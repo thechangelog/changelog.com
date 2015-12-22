@@ -12,6 +12,8 @@ exports.config = {
         "js/admin.js": [
           "deps/phoenix/web/static/js/phoenix.js",
           "deps/phoenix/web/static/js/phoenix_html.js",
+          "web/static/vendor/jquery-2.1.4.js",
+          "web/static/vendor/semantic.js",
           /^(web\/static\/js\/shared)/,
           /^(web\/static\/js\/admin)/
         ]
@@ -20,7 +22,10 @@ exports.config = {
     stylesheets: {
       joinTo: {
         "css/app.css": /^(web\/static\/css\/app)/,
-        "css/admin.css": /^(web\/static\/css\/admin)/,
+        "css/admin.css": [
+          "web/static/vendor/semantic.css",
+          /^(web\/static\/css\/admin)/
+        ],
       }
     },
     templates: {

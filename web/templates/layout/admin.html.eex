@@ -3,16 +3,66 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
     <title>Changelog Admin</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/admin.css") %>">
   </head>
 
-  <body>
-  <%= @inner %>
+  <body class="pushable">
+    <div class="ui labeled icon left vertical thin inverted menu sidebar visible">
+      <a href="" class="active item">
+        <i class="home icon"></i>
+        Home
+      </a>
+
+      <a href="" class="item">
+        <i class="unmute icon"></i>
+        Podcasts
+      </a>
+
+      <a href="" class="item">
+        <i class="newspaper icon"></i>
+        News
+      </a>
+
+      <a href="" class="item">
+        <i class="write icon"></i>
+        Posts
+      </a>
+
+      <a href="" class="item">
+        <i class="file icon"></i>
+        Pages
+      </a>
+
+      <a href="" class="item">
+        <i class="block layout icon"></i>
+        Topics
+      </a>
+
+      <a href="" class="item">
+        <i class="user icon"></i>
+        People
+      </a>
+
+      <a href="" class="item">
+        <i class="dollar icon"></i>
+        Sponsors
+      </a>
+
+      <a href="/" class="item">
+        <i class="sign out icon"></i>
+        Public
+      </a>
+    </div>
+
+    <div class="pusher">
+      <div class="ui basic segment">
+        <%= @inner %>
+      </div>
+
+    </div>
     <script src="<%= static_path(@conn, "/js/admin.js") %>"></script>
   </body>
 </html>
