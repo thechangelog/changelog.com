@@ -11,10 +11,10 @@
 
   <body class="pushable">
     <div class="ui labeled icon left vertical thin inverted menu sidebar visible">
-      <a href="" class="active item">
+      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>
         <i class="home icon"></i>
         Home
-      </a>
+      <% end %>
 
       <a href="" class="item">
         <i class="unmute icon"></i>
@@ -51,10 +51,10 @@
         Sponsors
       </a>
 
-      <a href="/" class="item">
+      <%= link to: page_path(@conn, :index), class: "item" do %>
         <i class="sign out icon"></i>
         Public
-      </a>
+      <% end %>
     </div>
 
     <div class="pusher">
