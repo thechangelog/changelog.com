@@ -27,5 +27,7 @@ defmodule Changelog.Router do
     pipe_through [:browser, :admin]
 
     get "/", PageController, :index
+
+    resources "/people", PersonController
   end
 end

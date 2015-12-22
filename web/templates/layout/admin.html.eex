@@ -9,60 +9,48 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/admin.css") %>">
   </head>
 
-  <body class="pushable">
-    <div class="ui labeled icon left vertical thin inverted menu sidebar visible">
-      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>
-        <i class="home icon"></i>
-        Home
-      <% end %>
-
-      <a href="" class="item">
-        <i class="unmute icon"></i>
-        Podcasts
+  <body>
+    <div class="ui top attached menu">
+      <a class="item" onclick="$('#sidebar').sidebar('toggle');">
+        <i class="sidebar icon"></i>
       </a>
 
-      <a href="" class="item">
-        <i class="newspaper icon"></i>
-        News
-      </a>
+      <a href="/admin" class="item">Changelog Admin</a>
 
-      <a href="" class="item">
-        <i class="write icon"></i>
-        Posts
-      </a>
+      <div class="right menu">
+        <div class="ui right aligned category search item">
+          <div class="ui transparent icon input">
+            <input class="prompt" type="text" placeholder="Coming Soon...">
+            <i class="search link icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
 
-      <a href="" class="item">
-        <i class="file icon"></i>
-        Pages
-      </a>
-
-      <a href="" class="item">
-        <i class="block layout icon"></i>
-        Topics
-      </a>
-
-      <a href="" class="item">
-        <i class="user icon"></i>
-        People
-      </a>
-
-      <a href="" class="item">
-        <i class="dollar icon"></i>
-        Sponsors
-      </a>
-
-      <%= link to: page_path(@conn, :index), class: "item" do %>
-        <i class="sign out icon"></i>
-        Public
-      <% end %>
+        <a href="/" class="item"><i class="eject icon"></i>View Site</a>
+        <a class="item"><i class="sign out icon"></i>Sign Out</a>
+      </div>
     </div>
 
-    <div class="pusher">
-      <div class="ui basic segment">
-        <%= @inner %>
+    <div id="main" class="ui bottom attached pushable segment">
+      <div id="sidebar" class="ui labeled icon left inline vertical inverted menu sidebar">
+        <a href="" class="item"><i class="unmute icon"></i>Podcasts</a>
+        <a href="" class="item"><i class="newspaper icon"></i>News</a>
+        <a href="" class="item"><i class="write icon"></i>Posts</a>
+        <a href="" class="item"><i class="file icon"></i>Pages</a>
+        <a href="" class="item"><i class="block layout icon"></i>Topics</a>
+
+        <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PersonController)}" do %>
+          <i class="user icon"></i>People
+        <% end %>
+
+        <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
       </div>
 
+      <div class="pusher">
+        <%= @inner %>
+      </div>
     </div>
+
     <script src="<%= static_path(@conn, "/js/admin.js") %>"></script>
   </body>
 </html>
