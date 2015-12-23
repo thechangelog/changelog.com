@@ -18,18 +18,18 @@ defmodule Changelog.Admin.PersonControllerTest do
     assert String.contains?(conn.resp_body, p2.name)
   end
 
-  # test "creates user video and redirects" do
-  #   conn = post conn, video_path(conn, :create), video: @valid_attrs
+  test "creates person and redirects" do
+    conn = post conn, admin_person_path(conn, :create), person: @valid_attrs
 
-  #   assert redirected_to(conn) == video_path(conn, :index)
-  #   assert Repo.get_by!(Video, @valid_attrs).user_id == user.id
-  # end
+    assert redirected_to(conn) == admin_person_path(conn, :index)
+    assert person_count(Person) == 1
+  end
 
-  # test "does not create with invalid attributes", %{conn: conn, user: _user} do
-  #   count_before = video_count(Video)
-  #   conn = post conn, video_path(conn, :create), video: @invalid_attrs
+  test "does not create with invalid attributes" do
+    count_before = person_count(Person)
+    conn = post conn, admin_person_path(conn, :create), person: @invalid_attrs
 
-  #   assert html_response(conn, 200) =~ ~r/errors/
-  #   assert video_count(Video) == count_before
-  # end
+    assert html_response(conn, 200) =~ ~r/error/
+    assert person_count(Person) == count_before
+  end
 end

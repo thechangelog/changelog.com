@@ -6,8 +6,8 @@ defmodule Changelog.Person do
     field :email, :string
     field :github_handle, :string
     field :twitter_handle, :string
-    field :bio, :string
     field :website, :string
+    field :bio, :string
 
     timestamps
   end

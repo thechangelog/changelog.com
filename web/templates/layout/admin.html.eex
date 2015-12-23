@@ -47,7 +47,9 @@
       </div>
 
       <div class="pusher">
-        <%= @inner %>
+        <div class="ui very padded basic segment">
+          <%= @inner %>
+        </div>
       </div>
     </div>
 
