@@ -21,3 +21,4 @@
 // import socket from "./shared/socket"
 
 $("#sidebar").sidebar({context: $("#main")})
+$("a[rel=external]").attr("target", "_blank")
