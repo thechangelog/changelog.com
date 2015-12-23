@@ -11,11 +11,13 @@
 
   <body>
     <div class="ui top attached menu">
-      <a class="item" onclick="$('#sidebar').sidebar('toggle');">
-        <i class="sidebar icon"></i>
-      </a>
+      <a href="/admin" class="item">Home</a>
+      <a href="" class="item"><i class="unmute icon"></i>Podcasts</a>
+      <a href="" class="item"><i class="newspaper icon"></i>News</a>
+      <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PersonController)}" do %>
+        <i class="user icon"></i>People
+      <% end %>
 
-      <a href="/admin" class="item">Changelog Admin</a>
 
       <div class="right menu">
         <div class="ui right aligned category search item">
@@ -26,31 +28,23 @@
           <div class="results"></div>
         </div>
 
-        <a href="/" class="item"><i class="eject icon"></i>View Site</a>
-        <a class="item"><i class="sign out icon"></i>Sign Out</a>
+        <div class="ui dropdown icon item">
+          <i class="sidebar icon"></i>
+
+          <div class="menu">
+            <a href="" class="item"><i class="write icon"></i>Posts</a>
+            <a href="" class="item"><i class="file icon"></i>Pages</a>
+            <a href="" class="item"><i class="block layout icon"></i>Topics</a>
+            <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
+            <a href="/" class="item"><i class="eject icon"></i>View Site</a>
+            <a class="item"><i class="sign out icon"></i>Sign Out</a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div id="main" class="ui bottom attached pushable segment">
-      <div id="sidebar" class="ui labeled icon left inline vertical inverted menu sidebar">
-        <a href="" class="item"><i class="unmute icon"></i>Podcasts</a>
-        <a href="" class="item"><i class="newspaper icon"></i>News</a>
-        <a href="" class="item"><i class="write icon"></i>Posts</a>
-        <a href="" class="item"><i class="file icon"></i>Pages</a>
-        <a href="" class="item"><i class="block layout icon"></i>Topics</a>
-
-        <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PersonController)}" do %>
-          <i class="user icon"></i>People
-        <% end %>
-
-        <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
-      </div>
-
-      <div class="pusher">
-        <div class="ui very padded basic segment">
-          <%= @inner %>
-        </div>
-      </div>
+    <div class="ui very padded basic segment">
+      <%= @inner %>
     </div>
 
     <script src="<%= static_path(@conn, "/js/admin.js") %>"></script>

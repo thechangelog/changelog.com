@@ -22,3 +22,4 @@
 
 $("#sidebar").sidebar({context: $("#main")})
 $("a[rel=external]").attr("target", "_blank")
+$(".ui.dropdown").dropdown()
