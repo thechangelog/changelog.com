@@ -27,4 +27,24 @@ defmodule Changelog.Admin.PersonController do
         render(conn, "new.html", changeset: changeset)
     end
   end
+
+  def edit(conn, %{"id" => id}) do
+    person = Repo.get!(Person, id)
+    changeset = Person.changeset(person)
+    render(conn, "edit.html", person: person, changeset: changeset)
+  end
+
+  def update(conn, %{"id" => id, "person" => person_params}) do
+    person = Repo.get!(Person, id)
+    changeset = Person.changeset(person, person_params)
+
+    case Repo.update(changeset) do
+      {:ok, person} ->
+        conn
+        |> put_flash(:info, "#{person.name} udated!")
+        |> redirect(to: admin_person_path(conn, :index))
+      {:error, changeset} ->
+        render(conn, "edit.html", person: person, changeset: changeset)
+    end
+  end
 end
