@@ -12,6 +12,7 @@ defmodule Changelog.Person do
     timestamps
   end
 
+  @admins ~w(jerod@changelog.com adam@changelog.com)
   @required_fields ~w(name)
   @optional_fields ~w(email github_handle twitter_handle bio website)
 
@@ -24,5 +25,9 @@ defmodule Changelog.Person do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def is_admin(model) do
+    Enum.member? @admins, model.email
   end
 end

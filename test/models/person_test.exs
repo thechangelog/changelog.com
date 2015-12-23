@@ -15,4 +15,14 @@ defmodule Changelog.PersonTest do
     changeset = Person.changeset(%Person{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "is_admin when email is in the list" do
+    user = %Person{email: "adam@changelog.com"}
+    assert Person.is_admin(user)
+  end
+
+  test "is_admin is false when email is not in the list" do
+    user = %Person{}
+    refute Person.is_admin(user)
+  end
 end
