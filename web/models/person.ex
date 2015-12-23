@@ -8,6 +8,9 @@ defmodule Changelog.Person do
     field :twitter_handle, :string
     field :website, :string
     field :bio, :string
+    field :auth_token, :string
+    field :auth_token_expires_at, Ecto.DateTime
+    field :signed_in_at, Ecto.DateTime
 
     timestamps
   end
