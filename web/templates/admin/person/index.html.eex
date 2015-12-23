@@ -13,6 +13,7 @@
   <table class="ui celled striped table">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Email</th>
         <th>Website</th>
@@ -25,6 +26,7 @@
     <tbody>
       <%= for person <- @people do %>
         <tr>
+          <td><%= person.id %></td>
           <td><%= person.name %></td>
           <td><%= person.email %></td>
           <td><%= website_link(person) %></td>
@@ -33,8 +35,8 @@
           <td class="center aligned">
             <div class="ui basic buttons">
               <div class="ui button">View</div>
-              <%= link to: admin_person_path(@conn, :edit, person), class: "ui button", do: "Edit" %>
-              <div class="ui button">Delete</div>
+              <%= link "Edit", to: admin_person_path(@conn, :edit, person), class: "ui button" %>
+              <%= link "Delete", to: admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" %>
             </div>
           </td>
         </tr>

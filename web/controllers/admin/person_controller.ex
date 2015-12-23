@@ -6,7 +6,7 @@ defmodule Changelog.Admin.PersonController do
   plug :scrub_params, "person" when action in [:create, :update]
 
   def index(conn, _params) do
-    people = Repo.all(Person)
+    people = Repo.all from p in Person, order_by: p.id
     render conn, "index.html", people: people
   end
 
@@ -46,5 +46,14 @@ defmodule Changelog.Admin.PersonController do
       {:error, changeset} ->
         render(conn, "edit.html", person: person, changeset: changeset)
     end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    person = Repo.get!(Person, id)
+    Repo.delete!(person)
+
+    conn
+    |> put_flash(:info, "#{person.name} deleted!")
+    |> redirect(to: admin_person_path(conn, :index))
   end
 end

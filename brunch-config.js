@@ -5,13 +5,13 @@ exports.config = {
       joinTo: {
         "js/app.js": [
           "deps/phoenix/web/static/js/phoenix.js",
-          "deps/phoenix/web/static/js/phoenix_html.js",
+          "deps/phoenix_html/web/static/js/phoenix_html.js",
           /^(web\/static\/js\/shared)/,
           /^(web\/static\/js\/app)/
         ],
         "js/admin.js": [
           "deps/phoenix/web/static/js/phoenix.js",
-          "deps/phoenix/web/static/js/phoenix_html.js",
+          "deps/phoenix_html/web/static/js/phoenix_html.js",
           "web/static/vendor/jquery-2.1.4.js",
           "web/static/vendor/semantic.js",
           /^(web\/static\/js\/shared)/,

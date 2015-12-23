@@ -11,7 +11,9 @@
 
   <body>
     <div class="ui top attached menu">
-      <a href="/admin" class="item">Home</a>
+      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>
+        Changelog Admin
+      <% end %>
       <a href="" class="item"><i class="unmute icon"></i>Podcasts</a>
       <a href="" class="item"><i class="newspaper icon"></i>News</a>
       <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PersonController)}" do %>

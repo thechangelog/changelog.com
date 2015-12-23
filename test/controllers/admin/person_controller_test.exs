@@ -57,9 +57,19 @@ defmodule Changelog.Admin.PersonControllerTest do
   test "does not update with invalid attributes" do
     person = insert_person()
     count_before = person_count(Person)
+
     conn = put conn, admin_person_path(conn, :update, person.id), person: @invalid_attrs
 
     assert html_response(conn, 200) =~ ~r/error/
     assert person_count(Person) == count_before
+  end
+
+  test "deletes a person and redirects" do
+    person = insert_person()
+
+    conn = delete conn, admin_person_path(conn, :delete, person.id)
+
+    assert redirected_to(conn) == admin_person_path(conn, :index)
+    assert person_count(Person) == 0
   end
 end
