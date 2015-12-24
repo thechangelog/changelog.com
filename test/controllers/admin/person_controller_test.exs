@@ -2,7 +2,7 @@ defmodule Changelog.Admin.PersonControllerTest do
   use Changelog.ConnCase
   alias Changelog.Person
 
-  @valid_attrs %{name: "Joe Blow"}
+  @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
   @invalid_attrs %{name: "", email: "noname@nope.com"}
 
   defp person_count(query), do: Repo.one(from p in query, select: count(p.id))

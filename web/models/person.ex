@@ -30,7 +30,7 @@ defmodule Changelog.Person do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:website, ~r/^https?:\/\//, message: "must include http(s)://")
-    |> validate_format(:handle, ~r/\A[a-z|1-9|-|_]+\z/, message: "valid chars: a-z, 1-9, -, _")
+    |> validate_format(:handle, ~r/\A[a-z|0-9|_|-]+\z/, message: "valid chars: a-z, 0-9, -, _")
     |> validate_length(:handle, max: 40, message: "max 40 chars")
     |> unique_constraint(:name)
     |> unique_constraint(:email)

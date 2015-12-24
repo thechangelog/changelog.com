@@ -3,7 +3,7 @@ defmodule Changelog.PersonTest do
 
   alias Changelog.Person
 
-  @valid_attrs %{name: "Joe Blow", email: "joe@blow.com"}
+  @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
