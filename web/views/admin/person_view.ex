@@ -6,6 +6,14 @@ defmodule Changelog.Admin.PersonView do
     if form.errors[field], do: "error", else: ""
   end
 
+  def error_message(form, field) do
+    if message = form.errors[field] do
+      content_tag :div, class: "ui pointing red basic label" do
+        message
+      end
+    end
+  end
+
   def github_link(p) do
     if p.github_handle do
       external_link p.github_handle, to: "https://github.com/#{p.github_handle}"
