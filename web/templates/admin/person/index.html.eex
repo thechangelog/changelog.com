@@ -29,7 +29,12 @@
     <%= for person <- @people do %>
       <tr>
         <td><%= person.id %></td>
-        <td><%= person.name %></td>
+        <td>
+          <%= person.name %>
+          <%= if Changelog.Person.is_admin(person) do %>
+            <div class="ui tiny blue label">Admin</div>
+          <% end %>
+        </td>
         <td><%= person.email %></td>
         <td><%= person.handle %></td>
         <td><%= website_link(person) %></td>
