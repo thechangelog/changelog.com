@@ -17,7 +17,7 @@ defmodule Changelog.ModelCase do
   using do
     quote do
       alias Changelog.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 2]
       import Changelog.ModelCase
     end

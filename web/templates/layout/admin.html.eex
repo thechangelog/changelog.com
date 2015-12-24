@@ -46,7 +46,7 @@
     </div>
 
     <div class="ui very padded basic segment">
-      <%= @inner %>
+      <%= render @view_module, @view_template, assigns %>
     </div>
 
     <script src="<%= static_path(@conn, "/js/admin.js") %>"></script>

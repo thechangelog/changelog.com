@@ -21,7 +21,7 @@ defmodule Changelog.ConnCase do
       use Phoenix.ConnTest
 
       alias Changelog.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 2]
 
       import Changelog.Router.Helpers

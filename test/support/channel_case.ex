@@ -21,7 +21,7 @@ defmodule Changelog.ChannelCase do
       use Phoenix.ChannelTest
 
       alias Changelog.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 2]
 
 
