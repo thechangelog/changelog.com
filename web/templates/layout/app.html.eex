@@ -13,15 +13,19 @@
 
   <body>
     <div class="container" role="main">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-        </ul>
-        <span class="logo"></span>
-      </div>
-
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <ul>
+      <%= if @current_user do %>
+        <li>Howdy, <%= @current_user.handle %></li>
+        <li><%= link "Admin", to: admin_page_path(@conn, :index) %></li>
+        <li><%= link "Sign Out", to: sign_out_path(@conn, :delete) %></li>
+
+      <% else %>
+        <li><%= link "Sign In", to: sign_in_path(@conn, :new) %></li>
+      <% end %>
+      </ul>
 
       <%= render @view_module, @view_template, assigns %>
 

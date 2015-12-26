@@ -25,4 +25,13 @@ defmodule Changelog.PersonTest do
     user = %Person{}
     refute Person.is_admin(user)
   end
+
+  test "encoded_auth and decoded_auth" do
+    user = %Person{email: "jenny@hits.com", auth_token: "8675309"}
+    {:ok, encoded} = Person.encoded_auth(user)
+
+    assert encoded == "6A656E6E7940686974732E636F6D7C38363735333039"
+
+    assert ["jenny@hits.com", "8675309"] = Person.decoded_auth(encoded)
+  end
 end

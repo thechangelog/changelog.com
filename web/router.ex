@@ -7,6 +7,7 @@ defmodule Changelog.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Changelog.Plug.Auth, repo: Changelog.Repo
   end
 
   pipeline :api do
@@ -21,6 +22,11 @@ defmodule Changelog.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    get "/in", AuthController, :new, as: :sign_in
+    post "/in", AuthController, :new, as: :sign_in
+    get "/in/:token", AuthController, :create, as: :create_sign_in
+    get "/out", AuthController, :delete, as: :sign_out
   end
 
   scope "/admin", Changelog.Admin, as: :admin do

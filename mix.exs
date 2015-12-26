@@ -19,7 +19,7 @@ defmodule Changelog.Mixfile do
   def application do
     [mod: {Changelog, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :tzdata]]
   end
 
   # Specifies which paths to compile per environment.
@@ -35,6 +35,8 @@ defmodule Changelog.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:timex, "~> 1.0.0-rc4"},
+     {:timex_ecto, "~> 0.7.0"},
      {:cowboy, "~> 1.0"}]
   end
 

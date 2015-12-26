@@ -1,0 +1,20 @@
+<h1>Sign In</h1>
+
+<%= if @person do %>
+<p>Check your email! We sent you a single-use sign in link. It will expire in 15 minutes.</p>
+
+<%= if Mix.env == :dev do %>
+<p>Psst! Since you're hacking we'll just skip the email process.
+<%= link "click here", to: auth_path(@person) %> instead!</p>
+<% end %>
+
+<% else %>
+<p>Please enter your email address.</p>
+
+<%= form_for @conn, sign_in_path(@conn, :new), [as: :auth], fn f -> %>
+  <%= label f, :email %>
+  <%= email_input f, :email %>
+
+  <button type="submit">Enter</button>
+<% end %>
+<% end %>
