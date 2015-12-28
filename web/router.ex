@@ -36,5 +36,6 @@ defmodule Changelog.Router do
     get "/", PageController, :index
 
     resources "/people", PersonController
+    resources "/podcasts", PodcastController
   end
 end

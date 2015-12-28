@@ -22,4 +22,22 @@ defmodule Changelog.Helpers.ViewHelpers do
   def external_link(text, opts) do
     link text, (opts ++ [rel: "external"])
   end
+
+  def github_link(model) do
+    if model.github_handle do
+      external_link model.github_handle, to: "https://github.com/#{model.github_handle}"
+    end
+  end
+
+  def twitter_link(model) do
+    if model.twitter_handle do
+      external_link model.twitter_handle, to: "https://twitter.com/#{model.twitter_handle}"
+    end
+  end
+
+  def website_link(model) do
+    if model.website do
+      external_link model.website, to: model.website
+    end
+  end
 end
