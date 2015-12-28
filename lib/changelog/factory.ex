@@ -8,4 +8,11 @@ defmodule Changelog.Factory do
       handle: sequence(:handle, &"joeblow-#{&1}")
     }
   end
+
+  def factory(:podcast) do
+    %Changelog.Podcast{
+      name: sequence(:name, &"Show #{&1}"),
+      slug: sequence(:slug, &"show-#{&1}")
+    }
+  end
 end
