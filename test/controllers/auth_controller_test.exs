@@ -20,7 +20,7 @@ defmodule Changelog.AuthControllerTest do
   end
 
   test "submitting the form with known email sets auth token and sends email" do
-    person = insert_person(auth_token: nil)
+    person = create(:person, auth_token: nil)
 
     conn = post conn(), "/in", auth: %{email: person.email}
     person = Repo.get(Person, person.id)
@@ -30,7 +30,7 @@ defmodule Changelog.AuthControllerTest do
   end
 
   test "following a valid auth token signs you in" do
-    person = insert_person()
+    person = create(:person)
 
     changeset = Person.auth_changeset(person, %{
       auth_token: "12345",
@@ -47,7 +47,7 @@ defmodule Changelog.AuthControllerTest do
   end
 
   test "following an expired auth token doesn't sign you in" do
-    person = insert_person()
+    person = create(:person)
 
     changeset = Person.auth_changeset(person, %{
       auth_token: "12345",

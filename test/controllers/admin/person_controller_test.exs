@@ -9,8 +9,8 @@ defmodule Changelog.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "lists all people on index", %{conn: conn} do
-    p1 = insert_person()
-    p2 = insert_person()
+    p1 = create(:person)
+    p2 = create(:person)
 
     conn = get conn, admin_person_path(conn, :index)
 
@@ -44,7 +44,7 @@ defmodule Changelog.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "renders form to edit person", %{conn: conn} do
-    person = insert_person()
+    person = create(:person)
 
     conn = get conn, admin_person_path(conn, :edit, person)
     assert html_response(conn, 200) =~ ~r/edit/i
@@ -52,7 +52,7 @@ defmodule Changelog.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "updates person and redirects", %{conn: conn} do
-    person = insert_person()
+    person = create(:person)
 
     conn = put conn, admin_person_path(conn, :update, person.id), person: @valid_attrs
 
@@ -62,7 +62,7 @@ defmodule Changelog.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "does not update with invalid attributes", %{conn: conn} do
-    person = insert_person()
+    person = create(:person)
     count_before = person_count(Person)
 
     conn = put conn, admin_person_path(conn, :update, person.id), person: @invalid_attrs
@@ -73,7 +73,7 @@ defmodule Changelog.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "deletes a person and redirects", %{conn: conn} do
-    person = insert_person()
+    person = create(:person)
 
     conn = delete conn, admin_person_path(conn, :delete, person.id)
 

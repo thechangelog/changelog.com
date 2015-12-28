@@ -25,7 +25,7 @@ defmodule Changelog.ConnCase do
       import Ecto.Query, only: [from: 2]
 
       import Changelog.Router.Helpers
-      import Changelog.Factories
+      import Changelog.Factory
 
       # The default endpoint for testing
       @endpoint Changelog.Endpoint

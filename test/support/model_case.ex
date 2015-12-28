@@ -20,6 +20,7 @@ defmodule Changelog.ModelCase do
       import Ecto
       import Ecto.Query, only: [from: 2]
       import Changelog.ModelCase
+      import Changelog.Factory
     end
   end
 
