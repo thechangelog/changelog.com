@@ -12,13 +12,14 @@ defmodule Changelog.Person do
     field :auth_token, :string
     field :auth_token_expires_at, Timex.Ecto.DateTime
     field :signed_in_at, Timex.Ecto.DateTime
+    field :admin, :boolean
 
     timestamps
   end
 
   @admins ~w(jerod@changelog.com adam@changelog.com)
   @required_fields ~w(name email handle)
-  @optional_fields ~w(github_handle twitter_handle bio website)
+  @optional_fields ~w(github_handle twitter_handle bio website admin)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -48,14 +49,6 @@ defmodule Changelog.Person do
       auth_token_expires_at: nil,
       signed_in_at: Timex.Date.now
     })
-  end
-
-  def signed_in(model, datetime) do
-
-  end
-
-  def is_admin(model) do
-    Enum.member? @admins, model.email
   end
 
   def encoded_auth(model) do

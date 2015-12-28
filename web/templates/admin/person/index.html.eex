@@ -31,7 +31,7 @@
         <td><%= person.id %></td>
         <td>
           <%= person.name %>
-          <%= if Changelog.Person.is_admin(person) do %>
+          <%= if person.admin do %>
             <div class="ui tiny blue label">Admin</div>
           <% end %>
         </td>

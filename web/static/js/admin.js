@@ -23,3 +23,4 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 $("#sidebar").sidebar({context: $("#main")})
 $("a[rel=external]").attr("target", "_blank")
 $(".ui.dropdown").dropdown()
+$(".ui.checkbox").checkbox();

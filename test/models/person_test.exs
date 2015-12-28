@@ -16,16 +16,6 @@ defmodule Changelog.PersonTest do
     refute changeset.valid?
   end
 
-  test "is_admin when email is in the list" do
-    user = %Person{email: "adam@changelog.com"}
-    assert Person.is_admin(user)
-  end
-
-  test "is_admin is false when email is not in the list" do
-    user = %Person{}
-    refute Person.is_admin(user)
-  end
-
   test "encoded_auth and decoded_auth" do
     user = %Person{email: "jenny@hits.com", auth_token: "8675309"}
     {:ok, encoded} = Person.encoded_auth(user)

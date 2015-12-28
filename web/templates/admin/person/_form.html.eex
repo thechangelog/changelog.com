@@ -43,5 +43,12 @@
     <%= error_message(f, :bio) %>
   </div>
 
+  <div class="inline field">
+    <div class="ui checkbox">
+      <%= checkbox f, :admin, class: "hidden" %>
+      <%= label f, :admin %>
+    </div>
+  </div>
+
   <button class="ui primary button" type="submit">Save</button>
 <% end %>
