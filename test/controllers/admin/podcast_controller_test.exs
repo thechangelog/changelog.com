@@ -20,6 +20,58 @@ defmodule Changelog.Admin.PodcastControllerTest do
     assert String.contains?(conn.resp_body, p2.name)
   end
 
+  @tag :as_admin
+  test "renders form to create new podcast", %{conn: conn} do
+    conn = get conn, admin_podcast_path(conn, :new)
+    assert html_response(conn, 200) =~ ~r/new/
+  end
+
+  @tag :as_admin
+  test "creates podcast and redirects", %{conn: conn} do
+    conn = post conn, admin_podcast_path(conn, :create), podcast: @valid_attrs
+
+    assert redirected_to(conn) == admin_podcast_path(conn, :index)
+    assert podcast_count(Podcast) == 1
+  end
+
+  @tag :as_admin
+  test "does not create with invalid attributes", %{conn: conn} do
+    count_before = podcast_count(Podcast)
+    conn = post conn, admin_podcast_path(conn, :create), podcast: @invalid_attrs
+
+    assert html_response(conn, 200) =~ ~r/error/
+    assert podcast_count(Podcast) == count_before
+  end
+
+  @tag :as_admin
+  test "renders form to edit podcast", %{conn: conn} do
+    podcast = create(:podcast)
+
+    conn = get conn, admin_podcast_path(conn, :edit, podcast)
+    assert html_response(conn, 200) =~ ~r/edit/i
+  end
+
+  @tag :as_admin
+  test "updates podcast and redirects", %{conn: conn} do
+    podcast = create(:podcast)
+
+    conn = put conn, admin_podcast_path(conn, :update, podcast.id), podcast: @valid_attrs
+
+    assert redirected_to(conn) == admin_podcast_path(conn, :index)
+    assert podcast_count(Podcast) == 1
+  end
+
+  @tag :as_admin
+  test "does not update with invalid attributes", %{conn: conn} do
+    podcast = create(:podcast)
+    count_before = podcast_count(Podcast)
+
+    conn = put conn, admin_podcast_path(conn, :update, podcast.id), podcast: @invalid_attrs
+
+    assert html_response(conn, 200) =~ ~r/error/
+    assert podcast_count(Podcast) == count_before
+  end
+
   test "requires user auth on all actions" do
     Enum.each([
       get(conn, admin_podcast_path(conn, :index)),

@@ -1,6 +1,8 @@
 defmodule Changelog.Person do
   use Changelog.Web, :model
 
+  alias Changelog.Regexp
+
   schema "people" do
     field :name, :string
     field :email, :string
@@ -30,8 +32,8 @@ defmodule Changelog.Person do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_format(:website, ~r/^https?:\/\//, message: "must include http(s)://")
-    |> validate_format(:handle, Changelog.Regexp.slug, message: Changelog.Regexp.slug_message)
+    |> validate_format(:website, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
     |> validate_length(:handle, max: 40, message: "max 40 chars")
     |> unique_constraint(:name)
     |> unique_constraint(:email)

@@ -17,8 +17,8 @@
         <th>ID</th>
         <th>Name</th>
         <th>Slug</th>
-        <th>Description</th>
         <th>Twitter</th>
+        <th>Vanity Domain</th>
         <th></th>
       </tr>
     </thead>
@@ -32,11 +32,12 @@
         </td>
         <td><%= podcast.slug %></td>
         <td><%= twitter_link(podcast) %></td>
+        <td><%= vanity_link(podcast) %></td>
         <td class="center aligned">
           <div class="ui tiny basic buttons">
-            <div class="ui button">View</div>
-            <%= link "Edit", to: admin_podcast_path(@conn, :edit, podcast), class: "ui button" %>
-            <%= link "Delete", to: admin_podcast_path(@conn, :delete, podcast), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" %>
+          <%= link "View", to: "#", class: "ui button" %>
+          <%= link "Edit", to: admin_podcast_path(@conn, :edit, podcast), class: "ui button" %>
+          <%= link "Add Episode", to: "#", class: "ui button" %>
           </div>
         </td>
       </tr>

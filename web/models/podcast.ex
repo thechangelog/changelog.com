@@ -1,6 +1,8 @@
 defmodule Changelog.Podcast do
   use Changelog.Web, :model
 
+  alias Changelog.Regexp
+
   schema "podcasts" do
     field :name, :string
     field :slug, :string
@@ -18,7 +20,8 @@ defmodule Changelog.Podcast do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_format(:slug, Changelog.Regexp.slug, message: Changelog.Regexp.slug_message)
+    |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
   end
 end

@@ -1,0 +1,41 @@
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+  <div class="field required <%= error_class(f, :name) %>">
+    <%= label f, :name, "Name" %>
+    <%= text_input f, :name, placeholder: "The Changelog" %>
+    <%= error_message(f, :name) %>
+  </div>
+
+  <div class="three fields">
+    <div class="field required <%= error_class(f, :slug) %>">
+      <%= label f, :slug %>
+      <%= text_input f, :slug, placeholder: "tcl" %>
+      <%= error_message(f, :slug) %>
+    </div>
+
+    <div class="field <%= error_class(f, :vanity_domain) %>">
+      <%= label f, :vanity_domain, "Vanity Domain" %>
+      <%= text_input f, :vanity_domain, placeholder: "http://changelog.fm" %>
+      <%= error_message(f, :vanity_domain) %>
+    </div>
+
+    <div class="field <%= error_class(f, :twitter_handle) %>">
+      <%= label f, :twitter_handle, "On Twitter" %>
+      <%= text_input f, :twitter_handle, placeholder: "gracehopper" %>
+      <%= error_message(f, :twitter_handle) %>
+    </div>
+  </div>
+
+  <div class="field <%= error_class(f, :description) %>">
+    <%= label f, :description %>
+    <%= textarea f, :description %>
+    <%= error_message(f, :description) %>
+  </div>
+
+  <div class="field <%= error_class(f, :keywords) %>">
+    <%= label f, :keywords %>
+    <%= text_input f, :keywords, placeholder: "changelog, open source, software, development" %>
+    <%= error_message(f, :keywords) %>
+  </div>
+
+  <button class="ui primary button" type="submit">Save</button>
+<% end %>
