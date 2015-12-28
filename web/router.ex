@@ -28,6 +28,8 @@ defmodule Changelog.Router do
     post "/in", AuthController, :new, as: :sign_in
     get "/in/:token", AuthController, :create, as: :create_sign_in
     get "/out", AuthController, :delete, as: :sign_out
+
+    resources "/people", PersonController, only: [:show]
   end
 
   scope "/admin", Changelog.Admin, as: :admin do

@@ -19,6 +19,7 @@
         <th>Slug</th>
         <th>Twitter</th>
         <th>Vanity Domain</th>
+        <th>Episodes</th>
         <th></th>
       </tr>
     </thead>
@@ -33,11 +34,24 @@
         <td><%= podcast.slug %></td>
         <td><%= twitter_link(podcast) %></td>
         <td><%= vanity_link(podcast) %></td>
+        <td>0</td>
         <td class="center aligned">
-          <div class="ui tiny basic buttons">
-          <%= link "View", to: "#", class: "ui button" %>
-          <%= link "Edit", to: admin_podcast_path(@conn, :edit, podcast), class: "ui button" %>
-          <%= link "Add Episode", to: "#", class: "ui button" %>
+          <div class="ui basic icon buttons">
+            <%= link to: "#", class: "ui button", title: "View Public Page" do %>
+              <i class="external icon"></i>
+            <% end %>
+
+            <%= link to: admin_podcast_path(@conn, :show, podcast), class: "ui button", title: "View" do %>
+              <i class="eye icon"></i>
+            <% end %>
+
+            <%= link to: admin_podcast_path(@conn, :edit, podcast), class: "ui button", title: "Edit" do %>
+              <i class="edit icon"></i>
+            <% end %>
+
+            <%= link to: "#", class: "ui button", title: "Add Episode" do %>
+              <i class="add icon"></i>
+            <% end %>
           </div>
         </td>
       </tr>
