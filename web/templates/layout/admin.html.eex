@@ -39,7 +39,9 @@
             <a href="" class="item"><i class="block layout icon"></i>Topics</a>
             <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
             <a href="/" class="item"><i class="eject icon"></i>View Site</a>
-            <a class="item"><i class="sign out icon"></i>Sign Out</a>
+            <%= link to: sign_out_path(@conn, :delete), class: "item" do %>
+              <i class="sign out icon"></i>Sign Out</a>
+            <% end %>
           </div>
         </div>
       </div>
