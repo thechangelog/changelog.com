@@ -37,6 +37,14 @@ defmodule Changelog.ConnCase do
       Ecto.Adapters.SQL.restart_test_transaction(Changelog.Repo, [])
     end
 
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    conn = Phoenix.ConnTest.conn()
+
+    if tags[:as_admin] do
+      user = %Changelog.Person{admin: true}
+      conn = Plug.Conn.assign(conn, :current_user, user)
+      {:ok, conn: conn, user: user}
+    else
+      {:ok, conn: conn}
+    end
   end
 end

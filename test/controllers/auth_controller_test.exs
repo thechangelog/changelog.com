@@ -62,16 +62,4 @@ defmodule Changelog.AuthControllerTest do
     assert html_response(conn, 200) =~ "Sign In"
     refute get_session(conn, :user_id) == person.id
   end
-
-  test "you can sign out" do
-    out_conn =
-    conn
-    |> put_session(:user_id, 123)
-    |> get sign_out_path(conn, :delete)
-
-    assert redirected_to(out_conn) == page_path(out_conn, :index)
-
-    next_conn = get(out_conn, "/")
-    refute get_session(next_conn, :user_id)
-  end
 end

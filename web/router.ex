@@ -16,6 +16,7 @@ defmodule Changelog.Router do
 
   pipeline :admin do
     plug :put_layout, {Changelog.LayoutView, :admin}
+    plug Changelog.Plug.RequireAdmin
   end
 
   scope "/", Changelog do

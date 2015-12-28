@@ -17,4 +17,8 @@ defmodule Changelog.Factories do
     |> Person.changeset(changes)
     |> Repo.insert!
   end
+
+  def insert_admin(attrs \\ %{}) do
+    insert_person(admin: true)
+  end
 end
