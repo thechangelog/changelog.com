@@ -11,16 +11,26 @@
 
   <body>
     <div class="ui top attached menu">
+      <a href="/" class="icon item"><i class="eject icon"></i></a>
       <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>
         Changelog Admin
       <% end %>
+
+      <a href="#" class="item"><i class="newspaper icon"></i>News</a>
+
       <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PodcastController)}" do %>
         <i class="unmute icon"></i>Podcasts</a>
       <% end %>
-      <a href="" class="item"><i class="newspaper icon"></i>News</a>
+
+      <a href="#" class="item"><i class="video icon"></i>Videos</a>
+      <a href="" class="item"><i class="write icon"></i>Posts</a>
+
       <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PersonController)}" do %>
         <i class="user icon"></i>People
       <% end %>
+
+      <a href="" class="item"><i class="block layout icon"></i>Topics</a>
+      <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
 
 
       <div class="right menu">
@@ -32,20 +42,9 @@
           <div class="results"></div>
         </div>
 
-        <div class="ui dropdown icon item">
-          <i class="sidebar icon"></i>
-
-          <div class="menu">
-            <a href="" class="item"><i class="write icon"></i>Posts</a>
-            <a href="" class="item"><i class="file icon"></i>Pages</a>
-            <a href="" class="item"><i class="block layout icon"></i>Topics</a>
-            <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
-            <a href="/" class="item"><i class="eject icon"></i>View Site</a>
-            <%= link to: sign_out_path(@conn, :delete), class: "item" do %>
-              <i class="sign out icon"></i>Sign Out</a>
-            <% end %>
-          </div>
-        </div>
+        <%= link to: sign_out_path(@conn, :delete), class: "icon item" do %>
+          <i class="sign out icon"></i>
+        <% end %>
       </div>
     </div>
 
