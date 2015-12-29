@@ -30,6 +30,7 @@
       <tr>
         <td><%= person.id %></td>
         <td>
+          <img class="ui avatar image" src="<%= avatar_url(person, 56) %>">
           <%= person.name %>
           <%= if person.admin do %>
             <div class="ui tiny blue label">Admin</div>
