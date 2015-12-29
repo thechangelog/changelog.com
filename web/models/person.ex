@@ -16,6 +16,8 @@ defmodule Changelog.Person do
     field :signed_in_at, Timex.Ecto.DateTime
     field :admin, :boolean
 
+    has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
+
     timestamps
   end
 
