@@ -47,15 +47,15 @@
               <i class="external icon"></i>
             <% end %>
 
-            <%= link to: admin_person_path(@conn, :show, person), class: "ui button", title: "View" do %>
+            <%= link to: admin_person_path(@conn, :show, person), class: "ui button", title: "View Details" do %>
               <i class="eye icon"></i>
             <% end %>
 
-            <%= link to: admin_person_path(@conn, :edit, person), class: "ui button", title: "Edit" do %>
+            <%= link to: admin_person_path(@conn, :edit, person), class: "ui button", title: "Edit this Person" do %>
               <i class="edit icon"></i>
             <% end %>
 
-            <%= link to: admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"], class: "ui button", title: "Delete" do %>
+            <%= link to: admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"], class: "ui button", title: "Delete this Person" do %>
               <i class="trash icon"></i>
             <% end %>
           </div>

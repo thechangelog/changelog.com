@@ -9,6 +9,7 @@ $("#sidebar").sidebar({context: $("#main")})
 $("a[rel=external]").attr("target", "_blank")
 $(".ui.dropdown").dropdown()
 $(".ui.checkbox").checkbox()
+$(".ui.button").popup()
 
 let $body = $("body");
 let viewName = $body.data("module").match(/\.(\w+View)$/)[1]
