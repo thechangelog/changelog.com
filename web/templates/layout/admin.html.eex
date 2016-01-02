@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/admin.css") %>">
   </head>
 
-  <body>
+  <body data-module="<%= @view_module %>" data-template="<%= @view_template %>">
     <div class="ui top attached menu">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
       <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>

@@ -15,6 +15,7 @@ exports.config = {
           "web/static/vendor/jquery-2.1.4.js",
           "web/static/vendor/semantic.js",
           "web/static/vendor/handlebars-v4.0.5.js",
+          "web/static/vendor/sortable.js",
           /^(web\/static\/js\/shared)/,
           /^(web\/static\/js\/admin)/
         ]

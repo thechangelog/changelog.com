@@ -12,6 +12,7 @@ defmodule Changelog.Podcast do
     field :twitter_handle, :string
 
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
+    has_many :hosts, through: [:podcast_hosts, :person]
 
     timestamps
   end
@@ -25,5 +26,6 @@ defmodule Changelog.Podcast do
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
+    |> cast_assoc(:podcast_hosts, required: true)
   end
 end

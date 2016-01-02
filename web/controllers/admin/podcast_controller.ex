@@ -11,7 +11,7 @@ defmodule Changelog.Admin.PodcastController do
   end
 
   def new(conn, _params) do
-    changeset = Podcast.changeset(%Podcast{})
+    changeset = Podcast.changeset(%Podcast{podcast_hosts: []})
     render conn, "new.html", changeset: changeset
   end
 
@@ -30,12 +30,14 @@ defmodule Changelog.Admin.PodcastController do
 
   def edit(conn, %{"id" => id}) do
     podcast = Repo.get!(Podcast, id)
+      |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
     changeset = Podcast.changeset(podcast)
     render conn, "edit.html", podcast: podcast, changeset: changeset
   end
 
   def update(conn, %{"id" => id, "podcast" => podcast_params}) do
     podcast = Repo.get!(Podcast, id)
+      |> Repo.preload(:podcast_hosts)
     changeset = Podcast.changeset(podcast, podcast_params)
 
     case Repo.update(changeset) do
