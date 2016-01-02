@@ -36,6 +36,7 @@ defmodule Changelog.Router do
     pipe_through [:browser, :admin]
 
     get "/", PageController, :index
+    get "/search", SearchController, :index
 
     resources "/people", PersonController
     resources "/podcasts", PodcastController
