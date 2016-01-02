@@ -39,6 +39,9 @@ export default class PodcastView {
         setTimeout(function() {
           $personSearch.search("set value", "")
         }, 10);
+      },
+      error: {
+        noResults: "<a href='/admin/people/new' target='_blank'>Add a Person</a>"
       }
     })
 
