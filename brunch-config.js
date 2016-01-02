@@ -14,6 +14,7 @@ exports.config = {
           "deps/phoenix_html/web/static/js/phoenix_html.js",
           "web/static/vendor/jquery-2.1.4.js",
           "web/static/vendor/semantic.js",
+          "web/static/vendor/handlebars-v4.0.5.js",
           /^(web\/static\/js\/shared)/,
           /^(web\/static\/js\/admin)/
         ]
@@ -29,7 +30,10 @@ exports.config = {
       }
     },
     templates: {
-      joinTo: "js/app.js"
+      joinTo: {
+        "js/app.js": /^(web\/static\/js\/app\/templates)/,
+        "js/admin.js": /^(web\/static\/js\/admin\/templates)/
+      }
     }
   },
 
