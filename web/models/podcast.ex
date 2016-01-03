@@ -11,6 +11,7 @@ defmodule Changelog.Podcast do
     field :keywords, :string
     field :twitter_handle, :string
 
+    has_many :episodes, Changelog.Episode, on_delete: :delete_all
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
 
