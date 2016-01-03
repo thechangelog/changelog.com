@@ -15,11 +15,11 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Name</th>
         <th>Slug</th>
-        <th>Twitter</th>
-        <th>Vanity Domain</th>
-        <th>Episodes</th>
+        <th>Name</th>
+        <th>Published</th>
+        <th>Record Time</th>
+        <th>Publish Time</th>
         <th></th>
       </tr>
     </thead>
@@ -28,13 +28,11 @@
     <%= for episode <- @episodes do %>
       <tr>
         <td><%= episode.id %></td>
-        <td>
-          <%= episode.title %>
-        </td>
-        <td></td>
-        <td>></td>
-        <td>></td>
-        <td></td>
+        <td><%= episode.slug %></td>
+        <td><%= episode.title %></td>
+        <td><%= episode.published %></td>
+        <td><%= episode.recorded_at %></td>
+        <td><%= episode.published_at %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
           </div>

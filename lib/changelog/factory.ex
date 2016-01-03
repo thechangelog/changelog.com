@@ -1,6 +1,14 @@
 defmodule Changelog.Factory do
   use ExMachina.Ecto, repo: Changelog.Repo
 
+  def factory(:episode) do
+    %Changelog.Episode{
+      title: sequence(:title, &"Best Show Evar! #{&1}"),
+      slug: sequence(:slug, &"best-show-evar-#{&1}"),
+      podcast: build(:podcast)
+    }
+  end
+
   def factory(:person) do
     %Changelog.Person{
       name: sequence(:name, &"Joe Blow #{&1}"),
