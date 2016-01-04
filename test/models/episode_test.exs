@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeTest do
 
   alias Changelog.Episode
 
-  @valid_attrs %{slug: "181", summary: "some content", title: "some content"}
+  @valid_attrs %{slug: "181", title: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

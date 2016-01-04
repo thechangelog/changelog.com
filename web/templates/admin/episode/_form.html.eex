@@ -1,0 +1,9 @@
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+  <div class="field required <%= error_class(f, :title) %>">
+    <%= label f, :title, "Name" %>
+    <%= text_input f, :title, placeholder: "Best Show Evar!" %>
+    <%= error_message(f, :title) %>
+  </div>
+
+  <button class="ui primary button" type="submit">Save</button>
+<% end %>

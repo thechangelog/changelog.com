@@ -1,0 +1,7 @@
+<div class="ui text container">
+  <h1 class="ui dividing header"><%= @podcast.name %>: New Episode</h1>
+
+  <%= render "_form.html",
+    changeset: @changeset,
+    action: admin_podcast_episode_path(@conn, :create, @podcast) %>
+</div>
