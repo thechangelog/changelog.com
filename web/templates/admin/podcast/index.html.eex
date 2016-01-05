@@ -41,7 +41,7 @@
               <i class="external icon"></i>
             <% end %>
 
-            <%= link to: admin_podcast_path(@conn, :show, podcast), class: "ui button", title: "View Details" do %>
+            <%= link to: admin_podcast_episode_path(@conn, :index, podcast), class: "ui button", title: "View Details" do %>
               <i class="eye icon"></i>
             <% end %>
 
@@ -49,7 +49,7 @@
               <i class="edit icon"></i>
             <% end %>
 
-            <%= link to: "#", class: "ui button", title: "Add an Episode" do %>
+            <%= link to: admin_podcast_episode_path(@conn, :new, podcast), class: "ui button", title: "Add an Episode" do %>
               <i class="add icon"></i>
             <% end %>
           </div>
