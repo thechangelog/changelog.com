@@ -1,8 +1,55 @@
 <%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
-  <div class="field required <%= error_class(f, :title) %>">
-    <%= label f, :title, "Name" %>
+  <div class="field required <%= error_class f, :title %>">
+    <%= label f, :title %>
     <%= text_input f, :title, placeholder: "Best Show Evar!" %>
-    <%= error_message(f, :title) %>
+    <%= error_message f, :title %>
+  </div>
+
+  <div class="field required <%= error_class f, :slug %>">
+    <%= label f, :slug %>
+    <%= text_input f, :slug, placeholder: "183" %>
+    <%= error_message f, :slug %>
+  </div>
+
+  <div class="field required <%= error_class f, :summary %>">
+    <%= label f, :summary %>
+    <%= textarea f, :summary, placeholder: "Keep it brief. Markdown enabled." %>
+    <%= error_message f, :summary %>
+  </div>
+
+  <div class="field <%= error_class f, :recorded_at %>">
+    <%= label f, :recorded_at, "Record At" %>
+    <%= semantic_datetime_select f, :recorded_at, default: :os.timestamp |> :calendar.now_to_datetime %>
+    <%= error_message f, :recorded_at %>
+  </div>
+
+  <div class="field <%= error_class f, :published_at %>">
+    <%= label f, :published_at, "Publish At" %>
+    <%= semantic_datetime_select f, :published_at, default: :os.timestamp |> :calendar.now_to_datetime %>
+    <%= error_message f, :published_at %>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox f, :published, class: "hidden" %>
+      <label>Published</label>
+    </div>
+  </div>
+
+  <div class="required field">
+    <%= label f, :hosts %>
+  </div>
+
+  <div class="field">
+    <%= label f, :guests %>
+  </div>
+
+  <div class="field">
+    <%= label f, :topics %>
+  </div>
+
+  <div class="field">
+    <%= label f, :sponsors %>
   </div>
 
   <button class="ui primary button" type="submit">Save</button>

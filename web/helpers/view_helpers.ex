@@ -7,6 +7,22 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def semantic_datetime_select(form, field, opts \\ []) do
+    builder = fn b ->
+      ~e"""
+      <div class="fields">
+        <div class="three wide field"><%= b.(:month, []) %></div>
+        <div class="two wide field"><%= b.(:day, []) %></div>
+        <div class="two wide field"><%= b.(:year, []) %></div> at
+        <div class="two wide field"><%= b.(:hour, []) %></div>:
+        <div class="two wide field"><%= b.(:min, []) %></div>
+      </div>
+      """
+    end
+
+    datetime_select form, field, [builder: builder] ++ opts
+  end
+
   def error_class(form, field) do
     if form.errors[field], do: "error", else: ""
   end
