@@ -5,8 +5,6 @@ defmodule Changelog.Admin.PersonControllerTest do
   @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
   @invalid_attrs %{name: "", email: "noname@nope.com"}
 
-  defp person_count(query), do: Repo.one(from p in query, select: count(p.id))
-
   @tag :as_admin
   test "lists all people on index", %{conn: conn} do
     p1 = create(:person)
@@ -30,16 +28,16 @@ defmodule Changelog.Admin.PersonControllerTest do
     conn = post conn, admin_person_path(conn, :create), person: @valid_attrs
 
     assert redirected_to(conn) == admin_person_path(conn, :index)
-    assert person_count(Person) == 1
+    assert count(Person) == 1
   end
 
   @tag :as_admin
   test "does not create with invalid attributes", %{conn: conn} do
-    count_before = person_count(Person)
+    count_before = count(Person)
     conn = post conn, admin_person_path(conn, :create), person: @invalid_attrs
 
     assert html_response(conn, 200) =~ ~r/error/
-    assert person_count(Person) == count_before
+    assert count(Person) == count_before
   end
 
   @tag :as_admin
@@ -57,18 +55,18 @@ defmodule Changelog.Admin.PersonControllerTest do
     conn = put conn, admin_person_path(conn, :update, person.id), person: @valid_attrs
 
     assert redirected_to(conn) == admin_person_path(conn, :index)
-    assert person_count(Person) == 1
+    assert count(Person) == 1
   end
 
   @tag :as_admin
   test "does not update with invalid attributes", %{conn: conn} do
     person = create(:person)
-    count_before = person_count(Person)
+    count_before = count(Person)
 
     conn = put conn, admin_person_path(conn, :update, person.id), person: @invalid_attrs
 
     assert html_response(conn, 200) =~ ~r/error/
-    assert person_count(Person) == count_before
+    assert count(Person) == count_before
   end
 
   @tag :as_admin
@@ -78,7 +76,7 @@ defmodule Changelog.Admin.PersonControllerTest do
     conn = delete conn, admin_person_path(conn, :delete, person.id)
 
     assert redirected_to(conn) == admin_person_path(conn, :index)
-    assert person_count(Person) == 0
+    assert count(Person) == 0
   end
 
   test "requires user auth on all actions" do

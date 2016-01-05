@@ -6,8 +6,6 @@ defmodule Changelog.Admin.PodcastControllerTest do
   @valid_attrs %{name: "Polyglot", slug: "polyglot"}
   @invalid_attrs %{name: "Polyglot", slug: ""}
 
-  defp podcast_count(query), do: Repo.one(from p in query, select: count(p.id))
-
   @tag :as_admin
   test "lists all podcasts", %{conn: conn} do
     p1 = create(:podcast)
@@ -31,16 +29,16 @@ defmodule Changelog.Admin.PodcastControllerTest do
     conn = post conn, admin_podcast_path(conn, :create), podcast: @valid_attrs
 
     assert redirected_to(conn) == admin_podcast_path(conn, :index)
-    assert podcast_count(Podcast) == 1
+    assert count(Podcast) == 1
   end
 
   @tag :as_admin
   test "does not create with invalid attributes", %{conn: conn} do
-    count_before = podcast_count(Podcast)
+    count_before = count(Podcast)
     conn = post conn, admin_podcast_path(conn, :create), podcast: @invalid_attrs
 
     assert html_response(conn, 200) =~ ~r/error/
-    assert podcast_count(Podcast) == count_before
+    assert count(Podcast) == count_before
   end
 
   @tag :as_admin
@@ -58,18 +56,18 @@ defmodule Changelog.Admin.PodcastControllerTest do
     conn = put conn, admin_podcast_path(conn, :update, podcast.id), podcast: @valid_attrs
 
     assert redirected_to(conn) == admin_podcast_path(conn, :index)
-    assert podcast_count(Podcast) == 1
+    assert count(Podcast) == 1
   end
 
   @tag :as_admin
   test "does not update with invalid attributes", %{conn: conn} do
     podcast = create(:podcast)
-    count_before = podcast_count(Podcast)
+    count_before = count(Podcast)
 
     conn = put conn, admin_podcast_path(conn, :update, podcast.id), podcast: @invalid_attrs
 
     assert html_response(conn, 200) =~ ~r/error/
-    assert podcast_count(Podcast) == count_before
+    assert count(Podcast) == count_before
   end
 
   test "requires user auth on all actions" do
