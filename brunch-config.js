@@ -4,14 +4,14 @@ exports.config = {
     javascripts: {
       joinTo: {
         "js/app.js": [
-          "deps/phoenix/web/static/js/phoenix.js",
-          "deps/phoenix_html/web/static/js/phoenix_html.js",
+          "node_modules/phoenix/priv/static/phoenix.js",
+          "node_modules/phoenix_html/priv/static/phoenix_html.js",
           /^(web\/static\/js\/shared)/,
           /^(web\/static\/js\/app)/
         ],
         "js/admin.js": [
-          "deps/phoenix/web/static/js/phoenix.js",
-          "deps/phoenix_html/web/static/js/phoenix_html.js",
+          "node_modules/phoenix/priv/static/phoenix.js",
+          "node_modules/phoenix_html/priv/static/phoenix_html.js",
           "web/static/vendor/jquery-2.1.4.js",
           "web/static/vendor/semantic.js",
           "web/static/vendor/handlebars-v4.0.5.js",
@@ -49,8 +49,6 @@ exports.config = {
   paths: {
     // Dependencies and current project directories to watch
     watched: [
-      "deps/phoenix/web/static",
-      "deps/phoenix_html/web/static",
       "web/static",
       "test/static"
     ],
@@ -75,6 +73,7 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    whitelist: ["phoenix", "phoenix_html"]
   }
 };

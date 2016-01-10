@@ -1,4 +1,4 @@
-import "deps/phoenix_html/web/static/js/phoenix_html"
+import "phoenix_html"
 import pv from "./admin/views/podcast_view"
 
 let views = {
