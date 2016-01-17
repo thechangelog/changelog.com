@@ -1,8 +1,10 @@
 import "phoenix_html"
-import pv from "./admin/views/podcast_view"
+import pv from "./admin/views/podcastView"
+import ev from "./admin/views/episodeView"
 
 let views = {
-  "PodcastView": pv
+  "PodcastView": pv,
+  "EpisodeView": ev
 }
 
 $("#sidebar").sidebar({context: $("#main")})

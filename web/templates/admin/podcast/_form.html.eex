@@ -49,7 +49,7 @@
 
     <div class="ui person search">
       <div class="ui left icon input">
-        <input class="prompt" type="text" placeholder="Add Host">
+        <input class="prompt" type="text" placeholder="Add a Host">
         <i class="user icon"></i>
       </div>
     </div>

@@ -38,6 +38,32 @@
 
   <div class="required field">
     <%= label f, :hosts %>
+
+    <div class="ui middle aligned selection list js-hosts">
+      <%= inputs_for f, :episode_hosts, fn i -> %>
+        <div class="item persisted">
+          <%= hidden_input i, :person_id %>
+          <%= hidden_input i, :position, class: "js-position" %>
+          <img class="ui avatar image" src="<%= Changelog.Admin.PersonView.avatar_url(i.model.person) %>">
+
+          <div class="content">
+            <div class="header"><%= i.model.person.name %> (@<%= i.model.person.handle %>)</div>
+          </div>
+
+          <div class="right floated content">
+            <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
+            <%= hidden_input i, :delete %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui person search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Host">
+        <i class="user icon"></i>
+      </div>
+    </div>
   </div>
 
   <div class="field">

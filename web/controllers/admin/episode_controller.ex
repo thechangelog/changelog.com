@@ -44,6 +44,7 @@ defmodule Changelog.Admin.EpisodeController do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get!(id)
+      |> Repo.preload([episode_hosts: {Changelog.EpisodeHost.by_position, :person}])
     changeset = Episode.changeset(episode)
     render conn, "edit.html", episode: episode, changeset: changeset
   end
@@ -52,6 +53,7 @@ defmodule Changelog.Admin.EpisodeController do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get!(id)
+      |> Repo.preload(:episode_hosts)
     changeset = Episode.changeset(episode, episode_params)
 
     case Repo.update(changeset) do

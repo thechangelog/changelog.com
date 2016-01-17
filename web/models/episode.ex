@@ -27,5 +27,6 @@ defmodule Changelog.Episode do
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:episodes_slug_podcast_id_index)
+    |> cast_assoc(:episode_hosts, required: true)
   end
 end
