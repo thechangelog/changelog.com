@@ -1,5 +1,5 @@
 <div class="ui basic segment">
-  <h1 class="ui dividing header"><%= @podcast.name %> Episodes</h1>
+  <h1 class="ui dividing header"><%= @podcast.name %> &raquo; Episodes</h1>
 
   <div class="actions">
     <%= link to: admin_podcast_episode_path(@conn, :new, @podcast), class: "ui right floated primary button" do %>
@@ -35,6 +35,9 @@
         <td><%= episode.published_at %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
+            <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast, episode), class: "ui button", title: "Edit Episode" do %>
+              <i class="edit icon"></i>
+            <% end %>
           </div>
         </td>
       </tr>

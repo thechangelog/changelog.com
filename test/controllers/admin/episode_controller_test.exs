@@ -54,4 +54,25 @@ defmodule Changelog.Admin.EpisodeControllerTest do
     conn = get conn, admin_podcast_episode_path(conn, :edit, p, e)
     assert html_response(conn, 200) =~ ~r/edit/i
   end
+
+  @tag :as_admin
+  test "updates an episode and redirects", %{conn: conn} do
+    p = create :podcast
+    e = create :episode, podcast: p
+
+    conn = put conn, admin_podcast_episode_path(conn, :update, p, e), episode: @valid_attrs
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p)
+    assert count(Episode) == 1
+  end
+
+  @tag :as_admin
+  test "does not update with invalid attrs", %{conn: conn} do
+    p = create :podcast
+    e = create :episode, podcast: p
+
+    conn = put conn, admin_podcast_episode_path(conn, :update, p, e), episode: @invalid_attrs
+
+    assert html_response(conn, 200) =~ ~r/error/
+  end
 end

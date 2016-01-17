@@ -11,7 +11,7 @@ $(".ui.dropdown").dropdown()
 $(".ui.checkbox").checkbox()
 $(".ui.button").popup()
 
-let $body = $("body");
+let $body = $("body")
 let viewName = $body.data("module").match(/\.(\w+View)$/)[1]
 let actionName = $body.data("template").replace(".html", "")
 
@@ -21,8 +21,8 @@ if (viewClass !== undefined) {
   let activeView = new viewClass()
 
   if ($.isFunction(activeView.shared))
-    activeController.shared();
+    activeController.shared()
 
   if ($.isFunction(activeView[actionName]))
-    activeView[actionName]();
+    activeView[actionName]()
 }

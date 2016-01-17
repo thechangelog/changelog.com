@@ -1,5 +1,5 @@
 <div class="ui text container">
-  <h1 class="ui dividing header">Edit <%= @podcast.name %></h1>
+  <h1 class="ui dividing header">Podcasts &raquo; Edit</h1>
 
   <%= render "_form.html", changeset: @changeset, action: admin_podcast_path(@conn, :update, @podcast) %>
 </div>

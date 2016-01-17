@@ -7,8 +7,8 @@ defmodule Changelog.Episode do
     field :title, :string
     field :slug, :string
     field :published, :boolean, default: false
-    field :published_at, Timex.Ecto.DateTime
-    field :recorded_at, Timex.Ecto.DateTime
+    field :published_at, Ecto.DateTime
+    field :recorded_at, Ecto.DateTime
     field :duration, :integer
     field :summary, :string
 

@@ -15,7 +15,7 @@ defmodule Changelog.Helpers.ViewHelpers do
         <div class="two wide field"><%= b.(:day, []) %></div>
         <div class="two wide field"><%= b.(:year, []) %></div> at
         <div class="two wide field"><%= b.(:hour, []) %></div>:
-        <div class="two wide field"><%= b.(:min, []) %></div>
+        <div class="two wide field"><%= b.(:min, []) %></div>&nbsp;UTC
       </div>
       """
     end

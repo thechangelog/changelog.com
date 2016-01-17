@@ -5,6 +5,7 @@ defmodule Changelog.Admin.EpisodeController do
   alias Changelog.Episode
 
   plug :assign_podcast
+  plug :scrub_params, "episode" when action in [:create, :update]
 
   # pass assigned podcast as a function arg
   def action(conn, _) do
@@ -45,6 +46,22 @@ defmodule Changelog.Admin.EpisodeController do
       |> Repo.get!(id)
     changeset = Episode.changeset(episode)
     render conn, "edit.html", episode: episode, changeset: changeset
+  end
+
+  def update(conn, %{"id" => id, "episode" => episode_params}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Repo.get!(id)
+    changeset = Episode.changeset(episode, episode_params)
+
+    case Repo.update(changeset) do
+      {:ok, episode} ->
+        conn
+        |> put_flash(:info, "#{episode.title} updated!")
+        |> redirect(to: admin_podcast_episode_path(conn, :index, podcast))
+      {:error, changeset} ->
+        render conn, "edit.html", episode: episode, changeset: changeset
+    end
   end
 
   defp assign_podcast(conn, _) do
