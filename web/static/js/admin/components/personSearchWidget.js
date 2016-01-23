@@ -2,8 +2,8 @@ import personItem from "../templates/personItem"
 
 export default class PersonSearchWidget {
   constructor(parentType, relationType) {
-    let $search = $(".person.search")
     let $members = $(`.js-${relationType}`)
+    let $search = $members.siblings(".person.search")
 
     var setPositions = function() {
       $members.find(".item").each(function(index) {
