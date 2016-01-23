@@ -22,7 +22,7 @@ defmodule Changelog.AuthController do
       {:error, _} ->
         conn
         |> put_flash(:info, "try again!")
-        |> render "new.html", person: nil
+        |> render("new.html", person: nil)
     end
   end
 
@@ -45,7 +45,7 @@ defmodule Changelog.AuthController do
       true ->
         conn
         |> put_flash(:info, "Whoops!")
-        |> render "new.html", person: nil
+        |> render("new.html", person: nil)
     end
   end
 
