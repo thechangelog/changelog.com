@@ -15,6 +15,8 @@ defmodule Changelog.Episode do
     belongs_to :podcast, Changelog.Podcast
     has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
     has_many :hosts, through: [:episode_hosts, :person]
+    has_many :episode_guests, Changelog.EpisodeGuest, on_delete: :delete_all
+    has_many :guests, through: [:episode_guests, :person]
 
     timestamps
   end

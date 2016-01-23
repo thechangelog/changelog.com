@@ -18,6 +18,7 @@ defmodule Changelog.Person do
 
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
+    has_many :episode_guests, Changelog.EpisodeGuest, on_delete: :delete_all
 
     timestamps
   end
