@@ -21,6 +21,7 @@ defmodule Changelog.Web do
       use Ecto.Schema
       use Timex.Ecto.Timestamps
 
+      alias Changelog.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]

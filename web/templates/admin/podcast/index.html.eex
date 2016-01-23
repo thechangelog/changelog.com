@@ -34,7 +34,7 @@
         <td><%= podcast.slug %></td>
         <td><%= twitter_link(podcast) %></td>
         <td><%= vanity_link(podcast) %></td>
-        <td>0</td>
+        <td><%= episode_count(podcast) %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
             <%= link to: "#", class: "ui button", title: "View Public Page" do %>

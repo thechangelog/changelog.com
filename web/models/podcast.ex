@@ -29,4 +29,10 @@ defmodule Changelog.Podcast do
     |> unique_constraint(:slug)
     |> cast_assoc(:podcast_hosts, required: true)
   end
+
+  def episode_count(podcast) do
+    Repo.one from(e in Changelog.Episode,
+      where: e.podcast_id == ^podcast.id,
+      select: count(e.id))
+  end
 end
