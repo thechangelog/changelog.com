@@ -30,6 +30,7 @@ defmodule Changelog.Router do
     get "/out", AuthController, :delete, as: :sign_out
 
     resources "/people", PersonController, only: [:show]
+    resources "/topics", TopicController, only: [:show]
   end
 
   scope "/admin", Changelog.Admin, as: :admin do
@@ -42,5 +43,6 @@ defmodule Changelog.Router do
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
     end
+    resources "/topics", TopicController
   end
 end

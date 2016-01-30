@@ -1,0 +1,5 @@
+<div class="ui text container">
+  <h1 class="ui dividing header">New Topic</h1>
+
+  <%= render "_form.html", changeset: @changeset, action: admin_topic_path(@conn, :create) %>
+</div>

@@ -23,4 +23,11 @@ defmodule Changelog.Factory do
       slug: sequence(:slug, &"show-#{&1}")
     }
   end
+
+  def factory(:topic) do
+    %Changelog.Topic{
+      name: sequence(:name, &"Topic #{&1}"),
+      slug: sequence(:slug, &"topic-#{&1}")
+    }
+  end
 end

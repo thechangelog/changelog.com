@@ -29,7 +29,9 @@
         <i class="user icon"></i>People
       <% end %>
 
-      <a href="" class="item"><i class="block layout icon"></i>Topics</a>
+      <%= link to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.TopicController)}" do %>
+        <i class="block layout icon"></i>Topics</a>
+      <% end %>
       <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
 
 
