@@ -17,6 +17,8 @@ defmodule Changelog.Episode do
     has_many :hosts, through: [:episode_hosts, :person]
     has_many :episode_guests, Changelog.EpisodeGuest, on_delete: :delete_all
     has_many :guests, through: [:episode_guests, :person]
+    has_many :episode_topics, Changelog.EpisodeTopic, on_delete: :delete_all
+    has_many :topics, through: [:episode_topics, :topic]
 
     timestamps
   end
@@ -31,5 +33,6 @@ defmodule Changelog.Episode do
     |> unique_constraint(:episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts, required: true)
     |> cast_assoc(:episode_guests, required: true)
+    |> cast_assoc(:episode_topics, required: true)
   end
 end

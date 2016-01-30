@@ -9,6 +9,9 @@ defmodule Changelog.Topic do
     field :description, :string
     field :website, :string
 
+    has_many :episode_topics, Changelog.EpisodeTopic, on_delete: :delete_all
+    has_many :episodes, through: [:episode_topics, :episode]
+
     timestamps
   end
 
