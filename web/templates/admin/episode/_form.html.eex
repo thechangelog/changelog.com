@@ -58,7 +58,7 @@
       <% end %>
     </div>
 
-    <div class="ui person search">
+    <div class="ui search">
       <div class="ui left icon input">
         <input class="prompt" type="text" placeholder="Add a Host">
         <i class="user icon"></i>
@@ -88,7 +88,7 @@
       <% end %>
     </div>
 
-    <div class="ui person search">
+    <div class="ui search">
       <div class="ui left icon input">
         <input class="prompt" type="text" placeholder="Add a Guest">
         <i class="user icon"></i>
@@ -98,6 +98,30 @@
 
   <div class="field">
     <%= label f, :topics %>
+
+    <div class="ui horizontal selection list js-topics">
+      <%= inputs_for f, :episode_topics, fn i -> %>
+        <div class="item persisted">
+          <%= hidden_input i, :topic_id %>
+          <%= hidden_input i, :position, class: "js-position" %>
+
+          <div class="content">
+            <a class="ui label">
+              <%= i.model.topic.name %>
+              <i class="remove icon js-remove"></i>
+              <%= hidden_input i, :delete %>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Topic">
+        <i class="block layout icon"></i>
+      </div>
+    </div>
   </div>
 
   <div class="field">

@@ -21,7 +21,7 @@ defmodule Changelog.Admin.SearchView do
   def render("topic.json", %{topic: topic}) do
     %{
       id: topic.id,
-      name: topic.name,
+      title: topic.name,
       slug: topic.slug
     }
   end

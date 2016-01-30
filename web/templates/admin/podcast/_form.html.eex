@@ -47,7 +47,7 @@
       <% end %>
     </div>
 
-    <div class="ui person search">
+    <div class="ui search">
       <div class="ui left icon input">
         <input class="prompt" type="text" placeholder="Add a Host">
         <i class="user icon"></i>
