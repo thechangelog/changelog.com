@@ -14,7 +14,11 @@ defmodule Changelog.Admin.EpisodeController do
   end
 
   def index(conn, _params, podcast) do
-    episodes = Repo.all from e in Episode, where: e.podcast_id == ^podcast.id
+    query = from e in Episode,
+      where: e.podcast_id == ^podcast.id,
+      order_by: [desc: e.id]
+
+    episodes = Repo.all query
     render conn, "index.html", episodes: episodes
   end
 
