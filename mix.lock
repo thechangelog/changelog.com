@@ -19,6 +19,8 @@
   "poolboy": {:hex, :poolboy, "1.5.1"},
   "postgrex": {:hex, :postgrex, "0.10.0"},
   "ranch": {:hex, :ranch, "1.2.0"},
+  "scrivener": {:hex, :scrivener, "1.1.1"},
+  "scrivener_html": {:hex, :scrivener_html, "1.0.5"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
   "timex": {:hex, :timex, "1.0.0-rc4"},
   "timex_ecto": {:hex, :timex_ecto, "0.7.0"},

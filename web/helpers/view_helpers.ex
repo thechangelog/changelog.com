@@ -65,7 +65,7 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
-  def truncate(string, length) do
+  def truncate(_string, _length) do
     ""
   end
 end

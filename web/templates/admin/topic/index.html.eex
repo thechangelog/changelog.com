@@ -54,5 +54,7 @@
     <% end %>
     </tbody>
   </table>
+
+  <%= pagination_links @conn, @page, path: &admin_topic_path/3 %>
 <% end %>
 </div>

@@ -27,3 +27,7 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+config :scrivener_html,
+  routes_helper: Changelog.Router.Helpers,
+  view_style: :semantic

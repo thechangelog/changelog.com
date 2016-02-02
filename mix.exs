@@ -38,6 +38,8 @@ defmodule Changelog.Mixfile do
      {:timex, "~> 1.0.0-rc4"},
      {:timex_ecto, "~> 0.7.0"},
      {:ex_machina, "~> 0.5"},
+     {:scrivener, "~> 1.0"},
+     {:scrivener_html, "~> 1.0"},
      {:cowboy, "~> 1.0"}]
   end
 

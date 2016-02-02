@@ -5,9 +5,12 @@ defmodule Changelog.Admin.PersonController do
 
   plug :scrub_params, "person" when action in [:create, :update]
 
-  def index(conn, _params) do
-    people = Repo.all from p in Person, order_by: p.id
-    render conn, "index.html", people: people
+  def index(conn, params) do
+    page = Person
+    |> order_by([p], desc: p.id)
+    |> Repo.paginate(params)
+
+    render conn, :index, people: page.entries, page: page
   end
 
   def new(conn, _params) do

@@ -2,6 +2,8 @@ defmodule Changelog.Admin.PersonView do
   use Changelog.Web, :view
   use Changelog.Helpers.ViewHelpers
 
+  import Scrivener.HTML
+
   def avatar_url(person) do
     gravatar_url(person.email, 100)
   end

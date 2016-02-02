@@ -5,9 +5,12 @@ defmodule Changelog.Admin.TopicController do
 
   plug :scrub_params, "topic" when action in [:create, :update]
 
-  def index(conn, _params) do
-    topics = Repo.all from p in Topic, order_by: p.id
-    render conn, "index.html", topics: topics
+  def index(conn, params) do
+    page = Topic
+    |> order_by([t], desc: t.id)
+    |> Repo.paginate(params)
+
+    render conn, :index, topics: page.entries, page: page
   end
 
   def new(conn, _params) do
