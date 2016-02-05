@@ -7,7 +7,7 @@ defmodule Changelog.Admin.TopicController do
 
   def index(conn, params) do
     page = Topic
-    |> order_by([t], desc: t.id)
+    |> order_by([t], asc: t.name)
     |> Repo.paginate(params)
 
     render conn, :index, topics: page.entries, page: page
