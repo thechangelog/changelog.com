@@ -23,7 +23,6 @@ defmodule Changelog.Person do
     timestamps
   end
 
-  @admins ~w(jerod@changelog.com adam@changelog.com)
   @required_fields ~w(name email handle)
   @optional_fields ~w(github_handle twitter_handle bio website admin)
 

@@ -12,6 +12,7 @@ class Nokogiri::XML::Element
 end
 
 class Tag < Struct.new(:id, :name, :slug); end
+class Author < Struct.new(:id, :name, :email, :handle); end
 
 class Importer
   def db
@@ -24,6 +25,17 @@ class Importer
     abort "Must specify valid IMPORT_FILE env var"
   end
 
+  def authors
+    @authors ||= doc.xpath("//channel/wp:author").map { |el|
+      Author.new(
+        el.child_with_name("author_id").text.to_i,
+        el.child_with_name("author_display_name").text,
+        el.child_with_name("author_email").text,
+        el.child_with_name("author_login").text
+      )
+    }
+  end
+
   def tags
     @tags ||= doc.xpath("//channel/wp:tag").map { |el|
       Tag.new(
@@ -34,23 +46,46 @@ class Importer
     }
   end
 
-  def import_topics
-    tags.each do |tag|
-      begin
-        db[:topics].insert({
-          name: tag.name,
-          slug: tag.slug,
-          inserted_at: Time.now,
-          updated_at: Time.now
-        })
-      rescue Sequel::UniqueConstraintViolation
-        # next plz
+  def import_people
+    authors.each do |author|
+      handling_data_issues do
+        db[:people].insert({
+          name: author.name,
+          email: author.email,
+          handle: author.handle
+        }.merge(timestamps))
       end
     end
+  end
+
+  def import_topics
+    tags.each do |tag|
+      handling_data_issues do
+        db[:topics].insert({
+          name: tag.name,
+          slug: tag.slug
+        }.merge(timestamps))
+      end
+    end
+  end
+
+  private
+
+  def timestamps
+    {
+      inserted_at: Time.now,
+      updated_at: Time.now
+    }
+  end
+
+  def handling_data_issues
+    yield
+  rescue Sequel::UniqueConstraintViolation
+    # next plz
   end
 end
 
 importer = Importer.new
 
-#import.import_topics
-#import.import_people
+importer.import_topics
+importer.import_people
