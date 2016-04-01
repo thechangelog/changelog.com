@@ -30,13 +30,13 @@ defmodule Changelog.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.2"},
+    [{:phoenix, "~> 1.1.4"},
      {:phoenix_ecto, "~> 2.0"},
-     {:postgrex, ">= 0.0.0"},
+     {:postgrex, "~> 0.11.1"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:timex, "~> 1.0.0-rc4"},
-     {:timex_ecto, "~> 0.7.0"},
+     {:timex, "~> 2.1.4"},
+     {:timex_ecto, "~> 1.0.4"},
      {:ex_machina, "~> 0.5"},
      {:scrivener, "~> 1.0"},
      {:scrivener_html, "~> 1.0"},

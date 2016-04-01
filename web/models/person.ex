@@ -52,7 +52,7 @@ defmodule Changelog.Person do
     change(model, %{
       auth_token: nil,
       auth_token_expires_at: nil,
-      signed_in_at: Timex.Date.now
+      signed_in_at: Timex.DateTime.now
     })
   end
 

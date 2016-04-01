@@ -2,14 +2,14 @@ defmodule Changelog.AuthController do
   use Changelog.Web, :controller
 
   alias Changelog.Person
-  alias Timex.Date
-  alias Timex.Time
 
   def new(conn, %{"auth" =>  %{"email" => email}}) do
     person = Repo.one!(from p in Person, where: p.email == ^email)
 
     auth_token = Base.encode16(:crypto.rand_bytes(8))
-    expires_at = Date.now |> Date.add(Time.to_timestamp(15, :mins))
+    expires_at =
+      Timex.DateTime.now
+      |> Timex.add(Timex.Time.to_timestamp(15, :minutes))
 
     changeset = Person.auth_changeset(person, %{
       auth_token: auth_token,
@@ -35,7 +35,8 @@ defmodule Changelog.AuthController do
     person = Repo.get_by(Person, email: email, auth_token: auth_token)
 
     cond do
-      person && Date.now < person.auth_token_expires_at ->
+      person &&
+      Timex.compare(Timex.DateTime.now, person.auth_token_expires_at) == -1 ->
         Repo.update(Person.sign_in_changes(person))
         conn
         |> assign(:current_user, person)
