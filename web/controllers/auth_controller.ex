@@ -36,11 +36,11 @@ defmodule Changelog.AuthController do
 
     cond do
       person &&
-      Timex.compare(Timex.DateTime.now, person.auth_token_expires_at) == -1 ->
+      Timex.before?(Timex.DateTime.now, person.auth_token_expires_at) ->
         Repo.update(Person.sign_in_changes(person))
         conn
         |> assign(:current_user, person)
-        |> put_session(:user_id, person.id)
+        |> put_encrypted_cookie("_changelog_user", person.id)
         |> configure_session(renew: true)
         |> redirect(to: page_path(conn, :index))
       true ->
@@ -53,6 +53,7 @@ defmodule Changelog.AuthController do
   def delete(conn, _params) do
     conn
       |> configure_session(drop: true)
+      |> delete_resp_cookie("_changelog_user")
       |> redirect(to: page_path(conn, :index))
   end
 end

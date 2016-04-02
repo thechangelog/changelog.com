@@ -37,6 +37,7 @@ defmodule Changelog.Web do
       import Ecto.Query
 
       import Changelog.Router.Helpers
+      import Changelog.Plug.Conn
     end
   end
 

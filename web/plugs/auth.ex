@@ -1,12 +1,13 @@
 defmodule Changelog.Plug.Auth do
   import Plug.Conn
+  import Changelog.Plug.Conn
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
   end
 
   def call(conn, repo) do
-    user_id = get_session(conn, :user_id)
+    user_id = get_encrypted_cookie(conn, "_changelog_user")
 
     cond do
       user = conn.assigns[:current_user] ->

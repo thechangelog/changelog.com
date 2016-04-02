@@ -28,6 +28,7 @@ defmodule Changelog.ConnCase do
 
       import Changelog.Router.Helpers
       import Changelog.Factory
+      import Changelog.Plug.Conn
 
       # The default endpoint for testing
       @endpoint Changelog.Endpoint

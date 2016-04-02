@@ -43,7 +43,7 @@ defmodule Changelog.AuthControllerTest do
     conn = get conn(), "/in/#{encoded}"
 
     assert redirected_to(conn) == page_path(conn, :index)
-    assert get_session(conn, :user_id) == person.id
+    assert get_encrypted_cookie(conn, "_changelog_user") == person.id
   end
 
   test "following an expired auth token doesn't sign you in" do
@@ -60,6 +60,6 @@ defmodule Changelog.AuthControllerTest do
     conn = get conn(), "/in/#{encoded}"
 
     assert html_response(conn, 200) =~ "Sign In"
-    refute get_session(conn, :user_id) == person.id
+    refute get_encrypted_cookie(conn, "_changelog_user") == person.id
   end
 end
