@@ -11,6 +11,7 @@ defmodule Changelog.PodcastController do
     episodes =
       assoc(podcast, :episodes)
       |> Episode.published
+      |> Episode.newest_first
       |> Repo.all
 
     render conn, "show.html", podcast: podcast, episodes: episodes

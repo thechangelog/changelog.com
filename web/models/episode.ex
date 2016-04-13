@@ -37,6 +37,10 @@ defmodule Changelog.Episode do
   end
 
   def published(query) do
-    from p in query, where: p.published == true
+    from e in query, where: e.published == true
+  end
+
+  def newest_first(query) do
+    from e in query, order_by: [desc: e.published_at]
   end
 end
