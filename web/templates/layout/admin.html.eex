@@ -16,13 +16,12 @@
         Changelog Admin
       <% end %>
 
-      <a href="#" class="item"><i class="newspaper icon"></i>News</a>
-
       <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PodcastController)}" do %>
         <i class="unmute icon"></i>Podcasts</a>
       <% end %>
 
-      <a href="#" class="item"><i class="video icon"></i>Videos</a>
+      <a href="#" class="item"><i class="newspaper icon"></i>News</a>
+
       <a href="" class="item"><i class="write icon"></i>Posts</a>
 
       <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PersonController)}" do %>
