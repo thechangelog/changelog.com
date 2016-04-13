@@ -1,1 +1,9 @@
 <h1><%= @podcast.name %></h1>
+
+<%= if Enum.any?(@episodes) do %>
+<ul>
+  <%= for episode <- @episodes do %>
+    <li><%= link episode.title, to: episode_path(@conn, :episode, @podcast.slug, episode.slug) %></li>
+  <% end %>
+</ul>
+<% end %>

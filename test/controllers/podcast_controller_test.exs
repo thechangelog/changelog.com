@@ -7,6 +7,14 @@ defmodule Changelog.PodcastControllerTest do
     assert html_response(conn, 200) =~ p.name
   end
 
+  test "getting a podcast page with a published episode" do
+    p = create :podcast
+    e = create :episode, podcast: p, published: true
+    conn = get conn, podcast_path(conn, :show, p.slug)
+    assert html_response(conn, 200) =~ p.name
+    assert String.contains?(conn.resp_body, e.title)
+  end
+
   test "getting a podcast page that doesn't exist" do
     assert_raise Ecto.NoResultsError, fn ->
       get conn, podcast_path(conn, :show, "bad-show")

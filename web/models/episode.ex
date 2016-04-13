@@ -35,4 +35,8 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_guests, required: true)
     |> cast_assoc(:episode_topics, required: true)
   end
+
+  def published(query) do
+    from p in query, where: p.published == true
+  end
 end
