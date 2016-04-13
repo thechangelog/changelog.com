@@ -35,6 +35,10 @@
         <td><%= episode.published_at %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
+            <%= link to: episode_path(@conn, :episode, @podcast.slug, episode.slug), class: "ui button", title: "View Public Page" do %>
+              <i class="external icon"></i>
+            <% end %>
+
             <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast, episode), class: "ui button", title: "Edit Episode" do %>
               <i class="edit icon"></i>
             <% end %>

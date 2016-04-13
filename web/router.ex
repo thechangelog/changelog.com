@@ -19,20 +19,6 @@ defmodule Changelog.Router do
     plug Changelog.Plug.RequireAdmin
   end
 
-  scope "/", Changelog do
-    pipe_through :browser
-
-    get "/", PageController, :index
-
-    get "/in", AuthController, :new, as: :sign_in
-    post "/in", AuthController, :new, as: :sign_in
-    get "/in/:token", AuthController, :create, as: :create_sign_in
-    get "/out", AuthController, :delete, as: :sign_out
-
-    resources "/people", PersonController, only: [:show]
-    resources "/topics", TopicController, only: [:show]
-  end
-
   scope "/admin", Changelog.Admin, as: :admin do
     pipe_through [:browser, :admin]
 
@@ -44,5 +30,21 @@ defmodule Changelog.Router do
       resources "/episodes", EpisodeController
     end
     resources "/topics", TopicController
+  end
+
+  scope "/", Changelog do
+    pipe_through :browser
+
+    resources "/people", PersonController, only: [:show]
+    resources "/topics", TopicController, only: [:show]
+
+    get "/", PageController, :index
+
+    get "/in", AuthController, :new, as: :sign_in
+    post "/in", AuthController, :new, as: :sign_in
+    get "/in/:token", AuthController, :create, as: :create_sign_in
+    get "/out", AuthController, :delete, as: :sign_out
+    get "/:slug", PodcastController, :show, as: :podcast
+    get "/:podcast/:slug", PodcastController, :episode, as: :episode
   end
 end

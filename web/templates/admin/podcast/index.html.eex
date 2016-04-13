@@ -37,10 +37,10 @@
         <td><%= podcast.slug %></td>
         <td><%= twitter_link(podcast) %></td>
         <td><%= vanity_link(podcast) %></td>
-        <td><%= episode_count(podcast) %></td>
+        <td><%= link "#{episode_count(podcast)}", to: admin_podcast_episode_path(@conn, :index, podcast) %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
-            <%= link to: "#", class: "ui button", title: "View Public Page" do %>
+            <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button", title: "View Public Page" do %>
               <i class="external icon"></i>
             <% end %>
 
