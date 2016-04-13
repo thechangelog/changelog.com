@@ -1,5 +1,8 @@
 <div class="ui basic segment">
-  <h1 class="ui dividing header">Topics</h1>
+  <h1 class="ui dividing header">
+    Topics
+    <div class="sub header">Topics are high level (Ruby, Python, Elm) and big picture (DevOps, Datastores, Hardware). Create with care.</div>
+  </h1>
 
   <div class="actions">
     <%= link to: admin_topic_path(@conn, :new), class: "ui right floated primary button" do %>

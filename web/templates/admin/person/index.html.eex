@@ -1,5 +1,8 @@
 <div class="ui basic segment">
-  <h1 class="ui dividing header">People</h1>
+  <h1 class="ui dividing header">
+    People
+    <div class="sub header">Hackers to the heart.</div>
+  </h1>
 
   <div class="actions">
     <%= link to: admin_person_path(@conn, :new), class: "ui right floated primary button" do %>

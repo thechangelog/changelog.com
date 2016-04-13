@@ -1,5 +1,8 @@
 <div class="ui basic segment">
-  <h1 class="ui dividing header">Podcasts</h1>
+  <h1 class="ui dividing header">
+    Podcasts
+    <div class="sub header">The main thing is the main thing.</div>
+  </h1>
 
   <div class="actions">
     <%= link to: admin_podcast_path(@conn, :new), class: "ui right floated primary button" do %>
