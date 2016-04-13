@@ -1,2 +1,2 @@
 <h1><%= @podcast.name %></h1>
-<h2><%= @episode.title %></h2>
+<h2><%= numbered_episode_title @episode %></h2>
