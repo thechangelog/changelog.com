@@ -2,5 +2,5 @@
 <h2><%= numbered_episode_title @episode %></h2>
 
 <section class="description">
-  <%= parse_markdown @episode.summary %>
+  <%= raw md_to_html(@episode.summary) %>
 </section>

@@ -32,4 +32,19 @@ defmodule Changelog.PodcastController do
 
     render conn, "episode.html", podcast: podcast, episode: episode
   end
+
+  def feed(conn, %{"slug" => slug}) do
+    podcast = Repo.get_by!(Podcast, slug: slug)
+
+    episodes =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Episode.newest_first
+      |> Repo.all
+
+    conn
+    |> put_layout(false)
+    |> put_resp_content_type("application/xml")
+    |> render("feed.xml", podcast: podcast, episodes: episodes)
+  end
 end

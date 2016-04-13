@@ -1,7 +1,7 @@
 <h1><%= @podcast.name %></h1>
 
 <section class="description">
-<%= parse_markdown @podcast.description %>
+<%= raw md_to_html(@podcast.description) %>
 </section>
 
 <%= if Enum.any?(@episodes) do %>

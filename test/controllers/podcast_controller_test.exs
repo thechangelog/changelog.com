@@ -44,4 +44,10 @@ defmodule Changelog.PodcastControllerTest do
       get conn, episode_path(conn, :episode, p.slug, "bad-episode")
     end
   end
+
+  test "getting a podcast feed" do
+    p = create :podcast
+    conn = get conn, podcast_feed_path(conn, :feed, p.slug)
+    assert conn.status == 200
+  end
 end

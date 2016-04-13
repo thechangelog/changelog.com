@@ -41,6 +41,7 @@ defmodule Changelog.Mixfile do
      {:scrivener, "~> 1.0"},
      {:scrivener_html, "~> 1.0"},
      {:cmark, "~> 0.6"},
+     {:html_sanitize_ex, "~> 0.1.0"},
      {:cowboy, "~> 1.0"}]
   end
 

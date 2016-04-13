@@ -35,11 +35,10 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
-  def parse_markdown content do
-    if content do
-      raw Cmark.to_html content
-    end
-  end
+  def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
+  def md_to_html(md) when is_nil(md), do: ""
+
+  def md_to_text(md), do: HtmlSanitizeEx.strip_tags(md_to_html(md))
 
   def external_link(text, opts) do
     link text, (opts ++ [rel: "external"])

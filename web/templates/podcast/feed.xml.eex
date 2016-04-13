@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:atom="http://www.w3.org/2005/Atom/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title><%= @podcast.name %></title>
+    <link><%= podcast_url(@conn, :show, @podcast.slug) %></link>
+    <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <description><%= md_to_text @podcast.description %></description>
+    <itunes:subtitle><%= @podcast.name %></itunes:subtitle>
+    <itunes:author>Changelog Media</itunes:author>
+    <itunes:summary><%= md_to_text @podcast.description %></itunes:summary>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:image href="TODO"/>
+    <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
+    <itunes:owner>
+      <itunes:name>Changelog Media</itunes:name>
+      <itunes:email>editors@changelog.com</itunes:email>
+    </itunes:owner>
+    <itunes:category text="Technology">
+      <itunes:category text="Software How-To"/>
+      <itunes:category text="Tech News"/>
+    </itunes:category>
+
+    <%= for episode <- @episodes do %>
+      <item>
+        <title><%= numbered_episode_title episode %></title>
+      </item>
+    <% end %>
+  </channel>
+</rss>

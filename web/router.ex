@@ -45,6 +45,7 @@ defmodule Changelog.Router do
     get "/in/:token", AuthController, :create, as: :create_sign_in
     get "/out", AuthController, :delete, as: :sign_out
     get "/:slug", PodcastController, :show, as: :podcast
+    get "/:slug/feed", PodcastController, :feed, as: :podcast_feed
     get "/:podcast/:slug", PodcastController, :episode, as: :episode
   end
 end
