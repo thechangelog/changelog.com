@@ -1,7 +1,10 @@
 defmodule Changelog.PageController do
   use Changelog.Web, :controller
 
+  alias Changelog.Podcast
+
   def index(conn, _params) do
-    render conn, "index.html"
+    podcasts = Repo.all(Podcast)
+    render conn, "index.html", podcasts: podcasts
   end
 end

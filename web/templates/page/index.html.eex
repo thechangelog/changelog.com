@@ -1,1 +1,11 @@
 <h1>Welcome to The Changelog</h1>
+
+<%= if Enum.any?(@podcasts) do %>
+  <h2>Our Shows:</h2>
+
+  <ul>
+    <%= for podcast <- @podcasts do %>
+      <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
+    <% end %>
+  </ul>
+<% end %>
