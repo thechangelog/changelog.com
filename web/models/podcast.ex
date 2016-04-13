@@ -10,6 +10,7 @@ defmodule Changelog.Podcast do
     field :vanity_domain, :string
     field :keywords, :string
     field :twitter_handle, :string
+    field :itunes_url, :string
 
     has_many :episodes, Changelog.Episode, on_delete: :delete_all
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
@@ -19,7 +20,7 @@ defmodule Changelog.Podcast do
   end
 
   @required_fields ~w(name slug)
-  @optional_fields ~w(vanity_domain description keywords twitter_handle)
+  @optional_fields ~w(vanity_domain description keywords twitter_handle itunes_url)
 
   def changeset(model, params \\ :empty) do
     model
