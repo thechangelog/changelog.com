@@ -1,6 +1,5 @@
 defmodule Changelog.Admin.PodcastView do
   use Changelog.Web, :view
-  use Changelog.Helpers.ViewHelpers
 
   def episode_count(podcast) do
     Changelog.Podcast.episode_count podcast

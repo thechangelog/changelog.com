@@ -35,6 +35,12 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def parse_markdown content do
+    if content do
+      raw Cmark.to_html content
+    end
+  end
+
   def external_link(text, opts) do
     link text, (opts ++ [rel: "external"])
   end

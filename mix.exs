@@ -40,6 +40,7 @@ defmodule Changelog.Mixfile do
      {:ex_machina, "~> 0.5"},
      {:scrivener, "~> 1.0"},
      {:scrivener_html, "~> 1.0"},
+     {:cmark, "~> 0.6"},
      {:cowboy, "~> 1.0"}]
   end
 

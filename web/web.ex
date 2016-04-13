@@ -50,6 +50,7 @@ defmodule Changelog.Web do
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
+      use Changelog.Helpers.ViewHelpers
 
       import Changelog.Router.Helpers
     end

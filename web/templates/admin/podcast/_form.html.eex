@@ -57,7 +57,7 @@
 
   <div class="field <%= error_class(f, :description) %>">
     <%= label f, :description %>
-    <%= textarea f, :description %>
+    <%= textarea f, :description, placeholder: "Markdown enabled." %>
     <%= error_message(f, :description) %>
   </div>
 
