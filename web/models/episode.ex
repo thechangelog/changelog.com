@@ -11,6 +11,7 @@ defmodule Changelog.Episode do
     field :recorded_at, Ecto.DateTime
     field :duration, :integer
     field :summary, :string
+    field :guid, :string
 
     belongs_to :podcast, Changelog.Podcast
     has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
@@ -24,7 +25,7 @@ defmodule Changelog.Episode do
   end
 
   @required_fields ~w(slug title published)
-  @optional_fields ~w(published_at recorded_at duration summary)
+  @optional_fields ~w(published_at recorded_at duration summary guid)
 
   def changeset(model, params \\ :empty) do
     model
