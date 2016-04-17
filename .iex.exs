@@ -1,5 +1,4 @@
-alias Changelog.Repo
-alias Changelog.Person
+alias Changelog.{Repo, Person, Episode, Podcast, Topic}
 
 import Ecto
 import Ecto.Changeset
