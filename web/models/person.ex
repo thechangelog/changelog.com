@@ -12,8 +12,8 @@ defmodule Changelog.Person do
     field :website, :string
     field :bio, :string
     field :auth_token, :string
-    field :auth_token_expires_at, Timex.Ecto.DateTime
-    field :signed_in_at, Timex.Ecto.DateTime
+    field :auth_token_expires_at, Ecto.DateTime
+    field :signed_in_at, Ecto.DateTime
     field :admin, :boolean
 
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
@@ -52,7 +52,7 @@ defmodule Changelog.Person do
     change(model, %{
       auth_token: nil,
       auth_token_expires_at: nil,
-      signed_in_at: Timex.DateTime.now
+      signed_in_at: Timex.DateTime.now |> Changelog.Timex.to_ecto
     })
   end
 

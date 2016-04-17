@@ -6,11 +6,13 @@ defmodule Changelog.AuthControllerTest do
   def valid_expires_at do
     Timex.DateTime.now
     |> Timex.add(Timex.Time.to_timestamp(15, :minutes))
+    |> Changelog.Timex.to_ecto
   end
 
   def invalid_expires_at do
     Timex.DateTime.now
     |> Timex.subtract(Timex.Time.to_timestamp(15, :minutes))
+    |> Changelog.Timex.to_ecto
   end
 
   test "getting the sign in form" do

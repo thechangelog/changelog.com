@@ -19,7 +19,6 @@ defmodule Changelog.Web do
   def model do
     quote do
       use Ecto.Schema
-      use Timex.Ecto.Timestamps
 
       alias Changelog.Repo
       import Ecto
@@ -51,6 +50,8 @@ defmodule Changelog.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
       use Changelog.Helpers.ViewHelpers
+
+      alias Changelog.TimeView
 
       import Changelog.Router.Helpers
     end

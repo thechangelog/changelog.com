@@ -10,6 +10,7 @@ defmodule Changelog.AuthController do
     expires_at =
       Timex.DateTime.now
       |> Timex.add(Timex.Time.to_timestamp(15, :minutes))
+      |> Changelog.Timex.to_ecto
 
     changeset = Person.auth_changeset(person, %{
       auth_token: auth_token,
@@ -36,7 +37,7 @@ defmodule Changelog.AuthController do
 
     cond do
       person &&
-      Timex.before?(Timex.DateTime.now, person.auth_token_expires_at) ->
+      Timex.before?(Timex.DateTime.now, Changelog.Timex.from_ecto(person.auth_token_expires_at)) ->
         Repo.update(Person.sign_in_changes(person))
         conn
         |> assign(:current_user, person)

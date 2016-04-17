@@ -36,7 +36,6 @@ defmodule Changelog.Mixfile do
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:timex, "~> 2.1.4"},
-     {:timex_ecto, "~> 1.0.4"},
      {:ex_machina, "~> 0.5"},
      {:scrivener, "~> 1.0"},
      {:scrivener_html, "~> 1.0"},
