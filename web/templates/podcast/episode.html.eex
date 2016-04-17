@@ -1,5 +1,5 @@
 <h1><%= @podcast.name %></h1>
-<h2><%= numbered_episode_title @episode %></h2>
+<h2><%= Changelog.EpisodeView.numbered_title(@episode) %></h2>
 
 <section class="description">
   <%= raw md_to_html(@episode.summary) %>
