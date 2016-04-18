@@ -29,9 +29,13 @@
         <guid isPermalink="false"><%= Changelog.EpisodeView.guid(episode) %></guid>
         <pubDate><%= Changelog.TimeView.rss(episode.published_at) %></pubDate>
         <author>Changelog Media</author>
-        <description><![CDATA[]]></description>
+        <description><![CDATA[TODO FULL MONTY]]></description>
+        <enclosure url="TODO" length="TODO" type="audio/mpeg" />
         <itunes:author>Changelog Media</itunes:author>
+        <itunes:duration><%= Changelog.TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
+        <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
+        <itunes:subtitle>TODO SUMMARY</itunes:subtitle>
       </item>
     <% end %>
   </channel>
