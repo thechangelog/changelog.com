@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
   <div class="field required <%= error_class f, :title %>">
     <%= label f, :title %>
     <%= text_input f, :title, placeholder: "Best Show Evar!" %>
@@ -126,6 +126,11 @@
 
   <div class="field">
     <%= label f, :sponsors %>
+  </div>
+
+  <div class="field">
+    <%= label f, :audio_file %>
+    <%= file_input f, :audio_file %>
   </div>
 
   <button class="ui primary button" type="submit">Save</button>

@@ -1,4 +1,5 @@
-%{"certifi": {:hex, :certifi, "0.4.0"},
+%{"arc": {:hex, :arc, "0.5.1"},
+  "certifi": {:hex, :certifi, "0.4.0"},
   "cmark": {:hex, :cmark, "0.6.10"},
   "combine": {:hex, :combine, "0.7.0"},
   "connection": {:hex, :connection, "1.0.2"},
