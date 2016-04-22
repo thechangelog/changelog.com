@@ -2,7 +2,7 @@ import SearchWidget from "../components/searchWidget"
 
 export default class PodcastView {
   new() {
-    let $hostWidget = new PersonSearchWidget("person", "podcast", "hosts")
+    let $hostWidget = new SearchWidget("person", "podcast", "hosts")
   }
 
   edit() {

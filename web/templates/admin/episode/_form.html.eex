@@ -7,7 +7,7 @@
 
   <div class="field required <%= error_class f, :slug %>">
     <%= label f, :slug %>
-    <%= text_input f, :slug, placeholder: "183" %>
+    <%= text_input f, :slug, placeholder: "183", readonly: f.data.published %>
     <%= error_message f, :slug %>
   </div>
 

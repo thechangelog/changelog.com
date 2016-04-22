@@ -35,6 +35,8 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def is_persisted(struct), do: is_integer(struct.id)
+
   def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
   def md_to_html(md) when is_nil(md), do: ""
 

@@ -9,6 +9,10 @@ let views = {
 
 $("#sidebar").sidebar({context: $("#main")})
 $("a[rel=external]").attr("target", "_blank")
+$("input[readonly]").popup({
+  content: "Read-only because danger. Use the console if you really need to edit this.",
+  variation: "very wide"
+})
 $(".ui.dropdown").dropdown()
 $(".ui.checkbox").checkbox()
 $(".ui.button").popup()

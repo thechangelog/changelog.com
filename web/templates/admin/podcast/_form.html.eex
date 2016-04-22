@@ -8,7 +8,7 @@
   <div class="three fields">
     <div class="field required <%= error_class(f, :slug) %>">
       <%= label f, :slug %>
-      <%= text_input f, :slug, placeholder: "tcl" %>
+      <%= text_input f, :slug, placeholder: "tcl", readonly: is_persisted(f.data) %>
       <%= error_message(f, :slug) %>
     </div>
 
