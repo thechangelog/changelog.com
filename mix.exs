@@ -42,6 +42,7 @@ defmodule Changelog.Mixfile do
      {:cmark, "~> 0.6"},
      {:html_sanitize_ex, "~> 0.1.0"},
      {:arc, "~> 0.5.1"},
+     {:arc_ecto, "~> 0.3.2"},
      {:cowboy, "~> 1.0"}]
   end
 

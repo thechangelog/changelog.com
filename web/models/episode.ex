@@ -1,5 +1,6 @@
 defmodule Changelog.Episode do
   use Changelog.Web, :model
+  use Arc.Ecto.Model
 
   alias Changelog.Regexp
 
@@ -12,6 +13,7 @@ defmodule Changelog.Episode do
     field :duration, :integer
     field :summary, :string
     field :guid, :string
+    field :audio_file, Changelog.AudioFile.Type
 
     belongs_to :podcast, Changelog.Podcast
     has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
@@ -27,9 +29,13 @@ defmodule Changelog.Episode do
   @required_fields ~w(slug title published)
   @optional_fields ~w(published_at recorded_at duration summary guid)
 
+  @required_file_fields ~w()
+  @optional_file_fields ~w(audio_file)
+
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> cast_attachments(params, @required_file_fields, @optional_file_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts, required: true)

@@ -130,6 +130,19 @@
 
   <div class="field">
     <%= label f, :audio_file %>
+    <%= if f.data.audio_file  do %>
+      <div class="ui raised segment items">
+        <div class="ui item">
+          <div class="content">
+            <div class="header"><%= link f.data.audio_file.file_name, to: Changelog.EpisodeView.audio_url(f.data) %></div>
+            <div class="meta">
+              <span class="size">68MB</span>
+              <span class="duration">33:45</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
     <%= file_input f, :audio_file %>
   </div>
 

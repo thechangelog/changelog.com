@@ -48,6 +48,7 @@ defmodule Changelog.Admin.EpisodeController do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get!(id)
+      |> Repo.preload(:podcast)
       |> Repo.preload([
         episode_hosts: {Changelog.EpisodeHost.by_position, :person},
         episode_guests: {Changelog.EpisodeGuest.by_position, :person},
@@ -70,10 +71,6 @@ defmodule Changelog.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
-        if audio_file = episode_params["audio_file"] do
-          Changelog.AudioFile.store({audio_file, episode})
-        end
-
         conn
         |> put_flash(:info, "#{episode.title} updated!")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast))
