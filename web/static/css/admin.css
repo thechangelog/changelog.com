@@ -1,3 +1,7 @@
+.ui.text.container {
+  max-width: 600px !important;
+}
+
 .ui.horizontal.selection.list .item .label {
   margin-bottom: 1em;
 }

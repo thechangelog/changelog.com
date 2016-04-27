@@ -6,7 +6,7 @@ defmodule Changelog.EpisodeView do
   end
 
   def audio_url(episode) do
-    "/" <> Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
+    Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
   end
 
   def guid(episode) do

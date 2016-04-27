@@ -15,7 +15,7 @@ $("input[readonly]").popup({
 })
 $(".ui.dropdown").dropdown()
 $(".ui.checkbox").checkbox()
-$(".ui.button").popup()
+$(".ui.button, [data-popup=true]").popup()
 
 let $body = $("body")
 let viewName = $body.data("module").match(/\.(\w+View)$/)[1]

@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, [multipart: true, class: "ui large form"], fn f -> %>
   <div class="field required <%= error_class(f, :name) %>">
     <%= label f, :name, "Name" %>
     <%= text_input f, :name, placeholder: "The Changelog" %>
@@ -23,6 +23,19 @@
       <%= text_input f, :twitter_handle, placeholder: "gracehopper" %>
       <%= error_message(f, :twitter_handle) %>
     </div>
+  </div>
+
+  <div class="field">
+    <%= label f, :cover_art, "Cover Art" %>
+    <img
+      src="<%= Changelog.PodcastView.cover_art_url(f.data, :small) %>"
+      data-popup=true
+      data-content="Ideal size is 3000px by 3000px."
+      width=100
+      height=100
+    >
+    <br/>
+    <%= file_input f, :cover_art %>
   </div>
 
   <div class="required field">

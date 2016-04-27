@@ -31,8 +31,12 @@
     <%= for podcast <- @podcasts do %>
       <tr>
         <td><%= podcast.id %></td>
+        </td>
         <td>
-          <%= podcast.name %>
+          <h4 class="ui image header">
+            <img src="<%= Changelog.PodcastView.cover_art_url(podcast, :small) %>" class="ui image"/>
+          </h4>
+            <%= podcast.name %>
         </td>
         <td><%= podcast.slug %></td>
         <td><%= twitter_link(podcast) %></td>
