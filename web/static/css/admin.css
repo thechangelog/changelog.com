@@ -1,3 +1,7 @@
 .ui.horizontal.selection.list .item .label {
   margin-bottom: 1em;
 }
+
+.emphasis {
+  font-weight: bold;
+}
