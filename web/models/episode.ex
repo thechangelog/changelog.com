@@ -10,10 +10,11 @@ defmodule Changelog.Episode do
     field :published, :boolean, default: false
     field :published_at, Ecto.DateTime
     field :recorded_at, Ecto.DateTime
-    field :duration, :integer
     field :summary, :string
     field :guid, :string
     field :audio_file, Changelog.AudioFile.Type
+    field :bytes, :integer
+    field :duration, :integer
 
     belongs_to :podcast, Changelog.Podcast
     has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
@@ -27,10 +28,18 @@ defmodule Changelog.Episode do
   end
 
   @required_fields ~w(slug title published)
-  @optional_fields ~w(published_at recorded_at duration summary guid)
+  @optional_fields ~w(published_at recorded_at summary guid)
 
   @required_file_fields ~w()
   @optional_file_fields ~w(audio_file)
+
+  def published(query) do
+    from e in query, where: e.published == true
+  end
+
+  def newest_first(query) do
+    from e in query, order_by: [desc: e.published_at]
+  end
 
   def changeset(model, params \\ :empty) do
     model
@@ -41,13 +50,30 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_hosts, required: true)
     |> cast_assoc(:episode_guests, required: true)
     |> cast_assoc(:episode_topics, required: true)
+    |> derive_bytes_and_duration(params)
   end
 
-  def published(query) do
-    from e in query, where: e.published == true
+  defp derive_bytes_and_duration(changeset, params) do
+    if get_change(changeset, :audio_file) do
+      path = params["audio_file"].path
+      case File.stat(path) do
+        {:ok, stats} ->
+          seconds = extract_duration_seconds(path)
+          change(changeset, bytes: stats.size, duration: seconds)
+        {:error, _} -> changeset
+      end
+    else
+      changeset
+    end
   end
 
-  def newest_first(query) do
-    from e in query, order_by: [desc: e.published_at]
+  defp extract_duration_seconds(path) do
+    try do
+      {info, _exit_code} = System.cmd("ffmpeg", ["-i", path], stderr_to_stdout: true)
+      [_match, duration] = Regex.run ~r/Duration: (.*?),/, info
+      Changelog.TimeView.seconds(duration)
+    catch
+      all -> 0
+    end
   end
 end
