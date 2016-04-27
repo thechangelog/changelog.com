@@ -20,6 +20,26 @@ defmodule Changelog.TimeView do
     result
   end
 
+  def seconds(duration) when not is_binary(duration), do: seconds("00")
+  def seconds(duration) do
+    parts =
+      duration
+      |> String.split(".")
+      |> List.first
+      |> String.split(":")
+
+    case parts do
+      [h, m, s] -> to_seconds(:hours, h) + to_seconds(:minutes, m) + to_seconds(s)
+      [m, s] -> to_seconds(:minutes, m) + to_seconds(s)
+      [s] -> to_seconds(s)
+      _ -> 0
+    end
+  end
+
+  defp to_seconds(:hours, str), do: String.to_integer(str) * 3600
+  defp to_seconds(:minutes, str), do: String.to_integer(str) * 60
+  defp to_seconds(str), do: String.to_integer(str)
+
   def terse(ts) when is_nil(ts), do: ""
   def terse(ts) do
     {:ok, result} = ts
