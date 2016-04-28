@@ -22,13 +22,7 @@ defmodule Changelog.TimeView do
 
   def seconds(duration) when not is_binary(duration), do: seconds("00")
   def seconds(duration) do
-    parts =
-      duration
-      |> String.split(".")
-      |> List.first
-      |> String.split(":")
-
-    case parts do
+    case String.split(duration, ":") do
       [h, m, s] -> to_seconds(:hours, h) + to_seconds(:minutes, m) + to_seconds(s)
       [m, s] -> to_seconds(:minutes, m) + to_seconds(s)
       [s] -> to_seconds(s)
@@ -36,9 +30,17 @@ defmodule Changelog.TimeView do
     end
   end
 
-  defp to_seconds(:hours, str), do: String.to_integer(str) * 3600
-  defp to_seconds(:minutes, str), do: String.to_integer(str) * 60
-  defp to_seconds(str), do: String.to_integer(str)
+  defp to_seconds(:hours, str), do: string_to_rounded_integer(str) * 3600
+  defp to_seconds(:minutes, str), do: string_to_rounded_integer(str) * 60
+  defp to_seconds(str), do: string_to_rounded_integer(str)
+
+  defp string_to_rounded_integer(str) do
+    if String.contains?(str, ".") do
+      round(String.to_float(str))
+    else
+      String.to_integer(str)
+    end
+  end
 
   def terse(ts) when is_nil(ts), do: ""
   def terse(ts) do

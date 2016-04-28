@@ -48,6 +48,6 @@ defmodule Changelog.TimeViewTest do
 
   test "seconds when duration has fraction of a sentence" do
     assert TimeView.seconds("59.17") == 59
-    assert TimeView.seconds("01:35:10.70") == 5710
+    assert TimeView.seconds("01:35:10.70") == 5711
   end
 end
