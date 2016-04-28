@@ -10,15 +10,15 @@ defmodule Changelog.AudioFile do
     ~w(.mp3) |> Enum.member?(Path.extname(file.file_name))
   end
 
-  def filename(_version, {file, scope}) do
+  def filename(_version, {_file, scope}) do
     "#{Changelog.PodcastView.dasherized_name(scope.podcast)}-#{scope.slug}"
   end
 
-  def storage_dir(_version, {file, scope}) do
+  def storage_dir(_version, {_file, scope}) do
     "priv/static/uploads/#{scope.podcast.slug}/#{scope.slug}"
   end
 
-  def transform(_version, {file, scope}) do
+  def transform(_version, {_file, scope}) do
     podcast = scope.podcast
 
     # if podcast has cover art, get its location and insert list of art
@@ -37,7 +37,6 @@ defmodule Changelog.AudioFile do
         "-i", input,
         art_options,
         "-acodec", "copy",
-        "-id3v2_version", "3",
         "-metadata", "artist=Changelog Media",
         "-metadata", "publisher=Changelog Media",
         "-metadata", "album=#{podcast.name}",
