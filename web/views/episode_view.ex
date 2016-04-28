@@ -7,6 +7,7 @@ defmodule Changelog.EpisodeView do
 
   def audio_url(episode) do
     Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
+    |> String.replace_leading("priv/static", "/")
   end
 
   def guid(episode) do

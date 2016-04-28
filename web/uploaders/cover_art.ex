@@ -11,7 +11,7 @@ defmodule Changelog.CoverArt do
   end
 
   def storage_dir(version, {file, scope}) do
-    "/uploads/#{scope.slug}"
+    "priv/static/uploads/#{scope.slug}"
   end
 
   def filename(version, _) do
