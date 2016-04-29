@@ -43,6 +43,7 @@ defmodule Changelog.Mixfile do
      {:html_sanitize_ex, "~> 0.1.0"},
      {:arc, "~> 0.5.2"},
      {:arc_ecto, "~> 0.3.2"},
+     {:hashids, "~> 2.0"},
      {:cowboy, "~> 1.0"}]
   end
 

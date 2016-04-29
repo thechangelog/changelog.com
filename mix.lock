@@ -13,6 +13,7 @@
   "fs": {:hex, :fs, "0.9.2"},
   "gettext": {:hex, :gettext, "0.10.0"},
   "hackney": {:hex, :hackney, "1.6.0"},
+  "hashids": {:hex, :hashids, "2.0.2"},
   "html_sanitize_ex": {:hex, :html_sanitize_ex, "0.1.2"},
   "idna": {:hex, :idna, "1.2.0"},
   "metrics": {:hex, :metrics, "1.0.1"},
