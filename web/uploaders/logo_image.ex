@@ -7,7 +7,8 @@ defmodule Changelog.LogoImage do
   def __storage, do: Arc.Storage.Local
 
   def validate({file, _}) do
-    ~w(.jpg .png) |> Enum.member?(Path.extname(file.file_name))
+    ext = Path.extname(file.file_name) |> String.downcase
+    ~w(.jpg .png) |> Enum.member?(ext)
   end
 
   def storage_dir(_version, {_file, scope}) do
