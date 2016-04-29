@@ -1,0 +1,48 @@
+<%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
+  <div class="field required <%= error_class(f, :name) %>">
+    <%= label f, :name, "Name" %>
+    <%= text_input f, :name, placeholder: "Apple, Inc." %>
+    <%= error_message(f, :name) %>
+  </div>
+
+  <div class="field">
+    <%= label f, :logo_image, "Logo Image" %>
+    <img
+      src="<%= logo_image_url(f.data, :small) %>"
+      data-popup=true
+      data-content="Ideal size is 800px by 800px."
+      width=50
+      height=50
+    >
+    <br/>
+    <%= file_input f, :logo_image %>
+  </div>
+
+  <div class="three fields">
+    <div class="field <%= error_class(f, :website) %>">
+      <%= label f, :website %>
+      <%= text_input f, :website, placeholder: "https://apple.com" %>
+      <%= error_message(f, :website) %>
+    </div>
+
+    <div class="field <%= error_class(f, :github_handle) %>">
+      <%= label f, :github_handle, "On GitHub" %>
+      <%= text_input f, :github_handle, placeholder: "apple" %>
+      <%= error_message(f, :github_handle) %>
+    </div>
+
+    <div class="field <%= error_class(f, :twitter_handle) %>">
+      <%= label f, :twitter_handle, "On Twitter" %>
+      <%= text_input f, :twitter_handle, placeholder: "apple" %>
+      <%= error_message(f, :twitter_handle) %>
+    </div>
+  </div>
+
+  <div class="field <%= error_class(f, :description) %>">
+    <%= label f, :description %>
+    <%= text_input f, :description, placeholder: "Apple leads the world in innovation with iPhone, iPad, Mac, Apple Watch and Apple TV." %>
+    <%= error_message(f, :description) %>
+  </div>
+
+  <button class="ui primary button" type="submit">Save</button>
+<% end %>
