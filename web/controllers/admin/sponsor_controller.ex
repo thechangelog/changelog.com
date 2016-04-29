@@ -50,4 +50,13 @@ defmodule Changelog.Admin.SponsorController do
         render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    sponsor = Repo.get!(Sponsor, id)
+    Repo.delete!(sponsor)
+
+    conn
+    |> put_flash(:info, "#{sponsor.name} deleted!")
+    |> redirect(to: admin_sponsor_path(conn, :index))
+  end
 end

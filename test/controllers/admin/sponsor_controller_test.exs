@@ -69,15 +69,15 @@ defmodule Changelog.Admin.SponsorControllerTest do
     assert count(Sponsor) == count_before
   end
 
-  # @tag :as_admin
-  # test "deletes a sponsor and redirects", %{conn: conn} do
-  #   sponsor = create(:sponsor)
+  @tag :as_admin
+  test "deletes a sponsor and redirects", %{conn: conn} do
+    sponsor = create(:sponsor)
 
-  #   conn = delete conn, admin_sponsor_path(conn, :delete, sponsor.id)
+    conn = delete conn, admin_sponsor_path(conn, :delete, sponsor.id)
 
-  #   assert redirected_to(conn) == admin_sponsor_path(conn, :index)
-  #   assert count(Sponsor) == 0
-  # end
+    assert redirected_to(conn) == admin_sponsor_path(conn, :index)
+    assert count(Sponsor) == 0
+  end
 
   test "requires user auth on all actions" do
     Enum.each([
