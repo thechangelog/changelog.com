@@ -40,34 +40,34 @@ defmodule Changelog.Admin.SponsorControllerTest do
     assert count(Sponsor) == count_before
   end
 
-  # @tag :as_admin
-  # test "renders form to edit sponsor", %{conn: conn} do
-  #   sponsor = create(:sponsor)
+  @tag :as_admin
+  test "renders form to edit sponsor", %{conn: conn} do
+    sponsor = create(:sponsor)
 
-  #   conn = get conn, admin_sponsor_path(conn, :edit, sponsor)
-  #   assert html_response(conn, 200) =~ ~r/edit/i
-  # end
+    conn = get conn, admin_sponsor_path(conn, :edit, sponsor)
+    assert html_response(conn, 200) =~ ~r/edit/i
+  end
 
-  # @tag :as_admin
-  # test "updates sponsor and redirects", %{conn: conn} do
-  #   sponsor = create(:sponsor)
+  @tag :as_admin
+  test "updates sponsor and redirects", %{conn: conn} do
+    sponsor = create(:sponsor)
 
-  #   conn = put conn, admin_sponsor_path(conn, :update, sponsor.id), sponsor: @valid_attrs
+    conn = put conn, admin_sponsor_path(conn, :update, sponsor.id), sponsor: @valid_attrs
 
-  #   assert redirected_to(conn) == admin_sponsor_path(conn, :index)
-  #   assert count(Sponsor) == 1
-  # end
+    assert redirected_to(conn) == admin_sponsor_path(conn, :index)
+    assert count(Sponsor) == 1
+  end
 
-  # @tag :as_admin
-  # test "does not update with invalid attributes", %{conn: conn} do
-  #   sponsor = create(:sponsor)
-  #   count_before = count(Sponsor)
+  @tag :as_admin
+  test "does not update with invalid attributes", %{conn: conn} do
+    sponsor = create(:sponsor)
+    count_before = count(Sponsor)
 
-  #   conn = put conn, admin_sponsor_path(conn, :update, sponsor.id), sponsor: @invalid_attrs
+    conn = put conn, admin_sponsor_path(conn, :update, sponsor.id), sponsor: @invalid_attrs
 
-  #   assert html_response(conn, 200) =~ ~r/error/
-  #   assert count(Sponsor) == count_before
-  # end
+    assert html_response(conn, 200) =~ ~r/error/
+    assert count(Sponsor) == count_before
+  end
 
   # @tag :as_admin
   # test "deletes a sponsor and redirects", %{conn: conn} do

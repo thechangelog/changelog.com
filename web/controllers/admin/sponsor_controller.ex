@@ -30,4 +30,24 @@ defmodule Changelog.Admin.SponsorController do
         render(conn, "new.html", changeset: changeset)
     end
   end
+
+  def edit(conn, %{"id" => id}) do
+    sponsor = Repo.get!(Sponsor, id)
+    changeset = Sponsor.changeset(sponsor)
+    render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
+  end
+
+  def update(conn, %{"id" => id, "sponsor" => sponsor_params}) do
+    sponsor = Repo.get!(Sponsor, id)
+    changeset = Sponsor.changeset(sponsor, sponsor_params)
+
+    case Repo.update(changeset) do
+      {:ok, sponsor} ->
+        conn
+        |> put_flash(:info, "#{sponsor.name} udated!")
+        |> redirect(to: admin_sponsor_path(conn, :index))
+      {:error, changeset} ->
+        render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
+    end
+  end
 end
