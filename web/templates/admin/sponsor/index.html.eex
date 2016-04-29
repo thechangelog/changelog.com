@@ -1,0 +1,66 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    Sponsors
+    <div class="sub header">Putting their money where their mouths are.</div>
+  </h1>
+
+  <div class="actions">
+    <%= link to: admin_sponsor_path(@conn, :new), class: "ui right floated primary button" do %>
+      <i class="dollar icon"></i>
+      Add Sponsor
+    <% end %>
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@sponsors) do %>
+  <table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Website</th>
+        <th>GitHub</th>
+        <th>Twitter</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for sponsor <- @sponsors do %>
+      <tr>
+        <td><%= sponsor.id %></td>
+        <td>
+          <h4 class="ui image header">
+            <img src="<%= logo_image_url(sponsor, :small) %>" class="ui image"/>
+          </h4>
+          <%= sponsor.name %>
+        </td>
+        <td><%= sponsor.description %></td>
+        <td><%= website_link(sponsor) %></td>
+        <td><%= github_link(sponsor) %></td>
+        <td><%= twitter_link(sponsor) %></td>
+        <td class="center aligned">
+          <div class="ui basic icon buttons">
+            <%= link to: admin_sponsor_path(@conn, :show, sponsor), class: "ui button", title: "View Details" do %>
+              <i class="eye icon"></i>
+            <% end %>
+
+            <%= link to: admin_sponsor_path(@conn, :edit, sponsor), class: "ui button", title: "Edit this Sponsor" do %>
+              <i class="edit icon"></i>
+            <% end %>
+
+            <%= link to: admin_sponsor_path(@conn, :delete, sponsor), method: :delete, data: [confirm: "Are you sure?"], class: "ui button", title: "Delete this Sponsor" do %>
+              <i class="trash icon"></i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= pagination_links @conn, @page, path: &admin_sponsor_path/3 %>
+<% end %>
+</div>

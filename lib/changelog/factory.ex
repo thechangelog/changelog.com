@@ -24,6 +24,12 @@ defmodule Changelog.Factory do
     }
   end
 
+  def factory(:sponsor) do
+    %Changelog.Sponsor{
+      name: sequence(:name, &"Sponsor #{&1}")
+    }
+  end
+
   def factory(:topic) do
     %Changelog.Topic{
       name: sequence(:name, &"Topic #{&1}"),

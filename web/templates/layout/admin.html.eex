@@ -31,8 +31,10 @@
       <%= link to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.TopicController)}" do %>
         <i class="block layout icon"></i>Topics</a>
       <% end %>
-      <a href="" class="item"><i class="dollar icon"></i>Sponsors</a>
 
+      <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.SponsorController)}" do %>
+        <i class="dollar icon"></i>Sponsors</a>
+      <% end %>
 
       <div class="right menu">
         <div class="ui right aligned category search item">

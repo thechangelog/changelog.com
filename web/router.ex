@@ -26,6 +26,7 @@ defmodule Changelog.Router do
     get "/search", SearchController, :index
 
     resources "/people", PersonController
+    resources "/sponsors", SponsorController
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
     end
