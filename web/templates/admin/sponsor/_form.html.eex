@@ -15,6 +15,7 @@
       height=50
     >
     <br/>
+    <%= error_message(f, :logo_image) %>
     <%= file_input f, :logo_image %>
   </div>
 

@@ -35,6 +35,7 @@
       height=100
     >
     <br/>
+    <%= error_message(f, :cover_art) %>
     <%= file_input f, :cover_art %>
   </div>
 
