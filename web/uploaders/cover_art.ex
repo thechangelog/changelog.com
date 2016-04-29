@@ -10,7 +10,7 @@ defmodule Changelog.CoverArt do
     ~w(.jpg .png) |> Enum.member?(Path.extname(file.file_name))
   end
 
-  def storage_dir(version, {file, scope}) do
+  def storage_dir(_version, {_file, scope}) do
     "priv/static/uploads/#{scope.slug}"
   end
 
@@ -30,7 +30,7 @@ defmodule Changelog.CoverArt do
     {:convert, "-strip -resize 300x300 -format png", :png}
   end
 
-  def default_url(version, scope) do
+  def default_url(_version, _scope) do
     "/images/defaults/cover.png"
   end
 end
