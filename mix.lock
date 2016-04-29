@@ -1,4 +1,4 @@
-%{"arc": {:hex, :arc, "0.5.1"},
+%{"arc": {:hex, :arc, "0.5.2"},
   "arc_ecto": {:hex, :arc_ecto, "0.3.2"},
   "certifi": {:hex, :certifi, "0.4.0"},
   "cmark": {:hex, :cmark, "0.6.10"},
