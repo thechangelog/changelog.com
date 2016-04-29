@@ -1,4 +1,4 @@
-defmodule Changelog.CoverArt do
+defmodule Changelog.LogoImage do
   use Arc.Definition
   use Arc.Ecto.Definition
 
@@ -11,23 +11,24 @@ defmodule Changelog.CoverArt do
   end
 
   def storage_dir(_version, {_file, scope}) do
-    "priv/static/uploads/#{scope.slug}"
+    hashed_id = Changelog.Hashid.encode(scope.id)
+    "priv/static/uploads/logos/#{hashed_id}"
   end
 
   def filename(version, _) do
-    "cover_#{version}"
+    "logo_#{version}"
   end
 
   def transform(:large, _) do
-    {:convert, "-strip -resize 1500x1500 -format png", :png}
+    {:convert, "-strip -resize 800x800 -format png", :png}
   end
 
   def transform(:medium, _) do
-    {:convert, "-strip -resize 750x750 -format png", :png}
+    {:convert, "-strip -resize 400x400 -format png", :png}
   end
 
   def transform(:small, _) do
-    {:convert, "-strip -resize 300x300 -format png", :png}
+    {:convert, "-strip -resize 200x200 -format png", :png}
   end
 
   def default_url(_version, _scope) do
