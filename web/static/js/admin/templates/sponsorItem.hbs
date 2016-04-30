@@ -1,0 +1,42 @@
+<div class="item">
+  <input name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][sponsor_id]" type="hidden" value="{{id}}">
+  <input class="js-position" name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][position]" type="hidden">
+
+  <div class="right floated content">
+    <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
+  </div>
+
+  <h4 class="ui sponsor header">{{name}}</h4>
+
+  <div class="fields">
+    <div class="required field six wide">
+      <label>Title</label>
+      <input
+        name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][title]"
+        value=""
+        placeholder="Apple, Inc."
+      >
+    </div>
+
+    <div class="required field ten wide">
+      <label>Link</label>
+      <input
+        name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][link_url]"
+        value=""
+        placeholder="https://apple.com"
+      >
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Description</label>
+    <textarea
+      name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][description]"
+      value=""
+      placeholder="Markdown enabled."
+      rows="1"
+    ></textarea>
+  </div>
+
+  <div class="ui divider"></div>
+</div>

@@ -10,6 +10,7 @@ defmodule Changelog.EpisodeSponsor do
     field :description, :string
 
     field :delete, :boolean, virtual: true
+
     belongs_to :episode, Changelog.Episode
     belongs_to :sponsor, Changelog.Sponsor
 
@@ -17,7 +18,7 @@ defmodule Changelog.EpisodeSponsor do
   end
 
   @required_fields ~w(position title link_url)
-  @optional_fields ~w(description)
+  @optional_fields ~w(episode_id sponsor_id description delete)
 
   def changeset(model, params \\ :empty) do
     model

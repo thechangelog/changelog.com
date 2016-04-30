@@ -9,3 +9,7 @@
 .emphasis {
   font-weight: bold;
 }
+
+.ui.sponsor.header {
+  margin-bottom: 10px !important;
+}

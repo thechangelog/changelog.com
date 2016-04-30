@@ -97,6 +97,56 @@
   </div>
 
   <div class="field">
+    <%= label f, :sponsors %>
+
+    <div class="ui middle aligned selection list js-sponsors">
+      <%= inputs_for f, :episode_sponsors, fn i -> %>
+        <% sponsor = Changelog.Repo.get(Changelog.Sponsor, (i.model.sponsor_id || i.params["sponsor_id"])) %>
+        <div class="item persisted">
+          <%= hidden_input i, :sponsor_id %>
+          <%= hidden_input i, :position, class: "js-position" %>
+
+          <div class="right floated content">
+            <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
+            <%= hidden_input i, :delete %>
+          </div>
+
+          <h4 class="ui sponsor header">
+            #<span class="js-position-display"><%= i.params["position"] %></span> &mdash;
+            <%= sponsor.name %>
+          </h4>
+
+          <div class="fields">
+            <div class="required four wide field <%= error_class(i, :title) %>">
+              <label>Title</label>
+              <%= text_input i, :title %>
+              <%= error_message i, :title %>
+            </div>
+
+            <div class="required twelve wide field <%= error_class(i, :link_url) %>">
+              <label>Link</label>
+              <%= text_input i, :link_url %>
+              <%= error_message i, :link_url %>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Description</label>
+            <%= textarea i, :description, rows: 1 %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Sponsor">
+        <i class="dollar icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
     <%= label f, :topics %>
 
     <div class="ui horizontal selection list js-topics">
@@ -122,10 +172,6 @@
         <i class="block layout icon"></i>
       </div>
     </div>
-  </div>
-
-  <div class="field">
-    <%= label f, :sponsors %>
   </div>
 
   <div class="field">

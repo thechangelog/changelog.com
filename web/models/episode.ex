@@ -50,8 +50,20 @@ defmodule Changelog.Episode do
     |> unique_constraint(:episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts, required: true)
     |> cast_assoc(:episode_guests, required: true)
+    |> cast_assoc(:episode_sponsors, required: true)
     |> cast_assoc(:episode_topics, required: true)
     |> derive_bytes_and_duration(params)
+  end
+
+  def preload_all(model) do
+    model
+    |> Repo.preload(:podcast)
+    |> Repo.preload([
+      episode_hosts: {Changelog.EpisodeHost.by_position, :person},
+      episode_guests: {Changelog.EpisodeGuest.by_position, :person},
+      episode_sponsors: {Changelog.EpisodeSponsor.by_position, :sponsor},
+      episode_topics: {Changelog.EpisodeTopic.by_position, :topic}
+    ])
   end
 
   defp derive_bytes_and_duration(changeset, params) do
