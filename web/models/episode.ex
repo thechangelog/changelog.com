@@ -23,6 +23,7 @@ defmodule Changelog.Episode do
     has_many :guests, through: [:episode_guests, :person]
     has_many :episode_topics, Changelog.EpisodeTopic, on_delete: :delete_all
     has_many :topics, through: [:episode_topics, :topic]
+    has_many :episode_sponsors, Changelog.EpisodeSponsor, on_delete: :delete_all
 
     timestamps
   end

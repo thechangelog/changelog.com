@@ -12,6 +12,8 @@ defmodule Changelog.Sponsor do
     field :twitter_handle, :string
     field :logo_image, Changelog.LogoImage.Type
 
+    has_many :episode_sponsors, Changelog.EpisodeSponsor, on_delete: :delete_all
+
     timestamps
   end
 
