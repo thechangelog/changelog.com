@@ -44,7 +44,7 @@
         <div class="item persisted">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= Changelog.Admin.PersonView.avatar_url(i.model.person) %>">
+          <img class="ui avatar image" src="<%= avatar_url(i.model.person) %>">
 
           <div class="content">
             <div class="header"><%= i.model.person.name %> (@<%= i.model.person.handle %>)</div>
@@ -74,7 +74,7 @@
         <div class="item persisted">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= Changelog.Admin.PersonView.avatar_url(i.model.person) %>">
+          <img class="ui avatar image" src="<%= avatar_url(i.model.person) %>">
 
           <div class="content">
             <div class="header"><%= i.model.person.name %> (@<%= i.model.person.handle %>)</div>
@@ -136,12 +136,12 @@
         <div class="ui item">
           <div class="content">
             <div class="header">
-            <%= link Changelog.EpisodeView.audio_filename(f.data), to: Changelog.EpisodeView.audio_url(f.data) %>
+            <%= link audio_filename(f.data), to: audio_url(f.data) %>
             </div>
             <p class="description">
-              Currently &mdash; a <span class="emphasis"><%= Changelog.EpisodeView.megabytes(f.data) %> MB</span> file,
-              runs <span class="emphasis"><%= Changelog.TimeView.duration(f.data.duration) %></span>,
-              last updated <span class="emphasis"><%= Changelog.TimeView.terse(f.data.audio_file.updated_at) %></span>
+              Currently &mdash; a <span class="emphasis"><%= megabytes(f.data) %> MB</span> file,
+              runs <span class="emphasis"><%= TimeView.duration(f.data.duration) %></span>,
+              last updated <span class="emphasis"><%= ts(f.data.audio_file.updated_at) %></span>
             </p>
           </div>
         </div>

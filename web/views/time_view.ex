@@ -1,6 +1,4 @@
 defmodule Changelog.TimeView do
-  alias Ecto.DateTime
-
   def duration(seconds) when is_nil(seconds), do: duration(0)
   def duration(seconds) when seconds < 3600 do
     minutes = div(seconds, 60)
@@ -43,9 +41,6 @@ defmodule Changelog.TimeView do
       String.to_integer(str)
     end
   end
-
-  def ts(ts) when is_nil(ts), do: ""
-  def ts(ts), do: {:safe, "<span class='time'>#{DateTime.to_iso8601(ts)}</span>"}
 
   defp leading_zero(integer) do
     if integer < 10 do

@@ -31,8 +31,8 @@
         <td><%= episode.slug %></td>
         <td><%= episode.title %></td>
         <td><%= episode.published %></td>
-        <td><%= Changelog.TimeView.ts(episode.recorded_at) %></td>
-        <td><%= Changelog.TimeView.ts(episode.published_at) %></td>
+        <td><%= ts(episode.recorded_at) %></td>
+        <td><%= ts(episode.published_at) %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
             <%= link to: episode_path(@conn, :episode, @podcast.slug, episode.slug), class: "ui button", title: "View Public Page" do %>

@@ -14,7 +14,7 @@ defmodule Changelog.Admin.SearchView do
       id: person.id,
       title: person.name,
       description: "(@#{person.handle})",
-      image: Changelog.Admin.PersonView.avatar_url(person)
+      image: avatar_url(person)
     }
   end
 
