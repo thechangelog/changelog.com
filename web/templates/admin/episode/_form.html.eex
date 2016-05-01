@@ -1,14 +1,16 @@
-<%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
-  <div class="field required <%= error_class f, :title %>">
-    <%= label f, :title %>
-    <%= text_input f, :title, placeholder: "Best Show Evar!" %>
-    <%= error_message f, :title %>
-  </div>
+<%= form_for @changeset, @action, [multipart: true, class: "ui large form"], fn f -> %>
+  <div class="two fields">
+    <div class="twelve wide field required <%= error_class f, :title %>">
+      <%= label f, :title %>
+      <%= text_input f, :title, placeholder: "Best Show Evar!" %>
+      <%= error_message f, :title %>
+    </div>
 
-  <div class="field required <%= error_class f, :slug %>">
-    <%= label f, :slug %>
-    <%= text_input f, :slug, placeholder: "183", readonly: f.data.published %>
-    <%= error_message f, :slug %>
+    <div class="four wide field required <%= error_class f, :slug %>">
+      <%= label f, :slug %>
+      <%= text_input f, :slug, placeholder: "183", readonly: f.data.published %>
+      <%= error_message f, :slug %>
+    </div>
   </div>
 
   <div class="field <%= error_class f, :recorded_at %>">
@@ -23,11 +25,27 @@
     <%= error_message f, :published_at %>
   </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox f, :published, class: "hidden" %>
-      <label>Published</label>
-    </div>
+  <div class="field">
+    <%= label f, :audio_file %>
+
+    <%= if f.data.audio_file  do %>
+      <div class="ui raised segment items">
+        <div class="ui item">
+          <div class="content">
+            <div class="header">
+            <%= link audio_filename(f.data), to: audio_url(f.data) %>
+            </div>
+            <p class="description">
+              Currently &mdash; a <span class="emphasis"><%= megabytes(f.data) %> MB</span> file,
+              runs <span class="emphasis"><%= TimeView.duration(f.data.duration) %></span>,
+              last updated <span class="emphasis"><%= ts(f.data.audio_file.updated_at) %></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= file_input f, :audio_file %>
   </div>
 
   <div class="field required <%= error_class f, :summary %>">
@@ -158,7 +176,7 @@
           <div class="content">
             <a class="ui label">
               <%= i.model.topic.name %>
-              <i class="remove icon js-remove"></i>
+              <i class="delete icon js-remove"></i>
               <%= hidden_input i, :delete %>
             </a>
           </div>
@@ -174,27 +192,11 @@
     </div>
   </div>
 
-  <div class="field">
-    <%= label f, :audio_file %>
-
-    <%= if f.data.audio_file  do %>
-      <div class="ui raised segment items">
-        <div class="ui item">
-          <div class="content">
-            <div class="header">
-            <%= link audio_filename(f.data), to: audio_url(f.data) %>
-            </div>
-            <p class="description">
-              Currently &mdash; a <span class="emphasis"><%= megabytes(f.data) %> MB</span> file,
-              runs <span class="emphasis"><%= TimeView.duration(f.data.duration) %></span>,
-              last updated <span class="emphasis"><%= ts(f.data.audio_file.updated_at) %></span>
-            </p>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <%= file_input f, :audio_file %>
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox f, :published, class: "hidden" %>
+      <label>Published</label>
+    </div>
   </div>
 
   <button class="ui primary button" type="submit">Save</button>
