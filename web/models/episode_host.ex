@@ -24,6 +24,10 @@ defmodule Changelog.EpisodeHost do
     from p in __MODULE__, order_by: p.position
   end
 
+  def build_and_preload({person, position}) do
+    %__MODULE__{position: position, person_id: person.id} |> Repo.preload(:person)
+  end
+
   defp mark_for_deletion(changeset) do
     if get_change(changeset, :delete) do
       %{changeset | action: :delete}

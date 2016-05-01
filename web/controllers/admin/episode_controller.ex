@@ -1,8 +1,7 @@
 defmodule Changelog.Admin.EpisodeController do
   use Changelog.Web, :controller
 
-  alias Changelog.Podcast
-  alias Changelog.Episode
+  alias Changelog.{Podcast, Episode, EpisodeHost}
 
   plug :assign_podcast
   plug :scrub_params, "episode" when action in [:create, :update]
@@ -23,9 +22,18 @@ defmodule Changelog.Admin.EpisodeController do
   end
 
   def new(conn, _params, podcast) do
+    podcast = podcast |> Repo.preload(:hosts)
+
+    default_hosts =
+      podcast.hosts
+      |> Enum.with_index(1)
+      |> Enum.map(&EpisodeHost.build_and_preload/1)
+
     changeset =
-      build_assoc(podcast, :episodes)
+      podcast
+      |> build_assoc(:episodes, episode_hosts: default_hosts)
       |> Episode.changeset
+
     render conn, "new.html", changeset: changeset
   end
 
