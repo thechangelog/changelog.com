@@ -14,29 +14,39 @@ defmodule Changelog.Admin.SearchView do
   end
 
   def render("person.json", %{person: person}) do
-    %{
-      id: person.id,
+    %{id: person.id,
       title: person.name,
       description: "(@#{person.handle})",
-      image: avatar_url(person)
-    }
+      image: avatar_url(person)}
   end
 
   def render("sponsor.json", %{sponsor: sponsor}) do
-    %{
-      id: sponsor.id,
+    latest =
+      sponsor
+      |> Ecto.assoc(:episode_sponsors)
+      |> Changelog.EpisodeSponsor.newest_first
+      |> Changelog.Repo.one
+
+    extras = if latest do
+       %{title: latest.title,
+         link_url: latest.link_url,
+         description: latest.description}
+    else
+      %{title: sponsor.name,
+        link_url: sponsor.website,
+        description: sponsor.description}
+    end
+
+    %{id: sponsor.id,
       title: sponsor.name,
       description: sponsor.description,
       image: Changelog.SponsorView.logo_image_url(sponsor, :small),
-      name: "HAIO"
-    }
+      extras: extras}
   end
 
   def render("topic.json", %{topic: topic}) do
-    %{
-      id: topic.id,
+    %{id: topic.id,
       title: topic.name,
-      slug: topic.slug
-    }
+      slug: topic.slug}
   end
 end

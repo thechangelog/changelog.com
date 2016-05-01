@@ -6,15 +6,17 @@
     <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
   </div>
 
-  <h4 class="ui sponsor header">{{name}}</h4>
+  <h4 class="ui sponsor header">
+    #<span class="js-position-display">{{position}}</span> &mdash;
+    {{name}}
+  </h4>
 
   <div class="fields">
     <div class="required field six wide">
       <label>Title</label>
       <input
         name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][title]"
-        value=""
-        placeholder="Apple, Inc."
+        value="{{extras.title}}"
       >
     </div>
 
@@ -22,8 +24,7 @@
       <label>Link</label>
       <input
         name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][link_url]"
-        value=""
-        placeholder="https://apple.com"
+        value="{{extras.link_url}}"
       >
     </div>
   </div>
@@ -35,7 +36,7 @@
       value=""
       placeholder="Markdown enabled."
       rows="1"
-    ></textarea>
+    >{{extras.description}}</textarea>
   </div>
 
   <div class="ui divider"></div>

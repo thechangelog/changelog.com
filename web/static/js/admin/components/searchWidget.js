@@ -51,7 +51,8 @@ export default class SearchWidget {
           name: selected.title,
           handle: selected.description,
           avatarUrl: selected.image,
-          index: $members.find(".item").length
+          index: $members.find(".item").length,
+          extras: selected.extras
         }
 
         switch (type) {

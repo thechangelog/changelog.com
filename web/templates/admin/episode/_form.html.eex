@@ -112,7 +112,7 @@
           </div>
 
           <h4 class="ui sponsor header">
-            #<span class="js-position-display"><%= i.params["position"] %></span> &mdash;
+            #<span class="js-position-display"><%= i.model.position || i.params["position"] %></span> &mdash;
             <%= sponsor.name %>
           </h4>
 
