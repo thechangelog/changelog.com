@@ -41,6 +41,7 @@ defmodule Changelog.PodcastController do
       |> Episode.published
       |> Episode.newest_first
       |> Repo.all
+      |> Episode.preload_all
 
     conn
     |> put_layout(false)

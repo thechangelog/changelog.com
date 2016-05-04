@@ -58,6 +58,7 @@ defmodule Changelog.Episode do
   def preload_all(model) do
     model
     |> Repo.preload(:podcast)
+    |> Repo.preload(:hosts)
     |> Repo.preload([
       episode_hosts: {Changelog.EpisodeHost.by_position, :person},
       episode_guests: {Changelog.EpisodeGuest.by_position, :person},
