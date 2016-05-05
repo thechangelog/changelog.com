@@ -68,12 +68,12 @@ defmodule Changelog.Episode do
   end
 
   defp derive_bytes_and_duration(changeset, params) do
-    if get_change(changeset, :audio_file) do
+    if new_audio_file = get_change(changeset, :audio_file) do
       # adding the album art to the mp3 file throws off ffmpeg's duration
       # detection (bitrate * filesize). So, we use the raw_file to get accurate
       # duration and the tagged_file to get accurate bytes
       raw_file = params["audio_file"].path
-      tagged_file = Changelog.EpisodeView.audio_local_path(changeset.model)
+      tagged_file = Changelog.EpisodeView.audio_local_path(%{changeset.model | audio_file: new_audio_file})
 
       case File.stat(tagged_file) do
         {:ok, stats} ->

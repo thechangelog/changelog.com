@@ -40,6 +40,7 @@ defmodule Changelog.Admin.EpisodeController do
   def create(conn, %{"episode" => episode_params}, podcast) do
     changeset =
       build_assoc(podcast, :episodes)
+      |> Episode.preload_all
       |> Episode.changeset(episode_params)
 
     case Repo.insert(changeset) do
