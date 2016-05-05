@@ -11,7 +11,12 @@
     <itunes:author>Changelog Media</itunes:author>
     <itunes:summary><%= md_to_text @podcast.description %></itunes:summary>
     <itunes:explicit>no</itunes:explicit>
-    <itunes:image href="TODO"/>
+    <itunes:image href="<%= static_url(@conn, cover_art_url(@podcast, :original)) %>"/>
+    <image>
+      <url><%= static_url(@conn, cover_art_url(@podcast, :original)) %></url>
+      <title><%= @podcast.name %></title>
+      <link><%= @podcast.vanity_domain %></link>
+    </image>
     <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
     <itunes:owner>
       <itunes:name>Changelog Media</itunes:name>
@@ -21,7 +26,6 @@
       <itunes:category text="Software How-To"/>
       <itunes:category text="Tech News"/>
     </itunes:category>
-
     <%= for episode <- @episodes do %>
       <item>
         <title><%= Changelog.EpisodeView.numbered_title(episode) %></title>
@@ -29,14 +33,14 @@
         <guid isPermalink="false"><%= Changelog.EpisodeView.guid(episode) %></guid>
         <pubDate><%= Changelog.TimeView.rss(episode.published_at) %></pubDate>
         <author><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></author>
-        <description><![CDATA[TODO FULL MONTY]]></description>
-        <enclosure url="TODO" length="TODO" type="audio/mpeg" />
+        <description><![CDATA[<%= md_to_html(episode.summary) %>]]></description>
+        <enclosure url="<%= static_url(@conn, Changelog.EpisodeView.audio_url(episode)) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
         <itunes:author><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></itunes:author>
         <itunes:duration><%= Changelog.TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
-        <itunes:subtitle>TODO SUMMARY</itunes:subtitle>
-        <itunes:summary>TODO</itunes:summary>
+        <itunes:subtitle><%= md_to_text(episode.summary) %></itunes:subtitle>
+        <itunes:summary><%= md_to_text(episode.summary) %></itunes:summary>
       </item>
     <% end %>
   </channel>
