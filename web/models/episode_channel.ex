@@ -1,18 +1,18 @@
-defmodule Changelog.EpisodeTopic do
+defmodule Changelog.EpisodeChannel do
   use Changelog.Web, :model
 
-  schema "episode_topics" do
+  schema "episode_channels" do
     field :position, :integer
     field :delete, :boolean, virtual: true
 
-    belongs_to :topic, Changelog.Topic
+    belongs_to :channel, Changelog.Channel
     belongs_to :episode, Changelog.Episode
 
     timestamps
   end
 
   @required_fields ~w(position)
-  @optional_fields ~w(episode_id topic_id delete)
+  @optional_fields ~w(episode_id channel_id delete)
 
   def changeset(model, params \\ :empty) do
     model

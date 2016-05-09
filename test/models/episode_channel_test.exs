@@ -1,18 +1,18 @@
-defmodule Changelog.EpisodeTopicTest do
+defmodule Changelog.EpisodeChannelTest do
   use Changelog.ModelCase
 
-  alias Changelog.EpisodeTopic
+  alias Changelog.EpisodeChannel
 
   @valid_attrs %{position: 42}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = EpisodeTopic.changeset(%EpisodeTopic{}, @valid_attrs)
+    changeset = EpisodeChannel.changeset(%EpisodeChannel{}, @valid_attrs)
     assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
-    changeset = EpisodeTopic.changeset(%EpisodeTopic{}, @invalid_attrs)
+    changeset = EpisodeChannel.changeset(%EpisodeChannel{}, @invalid_attrs)
     refute changeset.valid?
   end
 end

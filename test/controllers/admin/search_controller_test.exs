@@ -14,11 +14,11 @@ defmodule Changelog.Admin.SearchControllerTest do
   end
 
   @tag :as_admin
-  test "searching topics", %{conn: conn} do
-    create :topic, name: "Elixir Phoenix"
-    create :topic, name: "Elixir Ecto"
+  test "searching channels", %{conn: conn} do
+    create :channel, name: "Elixir Phoenix"
+    create :channel, name: "Elixir Ecto"
 
-    conn = get conn, "/admin/search?t=topic&q=ect"
+    conn = get conn, "/admin/search?t=channel&q=ect"
 
     assert conn.status == 200
     assert conn.resp_body =~ "Elixir Ecto"
@@ -38,7 +38,7 @@ defmodule Changelog.Admin.SearchControllerTest do
   end
 
   test "requires user auth" do
-    conn = get conn, "/admin/search?t=topic&q=ect"
+    conn = get conn, "/admin/search?t=channel&q=ect"
     assert html_response(conn, 302)
     assert conn.halted
   end

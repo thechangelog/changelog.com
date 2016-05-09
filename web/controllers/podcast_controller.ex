@@ -27,7 +27,7 @@ defmodule Changelog.PodcastController do
       |> Repo.preload([
         episode_hosts: {Changelog.EpisodeHost.by_position, :person},
         episode_guests: {Changelog.EpisodeGuest.by_position, :person},
-        episode_topics: {Changelog.EpisodeTopic.by_position, :topic}
+        episode_channels: {Changelog.EpisodeChannel.by_position, :channel}
       ])
 
     render conn, "episode.html", podcast: podcast, episode: episode

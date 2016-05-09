@@ -1,21 +1,15 @@
 <%= form_for @changeset, @action, [class: "ui large form"], fn f -> %>
-  <div class="field required <%= error_class(f, :name) %>">
-    <%= label f, :name, "Name" %>
-    <%= text_input f, :name, placeholder: "Ruby on Rails" %>
-    <%= error_message(f, :name) %>
-  </div>
-
   <div class="two fields">
-    <div class="field required <%= error_class(f, :slug) %>">
-      <%= label f, :slug, "Slug" %>
-      <%= text_input f, :slug, placeholder: "ruby-on-rails" %>
-      <%= error_message(f, :slug) %>
+    <div class="field required <%= error_class(f, :name) %>">
+      <%= label f, :name, "Name" %>
+      <%= text_input f, :name, placeholder: "Ruby on Rails" %>
+      <%= error_message(f, :name) %>
     </div>
 
-    <div class="field <%= error_class(f, :website) %>">
-      <%= label f, :website %>
-      <%= text_input f, :website, placeholder: "https://en.wikipedia.org/wiki/Grace_Hopper" %>
-      <%= error_message(f, :website) %>
+    <div class="field required <%= error_class(f, :slug) %>">
+      <%= label f, :slug, "Slug" %>
+      <%= text_input f, :slug, placeholder: "ror" %>
+      <%= error_message(f, :slug) %>
     </div>
   </div>
 

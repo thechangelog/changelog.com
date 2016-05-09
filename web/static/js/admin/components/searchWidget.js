@@ -1,5 +1,5 @@
 import personItem from "../templates/personItem"
-import topicItem from "../templates/topicItem"
+import channelItem from "../templates/channelItem"
 import sponsorItem from "../templates/sponsorItem"
 
 export default class SearchWidget {
@@ -24,8 +24,8 @@ export default class SearchWidget {
         case "sponsor":
           return "<a href='/admin/sponsors/new' target='_blank'>Add a Sponsor</a>";
           break
-        case "topic":
-          return "<a href='/admin/topics/new' target='_blank'>Add a Topic</a>";
+        case "channel":
+          return "<a href='/admin/channels/new' target='_blank'>Add a Channel</a>";
           break;
       }
     }
@@ -62,8 +62,8 @@ export default class SearchWidget {
           case "sponsor":
             $list.append(sponsorItem(context));
             break;
-          case "topic":
-            $list.append(topicItem(context));
+          case "channel":
+            $list.append(channelItem(context));
             break;
         }
 

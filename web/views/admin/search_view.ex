@@ -9,8 +9,8 @@ defmodule Changelog.Admin.SearchView do
     %{results: render_many(sponsors, __MODULE__, "sponsor.json", as: :sponsor)}
   end
 
-  def render("index.json", %{topics: topics}) do
-    %{results: render_many(topics, __MODULE__, "topic.json", as: :topic)}
+  def render("index.json", %{channels: channels}) do
+    %{results: render_many(channels, __MODULE__, "channel.json", as: :channel)}
   end
 
   def render("person.json", %{person: person}) do
@@ -44,9 +44,9 @@ defmodule Changelog.Admin.SearchView do
       extras: extras}
   end
 
-  def render("topic.json", %{topic: topic}) do
-    %{id: topic.id,
-      title: topic.name,
-      slug: topic.slug}
+  def render("channel.json", %{channel: channel}) do
+    %{id: channel.id,
+      title: channel.name,
+      slug: channel.slug}
   end
 end

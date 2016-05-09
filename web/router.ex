@@ -30,14 +30,14 @@ defmodule Changelog.Router do
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
     end
-    resources "/topics", TopicController
+    resources "/channels", ChannelController
   end
 
   scope "/", Changelog do
     pipe_through :browser
 
     resources "/people", PersonController, only: [:show]
-    resources "/topics", TopicController, only: [:show]
+    resources "/channels", ChannelController, only: [:show]
 
     get "/", PageController, :index
 

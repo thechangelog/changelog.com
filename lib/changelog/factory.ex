@@ -30,10 +30,10 @@ defmodule Changelog.Factory do
     }
   end
 
-  def factory(:topic) do
-    %Changelog.Topic{
-      name: sequence(:name, &"Topic #{&1}"),
-      slug: sequence(:slug, &"topic-#{&1}")
+  def factory(:channel) do
+    %Changelog.Channel{
+      name: sequence(:name, &"Channel #{&1}"),
+      slug: sequence(:slug, &"channel-#{&1}")
     }
   end
 end

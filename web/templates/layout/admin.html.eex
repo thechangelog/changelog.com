@@ -28,8 +28,8 @@
         <i class="user icon"></i>People
       <% end %>
 
-      <%= link to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.TopicController)}" do %>
-        <i class="block layout icon"></i>Topics</a>
+      <%= link to: admin_channel_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.ChannelController)}" do %>
+        <i class="block layout icon"></i>Channels</a>
       <% end %>
 
       <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.SponsorController)}" do %>

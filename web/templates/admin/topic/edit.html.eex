@@ -1,5 +1,0 @@
-<div class="ui text container">
-  <h1 class="ui dividing header">Edit <%= @topic.name %></h1>
-
-  <%= render "_form.html", changeset: @changeset, action: admin_topic_path(@conn, :update, @topic) %>
-</div>

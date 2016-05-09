@@ -5,7 +5,7 @@ export default class EpisodeView {
     let $hostWidget = new SearchWidget("person", "episode", "hosts");
     let $guestWidget = new SearchWidget("person", "episode", "guests");
     let $sponsorWidget = new SearchWidget("sponsor", "episode", "sponsors");
-    let $topicWidget = new SearchWidget("topic", "episode", "topics");
+    let $channelWidget = new SearchWidget("channel", "episode", "channels");
   }
 
   edit() {

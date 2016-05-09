@@ -1,8 +1,7 @@
-defmodule Changelog.EpisodeViewTest do
+defmodule Changelog.PersonViewTest do
   use Changelog.ConnCase, async: true
 
   import Changelog.PersonView
-  alias Changelog.Person
 
   test "comma_separated_names" do
     p1 = build(:person, name: "The Gangsta")
