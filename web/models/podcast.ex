@@ -42,4 +42,12 @@ defmodule Changelog.Podcast do
       where: e.podcast_id == ^podcast.id,
       select: count(e.id))
   end
+
+  def last_numbered_slug(podcast) do
+    Repo.preload(podcast, :episodes).episodes
+    |> Enum.sort_by(&(&1.id))
+    |> Enum.reverse
+    |> Enum.map(&(Float.parse(&1.slug)))
+    |> Enum.find(fn(x) -> x != :error end)
+  end
 end

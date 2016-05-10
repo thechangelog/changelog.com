@@ -29,9 +29,14 @@ defmodule Changelog.Admin.EpisodeController do
       |> Enum.with_index(1)
       |> Enum.map(&EpisodeHost.build_and_preload/1)
 
+    default_slug = case Podcast.last_numbered_slug(podcast) do
+      {float, _} -> round(Float.floor(float) + 1)
+      _ -> ""
+    end
+
     changeset =
       podcast
-      |> build_assoc(:episodes, episode_hosts: default_hosts)
+      |> build_assoc(:episodes, episode_hosts: default_hosts, slug: default_slug)
       |> Episode.changeset
 
     render conn, "new.html", changeset: changeset
