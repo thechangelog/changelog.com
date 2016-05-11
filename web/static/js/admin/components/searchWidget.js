@@ -12,8 +12,7 @@ export default class SearchWidget {
         let $item = $(this);
         $item.find("input.js-position").val(index + 1);
         $item.find(".js-position-display").text(index + 1);
-
-      })
+      });
     }
 
     var noResultsMessage = function() {
@@ -41,7 +40,6 @@ export default class SearchWidget {
         url: `/admin/search?t=${type}&q={query}`
       },
       onSelect: function(selected) {
-        console.log(selected);
         let $list = $search.siblings(".list");
 
         let context = {

@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeLinkTest do
 
   alias Changelog.EpisodeLink
 
-  @valid_attrs %{position: 1, url: "https://changelog.com"}
+  @valid_attrs %{position: 1, url: "https://changelog.com", title: "test"}
   @invalid_attrs %{url: ""}
 
   test "changeset with valid attributes" do

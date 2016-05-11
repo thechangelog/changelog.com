@@ -1,0 +1,36 @@
+<div class="item">
+  <input
+    class="js-position"
+    name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][position]"
+    type="hidden"
+    value="{{position}}"
+  >
+
+  <div class="right floated content">
+    <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
+  </div>
+
+  <h4 class="ui link header">
+    #<span class="js-position-display">{{position}}</span>
+  </h4>
+
+  <div class="two fields">
+    <div class="required field">
+      <label>Title</label>
+      <input
+        name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][title]"
+        placeholder="Project Website"
+      >
+    </div>
+
+    <div class="required field">
+      <label>Url</label>
+      <input
+        name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][url]"
+        placeholder="http://semantic-ui.com/"
+      >
+    </div>
+  </div>
+
+  <div class="ui divider"></div>
+</div>

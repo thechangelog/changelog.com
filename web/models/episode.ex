@@ -67,7 +67,7 @@ defmodule Changelog.Episode do
       episode_guests: {Changelog.EpisodeGuest.by_position, :person},
       episode_sponsors: {Changelog.EpisodeSponsor.by_position, :sponsor},
       episode_channels: {Changelog.EpisodeChannel.by_position, :channel},
-      episode_links: {Changelog.EpisodeLink.by_position, :episode_link}
+      episode_links: Changelog.EpisodeLink.by_position
     ])
   end
 
