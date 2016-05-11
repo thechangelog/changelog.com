@@ -24,6 +24,8 @@ defmodule Changelog.Episode do
     has_many :episode_channels, Changelog.EpisodeChannel, on_delete: :delete_all
     has_many :channels, through: [:episode_channels, :channel]
     has_many :episode_sponsors, Changelog.EpisodeSponsor, on_delete: :delete_all
+    has_many :sponsors, through: [:episode_sponsors, :sponsor]
+    has_many :episode_links, Changelog.EpisodeLink, on_delete: :delete_all
 
     timestamps
   end
@@ -52,6 +54,7 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_guests, required: true)
     |> cast_assoc(:episode_sponsors, required: true)
     |> cast_assoc(:episode_channels, required: true)
+    |> cast_assoc(:episode_links, required: true)
     |> derive_bytes_and_duration(params)
   end
 
@@ -63,7 +66,8 @@ defmodule Changelog.Episode do
       episode_hosts: {Changelog.EpisodeHost.by_position, :person},
       episode_guests: {Changelog.EpisodeGuest.by_position, :person},
       episode_sponsors: {Changelog.EpisodeSponsor.by_position, :sponsor},
-      episode_channels: {Changelog.EpisodeChannel.by_position, :channel}
+      episode_channels: {Changelog.EpisodeChannel.by_position, :channel},
+      episode_links: {Changelog.EpisodeLink.by_position, :episode_link}
     ])
   end
 
