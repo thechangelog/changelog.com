@@ -24,6 +24,14 @@ defmodule Changelog.Factory do
     }
   end
 
+  def factory(:post) do
+    %Changelog.Post{
+      title: sequence(:name, &"Post #{&1}"),
+      slug: sequence(:slug, &"post-#{&1}"),
+      author: build(:person)
+    }
+  end
+
   def factory(:sponsor) do
     %Changelog.Sponsor{
       name: sequence(:name, &"Sponsor #{&1}")

@@ -25,19 +25,21 @@ defmodule Changelog.Router do
     get "/", PageController, :index
     get "/search", SearchController, :index
 
+    resources "/channels", ChannelController
     resources "/people", PersonController
-    resources "/sponsors", SponsorController
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
     end
-    resources "/channels", ChannelController
+    resources "/posts", PostController
+    resources "/sponsors", SponsorController
   end
 
   scope "/", Changelog do
     pipe_through :browser
 
-    resources "/people", PersonController, only: [:show]
     resources "/channels", ChannelController, only: [:show]
+    resources "/people", PersonController, only: [:show]
+    resources "/posts", PostController, only: [:show]
 
     get "/", PageController, :index
 

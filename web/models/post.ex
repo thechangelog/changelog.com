@@ -14,13 +14,13 @@ defmodule Changelog.Post do
     timestamps
   end
 
-  @required_fields ~w(title slug)
+  @required_fields ~w(title slug author_id)
   @optional_fields ~w(published published_at body)
 
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
-    |> unique_constraint(:posts_slug_index)
+    |> unique_constraint(:slug)
   end
 end

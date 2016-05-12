@@ -3,7 +3,7 @@ defmodule Changelog.PostTest do
 
   alias Changelog.Post
 
-  @valid_attrs %{slug: "what-a-post", title: "What a Post"}
+  @valid_attrs %{slug: "what-a-post", title: "What a Post", author_id: 42}
   @invalid_attrs %{title: "What a Post"}
 
   test "changeset with valid attributes" do

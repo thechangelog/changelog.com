@@ -1,10 +1,12 @@
 import "phoenix_html"
-import pv from "./admin/views/podcastView"
-import ev from "./admin/views/episodeView"
+import episodeView from "./admin/views/episodeView"
+import podcastView from "./admin/views/podcastView"
+import postView from "./admin/views/postView"
 
 let views = {
-  "PodcastView": pv,
-  "EpisodeView": ev
+  "PodcastView": podcastView,
+  "EpisodeView": episodeView,
+  "PostView": postView
 }
 
 let timeString = function(date) {

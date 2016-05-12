@@ -1,0 +1,5 @@
+<div class="ui text container">
+  <h1 class="ui dividing header">Edit <%= @post.title %></h1>
+
+  <%= render "_form.html", changeset: @changeset, action: admin_post_path(@conn, :update, @post) %>
+</div>
