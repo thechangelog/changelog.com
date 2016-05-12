@@ -27,5 +27,18 @@
     <%= error_message(f, :body) %>
   </div>
 
+  <div class="field <%= error_class f, :published_at %>">
+    <%= label f, :published_at, "Publish At" %>
+    <%= semantic_datetime_select f, :published_at, default: :os.timestamp |> :calendar.now_to_datetime %>
+    <%= error_message f, :published_at %>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox f, :published, class: "hidden" %>
+      <label>Published</label>
+    </div>
+  </div>
+
   <button class="ui primary button" type="submit">Save</button>
 <% end %>
