@@ -1,9 +1,11 @@
 import "phoenix_html"
+import channelView from "./admin/views/channelView"
 import episodeView from "./admin/views/episodeView"
 import podcastView from "./admin/views/podcastView"
 import postView from "./admin/views/postView"
 
 let views = {
+  "ChannelView": channelView,
   "PodcastView": podcastView,
   "EpisodeView": episodeView,
   "PostView": postView
