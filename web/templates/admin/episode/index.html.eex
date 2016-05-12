@@ -17,7 +17,7 @@
         <th>ID</th>
         <th>Slug</th>
         <th>Name</th>
-        <th>Published</th>
+        <th>Status</th>
         <th>Record Time</th>
         <th>Publish Time</th>
         <th></th>
@@ -30,7 +30,7 @@
         <td><%= episode.id %></td>
         <td><%= episode.slug %></td>
         <td><%= episode.title %></td>
-        <td><%= episode.published %></td>
+        <td><%= status_label(episode) %></td>
         <td><%= ts(episode.recorded_at) %></td>
         <td><%= ts(episode.published_at) %></td>
         <td class="center aligned">

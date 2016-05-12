@@ -20,7 +20,7 @@
         <th>ID</th>
         <th>Title</th>
         <th>Author</th>
-        <th>Published</th>
+        <th>Status</th>
         <th>Publish Time</th>
         <th></th>
       </tr>
@@ -32,7 +32,7 @@
         <td><%= post.id %></td>
         <td><%= link post.title, to: admin_post_path(@conn, :edit, post) %></td>
         <td><%= link post.author.name, to: admin_person_path(@conn, :edit, post.author) %></td>
-        <td><%= post.published %></td>
+        <td><%= status_label(post) %></td>
         <td><%= ts(post.published_at) %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
