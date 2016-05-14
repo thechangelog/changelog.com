@@ -26,12 +26,6 @@ defmodule Changelog.Person do
   @required_fields ~w(name email handle)
   @optional_fields ~w(github_handle twitter_handle bio website admin)
 
-  @doc """
-  Creates a changeset based on the `model` and `params`.
-
-  If no params are provided, an invalid changeset is returned
-  with no validation performed.
-  """
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
@@ -63,5 +57,23 @@ defmodule Changelog.Person do
   def decoded_auth(encoded) do
     {:ok, decoded} = Base.decode16(encoded)
     String.split(decoded, "|")
+  end
+
+  def episode_count(person) do
+    host_count = Repo.one from(e in Changelog.EpisodeHost,
+      where: e.person_id == ^person.id,
+      select: count(e.id))
+
+    guest_count = Repo.one from(e in Changelog.EpisodeGuest,
+      where: e.person_id == ^person.id,
+      select: count(e.id))
+
+    host_count + guest_count
+  end
+
+  def post_count(person) do
+    Repo.one from(p in Changelog.Post,
+      where: p.author_id == ^person.id,
+      select: count(p.id))
   end
 end
