@@ -28,6 +28,10 @@ defmodule Changelog.Post do
     |> cast_assoc(:post_channels, required: true)
   end
 
+  def published(query) do
+    from p in query, where: p.published == true
+  end
+
   def preload_all(model) do
     model
     |> Repo.preload(:author)

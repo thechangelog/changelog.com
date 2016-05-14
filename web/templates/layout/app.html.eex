@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Phoenix!</title>
+    <title>The Changelog</title>
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
   </head>
 
@@ -15,7 +15,7 @@
     <div class="container" role="main">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
+      <%= link "The Changelog", to: "/" %>
       <ul>
       <%= if @current_user do %>
         <li>Howdy, <%= @current_user.handle %></li>

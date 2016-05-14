@@ -1,0 +1,5 @@
+<h1><%= @post.title %></h1>
+
+<div class="body">
+  <%= md_to_html(@post.body) %>
+</div>

@@ -51,10 +51,13 @@ defmodule Changelog.Helpers.ViewHelpers do
 
   def is_persisted(struct), do: is_integer(struct.id)
 
-  def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
-  def md_to_html(md) when is_nil(md), do: ""
+  def md_to_html(md) when is_binary(md), do: {:safe, Cmark.to_html(md)}
+  def md_to_html(md) when is_nil(md), do: {:safe, ""}
 
-  def md_to_text(md), do: HtmlSanitizeEx.strip_tags(md_to_html(md))
+  def md_to_text(md) do
+    {:safe, html} = md_to_html(md)
+    HtmlSanitizeEx.strip_tags(html)
+  end
 
   def external_link(text, opts) do
     link text, (opts ++ [rel: "external"])
