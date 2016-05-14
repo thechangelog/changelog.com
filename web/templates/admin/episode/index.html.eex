@@ -20,6 +20,7 @@
         <th>Status</th>
         <th>Record Time</th>
         <th>Publish Time</th>
+        <th>Downloads</th>
         <th></th>
       </tr>
     </thead>
@@ -33,6 +34,7 @@
         <td><%= status_label(episode) %></td>
         <td><%= ts(episode.recorded_at) %></td>
         <td><%= ts(episode.published_at) %></td>
+        <td>TODO</td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
             <%= link to: episode_path(@conn, :episode, @podcast.slug, episode.slug), class: "ui button", title: "View Public Page" do %>

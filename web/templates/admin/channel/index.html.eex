@@ -42,10 +42,6 @@
               <i class="external icon"></i>
             <% end %>
 
-            <%= link to: admin_channel_path(@conn, :show, channel), class: "ui button", title: "View Details" do %>
-              <i class="eye icon"></i>
-            <% end %>
-
             <%= link to: admin_channel_path(@conn, :edit, channel), class: "ui button", title: "Edit this Channel" do %>
               <i class="edit icon"></i>
             <% end %>

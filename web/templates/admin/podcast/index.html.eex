@@ -23,6 +23,7 @@
         <th>Twitter</th>
         <th>Vanity Domain</th>
         <th>Episodes</th>
+        <th>Downloads</th>
         <th></th>
       </tr>
     </thead>
@@ -33,23 +34,22 @@
         <td><%= podcast.id %></td>
         </td>
         <td>
+          <%= link to: admin_podcast_episode_path(@conn, :index, podcast) do %>
           <h4 class="ui image header">
             <img src="<%= Changelog.PodcastView.cover_art_url(podcast, :small) %>" class="ui image"/>
           </h4>
             <%= podcast.name %>
+          <% end %>
         </td>
-        <td><%= podcast.slug %></td>
+        <td><%= link "/#{podcast.slug}", to: podcast_path(@conn, :show, podcast.slug) %></td>
         <td><%= twitter_link(podcast) %></td>
         <td><%= vanity_link(podcast) %></td>
-        <td><%= link "#{episode_count(podcast)}", to: admin_podcast_episode_path(@conn, :index, podcast) %></td>
+        <td><%= episode_count(podcast) %></td>
+        <td>TODO</td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
             <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button", title: "View Public Page" do %>
               <i class="external icon"></i>
-            <% end %>
-
-            <%= link to: admin_podcast_episode_path(@conn, :index, podcast), class: "ui button", title: "View Details" do %>
-              <i class="eye icon"></i>
             <% end %>
 
             <%= link to: admin_podcast_path(@conn, :edit, podcast), class: "ui button", title: "Edit Podcast" do %>

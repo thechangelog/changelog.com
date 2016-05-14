@@ -25,8 +25,8 @@ defmodule Changelog.Router do
     get "/", PageController, :index
     get "/search", SearchController, :index
 
-    resources "/channels", ChannelController
-    resources "/people", PersonController
+    resources "/channels", ChannelController, except: [:show]
+    resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
     end
