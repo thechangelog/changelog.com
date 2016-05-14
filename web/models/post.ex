@@ -9,7 +9,10 @@ defmodule Changelog.Post do
     field :published, :boolean, default: false
     field :published_at, Ecto.DateTime
     field :body, :string
+
     belongs_to :author, Changelog.Person
+    has_many :post_channels, Changelog.PostChannel, on_delete: :delete_all
+    has_many :channels, through: [:post_channels, :channel]
 
     timestamps
   end
@@ -22,5 +25,14 @@ defmodule Changelog.Post do
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
+    |> cast_assoc(:post_channels, required: true)
+  end
+
+  def preload_all(model) do
+    model
+    |> Repo.preload(:author)
+    |> Repo.preload([
+      post_channels: {Changelog.PostChannel.by_position, :channel}
+    ])
   end
 end

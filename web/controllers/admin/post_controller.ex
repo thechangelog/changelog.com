@@ -33,13 +33,14 @@ defmodule Changelog.Admin.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
-    post = Repo.get!(Post, id)
+    post = Repo.get!(Post, id) |> Post.preload_all
+
     changeset = Post.changeset(post)
     render conn, "edit.html", post: post, changeset: changeset
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
-    post = Repo.get!(Post, id)
+    post = Repo.get!(Post, id) |> Post.preload_all
     changeset = Post.changeset(post, post_params)
 
     case Repo.update(changeset) do

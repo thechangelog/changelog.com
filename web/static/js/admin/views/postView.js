@@ -1,3 +1,4 @@
+import SearchWidget from "../components/searchWidget"
 import Slugifier from "../components/slugifier"
 
 export default class PostView {
@@ -10,6 +11,7 @@ export default class PostView {
     });
 
     let $slugifier = new Slugifier("#post_title", "#post_slug");
+    let $channelWidget = new SearchWidget("channel", "post", "channels");
   }
 
   edit() {

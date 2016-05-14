@@ -32,10 +32,10 @@
       <tr>
         <td><%= channel.id %></td>
         <td><%= channel.name %></td>
-        <td><%= channel.slug %></td>
+        <td><%= link channel.slug, to: channel_path(@conn, :show, channel.slug) %></td>
         <td><%= truncate(channel.description, 60) %></td>
         <td><%= episode_count(channel) %></td>
-        <td>0</td>
+        <td><%= post_count(channel) %></td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
             <%= link to: channel_path(@conn, :show, channel.slug), class: "ui button", title: "View Public Page" do %>
