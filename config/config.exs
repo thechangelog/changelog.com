@@ -15,6 +15,10 @@ config :changelog, Changelog.Endpoint,
   pubsub: [name: Changelog.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configures Bamboo
+config :changelog, Changelog.Mailer,
+  adapter: Bamboo.LocalAdapter
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

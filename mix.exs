@@ -18,7 +18,7 @@ defmodule Changelog.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Changelog, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
+     applications: [:bamboo, :phoenix, :phoenix_html, :cowboy, :logger,
                     :phoenix_ecto, :postgrex, :tzdata, :ex_machina]]
   end
 
@@ -44,6 +44,7 @@ defmodule Changelog.Mixfile do
      {:arc, "~> 0.5.2"},
      {:arc_ecto, "~> 0.3.2"},
      {:hashids, "~> 2.0"},
+     {:bamboo, "~> 0.5"},
      {:cowboy, "~> 1.0"}]
   end
 

@@ -9,6 +9,10 @@ config :changelog, Changelog.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+# Configures Bamboo
+config :changelog, Changelog.Mailer,
+  adapter: Bamboo.TestAdapter
+
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
