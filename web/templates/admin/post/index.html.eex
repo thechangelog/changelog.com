@@ -17,7 +17,6 @@
   <table class="ui celled striped table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Title</th>
         <th>Author</th>
         <th>Status</th>
@@ -29,7 +28,6 @@
     <tbody>
     <%= for post <- @posts do %>
       <tr>
-        <td><%= post.id %></td>
         <td><%= link post.title, to: admin_post_path(@conn, :edit, post) %></td>
         <td><%= link post.author.name, to: admin_person_path(@conn, :edit, post.author) %></td>
         <td><%= status_label(post) %></td>

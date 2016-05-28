@@ -17,7 +17,6 @@
   <table class="ui celled striped table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Person</th>
         <th>Email</th>
         <th>Posts</th>
@@ -29,7 +28,6 @@
     <tbody>
     <%= for person <- @people do %>
       <tr>
-        <td><%= person.id %></td>
         <td>
           <img class="ui avatar image" src="<%= avatar_url(person, 56) %>">
           <%= person.name %>

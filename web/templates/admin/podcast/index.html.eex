@@ -17,7 +17,6 @@
   <table class="ui celled striped table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Slug</th>
         <th>Twitter</th>
@@ -31,8 +30,6 @@
     <tbody>
     <%= for podcast <- @podcasts do %>
       <tr>
-        <td><%= podcast.id %></td>
-        </td>
         <td>
           <%= link to: admin_podcast_episode_path(@conn, :index, podcast) do %>
           <h4 class="ui image header">

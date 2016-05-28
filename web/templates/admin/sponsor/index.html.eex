@@ -17,7 +17,6 @@
   <table class="ui celled striped table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Description</th>
         <th>Website</th>
@@ -30,7 +29,6 @@
     <tbody>
     <%= for sponsor <- @sponsors do %>
       <tr>
-        <td><%= sponsor.id %></td>
         <td>
           <h4 class="ui image header">
             <img src="<%= logo_image_url(sponsor, :small) %>" class="ui image"/>

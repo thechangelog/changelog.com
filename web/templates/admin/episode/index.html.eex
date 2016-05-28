@@ -14,7 +14,6 @@
   <table class="ui celled striped table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Slug</th>
         <th>Name</th>
         <th>Status</th>
@@ -28,7 +27,6 @@
     <tbody>
     <%= for episode <- @episodes do %>
       <tr>
-        <td><%= episode.id %></td>
         <td><%= episode.slug %></td>
         <td><%= episode.title %></td>
         <td><%= status_label(episode) %></td>

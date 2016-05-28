@@ -17,7 +17,6 @@
   <table class="ui celled striped table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Slug</th>
         <th>Description</th>
@@ -30,7 +29,6 @@
     <tbody>
     <%= for channel <- @channels do %>
       <tr>
-        <td><%= channel.id %></td>
         <td><%= channel.name %></td>
         <td><%= link channel.slug, to: channel_path(@conn, :show, channel.slug) %></td>
         <td><%= truncate(channel.description, 60) %></td>
