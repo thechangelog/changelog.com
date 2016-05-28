@@ -12,13 +12,13 @@ defmodule Changelog.Admin.EpisodeController do
     apply __MODULE__, action_name(conn), arg_list
   end
 
-  def index(conn, _params, podcast) do
-    query = from e in Episode,
-      where: e.podcast_id == ^podcast.id,
-      order_by: [desc: e.id]
+  def index(conn, params, podcast) do
+    page = Episode
+    |> where([e], e.podcast_id == ^podcast.id)
+    |> order_by([e], desc: e.published_at)
+    |> Repo.paginate(params)
 
-    episodes = Repo.all query
-    render conn, "index.html", episodes: episodes
+    render conn, "index.html", episodes: page.entries, page: page
   end
 
   def new(conn, _params, podcast) do

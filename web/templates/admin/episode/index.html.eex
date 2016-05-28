@@ -48,5 +48,7 @@
     <% end %>
     </tbody>
   </table>
+
+  <%= pagination_links @conn, @page, [@podcast], path: &admin_podcast_episode_path/4 %>
 <% end %>
 </div>

@@ -1,6 +1,8 @@
 defmodule Changelog.Admin.ChannelView do
   use Changelog.Web, :view
 
+  import Scrivener.HTML
+
   def episode_count(channel) do
     Changelog.Channel.episode_count(channel)
   end
@@ -8,6 +10,4 @@ defmodule Changelog.Admin.ChannelView do
   def post_count(channel) do
     Changelog.Channel.post_count(channel)
   end
-
-  import Scrivener.HTML
 end

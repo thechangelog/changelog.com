@@ -1,6 +1,8 @@
 defmodule Changelog.Admin.EpisodeView do
   use Changelog.Web, :view
 
+  import Scrivener.HTML
+
   alias Changelog.{EpisodeView, TimeView}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)

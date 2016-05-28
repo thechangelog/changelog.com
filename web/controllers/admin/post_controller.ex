@@ -7,7 +7,7 @@ defmodule Changelog.Admin.PostController do
 
   def index(conn, params) do
     page = Post
-    |> order_by([p], asc: p.published_at)
+    |> order_by([p], desc: p.published_at)
     |> preload(:author)
     |> Repo.paginate(params)
 
