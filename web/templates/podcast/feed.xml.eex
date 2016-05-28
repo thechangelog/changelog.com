@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:atom="http://www.w3.org/2005/Atom/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
     <title><%= @podcast.name %></title>
     <copyright>All rights reserved</copyright>
@@ -30,9 +30,9 @@
       <item>
         <title><%= Changelog.EpisodeView.numbered_title(episode) %></title>
         <link><%= episode_url(@conn, :episode, @podcast.slug, episode.slug) %></link>
-        <guid isPermalink="false"><%= Changelog.EpisodeView.guid(episode) %></guid>
+        <guid isPermaLink="false"><%= Changelog.EpisodeView.guid(episode) %></guid>
         <pubDate><%= Changelog.TimeView.rss(episode.published_at) %></pubDate>
-        <author><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></author>
+        <dc:creator><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></dc:creator>
         <description><![CDATA[<%= md_to_html(episode.summary) %>]]></description>
         <enclosure url="<%= static_url(@conn, Changelog.EpisodeView.audio_url(episode)) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
         <itunes:author><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></itunes:author>

@@ -16,7 +16,7 @@ defmodule Changelog.TimeView do
     {:ok, result} =
       ts
       |> Changelog.Timex.from_ecto
-      |> Timex.format("{RFC822}")
+      |> Timex.format("{RFC1123}")
     result
   end
 
