@@ -17,8 +17,7 @@
         <th>Slug</th>
         <th>Name</th>
         <th>Status</th>
-        <th>Record Time</th>
-        <th>Publish Time</th>
+        <th>Record/Publish Time</th>
         <th>Downloads</th>
         <th></th>
       </tr>
@@ -30,8 +29,11 @@
         <td><%= episode.slug %></td>
         <td><%= episode.title %></td>
         <td><%= status_label(episode) %></td>
-        <td><%= ts(episode.recorded_at) %></td>
+        <%= if episode.published do %>
         <td><%= ts(episode.published_at) %></td>
+        <% else %>
+        <td><%= ts(episode.recorded_at) %></td>
+        <% end %>
         <td>TODO</td>
         <td class="center aligned">
           <div class="ui basic icon buttons">
