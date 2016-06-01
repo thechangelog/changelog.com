@@ -44,7 +44,7 @@ defmodule Changelog.Mixfile do
      {:arc, "~> 0.5.2"},
      {:arc_ecto, "~> 0.3.2"},
      {:hashids, "~> 2.0"},
-     {:bamboo, "~> 0.5"},
+     {:bamboo, "~> 0.6"},
      {:cowboy, "~> 1.0"}]
   end
 
