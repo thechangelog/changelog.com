@@ -1,7 +1,7 @@
 defmodule Changelog.AuthController do
   use Changelog.Web, :controller
 
-  alias Changelog.Person
+  alias Changelog.{Person, Email, Mailer}
 
   def new(conn, %{"auth" =>  %{"email" => email}}) do
     person = Repo.one!(from p in Person, where: p.email == ^email)
@@ -19,6 +19,7 @@ defmodule Changelog.AuthController do
 
     case Repo.update(changeset) do
       {:ok, person} ->
+        Email.sign_in_email(person) |> Mailer.deliver_later
         render conn, "new.html", person: person
       {:error, _} ->
         conn

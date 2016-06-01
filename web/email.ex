@@ -11,7 +11,7 @@ defmodule Changelog.Email do
   end
 end
 
-defimpl Bamboo.Formatter, for: Changelo.Person do
+defimpl Bamboo.Formatter, for: Changelog.Person do
   def format_email_address(person, _opts) do
     {person.name, person.email}
   end

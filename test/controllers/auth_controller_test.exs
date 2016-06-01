@@ -1,5 +1,6 @@
 defmodule Changelog.AuthControllerTest do
   use Changelog.ConnCase
+  use Bamboo.Test
 
   alias Changelog.Person
 
@@ -29,6 +30,7 @@ defmodule Changelog.AuthControllerTest do
 
     assert html_response(conn, 200) =~ "Check your email"
     assert person.auth_token != nil
+    assert_delivered_email Changelog.Email.sign_in_email(person)
   end
 
   test "following a valid auth token signs you in" do
