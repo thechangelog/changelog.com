@@ -28,6 +28,7 @@ exports.config = {
           "web/static/vendor/semantic.css",
           /^(web\/static\/css\/admin)/
         ],
+        "css/email.css": /^(web\/static\/css\/email)/,
       }
     },
     templates: {

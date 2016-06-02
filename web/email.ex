@@ -1,13 +1,19 @@
 defmodule Changelog.Email do
-  import Bamboo.Email
+  use Bamboo.Phoenix, view: Changelog.EmailView
 
   def sign_in_email(person) do
-    new_email
-    |> from("robot@changelog.com")
+    base_email
     |> to(person)
     |> subject("Your Sign In Link")
-    |> html_body("<p>Click here to sign in.</p>")
-    |> text_body("Click here to sign in: ")
+    |> assign(:person, person)
+    |> render(:sign_in)
+  end
+
+  defp base_email do
+    new_email
+    |> from("Rob Ot<robot@changelog.com>")
+    |> put_header("Reply-To", "editors@changelog.com")
+    |> put_html_layout({Changelog.LayoutView, "email.html"})
   end
 end
 

@@ -11,6 +11,6 @@ defmodule Changelog.EmailTest do
     email = Email.sign_in_email(person)
 
     assert email.to == person
-    assert email.html_body =~ "Click here"
+    assert email.html_body =~ "Sign In"
   end
 end

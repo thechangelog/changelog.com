@@ -5,7 +5,7 @@
 
 <%= if Mix.env == :dev do %>
 <p>Psst! Since you're hacking we'll just skip the email process.
-<%= link "click here", to: auth_path(@person) %> instead!</p>
+<%= link "click here", to: auth_path(@conn, @person) %> instead!</p>
 <% end %>
 
 <% else %>
