@@ -6,7 +6,7 @@ defmodule Changelog.Admin.SearchControllerTest do
     create :person, name: "joe blow"
     create :person, name: "oh no"
 
-    conn = get conn, "/admin/search?t=person&q=jo"
+    conn = get conn, "/admin/search/person?q=jo&f=json"
 
     assert conn.status == 200
     assert conn.resp_body =~ "joe blow"
@@ -18,7 +18,7 @@ defmodule Changelog.Admin.SearchControllerTest do
     create :channel, name: "Elixir Phoenix"
     create :channel, name: "Elixir Ecto"
 
-    conn = get conn, "/admin/search?t=channel&q=ect"
+    conn = get conn, "/admin/search/channel?q=ect&f=json"
 
     assert conn.status == 200
     assert conn.resp_body =~ "Elixir Ecto"
@@ -30,7 +30,7 @@ defmodule Changelog.Admin.SearchControllerTest do
     create :sponsor, name: "Apple Inc"
     create :sponsor, name: "Google Inc"
 
-    conn = get conn, "/admin/search?t=sponsor&q=App"
+    conn = get conn, "/admin/search/sponsor?q=App&f=json"
 
     assert conn.status == 200
     assert conn.resp_body =~ "Apple Inc"
@@ -38,7 +38,7 @@ defmodule Changelog.Admin.SearchControllerTest do
   end
 
   test "requires user auth" do
-    conn = get conn, "/admin/search?t=channel&q=ect"
+    conn = get conn, "/admin/search/channel?q=ect&f=json"
     assert html_response(conn, 302)
     assert conn.halted
   end

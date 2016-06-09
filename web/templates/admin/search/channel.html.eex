@@ -1,0 +1,10 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    Channels matching '<%= @query %>': <%= length(@results) %>
+  </h1>
+
+  <%= if Enum.any?(@results) do %>
+    <%= render Changelog.Admin.ChannelView, "_table.html", conn: @conn, channels: @results %>
+  <% end %>
+</div>
+

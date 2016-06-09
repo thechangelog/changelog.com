@@ -1,0 +1,5 @@
+<%= render "channel.html", conn: @conn, query: @query, results: @results.channels %>
+<%= render "episode.html", conn: @conn, query: @query, results: @results.episodes %>
+<%= render "person.html", conn: @conn, query: @query, results: @results.people %>
+<%= render "post.html", conn: @conn, query: @query, results: @results.posts %>
+<%= render "sponsor.html", conn: @conn, query: @query, results: @results.sponsors %>

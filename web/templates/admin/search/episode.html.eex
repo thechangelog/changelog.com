@@ -1,0 +1,10 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    Episodes matching '<%= @query %>': <%= length(@results) %>
+  </h1>
+
+  <%= if Enum.any?(@results) do %>
+    <%= render Changelog.Admin.EpisodeView, "_table.html", conn: @conn, podcast: List.first(@results).podcast, episodes: @results %>
+  <% end %>
+</div>
+

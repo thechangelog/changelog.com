@@ -1,0 +1,10 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    People matching '<%= @query %>': <%= length(@results) %>
+  </h1>
+
+  <%= if Enum.any?(@results) do %>
+    <%= render Changelog.Admin.PersonView, "_table.html", conn: @conn, people: @results %>
+  <% end %>
+</div>
+

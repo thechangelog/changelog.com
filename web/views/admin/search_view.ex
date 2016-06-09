@@ -1,26 +1,85 @@
 defmodule Changelog.Admin.SearchView do
   use Changelog.Web, :view
 
-  def render("index.json", %{people: people}) do
-    %{results: render_many(people, __MODULE__, "person.json", as: :person)}
+  alias Changelog.Endpoint
+
+  def render("all.json", params = %{results: results, query: query}) do
+    limit = 3
+
+    response = %{results: %{
+      channels: %{
+        name: "Channels",
+        results: (results.channels |> Enum.take(limit) |> Enum.map(&channel_result/1))
+      },
+      episodes: %{
+        name: "Episodes",
+        results: (results.episodes |> Enum.take(limit) |> Enum.map(&episode_result/1))
+      },
+      people: %{
+        name: "People",
+        results: (results.people |> Enum.take(limit) |> Enum.map(&person_result/1))
+      },
+      posts: %{
+        name: "Posts",
+        results: (results.posts |> Enum.take(limit) |> Enum.map(&post_result/1))
+      },
+      sponsors: %{
+        name: "Sponsors",
+        results: (results.sponsors |> Enum.take(limit) |> Enum.map(&sponsor_result/1))
+      }
+    }}
+
+    counts = Enum.map(results, fn({type, results}) -> Enum.count(results) end)
+    if Enum.any?(counts, fn(count) -> count > limit end) do
+      Map.put(response, :action, %{
+        url: "/admin/search?q=#{query}",
+        text: "View all #{Enum.sum(counts)} results"
+      })
+    else
+      response
+    end
   end
 
-  def render("index.json", %{sponsors: sponsors}) do
-    %{results: render_many(sponsors, __MODULE__, "sponsor.json", as: :sponsor)}
+  def render("channel.json", params = %{results: results, query: query}) do
+    %{results: Enum.map(results, &channel_result/1)}
   end
 
-  def render("index.json", %{channels: channels}) do
-    %{results: render_many(channels, __MODULE__, "channel.json", as: :channel)}
+  def render("person.json", params = %{results: results, query: query}) do
+    %{results: Enum.map(results, &person_result/1)}
   end
 
-  def render("person.json", %{person: person}) do
+  def render("sponsor.json", params = %{results: results, query: query}) do
+    %{results: Enum.map(results, &sponsor_result/1)}
+  end
+
+  defp channel_result(channel) do
+    %{id: channel.id,
+      title: channel.name,
+      slug: channel.slug,
+      url: admin_channel_path(Endpoint, :edit, channel)}
+  end
+
+  defp episode_result(episode) do
+    %{
+      id: episode.id,
+      title: Changelog.EpisodeView.numbered_title(episode),
+      url: admin_podcast_episode_path(Endpoint, :edit, episode.podcast, episode)
+    }
+  end
+
+  defp person_result(person) do
     %{id: person.id,
       title: person.name,
       description: "(@#{person.handle})",
-      image: avatar_url(person)}
+      image: avatar_url(person),
+      url: admin_person_path(Endpoint, :edit, person)}
   end
 
-  def render("sponsor.json", %{sponsor: sponsor}) do
+  defp post_result(post) do
+    %{title: post.title, url: admin_post_path(Endpoint, :edit, post)}
+  end
+
+  defp sponsor_result(sponsor) do
     latest =
       sponsor
       |> Ecto.assoc(:episode_sponsors)
@@ -41,12 +100,7 @@ defmodule Changelog.Admin.SearchView do
       title: sponsor.name,
       description: sponsor.description,
       image: Changelog.SponsorView.logo_image_url(sponsor, :small),
+      url: admin_sponsor_path(Endpoint, :edit, sponsor),
       extras: extras}
-  end
-
-  def render("channel.json", %{channel: channel}) do
-    %{id: channel.id,
-      title: channel.name,
-      slug: channel.slug}
   end
 end

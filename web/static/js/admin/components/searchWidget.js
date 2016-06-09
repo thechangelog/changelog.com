@@ -37,9 +37,12 @@ export default class SearchWidget {
 
     $search.search({
       apiSettings: {
-        url: `/admin/search?t=${type}&q={query}`
+        url: `/admin/search/${type}?q={query}&f=json`
       },
       onSelect: function(selected) {
+      fields: {
+        url: null // so the returned url isn't followed on click
+      },
         let $list = $search.siblings(".list");
 
         let context = {

@@ -53,6 +53,18 @@ $("span.time").each(function() {
   $span.text(timeString(date));
 })
 
+$(".ui.navigation.search").search({
+  type: "category",
+  minCharacters: 3,
+  apiSettings: {
+    url: "/admin/search?q={query}&f=json"
+  },
+  onSelect: function(result, response) {
+    console.log("FAIL", result["url"]);
+    return false;
+  }
+})
+
 let $body = $("body");
 let viewName = $body.data("module").match(/\.(\w+View)$/)[1];
 let actionName = $body.data("template").replace(".html", "");

@@ -27,7 +27,11 @@ defmodule Changelog.Router do
     pipe_through [:browser, :admin]
 
     get "/", PageController, :index
-    get "/search", SearchController, :index
+    get "/search", SearchController, :all
+    get "/search/channel", SearchController, :channel
+    get "/search/person", SearchController, :person
+    get "/search/post", SearchController, :post
+    get "/search/sponsor", SearchController, :sponsor
 
     resources "/channels", ChannelController, except: [:show]
     resources "/people", PersonController, except: [:show]
