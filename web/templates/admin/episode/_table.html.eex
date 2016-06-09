@@ -1,0 +1,39 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Slug</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Record/Publish Time</th>
+      <th>Downloads</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for episode <- @episodes do %>
+    <tr>
+      <td><%= episode.slug %></td>
+      <td><%= episode.title %></td>
+      <td><%= status_label(episode) %></td>
+      <%= if episode.published do %>
+      <td><%= ts(episode.published_at) %></td>
+      <% else %>
+      <td><%= ts(episode.recorded_at) %></td>
+      <% end %>
+      <td>TODO</td>
+      <td class="center aligned">
+        <div class="ui basic icon buttons">
+          <%= link to: episode_path(@conn, :episode, @podcast.slug, episode.slug), class: "ui button", title: "View Public Page" do %>
+            <i class="external icon"></i>
+          <% end %>
+
+          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast, episode), class: "ui button", title: "Edit Episode" do %>
+            <i class="edit icon"></i>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

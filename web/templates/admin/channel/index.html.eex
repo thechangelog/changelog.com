@@ -14,46 +14,7 @@
 
 <div class="ui basic segment">
 <%= if Enum.any?(@channels) do %>
-  <table class="ui celled striped table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Slug</th>
-        <th>Description</th>
-        <th>Episodes</th>
-        <th>Posts</th>
-        <th></th>
-      </tr>
-    </thead>
-
-    <tbody>
-    <%= for channel <- @channels do %>
-      <tr>
-        <td><%= channel.name %></td>
-        <td><%= link channel.slug, to: channel_path(@conn, :show, channel.slug) %></td>
-        <td><%= truncate(channel.description, 60) %></td>
-        <td><%= episode_count(channel) %></td>
-        <td><%= post_count(channel) %></td>
-        <td class="center aligned">
-          <div class="ui basic icon buttons">
-            <%= link to: channel_path(@conn, :show, channel.slug), class: "ui button", title: "View Public Page" do %>
-              <i class="external icon"></i>
-            <% end %>
-
-            <%= link to: admin_channel_path(@conn, :edit, channel), class: "ui button", title: "Edit this Channel" do %>
-              <i class="edit icon"></i>
-            <% end %>
-
-            <%= link to: admin_channel_path(@conn, :delete, channel), method: :delete, data: [confirm: "Are you sure?"], class: "ui button", title: "Delete this Channel" do %>
-              <i class="trash icon"></i>
-            <% end %>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-
+  <%= render "_table.html", conn: @conn, channels: @channels %>
   <%= pagination_links @conn, @page, path: &admin_channel_path/3 %>
 <% end %>
 </div>

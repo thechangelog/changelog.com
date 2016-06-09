@@ -1,0 +1,37 @@
+<table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Status</th>
+        <th>Publish Time</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for post <- @posts do %>
+      <tr>
+        <td><%= link post.title, to: admin_post_path(@conn, :edit, post) %></td>
+        <td><%= link post.author.name, to: admin_person_path(@conn, :edit, post.author) %></td>
+        <td><%= status_label(post) %></td>
+        <td><%= ts(post.published_at) %></td>
+        <td class="center aligned">
+          <div class="ui basic icon buttons">
+            <%= link to: post_path(@conn, :show, post.slug), class: "ui button", title: "View Public Page" do %>
+              <i class="external icon"></i>
+            <% end %>
+
+            <%= link to: admin_post_path(@conn, :edit, post), class: "ui button", title: "Edit this Post" do %>
+              <i class="edit icon"></i>
+            <% end %>
+
+            <%= link to: admin_post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "ui button", title: "Delete this Post" do %>
+              <i class="trash icon"></i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>

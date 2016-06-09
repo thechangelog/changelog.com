@@ -1,0 +1,44 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Website</th>
+      <th>GitHub</th>
+      <th>Twitter</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for sponsor <- @sponsors do %>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+          <img src="<%= logo_image_url(sponsor, :small) %>" class="ui image"/>
+        </h4>
+        <%= sponsor.name %>
+      </td>
+      <td><%= sponsor.description %></td>
+      <td><%= website_link(sponsor) %></td>
+      <td><%= github_link(sponsor) %></td>
+      <td><%= twitter_link(sponsor) %></td>
+      <td class="center aligned">
+        <div class="ui basic icon buttons">
+          <%= link to: admin_sponsor_path(@conn, :show, sponsor), class: "ui button", title: "View Details" do %>
+            <i class="eye icon"></i>
+          <% end %>
+
+          <%= link to: admin_sponsor_path(@conn, :edit, sponsor), class: "ui button", title: "Edit this Sponsor" do %>
+            <i class="edit icon"></i>
+          <% end %>
+
+          <%= link to: admin_sponsor_path(@conn, :delete, sponsor), method: :delete, data: [confirm: "Are you sure?"], class: "ui button", title: "Delete this Sponsor" do %>
+            <i class="trash icon"></i>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
