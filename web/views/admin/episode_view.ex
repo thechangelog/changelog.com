@@ -3,11 +3,24 @@ defmodule Changelog.Admin.EpisodeView do
 
   import Scrivener.HTML
 
-  alias Changelog.{EpisodeView, TimeView}
+  alias Changelog.{EpisodeView, TimeView, Repo}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
   def audio_url(episode), do: EpisodeView.audio_url(episode)
   def megabytes(episode), do: EpisodeView.megabytes(episode)
+
+  def channel_from_model_or_params(model, params) do
+    (model |> Repo.preload(:channel)).channel ||
+      Repo.get(Changelog.Channel, (Map.get(model, "channel_id") || params["channel_id"]))
+  end
+  def person_from_model_or_params(model, params) do
+    (model |> Repo.preload(:person)).person ||
+      Repo.get(Changelog.Person, (Map.get(model, "person_id") || params["person_id"]))
+  end
+  def sponsor_from_model_or_params(model, params) do
+    (model |> Repo.preload(:sponsor)).sponsor ||
+      Repo.get(Changelog.Sponsor, (Map.get(model, "sponsor_id") || params["sponsor_id"]))
+  end
 
   def status_label(episode) do
     if episode.published do

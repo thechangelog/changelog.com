@@ -30,13 +30,14 @@
 
     <div class="ui middle aligned selection list js-hosts">
       <%= inputs_for f, :episode_hosts, fn i -> %>
+        <% host = person_from_model_or_params(i.model, i.params) %>
         <div class="item persisted">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= avatar_url(i.model.person) %>">
+          <img class="ui avatar image" src="<%= avatar_url(host) %>">
 
           <div class="content">
-            <div class="header"><%= i.model.person.name %> (@<%= i.model.person.handle %>)</div>
+            <div class="header"><%= host.name %> (@<%= host.handle %>)</div>
           </div>
 
           <div class="right floated content">
@@ -60,13 +61,14 @@
 
     <div class="ui middle aligned selection list js-guests">
       <%= inputs_for f, :episode_guests, fn i -> %>
+        <% guest = person_from_model_or_params(i.model, i.params) %>
         <div class="item persisted">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= avatar_url(i.model.person) %>">
+          <img class="ui avatar image" src="<%= avatar_url(guest) %>">
 
           <div class="content">
-            <div class="header"><%= i.model.person.name %> (@<%= i.model.person.handle %>)</div>
+            <div class="header"><%= guest.name %> (@<%= guest.handle %>)</div>
           </div>
 
           <div class="right floated content">
@@ -90,7 +92,7 @@
 
     <div class="ui middle aligned selection list js-sponsors">
       <%= inputs_for f, :episode_sponsors, fn i -> %>
-        <% sponsor = Changelog.Repo.get(Changelog.Sponsor, (i.model.sponsor_id || i.params["sponsor_id"])) %>
+        <% sponsor = sponsor_from_model_or_params(i.model, i.params) %>
         <div class="item persisted">
           <%= hidden_input i, :sponsor_id %>
           <%= hidden_input i, :position, class: "js-position" %>
@@ -140,13 +142,14 @@
 
     <div class="ui horizontal selection list js-channels">
       <%= inputs_for f, :episode_channels, fn i -> %>
+        <% channel = channel_from_model_or_params(i.model, i.params) %>
         <div class="item persisted">
           <%= hidden_input i, :channel_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
           <div class="content">
             <a class="ui label">
-              <%= i.model.channel.name %>
+              <%= channel.name %>
               <i class="delete icon js-remove"></i>
               <%= hidden_input i, :delete %>
             </a>
