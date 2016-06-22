@@ -3,7 +3,7 @@ defmodule Changelog.PodcastView do
 
   def cover_art_url(podcast, version) do
     Changelog.CoverArt.url({podcast.cover_art, podcast}, version)
-    |> String.replace_leading("priv/static", "/")
+    |> String.replace_leading("priv/static", "")
   end
 
   def cover_art_local_path(podcast, version) do
@@ -16,5 +16,14 @@ defmodule Changelog.PodcastView do
     |> String.downcase
     |> String.replace(~r/[^\w\s]/, "")
     |> String.replace(" ", "-")
+  end
+
+
+  def vanity_domain_with_fallback_url(podcast) do
+    if podcast.vanity_domain do
+      podcast.vanity_domain
+    else
+      podcast_url(Changelog.Endpoint, :show, podcast.slug)
+    end
   end
 end

@@ -48,4 +48,35 @@ defmodule Changelog.PodcastController do
     |> put_resp_content_type("application/xml")
     |> render("feed.xml", podcast: podcast, episodes: episodes)
   end
+
+  def master(conn, _params) do
+    episodes =
+      Episode.published
+      |> Episode.newest_first
+      |> Repo.all
+      |> Episode.preload_all
+
+    render conn, "master.html", podcast: stub_master_podcast, episodes: episodes
+  end
+
+  def master_feed(conn, _params) do
+    episodes =
+      Episode.published
+      |> Episode.newest_first
+      |> Repo.all
+      |> Episode.preload_all
+
+    conn
+    |> put_layout(false)
+    |> put_resp_content_type("application/xml")
+    |> render("master.xml", podcast: stub_master_podcast, episodes: episodes)
+  end
+
+  defp stub_master_podcast do
+    %Podcast{
+      name: "Changelog Master Feed",
+      description: "git pull changelog master",
+      keywords: "changelog, open source, oss, software, development, developer"
+    }
+  end
 end

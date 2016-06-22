@@ -36,8 +36,8 @@ defmodule Changelog.Episode do
   @required_file_fields ~w()
   @optional_file_fields ~w(audio_file)
 
-  def published(query) do
-    from e in query, where: e.published == true
+  def published(query \\ __MODULE__) do
+    from e in query, where: e.published == true, where: not(is_nil(e.audio_file))
   end
 
   def newest_first(query) do

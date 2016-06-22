@@ -9,6 +9,16 @@ defmodule Changelog.Factory do
     }
   end
 
+  def factory(:published_episode) do
+    %Changelog.Episode{
+      title: sequence(:title, &"Best Show Evar! #{&1}"),
+      slug: sequence(:slug, &"best-show-evar-#{&1}"),
+      audio_file: %{file_name: "test.mp3", updated_at: Ecto.DateTime.from_erl(:calendar.gregorian_seconds_to_datetime(63633830567))},
+      published: true,
+      podcast: build(:podcast)
+    }
+  end
+
   def factory(:person) do
     %Changelog.Person{
       name: sequence(:name, &"Joe Blow #{&1}"),
