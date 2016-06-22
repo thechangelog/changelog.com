@@ -3,7 +3,7 @@ defmodule Changelog.Admin.SearchView do
 
   alias Changelog.Endpoint
 
-  def render("all.json", params = %{results: results, query: query}) do
+  def render("all.json", _params = %{results: results, query: query}) do
     limit = 3
 
     response = %{results: %{
@@ -29,7 +29,7 @@ defmodule Changelog.Admin.SearchView do
       }
     }}
 
-    counts = Enum.map(results, fn({type, results}) -> Enum.count(results) end)
+    counts = Enum.map(results, fn({_type, results}) -> Enum.count(results) end)
     if Enum.any?(counts, fn(count) -> count > limit end) do
       Map.put(response, :action, %{
         url: "/admin/search?q=#{query}",
@@ -40,15 +40,15 @@ defmodule Changelog.Admin.SearchView do
     end
   end
 
-  def render("channel.json", params = %{results: results, query: query}) do
+  def render("channel.json", _params = %{results: results, query: _query}) do
     %{results: Enum.map(results, &channel_result/1)}
   end
 
-  def render("person.json", params = %{results: results, query: query}) do
+  def render("person.json", _params = %{results: results, query: _query}) do
     %{results: Enum.map(results, &person_result/1)}
   end
 
-  def render("sponsor.json", params = %{results: results, query: query}) do
+  def render("sponsor.json", _params = %{results: results, query: _query}) do
     %{results: Enum.map(results, &sponsor_result/1)}
   end
 
