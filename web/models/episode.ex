@@ -61,7 +61,6 @@ defmodule Changelog.Episode do
   def preload_all(model) do
     model
     |> Repo.preload(:podcast)
-    |> Repo.preload(:hosts)
     |> Repo.preload([
       episode_hosts: {Changelog.EpisodeHost.by_position, :person},
       episode_guests: {Changelog.EpisodeGuest.by_position, :person},
@@ -69,6 +68,8 @@ defmodule Changelog.Episode do
       episode_channels: {Changelog.EpisodeChannel.by_position, :channel},
       episode_links: Changelog.EpisodeLink.by_position
     ])
+    |> Repo.preload(:hosts)
+    |> Repo.preload(:guests)
   end
 
   defp derive_bytes_and_duration(changeset, params) do

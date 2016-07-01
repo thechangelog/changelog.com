@@ -2,5 +2,5 @@
 <h2><%= Changelog.EpisodeView.numbered_title(@episode) %></h2>
 
 <section class="description">
-  <%= md_to_html(@episode.summary) %>
+  <%= raw md_to_html(@episode.summary) %>
 </section>
