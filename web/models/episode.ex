@@ -1,6 +1,6 @@
 defmodule Changelog.Episode do
   use Changelog.Web, :model
-  use Arc.Ecto.Model
+  use Arc.Ecto.Schema
 
   alias Changelog.Regexp
 
@@ -34,9 +34,6 @@ defmodule Changelog.Episode do
   @required_fields ~w(slug title published)
   @optional_fields ~w(subtitle summary notes published_at recorded_at guid)
 
-  @required_file_fields ~w()
-  @optional_file_fields ~w(audio_file)
-
   def published(query \\ __MODULE__) do
     from e in query, where: e.published == true, where: not(is_nil(e.audio_file))
   end
@@ -48,7 +45,7 @@ defmodule Changelog.Episode do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> cast_attachments(params, @required_file_fields, @optional_file_fields)
+    |> cast_attachments(params, ~w(audio_file))
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts, required: true)

@@ -7,6 +7,14 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def pagination_links(_one, _two, _three) do
+    ""
+  end
+
+  def pagination_links(_one, _two, _three, _four) do
+    ""
+  end
+
   # moved here from PersonView because used pervasively
   def avatar_url(person), do: gravatar_url(person.email, 100)
   def avatar_url(person, size), do: gravatar_url(person.email, size)

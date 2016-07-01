@@ -1,7 +1,7 @@
 defmodule Changelog.Admin.PersonView do
   use Changelog.Web, :view
 
-  import Scrivener.HTML
+  # import Scrivener.HTML
 
   def episode_count(person) do
     Changelog.Person.episode_count(person)

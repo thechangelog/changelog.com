@@ -18,8 +18,8 @@ defmodule Changelog.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Changelog, []},
-     applications: [:bamboo, :phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :tzdata, :ex_machina]]
+     applications: [:bamboo, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy,
+                    :logger, :phoenix_ecto, :postgrex, :tzdata, :ex_machina]]
   end
 
   # Specifies which paths to compile per environment.
@@ -30,19 +30,19 @@ defmodule Changelog.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.4"},
-     {:phoenix_ecto, "~> 2.0"},
+    [{:phoenix, "~> 1.2.0"},
+     {:phoenix_pubsub, "~> 1.0"},
+     {:phoenix_ecto, "~> 3.0-rc"},
      {:postgrex, "~> 0.11.1"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:timex, "~> 2.1.4"},
      {:ex_machina, "~> 0.5"},
-     {:scrivener, "~> 1.0"},
-     {:scrivener_html, "~> 1.0"},
+     {:scrivener_ecto, "~> 1.0"},
      {:cmark, "~> 0.6"},
      {:html_sanitize_ex, "~> 0.1.0"},
      {:arc, "~> 0.5.2"},
-     {:arc_ecto, "~> 0.3.2"},
+     {:arc_ecto, "~> 0.4.2"},
      {:hashids, "~> 2.0"},
      {:bamboo, "~> 0.6"},
      {:cowboy, "~> 1.0"}]

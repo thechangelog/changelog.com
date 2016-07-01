@@ -9,5 +9,5 @@ defmodule Changelog.Admin.PostView do
     end
   end
 
-  import Scrivener.HTML
+  # import Scrivener.HTML
 end
