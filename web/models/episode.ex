@@ -5,12 +5,14 @@ defmodule Changelog.Episode do
   alias Changelog.Regexp
 
   schema "episodes" do
-    field :title, :string
     field :slug, :string
+    field :title, :string
+    field :subtitle, :string
+    field :summary, :string
+    field :notes, :string
     field :published, :boolean, default: false
     field :published_at, Ecto.DateTime
     field :recorded_at, Ecto.DateTime
-    field :summary, :string
     field :guid, :string
     field :audio_file, Changelog.AudioFile.Type
     field :bytes, :integer
@@ -25,13 +27,12 @@ defmodule Changelog.Episode do
     has_many :channels, through: [:episode_channels, :channel]
     has_many :episode_sponsors, Changelog.EpisodeSponsor, on_delete: :delete_all
     has_many :sponsors, through: [:episode_sponsors, :sponsor]
-    has_many :episode_links, Changelog.EpisodeLink, on_delete: :delete_all
 
     timestamps
   end
 
   @required_fields ~w(slug title published)
-  @optional_fields ~w(published_at recorded_at summary guid)
+  @optional_fields ~w(subtitle summary notes published_at recorded_at guid)
 
   @required_file_fields ~w()
   @optional_file_fields ~w(audio_file)
@@ -54,7 +55,6 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_guests, required: true)
     |> cast_assoc(:episode_sponsors, required: true)
     |> cast_assoc(:episode_channels, required: true)
-    |> cast_assoc(:episode_links, required: true)
     |> derive_bytes_and_duration(params)
   end
 
@@ -65,8 +65,7 @@ defmodule Changelog.Episode do
       episode_hosts: {Changelog.EpisodeHost.by_position, :person},
       episode_guests: {Changelog.EpisodeGuest.by_position, :person},
       episode_sponsors: {Changelog.EpisodeSponsor.by_position, :sponsor},
-      episode_channels: {Changelog.EpisodeChannel.by_position, :channel},
-      episode_links: Changelog.EpisodeLink.by_position
+      episode_channels: {Changelog.EpisodeChannel.by_position, :channel}
     ])
     |> Repo.preload(:hosts)
     |> Repo.preload(:guests)

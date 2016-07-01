@@ -1,5 +1,4 @@
 import SearchWidget from "../components/searchWidget"
-import ListWidget from "../components/listWidget"
 
 export default class EpisodeView {
   new() {
@@ -7,7 +6,6 @@ export default class EpisodeView {
     let $guestWidget = new SearchWidget("person", "episode", "guests");
     let $sponsorWidget = new SearchWidget("sponsor", "episode", "sponsors");
     let $channelWidget = new SearchWidget("channel", "episode", "channels");
-    let $linkWidget = new ListWidget("episode", "links");
   }
 
   edit() {

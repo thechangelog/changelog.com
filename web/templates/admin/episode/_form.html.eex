@@ -13,6 +13,11 @@
     </div>
   </div>
 
+  <div class="field">
+    <%= label f, :subtitle %>
+    <%= text_input f, :subtitle, placeholder: "Optional. Used in iTunes." %>
+  </div>
+
   <div class="field <%= error_class f, :recorded_at %>">
     <%= label f, :recorded_at, "Record At" %>
     <%= semantic_datetime_select f, :recorded_at, default: :os.timestamp |> :calendar.now_to_datetime %>
@@ -173,45 +178,8 @@
   </div>
 
   <div class="field">
-    <%= label f, :links %>
-
-    <div class="ui middle aligned selection list js-links">
-      <%= inputs_for f, :episode_links, fn i -> %>
-        <div class="item persisted">
-          <%= hidden_input i, :position, class: "js-position" %>
-
-          <div class="right floated content">
-            <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
-            <%= hidden_input i, :delete %>
-          </div>
-
-          <h4 class="ui link header">
-            #<span class="js-position-display"><%= i.model.position %></span>
-          </h4>
-
-          <div class="two fields">
-            <div class="required field <%= error_class(i, :title) %>">
-              <label>Title</label>
-              <%= text_input i, :title %>
-              <%= error_message i, :title %>
-            </div>
-
-            <div class="required field <%= error_class(i, :url) %>">
-              <label>Url</label>
-              <%= text_input i, :url %>
-              <%= error_message i, :url %>
-            </div>
-          </div>
-
-          <div class="ui divider"></div>
-        </div>
-      <% end %>
-    </div>
-
-    <button class="ui small basic button js-add">
-      <i class="plus icon"></i>
-      Add Link
-    </button>
+    <%= label f, :notes %>
+    <%= textarea f, :notes, placeholder: "The more, the better. Markdown enabled." %>
   </div>
 
   <div class="field">
