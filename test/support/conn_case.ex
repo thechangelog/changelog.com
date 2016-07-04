@@ -36,11 +36,13 @@ defmodule Changelog.ConnCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Changelog.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Changelog.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Changelog.Repo, {:shared, self()})
     end
 
-    conn = Phoenix.ConnTest.conn()
+    conn = Phoenix.ConnTest.build_conn()
 
     if tags[:as_admin] do
       user = %Changelog.Person{admin: true}

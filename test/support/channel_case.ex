@@ -31,8 +31,10 @@ defmodule Changelog.ChannelCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Changelog.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Changelog.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Changelog.Repo, {:shared, self()})
     end
 
     :ok

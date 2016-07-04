@@ -14,7 +14,7 @@ defmodule Changelog.PodcastHost do
   @required_fields ~w(position)
   @optional_fields ~w(podcast_id person_id delete)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> mark_for_deletion()

@@ -42,16 +42,16 @@ defmodule Changelog.Episode do
     from e in query, order_by: [desc: e.published_at]
   end
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, ~w(audio_file))
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:episodes_slug_podcast_id_index)
-    |> cast_assoc(:episode_hosts, required: true)
-    |> cast_assoc(:episode_guests, required: true)
-    |> cast_assoc(:episode_sponsors, required: true)
-    |> cast_assoc(:episode_channels, required: true)
+    |> cast_assoc(:episode_hosts)
+    |> cast_assoc(:episode_guests)
+    |> cast_assoc(:episode_sponsors)
+    |> cast_assoc(:episode_channels)
     |> derive_bytes_and_duration(params)
   end
 

@@ -3,10 +3,10 @@ defmodule Changelog.Admin.SearchControllerTest do
 
   @tag :as_admin
   test "searching people", %{conn: conn} do
-    create :person, name: "joe blow"
-    create :person, name: "oh no"
+    insert(:person, name: "joe blow")
+    insert(:person, name: "oh no")
 
-    conn = get conn, "/admin/search/person?q=jo&f=json"
+    conn = get(conn, "/admin/search/person?q=jo&f=json")
 
     assert conn.status == 200
     assert conn.resp_body =~ "joe blow"
@@ -15,10 +15,10 @@ defmodule Changelog.Admin.SearchControllerTest do
 
   @tag :as_admin
   test "searching channels", %{conn: conn} do
-    create :channel, name: "Elixir Phoenix"
-    create :channel, name: "Elixir Ecto"
+    insert(:channel, name: "Elixir Phoenix")
+    insert(:channel, name: "Elixir Ecto")
 
-    conn = get conn, "/admin/search/channel?q=ect&f=json"
+    conn = get(conn, "/admin/search/channel?q=ect&f=json")
 
     assert conn.status == 200
     assert conn.resp_body =~ "Elixir Ecto"
@@ -27,10 +27,10 @@ defmodule Changelog.Admin.SearchControllerTest do
 
   @tag :as_admin
   test "searching sponsors", %{conn: conn} do
-    create :sponsor, name: "Apple Inc"
-    create :sponsor, name: "Google Inc"
+    insert(:sponsor, name: "Apple Inc")
+    insert(:sponsor, name: "Google Inc")
 
-    conn = get conn, "/admin/search/sponsor?q=App&f=json"
+    conn = get(conn, "/admin/search/sponsor?q=App&f=json")
 
     assert conn.status == 200
     assert conn.resp_body =~ "Apple Inc"
@@ -38,7 +38,7 @@ defmodule Changelog.Admin.SearchControllerTest do
   end
 
   test "requires user auth" do
-    conn = get conn, "/admin/search/channel?q=ect&f=json"
+    conn = get(build_conn, "/admin/search/channel?q=ect&f=json")
     assert html_response(conn, 302)
     assert conn.halted
   end

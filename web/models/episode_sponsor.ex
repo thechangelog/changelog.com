@@ -20,7 +20,7 @@ defmodule Changelog.EpisodeSponsor do
   @required_fields ~w(position title link_url)
   @optional_fields ~w(episode_id sponsor_id description delete)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:link_url, Regexp.http, message: Regexp.http_message)

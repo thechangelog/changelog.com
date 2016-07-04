@@ -26,7 +26,7 @@ defmodule Changelog.Person do
   @required_fields ~w(name email handle)
   @optional_fields ~w(github_handle twitter_handle bio website admin)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
@@ -37,7 +37,7 @@ defmodule Changelog.Person do
     |> unique_constraint(:handle)
   end
 
-  def auth_changeset(model, params \\ :empty) do
+  def auth_changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(auth_token auth_token_expires_at), [])
   end

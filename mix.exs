@@ -37,8 +37,9 @@ defmodule Changelog.Mixfile do
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:timex, "~> 2.1.4"},
-     {:ex_machina, "~> 0.5"},
+     {:ex_machina, "~> 1.0"},
      {:scrivener_ecto, "~> 1.0"},
+     {:scrivener_html, github: "jerodsanto/scrivener_html", branch: "or-scrivener-2"},
      {:cmark, "~> 0.6"},
      {:html_sanitize_ex, "~> 0.1.0"},
      {:arc, "~> 0.5.2"},
@@ -56,6 +57,7 @@ defmodule Changelog.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"]]
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end

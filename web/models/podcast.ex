@@ -24,14 +24,14 @@ defmodule Changelog.Podcast do
   @required_fields ~w(name slug)
   @optional_fields ~w(vanity_domain description keywords twitter_handle itunes_url)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, ~w(cover_art))
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
-    |> cast_assoc(:podcast_hosts, required: true)
+    |> cast_assoc(:podcast_hosts)
   end
 
   def episode_count(podcast) do

@@ -20,7 +20,7 @@ defmodule Changelog.Sponsor do
   @required_fields ~w(name)
   @optional_fields ~w(description website github_handle twitter_handle)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, ~w(logo_image))

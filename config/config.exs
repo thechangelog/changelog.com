@@ -15,6 +15,8 @@ config :changelog, Changelog.Endpoint,
   pubsub: [name: Changelog.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :changelog, ecto_repos: [Changelog.Repo]
+
 # Configures Bamboo
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.LocalAdapter

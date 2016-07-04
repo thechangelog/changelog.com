@@ -17,15 +17,15 @@ defmodule Changelog.AuthControllerTest do
   end
 
   test "getting the sign in form" do
-    conn = get conn(), "/in"
+    conn = get(build_conn, "/in")
 
     assert html_response(conn, 200) =~ "Sign In"
   end
 
   test "submitting the form with known email sets auth token and sends email" do
-    person = create(:person, auth_token: nil)
+    person = insert(:person, auth_token: nil)
 
-    conn = post conn(), "/in", auth: %{email: person.email}
+    conn = post(build_conn, "/in", auth: %{email: person.email})
     person = Repo.get(Person, person.id)
 
     assert html_response(conn, 200) =~ "Check your email"
@@ -34,7 +34,7 @@ defmodule Changelog.AuthControllerTest do
   end
 
   test "following a valid auth token signs you in" do
-    person = create(:person)
+    person = insert(:person)
 
     changeset = Person.auth_changeset(person, %{
       auth_token: "12345",
@@ -44,14 +44,14 @@ defmodule Changelog.AuthControllerTest do
     {:ok, person} = Repo.update(changeset)
     {:ok, encoded} = Person.encoded_auth(person)
 
-    conn = get conn(), "/in/#{encoded}"
+    conn = get(build_conn, "/in/#{encoded}")
 
     assert redirected_to(conn) == page_path(conn, :index)
     assert get_encrypted_cookie(conn, "_changelog_user") == person.id
   end
 
   test "following an expired auth token doesn't sign you in" do
-    person = create(:person)
+    person = insert(:person)
 
     changeset = Person.auth_changeset(person, %{
       auth_token: "12345",
@@ -61,7 +61,7 @@ defmodule Changelog.AuthControllerTest do
     {:ok, person} = Repo.update(changeset)
     {:ok, encoded} = Person.encoded_auth(person)
 
-    conn = get conn(), "/in/#{encoded}"
+    conn = get(build_conn, "/in/#{encoded}")
 
     assert html_response(conn, 200) =~ "Sign In"
     refute get_encrypted_cookie(conn, "_changelog_user") == person.id

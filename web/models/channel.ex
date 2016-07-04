@@ -10,7 +10,7 @@ defmodule Changelog.Channel do
 
     has_many :episode_channels, Changelog.EpisodeChannel, on_delete: :delete_all
     has_many :episodes, through: [:episode_channels, :episode]
-    has_many :post_channels, Channel.PostChannel, on_delete: :delete_all
+    has_many :post_channels, Changelog.PostChannel, on_delete: :delete_all
     has_many :posts, through: [:post_channels, :post]
 
     timestamps
@@ -19,7 +19,7 @@ defmodule Changelog.Channel do
   @required_fields ~w(name slug)
   @optional_fields ~w(description)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)

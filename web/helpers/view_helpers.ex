@@ -7,14 +7,6 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
-  def pagination_links(_one, _two, _three) do
-    ""
-  end
-
-  def pagination_links(_one, _two, _three, _four) do
-    ""
-  end
-
   # moved here from PersonView because used pervasively
   def avatar_url(person), do: gravatar_url(person.email, 100)
   def avatar_url(person, size), do: gravatar_url(person.email, size)
@@ -37,7 +29,7 @@ defmodule Changelog.Helpers.ViewHelpers do
         <div class="two wide field"><%= b.(:day, []) %></div>
         <div class="two wide field"><%= b.(:year, []) %></div> at
         <div class="two wide field"><%= b.(:hour, []) %></div>:
-        <div class="two wide field"><%= b.(:min, []) %></div>&nbsp;UTC
+        <div class="two wide field"><%= b.(:minute, []) %></div>&nbsp;UTC
       </div>
       """
     end
@@ -50,10 +42,12 @@ defmodule Changelog.Helpers.ViewHelpers do
   end
 
   def error_message(form, field) do
-    if message = form.errors[field] do
-      content_tag :div, class: "ui pointing red basic label" do
-        message
-      end
+    case form.errors[field] do
+      {message, _} ->
+        content_tag :div, class: "ui pointing red basic label" do
+          message
+        end
+      nil -> ""
     end
   end
 

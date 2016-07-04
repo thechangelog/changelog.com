@@ -14,7 +14,7 @@ defmodule Changelog.PostChannel do
   @required_fields ~w(position)
   @optional_fields ~w(post_id channel_id delete)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> mark_for_deletion()

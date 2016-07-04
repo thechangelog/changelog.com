@@ -20,12 +20,12 @@ defmodule Changelog.Post do
   @required_fields ~w(title slug author_id)
   @optional_fields ~w(published published_at body)
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
-    |> cast_assoc(:post_channels, required: true)
+    |> cast_assoc(:post_channels)
   end
 
   def published(query) do
