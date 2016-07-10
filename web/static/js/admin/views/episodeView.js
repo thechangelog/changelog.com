@@ -1,4 +1,4 @@
-import SearchWidget from "../components/searchWidget"
+import SearchWidget from "../components/searchWidget";
 
 export default class EpisodeView {
   new() {

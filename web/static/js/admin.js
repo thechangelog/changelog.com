@@ -1,15 +1,16 @@
-import "phoenix_html"
-import channelView from "./admin/views/channelView"
-import episodeView from "./admin/views/episodeView"
-import podcastView from "./admin/views/podcastView"
-import postView from "./admin/views/postView"
+import "phoenix_html";
+
+import channelView from "admin/views/channelView";
+import episodeView from "admin/views/episodeView";
+import podcastView from "admin/views/podcastView";
+import postView from "admin/views/postView";
 
 let views = {
   "ChannelView": channelView,
   "PodcastView": podcastView,
   "EpisodeView": episodeView,
   "PostView": postView
-}
+};
 
 let timeString = function(date) {
   let month = date.getMonth() + 1;
@@ -37,7 +38,6 @@ let timeString = function(date) {
   return `${month}/${year}/${day} – ${hours}${minutes}${amPm} ${tz}`;
 }
 
-$("#sidebar").sidebar({context: $("#main")});
 $("a[rel=external]").attr("target", "_blank");
 $("input[readonly]").popup({
   content: "Read-only because danger. Use the console if you really need to edit this.",

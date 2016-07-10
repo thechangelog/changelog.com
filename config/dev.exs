@@ -12,8 +12,7 @@ config :changelog, Changelog.Endpoint,
   code_reloader: true,
   cache_static_lookup: false,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-             cd: Path.expand("../", __DIR__)]]
+  watchers: [npm: ["start", cd: Path.expand("../", __DIR__)]]
 
 # Watch static and templates for browser reloading.
 config :changelog, Changelog.Endpoint,

@@ -1,6 +1,8 @@
-import personItem from "../templates/personItem"
-import channelItem from "../templates/channelItem"
-import sponsorItem from "../templates/sponsorItem"
+import Sortable from "sortablejs";
+
+import personItem from "admin/templates/personItem.hbs";
+import channelItem from "admin/templates/channelItem.hbs";
+import sponsorItem from "admin/templates/sponsorItem.hbs";
 
 export default class SearchWidget {
   constructor(type, parentType, relationType) {
