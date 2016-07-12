@@ -1,5 +1,5 @@
 import "phoenix_html";
-
+import autosize from "autosize";
 import channelView from "admin/views/channelView";
 import episodeView from "admin/views/episodeView";
 import podcastView from "admin/views/podcastView";
@@ -38,6 +38,7 @@ let timeString = function(date) {
   return `${month}/${year}/${day} – ${hours}${minutes}${amPm} ${tz}`;
 }
 
+autosize($("textarea"));
 $("a[rel=external]").attr("target", "_blank");
 $("input[readonly]").popup({
   content: "Read-only because danger. Use the console if you really need to edit this.",
@@ -51,7 +52,7 @@ $("span.time").each(function() {
   let $span = $(this);
   let date = new Date($span.text());
   $span.text(timeString(date));
-})
+});
 
 $(".ui.navigation.search").search({
   type: "category",
@@ -63,7 +64,7 @@ $(".ui.navigation.search").search({
     console.log("FAIL", result["url"]);
     return false;
   }
-})
+});
 
 let $body = $("body");
 let viewName = $body.data("module").match(/\.(\w+View)$/)[1];
