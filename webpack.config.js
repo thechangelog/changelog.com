@@ -37,6 +37,7 @@ var common = {
 module.exports = [
   merge(common, {
     entry: [
+      "normalize.css",
       "./web/static/app/app.sass",
       "./web/static/app/app.js"
     ],
