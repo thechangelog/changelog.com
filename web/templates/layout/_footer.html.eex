@@ -1,0 +1,18 @@
+<section class="footer mosiac">
+  <h2><%= Enum.random(["Hacker to the heart", "!imposter", "Keep Up"]) %></h2>
+  <footer class="container">
+    <div class="footer_copyright"><small>&copy; 2009-2016<span> Changelog Media, LLC.</span></small>
+      <address>
+        <%= link "Contact Us", to: contact_path(@conn, :contact), class: "footer_link" %>
+      </address>
+    </div>
+    <nav class="footer_nav">
+      <h2 class="accessibility-hidden">Social Media Links</h2>
+      <a class="footer_link" href="https://twitter.com/changelog">Twitter</a>
+      <a class="footer_link" href="https://github.com/thechangelog">GitHub</a>
+      <a class="footer_link" href="https://www.youtube.com/c/thechangelog">YouTube</a>
+      <a class="footer_link" href="https://www.instagram.com/thechangelog/">Instagram</a>
+      <%= link "Newsletters", to: weekly_path(@conn, :weekly), class: "footer_link" %>
+    </nav>
+  </footer>
+</section>

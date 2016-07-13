@@ -18,9 +18,10 @@
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <%= render "_nav.html", assigns %>
-
-    <%= render @view_module, @view_template, assigns %>
-
+    <main>
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+    <%= render "_footer.html", assigns %>
     <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
