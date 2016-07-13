@@ -1,0 +1,84 @@
+<div class="navigation-bar">
+  <%= link to: "/", class: "navigation-bar_logo" do %>
+    <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog"></h1></a>
+  <% end %>
+  <nav class="navigation-bar_links">
+    <h2 class="accessibility-hidden">Quick Links</h2>
+    <a class="navigation-bar-link" href="#">Podcasts</a>
+    <!-- For open state, use .navigation-bar-link--is-open-->
+    <div class="navigation-bar-link">
+      <a href="#">News</a>
+      <div class="navigation-bar-link_dropdown">
+        <nav class="navigation-bar-dropdown">
+          <%= link "Weekly", to: weekly_path(@conn, :weekly) %>
+          <%= link "Nightly", to: nightly_path(@conn, :nightly) %>
+          <a href="#">Subscribe</a>
+        </nav>
+      </div>
+    </div>
+    <a class="navigation-bar-link" href="#">Videos</a>
+    <a class="navigation-bar-link" href="#">Advertise</a>
+  </nav>
+  <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
+  <!-- For open state, use .navigation-bar_tray--is-open-->
+  <div class="navigation-bar_tray">
+    <div class="navigation-tray">
+      <h2 class="accessibility-hidden">Site Navigation</h2>
+      <div class="navigation-bar">
+        <%= link to: "/", class: "navigation-tray_logo navigation-bar_logo" do %>
+          <img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog">
+        <% end %>
+        <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide site navigation menu"></button>
+      </div>
+      <div class="navigation-tray_content">
+        <div class="navigation-tray_content_sections">
+          <aside class="navigation-tray-section navigation-tray-section--aside">
+            <header>
+              <img src="<%= static_url(@conn, "/images/changelog-mark-only.svg") %>" alt="The Changelog">
+              <h3 role="presentation">Changelog</h3>
+            </header>
+            <p>The Changelog is a member supported blog, weekly newsletter and podcast that covers the intersection of software development and open source. Open source moves fast. Keep up.</p>
+          </aside>
+          <nav class="navigation-tray-section">
+            <header>
+              <img src="<%= static_url(@conn, "/images/news.svg") %>" alt="Changelog news graphic">
+              <h3>News</h3>
+            </header>
+            <%= link "Weekly", to: weekly_path(@conn, :weekly) %>
+            <%= link "Nightly", to: nightly_path(@conn, :nightly) %>
+            <a href="#">Subscribe</a>
+          </nav>
+          <nav class="navigation-tray-section">
+            <header>
+              <img src="<%= static_url(@conn, "/images/podcasts.svg") %>" alt="Changelog podcasts graphic">
+              <h3>Podcasts</h3>
+            </header>
+            <!-- TODO add status flag to podcasts and only use those here -->
+            <%= for podcast <- @podcasts do %>
+              <%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %>
+            <% end %>
+          </nav>
+          <nav class="navigation-tray-section">
+            <header>
+              <img src="<%= static_url(@conn, "/images/films.svg") %>" alt="Changelog films graphic">
+              <h3>Films</h3>
+            </header>
+            <a href="#">Featured</a>
+            <a href="#">All films</a>
+            <a href="#">Subscribe</a>
+          </nav>
+        </div>
+        <nav class="navigation-tray-side-nav">
+          <h3 class="navigation-tray-side-nav_heading">More Info</h3>
+          <%= link "Sponsorship", to: sponsorship_path(@conn, :sponsorship) %>
+          <%= link "Membership", to: membership_path(@conn, :membership) %>
+          <%= link "Partnership", to: partnership_path(@conn, :partnership) %>
+          <%= link "Store", to: store_path(@conn, :store) %>
+          <%= link "About", to: about_path(@conn, :about) %>
+          <%= link "Team", to: team_path(@conn, :team) %>
+          <%= link "Contact", to: contact_path(@conn, :contact) %>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

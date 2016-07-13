@@ -49,7 +49,18 @@ defmodule Changelog.Router do
     resources "/people", PersonController, only: [:show]
     resources "/posts", PostController, only: [:show]
 
+    # static pages
     get "/", PageController, :index
+    get "/weekly", PageController, :weekly, as: :weekly
+    get "/nightly", PageController, :nightly, as: :nightly
+    get "/contact", PageController, :contact, as: :contact
+    get "/films", PageController, :films, as: :films
+    get "/membership", PageController, :membership, as: :membership
+    get "/sponsorship", PageController, :sponsorship, as: :sponsorship
+    get "/partnership", PageController, :partnership, as: :partnership
+    get "/store", PageController, :store, as: :store
+    get "/team", PageController, :team, as: :team
+    get "/about", PageController, :about, as: :about
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in

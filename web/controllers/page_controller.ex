@@ -3,8 +3,14 @@ defmodule Changelog.PageController do
 
   alias Changelog.Podcast
 
+  plug :load_podcasts
+
   def index(conn, _params) do
+    render(conn, "index.html")
+  end
+
+  defp load_podcasts(conn, _params) do
     podcasts = Repo.all(Podcast)
-    render conn, "index.html", podcasts: podcasts
+    assign(conn, :podcasts, podcasts)
   end
 end
