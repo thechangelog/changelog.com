@@ -1,0 +1,53 @@
+.navigation-bar
+    display: flex
+    position: relative
+    justify-content: space-between
+    align-content: center
+    align-items: center
+    padding: $padding-extra-small
+    background-color: $black
+    max-height: 6.42rem
+    z-index: 1000
+
+    &_logo 
+        flex: 0 0 auto
+
+        & > h1
+            display: flex
+            align-content: center
+            margin: 0
+
+            & > img
+                max-width: 100%
+                height: 3.85rem
+                width: 12.85rem
+
+    &_links
+        display: none
+
+        @media (min-width: $tablet)
+            display: flex
+            margin: 0 auto 0 3rem
+
+    &_menu-button
+        min-width: 3rem
+        flex: 0 0 auto
+
+        & > img
+            width: 1.9rem
+            height: 1.25rem
+
+        @media (min-width: $tablet)
+            margin-left: auto
+
+    &_tray
+        display: none
+        overflow: hidden
+
+        &--is-open
+            display: block
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            padding: 1rem

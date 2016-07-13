@@ -1,0 +1,37 @@
+.tooltip
+    flex: 1 1 auto
+    background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9));
+    overflow: hidden
+    padding: 0.75rem
+    
+    &--has-carret:before
+        content: ''
+        position: absolute
+        top: 50%
+        margin-top: -10px
+        right: 100%
+        width: 0 
+        height: 0
+        border-top: 10px solid transparent
+        border-bottom: 10px solid transparent
+        border-right: 10px solid $black
+
+    &_heading
+        line-height: 2em
+        font-size: 1.15em
+        color: $white
+        margin: 0
+
+    &_links > a, &_links > button
+        display: block
+        width: 100%
+        text-align: inherit
+        line-height: 1.6em
+        color: $half-white
+        border-bottom: 1px solid rgba($white, 0.1)
+
+        &:last-child
+            border: none
+
+        &:hover
+            color: $white

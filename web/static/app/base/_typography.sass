@@ -1,0 +1,76 @@
+body
+    font-size: $root-font-size
+    font-family: $content-fallback
+    color: $black
+
+    @media (min-width: $tablet)
+        font-family: $content
+
+a
+    text-decoration: none
+
+    & > img
+        max-height: 100% 
+
+b
+    font-weight: 900
+    color: $black
+
+p, ul, ol
+    color: $half-black
+
+    &.description
+        max-width: $tablet - 90
+        margin: 1.5rem auto
+        font-size: 1.25em
+        text-align: center
+        color: $black
+
+q
+    font-size: 1.7em
+    font-weight: 900
+    text-align: center
+
+    &:before
+        content: '“'
+    
+    &:after
+        content: '”'
+
+    & + cite
+        font-size: 1em
+        display: block
+        font-weight: 500
+        font-style: normal
+        line-height: 2
+        margin-top: 1rem
+
+        @media (min-width: $tablet)
+            margin-top: 0
+
+        & > sup
+            font-style: italic
+            display: block
+            top: 0
+            font-size: 0.85em
+            line-height: 1.5
+            vertical-align: baseline
+
+%display-font
+    text-transform: uppercase
+    font-weight: 400
+    letter-spacing: 1.15px
+    font-family: $display-fallback
+
+    @media (min-width: $tablet)
+        font-family: $display
+
+.h2
+    text-align: center
+    margin: 0
+    text-transform: uppercase
+    font-size: 1.75em
+
+    & > img
+        max-width: 5.15rem
+        max-height: 5.15rem

@@ -1,0 +1,26 @@
+.podcast-player-button
+    color: $half-white
+    padding: 0
+    height: 3.85rem
+    width: 3.85rem
+    display: flex
+    align-content: center
+    justify-content: center
+
+    &--is-active, &:hover
+        filter: brightness(115%)
+        color: $white
+
+    &--play > img
+        height: 100%
+        width: 100%
+
+    &--transport > img
+        height: 75%
+        width: 75%
+
+    &--episode
+        justify-content: space-around
+        line-height: 1.25rem
+        & > img
+            height: 1.25rem

@@ -1,0 +1,14 @@
+// Maintain aspect ratio
+=aspect-ratio($width, $height, $className)
+    position: relative
+    &:before
+        display: block
+        content: ""
+        width: 100%
+        padding-top: ($height / $width) * 100%
+    &_#{$className}
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0

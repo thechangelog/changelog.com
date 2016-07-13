@@ -1,0 +1,12 @@
+#shows
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    padding: $padding-large 1rem
+
+    & > article
+        @media (min-width: $tablet)
+            max-width: 48%
+
+    @media (min-width: $desktop)
+        padding: $padding-extra-large * 2 0

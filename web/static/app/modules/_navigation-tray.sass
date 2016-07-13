@@ -1,0 +1,34 @@
+.navigation-tray
+    background-color: $black
+    border: 1px solid $green
+    overflow: hidden
+
+    @media (min-width: $tablet)
+        font-size: 1.15em
+
+    &_logo
+        @media (min-width: $tablet)
+            display: none
+
+    &_content
+        display: flex
+        justify-content: space-around
+        padding: 0 $padding-extra-small $padding-large $padding-extra-small
+
+        @media (min-width: $smartphone)
+            padding: 0 $padding-small $padding-large $padding-small
+
+        @media (min-width: $tablet)
+            padding: 0 $padding-extra-large $padding-extra-large $padding-extra-large
+        
+        @media (min-width: $desktop)
+            align-items: center
+
+        &_sections
+            display: flex
+            flex-wrap: wrap
+            flex: 1 1 auto
+
+            @media (min-width: $tablet)
+                justify-content: space-around
+                flex-wrap: nowrap

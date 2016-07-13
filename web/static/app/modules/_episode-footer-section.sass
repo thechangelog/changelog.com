@@ -1,0 +1,29 @@
+.episode-footer-section
+    display: flex
+    margin: 1rem 0
+
+    &_icon
+        flex: 0 0 auto
+        width: 2rem
+        
+        @media (min-width: $tablet)
+            width: $padding-extra-large
+
+        & > img
+            width: 1.25rem
+            height: 1.25rem
+
+
+    &_content
+        & > h3
+            @extend %display-font
+            line-height: 1.25em
+            margin: 0
+
+        & > ul
+            margin: 0.5rem 0
+            list-style: none
+            padding: 0
+
+            & > li
+                padding: 0.5rem 0

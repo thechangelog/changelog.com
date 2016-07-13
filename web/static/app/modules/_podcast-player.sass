@@ -1,0 +1,82 @@
+.podcast-player
+    display: none
+    color: $white
+    margin: 0
+    background: rgba($black, 0.9)
+    flex-wrap: wrap
+    
+    @media (min-width: $tablet)
+        flex-wrap: nowrap
+        align-items: center
+
+    &--is-active
+        display: flex
+
+    &_art
+        display: none
+        max-height: 5rem
+        max-width: 5rem
+
+        @media (min-width: 415px)
+            display: block
+
+    &_details
+        background: rgba($black, 0.5)
+        display: flex
+        flex: 1 1 auto
+        justify-content: space-between
+
+        @media (min-width: $tablet)
+            background: none
+            flex: 0 0 auto
+            order: 4
+
+        &_title
+            flex: 1 1 auto
+            display: flex
+            flex-direction: column
+            justify-content: center
+            margin: 0 1rem
+            min-width: 0
+
+            @media(min-width: $tablet)
+                display: none
+
+            & > span, & > figcaption
+                overflow: hidden
+                white-space: nowrap
+                text-overflow: ellipsis
+
+            & > span
+                @extend %display-font
+
+                & > b
+                    color: $green
+
+            & > figcaption
+                font-weight: 500
+                font-size: 1.25em
+
+        &_share 
+            flex: 0 1 auto
+
+    &_buttons
+        width: 100%
+        padding: 1rem 0
+        display: flex
+        flex: 1 0 auto
+        justify-content: center
+        align-items: center
+
+        @media (min-width: $tablet)
+            width: auto
+            padding: 0 1rem
+            flex: 0 0 auto
+
+    &_slider
+        padding: 0 1rem 1rem 1rem
+        flex: 1 0 auto
+
+        @media (min-width: $tablet)
+            width: auto
+            padding: 0 1rem

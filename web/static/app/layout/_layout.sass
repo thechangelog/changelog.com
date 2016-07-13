@@ -1,0 +1,57 @@
+@import footer
+@import player
+@import shows
+
+.wrapper
+    width: 100%
+
+    &--gray
+        background-color: rgba($black, 0.1)
+
+    &--half-gray
+        position: relative
+
+        &:before
+            position: absolute
+            top: 50%
+            height: 50%
+            width: 100%
+            left: 0
+            right: 0
+            content: ''
+            z-index: -1
+            background-color: rgba($black, 0.1)
+
+.container
+    margin: 0 auto
+    overflow: hidden
+    max-width: $desktop
+
+    &--has-padding
+        padding: 0 0.5rem
+
+        @media (min-width: $tablet)
+            padding: 0
+
+    &--skinny
+        max-width: $tablet
+        overflow: visible
+
+    &--extra-skinny
+        max-width: $tablet - 90
+        overflow: visible
+
+.section
+    padding: 2rem 0
+
+
+.flex-column
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.flip-horizontal
+    transform: scaleX(-1);
+    filter: FlipH;
+    

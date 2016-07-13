@@ -1,0 +1,21 @@
+.episode-menu
+    display: flex
+    border-top: 1px solid $green
+    width: 100%
+    align-items: center
+
+    & > a, & > button
+        @extend %display-font
+        flex: 1 0 auto
+        color: $half-white
+        padding: 1.15rem
+        display: flex
+
+        @media (min-width: $tablet)
+            padding: 1.15rem 1.75rem
+
+        &:hover
+            color: $white
+
+        & > img
+            margin-right: 1rem

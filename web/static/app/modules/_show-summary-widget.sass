@@ -1,0 +1,55 @@
+.show-summary-widget
+    +aspect-ratio(1, 1, 'content')
+
+    &_toggle
+        display: none
+        position: absolute
+        right: 1rem
+        bottom: 0.5rem
+        width: 2rem
+        height: 2rem
+        justify-content: space-around
+        background: url(/images/more.svg) center center no-repeat
+
+    &:hover &_toggle, &_menu--is-open + &_toggle
+        @media (min-width: $tablet + 100)
+            display: flex
+
+    &_menu--is-open + &_toggle
+        height: 1.15rem
+        width: 1.15rem
+        background: url(/images/close.svg) center center no-repeat
+
+    &_content
+        background-size: cover
+        background-position: center center
+
+    &--changelog &_content
+        background-image: url(/images/the-changelog-cover-art.svg)
+
+    &--founders-talk &_content
+        background-image: url(/images/founders-talk-cover-art.svg)
+
+    &--go-time &_content
+        background-image: url(/images/go-time-cover-art.svg)
+
+    &--polyglot &_content
+        background-image: url(/images/polyglot-cover-art.svg)
+
+    &--backstage &_content
+        background-image: url(/images/backstage-cover-art.svg)
+
+
+    &_menu
+        display: none
+        @extend %display-font
+        text-align: center
+        position: absolute
+        top: 0
+        left: 0
+        bottom: 0
+        right: 0
+
+        &--is-open
+            @media (min-width: $tablet + 100)
+                display: flex

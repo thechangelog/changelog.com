@@ -1,0 +1,46 @@
+.podcast-menu
+    display: flex
+    background: $black
+    border-top: 1px solid $green
+    overflow: auto
+    max-width: 100%
+    align-items: center
+
+    &--episode
+        margin-top: 1rem
+        width: 100%
+        background: transparent
+        overflow: visible
+
+        & > a, & > button
+            color: $half-black !important
+
+        & > a:hover, & > button:hover
+            color: $black !important
+
+    & > a, & > button
+        @extend %display-font
+        position: relative
+        flex: 0 0 auto
+        color: $half-white
+        padding: 1.15rem
+        display: flex
+        align-items: center
+
+        @media (min-width: $tablet)
+            padding: 1.15rem 0 1.15rem 1.75rem
+
+        &:hover
+            color: $white
+
+        & > img
+            margin-right: 1rem
+            width: 1.25rem
+            height: 1.25rem
+
+    &_tooltip
+        display: none
+        position: absolute
+
+        &--is-open
+            display: block

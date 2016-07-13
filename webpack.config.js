@@ -37,7 +37,7 @@ var common = {
 module.exports = [
   merge(common, {
     entry: [
-      "./web/static/app/app.css",
+      "./web/static/app/app.sass",
       "./web/static/app/app.js"
     ],
     output: {
@@ -45,7 +45,7 @@ module.exports = [
       filename: "js/app.js"
     },
     resolve: {
-      modulesDirectories: [ "node_modules", __dirname + "/web/static/app" ]
+      modulesDirectories: ["node_modules", __dirname + "/web/static/app"]
     },
     plugins: [
       new CopyWebpackPlugin([{ from: "./web/static/assets"}]),
@@ -64,7 +64,7 @@ module.exports = [
       filename: "js/admin.js"
     },
     resolve: {
-      modulesDirectories: [ "node_modules", __dirname + "/web/static/admin" ]
+      modulesDirectories: ["node_modules", __dirname + "/web/static/admin"]
     },
     plugins: [
       new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),

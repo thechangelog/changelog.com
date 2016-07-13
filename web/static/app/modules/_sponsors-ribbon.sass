@@ -1,0 +1,31 @@
+.sponsors-ribbon
+    width: 100%
+    display: flex
+    align-items: center
+    color: $half-black
+    justify-content: center
+    padding: $padding-large 1rem
+
+    &--dark
+        color: $half-white
+        background-color: $black
+        
+        @media (min-width: $tablet)
+            border-top: 1px solid $half-white
+
+    @media (min-width: $tablet)
+        padding: $padding-large 0
+
+    & > h3 
+        @extend %display-font
+        font-size: 0.85em
+
+    &_logos
+        display: flex
+        flex: 0 1 auto
+
+        & > a
+            margin: 0 0.5rem
+
+        & img
+            height: 1.5rem

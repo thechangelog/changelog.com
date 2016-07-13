@@ -1,0 +1,26 @@
+.navigation-bar-link
+    flex: 0 0 auto
+    padding: 1rem
+    font-size: 1.3em
+    position: relative
+
+    &, & > a
+        @extend %display-font
+        margin-left: 1px
+        color: $green
+
+    &--is-open, &--is-open > a, &:hover, &:hover > a
+        color: $white
+    
+    &--is-open
+        margin-left: 0
+        border-left: 1px solid $green
+
+    &_dropdown
+        display: none
+
+    &--is-open &_dropdown
+        display: block
+        position: absolute
+        top: 99%
+        left: -1px

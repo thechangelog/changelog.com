@@ -1,0 +1,42 @@
+.episode-summary
+    margin: $padding-large / 2 0.5rem
+    border-top: 1px solid $border-color
+
+    @media (min-width: $tablet)
+        margin: $padding-large / 2 auto
+
+    &--btn
+        margin-left: 0
+        border: none
+        margin-bottom: 0.5rem
+
+        @media (min-width: $tablet)
+            margin-left: auto
+            margin-bottom: $padding-extra-large * 2
+
+    &_date
+        @extend %display-font
+        color: rgba($black, 0.25)
+        font-size: 0.85em
+        display: block
+        line-height: $padding-extra-large
+
+    &_title
+        font-size: 1.5em
+        margin: 0
+
+        &_number
+            display: inline-block
+            width: $padding-extra-large
+            font-weight: 300
+
+    &_content
+        padding-left: $padding-extra-large
+
+        &_description
+            display: flex
+            align-items: flex-start
+
+            & > img
+                margin-left: 1rem
+                box-shadow: 0.33rem 0.33rem 0 $half-black

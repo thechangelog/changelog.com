@@ -1,0 +1,62 @@
+.share-podcast-tooltip
+    background-color: $black
+    padding: 0.5rem
+    z-index: 100
+
+    &_link, &_options
+        display: flex
+        align-items: center
+        font-size: 1.15em
+        line-height: 1.75em
+        margin-bottom: 0.5rem
+
+    &_link
+        &_text
+            color: $green
+            margin-left: 0.5rem
+            flex: 1 1 auto
+            padding: 0.25rem
+            background: rgba($white, 0.1)
+            border-radius: 3px
+
+    &_options
+        & > input[type="checkbox"]:not(:checked),
+        & > input[type="checkbox"]:checked
+            position: absolute
+            left: -9999px
+
+        & > input[type="checkbox"]:not(:checked) + label,
+        & > input[type="checkbox"]:checked + label
+            position: relative
+            padding-left: 1.75rem
+            cursor: pointer
+
+
+        & > input[type="checkbox"]:not(:checked) + label:before,
+        & > input[type="checkbox"]:checked + label:before
+            content: ''
+            position: absolute
+            left: 0
+            top: 50%
+            margin-top: -0.5rem
+            width: 1rem
+            height: 1rem
+            border: 1px solid $white
+            background: transparent
+
+        & > input[type="checkbox"]:not(:checked) + label:after,
+        & > input[type="checkbox"]:checked + label:after
+            content: '✔'
+            position: absolute
+            left: 1px
+            top: 43%
+            margin-top: -0.5rem
+            font-size: 1.25em
+            line-height: 1em
+            color: $green
+
+        & > input[type="checkbox"]:not(:checked) + label:after
+            opacity: 0
+
+        & > input[type="checkbox"]:checked + label:after
+            opacity: 1

@@ -1,0 +1,29 @@
+.callout
+    text-align: center
+    padding: 2rem
+
+    & > h2
+        @extend %display-font
+        color: $green
+        margin: 0 0 $padding-small 0
+        font-size: 2.75em
+
+    & p
+        color: $white
+
+    &_content
+        padding: 0 1rem
+
+    &--horizontal
+        & img
+            max-width: 3.25rem
+            max-height: 100%
+
+        @media (min-width: $tablet)
+            display: flex
+            align-items: center
+            text-align: left
+            justify-content: space-between
+
+            & h2, & p
+                margin: 0

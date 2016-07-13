@@ -1,0 +1,86 @@
+.featured-podcast
+    text-align: center
+
+    &_content
+        position: relative
+        padding: $padding-extra-large 0
+
+        @media (min-width: $tablet)
+            padding: $padding-extra-large * 3 0 $padding-extra-large 0
+
+        & > q
+            @media (min-width: $tablet)
+                font-size: 2.85em
+
+            & + cite
+                @media (min-width: $tablet)
+                    font-size: 1.15em
+
+                & > sup
+                    color: $gray
+
+                    @media (min-width: $tablet)
+                        display: inline-block
+                        margin-left: 0.5rem
+
+    &_navigation
+        display: flex
+        align-items: center
+        justify-content: space-between
+
+
+        & > button
+            width: 3.2rem
+            height: 3.2rem
+
+            & > img
+                height: 2.5rem
+
+                @media (min-width: $tablet)
+                    height: 3.5rem
+
+        & > h3
+            font-size: 1em
+            flex: 1 0 auto
+            font-weight: 900
+            z-index: 1
+
+            @media (min-width: $tablet)
+                font-size: 1.25em
+
+            & > span
+                @extend %display-font
+                color: $gray
+                font-size: 0.85em
+                display: block
+
+    &_footer
+        margin-top: $padding-extra-large
+        display: flex
+        flex-direction: column
+        align-items: center
+
+        @media (min-width: $tablet)
+            margin-top: 0
+
+        & > *
+            z-index: 1
+
+        & > aside
+            display: none
+
+            & > h4
+                @extend %display-font
+                color: $half-white
+                font-size: 0.85em
+                margin-top: 0
+
+            & > a
+                margin: 0 1rem
+
+            & img
+                height: 1.5rem
+
+            @media (min-width: $tablet)
+                display: block
+                margin: $padding-extra-large * 1.5 0 $padding-extra-large * 1.5 0

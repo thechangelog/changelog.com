@@ -1,0 +1,29 @@
+.show-summary
+    display: flex
+    justify-content: space-between
+    margin-bottom: 2rem
+
+    @media (min-width: $tablet)
+        font-size: 1.3em
+
+    &_art
+        flex: 0 0 auto
+        width: 50%
+        max-width: 14rem
+        margin-right: 0.5rem
+
+        @media (min-width: $tablet)
+            margin-right: 1.3rem
+
+    &_content
+        flex: 1 1 auto
+
+        & > p:first-child
+            margin-top: 0
+
+        & > cite
+            font-weight: 500
+
+            & > a
+                display: block
+                color: $green

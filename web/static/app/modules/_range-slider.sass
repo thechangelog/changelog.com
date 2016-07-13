@@ -1,0 +1,102 @@
+$range-width: 100% !default
+
+$range-handle-color: $green !default
+$range-handle-color-hover: $green !default
+$range-handle-size: 18px !default
+
+$range-track-color: $black !default
+$range-track-height: 2px !default
+
+$range-label-color: $half-white !default
+$range-label-width: 60px !default
+
+.range-slider
+    margin: 0
+    width: $range-width
+
+    @media (min-width: $tablet)
+        display: flex;
+        flex-direction: column;
+
+    &_range
+        position: relative
+        -webkit-appearance: none
+        width: $range-width
+        height: $range-track-height
+        border-radius: 1px
+        background: $range-track-color
+        outline: none
+        padding: 0
+        margin: 0.5rem 0
+
+        &:after
+            content: ''
+            position: absolute
+            left: 0
+            top: 0
+            background: $green
+            height: $range-track-height
+            border-radius: 1px
+            width: 50%
+
+        // Range Handle
+        &::-webkit-slider-thumb
+            -webkit-appearance: none
+            width: $range-handle-size
+            height: $range-handle-size
+            border-radius: 50%
+            background: $range-handle-color
+            cursor: pointer
+            transition: background .15s ease-in-out
+
+        &:hover
+          background: $range-handle-color-hover
+
+    &:active::-webkit-slider-thumb
+        background: $range-handle-color-hover
+
+    &::-moz-range-thumb
+        width: $range-handle-size
+        height: $range-handle-size
+        border: 0
+        border-radius: 50%
+        background: $range-handle-color
+        cursor: pointer
+        transition: background .15s ease-in-out
+
+        &:hover
+          background: $range-handle-color-hover
+
+    &:active::-moz-range-thumb
+        background: $range-handle-color-hover
+
+    &_above
+        display: none
+        color: $green
+        @extend %display-font
+
+        @media (min-width: $tablet)
+            display: inline
+
+    &_below
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+        & > span
+            display: none
+            font-size: 1.15em
+            font-weight: 900
+
+            @media (min-width: $tablet)
+                display: inline
+
+        & > output
+            margin-left: auto
+            text-align: right
+            color: $half-white
+            font-size: 0.75em
+
+            & > b
+                color: $green
+                font-weight: 400
