@@ -1,9 +1,9 @@
 import "phoenix_html";
 import autosize from "autosize";
-import channelView from "admin/views/channelView";
-import episodeView from "admin/views/episodeView";
-import podcastView from "admin/views/podcastView";
-import postView from "admin/views/postView";
+import channelView from "views/channelView";
+import episodeView from "views/episodeView";
+import podcastView from "views/podcastView";
+import postView from "views/postView";
 
 let views = {
   "ChannelView": channelView,

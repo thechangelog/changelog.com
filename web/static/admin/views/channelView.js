@@ -1,4 +1,4 @@
-import Slugifier from "../components/slugifier";
+import Slugifier from "components/slugifier";
 
 export default class ChannelView {
   new() {

@@ -1,5 +1,5 @@
-import SearchWidget from "../components/searchWidget"
-import Slugifier from "../components/slugifier"
+import SearchWidget from "components/searchWidget";
+import Slugifier from "components/slugifier";
 
 export default class PostView {
   new() {

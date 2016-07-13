@@ -1,4 +1,4 @@
-import linkItem from "admin/templates/linkItem.hbs"
+import linkItem from "templates/linkItem.hbs";
 
 export default class ListWidget {
   constructor(parentType, relationType) {
