@@ -7,17 +7,16 @@
     <a class="navigation-bar-link" href="#">Podcasts</a>
     <!-- For open state, use .navigation-bar-link--is-open-->
     <div class="navigation-bar-link">
-      <a href="#">News</a>
+      <%= link "News", to: page_path(@conn, :weekly) %>
       <div class="navigation-bar-link_dropdown">
         <nav class="navigation-bar-dropdown">
           <%= link "Weekly", to: page_path(@conn, :weekly) %>
           <%= link "Nightly", to: page_path(@conn, :nightly) %>
-          <a href="#">Subscribe</a>
         </nav>
       </div>
     </div>
-    <a class="navigation-bar-link" href="#">Videos</a>
-    <a class="navigation-bar-link" href="#">Advertise</a>
+    <%= link "Videos", to: page_path(@conn, :films), class: "navigation-bar-link" %>
+    <%= link "Advertise", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
   </nav>
   <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
   <!-- For open state, use .navigation-bar_tray--is-open-->

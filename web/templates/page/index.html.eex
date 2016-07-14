@@ -1,11 +1,67 @@
-<h1>Welcome to The Changelog</h1>
+<div class="mosiac">
+  <section>
+    <h2 class="accessibility-hidden">Featured Quotes</h2>
+    <article class="featured-podcast">
+      <div class="featured-podcast_content">
+        <q>I train a computer like I train a dog.</q>
+        <cite>-Matz<sup>Creator of the Ruby Programming Language</sup></cite>
+      </div>
+      <div class="featured-podcast_navigation">
+        <button><img src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show previous featured quote"/></button>
+        <h3><span>The Changelog #202</span>23 years of Ruby with Matz</h3>
+        <button><img class="flip-horizontal" src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show next featured quote"/></button>
+      </div>
+      <div class="featured-podcast_footer">
+        <nav class="podcast-menu">
+          <button><img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play podcast graphic"/>Play</button>
+          <a href="#"><img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe to podcast graphic"/>Subscribe</a>
+          <a href="#"><img src="<%= static_url(@conn, "/images/share.svg") %>" alt="Share podcast graphic"/>Share</a>
+          <%= link to: page_path(@conn, :sponsorship) do %>
+            <img src="<%= static_url(@conn, "/images/sponsor.svg") %>" alt="Sponsor podcast graphic">Sponsor
+          <% end %>
+          <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More podcast options graphic"/></button>
+        </nav>
+        <aside>
+          <h4>Brought to you by:</h4><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/toptal-logo.svg") %>" alt="Toptal logo"></a><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/digital-ocean-logo.svg") %>" alt="DigitalOcean logo"></a>
+        </aside>
+      </div>
+    </article>
+  </section>
+</div>
 
-<%= if Enum.any?(@podcasts) do %>
-  <h2>Our Shows:</h2>
-
-  <ul>
-    <%= for podcast <- @podcasts do %>
-      <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
-    <% end %>
-  </ul>
-<% end %>
+<section class="container" id="shows">
+  <h2 class="accessibility-hidden">Podcast Shows</h2>
+  <%= for podcast <- @podcasts do %>
+    <article class="show-summary">
+      <div class="show-summary_art">
+        <div class="show-summary-widget show-summary-widget--<%= podcast.slug %>">
+          <div class="show-summary-widget_content">
+            <!-- For open state, use .show-summary-widget_menu--is-open-->
+            <div class="show-summary-widget_menu">
+              <div class="tooltip">
+                <h3 class="tooltip_heading"><%= podcast.name %></h3>
+                <nav class="tooltip_links">
+                  <h4 class="accessibility-hidden">Podcast Menu</h4>
+                  <a href="#">Play latest episode</a>
+                  <a href="#">Latest Episode Page</a>
+                  <%= link "Go to show page", to: podcast_path(@conn, :show, podcast.slug) %>
+                  <a href="#">Subscribe</a>
+                </nav>
+              </div>
+            </div>
+            <button class="show-summary-widget_toggle"></button>
+          </div>
+        </div>
+      </div>
+      <div class="show-summary_content">
+        <%= raw md_to_html(podcast.description) %>
+        <cite>Hosted by
+          <%= for person <- podcast.hosts do %>
+            <%= twitter_link(person, person.name) %>
+          <% end %>
+        </cite>
+        <p><b><%= pluralize(Changelog.PodcastView.episode_count(podcast), "Episode", "Episodes") %></b></p>
+      </div>
+    </article>
+  <% end %>
+</section>

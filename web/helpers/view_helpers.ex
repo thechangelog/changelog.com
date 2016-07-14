@@ -65,15 +65,23 @@ defmodule Changelog.Helpers.ViewHelpers do
     link text, (opts ++ [rel: "external"])
   end
 
+  def pluralize(count, singluar, plural) do
+    if count == 1 do
+      "#{count} #{singluar}"
+    else
+      "#{count} #{plural}"
+    end
+  end
+
   def github_link(model) do
     if model.github_handle do
       external_link model.github_handle, to: "https://github.com/#{model.github_handle}"
     end
   end
 
-  def twitter_link(model) do
+  def twitter_link(model, string \\ nil) do
     if model.twitter_handle do
-      external_link model.twitter_handle, to: "https://twitter.com/#{model.twitter_handle}"
+      external_link (string || model.twitter_handle), to: "https://twitter.com/#{model.twitter_handle}"
     end
   end
 

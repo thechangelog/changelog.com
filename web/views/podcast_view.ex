@@ -18,6 +18,9 @@ defmodule Changelog.PodcastView do
     |> String.replace(" ", "-")
   end
 
+  def episode_count(podcast) do
+    Changelog.Podcast.episode_count(podcast)
+  end
 
   def vanity_domain_with_fallback_url(podcast) do
     if podcast.vanity_domain do

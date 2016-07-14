@@ -1,9 +1,9 @@
 defmodule Changelog.Admin.PodcastView do
   use Changelog.Web, :view
 
-  def episode_count(podcast) do
-    Changelog.Podcast.episode_count podcast
-  end
+  alias Changelog.PodcastView
+
+  def episode_count(podcast), do: PodcastView.episode_count(podcast)
 
   def vanity_link(podcast) do
     if podcast.vanity_domain do
