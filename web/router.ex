@@ -23,6 +23,10 @@ defmodule Changelog.Router do
     plug Changelog.Plug.RequireAdmin
   end
 
+  pipeline :public do
+    plug Changelog.Plug.LoadPodcasts
+  end
+
   scope "/admin", Changelog.Admin, as: :admin do
     pipe_through [:browser, :admin]
 
@@ -43,7 +47,7 @@ defmodule Changelog.Router do
   end
 
   scope "/", Changelog do
-    pipe_through :browser
+    pipe_through [:browser, :public]
 
     resources "/channels", ChannelController, only: [:show]
     resources "/people", PersonController, only: [:show]
