@@ -10,8 +10,8 @@
       <a href="#">News</a>
       <div class="navigation-bar-link_dropdown">
         <nav class="navigation-bar-dropdown">
-          <%= link "Weekly", to: weekly_path(@conn, :weekly) %>
-          <%= link "Nightly", to: nightly_path(@conn, :nightly) %>
+          <%= link "Weekly", to: page_path(@conn, :weekly) %>
+          <%= link "Nightly", to: page_path(@conn, :nightly) %>
           <a href="#">Subscribe</a>
         </nav>
       </div>
@@ -44,8 +44,8 @@
               <img src="<%= static_url(@conn, "/images/news.svg") %>" alt="Changelog news graphic">
               <h3>News</h3>
             </header>
-            <%= link "Weekly", to: weekly_path(@conn, :weekly) %>
-            <%= link "Nightly", to: nightly_path(@conn, :nightly) %>
+            <%= link "Weekly", to: page_path(@conn, :weekly) %>
+            <%= link "Nightly", to: page_path(@conn, :nightly) %>
             <a href="#">Subscribe</a>
           </nav>
           <nav class="navigation-tray-section">
@@ -70,13 +70,13 @@
         </div>
         <nav class="navigation-tray-side-nav">
           <h3 class="navigation-tray-side-nav_heading">More Info</h3>
-          <%= link "Sponsorship", to: sponsorship_path(@conn, :sponsorship) %>
-          <%= link "Membership", to: membership_path(@conn, :membership) %>
-          <%= link "Partnership", to: partnership_path(@conn, :partnership) %>
-          <%= link "Store", to: store_path(@conn, :store) %>
-          <%= link "About", to: about_path(@conn, :about) %>
-          <%= link "Team", to: team_path(@conn, :team) %>
-          <%= link "Contact", to: contact_path(@conn, :contact) %>
+          <%= link "Sponsorship", to: page_path(@conn, :sponsorship) %>
+          <%= link "Membership", to: page_path(@conn, :membership) %>
+          <%= link "Partnership", to: page_path(@conn, :partnership) %>
+          <%= link "Store", to: page_path(@conn, :store) %>
+          <%= link "About", to: page_path(@conn, :about) %>
+          <%= link "Team", to: page_path(@conn, :team) %>
+          <%= link "Contact", to: page_path(@conn, :contact) %>
         </nav>
       </div>
     </div>

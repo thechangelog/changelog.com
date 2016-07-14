@@ -55,16 +55,16 @@ defmodule Changelog.Router do
 
     # static pages
     get "/", PageController, :index
-    get "/weekly", PageController, :weekly, as: :weekly
-    get "/nightly", PageController, :nightly, as: :nightly
-    get "/contact", PageController, :contact, as: :contact
-    get "/films", PageController, :films, as: :films
-    get "/membership", PageController, :membership, as: :membership
-    get "/sponsorship", PageController, :sponsorship, as: :sponsorship
-    get "/partnership", PageController, :partnership, as: :partnership
-    get "/store", PageController, :store, as: :store
-    get "/team", PageController, :team, as: :team
-    get "/about", PageController, :about, as: :about
+    get "/about", PageController, :about
+    get "/contact", PageController, :contact
+    get "/films", PageController, :films
+    get "/membership", PageController, :membership
+    get "/nightly", PageController, :nightly
+    get "/partnership", PageController, :partnership
+    get "/sponsorship", PageController, :sponsorship
+    get "/store", PageController, :store
+    get "/team", PageController, :team
+    get "/weekly", PageController, :weekly
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in

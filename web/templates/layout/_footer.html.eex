@@ -3,7 +3,7 @@
   <footer class="container">
     <div class="footer_copyright"><small>&copy; 2009-2016<span> Changelog Media, LLC.</span></small>
       <address>
-        <%= link "Contact Us", to: contact_path(@conn, :contact), class: "footer_link" %>
+        <%= link "Contact Us", to: page_path(@conn, :contact), class: "footer_link" %>
       </address>
     </div>
     <nav class="footer_nav">
@@ -12,7 +12,7 @@
       <a class="footer_link" href="https://github.com/thechangelog">GitHub</a>
       <a class="footer_link" href="https://www.youtube.com/c/thechangelog">YouTube</a>
       <a class="footer_link" href="https://www.instagram.com/thechangelog/">Instagram</a>
-      <%= link "Newsletters", to: weekly_path(@conn, :weekly), class: "footer_link" %>
+      <%= link "Newsletters", to: page_path(@conn, :weekly), class: "footer_link" %>
     </nav>
   </footer>
 </section>
