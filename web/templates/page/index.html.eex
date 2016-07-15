@@ -12,15 +12,7 @@
         <button><img class="flip-horizontal" src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show next featured quote"/></button>
       </div>
       <div class="featured-podcast_footer">
-        <nav class="podcast-menu">
-          <button><img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play podcast graphic"/>Play</button>
-          <a href="#"><img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe to podcast graphic"/>Subscribe</a>
-          <a href="#"><img src="<%= static_url(@conn, "/images/share.svg") %>" alt="Share podcast graphic"/>Share</a>
-          <%= link to: page_path(@conn, :sponsorship) do %>
-            <img src="<%= static_url(@conn, "/images/sponsor.svg") %>" alt="Sponsor podcast graphic">Sponsor
-          <% end %>
-          <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More podcast options graphic"/></button>
-        </nav>
+        <%= render Changelog.PodcastView, "_menu.html", assigns %>
         <aside>
           <h4>Brought to you by:</h4><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/toptal-logo.svg") %>" alt="Toptal logo"></a><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/digital-ocean-logo.svg") %>" alt="DigitalOcean logo"></a>
         </aside>
@@ -57,7 +49,7 @@
         <%= raw md_to_html(podcast.description) %>
         <cite>Hosted by
           <%= for person <- podcast.hosts do %>
-            <%= twitter_link(person, person.name) %>
+            <%= link person.name, to: Changelog.PersonView.external_url(person) %>
           <% end %>
         </cite>
         <p><b><%= pluralize(Changelog.PodcastView.episode_count(podcast), "Episode", "Episodes") %></b></p>

@@ -12,7 +12,9 @@ defmodule Changelog.PodcastController do
       assoc(podcast, :episodes)
       |> Episode.published
       |> Episode.newest_first
+      |> Episode.limit(5)
       |> Repo.all
+      |> Episode.preload_guests
 
     render conn, "show.html", podcast: podcast, episodes: episodes
   end

@@ -26,7 +26,6 @@
             height: 18rem
             width: 18rem
             z-index: -1
-            background-image: url(/images/abstract-circle.svg)
 
         & > img
             display: block
@@ -42,3 +41,8 @@
             display: block
             @extend %display-font
             color: $half-black
+
+    &--podcast
+        & > button
+            &:before
+                background-image: url(/images/podcasts/podcast-abstract-art.svg)

@@ -1,16 +1,55 @@
-<h1><%= @podcast.name %></h1>
+<section>
+  <div class="mosiac mosiac--<%= @podcast.slug %>">
+    <header class="flex-column show-header">
+      <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
+      <%= raw md_to_html(@podcast.description) %>
+      <%= render "_menu.html", assigns %>
+      <div class="show-header_hosts"><i>TODO make me dynamic</i>
+        <div class="hosts-list section">
+          <%= for person <- @podcast.hosts do %>
+            <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item" do %>
+              <img src="<%= avatar_url(person, 42) %>" alt="<%= person.name %>"/><%= person.name %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+  </div>
 
-<section class="description">
-<%= md_to_html(@podcast.description) %>
+  <% pre_cta_episodes = Enum.slice(@episodes, 0, 1) %>
+  <div class="container container--skinny">
+    <% if latest = List.first(pre_cta_episodes) do %>
+      <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
+        <h3>The Latest</h3>
+        <q>It took 6 months for a simple hello world.</q>
+        <button><img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>Play</button>
+        <cite>
+          <%= latest.title %>
+          <%= if number = Changelog.EpisodeView.number(latest) do %>
+            <span>#<%= number %></span>
+          <% end %>
+        </cite>
+      </article>
+    <% end %>
+
+    <%= for episode <- pre_cta_episodes do %>
+      <%= render "_episode_summary.html", conn: @conn, podcast: @podcast, episode: episode %>
+    <% end %>
+  </div>
+
+  <%= render Changelog.SharedView, "_membership_cta.html", assigns %>
+
+  <% post_cta_episodes = Enum.slice(@episodes, 2, length(@episodes)) %>
+  <div class="container container--skinny">
+    <%= for episode <- post_cta_episodes do %>
+      <%= render "_episode_summary.html", conn: @conn, podcast: @podcast, episode: episode %>
+    <% end %>
+
+    <div class="btn-container">
+      <%= link to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--block" do %>
+        <img src="<%= static_url(@conn, "/images/arrow-down.svg") %>" alt="Show all episodes"/>Show all episodes
+      <% end %>
+    </div>
+  </div>
+
 </section>
-
-<%= if Enum.any?(@episodes) do %>
-<ul>
-  <%= for episode <- @episodes do %>
-    <li>
-      <%= link Changelog.EpisodeView.numbered_title(episode),
-          to: episode_path(@conn, :episode, @podcast.slug, episode.slug) %>
-    </li>
-  <% end %>
-</ul>
-<% end %>

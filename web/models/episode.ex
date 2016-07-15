@@ -42,8 +42,12 @@ defmodule Changelog.Episode do
     from e in query, order_by: [desc: e.published_at]
   end
 
-  def changeset(model, params \\ %{}) do
-    model
+  def limit(query, count) do
+    from e in query, limit: ^count
+  end
+
+  def changeset(struct, params \\ %{}) do
+    struct
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, ~w(audio_file))
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
@@ -55,8 +59,8 @@ defmodule Changelog.Episode do
     |> derive_bytes_and_duration(params)
   end
 
-  def preload_all(model) do
-    model
+  def preload_all(struct) do
+    struct
     |> Repo.preload(:podcast)
     |> Repo.preload([
       episode_hosts: {Changelog.EpisodeHost.by_position, :person},
@@ -65,6 +69,12 @@ defmodule Changelog.Episode do
       episode_channels: {Changelog.EpisodeChannel.by_position, :channel}
     ])
     |> Repo.preload(:hosts)
+    |> Repo.preload(:guests)
+  end
+
+  def preload_guests(struct) do
+    struct
+    |> Repo.preload(episode_guests: {Changelog.EpisodeGuest.by_position, :person})
     |> Repo.preload(:guests)
   end
 

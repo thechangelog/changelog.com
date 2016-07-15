@@ -23,10 +23,20 @@ defmodule Changelog.EpisodeView do
     round(episode.bytes / 1000 / 1000)
   end
 
-  def numbered_title(episode) do
+  def number(episode) do
     case Float.parse(episode.slug) do
-      {_, _} -> "#{episode.slug}: #{episode.title}"
-      :error -> episode.title
+      {_, _} -> episode.slug
+      :error -> nil
+    end
+  end
+
+  def numbered_title(episode) do
+    episode_number = number(episode)
+
+    if is_nil(episode_number) do
+      episode.title
+    else
+      "#{episode_number}: #{episode.title}"
     end
   end
 end

@@ -3,6 +3,13 @@ defmodule Changelog.PersonViewTest do
 
   import Changelog.PersonView
 
+  test "external_url" do
+    assert external_url(build(:person)) == "#"
+    assert external_url(build(:person, website: "test.com")) == "test.com"
+    assert external_url(build(:person, twitter_handle: "handle")) == "https://twitter.com/handle"
+    assert external_url(build(:person, github_handle: "handle")) == "https://github.com/handle"
+  end
+
   test "comma_separated_names" do
     p1 = build(:person, name: "The Gangsta")
     p2 = build(:person, name: "The Killa")

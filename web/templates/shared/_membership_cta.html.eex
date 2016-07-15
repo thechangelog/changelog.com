@@ -1,0 +1,8 @@
+<div class="container section">
+  <div class="mosiac mosiac--blue">
+    <aside class="callout callout--large">
+      <h2>Join the community</h2>
+      <p>Get backstage passes to everything we do:<br/>Access to our private Slack, exclusive discounts, our limited yearly tee, and more.</p><%= link "Join Now", to: page_path(@conn, :membership), class: "btn btn--blue-text" %>
+    </aside>
+  </div>
+</div>

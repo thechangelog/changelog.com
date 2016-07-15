@@ -2,7 +2,7 @@
     position: relative
     color: $white
 
-    &:before
+    &:before, &:after
         content: ''
         position: absolute
         z-index: -1
@@ -16,6 +16,14 @@
 
     &--blue:before
         background-image: url(/images/mosiac.svg), linear-gradient($blue, $blue);
+
+    &--podcast:after
+        background-image: url(/images/mosiac.svg), linear-gradient($changelog, $changelog);
+        opacity: .15
+
+    &--gotime:after
+        background-image: url(/images/mosiac.svg), linear-gradient($gotime, $gotime);
+        opacity: .15
 
     &--overlap
         color: inherit

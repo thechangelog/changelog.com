@@ -1,0 +1,36 @@
+<article class="episode-summary">
+  <time class="episode-summary_date" datetime="2016-05-16T12:00"><%= ts(@episode.published_at) %></time>
+  <h3 class="episode-summary_title">
+    <%= if number = Changelog.EpisodeView.number(@episode) do %>
+      <span class="episode-summary_title_number">#<%= number %>&nbsp;</span>
+    <% end %>
+    <%= @episode.title %>
+  </h3>
+  <div class="episode-summary_content">
+    <p class="episode-summary_content_description">
+      <%= raw md_to_html(@episode.summary) %>
+      <%= for person <- @episode.guests do %>
+        <img src="<%= avatar_url(person, 75) %>" alt="Guest Speaker: <%= person.name %>"/>
+      <% end %>
+    </p>
+
+    <nav class="podcast-menu podcast-menu--episode">
+      <h4 class="accessibility-hidden">Episode Navigation</h4>
+      <button><img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play podcast"/>Play</button>
+      <%= link to: episode_path(@conn, :episode, @podcast.slug, @episode.slug) do %>
+        <img src="<%= static_url(@conn, "/images/details.svg") %>" alt="View details"/>Details
+      <% end %>
+      <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More options"/></button>
+    </nav>
+
+    <nav class="podcast-menu-tooltip tooltip">
+      <h5 class="accessibility-hidden">More Episode Navigation Options</h5>
+      <div class="tooltip_links">
+        <a href="#">Subscribe</a>
+        <a href="#">Share episode</a>
+        <button>Copy episode link</button>
+        <a href="#">Sponsor this podcast</a>
+      </div>
+    </nav>
+  </div>
+</article>
