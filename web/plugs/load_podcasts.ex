@@ -11,7 +11,7 @@ defmodule Changelog.Plug.LoadPodcasts do
   def call(conn, _opts) do
     podcasts =
       Repo.all(from p in Podcast, order_by: [asc: p.id])
-      |> Repo.preload(:hosts)
+      |> Podcast.preload_hosts
 
     assign(conn, :podcasts, podcasts)
   end

@@ -47,4 +47,10 @@ defmodule Changelog.Podcast do
     |> Enum.map(&(Float.parse(&1.slug)))
     |> Enum.find(fn(x) -> x != :error end)
   end
+
+  def preload_hosts(struct) do
+    struct
+    |> Repo.preload(podcast_hosts: {Changelog.PodcastHost.by_position, :person})
+    |> Repo.preload(:hosts)
+  end
 end

@@ -6,7 +6,7 @@ defmodule Changelog.PodcastController do
 
   def show(conn, %{"slug" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: slug)
-      |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
+    |> Podcast.preload_hosts
 
     episodes =
       assoc(podcast, :episodes)
