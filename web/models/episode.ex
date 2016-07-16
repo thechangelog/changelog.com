@@ -84,7 +84,7 @@ defmodule Changelog.Episode do
       # detection (bitrate * filesize). So, we use the raw_file to get accurate
       # duration and the tagged_file to get accurate bytes
       raw_file = params["audio_file"].path
-      tagged_file = Changelog.EpisodeView.audio_local_path(%{changeset.model | audio_file: new_audio_file})
+      tagged_file = Changelog.EpisodeView.audio_local_path(%{changeset.data | audio_file: new_audio_file})
 
       case File.stat(tagged_file) do
         {:ok, stats} ->
