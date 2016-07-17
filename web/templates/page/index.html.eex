@@ -24,36 +24,6 @@
 <section class="container" id="shows">
   <h2 class="accessibility-hidden">Podcast Shows</h2>
   <%= for podcast <- @podcasts do %>
-    <article class="show-summary">
-      <div class="show-summary_art">
-        <div class="show-summary-widget show-summary-widget--<%= podcast.slug %>">
-          <div class="show-summary-widget_content">
-            <!-- For open state, use .show-summary-widget_menu--is-open-->
-            <div class="show-summary-widget_menu">
-              <div class="tooltip">
-                <h3 class="tooltip_heading"><%= podcast.name %></h3>
-                <nav class="tooltip_links">
-                  <h4 class="accessibility-hidden">Podcast Menu</h4>
-                  <a href="#">Play latest episode</a>
-                  <a href="#">Latest Episode Page</a>
-                  <%= link "Go to show page", to: podcast_path(@conn, :show, podcast.slug) %>
-                  <a href="#">Subscribe</a>
-                </nav>
-              </div>
-            </div>
-            <button class="show-summary-widget_toggle"></button>
-          </div>
-        </div>
-      </div>
-      <div class="show-summary_content">
-        <%= raw md_to_html(podcast.description) %>
-        <cite>Hosted by
-          <%= for person <- podcast.hosts do %>
-            <%= link person.name, to: Changelog.PersonView.external_url(person) %>
-          <% end %>
-        </cite>
-        <p><b><%= pluralize(Changelog.PodcastView.episode_count(podcast), "Episode", "Episodes") %></b></p>
-      </div>
-    </article>
+    <%= render Changelog.PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast %>
   <% end %>
 </section>

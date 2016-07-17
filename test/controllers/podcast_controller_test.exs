@@ -1,6 +1,17 @@
 defmodule Changelog.PodcastControllerTest do
   use Changelog.ConnCase
 
+  test "getting the podcasts index" do
+    p1 = insert(:podcast)
+    p2 = insert(:podcast)
+
+    conn = get(build_conn, podcast_path(build_conn, :index))
+
+    assert conn.status == 200
+    assert conn.resp_body =~ p1.name
+    assert conn.resp_body =~ p2.name
+  end
+
   test "getting a podcast page" do
     p = insert(:podcast)
     conn = get(build_conn, podcast_path(build_conn, :show, p.slug))

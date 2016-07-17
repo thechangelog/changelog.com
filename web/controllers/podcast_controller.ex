@@ -4,6 +4,10 @@ defmodule Changelog.PodcastController do
   alias Changelog.Podcast
   alias Changelog.Episode
 
+  def index(conn, _params) do
+    render conn, "index.html"
+  end
+
   def show(conn, %{"slug" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: slug)
     |> Podcast.preload_hosts

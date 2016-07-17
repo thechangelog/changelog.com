@@ -4,7 +4,7 @@
   <% end %>
   <nav class="navigation-bar_links">
     <h2 class="accessibility-hidden">Quick Links</h2>
-    <a class="navigation-bar-link" href="#">Podcasts</a>
+    <%= link "Podcasts", to: podcast_path(@conn, :index), class: "navigation-bar-link" %>
     <!-- For open state, use .navigation-bar-link--is-open-->
     <div class="navigation-bar-link">
       <%= link "News", to: page_path(@conn, :weekly) %>
