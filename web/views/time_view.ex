@@ -11,6 +11,15 @@ defmodule Changelog.TimeView do
     "#{hours}:#{duration(remaining)}"
   end
 
+  def pretty_date(ts) when is_nil(ts), do: ""
+  def pretty_date(ts) do
+    {:ok, result} =
+      ts
+      |> Changelog.Timex.from_ecto
+      |> Timex.format("{Mshort} {D} {YYYY}")
+    result
+  end
+
   def rss(ts) when is_nil(ts), do: ""
   def rss(ts) do
     {:ok, result} =

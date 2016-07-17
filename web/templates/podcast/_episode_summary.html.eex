@@ -1,5 +1,5 @@
 <article class="episode-summary">
-  <time class="episode-summary_date" datetime="2016-05-16T12:00"><%= ts(@episode.published_at) %></time>
+  <time class="episode-summary_date" datetime="2016-05-16T12:00"><%= Changelog.TimeView.pretty_date(@episode.published_at) %></time>
   <h3 class="episode-summary_title">
     <%= if number = Changelog.EpisodeView.number(@episode) do %>
       <span class="episode-summary_title_number">#<%= number %>&nbsp;</span>
