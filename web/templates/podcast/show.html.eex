@@ -16,9 +16,9 @@
     </header>
   </div>
 
-  <% pre_cta_episodes = Enum.slice(@episodes, 0, 1) %>
+  <% pre_cta_episodes = Enum.slice(@episodes, 0, 2) %>
   <div class="container container--skinny">
-    <% if latest = List.first(pre_cta_episodes) do %>
+    <%= if latest = List.first(pre_cta_episodes) do %>
       <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
         <h3>The Latest</h3>
         <q>It took 6 months for a simple hello world.</q>
