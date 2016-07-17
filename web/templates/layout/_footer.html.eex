@@ -1,5 +1,5 @@
 <section class="footer mosiac">
-  <h2><%= Enum.random(["Hacker to the heart", "!imposter", "Keep Up"]) %></h2>
+  <h2><%= Enum.random(["Hacker to the heart", "!imposter", "Open Source Moves Fast", "Keep Up"]) %></h2>
   <footer class="container">
     <div class="footer_copyright"><small>&copy; 2009-2016<span> Changelog Media, LLC.</span></small>
       <address>
