@@ -37,7 +37,8 @@ defmodule Changelog.Factory do
   def podcast_factory do
     %Changelog.Podcast{
       name: sequence(:name, &"Show #{&1}"),
-      slug: sequence(:slug, &"show-#{&1}")
+      slug: sequence(:slug, &"show-#{&1}"),
+      status: :published
     }
   end
 

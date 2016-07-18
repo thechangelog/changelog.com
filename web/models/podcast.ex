@@ -34,6 +34,14 @@ defmodule Changelog.Podcast do
     |> cast_assoc(:podcast_hosts)
   end
 
+  def public(query \\ __MODULE__) do
+    from(p in query, where: p.status in [^:soon, ^:published])
+  end
+
+  def oldest_first(query \\ __MODULE__) do
+    from p in query, order_by: [asc: p.id]
+  end
+
   def episode_count(podcast) do
     Repo.one from(e in Changelog.Episode,
       where: e.podcast_id == ^podcast.id,
@@ -48,8 +56,8 @@ defmodule Changelog.Podcast do
     |> Enum.find(fn(x) -> x != :error end)
   end
 
-  def preload_hosts(struct) do
-    struct
+  def preload_hosts(podcast) do
+    podcast
     |> Repo.preload(podcast_hosts: {Changelog.PodcastHost.by_position, :person})
     |> Repo.preload(:hosts)
   end

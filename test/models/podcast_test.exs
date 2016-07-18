@@ -3,7 +3,7 @@ defmodule Changelog.PodcastTest do
 
   alias Changelog.Podcast
 
-  @valid_attrs %{slug: "the-bomb-show", name: "The Bomb Show"}
+  @valid_attrs %{slug: "the-bomb-show", name: "The Bomb Show", status: :draft}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

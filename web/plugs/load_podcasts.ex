@@ -1,6 +1,5 @@
 defmodule Changelog.Plug.LoadPodcasts do
   import Plug.Conn
-  import Ecto.Query
 
   alias Changelog.{Repo, Podcast}
 
@@ -10,7 +9,9 @@ defmodule Changelog.Plug.LoadPodcasts do
 
   def call(conn, _opts) do
     podcasts =
-      Repo.all(from p in Podcast, order_by: [asc: p.id])
+      Podcast.public
+      |> Podcast.oldest_first
+      |> Repo.all
       |> Podcast.preload_hosts
 
     assign(conn, :podcasts, podcasts)

@@ -3,7 +3,7 @@ defmodule Changelog.Admin.PodcastControllerTest do
 
   alias Changelog.Podcast
 
-  @valid_attrs %{name: "Polyglot", slug: "polyglot"}
+  @valid_attrs %{name: "Polyglot", slug: "polyglot", status: :published}
   @invalid_attrs %{name: "Polyglot", slug: ""}
 
   @tag :as_admin

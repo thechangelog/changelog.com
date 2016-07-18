@@ -12,6 +12,13 @@ defmodule Changelog.PodcastControllerTest do
     assert conn.resp_body =~ p2.name
   end
 
+  test "getting a draft podcast page" do
+    p = insert(:podcast, status: :draft)
+    assert_raise Ecto.NoResultsError, fn ->
+      get(build_conn, podcast_path(build_conn, :show, p.slug))
+    end
+  end
+
   test "getting a podcast page" do
     p = insert(:podcast)
     conn = get(build_conn, podcast_path(build_conn, :show, p.slug))

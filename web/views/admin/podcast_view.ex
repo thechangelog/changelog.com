@@ -16,7 +16,7 @@ defmodule Changelog.Admin.PodcastView do
 
   def status_options do
     PodcastStatus.__enum_map__()
-    |> Enum.map(fn({k, v}) -> {String.capitalize(Atom.to_string(k)), k} end)
+    |> Enum.map(fn({k, _v}) -> {String.capitalize(Atom.to_string(k)), k} end)
   end
 
   def vanity_link(podcast) do
