@@ -21,21 +21,15 @@ defmodule Changelog.AudioFile do
   def transform(_version, {_file, scope}) do
     podcast = scope.podcast
 
-    # if podcast has cover art, get its location and insert list of art
-    # options to be flattened into the other list. Otherwise empty list
-    art_options = if podcast.cover_art do
-      art_file = Changelog.PodcastView.cover_art_local_path(podcast, :original)
-      ["-i", art_file, "-map", "0:0", "-map", "1:0"]
-    else
-      []
-    end
+    # get podcast's cover art location and insert list of art options
+    art_file = Changelog.PodcastView.cover_art_local_path(podcast, "png")
 
     {:ffmpeg,
      fn(input, output) ->
       [
         "-f", "mp3",
         "-i", input,
-        art_options,
+        "-i", art_file, "-map", "0:0", "-map", "1:0",
         "-acodec", "copy",
         "-metadata", "artist=Changelog Media",
         "-metadata", "publisher=Changelog Media",
@@ -45,7 +39,7 @@ defmodule Changelog.AudioFile do
         "-metadata", "genre=Podcast",
         "-metadata", "comment=SGUgdGhhdCBoZWFycyBteSB3b3JkLCBhbmQgYmVsaWV2ZXMgb24gaGltIHRoYXQgc2VudCBtZSwgaGFzIGV2ZXJsYXN0aW5nIGxpZmUsIGFuZCBzaGFsbCBub3QgY29tZSBpbnRvIGNvbmRlbW5hdGlvbjsgYnV0IGlzIHBhc3NlZCBmcm9tIGRlYXRoIHVudG8gbGlmZQ==",
         "-f", "mp3", output
-      ] |> List.flatten
+      ]
      end,
      :mp3}
   end

@@ -33,7 +33,7 @@
         <guid isPermaLink="false"><%= Changelog.EpisodeView.guid(episode) %></guid>
         <pubDate><%= Changelog.TimeView.rss(episode.published_at) %></pubDate>
         <image>
-          <url><%= static_url(@conn, cover_art_url(episode.podcast, :original)) %></url>
+          <url><%= static_url(@conn, cover_art_path(episode.podcast, "png")) %></url>
           <title><%= episode.podcast.name %></title>
           <link><%= vanity_domain_with_fallback_url(episode.podcast)  %></link>
         </image>
@@ -41,7 +41,7 @@
         <description><![CDATA[<%= md_to_html(episode.summary) %>]]></description>
         <enclosure url="<%= static_url(@conn, Changelog.EpisodeView.audio_url(episode)) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
         <itunes:author><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></itunes:author>
-        <itunes:image href="<%= static_url(@conn, cover_art_url(episode.podcast, :original)) %>"/>
+        <itunes:image href="<%= static_url(@conn, cover_art_path(episode.podcast, "png")) %>"/>
         <itunes:duration><%= Changelog.TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:keywords><%= @podcast.keywords %></itunes:keywords>

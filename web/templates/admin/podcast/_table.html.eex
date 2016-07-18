@@ -16,9 +16,9 @@
     <tr>
       <td>
         <%= link to: admin_podcast_episode_path(@conn, :index, podcast) do %>
-        <h4 class="ui image header">
-          <img src="<%= Changelog.PodcastView.cover_art_url(podcast, :small) %>" class="ui image"/>
-        </h4>
+        <h3 class="ui circular image header">
+          <img src="<%= static_url(@conn, Changelog.PodcastView.cover_art_path(podcast)) %>" class="ui image"/>
+        </h3>
           <%= podcast.name %>
         <% end %>
       </td>

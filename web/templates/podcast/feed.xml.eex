@@ -11,9 +11,9 @@
     <itunes:author>Changelog Media</itunes:author>
     <itunes:summary><%= md_to_text @podcast.description %></itunes:summary>
     <itunes:explicit>no</itunes:explicit>
-    <itunes:image href="<%= static_url(@conn, cover_art_url(@podcast, :original)) %>"/>
+    <itunes:image href="<%= static_url(@conn, cover_art_path(@podcast, "png")) %>"/>
     <image>
-      <url><%= static_url(@conn, cover_art_url(@podcast, :original)) %></url>
+      <url><%= static_url(@conn, cover_art_path(@podcast, "png")) %></url>
       <title><%= @podcast.name %></title>
       <link><%= vanity_domain_with_fallback_url(@podcast) %></link>
     </image>

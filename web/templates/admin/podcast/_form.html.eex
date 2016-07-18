@@ -25,20 +25,6 @@
     </div>
   </div>
 
-  <div class="field">
-    <%= label f, :cover_art, "Cover Art" %>
-    <img
-      src="<%= Changelog.PodcastView.cover_art_url(f.data, :small) %>"
-      data-popup=true
-      data-content="Ideal size is 3000px by 3000px."
-      width=100
-      height=100
-    >
-    <br/>
-    <%= error_message(f, :cover_art) %>
-    <%= file_input f, :cover_art %>
-  </div>
-
   <div class="required field">
     <%= label f, :hosts %>
 

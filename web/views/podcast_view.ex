@@ -1,14 +1,13 @@
 defmodule Changelog.PodcastView do
   use Changelog.Web, :view
 
-  def cover_art_url(podcast, version) do
-    Changelog.CoverArt.url({podcast.cover_art, podcast}, version)
-    |> String.replace_leading("priv/static", "")
+  def cover_art_path(podcast, extension \\ "svg") do
+    "/images/podcasts/#{podcast.slug}-cover-art.#{extension}"
   end
 
-  def cover_art_local_path(podcast, version) do
-    url = Changelog.CoverArt.url({podcast.cover_art.file_name, podcast}, version)
-    Application.app_dir(:changelog, url)
+  def cover_art_local_path(podcast, extension \\ "svg") do
+    url = cover_art_path(podcast, extension)
+    Application.app_dir(:changelog, "priv/static#{url}")
   end
 
   def dasherized_name(podcast) do
