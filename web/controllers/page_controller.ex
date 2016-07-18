@@ -1,10 +1,6 @@
 defmodule Changelog.PageController do
   use Changelog.Web, :controller
 
-  def index(conn, _params) do
-    render(conn, :index)
-  end
-
   def about(conn, _params) do
     render(conn, :about)
   end
@@ -15,6 +11,10 @@ defmodule Changelog.PageController do
 
   def films(conn, _params) do
     render(conn, :films)
+  end
+
+  def home(conn, _params) do
+    render(conn, :home)
   end
 
   def membership(conn, _params) do

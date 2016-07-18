@@ -46,7 +46,7 @@ defmodule Changelog.AuthControllerTest do
 
     conn = get(build_conn, "/in/#{encoded}")
 
-    assert redirected_to(conn) == page_path(conn, :index)
+    assert redirected_to(conn) == page_path(conn, :home)
     assert get_encrypted_cookie(conn, "_changelog_user") == person.id
   end
 

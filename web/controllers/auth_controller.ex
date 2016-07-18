@@ -44,7 +44,7 @@ defmodule Changelog.AuthController do
         |> assign(:current_user, person)
         |> put_encrypted_cookie("_changelog_user", person.id)
         |> configure_session(renew: true)
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: page_path(conn, :home))
       true ->
         conn
         |> put_flash(:info, "Whoops!")
@@ -56,6 +56,6 @@ defmodule Changelog.AuthController do
     conn
       |> configure_session(drop: true)
       |> delete_resp_cookie("_changelog_user")
-      |> redirect(to: page_path(conn, :index))
+      |> redirect(to: page_path(conn, :home))
   end
 end

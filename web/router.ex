@@ -54,7 +54,7 @@ defmodule Changelog.Router do
     resources "/posts", PostController, only: [:show]
 
     # static pages
-    get "/", PageController, :index
+    get "/", PageController, :home
     get "/about", PageController, :about
     get "/contact", PageController, :contact
     get "/films", PageController, :films
