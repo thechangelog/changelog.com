@@ -4,16 +4,23 @@ defmodule Changelog.PageControllerTest do
   test "static pages all render" do
     Enum.each([
       "/",
-      "/weekly",
-      "/nightly",
+      "/about",
       "/contact",
       "/films",
       "/membership",
-      "/sponsorship",
+      "/nightly",
+      "/nightly/confirmation-pending",
+      "/nightly/confirmed",
+      "/nightly/unsubscribed",
       "/partnership",
+      "/sponsorship",
       "/store",
       "/team",
-      "/about"
+      "/weekly",
+      "/weekly/archive",
+      "/weekly/confirmed",
+      "/weekly/confirmation-pending",
+      "/weekly/unsubscribed",
     ], fn route ->
       conn = get(build_conn, route)
       assert conn.status == 200

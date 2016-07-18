@@ -59,12 +59,23 @@ defmodule Changelog.Router do
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/membership", PageController, :membership
-    get "/nightly", PageController, :nightly
+
     get "/partnership", PageController, :partnership
     get "/sponsorship", PageController, :sponsorship
     get "/store", PageController, :store
     get "/team", PageController, :team
+    get "/live", PageController, :live
+
+    get "/nightly", PageController, :nightly
+    get "/nightly/confirmation-pending", PageController, :nightly_pending
+    get "/nightly/confirmed", PageController, :nightly_confirmed
+    get "/nightly/unsubscribed", PageController, :nightly_unsubscribed
+
     get "/weekly", PageController, :weekly
+    get "/weekly/archive", PageController, :weekly_archive
+    get "/weekly/confirmation-pending", PageController, :weekly_pending
+    get "/weekly/confirmed", PageController, :weekly_confirmed
+    get "/weekly/unsubscribed", PageController, :weekly_unsubscribed
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
