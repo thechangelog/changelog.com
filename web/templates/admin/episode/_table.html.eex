@@ -24,7 +24,7 @@
       <td>TODO</td>
       <td class="center aligned">
         <div class="ui basic icon buttons">
-          <%= link to: episode_path(@conn, :episode, @podcast.slug, episode.slug), class: "ui button", title: "View Public Page" do %>
+          <%= link to: episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button", title: "View Public Page" do %>
             <i class="external icon"></i>
           <% end %>
 

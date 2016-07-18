@@ -29,7 +29,7 @@
     <%= for episode <- @episodes do %>
       <item>
         <title><%= episode.podcast.name %> – <%= Changelog.EpisodeView.numbered_title(episode) %></title>
-        <link><%= episode_url(@conn, :episode, episode.podcast.slug, episode.slug) %></link>
+        <link><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= Changelog.EpisodeView.guid(episode) %></guid>
         <pubDate><%= Changelog.TimeView.rss(episode.published_at) %></pubDate>
         <image>

@@ -17,7 +17,7 @@
     <nav class="podcast-menu podcast-menu--episode">
       <h4 class="accessibility-hidden">Episode Navigation</h4>
       <button><img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play podcast"/>Play</button>
-      <%= link to: episode_path(@conn, :episode, @podcast.slug, @episode.slug) do %>
+      <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug) do %>
         <img src="<%= static_url(@conn, "/images/details.svg") %>" alt="View details"/>Details
       <% end %>
       <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More options"/></button>

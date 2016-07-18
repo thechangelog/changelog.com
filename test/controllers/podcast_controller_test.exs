@@ -32,30 +32,6 @@ defmodule Changelog.PodcastControllerTest do
     end
   end
 
-  test "getting a published podcast episode page" do
-    p = insert(:podcast)
-    e = insert(:published_episode, podcast: p)
-    conn = get(build_conn, episode_path(build_conn, :episode, p.slug, e.slug))
-    assert html_response(conn, 200) =~ e.title
-  end
-
-  test "getting a podcast episode page that is not published" do
-    p = insert(:podcast)
-    e = insert(:episode, podcast: p)
-
-    assert_raise Ecto.NoResultsError, fn ->
-      get(build_conn, episode_path(build_conn, :episode, p.slug, e.slug))
-    end
-  end
-
-  test "geting a podcast episode page that doesn't exist" do
-    p = insert(:podcast)
-
-    assert_raise Ecto.NoResultsError, fn ->
-      get(build_conn, episode_path(build_conn, :episode, p.slug, "bad-episode"))
-    end
-  end
-
   test "getting a podcast feed" do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
