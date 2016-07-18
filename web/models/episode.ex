@@ -46,8 +46,8 @@ defmodule Changelog.Episode do
     from e in query, limit: ^count
   end
 
-  def changeset(struct, params \\ %{}) do
-    struct
+  def changeset(episode, params \\ %{}) do
+    episode
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, ~w(audio_file))
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
@@ -59,23 +59,37 @@ defmodule Changelog.Episode do
     |> derive_bytes_and_duration(params)
   end
 
-  def preload_all(struct) do
-    struct
+  def preload_all(episode) do
+    episode
     |> Repo.preload(:podcast)
-    |> Repo.preload([
-      episode_hosts: {Changelog.EpisodeHost.by_position, :person},
-      episode_guests: {Changelog.EpisodeGuest.by_position, :person},
-      episode_sponsors: {Changelog.EpisodeSponsor.by_position, :sponsor},
-      episode_channels: {Changelog.EpisodeChannel.by_position, :channel}
-    ])
+    |> preload_channels
+    |> preload_guests
+    |> preload_hosts
+    |> preload_sponsors
+  end
+
+  def preload_channels(episode) do
+    episode
+    |> Repo.preload(episode_channels: {Changelog.EpisodeChannel.by_position, :channel})
+    |> Repo.preload(:channels)
+  end
+
+  def preload_hosts(episode) do
+    episode
+    |> Repo.preload(episode_hosts: {Changelog.EpisodeHost.by_position, :person})
     |> Repo.preload(:hosts)
+  end
+
+  def preload_guests(episode) do
+    episode
+    |> Repo.preload(episode_guests: {Changelog.EpisodeGuest.by_position, :person})
     |> Repo.preload(:guests)
   end
 
-  def preload_guests(struct) do
-    struct
-    |> Repo.preload(episode_guests: {Changelog.EpisodeGuest.by_position, :person})
-    |> Repo.preload(:guests)
+  def preload_sponsors(episode) do
+    episode
+    |> Repo.preload(episode_sponsors: {Changelog.EpisodeSponsor.by_position, :sponsor})
+    |> Repo.preload(:sponsors)
   end
 
   defp derive_bytes_and_duration(changeset, params) do

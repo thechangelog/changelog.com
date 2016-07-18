@@ -1,0 +1,11 @@
+<div class="container section">
+  <div class="mosiac mosiac--blue">
+    <aside class="callout callout--horizontal"><img src="<%= static_url(@conn, "/images/changelog-mark-only-white.svg") %>" alt="Changelog Logo">
+      <div class="callout_content">
+        <h2>Become a Changelog member today!</h2>
+        <p>Get backstage passes to everything we do: Access to our private Slack, exclusive discounts, our limited yearly tee, and more.</p>
+      </div>
+      <%= link "Join Now", to: page_path(@conn, :membership), class: "btn btn--blue-text" %>
+    </aside>
+  </div>
+</div>

@@ -7,7 +7,7 @@
       <div class="show-header_hosts"><i>Your <%= plural_form(@podcast.hosts, "Host", "Hosts") %>:</i>
         <div class="hosts-list section">
           <%= for person <- @podcast.hosts do %>
-            <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item" do %>
+            <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
               <img src="<%= avatar_url(person, 42) %>" alt="<%= person.name %>"/><%= person.name %>
             <% end %>
           <% end %>
@@ -37,7 +37,7 @@
     <% end %>
   </div>
 
-  <%= render Changelog.SharedView, "_membership_cta.html", assigns %>
+  <%= render Changelog.SharedView, "_membership_cta_1.html", assigns %>
 
   <% post_cta_episodes = Enum.slice(@episodes, 2, length(@episodes)) %>
   <div class="container container--skinny">

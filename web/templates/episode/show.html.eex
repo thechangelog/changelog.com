@@ -1,15 +1,139 @@
-<h1><%= @podcast.name %></h1>
-<h2><%= Changelog.EpisodeView.numbered_title(@episode) %></h2>
+<div class="mosiac mosiac--overlap mosiac--<%= @podcast.slug %>">
+  <div class="container container--has-padding container--extra-skinny">
+    <article class="episode">
+      <header class="episode_header">
+        <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/>
+        <h2><%= @episode.title %></h2>
 
-<audio id="player" src="https://cdn.changelog.com/uploads/podcast/199/the-changelog-199.mp3"></audio>
+        <%= if Enum.any?(@episode.guests) do %>
+        <div class="hosts-list section">
+          <h3 class="accessibility-hidden">Guest Speakers</h3>
+          <%= for person <- @episode.guests do %>
+            <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
+              <img src="<%= avatar_url(person, 75) %>" alt="<%= person.name %>"/>
+            <% end %>
+          <% end %>
+        </div>
+        <% end %>
 
-<section class="description">
-  <%= raw md_to_html(@episode.summary) %>
-</section>
+        <%= render Changelog.PodcastView, "_menu.html", conn: @conn %>
 
-<script type="text/javascript">
-  player = document.getElementById("player");
-  player.oncanplay = function() {
-    console.log("ohai");
-  }
-</script>
+        <%= if Enum.any?(@episode.sponsors) do %>
+          <aside class="sponsors-ribbon">
+            <h3>Brought to you by:</h3>
+            <div class="sponsors-ribbon_logos"><a href="#"><img src="img/toptal-logo-gray.svg" alt="toptal"/></a></div>
+          </aside>
+        <% end %>
+      </header>
+
+      <%= raw(md_to_html(@episode.summary)) %>
+
+      <cite class="episode_meta">
+        <%= if number = number(@episode) do %>
+        <b>Episode #<%= number %></b>&nbsp;/&nbsp;
+        <% end %>
+        <time datetime="<%= @episode.published_at %>"><%= Changelog.TimeView.pretty_date(@episode.published_at) %></time>
+        &nbsp;/&nbsp;<%= Changelog.TimeView.rounded_minutes(@episode.duration) %> Min
+        &nbsp;
+        <%= link to: audio_url(@episode), download: true do %>
+          <img src="<%= static_url(@conn, "/images/download.svg") %>"">
+          &nbsp;Download MP3 (<%= megabytes(@episode) %>MB)
+        <% end %>
+      </cite>
+
+      <footer class="episode_footer">
+        <%= if Enum.any?(@episode.guests) do %>
+        <section class="episode-footer-section">
+          <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
+          <div class="episode-footer-section_content">
+            <h3>Guests</h3>
+            <ul>
+              <%= for person <- @episode.guests do %>
+                <li>
+                <%= person.name %> &mdash;
+                <%= if person.twitter_handle do %>
+                  <%= link "[Twitter]", to: twitter_url(person.twitter_handle) %>
+                <% end %>
+                <%= if person.github_handle do %>
+                  <%= link "[GitHub]", to: twitter_url(person.github_handle) %>
+                <% end %>
+                <%= if person.website do %>
+                  <%= link "[Website]", to: person.website %>
+                <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </section>
+        <% end %>
+
+        <%= if Enum.any?(@episode.episode_sponsors) do %>
+        <section class="episode-footer-section">
+          <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/sponsor-gray.svg") %>" alt="Show sponsors"></div>
+          <div class="episode-footer-section_content">
+            <h3>Sponsors</h3>
+            <dl class="sponsors-list">
+              <%= for sponsor <- @episode.episode_sponsors do %>
+                <dt class="sponsors-list-name"><%= link sponsor.title, to: sponsor.link_url, class: "episode_link" %></dt>
+                <dd class="sponsors-list_description"><%= sponsor.description %></dd>
+              <% end %>
+            </dl>
+          </div>
+        </section>
+        <% end %>
+
+        <section class="episode-footer-section">
+          <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
+          <div class="episode-footer-section_content">
+            <h3>Notes</h3>
+            <%= raw(md_to_html(@episode.notes)) %>
+          </div>
+        </section>
+
+        <%= link "View all episodes", to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--block" %>
+      </footer>
+    </article>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container container--skinny container--has-padding">
+    <section class="icon-panel">
+      <header class="icon-panel_header">
+        <h2 class="h2"> <img src="<%= static_url(@conn, "/images/news.svg") %>" alt="News"><br/>News</h2>
+      </header>
+      <div class="icon-panel_content">
+        <div class="news-list">
+          <article class="news-item">
+            <h3 class="news-item_heading">Changelog Weekly</h3>
+            <p class="news-item_description"><b><em>Every Saturday morning</em></b> we ship an email that covers everything that hits our open source radar. It's nerd to the core. Don't miss out. No spam!</p>
+            <nav class="podcast-menu podcast-menu--episode">
+              <h4 class="accessibility-hidden">Changelog Weekly Navigation</h4>
+              <%= link to: page_path(@conn, :weekly), title: "Subscribe to Changelog Weekly" do %>
+                <img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe">Subscribe</a>
+              <% end %>
+            </nav>
+          </article>
+          <article class="news-item">
+            <h3 class="news-item_heading">Changelog Nightly</h3>
+            <p class="news-item_description"><b><em>Every night at 10pm CST</em></b> we ship an email that unearths the hottest new repos on GitHub before they blow up. It's nerd to the core. Don't miss out. No spam!</p>
+            <nav class="podcast-menu podcast-menu--episode">
+              <h4 class="accessibility-hidden">Changelog Nightly Navigation</h4>
+              <%= link to: page_path(@conn, :nightly), title: "Subscribe to Changelog Nightly" do %>
+                <img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe">Subscribe</a>
+              <% end %>
+            </nav>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="wrapper wrapper--half-gray">
+  <%= render Changelog.SharedView, "_membership_cta_2.html", assigns %>
+</div>
+
+<div class="wrapper wrapper--gray">
+  <%= render Changelog.SharedView, "_films_cta_1.html", assigns %>
+</div>

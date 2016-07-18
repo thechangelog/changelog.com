@@ -14,7 +14,7 @@
         background-size: cover;
         background-position: center center;
 
-    &--blue:before
+    &--blue:after
         background-image: url(/images/mosiac.svg), linear-gradient($blue, $blue);
 
     &--podcast:after
@@ -44,6 +44,11 @@
     &--overlap
         color: inherit
         &:before
+            height: 8.25rem
+
+            @media (min-width: $tablet)
+                height: 9.75rem
+        &:after
             height: 8.25rem
 
             @media (min-width: $tablet)

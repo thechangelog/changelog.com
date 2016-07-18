@@ -1,0 +1,23 @@
+<div class="container container--skinny section">
+  <section>
+    <header>
+      <h2 class="h2"><img src="<%= static_url(@conn, "/images/films.svg") %>" alt="Films"><br/>Films</h2>
+      <p class="description">Our little film studio focuses on telling developer-centric stories that need to be seen.</p>
+    </header>
+    <article class="film">
+      <header class="film_header">
+        <h3>Beyond Code: Season 2 / Space City Js 2015</h3>
+        <time datetime="2016-01-01T12:00">Jan 2016</time>
+      </header>
+      <video poster="http://placehold.it/960x540" controls>
+        <source src="#" type="video/webm">
+        <source src="#" type="video/mp4">
+        <source src="#" type="video/ogg">Your browser does not support HTML5 video
+      </video>
+    </article>
+    <footer class="btn-container btn-container--flex">
+      <a class="btn" href="#">Hire us</a>
+      <a class="btn btn--white" href="#">View more films</a>
+    </footer>
+  </section>
+</div>
