@@ -65,9 +65,19 @@ defmodule Changelog.Helpers.ViewHelpers do
     link text, (opts ++ [rel: "external"])
   end
 
-  def pluralize(count, singluar, plural) do
+  def plural_form(list, singular, plural) when is_list(list), do: plural_form(length(list), singular, plural)
+  def plural_form(count, singular, plural) do
     if count == 1 do
-      "#{count} #{singluar}"
+      singular
+    else
+      plural
+    end
+  end
+
+  def pluralize(list, singular, plural) when is_list(list), do: pluralize(length(list), singular, plural)
+  def pluralize(count, singular, plural) do
+    if count == 1 do
+      "#{count} #{singular}"
     else
       "#{count} #{plural}"
     end

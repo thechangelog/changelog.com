@@ -4,7 +4,7 @@
       <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
       <%= raw md_to_html(@podcast.description) %>
       <%= render "_menu.html", assigns %>
-      <div class="show-header_hosts"><i>TODO make me dynamic</i>
+      <div class="show-header_hosts"><i>Your <%= plural_form(@podcast.hosts, "Host", "Hosts") %>:</i>
         <div class="hosts-list section">
           <%= for person <- @podcast.hosts do %>
             <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item" do %>
