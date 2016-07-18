@@ -1,8 +1,15 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
-  <div class="field required <%= error_class(f, :name) %>">
-    <%= label f, :name, "Name" %>
-    <%= text_input f, :name, placeholder: "The Changelog" %>
-    <%= error_message(f, :name) %>
+  <div class="two fields">
+    <div class="field required <%= error_class(f, :name) %>">
+      <%= label f, :name, "Name" %>
+      <%= text_input f, :name, placeholder: "The Changelog" %>
+      <%= error_message(f, :name) %>
+    </div>
+
+    <div class="field required <%= error_class(f, :status) %>">
+      <%= label f, :status %>
+      <%= select f, :status, status_options, class: "ui fluid dropdown" %>
+    </div>
   </div>
 
   <div class="three fields">
@@ -53,6 +60,12 @@
         <i class="user icon"></i>
       </div>
     </div>
+  </div>
+
+  <div class="field <%= error_class(f, :schedule_note) %>">
+    <%= label f, :schedule_note %>
+    <%= text_input f, :schedule_note, placeholder: "New show every Friday!" %>
+    <%= error_message(f, :schedule_note) %>
   </div>
 
   <div class="field <%= error_class(f, :description) %>">

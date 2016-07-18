@@ -7,12 +7,13 @@ defmodule Changelog.Podcast do
   schema "podcasts" do
     field :name, :string
     field :slug, :string
+    field :status, PodcastStatus
     field :description, :string
     field :vanity_domain, :string
     field :keywords, :string
     field :twitter_handle, :string
     field :itunes_url, :string
-    field :cover_art, Changelog.CoverArt.Type
+    field :schedule_note, :string
 
     has_many :episodes, Changelog.Episode, on_delete: :delete_all
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
@@ -21,13 +22,12 @@ defmodule Changelog.Podcast do
     timestamps
   end
 
-  @required_fields ~w(name slug)
-  @optional_fields ~w(vanity_domain description keywords twitter_handle itunes_url)
+  @required_fields ~w(name slug status)
+  @optional_fields ~w(vanity_domain schedule_note description keywords twitter_handle itunes_url)
 
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> cast_attachments(params, ~w(cover_art))
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
