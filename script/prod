@@ -1,9 +1,7 @@
 #!/bin/bash -ex
 
-mix deps.get --only prod
-mix compile
+yes | mix do deps.get --only prod, compile
 
-mix ecto.create
-mix ecto.migrate
+mix do ecto.create, ecto.migrate
 
 mix phoenix.server
