@@ -13,7 +13,6 @@ use Mix.Config
 # which you typically run after static files are built.
 config :changelog, Changelog.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "changelog.com", port: 80],
   cache_static_manifest: "priv/static/manifest.json"
 
 # Do not print debug messages in production
@@ -55,7 +54,8 @@ config :logger, level: :info
 #
 #     config :changelog, Changelog.Endpoint, server: true
 #
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"
+# Configure your database
+config :changelog, Changelog.Repo,
+  url: {:system, "DB_URL"},
+  adapter: Ecto.Adapters.Postgres,
+  pool_size: 20
