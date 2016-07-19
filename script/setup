@@ -1,0 +1,7 @@
+  #!/bin/bash -ex
+
+brew install elixir node
+
+mix deps.get
+
+npm install
