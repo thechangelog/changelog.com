@@ -1,4 +1,4 @@
-  #!/bin/bash -ex
+#!/bin/bash -ex
 
 brew install elixir node
 
