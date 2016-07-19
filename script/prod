@@ -1,0 +1,9 @@
+#!/bin/bash -ex
+
+mix deps.get --only prod
+mix compile
+
+mix ecto.create
+mix ecto.migrate
+
+mix phoenix.server
