@@ -1,0 +1,5 @@
+#!/bin/bash -ex
+
+npm install
+
+npm run-script compile
