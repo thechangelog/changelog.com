@@ -2,7 +2,8 @@ use Mix.Config
 
 config :changelog, Changelog.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "2016.changelog.com", port: 443],
+  url: [scheme: "https", host: "2016.changelog.com", port: 443],
+  static_url: [scheme: "https", host: "2016.changelog.com", port: 443],
   # remove once app is stable and ready to go live
   debug_errors: true
 
