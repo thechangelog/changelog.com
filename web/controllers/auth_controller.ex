@@ -6,7 +6,7 @@ defmodule Changelog.AuthController do
   def new(conn, %{"auth" =>  %{"email" => email}}) do
     person = Repo.one!(from p in Person, where: p.email == ^email)
 
-    auth_token = Base.encode16(:crypto.rand_bytes(8))
+    auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
     expires_at =
       Timex.DateTime.now
       |> Timex.add(Timex.Time.to_timestamp(15, :minutes))
