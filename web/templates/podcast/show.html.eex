@@ -9,7 +9,7 @@
         <div class="hosts-list section">
           <%= for person <- @podcast.hosts do %>
             <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-              <img src="<%= avatar_url(person, 42) %>" alt="<%= person.name %>"/><%= person.name %>
+              <img src="<%= Changelog.PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
             <% end %>
           <% end %>
         </div>

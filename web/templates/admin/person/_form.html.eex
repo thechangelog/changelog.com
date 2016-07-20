@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="field required <%= error_class(f, :name) %>">
     <%= label f, :name, "Name" %>
     <%= text_input f, :name, placeholder: "Grace Hopper" %>
@@ -29,6 +29,26 @@
       <%= text_input f, :twitter_handle, placeholder: "gracehopper" %>
       <%= error_message(f, :twitter_handle) %>
     </div>
+  </div>
+
+  <div class="field">
+    <%= label f, :avatar, "Avatar" %>
+    <%= if f.data.id do %>
+      <img
+        src="<%= Changelog.PersonView.avatar_url(f.data, :small) %>"
+        data-popup=true
+        <%= if !f.data.avatar do %>
+          data-content="Ideal size is 600px by 600px. This is the fallback gravatar."
+        <% else %>
+          data-content="Ideal size is 600px by 600px. This is the uploaded file.."
+        <% end %>
+        width=75
+        height=75
+      >
+      <br/>
+    <% end %>
+    <%= error_message(f, :avatar) %>
+    <%= file_input f, :avatar %>
   </div>
 
   <div class="field <%= error_class(f, :website) %>">

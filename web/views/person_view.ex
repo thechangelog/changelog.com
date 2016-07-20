@@ -1,6 +1,33 @@
 defmodule Changelog.PersonView do
   use Changelog.Web, :view
 
+  def avatar_url(person), do: avatar_url(person, :small)
+  def avatar_url(person, version) do
+    if person.avatar do
+      Changelog.Avatar.url({person.avatar, person}, version)
+      |> String.replace_leading("priv/static", "")
+    else
+      gravatar_url(person.email, version)
+    end
+  end
+
+  defp gravatar_url(email, version) do
+    size = case version do
+      :small  -> 150
+      :medium -> 300
+      :large  -> 600
+      _else   -> 100
+    end
+
+    hash = email
+      |> String.strip
+      |> String.downcase
+      |> :erlang.md5
+      |> Base.encode16(case: :lower)
+
+    "https://secure.gravatar.com/avatar/#{hash}.jpg?s=#{size}&d=mm"
+  end
+
   def comma_separated_names(people) when not is_list(people), do: comma_separated_names([])
   def comma_separated_names(people) do
     # I bet this can be more Elixirey by using head/tail and recursion, but I'm

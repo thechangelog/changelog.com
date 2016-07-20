@@ -39,7 +39,7 @@
         <div class="item persisted">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= avatar_url(host) %>">
+          <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(host) %>">
 
           <div class="content">
             <div class="header"><%= host.name %> (@<%= host.handle %>)</div>
@@ -70,7 +70,7 @@
         <div class="item persisted">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= avatar_url(guest) %>">
+          <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(guest) %>">
 
           <div class="content">
             <div class="header"><%= guest.name %> (@<%= guest.handle %>)</div>

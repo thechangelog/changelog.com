@@ -71,7 +71,7 @@ defmodule Changelog.Admin.SearchView do
     %{id: person.id,
       title: person.name,
       description: "(@#{person.handle})",
-      image: avatar_url(person),
+      image: Changelog.PersonView.avatar_url(person),
       url: admin_person_path(Endpoint, :edit, person)}
   end
 

@@ -7,20 +7,6 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
-  # moved here from PersonView because used pervasively
-  def avatar_url(person), do: gravatar_url(person.email, 100)
-  def avatar_url(person, size), do: gravatar_url(person.email, size)
-
-  defp gravatar_url(email, size) do
-    hash = email
-      |> String.strip
-      |> String.downcase
-      |> :erlang.md5
-      |> Base.encode16(case: :lower)
-
-    "https://secure.gravatar.com/avatar/#{hash}.jpg?s=#{size}&d=mm"
-  end
-
   def semantic_datetime_select(form, field, opts \\ []) do
     builder = fn b ->
       ~e"""

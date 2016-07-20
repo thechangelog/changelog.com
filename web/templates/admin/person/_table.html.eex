@@ -13,7 +13,7 @@
   <%= for person <- @people do %>
     <tr>
       <td>
-        <img class="ui avatar image" src="<%= avatar_url(person, 56) %>">
+        <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(person) %>">
         <%= person.name %>
         (<%= person.handle %>)
         <%= if person.admin do %>

@@ -10,7 +10,7 @@
           <h3 class="accessibility-hidden">Guest Speakers</h3>
           <%= for person <- @episode.guests do %>
             <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-              <img src="<%= avatar_url(person, 75) %>" alt="<%= person.name %>"/>
+              <img src="<%= Changelog.PersonView.avatar_url(person) %>" width=75 height=75 alt="<%= person.name %>"/>
             <% end %>
           <% end %>
         </div>

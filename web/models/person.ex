@@ -1,5 +1,6 @@
 defmodule Changelog.Person do
   use Changelog.Web, :model
+  use Arc.Ecto.Schema
 
   alias Changelog.Regexp
 
@@ -15,6 +16,7 @@ defmodule Changelog.Person do
     field :auth_token_expires_at, Ecto.DateTime
     field :signed_in_at, Ecto.DateTime
     field :admin, :boolean
+    field :avatar, Changelog.Avatar.Type
 
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
@@ -29,6 +31,7 @@ defmodule Changelog.Person do
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> cast_attachments(params, ~w(avatar))
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
     |> validate_length(:handle, max: 40, message: "max 40 chars")
