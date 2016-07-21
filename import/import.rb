@@ -29,6 +29,7 @@ class Episode < DataWrapper
   def slug; el.child_named("link").text.split("/").last; end
   def summary; el.xpath("content:encoded").text; end
   def title; el.child_named("title").text.gsub(/\A\d+:\s/, ""); end
+  def tags; el.xpath("category[@domain='post_tag']").map(&:text); end
 end
 
 class Post < DataWrapper
@@ -73,7 +74,7 @@ class Importer
 
     episodes.each do |episode|
       handling_data_issues do
-        db[:episodes].insert({
+        episode_id = db[:episodes].insert({
           podcast_id: podcast_id,
           title: episode.title,
           slug: episode.slug,
@@ -82,6 +83,15 @@ class Importer
           recorded_at: episode.published_at,
           summary: episode.summary
         }.merge(timestamps))
+
+        episode.tags.each do |tag|
+          if channel = db[:channels].where(name: tag).first
+            db[:episode_channels].insert({
+              channel_id: channel[:id],
+              episode_id: episode_id
+            }.merge(timestamps))
+          end
+        end
       end
     end
   end
