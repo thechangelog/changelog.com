@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= label f, :avatar, "Avatar" %>
-    <%= if f.data.id do %>
+    <%= if is_persisted(f.data) do %>
       <img
         src="<%= Changelog.PersonView.avatar_url(f.data, :small) %>"
         data-popup=true

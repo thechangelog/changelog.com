@@ -17,7 +17,7 @@
         <%= person.name %>
         (<%= person.handle %>)
         <%= if person.admin do %>
-          <div class="ui tiny blue label">Admin</div>
+          <div class="ui tiny blue basic label">Admin</div>
         <% end %>
       </td>
       <td><%= link person.email, to: "mailto:#{person.email}" %></td>

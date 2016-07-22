@@ -3,7 +3,6 @@
     <tr>
       <th>Slug</th>
       <th>Name</th>
-      <th>Status</th>
       <th>Record/Publish Time</th>
       <th>Downloads</th>
       <th></th>
@@ -14,8 +13,7 @@
   <%= for episode <- @episodes do %>
     <tr>
       <td><%= episode.slug %></td>
-      <td><%= episode.title %></td>
-      <td><%= status_label(episode) %></td>
+      <td><%= episode.title %>&nbsp;&nbsp;<%= status_label(episode) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
       <%= if episode.published do %>
       <td><%= ts(episode.published_at) %></td>
       <% else %>

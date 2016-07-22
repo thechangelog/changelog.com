@@ -2,7 +2,7 @@
   <div class="two fields">
     <div class="twelve wide field required <%= error_class f, :title %>">
       <%= label f, :title %>
-      <%= text_input f, :title, placeholder: "Best Show Evar!" %>
+      <%= text_input f, :title, placeholder: "SQLite with Richard Hipp" %>
       <%= error_message f, :title %>
     </div>
 
@@ -13,19 +13,49 @@
     </div>
   </div>
 
-  <div class="field">
-    <%= label f, :subtitle %>
-    <%= text_input f, :subtitle, placeholder: "Optional. Used in iTunes." %>
+  <div class="field <%= error_class f, :headline %>">
+    <%= label :f, :headline do %>
+      Headline <%= help_icon("Used as primary title on episode page and iTunes subtitle.") %>
+    <% end %>
+    <%= text_input f, :headline, placeholder: "Why SQLite Succeeded as a Database" %>
+  </div>
+
+  <div class="field <%= error_class(f, :headline) %>">
+    <%= label :f, :subheadline do %>
+      Sub Headline <%= help_icon("Used underneath headline on episode page. Markdown supported.") %>
+    <% end %>
+    <%= text_input f, :subheadline, placeholder: "with [Richard Hipp](http://www.hwaci.com/drh/), creator of [SQLite](http://sqlite.org)" %>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox f, :featured, class: "hidden" %>
+      <label>Featured</label>
+    </div>
+  </div>
+
+  <div class="field <%= error_class(f, :highlight) %>">
+    <%= label :f, :highlight do %>
+      Highlight <%= help_icon("Used on home page when episode is featured.") %>
+    <% end %>
+    <%= text_input f, :highlight, placeholder: "\"I train a computer like I train a dog.\"" %>
+  </div>
+
+  <div class="field <%= error_class(f, :subhighlight) %>">
+    <%= label :f, :subhighlight do %>
+      Sub Highlight <%= help_icon("Used underneath subhighlight. Markdown supported.") %>
+    <% end %>
+    <%= text_input f, :subhighlight, placeholder: "–Matz <sup>Creator of the Ruby programming language</sup>" %>
   </div>
 
   <div class="field <%= error_class f, :recorded_at %>">
-    <%= label f, :recorded_at, "Record At" %>
+    <%= label f, :recorded_at, "Record Date/Time" %>
     <%= semantic_datetime_select f, :recorded_at, default: :os.timestamp |> :calendar.now_to_datetime %>
     <%= error_message f, :recorded_at %>
   </div>
 
   <div class="field <%= error_class f, :published_at %>">
-    <%= label f, :published_at, "Publish At" %>
+    <%= label f, :published_at, "Publish Date/Time" %>
     <%= semantic_datetime_select f, :published_at, default: :os.timestamp |> :calendar.now_to_datetime %>
     <%= error_message f, :published_at %>
   </div>

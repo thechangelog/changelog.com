@@ -6,14 +6,23 @@ defmodule Changelog.Episode do
 
   schema "episodes" do
     field :slug, :string
+    field :guid, :string
+
     field :title, :string
-    field :subtitle, :string
+    field :headline, :string
+    field :subheadline, :string
+
+    field :featured, :boolean, default: false
+    field :highlight, :string
+    field :subhighlight, :string
+
     field :summary, :string
     field :notes, :string
+
     field :published, :boolean, default: false
     field :published_at, Ecto.DateTime
     field :recorded_at, Ecto.DateTime
-    field :guid, :string
+
     field :audio_file, Changelog.AudioFile.Type
     field :bytes, :integer
     field :duration, :integer
@@ -31,8 +40,8 @@ defmodule Changelog.Episode do
     timestamps
   end
 
-  @required_fields ~w(slug title published)
-  @optional_fields ~w(subtitle summary notes published_at recorded_at guid)
+  @required_fields ~w(slug title published featured)
+  @optional_fields ~w(headline subheadline highlight subhighlight summary notes published_at recorded_at guid)
 
   def published(query \\ __MODULE__) do
     from e in query, where: e.published == true, where: not(is_nil(e.audio_file))
