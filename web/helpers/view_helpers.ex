@@ -37,6 +37,8 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def sans_p_tags(html), do: String.replace(html, ~r/<\/?p>/, "")
+
   def github_url(handle), do: "https://github.com/#{handle}"
   def twitter_url(handle), do: "https://twitter.com/#{handle}"
 

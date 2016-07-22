@@ -39,7 +39,7 @@
         <itunes:duration><%= Changelog.TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
-        <itunes:subtitle><%= md_to_text(episode.summary) %></itunes:subtitle>
+        <itunes:subtitle><%= episode.headline %></itunes:subtitle>
         <itunes:summary><%= md_to_text(episode.summary) %></itunes:summary>
       </item>
     <% end %>
