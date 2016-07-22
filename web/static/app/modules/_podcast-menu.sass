@@ -28,9 +28,6 @@
         display: flex
         align-items: center
 
-        @media (min-width: $tablet)
-            padding: 1.15rem 0 1.15rem 1.75rem
-
         &:hover
             color: $white
 
@@ -38,6 +35,9 @@
             margin-right: 1rem
             width: 1.25rem
             height: 1.25rem
+
+    & > button:last-child > img
+        margin: 0
 
     &_tooltip
         display: none
