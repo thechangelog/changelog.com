@@ -7,12 +7,14 @@
     <%= @episode.title %>
   </h3>
   <div class="episode-summary_content">
-    <p class="episode-summary_content_description">
-      <%= raw md_to_html(@episode.summary) %>
+    <div class="episode-summary_content_description">
+      <div>
+        <%= raw md_to_html(@episode.summary) %>
+      </div>
       <%= for person <- @episode.guests do %>
         <img src="<%= Changelog.PersonView.avatar_url(person, :small) %>" width=75 height=75 alt="Guest Speaker: <%= person.name %>"/>
       <% end %>
-    </p>
+    </div>
 
     <nav class="podcast-menu podcast-menu--episode">
       <h4 class="accessibility-hidden">Episode Navigation</h4>

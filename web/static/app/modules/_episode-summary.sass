@@ -35,8 +35,14 @@
 
         &_description
             display: flex
-            align-items: flex-start
+
+            & > div
+                flex: 0 1 auto
 
             & > img
-                margin-left: 1rem
+                flex: 0 0 auto
+                margin: 1rem 0 0 1rem
                 box-shadow: 0.33rem 0.33rem 0 $half-black
+
+                @media (max-width: $tablet)
+                    display: none
