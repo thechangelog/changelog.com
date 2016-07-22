@@ -13,14 +13,14 @@
     <div class="ui top attached menu">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
       <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>
-        Changelog Admin
+        Admin
       <% end %>
 
       <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PodcastController)}" do %>
         <i class="unmute icon"></i>Podcasts
       <% end %>
 
-      <a href="#" class="item"><i class="newspaper icon"></i>News</a>
+      <a href="#" class="item disabled"><i class="newspaper icon"></i>News</a>
 
       <%= link to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PostController)}" do %>
         <i class="write icon"></i>Posts
