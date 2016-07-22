@@ -1,6 +1,7 @@
 defmodule Changelog.Admin.EpisodeView do
   use Changelog.Web, :view
 
+  import Changelog.Admin.SharedView
   import Scrivener.HTML
 
   alias Changelog.{EpisodeView, TimeView, Repo}
@@ -22,11 +23,17 @@ defmodule Changelog.Admin.EpisodeView do
       Repo.get(Changelog.Sponsor, (Map.get(model, "sponsor_id") || params["sponsor_id"]))
   end
 
+  def featured_label(episode) do
+    if episode.featured do
+      content_tag :span, "Featured", class: "ui tiny blue basic label"
+    end
+  end
+
   def status_label(episode) do
     if episode.published do
-      content_tag :span, "Published", class: "ui tiny green label"
+      content_tag :span, "Published", class: "ui tiny green basic label"
     else
-      content_tag :span, "Draft", class: "ui tiny yellow label"
+      content_tag :span, "Draft", class: "ui tiny yellow basic label"
     end
   end
 end

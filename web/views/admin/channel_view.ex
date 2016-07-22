@@ -1,6 +1,7 @@
 defmodule Changelog.Admin.ChannelView do
   use Changelog.Web, :view
 
+  import Changelog.Admin.SharedView
   import Scrivener.HTML
 
   def episode_count(channel) do
