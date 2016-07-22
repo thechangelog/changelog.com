@@ -18,3 +18,10 @@ config :changelog, Changelog.Repo,
   url: {:system, "DB_URL"},
   adapter: Ecto.Adapters.Postgres,
   pool_size: 20
+
+config :changelog, Changelog.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: "smtp.api.createsend.com",
+  port: 587,
+  username: {:system, "CM_TOKEN"},
+  password: {:system, "CM_TOKEN"}

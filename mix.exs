@@ -18,8 +18,9 @@ defmodule Changelog.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Changelog, []},
-     applications: [:bamboo, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy,
-                    :logger, :phoenix_ecto, :postgrex, :tzdata, :ex_machina]]
+     applications: [:bamboo, :bamboo_smtp, :phoenix, :phoenix_pubsub,
+                    :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex,
+                    :tzdata, :ex_machina]]
   end
 
   # Specifies which paths to compile per environment.
@@ -46,6 +47,7 @@ defmodule Changelog.Mixfile do
      {:arc_ecto, "~> 0.4.2"},
      {:hashids, "~> 2.0"},
      {:bamboo, "~> 0.6"},
+     {:bamboo_smtp, "~> 1.1.0"},
      {:ecto_enum, "~> 0.3.0"},
      {:cowboy, "~> 1.0"}]
   end
