@@ -23,7 +23,10 @@
       <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
         <h3>The Latest</h3>
         <q>It took 6 months for a simple hello world.</q>
-        <button><img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>Play</button>
+        <button>
+            <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>
+            <span class="accessibility-hidden">Play</span>
+        </button>
         <cite>
           <%= latest.title %>
           <%= if number = Changelog.EpisodeView.number(latest) do %>
