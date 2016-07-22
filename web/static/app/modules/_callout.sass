@@ -5,14 +5,38 @@
     & > h2
         @extend %display-font
         color: $green
-        margin: 0 0 $padding-small 0
-        font-size: 2.75em
+        margin: $padding-medium 0 0 0
+        font-size: 3.5em
 
     & p
+        line-height: 1.5em
+        font-size: 1.15em
         color: $white
 
     &_content
         padding: 0 1rem
+
+    &--large
+        position: relative
+        padding: 3rem 2rem
+
+        & > h2
+            @media (min-width: $tablet)
+                line-height: 0.5em
+
+        & p
+            margin: 1.5rem 0
+
+        & img
+            display: none
+
+            @media (min-width: $tablet)
+                display: block
+                position: absolute
+                top: 2rem
+                right: 2rem
+                width: 4rem
+                height: 4rem
 
     &--horizontal
         & img

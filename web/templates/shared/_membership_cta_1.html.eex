@@ -3,6 +3,7 @@
     <aside class="callout callout--large">
       <h2>Join the community</h2>
       <p>Get backstage passes to everything we do:<br/>Access to our private Slack, exclusive discounts, our limited yearly tee, and more.</p><%= link "Join Now", to: page_path(@conn, :membership), class: "btn btn--blue-text" %>
+      <img src="<%= static_url(@conn, "/images/changelog-mark-only-white.svg") %>" alt="Changelog Logo" />
     </aside>
   </div>
 </div>
