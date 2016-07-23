@@ -24,4 +24,21 @@ defmodule Changelog.EpisodeControllerTest do
       get(build_conn, episode_path(build_conn, :show, p.slug, "bad-episode"))
     end
   end
+
+  test "previewing a podcast episode when not an admin" do
+    p = insert(:podcast)
+    e = insert(:episode, podcast: p)
+
+    conn = get(build_conn, episode_path(build_conn, :preview, p.slug, e.slug))
+    assert conn.halted
+  end
+
+  @tag :as_admin
+  test "previewing a podcast episode when signed in as admin", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:episode, podcast: p)
+
+    conn = get(conn, episode_path(conn, :preview, p.slug, e.slug))
+    assert html_response(conn, 200) =~ e.title
+  end
 end

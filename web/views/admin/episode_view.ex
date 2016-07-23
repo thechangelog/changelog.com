@@ -36,4 +36,12 @@ defmodule Changelog.Admin.EpisodeView do
       content_tag :span, "Draft", class: "ui tiny yellow basic label"
     end
   end
+
+  def show_or_preview(episode) do
+    if episode.published do
+      :show
+    else
+      :preview
+    end
+  end
 end

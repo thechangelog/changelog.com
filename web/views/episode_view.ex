@@ -6,8 +6,12 @@ defmodule Changelog.EpisodeView do
   end
 
   def audio_url(episode) do
-    Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
-    |> String.replace_leading("priv/static", "")
+    if episode.audio_file do
+      Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
+      |> String.replace_leading("priv/static", "")
+    else
+      static_url(Changelog.Endpoint, "/california.mp3")
+    end
   end
 
   def audio_local_path(episode) do
@@ -20,7 +24,7 @@ defmodule Changelog.EpisodeView do
   end
 
   def megabytes(episode) do
-    round(episode.bytes / 1000 / 1000)
+    round((episode.bytes || 0) / 1000 / 1000)
   end
 
   def number(episode) do
