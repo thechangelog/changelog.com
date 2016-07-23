@@ -19,17 +19,20 @@
       <td><%= episode_count(channel) %></td>
       <td><%= post_count(channel) %></td>
       <td class="center aligned">
-        <div class="ui basic icon buttons">
-          <%= link to: channel_path(@conn, :show, channel.slug), class: "ui button", title: "View Public Page" do %>
+        <div class="ui small basic buttons">
+          <%= link to: channel_path(@conn, :show, channel.slug), class: "ui disabled button" do %>
             <i class="external icon"></i>
+            Public
           <% end %>
 
-          <%= link to: admin_channel_path(@conn, :edit, channel), class: "ui button", title: "Edit this Channel" do %>
+          <%= link to: admin_channel_path(@conn, :edit, channel), class: "ui button" do %>
             <i class="edit icon"></i>
+            Edit
           <% end %>
 
-          <%= link to: admin_channel_path(@conn, :delete, channel), method: :delete, data: [confirm: "Are you sure?"], class: "ui button", title: "Delete this Channel" do %>
+          <%= link to: admin_channel_path(@conn, :delete, channel), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
             <i class="trash icon"></i>
+            Delete
           <% end %>
         </div>
       </td>

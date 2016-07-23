@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeController do
 
   alias Changelog.{Podcast, Episode}
 
-def show(conn, %{"podcast" => podcast, "slug" => slug}) do
+  def show(conn, %{"podcast" => podcast, "slug" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: podcast)
 
     episode =

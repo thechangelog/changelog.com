@@ -35,7 +35,7 @@ let timeString = function(date) {
     minutes = `:${minutes}`;
   }
 
-  return `${month}/${year}/${day} – ${hours}${minutes}${amPm} ${tz}`;
+  return `${month}/${day}/${year} – ${hours}${minutes}${amPm} ${tz}`;
 }
 
 autosize($("textarea"));

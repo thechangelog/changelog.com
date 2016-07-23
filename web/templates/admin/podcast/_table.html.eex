@@ -1,7 +1,7 @@
 <table class="ui celled striped table">
   <thead>
     <tr>
-      <th>Name</th>
+      <th></th>
       <th>Slug</th>
       <th>Status</th>
       <th>Twitter</th>
@@ -15,12 +15,11 @@
   <tbody>
   <%= for podcast <- @podcasts do %>
     <tr>
-      <td>
+      <td class="center aligned">
         <%= link to: admin_podcast_episode_path(@conn, :index, podcast) do %>
-        <h3 class="ui circular image header">
+        <h2 class="ui circular image header">
           <img src="<%= static_url(@conn, Changelog.PodcastView.cover_art_path(podcast)) %>" class="ui image"/>
-        </h3>
-          <%= podcast.name %>
+        </h2>
         <% end %>
       </td>
       <td><%= link "/#{podcast.slug}", to: podcast_path(@conn, :show, podcast.slug) %></td>
@@ -30,17 +29,25 @@
       <td><%= episode_count(podcast) %></td>
       <td>TODO</td>
       <td class="center aligned">
-        <div class="ui basic icon buttons">
-          <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button", title: "View Public Page" do %>
+        <div class="ui small basic buttons">
+          <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button" do %>
             <i class="external icon"></i>
+            Public
           <% end %>
 
-          <%= link to: admin_podcast_path(@conn, :edit, podcast), class: "ui button", title: "Edit Podcast" do %>
+          <%= link to: admin_podcast_path(@conn, :edit, podcast), class: "ui button" do %>
             <i class="edit icon"></i>
+            Edit
           <% end %>
 
-          <%= link to: admin_podcast_episode_path(@conn, :new, podcast), class: "ui button", title: "Add an Episode" do %>
+          <%= link to: admin_podcast_episode_path(@conn, :index, podcast), class: "ui button" do %>
+            <i class="eye icon"></i>
+            Episodes
+          <% end %>
+
+          <%= link to: admin_podcast_episode_path(@conn, :new, podcast), class: "ui button" do %>
             <i class="add icon"></i>
+            Episode
           <% end %>
         </div>
       </td>

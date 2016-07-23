@@ -13,7 +13,7 @@
   <%= for episode <- @episodes do %>
     <tr>
       <td><%= episode.slug %></td>
-      <td><%= episode.title %>&nbsp;&nbsp;<%= status_label(episode) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
+      <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= status_label(episode) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
       <%= if episode.published do %>
       <td><%= ts(episode.published_at) %></td>
       <% else %>
@@ -21,13 +21,15 @@
       <% end %>
       <td>TODO</td>
       <td class="center aligned">
-        <div class="ui basic icon buttons">
-          <%= link to: episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button", title: "View Public Page" do %>
+        <div class="ui small basic buttons">
+          <%= link to: episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button" do %>
             <i class="external icon"></i>
+            Public
           <% end %>
 
-          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast, episode), class: "ui button", title: "Edit Episode" do %>
+          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast, episode), class: "ui button" do %>
             <i class="edit icon"></i>
+            Edit
           <% end %>
         </div>
       </td>

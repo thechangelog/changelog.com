@@ -14,8 +14,8 @@ defmodule Changelog.Admin.PodcastControllerTest do
     conn = get(conn, admin_podcast_path(conn, :index))
 
     assert html_response(conn, 200) =~ ~r/Podcasts/
-    assert String.contains?(conn.resp_body, p1.name)
-    assert String.contains?(conn.resp_body, p2.name)
+    assert String.contains?(conn.resp_body, p1.slug)
+    assert String.contains?(conn.resp_body, p2.slug)
   end
 
   @tag :as_admin
