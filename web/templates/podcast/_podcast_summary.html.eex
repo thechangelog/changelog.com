@@ -26,6 +26,6 @@
         <%= link person.name, to: Changelog.PersonView.external_url(person) %>
       <% end %>
     </cite>
-    <p><b><%= pluralize(Changelog.PodcastView.episode_count(@podcast), "Episode", "Episodes") %></b></p>
+    <p><b><%= pluralize(Changelog.PodcastView.published_episode_count(@podcast), "Episode", "Episodes") %></b></p>
   </div>
 </article>

@@ -21,6 +21,10 @@ defmodule Changelog.PodcastView do
     Changelog.Podcast.episode_count(podcast)
   end
 
+  def published_episode_count(podcast) do
+    Changelog.Podcast.published_episode_count(podcast)
+  end
+
   def vanity_domain_with_fallback_url(podcast) do
     if podcast.vanity_domain do
       podcast.vanity_domain

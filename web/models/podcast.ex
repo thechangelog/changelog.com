@@ -48,6 +48,14 @@ defmodule Changelog.Podcast do
       select: count(e.id))
   end
 
+  def published_episode_count(podcast) do
+    podcast
+    |> assoc(:episodes)
+    |> Changelog.Episode.published
+    |> Ecto.Query.select([e], count(e.id))
+    |> Repo.one
+  end
+
   def last_numbered_slug(podcast) do
     Repo.preload(podcast, :episodes).episodes
     |> Enum.sort_by(&(&1.id))
