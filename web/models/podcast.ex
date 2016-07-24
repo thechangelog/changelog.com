@@ -43,9 +43,10 @@ defmodule Changelog.Podcast do
   end
 
   def episode_count(podcast) do
-    Repo.one from(e in Changelog.Episode,
-      where: e.podcast_id == ^podcast.id,
-      select: count(e.id))
+    podcast
+    |> assoc(:episodes)
+    |> Ecto.Query.select([e], count(e.id))
+    |> Repo.one
   end
 
   def published_episode_count(podcast) do
