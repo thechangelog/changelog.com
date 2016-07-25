@@ -13,8 +13,10 @@ defmodule Changelog.EpisodeView do
       |> audio_local_path
       |> String.replace_leading("priv", "")
     else
-      static_url(Changelog.Endpoint, "/california.mp3")
+      "/california.mp3"
     end
+
+    static_url(Changelog.Endpoint, url)
   end
 
   def audio_local_path(episode) do
@@ -65,5 +67,36 @@ defmodule Changelog.EpisodeView do
 
   def sponsorships_with_dark_logo(episode) do
     Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.dark_logo) end)
+  end
+
+  def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do
+    info = %{
+      podcast: podcast.name,
+      title: episode.title,
+      duration: episode.duration,
+      art_url: static_url(Changelog.Endpoint, "/images/podcasts/#{podcast.slug}-cover-art.svg"),
+      audio_url: audio_url(episode),
+      share_url: "#{Changelog.PodcastView.vanity_domain_with_fallback_url(podcast)}/#{episode.slug}"
+    }
+
+    info = if prev do
+      Map.put(info, :prev, %{
+        number: prev.slug,
+        url: episode_path(Changelog.Endpoint, :play, podcast.slug, prev.slug)
+      })
+    else
+      info
+    end
+
+    info = if next do
+      Map.put(info, :next, %{
+        number: next.slug,
+        url: episode_path(Changelog.Endpoint, :play, podcast.slug, next.slug)
+      })
+    else
+      info
+    end
+
+    info
   end
 end

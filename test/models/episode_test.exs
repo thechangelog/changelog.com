@@ -27,4 +27,18 @@ defmodule Changelog.EpisodeTest do
       assert changeset.valid?
     end
   end
+
+  test "with_numbered_slug" do
+    insert :episode, slug: "bonus-episode-dont-find-me"
+
+    yes1 = insert :episode, slug: "204"
+    yes2 = insert :episode, slug: "99"
+
+    found_titles =
+      Episode.with_numbered_slug
+      |> Repo.all
+      |> Enum.map(&(&1.title))
+
+    assert found_titles == [yes1.title, yes2.title]
+  end
 end

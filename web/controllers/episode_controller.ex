@@ -31,4 +31,32 @@ defmodule Changelog.EpisodeController do
 
     render conn, :show, podcast: podcast, episode: episode
   end
+
+  def play(conn, %{"podcast" => podcast, "slug" => slug}) do
+    podcast = Repo.get_by!(Podcast, slug: podcast)
+
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Repo.get_by!(slug: slug)
+      |> Repo.preload(:podcast)
+
+    prev =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Episode.with_numbered_slug
+      |> Episode.newest_first
+      |> Episode.previous_to(episode)
+      |> Repo.one
+
+    next =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Episode.with_numbered_slug
+      |> Episode.newest_first
+      |> Episode.next_after(episode)
+      |> Repo.one
+
+    render conn, "play.json", podcast: podcast, episode: episode, prev: prev, next: next
+  end
 end

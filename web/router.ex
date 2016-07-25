@@ -95,5 +95,6 @@ defmodule Changelog.Router do
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
     get "/:podcast/:slug/preview", EpisodeController, :preview, as: :episode
+    get "/:podcast/:slug/play", EpisodeController, :play, as: :episode
   end
 end

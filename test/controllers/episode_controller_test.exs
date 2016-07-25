@@ -41,4 +41,37 @@ defmodule Changelog.EpisodeControllerTest do
     conn = get(conn, episode_path(conn, :preview, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
   end
+
+  describe "play" do
+    test "for unpublished episode" do
+      p = insert(:podcast)
+      e = insert(:episode, podcast: p)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        get(build_conn, episode_path(build_conn, :play, p.slug, e.slug))
+      end
+    end
+
+    test "for published episode" do
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p)
+
+      conn = get(build_conn, episode_path(build_conn, :play, p.slug, e.slug))
+      assert conn.status == 200
+      assert conn.resp_body =~ p.name
+      assert conn.resp_body =~ e.title
+    end
+
+    test "for published episode with prev and next" do
+      p = insert(:podcast)
+      prev = insert(:published_episode, podcast: p, slug: "1")
+      e = insert(:published_episode, podcast: p, slug: "2")
+      next = insert(:published_episode, podcast: p, slug: "3")
+
+      conn = get(build_conn, episode_path(build_conn, :play, p.slug, e.slug))
+      assert conn.status == 200
+      assert conn.resp_body =~ prev.slug
+      assert conn.resp_body =~ next.slug
+    end
+  end
 end
