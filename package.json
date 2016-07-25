@@ -25,7 +25,7 @@
     "webpack-merge": "^0.14.0"
   },
   "scripts": {
-    "start": "webpack --watch-stdin --progress --color",
+    "start": "webpack --watch-stdin --color",
     "compile": "webpack -p"
   }
 }

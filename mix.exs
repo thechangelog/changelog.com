@@ -40,14 +40,14 @@ defmodule Changelog.Mixfile do
      {:timex, "~> 2.1.4"},
      {:ex_machina, "~> 1.0"},
      {:scrivener_ecto, "~> 1.0"},
-     {:scrivener_html, github: "jerodsanto/scrivener_html", branch: "or-scrivener-2"},
+     {:scrivener_html, "~> 1.3.0"},
      {:cmark, "~> 0.6"},
      {:html_sanitize_ex, "~> 0.1.0"},
      {:arc, "~> 0.5.2"},
      {:arc_ecto, "~> 0.4.2"},
      {:hashids, "~> 2.0"},
      {:bamboo, "~> 0.6"},
-     {:bamboo_smtp, "~> 1.1.0"},
+     {:bamboo_smtp, github: "jerodsanto/bamboo_smtp", branch: "improvements"},
      {:ecto_enum, "~> 0.3.0"},
      {:cowboy, "~> 1.0"}]
   end

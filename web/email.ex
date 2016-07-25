@@ -3,6 +3,7 @@ defmodule Changelog.Email do
 
   def sign_in_email(person) do
     base_email
+    |> put_header("X-CMail-GroupName", "Sign In")
     |> to(person)
     |> subject("Your Sign In Link")
     |> assign(:person, person)
