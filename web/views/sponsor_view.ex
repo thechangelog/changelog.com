@@ -3,6 +3,6 @@ defmodule Changelog.SponsorView do
 
   def logo_image_url(sponsor, version) do
     Changelog.LogoImage.url({sponsor.logo_image, sponsor}, version)
-    |> String.replace_leading("priv/static", "/")
+    |> String.replace_leading("priv/static", "")
   end
 end

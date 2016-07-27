@@ -6,14 +6,14 @@
   </div>
 
   <div class="field">
-    <%= label f, :logo_image, "Logo Image" %>
-    <img
-      src="<%= logo_image_url(f.data, :small) %>"
-      data-popup=true
-      data-content="Ideal size is 800px by 800px."
-      width=50
-      height=50
-    >
+    <label for="logo">
+      Logo Image
+      <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+    </label>
+
+    <%= if f.data.logo_image do %>
+      <img src="<%= logo_image_url(f.data, :small) %>" width=100 height=100>
+    <% end %>
     <br/>
     <%= error_message(f, :logo_image) %>
     <%= file_input f, :logo_image %>

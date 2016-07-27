@@ -32,15 +32,18 @@
   </div>
 
   <div class="field">
-    <%= label f, :avatar, "Avatar" %>
+    <label for="avatar">
+      Avatar
+      <%= help_icon("Ideal size is 600px by 600px") %>
+    </label>
     <%= if is_persisted(f.data) do %>
       <img
         src="<%= Changelog.PersonView.avatar_url(f.data, :small) %>"
         data-popup=true
         <%= if !f.data.avatar do %>
-          data-content="Ideal size is 600px by 600px. This is the fallback gravatar."
+          data-content="This is the fallback gravatar."
         <% else %>
-          data-content="Ideal size is 600px by 600px. This is the uploaded file.."
+          data-content="This is the uploaded file.."
         <% end %>
         width=75
         height=75
