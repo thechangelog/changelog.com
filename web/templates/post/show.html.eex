@@ -1,5 +1,9 @@
-<h1><%= @post.title %></h1>
+<article class="section">
+  <div class="container container--has-padding container--skinny">
+    <header>
+      <h2 class="h2"><%= @post.title %></h2>
+    </header>
 
-<div class="body">
-  <%= md_to_html(@post.body) %>
-</div>
+    <%= raw(md_to_html(@post.body)) %>
+  </div>
+</article>
