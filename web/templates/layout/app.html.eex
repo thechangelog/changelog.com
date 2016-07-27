@@ -35,6 +35,7 @@
       <%= render(@view_module, @view_template, assigns) %>
     </main>
     <%= render("_footer.html", assigns) %>
+    <%= render("_player.html", assigns) %>
     <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

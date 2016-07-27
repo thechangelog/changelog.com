@@ -11,3 +11,8 @@ import { makeToggles } from "./toggles.js";
   makePoppers('.podcast-menu_more-button', '.podcast-menu-tooltip');
   makePoppers('.share-podcast_btn', '.share-podcast-tooltip');
 }(makePoppers, makeToggles));
+
+import Player from "components/player";
+import { u } from "umbrellajs";
+
+window.player = new Player(u("#player"));
