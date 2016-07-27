@@ -10,7 +10,10 @@ defmodule Changelog.Sponsor do
     field :website, :string
     field :github_handle, :string
     field :twitter_handle, :string
-    field :logo_image, Changelog.LogoImage.Type
+
+    field :color_logo, Changelog.ColorLogo.Type
+    field :dark_logo, Changelog.DarkLogo.Type
+    field :light_logo, Changelog.LightLogo.Type
 
     has_many :episode_sponsors, Changelog.EpisodeSponsor, on_delete: :delete_all
 
@@ -23,7 +26,7 @@ defmodule Changelog.Sponsor do
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> cast_attachments(params, ~w(logo_image))
+    |> cast_attachments(params, ~w(color_logo dark_logo light_logo))
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:name)
   end

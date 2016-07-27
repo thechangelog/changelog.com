@@ -15,7 +15,7 @@
     <tr>
       <td>
         <h4 class="ui image header">
-          <img src="<%= logo_image_url(sponsor, :small) %>" class="ui image"/>
+          <img src="<%= logo_url(sponsor, :color_logo, :small) %>" class="ui image"/>
         </h4>
         <%= sponsor.name %>
       </td>

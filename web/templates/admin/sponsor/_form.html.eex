@@ -5,18 +5,48 @@
     <%= error_message(f, :name) %>
   </div>
 
-  <div class="field">
-    <label for="logo">
-      Logo Image
-      <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
-    </label>
+  <div class="three fields">
+    <div class="field">
+      <label for="color_logo">
+        Color Logo
+        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+      </label>
 
-    <%= if f.data.logo_image do %>
-      <img src="<%= logo_image_url(f.data, :small) %>" width=100 height=100>
-    <% end %>
-    <br/>
-    <%= error_message(f, :logo_image) %>
-    <%= file_input f, :logo_image %>
+      <%= if f.data.color_logo do %>
+        <img src="<%= logo_url(f.data, :color_logo, :small) %>" width=100 height=100>
+      <% end %>
+      <br/>
+      <%= error_message(f, :color_logo) %>
+      <%= file_input f, :color_logo %>
+    </div>
+
+    <div class="field">
+      <label for="color_logo">
+        Dark Logo
+        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+      </label>
+
+      <%= if f.data.dark_logo do %>
+        <img src="<%= logo_url(f.data, :dark_logo, :small) %>" width=100 height=100>
+      <% end %>
+      <br/>
+      <%= error_message(f, :dark_logo) %>
+      <%= file_input f, :dark_logo %>
+    </div>
+
+    <div class="field">
+      <label for="light_logo">
+        Light Logo
+        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+      </label>
+
+      <%= if f.data.light_logo do %>
+        <img src="<%= logo_url(f.data, :light_logo, :small) %>" width=100 height=100>
+      <% end %>
+      <br/>
+      <%= error_message(f, :light_logo) %>
+      <%= file_input f, :light_logo %>
+    </div>
   </div>
 
   <div class="three fields">

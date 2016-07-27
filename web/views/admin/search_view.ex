@@ -99,7 +99,7 @@ defmodule Changelog.Admin.SearchView do
     %{id: sponsor.id,
       title: sponsor.name,
       description: sponsor.description,
-      image: Changelog.SponsorView.logo_image_url(sponsor, :small),
+      image: Changelog.SponsorView.logo_url(sponsor, :color_logo, :small),
       url: admin_sponsor_path(Endpoint, :edit, sponsor),
       extras: extras}
   end

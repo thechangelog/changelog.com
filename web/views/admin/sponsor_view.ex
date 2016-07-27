@@ -6,5 +6,5 @@ defmodule Changelog.Admin.SponsorView do
 
   alias Changelog.SponsorView
 
-  def logo_image_url(sponsor, version), do: SponsorView.logo_image_url(sponsor, version)
+  def logo_url(sponsor, type, version), do: SponsorView.logo_url(sponsor, type, version)
 end
