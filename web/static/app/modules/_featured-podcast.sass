@@ -62,6 +62,7 @@
 
     &_footer
         margin-top: $padding-extra-large
+        padding-bottom: $padding-extra-large * 1.5
         display: flex
         flex-direction: column
         align-items: center
@@ -72,9 +73,11 @@
         & > *
             z-index: 1
 
-        & > aside
-            display: none
+        &_menu
+            max-width: 100%
+            padding-bottom: $padding-extra-large * 1.5
 
+        & > aside
             & > h4
                 @extend %display-font
                 color: $half-white
@@ -86,7 +89,3 @@
 
             & img
                 height: 1.5rem
-
-            @media (min-width: $tablet)
-                display: block
-                margin: $padding-extra-large * 1.5 0 $padding-extra-large * 1.5 0

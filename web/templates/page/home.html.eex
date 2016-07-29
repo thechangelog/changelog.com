@@ -12,7 +12,9 @@
         <button><img class="flip-horizontal" src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show next featured quote"/></button>
       </div>
       <div class="featured-podcast_footer">
-        <%= render Changelog.PodcastView, "_menu.html", assigns %>
+        <div class="featured-podcast_footer_menu">
+            <%= render Changelog.PodcastView, "_menu.html", assigns %>    
+        </div>
         <aside>
           <h4>Brought to you by:</h4><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/toptal-logo.svg") %>" alt="Toptal logo"></a><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/digital-ocean-logo.svg") %>" alt="DigitalOcean logo"></a>
         </aside>

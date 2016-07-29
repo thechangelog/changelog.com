@@ -5,13 +5,15 @@
       <%= raw md_to_html(@podcast.description) %>
       <%= render "_menu.html", assigns %>
       <div class="show-header_hosts">
-      <i><%= @podcast.schedule_note %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i>
-        <div class="hosts-list section">
-          <%= for person <- @podcast.hosts do %>
-            <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-              <img src="<%= Changelog.PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
-            <% end %>
-          <% end %>
+        <i><%= @podcast.schedule_note %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i>
+        <div class="show-header_hosts">
+            <div class="hosts-list">
+              <%= for person <- @podcast.hosts do %>
+                <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
+                  <img src="<%= Changelog.PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
+                <% end %>
+              <% end %>
+            </div>
         </div>
       </div>
     </header>
