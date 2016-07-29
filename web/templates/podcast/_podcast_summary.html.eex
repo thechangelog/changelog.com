@@ -2,6 +2,9 @@
   <div class="show-summary_art">
     <div class="show-summary-widget show-summary-widget--<%= @podcast.slug %>">
       <div class="show-summary-widget_content">
+        <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show-summary-widget_link">
+            <span class="accessibility-hidden">View show page</span>
+        </a>
         <!-- For open state, use .show-summary-widget_menu--is-open-->
         <div class="show-summary-widget_menu">
           <div class="tooltip">
