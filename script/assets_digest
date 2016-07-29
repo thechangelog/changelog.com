@@ -1,3 +1,4 @@
 #!/bin/bash -ex
 
+mix local.hex --force
 mix phoenix.digest
