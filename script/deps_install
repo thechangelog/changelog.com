@@ -1,0 +1,5 @@
+#!/bin/bash -ex
+
+yes | mix deps.get "$@"
+
+mix compile
