@@ -62,13 +62,41 @@
                 padding: 0 0.5rem
 
     &_footer
+        position: relative
         font-size: 1.15em
         width: 100%
         border-top: 1px solid $border-color
         text-align: left
 
-        @media (min-width: $tablet)
-            background-image: url(/images/abstract-circle.svg)
-            background-position: center 2rem
-            background-repeat: no-repeat
-            background-size: contain
+        &:before
+            content: ''
+            z-index: -1
+            opacity: 0.2
+            position: absolute
+            top: 0
+            bottom: 0
+            left: 0
+            right: 0
+
+            @media (min-width: $tablet)
+                background-position: center 2rem;
+                background-repeat: no-repeat;
+                background-size: 50%;
+
+        &--podcast:before
+            background-image: url(/images/podcasts/podcast-abstract-art.svg);
+
+        &--gotime:before
+            background-image: url(/images/podcasts/gotime-abstract-art.svg);
+
+        &--polyglot:before
+            background-image: url(/images/podcasts/polyglot-abstract-art.svg);
+
+        &--rfc:before
+            background-image: url(/images/podcasts/rfc-abstract-art.svg);
+
+        &--founderstalk:before
+            background-image: url(/images/podcasts/founderstalk-abstract-art.svg);
+
+        &--backstage:before
+            background-image: url(/images/podcasts/backstage-abstract-art.svg);
