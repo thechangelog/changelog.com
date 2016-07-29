@@ -9,6 +9,9 @@
             padding: $padding-extra-large * 3 0 $padding-extra-large 0
 
         & > q
+            & > a 
+                color: $white
+
             @media (min-width: $tablet)
                 font-size: 2.85em
 
@@ -48,11 +51,14 @@
             @media (min-width: $tablet)
                 font-size: 1.25em
 
-            & > span
-                @extend %display-font
-                color: $gray
-                font-size: 0.85em
-                display: block
+            & > a 
+                color: $white
+
+                & > span
+                    @extend %display-font
+                    color: $gray
+                    font-size: 0.85em
+                    display: block
 
     &_footer
         margin-top: $padding-extra-large
