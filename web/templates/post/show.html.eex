@@ -2,8 +2,28 @@
   <div class="container container--has-padding container--skinny">
     <header>
       <h2 class="h2"><%= @post.title %></h2>
+      by <%= link @post.author.name, to: PersonView.external_url(@post.author) %>
+      <br/>
+      on <time datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>
     </header>
 
     <%= raw(md_to_html(@post.body)) %>
+
+    <h2>Channels</h2>
+    <%= for channel <- @post.channels do %>
+      <%= link channel.name, to: "#" %>
+    <% end %>
+
+    <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
+      <img src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
+    <% end %>
   </div>
 </article>
+
+<div class="wrapper wrapper--half-gray">
+  <%= render Changelog.SharedView, "_membership_cta_2.html", assigns %>
+</div>
+
+<div class="wrapper wrapper--gray">
+  <%= render Changelog.SharedView, "_films_cta_1.html", assigns %>
+</div>
