@@ -7,7 +7,7 @@
       on <time datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>
     </header>
 
-    <%= raw(md_to_html(@post.body)) %>
+    <%= @post.body |> md_to_html |> raw %>
 
     <h2>Channels</h2>
     <%= for channel <- @post.channels do %>
@@ -16,6 +16,10 @@
 
     <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
       <img src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
+    <% end %>
+
+    <%= if @post.author.bio do %>
+      <%= @post.author.bio %>
     <% end %>
   </div>
 </article>
