@@ -20,7 +20,7 @@ defmodule Changelog.Mixfile do
     [mod: {Changelog, []},
      applications: [:bamboo, :bamboo_smtp, :phoenix, :phoenix_pubsub,
                     :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex,
-                    :tzdata, :ex_machina]]
+                    :tzdata, :ex_machina, :httpoison, :exjsx, :con_cache]]
   end
 
   # Specifies which paths to compile per environment.
@@ -50,6 +50,9 @@ defmodule Changelog.Mixfile do
      {:bamboo_smtp, github: "jerodsanto/bamboo_smtp", branch: "fix-email-format"},
      {:ecto_enum, "~> 0.3.0"},
      {:basic_auth, "~> 1.0.0"},
+     {:httpoison, "~> 0.9.0"},
+     {:exjsx, "~> 3.2.0"},
+     {:con_cache, "~> 0.11.1"},
      {:cowboy, "~> 1.0"}]
   end
 

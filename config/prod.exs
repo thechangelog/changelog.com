@@ -27,8 +27,8 @@ config :changelog, Changelog.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.api.createsend.com",
   port: 587,
-  username: {:system, "CM_TOKEN"},
-  password: {:system, "CM_TOKEN"}
+  username: {:system, "CM_SMTP_TOKEN"},
+  password: {:system, "CM_SMTP_TOKEN"}
 
 config :arc,
   storage_dir: "/uploads"
