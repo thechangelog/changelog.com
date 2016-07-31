@@ -1,8 +1,10 @@
 <section class="footer mosiac">
   <h2><%= Enum.random(["Hacker to the heart", "!imposter", "Open Source Moves Fast", "Keep Up", "Long Live the Hacker", "Nerd to the Core"]) %></h2>
   <footer class="container">
-    <div class="footer_copyright"><small>&copy; 2009-2016<span> Changelog Media, LLC.</span></small>
+    <div class="footer_copyright">
+      <small>&copy; 2009&ndash;2016<span> Changelog Media, LLC</span></small>
       <address>
+        <a class="footer_link" href="tel:+18889742454">888-974-CHLG (2454)</a>
         <%= link "Contact Us", to: page_path(@conn, :contact), class: "footer_link" %>
       </address>
     </div>
