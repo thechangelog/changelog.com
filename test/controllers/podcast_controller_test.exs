@@ -39,6 +39,18 @@ defmodule Changelog.PodcastControllerTest do
     end
   end
 
+  test "getting a podcast archive page" do
+    p = insert(:podcast)
+    e1 = insert(:published_episode, podcast: p)
+    e2 = insert(:published_episode, podcast: p)
+    e3 = insert(:published_episode, podcast: p)
+    conn = get(build_conn, podcast_path(build_conn, :archive, p.slug))
+    assert conn.status == 200
+    assert conn.resp_body =~ e1.title
+    assert conn.resp_body =~ e2.title
+    assert conn.resp_body =~ e3.title
+  end
+
   test "getting a podcast feed" do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
