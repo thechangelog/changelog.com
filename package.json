@@ -7,6 +7,7 @@
     "normalize.css": "^4.2.0",
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html",
+    "popper.js": "^0.5.2",
     "sortablejs": "^1.4.2"
   },
   "devDependencies": {
