@@ -8,7 +8,7 @@ var common = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: [/node_modules/, /semantic/],
+        exclude: [/node_modules/, /semantic/, /uploads/],
         loader: "babel",
         query: {
           presets: ["es2015"]
