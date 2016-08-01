@@ -2,6 +2,7 @@
 
 brew install elixir node
 
+mix local.hex --force
 mix deps.get
 
 npm install

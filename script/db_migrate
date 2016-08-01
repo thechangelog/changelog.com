@@ -1,6 +1,4 @@
 #!/bin/bash -ex
 
-mix local.hex --force
-
 mix ecto.create
 mix ecto.migrate
