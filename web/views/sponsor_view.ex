@@ -8,6 +8,7 @@ defmodule Changelog.SponsorView do
       :light_logo -> {Changelog.LightLogo, sponsor.light_logo}
     end
 
-    module.url({file, sponsor}, version) |> String.replace_leading("priv/static", "")
+    module.url({file, sponsor}, version)
+    |> String.replace_leading(Application.app_dir(:changelog, "priv"), "")
   end
 end

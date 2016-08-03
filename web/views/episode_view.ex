@@ -7,16 +7,16 @@ defmodule Changelog.EpisodeView do
 
   def audio_url(episode) do
     if episode.audio_file do
-      Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
-      |> String.replace_leading("priv/static", "")
+      episode
+      |> audio_local_path
+      |> String.replace_leading(Application.app_dir(:changelog, "priv"), "")
     else
       static_url(Changelog.Endpoint, "/california.mp3")
     end
   end
 
   def audio_local_path(episode) do
-    url = Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
-    Application.app_dir(:changelog, url)
+    Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
   end
 
   def guid(episode) do
