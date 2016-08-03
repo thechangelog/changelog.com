@@ -5,7 +5,7 @@
   </h1>
 
   <div class="actions">
-    <%= link to: admin_person_path(@conn, :new), class: "ui right floated primary button" do %>
+    <%= link to: admin_person_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="add user icon"></i>
       Add Person
     <% end %>

@@ -86,5 +86,5 @@
     <%= error_message(f, :itunes_url) %>
   </div>
 
-  <button class="ui primary button" type="submit">Save</button>
+  <%= form_actions %>
 <% end %>

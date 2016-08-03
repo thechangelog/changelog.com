@@ -28,9 +28,9 @@ defmodule Changelog.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
-  test "creates episode and redirects", %{conn: conn} do
+  test "creates episode and smart redirects", %{conn: conn} do
     p = insert(:podcast)
-    conn = post(conn, admin_podcast_episode_path(conn, :create, p), episode: @valid_attrs)
+    conn = post(conn, admin_podcast_episode_path(conn, :create, p), episode: @valid_attrs, close: true)
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p)
     assert count(Episode) == 1
@@ -56,13 +56,13 @@ defmodule Changelog.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
-  test "updates an episode and redirects", %{conn: conn} do
+  test "updates an episode and smart redirects", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
     conn = put(conn, admin_podcast_episode_path(conn, :update, p, e), episode: @valid_attrs)
 
-    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p)
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :edit, p, e)
     assert count(Episode) == 1
   end
 

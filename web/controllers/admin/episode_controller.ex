@@ -42,7 +42,7 @@ defmodule Changelog.Admin.EpisodeController do
     render conn, "new.html", changeset: changeset
   end
 
-  def create(conn, %{"episode" => episode_params}, podcast) do
+  def create(conn, params = %{"episode" => episode_params}, podcast) do
     changeset =
       build_assoc(podcast, :episodes)
       |> Episode.preload_all
@@ -52,7 +52,7 @@ defmodule Changelog.Admin.EpisodeController do
       {:ok, episode} ->
         conn
         |> put_flash(:info, "#{episode.title} created!")
-        |> redirect(to: admin_podcast_episode_path(conn, :index, podcast))
+        |> smart_redirect(podcast, episode, params)
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset
     end
@@ -68,7 +68,7 @@ defmodule Changelog.Admin.EpisodeController do
     render conn, "edit.html", episode: episode, changeset: changeset
   end
 
-  def update(conn, %{"id" => id, "episode" => episode_params}, podcast) do
+  def update(conn, params = %{"id" => id, "episode" => episode_params}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get!(id)
@@ -80,7 +80,7 @@ defmodule Changelog.Admin.EpisodeController do
       {:ok, episode} ->
         conn
         |> put_flash(:info, "#{episode.title} updated!")
-        |> redirect(to: admin_podcast_episode_path(conn, :index, podcast))
+        |> smart_redirect(podcast, episode, params)
       {:error, changeset} ->
         render conn, "edit.html", episode: episode, changeset: changeset
     end
@@ -89,5 +89,12 @@ defmodule Changelog.Admin.EpisodeController do
   defp assign_podcast(conn, _) do
     podcast = Repo.get! Podcast, conn.params["podcast_id"]
     assign conn, :podcast, podcast
+  end
+
+  defp smart_redirect(conn, podcast, _episode, %{"close" => _true}) do
+    redirect(conn, to: admin_podcast_episode_path(conn, :index, podcast))
+  end
+  defp smart_redirect(conn, podcast, episode, _params) do
+    redirect(conn, to: admin_podcast_episode_path(conn, :edit, podcast, episode))
   end
 end

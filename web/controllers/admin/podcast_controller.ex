@@ -15,14 +15,14 @@ defmodule Changelog.Admin.PodcastController do
     render conn, "new.html", changeset: changeset
   end
 
-  def create(conn, %{"podcast" => podcast_params}) do
+  def create(conn, params = %{"podcast" => podcast_params}) do
     changeset = Podcast.changeset(%Podcast{}, podcast_params)
 
     case Repo.insert(changeset) do
       {:ok, podcast} ->
         conn
         |> put_flash(:info, "#{podcast.name} created!")
-        |> redirect(to: admin_podcast_path(conn, :index))
+        |> smart_redirect(podcast, params)
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -35,7 +35,7 @@ defmodule Changelog.Admin.PodcastController do
     render conn, "edit.html", podcast: podcast, changeset: changeset
   end
 
-  def update(conn, %{"id" => id, "podcast" => podcast_params}) do
+  def update(conn, params = %{"id" => id, "podcast" => podcast_params}) do
     podcast = Repo.get!(Podcast, id)
       |> Repo.preload(:podcast_hosts)
     changeset = Podcast.changeset(podcast, podcast_params)
@@ -44,9 +44,16 @@ defmodule Changelog.Admin.PodcastController do
       {:ok, podcast} ->
         conn
         |> put_flash(:info, "#{podcast.name} udated!")
-        |> redirect(to: admin_podcast_path(conn, :index))
+        |> smart_redirect(podcast, params)
       {:error, changeset} ->
         render conn, "edit.html", podcast: podcast, changeset: changeset
     end
+  end
+
+  defp smart_redirect(conn, _podcast, %{"close" => _true}) do
+    redirect(conn, to: admin_podcast_path(conn, :index))
+  end
+  defp smart_redirect(conn, podcast, _params) do
+    redirect(conn, to: admin_podcast_path(conn, :edit, podcast))
   end
 end

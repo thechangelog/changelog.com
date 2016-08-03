@@ -31,6 +31,13 @@ defmodule Changelog.Admin.SharedView do
     end
   end
 
+  def form_actions do
+    ~e"""
+    <button class="ui primary basic button" type="submit">Save</button>
+    <button class="ui secondary basic button" type="submit" name="close">Save and Close</button>
+    """
+  end
+
   def help_icon(help_text) do
     ~e"""
     <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>

@@ -25,8 +25,8 @@ defmodule Changelog.Admin.PodcastControllerTest do
   end
 
   @tag :as_admin
-  test "creates podcast and redirects", %{conn: conn} do
-    conn = post(conn, admin_podcast_path(conn, :create), podcast: @valid_attrs)
+  test "creates podcast and smart redirects", %{conn: conn} do
+    conn = post(conn, admin_podcast_path(conn, :create), podcast: @valid_attrs, close: true)
 
     assert redirected_to(conn) == admin_podcast_path(conn, :index)
     assert count(Podcast) == 1
@@ -50,12 +50,12 @@ defmodule Changelog.Admin.PodcastControllerTest do
   end
 
   @tag :as_admin
-  test "updates podcast and redirects", %{conn: conn} do
+  test "updates podcast and smart redirects", %{conn: conn} do
     podcast = insert(:podcast)
 
     conn = put(conn, admin_podcast_path(conn, :update, podcast.id), podcast: @valid_attrs)
 
-    assert redirected_to(conn) == admin_podcast_path(conn, :index)
+    assert redirected_to(conn) == admin_podcast_path(conn, :edit, podcast)
     assert count(Podcast) == 1
   end
 
