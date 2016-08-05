@@ -35,8 +35,10 @@ end
 class Post < DataWrapper
   def author_handle; el.xpath("dc:creator").text; end
   def body; el.xpath("content:encoded").text; end
-  def category; el.xpath("category[@domain='category']").text; end
-  def podcast?; category == "Podcast"; end
+  def categories; el.xpath("category[@domain='category']").map(&:text); end
+  def go_time?; categories.include?("Go Time"); end
+  def podcast?; categories.include?("Podcast"); end
+  def published?; el.xpath("wp:status").text == "publish"; end
   def slug; el.child_named("post_name").text; end
   def title; el.child_named("title").text; end
   def tags; el.xpath("category[@domain='post_tag']").map(&:text); end
@@ -58,7 +60,7 @@ class Importer
   end
 
   def posts
-    @posts ||= doc.xpath("//channel/item").map { |el| Post.new el }.reject(&:podcast?)
+    @posts ||= doc.xpath("//channel/item").map { |el| Post.new el }.select(&:published?).reject(&:podcast?).reject(&:go_time?)
   end
 
   def episodes
@@ -150,7 +152,7 @@ class Importer
 end
 
 importer = Importer.new
-
+binding.pry
 # importer.import_people
 # importer.import_posts
 # importer.import_episodes
