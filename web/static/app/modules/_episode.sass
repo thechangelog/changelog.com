@@ -69,19 +69,17 @@
         text-align: left
 
         &:before
+            background-position: center 2rem;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            bottom: 0
             content: ''
-            z-index: -1
+            left: 0
             opacity: 0.2
             position: absolute
-            top: 0
-            bottom: 0
-            left: 0
             right: 0
-
-            @media (min-width: $tablet)
-                background-position: center 2rem;
-                background-repeat: no-repeat;
-                background-size: 50%;
+            top: 0
+            z-index: -1
 
         &--podcast:before
             background-image: url(/images/podcasts/podcast-abstract-art.svg);
