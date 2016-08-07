@@ -1,20 +1,11 @@
 .tooltip
-    flex: 1 1 auto
+    position: absolute
     background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9));
-    overflow: hidden
     padding: 0.75rem
     
-    &--has-carret:before
-        content: ''
-        position: absolute
-        top: 50%
-        margin-top: -10px
-        right: 100%
-        width: 0 
-        height: 0
-        border-top: 10px solid transparent
-        border-bottom: 10px solid transparent
-        border-right: 10px solid $black
+    &--inline
+        flex: 1 1 auto
+        position: relative
 
     &_heading
         line-height: 2em
@@ -29,6 +20,7 @@
         line-height: 1.6em
         color: $half-white
         border-bottom: 1px solid rgba($white, 0.1)
+        padding: 0 !important
 
         &:last-child
             border: none

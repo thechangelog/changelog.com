@@ -7,7 +7,7 @@
         </a>
         <!-- For open state, use .show-summary-widget_menu--is-open-->
         <div class="show-summary-widget_menu">
-          <div class="tooltip">
+          <div class="tooltip tooltip--inline">
             <h3 class="tooltip_heading"><%= @podcast.name %></h3>
             <nav class="tooltip_links">
               <h4 class="accessibility-hidden">Podcast Menu</h4>
