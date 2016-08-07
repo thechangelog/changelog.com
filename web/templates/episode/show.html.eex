@@ -2,7 +2,9 @@
   <div class="container container--has-padding container--extra-skinny">
     <article class="episode">
       <header class="episode_header">
-        <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/>
+        <%= link to: podcast_path(@conn, :show, @podcast.slug) do %>
+          <img class="episode_header_art" src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="  <%= @podcast.name %> Podcast"/>
+        <% end %>
         <%= if @episode.headline do %>
           <h2><%= @episode.headline %></h2>
           <i><%= @episode.subheadline |> md_to_html |> sans_p_tags |> raw %></i>
