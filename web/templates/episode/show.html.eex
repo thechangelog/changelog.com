@@ -79,8 +79,10 @@
             <h3>Sponsors</h3>
             <dl class="sponsors-list">
             <%= for sponsor <- @episode.episode_sponsors do %>
-              <dt class="sponsors-list-name"><%= link sponsor.title, to: sponsor.link_url %></dt>
-              <dd class="sponsors-list_description"><%= sponsor.description %></dd>
+              <div class="sponsors-list_item">
+                  <dt class="sponsors-list_name"><%= link sponsor.title, to: sponsor.link_url %></dt>
+                  <dd class="sponsors-list_description"><%= sponsor.description %></dd>
+              <div>
             <% end %>
             </dl>
           </div>
