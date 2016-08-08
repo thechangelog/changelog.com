@@ -28,7 +28,11 @@
         <%= if Enum.any?(@episode.sponsors) do %>
           <aside class="sponsors-ribbon">
             <h3>Brought to you by:</h3>
-            <div class="sponsors-ribbon_logos"><a href="#"><img src="img/toptal-logo-gray.svg" alt="toptal"/></a></div>
+            <div class="sponsors-ribbon_logos">
+              <a href="#">
+                <img src="<%= static_url(@conn, "/images/toptal-logo-gray.svg") %>" alt="toptal"/>
+              </a>
+            </div>
           </aside>
         <% end %>
       </header>
@@ -83,7 +87,7 @@
             <%= for sponsor <- @episode.episode_sponsors do %>
               <div class="sponsors-list_item">
                 <dt class="sponsors-list_name"><%= link sponsor.title, to: sponsor.link_url %></dt>
-                <dd class="sponsors-list_description"><%= sponsor.description |> md_to_html |> raw %></dd>
+                <dd class="sponsors-list_description"><%= sponsor.description |> md_to_html |> sans_p_tags |> raw %></dd>
               <div>
             <% end %>
             </dl>
