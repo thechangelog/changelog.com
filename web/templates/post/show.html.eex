@@ -1,5 +1,12 @@
 <article class="section">
   <div class="container container--has-padding container--skinny">
+    <nav class="breadcrumbs breadcrumbs--slashes">
+        <a class="breadcrumbs_crumb" href="#">Home</a>
+        /
+        <a class="breadcrumbs_crumb" href="#">Blog</a>
+        /
+        <span class="breadcrumbs_crumb breadcrumbs_crumb--active">Jun 16 2016</span>
+    </nav>
     <header>
       <h2 class="h2"><%= @post.title %></h2>
       by <%= link @post.author.name, to: PersonView.external_url(@post.author) %>
