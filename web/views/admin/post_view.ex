@@ -1,7 +1,7 @@
 defmodule Changelog.Admin.PostView do
   use Changelog.Web, :view
 
-  import Changelog.Admin.SharedView
+  import Changelog.Admin.SharedView, only: :functions
   import Scrivener.HTML
 
   def status_label(post) do

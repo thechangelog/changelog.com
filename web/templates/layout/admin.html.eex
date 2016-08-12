@@ -31,7 +31,7 @@
       <% end %>
 
       <%= link to: admin_channel_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.ChannelController)}" do %>
-        <i class="block layout icon"></i>Channels
+        <i class="hashtag icon"></i>Channels
       <% end %>
 
       <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.SponsorController)}" do %>

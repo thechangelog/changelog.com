@@ -18,14 +18,14 @@ defmodule Changelog.Admin.PersonController do
     render conn, "new.html", changeset: changeset
   end
 
-  def create(conn, %{"person" => person_params}) do
+  def create(conn, params = %{"person" => person_params}) do
     changeset = Person.changeset(%Person{}, person_params)
 
     case Repo.insert(changeset) do
       {:ok, person} ->
         conn
         |> put_flash(:info, "#{person.name} created!")
-        |> redirect(to: admin_person_path(conn, :index))
+        |> smart_redirect(person, params)
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -37,7 +37,7 @@ defmodule Changelog.Admin.PersonController do
     render(conn, "edit.html", person: person, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "person" => person_params}) do
+  def update(conn, params = %{"id" => id, "person" => person_params}) do
     person = Repo.get!(Person, id)
     changeset = Person.changeset(person, person_params)
 
@@ -45,7 +45,7 @@ defmodule Changelog.Admin.PersonController do
       {:ok, person} ->
         conn
         |> put_flash(:info, "#{person.name} udated!")
-        |> redirect(to: admin_person_path(conn, :index))
+        |> smart_redirect(person, params)
       {:error, changeset} ->
         render(conn, "edit.html", person: person, changeset: changeset)
     end
@@ -58,5 +58,12 @@ defmodule Changelog.Admin.PersonController do
     conn
     |> put_flash(:info, "#{person.name} deleted!")
     |> redirect(to: admin_person_path(conn, :index))
+  end
+
+  defp smart_redirect(conn, _person, %{"close" => _true}) do
+    redirect(conn, to: admin_person_path(conn, :index))
+  end
+  defp smart_redirect(conn, person, _params) do
+    redirect(conn, to: admin_person_path(conn, :edit, person))
   end
 end

@@ -19,14 +19,14 @@ defmodule Changelog.Admin.PostController do
     render conn, "new.html", changeset: changeset
   end
 
-  def create(conn, %{"post" => post_params}) do
+  def create(conn, params = %{"post" => post_params}) do
     changeset = Post.changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "#{post.title} created!")
-        |> redirect(to: admin_post_path(conn, :index))
+        |> smart_redirect(post, params)
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -39,7 +39,7 @@ defmodule Changelog.Admin.PostController do
     render conn, "edit.html", post: post, changeset: changeset
   end
 
-  def update(conn, %{"id" => id, "post" => post_params}) do
+  def update(conn, params = %{"id" => id, "post" => post_params}) do
     post = Repo.get!(Post, id) |> Post.preload_all
     changeset = Post.changeset(post, post_params)
 
@@ -47,7 +47,7 @@ defmodule Changelog.Admin.PostController do
       {:ok, post} ->
         conn
         |> put_flash(:info, "#{post.title} udated!")
-        |> redirect(to: admin_post_path(conn, :index))
+        |> smart_redirect(post, params)
       {:error, changeset} ->
         render conn, "edit.html", post: post, changeset: changeset
     end
@@ -60,5 +60,12 @@ defmodule Changelog.Admin.PostController do
     conn
     |> put_flash(:info, "#{post.title} deleted!")
     |> redirect(to: admin_post_path(conn, :index))
+  end
+
+  defp smart_redirect(conn, _post, %{"close" => _true}) do
+    redirect(conn, to: admin_post_path(conn, :index))
+  end
+  defp smart_redirect(conn, post, _params) do
+    redirect(conn, to: admin_post_path(conn, :edit, post))
   end
 end

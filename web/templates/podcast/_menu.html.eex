@@ -5,5 +5,4 @@
   <%= link to: page_path(@conn, :sponsorship) do %>
     <img src="<%= static_url(@conn, "/images/sponsor.svg") %>" alt="Sponsor podcast graphic">Sponsor
   <% end %>
-  <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More podcast options graphic"/></button>
 </nav>

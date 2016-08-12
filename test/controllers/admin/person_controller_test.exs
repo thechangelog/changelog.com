@@ -24,8 +24,8 @@ defmodule Changelog.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
-  test "creates person and redirects", %{conn: conn} do
-    conn = post(conn, admin_person_path(conn, :create), person: @valid_attrs)
+  test "creates person and smart redirects", %{conn: conn} do
+    conn = post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
 
     assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 1
@@ -49,12 +49,12 @@ defmodule Changelog.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
-  test "updates person and redirects", %{conn: conn} do
+  test "updates person and smart redirects", %{conn: conn} do
     person = insert(:person)
 
     conn = put conn, admin_person_path(conn, :update, person.id), person: @valid_attrs
 
-    assert redirected_to(conn) == admin_person_path(conn, :index)
+    assert redirected_to(conn) == admin_person_path(conn, :edit, person)
     assert count(Person) == 1
   end
 

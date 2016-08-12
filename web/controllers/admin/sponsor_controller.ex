@@ -18,14 +18,14 @@ defmodule Changelog.Admin.SponsorController do
     render conn, "new.html", changeset: changeset
   end
 
-  def create(conn, %{"sponsor" => sponsor_params}) do
+  def create(conn, params = %{"sponsor" => sponsor_params}) do
     changeset = Sponsor.changeset(%Sponsor{}, sponsor_params)
 
     case Repo.insert(changeset) do
       {:ok, sponsor} ->
         conn
         |> put_flash(:info, "#{sponsor.name} created!")
-        |> redirect(to: admin_sponsor_path(conn, :index))
+        |> smart_redirect(sponsor, params)
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -37,7 +37,7 @@ defmodule Changelog.Admin.SponsorController do
     render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "sponsor" => sponsor_params}) do
+  def update(conn, params = %{"id" => id, "sponsor" => sponsor_params}) do
     sponsor = Repo.get!(Sponsor, id)
     changeset = Sponsor.changeset(sponsor, sponsor_params)
 
@@ -45,7 +45,7 @@ defmodule Changelog.Admin.SponsorController do
       {:ok, sponsor} ->
         conn
         |> put_flash(:info, "#{sponsor.name} udated!")
-        |> redirect(to: admin_sponsor_path(conn, :index))
+        |> smart_redirect(sponsor, params)
       {:error, changeset} ->
         render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
     end
@@ -58,5 +58,12 @@ defmodule Changelog.Admin.SponsorController do
     conn
     |> put_flash(:info, "#{sponsor.name} deleted!")
     |> redirect(to: admin_sponsor_path(conn, :index))
+  end
+
+  defp smart_redirect(conn, _sponsor, %{"close" => _true}) do
+    redirect(conn, to: admin_sponsor_path(conn, :index))
+  end
+  defp smart_redirect(conn, sponsor, _params) do
+    redirect(conn, to: admin_sponsor_path(conn, :edit, sponsor))
   end
 end

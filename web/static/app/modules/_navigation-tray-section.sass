@@ -48,7 +48,7 @@ $large-icon-img-size: 74px / $root-font-size * 1rem
 
     & > a
         @extend %display-font
-        color: $green
+        
         display: block
         line-height: 2em
         padding-left: 3rem
@@ -61,8 +61,11 @@ $large-icon-img-size: 74px / $root-font-size * 1rem
             width: 100%
             text-align: center
 
-        &:hover
-            color: $white
+        & > span
+            color: $green
+            
+            &:hover
+                color: $white
 
     &--aside
         display: none

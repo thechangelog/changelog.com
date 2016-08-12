@@ -22,17 +22,30 @@
         flex-direction: column
         align-items: center
 
-        & > img
+        &_art
             width: 12.5rem
 
             @media (min-width: $tablet)
                 width: 15.5rem
 
-        & > h2
+        &_headline
             font-size: 2em
 
-        & > i
+            &--has-guests
+                margin-bottom: 0
+
+            &--has-subhead
+                margin: 1.7rem 0 0.5rem 0
+
+        &_subhead
             font-size: 1.15em
+            margin-bottom: 1.7rem
+
+            > a
+                color: $green
+
+            &--has-guests
+                margin: 0
 
     &_meta
         font-size: 1.15em
@@ -69,19 +82,17 @@
         text-align: left
 
         &:before
+            background-position: center 2rem;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            bottom: 0
             content: ''
-            z-index: -1
+            left: 0
             opacity: 0.2
             position: absolute
-            top: 0
-            bottom: 0
-            left: 0
             right: 0
-
-            @media (min-width: $tablet)
-                background-position: center 2rem;
-                background-repeat: no-repeat;
-                background-size: 50%;
+            top: 0
+            z-index: -1
 
         &--podcast:before
             background-image: url(/images/podcasts/podcast-abstract-art.svg);

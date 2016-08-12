@@ -8,8 +8,16 @@ defmodule Changelog.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :changelog, gzip: false,
-    only: ~w(css fonts images js uploads favicon.ico robots.txt)
+    at: "/", from: :changelog, gzip: true,
+    only: ~w(css fonts images js favicon.ico robots.txt)
+
+  # In dev environment, serve uploaded files from "priv/uploads".
+  #
+  # Nginx will serve these in production.
+  if Mix.env == :dev do
+    plug Plug.Static,
+      at: "/uploads", from: {:changelog, "priv/uploads"}, gzip: false
+  end
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

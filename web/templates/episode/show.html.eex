@@ -2,12 +2,14 @@
   <div class="container container--has-padding container--extra-skinny">
     <article class="episode">
       <header class="episode_header">
-        <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/>
+        <%= link to: podcast_path(@conn, :show, @podcast.slug) do %>
+          <img class="episode_header_art" src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="  <%= @podcast.name %> Podcast"/>
+        <% end %>
         <%= if @episode.headline do %>
-          <h2><%= @episode.headline %></h2>
-          <i><%= @episode.subheadline |> md_to_html |> sans_p_tags |> raw %></i>
+          <h2 class="episode_header_headline<%= if @episode.subheadline do %> episode_header_headline--has-subhead<% end %>"><%= @episode.headline %></h2>
+          <i class="episode_header_subhead<%= if @episode.guests do %> episode_header_subhead--has-guests<% end %>"><%= @episode.subheadline |> md_to_html |> sans_p_tags |> raw %></i>
         <% else %>
-          <h2><%= @episode.title %></h2>
+          <h2 class="episode_header_headline<%= if @episode.guests do %> episode_header_headline--has-guests<% end %>"><%= @episode.title %></h2>
         <% end %>
 
         <%= if Enum.any?(@episode.guests) do %>
@@ -26,7 +28,11 @@
         <%= if Enum.any?(@episode.sponsors) do %>
           <aside class="sponsors-ribbon">
             <h3>Brought to you by:</h3>
-            <div class="sponsors-ribbon_logos"><a href="#"><img src="img/toptal-logo-gray.svg" alt="toptal"/></a></div>
+            <div class="sponsors-ribbon_logos">
+              <a href="#">
+                <img src="<%= static_url(@conn, "/images/toptal-logo-gray.svg") %>" alt="toptal"/>
+              </a>
+            </div>
           </aside>
         <% end %>
       </header>
@@ -51,7 +57,7 @@
         <section class="episode-footer-section">
           <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
           <div class="episode-footer-section_content">
-            <h3>Guests</h3>
+            <h3>Show Guests</h3>
             <ul>
               <%= for person <- @episode.guests do %>
                 <li>
@@ -76,12 +82,14 @@
         <section class="episode-footer-section">
           <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/sponsor-gray.svg") %>" alt="Show sponsors"></div>
           <div class="episode-footer-section_content">
-            <h3>Sponsors</h3>
+            <h3>Show Sponsors</h3>
             <dl class="sponsors-list">
-              <%= for sponsor <- @episode.episode_sponsors do %>
-                <dt class="sponsors-list-name"><%= link sponsor.title, to: sponsor.link_url, class: "episode_link" %></dt>
-                <dd class="sponsors-list_description"><%= sponsor.description %></dd>
-              <% end %>
+            <%= for sponsor <- @episode.episode_sponsors do %>
+              <div class="sponsors-list_item">
+                <dt class="sponsors-list_name"><%= link sponsor.title, to: sponsor.link_url %></dt>
+                <dd class="sponsors-list_description"><%= sponsor.description |> md_to_html |> sans_p_tags |> raw %></dd>
+              <div>
+            <% end %>
             </dl>
           </div>
         </section>
@@ -90,7 +98,7 @@
         <section class="episode-footer-section">
           <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
           <div class="episode-footer-section_content">
-            <h3>Notes</h3>
+            <h3>Show Notes</h3>
             <%= raw(md_to_html(@episode.notes)) %>
           </div>
         </section>
@@ -101,39 +109,7 @@
   </div>
 </div>
 
-<div class="section">
-  <div class="container container--skinny container--has-padding">
-    <section class="icon-panel">
-      <header class="icon-panel_header">
-        <h2 class="h2"> <img src="<%= static_url(@conn, "/images/news.svg") %>" alt="News"><br/>News</h2>
-      </header>
-      <div class="icon-panel_content">
-        <div class="news-list">
-          <article class="news-item">
-            <h3 class="news-item_heading">Changelog Weekly</h3>
-            <p class="news-item_description"><b><em>Every Saturday morning</em></b> we ship an email that covers everything that hits our open source radar. It's nerd to the core. Don't miss out. No spam!</p>
-            <nav class="podcast-menu podcast-menu--episode">
-              <h4 class="accessibility-hidden">Changelog Weekly Navigation</h4>
-              <%= link to: page_path(@conn, :weekly), title: "Subscribe to Changelog Weekly" do %>
-                <img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe">Subscribe</a>
-              <% end %>
-            </nav>
-          </article>
-          <article class="news-item">
-            <h3 class="news-item_heading">Changelog Nightly</h3>
-            <p class="news-item_description"><b><em>Every night at 10pm CST</em></b> we ship an email that unearths the hottest new repos on GitHub before they blow up. It's nerd to the core. Don't miss out. No spam!</p>
-            <nav class="podcast-menu podcast-menu--episode">
-              <h4 class="accessibility-hidden">Changelog Nightly Navigation</h4>
-              <%= link to: page_path(@conn, :nightly), title: "Subscribe to Changelog Nightly" do %>
-                <img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe">Subscribe</a>
-              <% end %>
-            </nav>
-          </article>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
+<%= render Changelog.SharedView, "_news_cta_1.html", assigns %>
 
 <div class="wrapper wrapper--half-gray">
   <%= render Changelog.SharedView, "_membership_cta_2.html", assigns %>

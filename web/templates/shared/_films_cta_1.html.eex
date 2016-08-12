@@ -6,18 +6,14 @@
     </header>
     <article class="film">
       <header class="film_header">
-        <h3>Beyond Code: Season 2 / Space City Js 2015</h3>
-        <time datetime="2016-01-01T12:00">Jan 2016</time>
+        <h3>Beyond Code: Season 3 / GopherCon 2015</h3>
+        <time datetime="2016-06-01T12:00">June 2016</time>
       </header>
-      <video poster="http://placehold.it/960x540" controls>
-        <source src="#" type="video/webm">
-        <source src="#" type="video/mp4">
-        <source src="#" type="video/ogg">Your browser does not support HTML5 video
-      </video>
+      <script src="//fast.wistia.com/embed/medias/flcb9g0nkr.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_flcb9g0nkr videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
     </article>
     <footer class="btn-container btn-container--flex">
       <a class="btn" href="#">Hire us</a>
-      <a class="btn btn--white" href="#">View more films</a>
+      <%= link "View more films", to: page_path(@conn, :films), class: "btn btn--white" %>
     </footer>
   </section>
 </div>

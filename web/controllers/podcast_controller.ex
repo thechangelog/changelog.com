@@ -24,6 +24,19 @@ defmodule Changelog.PodcastController do
     render(conn, :show, podcast: podcast, episodes: episodes)
   end
 
+  def archive(conn, %{"slug" => slug}) do
+    podcast = Repo.get_by!(Podcast, slug: slug)
+
+    episodes =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Episode.newest_first
+      |> Repo.all
+      |> Episode.preload_guests
+
+    render(conn, :archive, podcast: podcast, episodes: episodes)
+  end
+
   def feed(conn, %{"slug" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: slug)
 

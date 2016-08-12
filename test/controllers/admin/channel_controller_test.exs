@@ -25,8 +25,8 @@ defmodule Changelog.Admin.ChannelControllerTest do
   end
 
   @tag :as_admin
-  test "creates channel and redirects", %{conn: conn} do
-    conn = post(conn, admin_channel_path(conn, :create), channel: @valid_attrs)
+  test "creates channel and smart redirects", %{conn: conn} do
+    conn = post(conn, admin_channel_path(conn, :create), channel: @valid_attrs, close: true)
 
     assert redirected_to(conn) == admin_channel_path(conn, :index)
     assert count(Channel) == 1
@@ -50,12 +50,12 @@ defmodule Changelog.Admin.ChannelControllerTest do
   end
 
   @tag :as_admin
-  test "updates channel and redirects", %{conn: conn} do
+  test "updates channel and smart redirects", %{conn: conn} do
     channel = insert(:channel)
 
     conn = put(conn, admin_channel_path(conn, :update, channel.id), channel: @valid_attrs)
 
-    assert redirected_to(conn) == admin_channel_path(conn, :index)
+    assert redirected_to(conn) == admin_channel_path(conn, :edit, channel)
     assert count(Channel) == 1
   end
 

@@ -25,9 +25,9 @@ defmodule Changelog.Admin.PostControllerTest do
   end
 
   @tag :as_admin
-  test "creates post and redirects", %{conn: conn} do
+  test "creates post and smart redirects", %{conn: conn} do
     author = insert(:person)
-    conn = post(conn, admin_post_path(conn, :create), post: %{@valid_attrs | author_id: author.id})
+    conn = post(conn, admin_post_path(conn, :create), post: %{@valid_attrs | author_id: author.id}, close: true)
 
     assert redirected_to(conn) == admin_post_path(conn, :index)
     assert count(Post) == 1
@@ -51,13 +51,13 @@ defmodule Changelog.Admin.PostControllerTest do
   end
 
   @tag :as_admin
-  test "updates post and redirects", %{conn: conn} do
+  test "updates post and smart redirects", %{conn: conn} do
     author = insert(:person)
     post = insert(:post, author: author)
 
     conn = put(conn, admin_post_path(conn, :update, post.id), post: %{@valid_attrs | author_id: author.id})
 
-    assert redirected_to(conn) == admin_post_path(conn, :index)
+    assert redirected_to(conn) == admin_post_path(conn, :edit, post)
     assert count(Post) == 1
   end
 

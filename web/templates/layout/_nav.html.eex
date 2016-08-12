@@ -5,17 +5,8 @@
   <nav class="navigation-bar_links">
     <h2 class="accessibility-hidden">Quick Links</h2>
     <%= link "Podcasts", to: podcast_path(@conn, :index), class: "navigation-bar-link" %>
-    <!-- For open state, use .navigation-bar-link--is-open-->
-    <div class="navigation-bar-link">
-      <%= link "News", to: page_path(@conn, :weekly) %>
-      <div class="navigation-bar-link_dropdown">
-        <nav class="navigation-bar-dropdown">
-          <%= link "Weekly", to: page_path(@conn, :weekly) %>
-          <%= link "Nightly", to: page_path(@conn, :nightly) %>
-        </nav>
-      </div>
-    </div>
-    <%= link "Videos", to: page_path(@conn, :films), class: "navigation-bar-link" %>
+    <%= link "Weekly", to: page_path(@conn, :weekly), class: "navigation-bar-link" %>
+    <%= link "Nightly", to: page_path(@conn, :nightly), class: "navigation-bar-link" %>
     <%= link "Advertise", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
   </nav>
   <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
@@ -43,9 +34,9 @@
               <img src="<%= static_url(@conn, "/images/news.svg") %>" alt="Changelog news graphic">
               <h3>News</h3>
             </header>
-            <%= link "Weekly", to: page_path(@conn, :weekly) %>
-            <%= link "Nightly", to: page_path(@conn, :nightly) %>
-            <a href="#">Subscribe</a>
+            <%= link to: page_path(@conn, :weekly) do %><span>Weekly</span><% end %>
+            <%= link to: page_path(@conn, :nightly) do %><span>Nightly</span><% end %>
+            <a href="#"><span>Subscribe</span></a>
           </nav>
           <nav class="navigation-tray-section">
             <header>
@@ -54,7 +45,7 @@
             </header>
             <!-- TODO add status flag to podcasts and only use those here -->
             <%= for podcast <- @podcasts do %>
-              <%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %>
+              <%= link to: podcast_path(@conn, :show, podcast.slug) do %><span><%= podcast.name %></span><% end %>
             <% end %>
           </nav>
           <nav class="navigation-tray-section">
@@ -62,9 +53,9 @@
               <img src="<%= static_url(@conn, "/images/films.svg") %>" alt="Changelog films graphic">
               <h3>Films</h3>
             </header>
-            <a href="#">Featured</a>
-            <a href="#">All films</a>
-            <a href="#">Subscribe</a>
+            <a href="#"><span>Featured</span></a>
+            <a href="#"><span>All films</span></a>
+            <a href="#"><span>Subscribe</span></a>
           </nav>
         </div>
         <nav class="navigation-tray-side-nav">

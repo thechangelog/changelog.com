@@ -38,7 +38,7 @@
         & > address
             & > a:before
                 @media (min-width: $tablet)
-                    content: '|'
+                    content: '/'
                     margin: 0 0.33rem
 
             & > a:hover::before
@@ -67,8 +67,9 @@
     &_nav
         text-align: right
 
-        & > a:after
+        & > a:after, & > a:hover::after
             @media (min-width: $tablet)
+                color: $half-white
                 content: '/'
                 margin: 0 0.33rem
 
