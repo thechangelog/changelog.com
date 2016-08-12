@@ -1,4 +1,4 @@
-<article class="section">
+<article class="section content">
   <div class="container container--has-padding container--skinny">
     <nav class="breadcrumbs breadcrumbs--slashes">
         <a class="breadcrumbs_crumb" href="#">Home</a>
@@ -8,26 +8,32 @@
         <span class="breadcrumbs_crumb breadcrumbs_crumb--active">Jun 16 2016</span>
     </nav>
     <header>
-      <h2 class="h2"><%= @post.title %></h2>
-      by <%= link @post.author.name, to: PersonView.external_url(@post.author) %>
-      <br/>
-      on <time datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>
+      <h2><%= @post.title %></h2>
+      <div class="content_byline">
+        <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>  
+      </div>
     </header>
+    <div class="content_body">
 
-    <%= @post.body |> md_to_html |> raw %>
 
-    <h2>Channels</h2>
-    <%= for channel <- @post.channels do %>
-      <%= link channel.name, to: "#" %>
-    <% end %>
+        <%= @post.body |> md_to_html |> raw %>
+    </div>
 
-    <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
-      <img src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
-    <% end %>
+    <footer>
+        <h2>Channels</h2>
+        <%= for channel <- @post.channels do %>
+          <%= link channel.name, to: "#" %>
+        <% end %>
 
-    <%= if @post.author.bio do %>
-      <%= @post.author.bio %>
-    <% end %>
+        <div class="content_footer">
+            <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
+              <img src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
+            <% end %>
+            <%= if @post.author.bio do %>
+              <%= @post.author.bio %>
+            <% end %>
+        </div>
+    </footer>
   </div>
 </article>
 
