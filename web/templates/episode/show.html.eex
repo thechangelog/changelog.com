@@ -6,10 +6,10 @@
           <img class="episode_header_art" src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="  <%= @podcast.name %> Podcast"/>
         <% end %>
         <%= if @episode.headline do %>
-          <h2><%= @episode.headline %></h2>
-          <i><%= @episode.subheadline |> md_to_html |> sans_p_tags |> raw %></i>
+          <h2 class="episode_header_headline<%= if @episode.subheadline do %> episode_header_headline--has-subhead<% end %>"><%= @episode.headline %></h2>
+          <i class="episode_header_subhead<%= if @episode.guests do %> episode_header_subhead--has-guests<% end %>"><%= @episode.subheadline |> md_to_html |> sans_p_tags |> raw %></i>
         <% else %>
-          <h2><%= @episode.title %></h2>
+          <h2 class="episode_header_headline<%= if @episode.guests do %> episode_header_headline--has-guests<% end %>"><%= @episode.title %></h2>
         <% end %>
 
         <%= if Enum.any?(@episode.guests) do %>
