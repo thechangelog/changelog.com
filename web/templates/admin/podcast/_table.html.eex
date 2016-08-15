@@ -45,7 +45,7 @@
             Episodes
           <% end %>
 
-          <%= link to: admin_podcast_episode_path(@conn, :new, podcast), class: "ui button" do %>
+          <%= link to: admin_podcast_episode_path(@conn, :new, podcast.slug), class: "ui button" do %>
             <i class="add icon"></i>
             Episode
           <% end %>
