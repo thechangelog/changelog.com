@@ -60,7 +60,7 @@ defmodule Changelog.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e), episode: @valid_attrs)
+    conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @valid_attrs)
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :edit, p.slug, @valid_attrs[:slug])
     assert count(Episode) == 1
@@ -71,7 +71,7 @@ defmodule Changelog.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e), episode: @invalid_attrs)
+    conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
   end

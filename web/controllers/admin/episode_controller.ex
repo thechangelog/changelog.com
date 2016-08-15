@@ -70,10 +70,10 @@ defmodule Changelog.Admin.EpisodeController do
     render conn, "edit.html", episode: episode, changeset: changeset
   end
 
-  def update(conn, params = %{"id" => id, "episode" => episode_params}, podcast) do
+  def update(conn, params = %{"id" => slug, "episode" => episode_params}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Repo.get!(id)
+      |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
     changeset = Episode.changeset(episode, episode_params)
