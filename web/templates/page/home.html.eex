@@ -3,7 +3,7 @@
     <h2 class="accessibility-hidden">Featured Quotes</h2>
     <article class="featured-podcast">
       <div class="featured-podcast_content">
-        <q><a href="">I train a computer like I train a dog.</a></q>
+        <q><a href=""><%= "\"I train a computer like I train a dog.\"" |> with_smart_quotes %></a></q>
         <cite>-Matz<sup>Creator of the Ruby Programming Language</sup></cite>
       </div>
       <div class="featured-podcast_navigation">
@@ -13,7 +13,7 @@
       </div>
       <div class="featured-podcast_footer">
         <div class="featured-podcast_footer_menu">
-            <%= render Changelog.PodcastView, "_menu.html", assigns %>    
+            <%= render Changelog.PodcastView, "_menu.html", assigns %>
         </div>
         <aside>
           <h4>Brought to you by:</h4><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/toptal-logo.svg") %>" alt="Toptal logo"></a><a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/digital-ocean-logo.svg") %>" alt="DigitalOcean logo"></a>
