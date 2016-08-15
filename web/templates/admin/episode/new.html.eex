@@ -3,5 +3,5 @@
 
   <%= render "_form.html",
     changeset: @changeset,
-    action: admin_podcast_episode_path(@conn, :create, @podcast) %>
+    action: admin_podcast_episode_path(@conn, :create, @podcast.slug) %>
 </div>

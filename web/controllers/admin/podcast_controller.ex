@@ -28,8 +28,8 @@ defmodule Changelog.Admin.PodcastController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    podcast = Repo.get!(Podcast, id)
+  def edit(conn, %{"id" => slug}) do
+    podcast = Repo.get_by!(Podcast, slug: slug)
       |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
     changeset = Podcast.changeset(podcast)
     render conn, "edit.html", podcast: podcast, changeset: changeset
@@ -54,6 +54,6 @@ defmodule Changelog.Admin.PodcastController do
     redirect(conn, to: admin_podcast_path(conn, :index))
   end
   defp smart_redirect(conn, podcast, _params) do
-    redirect(conn, to: admin_podcast_path(conn, :edit, podcast))
+    redirect(conn, to: admin_podcast_path(conn, :edit, podcast.slug))
   end
 end

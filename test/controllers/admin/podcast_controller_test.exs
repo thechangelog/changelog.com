@@ -45,7 +45,7 @@ defmodule Changelog.Admin.PodcastControllerTest do
   test "renders form to edit podcast", %{conn: conn} do
     podcast = insert(:podcast)
 
-    conn = get(conn, admin_podcast_path(conn, :edit, podcast))
+    conn = get(conn, admin_podcast_path(conn, :edit, podcast.slug))
     assert html_response(conn, 200) =~ ~r/edit/i
   end
 
@@ -55,7 +55,7 @@ defmodule Changelog.Admin.PodcastControllerTest do
 
     conn = put(conn, admin_podcast_path(conn, :update, podcast.id), podcast: @valid_attrs)
 
-    assert redirected_to(conn) == admin_podcast_path(conn, :edit, podcast)
+    assert redirected_to(conn) == admin_podcast_path(conn, :edit, @valid_attrs[:slug])
     assert count(Podcast) == 1
   end
 

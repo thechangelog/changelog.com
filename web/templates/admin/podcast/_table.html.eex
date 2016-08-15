@@ -16,7 +16,7 @@
   <%= for podcast <- @podcasts do %>
     <tr>
       <td class="center aligned">
-        <%= link to: admin_podcast_episode_path(@conn, :index, podcast) do %>
+        <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug) do %>
         <h2 class="ui circular image header">
           <img src="<%= static_url(@conn, Changelog.PodcastView.cover_art_path(podcast)) %>" class="ui image"/>
         </h2>
@@ -35,12 +35,12 @@
             Public
           <% end %>
 
-          <%= link to: admin_podcast_path(@conn, :edit, podcast), class: "ui button" do %>
+          <%= link to: admin_podcast_path(@conn, :edit, podcast.slug), class: "ui button" do %>
             <i class="edit icon"></i>
             Edit
           <% end %>
 
-          <%= link to: admin_podcast_episode_path(@conn, :index, podcast), class: "ui button" do %>
+          <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug), class: "ui button" do %>
             <i class="eye icon"></i>
             Episodes
           <% end %>

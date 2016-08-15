@@ -58,10 +58,10 @@ defmodule Changelog.Admin.EpisodeController do
     end
   end
 
-  def edit(conn, %{"id" => id}, podcast) do
+  def edit(conn, %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Repo.get!(id)
+      |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
     changeset = Episode.changeset(episode)
@@ -87,14 +87,14 @@ defmodule Changelog.Admin.EpisodeController do
   end
 
   defp assign_podcast(conn, _) do
-    podcast = Repo.get! Podcast, conn.params["podcast_id"]
+    podcast = Repo.get_by!(Podcast, slug: conn.params["podcast_id"])
     assign conn, :podcast, podcast
   end
 
   defp smart_redirect(conn, podcast, _episode, %{"close" => _true}) do
-    redirect(conn, to: admin_podcast_episode_path(conn, :index, podcast))
+    redirect(conn, to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
   defp smart_redirect(conn, podcast, episode, _params) do
-    redirect(conn, to: admin_podcast_episode_path(conn, :edit, podcast, episode))
+    redirect(conn, to: admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
   end
 end
