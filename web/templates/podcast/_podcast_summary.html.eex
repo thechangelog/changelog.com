@@ -11,8 +11,10 @@
             <h3 class="tooltip_heading"><%= @podcast.name %></h3>
             <nav class="tooltip_links">
               <h4 class="accessibility-hidden">Podcast Menu</h4>
-              <a href="#">Play latest episode</a>
-              <a href="#">Latest Episode Page</a>
+              <%= if latest = Changelog.Podcast.latest_episode(@podcast) do %>
+                <%= link "Play latest episode", to: Changelog.EpisodeView.audio_url(latest) %>
+                <%= link "Latest Episode page", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
+              <% end %>
               <%= link "Go to show page", to: podcast_path(@conn, :show, @podcast.slug) %>
               <a href="#">Subscribe</a>
             </nav>

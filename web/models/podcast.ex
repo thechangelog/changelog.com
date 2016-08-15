@@ -65,6 +65,15 @@ defmodule Changelog.Podcast do
     |> Enum.find(fn(x) -> x != :error end)
   end
 
+  def latest_episode(podcast) do
+    podcast
+    |> assoc(:episodes)
+    |> Changelog.Episode.published
+    |> Changelog.Episode.newest_first
+    |> Ecto.Query.first
+    |> Repo.one
+  end
+
   def preload_hosts(podcast) do
     podcast
     |> Repo.preload(podcast_hosts: {Changelog.PodcastHost.by_position, :person})
