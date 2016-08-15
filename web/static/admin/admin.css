@@ -13,3 +13,24 @@
 .ui.sponsor.header, .ui.link.header {
   margin-bottom: 10px !important;
 }
+
+@-webkit-keyframes success {
+  0% { background-color: #E5F9E7; }
+  100% { background-color: white; }
+}
+
+@-webkit-keyframes failure {
+  0% { background-color: #FFE8E6; }
+  100% { background-color: white; }
+}
+.ui.menu.success {
+  -webkit-animation-name: success;
+  -webkit-animation-duration: 3000ms;
+  -webkit-animation-iteration-count: 1;
+}
+
+.ui.menu.failure {
+  -webkit-animation-name: failure;
+  -webkit-animation-duration: 3000ms;
+  -webkit-animation-iteration-count: 1;
+}

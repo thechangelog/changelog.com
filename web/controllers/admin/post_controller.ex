@@ -25,10 +25,12 @@ defmodule Changelog.Admin.PostController do
     case Repo.insert(changeset) do
       {:ok, post} ->
         conn
-        |> put_flash(:info, "#{post.title} created!")
+        |> put_flash(:result, "success")
         |> smart_redirect(post, params)
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:result, "failure")
+        |> render("new.html", changeset: changeset)
     end
   end
 
@@ -46,10 +48,12 @@ defmodule Changelog.Admin.PostController do
     case Repo.update(changeset) do
       {:ok, post} ->
         conn
-        |> put_flash(:info, "#{post.title} udated!")
+        |> put_flash(:result, "success")
         |> smart_redirect(post, params)
       {:error, changeset} ->
-        render conn, "edit.html", post: post, changeset: changeset
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", post: post, changeset: changeset)
     end
   end
 
@@ -58,7 +62,7 @@ defmodule Changelog.Admin.PostController do
     Repo.delete!(post)
 
     conn
-    |> put_flash(:info, "#{post.title} deleted!")
+    |> put_flash(:result, "success")
     |> redirect(to: admin_post_path(conn, :index))
   end
 

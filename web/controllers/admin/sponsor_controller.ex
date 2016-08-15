@@ -24,10 +24,12 @@ defmodule Changelog.Admin.SponsorController do
     case Repo.insert(changeset) do
       {:ok, sponsor} ->
         conn
-        |> put_flash(:info, "#{sponsor.name} created!")
+        |> put_flash(:result, "success")
         |> smart_redirect(sponsor, params)
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:result, "failure")
+        |> render("new.html", changeset: changeset)
     end
   end
 
@@ -44,10 +46,12 @@ defmodule Changelog.Admin.SponsorController do
     case Repo.update(changeset) do
       {:ok, sponsor} ->
         conn
-        |> put_flash(:info, "#{sponsor.name} udated!")
+        |> put_flash(:result, "success")
         |> smart_redirect(sponsor, params)
       {:error, changeset} ->
-        render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", sponsor: sponsor, changeset: changeset)
     end
   end
 
@@ -56,7 +60,7 @@ defmodule Changelog.Admin.SponsorController do
     Repo.delete!(sponsor)
 
     conn
-    |> put_flash(:info, "#{sponsor.name} deleted!")
+    |> put_flash(:result, "success")
     |> redirect(to: admin_sponsor_path(conn, :index))
   end
 

@@ -21,10 +21,12 @@ defmodule Changelog.Admin.PodcastController do
     case Repo.insert(changeset) do
       {:ok, podcast} ->
         conn
-        |> put_flash(:info, "#{podcast.name} created!")
+        |> put_flash(:result, "success")
         |> smart_redirect(podcast, params)
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:result, "failure")
+        |> render("new.html", changeset: changeset)
     end
   end
 
@@ -43,7 +45,7 @@ defmodule Changelog.Admin.PodcastController do
     case Repo.update(changeset) do
       {:ok, podcast} ->
         conn
-        |> put_flash(:info, "#{podcast.name} udated!")
+        |> put_flash(:result, "success")
         |> smart_redirect(podcast, params)
       {:error, changeset} ->
         render conn, "edit.html", podcast: podcast, changeset: changeset

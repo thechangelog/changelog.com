@@ -24,10 +24,12 @@ defmodule Changelog.Admin.PersonController do
     case Repo.insert(changeset) do
       {:ok, person} ->
         conn
-        |> put_flash(:info, "#{person.name} created!")
+        |> put_flash(:result, "success")
         |> smart_redirect(person, params)
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:result, "failure")
+        |> render("new.html", changeset: changeset)
     end
   end
 
@@ -44,10 +46,12 @@ defmodule Changelog.Admin.PersonController do
     case Repo.update(changeset) do
       {:ok, person} ->
         conn
-        |> put_flash(:info, "#{person.name} udated!")
+        |> put_flash(:result, "success")
         |> smart_redirect(person, params)
       {:error, changeset} ->
-        render(conn, "edit.html", person: person, changeset: changeset)
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", person: person, changeset: changeset)
     end
   end
 
@@ -56,7 +60,7 @@ defmodule Changelog.Admin.PersonController do
     Repo.delete!(person)
 
     conn
-    |> put_flash(:info, "#{person.name} deleted!")
+    |> put_flash(:result, "success")
     |> redirect(to: admin_person_path(conn, :index))
   end
 

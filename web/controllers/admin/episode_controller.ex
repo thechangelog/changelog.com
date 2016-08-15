@@ -51,10 +51,12 @@ defmodule Changelog.Admin.EpisodeController do
     case Repo.insert(changeset) do
       {:ok, episode} ->
         conn
-        |> put_flash(:info, "#{episode.title} created!")
+        |> put_flash(:result, "success")
         |> smart_redirect(podcast, episode, params)
       {:error, changeset} ->
-        render conn, "new.html", changeset: changeset
+        conn
+        |> put_flash(:result, "failure")
+        |> render("new.html", changeset: changeset)
     end
   end
 
@@ -79,10 +81,12 @@ defmodule Changelog.Admin.EpisodeController do
     case Repo.update(changeset) do
       {:ok, episode} ->
         conn
-        |> put_flash(:info, "#{episode.title} updated!")
+        |> put_flash(:result, "success")
         |> smart_redirect(podcast, episode, params)
       {:error, changeset} ->
-        render conn, "edit.html", episode: episode, changeset: changeset
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", episode: episode, changeset: changeset)
     end
   end
 
