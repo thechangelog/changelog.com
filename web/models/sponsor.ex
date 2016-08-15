@@ -30,4 +30,10 @@ defmodule Changelog.Sponsor do
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:name)
   end
+
+  def sponsorship_count(sponsor) do
+    Repo.one from(e in Changelog.EpisodeSponsor,
+      where: e.sponsor_id == ^sponsor.id,
+      select: count(e.id))
+  end
 end
