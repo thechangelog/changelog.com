@@ -61,15 +61,15 @@
             <ul>
               <%= for person <- @episode.guests do %>
                 <li>
-                <%= person.name %> &mdash;
+                <%= person.name %> &ndash;
                 <%= if person.twitter_handle do %>
-                  <%= link "[Twitter]", to: twitter_url(person.twitter_handle) %>
+                  <%= link "Twitter", to: twitter_url(person.twitter_handle) %>,&nbsp;
                 <% end %>
                 <%= if person.github_handle do %>
-                  <%= link "[GitHub]", to: twitter_url(person.github_handle) %>
+                  <%= link "GitHub", to: twitter_url(person.github_handle) %>,&nbsp;
                 <% end %>
                 <%= if person.website do %>
-                  <%= link "[Website]", to: person.website %>
+                  <%= link "Website", to: person.website %>
                 <% end %>
                 </li>
               <% end %>
