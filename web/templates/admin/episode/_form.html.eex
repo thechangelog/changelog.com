@@ -203,13 +203,13 @@
 
   <div class="field required <%= error_class f, :summary %>">
     <%= label f, :summary %>
-    <%= textarea f, :summary, placeholder: "Keep it brief. Markdown enabled." %>
+    <%= textarea f, :summary, placeholder: "Keep it brief. Markdown enabled.", rows: 2 %>
     <%= error_message f, :summary %>
   </div>
 
   <div class="field">
     <%= label f, :notes %>
-    <%= textarea f, :notes, placeholder: "The more, the better. Markdown enabled." %>
+    <%= textarea f, :notes, placeholder: "The more, the better. Markdown enabled.", rows: 5 %>
   </div>
 
   <div class="field">
