@@ -20,17 +20,24 @@
             </nav>
           </div>
         </div>
+        <%= unless @podcast.slug == "master" do %>
         <button class="show-summary-widget_toggle"></button>
+        <% end %>
       </div>
     </div>
   </div>
   <div class="show-summary_content">
     <%= raw md_to_html(@podcast.description) %>
+    <%= if Enum.any?(@podcast.hosts) do %>
     <cite>Hosted by
       <%= for person <- @podcast.hosts do %>
         <%= link person.name, to: Changelog.PersonView.external_url(person) %>
       <% end %>
     </cite>
-    <p><b><%= pluralize(Changelog.PodcastView.published_episode_count(@podcast), "Episode", "Episodes") %></b></p>
+    <% end %>
+    <% episode_count = Changelog.PodcastView.published_episode_count(@podcast) %>
+    <%= if episode_count > 0 do %>
+      <p><b><%= pluralize(episode_count, "Episode", "Episodes") %></b></p>
+    <% end %>
   </div>
 </article>

@@ -43,10 +43,10 @@
               <img src="<%= static_url(@conn, "/images/podcasts.svg") %>" alt="Changelog podcasts graphic">
               <h3>Podcasts</h3>
             </header>
-            <!-- TODO add status flag to podcasts and only use those here -->
             <%= for podcast <- @podcasts do %>
               <%= link to: podcast_path(@conn, :show, podcast.slug) do %><span><%= podcast.name %></span><% end %>
             <% end %>
+            <%= link to: podcast_path(@conn, :show, "master") do %><span>Master</span><% end %>
           </nav>
           <nav class="navigation-tray-section">
             <header>
