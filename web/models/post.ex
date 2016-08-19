@@ -8,6 +8,7 @@ defmodule Changelog.Post do
     field :slug, :string
     field :published, :boolean, default: false
     field :published_at, Ecto.DateTime
+    field :tldr, :string
     field :body, :string
 
     belongs_to :author, Changelog.Person
@@ -18,7 +19,7 @@ defmodule Changelog.Post do
   end
 
   @required_fields ~w(title slug author_id)
-  @optional_fields ~w(published published_at body)
+  @optional_fields ~w(published published_at body tldr)
 
   def changeset(model, params \\ %{}) do
     model

@@ -49,9 +49,15 @@
     </div>
   </div>
 
+  <div class="field <%= error_class(f, :tldr) %>">
+    <%= label f, :tldr %>
+    <%= textarea f, :tldr, placeholder: "Tweet-sized. Markdown enabled.", rows: 1 %>
+    <%= error_message(f, :tldr) %>
+  </div>
+
   <div class="field <%= error_class(f, :body) %>">
     <%= label f, :body %>
-    <%= textarea f, :body, placeholder: "Markdown enabled." %>
+    <%= textarea f, :body, placeholder: "Markdown enabled.", rows: 10 %>
     <%= error_message(f, :body) %>
   </div>
 
