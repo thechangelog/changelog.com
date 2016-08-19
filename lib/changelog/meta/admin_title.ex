@@ -1,4 +1,4 @@
-defmodule Changelog.AdminPageTitle do
+defmodule Changelog.Meta.AdminTitle do
   alias Changelog.Admin.{PageView, PersonView}
 
   @suffix "Changelog Admin"

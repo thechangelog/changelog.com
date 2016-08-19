@@ -1,9 +1,12 @@
-defmodule Changelog.PageTitle do
+defmodule Changelog.Meta.Title do
   alias Changelog.{AuthView, EpisodeView, PageView, PersonView, PodcastView, PostView}
 
   @suffix "Changelog"
 
   def page_title(assigns), do: assigns |> get |> put_suffix
+
+  # no need for the suffix on these
+  def share_title(assigns), do: assigns |> get
 
   defp put_suffix(nil), do: @suffix
   defp put_suffix(title), do: title <> " | " <> @suffix
@@ -29,7 +32,7 @@ defmodule Changelog.PageTitle do
   end
 
   defp get(%{view_module: PodcastView, view_template: "index.html"}) do
-    "All Podcasts"
+    "All Changelog Podcasts"
   end
 
   defp get(%{view_module: PodcastView, view_template: "master.html"}) do
