@@ -15,7 +15,7 @@ defmodule Changelog.AudioFile do
   end
 
   def storage_dir(_version, {_file, scope}) do
-    Application.app_dir(:changelog, "priv/uploads/#{scope.podcast.slug}/#{scope.slug}")
+    "#{Application.fetch_env!(:arc, :storage_dir)}/#{scope.podcast.slug}/#{scope.slug}"
   end
 
   def transform(_version, {_file, scope}) do

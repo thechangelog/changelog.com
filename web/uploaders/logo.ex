@@ -19,7 +19,7 @@ defmodule Changelog.Logo do
 
       def storage_dir(_version, {_file, scope}) do
         hashed_id = Changelog.Hashid.encode(scope.id)
-        Application.app_dir(:changelog, "priv/uploads/logos/#{hashed_id}")
+        "#{Application.fetch_env!(:arc, :storage_dir)}/logos/#{hashed_id}"
       end
 
       def transform(:large, {file, _scope}) do

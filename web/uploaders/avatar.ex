@@ -13,7 +13,7 @@ defmodule Changelog.Avatar do
 
   def storage_dir(_version, {_file, scope}) do
     hashed_id = Changelog.Hashid.encode(scope.id)
-    Application.app_dir(:changelog, "priv/uploads/avatars/#{hashed_id}")
+    "#{Application.fetch_env!(:arc, :storage_dir)}/avatars/#{hashed_id}"
   end
 
   def filename(version, _) do
