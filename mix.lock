@@ -1,7 +1,7 @@
 %{"arc": {:hex, :arc, "0.5.3", "2bc1b4ce8c1064ae12015f5612f3e3853d354859905bb34088b3579bf34a519d", [:mix], [{:ex_aws, "~> 0.4.10 or ~> 0.5.0", [hex: :ex_aws, optional: true]}, {:httpoison, "~> 0.7", [hex: :httpoison, optional: true]}, {:poison, "~> 1.2 or ~> 2.0", [hex: :poison, optional: true]}]},
   "arc_ecto": {:hex, :arc_ecto, "0.4.2", "9f7fd7da4dfa8d16292bb6a49a65971b12c663cb4c9711674d6302d6272f9e52", [:mix], [{:arc, "~> 0.2", [hex: :arc, optional: false]}, {:ecto, "~> 2.0.0-rc.3", [hex: :ecto, optional: false]}]},
   "bamboo": {:hex, :bamboo, "0.7.0", "2722e395a396dfedc12d300c900f65b216f7d7bf9d430c5dd0235690997878b7", [:mix], [{:httpoison, "~> 0.9", [hex: :httpoison, optional: false]}, {:plug, "~> 1.0", [hex: :plug, optional: false]}, {:poison, ">= 1.5.0", [hex: :poison, optional: false]}]},
-  "bamboo_smtp": {:hex, :bamboo_smtp, "1.2.0", "d0bad70890910a3c7f58ab600d7a3fe6ce9637746dbb968b0610412c544375c4", [:mix], [{:bamboo, "~> 0.7.0", [hex: :bamboo, optional: false]}, {:gen_smtp, "~> 0.11.0", [hex: :gen_smtp, optional: false]}]},
+  "bamboo_smtp": {:git, "https://github.com/jerodsanto/bamboo_smtp.git", "2b8496c3432b8863020973eaef925df984760cc9", [branch: "fix-email-format"]},
   "certifi": {:hex, :certifi, "0.4.0", "a7966efb868b179023618d29a407548f70c52466bf1849b9e8ebd0e34b7ea11f", [:rebar3], []},
   "cmark": {:hex, :cmark, "0.6.10", "de67c5f033b42ef2adc702df2044bc97b4a1b36b55826e351852f8d31624bc37", [:mix, :make], []},
   "combine": {:hex, :combine, "0.9.1", "5fd778ee77032ae593bf79aedb8519d9e36283e4f869abd98c2d6029ca476db8", [:mix], []},
