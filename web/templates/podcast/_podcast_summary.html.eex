@@ -12,6 +12,7 @@
             <nav class="tooltip_links">
               <h4 class="accessibility-hidden">Podcast Menu</h4>
               <%= if latest = Changelog.Podcast.latest_episode(@podcast) do %>
+                <% latest = latest |> Changelog.Repo.preload(:podcast) %>
                 <%= link "Play latest episode", to: Changelog.EpisodeView.audio_url(latest) %>
                 <%= link "Latest Episode page", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
               <% end %>
