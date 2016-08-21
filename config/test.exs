@@ -18,3 +18,6 @@ config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "changelog_test",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :arc,
+  storage_dir: "priv/uploads"

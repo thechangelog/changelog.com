@@ -5,7 +5,7 @@ defmodule Changelog.PersonView do
   def avatar_url(person, version) do
     if person.avatar do
       Changelog.Avatar.url({person.avatar, person}, version)
-      |> String.replace_leading(Application.app_dir(:changelog, "priv"), "")
+      |> String.replace_leading("priv", "")
     else
       gravatar_url(person.email, version)
     end
