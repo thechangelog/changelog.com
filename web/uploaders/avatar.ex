@@ -7,8 +7,7 @@ defmodule Changelog.Avatar do
   def __storage, do: Arc.Storage.Local
 
   def validate({file, _}) do
-    ext = Path.extname(file.file_name) |> String.downcase
-    ~w(.jpg .png) |> Enum.member?(ext)
+    Enum.member?(~w(.jpg .jpeg .png), file_ext(file))
   end
 
   def storage_dir(_version, {_file, scope}) do
@@ -34,5 +33,9 @@ defmodule Changelog.Avatar do
 
   def default_url(_version, _scope) do
     "/images/defaults/black.png"
+  end
+
+  defp file_ext(file) do
+    file.file_name |> Path.extname |> String.downcase
   end
 end

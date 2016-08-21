@@ -14,7 +14,7 @@ defmodule Changelog.Logo do
       def __storage, do: Arc.Storage.Local
 
       def validate({file, _}) do
-        Enum.member?(~w(.jpg .png .svg), file_ext(file))
+        Enum.member?(~w(.jpg .jpeg .png .svg), file_ext(file))
       end
 
       def storage_dir(_version, {_file, scope}) do
