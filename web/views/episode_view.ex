@@ -1,7 +1,7 @@
 defmodule Changelog.EpisodeView do
   use Changelog.Web, :view
 
-  alias Changelog.PersonView
+  alias Changelog.{PersonView, PodcastView, SharedView, TimeView}
 
   def audio_filename(episode) do
     Changelog.AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"

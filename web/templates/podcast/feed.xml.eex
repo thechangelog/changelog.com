@@ -28,15 +28,15 @@
     </itunes:category>
     <%= for episode <- @episodes do %>
       <item>
-        <title><%= Changelog.EpisodeView.numbered_title(episode) %></title>
+        <title><%= EpisodeView.numbered_title(episode) %></title>
         <link><%= episode_url(@conn, :show, @podcast.slug, episode.slug) %></link>
-        <guid isPermaLink="false"><%= Changelog.EpisodeView.guid(episode) %></guid>
-        <pubDate><%= Changelog.TimeView.rss(episode.published_at) %></pubDate>
-        <dc:creator><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></dc:creator>
+        <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
+        <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
+        <dc:creator><%= PersonView.comma_separated_names(episode.hosts) %></dc:creator>
         <description><![CDATA[<%= md_to_html(episode.summary) %>]]></description>
-        <enclosure url="<%= static_url(@conn, Changelog.EpisodeView.audio_url(episode)) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
-        <itunes:author><%= Changelog.PersonView.comma_separated_names(episode.hosts) %></itunes:author>
-        <itunes:duration><%= Changelog.TimeView.duration(episode.duration) %></itunes:duration>
+        <enclosure url="<%= static_url(@conn, EpisodeView.audio_url(episode)) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
+        <itunes:author><%= PersonView.comma_separated_names(episode.hosts) %></itunes:author>
+        <itunes:duration><%= TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
         <itunes:subtitle><%= episode.headline %></itunes:subtitle>

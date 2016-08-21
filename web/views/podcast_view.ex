@@ -1,6 +1,8 @@
 defmodule Changelog.PodcastView do
   use Changelog.Web, :view
 
+  alias Changelog.{EpisodeView, PersonView, TimeView, SharedView}
+
   def cover_art_path(podcast, extension \\ "svg") do
     "/images/podcasts/#{podcast.slug}-cover-art.#{extension}"
   end

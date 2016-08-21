@@ -23,7 +23,7 @@
         </div>
         <% end %>
 
-        <%= render Changelog.PodcastView, "_menu.html", conn: @conn %>
+        <%= render PodcastView, "_menu.html", conn: @conn %>
 
         <%= if Enum.any?(@episode.sponsors) do %>
           <aside class="sponsors-ribbon">
@@ -43,8 +43,8 @@
         <%= if number = number(@episode) do %>
         <b>Episode #<%= number %></b>&nbsp;/&nbsp;
         <% end %>
-        <time datetime="<%= @episode.published_at %>"><%= Changelog.TimeView.pretty_date(@episode.published_at) %></time>
-        &nbsp;/&nbsp;<%= Changelog.TimeView.rounded_minutes(@episode.duration) %> Min
+        <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time>
+        &nbsp;/&nbsp;<%= TimeView.rounded_minutes(@episode.duration) %> Min
         &nbsp;
         <%= link to: audio_url(@episode), download: true do %>
           <img src="<%= static_url(@conn, "/images/download.svg") %>"">
@@ -98,12 +98,12 @@
   </div>
 </div>
 
-<%= render Changelog.SharedView, "_news_cta_1.html", assigns %>
+<%= render SharedView, "_news_cta_1.html", assigns %>
 
 <div class="wrapper wrapper--half-gray">
-  <%= render Changelog.SharedView, "_membership_cta_2.html", assigns %>
+  <%= render SharedView, "_membership_cta_2.html", assigns %>
 </div>
 
 <div class="wrapper wrapper--gray">
-  <%= render Changelog.SharedView, "_films_cta_1.html", assigns %>
+  <%= render SharedView, "_films_cta_1.html", assigns %>
 </div>
