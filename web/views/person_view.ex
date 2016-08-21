@@ -28,6 +28,16 @@ defmodule Changelog.PersonView do
     "https://secure.gravatar.com/avatar/#{hash}.jpg?s=#{size}&d=mm"
   end
 
+  def list_of_links(person) do
+    [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
+     %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
+     %{value: person.website, text: "Website", url: person.website}]
+    |> Enum.reject(fn(x) -> x.value == nil end)
+    |> Enum.map(fn(x) -> link(x.text, to: x.url) end)
+    |> Enum.map(fn({:safe, list}) -> Enum.join(list) end)
+    |> Enum.join(", ")
+  end
+
   def comma_separated_names(people) when not is_list(people), do: comma_separated_names([])
   def comma_separated_names(people) do
     # I bet this can be more Elixirey by using head/tail and recursion, but I'm

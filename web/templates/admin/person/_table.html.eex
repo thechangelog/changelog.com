@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>Person</th>
-      <th>Email</th>
+      <th>Links</th>
       <th>Posts</th>
       <th>Episodes</th>
       <th></th>
@@ -13,14 +13,17 @@
   <%= for person <- @people do %>
     <tr>
       <td>
-        <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(person) %>">
+        <img class="ui avatar image" src="<%= avatar_url(person) %>">
         <%= person.name %>
         (<%= person.handle %>)
         <%= if person.admin do %>
           <div class="ui tiny blue basic label">Admin</div>
         <% end %>
       </td>
-      <td><%= link person.email, to: "mailto:#{person.email}" %></td>
+      <td>
+        <%= link "Email", to: "mailto:#{person.email}" %>,
+        <%= person |> list_of_links |> raw %>
+      </td>
       <td><%= post_count(person) %></td>
       <td><%= episode_count(person) %></td>
       <td class="center aligned">
