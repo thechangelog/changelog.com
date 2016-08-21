@@ -216,7 +216,7 @@
     <%= label f, :audio_file %>
 
     <%= if f.data.audio_file  do %>
-      <div class="ui raised segment items">
+      <div class="ui raised segment items js-audio-file">
         <div class="ui item">
           <div class="content">
             <div class="header">
