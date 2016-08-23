@@ -50,13 +50,13 @@
 
   <div class="field <%= error_class f, :recorded_at %>">
     <%= label f, :recorded_at, "Record Date/Time" %>
-    <%= semantic_datetime_select f, :recorded_at, default: :os.timestamp |> :calendar.now_to_datetime %>
+    <%= semantic_datetime_select f, :recorded_at, minute: [options: ["00", "15", "30", "45"]] %>
     <%= error_message f, :recorded_at %>
   </div>
 
   <div class="field <%= error_class f, :published_at %>">
     <%= label f, :published_at, "Publish Date/Time" %>
-    <%= semantic_datetime_select f, :published_at, default: :os.timestamp |> :calendar.now_to_datetime %>
+    <%= semantic_datetime_select f, :published_at, minute: [options: ["00", "15", "30", "45"]] %>
     <%= error_message f, :published_at %>
   </div>
 

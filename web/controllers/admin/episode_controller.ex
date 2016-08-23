@@ -34,9 +34,19 @@ defmodule Changelog.Admin.EpisodeController do
       _ -> ""
     end
 
+    default_ts =
+      Timex.Date.now
+      |> Timex.Convertable.to_erlang_datetime
+      |> Tuple.delete_at(1)
+      |> Tuple.insert_at(1, {20, 0, 0}) # 2pm US Central
+
     changeset =
       podcast
-      |> build_assoc(:episodes, episode_hosts: default_hosts, slug: default_slug)
+      |> build_assoc(:episodes,
+        episode_hosts: default_hosts,
+        slug: default_slug,
+        recorded_at: default_ts,
+        published_at: default_ts)
       |> Episode.changeset
 
     render conn, "new.html", changeset: changeset
