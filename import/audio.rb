@@ -25,8 +25,9 @@ else
 end
 
 mp3s.each do |mp3|
-  podcast, slug = mp3.gsub(".mp3", "").split("-")
-  episode_page = mech.get("#{root}/admin/podcasts/#{podcast}/episodes/#{slig}/edit")
+  podcast, slug = mp3.split("/").last.gsub(".mp3", "").split("-")
+
+  episode_page = mech.get("#{root}/admin/podcasts/#{podcast}/episodes/#{slug}/edit")
 
   if episode_page.search(".js-audio-file").any?
     puts "skipping #{mp3}. Audio file exists..."
