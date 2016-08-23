@@ -1,7 +1,10 @@
-<div class="ui text container">
-  <h1 class="ui dividing header"><%= @podcast.name %> &raquo; Edit</h1>
+<div class="ui basic segment text container">
+  <h1 class="ui dividing header">
+    <%= link @podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
+    &raquo; Edit
+  </h1>
 
   <%= render "_form.html",
     changeset: @changeset,
-    action: admin_podcast_episode_path(@conn, :update, @podcast, @episode) %>
+    action: admin_podcast_episode_path(@conn, :update, @podcast.slug, @episode.slug) %>
 </div>

@@ -27,7 +27,7 @@
             Public
           <% end %>
 
-          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast, episode), class: "ui button" do %>
+          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug), class: "ui button" do %>
             <i class="edit icon"></i>
             Edit
           <% end %>

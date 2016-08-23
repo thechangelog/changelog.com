@@ -1,5 +1,5 @@
 export function createClassToggleListener(element, target, toggleClass) {
-    element.addEventListener('click', function(e) {
+    element.addEventListener('click', function toggle(e){
         e.preventDefault();
         e.stopPropagation();
         target = target || this;
@@ -17,8 +17,8 @@ export function createClassToggleListener(element, target, toggleClass) {
 
 export function makeToggles(elementClass, targetClass, toggleClass) {
     const toggleElements = document.body.querySelectorAll(elementClass);
-    const targetElement = targetClass ? document.querySelector(targetClass) : null;
-    toggleElements.forEach(function(node) {
-        createClassToggleListener(targetElement ? node : node.parentElement, targetElement, toggleClass);
+    const targetElements = targetClass ? document.querySelectorAll(targetClass) : null;
+    toggleElements.forEach((node, i) => {
+        createClassToggleListener(targetElements[i] ? node : node.parentElement, targetElements[i], toggleClass);
     });
 }

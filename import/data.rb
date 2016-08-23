@@ -35,8 +35,10 @@ end
 class Post < DataWrapper
   def author_handle; el.xpath("dc:creator").text; end
   def body; el.xpath("content:encoded").text; end
+  def excerpt; el.xpath("excerpt:encoded").text; end
   def categories; el.xpath("category[@domain='category']").map(&:text); end
   def go_time?; categories.include?("Go Time"); end
+  def rfc?; categories.include?("Request For Commits"); end
   def podcast?; categories.include?("Podcast"); end
   def published?; el.xpath("wp:status").text == "publish"; end
   def slug; el.child_named("post_name").text; end
@@ -60,7 +62,7 @@ class Importer
   end
 
   def posts
-    @posts ||= doc.xpath("//channel/item").map { |el| Post.new el }.select(&:published?).reject(&:podcast?).reject(&:go_time?)
+    @posts ||= doc.xpath("//channel/item").map { |el| Post.new el }.select(&:published?).reject(&:podcast?).reject(&:go_time?).reject(&:rfc?)
   end
 
   def episodes
@@ -130,6 +132,16 @@ class Importer
               post_id: post_id
             }.merge(timestamps))
           end
+        end
+      end
+    end
+  end
+
+  def import_post_excerpts
+    posts.each do |post|
+      handling_data_issues do
+        unless post.excerpt.empty?
+          db[:posts].where(slug: post.slug).update(tldr: post.excerpt)
         end
       end
     end

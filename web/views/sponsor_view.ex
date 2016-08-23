@@ -9,6 +9,6 @@ defmodule Changelog.SponsorView do
     end
 
     module.url({file, sponsor}, version)
-    |> String.replace_leading(Application.app_dir(:changelog, "priv"), "")
+    |> String.replace_leading("priv", "")
   end
 end

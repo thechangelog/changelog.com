@@ -1,4 +1,5 @@
 import Sortable from "sortablejs";
+import autosize from "autosize";
 
 import personItem from "templates/personItem.hbs";
 import channelItem from "templates/channelItem.hbs";
@@ -71,6 +72,7 @@ export default class SearchWidget {
         }
 
         setPositions();
+        autosize($("textarea"));
 
         setTimeout(function() {
           $search.search("set value", "");

@@ -4,7 +4,7 @@ defmodule Changelog.PodcastController do
   alias Changelog.{Podcast, Episode}
 
   def index(conn, _params) do
-    render(conn, :index)
+    render(conn, :index, master: stub_master_podcast)
   end
 
   def show(conn, %{"slug" => slug}) do
@@ -79,8 +79,10 @@ defmodule Changelog.PodcastController do
   defp stub_master_podcast do
     %Podcast{
       name: "Changelog Master Feed",
-      description: "git pull changelog master",
-      keywords: "changelog, open source, oss, software, development, developer"
+      slug: "master",
+      description: "The master feed compiled of all Changelog podcasts. All you have to do is `git pull changelog master`",
+      keywords: "changelog, open source, oss, software, development, developer",
+      hosts: []
     }
   end
 end

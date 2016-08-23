@@ -45,7 +45,7 @@ defmodule Changelog.Admin.PodcastControllerTest do
   test "renders form to edit podcast", %{conn: conn} do
     podcast = insert(:podcast)
 
-    conn = get(conn, admin_podcast_path(conn, :edit, podcast))
+    conn = get(conn, admin_podcast_path(conn, :edit, podcast.slug))
     assert html_response(conn, 200) =~ ~r/edit/i
   end
 
@@ -53,9 +53,9 @@ defmodule Changelog.Admin.PodcastControllerTest do
   test "updates podcast and smart redirects", %{conn: conn} do
     podcast = insert(:podcast)
 
-    conn = put(conn, admin_podcast_path(conn, :update, podcast.id), podcast: @valid_attrs)
+    conn = put(conn, admin_podcast_path(conn, :update, podcast.slug), podcast: @valid_attrs)
 
-    assert redirected_to(conn) == admin_podcast_path(conn, :edit, podcast)
+    assert redirected_to(conn) == admin_podcast_path(conn, :edit, @valid_attrs[:slug])
     assert count(Podcast) == 1
   end
 
@@ -64,7 +64,7 @@ defmodule Changelog.Admin.PodcastControllerTest do
     podcast = insert(:podcast)
     count_before = count(Podcast)
 
-    conn = put(conn, admin_podcast_path(conn, :update, podcast.id), podcast: @invalid_attrs)
+    conn = put(conn, admin_podcast_path(conn, :update, podcast.slug), podcast: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Podcast) == count_before

@@ -5,7 +5,7 @@ defmodule Changelog.PersonView do
   def avatar_url(person, version) do
     if person.avatar do
       Changelog.Avatar.url({person.avatar, person}, version)
-      |> String.replace_leading(Application.app_dir(:changelog, "priv"), "")
+      |> String.replace_leading("priv", "")
     else
       gravatar_url(person.email, version)
     end
@@ -26,6 +26,16 @@ defmodule Changelog.PersonView do
       |> Base.encode16(case: :lower)
 
     "https://secure.gravatar.com/avatar/#{hash}.jpg?s=#{size}&d=mm"
+  end
+
+  def list_of_links(person) do
+    [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
+     %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
+     %{value: person.website, text: "Website", url: person.website}]
+    |> Enum.reject(fn(x) -> x.value == nil end)
+    |> Enum.map(fn(x) -> link(x.text, to: x.url) end)
+    |> Enum.map(fn({:safe, list}) -> Enum.join(list) end)
+    |> Enum.join(", ")
   end
 
   def comma_separated_names(people) when not is_list(people), do: comma_separated_names([])

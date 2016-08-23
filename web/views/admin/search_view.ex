@@ -84,6 +84,7 @@ defmodule Changelog.Admin.SearchView do
       sponsor
       |> Ecto.assoc(:episode_sponsors)
       |> Changelog.EpisodeSponsor.newest_first
+      |> Ecto.Query.first
       |> Changelog.Repo.one
 
     extras = if latest do

@@ -24,10 +24,12 @@ defmodule Changelog.Admin.ChannelController do
     case Repo.insert(changeset) do
       {:ok, channel} ->
         conn
-        |> put_flash(:info, "#{channel.name} created!")
+        |> put_flash(:result, "success")
         |> smart_redirect(channel, params)
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:result, "failure")
+        |> render("new.html", changeset: changeset)
     end
   end
 
@@ -44,10 +46,12 @@ defmodule Changelog.Admin.ChannelController do
     case Repo.update(changeset) do
       {:ok, channel} ->
         conn
-        |> put_flash(:info, "#{channel.name} udated!")
+        |> put_flash(:result, "success")
         |> smart_redirect(channel, params)
       {:error, changeset} ->
-        render conn, "edit.html", channel: channel, changeset: changeset
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", channel: channel, changeset: changeset)
     end
   end
 
@@ -56,7 +60,7 @@ defmodule Changelog.Admin.ChannelController do
     Repo.delete!(channel)
 
     conn
-    |> put_flash(:info, "#{channel.name} deleted!")
+    |> put_flash(:result, "success")
     |> redirect(to: admin_channel_path(conn, :index))
   end
 

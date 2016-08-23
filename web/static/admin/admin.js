@@ -39,6 +39,7 @@ let timeString = function(date) {
 }
 
 autosize($("textarea"));
+
 $("a[rel=external]").attr("target", "_blank");
 $("input[readonly]").popup({
   content: "Read-only because danger. Use the console if you really need to edit this.",

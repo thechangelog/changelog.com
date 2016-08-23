@@ -15,6 +15,9 @@ config :logger, :console, level: :info, format: "[$level] $message\n"
 # Temporary production debug, remove once app is stable and ready to go live
 config :phoenix, :stacktrace_depth, 10
 
+config :arc,
+  storage_dir: "/uploads"
+
 config :changelog, Changelog.Repo,
   url: {:system, "DB_URL"},
   adapter: Ecto.Adapters.Postgres,
@@ -26,3 +29,6 @@ config :changelog, Changelog.Mailer,
   port: 587,
   username: {:system, "CM_TOKEN"},
   password: {:system, "CM_TOKEN"}
+
+config :arc,
+  storage_dir: "/uploads"

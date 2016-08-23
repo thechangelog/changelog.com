@@ -1,6 +1,8 @@
 defmodule Changelog.EpisodeView do
   use Changelog.Web, :view
 
+  alias Changelog.{PersonView, PodcastView, SharedView, TimeView}
+
   def audio_filename(episode) do
     Changelog.AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
   end
@@ -9,7 +11,7 @@ defmodule Changelog.EpisodeView do
     if episode.audio_file do
       episode
       |> audio_local_path
-      |> String.replace_leading(Application.app_dir(:changelog, "priv"), "")
+      |> String.replace_leading("priv", "")
     else
       static_url(Changelog.Endpoint, "/california.mp3")
     end

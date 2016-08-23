@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-    <title>Changelog Admin</title>
+    <title><%= admin_page_title(assigns) %></title>
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/admin.css") %>">
   </head>
 
   <body data-module="<%= @view_module %>" data-template="<%= @view_template %>">
-    <div class="ui top attached menu">
+    <div class="ui fixed menu <%= get_flash(@conn, :result) %>">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
       <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>
         Admin
@@ -54,7 +54,7 @@
     </div>
 
     <div class="ui very padded basic segment">
-      <%= render @view_module, @view_template, assigns %>
+      <%= render(@view_module, @view_template, assigns) %>
     </div>
 
     <script src="<%= static_url(@conn, "/js/admin.js") %>"></script>

@@ -11,24 +11,34 @@
             <h3 class="tooltip_heading"><%= @podcast.name %></h3>
             <nav class="tooltip_links">
               <h4 class="accessibility-hidden">Podcast Menu</h4>
-              <a href="#">Play latest episode</a>
-              <a href="#">Latest Episode Page</a>
+              <%= if latest = Changelog.Podcast.latest_episode(@podcast) do %>
+                <% latest = latest |> Changelog.Repo.preload(:podcast) %>
+                <%= link "Play latest episode", to: Changelog.EpisodeView.audio_url(latest) %>
+                <%= link "Latest Episode page", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
+              <% end %>
               <%= link "Go to show page", to: podcast_path(@conn, :show, @podcast.slug) %>
               <a href="#">Subscribe</a>
             </nav>
           </div>
         </div>
+        <%= unless @podcast.slug == "master" do %>
         <button class="show-summary-widget_toggle"></button>
+        <% end %>
       </div>
     </div>
   </div>
   <div class="show-summary_content">
     <%= raw md_to_html(@podcast.description) %>
+    <%= if Enum.any?(@podcast.hosts) do %>
     <cite>Hosted by
       <%= for person <- @podcast.hosts do %>
         <%= link person.name, to: Changelog.PersonView.external_url(person) %>
       <% end %>
     </cite>
-    <p><b><%= pluralize(Changelog.PodcastView.published_episode_count(@podcast), "Episode", "Episodes") %></b></p>
+    <% end %>
+    <% episode_count = Changelog.PodcastView.published_episode_count(@podcast) %>
+    <%= if episode_count > 0 do %>
+      <p><b><%= pluralize(episode_count, "Episode", "Episodes") %></b></p>
+    <% end %>
   </div>
 </article>

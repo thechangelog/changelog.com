@@ -14,12 +14,12 @@ defmodule Changelog.Logo do
       def __storage, do: Arc.Storage.Local
 
       def validate({file, _}) do
-        Enum.member?(~w(.jpg .png .svg), file_ext(file))
+        Enum.member?(~w(.jpg .jpeg .png .svg), file_ext(file))
       end
 
       def storage_dir(_version, {_file, scope}) do
         hashed_id = Changelog.Hashid.encode(scope.id)
-        Application.app_dir(:changelog, "priv/uploads/logos/#{hashed_id}")
+        "#{Application.fetch_env!(:arc, :storage_dir)}/logos/#{hashed_id}"
       end
 
       def transform(:large, {file, _scope}) do

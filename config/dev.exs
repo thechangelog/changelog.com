@@ -37,3 +37,6 @@ config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "changelog_dev",
   pool_size: 10
+
+config :arc,
+  storage_dir: "priv/uploads"

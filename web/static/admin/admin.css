@@ -1,5 +1,5 @@
 .ui.text.container {
-  max-width: 600px !important;
+  max-width: 650px !important;
 }
 
 .ui.horizontal.selection.list .item .label {
@@ -12,4 +12,32 @@
 
 .ui.sponsor.header, .ui.link.header {
   margin-bottom: 10px !important;
+}
+
+.ui.header a {
+  color: black;
+}
+.ui.header a:hover {
+  text-decoration: underline;
+}
+
+@-webkit-keyframes success {
+  0% { background-color: #E5F9E7; }
+  100% { background-color: white; }
+}
+
+@-webkit-keyframes failure {
+  0% { background-color: #FFE8E6; }
+  100% { background-color: white; }
+}
+.ui.menu.success {
+  -webkit-animation-name: success;
+  -webkit-animation-duration: 3000ms;
+  -webkit-animation-iteration-count: 1;
+}
+
+.ui.menu.failure {
+  -webkit-animation-name: failure;
+  -webkit-animation-duration: 3000ms;
+  -webkit-animation-iteration-count: 1;
 }

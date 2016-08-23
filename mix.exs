@@ -47,7 +47,7 @@ defmodule Changelog.Mixfile do
      {:arc_ecto, "~> 0.4.2"},
      {:hashids, "~> 2.0"},
      {:bamboo, "~> 0.6"},
-     {:bamboo_smtp, github: "jerodsanto/bamboo_smtp", branch: "improvements"},
+     {:bamboo_smtp, github: "jerodsanto/bamboo_smtp", branch: "fix-email-format"},
      {:ecto_enum, "~> 0.3.0"},
      {:cowboy, "~> 1.0"}]
   end

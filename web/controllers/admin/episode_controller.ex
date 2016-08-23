@@ -34,9 +34,19 @@ defmodule Changelog.Admin.EpisodeController do
       _ -> ""
     end
 
+    default_ts =
+      Timex.Date.now
+      |> Timex.Convertable.to_erlang_datetime
+      |> Tuple.delete_at(1)
+      |> Tuple.insert_at(1, {20, 0, 0}) # 2pm US Central
+
     changeset =
       podcast
-      |> build_assoc(:episodes, episode_hosts: default_hosts, slug: default_slug)
+      |> build_assoc(:episodes,
+        episode_hosts: default_hosts,
+        slug: default_slug,
+        recorded_at: default_ts,
+        published_at: default_ts)
       |> Episode.changeset
 
     render conn, "new.html", changeset: changeset
@@ -51,27 +61,29 @@ defmodule Changelog.Admin.EpisodeController do
     case Repo.insert(changeset) do
       {:ok, episode} ->
         conn
-        |> put_flash(:info, "#{episode.title} created!")
+        |> put_flash(:result, "success")
         |> smart_redirect(podcast, episode, params)
       {:error, changeset} ->
-        render conn, "new.html", changeset: changeset
+        conn
+        |> put_flash(:result, "failure")
+        |> render("new.html", changeset: changeset)
     end
   end
 
-  def edit(conn, %{"id" => id}, podcast) do
+  def edit(conn, %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Repo.get!(id)
+      |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
     changeset = Episode.changeset(episode)
     render conn, "edit.html", episode: episode, changeset: changeset
   end
 
-  def update(conn, params = %{"id" => id, "episode" => episode_params}, podcast) do
+  def update(conn, params = %{"id" => slug, "episode" => episode_params}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Repo.get!(id)
+      |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
     changeset = Episode.changeset(episode, episode_params)
@@ -79,22 +91,24 @@ defmodule Changelog.Admin.EpisodeController do
     case Repo.update(changeset) do
       {:ok, episode} ->
         conn
-        |> put_flash(:info, "#{episode.title} updated!")
+        |> put_flash(:result, "success")
         |> smart_redirect(podcast, episode, params)
       {:error, changeset} ->
-        render conn, "edit.html", episode: episode, changeset: changeset
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", episode: episode, changeset: changeset)
     end
   end
 
   defp assign_podcast(conn, _) do
-    podcast = Repo.get! Podcast, conn.params["podcast_id"]
+    podcast = Repo.get_by!(Podcast, slug: conn.params["podcast_id"])
     assign conn, :podcast, podcast
   end
 
   defp smart_redirect(conn, podcast, _episode, %{"close" => _true}) do
-    redirect(conn, to: admin_podcast_episode_path(conn, :index, podcast))
+    redirect(conn, to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
   defp smart_redirect(conn, podcast, episode, _params) do
-    redirect(conn, to: admin_podcast_episode_path(conn, :edit, podcast, episode))
+    redirect(conn, to: admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
   end
 end

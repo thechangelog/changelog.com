@@ -9,8 +9,8 @@
         <div class="show-header_hosts">
             <div class="hosts-list">
               <%= for person <- @podcast.hosts do %>
-                <%= link to: Changelog.PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-                  <img src="<%= Changelog.PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
+                <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
+                  <img src="<%= PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
                 <% end %>
               <% end %>
             </div>
@@ -33,7 +33,7 @@
         </button>
         <cite>
           <%= latest.title %>
-          <%= if number = Changelog.EpisodeView.number(latest) do %>
+          <%= if number = EpisodeView.number(latest) do %>
             <span>#<%= number %></span>
           <% end %>
         </cite>
@@ -45,7 +45,7 @@
     <% end %>
   </div>
 
-  <%= render Changelog.SharedView, "_membership_cta_1.html", assigns %>
+  <%= render SharedView, "_membership_cta_1.html", assigns %>
 
   <% post_cta_episodes = Enum.slice(@episodes, 2, length(@episodes)) %>
   <div class="container container--skinny">
