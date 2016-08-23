@@ -60,7 +60,7 @@ defmodule Changelog.Episode do
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, ~w(audio_file))
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
-    |> unique_constraint(:episodes_slug_podcast_id_index)
+    |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)
     |> cast_assoc(:episode_guests)
     |> cast_assoc(:episode_sponsors)
