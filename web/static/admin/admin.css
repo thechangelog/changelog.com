@@ -14,6 +14,13 @@
   margin-bottom: 10px !important;
 }
 
+.ui.header a {
+  color: black;
+}
+.ui.header a:hover {
+  text-decoration: underline;
+}
+
 @-webkit-keyframes success {
   0% { background-color: #E5F9E7; }
   100% { background-color: white; }

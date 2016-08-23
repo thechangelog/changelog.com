@@ -1,5 +1,8 @@
 <div class="ui basic segment text container">
-  <h1 class="ui dividing header">Edit <%= @sponsor.name %></h1>
+  <h1 class="ui dividing header">
+    <%= link "Sponsors", to: admin_sponsor_path(@conn, :index) %>
+    &raquo; Edit
+  </h1>
 
   <%= render "_form.html", changeset: @changeset, action: admin_sponsor_path(@conn, :update, @sponsor) %>
 </div>

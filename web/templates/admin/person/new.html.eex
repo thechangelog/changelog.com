@@ -1,5 +1,8 @@
 <div class="ui basic segment text container">
-  <h1 class="ui dividing header">New Person</h1>
+  <h1 class="ui dividing header">
+    <%= link "People", to: admin_person_path(@conn, :index) %>
+    &raquo; New
+  </h1>
 
   <%= render "_form.html", changeset: @changeset, action: admin_person_path(@conn, :create) %>
 </div>

@@ -1,5 +1,8 @@
 <div class="ui basic segment text container">
-  <h1 class="ui dividing header">Edit <%= @post.title %></h1>
+  <h1 class="ui dividing header">
+    <%= link "Posts", to: admin_post_path(@conn, :index) %>
+    &raquo; Edit
+  </h1>
 
   <%= render "_form.html", changeset: @changeset, action: admin_post_path(@conn, :update, @post) %>
 </div>
