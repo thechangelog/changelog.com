@@ -1,0 +1,58 @@
+.membership-options
+    margin: $padding-large 0
+    overflow: auto
+
+    @media (min-width: $desktop)
+      margin: $padding-large -5%
+
+    *
+      box-sizing: border-box
+
+    &_item
+        background: $black
+        border: 1px solid $white
+        color: $white
+        padding: $padding-large $padding-extra-small 0
+        text-align: center
+        text-transform: uppercase
+
+        @media (min-width: $smartphone + 150)
+            float: left
+            width: 33.333%
+
+        &_title
+            @extend %display-font
+            color: $green
+            font-weight: normal
+            margin: 0 0 0.5rem
+
+        &_price
+            color: $white
+            font-size: 3em
+            font-weight: bold
+            line-height: 1em
+            margin: 0
+
+            sup
+                font-size: 0.5em
+                font-weight: normal
+                margin-right: 0.1em
+                top: -0.4em
+
+        &_duration
+            @extend %display-font
+            color: $half-white
+            margin: 0
+
+        &_button
+            background: $green
+            color: $white !important
+            display: inline-block
+            font-size: 1.5em
+            line-height: 1em
+            margin-top: 0.5em
+            padding: 1rem 1.5rem 0.7rem
+            text-transform: none
+
+            &:hover
+                background: darken($green, 10%)

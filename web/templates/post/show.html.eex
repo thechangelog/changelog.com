@@ -7,15 +7,13 @@
         /
         <span class="breadcrumbs_crumb breadcrumbs_crumb--active">Jun 16 2016</span>
     </nav>
-    <header>
+    <header class="content_header">
       <h2><%= @post.title %></h2>
       <div class="content_byline">
-        <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>  
+        <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>
       </div>
     </header>
     <div class="content_body">
-
-
         <%= @post.body |> md_to_html |> raw %>
     </div>
 
