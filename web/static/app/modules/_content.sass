@@ -20,12 +20,26 @@
             font-size: 2.5em
 
     &_body
-        p
-            code
+        // If a <code> tag is within a <p> tag show it as a snippet
+        p code
                 background: $black
-                color: $half-white
+                color: $green
                 display: inline-block
                 padding: 0 0.5em
+
+        ul, ol
+            list-style-position: inside
+            padding-left: 0
+            li
+                margin: 0.5em 0
+
+        // UL LIs will start with a > character
+        ul
+            list-style: none
+            li
+                background: url("/images/ul-arrow.svg") no-repeat
+                background-position: left 0.35em
+                padding-left: 20px
 
         blockquote
             border-left: 2px solid $green
