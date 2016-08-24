@@ -26,3 +26,4 @@ npm-debug.log*
 # variables.
 /config/prod.secret.exs
 /priv/uploads
+/import/cookies.yml
