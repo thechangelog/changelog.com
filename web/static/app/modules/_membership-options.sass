@@ -12,12 +12,15 @@
         background: $black
         border: 1px solid $white
         color: $white
-        padding: $padding-large $padding-extra-small 0
-        text-align: center
+        padding: $padding-medium 120px $padding-medium $padding-medium
+        position: relative
+        text-align: left
         text-transform: uppercase
 
         @media (min-width: $smartphone + 150)
             float: left
+            padding: $padding-large $padding-extra-small 0
+            text-align: center
             width: 36%
 
             &--small
@@ -43,17 +46,30 @@
                 margin-right: 0.1em
                 top: -0.4em
 
-        &_duration
-            @extend %display-font
-            font-size: 0.8em
-            color: $half-white
-            margin: 0
+            span
+                @extend %display-font
+                font-size: 14px
+                color: $half-white
+                margin: 0
+
+                @media (min-width: $smartphone + 150)
+                  display: block
+                  line-height: 1em
 
         &_button
             @extend %primary-button
             display: inline-block
             font-size: 1.125em
             line-height: 1em
-            margin-top: 0.75em
+            margin-top: -25px
             padding: 1rem 1.5rem 0.7rem
+            position: absolute
+            right: 0
+            top: 50%
             text-transform: none
+
+            @media (min-width: $smartphone + 150)
+              margin-top: 1em
+              position: relative
+              top: auto
+              right: auto

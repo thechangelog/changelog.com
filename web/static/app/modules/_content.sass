@@ -20,13 +20,23 @@
             font-size: 2.5em
 
     &_body
+        p
+            code
+                background: $black
+                color: $half-white
+                display: inline-block
+                padding: 0 0.5em
+
         blockquote
-            margin: 1rem 0
-            padding: 1rem
+            border-left: 2px solid $green
+            font-size: 1.25em
+            line-height: 1em
+            margin: 2rem 0
+            padding: 0 1rem
             color: $black
-            border-color: rgba($half-black, 0.5)
-            border-style: solid
-            border-width: 1px 0 1px 0
+
+            p
+              color: $black
 
         .button
             @extend %primary-button

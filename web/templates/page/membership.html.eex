@@ -19,20 +19,17 @@
       <div class="membership-options">
         <div class="membership-options_item membership-options_item--small">
           <p class="membership-options_item_title">Director</p>
-          <p class="membership-options_item_price"><sup>$</sup>10</p>
-          <p class="membership-options_item_duration">Monthly</p>
+          <p class="membership-options_item_price"><sup>$</sup>10 <span>Monthly</span></p>
           <a class="membership-options_item_button" href="#">Select</a>
         </div>
         <div class="membership-options_item">
           <p class="membership-options_item_title">Producer</p>
-          <p class="membership-options_item_price"><sup>$</sup>20</p>
-          <p class="membership-options_item_duration">Monthly</p>
+          <p class="membership-options_item_price"><sup>$</sup>20 <span>Monthly</span></p>
           <a class="membership-options_item_button" href="#">Select</a>
         </div>
         <div class="membership-options_item">
           <p class="membership-options_item_title">Executive Producer</p>
-          <p class="membership-options_item_price"><sup>$</sup>50</p>
-          <p class="membership-options_item_duration">Monthly</p>
+          <p class="membership-options_item_price"><sup>$</sup>50 <span>Monthly</span></p>
           <a class="membership-options_item_button" href="#">Select</a>
         </div>
       </div>
