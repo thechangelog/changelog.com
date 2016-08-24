@@ -1,7 +1,7 @@
 defmodule Changelog.EpisodeView do
   use Changelog.Web, :view
 
-  alias Changelog.{PersonView, SharedView, TimeView}
+  alias Changelog.{PersonView, SharedView, SponsorView, TimeView}
 
   def audio_filename(episode) do
     Changelog.AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
@@ -50,5 +50,13 @@ defmodule Changelog.EpisodeView do
     else
       "#{episode_number}: #{episode.title}"
     end
+  end
+
+  def sponsorships_with_light_logo(episode) do
+    Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.light_logo) end)
+  end
+
+  def sponsorships_with_dark_logo(episode) do
+    Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.dark_logo) end)
   end
 end

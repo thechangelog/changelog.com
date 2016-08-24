@@ -23,13 +23,16 @@
 
         <%= render("_play_bar.html", conn: @conn, episode: @episode) %>
 
-        <%= if Enum.any?(@episode.sponsors) do %>
+        <% dark_logo_sponsorships = sponsorships_with_dark_logo(@episode) %>
+        <%= if Enum.any?(dark_logo_sponsorships) do %>
           <aside class="sponsors-ribbon">
             <h3>Brought to you by:</h3>
             <div class="sponsors-ribbon_logos">
-              <a href="#">
-                <img src="<%= static_url(@conn, "/images/toptal-logo-gray.svg") %>" alt="toptal"/>
-              </a>
+              <%= for episode_sponsor <- dark_logo_sponsorships do %>
+                <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
+                <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
+                <% end %>
+              <% end %>
             </div>
           </aside>
         <% end %>
