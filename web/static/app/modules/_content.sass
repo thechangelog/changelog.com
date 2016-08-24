@@ -1,10 +1,13 @@
 .content
-    font-size: 1.14em
+    font-size: 1.2875em
     line-height: 1.5em
 
     a
         color: $green
         font-weight: bold
+
+        &:hover
+            color: darken($green, 10%)
 
     &_byline
         font-style: italic
@@ -14,7 +17,7 @@
 
     &_header
         h2
-            font-size: 3em
+            font-size: 2.5em
 
     &_body
         blockquote
@@ -24,6 +27,14 @@
             border-color: rgba($half-black, 0.5)
             border-style: solid
             border-width: 1px 0 1px 0
+
+        .button
+            @extend %primary-button
+            display: inline-block
+            font-size: 1.325em
+            margin: 0.5em 0
+            padding: 0.6em 1.5em 0.45em
+            text-align: center
 
         aside
             padding-left: 1rem
@@ -42,6 +53,21 @@
 
         .right
             float: right
+
+        h2
+            font-size: 1.325em
+        h3
+            font-size: 1.25em
+        h4
+            font-size: 1.125em
+        h5
+            font-size: 1em
+        h6
+            font-size: 0.9em
+
+        hr
+            border: 1px solid $light-grey
+            margin: 2em 0
 
     &_footer
         padding: 1rem

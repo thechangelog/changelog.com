@@ -1,7 +1,7 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2>Membership</h2>
+      <h2>Changelog Membership</h2>
     </header>
     <div class="content_body">
       <p>Join the community for just $20 a year and we’ll give you an all-access pass to everything we do.</p>
@@ -17,21 +17,21 @@
       <p>Yes, of course. Thank you!! We have three membership plans that allow you to support us on a recurring monthly basis. The same rules apply to these options as our normal membership option.</p>
 
       <div class="membership-options">
-        <div class="membership-options_item">
-          <h3 class="membership-options_item_title">Director</h3>
+        <div class="membership-options_item membership-options_item--small">
+          <p class="membership-options_item_title">Director</p>
           <p class="membership-options_item_price"><sup>$</sup>10</p>
           <p class="membership-options_item_duration">Monthly</p>
           <a class="membership-options_item_button" href="#">Select</a>
         </div>
         <div class="membership-options_item">
-          <h3 class="membership-options_item_title">Director</h3>
-          <p class="membership-options_item_price"><sup>$</sup>10</p>
+          <p class="membership-options_item_title">Producer</p>
+          <p class="membership-options_item_price"><sup>$</sup>20</p>
           <p class="membership-options_item_duration">Monthly</p>
           <a class="membership-options_item_button" href="#">Select</a>
         </div>
         <div class="membership-options_item">
-          <h3 class="membership-options_item_title">Director</h3>
-          <p class="membership-options_item_price"><sup>$</sup>10</p>
+          <p class="membership-options_item_title">Executive Producer</p>
+          <p class="membership-options_item_price"><sup>$</sup>50</p>
           <p class="membership-options_item_duration">Monthly</p>
           <a class="membership-options_item_button" href="#">Select</a>
         </div>

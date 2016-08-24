@@ -18,17 +18,21 @@
 
         @media (min-width: $smartphone + 150)
             float: left
-            width: 33.333%
+            width: 36%
+
+            &--small
+              width: 28%
 
         &_title
             @extend %display-font
             color: $green
+            font-size: 1em
             font-weight: normal
             margin: 0 0 0.5rem
 
         &_price
             color: $white
-            font-size: 3em
+            font-size: 2.5em
             font-weight: bold
             line-height: 1em
             margin: 0
@@ -41,18 +45,15 @@
 
         &_duration
             @extend %display-font
+            font-size: 0.8em
             color: $half-white
             margin: 0
 
         &_button
-            background: $green
-            color: $white !important
+            @extend %primary-button
             display: inline-block
-            font-size: 1.5em
+            font-size: 1.125em
             line-height: 1em
-            margin-top: 0.5em
+            margin-top: 0.75em
             padding: 1rem 1.5rem 0.7rem
             text-transform: none
-
-            &:hover
-                background: darken($green, 10%)
