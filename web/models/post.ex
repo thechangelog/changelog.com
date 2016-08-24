@@ -21,8 +21,8 @@ defmodule Changelog.Post do
   @required_fields ~w(title slug author_id)
   @optional_fields ~w(published published_at body tldr)
 
-  def changeset(model, params \\ %{}) do
-    model
+  def changeset(post, params \\ %{}) do
+    post
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
@@ -33,11 +33,15 @@ defmodule Changelog.Post do
     from p in query, where: p.published == true
   end
 
-  def preload_all(model) do
-    model
+  def preload_all(post) do
+    post
     |> Repo.preload(:author)
-    |> Repo.preload([
-      post_channels: {Changelog.PostChannel.by_position, :channel}
-    ])
+    |> preload_channels
+  end
+
+  def preload_channels(post) do
+    post
+    |> Repo.preload(post_channels: {Changelog.PostChannel.by_position, :channel})
+    |> Repo.preload(:channels)
   end
 end

@@ -1,0 +1,124 @@
+.content
+    font-size: 1.2875em
+    line-height: 1.5em
+
+    a
+        color: $green
+        font-weight: bold
+
+        &:hover
+            color: darken($green, 10%)
+
+    &_byline
+        font-style: italic
+
+        address
+            display: inline-block
+
+    &_header
+        h2
+            font-size: 2.5em
+
+    &_body
+        margin-bottom: $padding-large
+        // A simple clearfix so we don't have to use overflow auto (which would break 100%+ width stuff)
+        &:after
+            clear: both
+            content: ""
+            display: table
+
+        // If a <code> tag is within a <p> tag show it as a snippet
+        p code
+                background: $black
+                color: $green
+                display: inline-block
+                padding: 0 0.5em
+
+        ul, ol
+            list-style-position: inside
+            padding-left: 0
+            li
+                margin: 0.5em 0
+
+        // UL LIs will start with a > character
+        ul
+            list-style: none
+            li
+                background: url("/images/ul-arrow.svg") no-repeat
+                background-position: left 0.35em
+                padding-left: 20px
+
+        blockquote
+            border-left: 2px solid $green
+            font-size: 1.25em
+            line-height: 1em
+            margin: 2rem 0
+            padding: 0 1rem
+            color: $black
+
+            p
+              color: $black
+
+        .button
+            @extend %primary-button
+            display: inline-block
+            font-size: 1.325em
+            margin: 0.5em 0
+            padding: 0.6em 1.5em 0.45em
+            text-align: center
+
+        aside
+            padding-left: 1rem
+            border-left: 1px solid $green
+            color: $black
+
+        > .block
+            display: block
+            max-width: 100%
+
+        .left, .right
+            display: inline-block
+
+        .left
+            float: left
+
+        .right
+            float: right
+
+        h2
+            font-size: 1.325em
+        h3
+            font-size: 1.25em
+        h4
+            font-size: 1.125em
+        h5
+            font-size: 1em
+        h6
+            font-size: 0.9em
+
+        hr
+            border: 1px solid $light-grey
+            margin: 2em 0
+
+        img
+            height: auto
+            width: 100%
+
+            @media (min-width: $desktop)
+                margin: $padding-large -5%
+                width: 110%
+
+        .float
+            margin: auto
+            width: auto
+            &--left
+                float: left
+                margin: 0 1em 1em 0
+            &--right
+                float: right
+                margin: 0 0 1em 1em
+
+    &_footer
+        padding: 1rem
+        border: 1px solid $green
+        font-style: italic

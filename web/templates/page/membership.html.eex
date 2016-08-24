@@ -1,0 +1,47 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Changelog Membership</h2>
+    </header>
+    <div class="content_body">
+      <p>Join the community for just $20 a year and we’ll give you an all-access pass to everything we do.</p>
+      <h2>Community members enjoy these benefits:</h2>
+      <ul>
+        <li>Aenean eu leo quam.</li>
+        <li>Pellentesque ornare sem lacinia quam venenatis vestibulum.</li>
+        <li>Aenean lacinia bibendum nulla sed consectetur.</li>
+      </ul>
+      <a class="button" href="#" title="">Yes! Give me access to the community</a>
+
+      <h2>Can I become a member but support you monthly?</h2>
+      <p>Yes, of course. Thank you!! We have three membership plans that allow you to support us on a recurring monthly basis. The same rules apply to these options as our normal membership option.</p>
+
+      <div class="membership-options">
+        <div class="membership-options_item membership-options_item--small">
+          <p class="membership-options_item_title">Director</p>
+          <p class="membership-options_item_price"><sup>$</sup>10 <span>Monthly</span></p>
+          <a class="membership-options_item_button" href="#">Select</a>
+        </div>
+        <div class="membership-options_item">
+          <p class="membership-options_item_title">Producer</p>
+          <p class="membership-options_item_price"><sup>$</sup>20 <span>Monthly</span></p>
+          <a class="membership-options_item_button" href="#">Select</a>
+        </div>
+        <div class="membership-options_item">
+          <p class="membership-options_item_title">Executive Producer</p>
+          <p class="membership-options_item_price"><sup>$</sup>50 <span>Monthly</span></p>
+          <a class="membership-options_item_button" href="#">Select</a>
+        </div>
+      </div>
+
+      <h2>Can I cancel or change my membership?</h2>
+      <p>Yes! You can cancel or change your membership at any time. If you’re not happy, we’re not happy!</p>
+      <h2>Is my credit card safe?</h2>
+      <p>We use Memberful and Stripe to manage our membership subscriptions and payment processing. Your payment info is never sent to our servers. All sensitive communication is between your browser, Memberful, and Stripe.</p>
+      <h2>Is my data safe?</h2>
+      <p>Memberful is fully PCI compliant and secure. They don’t store any sensitive customer credit card data and use a 256-bit SSL connection (like banks do) across the entire service. They also keep geo-redundant backups of all our data.</p>
+      <hr />
+      <h2><a href="#" title="">Get in touch</a> if you have any questions.</h2>
+    </div>
+  </div>
+</article>
