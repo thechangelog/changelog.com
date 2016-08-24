@@ -12,7 +12,6 @@
           <h2 class="episode_header_headline<%= if @episode.guests do %> episode_header_headline--has-guests<% end %>"><%= @episode.title %></h2>
         <% end %>
 
-        <%= if Enum.any?(@episode.guests) do %>
         <div class="hosts-list section">
           <h3 class="accessibility-hidden">Guest Speakers</h3>
           <%= for person <- @episode.guests do %>
@@ -21,9 +20,8 @@
             <% end %>
           <% end %>
         </div>
-        <% end %>
 
-        <%= render PodcastView, "_menu.html", conn: @conn %>
+        <%= render("_play_bar.html", conn: @conn, episode: @episode) %>
 
         <%= if Enum.any?(@episode.sponsors) do %>
           <aside class="sponsors-ribbon">
@@ -37,7 +35,7 @@
         <% end %>
       </header>
 
-      <%= raw(md_to_html(@episode.summary)) %>
+      <%= @episode.summary |> md_to_html |> raw %>
 
       <cite class="episode_meta">
         <%= if number = number(@episode) do %>

@@ -1,8 +1,0 @@
-<nav class="podcast-menu">
-  <button><img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play podcast graphic"/>Play</button>
-  <a href="#"><img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe to podcast graphic"/>Subscribe</a>
-  <a href="#"><img src="<%= static_url(@conn, "/images/share.svg") %>" alt="Share podcast graphic"/>Share</a>
-  <%= link to: page_path(@conn, :sponsorship) do %>
-    <img src="<%= static_url(@conn, "/images/sponsor.svg") %>" alt="Sponsor podcast graphic">Sponsor
-  <% end %>
-</nav>

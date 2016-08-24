@@ -2,8 +2,8 @@
   <div class="mosiac mosiac--<%= @podcast.slug %>">
     <header class="flex-column show-header">
       <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
-      <%= raw md_to_html(@podcast.description) %>
-      <%= render "_menu.html", assigns %>
+      <%= @podcast.description |> md_to_html |> raw %>
+      <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes)) %>
       <div class="show-header_hosts">
         <i><%= @podcast.schedule_note %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i>
         <div class="show-header_hosts">

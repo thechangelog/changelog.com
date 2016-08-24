@@ -71,7 +71,7 @@ defmodule Changelog.Episode do
 
   def preload_all(episode) do
     episode
-    |> Repo.preload(:podcast)
+    |> preload_podcast
     |> preload_channels
     |> preload_guests
     |> preload_hosts
@@ -94,6 +94,10 @@ defmodule Changelog.Episode do
     episode
     |> Repo.preload(episode_guests: {Changelog.EpisodeGuest.by_position, :person})
     |> Repo.preload(:guests)
+  end
+
+  def preload_podcast(episode) do
+    episode |> Repo.preload(:podcast)
   end
 
   def preload_sponsors(episode) do

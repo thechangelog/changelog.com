@@ -19,6 +19,7 @@ defmodule Changelog.PodcastController do
       |> Episode.newest_first
       |> Episode.limit(5)
       |> Repo.all
+      |> Episode.preload_podcast
       |> Episode.preload_guests
 
     render(conn, :show, podcast: podcast, episodes: episodes)
@@ -32,6 +33,7 @@ defmodule Changelog.PodcastController do
       |> Episode.published
       |> Episode.newest_first
       |> Repo.all
+      |> Episode.preload_podcast
       |> Episode.preload_guests
 
     render(conn, :archive, podcast: podcast, episodes: episodes)

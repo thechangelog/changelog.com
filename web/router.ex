@@ -89,6 +89,7 @@ defmodule Changelog.Router do
     get "/:slug", PodcastController, :show, as: :podcast
     get "/:slug/archive", PodcastController, :archive, as: :podcast
     get "/:slug/feed", PodcastController, :feed, as: :podcast_feed
+    get "/:slug/subscribe", PodcastController, :subscribe, as: :podcast
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
     get "/:podcast/:slug/preview", EpisodeController, :preview, as: :episode
