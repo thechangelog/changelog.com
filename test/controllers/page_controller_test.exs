@@ -26,4 +26,12 @@ defmodule Changelog.PageControllerTest do
       assert conn.status == 200
     end)
   end
+
+  test "home page includes featured episode" do
+    featured = insert :published_episode, featured: true, highlight: "ohai"
+
+    conn = get(build_conn, "/")
+
+    assert html_response(conn, 200) =~ featured.title
+  end
 end

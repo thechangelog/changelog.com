@@ -43,6 +43,10 @@ defmodule Changelog.Episode do
   @required_fields ~w(slug title published featured)
   @optional_fields ~w(headline subheadline highlight subhighlight summary notes published_at recorded_at guid)
 
+  def featured(query \\ __MODULE__) do
+    from e in query, where: e.featured == true, where: not(is_nil(e.highlight))
+  end
+
   def published(query \\ __MODULE__) do
     from e in query, where: e.published == true, where: not(is_nil(e.audio_file))
   end

@@ -3,7 +3,11 @@
     <header class="flex-column show-header">
       <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
       <%= @podcast.description |> md_to_html |> raw %>
-      <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes)) %>
+
+      <%= if Enum.any?(@episodes) do %>
+        <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes)) %>
+      <% end %>
+
       <div class="show-header_hosts">
         <i><%= @podcast.schedule_note %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i>
         <div class="show-header_hosts">

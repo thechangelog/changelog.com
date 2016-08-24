@@ -1,7 +1,7 @@
 defmodule Changelog.EpisodeView do
   use Changelog.Web, :view
 
-  alias Changelog.{PersonView, PodcastView, SharedView, TimeView}
+  alias Changelog.{PersonView, SharedView, TimeView}
 
   def audio_filename(episode) do
     Changelog.AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
@@ -33,6 +33,12 @@ defmodule Changelog.EpisodeView do
     case Float.parse(episode.slug) do
       {_, _} -> episode.slug
       :error -> nil
+    end
+  end
+
+  def number_with_pound(episode) do
+    if episode_number = number(episode) do
+      "##{episode_number}"
     end
   end
 
