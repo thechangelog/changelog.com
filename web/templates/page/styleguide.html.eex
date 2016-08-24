@@ -42,6 +42,8 @@
 
       <p>You can left align a paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in consectetur ante, sed venenatis magna. Phasellus ultricies, purus ut feugiat tristique, nisi arcu accumsan urna, vestibulum lacinia odio justo eu ipsum. Aliquam cursus eu augue vitae commodo.</p>
 
+      <img src="http://placehold.it/768x400" alt="Always have an alt." />
+
       <p style="text-align: center;">You can center a paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in consectetur ante, sed venenatis magna. Phasellus ultricies, purus ut feugiat tristique, nisi arcu accumsan urna, vestibulum lacinia odio justo eu ipsum. Aliquam cursus eu augue vitae commodo.</p>
 
       <p style="text-align: right;">You can right align a paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in consectetur ante, sed venenatis magna. Phasellus ultricies, purus ut feugiat tristique, nisi arcu accumsan urna, vestibulum lacinia odio justo eu ipsum. Aliquam cursus eu augue vitae commodo.</p>
@@ -59,7 +61,10 @@
 
       <p>You can <span style="text-decoration: underline;">underline</span> things.</p>
 
+      <img class="float float--left" src="http://placehold.it/300x300" alt="Always have an alt." />
+
       <p style="text-align: justify;">You can do align full to try and take up the entire width. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in consectetur ante, sed venenatis magna. Phasellus ultricies, purus ut feugiat tristique, nisi arcu accumsan urna, vestibulum lacinia odio justo eu ipsum. Aliquam cursus eu augue vitae commodo.</p>
+
     </div>
   </div>
 </article>
