@@ -15,4 +15,16 @@ defmodule Changelog.EpisodeTest do
     changeset = Episode.changeset(%Episode{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  describe "validating featured episodes" do
+    test "featured changeset that is missing a highlight" do
+      changeset = Episode.changeset(build(:episode), %{featured: true})
+      refute changeset.valid?
+    end
+
+    test "featured changeset that includes a highlight" do
+      changeset = Episode.changeset(build(:episode), %{featured: true, highlight: "Much wow"})
+      assert changeset.valid?
+    end
+  end
 end

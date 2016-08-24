@@ -60,6 +60,7 @@ defmodule Changelog.Episode do
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, ~w(audio_file))
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
+    |> validate_featured_has_highlight
     |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)
     |> cast_assoc(:episode_guests)
@@ -127,6 +128,17 @@ defmodule Changelog.Episode do
       Changelog.TimeView.seconds(duration)
     catch
       _all -> 0
+    end
+  end
+
+  defp validate_featured_has_highlight(changeset) do
+    featured = get_field(changeset, :featured)
+    highlight = get_field(changeset, :highlight)
+
+    if featured && is_nil(highlight) do
+      add_error(changeset, :highlight, "can't be blank when featured")
+    else
+      changeset
     end
   end
 end

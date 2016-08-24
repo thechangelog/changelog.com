@@ -39,6 +39,7 @@
       Highlight <%= help_icon("Used on home page when episode is featured.") %>
     <% end %>
     <%= text_input f, :highlight, placeholder: "\"I train a computer like I train a dog.\"" %>
+    <%= error_message f, :highlight %>
   </div>
 
   <div class="field <%= error_class(f, :subhighlight) %>">
