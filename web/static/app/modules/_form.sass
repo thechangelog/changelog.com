@@ -1,0 +1,107 @@
+.form
+    $border-color: #e0dfe0
+    clear: both
+
+    *
+      box-sizing: border-box
+
+    input[type=text], input[type=email], input[type=password], textarea, select
+        background: #f2f1f1
+        border: 2px solid $border-color
+        padding: 0.5em 0.75em 0.4em
+        width: 100%
+
+        &:focus
+            border-color: $green
+
+    input[type=submit],
+    button.submit
+        @extend %primary-button
+        border: 0
+        font-size: 1.25em
+        font-weight: bold
+        padding: 0.5em 1.5em 0.4em
+
+    label
+        @extend %display-font
+        display: block
+        margin: 0 0 0.5em
+        text-transform: uppercase
+
+        span
+            color: $green
+
+    &_element
+        margin-bottom: 1.5rem
+        position: relative
+        width: 100%
+
+        @media (min-width: $smartphone)
+            max-width: 640px
+            padding-right: 180px
+
+        &_note
+            font-size: 0.8em
+            margin: 0.5em 0 0
+
+            @media (min-width: $smartphone)
+                margin: 0
+                position: absolute
+                right: 0
+                top: 0
+                width: 140px
+
+        &_checkbox
+            margin: 1.5em 0
+            position: relative
+            -moz-user-select: none
+
+            label
+                font-family: $content
+                line-height: 20px
+                margin: 0
+                padding: 0.05em 0 0 40px
+                text-transform: none
+
+            input[type=checkbox],
+            input[type=radio]
+                opacity: 0
+                z-index: 2
+
+            div,
+            input[type=checkbox],
+            input[type=radio]
+                position: absolute
+                top: 0
+                left: 0
+                height: 20px
+                width: 20px
+
+            /* Default State */
+            div
+                background: $white
+                border: 2px solid $border-color
+                color: white
+                text-align: center
+                z-index: 1
+
+            /* Toggled State */
+            input[type=radio]:checked ~ div
+                background: $green
+                border-color: $green
+                box-shadow: inset 0 0 0 4px $white
+
+            input[type=checkbox]:checked ~ div
+                border-color: $green
+                &:after
+                    background: url("/images/form-checkmark.svg") center no-repeat
+                    content: ""
+                    position: absolute
+                    top: -2px
+                    right: -2px
+                    width: 15px
+                    height: 14px
+
+            &--radio
+                div
+                    border-radius: 100px
