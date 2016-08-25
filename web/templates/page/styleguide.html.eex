@@ -71,76 +71,92 @@
         <h2>Forms</h2>
         <p>Let’s make sure forms always live in “content” areas so we can use all of the other HTML element styling that comes with that.</p>
 
-        <label for="name">Text Input <span>*</span></label>
-        <div class="form_element">
-          <input type="text" name="name" value="">
-          <p class="form_element_note">A form element note</p>
+        <div class="form_element_wrap">
+          <label for="name">Text Input <span>*</span></label>
+          <div class="form_element">
+            <input type="text" name="name" value="">
+            <p class="form_element_note">A form element note</p>
+          </div>
         </div>
 
-        <label for="name">Textarea <span>*</span></label>
-        <div class="form_element">
-          <textarea name="name" rows="8" cols="40"></textarea>
-          <p class="form_element_note">A form element note</p>
+        <div class="form_element_wrap error">
+          <label for="name">Textarea <span>*</span></label>
+          <div class="form_element">
+            <textarea name="name" rows="8" cols="40"></textarea>
+            <p class="form_element_note">A form element note</p>
+          </div>
         </div>
 
-        <label for="name">Select <span>*</span></label>
-        <div class="form_element">
-          <select class="" name="">
-            <option value="option">option 1</option>
-            <optgroup label="Group 1">
-              <option value="option">option 2</option>
-              <option value="option">option 3</option>
-              <option value="option">option 4</option>
-            </optgroup>
-          </select>
-          <p class="form_element_note">A form element note</p>
+        <div class="form_element_wrap">
+          <label for="name">Select <span>*</span></label>
+          <div class="form_element">
+            <div class="form_element_select-wrap">
+              <select name="">
+                <option value="option">option 1</option>
+                <optgroup label="Group 1">
+                  <option value="option">option 2</option>
+                  <option value="option">option 3</option>
+                  <option value="option">option 4</option>
+                </optgroup>
+              </select>
+            </div>
+            <p class="form_element_note">A form element note</p>
+          </div>
         </div>
 
         <hr />
 
         <h2>Checkboxes &amp; Radios</h2>
 
-        <div class="form_element">
+        <div class="form_element_wrap">
           <label>Checkboxes and let’s also make sure this looks good at two ore more lines</label>
-
-          <div class="form_element_checkbox">
-            <label for="checkbox-1">Checkbox Label</label>
-            <input type="checkbox" id="checkbox-1">
-            <div></div>
-          </div>
-          <div class="form_element_checkbox">
-            <label for="checkbox-2">Checkbox Label with a lot of text</label>
-            <input type="checkbox" id="checkbox-2">
-            <div></div>
-          </div>
-          <div class="form_element_checkbox">
-            <label for="checkbox-3">Checkbox Label</label>
-            <input type="checkbox" id="checkbox-3">
-            <div></div>
+          <div class="form_element">
+            <div class="form_element_checkbox">
+              <label for="checkbox-1">Checkbox Label</label>
+              <input type="checkbox" id="checkbox-1">
+              <div></div>
+            </div>
+            <div class="form_element_checkbox">
+              <label for="checkbox-2">Checkbox Label with a lot of text</label>
+              <input type="checkbox" id="checkbox-2">
+              <div></div>
+            </div>
+            <div class="form_element_checkbox">
+              <label for="checkbox-3">Checkbox Label</label>
+              <input type="checkbox" id="checkbox-3">
+              <div></div>
+            </div>
           </div>
         </div>
 
-        <div class="form_element">
+        <div class="form_element_wrap">
           <label>Checkboxes and let’s also make sure this looks good at two ore more lines</label>
-
-          <div class="form_element_checkbox form_element_checkbox--radio">
-            <label for="radio-1">Checkbox Label</label>
-            <input type="radio" id="radio-1" name="radioName">
-            <div></div>
-          </div>
-          <div class="form_element_checkbox form_element_checkbox--radio">
-            <label for="radio-2">Checkbox Label with a lot of text</label>
-            <input type="radio" id="radio-2" name="radioName">
-            <div></div>
-          </div>
-          <div class="form_element_checkbox form_element_checkbox--radio">
-            <label for="radio-3">Checkbox Label</label>
-            <input type="radio" id="radio-3" name="radioName">
-            <div></div>
+          <div class="form_element">
+            <div class="form_element_checkbox form_element_checkbox--radio">
+              <label for="radio-1">Checkbox Label</label>
+              <input type="radio" id="radio-1" name="radioName">
+              <div></div>
+            </div>
+            <div class="form_element_checkbox form_element_checkbox--radio">
+              <label for="radio-2">Checkbox Label with a lot of text</label>
+              <input type="radio" id="radio-2" name="radioName">
+              <div></div>
+            </div>
+            <div class="form_element_checkbox form_element_checkbox--radio">
+              <label for="radio-3">Checkbox Label</label>
+              <input type="radio" id="radio-3" name="radioName">
+              <div></div>
+            </div>
           </div>
         </div>
 
-        <input type="submit" value="Submit">
+        <div class="form_submit">
+          <input type="submit" value="Submit">
+          <div class="form_submit_responses">
+            <div class="form_submit_response">Sending...</div>
+            <div class="form_submit_response form_submit_response--error">Something went wrong. See above.</div>
+            <div class="form_submit_response form_submit_response--success">Success! Thanks for your interest.</div>
+          </div>
       </form>
 
     </div>
