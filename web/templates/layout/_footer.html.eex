@@ -1,4 +1,4 @@
-<section class="footer mosiac">
+<section class="footer mosaic">
   <h2><%= Enum.random(["Hacker to the Heart", "!imposter", "Open Source Moves Fast", "Keep Up", "Long Live the Hacker", "Nerd to the Core", "In the Trenches"]) %></h2>
   <footer class="container">
     <div class="footer_copyright">

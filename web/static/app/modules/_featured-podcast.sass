@@ -1,14 +1,19 @@
 .featured-podcast
     text-align: center
+    overflow: hidden
+    padding: ($padding-extra-large) 0 0
+
+    @media (min-width: $tablet)
+        padding: ($padding-extra-large * 2) 0
 
     &_content
         max-width: 800px
         margin: 0 auto
         position: relative
-        padding: $padding-extra-large 0
+        padding: 0 $padding-medium $padding-large
 
         @media (min-width: $tablet)
-            padding: $padding-extra-large * 3 0 $padding-extra-large 0
+            padding: 0 0 $padding-large 0
 
         & > q
             & > a
@@ -32,7 +37,29 @@
         display: flex
         align-items: center
         justify-content: space-between
+        padding: 0 $padding-medium
+        position: relative
 
+        // Sometimes we want the abstract line art graphics
+        .mosaic--abstract &:after
+            content: ''
+            z-index: 1
+            background-image: url(/images/podcasts/podcast-abstract-art.svg)
+            background-position: center
+            background-repeat: no-repeat
+            opacity: 0.15
+            position: absolute
+            left: 50%
+            background-size: 215px
+            height: 215px
+            width: 215px
+            transform: translateY(-50%) translateX(-50%)
+            z-index: -1
+
+            @media (min-width: $tablet)
+                background-size: 430px
+                height: 430px
+                width: 430px
 
         & > button
             width: 3.2rem
@@ -51,7 +78,7 @@
             z-index: 1
 
             @media (min-width: $tablet)
-                font-size: 1.25em
+                font-size: 1.5em
 
             & > a
                 color: $white
@@ -61,10 +88,11 @@
                     color: $half-white
                     font-size: 0.85em
                     display: block
+                    margin-bottom: 0.5em
 
     &_footer
         margin-top: $padding-extra-large
-        padding-bottom: $padding-extra-large * 1.3
+        // padding-bottom: $padding-extra-large * 1.3
         display: flex
         flex-direction: column
         align-items: center
@@ -77,6 +105,7 @@
 
         &_menu
             max-width: 100%
+            width: 640px
 
         & > aside
             padding-top: $padding-extra-large

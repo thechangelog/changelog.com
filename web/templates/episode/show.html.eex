@@ -1,4 +1,4 @@
-<div class="mosiac mosiac--overlap mosiac--<%= @podcast.slug %>">
+<div class="mosaic mosaic--overlap mosaic--<%= @podcast.slug %>">
   <div class="container container--has-padding container--extra-skinny">
     <article class="episode">
       <header class="episode_header">
