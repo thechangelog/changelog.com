@@ -4,21 +4,23 @@
     &_toggle
         display: none
         position: absolute
-        right: 1rem
+        right: 0.5rem
         bottom: 0.5rem
-        width: 2rem
-        height: 2rem
+        width: 22px
+        height: 22px
         justify-content: space-around
         background: url(/images/more.svg) center center no-repeat
+        background-size: 22px
 
     &:hover &_toggle, &_menu--is-open + &_toggle
         @media (min-width: $tablet + 100)
             display: flex
 
     &_menu--is-open + &_toggle
-        height: 1.15rem
-        width: 1.15rem
-        background: url(/images/close.svg) center center no-repeat
+        height: 18px
+        width: 18px
+        background-image: url(/images/close.svg)
+        background-size: 18px
 
     &_link
         display: block
@@ -29,26 +31,9 @@
         background-size: cover
         background-position: center center
 
-    &--podcast &_content
-        background-image: url(/images/podcasts/podcast-cover-art.svg)
-
-    &--founderstalk &_content
-        background-image: url(/images/podcasts/founderstalk-cover-art.svg)
-
-    &--gotime &_content
-        background-image: url(/images/podcasts/gotime-cover-art.svg)
-
-    &--polyglot &_content
-        background-image: url(/images/podcasts/polyglot-cover-art.svg)
-
-    &--backstage &_content
-        background-image: url(/images/podcasts/backstage-cover-art.svg)
-
-    &--rfc &_content
-        background-image: url(/images/podcasts/rfc-cover-art.svg)
-
-    &--master &_content
-        background-image: url(/images/podcasts/master-cover-art.svg)
+    @each $show in $shows
+        &--#{$show} &_content
+            background-image: url(/images/podcasts/#{$show}-cover-art.svg)
 
     &_menu
         display: none
