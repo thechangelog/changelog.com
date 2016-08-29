@@ -1,28 +1,32 @@
 <article class="episode-summary">
   <time class="episode-summary_date" datetime="2016-05-16T12:00"><%= Changelog.TimeView.pretty_date(@episode.published_at) %></time>
-  <h3 class="episode-summary_title">
-    <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug) do %>
-        <%= if number = Changelog.EpisodeView.number(@episode) do %>
-            <span class="episode-summary_title_number">#<%= number %>&nbsp;</span>
-        <% end %>
-        <%= @episode.title %>
-    <% end %>
-  </h3>
   <div class="episode-summary_content">
+    <h3 class="episode-summary_title">
+      <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug) do %>
+          <%= if number = Changelog.EpisodeView.number(@episode) do %>
+              <span class="episode-summary_title_number">#<%= number %>&nbsp;</span>
+          <% end %>
+          <%= @episode.title %>
+      <% end %>
+      <%= for person <- @episode.guests do %>
+        <img src="<%= Changelog.PersonView.avatar_url(person, :small) %>" width=75 height=75 alt="Guest Speaker: <%= person.name %>"/>
+      <% end %>
+    </h3>
+
     <div class="episode-summary_content_description">
       <div>
         <%= raw md_to_html(@episode.summary) %>
       </div>
-      <%= for person <- @episode.guests do %>
-        <img src="<%= Changelog.PersonView.avatar_url(person, :small) %>" width=75 height=75 alt="Guest Speaker: <%= person.name %>"/>
-      <% end %>
     </div>
 
     <nav class="podcast-menu podcast-menu--episode">
       <h4 class="accessibility-hidden">Episode Navigation</h4>
-      <button><img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play podcast"/>Play</button>
+
+      <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug), role: "button" do %>
+        <img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play episode graphic"/><span>Play</span>
+      <% end %>
       <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug) do %>
-        <img src="<%= static_url(@conn, "/images/details.svg") %>" alt="View details"/>Details
+        <img src="<%= static_url(@conn, "/images/details.svg") %>" alt="View details"/><span>Details</span>
       <% end %>
       <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More options"/></button>
     </nav>

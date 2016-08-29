@@ -1,5 +1,4 @@
 .episode
-    padding-top: 1rem
     display: flex
     flex-direction: column
     align-content: center
@@ -13,9 +12,6 @@
         text-align: left
         color: $black
 
-    @media (min-width: $tablet)
-        padding-top: 2rem
-
     &_header
         max-width: 100%
         display: flex
@@ -23,10 +19,18 @@
         align-items: center
 
         &_art
-            width: 12.5rem
+            margin: -(6.25rem) auto 0
+
+            img
+              height: 12.5rem
+              width: 12.5rem
 
             @media (min-width: $tablet)
-                width: 15.5rem
+                margin: -(7.75rem) auto 0
+
+                img
+                  height: 15.5rem
+                  width: 15.5rem
 
         &_headline
             font-size: 2em
@@ -71,7 +75,7 @@
 
             & > img
                 height: 1.25rem
-                width: 1.25rem
+                // width: 1.25rem
                 padding: 0 0.5rem
 
     &_footer
@@ -88,26 +92,12 @@
             bottom: 0
             content: ''
             left: 0
-            opacity: 0.2
+            opacity: 0.1
             position: absolute
             right: 0
             top: 0
             z-index: -1
 
-        &--podcast:before
-            background-image: url(/images/podcasts/podcast-abstract-art.svg)
-
-        &--gotime:before
-            background-image: url(/images/podcasts/gotime-abstract-art.svg)
-
-        &--polyglot:before
-            background-image: url(/images/podcasts/polyglot-abstract-art.svg)
-
-        &--rfc:before
-            background-image: url(/images/podcasts/rfc-abstract-art.svg)
-
-        &--founderstalk:before
-            background-image: url(/images/podcasts/founderstalk-abstract-art.svg)
-
-        &--backstage:before
-            background-image: url(/images/podcasts/backstage-abstract-art.svg)
+        @each $show in $shows
+            &--#{$show}:before
+                background-image: url(/images/podcasts/#{$show}-abstract-art.svg)

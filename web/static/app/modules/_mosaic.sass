@@ -1,7 +1,9 @@
 .mosaic
     background-color: $black
     color: $white
+    min-height: 200px
     position: relative
+    z-index: -1
 
     & > *
       position: relative
@@ -44,11 +46,3 @@
 
     &--backstage
         background: darken($backstage, 30%)
-
-    &--overlap
-        color: inherit
-        &:before
-            height: 8.25rem
-
-            @media (min-width: $tablet)
-                height: 9.75rem

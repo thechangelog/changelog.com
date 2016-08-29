@@ -43,28 +43,10 @@
             display: block
             @extend %display-font
             color: $half-black
+            font-size: 0.8em
 
-    &--podcast
-        & > button
-            &:before
-                background-image: url(/images/podcasts/podcast-abstract-art.svg)
-
-    &--gotime
-        & > button
-            &:before
-                background-image: url(/images/podcasts/gotime-abstract-art.svg)
-
-    &--backstage
-        & > button
-            &:before
-                background-image: url(/images/podcasts/backstage-abstract-art.svg)
-
-    &--rfc
-        & > button
-            &:before
-                background-image: url(/images/podcasts/rfc-abstract-art.svg)
-
-    &--founderstalk
-        & > button
-            &:before
-                background-image: url(/images/podcasts/founderstalk-abstract-art.svg)
+    @each $show in $shows
+        &--#{$show}
+            & > button
+                &:before
+                    background-image: url(/images/podcasts/#{$show}-abstract-art.svg)

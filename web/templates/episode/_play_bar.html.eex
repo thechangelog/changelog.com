@@ -9,7 +9,7 @@
     <img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe to podcast graphic"/><span>Subscribe</span>
   <% end %>
 
-  <%= link to: page_path(@conn, :sponsorship) do %>
+  <%= link to: page_path(@conn, :sponsorship), role: "button" do %>
     <img src="<%= static_url(@conn, "/images/share.svg") %>" alt="Share podcast graphic"/><span>Share</span>
   <% end %>
 

@@ -9,6 +9,7 @@
     align-items: center
 
     &--episode
+        align-content: flex-start
         margin: 1rem 0 0 0
         width: 100%
         background: transparent
@@ -16,8 +17,15 @@
 
         & > a, & > button
             color: $half-black !important
+            flex: 0 0 auto !important
+            font-size: 1.15em
             padding-left: 0 !important
-            padding-right: 2.3rem !important
+
+            @media (min-width: $smartphone)
+                padding-right: 2.3rem !important
+
+            span
+                margin-top: 2px
 
         & > a:hover, & > button:hover
             color: $black !important

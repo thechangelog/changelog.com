@@ -1,9 +1,10 @@
 .episode-summary
-    margin: $padding-large / 2 0.5rem
     border-top: 1px solid $border-color
+    margin: $padding-large / 2 auto
+    padding: 0 0.5rem
 
     @media (min-width: $tablet)
-        margin: $padding-large / 2 auto
+        padding-right: 75px
 
     &--btn
         margin-left: 0
@@ -24,28 +25,33 @@
     &_title
         font-size: 1.5em
         margin: 0
+        position: relative
 
         & > a
             color: inherit
 
         &_number
             display: inline-block
-            width: $padding-extra-large
             font-weight: 300
+            left: -($padding-extra-large)
+            position: absolute
+            width: $padding-extra-large
+
+        & > img
+            box-shadow: 10px 10px 0 $light-grey
+            margin: 0
+            position: absolute
+            right: -65px
+
+            @media (max-width: $tablet)
+                display: none
 
     &_content
         padding-left: $padding-extra-large
+        padding-right: 10px
 
         &_description
             display: flex
 
             & > div
                 flex: 0 1 auto
-
-            & > img
-                flex: 0 0 auto
-                margin: 1rem 0 0 1rem
-                box-shadow: 0.33rem 0.33rem 0 $half-black
-
-                @media (max-width: $tablet)
-                    display: none
