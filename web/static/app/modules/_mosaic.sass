@@ -1,0 +1,47 @@
+.mosaic
+    background-color: $black
+    color: $white
+    min-height: 200px
+    position: relative
+
+    & > *
+      position: relative
+      z-index: 3
+
+    &:before,
+    &:after
+        content: ''
+        position: absolute
+        z-index: 1
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+
+    // The mosaic overlay
+    &:before
+        background-image: url(/images/mosaic.svg)
+        background-size: cover
+        background-position: center
+
+    &--blue
+        background: $blue
+
+    // Based on mockups, this may be intended to be the default black rather than $changelogs grey in this scenario
+    // &--podcast
+    //     background: darken($changelog, 45%)
+
+    &--gotime
+        background: darken($gotime, 52%)
+
+    &--polyglot
+        background: darken($polyglot, 35%)
+
+    &--rfc
+        background: darken($rfc, 33%)
+
+    &--founderstalk
+        background: darken($founderstalk, 43%)
+
+    &--backstage
+        background: darken($backstage, 30%)

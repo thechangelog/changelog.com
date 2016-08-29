@@ -1,12 +1,15 @@
 .podcast-menu
     display: flex
     background: $black
-    border-top: 1px solid $green
-    overflow: auto
+    border-top: 2px solid $green
     max-width: 100%
+    overflow: auto
+    padding: 0 10px
+    width: 640px
     align-items: center
 
     &--episode
+        align-content: flex-start
         margin: 1rem 0 0 0
         width: 100%
         background: transparent
@@ -14,8 +17,15 @@
 
         & > a, & > button
             color: $half-black !important
+            flex: 0 0 auto !important
+            font-size: 1.15em
             padding-left: 0 !important
-            padding-right: 2.3rem !important
+
+            @media (min-width: $smartphone)
+                padding-right: 2.3rem !important
+
+            span
+                margin-top: 2px
 
         & > a:hover, & > button:hover
             color: $black !important
@@ -23,16 +33,18 @@
     & > a, & > button
         @extend %display-font
         position: relative
-        flex: 0 0 auto
+        flex: 1 0 auto
         color: $half-white
         padding: 1.15rem
         display: flex
         align-items: center
+        position: relative
 
         &:hover
             color: $white
 
         & > img
+            float: left
             margin-right: 1rem
             width: 1.25rem
             height: 1.25rem

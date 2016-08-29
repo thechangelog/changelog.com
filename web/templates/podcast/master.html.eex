@@ -1,5 +1,5 @@
 <section>
-  <div class="mosiac mosiac--<%= @podcast.slug %>">
+  <div class="mosaic mosaic--<%= @podcast.slug %>">
     <header class="flex-column show-header">
       <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
       <%= raw md_to_html(@podcast.description) %>

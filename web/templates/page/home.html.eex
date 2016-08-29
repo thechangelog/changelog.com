@@ -1,5 +1,5 @@
 <%= for episode <- @featured do %>
-<div class="mosiac mosiac--<%= episode.podcast.slug %>">
+<div class="mosaic mosaic--<%= episode.podcast.slug %> mosaic--abstract">
   <section>
     <h2 class="accessibility-hidden">Featured Quotes</h2>
     <article class="featured-podcast">
