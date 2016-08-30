@@ -1,0 +1,37 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Subscribe</h2>
+    </header>
+    <div class="content_body">
+      <h1>Newsletters</h1>
+      <hr />
+      <h2>Changelog Weekly</h2>
+      <p><a href="#" title="">Suscribe to</a> our curated weekly email covering everything that hits our open source radar.</p>
+      <hr />
+      <h2>Changelog Nightly</h2>
+      <p><a href="#" title="">Suscribe to</a> our automated nightly email that unearths the hottest new repos on GitHub before they blow up.</p>
+
+      <hr />
+      <br />
+
+      <h1>Podcasts</h1>
+      <%= for podcast <- @podcasts do %>
+        <%= render(Changelog.PodcastView, "_subscribe.html", conn: @conn, podcast: podcast) %>
+      <% end %>
+
+      <hr />
+      <br />
+
+      <h1>Social</h1>
+      <hr />
+      <ul>
+        <li>Twitter: <a href="https://twitter.com/changelog" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://twitter.com/changelog', '@Changelog']);" class="link external" target="_blank">@Changelog</a></li>
+        <li>YouTube: <a href="https://www.youtube.com/thechangelog" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://www.youtube.com/thechangelog', 'Channel']);" class="link external" target="_blank">Channel</a></li>
+        <li>Facebook: <a href="https://www.facebook.com/thechangelog" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://www.facebook.com/thechangelog', 'facebook.com/thechangelog']);" class="link external" target="_blank">facebook.com/thechangelog</a></li>
+        <li>GitHub: <a href="https://github.com/thechangelog" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://github.com/thechangelog', 'github.com/thechangelog']);" class="link external" target="_blank">github.com/thechangelog</a></li>
+        <li>Google+: <a href="http://google.com/+thechangelog" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://google.com/+thechangelog', 'Follow us']);" class="link external" target="_blank">Follow us</a></li>
+      </ul>
+    </div>
+  </div>
+</article>

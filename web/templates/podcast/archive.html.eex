@@ -1,13 +1,15 @@
-<div class="mosaic mosaic--overlap mosaic--<%= @podcast.slug %>">
-  <div class="container container--has-padding container--extra-skinny">
-    <article class="episode">
-      <header class="episode_header">
-        <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/>
-      </header>
-    </article>
+<div class="mosaic mosaic--overlap mosaic--<%= @podcast.slug %>"></div>
+<div class="container container--has-padding container--extra-skinny">
+  <article class="episode">
+    <header class="episode_header">
+      <%= link to: podcast_path(@conn, :show, @podcast.slug), class: "episode_header_art" do %>
+        <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="  <%= @podcast.name %> Podcast"/>
+      <% end %>
+      <h2 class="episode_header_headline">All Episodes</h2>
+    </header>
+  </article>
 
-    <%= for episode <- @episodes do %>
-      <%= render "_episode_summary.html", conn: @conn, podcast: @podcast, episode: episode %>
-    <% end %>
-  </div>
+  <%= for episode <- @episodes do %>
+    <%= render "_episode_summary.html", conn: @conn, podcast: @podcast, episode: episode %>
+  <% end %>
 </div>

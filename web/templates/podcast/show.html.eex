@@ -58,8 +58,8 @@
     <% end %>
 
     <div class="btn-container">
-      <%= link to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--block" do %>
-        <img src="<%= static_url(@conn, "/images/arrow-down.svg") %>" alt="Show all episodes"/>Show all episodes
+      <%= link to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--show-all" do %>
+        <img src="<%= static_url(@conn, "/images/arrow-down.svg") %>" alt="Show all episodes"/>Show All Episodes
       <% end %>
     </div>
   </div>

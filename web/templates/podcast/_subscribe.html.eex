@@ -1,0 +1,10 @@
+<hr />
+<h2><%= @podcast.name %></h2>
+<p><%= raw md_to_html(@podcast.description) %></p>
+<p>
+  <a href="#" title="">iTunes</a> &bull;
+  <a href="#" title="">Direct (RSS)</a> &bull;
+  <a href="#" title="">Android</a> &bull;
+  <a href="#" title="">Overcast</a> &bull;
+  <a href="#" title="">Email</a>
+</p>

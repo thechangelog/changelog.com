@@ -14,6 +14,22 @@
 
     &--block
         display: block
+        width: 100%
+        max-width: 625px
+
+    &--show-all
+        display: block
+        margin-top: 2rem !important
+        width: 100%
+
+        img
+            position: relative
+            top: -2px
+
+        @media (min-width: $tablet)
+            font-size: 1.5em
+            max-width: 625px
+            transform: translateX(5px)
 
     &--white
         background: $white
