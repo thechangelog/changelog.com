@@ -7,6 +7,10 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def external_link(text, opts) do
+    link text, (opts ++ [rel: "external"])
+  end
+
   def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
   def md_to_html(md) when is_nil(md), do: ""
 
@@ -15,8 +19,18 @@ defmodule Changelog.Helpers.ViewHelpers do
   end
   def md_to_text(md) when is_nil(md), do: ""
 
-  def external_link(text, opts) do
-    link text, (opts ++ [rel: "external"])
+  def no_widowed_words(string) when is_nil(string), do: no_widowed_words("")
+  def no_widowed_words(string) do
+    words = String.split(string, " ")
+
+    case length(words) do
+      0   -> ""
+      1   -> string
+      len ->
+        first = Enum.take(words, len - 1) |> Enum.join(" ")
+        last = List.last(words)
+        [first, last] |> Enum.join("&nbsp;")
+    end
   end
 
   def plural_form(list, singular, plural) when is_list(list), do: plural_form(length(list), singular, plural)
@@ -71,4 +85,10 @@ defmodule Changelog.Helpers.ViewHelpers do
 
   def ts(ts) when is_nil(ts), do: ""
   def ts(ts), do: {:safe, "<span class='time'>#{Ecto.DateTime.to_iso8601(ts)}</span>"}
+
+  def with_smart_quotes(string) do
+    string
+    |> String.replace_leading("\"", "“")
+    |> String.replace_trailing("\"", "”")
+  end
 end

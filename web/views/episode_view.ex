@@ -21,6 +21,13 @@ defmodule Changelog.EpisodeView do
     Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
   end
 
+  def classy_highlight(episode) do
+    episode.highlight
+    |> no_widowed_words
+    |> with_smart_quotes
+    |> raw
+  end
+
   def guid(episode) do
     episode.guid || "changelog.com/#{episode.podcast_id}/#{episode.id}"
   end
