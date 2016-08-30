@@ -5,7 +5,7 @@
     <article class="featured-podcast">
       <div class="featured-podcast_content">
         <q>
-          <%= link(with_smart_quotes(episode.highlight), to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
+          <%= link(EpisodeView.classy_highlight(episode), to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
         </q>
         <%= if episode.subhighlight do %>
         <cite><%= episode.subhighlight |> md_to_html |> sans_p_tags |> raw %></cite>

@@ -29,7 +29,7 @@
       <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
         <h3>The Latest</h3>
         <%= if latest.highlight do %>
-        <q><%= latest.highlight %></q>
+        <q><%= EpisodeView.classy_highlight(latest) %></q>
         <% end %>
         <button>
             <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>
