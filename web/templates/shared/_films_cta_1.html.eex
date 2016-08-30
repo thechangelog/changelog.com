@@ -1,7 +1,7 @@
 <div class="container container--skinny section">
   <section>
     <header>
-      <h2 class="h2"><img src="<%= static_url(@conn, "/images/films.svg") %>" alt="Films"><br/>Films</h2>
+      <h2 class="h2"><img src="<%= static_url(@conn, "/images/logo-films.svg") %>" alt="News"> <span class="accessibility-hidden">Films</span></h2>
       <p class="description">Our little film studio focuses on telling developer-centric stories that need to be seen.</p>
     </header>
     <article class="film">

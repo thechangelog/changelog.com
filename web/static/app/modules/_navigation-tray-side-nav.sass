@@ -20,9 +20,12 @@
         @extend %display-font
         position: relative
         line-height: 2.85em
-        padding: 0 1rem
+        padding: 0 0 0 1rem
         display: block
         color: $half-white
+
+        @media (min-width: $smartphone)
+            padding: 0 1rem
 
         @media (min-width: $tablet)
             padding: 0 2rem

@@ -1,7 +1,11 @@
 .navigation-tray
     background-color: $black
     border: 1px solid $green
+    font-size: 0.8em
     overflow: hidden
+
+    @media (min-width: $smartphone)
+        font-size: 1em
 
     @media (min-width: $tablet)
         font-size: 1.15em
@@ -24,7 +28,7 @@
 
         @media (min-width: $tablet)
             padding: 0 $padding-extra-large $padding-extra-large $padding-extra-large
-        
+
         @media (min-width: $desktop)
             align-items: center
 

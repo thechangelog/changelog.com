@@ -2,7 +2,7 @@
   <div class="container container--skinny container--has-padding">
     <section class="icon-panel">
       <header class="icon-panel_header">
-        <h2 class="h2"><img src="<%= static_url(@conn, "/images/news.svg") %>" alt="News"><br/>News</h2>
+        <h2 class="h2"><img src="<%= static_url(@conn, "/images/logo-news.svg") %>" alt="News"> <span class="accessibility-hidden">News</span></h2>
       </header>
       <div class="icon-panel_content">
         <div class="news-list">
