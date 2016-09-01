@@ -5,7 +5,7 @@
   <% end %>
   <% end %>
 
-  <%= link to: podcast_path(@conn, :subscribe, @episode.podcast.slug) do %>
+  <%= link to: PodcastView.subscribe_link(@episode.podcast) do %>
     <img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe to podcast graphic"/><span>Subscribe</span>
   <% end %>
 

@@ -17,7 +17,7 @@
                 <%= link "Latest Episode page", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
               <% end %>
               <%= link "Go to show page", to: podcast_path(@conn, :show, @podcast.slug) %>
-              <a href="#">Subscribe</a>
+              <%= link "Subscribe", to: subscribe_link(@podcast) %>
             </nav>
           </div>
         </div>

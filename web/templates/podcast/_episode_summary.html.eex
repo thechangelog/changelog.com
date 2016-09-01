@@ -36,7 +36,7 @@
     <nav class="podcast-menu-tooltip tooltip">
       <h5 class="accessibility-hidden">More Episode Navigation Options</h5>
       <div class="tooltip_links">
-        <a href="#">Subscribe</a>
+        <%= link "Subscribe", to: subscribe_link(@podcast) %>
         <a href="#">Share episode</a>
         <button>Copy episode link</button>
         <a href="#">Sponsor this podcast</a>

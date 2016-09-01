@@ -64,7 +64,7 @@ defmodule Changelog.Helpers.ViewHelpers do
 
   def twitter_link(model, string \\ nil) do
     if model.twitter_handle do
-      external_link (string || model.twitter_handle), to: github_url(model.twitter_handle)
+      external_link (string || model.twitter_handle), to: twitter_url(model.twitter_handle)
     end
   end
 

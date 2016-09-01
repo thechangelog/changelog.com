@@ -27,6 +27,22 @@ defmodule Changelog.PodcastView do
     Changelog.Podcast.published_episode_count(podcast)
   end
 
+  def subscribe_link(podcast) do
+    page_path(Changelog.Endpoint, :subscribe) <> "##{podcast.slug}"
+  end
+
+  def subscribe_on_android_url(podcast) do
+    feed_url_sans_protocol =
+      podcast_url(Changelog.Endpoint, :feed, podcast.slug)
+      |> String.replace(~r/\Ahttps?:\/\//, "")
+    "http://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
+  end
+
+  def subscribe_on_overcast_url(podcast) do
+    %{"id" => id, "name" => name} = Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.itunes_url)
+    "https://overcast.fm/itunes#{id}/#{name}"
+  end
+
   def vanity_domain_with_fallback_url(podcast) do
     if podcast.vanity_domain do
       podcast.vanity_domain
