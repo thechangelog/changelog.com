@@ -31,7 +31,13 @@ var common = {
         loader: "file?name=/fonts/[name].[ext]",
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {warnings: false},
+      output: {comments: false}
+    })
+  ]
 };
 
 module.exports = [
