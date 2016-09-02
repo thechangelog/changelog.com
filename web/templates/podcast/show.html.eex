@@ -2,7 +2,7 @@
   <div class="mosaic mosaic--<%= @podcast.slug %>">
     <header class="flex-column show-header">
       <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
-      <%= @podcast.description |> md_to_html |> raw %>
+      <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
 
       <%= if Enum.any?(@episodes) do %>
         <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes)) %>
@@ -36,7 +36,7 @@
             <span class="accessibility-hidden">Play</span>
         </button>
         <cite>
-          <%= latest.title %>
+          <%= (latest.headline || latest.title) |> no_widowed_words |> raw %>
           <%= if number = EpisodeView.number(latest) do %>
             <span>#<%= number %></span>
           <% end %>

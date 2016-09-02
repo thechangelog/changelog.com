@@ -18,7 +18,7 @@
         <h3>
           <%= link to: episode_path(@conn, :show, episode.podcast.slug, episode.slug) do %>
             <span><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></span>
-            <%= episode.title %>
+            <%= episode.headline || episode.title %>
           <% end %>
         </h3>
         <%= if length(@featured) > 1 do %>
