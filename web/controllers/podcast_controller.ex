@@ -4,7 +4,7 @@ defmodule Changelog.PodcastController do
   alias Changelog.{Podcast, Episode}
 
   def index(conn, _params) do
-    render(conn, :index, master: stub_master_podcast)
+    render(conn, :index, master: Podcast.master)
   end
 
   def show(conn, %{"slug" => slug}) do
@@ -62,7 +62,7 @@ defmodule Changelog.PodcastController do
       |> Repo.all
       |> Episode.preload_all
 
-    render(conn, :master, podcast: stub_master_podcast, episodes: episodes)
+    render(conn, :master, podcast: Podcast.master, episodes: episodes)
   end
 
   def master_feed(conn, _params) do
@@ -75,16 +75,6 @@ defmodule Changelog.PodcastController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("master.xml", podcast: stub_master_podcast, episodes: episodes)
-  end
-
-  defp stub_master_podcast do
-    %Podcast{
-      name: "Changelog Master Feed",
-      slug: "master",
-      description: "The master feed compiled of all Changelog podcasts. All you have to do is `git pull changelog master`",
-      keywords: "changelog, open source, oss, software, development, developer",
-      hosts: []
-    }
+    |> render("master.xml", podcast: Podcast.master, episodes: episodes)
   end
 end

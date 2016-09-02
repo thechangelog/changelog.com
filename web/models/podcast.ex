@@ -25,6 +25,16 @@ defmodule Changelog.Podcast do
   @required_fields ~w(name slug status)
   @optional_fields ~w(vanity_domain schedule_note description keywords twitter_handle itunes_url)
 
+  def master do
+  %__MODULE__{
+    name: "Changelog Master Feed",
+    slug: "master",
+    description: "The master feed compiled of all Changelog podcasts. Only the hardest of the core need apply.",
+    keywords: "changelog, open source, oss, software, development, developer",
+    hosts: []
+  }
+  end
+
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
