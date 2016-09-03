@@ -49,6 +49,7 @@ defmodule Changelog.Mixfile do
      {:bamboo, "~> 0.6"},
      {:bamboo_smtp, github: "jerodsanto/bamboo_smtp", branch: "fix-email-format"},
      {:ecto_enum, "~> 0.3.0"},
+     {:basic_auth, "~> 1.0.0"},
      {:cowboy, "~> 1.0"}]
   end
 

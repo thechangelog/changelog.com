@@ -12,6 +12,10 @@ defmodule Changelog.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Changelog.Plug.Auth, repo: Changelog.Repo
+
+    if Mix.env == :prod do
+      plug BasicAuth, realm: "2016", username: "hacker", password: "heart"
+    end
   end
 
   pipeline :api do
