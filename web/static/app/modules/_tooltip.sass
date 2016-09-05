@@ -1,8 +1,11 @@
 .tooltip
-    position: absolute
+    display: none
     background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9))
     padding: 0.75rem
-    
+
+    &--is-open
+        display: block
+
     &--inline
         flex: 1 1 auto
         position: relative

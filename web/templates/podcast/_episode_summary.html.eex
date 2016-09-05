@@ -30,17 +30,18 @@
       <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>
         <img src="<%= static_url(@conn, "/images/details.svg") %>" alt="View details"/><span>Details</span>
       <% end %>
-      <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More options"/></button>
-    </nav>
-
-    <nav class="podcast-menu-tooltip tooltip">
-      <h5 class="accessibility-hidden">More Episode Navigation Options</h5>
-      <div class="tooltip_links">
-        <%= link "Subscribe", to: subscribe_link(@episode.podcast) %>
-        <a href="#">Share episode</a>
-        <button>Copy episode link</button>
-        <a href="#">Sponsor this podcast</a>
-      </div>
+      <button class="podcast-menu_more-button" title="More Options">
+        <img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More options"/>
+      </button>
+      <nav class="podcast-menu-tooltip tooltip">
+        <h5 class="accessibility-hidden">More Episode Navigation Options</h5>
+        <div class="tooltip_links">
+          <%= link "Subscribe", to: subscribe_link(@episode.podcast) %>
+          <a href="#">Share episode</a>
+          <button>Copy episode link</button>
+          <a href="#">Sponsor this podcast</a>
+        </div>
+      </nav>
     </nav>
   </div>
 </article>
