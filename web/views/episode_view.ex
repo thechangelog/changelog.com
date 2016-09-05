@@ -8,7 +8,7 @@ defmodule Changelog.EpisodeView do
   end
 
   def audio_url(episode) do
-    if episode.audio_file do
+    url = if episode.audio_file do
       episode
       |> audio_local_path
       |> String.replace_leading("priv", "")
