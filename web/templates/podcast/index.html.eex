@@ -1,4 +1,4 @@
-<section class="container" id="shows">
+<section class="container" id="podcasts">
   <h2 class="accessibility-hidden">Podcast Shows</h2>
   <%= for podcast <- @podcasts do %>
     <%= render "_podcast_summary.html", conn: @conn, podcast: podcast %>

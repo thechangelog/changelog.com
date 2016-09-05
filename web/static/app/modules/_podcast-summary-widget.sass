@@ -1,4 +1,4 @@
-.show-summary-widget
+.podcast-summary-widget
     +aspect-ratio(1, 1, 'content')
 
     &_toggle
@@ -31,9 +31,9 @@
         background-size: cover
         background-position: center center
 
-    @each $show in $shows
-        &--#{$show} &_content
-            background-image: url(/images/podcasts/#{$show}-cover-art.svg)
+    @each $podcast in $podcasts
+        &--#{$podcast} &_content
+            background-image: url(/images/podcasts/#{$podcast}-cover-art.svg)
 
     &_menu
         display: none

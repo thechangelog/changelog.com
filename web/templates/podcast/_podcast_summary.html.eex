@@ -1,12 +1,12 @@
-<article class="show-summary">
-  <div class="show-summary_art">
-    <div class="show-summary-widget show-summary-widget--<%= @podcast.slug %>">
-      <div class="show-summary-widget_content">
-        <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show-summary-widget_link">
+<article class="podcast-summary">
+  <div class="podcast-summary_art">
+    <div class="podcast-summary-widget podcast-summary-widget--<%= @podcast.slug %>">
+      <div class="podcast-summary-widget_content">
+        <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="podcast-summary-widget_link">
             <span class="accessibility-hidden">View show page</span>
         </a>
-        <!-- For open state, use .show-summary-widget_menu--is-open-->
-        <div class="show-summary-widget_menu">
+        <!-- For open state, use .podcast-summary-widget_menu--is-open-->
+        <div class="podcast-summary-widget_menu">
           <div class="tooltip tooltip--inline">
             <h3 class="tooltip_heading"><%= @podcast.name %></h3>
             <nav class="tooltip_links">
@@ -21,11 +21,11 @@
             </nav>
           </div>
         </div>
-        <button class="show-summary-widget_toggle"></button>
+        <button class="podcast-summary-widget_toggle"></button>
       </div>
     </div>
   </div>
-  <div class="show-summary_content">
+  <div class="podcast-summary_content">
     <%= @podcast.description |> md_to_html |> raw %>
     <%= if Enum.any?(@podcast.hosts) do %>
     <cite>Hosted by

@@ -99,6 +99,6 @@
             top: 0
             z-index: -1
 
-        @each $show in $shows
-            &--#{$show}:before
-                background-image: url(/images/podcasts/#{$show}-abstract-art.svg)
+        @each $podcast in $podcasts
+            &--#{$podcast}:before
+                background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)

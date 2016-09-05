@@ -45,8 +45,8 @@
             color: $half-black
             font-size: 0.8em
 
-    @each $show in $shows
-        &--#{$show}
+    @each $podcast in $podcasts
+        &--#{$podcast}
             & > button
                 &:before
-                    background-image: url(/images/podcasts/#{$show}-abstract-art.svg)
+                    background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)

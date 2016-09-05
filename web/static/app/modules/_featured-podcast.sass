@@ -62,9 +62,9 @@
                 height: 430px
                 width: 430px
 
-        @each $show in $shows
-            .mosaic--abstract.mosaic--#{$show} &:after
-                background-image: url(/images/podcasts/#{$show}-abstract-art.svg)
+        @each $podcast in $podcasts
+            .mosaic--abstract.mosaic--#{$podcast} &:after
+                background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)
 
         & > button
             width: 3.2rem
