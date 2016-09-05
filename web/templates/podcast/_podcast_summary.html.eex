@@ -21,14 +21,12 @@
             </nav>
           </div>
         </div>
-        <%= unless @podcast.slug == "master" do %>
         <button class="show-summary-widget_toggle"></button>
-        <% end %>
       </div>
     </div>
   </div>
   <div class="show-summary_content">
-    <%= raw md_to_html(@podcast.description) %>
+    <%= @podcast.description |> md_to_html |> raw %>
     <%= if Enum.any?(@podcast.hosts) do %>
     <cite>Hosted by
       <%= for person <- @podcast.hosts do %>

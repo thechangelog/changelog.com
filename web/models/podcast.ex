@@ -29,8 +29,8 @@ defmodule Changelog.Podcast do
   %__MODULE__{
     name: "Changelog Master Feed",
     slug: "master",
-    description: "The master feed compiled of all Changelog podcasts. Only the hardest of the core need apply.",
-    keywords: "changelog, open source, oss, software, development, developer",
+    description: "The master feed compiled of all Changelog podcasts. So you can git pull changelog master.",
+    keywords: "changelog, open source, oss, software, development, developer, hacker",
     hosts: []
   }
   end
@@ -57,6 +57,10 @@ defmodule Changelog.Podcast do
     |> assoc(:episodes)
     |> Ecto.Query.select([e], count(e.id))
     |> Repo.one
+  end
+
+  def is_master(podcast) do
+    podcast.slug == "master"
   end
 
   def published_episode_count(podcast) do

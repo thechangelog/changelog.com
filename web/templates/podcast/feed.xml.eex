@@ -7,16 +7,16 @@
     <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="self" type="application/rss+xml" />
     <language>en-us</language>
     <description><%= md_to_text(@podcast.description) %></description>
-    <itunes:subtitle><%= @podcast.name %></itunes:subtitle>
-    <itunes:author>Changelog Media</itunes:author>
-    <itunes:summary><%= md_to_text @podcast.description %></itunes:summary>
-    <itunes:explicit>no</itunes:explicit>
-    <itunes:image href="<%= static_url(@conn, cover_art_path(@podcast, "png")) %>"/>
     <image>
       <url><%= static_url(@conn, cover_art_path(@podcast, "png")) %></url>
       <title><%= @podcast.name %></title>
       <link><%= vanity_domain_with_fallback_url(@podcast) %></link>
     </image>
+    <itunes:subtitle><%= @podcast.name %></itunes:subtitle>
+    <itunes:author>Changelog Media</itunes:author>
+    <itunes:summary><%= md_to_text @podcast.description %></itunes:summary>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:image href="<%= static_url(@conn, cover_art_path(@podcast, "png")) %>"/>
     <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
     <itunes:owner>
       <itunes:name>Changelog Media</itunes:name>
@@ -28,17 +28,29 @@
     </itunes:category>
     <%= for episode <- @episodes do %>
       <item>
-        <title><%= EpisodeView.numbered_title(episode) %></title>
-        <link><%= episode_url(@conn, :show, @podcast.slug, episode.slug) %></link>
+        <title>
+        <%= if is_master(@podcast) do %>
+          <%= episode.podcast.name %> - <%= EpisodeView.numbered_title(episode) %>
+        <% else %>
+          <%= EpisodeView.numbered_title(episode) %>
+        <% end %>
+        </title>
+        <link><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
+        <image>
+          <url><%= static_url(@conn, cover_art_path(episode.podcast, "png")) %></url>
+          <title><%= episode.podcast.name %></title>
+          <link><%= vanity_domain_with_fallback_url(episode.podcast)  %></link>
+        </image>
         <dc:creator><%= PersonView.comma_separated_names(episode.hosts) %></dc:creator>
         <description><![CDATA[<%= md_to_html(episode.summary) %>]]></description>
         <enclosure url="<%= static_url(@conn, EpisodeView.audio_url(episode)) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
         <itunes:author><%= PersonView.comma_separated_names(episode.hosts) %></itunes:author>
+        <itunes:image href="<%= static_url(@conn, cover_art_path(episode.podcast, "png")) %>"/>
         <itunes:duration><%= TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
-        <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
+        <itunes:keywords><%= episode.podcast.keywords %></itunes:keywords>
         <itunes:subtitle><%= episode.headline %></itunes:subtitle>
         <itunes:summary><%= md_to_text(episode.summary) %></itunes:summary>
       </item>

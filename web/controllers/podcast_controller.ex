@@ -4,17 +4,14 @@ defmodule Changelog.PodcastController do
   alias Changelog.{Podcast, Episode}
 
   def index(conn, _params) do
-    render(conn, :index, master: Podcast.master)
+    render(conn, :index)
   end
 
   def show(conn, %{"slug" => slug}) do
-    podcast =
-      Podcast.public
-      |> Repo.get_by!(slug: slug)
-      |> Podcast.preload_hosts
+    podcast = get_podcast(slug)
 
     episodes =
-      assoc(podcast, :episodes)
+      podcast_episodes(podcast)
       |> Episode.published
       |> Episode.newest_first
       |> Episode.limit(5)
@@ -26,10 +23,10 @@ defmodule Changelog.PodcastController do
   end
 
   def archive(conn, %{"slug" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: slug)
+    podcast = get_podcast(slug)
 
     episodes =
-      assoc(podcast, :episodes)
+      podcast_episodes(podcast)
       |> Episode.published
       |> Episode.newest_first
       |> Repo.all
@@ -40,10 +37,10 @@ defmodule Changelog.PodcastController do
   end
 
   def feed(conn, %{"slug" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: slug)
+    podcast = get_podcast(slug)
 
     episodes =
-      assoc(podcast, :episodes)
+      podcast_episodes(podcast)
       |> Episode.published
       |> Episode.newest_first
       |> Repo.all
@@ -55,26 +52,21 @@ defmodule Changelog.PodcastController do
     |> render("feed.xml", podcast: podcast, episodes: episodes)
   end
 
-  def master(conn, _params) do
-    episodes =
-      Episode.published
-      |> Episode.newest_first
-      |> Repo.all
-      |> Episode.preload_all
-
-    render(conn, :master, podcast: Podcast.master, episodes: episodes)
+  defp get_podcast(slug) do
+    if slug == "master" do
+      Podcast.master
+    else
+      Podcast.public
+      |> Repo.get_by!(slug: slug)
+      |> Podcast.preload_hosts
+    end
   end
 
-  def master_feed(conn, _params) do
-    episodes =
-      Episode.published
-      |> Episode.newest_first
-      |> Repo.all
-      |> Episode.preload_all
-
-    conn
-    |> put_layout(false)
-    |> put_resp_content_type("application/xml")
-    |> render("master.xml", podcast: Podcast.master, episodes: episodes)
+  defp podcast_episodes(podcast) do
+    if Podcast.is_master(podcast) do
+      from(e in Episode)
+    else
+      assoc(podcast, :episodes)
+    end
   end
 end

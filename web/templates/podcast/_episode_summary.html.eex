@@ -1,10 +1,10 @@
 <article class="episode-summary">
-  <time class="episode-summary_date" datetime="2016-05-16T12:00"><%= Changelog.TimeView.pretty_date(@episode.published_at) %></time>
+  <time class="episode-summary_date" datetime="2016-05-16T12:00"><%= TimeView.pretty_date(@episode.published_at) %></time>
   <div class="episode-summary_content">
     <div class="episode-summary_content_wrap">
       <h3 class="episode-summary_title">
-        <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug) do %>
-            <%= if number = Changelog.EpisodeView.number(@episode) do %>
+        <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>
+            <%= if number = EpisodeView.number(@episode) do %>
                 <span class="episode-summary_title_number">#<%= number %>&nbsp;</span>
             <% end %>
             <%= @episode.title %>
@@ -24,10 +24,10 @@
     <nav class="podcast-menu podcast-menu--episode">
       <h4 class="accessibility-hidden">Episode Navigation</h4>
 
-      <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug), role: "button" do %>
+      <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), role: "button" do %>
         <img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play episode graphic"/><span>Play</span>
       <% end %>
-      <%= link to: episode_path(@conn, :show, @podcast.slug, @episode.slug) do %>
+      <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>
         <img src="<%= static_url(@conn, "/images/details.svg") %>" alt="View details"/><span>Details</span>
       <% end %>
       <button class="podcast-menu_more-button"><img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More options"/></button>
@@ -36,7 +36,7 @@
     <nav class="podcast-menu-tooltip tooltip">
       <h5 class="accessibility-hidden">More Episode Navigation Options</h5>
       <div class="tooltip_links">
-        <%= link "Subscribe", to: subscribe_link(@podcast) %>
+        <%= link "Subscribe", to: subscribe_link(@episode.podcast) %>
         <a href="#">Share episode</a>
         <button>Copy episode link</button>
         <a href="#">Sponsor this podcast</a>

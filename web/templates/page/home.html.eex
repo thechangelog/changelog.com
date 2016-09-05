@@ -50,6 +50,7 @@
 <section class="container" id="shows">
   <h2 class="accessibility-hidden">Podcast Shows</h2>
   <%= for podcast <- @podcasts do %>
-    <%= render(Changelog.PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast) %>
+    <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast) %>
   <% end %>
+  <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: Podcast.master) %>
 </section>

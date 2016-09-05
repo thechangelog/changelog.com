@@ -10,6 +10,6 @@
   </article>
 
   <%= for episode <- @episodes do %>
-    <%= render "_episode_summary.html", conn: @conn, podcast: @podcast, episode: episode %>
+    <%= render "_episode_summary.html", conn: @conn, episode: episode %>
   <% end %>
 </div>

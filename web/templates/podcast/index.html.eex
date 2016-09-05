@@ -3,5 +3,5 @@
   <%= for podcast <- @podcasts do %>
     <%= render "_podcast_summary.html", conn: @conn, podcast: podcast %>
   <% end %>
-  <%= render "_podcast_summary.html", conn: @conn, podcast: @master %>
+  <%= render "_podcast_summary.html", conn: @conn, podcast: Changelog.Podcast.master %>
 </section>

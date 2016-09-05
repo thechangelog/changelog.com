@@ -1,7 +1,7 @@
 defmodule Changelog.PodcastView do
   use Changelog.Web, :view
 
-  alias Changelog.{EpisodeView, PersonView, TimeView, SharedView}
+  alias Changelog.{EpisodeView, PersonView, Podcast, TimeView, SharedView}
 
   def cover_art_path(podcast, extension \\ "svg") do
     "/images/podcasts/#{podcast.slug}-cover-art.#{extension}"
@@ -19,13 +19,9 @@ defmodule Changelog.PodcastView do
     |> String.replace(" ", "-")
   end
 
-  def episode_count(podcast) do
-    Changelog.Podcast.episode_count(podcast)
-  end
-
-  def published_episode_count(podcast) do
-    Changelog.Podcast.published_episode_count(podcast)
-  end
+  def is_master(podcast), do: Podcast.is_master(podcast)
+  def episode_count(podcast), do: Podcast.episode_count(podcast)
+  def published_episode_count(podcast), do: Podcast.published_episode_count(podcast)
 
   def subscribe_link(podcast) do
     page_path(Changelog.Endpoint, :subscribe) <> "##{podcast.slug}"
