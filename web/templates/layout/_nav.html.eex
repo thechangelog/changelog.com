@@ -10,7 +10,6 @@
     <%= link "Advertise", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
   </nav>
   <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
-  <!-- For open state, use .navigation-bar_tray--is-open-->
   <div class="navigation-bar_tray">
     <div class="navigation-tray">
       <h2 class="accessibility-hidden">Site Navigation</h2>

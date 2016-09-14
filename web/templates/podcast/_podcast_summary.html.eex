@@ -5,7 +5,6 @@
         <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="podcast-summary-widget_link">
             <span class="accessibility-hidden">View show page</span>
         </a>
-        <!-- For open state, use .podcast-summary-widget_menu--is-open-->
         <div class="podcast-summary-widget_menu">
           <div class="tooltip tooltip--inline">
             <h3 class="tooltip_heading"><%= @podcast.name %></h3>
@@ -13,7 +12,7 @@
               <h4 class="accessibility-hidden">Podcast Menu</h4>
               <%= if latest = Changelog.Podcast.latest_episode(@podcast) do %>
                 <% latest = latest |> Changelog.Repo.preload(:podcast) %>
-                <%= link "Play latest episode", to: Changelog.EpisodeView.audio_url(latest) %>
+                <%= link "Play latest episode", to: Changelog.EpisodeView.audio_url(latest), data: [play: episode_path(@conn, :play, latest.podcast.slug, latest.slug)] %>
                 <%= link "Latest Episode page", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
               <% end %>
               <%= link "Go to show page", to: podcast_path(@conn, :show, @podcast.slug) %>

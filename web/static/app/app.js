@@ -1,5 +1,8 @@
 import Popper from "popper.js";
 import { u } from "umbrellajs";
+import Player from "components/player";
+
+const player = new Player("#player");
 
 u(".navigation-bar_menu-button").handle("click", function(event) {
   u(".navigation-bar_tray").toggleClass("navigation-bar_tray--is-open");
@@ -16,4 +19,9 @@ u(".podcast-menu_more-button").each(function(node, i) {
   u(node).handle("click", function(event) {
     u(tooltip).toggleClass("tooltip--is-open");
   })
+});
+
+u("body").handle("click", "[data-play]", function(event) {
+  const toPlay = u(event.target).closest("a,button").data("play");
+  player.load(toPlay);
 });

@@ -47,6 +47,7 @@ defmodule Changelog.EpisodeController do
       |> Episode.with_numbered_slug
       |> Episode.newest_first
       |> Episode.previous_to(episode)
+      |> Episode.limit(1)
       |> Repo.one
 
     next =
@@ -55,6 +56,7 @@ defmodule Changelog.EpisodeController do
       |> Episode.with_numbered_slug
       |> Episode.newest_first
       |> Episode.next_after(episode)
+      |> Episode.limit(1)
       |> Repo.one
 
     render conn, "play.json", podcast: podcast, episode: episode, prev: prev, next: next

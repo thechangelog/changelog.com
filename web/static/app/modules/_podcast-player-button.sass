@@ -7,13 +7,16 @@
     align-content: center
     justify-content: center
 
-    &--is-active, &:hover
+    &:hover
         filter: brightness(115%)
         color: $white
 
-    &--play > img
+    &--play > img, &--pause > img
         height: 100%
         width: 100%
+
+    &--is-hidden
+        display: none
 
     &--transport > img
         height: 75%
@@ -24,3 +27,7 @@
         line-height: 1.25rem
         & > img
             height: 1.25rem
+
+    &--episode:not([data-play])
+        filter: brightness(50%)
+        cursor: default

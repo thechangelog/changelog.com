@@ -73,6 +73,7 @@ defmodule Changelog.EpisodeView do
     info = %{
       podcast: podcast.name,
       title: episode.title,
+      number: number(episode),
       duration: episode.duration,
       art_url: static_url(Changelog.Endpoint, "/images/podcasts/#{podcast.slug}-cover-art.svg"),
       audio_url: audio_url(episode),
@@ -82,7 +83,7 @@ defmodule Changelog.EpisodeView do
     info = if prev do
       Map.put(info, :prev, %{
         number: prev.slug,
-        url: episode_path(Changelog.Endpoint, :play, podcast.slug, prev.slug)
+        location: episode_path(Changelog.Endpoint, :play, podcast.slug, prev.slug)
       })
     else
       info
@@ -91,7 +92,7 @@ defmodule Changelog.EpisodeView do
     info = if next do
       Map.put(info, :next, %{
         number: next.slug,
-        url: episode_path(Changelog.Endpoint, :play, podcast.slug, next.slug)
+        location: episode_path(Changelog.Endpoint, :play, podcast.slug, next.slug)
       })
     else
       info

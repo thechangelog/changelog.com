@@ -24,7 +24,7 @@
     <nav class="podcast-menu podcast-menu--episode">
       <h4 class="accessibility-hidden">Episode Navigation</h4>
 
-      <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), role: "button" do %>
+      <%= link to: EpisodeView.audio_url(@episode), data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)], role: "button" do %>
         <img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play episode graphic"/><span>Play</span>
       <% end %>
       <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>

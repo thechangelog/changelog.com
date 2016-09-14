@@ -16,7 +16,7 @@ defmodule Changelog.Endpoint do
   # Nginx will serve these in production.
   if Mix.env == :dev do
     plug Plug.Static,
-      at: "/uploads", from: {:changelog, "priv/uploads"}, gzip: false
+      at: "/uploads", from: {:changelog, "priv/uploads"}, gzip: false, headers: %{"Accept-Ranges" => "bytes"}
   end
 
   # Code reloading can be explicitly enabled under the

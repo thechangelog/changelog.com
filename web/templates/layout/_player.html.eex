@@ -1,28 +1,42 @@
 <div id="player">
-  <!-- For open state, use .podcast-player--is-active-->
-  <figure class="podcast-player">
-    <img class="podcast-player_art" src="<%= static_url(@conn, "/images/podcasts/podcast-cover-art.svg") %>" alt="The Changelog Podcast">
+  <figure class="podcast-player js-player">
+    <img class="podcast-player_art js-player-art">
     <div class="podcast-player_details">
-      <div class="podcast-player_details_title"><span>Now Playing: <b>Changelog #201</b></span>
-        <figcaption>SQLite with Richard Hipp</figcaption>
+      <div class="podcast-player_details_title"><span>Now Playing: <b class="js-player-now-playing"></b></span>
+        <figcaption class="js-player-title"></figcaption>
       </div>
-      <div class="podcast-player_details_share">
+      <!--<div class="podcast-player_details_share">
         <div class="share-podcast">
           <button class="share-podcast_btn"><img src="<%= static_url(@conn, "/images/share.svg") %>" alt="Share episode">Share</button>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="podcast-player_buttons">
-      <button class="podcast-player-button podcast-player-button--episode">#200<img src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Previous episode"/></button>
-      <button class="podcast-player-button podcast-player-button--transport"><img src="<%= static_url(@conn, "/images/podcast-previous-fifteen.svg") %>" alt="Last 15"/></button>
-      <button class="podcast-player-button podcast-player-button--play"><img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play"/></button>
-      <button class="podcast-player-button podcast-player-button--transport"><img src="<%= static_url(@conn, "/images/podcast-next-fifteen.svg") %>" alt="Next 15"/></button>
-      <button class="podcast-player-button podcast-player-button--episode podcast-player-button--is-active"><img class="flip-horizontal" src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Next episode"/>#202</button>
+      <button class="podcast-player-button podcast-player-button--episode js-player-prev-button" title="Listen to the previous episode">
+        <span class="js-player-prev-number"></span><img src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Previous episode"/>
+      </button>
+      <button class="podcast-player-button podcast-player-button--transport js-player-back-button" title="Seek back 15 seconds">
+        <img src="<%= static_url(@conn, "/images/podcast-previous-fifteen.svg") %>" alt="Last 15"/>
+      </button>
+      <button class="podcast-player-button podcast-player-button--play podcast-player-button--is-hidden js-player-play-button">
+        <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play"/>
+      </button>
+      <button class="podcast-player-button podcast-player-button--pause js-player-pause-button">
+        <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Pause"/>
+      </button>
+      <button class="podcast-player-button podcast-player-button--transport js-player-forward-button" title="Seek forward 15 seconds">
+        <img src="<%= static_url(@conn, "/images/podcast-next-fifteen.svg") %>" alt="Next 15"/>
+      </button>
+      <button class="podcast-player-button podcast-player-button--episode js-player-next-button" title="Listen to the next episode">
+        <img class="flip-horizontal" src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Next episode"/><span class="js-player-next-number"></span>
+      </button>
     </div>
     <form class="podcast-player_slider">
-      <div class="range-slider"><span class="range-slider_above">Now playing: Changelog #201</span>
-        <input class="range-slider_range" type="range" value="250" min="0" max="500" onChange=".range-slider_output.value=value"><span class="range-slider_below"> <span>SQLite with Richard Hipp</span>
-          <output><b>43:57</b> / 1:03:32</output></span>
+      <div class="range-slider">
+        <span class="range-slider_above">Now playing: <span class="js-player-now-playing"></span></span>
+        <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="500">
+        <span class="range-slider_below"> <span class="js-player-title"></span>
+          <output><b class="js-player-current">43:57</b> / <span class="js-player-duration">1:03:32</span></output></span>
       </div>
     </form>
   </figure>
