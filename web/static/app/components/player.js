@@ -80,6 +80,7 @@ export default class Player {
     this.nextNumberEl = this.containerEl.find(".js-player-next-number");
     this.nextButtonEl = this.containerEl.find(".js-player-next-button");
     this.scrubberEl = this.containerEl.find(".js-player-scrubber");
+    this.trackEl = this.containerEl.find(".js-player-track");
     this.durationEl = this.containerEl.find(".js-player-duration");
     this.currentEl = this.containerEl.find(".js-player-current");
 
@@ -150,8 +151,10 @@ export default class Player {
   step() {
     const seek = Math.round(this.howl.seek() || 0);
 
-    this.scrubberEl.attr("value", seek);
+    this.scrubberEl.value = seek;
     this.currentEl.text(Episode.formatTime(seek));
+
+    // TODO: Set the width of this.trackEl to be the percentage of episode that current time is at
 
     if (this.howl.playing()) {
       requestAnimationFrame(this.step.bind(this));

@@ -10,6 +10,34 @@ $range-track-height: 2px !default
 $range-label-color: $half-white !default
 $range-label-width: 60px !default
 
+@mixin range-handle()
+    -webkit-appearance: none
+    width: $range-handle-size
+    height: $range-handle-size
+    border: none
+    border-radius: 50%
+    background: $range-handle-color
+    cursor: pointer
+    transition: background .15s ease-in-out
+    position: relative
+    top: -8px
+
+    &:hover
+        background: $range-handle-color-hover
+    &:active
+        background: $range-handle-color-hover
+
+@mixin range-track()
+    -webkit-appearance: none
+    width: $range-width
+    height: $range-track-height
+    cursor: pointer
+    animate: 0.2s
+    background: $range-track-color
+    border-radius: 1px
+    border: none
+    margin: 8px 0
+
 .range-slider
     margin: 0
     width: $range-width
@@ -18,57 +46,48 @@ $range-label-width: 60px !default
         display: flex
         flex-direction: column
 
+    // input[type=range]
     &_range
-        position: relative
         -webkit-appearance: none
-        width: $range-width
-        height: $range-track-height
-        border-radius: 1px
-        background: $range-track-color
+        background: none
+        display: block
+        position: relative
         outline: none
         padding: 0
-        margin: 0.5rem 0
+        margin: 0
+        width: $range-width
 
-        &:after
-            content: ''
-            position: absolute
-            left: 0
-            top: 0
-            background: $green
-            height: $range-track-height
-            border-radius: 1px
-            width: 50%
+        // These have to be done one-by-one because the
+        // browsers don't like this on to be comma-seperated
+        &::-moz-range-track
+            +range-track
+        &::-ms-track
+            +range-track
+        &::-webkit-slider-runnable-track
+            +range-track
 
-        // Range Handle
+        &::-moz-range-thumb
+            +range-handle
+        &::-ms-thumb
+            +range-handle
         &::-webkit-slider-thumb
-            -webkit-appearance: none
-            width: $range-handle-size
-            height: $range-handle-size
-            border-radius: 50%
-            background: $range-handle-color
-            cursor: pointer
-            transition: background .15s ease-in-out
+            +range-handle
 
-        &:hover
-          background: $range-handle-color-hover
+        // Parent
+        &_wrap
+          margin: 3px 0
+          position: relative
 
-    &:active::-webkit-slider-thumb
-        background: $range-handle-color-hover
-
-    &::-moz-range-thumb
-        width: $range-handle-size
-        height: $range-handle-size
-        border: 0
-        border-radius: 50%
-        background: $range-handle-color
-        cursor: pointer
-        transition: background .15s ease-in-out
-
-        &:hover
-          background: $range-handle-color-hover
-
-    &:active::-moz-range-thumb
-        background: $range-handle-color-hover
+          .range-slider_range_track
+              content: ""
+              position: absolute
+              left: 0
+              top: 50%
+              background: $green
+              height: $range-track-height
+              border-radius: 1px
+              width: 0%
+              margin-top: -1px
 
     &_above
         display: none
