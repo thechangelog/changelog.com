@@ -54,7 +54,7 @@ defmodule Changelog.EpisodeController do
       assoc(podcast, :episodes)
       |> Episode.published
       |> Episode.with_numbered_slug
-      |> Episode.newest_first
+      |> Episode.newest_last
       |> Episode.next_after(episode)
       |> Episode.limit(1)
       |> Repo.one
