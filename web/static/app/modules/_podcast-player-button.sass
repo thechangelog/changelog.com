@@ -19,6 +19,8 @@
         transform: rotate(360deg)
 
 .podcast-player-button
+    background: rgba($black, 0.5) center no-repeat
+    border-radius: 200px
     color: $half-white
     padding: 0
     height: 3.85rem
@@ -37,8 +39,7 @@
         color: $white
 
     &--play
-      background: rgba($black, 0.5) url("/images/play.svg") center no-repeat
-      border-radius: 200px
+      background-image: url("/images/play.svg")
 
       &.is-paused
           background-image: url("/images/play.svg")
@@ -64,11 +65,19 @@
     &--is-hidden
         display: none
 
-    &--transport > img
-        height: 75%
-        width: 75%
+    &--forward15, &--back15
+        height: 3rem
+        width: 3rem
+        margin: 0 0.425rem
+
+    &--back15
+        background-image: url("/images/prev-15.svg")
+
+    &--forward15
+        background-image: url("/images/next-15.svg")
 
     &--episode
+        background-color: transparent
         justify-content: space-around
         line-height: 1.25rem
         & > img
