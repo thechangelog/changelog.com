@@ -85,12 +85,16 @@ export default class Player {
     this.currentEl = this.containerEl.find(".js-player-current");
 
     this.playButtonEl = this.containerEl.find(".js-player-play-button");
-    this.pauseButtonEl = this.containerEl.find(".js-player-pause-button");
     this.backButtonEl = this.containerEl.find(".js-player-back-button");
     this.forwardButtonEl = this.containerEl.find(".js-player-forward-button");
 
-    this.playButtonEl.handle("click", () => { this.play(); });
-    this.pauseButtonEl.handle("click", () => { this.pause(); });
+    this.playButtonEl.handle("click", () => {
+      if (this.howl.playing()) {
+        this.pause();
+      } else {
+        this.play();
+      }
+    });
     this.backButtonEl.handle("click", () => { this.seekBy(-15); });
     this.forwardButtonEl.handle("click", () => { this.seekBy(15); });
 
@@ -110,6 +114,7 @@ export default class Player {
       src: [this.current.audio()]
     });
 
+    this.playButtonEl.addClass("is-loading");
     this.howl.once("load", () => { this.play(); });
   }
 
@@ -117,15 +122,13 @@ export default class Player {
     if (!this.howl) return;
     requestAnimationFrame(this.step.bind(this));
     this.howl.play();
-    this.playButtonEl.addClass("podcast-player-button--is-hidden");
-    this.pauseButtonEl.removeClass("podcast-player-button--is-hidden");
+    this.playButtonEl.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
     if (!this.howl) return;
     this.howl.pause();
-    this.playButtonEl.removeClass("podcast-player-button--is-hidden");
-    this.pauseButtonEl.addClass("podcast-player-button--is-hidden");
+    this.playButtonEl.addClass("is-paused").removeClass("is-playing is-loading");
   }
 
   seekBy(to) {

@@ -18,12 +18,9 @@
       <button class="podcast-player-button podcast-player-button--transport js-player-back-button" title="Seek back 15 seconds">
         <img src="<%= static_url(@conn, "/images/podcast-previous-fifteen.svg") %>" alt="Last 15"/>
       </button>
-      <button class="podcast-player-button podcast-player-button--play podcast-player-button--is-hidden js-player-play-button">
-        <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play"/>
-      </button>
-      <button class="podcast-player-button podcast-player-button--pause js-player-pause-button">
-        <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Pause"/>
-      </button>
+
+      <button class="podcast-player-button podcast-player-button--play js-player-play-button"></button>
+
       <button class="podcast-player-button podcast-player-button--transport js-player-forward-button" title="Seek forward 15 seconds">
         <img src="<%= static_url(@conn, "/images/podcast-next-fifteen.svg") %>" alt="Next 15"/>
       </button>

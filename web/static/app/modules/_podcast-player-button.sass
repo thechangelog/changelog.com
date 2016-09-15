@@ -1,3 +1,23 @@
+@-webkit-keyframes spin
+    0%
+        -webkit-transform: rotate(0deg)
+        -ms-transform: rotate(0deg)
+        transform: rotate(0deg)
+    100%
+        -webkit-transform: rotate(360deg)
+        -ms-transform: rotate(360deg)
+        transform: rotate(360deg)
+
+@keyframes spin
+    0%
+        -webkit-transform: rotate(0deg)
+        -ms-transform: rotate(0deg)
+        transform: rotate(0deg)
+    100%
+        -webkit-transform: rotate(360deg)
+        -ms-transform: rotate(360deg)
+        transform: rotate(360deg)
+
 .podcast-player-button
     color: $half-white
     padding: 0
@@ -8,13 +28,38 @@
     justify-content: center
     text-align: center
 
+    img
+      display: block
+      margin: 0 auto
+
     &:hover
         filter: brightness(115%)
         color: $white
 
-    &--play > img, &--pause > img
-        height: 100%
-        width: 100%
+    &--play
+      background: rgba($black, 0.5) url("/images/play.svg") center no-repeat
+      border-radius: 200px
+
+      &.is-paused
+          background-image: url("/images/play.svg")
+          background-size: 18px
+      &.is-playing
+          background-image: url("/images/pause.svg")
+      &.is-loading
+          background-image: url("/images/loading.svg")
+          -webkit-animation: spin 1s ease-in-out infinite
+          animation: spin 1s ease-in-out infinite
+
+          &:after
+              -webkit-animation: spin 1s ease-in-out infinite
+              animation: spin 1s ease-in-out infinite
+              content: ""
+              background: url("/images/loading-2.svg") center no-repeat
+              position: absolute
+              top: 0
+              right: 0
+              bottom: 0
+              left: 0
 
     &--is-hidden
         display: none
