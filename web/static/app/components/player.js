@@ -85,16 +85,17 @@ export default class Player {
     this.currentEl = this.containerEl.find(".js-player-current");
 
     this.playButtonEl = this.containerEl.find(".js-player-play-button");
-    this.playButtonEl.handle("click", () => { this.play(); });
-
     this.pauseButtonEl = this.containerEl.find(".js-player-pause-button");
-    this.pauseButtonEl.handle("click", () => { this.pause(); });
-
     this.backButtonEl = this.containerEl.find(".js-player-back-button");
-    this.backButtonEl.handle("click", () => { this.seekBy(-15); });
-
     this.forwardButtonEl = this.containerEl.find(".js-player-forward-button");
+
+    this.playButtonEl.handle("click", () => { this.play(); });
+    this.pauseButtonEl.handle("click", () => { this.pause(); });
+    this.backButtonEl.handle("click", () => { this.seekBy(-15); });
     this.forwardButtonEl.handle("click", () => { this.seekBy(15); });
+
+    this.scrubberEl.on("input", (event) => { this.scrub(event.target.value); });
+    this.scrubberEl.on("change", (event) => { this.scrubEnd(event.target.value); });
   }
 
   start() {
@@ -150,15 +151,29 @@ export default class Player {
 
   step() {
     const seek = Math.round(this.howl.seek() || 0);
+    const percentComplete = seek / this.current.duration() * 100;
 
-    this.scrubberEl.value = seek;
-    this.currentEl.text(Episode.formatTime(seek));
-
-    // TODO: Set the width of this.trackEl to be the percentage of episode that current time is at
+    if (!this.isScrubbing) {
+      this.currentEl.text(Episode.formatTime(seek));
+      this.scrubberEl.first().value = seek;
+      this.trackEl.first().style.width = `${percentComplete}%`;
+    }
 
     if (this.howl.playing()) {
       requestAnimationFrame(this.step.bind(this));
     }
+  }
+
+  scrub(to) {
+    this.isScrubbing = true;
+    const percentComplete = to / this.current.duration() * 100;
+    this.currentEl.text(Episode.formatTime(to));
+    this.trackEl.first().style.width = `${percentComplete}%`;
+  }
+
+  scrubEnd(to) {
+    this.isScrubbing = false;
+    this.seek(to);
   }
 
   updateUI() {
