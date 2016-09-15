@@ -2,7 +2,8 @@
   <figure class="podcast-player js-player">
     <img class="podcast-player_art js-player-art">
     <div class="podcast-player_details">
-      <div class="podcast-player_details_title"><span>Now Playing: <b class="js-player-now-playing"></b></span>
+      <div class="podcast-player_details_title">
+        <span class="js-player-now-playing"></span>
         <figcaption class="js-player-title"></figcaption>
       </div>
       <!--<div class="podcast-player_details_share">
@@ -26,13 +27,13 @@
     </div>
     <form class="podcast-player_slider">
       <div class="range-slider">
-        <span class="range-slider_above">Now playing: <span class="js-player-now-playing"></span></span>
+        <span class="range-slider_above"><span class="js-player-now-playing"></span></span>
         <div class="range-slider_range_wrap">
           <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="500"/>
           <div class="range-slider_range_track js-player-track"></div>
         </div>
         <span class="range-slider_below"> <span class="js-player-title"></span>
-          <output><b class="js-player-current">43:57</b> / <span class="js-player-duration">1:03:32</span></output></span>
+          <output><b class="js-player-current">0:00</b> / <span class="js-player-duration">0:00</span></output></span>
       </div>
     </form>
   </figure>

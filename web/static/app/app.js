@@ -2,7 +2,7 @@ import Popper from "popper.js";
 import { u } from "umbrellajs";
 import Player from "components/player";
 
-const player = new Player("#player");
+const player = new Player(u("#player"));
 
 u(".navigation-bar_menu-button").handle("click", function(event) {
   u(".navigation-bar_tray").toggleClass("navigation-bar_tray--is-open");

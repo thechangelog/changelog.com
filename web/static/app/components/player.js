@@ -1,75 +1,11 @@
 import Howler from "howler";
-import { ajax, u } from "umbrellajs";
-
+import Episode from "components/episode";
+import { ajax } from "umbrellajs";
 const { Howl } = Howler;
 
-class Episode {
-  static formatTime(secs) {
-    const minutes = Math.floor(secs / 60) || 0;
-    const seconds = (secs - minutes * 60) || 0;
-    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-  }
-
-  constructor(data) {
-    this.prev = data.prev;
-    this.next = data.next;
-    delete data.prev;
-    delete data.nex;
-    this.ep = data;
-  }
-
-  art() {
-    return this.ep.art_url;
-  }
-
-  audio() {
-    return this.ep.audio_url;
-  }
-
-  duration() {
-    return this.ep.duration;
-  }
-
-  hasPrev() {
-    return !!this.prev;
-  }
-
-  hasNext() {
-    return !!this.next;
-  }
-
-  nowPlaying() {
-    if (this.ep.number) {
-      return `${this.ep.podcast} #${this.ep.number}`
-    } else {
-      return this.ep.podcast;
-    }
-  }
-
-  prevNumber() {
-    return `#${this.prev.number}`;
-  }
-
-  prevLocation() {
-    return this.prev.location;
-  }
-
-  nextNumber() {
-    return `#${this.next.number}`;
-  }
-
-  nextLocation() {
-    return this.next.location;
-  }
-
-  title() {
-    return this.ep.title;
-  }
-}
-
 export default class Player {
-  constructor(selector) {
-    this.containerEl = u(selector);
+  constructor(uEl) {
+    this.containerEl = uEl;
     this.playerEl = this.containerEl.find(".js-player");
 
     this.artEl = this.containerEl.find(".js-player-art");
@@ -114,7 +50,6 @@ export default class Player {
       src: [this.current.audio()]
     });
 
-    this.playButtonEl.addClass("is-loading");
     this.howl.once("load", () => { this.play(); });
   }
 
@@ -144,12 +79,51 @@ export default class Player {
   }
 
   load(episode) {
+    this.resetUI();
+    this.playButtonEl.addClass("is-loading");
     ajax(episode, {}, (error, data) => {
       this.current = new Episode(data);
-      this.updateUI();
+      this.loadUI();
       this.show();
       this.start();
-    })
+    });
+  }
+
+  loadUI() {
+    this.artEl.attr("src", this.current.art());
+    this.nowPlayingEl.text("Now Playing: " + this.current.nowPlaying());
+    this.titleEl.text(this.current.title());
+    this.durationEl.text(Episode.formatTime(this.current.duration()));
+    this.scrubberEl.attr("max", this.current.duration());
+
+    if (this.current.hasPrev()) {
+      this.prevNumberEl.text(this.current.prevNumber());
+      this.prevButtonEl.data("play", this.current.prevLocation());
+    } else {
+      this.prevNumberEl.text("");
+      this.prevButtonEl.first().removeAttribute("data-play");
+    }
+
+    if (this.current.hasNext()) {
+      this.nextNumberEl.text(this.current.nextNumber());
+      this.nextButtonEl.data("play", this.current.nextLocation());
+    } else {
+      this.nextNumberEl.text("");
+      this.nextButtonEl.first().removeAttribute("data-play");
+    }
+  }
+
+  resetUI() {
+    this.nowPlayingEl.text("Loading...");
+    this.titleEl.text("");
+    this.currentEl.text("0:00");
+    this.durationEl.text("0:00");
+    this.prevNumberEl.text("");
+    this.prevButtonEl.first().removeAttribute("data-play");
+    this.nextNumberEl.text("");
+    this.nextButtonEl.first().removeAttribute("data-play");
+    this.scrubberEl.first().value = 0;
+    this.trackEl.first().style.width = "0%";
   }
 
   step() {
@@ -177,30 +151,6 @@ export default class Player {
   scrubEnd(to) {
     this.isScrubbing = false;
     this.seek(to);
-  }
-
-  updateUI() {
-    this.artEl.attr("src", this.current.art());
-    this.nowPlayingEl.text(this.current.nowPlaying());
-    this.titleEl.text(this.current.title());
-    this.durationEl.text(Episode.formatTime(this.current.duration()));
-    this.scrubberEl.attr("max", this.current.duration());
-
-    if (this.current.hasPrev()) {
-      this.prevNumberEl.text(this.current.prevNumber());
-      this.prevButtonEl.data("play", this.current.prevLocation());
-    } else {
-      this.prevNumberEl.text("");
-      this.prevButtonEl.first().removeAttribute("data-play");
-    }
-
-    if (this.current.hasNext()) {
-      this.nextNumberEl.text(this.current.nextNumber());
-      this.nextButtonEl.data("play", this.current.nextLocation());
-    } else {
-      this.nextNumberEl.text("");
-      this.nextButtonEl.first().removeAttribute("data-play");
-    }
   }
 
   show() {
