@@ -1,7 +1,7 @@
 .tooltip
     display: none
     background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9))
-    padding: 0.75rem
+    padding: 0.5rem 0.75rem
 
     &--is-open
         display: block
@@ -18,16 +18,68 @@
         margin: 0
 
     &_links > a, &_links > button
-        display: block
-        width: 100%
-        text-align: inherit
-        line-height: 1.6em
-        color: $half-white
+        @extend %display-font
         border-bottom: 1px solid rgba($white, 0.1)
-        padding: 0 !important
+        color: $half-white
+        display: block
+        line-height: 1.6em
+        padding: 0.125em 0 0 !important
+        text-align: inherit
+        width: 100%
 
         &:last-child
             border: none
 
         &:hover
             color: $white
+
+    .tooltip__arrow
+        width: 0
+        height: 0
+        border-style: solid
+        position: absolute
+        // margin: 5px
+
+    &[x-placement^="top"]
+        margin-bottom: 5px
+
+    &[x-placement^="top"] .tooltip__arrow
+        border-width: 5px 5px 0 5px
+        border-color: rgba(0,0,0,0.9) transparent transparent transparent
+        bottom: -5px
+        left: calc(50% - 5px)
+        margin-top: 0
+        margin-bottom: 0
+
+    &[x-placement^="bottom"]
+        margin-top: 5px
+
+    &[x-placement^="bottom"] .tooltip__arrow
+        border-width: 0 5px 5px 5px
+        border-color: transparent transparent rgba(0,0,0,0.9) transparent
+        top: -5px
+        left: calc(50% - 5px)
+        margin-top: 0
+        margin-bottom: 0
+
+    &[x-placement^="right"]
+        margin-left: 5px
+
+    &[x-placement^="right"] .tooltip__arrow
+        border-width: 5px 5px 5px 0
+        border-color: transparent rgba(0,0,0,0.9) transparent transparent
+        left: -5px
+        top: calc(50% - 5px)
+        margin-left: 0
+        margin-right: 0
+
+    &[x-placement^="left"]
+        margin-right: 5px
+
+    &[x-placement^="left"] .tooltip__arrow
+        border-width: 5px 0 5px 5px
+        border-color: transparent transparent transparent rgba(0,0,0,0.9)
+        right: -5px
+        top: calc(50% - 5px)
+        margin-left: 0
+        margin-right: 0

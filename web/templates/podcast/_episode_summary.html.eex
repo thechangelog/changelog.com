@@ -41,6 +41,7 @@
           <button>Copy episode link</button>
           <a href="#">Sponsor this podcast</a>
         </div>
+        <div class="tooltip__arrow"></div>
       </nav>
     </nav>
   </div>
