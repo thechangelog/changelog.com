@@ -1,13 +1,17 @@
 .hosts-list
-    display: flex
-    justify-content: space-around
-    align-content: center
+    display: block
     list-style: none
+
+    @media (min-width: $smartphone)
+        align-content: center
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-around
 
     &_item
         display: flex
         flex: 0 0 auto
-        margin: 0 0.5rem
+        margin: 0.5rem
         color: inherit
         font-weight: 500
         font-style: normal
