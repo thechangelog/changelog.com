@@ -1,4 +1,4 @@
-<div id="player">
+<div id="player" data-turbolinks-permanent>
   <figure class="podcast-player js-player">
     <img class="podcast-player_art js-player-art">
     <div class="podcast-player_details">

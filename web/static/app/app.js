@@ -1,4 +1,5 @@
 import Popper from "popper.js";
+import Turbolinks from "turbolinks";
 import { u } from "umbrellajs";
 import Player from "components/player";
 
@@ -25,3 +26,5 @@ u("body").handle("click", "[data-play]", function(event) {
   const toPlay = u(event.target).closest("a,button").data("play");
   player.load(toPlay);
 });
+
+Turbolinks.start();
