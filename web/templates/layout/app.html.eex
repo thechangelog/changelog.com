@@ -25,6 +25,10 @@
     <meta name="twitter:description" content="<%= description(assigns) %>">
     <meta name="twitter:image" content="<%= static_url(@conn, twitter_image(assigns)) %>">
 
+    <%= for feed <- rss_feeds(assigns) do %>
+      <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
+    <% end %>
+
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
     <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
   </head>
