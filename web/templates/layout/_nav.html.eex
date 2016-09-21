@@ -15,7 +15,7 @@
       <h2 class="accessibility-hidden">Site Navigation</h2>
       <div class="navigation-bar">
         <%= link to: "/", class: "navigation-tray_logo navigation-bar_logo" do %>
-          <img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog">
+          <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog"></h1>
         <% end %>
         <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide site navigation menu"></button>
       </div>

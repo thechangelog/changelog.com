@@ -11,12 +11,23 @@
         font-size: 1.15em
 
     &_logo
+        flex: 0 0 auto
+
+        & > h1 > img
+            height: (3.85rem * .9)
+            width: (12.85rem * .9)
+
         @media (min-width: $tablet)
             display: none
 
     & > .navigation-bar
-        padding-top: 0
+        margin-bottom: 1rem
+        padding-top: 0.5rem
         padding-right: 0
+        padding-left: 0.5rem
+
+        @media (min-width: $tablet)
+            margin-bottom: 0
 
     &_content
         display: flex
