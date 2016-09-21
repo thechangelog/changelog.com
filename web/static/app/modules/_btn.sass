@@ -5,8 +5,11 @@
     font-weight: 900
     text-align: center
     color: $white
-    padding: 1.25rem $padding-extra-large
+    padding: 1rem
     background: $green
+
+    @media (min-width: $tablet)
+        font-size: 1.75em
 
     & > img
         padding: 0 0.5rem
@@ -15,7 +18,6 @@
     &--block
         display: block
         width: 100%
-        max-width: 625px
 
     &--show-all
         display: block
@@ -41,18 +43,18 @@
 .btn-container
     max-width: 100%
     padding: 0 0.5rem 1rem 0.5rem
-    margin: 0 -0.5rem
-    display: flex
-    flex-direction: column
+    display: block
 
-    @media (min-width: $tablet)
-        flex-direction: row
-        justify-content: center
+    @media (min-width: $smartphone)
+        display: flex
+        justify-content: space-around
         padding: 0 0 $padding-extra-large 0
 
     & > .btn
+        display: block
         margin: 0 0.5rem 0.5rem 0.5rem
-        flex: 0 0 auto
+        height: auto
 
-        @media (min-width: $tablet)
+        @media (min-width: $smartphone)
+            flex: 0 1 290px
             margin-bottom: 0rem
