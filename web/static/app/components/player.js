@@ -1,109 +1,19 @@
 import Howler from "howler";
-import { ajax, u } from "umbrellajs";
-
+import Episode from "components/episode";
+import { u, ajax } from "umbrellajs";
 const { Howl } = Howler;
-
-class Episode {
-  static formatTime(secs) {
-    const minutes = Math.floor(secs / 60) || 0;
-    const seconds = (secs - minutes * 60) || 0;
-    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-  }
-
-  constructor(data) {
-    this.prev = data.prev;
-    this.next = data.next;
-    delete data.prev;
-    delete data.nex;
-    this.ep = data;
-  }
-
-  art() {
-    return this.ep.art_url;
-  }
-
-  audio() {
-    return this.ep.audio_url;
-  }
-
-  duration() {
-    return this.ep.duration;
-  }
-
-  hasPrev() {
-    return !!this.prev;
-  }
-
-  hasNext() {
-    return !!this.next;
-  }
-
-  nowPlaying() {
-    if (this.ep.number) {
-      return `${this.ep.podcast} #${this.ep.number}`
-    } else {
-      return this.ep.podcast;
-    }
-  }
-
-  prevNumber() {
-    return `#${this.prev.number}`;
-  }
-
-  prevLocation() {
-    return this.prev.location;
-  }
-
-  nextNumber() {
-    return `#${this.next.number}`;
-  }
-
-  nextLocation() {
-    return this.next.location;
-  }
-
-  title() {
-    return this.ep.title;
-  }
-}
 
 export default class Player {
   constructor(selector) {
-    this.containerEl = u(selector);
-    this.playerEl = this.containerEl.find(".js-player");
-
-    this.artEl = this.containerEl.find(".js-player-art");
-    this.nowPlayingEl = this.containerEl.find(".js-player-now-playing");
-    this.titleEl = this.containerEl.find(".js-player-title");
-    this.prevNumberEl = this.containerEl.find(".js-player-prev-number");
-    this.prevButtonEl = this.containerEl.find(".js-player-prev-button");
-    this.nextNumberEl = this.containerEl.find(".js-player-next-number");
-    this.nextButtonEl = this.containerEl.find(".js-player-next-button");
-    this.scrubberEl = this.containerEl.find(".js-player-scrubber");
-    this.trackEl = this.containerEl.find(".js-player-track");
-    this.durationEl = this.containerEl.find(".js-player-duration");
-    this.currentEl = this.containerEl.find(".js-player-current");
-
-    this.playButtonEl = this.containerEl.find(".js-player-play-button");
-    this.backButtonEl = this.containerEl.find(".js-player-back-button");
-    this.forwardButtonEl = this.containerEl.find(".js-player-forward-button");
-
-    this.playButtonEl.handle("click", () => {
-      if (this.howl.playing()) {
-        this.pause();
-      } else {
-        this.play();
-      }
-    });
-    this.backButtonEl.handle("click", () => { this.seekBy(-15); });
-    this.forwardButtonEl.handle("click", () => { this.seekBy(15); });
-
-    this.scrubberEl.on("input", (event) => { this.scrub(event.target.value); });
-    this.scrubberEl.on("change", (event) => { this.scrubEnd(event.target.value); });
+    // not using turbolinks:load event because we want this to run exactly once
+    window.onload = () => {
+      this.attachUI(selector);
+      this.attachEvents();
+    }
   }
 
   start() {
-    if (!this.current) return;
+    if (!this.episode) return;
 
     if (this.howl) {
       this.howl.unload();
@@ -111,10 +21,9 @@ export default class Player {
 
     this.howl = new Howl({
       html5: true,
-      src: [this.current.audio()]
+      src: [this.episode.audio()]
     });
 
-    this.playButtonEl.addClass("is-loading");
     this.howl.once("load", () => { this.play(); });
   }
 
@@ -122,13 +31,22 @@ export default class Player {
     if (!this.howl) return;
     requestAnimationFrame(this.step.bind(this));
     this.howl.play();
-    this.playButtonEl.addClass("is-playing").removeClass("is-paused is-loading");
+    this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
     if (!this.howl) return;
     this.howl.pause();
-    this.playButtonEl.addClass("is-paused").removeClass("is-playing is-loading");
+    this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
+  }
+
+  togglePlayPause() {
+    if (!this.howl) return;
+    if (this.howl.playing()) {
+      this.pause();
+    } else {
+      this.play();
+    }
   }
 
   seekBy(to) {
@@ -144,22 +62,88 @@ export default class Player {
   }
 
   load(episode) {
+    this.resetUI();
+    this.playButton.addClass("is-loading");
     ajax(episode, {}, (error, data) => {
-      this.current = new Episode(data);
-      this.updateUI();
+      this.episode = new Episode(data);
+      this.loadUI();
       this.show();
       this.start();
-    })
+    });
+  }
+
+  attachUI(selector) {
+    this.container = u(selector);
+    this.player = this.container.find(".js-player");
+    this.art = this.container.find(".js-player-art");
+    this.nowPlaying = this.container.find(".js-player-now-playing");
+    this.title = this.container.find(".js-player-title");
+    this.prevNumber = this.container.find(".js-player-prev-number");
+    this.prevButton = this.container.find(".js-player-prev-button");
+    this.nextNumber = this.container.find(".js-player-next-number");
+    this.nextButton = this.container.find(".js-player-next-button");
+    this.scrubber = this.container.find(".js-player-scrubber");
+    this.track = this.container.find(".js-player-track");
+    this.duration = this.container.find(".js-player-duration");
+    this.current = this.container.find(".js-player-current");
+    this.playButton = this.container.find(".js-player-play-button");
+    this.backButton = this.container.find(".js-player-back-button");
+    this.forwardButton = this.container.find(".js-player-forward-button");
+  }
+
+  attachEvents() {
+    this.playButton.handle("click", () => { this.togglePlayPause(); });
+    this.backButton.handle("click", () => { this.seekBy(-15); });
+    this.forwardButton.handle("click", () => { this.seekBy(15); });
+    this.scrubber.on("input", (event) => { this.scrub(event.target.value); });
+    this.scrubber.on("change", (event) => { this.scrubEnd(event.target.value); });
+  }
+
+  loadUI() {
+    this.art.attr("src", this.episode.art());
+    this.nowPlaying.text("Now Playing: " + this.episode.nowPlaying());
+    this.title.text(this.episode.title());
+    this.duration.text(Episode.formatTime(this.episode.duration()));
+    this.scrubber.attr("max", this.episode.duration());
+
+    if (this.episode.hasPrev()) {
+      this.prevNumber.text(this.episode.prevNumber());
+      this.prevButton.data("play", this.episode.prevLocation());
+    } else {
+      this.prevNumber.text("");
+      this.prevButton.first().removeAttribute("data-play");
+    }
+
+    if (this.episode.hasNext()) {
+      this.nextNumber.text(this.episode.nextNumber());
+      this.nextButton.data("play", this.episode.nextLocation());
+    } else {
+      this.nextNumber.text("");
+      this.nextButton.first().removeAttribute("data-play");
+    }
+  }
+
+  resetUI() {
+    this.nowPlaying.text("Loading...");
+    this.title.text("");
+    this.current.text("0:00");
+    this.duration.text("0:00");
+    this.prevNumber.text("");
+    this.prevButton.first().removeAttribute("data-play");
+    this.nextNumber.text("");
+    this.nextButton.first().removeAttribute("data-play");
+    this.scrubber.first().value = 0;
+    this.track.first().style.width = "0%";
   }
 
   step() {
     const seek = Math.round(this.howl.seek() || 0);
-    const percentComplete = seek / this.current.duration() * 100;
+    const percentComplete = seek / this.episode.duration() * 100;
 
     if (!this.isScrubbing) {
-      this.currentEl.text(Episode.formatTime(seek));
-      this.scrubberEl.first().value = seek;
-      this.trackEl.first().style.width = `${percentComplete}%`;
+      this.current.text(Episode.formatTime(seek));
+      this.scrubber.first().value = seek;
+      this.track.first().style.width = `${percentComplete}%`;
     }
 
     if (this.howl.playing()) {
@@ -169,9 +153,9 @@ export default class Player {
 
   scrub(to) {
     this.isScrubbing = true;
-    const percentComplete = to / this.current.duration() * 100;
-    this.currentEl.text(Episode.formatTime(to));
-    this.trackEl.first().style.width = `${percentComplete}%`;
+    const percentComplete = to / this.episode.duration() * 100;
+    this.current.text(Episode.formatTime(to));
+    this.track.first().style.width = `${percentComplete}%`;
   }
 
   scrubEnd(to) {
@@ -179,35 +163,11 @@ export default class Player {
     this.seek(to);
   }
 
-  updateUI() {
-    this.artEl.attr("src", this.current.art());
-    this.nowPlayingEl.text(this.current.nowPlaying());
-    this.titleEl.text(this.current.title());
-    this.durationEl.text(Episode.formatTime(this.current.duration()));
-    this.scrubberEl.attr("max", this.current.duration());
-
-    if (this.current.hasPrev()) {
-      this.prevNumberEl.text(this.current.prevNumber());
-      this.prevButtonEl.data("play", this.current.prevLocation());
-    } else {
-      this.prevNumberEl.text("");
-      this.prevButtonEl.first().removeAttribute("data-play");
-    }
-
-    if (this.current.hasNext()) {
-      this.nextNumberEl.text(this.current.nextNumber());
-      this.nextButtonEl.data("play", this.current.nextLocation());
-    } else {
-      this.nextNumberEl.text("");
-      this.nextButtonEl.first().removeAttribute("data-play");
-    }
-  }
-
   show() {
-    this.playerEl.addClass("podcast-player--is-active");
+    this.player.addClass("podcast-player--is-active");
   }
 
   hide() {
-   this.playerEl.removeClass("podcast-player--is-active");
+   this.player.removeClass("podcast-player--is-active");
   }
 }

@@ -25,7 +25,12 @@
     <meta name="twitter:description" content="<%= description(assigns) %>">
     <meta name="twitter:image" content="<%= static_url(@conn, twitter_image(assigns)) %>">
 
+    <%= for feed <- rss_feeds(assigns) do %>
+      <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
+    <% end %>
+
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
+    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
   </head>
   <body><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -36,6 +41,5 @@
     </main>
     <%= render("_footer.html", assigns) %>
     <%= render("_player.html", assigns) %>
-    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

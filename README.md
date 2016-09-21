@@ -1,4 +1,4 @@
-# Changelog CMS
+# 2016.changelog.com
 
 Getting started:
 

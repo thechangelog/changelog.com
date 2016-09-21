@@ -58,7 +58,7 @@
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
         <div class="episode-footer-section_content">
-          <h3>Show Guests</h3>
+          <h3>Guests</h3>
           <ul>
           <%= for person <- @episode.guests do %>
             <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links |> raw %></li>
@@ -72,7 +72,7 @@
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/sponsor-gray.svg") %>" alt="Show sponsors"></div>
         <div class="episode-footer-section_content">
-          <h3>Show Sponsors</h3>
+          <h3>Sponsors</h3>
           <dl class="sponsors-list">
           <%= for sponsor <- @episode.episode_sponsors do %>
             <div class="sponsors-list_item">
@@ -88,8 +88,8 @@
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
         <div class="episode-footer-section_content">
-          <h3>Show Notes</h3>
-          <%= raw(md_to_html(@episode.notes)) %>
+          <h3>Notes &amp; Links</h3>
+          <%= @episode.notes |> md_to_html |> raw %>
         </div>
       </section>
 

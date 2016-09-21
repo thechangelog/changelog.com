@@ -11,7 +11,7 @@
     <nav class="footer_nav">
       <h2 class="accessibility-hidden">Social Media Links</h2>
       <%= if @current_user && @current_user.admin do %>
-        <%= link "Admin", to: admin_page_path(@conn, :index), class: "footer_link" %>
+        <%= link "Admin", to: admin_page_path(@conn, :index), class: "footer_link", data: [turbolinks: false] %>
       <% end %>
       <a class="footer_link" href="https://twitter.com/changelog">Twitter</a>
       <a class="footer_link" href="https://github.com/thechangelog">GitHub</a>
