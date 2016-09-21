@@ -19,17 +19,31 @@
 
         @media (min-width: 415px)
             display: block
+            position: absolute
+            top: 0
+            left: 0
+
+        @media (min-width: $tablet)
+            position: relative
+
 
     &_details
         background: rgba($black, 0.5)
         display: flex
         flex: 1 1 auto
+        padding: 1em 0
         justify-content: space-between
+        max-width: 100%
+        min-height: 5rem
+
+        @media (min-width: 415px)
+            padding-left: 5rem
 
         @media (min-width: $tablet)
             background: none
             flex: 0 0 auto
             order: 4
+            padding-left: 0
 
         &_title
             flex: 1 1 auto
@@ -38,6 +52,7 @@
             justify-content: center
             margin: 0 1rem
             min-width: 0
+            max-width: 100%
 
             @media(min-width: $tablet)
                 display: none
