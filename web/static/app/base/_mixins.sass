@@ -12,3 +12,20 @@
         left: 0
         right: 0
         bottom: 0
+
+=animate-zoom-out()
+    filter: blur(5px)
+    opacity: 0
+    pointer-events: none
+    transform: scale(1.05)
+    transition: all 0.1s ease-in-out
+    visibility: hidden
+    will-change: transform opacity
+
+    // TODO: This class should probably be abstracted and put in as an argument
+    &--is-open
+        filter: blur(0)
+        opacity: 1
+        pointer-events: inherit
+        transform: scale(1)
+        visibility: visible

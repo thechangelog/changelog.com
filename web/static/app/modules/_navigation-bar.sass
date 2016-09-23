@@ -10,7 +10,11 @@
     z-index: 1000
 
     &_logo
-        flex: 0 0 auto
+        // Push menu button to far right on mobile
+        flex: 1 0 auto
+
+        @media (min-width: $tablet)
+            flex: 0 0 auto
 
         & > h1
             display: flex
@@ -41,13 +45,13 @@
             margin-left: auto
 
     &_tray
-        display: none
+        +animate-zoom-out()
         overflow: hidden
+        padding: 0.9rem
+        position: fixed
+        top: 0
+        right: 0
+        left: 0
 
         &--is-open
-            display: block
-            position: absolute
-            top: 0
-            left: 0
-            right: 0
-            padding: 0.9rem
+            // Things are happening in the mixin above
