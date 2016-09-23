@@ -13,7 +13,8 @@
         right: 0
         bottom: 0
 
-=animate-zoom-out()
+// Used on the "Navigation Bar Tray", etc.
+=animate-zoom-out($adjuster-class)
     filter: blur(5px)
     opacity: 0
     pointer-events: none
@@ -22,10 +23,26 @@
     visibility: hidden
     will-change: transform opacity
 
-    // TODO: This class should probably be abstracted and put in as an argument
-    &--is-open
+    #{$adjuster-class}
         filter: blur(0)
         opacity: 1
         pointer-events: inherit
         transform: scale(1)
+        visibility: visible
+
+// Used on the audio player, etc.
+=animate-up($adjuster-class)
+    filter: blur(5px)
+    opacity: 0
+    pointer-events: none
+    transition: all 0.1s ease-in-out
+    transform: translateY(100%) scale(1.01)
+    visibility: hidden
+    will-change: transform opacity
+
+    #{$adjuster-class}
+        filter: blur(0)
+        opacity: 1
+        pointer-events: inherit
+        transform: translateY(0) scale(1)
         visibility: visible
