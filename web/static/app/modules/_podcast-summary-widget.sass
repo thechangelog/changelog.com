@@ -54,5 +54,7 @@
         @media (min-width: $tablet + 100)
             display: flex
 
-        &--is-open
-            // Things are happening in the mixin above
+        // We're using the tooltips styling here,
+           but don't want the bottom borders
+        .tooltip_links > a, .tooltip_links > button
+            border-bottom: 0
