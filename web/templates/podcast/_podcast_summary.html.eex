@@ -12,10 +12,10 @@
               <h4 class="accessibility-hidden">Podcast Menu</h4>
               <%= if latest = Changelog.Podcast.latest_episode(@podcast) do %>
                 <% latest = latest |> Changelog.Repo.preload(:podcast) %>
-                <%= link "Play latest episode", to: Changelog.EpisodeView.audio_url(latest), data: [play: episode_path(@conn, :play, latest.podcast.slug, latest.slug)] %>
-                <%= link "Latest Episode page", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
+                <%= link "Play Latest", to: Changelog.EpisodeView.audio_url(latest), data: [play: episode_path(@conn, :play, latest.podcast.slug, latest.slug)] %>
+                <%= link "View Latest", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
               <% end %>
-              <%= link "Go to show page", to: podcast_path(@conn, :show, @podcast.slug) %>
+              <%= link "View Podcast", to: podcast_path(@conn, :show, @podcast.slug) %>
               <%= link "Subscribe", to: subscribe_link(@podcast) %>
             </nav>
           </div>
