@@ -12,3 +12,37 @@
         left: 0
         right: 0
         bottom: 0
+
+// Used on the "Navigation Bar Tray", etc.
+=animate-zoom-out($adjuster-class)
+    filter: blur(5px)
+    opacity: 0
+    pointer-events: none
+    transform: scale(1.05)
+    transition: all 0.1s ease-in-out
+    visibility: hidden
+    will-change: transform opacity
+
+    #{$adjuster-class}
+        filter: blur(0)
+        opacity: 1
+        pointer-events: inherit
+        transform: scale(1)
+        visibility: visible
+
+// Used on the audio player, etc.
+=animate-up($adjuster-class)
+    filter: blur(5px)
+    opacity: 0
+    pointer-events: none
+    transition: all 0.1s ease-in-out
+    transform: translateY(100%) scale(1.01)
+    visibility: hidden
+    will-change: transform opacity
+
+    #{$adjuster-class}
+        filter: blur(0)
+        opacity: 1
+        pointer-events: inherit
+        transform: translateY(0) scale(1)
+        visibility: visible

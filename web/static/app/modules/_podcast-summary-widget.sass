@@ -1,5 +1,6 @@
 .podcast-summary-widget
     +aspect-ratio(1, 1, 'content')
+    overflow: hidden
 
     &_toggle
         display: none
@@ -36,8 +37,10 @@
             background-image: url(/images/podcasts/#{$podcast}-cover-art.svg)
 
     &_menu
-        display: none
+        +animate-zoom-out("&--is-open")
         @extend %display-font
+        align-items: center
+        background: #000
         text-align: center
         position: absolute
         top: 0
@@ -45,6 +48,13 @@
         bottom: 0
         right: 0
 
-        &--is-open
-            @media (min-width: $tablet + 100)
-                display: flex
+        // We don't show the toggles on smaller sizes so
+           don't show this (in case it was already opened)
+        display: none
+        @media (min-width: $tablet + 100)
+            display: flex
+
+        // We're using the tooltips styling here,
+           but don't want the bottom borders
+        .tooltip_links > a, .tooltip_links > button
+            border-bottom: 0

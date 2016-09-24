@@ -35,12 +35,14 @@
 
     & > a, & > button
         @extend %display-font
-        flex: 1 0 auto
         color: $half-white
+        display: flex
+        flex: 1 0 auto
+        font-size: 1.15em
         padding: 1.15rem
-        display: block
         align-items: center
         position: relative
+        justify-content: center
 
         &:hover
             color: $white
