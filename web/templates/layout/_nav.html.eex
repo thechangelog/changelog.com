@@ -25,7 +25,7 @@
             <header>
               <img src="<%= static_url(@conn, "/images/logo-changelog-white.svg") %>" alt="The Changelog">
             </header>
-            <p>The Changelog is a member supported blog, weekly newsletter and podcast that covers the intersection of software development and open source. Open source moves fast. Keep up.</p>
+            <p>Changelog is a developer-focused media company that delivers podcasts, news, and films to developers all over the world. We exist to enrich the lives of developers. Hacker to the heart.</p>
           </aside>
           <nav class="navigation-tray-section">
             <header>
