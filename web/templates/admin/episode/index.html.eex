@@ -12,6 +12,6 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@episodes) do %>
   <%= render "_table.html", conn: @conn, podcast: @podcast, episodes: @episodes %>
-  <%= pagination_links @conn, @page, [@podcast], path: &admin_podcast_episode_path/4 %>
+  <%= pagination_links @conn, @page, [@podcast.slug], path: &admin_podcast_episode_path/4 %>
 <% end %>
 </div>
