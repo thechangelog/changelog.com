@@ -1,0 +1,7 @@
+<ul>
+<%= for issue <- @issues do %>
+  <li>
+    <%= link issue["Name"], to: issue["WebVersionURL"] %> &mdash; <%= TimeView.pretty_date(issue["SentDate"]) %>
+  </li>
+<% end %>
+</ul>
