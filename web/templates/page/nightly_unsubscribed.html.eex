@@ -1,9 +1,14 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2></h2>
+      <h3>WAT!? You’ve unsubscribed?</h3>
     </header>
     <div class="content_body">
+      <p>We're sorry to see you go, but if you must, we can’t stop you.</p>
+
+      <p>If you simply couldn't keep up with Nightly's frequency, check out our <%= link "Weekly", to: page_path(@conn, :weekly) %>* newsletter.</p>
+
+      <p><em>*written by real, live humans</em></p>
     </div>
   </div>
 </article>

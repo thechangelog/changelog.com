@@ -1,9 +1,24 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2></h2>
+      <h3>IMPORTANT! Check your email, there's one more step!</h3>
     </header>
     <div class="content_body">
+      <p><em>We require our subscribers to confirm their subscription.</em>
+
+      <p>Please check your email now to confirm your email address and complete the subscription process. Click the link in the email we just sent you and you're done.</p>
+
+      <p><strong>If you do not complete this step, we will not email you.</strong></p>
+
+      <p><a href="/contact/">Get in touch</a> if for some reason you haven't received our confirmation email.</p>
+
+      <hr />
+
+      <h4>Why do we require you to confirm your email address?</h4>
+
+      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else.</p>
+
+      <p>By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is in fact the owner of the email address we will send our emails to, and are explicitly opting in to receive our emails.</p>
     </div>
   </div>
 </article>
