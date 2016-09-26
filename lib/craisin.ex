@@ -3,14 +3,16 @@ defmodule Craisin do
 
   require Logger
 
-  @auth Base.encode64((System.get_env("CM_API_TOKEN") || "") <> ":x")
+  defp auth do
+    Base.encode64((System.get_env("CM_API_TOKEN") || "") <> ":x")
+  end
 
   defp process_url(url) do
     "https://api.createsend.com/api/v3.1/#{url}.json"
   end
 
   defp process_request_headers(headers) do
-    Enum.into(headers, [{"Authorization", "Basic #{@auth}"}])
+    Enum.into(headers, [{"Authorization", "Basic #{auth}"}])
   end
 
   defp process_response_body(body), do: JSX.decode!(body)
@@ -26,7 +28,6 @@ defmodule Craisin do
   end
 
   defp log(message) do
-    Logger.debug("CM API TOKEN: #{@auth}")
-    Logger.debug(message)
+    Logger.debug("Craisin: #{message}")
   end
 end
