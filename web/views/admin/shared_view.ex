@@ -14,7 +14,7 @@ defmodule Changelog.Admin.SharedView do
       <div class="fields">
         <div class="three wide field"><%= b.(:month, []) %></div>
         <div class="two wide field"><%= b.(:day, []) %></div>
-        <div class="two wide field"><%= b.(:year, []) %></div> at
+        <div class="two wide field"><%= b.(:year, [options: 2008..2025]) %></div> at
         <div class="two wide field"><%= b.(:hour, []) %></div>:
         <div class="two wide field"><%= b.(:minute, []) %></div>&nbsp;UTC
       </div>
