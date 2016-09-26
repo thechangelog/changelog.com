@@ -7,8 +7,9 @@ defmodule Changelog.PageController do
   # all others simply render the template of the same name
   def action(conn, params) do
     case action_name(conn) do
-      :home -> home(conn, params)
-      action -> render(conn, action)
+      :home           -> home(conn, params)
+      :weekly_archive -> weekly_archive(conn, params)
+      action          -> render(conn, action)
     end
   end
 
@@ -23,5 +24,18 @@ defmodule Changelog.PageController do
       |> Episode.preload_sponsors
 
     render(conn, :home, featured: featured)
+  end
+
+  def weekly_archive(conn, _params) do
+    issues =
+      ConCache.get_or_store(:app_cache, "weekly_archive", fn() ->
+        campaigns =
+          Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
+          |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
+
+        %ConCache.Item{value: campaigns, ttl: :timer.hours(24)}
+      end)
+
+    render(conn, :weekly_archive, issues: issues)
   end
 end

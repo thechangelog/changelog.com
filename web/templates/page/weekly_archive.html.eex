@@ -1,0 +1,17 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Changelog Weekly &ndash; Archive</h2>
+    </header>
+    <div class="content_body">
+      <p>This is the archive for Changelog Weekly, our free email sent every weekend covering what’s fresh and new in open source.</p>
+
+      <p>If you’re not a subscriber yet, <%= link "subscribe here", to: page_path(@conn, :weekly) %>.</p>
+      <ul>
+      <%= for issue <- @issues do %>
+        <li><%= link issue["Name"], to: issue["WebVersionURL"] %> &mdash; <%= TimeView.pretty_date(issue["SentDate"]) %></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</article>
