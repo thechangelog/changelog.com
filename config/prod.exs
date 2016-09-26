@@ -10,7 +10,7 @@ config :changelog, Changelog.Endpoint,
 
 # Temporary log debug, replace with commented logger once app is stable and ready to go live
 # config :logger, level: :info
-config :logger, :console, level: :info, format: "[$level] $message\n"
+config :logger, :console, level: :debug, format: "[$level] $message\n"
 
 # Temporary production debug, remove once app is stable and ready to go live
 config :phoenix, :stacktrace_depth, 10
