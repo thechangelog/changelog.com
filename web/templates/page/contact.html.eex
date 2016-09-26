@@ -1,0 +1,33 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Contact Us</h2>
+    </header>
+    <div class="content_body">
+      <p><a href="https://github.com/thechangelog/ping">Get in touch publicly through a GitHub issue</a> to share projects, news, or tips.</p>
+
+      <p>However if you need to get in touch privately, please complete the form below.</p>
+
+      <div id="wufoo-k7x1s7">
+      Fill out my <a href="http://riznmedia.wufoo.com/forms/k7x1s7">online form</a>.
+      </div>
+
+      <script type="text/javascript">var k7x1s7;(function(d, t) {
+      var s = d.createElement(t), options = {
+      'userName':'riznmedia',
+      'formHash':'k7x1s7',
+      'autoResize':true,
+      'height':'768',
+      'async':true,
+      'header':'hide',
+      'ssl':true};
+      s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'wufoo.com/scripts/embed/form.js';
+      s.onload = s.onreadystatechange = function() {
+      var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
+      try { k7x1s7 = new WufooForm();k7x1s7.initialize(options);k7x1s7.display(); } catch (e) {}};
+      var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
+      })(document, 'script');</script>
+
+    </div>
+  </div>
+</article>
