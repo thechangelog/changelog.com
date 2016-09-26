@@ -1,0 +1,33 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Changelog Soundcheck</h2>
+    </header>
+    <div class="content_body">
+      <p>First off, thank you for joining us on the show!</p>
+
+      <p>We take our audio seriously, so we've prepared these instructions to help you get setup and sound your best on the show. Please take 5 minutes and read through and follow the instructions.</p>
+
+      <p>If you need help? Contact <a href="https://twitter.com/adamstac">Adam</a> or <a href="https://twitter.com/jerodsanto">Jerod</a>.</p>
+
+      <h3>Todo list for getting setup</h3>
+
+      <p>Make sure you have the following and also can record your side of the audio.</p>
+
+      <ul>
+        <li>Have a reliable internet connection. We prefer wired, but if you know/trust your wireless connection, we'll trust your choice.</li>
+        <li>You'll need a <a href="https://www.skype.com/">Skype</a> account. Let us know your Skype username/handle via email right away so we can add you as a contact (or add us as mentioned below). If we don't add you as a contact, we won't be able to call you.</li>
+        <li>For The Changelog, add <code>changelog-2</code> as a contact.</li>
+        <li>For Go Time, add <code>changelog-4</code> as a contact.</li>
+        <li>For Request For Commits, add <code>changelog-3</code> as a contact.</li>
+        <li>Use a good USB microphone, USB headset, or the ever trusty MacBook Pro mic.</li>
+        <li>You'll need headphones! Yes, headphones are required. Over the ear headphones are preferred.</li>
+        <li>Be in a quiet place when you record. Use your best judgment.</li>
+        <li>Silence and Airplane mode your mobile device (they interfere with the audio)</li>
+        <li>Be ready on Skype approximately 5-10 minutes prior to the call for a quick soundcheck.</li>
+        <li>We will contact you on Skype before the show starts. Please, do not call us. We'll likely be preparing to start the show.</li>
+        <li>Relax. Have fun. Bring your opinions.</li>
+      </ul>
+    </div>
+  </div>
+</article>
