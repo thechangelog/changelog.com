@@ -17,11 +17,16 @@ defmodule Craisin do
 
   def handle({:ok, %HTTPoison.Response{status_code: 200, body: body}}), do: body
   def handle({:ok, %HTTPoison.Response{status_code: 401, body: body}}) do
-    Logger.debug(body["Message"])
+    log(body["Message"])
     %{}
   end
   def handle({:error, %HTTPoison.Error{reason: reason}}) do
-    Logger.debug(elem(reason, 1))
+    log(elem(reason, 1))
     %{}
+  end
+
+  defp log(message) do
+    Logger.debug("CM API TOKEN: #{@auth}")
+    Logger.debug(message)
   end
 end
