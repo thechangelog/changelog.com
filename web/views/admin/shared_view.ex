@@ -1,6 +1,13 @@
 defmodule Changelog.Admin.SharedView do
   use Phoenix.HTML
 
+  alias Changelog.Repo
+
+  def channel_from_model_or_params(model, params) do
+    (model |> Repo.preload(:channel)).channel ||
+      Repo.get(Changelog.Channel, (Map.get(model, "channel_id") || params["channel_id"]))
+  end
+
   def semantic_datetime_select(form, field, opts \\ []) do
     builder = fn b ->
       ~e"""

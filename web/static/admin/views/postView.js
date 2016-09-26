@@ -6,7 +6,7 @@ export default class PostView {
     $(".remote.search.dropdown").dropdown({
       fields: {name: "title", value: "id"},
       apiSettings: {
-        url: `/admin/search?t=person&q={query}`
+        url: `/admin/search/person?q={query}&f=json`
       }
     });
 
@@ -15,6 +15,6 @@ export default class PostView {
   }
 
   edit() {
-    this.new()
+    this.new();
   }
 }

@@ -16,7 +16,11 @@
     <div class="ui fluid remote search selection dropdown">
       <%= hidden_input f, :author_id %>
       <i class="dropdown icon"></i>
-      <div class="default text">Select Author</div>
+      <%= if is_persisted(f.data) do %>
+        <div class="selected text"><%= f.data.author.name %></div>
+      <% else %>
+        <div class="default text">Select Author</div>
+      <% end %>
     </div>
     <%= error_message(f, :author_id) %>
   </div>
@@ -26,13 +30,14 @@
 
     <div class="ui horizontal selection list js-channels">
       <%= inputs_for f, :post_channels, fn i -> %>
+        <% channel = channel_from_model_or_params(i.model, i.params) %>
         <div class="item persisted">
           <%= hidden_input i, :channel_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
           <div class="content">
             <a class="ui label">
-              <%= i.model.channel.name %>
+              <%= channel.name %>
               <i class="delete icon js-remove"></i>
               <%= hidden_input i, :delete %>
             </a>

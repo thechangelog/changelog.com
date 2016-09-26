@@ -10,10 +10,6 @@ defmodule Changelog.Admin.EpisodeView do
   def audio_url(episode), do: EpisodeView.audio_url(episode)
   def megabytes(episode), do: EpisodeView.megabytes(episode)
 
-  def channel_from_model_or_params(model, params) do
-    (model |> Repo.preload(:channel)).channel ||
-      Repo.get(Changelog.Channel, (Map.get(model, "channel_id") || params["channel_id"]))
-  end
   def person_from_model_or_params(model, params) do
     (model |> Repo.preload(:person)).person ||
       Repo.get(Changelog.Person, (Map.get(model, "person_id") || params["person_id"]))
