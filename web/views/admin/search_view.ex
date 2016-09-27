@@ -63,7 +63,7 @@ defmodule Changelog.Admin.SearchView do
     %{
       id: episode.id,
       title: Changelog.EpisodeView.numbered_title(episode),
-      url: admin_podcast_episode_path(Endpoint, :edit, episode.podcast, episode)
+      url: admin_podcast_episode_path(Endpoint, :edit, episode.podcast.slug, episode.slug)
     }
   end
 
