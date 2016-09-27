@@ -10,14 +10,14 @@
         <div class="form_element_wrap">
           <label for="name">Name</label>
           <div class="form_element">
-            <input id="fieldName" name="cm-name" type="text" placeholder="Full name..." class="form-text-input" />
+            <input id="fieldName" name="cm-name" type="text" placeholder="Full name..." />
           </div>
         </div>
 
         <div class="form_element_wrap">
           <label>Email<span>*</span></label>
           <div class="form_element">
-            <input id="fieldEmail" name="cm-hhatl-hhatl" type="email" class="form-text-input" placeholder="Email address..." required />
+            <input id="fieldEmail" name="cm-hhatl-hhatl" type="email" placeholder="Email address..." required />
           </div>
         </div>
 
@@ -52,7 +52,7 @@
 
       <h4>Is my email address safe?</h4>
 
-      <p>Yes. <a href="https://changelog.com/changeloggers/">We're a trustworthy team.</a></p>
+      <p>Yes. <%= link "We're a trustworthy team.", to: page_path(@conn, :team) %></p>
 
       <p>We take the security and safety of our subscribers very seriously. Our subscribers' email addresses are stored securely by our Partner <a href="https://changelog.com/r/campaignmonitor">Campaign Monitor</a> and have not and will not be sold or rented to any third party. Ever.</p>
 
@@ -66,7 +66,7 @@
 
       <h4>Can I sponsor Changelog Nightly?</h4>
 
-      <p>Maybe in the future. In the meantime, <a href="https://changelog.com/sponsorship/">learn more about our sponsorship options here.</a></p>
+      <p>Maybe in the future. In the meantime, <%= link "learn more about our sponsorship options here.", to: page_path(@conn, :sponsorship) %></p>
 
       <h4>Why do we require you to confirm your email address?</h4>
 

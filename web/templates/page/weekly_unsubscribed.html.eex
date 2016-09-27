@@ -1,9 +1,17 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2></h2>
+      <h3>WAT!? You've unsubscribed?</h3>
     </header>
     <div class="content_body">
+      <p><em>I'm sorry to see you go, but if you must, I can't stop you.</em></p>
+
+      <p>If you would like to <%= link "get in touch", to: page_path(@conn, :contact) %> to let me know why you've unsubscribed, it would be helpful for me to improve The Changelog Weekly. If you've unsubscribed in error or you've changed your mind, you can <%= link "subscribe here", to: page_path(@conn, :weekly) %>.</p>
+
+      <p>Thank you for your support,</p>
+
+      <p><strong>Adam Stacoviak</strong><br />
+      <i>Founder &amp; Editor-in-Chief</i></p>
     </div>
   </div>
 </article>

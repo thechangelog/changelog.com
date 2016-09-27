@@ -1,9 +1,41 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2></h2>
+      <h2>Subscription Confirmed</h2>
     </header>
     <div class="content_body">
+      <p>Thank you for subscribing! Your subscription has been confirmed.</p>
+
+      <p>If you're on Twitter, could you help us spread the word by letting your followers know you've subscribed to Changelog Weekly?</p>
+
+      <p style="margin-bottom:10px!important;"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://changelog.com/weekly/" data-text="Just subscribed to Changelog Weekly. It's the best highly curated OSS focused newsletter out there!" data-via="changelog" data-size="large">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
+
+      <p>Click the button above and Twitter will let you edit the tweet before you send it.</p>
+
+      <p>While you're at it, you should follow us too if you don't already.</p>
+
+      <p style="margin-bottom:0!important;"><a href="https://twitter.com/changelog" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @Changelog</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
+
+      <hr />
+
+      <h4>Browse the Archive</h4>
+
+      <p><%= link "Browse the archive", to: page_path(@conn, :weekly_archive) %> to check out our past issues.</p>
+
+      <h4>Share your news</h4>
+
+      <p><a href="https://github.com/thechangelog/ping/issues">Get in touch</a> to share projects, news, feedback, guest suggestions.</p>
+
+      <h4>Become a Member</h4>
+
+
+      <p><%= link "Become a member", to: page_path(@conn, :membership) %> to get access to special offers from our trusted partners like Codeship, Toptal, Linode, Datadog, Compose, and more!</p>
+
+      <h4>Become a Sponsor</h4>
+
+      <p><%= link "Become a sponsor", to: page_path(@conn, :sponsorship) %> and we'll help you get the right exposure for your product or service.</p>
     </div>
   </div>
 </article>

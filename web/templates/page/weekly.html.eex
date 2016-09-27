@@ -1,9 +1,59 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2></h2>
+      <h2>Subscribe to Changelog Weekly</h2>
     </header>
     <div class="content_body">
+      <p>Every weekend we ship an email that covers everything that hits our open source radar. It's nerd to the core. Don't miss out. No spam!</p>
+
+      <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form" id="weekly-subscribe">
+        <div class="form_element_wrap">
+          <label>Name</label>
+          <div class="form_element">
+            <input id="fieldName" name="cm-name" type="text" placeholder="Full name..."/>
+          </div>
+        </div>
+
+        <div class="form_element_wrap">
+          <label>Email<span>*</span></label>
+          <div class="form_element">
+            <input id="fieldEmail" name="cm-zjykt-zjykt" type="email" placeholder="Email address..." required />
+          </div>
+        </div>
+
+        <div class="form_submit">
+          <input type="submit" value="Start my Subscription">
+        </div>
+      </form>
+
+      <hr />
+
+      <p>Need a sneak peek? <a href="http://lists.thechangelog.com/t/t-2788B1A6B14682A1">Check out Issue #10</a>, or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
+
+      <a href="http://lists.thechangelog.com/t/t-2788B1A6B14682A1"><img src="https://changelog.com/wp-content/uploads/weekly-preview.png" alt="The Changelog Weekly - Preview" /></a>
+
+      <hr />
+
+      <h4>Is my email address safe?</h4>
+
+      <p>Yes. <a href="/team">We're a trustworthy team.</a></p>
+
+      <p>We take the security and safety of our subscribers very seriously. Our subscribers' email addresses are stored securely by our Partner <a href="https://changelog.com/r/campaignmonitor">Campaign Monitor</a> and have not and will not be sold or rented to any third party. Ever.</p>
+
+      <h4>Is there an archive of past issues?</h4>
+
+      Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %>
+
+      <h4>Can I sponsor a link?</h4>
+
+      Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsorship) %>
+
+      <h4>Why do we require you to confirm your email address?</h4>
+
+      <p>We believe requiring double opt-in to subscribe to our emails will help us to keep subscribers safe from unintentionally subscribing.</p>
+
+      <p>By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is in fact the owner of the email address we will send emails to, and are explicitly opting in to receive our emails.</p>
     </div>
   </div>
 </article>
+
