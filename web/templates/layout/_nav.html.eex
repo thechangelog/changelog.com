@@ -35,7 +35,6 @@
             </header>
             <%= link to: page_path(@conn, :weekly) do %><span>Weekly</span><% end %>
             <%= link to: page_path(@conn, :nightly) do %><span>Nightly</span><% end %>
-            <a href="#"><span>Subscribe</span></a>
           </nav>
           <nav class="navigation-tray-section">
             <header>
@@ -54,9 +53,7 @@
               <img class="mobile-only" src="<%= static_url(@conn, "/images/logo-films-wide-white.svg") %>" alt="">
               <h3 class="accessibility-hidden">Films</h3>
             </header>
-            <a href="#"><span>Featured</span></a>
-            <a href="#"><span>All films</span></a>
-            <a href="#"><span>Subscribe</span></a>
+            <%= link to: page_path(@conn, :films) do %><span>Learn More</span><% end %>
           </nav>
         </div>
         <nav class="navigation-tray-side-nav">
