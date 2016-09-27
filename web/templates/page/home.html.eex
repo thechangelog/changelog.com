@@ -1,9 +1,16 @@
-<%= for episode <- @featured do %>
-<div class="mosaic mosaic--<%= episode.podcast.slug %> mosaic--abstract">
-  <section>
-    <h2 class="accessibility-hidden">Featured Quotes</h2>
-    <article class="featured-podcast">
-      <div class="featured-podcast_content">
+<section class="featured mosaic mosaic--<%#= episode.podcast.slug %> mosaic--abstract">
+  <h2 class="accessibility-hidden">Featured Quotes</h2>
+
+  <div class="featured_nav">
+    <%= if length(@featured) > 1 do %>
+      <button class="js-featured-previous"><img src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show previous featured quote"/></button>
+      <button class="js-featured-next"><img class="flip-horizontal" src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show next featured quote"/></button>
+    <% end %>
+  </div>
+
+  <%= for {episode, index} <- Enum.with_index(@featured) do %>
+    <article class="featured_podcast <%= if index == 0 do %>is-active<% end %>">
+      <div class="featured_podcast_content">
         <q>
           <%= link(EpisodeView.classy_highlight(episode), to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
         </q>
@@ -11,22 +18,16 @@
         <cite><%= episode.subhighlight |> md_to_html |> sans_p_tags |> raw %></cite>
         <% end %>
       </div>
-      <div class="featured-podcast_navigation">
-        <%= if length(@featured) > 1 do %>
-          <button><img src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show previous featured quote"/></button>
-        <% end %>
+      <div class="featured_podcast_navigation">
         <h3>
           <%= link to: episode_path(@conn, :show, episode.podcast.slug, episode.slug) do %>
             <span><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></span>
             <%= episode.headline || episode.title %>
           <% end %>
         </h3>
-        <%= if length(@featured) > 1 do %>
-          <button><img class="flip-horizontal" src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show next featured quote"/></button>
-        <% end %>
       </div>
-      <div class="featured-podcast_footer">
-        <div class="featured-podcast_footer_menu">
+      <div class="featured_podcast_footer">
+        <div class="featured_podcast_footer_menu">
           <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
         </div>
 
@@ -43,9 +44,8 @@
         <% end %>
       </div>
     </article>
-  </section>
-</div>
-<% end %>
+  <% end %>
+</section>
 
 <section class="container" id="podcasts">
   <h2 class="accessibility-hidden">Podcast Shows</h2>
