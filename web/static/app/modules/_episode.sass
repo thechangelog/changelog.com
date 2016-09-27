@@ -5,6 +5,8 @@
     align-items: center
     position: relative
     text-align: center
+    // Push z-index above div.mosaic
+    z-index: 2
 
     & > p
         max-width: $tablet - 90
@@ -83,7 +85,8 @@
         position: relative
         font-size: 1.15em
         width: 100%
-        border-top: 1px solid $border-color
+        border-top: 2px solid $border-color
+        padding-top: 2em
         text-align: left
 
         &:before
