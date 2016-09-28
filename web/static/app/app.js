@@ -39,6 +39,7 @@ u(document).on("turbolinks:load", function() {
     u(".featured_podcast--1").toggleClass("is-active");
     // When this is clicked we should find the next featured_podcast and add ".is-active" to it.
     // We also want to remove ".is-active" from the previouslly active slide
+    // Note: If there are no more next items, maybe it should find the FIRST slide and make that is-active so it's a full loop
   });
   u(document).handle("click", ".js-featured-previous", function(event) {
       // Fake it for CSS building
@@ -46,6 +47,7 @@ u(document).on("turbolinks:load", function() {
       u(".featured_podcast--1").toggleClass("is-active");
       // When this is clicked we should find the previous featured_podcast and add ".is-active" to it.
       // We also want to remove ".is-active" from the previouslly active slide
+      // Note: If there are no more previous items, maybe it should find the LAST slide and make that is-active so it's a full loop
   });
   // On Resize
   // 1. Set height of all .featured_podcast and .featured to "auto"
