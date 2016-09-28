@@ -1,24 +1,62 @@
 .featured
-    &_nav
-        & > button
-            width: 3.2rem
-            height: 3.2rem
+    height: 700px
+    overflow: hidden
+    position: relative
 
-            & > img
-                height: 2.5rem
+    &_nav-previous,
+    &_nav-next
+        position: absolute !important
+        z-index: 5
+        top: 50%
+        left: 0
+        transform: translateY(-50%)
 
-                @media (min-width: $tablet)
-                    height: 3.5rem
+        & > img
+            display: block
+            height: 2.5rem
+
+            @media (min-width: $tablet)
+                height: 3.5rem
+    &_nav-next
+        left: auto
+        right: 0
 
     &_podcast
-        display: none
-        text-align: center
+        min-height: 465px
+        position: absolute !important
+        top: 50%
+        right: 0
+        left: 0
         overflow: hidden
         padding: ($padding-extra-large) 0 0
+        text-align: center
 
-        // Show the first one on page load
+        // Pre animation
+        opacity: 0
+        pointer-events: none
+        transform: translateX(-10px) translateY(-50%)
+        transition: all 0.3s ease-in-out
+        visibility: hidden
+        will-change: transform opacity
+
+        // Post animation
         &.is-active
-            display: block
+            opacity: 1
+            pointer-events: inherit
+            transform: translateX(0) translateY(-50%)
+            visibility: visible
+
+        // Show Colors for Background
+        &--gotime
+            background: rgba(darken($gotime, 52%), 0.5)
+        &--polyglot
+            background: rgba(darken($polyglot, 35%), 0.5)
+        &--rfc
+            background: rgba(darken($rfc, 33%), 0.5)
+        &--founderstalk
+            background: rgba(darken($founderstalk, 43%), 0.5)
+        &--backstage
+            background: rgba(darken($backstage, 30%), 0.5)
 
         @media (min-width: $tablet)
             padding: ($padding-extra-large * 2) 0 ($padding-extra-large * 1.25)

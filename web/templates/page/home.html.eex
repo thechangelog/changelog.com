@@ -1,15 +1,7 @@
 <section class="featured mosaic mosaic--<%#= episode.podcast.slug %> mosaic--abstract">
   <h2 class="accessibility-hidden">Featured Quotes</h2>
-
-  <div class="featured_nav">
-    <%= if length(@featured) > 1 do %>
-      <button class="js-featured-previous"><img src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show previous featured quote"/></button>
-      <button class="js-featured-next"><img class="flip-horizontal" src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show next featured quote"/></button>
-    <% end %>
-  </div>
-
   <%= for {episode, index} <- Enum.with_index(@featured) do %>
-    <article class="featured_podcast <%= if index == 0 do %>is-active<% end %>">
+    <article class="featured_podcast featured_podcast--<%= index %> featured_podcast--<%= episode.podcast.slug %> <%= if index == 0 do %>is-active<% end %>">
       <div class="featured_podcast_content">
         <q>
           <%= link(EpisodeView.classy_highlight(episode), to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
@@ -44,6 +36,10 @@
         <% end %>
       </div>
     </article>
+  <% end %>
+  <%= if length(@featured) > 1 do %>
+    <button class="featured_nav-previous js-featured-previous"><img src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show previous featured quote"/></button>
+    <button class="featured_nav-next js-featured-next"><img class="flip-horizontal" src="<%= static_url(@conn, "/images/arrow-side.svg") %>" alt="Show next featured quote"/></button>
   <% end %>
 </section>
 

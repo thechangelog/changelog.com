@@ -34,10 +34,16 @@ u(document).on("turbolinks:load", function() {
 
   // Homepage Slider
   u(document).handle("click", ".js-featured-next", function(event) {
-      // When this is clicked we should find the next featured_podcast and add ".is-active" to it.
-      // We also want to remove ".is-active" from the previouslly active slide
+    // Fake it for CSS building
+    u(".featured_podcast").removeClass("is-active");
+    u(".featured_podcast--2").addClass("is-active");
+    // When this is clicked we should find the next featured_podcast and add ".is-active" to it.
+    // We also want to remove ".is-active" from the previouslly active slide
   });
   u(document).handle("click", ".js-featured-previous", function(event) {
+      // Fake it for CSS building
+      u(".featured_podcast").removeClass("is-active");
+      u(".featured_podcast--1").addClass("is-active");
       // When this is clicked we should find the previous featured_podcast and add ".is-active" to it.
       // We also want to remove ".is-active" from the previouslly active slide
   });
