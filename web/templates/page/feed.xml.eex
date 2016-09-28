@@ -21,7 +21,7 @@
           <link><%= episode_url(@conn, :show, item.podcast.slug, item.slug) %></link>
           <guid isPermaLink="false"><%= EpisodeView.guid(item) %></guid>
         <% else %>
-          <title><%= item.title  |> html_escape |> safe_to_string %></title>
+          <title><%= item.title |> html_escape |> safe_to_string %></title>
           <author><%= item.author.name %></author>
           <link><%= post_url(@conn, :show, item.slug) %></link>
           <guid isPermaLink="false"><%= PostView.guid(item) %></guid>

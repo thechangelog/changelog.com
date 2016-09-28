@@ -55,6 +55,8 @@ defmodule Changelog.Router do
 
     resources "/channels", ChannelController, only: [:show]
     resources "/people", PersonController, only: [:show]
+
+    get "/posts/feed", PostController, :feed, as: :post
     resources "/posts", PostController, only: [:show]
 
     # static pages

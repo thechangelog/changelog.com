@@ -21,9 +21,15 @@ defmodule Changelog.PostControllerTest do
     end
   end
 
-  # test "getting the posts feed" do
-  #   p = insert(:podcast)
-  #   conn = get build_conn, podcast_feed_path(conn, :feed, p.slug)
-  #   assert conn.status == 200
-  # end
+  test "getting the posts feed" do
+    p1 = insert(:published_post)
+    p2 = insert(:post)
+    p3 = insert(:published_post)
+
+    conn = get(build_conn, post_path(build_conn, :feed))
+    assert conn.status == 200
+    assert conn.resp_body =~ p1.title
+    refute conn.resp_body =~ p2.title
+    assert conn.resp_body =~ p3.title
+  end
 end
