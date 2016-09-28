@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+  xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+>
+  <channel>
+    <title>Changelog</title>
+    <copyright>All rights reserved</copyright>
+    <link><%= page_url(@conn, :home) %></link>
+    <atom:link href="<%= page_url(@conn, :feed) %>" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <description>Hacker to the Heart</description>
+    <%= for item <- @items do %>
+      <item>
+        <%= if item.__struct__ == Changelog.Episode do %>
+          <title><%= item.podcast.name %> <%= EpisodeView.number_with_pound(item) %>: <%= item.title |> html_escape |> safe_to_string %></title>
+          <link><%= episode_url(@conn, :show, item.podcast.slug, item.slug) %></link>
+          <guid isPermaLink="false"><%= EpisodeView.guid(item) %></guid>
+        <% else %>
+          <title><%= item.title  |> html_escape |> safe_to_string %></title>
+          <author><%= item.author.name %></author>
+          <link><%= post_url(@conn, :show, item.slug) %></link>
+          <guid isPermaLink="false"><%= PostView.guid(item) %></guid>
+        <% end %>
+        <pubDate><%= TimeView.rss(item.published_at) %></pubDate>
+        <description></description>
+      </item>
+    <% end %>
+  </channel>
+</rss>

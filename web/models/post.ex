@@ -29,14 +29,23 @@ defmodule Changelog.Post do
     |> cast_assoc(:post_channels)
   end
 
-  def published(query) do
+  def published(query \\ __MODULE__) do
     from p in query, where: p.published == true
+  end
+
+  def newest_first(query \\ __MODULE__) do
+    from p in query, order_by: [desc: p.published_at]
   end
 
   def preload_all(post) do
     post
-    |> Repo.preload(:author)
+    |> preload_author
     |> preload_channels
+  end
+
+  def preload_author(post) do
+    post
+    |> Repo.preload(:author)
   end
 
   def preload_channels(post) do
