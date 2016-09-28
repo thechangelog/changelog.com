@@ -35,18 +35,22 @@ u(document).on("turbolinks:load", function() {
   // Homepage Slider
   u(document).handle("click", ".js-featured-next", function(event) {
     // Fake it for CSS building
-    u(".featured_podcast").removeClass("is-active");
-    u(".featured_podcast--2").addClass("is-active");
+    u(".featured_podcast--0").toggleClass("is-active");
+    u(".featured_podcast--1").toggleClass("is-active");
     // When this is clicked we should find the next featured_podcast and add ".is-active" to it.
     // We also want to remove ".is-active" from the previouslly active slide
   });
   u(document).handle("click", ".js-featured-previous", function(event) {
       // Fake it for CSS building
-      u(".featured_podcast").removeClass("is-active");
-      u(".featured_podcast--1").addClass("is-active");
+      u(".featured_podcast--0").toggleClass("is-active");
+      u(".featured_podcast--1").toggleClass("is-active");
       // When this is clicked we should find the previous featured_podcast and add ".is-active" to it.
       // We also want to remove ".is-active" from the previouslly active slide
   });
+  // On Resize
+  // 1. Set height of all .featured_podcast and .featured to "auto"
+  // 2. Find the tallest instance of .featured_podcast
+  // 3. Set height of all .featured_podcast and .featured to value found in step 2
 });
 
 Turbolinks.start();

@@ -22,10 +22,10 @@
         right: 0
 
     &_podcast
-        min-height: 465px
         position: absolute !important
-        top: 50%
+        top: 0
         right: 0
+        bottom: 0
         left: 0
         overflow: hidden
         padding: ($padding-extra-large) 0 0
@@ -34,7 +34,7 @@
         // Pre animation
         opacity: 0
         pointer-events: none
-        transform: translateX(-10px) translateY(-50%)
+        transform: translateX(-10px)
         transition: all 0.3s ease-in-out
         visibility: hidden
         will-change: transform opacity
@@ -43,10 +43,12 @@
         &.is-active
             opacity: 1
             pointer-events: inherit
-            transform: translateX(0) translateY(-50%)
+            transform: translateX(0)
             visibility: visible
 
         // Show Colors for Background
+        &--podcast
+            background: rgba(darken($changelog, 45%), 0.5)
         &--gotime
             background: rgba(darken($gotime, 52%), 0.5)
         &--polyglot
@@ -60,6 +62,13 @@
 
         @media (min-width: $tablet)
             padding: ($padding-extra-large * 2) 0 ($padding-extra-large * 1.25)
+
+        &_wrap
+            position: absolute !important
+            top: 50%
+            right: 0
+            left: 0
+            transform: translateX(-10px) translateY(-50%)
 
         &_content
             max-width: 800px

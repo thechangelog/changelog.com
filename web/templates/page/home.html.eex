@@ -2,38 +2,40 @@
   <h2 class="accessibility-hidden">Featured Quotes</h2>
   <%= for {episode, index} <- Enum.with_index(@featured) do %>
     <article class="featured_podcast featured_podcast--<%= index %> featured_podcast--<%= episode.podcast.slug %> <%= if index == 0 do %>is-active<% end %>">
-      <div class="featured_podcast_content">
-        <q>
-          <%= link(EpisodeView.classy_highlight(episode), to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
-        </q>
-        <%= if episode.subhighlight do %>
-        <cite><%= episode.subhighlight |> md_to_html |> sans_p_tags |> raw %></cite>
-        <% end %>
-      </div>
-      <div class="featured_podcast_navigation">
-        <h3>
-          <%= link to: episode_path(@conn, :show, episode.podcast.slug, episode.slug) do %>
-            <span><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></span>
-            <%= episode.headline || episode.title %>
+      <div class="featured_podcast_wrap">
+        <div class="featured_podcast_content">
+          <q>
+            <%= link(EpisodeView.classy_highlight(episode), to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
+          </q>
+          <%= if episode.subhighlight do %>
+          <cite><%= episode.subhighlight |> md_to_html |> sans_p_tags |> raw %></cite>
           <% end %>
-        </h3>
-      </div>
-      <div class="featured_podcast_footer">
-        <div class="featured_podcast_footer_menu">
-          <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
         </div>
-
-        <% light_logo_sponsorships = EpisodeView.sponsorships_with_light_logo(episode) %>
-        <%= if Enum.any?(light_logo_sponsorships) do %>
-        <aside>
-          <h4>Brought to you by:</h4>
-          <%= for episode_sponsor <- light_logo_sponsorships do %>
-            <%= link to: episode_sponsor.link_url do %>
-            <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :light_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
+        <div class="featured_podcast_navigation">
+          <h3>
+            <%= link to: episode_path(@conn, :show, episode.podcast.slug, episode.slug) do %>
+              <span><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></span>
+              <%= episode.headline || episode.title %>
             <% end %>
+          </h3>
+        </div>
+        <div class="featured_podcast_footer">
+          <div class="featured_podcast_footer_menu">
+            <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
+          </div>
+
+          <% light_logo_sponsorships = EpisodeView.sponsorships_with_light_logo(episode) %>
+          <%= if Enum.any?(light_logo_sponsorships) do %>
+          <aside>
+            <h4>Brought to you by:</h4>
+            <%= for episode_sponsor <- light_logo_sponsorships do %>
+              <%= link to: episode_sponsor.link_url do %>
+              <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :light_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
+              <% end %>
+            <% end %>
+          </aside>
           <% end %>
-        </aside>
-        <% end %>
+        </div>
       </div>
     </article>
   <% end %>
