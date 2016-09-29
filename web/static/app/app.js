@@ -42,10 +42,24 @@ u(document).on("turbolinks:load", function() {
       u(tooltip).toggleClass("tooltip--is-open");
     });
   });
-  // On Resize
-  // 1. Set height of all .featured_podcast and .featured to "auto"
-  // 2. Find the tallest instance of .featured_podcast
-  // 3. Set height of all .featured_podcast and .featured to value found in step 2
 });
+
+// On Resize
+window.onresize = function() {
+  let tallestFeatured = 0;
+  // 1. Set height of all .featured_podcast and .featured to "auto"
+  u(".featured_podcast, .featured").attr("height", "auto");
+
+  // 2. Find the tallest instance of .featured_podcast
+  u(".featured_podcast").each(function(el) {
+    let featuredHeight = u(el).size().height;
+    if (featuredHeight > tallestFeatured) {
+      tallestFeatured = featuredHeight;
+    }
+  });
+
+  // 3. Set height of all .featured_podcast and .featured to value found in step 2
+  u(".featured_podcast, .featured").attr("height", tallestFeatured);
+}
 
 Turbolinks.start();
