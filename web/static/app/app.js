@@ -28,7 +28,7 @@ u(document).handle("click", ".js-featured-previous", function(event) {
   featured.slide(-1);
 });
 
-function tallest_slide() {
+function tallestSlide() {
   let tallestFeatured = 0;
   // 1. Set height of all .featured_podcast and .featured to "auto"
   u(".featured_podcast_wrap, .featured").attr("height", "auto");
@@ -60,12 +60,12 @@ u(document).on("turbolinks:load", function() {
     });
   });
 
-  tallest_slide();
+  tallestSlide();
 });
 
 // On Resize
 window.onresize = function() {
-  tallest_slide();
+  tallestSlide();
 }
 
 Turbolinks.start();
