@@ -2,8 +2,10 @@ import Turbolinks from "turbolinks";
 import Popper from "popper.js";
 import { u } from "umbrellajs";
 import Player from "components/player";
+import Slider from "components/slider";
 
 const player = new Player("#player");
+const featured = new Slider(".featured_podcast");
 
 u(document).handle("click", ".navigation-bar_menu-button", function(event) {
   u(".navigation-bar_tray").toggleClass("navigation-bar_tray--is-open");
@@ -18,6 +20,15 @@ u(document).handle("click", "[data-play]", function(event) {
   player.load(toPlay);
 });
 
+u(document).handle("click", ".js-featured-next", function(event) {
+  featured.slide(+1);
+});
+
+u(document).handle("click", ".js-featured-previous", function(event) {
+  featured.slide(-1);
+});
+
+// On Page Load
 u(document).on("turbolinks:load", function() {
   u(".podcast-menu_more-button").each(function(node, i) {
     const tooltip = u(node).siblings(".podcast-menu-tooltip").first();
@@ -30,24 +41,6 @@ u(document).on("turbolinks:load", function() {
     u(node).handle("click", function(event) {
       u(tooltip).toggleClass("tooltip--is-open");
     });
-  });
-
-  // Homepage Slider
-  u(document).handle("click", ".js-featured-next", function(event) {
-    // Fake it for CSS building
-    u(".featured_podcast--0").toggleClass("is-active");
-    u(".featured_podcast--1").toggleClass("is-active");
-    // When this is clicked we should find the next featured_podcast and add ".is-active" to it.
-    // We also want to remove ".is-active" from the previouslly active slide
-    // Note: If there are no more next items, maybe it should find the FIRST slide and make that is-active so it's a full loop
-  });
-  u(document).handle("click", ".js-featured-previous", function(event) {
-      // Fake it for CSS building
-      u(".featured_podcast--0").toggleClass("is-active");
-      u(".featured_podcast--1").toggleClass("is-active");
-      // When this is clicked we should find the previous featured_podcast and add ".is-active" to it.
-      // We also want to remove ".is-active" from the previouslly active slide
-      // Note: If there are no more previous items, maybe it should find the LAST slide and make that is-active so it's a full loop
   });
   // On Resize
   // 1. Set height of all .featured_podcast and .featured to "auto"
