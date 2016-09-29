@@ -33,7 +33,6 @@
         // Pre animation
         opacity: 0
         pointer-events: none
-        transform: translateX(-10px)
         transition: all 0.3s ease-in-out
         visibility: hidden
         will-change: transform opacity
@@ -42,22 +41,21 @@
         &.is-active
             opacity: 1
             pointer-events: inherit
-            transform: translateX(0)
             visibility: visible
 
         // Show Colors for Background
         &--podcast
-            background: rgba(darken($changelog, 45%), 0.5)
+            background: rgba(darken($changelog, 45%), 0.6)
         &--gotime
-            background: rgba(darken($gotime, 52%), 0.5)
+            background: rgba(darken($gotime, 52%), 0.6)
         &--polyglot
-            background: rgba(darken($polyglot, 35%), 0.5)
+            background: rgba(darken($polyglot, 35%), 0.6)
         &--rfc
-            background: rgba(darken($rfc, 33%), 0.5)
+            background: rgba(darken($rfc, 33%), 0.6)
         &--founderstalk
-            background: rgba(darken($founderstalk, 43%), 0.5)
+            background: rgba(darken($founderstalk, 43%), 0.6)
         &--backstage
-            background: rgba(darken($backstage, 30%), 0.5)
+            background: rgba(darken($backstage, 30%), 0.6)
 
         &_wrap
             position: absolute !important
@@ -116,13 +114,21 @@
                 background-size: 215px
                 height: 215px
                 width: 215px
-                transform: translateY(-50%) translateX(-50%)
                 z-index: -1
 
                 @media (min-width: $tablet)
                     background-size: 430px
                     height: 430px
                     width: 430px
+
+                // Pre animation
+                transform: translateY(-50%) translateX(-50%) rotate(90deg)
+                transition: all 0.3s ease-in-out
+                will-change: transform
+
+            // Post animation
+            .featured_podcast.is-active &:after
+                transform: translateY(-50%) translateX(-50%) rotate(0)
 
             @each $podcast in $podcasts
                 .featured_podcast--#{$podcast} &:after
