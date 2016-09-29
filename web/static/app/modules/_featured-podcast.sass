@@ -1,5 +1,5 @@
 .featured
-    height: 700px
+    height: 500px
     overflow: hidden
     position: relative
 
@@ -28,7 +28,6 @@
         bottom: 0
         left: 0
         overflow: hidden
-        padding: ($padding-extra-large) 0 0
         text-align: center
 
         // Pre animation
@@ -60,15 +59,16 @@
         &--backstage
             background: rgba(darken($backstage, 30%), 0.5)
 
-        @media (min-width: $tablet)
-            padding: ($padding-extra-large * 2) 0 ($padding-extra-large * 1.25)
-
         &_wrap
             position: absolute !important
             top: 50%
             right: 0
             left: 0
             transform: translateX(-10px) translateY(-50%)
+            padding: ($padding-extra-large) 0 0
+
+            @media (min-width: $tablet)
+                padding: ($padding-extra-large * 2) 0 ($padding-extra-large * 1.25)
 
         &_content
             max-width: 800px
