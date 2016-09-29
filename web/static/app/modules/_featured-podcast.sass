@@ -66,10 +66,14 @@
             right: 0
             left: 0
             transform: translateY(-50%)
-            padding: $padding-extra-large 0 0
-
+            padding: ($padding-extra-large*2) 0 0
             @media (min-width: $tablet)
-                padding: $padding-extra-large 0
+                padding: ($padding-extra-large*2) 0
+
+            &--has_sponsors
+                padding: $padding-extra-large 0 0
+                @media (min-width: $tablet)
+                    padding: $padding-extra-large 0
 
         &_content
             max-width: 800px

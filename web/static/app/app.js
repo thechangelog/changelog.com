@@ -30,8 +30,8 @@ u(document).handle("click", ".js-featured-previous", function(event) {
 
 function tallestSlide() {
   let tallestFeatured = 0;
-  // 1. Set height of all .featured_podcast and .featured to "auto"
-  u(".featured_podcast_wrap, .featured").attr("height", "auto");
+  // 1. Set height of .featured to "auto"
+  u(".featured").attr("height", "auto");
 
   // 2. Find the tallest instance of .featured_podcast
   u(".featured_podcast_wrap").each(function(el) {
