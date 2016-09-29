@@ -1,128 +1,189 @@
-.featured-podcast
-    text-align: center
+.featured
+    height: 500px
     overflow: hidden
-    padding: ($padding-extra-large) 0 0
+    position: relative
 
-    @media (min-width: $tablet)
-        padding: ($padding-extra-large * 2) 0 ($padding-extra-large * 1.25)
+    &_nav-previous,
+    &_nav-next
+        position: absolute !important
+        z-index: 5
+        top: 50%
+        left: 0
+        transform: translateY(-50%)
 
-    &_content
-        max-width: 800px
-        margin: 0 auto
-        position: relative
-        padding: 0 $padding-medium $padding-large
-
-        @media (min-width: $tablet)
-            padding: 0 0 $padding-large 0
-
-        & > q
-            & > a
-                color: $white
+        & > img
+            display: block
+            height: 2.5rem
 
             @media (min-width: $tablet)
-                font-size: 2.85em
+                height: 3.5rem
+    &_nav-next
+        left: auto
+        right: 0
 
-            & + cite
-                @media (min-width: $tablet)
-                    font-size: 1.15em
+    &_podcast
+        position: absolute !important
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        overflow: hidden
+        text-align: center
 
-                & > sup
-                    color: $half-white
+        // Pre animation
+        opacity: 0
+        pointer-events: none
+        transition: all 0.3s ease-in-out
+        visibility: hidden
+        will-change: transform opacity
 
-                    @media (min-width: $tablet)
-                        display: inline-block
-                        margin-left: 0.5rem
+        // Post animation
+        &.is-active
+            opacity: 1
+            pointer-events: inherit
+            visibility: visible
 
-    &_navigation
-        display: flex
-        align-items: center
-        justify-content: space-between
-        padding: 0 $padding-medium
-        position: relative
+        // Show Colors for Background
+        &--podcast
+            background: rgba(darken($changelog, 45%), 0.6)
+        &--gotime
+            background: rgba(darken($gotime, 52%), 0.6)
+        &--polyglot
+            background: rgba(darken($polyglot, 35%), 0.6)
+        &--rfc
+            background: rgba(darken($rfc, 33%), 0.6)
+        &--founderstalk
+            background: rgba(darken($founderstalk, 43%), 0.6)
+        &--backstage
+            background: rgba(darken($backstage, 30%), 0.6)
 
-        // Sometimes we want the abstract line art graphics
-        .mosaic--abstract &:after
-            content: ''
-            z-index: 1
-            background-image: url(/images/podcasts/podcast-abstract-art.svg)
-            background-position: center
-            background-repeat: no-repeat
-            opacity: 0.15
-            position: absolute
-            left: 50%
+        &_wrap
+            position: absolute !important
             top: 50%
-            background-size: 215px
-            height: 215px
-            width: 215px
-            transform: translateY(-50%) translateX(-50%)
-            z-index: -1
+            right: 0
+            left: 0
+            transform: translateY(-50%)
+            padding: $padding-extra-large 0 0
 
             @media (min-width: $tablet)
-                background-size: 430px
-                height: 430px
-                width: 430px
+                padding: ($padding-extra-large * 2) 0 0
 
-        @each $podcast in $podcasts
-            .mosaic--abstract.mosaic--#{$podcast} &:after
-                background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)
+        &_content
+            max-width: 800px
+            margin: 0 auto
+            position: relative
+            padding: 0 $padding-large $padding-large
 
-        & > button
-            width: 3.2rem
-            height: 3.2rem
-
-            & > img
-                height: 2.5rem
+            & > q
+                & > a
+                    color: $white
 
                 @media (min-width: $tablet)
-                    height: 3.5rem
+                    font-size: 2.85em
 
-        & > h3
-            font-size: 1em
-            flex: 1 0 auto
-            font-weight: 900
-            z-index: 1
+                & + cite
+                    @media (min-width: $tablet)
+                        font-size: 1.15em
+
+                    & > sup
+                        color: $half-white
+
+                        @media (min-width: $tablet)
+                            display: inline-block
+                            margin-left: 0.5rem
+
+        &_navigation
+            display: flex
+            align-items: center
+            justify-content: space-between
+            // position: relative
+            // Make room (50px) for the arrows on mobile
+            padding: 0 50px
+
+            // Sometimes we want the abstract line art graphics
+            .featured_podcast &:after
+                content: ''
+                z-index: 1
+                background-image: url(/images/podcasts/podcast-abstract-art.svg)
+                background-position: center
+                background-repeat: no-repeat
+                opacity: 0.15
+                position: absolute
+                left: 50%
+                top: 50%
+                background-size: 215px
+                height: 215px
+                width: 215px
+                z-index: -1
+
+                @media (min-width: $tablet)
+                    background-size: 430px
+                    height: 430px
+                    width: 430px
+
+                // Pre animation
+                transform: translateY(-50%) translateX(-50%) rotate(90deg)
+                transition: all 0.3s ease-in-out
+                will-change: transform
+
+            // Post animation
+            .featured_podcast.is-active &:after
+                transform: translateY(-50%) translateX(-50%) rotate(0)
+
+            @each $podcast in $podcasts
+                .featured_podcast--#{$podcast} &:after
+                    background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)
+
+            & > h3
+                font-size: 1.25em
+                flex: 1 0 auto
+                font-weight: 900
+                z-index: 1
+
+                @media (min-width: $tablet)
+                    font-size: 1.5em
+
+                & > a
+                    color: $white
+
+                    & > span
+                        @extend %display-font
+                        color: $half-white
+                        font-size: 0.85em
+                        display: block
+                        margin-bottom: 0.5em
+
+        &_footer
+            margin-top: $padding-large
+            display: flex
+            flex-direction: column
+            align-items: center
 
             @media (min-width: $tablet)
-                font-size: 1.5em
+                margin-top: 0
 
-            & > a
-                color: $white
+            & > *
+                z-index: 1
 
-                & > span
+            &_menu
+                max-width: 100%
+                width: 640px
+
+            & > aside
+                display: none
+                padding: $padding-extra-large 0
+
+                @media (min-width: $tablet)
+                    display: block
+
+                & > h4
                     @extend %display-font
                     color: $half-white
                     font-size: 0.85em
-                    display: block
-                    margin-bottom: 0.5em
+                    margin-top: 0
 
-    &_footer
-        margin-top: $padding-extra-large
-        // padding-bottom: $padding-extra-large * 1.3
-        display: flex
-        flex-direction: column
-        align-items: center
+                & > a
+                    margin: 0 1rem
 
-        @media (min-width: $tablet)
-            margin-top: 0
-
-        & > *
-            z-index: 1
-
-        &_menu
-            max-width: 100%
-            width: 640px
-
-        & > aside
-            padding-top: $padding-extra-large
-
-            & > h4
-                @extend %display-font
-                color: $half-white
-                font-size: 0.85em
-                margin-top: 0
-
-            & > a
-                margin: 0 1rem
-
-            & img
-                height: 1.5rem
+                & img
+                    height: 1.5rem

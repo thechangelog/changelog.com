@@ -2,8 +2,10 @@ import Turbolinks from "turbolinks";
 import Popper from "popper.js";
 import { u } from "umbrellajs";
 import Player from "components/player";
+import Slider from "components/slider";
 
 const player = new Player("#player");
+const featured = new Slider(".featured_podcast");
 
 u(document).handle("click", ".navigation-bar_menu-button", function(event) {
   u(".navigation-bar_tray").toggleClass("navigation-bar_tray--is-open");
@@ -18,6 +20,32 @@ u(document).handle("click", "[data-play]", function(event) {
   player.load(toPlay);
 });
 
+u(document).handle("click", ".js-featured-next", function(event) {
+  featured.slide(+1);
+});
+
+u(document).handle("click", ".js-featured-previous", function(event) {
+  featured.slide(-1);
+});
+
+function tallestSlide() {
+  let tallestFeatured = 0;
+  // 1. Set height of all .featured_podcast and .featured to "auto"
+  u(".featured_podcast_wrap, .featured").attr("height", "auto");
+
+  // 2. Find the tallest instance of .featured_podcast
+  u(".featured_podcast_wrap").each(function(el) {
+    let featuredHeight = u(el).size().height;
+    if (featuredHeight > tallestFeatured) {
+      tallestFeatured = featuredHeight;
+    }
+  });
+
+  // 3. Set height of all .featured_podcast and .featured to value found in step 2
+  u(".featured").attr("style", "height: " + tallestFeatured + "px;");
+}
+
+// On Page Load
 u(document).on("turbolinks:load", function() {
   u(".podcast-menu_more-button").each(function(node, i) {
     const tooltip = u(node).siblings(".podcast-menu-tooltip").first();
@@ -31,6 +59,13 @@ u(document).on("turbolinks:load", function() {
       u(tooltip).toggleClass("tooltip--is-open");
     });
   });
+
+  tallestSlide();
 });
+
+// On Resize
+window.onresize = function() {
+  tallestSlide();
+}
 
 Turbolinks.start();

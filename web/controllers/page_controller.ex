@@ -42,7 +42,7 @@ defmodule Changelog.PageController do
       Episode.published
       |> Episode.featured
       |> Episode.newest_first
-      |> Episode.limit(1)
+      |> Episode.limit(3)
       |> Repo.all
       |> Episode.preload_podcast
       |> Episode.preload_sponsors
