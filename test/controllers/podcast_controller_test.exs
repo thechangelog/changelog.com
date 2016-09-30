@@ -50,24 +50,4 @@ defmodule Changelog.PodcastControllerTest do
     assert conn.resp_body =~ e2.title
     assert conn.resp_body =~ e3.title
   end
-
-  test "getting a podcast feed" do
-    p = insert(:podcast)
-    e = insert(:published_episode, podcast: p)
-    conn = get(build_conn, podcast_path(build_conn, :feed, p.slug))
-    assert conn.status == 200
-    assert conn.resp_body =~ e.title
-  end
-
-  test "getting the master feed" do
-    p1 = insert(:podcast)
-    e1 = insert(:published_episode, podcast: p1)
-    p2 = insert(:podcast)
-    e2 = insert(:published_episode, podcast: p2)
-
-    conn = get(build_conn, podcast_path(build_conn, :feed, "master"))
-    assert conn.status == 200
-    assert conn.resp_body =~ e1.title
-    assert conn.resp_body =~ e2.title
-  end
 end

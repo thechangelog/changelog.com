@@ -34,15 +34,4 @@ defmodule Changelog.PageControllerTest do
 
     assert html_response(conn, 200) =~ featured.title
   end
-
-  test "getting the feed" do
-    podcast = insert(:podcast)
-    episode = insert(:published_episode, podcast: podcast)
-    post = insert(:published_post)
-
-    conn = get(build_conn, page_path(build_conn, :feed))
-    assert conn.status == 200
-    assert conn.resp_body =~ episode.title
-    assert conn.resp_body =~ post.title
-  end
 end

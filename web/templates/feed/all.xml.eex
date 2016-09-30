@@ -11,7 +11,7 @@
     <title>Changelog</title>
     <copyright>All rights reserved</copyright>
     <link><%= page_url(@conn, :home) %></link>
-    <atom:link href="<%= page_url(@conn, :feed) %>" rel="self" type="application/rss+xml" />
+    <atom:link href="<%= feed_url(@conn, :all) %>" rel="self" type="application/rss+xml" />
     <language>en-us</language>
     <description>Hacker to the Heart</description>
     <%= for item <- @items do %>

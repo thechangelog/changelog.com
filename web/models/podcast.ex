@@ -52,6 +52,24 @@ defmodule Changelog.Podcast do
     from p in query, order_by: [asc: p.id]
   end
 
+  def get_by_slug(slug) do
+    if slug == "master" do
+      master
+    else
+      public
+      |> Repo.get_by!(slug: slug)
+      |> preload_hosts
+    end
+  end
+
+  def get_episodes(podcast) do
+    if is_master(podcast) do
+      from(e in Changelog.Episode)
+    else
+      assoc(podcast, :episodes)
+    end
+  end
+
   def episode_count(podcast) do
     podcast
     |> assoc(:episodes)

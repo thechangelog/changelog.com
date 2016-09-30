@@ -20,16 +20,4 @@ defmodule Changelog.PostControllerTest do
       get(build_conn, post_path(build_conn, :show, "bad-post"))
     end
   end
-
-  test "getting the posts feed" do
-    p1 = insert(:published_post)
-    p2 = insert(:post)
-    p3 = insert(:published_post)
-
-    conn = get(build_conn, post_path(build_conn, :feed))
-    assert conn.status == 200
-    assert conn.resp_body =~ p1.title
-    refute conn.resp_body =~ p2.title
-    assert conn.resp_body =~ p3.title
-  end
 end

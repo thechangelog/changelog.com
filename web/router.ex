@@ -54,10 +54,10 @@ defmodule Changelog.Router do
     pipe_through [:browser, :public]
 
     #feeds
-    get "/feed", PageController, :feed
-    get "/posts/feed", PostController, :feed, as: :post
-    get "/:slug/feed", PodcastController, :feed, as: :podcast
+    get "/feed", FeedController, :all
+    get "/posts/feed", FeedController, :posts
     get "/sitemap.xml", FeedController, :sitemap
+    get "/:slug/feed", FeedController, :podcast
 
     resources "/channels", ChannelController, only: [:show]
     resources "/people", PersonController, only: [:show]

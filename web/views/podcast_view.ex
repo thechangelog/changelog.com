@@ -19,16 +19,6 @@ defmodule Changelog.PodcastView do
     |> String.replace(" ", "-")
   end
 
-  def feed_title(podcast, episode) do
-    title = EpisodeView.numbered_title(episode)
-
-    if is_master(podcast) do
-      "#{episode.podcast.name} - #{title}"
-    else
-      title
-    end
-  end
-
   def is_master(podcast), do: Podcast.is_master(podcast)
   def episode_count(podcast), do: Podcast.episode_count(podcast)
   def published_episode_count(podcast), do: Podcast.published_episode_count(podcast)
@@ -39,7 +29,7 @@ defmodule Changelog.PodcastView do
 
   def subscribe_on_android_url(podcast) do
     feed_url_sans_protocol =
-      podcast_url(Changelog.Endpoint, :feed, podcast.slug)
+      feed_url(Changelog.Endpoint, :podcast, podcast.slug)
       |> String.replace(~r/\Ahttps?:\/\//, "")
     "http://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
   end

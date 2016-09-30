@@ -1,40 +1,16 @@
 defmodule Changelog.PageController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Episode, Post}
-  alias Ecto.DateTime
+  alias Changelog.{Episode}
 
   # pages that need special treatment get their own matched function
   # all others simply render the template of the same name
   def action(conn, params) do
     case action_name(conn) do
-      :feed           -> feed(conn, params)
       :home           -> home(conn, params)
       :weekly_archive -> weekly_archive(conn, params)
       action          -> render(conn, action)
     end
-  end
-
-  def feed(conn, _params) do
-    episodes =
-      Episode.published
-      |> Episode.newest_first
-      |> Repo.all
-      |> Episode.preload_podcast
-
-    posts =
-      Post.published
-      |> Post.newest_first
-      |> Repo.all
-      |> Post.preload_author
-
-    items = (episodes ++ posts)
-      |> Enum.sort(&(DateTime.to_erl(&1.published_at) > DateTime.to_erl(&2.published_at)))
-
-    conn
-    |> put_layout(false)
-    |> put_resp_content_type("application/xml")
-    |> render("feed.xml", items: items)
   end
 
   def home(conn, _params) do
