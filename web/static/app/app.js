@@ -20,6 +20,17 @@ u(document).handle("click", "[data-play]", function(event) {
   player.load(toPlay);
 });
 
+// open external links in new window when player is doing its thing
+u(document).on("click", "a[href^=http]", function(event) {
+  if (player.isPlaying()) {
+    let href = u(this).attr("href");
+    if (!href.match(window.location.hostname)) {
+      event.preventDefault();
+      window.open(href, "_blank");
+    }
+  }
+});
+
 u(document).handle("click", ".js-featured-next", function(event) {
   featured.slide(+1);
 });

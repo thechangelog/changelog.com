@@ -15,8 +15,12 @@ export default class Player {
     }
   }
 
-  howlNotReady() {
-    return this.howl.state() == "unloaded";
+  isHowlReady() {
+    return this.howl.state() != "unloaded";
+  }
+
+  isPlaying() {
+    return this.howl.playing();
   }
 
   start() {
@@ -28,20 +32,20 @@ export default class Player {
   }
 
   play() {
-    if (this.howlNotReady()) return;
+    if (!this.isHowlReady()) return;
     requestAnimationFrame(this.step.bind(this));
     this.howl.play();
     this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
-    if (this.howlNotReady()) return;
+    if (!this.isHowlReady()) return;
     this.howl.pause();
     this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
   }
 
   togglePlayPause() {
-    if (this.howlNotReady()) return;
+    if (!this.isHowlReady()) return;
     if (this.howl.playing()) {
       this.pause();
     } else {
@@ -50,13 +54,13 @@ export default class Player {
   }
 
   seekBy(to) {
-    if (this.howlNotReady()) return;
+    if (!this.isHowlReady()) return;
     const currentSeek = this.howl.seek() || 0;
     this.seek(currentSeek + to);
   }
 
   seek(to) {
-    if (this.howlNotReady()) return;
+    if (!this.isHowlReady()) return;
     if (to < 0) to = 0;
     this.howl.seek(to);
   }
