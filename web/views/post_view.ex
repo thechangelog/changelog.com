@@ -4,6 +4,6 @@ defmodule Changelog.PostView do
   alias Changelog.PersonView
 
   def guid(post) do
-    "changelog.com/posts/#{post.id}"
+    post.guid || "changelog.com/posts/#{post.id}"
   end
 end

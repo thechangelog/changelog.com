@@ -5,11 +5,15 @@ defmodule Changelog.Post do
 
   schema "posts" do
     field :title, :string
+
     field :slug, :string
-    field :published, :boolean, default: false
-    field :published_at, Ecto.DateTime
+    field :guid, :string
+
     field :tldr, :string
     field :body, :string
+
+    field :published, :boolean, default: false
+    field :published_at, Ecto.DateTime
 
     belongs_to :author, Changelog.Person
     has_many :post_channels, Changelog.PostChannel, on_delete: :delete_all
