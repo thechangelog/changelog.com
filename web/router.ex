@@ -53,10 +53,14 @@ defmodule Changelog.Router do
   scope "/", Changelog do
     pipe_through [:browser, :public]
 
+    #feeds
+    get "/feed", PageController, :feed
+    get "/posts/feed", PostController, :feed, as: :post
+    get "/:slug/feed", PodcastController, :feed, as: :podcast
+    get "/sitemap.xml", FeedController, :sitemap
+
     resources "/channels", ChannelController, only: [:show]
     resources "/people", PersonController, only: [:show]
-
-    get "/posts/feed", PostController, :feed, as: :post
     resources "/posts", PostController, only: [:show]
 
     # static pages
@@ -67,8 +71,6 @@ defmodule Changelog.Router do
     get "/membership", PageController, :membership
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
-    get "/feed", PageController, :feed
-
     get "/partnership", PageController, :partnership
     get "/sponsorship", PageController, :sponsorship
     get "/store", PageController, :store
@@ -95,7 +97,6 @@ defmodule Changelog.Router do
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast
     get "/:slug/archive", PodcastController, :archive, as: :podcast
-    get "/:slug/feed", PodcastController, :feed, as: :podcast
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
     get "/:podcast/:slug/preview", EpisodeController, :preview, as: :episode

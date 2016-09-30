@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <%#= pages %>
+  <url><loc><%= page_url(@conn, :home) %></loc></url>
+  <url><loc><%= page_url(@conn, :about) %></loc></url>
+  <url><loc><%= page_url(@conn, :contact) %></loc></url>
+  <url><loc><%= page_url(@conn, :films) %></loc></url>
+  <url><loc><%= page_url(@conn, :membership) %></loc></url>
+  <url><loc><%= page_url(@conn, :subscribe) %></loc></url>
+  <url><loc><%= page_url(@conn, :partnership) %></loc></url>
+  <url><loc><%= page_url(@conn, :sponsorship) %></loc></url>
+  <url><loc><%= page_url(@conn, :store) %></loc></url>
+  <url><loc><%= page_url(@conn, :soundcheck) %></loc></url>
+  <url><loc><%= page_url(@conn, :team) %></loc></url>
+  <url><loc><%= page_url(@conn, :live) %></loc></url>
+  <url><loc><%= page_url(@conn, :weekly) %></loc></url>
+  <url><loc><%= page_url(@conn, :nightly) %></loc></url>
+
+  <%= for podcast <- @podcasts ++ [Podcast.master] do %>
+    <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
+    <url><loc><%= podcast_url(@conn, :archive, podcast.slug) %></loc></url>
+  <% end %>
+
+  <%= for episode <- @episodes do %>
+    <url><loc><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></loc></url>
+  <% end %>
+
+  <%= for post <- @posts do %>
+    <url><loc><%= post_url(@conn, :show, post.slug) %></loc></url>
+  <% end %>
+</urlset>
