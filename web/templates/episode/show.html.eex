@@ -87,6 +87,7 @@
       </section>
       <% end %>
 
+      <%= if @episode.notes do %>
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
         <div class="episode-footer-section_content">
@@ -96,6 +97,7 @@
           </div>
         </div>
       </section>
+      <% end %>
 
       <%= link "View all episodes", to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--block" %>
     </footer>
