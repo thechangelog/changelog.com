@@ -7,41 +7,41 @@ export default class Player {
   constructor(selector) {
     // not using turbolinks:load event because we want this to run exactly once
     window.onload = () => {
+      // instantiate our Howl up front so that mobile devices are enabled.
+      // if we get a new Howl for each call to `start`, user interaction resets.
+      this.howl = new Howl({html: true, src: [""]});
       this.attachUI(selector);
       this.attachEvents();
     }
   }
 
+  howlNotReady() {
+    return this.howl.state() == "unloaded";
+  }
+
   start() {
     if (!this.episode) return;
-
-    if (this.howl) {
-      this.howl.unload();
-    }
-
-    this.howl = new Howl({
-      html5: true,
-      src: [this.episode.audio()]
-    });
-
+    this.howl.unload();
+    this.howl._src = [this.episode.audio()];
+    this.howl.load();
     this.howl.once("load", () => { this.play(); });
   }
 
   play() {
-    if (!this.howl) return;
+    if (this.howlNotReady()) return;
     requestAnimationFrame(this.step.bind(this));
     this.howl.play();
     this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
-    if (!this.howl) return;
+    if (this.howlNotReady()) return;
     this.howl.pause();
     this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
   }
 
   togglePlayPause() {
-    if (!this.howl) return;
+    if (this.howlNotReady()) return;
     if (this.howl.playing()) {
       this.pause();
     } else {
@@ -50,13 +50,13 @@ export default class Player {
   }
 
   seekBy(to) {
-    if (!this.howl) return;
+    if (this.howlNotReady()) return;
     const currentSeek = this.howl.seek() || 0;
     this.seek(currentSeek + to);
   }
 
   seek(to) {
-    if (!this.howl) return;
+    if (this.howlNotReady()) return;
     if (to < 0) to = 0;
     this.howl.seek(to);
   }
