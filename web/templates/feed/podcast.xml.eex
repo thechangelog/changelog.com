@@ -68,7 +68,7 @@
         <itunes:duration><%= TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:keywords><%= episode.podcast.keywords %></itunes:keywords>
-        <itunes:subtitle><%= episode.headline %></itunes:subtitle>
+        <itunes:subtitle><%= episode.headline |> html_escape |> safe_to_string %></itunes:subtitle>
         <itunes:summary><%= md_to_text(episode.summary) %></itunes:summary>
       </item>
     <% end %>
