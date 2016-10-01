@@ -9,7 +9,7 @@ export default class Player {
     window.onload = () => {
       // instantiate our Howl up front so that mobile devices are enabled.
       // if we get a new Howl for each call to `start`, user interaction resets.
-      this.howl = new Howl({html: true, src: [""]});
+      this.howl = new Howl({html5: true, src: [""]});
       this.attachUI(selector);
       this.attachEvents();
     }
