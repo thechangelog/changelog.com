@@ -18,19 +18,23 @@
     </div>
 
     <footer>
-        <h2>Channels</h2>
+      <div class="channel-list">
         <%= for channel <- @post.channels do %>
           <%= link channel.name, to: "#" %>
         <% end %>
+      </div>
 
-        <div class="content_footer">
-            <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
-              <img src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
-            <% end %>
-            <%= if @post.author.bio do %>
-              <%= @post.author.bio %>
-            <% end %>
+      <%= if @post.author.bio do %>
+        <div class="author">
+          <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
+            <img class="author_image" src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
+          <% end %>
+
+          <div class="author_bio">
+            <%= @post.author.bio |> md_to_html |> raw %>
+          </div>
         </div>
+      <% end %>
     </footer>
   </div>
 </article>

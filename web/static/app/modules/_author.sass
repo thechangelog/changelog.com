@@ -1,0 +1,24 @@
+.author
+    align-items: center
+    border: 2px solid $green
+    display: flex
+    font-style: italic
+    justify-content: space-between
+    padding: 1rem
+
+    &_image,
+    &_bio
+        flex: 0 1 auto
+
+    &_image
+        @extend %image-shadow
+
+    &_bio
+        font-style: italic
+        margin-left: 1.5rem
+
+        p
+            margin-top: 0
+
+            &:last-child
+                margin-bottom: 0 !important
