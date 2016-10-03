@@ -12,7 +12,7 @@
           <cite><%= episode.subhighlight |> md_to_html |> sans_p_tags |> raw %></cite>
           <% end %>
         </div>
-        <div class="featured_podcast_navigation">
+        <div class="featured_podcast_title">
           <h3>
             <%= link to: episode_path(@conn, :show, episode.podcast.slug, episode.slug) do %>
               <span><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></span>
