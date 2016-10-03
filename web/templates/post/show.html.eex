@@ -14,14 +14,24 @@
       </div>
     </header>
     <div class="content_body">
-        <%= @post.body |> md_to_html |> raw %>
+      <%= @post.body |> md_to_html |> raw %>
     </div>
 
     <footer>
-      <div class="channel-list">
-        <%= for channel <- @post.channels do %>
-          <%= link channel.name, to: "#" %>
-        <% end %>
+      <div class="meta">
+        <ul class="meta_channel-list">
+          <%= if Enum.any?( @post.channels) do %>
+            <%= for channel <- @post.channels do %>
+              <li><%= link channel.name, to: "#" %></li>
+              <li><%= link channel.name, to: "#" %></li>
+              <li><%= link channel.name, to: "#" %></li>
+            <% end %>
+          <%= end %>
+        </ul>
+        <ul class="meta_share">
+          <li><a class="meta_share_link meta_share_link--twitter" href="#" title="Share on Twitter">Twitter</a></li>
+          <li><a class="meta_share_link meta_share_link--facebook" href="#" title="Share on Facebook">Facebook</a></li>
+        </ul>
       </div>
 
       <%= if @post.author.bio do %>

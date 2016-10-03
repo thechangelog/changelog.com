@@ -1,0 +1,62 @@
+.meta
+    @extend %display-font
+    justify-content: space-between
+    background: $black
+    border-top: 2px solid $green
+    color: $green
+    margin-bottom: 2rem
+    padding: 1em
+    text-transform: uppercase
+
+    a
+        @extend %hover-fade
+
+    @media (min-width: $smartphone)
+        display: flex
+
+    &_channel-list,
+    &_share
+        // Icon Stuff
+        background-position: left 3px
+        background-repeat: no-repeat
+        min-height: 20px
+        padding: 0 0 0 40px
+        //
+        list-style-type: none
+        margin: 0
+
+        li
+            display: inline-block
+            margin-right: 1em
+
+    &_channel-list
+        background-image: url(/images/icon-tag-white.svg)
+        flex: 0 1 auto
+
+    &_share
+        background-image: url(/images/icon-share-white.svg)
+        flex: 0 0 auto
+        margin-top: 1rem
+
+        @media (min-width: $smartphone)
+            margin-top: 0
+
+        li
+            margin-right: 0
+
+        &_link
+            background-position: center
+            background-repeat: no-repeat
+            display: block
+            height: 26px
+            width: 26px
+            text-indent: -9999px
+
+            &--facebook
+                background-image: url(/images/icon-facebook.svg)
+            &--github
+                background-image: url(/images/icon-github.svg)
+            &--link
+                background-image: url(/images/icon-link.svg)
+            &--twitter
+                background-image: url(/images/icon-twitter.svg)

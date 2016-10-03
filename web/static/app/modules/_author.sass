@@ -6,6 +6,9 @@
     justify-content: flex-start
     padding: 1rem
 
+    a
+        @extend %hover-fade
+
     &_image,
     &_bio
         flex: 0 1 auto
@@ -19,7 +22,7 @@
 
     &_bio
         font-style: italic
-        margin: 0.5rem 0 0 1.5rem
+        margin: 0.1rem 0 0 1.5rem
 
         p
             font-size: 0.9em
