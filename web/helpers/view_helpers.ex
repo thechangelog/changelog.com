@@ -74,6 +74,13 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def tweet_url(model) do
+    # TODO: Title should be URL-encoded
+    # TODO: Pull hashtags from channels
+    # TODO: Add Dynamic URL
+    "https://twitter.com/intent/tweet?text=#{model.title}&url=http://changelog.com&hashtags=&via=changelog&related=changelog"
+  end
+
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do
       String.slice(string, 0, length) <> "..."

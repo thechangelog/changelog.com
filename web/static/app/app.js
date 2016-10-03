@@ -28,6 +28,19 @@ u(document).handle("click", ".js-featured-previous", function(event) {
   featured.slide(-1);
 });
 
+// Open a URL in a popup window (for Facebook sharing, etc.)
+u(document).handle("click", ".js-share-popup", function(event) {
+  event.preventDefault();
+  var h, href, left, shareWindow, top, w;
+  href = u(event.target).attr("href");
+  w = 600;
+  h = 300;
+  left = (screen.width / 2) - (w / 2);
+  top = (screen.height / 2) - (h / 2);
+  shareWindow = window.open(href, "Changelog", "location=1,status=1,scrollbars=1, width=" + w + ",height=" + h + ",top=" + top + ",left=" + left);
+});
+
+// Make sure all slider slides are the same height
 function tallestSlide() {
   let tallestFeatured = 0;
   // 1. Set height of .featured to "auto"

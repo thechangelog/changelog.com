@@ -5,7 +5,7 @@
         /
         <a class="breadcrumbs_crumb" href="#">Blog</a>
         /
-        <span class="breadcrumbs_crumb breadcrumbs_crumb--active">Jun 16 2016</span>
+        <span class="breadcrumbs_crumb breadcrumbs_crumb--active"><%= Changelog.TimeView.pretty_date(@post.published_at) %></span>
     </nav>
     <header class="content_header">
       <h2><%= @post.title %></h2>
@@ -20,17 +20,15 @@
     <footer>
       <div class="meta">
         <ul class="meta_channel-list">
-          <%= if Enum.any?( @post.channels) do %>
+          <%= if Enum.any?(@post.channels) do %>
             <%= for channel <- @post.channels do %>
-              <li><%= link channel.name, to: "#" %></li>
-              <li><%= link channel.name, to: "#" %></li>
-              <li><%= link channel.name, to: "#" %></li>
+              <li><%= channel.name %></li>
             <% end %>
           <%= end %>
         </ul>
         <ul class="meta_share">
-          <li><a class="meta_share_link meta_share_link--twitter" href="#" title="Share on Twitter">Twitter</a></li>
-          <li><a class="meta_share_link meta_share_link--facebook" href="#" title="Share on Facebook">Facebook</a></li>
+          <li><a class="meta_share_link meta_share_link--twitter" href="<%= tweet_url(@post) %>" title="Share on Twitter">Twitter</a></li>
+          <li><a class="meta_share_link meta_share_link--facebook js-share-popup" href="https://www.facebook.com/sharer.php?u=<%= post_url(@conn, :show, @post.slug) %>" title="Share on Facebook">Facebook</a></li>
         </ul>
       </div>
 
