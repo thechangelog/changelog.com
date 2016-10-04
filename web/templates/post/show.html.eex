@@ -18,17 +18,29 @@
     </div>
 
     <footer>
-      <div class="meta">
-        <ul class="meta_channel-list">
+      <div class="toolbar toolbar--dark">
+        <ul class="toolbar_item toolbar_item--list" style="background-image: url(/images/icon-tag-white.svg);">
           <%= if Enum.any?(@post.channels) do %>
             <%= for channel <- @post.channels do %>
               <li><%= channel.name %></li>
             <% end %>
           <%= end %>
         </ul>
-        <ul class="meta_share">
-          <li><a class="meta_share_link meta_share_link--twitter" href="<%= tweet_url(@post) %>" title="Share on Twitter">Twitter</a></li>
-          <li><a class="meta_share_link meta_share_link--facebook js-share-popup" href="https://www.facebook.com/sharer.php?u=<%= post_url(@conn, :show, @post.slug) %>" title="Share on Facebook">Facebook</a></li>
+        <ul class="toolbar_item toolbar_item--icon_list toolbar_item--right" style="background-image: url(/images/icon-share-white.svg);">
+          <li>
+            <%= link "Twitter",
+                title: "Share on Twitter",
+                to: tweet_url(@post),
+                class: "toolbar_item_link",
+                style: "background-image: url('#{static_url(@conn, "/images/icon-twitter.svg")}')" %>
+          </li>
+          <li>
+            <%= link "Facebook",
+                title: "Share on Facebook",
+                to: "https://www.facebook.com/sharer.php?u=#{ post_url(@conn, :show, @post.slug) }",
+                class: "toolbar_item_link",
+                style: "background-image: url('#{static_url(@conn, "/images/icon-facebook.svg")}')" %>
+          </li>
         </ul>
       </div>
 
