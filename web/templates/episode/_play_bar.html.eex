@@ -1,19 +1,42 @@
-<nav class="podcast-menu">
-  <%= if @episode.audio_file do %>
-    <%= link to: audio_url(@episode), data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)] do %>
-      <img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play episode graphic"/><span>Play</span>
+<div class="toolbar_scroll-wrap">
+  <div class="toolbar toolbar--dark">
+    <%= if @episode.audio_file do %>
+      <%= link "Play",
+          title: "Play Most Recent Episode",
+          to: audio_url(@episode),
+          data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
+          role: "button",
+          class: "toolbar_item toolbar_item--button",
+          style: "background-image: url('#{static_url(@conn, "/images/icon-play.svg")}')" %>
     <% end %>
-  <% end %>
 
-  <%= link to: PodcastView.subscribe_link(@episode.podcast) do %>
-    <img src="<%= static_url(@conn, "/images/subscribe.svg") %>" alt="Subscribe to podcast graphic"/><span>Subscribe</span>
-  <% end %>
+    <%= link "Subscribe",
+        title: "",
+        to: PodcastView.subscribe_link(@episode.podcast),
+        class: "toolbar_item toolbar_item--button",
+        style: "background-image: url('#{static_url(@conn, "/images/icon-subscribe.svg")}')" %>
 
-  <%= link to: page_path(@conn, :sponsorship), role: "button" do %>
-    <img src="<%= static_url(@conn, "/images/share.svg") %>" alt="Share podcast graphic"/><span>Share</span>
-  <% end %>
+    <%= link "Sponsor",
+        title: "",
+        to: page_path(@conn, :sponsorship),
+        class: "toolbar_item toolbar_item--button",
+        style: "background-image: url('#{static_url(@conn, "/images/icon-sponsor.svg")}')" %>
 
-  <%= link to: page_path(@conn, :sponsorship) do %>
-    <img src="<%= static_url(@conn, "/images/sponsor.svg") %>" alt="Sponsor podcast graphic"><span>Sponsor</span>
-  <% end %>
-</nav>
+    <ul class="toolbar_item toolbar_item--icon_list toolbar_item--right" style="background-image: url(/images/icon-share.svg);">
+      <li>
+        <%= link "Twitter",
+            title: "Share on Twitter",
+            to: "#",
+            class: "toolbar_item_link",
+            style: "background-image: url('#{static_url(@conn, "/images/icon-twitter-grey.svg")}')" %>
+      </li>
+      <li>
+        <%= link "Facebook",
+            title: "Share on Facebook",
+            to: "https://www.facebook.com/sharer.php?u=#",
+            class: "toolbar_item_link",
+            style: "background-image: url('#{static_url(@conn, "/images/icon-facebook-grey.svg")}')" %>
+      </li>
+    </ul>
+  </div>
+</div>

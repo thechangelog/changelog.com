@@ -4,21 +4,37 @@
     border-top: 2px solid $green
     color: $green
     font-size: 14px
-    margin-bottom: 2rem
     padding: 1em
+    text-align: left
     text-transform: uppercase
-
-    &--dark
-      background: $black
-
-    a
-        @extend %hover-fade
 
     @media (min-width: $smartphone)
         display: flex
         flex-wrap: wrap
         justify-content: flex-start
 
+    &--dark
+      background: $black
+
+    // Some toolbars scroll horizontally on mobile (like a quick swipe scroll)
+    &_scroll-wrap
+        $width: 540px
+        max-width: 100%
+        overflow: scroll
+        width: $width
+
+        .toolbar
+            // Force always flexbox
+            display: flex
+            flex-wrap: wrap
+            justify-content: flex-start
+            //
+            width: $width !important
+
+    a
+        @extend %hover-fade
+
+    // Toolbars have a few different types of items
     &_item
         font-size: 1.125em
         flex: 1 0 auto
@@ -43,6 +59,9 @@
             background-repeat: no-repeat
             color: $half-black
             display: block
+
+            .toolbar--dark &
+                color: $half-white
 
         // List's have an icon on the left that isn't clickable
         &--list,
@@ -75,5 +94,4 @@
                 text-indent: -9999px
 
         &--right
-            align-self: flex-end
             flex: 0 1 auto
