@@ -26,7 +26,7 @@
           </div>
           <%= if Enum.any?(light_logo_sponsorships) do %>
             <aside>
-              <h4>Brought to you by:</h4>
+              <h4>Sponsored by:</h4>
               <%= for episode_sponsor <- light_logo_sponsorships do %>
                 <%= link to: episode_sponsor.link_url do %>
                 <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :light_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
