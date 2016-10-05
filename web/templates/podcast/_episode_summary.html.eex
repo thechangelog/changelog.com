@@ -21,8 +21,8 @@
       </div>
     </div>
 
-    <nav class="toolbar">
-      <h4 class="accessibility-hidden">Episode Navigation</h4>
+    <h4 class="accessibility-hidden">Episode Navigation</h4>
+    <nav class="toolbar toolbar--left">
       <%= link "Play",
           title: "Play Episode",
           to: EpisodeView.audio_url(@episode),
@@ -37,22 +37,11 @@
           class: "toolbar_item toolbar_item--button",
           style: "background-image: url('#{static_url(@conn, "/images/icon-details.svg")}')" %>
 
-      <ul class="toolbar_item toolbar_item--icon_list toolbar_item--right" style="background-image: url(/images/icon-share.svg);">
-        <li>
-          <%= link "Twitter",
-              title: "Share on Twitter",
-              to: tweet_url(@episode),
-              class: "toolbar_item_link",
-              style: "background-image: url('#{static_url(@conn, "/images/icon-twitter-grey.svg")}')" %>
-        </li>
-        <li>
-          <%= link "Facebook",
-              title: "Share on Facebook",
-              to: "https://www.facebook.com/sharer.php?u=#{episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)}",
-              class: "toolbar_item_link",
-              style: "background-image: url('#{static_url(@conn, "/images/icon-facebook-grey.svg")}')" %>
-        </li>
-      </ul>
+      <%= link "Share",
+          title: "Share on Twitter",
+          to: tweet_url(@episode.title,episode_path(@conn, :show, @episode.podcast.slug, @episode.slug)),
+          class: "toolbar_item toolbar_item--button",
+          style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
     </nav>
   </div>
 </article>

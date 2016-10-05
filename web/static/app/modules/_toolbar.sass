@@ -4,17 +4,34 @@
     border-top: 2px solid $green
     color: $green
     font-size: 14px
-    padding: 1em
+    padding: 1.25em 1em
     text-align: left
     text-transform: uppercase
 
+    &--dark
+      background: $black
+
+    // 1. By default items will be spread apart
     @media (min-width: $smartphone)
         display: flex
         flex-wrap: wrap
-        justify-content: flex-start
+        justify-content: space-between
 
-    &--dark
-      background: $black
+    // 2. But you can left align them if you want
+    &--left
+        @media (min-width: $smartphone)
+            display: flex
+            flex-wrap: wrap
+            justify-content: flex-start
+
+    // 3. If you want the items split (some on the left, some on the right)
+       align the items center, and then wrap the left and right side in divs (no classes)
+       Works with the "space-between" method above
+    &--split
+        @media (min-width: $smartphone)
+            justify-content: space-between
+            align-items: center
+
 
     // Some toolbars scroll horizontally on mobile (like a quick swipe scroll)
     &_scroll-wrap
@@ -27,7 +44,7 @@
             // Force always flexbox
             display: flex
             flex-wrap: wrap
-            justify-content: flex-start
+            justify-content: space-between
             //
             width: $width !important
 
@@ -37,8 +54,8 @@
     // Toolbars have a few different types of items
     &_item
         font-size: 1.125em
-        flex: 1 0 auto
-        margin-right: 1.5rem
+        flex: 0 1 auto
+        margin: 0 1em
         margin-bottom: 0.5rem !important
         padding: 0 0 0 35px
         // At least as tall as icons
@@ -72,7 +89,8 @@
             //
             color: $half-black
             list-style-type: none
-            margin: 0
+            margin-top: 0
+            margin-bottom: 0
 
             .toolbar--dark &
                 color: $green
@@ -92,6 +110,3 @@
                 height: 26px
                 width: 26px
                 text-indent: -9999px
-
-        &--right
-            flex: 0 1 auto
