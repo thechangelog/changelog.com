@@ -89,6 +89,8 @@ export default class Player {
     this.playButton = this.container.find(".js-player-play-button");
     this.backButton = this.container.find(".js-player-back-button");
     this.forwardButton = this.container.find(".js-player-forward-button");
+    this.closeButton = this.container.find(".js-player-close");
+    this.hideButton = this.container.find(".js-player-hide");
   }
 
   attachEvents() {
@@ -97,6 +99,8 @@ export default class Player {
     this.forwardButton.handle("click", () => { this.seekBy(15); });
     this.scrubber.on("input", (event) => { this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { this.scrubEnd(event.target.value); });
+    this.closeButton.handle("click", () => { this.closePlayer(); });
+    this.hideButton.handle("click", () => { this.hide(); });
   }
 
   loadUI() {
@@ -164,10 +168,15 @@ export default class Player {
   }
 
   show() {
-    this.player.addClass("podcast-player--is-active");
+    this.player.addClass("podcast-player--is-active").removeClass("podcast-player--is-hidden");
   }
 
   hide() {
-   this.player.removeClass("podcast-player--is-active");
+    this.player.toggleClass("podcast-player--is-hidden");
+  }
+
+  closePlayer() {
+    this.pause();
+    this.player.removeClass("podcast-player--is-active");
   }
 }
