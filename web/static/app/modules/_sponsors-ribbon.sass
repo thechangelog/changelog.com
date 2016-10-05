@@ -19,18 +19,20 @@
 
     & > h3
         @extend %display-font
+        @extend .accessibility-hidden
         font-size: 1em
         margin: 0.5em 0
+        display: none
 
     &_logos
         display: flex
         flex: 0 1 auto
 
         & > a
-            margin-right: 1.5rem
+            display: block
+            margin-right: 3rem
             &:first-of-type
-                margin-left: 1.25rem
-
+                margin-left: 0px
 
         & img
             width: 5.75rem
