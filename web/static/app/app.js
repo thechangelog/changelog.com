@@ -4,7 +4,7 @@ import { u } from "umbrellajs";
 import Player from "components/player";
 import Slider from "components/slider";
 
-const player = new Player("#player");
+window.player = new Player("#player");
 const featured = new Slider(".featured_podcast");
 
 u(document).handle("click", ".js-toggle-nav", function(event) {

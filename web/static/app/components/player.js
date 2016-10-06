@@ -1,52 +1,79 @@
-import Howler from "howler";
 import Episode from "components/episode";
 import { u, ajax } from "umbrellajs";
-const { Howl } = Howler;
+
+class ChangelogAudio {
+  constructor() {
+    if (typeof Audio === "undefined") {
+      this.canPlay = false;
+      return
+    } else {
+      this.canPlay = true;
+    }
+
+    this.audio = new Audio();
+  }
+
+  load(file, then) {
+    this.audio.addEventListener("canplaythrough", then, false);
+    this.audio.src = file;
+  }
+
+  play() {
+    this.audio.play();
+  }
+
+  pause() {
+    if (!this.playing()) return;
+    this.audio.pause();
+  }
+
+  playing() {
+    return this.audio.duration > 0 && !this.audio.paused;
+  }
+
+  currentSeek() {
+    return this.audio.currentTime;
+  }
+
+  seek(to) {
+    to = parseInt(to, 10);
+    if (to < 0) to = 0;
+    this.audio.currentTime = to;
+  }
+}
 
 export default class Player {
   constructor(selector) {
     // not using turbolinks:load event because we want this to run exactly once
     window.onload = () => {
-      // instantiate our Howl up front so that mobile devices are enabled.
-      // if we get a new Howl for each call to `start`, user interaction resets.
-      this.howl = new Howl({html5: true, src: [""]});
+      this.audio = new ChangelogAudio();
       this.attachUI(selector);
       this.attachEvents();
     }
   }
 
-  isHowlReady() {
-    return this.howl.state() != "unloaded";
-  }
-
   isPlaying() {
-    return this.howl.playing();
+    return this.audio.playing();
   }
 
   start() {
     if (!this.episode) return;
-    this.howl.unload();
-    this.howl._src = [this.episode.audio()];
-    this.howl.load();
-    this.howl.once("load", () => { this.play(); });
+    this.audio.load(this.episode.audio(), this.play.bind(this));
   }
 
   play() {
-    if (!this.isHowlReady()) return;
     requestAnimationFrame(this.step.bind(this));
-    this.howl.play();
+    this.audio.play();
     this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
-    if (!this.isHowlReady()) return;
-    this.howl.pause();
+    this.audio.pause();
     this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
   }
 
   togglePlayPause() {
-    if (!this.isHowlReady()) return;
-    if (this.howl.playing()) {
+    if (this.audio.playing()) {
       this.pause();
     } else {
       this.play();
@@ -54,15 +81,8 @@ export default class Player {
   }
 
   seekBy(to) {
-    if (!this.isHowlReady()) return;
-    const currentSeek = this.howl.seek() || 0;
-    this.seek(currentSeek + to);
-  }
-
-  seek(to) {
-    if (!this.isHowlReady()) return;
-    if (to < 0) to = 0;
-    this.howl.seek(to);
+    const currentSeek = this.audio.currentSeek() || 0;
+    this.audio.seek(currentSeek + to);
   }
 
   load(episode) {
@@ -145,7 +165,7 @@ export default class Player {
   }
 
   step() {
-    const seek = Math.round(this.howl.seek() || 0);
+    const seek = Math.round(this.audio.currentSeek() || 0);
     const percentComplete = seek / this.episode.duration() * 100;
 
     if (!this.isScrubbing) {
@@ -154,7 +174,7 @@ export default class Player {
       this.track.first().style.width = `${percentComplete}%`;
     }
 
-    if (this.howl.playing()) {
+    if (this.audio.playing()) {
       requestAnimationFrame(this.step.bind(this));
     }
   }
@@ -168,7 +188,7 @@ export default class Player {
 
   scrubEnd(to) {
     this.isScrubbing = false;
-    this.seek(to);
+    this.audio.seek(to);
   }
 
   show() {
