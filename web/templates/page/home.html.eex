@@ -12,7 +12,7 @@
           <cite><%= episode.subhighlight |> md_to_html |> sans_p_tags |> raw %></cite>
           <% end %>
         </div>
-        <div class="featured_podcast_navigation">
+        <div class="featured_podcast_title">
           <h3>
             <%= link to: episode_path(@conn, :show, episode.podcast.slug, episode.slug) do %>
               <span><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></span>
@@ -21,9 +21,7 @@
           </h3>
         </div>
         <div class="featured_podcast_footer">
-          <div class="featured_podcast_footer_menu">
-            <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
-          </div>
+          <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
           <%= if Enum.any?(light_logo_sponsorships) do %>
             <aside>
               <h4>Sponsored by:</h4>

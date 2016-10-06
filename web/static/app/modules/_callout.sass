@@ -2,11 +2,11 @@
     text-align: center
     padding: 2rem
 
-    & > h2
+    h2
         @extend %display-font
         color: $green
         margin: $padding-medium 0 0 0
-        font-size: 3.5em
+        font-size: 3em
 
     & p
         line-height: 1.5em
@@ -31,10 +31,10 @@
             @media (min-width: $tablet)
                 line-height: 0.5em
 
-        & p
+        p
             margin: 1.5rem 0
 
-        & img
+        img
             display: none
 
             @media (min-width: $tablet)
@@ -46,7 +46,10 @@
                 height: 4rem
 
     &--horizontal
-        & img
+        .btn
+            padding: 1rem 2rem
+
+        img
             max-width: 3.25rem
             max-height: 100%
 
@@ -56,5 +59,5 @@
             text-align: left
             justify-content: space-between
 
-            & h2, & p
+            h2, p
                 margin: 0

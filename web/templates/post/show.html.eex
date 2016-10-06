@@ -5,7 +5,7 @@
         /
         <a class="breadcrumbs_crumb" href="#">Blog</a>
         /
-        <span class="breadcrumbs_crumb breadcrumbs_crumb--active">Jun 16 2016</span>
+        <span class="breadcrumbs_crumb breadcrumbs_crumb--active"><%= Changelog.TimeView.pretty_date(@post.published_at) %></span>
     </nav>
     <header class="content_header">
       <h2><%= @post.title %></h2>
@@ -14,23 +14,55 @@
       </div>
     </header>
     <div class="content_body">
-        <%= @post.body |> md_to_html |> raw %>
+      <%= @post.body |> md_to_html |> raw %>
     </div>
 
     <footer>
-        <h2>Channels</h2>
-        <%= for channel <- @post.channels do %>
-          <%= link channel.name, to: "#" %>
-        <% end %>
+      <div class="toolbar toolbar--dark">
+        <ul class="toolbar_item toolbar_item--list" style="background-image: url(/images/icon-tag-white.svg);">
+          <%= if Enum.any?(@post.channels) do %>
+            <%= for channel <- @post.channels do %>
+              <li><%= channel.name %></li>
+            <% end %>
+          <%= end %>
+        </ul>
+        <ul class="toolbar_item toolbar_item--icon_list toolbar_item--right" style="background-image: url(/images/icon-share-white.svg);">
+          <li>
+            <%= link "Twitter",
+                title: "Share on Twitter",
+                to: tweet_url(@post.title, post_url(@conn, :show, @post.slug)),
+                class: "toolbar_item_link",
+                style: "background-image: url('#{static_url(@conn, "/images/icon-twitter.svg")}')" %>
+          </li>
+        </ul>
+      </div>
 
-        <div class="content_footer">
-            <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
-              <img src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
-            <% end %>
-            <%= if @post.author.bio do %>
-              <%= @post.author.bio %>
-            <% end %>
+      <%= if @post.author.bio do %>
+        <div class="author">
+          <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
+            <img class="author_image" src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
+          <% end %>
+
+          <div class="author_bio">
+            <p>
+              <%= link @post.author.name, to: PersonView.external_url(@post.author) %>
+              <%= @post.author.bio |> md_to_html |> sans_p_tags |> raw %>
+            </p>
+
+            <ul class="author_bio_social">
+              <%= if @post.author.website do %>
+                <li><a class="author_bio_social_link author_bio_social_link--link" href="<%= @post.author.website %>" title="<%= @post.author.name %>'s Website"><%= @post.author.website %></a></li>
+              <% end %>
+              <%= if @post.author.twitter_handle do %>
+                <li><a class="author_bio_social_link author_bio_social_link--twitter" href="<%= twitter_url(@post.author.twitter_handle) %>" title="<%= @post.author.name %> on Twitter">@<%= @post.author.twitter_handle %></a></li>
+              <% end %>
+              <%= if @post.author.github_handle do %>
+                <li><a class="author_bio_social_link author_bio_social_link--github" href="<%= github_url(@post.author.github_handle) %>" title="<%= @post.author.name %> on Github"><%= @post.author.github_handle %></a></li>
+              <% end %>
+            </ul>
+          </div>
         </div>
+      <% end %>
     </footer>
   </div>
 </article>

@@ -1,18 +1,67 @@
 .podcast-player
     +animate-up("&--is-active")
-    // display: none
-    display: flex
-    color: $white
-    margin: 0
     background: rgba($black, 0.9)
+    bottom: 0
+    color: $white
+    display: flex
     flex-wrap: wrap
+    margin: 0
+    position: fixed
+    width: 100%
+    z-index: 1000
+
+    // For when it's active but hidden
+    &--is-hidden
+        transform: translateY(100%) scale(1.0001)
 
     @media (min-width: $tablet)
         flex-wrap: nowrap
         align-items: center
 
-    // &--is-active
-    //     display: flex
+    &_nav
+        position: absolute
+        bottom: 100%
+        left: 0
+        right: 0
+
+        @media (min-width: $tablet)
+            transition: all 0.1s ease-in-out 0s
+            will-change: transform
+            position: absolute
+            left: auto
+            right: 0
+            bottom: auto
+            top: 6px
+
+            .podcast-player--is-hidden &
+                top: 0
+                transform: translateY(-100%)
+                transition-delay: 0.3s
+
+        &_button
+            transition: background 0.1s ease-in-out 0s
+            background: $black center no-repeat
+            background-size: 10px
+            float: left
+            height: 50px
+            padding: 0
+            width: 50%
+
+            @media (min-width: $tablet)
+                background-color: transparent
+                height: 22px
+                width: 42px
+
+                .podcast-player--is-hidden &
+                    background-color: rgba($black, 0.9)
+
+            &--hide
+                background-image: url("/images/icon-down.svg")
+                .podcast-player--is-hidden &
+                    background-image: url("/images/icon-up.svg")
+
+            &--close
+                background-image: url("/images/icon-close.svg")
 
     &_art
         display: none

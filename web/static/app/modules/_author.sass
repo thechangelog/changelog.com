@@ -1,0 +1,63 @@
+.author
+    align-items: top
+    border: 2px solid $green
+    display: flex
+    font-style: italic
+    justify-content: flex-start
+    margin-top: 2rem
+    padding: 1rem
+
+    a
+        @extend %hover-fade
+
+    &_image,
+    &_bio
+        flex: 0 1 auto
+
+    &_image
+        @extend %image-shadow
+
+        @media (max-width: $tablet)
+            width: 60px
+            height: 60px
+
+    &_bio
+        font-style: italic
+        margin: 0.1rem 0 0 1.5rem
+
+        p
+            font-size: 0.9em
+            margin: 0 0 0.5em
+
+            @media (min-width: $tablet)
+                font-size: 1em
+
+            &:last-child
+                margin-bottom: 0 !important
+
+        &_social
+            list-style-type: none
+            margin: 0
+            padding: 0
+
+            &_link
+                background-position: left 3px
+                background-repeat: no-repeat
+                display: inline-block
+                font-style: normal
+                min-height: 20px
+                padding: 0 0 0 25px
+
+                &--facebook
+                    background-image: url(/images/icon-facebook.svg)
+                &--github
+                    background-image: url(/images/icon-github.svg)
+                &--link
+                    background-image: url(/images/icon-link.svg)
+                &--twitter
+                    background-image: url(/images/icon-twitter.svg)
+
+            li
+                display: inline-block
+                font-size: 0.825em
+                margin-right: 1em

@@ -1,0 +1,112 @@
+.toolbar
+    @extend %display-font
+    background: $white
+    border-top: 2px solid $green
+    color: $green
+    font-size: 14px
+    padding: 1.25em 1em
+    text-align: left
+    text-transform: uppercase
+
+    &--dark
+      background: $black
+
+    // 1. By default items will be spread apart
+    @media (min-width: $smartphone)
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+
+    // 2. But you can left align them if you want
+    &--left
+        @media (min-width: $smartphone)
+            display: flex
+            flex-wrap: wrap
+            justify-content: flex-start
+
+    // 3. If you want the items split (some on the left, some on the right)
+       align the items center, and then wrap the left and right side in divs (no classes)
+       Works with the "space-between" method above
+    &--split
+        @media (min-width: $smartphone)
+            justify-content: space-between
+            align-items: center
+
+
+    // Some toolbars scroll horizontally on mobile (like a quick swipe scroll)
+    &_scroll-wrap
+        $width: 540px
+        max-width: 100%
+        overflow: scroll
+        width: $width
+
+        .toolbar
+            // Force always flexbox
+            display: flex
+            flex-wrap: wrap
+            justify-content: space-between
+            //
+            width: $width !important
+
+    a
+        @extend %hover-fade
+
+    // Toolbars have a few different types of items
+    &_item
+        font-size: 1.125em
+        flex: 0 1 auto
+        margin: 0 1em
+        margin-bottom: 0.5rem !important
+        padding: 0 0 0 35px
+        // At least as tall as icons
+        min-height: 20px
+        // Should be 20px but we have to account for no descendars (all uppercase)
+        line-height: 26px
+
+        &:last-child
+            margin-bottom: 0 !important
+
+        @media (min-width: $smartphone)
+            margin-bottom: 0 !important
+
+        // A button is a word with a clickable icon
+        &--button
+            background-size: 20px
+            background-position: left 3px
+            background-repeat: no-repeat
+            color: $half-black
+            display: block
+
+            .toolbar--dark &
+                color: $half-white
+
+        // List's have an icon on the left that isn't clickable
+        &--list,
+        &--icon_list
+            // Icon Stuff
+            background-position: left 3px
+            background-repeat: no-repeat
+            //
+            color: $half-black
+            list-style-type: none
+            margin-top: 0
+            margin-bottom: 0
+
+            .toolbar--dark &
+                color: $green
+
+            li
+                display: inline-block
+                margin-right: 1em
+
+        &--icon_list
+            li
+                margin-right: 0
+
+            .toolbar_item_link
+                background-position: center
+                background-repeat: no-repeat
+                display: block
+                height: 26px
+                width: 26px
+                text-indent: -9999px

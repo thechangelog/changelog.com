@@ -1,5 +1,9 @@
 <div id="player" data-turbolinks-permanent>
   <figure class="podcast-player js-player">
+    <nav class="podcast-player_nav">
+      <button class="podcast-player_nav_button podcast-player_nav_button--hide js-player-hide" title="Hide Player"></button>
+      <button class="podcast-player_nav_button podcast-player_nav_button--close js-player-close" title="Close Player"></button>
+    </nav>
     <img class="podcast-player_art js-player-art">
     <div class="podcast-player_details">
       <div class="podcast-player_details_title">
@@ -37,7 +41,7 @@
       </div>
     </form>
   </figure>
-  <div class="share-podcast-tooltip" style="display:none;">
+  <!-- <div class="share-podcast-tooltip" style="display:none;">
     <div class="share-podcast-tooltip_link">
       <img src="<%= static_url(@conn, "/images/podcast-link.svg") %>" alt="Episode link">
       <span class="share-podcast-tooltip_link_text">http://changelog.com/podcasts/201</span>
@@ -50,5 +54,5 @@
       <a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/social-twitter.svg") %>" alt="Tweet episode link on twitter">Tweet</a>
       <a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/social-facebook.svg") %>" alt="Post episode link on facebook">Post</a>
     </nav>
-  </div>
+  </div> -->
 </div>

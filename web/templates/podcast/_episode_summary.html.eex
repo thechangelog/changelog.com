@@ -21,28 +21,27 @@
       </div>
     </div>
 
-    <nav class="podcast-menu podcast-menu--episode">
-      <h4 class="accessibility-hidden">Episode Navigation</h4>
+    <h4 class="accessibility-hidden">Episode Navigation</h4>
+    <nav class="toolbar toolbar--left">
+      <%= link "Play",
+          title: "Play Episode",
+          to: EpisodeView.audio_url(@episode),
+          data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
+          role: "button",
+          class: "toolbar_item toolbar_item--button",
+          style: "background-image: url('#{static_url(@conn, "/images/icon-play.svg")}')" %>
 
-      <%= link to: EpisodeView.audio_url(@episode), data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)], role: "button" do %>
-        <img src="<%= static_url(@conn, "/images/play.svg") %>" alt="Play episode graphic"/><span>Play</span>
-      <% end %>
-      <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>
-        <img src="<%= static_url(@conn, "/images/details.svg") %>" alt="View details"/><span>Details</span>
-      <% end %>
-      <button class="podcast-menu_more-button" title="More Options">
-        <img src="<%= static_url(@conn, "/images/more.svg") %>" alt="More options"/>
-      </button>
-      <nav class="podcast-menu-tooltip tooltip">
-        <h5 class="accessibility-hidden">More Episode Navigation Options</h5>
-        <div class="tooltip_links">
-          <%= link "Subscribe", to: subscribe_link(@episode.podcast) %>
-          <a href="#">Share episode</a>
-          <button>Copy episode link</button>
-          <a href="#">Sponsor this podcast</a>
-        </div>
-        <div class="tooltip__arrow"></div>
-      </nav>
+      <%= link "Details",
+          title: "Episode Details",
+          to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug),
+          class: "toolbar_item toolbar_item--button",
+          style: "background-image: url('#{static_url(@conn, "/images/icon-details.svg")}')" %>
+
+      <%= link "Share",
+          title: "Share on Twitter",
+          to: tweet_url(@episode.title,episode_path(@conn, :show, @episode.podcast.slug, @episode.slug)),
+          class: "toolbar_item toolbar_item--button",
+          style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
     </nav>
   </div>
 </article>

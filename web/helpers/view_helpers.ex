@@ -74,6 +74,11 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def tweet_url(text,url) do
+    # TODO: Text should be URL-encoded
+    "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=changelog&related=changelog"
+  end
+
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do
       String.slice(string, 0, length) <> "..."
