@@ -20,17 +20,40 @@
 
     &_nav
         position: absolute
-        right: 0
         bottom: 100%
+        left: 0
+        right: 0
+
+        @media (min-width: $tablet)
+            transition: all 0.1s ease-in-out 0s
+            will-change: transform
+            position: absolute
+            left: auto
+            right: 0
+            bottom: auto
+            top: 6px
+
+            .podcast-player--is-hidden &
+                top: 0
+                transform: translateY(-100%)
+                transition-delay: 0.3s
 
         &_button
-            background: rgba($black, 0.9) center no-repeat
+            transition: background 0.1s ease-in-out 0s
+            background: $black center no-repeat
             background-size: 10px
             float: left
-            height: 22px
-            margin-left: 1px
+            height: 50px
             padding: 0
-            width: 30px
+            width: 50%
+
+            @media (min-width: $tablet)
+                background-color: transparent
+                height: 22px
+                width: 42px
+
+                .podcast-player--is-hidden &
+                    background-color: rgba($black, 0.9)
 
             &--hide
                 background-image: url("/images/icon-down.svg")

@@ -31,11 +31,11 @@
         visibility: visible
 
 // Used on the audio player, etc.
-=animate-up($adjuster-class)
+=animate-up($adjuster-class, $delay: 0s)
     filter: blur(5px)
     opacity: 0
     pointer-events: none
-    transition: all 0.1s ease-in-out
+    transition: all 0.1s ease-in-out $delay
     transform: translateY(100%) scale(1.0001)
     visibility: hidden
     will-change: transform opacity
