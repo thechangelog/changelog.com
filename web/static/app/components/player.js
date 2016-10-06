@@ -105,7 +105,7 @@ export default class Player {
 
   loadUI() {
     this.art.attr("src", this.episode.art());
-    this.nowPlaying.text("Now Playing: " + this.episode.nowPlaying());
+    this.nowPlaying.text(this.episode.nowPlaying());
     this.title.text(this.episode.title());
     this.duration.text(Episode.formatTime(this.episode.duration()));
     this.scrubber.attr("max", this.episode.duration());

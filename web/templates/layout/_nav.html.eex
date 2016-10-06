@@ -1,3 +1,4 @@
+<div class="navigation-tray_curtain js-toggle-nav"></div>
 <div class="navigation-bar">
   <%= link to: "/", class: "navigation-bar_logo" do %>
     <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog"></h1></a>
@@ -9,7 +10,7 @@
     <%= link "Nightly", to: page_path(@conn, :nightly), class: "navigation-bar-link" %>
     <%= link "Advertise", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
   </nav>
-  <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
+  <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
   <div class="navigation-bar_tray">
     <div class="navigation-tray">
       <h2 class="accessibility-hidden">Site Navigation</h2>
@@ -17,7 +18,7 @@
         <%= link to: "/", class: "navigation-tray_logo navigation-bar_logo" do %>
           <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog"></h1>
         <% end %>
-        <button class="navigation-bar_menu-button"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide site navigation menu"></button>
+        <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide site navigation menu"></button>
       </div>
       <div class="navigation-tray_content">
         <div class="navigation-tray_content_sections">

@@ -7,8 +7,8 @@ import Slider from "components/slider";
 const player = new Player("#player");
 const featured = new Slider(".featured_podcast");
 
-u(document).handle("click", ".navigation-bar_menu-button", function(event) {
-  u(".navigation-bar_tray").toggleClass("navigation-bar_tray--is-open");
+u(document).handle("click", ".js-toggle-nav", function(event) {
+  u("body").toggleClass("nav-open");
 });
 
 u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
