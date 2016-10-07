@@ -45,6 +45,14 @@ export default class Episode {
     return `#${this.prev.number}`;
   }
 
+  prevTitle() {
+    return this.prev.title;
+  }
+
+  prevAudio() {
+   return this.prev.audio_url;
+  }
+
   prevLocation() {
     return this.prev.location;
   }
@@ -53,8 +61,16 @@ export default class Episode {
     return `#${this.next.number}`;
   }
 
+  nextTitle() {
+    return this.next.title;
+  }
+
   nextLocation() {
     return this.next.location;
+  }
+
+  nextAudio() {
+   return this.next.audio_url;
   }
 
   title() {

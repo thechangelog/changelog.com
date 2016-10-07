@@ -39,7 +39,7 @@ defmodule Changelog.EpisodeController do
       assoc(podcast, :episodes)
       |> Episode.published
       |> Repo.get_by!(slug: slug)
-      |> Repo.preload(:podcast)
+      |> Episode.preload_podcast
 
     prev =
       assoc(podcast, :episodes)
@@ -49,6 +49,7 @@ defmodule Changelog.EpisodeController do
       |> Episode.previous_to(episode)
       |> Episode.limit(1)
       |> Repo.one
+      |> Episode.preload_podcast
 
     next =
       assoc(podcast, :episodes)
@@ -58,6 +59,7 @@ defmodule Changelog.EpisodeController do
       |> Episode.next_after(episode)
       |> Episode.limit(1)
       |> Repo.one
+      |> Episode.preload_podcast
 
     render conn, "play.json", podcast: podcast, episode: episode, prev: prev, next: next
   end

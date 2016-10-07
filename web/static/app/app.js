@@ -4,7 +4,7 @@ import { u } from "umbrellajs";
 import Player from "components/player";
 import Slider from "components/slider";
 
-window.player = new Player("#player");
+const player = new Player("#player");
 const featured = new Slider(".featured_podcast");
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
@@ -16,8 +16,8 @@ u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
 });
 
 u(document).handle("click", "[data-play]", function(event) {
-  const toPlay = u(event.target).closest("a,button").data("play");
-  player.load(toPlay);
+  const clicked = u(event.target).closest("a, button");
+  player.load(clicked.attr("href"), clicked.data("play"));
 });
 
 // open external links in new window when player is doing its thing
@@ -41,7 +41,6 @@ u(document).handle("click", ".js-featured-previous", function(event) {
 
 // Open a URL in a popup window (for Facebook sharing, etc.)
 u(document).handle("click", ".js-share-popup", function(event) {
-  event.preventDefault();
   var h, href, left, shareWindow, top, w;
   href = u(event.target).attr("href");
   w = 600;

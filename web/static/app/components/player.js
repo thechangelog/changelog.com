@@ -13,9 +13,10 @@ class ChangelogAudio {
     this.audio = new Audio();
   }
 
-  load(file, then) {
-    this.audio.addEventListener("canplaythrough", then, false);
+  load(file, callback) {
+    this.audio.addEventListener("canplaythrough", callback, false);
     this.audio.src = file;
+    this.audio.load();
   }
 
   play() {
@@ -47,6 +48,8 @@ export default class Player {
     // not using turbolinks:load event because we want this to run exactly once
     window.onload = () => {
       this.audio = new ChangelogAudio();
+      this.detailsLoaded = false;
+      this.audioLoaded = false;
       this.attachUI(selector);
       this.attachEvents();
     }
@@ -54,11 +57,6 @@ export default class Player {
 
   isPlaying() {
     return this.audio.playing();
-  }
-
-  start() {
-    if (!this.episode) return;
-    this.audio.load(this.episode.audio(), this.play.bind(this));
   }
 
   play() {
@@ -85,14 +83,29 @@ export default class Player {
     this.audio.seek(currentSeek + to);
   }
 
-  load(episode) {
+  // begins the process of playing the audio, fetching the details
+  load(audioUrl, detailsUrl) {
     this.resetUI();
     this.playButton.addClass("is-loading");
-    ajax(episode, {}, (error, data) => {
+    this.loadAudio(audioUrl);
+    this.loadDetails(detailsUrl);
+  }
+
+  loadAudio(audioUrl) {
+    this.audioLoaded = false;
+    this.audio.load(audioUrl, () => {
+      this.audioLoaded = true;
+      this.play();
+    });
+  }
+
+  loadDetails(detailsUrl) {
+    this.detailsLoaded = false;
+    ajax(detailsUrl, {}, (error, data) => {
       this.episode = new Episode(data);
       this.loadUI();
+      this.detailsLoaded = true;
       this.show();
-      this.start();
     });
   }
 
@@ -136,18 +149,22 @@ export default class Player {
 
     if (this.episode.hasPrev()) {
       this.prevNumber.text(this.episode.prevNumber());
+      this.prevButton.attr("title", "Listen to " + this.episode.prevTitle());
+      this.prevButton.attr("href", this.episode.prevAudio());
       this.prevButton.data("play", this.episode.prevLocation());
     } else {
       this.prevNumber.text("");
-      this.prevButton.first().removeAttribute("data-play");
+      this.prevButton.first().removeAttribute("href").removeAttribute("data-play");
     }
 
     if (this.episode.hasNext()) {
       this.nextNumber.text(this.episode.nextNumber());
+      this.nextButton.attr("title", "Listen to " + this.episode.nextTitle());
+      this.nextButton.attr("href", this.episode.nextAudio());
       this.nextButton.data("play", this.episode.nextLocation());
     } else {
       this.nextNumber.text("");
-      this.nextButton.first().removeAttribute("data-play");
+      this.nextButton.first().removeAttribute("href").removeAttribute("data-play");
     }
   }
 
@@ -157,14 +174,22 @@ export default class Player {
     this.current.text("0:00");
     this.duration.text("0:00");
     this.prevNumber.text("");
+    this.prevButton.first().removeAttribute("href");
     this.prevButton.first().removeAttribute("data-play");
     this.nextNumber.text("");
+    this.nextButton.first().removeAttribute("href");
     this.nextButton.first().removeAttribute("data-play");
     this.scrubber.first().value = 0;
     this.track.first().style.width = "0%";
   }
 
   step() {
+    if (!this.detailsLoaded) {
+      // wait for it...
+      requestAnimationFrame(this.step.bind(this));
+      return;
+    }
+
     const seek = Math.round(this.audio.currentSeek() || 0);
     const percentComplete = seek / this.episode.duration() * 100;
 

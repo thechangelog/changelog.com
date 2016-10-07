@@ -83,7 +83,9 @@ defmodule Changelog.EpisodeView do
     info = if prev do
       Map.put(info, :prev, %{
         number: prev.slug,
-        location: episode_path(Changelog.Endpoint, :play, podcast.slug, prev.slug)
+        title: prev.title,
+        location: episode_path(Changelog.Endpoint, :play, podcast.slug, prev.slug),
+        audio_url: audio_url(prev)
       })
     else
       info
@@ -92,7 +94,9 @@ defmodule Changelog.EpisodeView do
     info = if next do
       Map.put(info, :next, %{
         number: next.slug,
-        location: episode_path(Changelog.Endpoint, :play, podcast.slug, next.slug)
+        title: next.title,
+        location: episode_path(Changelog.Endpoint, :play, podcast.slug, next.slug),
+        audio_url: audio_url(next)
       })
     else
       info
