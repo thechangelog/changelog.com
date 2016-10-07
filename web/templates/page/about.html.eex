@@ -4,19 +4,25 @@
       <h2>About Us</h2>
     </header>
     <div class="content_body">
-      <p>The Changelog is a <a href="/membership">member supported</a> blog, <a href="/weekly">weekly newsletter</a> and <a href="/podcast">podcast</a> that covers the intersection of software development and open source. Open source moves fast. Keep up.</p>
 
-      <p>We launched in <a href="/posts/welcome-to-the-changelog">November of 2009</a>. It was kind of a happy accident. Since then we've published hundreds of podcast episodes, serving more than 200,000 listens per month.</p>
+      <p>Changelog is a digital media company focused on telling developer-centric stories that get to the heart. We exist to enrich the lives of developers.</p>
 
-      <h2>Member supported</h2>
+      <hr>
 
-      <p>Our efforts are backed by <a href="/membership">community members</a>.</p>
+      <p><strong>Adam Stacoviak</strong> &mdash; Adam is the host of Founders Talk, and Founder &amp; Editor-in-chief of Changelog Media. Prior to Changelog (and during, depending on the year) he lead product development for a non-profit called Pure Charity. &mdash; <a href="https://twitter.com/adamstac">@adamstac</a></p>
 
-      <h2>Special thanks</h2>
+      <p><strong>Jerod Santo</strong> &mdash; Jerod is Managing Editor &amp; Partner of Changelog Media. Jerod helps lead and co-host our flagship podcast The Changelog, and all the cool stuff we get to build to make Changelog awesome. Previously, he ran his custom software company Object Lateral. &mdash; <a href="https://twitter.com/jerodsanto">@jerodsanto</a></p>
 
-      <p>We've partnered with Linode.</p>
+      <p><strong>Heather Stacoviak</strong> &mdash; Heather is our Chief Happiness Officer, taking care of design, marketing, user experience, and more. Heather brings joy to our community members, listeners, readers, sponsors, partners &mdash; everyone we work with. Before Changelog, Heather worked for MediaFire as a UI/UX Designer. &mdash; <a href="https://twitter.com/heatherstac">@heatherstac</a></p>
 
-      <p>We've also a partnered with <a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a>.</p>
+      <hr>
+
+      <p>Special thanks to <a href="https://www.fastly.com/?utm_source=changelog&amp;utm_campaign=changelog-partner">Faslty</a> for providing our real-time CDN and worldwide bandwidth.</p>
+
+      <p>Special thanks to <a href="http://linode.com/changelog">Linode</a> for providing our SSS cloud servers.</p>
+
+      <p>Special thanks to <a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a> for partnering with us and including us in OSCON and other conference oportunities.</p>
+
     </div>
   </div>
 </article>
