@@ -153,8 +153,7 @@ export default class Player {
       this.prevButton.attr("href", this.episode.prevAudio());
       this.prevButton.data("play", this.episode.prevLocation());
     } else {
-      this.prevNumber.text("");
-      this.prevButton.first().removeAttribute("href").removeAttribute("data-play");
+      this.resetPrevUI();
     }
 
     if (this.episode.hasNext()) {
@@ -163,8 +162,7 @@ export default class Player {
       this.nextButton.attr("href", this.episode.nextAudio());
       this.nextButton.data("play", this.episode.nextLocation());
     } else {
-      this.nextNumber.text("");
-      this.nextButton.first().removeAttribute("href").removeAttribute("data-play");
+      this.resetNextUI();
     }
   }
 
@@ -173,14 +171,22 @@ export default class Player {
     this.title.text("");
     this.current.text("0:00");
     this.duration.text("0:00");
+    this.resetPrevUI();
+    this.resetNextUI();
+    this.scrubber.first().value = 0;
+    this.track.first().style.width = "0%";
+  }
+
+  resetPrevUI() {
     this.prevNumber.text("");
     this.prevButton.first().removeAttribute("href");
     this.prevButton.first().removeAttribute("data-play");
+  }
+
+  resetNextUI() {
     this.nextNumber.text("");
     this.nextButton.first().removeAttribute("href");
     this.nextButton.first().removeAttribute("data-play");
-    this.scrubber.first().value = 0;
-    this.track.first().style.width = "0%";
   }
 
   step() {
