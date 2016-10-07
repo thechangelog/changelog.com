@@ -1,7 +1,7 @@
 <div class="navigation-tray_curtain js-toggle-nav"></div>
 <div class="navigation-bar">
   <%= link to: "/", class: "navigation-bar_logo" do %>
-    <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog"></h1>
+    <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="Changelog Media"></h1>
   <% end %>
   <nav class="navigation-bar_links">
     <h2 class="accessibility-hidden">Quick Links</h2>
@@ -16,7 +16,7 @@
       <h2 class="accessibility-hidden">Site Navigation</h2>
       <div class="navigation-bar">
         <%= link to: "/", class: "navigation-tray_logo navigation-bar_logo" do %>
-          <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="The Changelog"></h1>
+          <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="Changelog Media"></h1>
         <% end %>
         <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide site navigation menu"></button>
       </div>
@@ -24,9 +24,10 @@
         <div class="navigation-tray_content_sections">
           <aside class="navigation-tray-section navigation-tray-section--aside">
             <header>
-              <img src="<%= static_url(@conn, "/images/logo-changelog-white.svg") %>" alt="The Changelog">
+              <img src="<%= static_url(@conn, "/images/logo-changelog-white.svg") %>" alt="Changelog Media">
             </header>
-            <p>Changelog is a developer-focused media company that delivers podcasts, news, and films to developers all over the world. We exist to enrich the lives of developers. Hacker to the heart.</p>
+            <p>Changelog is a digital media company focused on telling developer-centric stories that get to the heart. We exist to enrich the lives of developers.</p>
+            <p class="tagline">Hacker to the heart</p>
           </aside>
           <nav class="navigation-tray-section">
             <header>
@@ -64,7 +65,6 @@
           <%= link "Partnership", to: page_path(@conn, :partnership) %>
           <%= link "Store", to: page_path(@conn, :store) %>
           <%= link "About", to: page_path(@conn, :about) %>
-          <%= link "Team", to: page_path(@conn, :team) %>
           <%= link "Contact", to: page_path(@conn, :contact) %>
         </nav>
       </div>

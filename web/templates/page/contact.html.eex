@@ -1,32 +1,27 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2>Contact Us</h2>
+      <h2>Get in touch. Say hello.</h2>
     </header>
     <div class="content_body">
-      <p><a href="https://github.com/thechangelog/ping">Get in touch publicly through a GitHub issue</a> to share projects, news, or tips.</p>
 
-      <p>However if you need to get in touch privately, please complete the form below.</p>
+      <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open inbox on GitHub. Share your projects, news, feedback, or tips.</p>
 
-      <div id="wufoo-k7x1s7">
-      Fill out my <a href="http://riznmedia.wufoo.com/forms/k7x1s7">online form</a>.
-      </div>
-
-      <script type="text/javascript">var k7x1s7;(function(d, t) {
-      var s = d.createElement(t), options = {
-      'userName':'riznmedia',
-      'formHash':'k7x1s7',
-      'autoResize':true,
-      'height':'768',
-      'async':true,
-      'header':'hide',
-      'ssl':true};
-      s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'wufoo.com/scripts/embed/form.js';
-      s.onload = s.onreadystatechange = function() {
-      var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
-      try { k7x1s7 = new WufooForm();k7x1s7.initialize(options);k7x1s7.display(); } catch (e) {}};
-      var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
-      })(document, 'script');</script>
+      <p>Email <script type="text/javascript">
+//<![CDATA[
+<!--
+var x="function f(x){var i,o=\"\",ol=x.length,l=ol;while(x.charCodeAt(l/13)!" +
+"=50){try{x+=x;l+=l;}catch(e){}}for(i=l-1;i>=0;i--){o+=x.charAt(i);}return o" +
+".substr(0,ol);}f(\")0,\\\"@JBQUH420\\\\[O730\\\\630\\\\320\\\\At\\\\200\\\\" +
+"000\\\\610\\\\r\\\\700\\\\t\\\\710\\\\500\\\\%720\\\\120\\\\r\\\\520\\\\t\\" +
+"\\;;c~700\\\\x500\\\\e2:!='rs410\\\\(!!),$( 400\\\\f*(/'t\\\\}K]XVYOJ700\\\\"+
+"ZYV230\\\\T]]UH@LDHjZZHRL@F030\\\\NTsw|q9F$~rd}4r.38abhxbx~&sh`ivand\\\"(f}" +
+";o nruter};))++y(^)i(tAedoCrahc.x(edoCrahCmorf.gnirtS=+o;721=%y;2=*y))y+0(>" +
+"i(fi{)++i;l<i;0=i(rof;htgnel.x=l,\\\"\\\"=o,i rav{)y,x(f noitcnuf\")"        ;
+while(x=eval(x));
+//-->
+//]]>
+</script> if you'd like to get in touch privately.</p>
 
     </div>
   </div>
