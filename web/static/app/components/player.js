@@ -14,7 +14,10 @@ class ChangelogAudio {
   }
 
   load(file, callback) {
-    this.audio.addEventListener("canplaythrough", callback, false);
+    if (callback) {
+      this.runOnce("canplaythrough", callback);
+    }
+
     this.audio.src = file;
     this.audio.load();
   }
@@ -36,10 +39,28 @@ class ChangelogAudio {
     return this.audio.currentTime;
   }
 
-  seek(to) {
+  seek(to, before, after) {
     to = parseInt(to, 10);
     if (to < 0) to = 0;
+
+    if (before) {
+      this.runOnce("seeking", before);
+    }
+
+    if (after) {
+      this.runOnce("seeked", after);
+    }
+
     this.audio.currentTime = to;
+  }
+
+  runOnce(eventName, fn) {
+    let listener = () => {
+      fn.call();
+      this.audio.removeEventListener(eventName, listener);
+    }
+
+    this.audio.addEventListener(eventName, listener);
   }
 }
 
@@ -219,7 +240,11 @@ export default class Player {
 
   scrubEnd(to) {
     this.isScrubbing = false;
-    this.audio.seek(to);
+    this.audio.seek(to, () => {
+      this.playButton.addClass("is-loading");
+    }, () => {
+      this.playButton.removeClass("is-loading");
+    });
   }
 
   show() {
