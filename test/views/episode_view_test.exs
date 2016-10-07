@@ -19,4 +19,21 @@ defmodule Changelog.EpisodeViewTest do
       assert number(build(:episode, slug: "211")) == "211"
     end
   end
+
+  describe "numbered_title" do
+    test "it has number but no pound by default when episode has number" do
+      ep = build(:episode, slug: "1", title: "Test")
+      assert numbered_title(ep) == "1: Test"
+    end
+
+    test "it includes a prefix passed in when episode has number" do
+      ep = build(:episode, slug: "1", title: "Test")
+      assert numbered_title(ep, "#") == "#1: Test"
+    end
+
+    test "it has just the episode title when episode has no number" do
+      ep = build(:episode, slug: "bonus-ep", title: "Test")
+      assert numbered_title(ep, "#") == "Test"
+    end
+  end
 end

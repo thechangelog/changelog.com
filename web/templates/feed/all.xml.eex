@@ -17,7 +17,7 @@
     <%= for item <- @items do %>
       <item>
         <%= if item.__struct__ == Changelog.Episode do %>
-          <title><%= item.podcast.name %> <%= EpisodeView.number_with_pound(item) %>: <%= item.title |> html_escape |> safe_to_string %></title>
+          <title><%= item.podcast.name %> <%= EpisodeView.numbered_title(item, "") |> html_escape |> safe_to_string %></title>
           <link><%= episode_url(@conn, :show, item.podcast.slug, item.slug) %></link>
           <guid isPermaLink="false"><%= EpisodeView.guid(item) %></guid>
         <% else %>

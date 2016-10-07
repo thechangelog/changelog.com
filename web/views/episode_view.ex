@@ -51,13 +51,13 @@ defmodule Changelog.EpisodeView do
     end
   end
 
-  def numbered_title(episode) do
+  def numbered_title(episode, prefix \\ "") do
     episode_number = number(episode)
 
     if is_nil(episode_number) do
       episode.title
     else
-      "#{episode_number}: #{episode.title}"
+      "#{prefix}#{episode_number}: #{episode.title}"
     end
   end
 

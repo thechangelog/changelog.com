@@ -14,7 +14,7 @@ defmodule Changelog.Meta.Title do
   defp get(%{view_module: AuthView}), do: "Sign In"
 
   defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
-    "#{podcast.name} ##{EpisodeView.numbered_title(episode)}"
+    "#{podcast.name} #{EpisodeView.numbered_title(episode, "#")}"
   end
 
   defp get(%{view_module: PageView, view_template: template}) do
