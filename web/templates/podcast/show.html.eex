@@ -31,7 +31,7 @@
         <%= if latest.highlight do %>
         <q><%= EpisodeView.classy_highlight(latest) %></q>
         <% end %>
-        <button>
+        <button href="<%= EpisodeView.audio_url(latest) %>" data-play="<%= episode_path(@conn, :play, latest.podcast.slug, latest.slug) %>">
             <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>
             <span class="accessibility-hidden">Play</span>
         </button>
