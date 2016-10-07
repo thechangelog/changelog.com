@@ -9,19 +9,34 @@
 
       <hr>
 
-      <p><strong>Adam Stacoviak</strong> &mdash; Adam is the host of Founders Talk, and Founder &amp; Editor-in-chief of Changelog Media. Prior to Changelog (and during, depending on the year) he lead product development for a non-profit called Pure Charity. &mdash; <a href="https://twitter.com/adamstac">@adamstac</a></p>
-
-      <p><strong>Jerod Santo</strong> &mdash; Jerod is Managing Editor &amp; Partner of Changelog Media. Jerod helps lead and co-host our flagship podcast The Changelog, and all the cool stuff we get to build to make Changelog awesome. Previously, he ran his custom software company Object Lateral. &mdash; <a href="https://twitter.com/jerodsanto">@jerodsanto</a></p>
-
-      <p><strong>Heather Stacoviak</strong> &mdash; Heather is our Chief Happiness Officer, taking care of design, marketing, user experience, and more. Heather brings joy to our community members, listeners, readers, sponsors, partners &mdash; everyone we work with. Before Changelog, Heather worked for MediaFire as a UI/UX Designer. &mdash; <a href="https://twitter.com/heatherstac">@heatherstac</a></p>
+      <p>
+        <img src="https://pbs.twimg.com/profile_images/2691433309/c6b807d4c05e097931a482358fc10dfd_400x400.jpeg" class="float float--left" style="margin-top: 5px;width:75px;">
+        <strong>Adam Stacoviak</strong> &mdash; Adam is the host of Founders Talk, and Founder &amp; Editor-in-chief of Changelog Media. Prior to Changelog (and during, depending on the year) he lead product development for a non-profit called Pure Charity. &mdash; <a href="https://twitter.com/adamstac">@adamstac</a>
+      </p>
 
       <hr>
 
-      <p>Special thanks to <a href="https://www.fastly.com/?utm_source=changelog&amp;utm_campaign=changelog-partner">Faslty</a> for providing our real-time CDN and worldwide bandwidth.</p>
+      <p>
+        <img src="https://interfaceschool.com/wp-content/uploads/2014/02/p-jerod.jpg" class="float float--left" style="margin-top: 5px;width:75px;">
+        <strong>Jerod Santo</strong> &mdash; Jerod is Managing Editor &amp; Partner of Changelog Media. Jerod helps lead and co-host our flagship podcast The Changelog, and all the cool stuff we get to build to make Changelog awesome. Previously, he ran his custom software company Object Lateral. &mdash; <a href="https://twitter.com/jerodsanto">@jerodsanto</a>
+      </p>
 
-      <p>Special thanks to <a href="http://linode.com/changelog">Linode</a> for providing our SSS cloud servers.</p>
+      <hr>
 
-      <p>Special thanks to <a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a> for partnering with us and including us in OSCON and other conference oportunities.</p>
+      <p>
+        <img src="https://pbs.twimg.com/profile_images/691841764752252929/KkTdXHic_400x400.jpg" class="float float--left" style="margin-top: 5px;width:75px;">
+        <strong>Heather Stacoviak</strong> &mdash; Heather is our Creative Director, taking care of design, marketing, user experience, and more. Heather brings joy to our community members, listeners, readers, sponsors, partners &mdash; everyone we work with. Before Changelog, Heather worked for MediaFire as a UI/UX Designer. &mdash; <a href="https://twitter.com/heatherstac">@heatherstac</a>
+      </p>
+
+      <hr>
+
+      <h4>Special thanks to...</h4>
+
+      <p><a href="https://www.fastly.com/?utm_source=changelog&amp;utm_campaign=changelog-partner">Fastly</a> for providing our real-time CDN and worldwide bandwidth.</p>
+
+      <p><a href="http://linode.com/changelog">Linode</a> for providing our SSS cloud servers.</p>
+
+      <p><a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a> for partnering with us and including us in OSCON and other conference oportunities.</p>
 
     </div>
   </div>
