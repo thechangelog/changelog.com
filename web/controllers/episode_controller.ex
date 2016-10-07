@@ -49,7 +49,6 @@ defmodule Changelog.EpisodeController do
       |> Episode.previous_to(episode)
       |> Episode.limit(1)
       |> Repo.one
-      |> Episode.preload_podcast
 
     next =
       assoc(podcast, :episodes)
@@ -59,8 +58,10 @@ defmodule Changelog.EpisodeController do
       |> Episode.next_after(episode)
       |> Episode.limit(1)
       |> Repo.one
-      |> Episode.preload_podcast
 
-    render conn, "play.json", podcast: podcast, episode: episode, prev: prev, next: next
+    render conn, "play.json", podcast: podcast, episode: episode, prev: preloaded(prev), next: preloaded(next)
   end
+
+  defp preloaded(episode) when is_nil(episode), do: nil
+  defp preloaded(episode), do: Episode.preload_podcast(episode)
 end
