@@ -15,9 +15,12 @@ u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
   u(event.target).siblings(".podcast-summary-widget_menu").toggleClass("podcast-summary-widget_menu--is-open");
 });
 
-u(document).handle("click", "[data-play]", function(event) {
-  const clicked = u(event.target).closest("a, button");
-  player.load(clicked.attr("href"), clicked.data("play"));
+u(document).on("click", "[data-play]", function(event) {
+  if (player.canPlay()) {
+    event.preventDefault();
+    const clicked = u(event.target).closest("a, button");
+    player.load(clicked.attr("href"), clicked.data("play"));
+  }
 });
 
 // open external links in new window when player is doing its thing

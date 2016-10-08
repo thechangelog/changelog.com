@@ -4,10 +4,10 @@ import { u, ajax } from "umbrellajs";
 class ChangelogAudio {
   constructor() {
     if (typeof Audio === "undefined") {
-      this.canPlay = false;
+      this.hasAudio = false;
       return
     } else {
-      this.canPlay = true;
+      this.hasAudio = true;
     }
 
     this.audio = new Audio();
@@ -20,6 +20,10 @@ class ChangelogAudio {
 
     this.audio.src = file;
     this.audio.load();
+  }
+
+  canPlay() {
+    return this.hasAudio;
   }
 
   play() {
@@ -74,6 +78,10 @@ export default class Player {
       this.attachUI(selector);
       this.attachEvents();
     }
+  }
+
+  canPlay() {
+    return this.audio.canPlay();
   }
 
   isPlaying() {
