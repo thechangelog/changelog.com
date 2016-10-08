@@ -7,6 +7,11 @@
       <p>We're sorry to see you go. <%= link "Please get in touch", to: page_path(@conn, :contact) %> if you have feedback to help us improve this email.</p>
 
       <p>If you simply couldn't keep up with Nightly's frequency, check out <%= link "Changelog Weekly", to: page_path(@conn, :weekly) %> &mdash; our hand written, editorialized, take on what happened this week in open source and software development.</p>
+
+      <p>Thank you for your support,</p>
+
+      <p><strong>Adam Stacoviak</strong><br />
+      <i>Founder &amp; Editor-in-Chief</i></p>
     </div>
   </div>
 </article>

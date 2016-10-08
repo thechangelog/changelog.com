@@ -4,7 +4,9 @@
       <h2>Subscribe to Changelog Weekly</h2>
     </header>
     <div class="content_body">
-      <p>Every weekend we ship an email that covers everything that hits our open source radar. It's nerd to the core. Don't miss out. No spam!</p>
+      <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
+
+      <hr>
 
       <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form" id="weekly-subscribe">
         <div class="form_element_wrap">
@@ -28,31 +30,29 @@
 
       <hr />
 
-      <p>Need a sneak peek? <a href="http://lists.thechangelog.com/t/t-2788B1A6B14682A1">Check out Issue #10</a>, or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
+      <p>Need a sneak peek? <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a>, or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
 
-      <a href="http://lists.thechangelog.com/t/t-2788B1A6B14682A1"><img src="https://changelog.com/wp-content/uploads/weekly-preview.png" alt="The Changelog Weekly - Preview" /></a>
+      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
 
       <hr />
 
       <h4>Is my email address safe?</h4>
 
-      <p>Yes. <a href="/team">We're a trustworthy team.</a></p>
+      <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
 
-      <p>We take the security and safety of our subscribers very seriously. Our subscribers' email addresses are stored securely by our Partner <a href="https://changelog.com/r/campaignmonitor">Campaign Monitor</a> and have not and will not be sold or rented to any third party. Ever.</p>
+      <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
 
       <h4>Is there an archive of past issues?</h4>
 
       Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %>
 
-      <h4>Can I sponsor a link?</h4>
+      <h4>Can I sponsor a Headline, Link, Repo, or Video?</h4>
 
       Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsorship) %>
 
-      <h4>Why do we require you to confirm your email address?</h4>
+      <h4>Why do we require you to verify your email address?</h4>
 
-      <p>We believe requiring double opt-in to subscribe to our emails will help us to keep subscribers safe from unintentionally subscribing.</p>
-
-      <p>By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is in fact the owner of the email address we will send emails to, and are explicitly opting in to receive our emails.</p>
+      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
     </div>
   </div>
 </article>
