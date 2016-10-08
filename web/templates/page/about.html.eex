@@ -30,11 +30,11 @@
 
       <hr>
 
-      <h4>Special thanks to...</h4>
+      <h3>Special thanks to...</h3>
 
       <p><a href="https://www.fastly.com/?utm_source=changelog&amp;utm_campaign=changelog-partner">Fastly</a> for providing our real-time CDN and worldwide bandwidth.</p>
 
-      <p><a href="http://linode.com/changelog">Linode</a> for providing our SSS cloud servers.</p>
+      <p><a href="http://linode.com/changelog">Linode</a> for providing our high performance SSD Linux cloud servers.</p>
 
       <p><a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a> for partnering with us on OSCON and other content oportunities.</p>
 
