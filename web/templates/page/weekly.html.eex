@@ -30,7 +30,7 @@
 
       <hr />
 
-      <p>Need a sneak peek? <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a>, or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
+      <p>Need a sneak peek? <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a> or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
 
       <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
 
