@@ -4,7 +4,9 @@
       <h2>Subscribe to Changelog Nightly</h2>
     </header>
     <div class="content_body">
-      <p>Every night at 10pm CT we ship an email that unearths the hottest new repos on GitHub before they blow up. It's nerd to the core. No spam!</p>
+      <p>Every night at 10pm CT we ship this email to unearth the hottest new repos on GitHub before they blow up. It's nerd to the core. No spam!</p>
+
+      <hr>
 
       <form action="http://email.thechangelog.com/t/t/s/hhatl/" method="post" class="form" id="weekly-subscribe">
         <div class="form_element_wrap">
@@ -40,9 +42,9 @@
 
       <hr />
 
-      <p>Need a sneak peek? <a href="http://nightly.changelog.com/2015/03/13/">Check out the email for March 13, 2015</a>.</p>
+      <p>Need a sneak peek? <a href="http://nightly.changelog.com/2016/10/06/">Check out the email for October 6, 2016</a>.</p>
 
-      <a href="http://nightly.changelog.com/2015/03/13/"><img src="https://changelog.com/wp-content/uploads/changelog-nightly.png" alt="Changelog Nightly" /></a>
+      <a href="http://nightly.changelog.com/2016/10/06/"><img src="<%= static_url(@conn, "/images/changelog-nightly.jpg") %>" alt="Changelog Nightly" /></a>
 
       <hr />
 
@@ -52,9 +54,9 @@
 
       <h4>Is my email address safe?</h4>
 
-      <p>Yes. <%= link "We're a trustworthy team.", to: page_path(@conn, :team) %></p>
+      <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
 
-      <p>We take the security and safety of our subscribers very seriously. Our subscribers' email addresses are stored securely by our Partner <a href="https://changelog.com/r/campaignmonitor">Campaign Monitor</a> and have not and will not be sold or rented to any third party. Ever.</p>
+      <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
 
       <h4>Is there an archive of past issues?</h4>
 
@@ -66,13 +68,11 @@
 
       <h4>Can I sponsor Changelog Nightly?</h4>
 
-      <p>Maybe in the future. In the meantime, <%= link "learn more about our sponsorship options here.", to: page_path(@conn, :sponsorship) %></p>
+      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: page_path(@conn, :sponsorship) %>.</p>
 
       <h4>Why do we require you to confirm your email address?</h4>
 
-      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing.</p>
-
-      <p>By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is in fact the owner of the email address we will send our emails to, and are explicitly opting in to receive our emails.</p>
+      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
     </div>
   </div>
 </article>

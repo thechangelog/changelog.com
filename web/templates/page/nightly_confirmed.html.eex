@@ -4,27 +4,25 @@
       <h2>Subscription Confirmed</h2>
     </header>
     <div class="content_body">
-      <p>Thank you for subscribing! Your subscription has been confirmed.</p>
+      <p>Thank you for verifying your email address. Your subscription to Changelog Nightly is confirmed.</p>
 
-      <p>If you're on Twitter, could you help us spread the word by letting your followers know you've subscribed to Changelog Nightly?</p>
+      <p>Help spread the word by letting your followers know you've subscribed to Changelog Nightly.</p>
 
-      <p>Click the button below and Twitter will let you edit the tweet before you send it.</p>
+      <p>Click the button below &mdash; Twitter will let you edit the tweet before you send it.</p>
 
-      <p style="margin-bottom:0!important;"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://changelog.com/nightly/" data-text="Just subscribed to Changelog Nightly. It unearths the hottest repos on GitHub before they blow up!" data-via="changelog" data-size="large">Tweet</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
+      <p><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just subscribed to Changelog Nightly. Get the hottest repos on GitHub in your inbox every night." data-url="https://changelog.com/nightly" data-via="changelog" data-related="adamstac,jerodsanto" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
-      <hr/>
+      <hr>
 
-      <p>While you're at it, you should follow us too if you don't already.</p>
+      <p>You should follow us on Twitter too, if you don't already.</p>
 
-      <p style="margin-bottom:0!important;"><a href="https://twitter.com/changelog" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @Changelog</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
+      <p><a href="https://twitter.com/Changelog" class="twitter-follow-button" data-size="large" data-dnt="true" data-show-count="false">Follow @Changelog</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
-      <hr/>
+      <hr>
 
-      <h3>Join the Community!</h3>
+      <h3>Join the community</h3>
 
-      <p><a href="https://changelog.com/membership/">Become a member</a> to get access to our members-only Slack room, exclusive offers and discounts from partners like DigitalOcean, CodeShip, Runscope and more.</p>
+      <p><%= link "Join the member community", to: page_path(@conn, :membership) %> to get access to our members-only Slack room, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
     </div>
   </div>
 </article>
