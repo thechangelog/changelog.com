@@ -18,7 +18,7 @@
 
       <p>
         <img src="<%= static_url(@conn, "/images/about/jerod.jpg") %>" class="float float--left" style="margin-top: 5px;width:75px;">
-        <strong>Jerod Santo</strong> &mdash; Jerod is Managing Editor &amp; Partner of Changelog Media. Jerod helps lead and co-host our flagship podcast The Changelog, and all the cool stuff we get to build to make Changelog awesome. Previously, he ran his custom software company Object Lateral. &mdash; <a href="https://twitter.com/jerodsanto">@jerodsanto</a>
+        <strong>Jerod Santo</strong> &mdash; Jerod is Managing Editor &amp; Partner of Changelog Media. Jerod helps lead and co-host our flagship podcast, The Changelog, and all the cool stuff we get to build to make Changelog awesome. He also runs his custom software company, Object Lateral. &mdash; <a href="https://twitter.com/jerodsanto">@jerodsanto</a>
       </p>
 
       <hr>
