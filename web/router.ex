@@ -63,6 +63,8 @@ defmodule Changelog.Router do
     resources "/people", PersonController, only: [:show]
     resources "/posts", PostController, only: [:show]
 
+    get "/slack/gotime", SlackController, :gotime
+
     # static pages
     get "/", PageController, :home
     get "/about", PageController, :about
