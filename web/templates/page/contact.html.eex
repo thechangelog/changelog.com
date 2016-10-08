@@ -7,21 +7,7 @@
 
       <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open inbox on GitHub. Share your projects, news, feedback, or tips.</p>
 
-      <p>Email <script type="text/javascript">
-//<![CDATA[
-<!--
-var x="function f(x){var i,o=\"\",ol=x.length,l=ol;while(x.charCodeAt(l/13)!" +
-"=50){try{x+=x;l+=l;}catch(e){}}for(i=l-1;i>=0;i--){o+=x.charAt(i);}return o" +
-".substr(0,ol);}f(\")0,\\\"@JBQUH420\\\\[O730\\\\630\\\\320\\\\At\\\\200\\\\" +
-"000\\\\610\\\\r\\\\700\\\\t\\\\710\\\\500\\\\%720\\\\120\\\\r\\\\520\\\\t\\" +
-"\\;;c~700\\\\x500\\\\e2:!='rs410\\\\(!!),$( 400\\\\f*(/'t\\\\}K]XVYOJ700\\\\"+
-"ZYV230\\\\T]]UH@LDHjZZHRL@F030\\\\NTsw|q9F$~rd}4r.38abhxbx~&sh`ivand\\\"(f}" +
-";o nruter};))++y(^)i(tAedoCrahc.x(edoCrahCmorf.gnirtS=+o;721=%y;2=*y))y+0(>" +
-"i(fi{)++i;l<i;0=i(rof;htgnel.x=l,\\\"\\\"=o,i rav{)y,x(f noitcnuf\")"        ;
-while(x=eval(x));
-//-->
-//]]>
-</script> if you'd like to get in touch privately.</p>
+      <p>Email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a> if you'd like to get in touch privately.</p>
 
     </div>
   </div>
