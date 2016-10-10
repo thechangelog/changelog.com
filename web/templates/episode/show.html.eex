@@ -47,10 +47,10 @@
       <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time>
       &nbsp;/&nbsp;<%= TimeView.rounded_minutes(@episode.duration) %> Min
       &nbsp;
-      <%= link to: audio_url(@episode), download: true do %>
+      <a href="<%= audio_url(@episode) %>" download>
         <img src="<%= static_url(@conn, "/images/download.svg") %>"">
         &nbsp;Download MP3 (<%= megabytes(@episode) %>MB)
-      <% end %>
+      </a>
     </cite>
 
     <footer class="episode_footer episode_footer--<%= @podcast.slug %>">
