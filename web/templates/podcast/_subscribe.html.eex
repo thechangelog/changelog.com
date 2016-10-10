@@ -1,8 +1,8 @@
 <hr />
 <h2 id="<%= @podcast.slug %>"><%= @podcast.name %></h2>
-<p><%= raw md_to_html(@podcast.description) %></p>
+<p><%= @podcast.description |> md_to_html |> raw %></p>
 <p>
-  <%= link "Direct (RSS)", to: feed_path(@conn, :podcast, @podcast.slug) %> &bull;
+  <%= link "Direct (RSS)", to: feed_path(@conn, :podcast, @podcast.slug), data: [turbolinks: false] %> &bull;
   <%= if @podcast.itunes_url do %>
     <%= link "iTunes", to: @podcast.itunes_url %> &bull;
     <%= link "Overcast", to: subscribe_on_overcast_url(@podcast) %> &bull;
