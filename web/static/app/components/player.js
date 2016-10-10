@@ -77,6 +77,7 @@ export default class Player {
       this.audioLoaded = false;
       this.attachUI(selector);
       this.attachEvents();
+      this.attachKeyboardShortcuts();
     }
   }
 
@@ -171,6 +172,21 @@ export default class Player {
     this.scrubber.on("change", (event) => { this.scrubEnd(event.target.value); });
     this.closeButton.handle("click", () => { this.close(); });
     this.hideButton.handle("click", () => { this.hide(); });
+  }
+
+  attachKeyboardShortcuts() {
+    u(document).on("keydown", (event) => {
+      if (!this.isActive()) return;
+
+      if (event.keyCode == 27) { // escape
+        this.close();
+      }
+
+      if (event.keyCode == 32) { // space bar
+        event.preventDefault();
+        this.togglePlayPause();
+      }
+    });
   }
 
   loadUI() {
