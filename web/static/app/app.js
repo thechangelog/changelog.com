@@ -29,7 +29,8 @@ u(document).on("click", "a[href^=http]", function(event) {
     let href = u(this).attr("href");
     if (!href.match(window.location.hostname)) {
       event.preventDefault();
-      window.open(href, "_blank");
+      let newWindow = window.open(href, "_blank");
+      newWindow.opener = null;
     }
   }
 });
@@ -51,6 +52,7 @@ u(document).handle("click", ".js-share-popup", function(event) {
   left = (screen.width / 2) - (w / 2);
   top = (screen.height / 2) - (h / 2);
   shareWindow = window.open(href, "Changelog", "location=1,status=1,scrollbars=1, width=" + w + ",height=" + h + ",top=" + top + ",left=" + left);
+  shareWindow.opener = null;
 });
 
 // Make sure all slider slides are the same height
