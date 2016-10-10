@@ -41,18 +41,4 @@
       </div>
     </form>
   </figure>
-  <!-- <div class="share-podcast-tooltip" style="display:none;">
-    <div class="share-podcast-tooltip_link">
-      <img src="<%= static_url(@conn, "/images/podcast-link.svg") %>" alt="Episode link">
-      <span class="share-podcast-tooltip_link_text">http://changelog.com/podcasts/201</span>
-    </div>
-    <div class="share-podcast-tooltip_options">
-      <input id="start-at" type="checkbox">
-      <label for="start-at">Start at <b>46:53</b>?</label>
-    </div>
-    <nav class="podcast-menu">
-      <a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/social-twitter.svg") %>" alt="Tweet episode link on twitter">Tweet</a>
-      <a href="#" target="_blank"><img src="<%= static_url(@conn, "/images/social-facebook.svg") %>" alt="Post episode link on facebook">Post</a>
-    </nav>
-  </div> -->
 </div>
