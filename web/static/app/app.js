@@ -1,5 +1,4 @@
 import Turbolinks from "turbolinks";
-import Popper from "popper.js";
 import { u } from "umbrellajs";
 import Player from "components/player";
 import Slider from "components/slider";
@@ -72,19 +71,6 @@ window.onresize = function() {
 
 // on page load
 u(document).on("turbolinks:load", function() {
-  u(".podcast-menu_more-button").each(function(node, i) {
-    const tooltip = u(node).siblings(".podcast-menu-tooltip").first();
-    new Popper(node, tooltip, {
-      placement: "right",
-      boundariesElement: u("body"),
-      arrowClassNames: "tooltip__arrow"
-    });
-
-    u(node).handle("click", function(event) {
-      u(tooltip).toggleClass("tooltip--is-open");
-    });
-  });
-
   tallestSlide();
 });
 
