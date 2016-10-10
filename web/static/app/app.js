@@ -25,7 +25,7 @@ u(document).on("click", "[data-play]", function(event) {
 
 // open external links in new window when player is doing its thing
 u(document).on("click", "a[href^=http]", function(event) {
-  if (player.isPlaying()) {
+  if (player.isActive()) {
     let href = u(this).attr("href");
     if (!href.match(window.location.hostname)) {
       event.preventDefault();

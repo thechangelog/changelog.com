@@ -84,6 +84,10 @@ export default class Player {
     return this.audio.canPlay();
   }
 
+  isActive() {
+    return this.player.hasClass("podcast-player--is-active");
+  }
+
   isPlaying() {
     return this.audio.playing();
   }
@@ -165,7 +169,7 @@ export default class Player {
     this.forwardButton.handle("click", () => { this.seekBy(15); });
     this.scrubber.on("input", (event) => { this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { this.scrubEnd(event.target.value); });
-    this.closeButton.handle("click", () => { this.closePlayer(); });
+    this.closeButton.handle("click", () => { this.close(); });
     this.hideButton.handle("click", () => { this.hide(); });
   }
 
@@ -263,7 +267,7 @@ export default class Player {
     this.player.toggleClass("podcast-player--is-hidden");
   }
 
-  closePlayer() {
+  close() {
     this.pause();
     this.player.removeClass("podcast-player--is-active");
   }
