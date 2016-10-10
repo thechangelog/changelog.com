@@ -66,6 +66,7 @@ defmodule Changelog.Router do
     get "/about", PageController, :about
     get "/contact", PageController, :contact
     get "/films", PageController, :films
+    get "/films/gophercon-2015", PageController, :films_gophercon_2015
     get "/community", PageController, :community
     get "/benefits", PageController, :benefits
     get "/styleguide", PageController, :styleguide
