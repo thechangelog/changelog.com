@@ -74,7 +74,7 @@
 
       <h3>GopherCon 2015</h3>
 
-      <p>This is the promo video we shot for our friends at GopherCon.</p>
+      <p>This is the promo video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %>.</p>
 
       <div class="wide-gutter-wrap">
         <script src="//fast.wistia.com/embed/medias/k4osu01wgp.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:42.71% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_k4osu01wgp videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
@@ -91,6 +91,8 @@
       <div class="wide-gutter-wrap">
         <script src="//fast.wistia.com/embed/medias/ozljuzk5yh.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ozljuzk5yh videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
       </div>
+
+      <p><%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %> we shot at GopherCon 2015.</p>
 
       <hr>
 
