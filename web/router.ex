@@ -71,6 +71,7 @@ defmodule Changelog.Router do
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/membership", PageController, :membership
+    get "/benefits", PageController, :benefits
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership
