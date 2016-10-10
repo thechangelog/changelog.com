@@ -30,7 +30,7 @@
 
       <h3>Join the community</h3>
 
-      <p><%= link "Join the member community", to: page_path(@conn, :membership) %> to get access to our members-only Slack room, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
+      <p><%= link "Join the member community", to: page_path(@conn, :community) %> to get access to our members-only Slack room, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
 
       <h3>Become a Sponsor</h3>
 

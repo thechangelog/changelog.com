@@ -5,7 +5,7 @@
         <h2>Join the Changelog Community</h2>
         <p>Get a backstage pass to everything we do: Access to our private Slack, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
       </div>
-      <%= link "Join Now", to: page_path(@conn, :membership), class: "btn btn--blue-text" %>
+      <%= link "Join Now", to: page_path(@conn, :community), class: "btn btn--blue-text" %>
     </aside>
   </div>
 </div>

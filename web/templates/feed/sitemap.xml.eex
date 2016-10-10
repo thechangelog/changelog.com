@@ -5,7 +5,7 @@
   <url><loc><%= page_url(@conn, :about) %></loc></url>
   <url><loc><%= page_url(@conn, :contact) %></loc></url>
   <url><loc><%= page_url(@conn, :films) %></loc></url>
-  <url><loc><%= page_url(@conn, :membership) %></loc></url>
+  <url><loc><%= page_url(@conn, :community) %></loc></url>
   <url><loc><%= page_url(@conn, :subscribe) %></loc></url>
   <url><loc><%= page_url(@conn, :partnership) %></loc></url>
   <url><loc><%= page_url(@conn, :sponsorship) %></loc></url>

@@ -4,7 +4,7 @@
       <h2>The Team</h2>
     </header>
     <div class="content_body">
-      <p><%= link "Become a member if you value our content.", to: page_path(@conn, :membership) %></p>
+      <p><%= link "Become a member if you value our content.", to: page_path(@conn, :community) %></p>
 
       <ul>
         <li><a href="https://twitter.com/adamstac"><strong>Adam Stacoviak</strong></a> &mdash; Founder &amp; Editor-in-chief</li>

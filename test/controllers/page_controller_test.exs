@@ -7,7 +7,7 @@ defmodule Changelog.PageControllerTest do
       "/about",
       "/contact",
       "/films",
-      "/membership",
+      "/community",
       "/nightly",
       "/nightly/confirmation-pending",
       "/nightly/confirmed",

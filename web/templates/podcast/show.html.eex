@@ -53,7 +53,7 @@
     <% end %>
   </div>
 
-  <%= render SharedView, "_membership_cta_1.html", assigns %>
+  <%= render SharedView, "_community_cta_1.html", assigns %>
 
   <% post_cta_episodes = Enum.slice(@episodes, 2, length(@episodes)) %>
   <div class="container container--skinny">

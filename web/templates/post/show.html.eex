@@ -68,7 +68,7 @@
 </article>
 
 <div class="wrapper wrapper--half-gray">
-  <%= render Changelog.SharedView, "_membership_cta_2.html", assigns %>
+  <%= render Changelog.SharedView, "_community_cta_2.html", assigns %>
 </div>
 
 <div class="wrapper wrapper--gray">

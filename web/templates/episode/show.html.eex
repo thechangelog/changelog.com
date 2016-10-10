@@ -107,7 +107,7 @@
 <%= render SharedView, "_news_cta_1.html", assigns %>
 
 <div class="wrapper wrapper--half-gray">
-  <%= render SharedView, "_membership_cta_2.html", assigns %>
+  <%= render SharedView, "_community_cta_2.html", assigns %>
 </div>
 
 <div class="wrapper wrapper--gray">
