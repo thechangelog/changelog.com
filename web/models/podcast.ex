@@ -2,7 +2,7 @@ defmodule Changelog.Podcast do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.Regexp
+  alias Changelog.{Episode, Regexp}
 
   schema "podcasts" do
     field :name, :string
@@ -15,7 +15,7 @@ defmodule Changelog.Podcast do
     field :itunes_url, :string
     field :schedule_note, :string
 
-    has_many :episodes, Changelog.Episode, on_delete: :delete_all
+    has_many :episodes, Episode, on_delete: :delete_all
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
 
@@ -64,7 +64,7 @@ defmodule Changelog.Podcast do
 
   def get_episodes(podcast) do
     if is_master(podcast) do
-      from(e in Changelog.Episode)
+      from(e in Episode)
     else
       assoc(podcast, :episodes)
     end
@@ -82,9 +82,15 @@ defmodule Changelog.Podcast do
   end
 
   def published_episode_count(podcast) do
-    podcast
-    |> assoc(:episodes)
-    |> Changelog.Episode.published
+    query = if is_master(podcast) do
+      Episode.published
+    else
+      podcast
+      |> assoc(:episodes)
+      |> Episode.published
+    end
+
+    query
     |> Ecto.Query.select([e], count(e.id))
     |> Repo.one
   end
@@ -100,8 +106,8 @@ defmodule Changelog.Podcast do
   def latest_episode(podcast) do
     podcast
     |> assoc(:episodes)
-    |> Changelog.Episode.published
-    |> Changelog.Episode.newest_first
+    |> Episode.published
+    |> Episode.newest_first
     |> Ecto.Query.first
     |> Repo.one
   end
