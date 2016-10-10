@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <%#= pages %>
   <url><loc><%= page_url(@conn, :home) %></loc></url>
   <url><loc><%= page_url(@conn, :about) %></loc></url>
   <url><loc><%= page_url(@conn, :contact) %></loc></url>

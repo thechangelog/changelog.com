@@ -19,6 +19,7 @@ defmodule Changelog.FeedController do
 
     items = (episodes ++ posts)
       |> Enum.sort(&(DateTime.to_erl(&1.published_at) > DateTime.to_erl(&2.published_at)))
+      |> Enum.take(50)
 
     conn
     |> put_layout(false)
