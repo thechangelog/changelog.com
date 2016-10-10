@@ -2,7 +2,6 @@
   "arc_ecto": {:hex, :arc_ecto, "0.4.2", "9f7fd7da4dfa8d16292bb6a49a65971b12c663cb4c9711674d6302d6272f9e52", [:mix], [{:arc, "~> 0.2", [hex: :arc, optional: false]}, {:ecto, "~> 2.0.0-rc.3", [hex: :ecto, optional: false]}]},
   "bamboo": {:hex, :bamboo, "0.7.0", "2722e395a396dfedc12d300c900f65b216f7d7bf9d430c5dd0235690997878b7", [:mix], [{:httpoison, "~> 0.9", [hex: :httpoison, optional: false]}, {:plug, "~> 1.0", [hex: :plug, optional: false]}, {:poison, ">= 1.5.0", [hex: :poison, optional: false]}]},
   "bamboo_smtp": {:git, "https://github.com/jerodsanto/bamboo_smtp.git", "2b8496c3432b8863020973eaef925df984760cc9", [branch: "fix-email-format"]},
-  "basic_auth": {:hex, :basic_auth, "1.0.0", "fc16c423023f4e855d9be3e8a5faa5ca5affc34efff72f75a293362566fc696f", [:mix], [{:cowboy, "~> 1.0", [hex: :cowboy, optional: false]}, {:plug, "~> 0.14 or ~> 1.0", [hex: :plug, optional: false]}]},
   "certifi": {:hex, :certifi, "0.4.0", "a7966efb868b179023618d29a407548f70c52466bf1849b9e8ebd0e34b7ea11f", [:rebar3], []},
   "cmark": {:hex, :cmark, "0.6.10", "de67c5f033b42ef2adc702df2044bc97b4a1b36b55826e351852f8d31624bc37", [:mix, :make], []},
   "combine": {:hex, :combine, "0.9.1", "5fd778ee77032ae593bf79aedb8519d9e36283e4f869abd98c2d6029ca476db8", [:mix], []},
