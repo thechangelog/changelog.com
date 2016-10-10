@@ -8,7 +8,7 @@
         <div class="news-list">
           <article class="news-item">
             <h3 class="news-item_heading">Changelog Weekly</h3>
-            <p class="news-item_description"><b><em>Every Saturday morning</em></b> we ship an email that covers everything that hits our open source radar. It's nerd to the core. Don't miss out. No spam!</p>
+            <p class="news-item_description"><b><em>Every weekend</em></b> we ship our editorialized take on this week in open source and software development. It's the email you need to read to not miss out. No spam!</p>
 
             <nav class="toolbar">
               <h4 class="accessibility-hidden">Changelog Weekly Navigation</h4>
@@ -26,7 +26,7 @@
           </article>
           <article class="news-item">
             <h3 class="news-item_heading">Changelog Nightly</h3>
-            <p class="news-item_description"><b><em>Every night at 10pm CST</em></b> we ship an email that unearths the hottest new repos on GitHub before they blow up. It's nerd to the core. Don't miss out. No spam!</p>
+            <p class="news-item_description"><b><em>Every night @ 10pm CST</em></b> we ship this email to unearth top new and starred repositories on GitHub before they blow up. No fluff, just repos. No spam!</p>
 
             <nav class="toolbar">
               <h4 class="accessibility-hidden">Changelog Weekly Navigation</h4>
