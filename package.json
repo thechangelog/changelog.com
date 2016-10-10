@@ -9,7 +9,7 @@
     "phoenix_html": "file:deps/phoenix_html",
     "sortablejs": "^1.4.2",
     "turbolinks": "^5.0.0",
-    "umbrellajs": "^2.6.6"
+    "umbrellajs": "^2.6.7"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
