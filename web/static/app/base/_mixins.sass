@@ -18,7 +18,7 @@
     filter: blur(5px)
     opacity: 0
     pointer-events: none
-    transform: scale(1.05)
+    transform: scale(1.05) translate3d(0, 0, 0)
     transition: all $speed ease-in-out
     visibility: hidden
     will-change: transform opacity
@@ -27,7 +27,7 @@
         filter: blur(0)
         opacity: 1
         pointer-events: inherit
-        transform: scale(1)
+        transform: scale(1) translate3d(0, 0, 0)
         visibility: visible
 
 // Used on the audio player, etc.
@@ -36,7 +36,7 @@
     opacity: 0
     pointer-events: none
     transition: all 0.1s ease-in-out $delay
-    transform: translateY(100%) scale(1.0001)
+    transform: translateY(100%) scale(1.0001) translate3d(0, 0, 0)
     visibility: hidden
     will-change: transform opacity
 
@@ -44,5 +44,5 @@
         filter: blur(0)
         opacity: 1
         pointer-events: inherit
-        transform: translateY(0) scale(1)
+        transform: translateY(0) scale(1) translate3d(0, 0, 0)
         visibility: visible
