@@ -8,7 +8,7 @@
     <link rel="canonical" content="<%= canonical_url(@conn) %>">
 
     <meta name="description" content="<%= description(assigns) %>">
-    <meta name="copyright" content="Changelog Media, LLC">
+    <meta name="copyright" content="Changelog Media LLC">
 
     <meta property="og:url" content="<%= canonical_url(@conn) %>">
     <meta property="og:type" content="website">

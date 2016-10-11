@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Not Found | Changelog</title>
+
+    <meta name="copyright" content="Changelog Media LLC">
+
+    <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
+    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+  <%= if Mix.env == :prod do %>
+    <script>
+      !function(g,s,q,r,d){r=g[r]=g[r]||function(){(r.q=r.q||[]).push(
+      arguments)};d=s.createElement(q);q=s.getElementsByTagName(q)[0];
+      d.src='//d1l6p2sc9645hc.cloudfront.net/tracker.js';q.parentNode.
+      insertBefore(d,q)}(window,document,'script','_gs');
+
+      _gs('GSN-050062-W');
+    </script>
+  <% end %>
+  </head>
+  <body><!--[if lt IE 8]>
+<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+    <%= render(LayoutView, "_nav.html", assigns) %>
+    <main class="main">
+      <article class="section content">
+        <div class="container container--has-padding container--skinny">
+          <header class="content_header">
+            <h2>Not Found</h2>
+          </header>
+          <div class="content_body">
+          </div>
+        </div>
+      </article>
+    </main>
+    <%= render(LayoutView, "_footer.html", assigns) %>
+    <%= render(LayoutView, "_player.html", assigns) %>
+  </body>
+</html>
