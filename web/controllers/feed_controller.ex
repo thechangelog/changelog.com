@@ -4,6 +4,8 @@ defmodule Changelog.FeedController do
   alias Changelog.{Episode, Podcast, Post}
   alias Ecto.DateTime
 
+  require Logger
+
   def all(conn, _params) do
     episodes =
       Episode.published
@@ -36,6 +38,11 @@ defmodule Changelog.FeedController do
       |> Episode.newest_first
       |> Repo.all
       |> Episode.preload_all
+
+    case List.keyfind(conn.req_headers, "referer", 0) do
+      {"referer", referer} -> Logger.info("Feed referer for #{podcast.name}: #{referer}")
+      nil -> nil
+    end
 
     conn
     |> put_layout(false)
