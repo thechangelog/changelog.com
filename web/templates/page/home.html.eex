@@ -1,4 +1,4 @@
-<section class="featured mosaic mosaic--<%#= episode.podcast.slug %> mosaic--abstract">
+<section class="featured mosaic mosaic--abstract">
   <h2 class="accessibility-hidden">Featured Quotes</h2>
   <%= for {episode, index} <- Enum.with_index(@featured) do %>
     <% light_logo_sponsorships = EpisodeView.sponsorships_with_light_logo(episode) %>
