@@ -1,5 +1,5 @@
 <article class="episode-summary">
-  <time class="episode-summary_date" datetime="2016-05-16T12:00"><%= TimeView.pretty_date(@episode.published_at) %></time>
+  <time class="episode-summary_date"><%= TimeView.pretty_date(@episode.published_at) %></time>
   <div class="episode-summary_content">
     <div class="episode-summary_content_wrap">
       <h3 class="episode-summary_title">

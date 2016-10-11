@@ -1,4 +1,4 @@
-# 2016.changelog.com
+# changelog.com
 
 Getting started:
 
