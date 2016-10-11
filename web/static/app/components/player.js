@@ -1,5 +1,6 @@
-import Episode from "components/episode";
 import { u, ajax } from "umbrellajs";
+import Episode from "components/episode";
+import Log from "components/log";
 
 class ChangelogAudio {
   constructor() {
@@ -140,6 +141,10 @@ export default class Player {
       this.loadUI();
       this.detailsLoaded = true;
       this.show();
+      Log.track("Play", {
+        podcast: this.episode.podcastName(),
+        episode: this.episode.title()
+      });
     });
   }
 

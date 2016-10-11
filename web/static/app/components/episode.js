@@ -35,10 +35,14 @@ export default class Episode {
 
   nowPlaying() {
     if (this.ep.number) {
-      return `${this.ep.podcast} #${this.ep.number}`
+      return `${this.podcastName()} #${this.ep.number}`
     } else {
-      return this.ep.podcast;
+      return this.podcastName();
     }
+  }
+
+  podcastName() {
+    return this.ep.podcast;
   }
 
   prevNumber() {
