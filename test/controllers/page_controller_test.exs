@@ -9,7 +9,6 @@ defmodule Changelog.PageControllerTest do
       "/films",
       "/community",
       "/nightly",
-      "/nightly/confirmation-pending",
       "/nightly/confirmed",
       "/nightly/unsubscribed",
       "/partnership",
@@ -19,8 +18,10 @@ defmodule Changelog.PageControllerTest do
       "/weekly",
       "/weekly/archive",
       "/weekly/confirmed",
-      "/weekly/confirmation-pending",
       "/weekly/unsubscribed",
+      "/confirmation-pending",
+      "/gotime/confirmed",
+      "/rfc/confirmed"
     ], fn route ->
       conn = get(build_conn, route)
       assert conn.status == 200
