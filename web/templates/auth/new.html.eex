@@ -1,20 +1,29 @@
-<h1>Sign In</h1>
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Sign In</h2>
+    </header>
+    <div class="content_body">
+    <%= if @person do %>
+      <div class="form_submit_response form_submit_response--success">Check your email! We sent you a single-use sign in link. It will expire in 15 minutes.</div>
 
-<%= if @person do %>
-<p>Check your email! We sent you a single-use sign in link. It will expire in 15 minutes.</p>
-
-<%= if Mix.env == :dev do %>
-<p>Psst! Since you're hacking we'll just skip the email process.
-<%= link "click here", to: auth_path(@conn, @person) %> instead!</p>
-<% end %>
-
-<% else %>
-<p>Please enter your email address.</p>
-
-<%= form_for @conn, sign_in_path(@conn, :new), [as: :auth], fn f -> %>
-  <%= label f, :email %>
-  <%= email_input f, :email %>
-
-  <button type="submit">Enter</button>
-<% end %>
-<% end %>
+      <%= if Mix.env == :dev do %>
+        <p>Psst! Since you're hacking we'll just skip the email process. <%= link "click here", to: auth_path(@conn, @person) %> instead!</p>
+      <% end %>
+    <% else %>
+      <p>Please enter your email address.</p>
+      <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form"], fn f -> %>
+        <div class="form_element_wrap">
+          <label>Email<span>*</span></label>
+          <div class="form_element">
+            <%= email_input f, :email, required: true %>
+          </div>
+        </div>
+        <div class="form_submit">
+          <input type="submit" value="Enter">
+        </div>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+</article>
