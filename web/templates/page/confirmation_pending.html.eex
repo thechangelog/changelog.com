@@ -10,7 +10,7 @@
 
       <p>If you don't complete this step we will not be able to email you.</p>
 
-      <p><a href="/contact">Email us</a> if for some reason you haven't received your confirmation email.</p>
+      <p><%= link "Email us", to: page_path(@conn, :contact) %> if for some reason you haven't received your confirmation email.</p>
 
       <hr>
 

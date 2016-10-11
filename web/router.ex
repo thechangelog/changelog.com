@@ -79,15 +79,18 @@ defmodule Changelog.Router do
     get "/live", PageController, :live
 
     get "/nightly", PageController, :nightly
-    get "/nightly/confirmation-pending", PageController, :nightly_pending
     get "/nightly/confirmed", PageController, :nightly_confirmed
     get "/nightly/unsubscribed", PageController, :nightly_unsubscribed
 
     get "/weekly", PageController, :weekly
     get "/weekly/archive", PageController, :weekly_archive
-    get "/weekly/confirmation-pending", PageController, :weekly_pending
     get "/weekly/confirmed", PageController, :weekly_confirmed
     get "/weekly/unsubscribed", PageController, :weekly_unsubscribed
+
+    get "/gotime/confirmed", PageController, :gotime_confirmed
+    get "/rfc/confirmed", PageController, :rfc_confirmed
+
+    get "/confirmation-pending", PageController, :confirmation_pending
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
