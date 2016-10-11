@@ -25,12 +25,22 @@
     <meta name="twitter:description" content="<%= description(assigns) %>">
     <meta name="twitter:image" content="<%= static_url(@conn, twitter_image(assigns)) %>">
 
-    <%= for feed <- rss_feeds(assigns) do %>
-      <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
-    <% end %>
+  <%= for feed <- rss_feeds(assigns) do %>
+    <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
+  <% end %>
 
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
     <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+  <%= if Mix.env == :prod do %>
+    <script>
+      !function(g,s,q,r,d){r=g[r]=g[r]||function(){(r.q=r.q||[]).push(
+      arguments)};d=s.createElement(q);q=s.getElementsByTagName(q)[0];
+      d.src='//d1l6p2sc9645hc.cloudfront.net/tracker.js';q.parentNode.
+      insertBefore(d,q)}(window,document,'script','_gs');
+
+      _gs('GSN-050062-W');
+    </script>
+  <% end %>
   </head>
   <body><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -42,6 +52,6 @@
     <%= render("_footer.html", assigns) %>
     <%= render("_player.html", assigns) %>
 
-    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js"></script>
   </body>
 </html>
