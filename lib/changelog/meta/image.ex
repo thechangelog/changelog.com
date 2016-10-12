@@ -9,5 +9,5 @@ defmodule Changelog.Meta.Image do
 
   defp get_twitter(%{podcast: podcast}), do: "/images/share/#{podcast.slug}-twitter.png"
   defp get_twitter(%{view_module: PageView, view_template: "home.html"}), do: "/images/share/sitewide-twitter-large.png"
-  defp get_twitter(_), do: "/images/share/sitewide-twitter.png"
+  defp get_twitter(_), do: "/images/share/sitewide-twitter-summary.png"
 end
