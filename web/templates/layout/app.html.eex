@@ -10,6 +10,13 @@
     <meta name="description" content="<%= description(assigns) %>">
     <meta name="copyright" content="Changelog Media LLC">
 
+    <meta name="twitter:card" content="<%= twitter_card_type(assigns) %>">
+    <meta name="twitter:site" content="@Changelog">
+    <meta name="twitter:url" content="<%= canonical_url(@conn) %>">
+    <meta name="twitter:title" content="<%= share_title(assigns) || page_title(assigns) %>">
+    <meta name="twitter:description" content="<%= description(assigns) %>">
+    <meta name="twitter:image" content="<%= static_url(@conn, twitter_image(assigns)) %>">
+
     <meta property="og:url" content="<%= canonical_url(@conn) %>">
     <meta property="og:type" content="website">
     <meta property="og:title" content="<%= share_title(assigns) || page_title(assigns) %>">
@@ -19,13 +26,6 @@
     <meta property="og:description" content="<%= description(assigns) %>">
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
-
-    <meta name="twitter:card" content="<%= twitter_card_type(assigns) %>">
-    <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:url" content="<%= canonical_url(@conn) %>">
-    <meta name="twitter:title" content="<%= share_title(assigns) || page_title(assigns) %>">
-    <meta name="twitter:description" content="<%= description(assigns) %>">
-    <meta name="twitter:image" content="<%= static_url(@conn, twitter_image(assigns)) %>">
 
   <%= for feed <- rss_feeds(assigns) do %>
     <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
