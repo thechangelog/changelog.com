@@ -56,11 +56,11 @@ defmodule Changelog.Episode do
   end
 
   def previous_to(query, episode) do
-    from e in query, where: e.id < ^episode.id
+    from e in query, where: e.published_at < ^episode.published_at
   end
 
   def next_after(query, episode) do
-    from e in query, where: e.id > ^episode.id
+    from e in query, where: e.published_at > ^episode.published_at
   end
 
   def newest_first(query) do

@@ -1,10 +1,10 @@
 defmodule Changelog.EpisodeView do
   use Changelog.Web, :view
 
-  alias Changelog.{PersonView, SharedView, PodcastView, SponsorView, TimeView}
+  alias Changelog.{AudioFile, Endpoint, PersonView, SharedView, PodcastView, SponsorView, TimeView}
 
   def audio_filename(episode) do
-    Changelog.AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
+    AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
   end
 
   def audio_url(episode) do
@@ -16,11 +16,11 @@ defmodule Changelog.EpisodeView do
       "/california.mp3"
     end
 
-    static_url(Changelog.Endpoint, url)
+    static_url(Endpoint, url)
   end
 
   def audio_local_path(episode) do
-    Changelog.AudioFile.url({episode.audio_file.file_name, episode}, :original)
+    AudioFile.url({episode.audio_file.file_name, episode}, :original)
   end
 
   def classy_highlight(episode) do
@@ -75,16 +75,16 @@ defmodule Changelog.EpisodeView do
       title: episode.title,
       number: number(episode),
       duration: episode.duration,
-      art_url: static_url(Changelog.Endpoint, "/images/podcasts/#{podcast.slug}-cover-art.svg"),
+      art_url: static_url(Endpoint, "/images/podcasts/#{podcast.slug}-cover-art.svg"),
       audio_url: audio_url(episode),
-      share_url: "#{Changelog.PodcastView.vanity_domain_with_fallback_url(podcast)}/#{episode.slug}"
+      share_url: "#{PodcastView.vanity_domain_with_fallback_url(podcast)}/#{episode.slug}"
     }
 
     info = if prev do
       Map.put(info, :prev, %{
         number: prev.slug,
         title: prev.title,
-        location: episode_path(Changelog.Endpoint, :play, podcast.slug, prev.slug),
+        location: episode_path(Endpoint, :play, podcast.slug, prev.slug),
         audio_url: audio_url(prev)
       })
     else
@@ -95,7 +95,7 @@ defmodule Changelog.EpisodeView do
       Map.put(info, :next, %{
         number: next.slug,
         title: next.title,
-        location: episode_path(Changelog.Endpoint, :play, podcast.slug, next.slug),
+        location: episode_path(Endpoint, :play, podcast.slug, next.slug),
         audio_url: audio_url(next)
       })
     else
