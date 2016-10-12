@@ -28,10 +28,6 @@
       <td><%= episode_count(person) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= link to: person_path(@conn, :show, person.handle), class: "ui button" do %>
-            <i class="external icon"></i>
-            Public
-          <% end %>
 
           <%= link to: admin_person_path(@conn, :edit, person), class: "ui button" do %>
             <i class="edit icon"></i>

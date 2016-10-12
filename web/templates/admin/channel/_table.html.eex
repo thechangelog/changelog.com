@@ -14,17 +14,12 @@
   <%= for channel <- @channels do %>
     <tr>
       <td><%= channel.name %></td>
-      <td><%= link channel.slug, to: channel_path(@conn, :show, channel.slug) %></td>
+      <td><%= channel.slug %></td>
       <td><%= truncate(channel.description, 60) %></td>
       <td><%= episode_count(channel) %></td>
       <td><%= post_count(channel) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= link to: channel_path(@conn, :show, channel.slug), class: "ui disabled button" do %>
-            <i class="external icon"></i>
-            Public
-          <% end %>
-
           <%= link to: admin_channel_path(@conn, :edit, channel), class: "ui button" do %>
             <i class="edit icon"></i>
             Edit

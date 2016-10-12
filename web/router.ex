@@ -55,8 +55,6 @@ defmodule Changelog.Router do
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
 
-    resources "/channels", ChannelController, only: [:show]
-    resources "/people", PersonController, only: [:show]
     resources "/posts", PostController, only: [:show]
 
     get "/slack/gotime", SlackController, :gotime
