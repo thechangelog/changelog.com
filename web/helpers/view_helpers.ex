@@ -74,8 +74,8 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
-  def tweet_url(text,url) do
-    # TODO: Text should be URL-encoded
+  def tweet_url(text, url) do
+    text = URI.encode(text)
     "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=changelog&related=changelog"
   end
 

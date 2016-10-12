@@ -2,6 +2,7 @@ import Turbolinks from "turbolinks";
 import { u } from "umbrellajs";
 import Player from "components/player";
 import Slider from "components/slider";
+import Log from "components/log";
 
 const player = new Player("#player");
 const featured = new Slider(".featured_podcast");
@@ -22,6 +23,19 @@ u(document).on("click", "[data-play]", function(event) {
   }
 });
 
+// open share dialogs in their own window (order matters or next rule will apply)
+u(document).handle("click", ".js-share-popup", function(event) {
+  Log.track("Share");
+  var h, href, left, shareWindow, top, w;
+  href = u(event.target).attr("href");
+  w = 600;
+  h = 300;
+  left = (screen.width / 2) - (w / 2);
+  top = (screen.height / 2) - (h / 2);
+  shareWindow = window.open(href, "Changelog", `location=1,status=1,scrollbars=1,width=${w},height=${h},top=${top},left=${left}`);
+  shareWindow.opener = null;
+});
+
 // open external links in new window when player is doing its thing
 u(document).on("click", "a[href^=http]", function(event) {
   if (player.isActive()) {
@@ -32,18 +46,6 @@ u(document).on("click", "a[href^=http]", function(event) {
       newWindow.opener = null;
     }
   }
-});
-
-// open share dialogs in their own window
-u(document).handle("click", ".js-share-popup", function(event) {
-  var h, href, left, shareWindow, top, w;
-  href = u(event.target).attr("href");
-  w = 600;
-  h = 300;
-  left = (screen.width / 2) - (w / 2);
-  top = (screen.height / 2) - (h / 2);
-  shareWindow = window.open(href, "Changelog", `location=1,status=1,scrollbars=1,width=${w},height=${h},top=${top},left=${left}`);
-  shareWindow.opener = null;
 });
 
 // handle featured sliders

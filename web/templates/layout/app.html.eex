@@ -54,6 +54,5 @@
     <%= render("_footer.html", assigns) %>
     <%= render("_player.html", assigns) %>
 
-    <script async src="https://platform.twitter.com/widgets.js"></script>
   </body>
 </html>

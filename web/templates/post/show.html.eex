@@ -31,7 +31,7 @@
             <%= link "Twitter",
                 title: "Share on Twitter",
                 to: tweet_url(@post.title, post_url(@conn, :show, @post.slug)),
-                class: "toolbar_item_link",
+                class: "toolbar_item_link js-share-popup",
                 style: "background-image: url('#{static_url(@conn, "/images/icon-twitter.svg")}')" %>
           </li>
         </ul>
