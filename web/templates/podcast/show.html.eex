@@ -4,62 +4,62 @@
       <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
       <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
 
-      <%= if !is_master(@podcast) && Enum.any?(@episodes) do %>
-        <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes)) %>
-      <% end %>
+    <%= if Enum.any?(@episodes) do %>
+      <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes)) %>
+    <% end %>
 
+      <div class="podcast-header_hosts">
       <%= if !is_master(@podcast) do %>
-        <div class="podcast-header_hosts">
-          <p class="podcast-header_hosts_heading"><i><%= @podcast.schedule_note %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i></p>
-          <div class="hosts-list">
-            <%= for person <- @podcast.hosts do %>
-              <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-                <img src="<%= PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
-              <% end %>
-            <% end %>
-          </div>
+        <p class="podcast-header_hosts_heading"><i><%= @podcast.schedule_note %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i></p>
+        <div class="hosts-list">
+        <%= for person <- @podcast.hosts do %>
+          <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
+            <img src="<%= PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
+          <% end %>
+        <% end %>
         </div>
       <% end %>
+      </div>
     </header>
   </div>
 
   <% pre_cta_episodes = Enum.slice(@episodes, 0, 2) %>
   <div class="container container--skinny">
-    <%= if latest = List.first(pre_cta_episodes) do %>
-      <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
-        <h3>The Latest</h3>
-        <%= if latest.highlight do %>
-        <q><%= EpisodeView.classy_highlight(latest) %></q>
+  <%= if latest = List.first(pre_cta_episodes) do %>
+    <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
+      <h3>The Latest</h3>
+    <%= if latest.highlight do %>
+      <q><%= EpisodeView.classy_highlight(latest) %></q>
+    <% end %>
+      <button href="<%= EpisodeView.audio_url(latest) %>" data-play="<%= episode_path(@conn, :play, latest.podcast.slug, latest.slug) %>">
+          <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>
+          <span class="accessibility-hidden">Play</span>
+      </button>
+      <cite>
+        <%= (latest.headline || latest.title) |> no_widowed_words |> raw %>
+      <%= if number = EpisodeView.number(latest) do %>
+        <%= if is_master(@podcast) do %>
+          <span><%= latest.podcast.name %> #<%= number %></span>
+        <% else %>
+          <span>#<%= number %></span>
         <% end %>
-        <button href="<%= EpisodeView.audio_url(latest) %>" data-play="<%= episode_path(@conn, :play, latest.podcast.slug, latest.slug) %>">
-            <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>
-            <span class="accessibility-hidden">Play</span>
-        </button>
-        <cite>
-          <%= (latest.headline || latest.title) |> no_widowed_words |> raw %>
-          <%= if number = EpisodeView.number(latest) do %>
-            <%= if is_master(@podcast) do %>
-              <span><%= latest.podcast.name %> #<%= number %></span>
-            <% else %>
-              <span>#<%= number %></span>
-            <% end %>
-          <% end %>
-        </cite>
-      </article>
-    <% end %>
+      <% end %>
+      </cite>
+    </article>
+  <% end %>
 
-    <%= for episode <- pre_cta_episodes do %>
-      <%= render "_episode_summary.html", conn: @conn, episode: episode %>
-    <% end %>
+  <%= for episode <- pre_cta_episodes do %>
+    <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
+  <% end %>
   </div>
 
-  <%= render SharedView, "_community_cta_1.html", assigns %>
+  <%= render(SharedView, "_community_cta_1.html", assigns) %>
 
   <% post_cta_episodes = Enum.slice(@episodes, 2, length(@episodes)) %>
   <div class="container container--skinny">
-    <%= for episode <- post_cta_episodes do %>
-      <%= render "_episode_summary.html", conn: @conn, episode: episode %>
-    <% end %>
+  <%= for episode <- post_cta_episodes do %>
+    <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
+  <% end %>
 
     <div class="btn-container">
       <%= link to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--show-all" do %>
@@ -67,5 +67,4 @@
       <% end %>
     </div>
   </div>
-
 </section>
