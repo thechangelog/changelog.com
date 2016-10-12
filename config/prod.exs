@@ -6,9 +6,8 @@ config :changelog, Changelog.Endpoint,
   static_url: [scheme: "https", host: "cdn.changelog.com", port: 443],
   cache_static_manifest: "priv/static/manifest.json"
 
-# Temporary log debug, replace with commented logger once app is stable and ready to go live
-# config :logger, level: :info
-config :logger, :console, level: :debug, format: "[$level] $message\n"
+config :logger, level: :info
+# config :logger, :console, level: :debug, format: "[$level] $message\n"
 
 config :arc,
   storage_dir: "/uploads"
