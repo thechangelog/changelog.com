@@ -183,11 +183,13 @@ export default class Player {
     u(document).on("keydown", (event) => {
       if (!this.isActive()) return;
 
-      if (event.keyCode == 27) { // escape
+      // 27 == escape
+      if (event.keyCode == 27) {
         this.close();
       }
 
-      if (event.keyCode == 32) { // space bar
+      // 32 == space bar
+      if (event.keyCode == 32 && !u(event.target).is("input, textarea")) {
         event.preventDefault();
         this.togglePlayPause();
       }
