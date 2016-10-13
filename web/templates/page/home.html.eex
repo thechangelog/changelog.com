@@ -1,6 +1,6 @@
 <section class="featured mosaic mosaic--abstract">
   <h2 class="accessibility-hidden">Featured Quotes</h2>
-  <%= for {episode, index} <- Enum.with_index(@featured) do %>
+  <%= for {episode, index} <- Enum.shuffle(@featured) |> Enum.with_index do %>
     <% light_logo_sponsorships = EpisodeView.sponsorships_with_light_logo(episode) %>
     <article class="featured_podcast featured_podcast--<%= index %> featured_podcast--<%= episode.podcast.slug %> <%= if index == 0 do %>is-active<% end %>">
       <div class="featured_podcast_wrap <%= if Enum.any?(light_logo_sponsorships) do %>featured_podcast_wrap--has_sponsors<% end %>">
