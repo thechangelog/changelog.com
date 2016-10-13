@@ -8,18 +8,18 @@
 
       <hr>
 
-      <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form js-cm" id="weekly-subscribe">
+      <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form js-cm">
         <div class="form_element_wrap">
           <label>Name</label>
           <div class="form_element">
-            <input id="fieldName" name="cm-name" type="text" placeholder="Full name..."/>
+            <input name="cm-name" type="text" placeholder="Full name..."/>
           </div>
         </div>
 
         <div class="form_element_wrap">
           <label>Email<span>*</span></label>
           <div class="form_element">
-            <input id="fieldEmail" name="cm-zjykt-zjykt" type="email" placeholder="Email address..." required />
+            <input name="cm-zjykt-zjykt" type="email" placeholder="Email address..." required />
           </div>
         </div>
 
