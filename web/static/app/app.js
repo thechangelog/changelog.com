@@ -48,6 +48,28 @@ u(document).on("click", "a[href^=http]", function(event) {
   }
 });
 
+// submit Campain Monitor forms via jsonp
+u(document).on("submit", "form.js-cm", function(event) {
+  event.preventDefault();
+
+  const form = u(this);
+  const status = form.find(".form_submit_responses");
+
+  status.html("<div class='form_submit_response'>Sending...</div>");
+
+  window.afterSubscribe = function(data) {
+    if (data.Status == 200) {
+      Turbolinks.visit(data.RedirectUrl);
+    } else {
+      status.html(`<div class="form_submit_response form_submit_response--error">${data.Message}</div>`);
+    }
+  }
+
+  const script = document.createElement("script");
+  script.src = form.attr("action") + "?callback=afterSubscribe&" + form.serialize();
+  document.body.appendChild(script);
+});
+
 // handle featured sliders
 u(document).handle("click", ".js-featured-next", function(event) { featured.slide(+1); });
 u(document).handle("click", ".js-featured-previous", function(event) { featured.slide(-1); });

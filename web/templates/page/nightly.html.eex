@@ -8,7 +8,7 @@
 
       <hr>
 
-      <form action="http://email.thechangelog.com/t/t/s/hhatl/" method="post" class="form" id="weekly-subscribe">
+      <form action="http://email.thechangelog.com/t/t/s/hhatl/" method="post" class="form js-cm" id="weekly-subscribe">
         <div class="form_element_wrap">
           <label for="name">Name</label>
           <div class="form_element">
@@ -37,6 +37,7 @@
 
         <div class="form_submit">
           <input type="submit" value="Start my Subscription">
+          <div class="form_submit_responses"></div>
         </div>
       </form>
 
