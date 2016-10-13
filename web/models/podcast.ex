@@ -31,6 +31,7 @@ defmodule Changelog.Podcast do
     slug: "master",
     description: "The master feed of all Changelog podcasts.<br><code>git pull changelog master</code>",
     keywords: "changelog, open source, oss, software, development, developer, hacker",
+    itunes_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
     hosts: []
   }
   end
