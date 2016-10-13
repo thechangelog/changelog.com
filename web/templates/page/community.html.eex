@@ -44,7 +44,7 @@
       <p>We use <a href="https://memberful.com/">Memberful</a> and <a href="https://stripe.com/">Stripe</a> to manage our membership subscriptions and payment processing. Changelog itself does not have access to your full credit card details at any time.</p>
 
       <h2>What name will appear on my credit card statement?</h2>
-      <p>you will see <code>CHANGELOG MEDIA</code> as the merchant name on your credit card statement.</p>
+      <p>You will see <code>CHANGELOG MEDIA</code> as the merchant name on your credit card statement.</p>
 
       <hr>
 
