@@ -6,49 +6,80 @@
     <div class="content_body">
       <p>Join the community and we'll give you an all-access pass to everything we do.</p>
       <ul>
-        <li><b>24/7 community Slack room</b></li>
-        <li>Connect with hundreds of like-minded developers from all over the world</li>
-        <li>This is a community who will help you level up</li>
-        <li>Discuss the bleeding edge</li>
-        <li>Get feedback on your projects</li>
-        <li>Members-only discounts from our partners (more than $3,000 in savings)</li>
-        <li>Get 50% off in the Changelog store</li>
+        <li><b>Early Access</b> &ndash; Hear new shows and play with site features before anyone else.</li>
+        <li><b>24/7 Slack</b>  &ndash; The community Slack room never closes.</li>
+        <li><b>T-Shirt</b> &ndash; Yearly members ONLY. Choose the t-shirt from your favorite show.</li>
+        <li><b>Connect</b> &ndash; Hang with hundreds of like-minded developers from all over the world.</li>
+        <li><b>Level Up</b> &ndash; Get feedback on what you're working on. We're a community who cares.</li>
+        <li><b>Exclusive Discounts</b> &ndash; Access to more than $3,000 in savings from our partners.</li>
       </ul>
 
-      <p>Choose the membership level that best fits your budget.</p>
-
       <div class="membership-options">
-        <div class="membership-options_item membership-options_item--small">
-          <p class="membership-options_item_title">Director</p>
-          <p class="membership-options_item_price"><sup>$</sup>10 <span>Monthly</span></p>
-          <a class="membership-options_item_button" href="https://changelog.memberful.com/checkout?plan=14146">Select</a>
+        <div class="membership-options_item">
+          <p class="membership-options_item_title">Monthly</p>
+          <p class="membership-options_item_price"><sup>$</sup>7</p>
+          <a class="membership-options_item_button" href="https://changelog.memberful.com/checkout?plan=16335">Select</a>
         </div>
         <div class="membership-options_item">
-          <p class="membership-options_item_title">Producer</p>
-          <p class="membership-options_item_price"><sup>$</sup>20 <span>Monthly</span></p>
-          <a class="membership-options_item_button" href="https://changelog.memberful.com/checkout?plan=14147">Select</a>
-        </div>
-        <div class="membership-options_item">
-          <p class="membership-options_item_title">Executive Producer</p>
-          <p class="membership-options_item_price"><sup>$</sup>50 <span>Monthly</span></p>
-          <a class="membership-options_item_button" href="https://changelog.memberful.com/checkout?plan=14148">Select</a>
+          <p class="membership-options_item_title">Yearly</p>
+          <p class="membership-options_item_price"><sup>$</sup>77</p>
+          <a class="membership-options_item_button" href="https://changelog.memberful.com/checkout?plan=16336">Select</a>
         </div>
       </div>
 
-      <hr>
-
-      <h2>Can I cancel or change my membership?</h2>
-      <p>Yes! You can cancel or change your membership at any time. If you’re not happy, we’re not happy!</p>
-
-      <h2>Is my credit card safe?</h2>
-      <p>We use Memberful and Stripe to manage our membership subscriptions and payment processing. Your payment info is never sent to our servers. All sensitive communication is between your browser, Memberful, and Stripe.</p>
-
-      <h2>Is my data safe?</h2>
-      <p>Memberful is fully PCI compliant and secure. They don’t store any sensitive customer credit card data and use a 256-bit SSL connection (like banks do) across the entire service. They also keep geo-redundant backups of all our data.</p>
+      <p><small>Call <a href="tel:+18889742454">888-974-CHLG (2454)</a>, or email us at <a href="mailto:community@changelog.com">community@changelog.com</a> if you have any questions.</small></p>
 
       <hr>
 
-      <p><a href="/contact">Get in touch</a> if you have any questions.</p>
+      <h2>If I'm not a member can I still listen to Changelog shows for free?</h2>
+      <p>Of course! All of our shows will continue to be available for free wherever you listen to your podcasts. However, you'll miss out on early access to new shows and any new site features we're testing.</p>
+
+      <h2>How do I sign in to manage my membership account?</h2>
+      <p>Head here to <a href="https://changelog.memberful.com/">sign in</a> &mdash; once you've signed in you can update your name, email address, password, credit card, address, subscriptions. You can also view your order history.</p>
+
+      <h2>What forms of payment do you accept?</h2>
+      <p>We accept credit and debit cards from Visa, MasterCard, American Express, JCB, Discover, and Diners Club. We also accept prepaid cards from those same companies. Unfortunately, we do not accept PayPal payments.</p>
+
+      <h2>Do you store my credit card details? Who's your payment processor?</h2>
+      <p>We use <a href="https://memberful.com/">Memberful</a> and <a href="https://stripe.com/">Stripe</a> to manage our membership subscriptions and payment processing. Changelog itself does not have access to your full credit card details at any time.</p>
+
+      <h2>What name will appear on my credit card statement?</h2>
+      <p>you will see <code>CHANGELOG MEDIA</code> as the merchant name on your credit card statement.</p>
+
+      <hr>
+
+      <h2>How do I renew my membership?</h2>
+      <p>It's automatic. Monthly memberships will renew every month, and yearly members renew once per year. You can turn off auto-renew &ndash; <a href="https://changelog.memberful.com/">sign in</a>, then head to the "Subscriptions" tab and click "Turn off auto-renewal."</p>
+
+      <h2>How do I turn off auto-renew?</h2>
+      <p><a href="https://changelog.memberful.com/">Sign in</a>, then head to the "Subscriptions" tab and click "Turn off auto-renewal."</p>
+
+      <h2>How do I cancel my membership?</h2>
+      <p><a href="https://changelog.memberful.com/">Sign in</a>, then head to the "Subscriptions" tab and click "Turn off auto-renewal." This means you will not be charged for your next billing cycle. We do not issue refunds for memberships.</p>
+
+      <hr>
+
+      <h2>Why do only yearly members get a t-shirt?</h2>
+      <p>As a bonus for supporting us for the long haul, we give one (1) t-shirt per membership year to yearly members. If you support us for the long haul, one year at a time, we'll give you the same bonus.</p>
+
+      <h2>Can I just buy a t-shirt without becoming a member?</h2>
+      <p>We've decided to no longer sell our t-shirts. T-shirts are only available to yearly members. Sign up for a yearly membership and we'll ship your favorite t-shirt to you &ndash; plus you'll be helping Changelog to produce the shows you love.</p>
+
+      <h2>Can I choose a specific shirt and size?</h2>
+      <p>Yes. Once you sign up for a yearly membership, you'll receive a welcome email that includes a link to our t-shirt order form where you'll tell us your email so we can get in touch with issues or questions, the t-shirt you want (your favorite show), t-shirt size, full name, and shipping address.</p>
+
+      <h2>Can I have a t-shirt shipped internationally?</h2>
+      <p>Yes, we ship t-shirts internationally to most countries. Please allow an additional 2-3 weeks for delivery. There are some places we don't ship to. Here's a list: Afghanistan, Algeria, Angola, Belarus, Bosnia, Burma, Burundi, Republic of the Congo, Democratic Republic of the Congo, Republic of the Cote d' lvoire (Ivory Coast), Croatia, Cuba, Herzegovina, Iran, Iraq, Jordan, Liberia, Libya, Moldova, Montenegro, Nigeria, North Korea, Paraguay, Serbia, Sierra Leone, Somalia, Sri Lanka, Sudan, Syria, Togo, Yemen, and Zimbabwe.</p>
+
+      <h2>What if I'm moving or changing my address? How do I get my t-shirt?</h2>
+      <p>Please email <a href="mailto:community@changelog.com">community@changelog.com</a> with your move date as well as your old and new address, or at least your correct shipping address. Don't worry. We'll make sure your t-shirt arrives at the right address.</p>
+
+      <h2>My t-shirt hasn't arrived yet. Can I track the shipping?</h2>
+      <p>Please allow up to 12 weeks for delivery of your t-shirt. Because we're a small business, and t-shirts are not our primary focus, we're a little slower at fulfillment than Amazon. If you've already patiently waited 12 weeks and your t-shirt still hasn't arrived, please email us at <a href="mailto:community@changelog.com">community@changelog.com</a> and we'll figure out what happened.</p>
+
+      <h2>I don't really want a t-shirt. Can I get something else instead?</h2>
+      <p>We have stickers! We can send you a sticker pack instead. Or, you could gift your t-shirt to a friend. Email us at <a href="mailto:community@changelog.com">community@changelog.com</a> to let us know what you'd like to do and we'll make it happen for you.</p>
+
     </div>
   </div>
 </article>
