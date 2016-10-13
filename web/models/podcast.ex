@@ -29,7 +29,7 @@ defmodule Changelog.Podcast do
   %__MODULE__{
     name: "Changelog Master Feed",
     slug: "master",
-    description: "The master feed compiled of all Changelog podcasts. So you can git pull changelog master.",
+    description: "The master feed of all Changelog podcasts.<br><code>git pull changelog master</code>",
     keywords: "changelog, open source, oss, software, development, developer, hacker",
     hosts: []
   }
