@@ -42,7 +42,7 @@
   <% end %>
 </section>
 
-<section class="container" id="podcasts">
+<section class="container container--has-padding" id="podcasts">
   <h2 class="accessibility-hidden">Podcast Shows</h2>
   <%= for podcast <- @podcasts do %>
     <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast) %>
