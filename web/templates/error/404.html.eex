@@ -29,10 +29,13 @@
       <article class="section content">
         <div class="container container--has-padding container--skinny">
           <header class="content_header">
-            <h2>Not Found</h2>
+            <h1>404</h1>
+            <h2>Oops! The page you were looking for&nbsp;doesn’t exist.</h2>
           </header>
           <div class="content_body">
+            <p>You may have mistyped the address or the page may have moved.</p>
           </div>
+          <%= link "Take Me Home", to: "/", class: "btn btn--padded-bottom" %>
         </div>
       </article>
     </main>

@@ -2,10 +2,11 @@
     flex: 0 0 auto
     display: inline-block
     font-size: 1.25em
-    font-weight: 900
+    font-weight: 900 !important
     text-align: center
-    color: $white
-    padding: 1rem
+    text-decoration: none !important
+    color: $white !important
+    padding: 1.1rem 1rem 0.8rem
     background: $green
 
     @media (min-width: $tablet)
@@ -18,6 +19,9 @@
     &--block
         display: block
         width: 100%
+
+    &--padded-bottom
+        margin-bottom: 2rem
 
     &--show-all
         display: block
@@ -35,10 +39,10 @@
 
     &--white
         background: $white
-        color: $green
+        color: $green !important
 
     &--blue-text
-        color: $blue
+        color: $blue !important
 
 .btn-container
     max-width: 100%

@@ -29,10 +29,13 @@
       <article class="section content">
         <div class="container container--has-padding container--skinny">
           <header class="content_header">
-            <h2>Server Error</h2>
+            <h1>Server Error</h1>
+            <h2>Oops! Looks like the server had a hiccup.</h2>
           </header>
           <div class="content_body">
+            <p>You may want to try to reload the page to see if the issue has cleared up.</p>
           </div>
+          <%= link "Take Me Home", to: "/", class: "btn btn--padded-bottom" %>
         </div>
       </article>
     </main>
