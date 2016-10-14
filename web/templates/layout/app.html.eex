@@ -46,6 +46,5 @@
     </main>
     <%= render("_footer.html", assigns) %>
     <%= render("_player.html", assigns) %>
-
   </body>
 </html>
