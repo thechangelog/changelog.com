@@ -29,6 +29,7 @@
   "mime": {:hex, :mime, "1.0.1", "05c393850524767d13a53627df71beeebb016205eb43bfbd92d14d24ec7a1b51", [:mix], []},
   "mimerl": {:hex, :mimerl, "1.0.2", "993f9b0e084083405ed8252b99460c4f0563e41729ab42d9074fd5e52439be88", [:rebar3], []},
   "mochiweb": {:hex, :mochiweb, "2.12.2", "80804ad342afa3d7f3524040d4eed66ce74b17a555de454ac85b07c479928e46", [:make, :rebar], []},
+  "nimble_csv": {:hex, :nimble_csv, "0.1.0", "b988ab0eeac9ca5980780b76a4a217b2ec943b2debaf50b0ccf0cd1a6c4adf56", [:mix], []},
   "phoenix": {:hex, :phoenix, "1.2.0", "1bdeb99c254f4c534cdf98fd201dede682297ccc62fcac5d57a2627c3b6681fb", [:mix], [{:cowboy, "~> 1.0", [hex: :cowboy, optional: true]}, {:phoenix_pubsub, "~> 1.0", [hex: :phoenix_pubsub, optional: false]}, {:plug, "~> 1.1", [hex: :plug, optional: false]}, {:poison, "~> 1.5 or ~> 2.0", [hex: :poison, optional: false]}]},
   "phoenix_ecto": {:hex, :phoenix_ecto, "3.0.0", "b947aaf03d076f5b1448f87828f22fb7710478ee38455c67cc3fe8e9a4dfd015", [:mix], [{:ecto, "~> 2.0.0-rc", [hex: :ecto, optional: false]}, {:phoenix_html, "~> 2.6", [hex: :phoenix_html, optional: true]}]},
   "phoenix_html": {:hex, :phoenix_html, "2.6.0", "b9f7e091eb3d908586d9634596478fb9e577ee033d76f4ff327a745569bdd2d8", [:mix], [{:plug, "~> 0.13 or ~> 1.0", [hex: :plug, optional: false]}]},
