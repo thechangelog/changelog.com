@@ -12,7 +12,7 @@ defmodule Changelog.Email do
 
   defp base_email do
     new_email
-    |> from("Rob Ot<robot@changelog.com>")
+    |> from("robot@changelog.com")
     |> put_header("Reply-To", "editors@changelog.com")
     |> put_html_layout({Changelog.LayoutView, "email.html"})
   end
