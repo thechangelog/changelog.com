@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
     <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
   <%= if Mix.env == :prod do %>
-    <%= render("_head_scripts.html", assigns) %>
+    <%= render(Changelog.LayoutView, "_head_scripts.html", assigns) %>
   <% end %>
   </head>
   <body><!--[if lt IE 8]>
