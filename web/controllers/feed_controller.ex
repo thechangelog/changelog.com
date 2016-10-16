@@ -39,7 +39,8 @@ defmodule Changelog.FeedController do
       |> Repo.all
       |> Episode.preload_all
 
-    if referer = get_req_header(conn, "referer") do
+    referer = get_req_header(conn, "referer")
+    if !is_nil(referer) do
       agent = get_req_header(conn, "user-agent")
       Logger.info("Feed referer for #{podcast.name}: #{referer} – #{agent}")
     end
