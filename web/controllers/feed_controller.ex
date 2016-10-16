@@ -39,9 +39,9 @@ defmodule Changelog.FeedController do
       |> Repo.all
       |> Episode.preload_all
 
-    case List.keyfind(conn.req_headers, "referer", 0) do
-      {"referer", referer} -> Logger.info("Feed referer for #{podcast.name}: #{referer}")
-      nil -> nil
+    if referer = get_req_header(conn, "referer") do
+      agent = get_req_header(conn, "user-agent")
+      Logger.info("Feed referer for #{podcast.name}: #{referer} – #{agent}")
     end
 
     conn
