@@ -8,6 +8,7 @@
     <%= link "Podcasts", to: podcast_path(@conn, :index), class: "navigation-bar-link" %>
     <%= link "Weekly", to: page_path(@conn, :weekly), class: "navigation-bar-link" %>
     <%= link "Nightly", to: page_path(@conn, :nightly), class: "navigation-bar-link" %>
+    <%= link "Subscribe", to: page_path(@conn, :subscribe), class: "navigation-bar-link" %>
     <%= link "Advertise", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
   </nav>
   <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
