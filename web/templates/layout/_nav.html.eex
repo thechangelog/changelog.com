@@ -60,6 +60,7 @@
         </div>
         <nav class="navigation-tray-side-nav">
           <h3 class="navigation-tray-side-nav_heading">More Info</h3>
+          <%= link "Subscribe", to: page_path(@conn, :subscribe) %>
           <%= link "Sponsorship", to: page_path(@conn, :sponsorship) %>
           <%= link "Community", to: page_path(@conn, :community) %>
           <%= link "About", to: page_path(@conn, :about) %>
