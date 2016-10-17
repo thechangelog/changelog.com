@@ -35,16 +35,16 @@ defmodule Changelog.Meta.Title do
     "All Changelog Podcasts"
   end
 
-  defp get(%{view_module: PodcastView, view_template: "master.html"}) do
-    "Changelog Master Feed"
-  end
-
   defp get(%{view_module: PodcastView, view_template: "archive.html", podcast: podcast}) do
     "#{podcast.name} Episode Archive"
   end
 
   defp get(%{view_module: PodcastView, podcast: podcast}) do
-    "#{podcast.name} with #{PersonView.comma_separated_names(podcast.hosts)}"
+    if Enum.any?(podcast.hosts) do
+      "#{podcast.name} with #{PersonView.comma_separated_names(podcast.hosts)}"
+    else
+      podcast.name
+    end
   end
 
   defp get(%{view_module: PostView, post: post}) do
