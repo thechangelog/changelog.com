@@ -89,7 +89,10 @@ defmodule Changelog.Helpers.ViewHelpers do
   def truncate(_string, _length), do: ""
 
   def ts(ts) when is_nil(ts), do: ""
-  def ts(ts), do: {:safe, "<span class='time'>#{Ecto.DateTime.to_iso8601(ts)}</span>"}
+  def ts(ts) do
+    {:ok, formatted} = Timex.format(ts, "{ISO:Extended}")
+    {:safe, "<span class='time'>#{formatted}</span>"}
+  end
 
   def with_smart_quotes(string) do
     string

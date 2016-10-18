@@ -20,7 +20,7 @@ defmodule Changelog.Mixfile do
     [mod: {Changelog, []},
      applications: [:bamboo, :bamboo_smtp, :phoenix, :phoenix_pubsub,
                     :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex,
-                    :tzdata, :ex_machina, :httpoison, :exjsx, :con_cache]]
+                    :ex_machina, :httpoison, :exjsx, :con_cache, :timex_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,7 +37,8 @@ defmodule Changelog.Mixfile do
      {:postgrex, "~> 0.11.1"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:timex, "~> 2.1.4"},
+     {:timex, "~> 3.1.0"},
+     {:timex_ecto, "~> 3.0"},
      {:ex_machina, "~> 1.0"},
      {:scrivener_ecto, "~> 1.0"},
      {:scrivener_html, "~> 1.3.0"},

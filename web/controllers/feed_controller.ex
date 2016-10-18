@@ -2,7 +2,6 @@ defmodule Changelog.FeedController do
   use Changelog.Web, :controller
 
   alias Changelog.{Episode, Podcast, Post}
-  alias Ecto.DateTime
 
   require Logger
 
@@ -20,7 +19,7 @@ defmodule Changelog.FeedController do
       |> Post.preload_author
 
     items = (episodes ++ posts)
-      |> Enum.sort(&(DateTime.to_erl(&1.published_at) > DateTime.to_erl(&2.published_at)))
+      |> Enum.sort(&(Timex.to_erl(&1.published_at) > Timex.to_erl(&2.published_at)))
       |> Enum.take(50)
 
     conn

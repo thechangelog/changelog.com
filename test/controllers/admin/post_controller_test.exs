@@ -8,7 +8,7 @@ defmodule Changelog.Admin.PostControllerTest do
 
   @tag :as_admin
   test "lists all posts", %{conn: conn} do
-    t1 = insert(:post)
+    t1 = insert(:published_post)
     t2 = insert(:post)
 
     conn = get(conn, admin_post_path(conn, :index))

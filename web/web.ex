@@ -19,7 +19,7 @@ defmodule Changelog.Web do
   def model do
     quote do
       use Ecto.Schema
-
+      use Timex.Ecto.Timestamps
       alias Changelog.Repo
       import Ecto
       import Ecto.Changeset

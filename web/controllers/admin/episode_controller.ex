@@ -35,8 +35,8 @@ defmodule Changelog.Admin.EpisodeController do
     end
 
     default_ts =
-      Timex.Date.now
-      |> Timex.Convertable.to_erlang_datetime
+      Timex.now
+      |> Timex.to_erl
       |> Tuple.delete_at(1)
       |> Tuple.insert_at(1, {20, 0, 0}) # 2pm US Central
 

@@ -4,7 +4,7 @@
   "bamboo_smtp": {:hex, :bamboo_smtp, "1.2.1", "47181e338cbee9d028e94f2bc5829816b26d719d8213b07d0fa107d95b591947", [:mix], [{:bamboo, "~> 0.7.0", [hex: :bamboo, optional: false]}, {:gen_smtp, "~> 0.11.0", [hex: :gen_smtp, optional: false]}]},
   "certifi": {:hex, :certifi, "0.4.0", "a7966efb868b179023618d29a407548f70c52466bf1849b9e8ebd0e34b7ea11f", [:rebar3], []},
   "cmark": {:hex, :cmark, "0.6.10", "de67c5f033b42ef2adc702df2044bc97b4a1b36b55826e351852f8d31624bc37", [:mix, :make], []},
-  "combine": {:hex, :combine, "0.9.1", "5fd778ee77032ae593bf79aedb8519d9e36283e4f869abd98c2d6029ca476db8", [:mix], []},
+  "combine": {:hex, :combine, "0.9.2", "cd3c8721f378ebe032487d8a4fa2ced3181a456a3c21b16464da8c46904bb552", [:mix], []},
   "con_cache": {:hex, :con_cache, "0.11.1", "acbe5a1d10c47faba30d9629c9121e1ef9bca0aa5eddbb86f4e777bd9f9f9b6f", [:mix], [{:exactor, "~> 2.2.0", [hex: :exactor, optional: false]}]},
   "connection": {:hex, :connection, "1.0.3", "3145f7416be3df248a4935f24e3221dc467c1e3a158d62015b35bd54da365786", [:mix], []},
   "cowboy": {:hex, :cowboy, "1.0.4", "a324a8df9f2316c833a470d918aaf73ae894278b8aa6226ce7a9bf699388f878", [:rebar, :make], [{:cowlib, "~> 1.0.0", [hex: :cowlib, optional: false]}, {:ranch, "~> 1.0", [hex: :ranch, optional: false]}]},
@@ -18,7 +18,7 @@
   "exjsx": {:hex, :exjsx, "3.2.0", "7136cc739ace295fc74c378f33699e5145bead4fdc1b4799822d0287489136fb", [:mix], [{:jsx, "~> 2.6.2", [hex: :jsx, optional: false]}]},
   "fs": {:hex, :fs, "0.9.2", "ed17036c26c3f70ac49781ed9220a50c36775c6ca2cf8182d123b6566e49ec59", [:rebar], []},
   "gen_smtp": {:hex, :gen_smtp, "0.11.0", "d90ff2f021fc86cb2a4259b1f2b177ab6e506676265e26454bf5755855adc956", [:rebar3], []},
-  "gettext": {:hex, :gettext, "0.10.0", "b6f9a72be494ad84ccbfaf7349150ef319b9a5a2b634e4d3ccf70bd59e1e4178", [:mix], []},
+  "gettext": {:hex, :gettext, "0.11.0", "80c1dd42d270482418fa158ec5ba073d2980e3718bacad86f3d4ad71d5667679", [:mix], []},
   "hackney": {:hex, :hackney, "1.6.1", "ddd22d42db2b50e6a155439c8811b8f6df61a4395de10509714ad2751c6da817", [:rebar3], [{:certifi, "0.4.0", [hex: :certifi, optional: false]}, {:idna, "1.2.0", [hex: :idna, optional: false]}, {:metrics, "1.0.1", [hex: :metrics, optional: false]}, {:mimerl, "1.0.2", [hex: :mimerl, optional: false]}, {:ssl_verify_fun, "1.1.0", [hex: :ssl_verify_fun, optional: false]}]},
   "hashids": {:hex, :hashids, "2.0.2", "16f7d1cd9d692633927847f05d1531997b4d302d689c5210c2e9bf281859fa78", [:mix], []},
   "html_sanitize_ex": {:hex, :html_sanitize_ex, "0.1.2", "b786fccba2f20ec3847a2198a6891e66e5c9b31ba10cf92e0ac9d3d7bec3aff9", [:mix], [{:mochiweb, "~> 2.12.2", [hex: :mochiweb, optional: false]}]},
@@ -43,5 +43,6 @@
   "scrivener_ecto": {:hex, :scrivener_ecto, "1.0.0", "66a0c4cf722e965cd4fc8b5ad48c09409c19a5a125bf2435d2f3fb18d0d72f50", [:mix], [{:ecto, "~> 2.0", [hex: :ecto, optional: false]}, {:postgrex, "~> 0.11.2", [hex: :postgrex, optional: true]}, {:scrivener, "~> 2.0", [hex: :scrivener, optional: false]}]},
   "scrivener_html": {:hex, :scrivener_html, "1.3.0", "122c96ed1f64273cdef13743aa4adc012d88fe6a9fb2b9919d9fc3a92a02ac52", [:mix], [{:phoenix, "~> 1.0 or ~> 1.2", [hex: :phoenix, optional: true]}, {:phoenix_html, "~> 2.2", [hex: :phoenix_html, optional: false]}, {:scrivener, "~> 1.2 or ~> 2.0.0", [hex: :scrivener, optional: false]}]},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0", "edee20847c42e379bf91261db474ffbe373f8acb56e9079acb6038d4e0bf414f", [:rebar, :make], []},
-  "timex": {:hex, :timex, "2.1.4", "17100f0d47473fe05423084039b8f3de9d63617b66d8db676e24a4221216db61", [:mix], [{:combine, "~> 0.7", [hex: :combine, optional: false]}, {:gettext, "~> 0.10", [hex: :gettext, optional: false]}, {:tzdata, "~> 0.1.8 or ~> 0.5", [hex: :tzdata, optional: false]}]},
-  "tzdata": {:hex, :tzdata, "0.5.7", "10a4176023c2b294f1bbb98594a646ef25d658ca507b2da20a5952072d6080c4", [:mix], [{:hackney, "~> 1.0", [hex: :hackney, optional: false]}]}}
+  "timex": {:hex, :timex, "3.1.0", "71c1bc6eef88f2bf8628224d62eab12dda5c5904e9db764289db1e360c622900", [:mix], [{:combine, "~> 0.7", [hex: :combine, optional: false]}, {:gettext, "~> 0.10", [hex: :gettext, optional: false]}, {:tzdata, "~> 0.1.8 or ~> 0.5", [hex: :tzdata, optional: false]}]},
+  "timex_ecto": {:hex, :timex_ecto, "3.0.5", "3ec6c25e10d2c0020958e5df64d2b5e690e441faa2c2259da8bc6bd3d7f39256", [:mix], [{:ecto, "~> 2.0", [hex: :ecto, optional: false]}, {:timex, "~> 3.0", [hex: :timex, optional: false]}]},
+  "tzdata": {:hex, :tzdata, "0.5.9", "575be217b039057a47e133b72838cbe104fb5329b19906ea4e66857001c37edb", [:mix], [{:hackney, "~> 1.0", [hex: :hackney, optional: false]}]}}

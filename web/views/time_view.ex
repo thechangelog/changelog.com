@@ -20,7 +20,6 @@ defmodule Changelog.TimeView do
   def pretty_date(ts) do
     {:ok, result} =
       ts
-      |> Changelog.Timex.from_ecto
       |> Timex.format("{Mshort} {D} {YYYY}")
     result
   end
@@ -34,7 +33,6 @@ defmodule Changelog.TimeView do
   def rss(ts) do
     {:ok, result} =
       ts
-      |> Changelog.Timex.from_ecto
       |> Timex.format("{RFC1123}")
     result
   end

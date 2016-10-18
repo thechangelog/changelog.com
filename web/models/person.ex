@@ -13,8 +13,8 @@ defmodule Changelog.Person do
     field :website, :string
     field :bio, :string
     field :auth_token, :string
-    field :auth_token_expires_at, Ecto.DateTime
-    field :signed_in_at, Ecto.DateTime
+    field :auth_token_expires_at, Timex.Ecto.DateTime
+    field :signed_in_at, Timex.Ecto.DateTime
     field :admin, :boolean
     field :avatar, Changelog.Avatar.Type
 
@@ -49,7 +49,7 @@ defmodule Changelog.Person do
     change(model, %{
       auth_token: nil,
       auth_token_expires_at: nil,
-      signed_in_at: Timex.DateTime.now |> Changelog.Timex.to_ecto
+      signed_in_at: Timex.now
     })
   end
 

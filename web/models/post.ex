@@ -13,7 +13,7 @@ defmodule Changelog.Post do
     field :body, :string
 
     field :published, :boolean, default: false
-    field :published_at, Ecto.DateTime
+    field :published_at, Timex.Ecto.DateTime
 
     belongs_to :author, Changelog.Person
     has_many :post_channels, Changelog.PostChannel, on_delete: :delete_all

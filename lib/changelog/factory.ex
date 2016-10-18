@@ -19,7 +19,7 @@ defmodule Changelog.Factory do
   def published_episode_factory do
     %Changelog.Episode{episode_factory | audio_file: stub_audio_file(),
       published: true,
-      published_at: stub_now()
+      published_at: Timex.now
     }
   end
 
@@ -48,7 +48,7 @@ defmodule Changelog.Factory do
   end
 
   def published_post_factory do
-    %Changelog.Post{post_factory | published: true, published_at: stub_now()}
+    %Changelog.Post{post_factory | published: true, published_at: Timex.now}
   end
 
   def sponsor_factory do
@@ -59,9 +59,5 @@ defmodule Changelog.Factory do
 
   defp stub_audio_file do
     %{file_name: "test.mp3", updated_at: Ecto.DateTime.from_erl(:calendar.gregorian_seconds_to_datetime(63633830567))}
-  end
-
-  defp stub_now do
-    Changelog.Timex.to_ecto(Timex.DateTime.now())
   end
 end

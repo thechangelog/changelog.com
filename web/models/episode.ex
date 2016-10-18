@@ -20,8 +20,8 @@ defmodule Changelog.Episode do
     field :notes, :string
 
     field :published, :boolean, default: false
-    field :published_at, Ecto.DateTime
-    field :recorded_at, Ecto.DateTime
+    field :published_at, Timex.Ecto.DateTime
+    field :recorded_at, Timex.Ecto.DateTime
 
     field :audio_file, Changelog.AudioFile.Type
     field :bytes, :integer

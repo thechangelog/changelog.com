@@ -5,8 +5,7 @@ defmodule Changelog.Plug.Conn do
   @signing_salt "9035768"
 
   def put_encrypted_cookie(conn, key, value, opts \\ []) do
-    now = Timex.DateTime.now
-    opts = Keyword.put_new(opts, :max_age, Timex.diff(now, Timex.shift(now, years: 1)))
+    opts = Keyword.put_new(opts, :max_age, 60*60*24*365)
 
     encrypted = Plug.Crypto.MessageEncryptor.encrypt_and_sign(
       :erlang.term_to_binary(value),
