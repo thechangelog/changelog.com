@@ -3,13 +3,17 @@
 <p><%= @podcast.description |> md_to_html |> raw %></p>
 <p>
   <%= link "Direct (RSS)", to: feed_path(@conn, :podcast, @podcast.slug), data: [turbolinks: false] %> &bull;
-  <%= if @podcast.itunes_url do %>
-    <%= link "iTunes", to: @podcast.itunes_url %> &bull;
-    <%= link "Overcast", to: subscribe_on_overcast_url(@podcast) %> &bull;
-  <% end %>
+<%= if @podcast.itunes_url do %>
+  <%= link "iTunes", to: @podcast.itunes_url %> &bull;
+  <%= link "Overcast", to: subscribe_on_overcast_url(@podcast) %> &bull;
+<% end %>
   <%= link "Android", to: subscribe_on_android_url(@podcast) %>
-  <%= if @podcast.twitter_handle do %>
-    &bull;
-    <%= link "Twitter", to: twitter_url(@podcast.twitter_handle) %>
-  <% end %>
+<%= if @podcast.twitter_handle do %>
+  &bull;
+  <%= link "Twitter", to: twitter_url(@podcast.twitter_handle) %>
+<% end %>
+<%= if @podcast.ping_url do %>
+  &bull;
+  <%= link "Ping Us!", to: @podcast.ping_url %>
+<% end %>
 </p>

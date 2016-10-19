@@ -13,6 +13,7 @@ defmodule Changelog.Podcast do
     field :keywords, :string
     field :twitter_handle, :string
     field :itunes_url, :string
+    field :ping_url, :string
     field :schedule_note, :string
 
     has_many :episodes, Episode, on_delete: :delete_all
@@ -23,7 +24,7 @@ defmodule Changelog.Podcast do
   end
 
   @required_fields ~w(name slug status)
-  @optional_fields ~w(vanity_domain schedule_note description keywords twitter_handle itunes_url)
+  @optional_fields ~w(vanity_domain schedule_note description keywords twitter_handle itunes_url ping_url)
 
   def master do
   %__MODULE__{
@@ -40,6 +41,8 @@ defmodule Changelog.Podcast do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:ping_url, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
     |> cast_assoc(:podcast_hosts)
