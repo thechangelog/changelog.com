@@ -2,6 +2,16 @@
   <h1 class="ui dividing header">
     <%= link "Posts", to: admin_post_path(@conn, :index) %>
     &raquo; Edit
+  <%= if @post.published do %>
+    <%= link "(View)",
+      to: post_path(@conn, :show, @post.slug),
+      class: "view" %>
+  <% else %>
+    <%= link "(Preview)",
+      to: post_path(@conn, :preview, @post.slug),
+      class: "view",
+      rel: "external" %>
+  <% end %>
   </h1>
 
   <%= render "_form.html", changeset: @changeset, action: admin_post_path(@conn, :update, @post) %>

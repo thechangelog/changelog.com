@@ -21,6 +21,11 @@
   text-decoration: underline;
 }
 
+.ui.header a.view {
+  float: right;
+  font-size: 1.5rem;
+}
+
 @-webkit-keyframes success {
   0% { background-color: #E5F9E7; }
   100% { background-color: white; }
