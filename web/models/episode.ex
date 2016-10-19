@@ -51,6 +51,10 @@ defmodule Changelog.Episode do
     from e in query, where: e.published == true, where: not(is_nil(e.audio_file))
   end
 
+  def unpublished(query \\ __MODULE__) do
+    from e in query, where: e.published == false
+  end
+
   def with_numbered_slug(query \\ __MODULE__) do
     from e in query, where: fragment("slug ~ E'^\\\\d+$'")
   end
@@ -63,12 +67,16 @@ defmodule Changelog.Episode do
     from e in query, where: e.published_at > ^episode.published_at
   end
 
-  def newest_first(query) do
-    from e in query, order_by: [desc: e.published_at]
+  def recorded_future_to(query, time) do
+    from e in query, where: e.recorded_at > ^time
   end
 
-  def newest_last(query) do
-    from e in query, order_by: [asc: e.published_at]
+  def newest_first(query, field \\ :published_at) do
+    from e in query, order_by: [desc: ^field]
+  end
+
+  def newest_last(query, field \\ :published_at) do
+    from e in query, order_by: [asc: ^field]
   end
 
   def limit(query, count) do
