@@ -22,7 +22,7 @@
         <td><%= ts(post.published_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= link to: post_path(@conn, :show, post.slug), class: "ui button" do %>
+            <%= link to: post_path(@conn, show_or_preview(post), post.slug), class: "ui button" do %>
               <i class="external icon"></i>
               Public
             <% end %>

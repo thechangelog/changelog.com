@@ -11,4 +11,12 @@ defmodule Changelog.Admin.PostView do
       content_tag :span, "Draft", class: "ui tiny yellow basic label"
     end
   end
+
+  def show_or_preview(post) do
+    if post.published do
+      :show
+    else
+      :preview
+    end
+  end
 end

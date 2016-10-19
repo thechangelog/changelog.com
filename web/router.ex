@@ -56,6 +56,7 @@ defmodule Changelog.Router do
     get "/:slug/feed", FeedController, :podcast
 
     resources "/posts", PostController, only: [:show]
+    get "/posts/:id/preview", PostController, :preview, as: :post
 
     get "/slack/gotime", SlackController, :gotime
 
