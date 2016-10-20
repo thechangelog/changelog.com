@@ -17,6 +17,7 @@ defmodule Changelog.Stats.Parser do
     |> String.split("\n")
     |> Enum.reject(fn(x) -> String.length(x) == 0 end)
     |> Enum.map(&parse_line/1)
+    |> Enum.reject(fn(entry) -> entry.bytes == 0 end)
   end
 
   def parse_line(line) do

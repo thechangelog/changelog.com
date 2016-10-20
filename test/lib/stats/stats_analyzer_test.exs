@@ -48,11 +48,11 @@ defmodule ChangelogStatsAnalyzerTest do
         %Entry{agent: "Prof Plum", bytes: 0},
       ]
 
-      assert Analyzer.downloads_by(entries, :agent, 1000) == [
-        {"Mr. Pink", 8.01},
-        {"Agent Orange", 8.0},
-        {"Prof Plum", 0}
-      ]
+      assert Analyzer.downloads_by(entries, :agent, 1000) == %{
+        "Mr. Pink" => 8.01,
+        "Agent Orange" => 8.0,
+        "Prof Plum" => 0
+      }
     end
 
     test "it can sum and sort bytes by country" do
@@ -63,11 +63,11 @@ defmodule ChangelogStatsAnalyzerTest do
         %Entry{country_code: "CA", bytes: 123000},
         %Entry{country_code: "DE", bytes: 1},
       ]
-      assert Analyzer.downloads_by(entries, :country_code, 1024) == [
-        {"US", 15001},
-        {"CA", 120.56},
-        {"DE", 0}
-      ]
+      assert Analyzer.downloads_by(entries, :country_code, 1024) == %{
+        "US" => 15001,
+        "CA" => 120.56,
+        "DE" => 0
+      }
     end
   end
 

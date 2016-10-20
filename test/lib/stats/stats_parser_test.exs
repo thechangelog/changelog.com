@@ -11,7 +11,8 @@ defmodule ChangelogStatsParserTest do
   describe "parse_files" do
     test "it creates a list with all the entries for the list of files given" do
       entries = Parser.parse_files([@file1, @file2])
-      assert length(entries) == 73
+      # actually 73 lines, but 26 of them have 0 byte entries
+      assert length(entries) == (73 - 26)
     end
   end
 
@@ -23,12 +24,13 @@ defmodule ChangelogStatsParserTest do
 
     test "it creates a list with many entries when file has many lines in it" do
       entries = Parser.parse_file(@file2)
-      assert length(entries) == 72
+      # actually 72 lines, but 26 of them have 0 byte entries
+      assert length(entries) == (72 - 26)
     end
   end
 
   describe "parse_line" do
-    test "it turns log1 into a value Entry" do
+    test "it parses log1 into a value Entry" do
       assert Parser.parse_line(@log1) == %Entry{
         ip: "142.169.78.110",
         episode: "145",
@@ -44,7 +46,7 @@ defmodule ChangelogStatsParserTest do
       }
     end
 
-    test "it turns log2 in to a valid Entry" do
+    test "it parses log2 in to a valid Entry" do
       assert Parser.parse_line(@log2) == %Entry{
         ip: "78.35.187.78",
         episode: "219",
