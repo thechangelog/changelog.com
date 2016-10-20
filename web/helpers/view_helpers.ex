@@ -74,9 +74,11 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
-  def tweet_url(text, url) do
+  def tweet_url(text, url, nil), do: tweet_url(text, url)
+  def tweet_url(text, url, via \\ "changelog") do
     text = URI.encode(text)
-    "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=changelog&related=changelog"
+    related = ["changelog", via] |> List.flatten |> Enum.uniq |> Enum.join(",")
+    "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=#{via}&related=#{related}"
   end
 
   def truncate(string, length) when is_binary(string) do
