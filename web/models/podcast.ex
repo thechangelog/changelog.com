@@ -15,6 +15,7 @@ defmodule Changelog.Podcast do
     field :itunes_url, :string
     field :ping_url, :string
     field :schedule_note, :string
+    field :download_count, :float
 
     has_many :episodes, Episode, on_delete: :delete_all
     has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
