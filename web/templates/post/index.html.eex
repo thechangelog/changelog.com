@@ -1,0 +1,23 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Posts From Changelog and Friends</h2>
+    </header>
+    <div class="content_body">
+      <ul>
+      <%= for post <- @posts do %>
+        <li>
+          <%= link post.title, to: post_path(@conn, :show, post.slug) %>
+        </li>
+      <% end %>
+      </ul>
+
+    <%= if @page.page_number > 1 do %>
+      <%= link "<< Newer", to: post_path(@conn, :index, page: @page.page_number - 1) %>
+    <% end %>
+    <%= if @page.page_number < @page.total_pages do %>
+      <%= link "Older >>", to: post_path(@conn, :index, page: @page.page_number + 1) %>
+    <% end %>
+    </div>
+  </div>
+</article>
