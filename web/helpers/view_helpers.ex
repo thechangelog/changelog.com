@@ -7,6 +7,11 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def domain_only(url) do
+    uri = URI.parse(url)
+    uri.host
+  end
+
   def external_link(text, opts) do
     link text, (opts ++ [rel: "external"])
   end

@@ -37,32 +37,9 @@
         </ul>
       </div>
 
-      <%= if @post.author.bio do %>
-        <div class="author">
-          <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
-            <img class="author_image" src="<%= PersonView.avatar_url(@post.author) %>" width=75 height=75 alt="<%= @post.author.name %>"/>
-          <% end %>
-
-          <div class="author_bio">
-            <p>
-              <%= link @post.author.name, to: PersonView.external_url(@post.author) %>
-              <%= @post.author.bio |> md_to_html |> sans_p_tags |> raw %>
-            </p>
-
-            <ul class="author_bio_social">
-              <%= if @post.author.website do %>
-                <li><a class="author_bio_social_link author_bio_social_link--link" href="<%= @post.author.website %>" title="<%= @post.author.name %>'s Website"><%= @post.author.website %></a></li>
-              <% end %>
-              <%= if @post.author.twitter_handle do %>
-                <li><a class="author_bio_social_link author_bio_social_link--twitter" href="<%= twitter_url(@post.author.twitter_handle) %>" title="<%= @post.author.name %> on Twitter">@<%= @post.author.twitter_handle %></a></li>
-              <% end %>
-              <%= if @post.author.github_handle do %>
-                <li><a class="author_bio_social_link author_bio_social_link--github" href="<%= github_url(@post.author.github_handle) %>" title="<%= @post.author.name %> on Github"><%= @post.author.github_handle %></a></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
+    <%= if @post.author.bio do %>
+      <%= render("_author_bio.html", person: @post.author) %>
+    <% end %>
     </footer>
   </div>
 </article>
