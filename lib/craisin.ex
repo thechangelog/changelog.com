@@ -23,7 +23,12 @@ defmodule Craisin do
     %{}
   end
   def handle({:error, %HTTPoison.Error{reason: reason}}) do
-    log(elem(reason, 1))
+    if is_tuple(reason) do
+      log(elem(reason, 1))
+    else
+      log(reason)
+    end
+
     %{}
   end
 
