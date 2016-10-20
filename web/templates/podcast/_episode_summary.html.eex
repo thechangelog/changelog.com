@@ -10,7 +10,7 @@
             <%= @episode.title %>
         <% end %>
         <%= for person <- @episode.guests do %>
-          <img src="<%= Changelog.PersonView.avatar_url(person, :small) %>" width=75 height=75 alt="Guest Speaker: <%= person.name %>"/>
+          <img src="<%= Changelog.PersonView.avatar_url(person, :small) %>" width=75 height=75 alt="Guest: <%= person.name %>"/>
         <% end %>
       </h3>
 

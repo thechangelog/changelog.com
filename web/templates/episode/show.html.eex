@@ -13,7 +13,7 @@
       <% end %>
 
       <div class="hosts-list section">
-        <h3 class="accessibility-hidden">Guest Speakers</h3>
+        <h3 class="accessibility-hidden">Guests</h3>
         <%= for person <- @episode.guests do %>
           <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
             <img src="<%= PersonView.avatar_url(person) %>" width=75 height=75 alt="<%= person.name %>"/>
