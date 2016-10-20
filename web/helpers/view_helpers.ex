@@ -79,8 +79,9 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def tweet_url(text, url, via \\ "changelog")
   def tweet_url(text, url, nil), do: tweet_url(text, url)
-  def tweet_url(text, url, via \\ "changelog") do
+  def tweet_url(text, url, via) do
     text = URI.encode(text)
     related = ["changelog", via] |> List.flatten |> Enum.uniq |> Enum.join(",")
     "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=#{via}&related=#{related}"
