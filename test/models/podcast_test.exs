@@ -31,4 +31,25 @@ defmodule Changelog.PodcastTest do
     insert :episode, podcast: podcast
     assert Podcast.published_episode_count(podcast) == 1
   end
+
+  describe "update_download_count" do
+    setup do
+      {:ok, podcast: insert(:podcast)}
+    end
+
+    test "it is 0 when podcast has no episodes/downloads", %{podcast: podcast} do
+      podcast = Podcast.update_download_count(podcast)
+      assert podcast.download_count == 0
+    end
+
+    test "it is the sum of episode downloads when there are some", %{podcast: podcast} do
+      insert(:episode, download_count: 845.34, podcast: podcast)
+      insert(:episode, download_count: 1095.38, podcast: podcast)
+      insert(:episode, download_count: 50.5)
+
+      podcast = Podcast.update_download_count(podcast)
+
+      assert podcast.download_count == 1940.72
+    end
+  end
 end
