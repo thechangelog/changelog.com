@@ -1,7 +1,7 @@
 defmodule Changelog.Admin.PageController do
   use Changelog.Web, :controller
 
-  alias Changelog.Newsletter
+  alias Changelog.{Episode, Newsletter, Post}
 
   def index(conn, _params) do
     newsletters = [
@@ -17,6 +17,18 @@ defmodule Changelog.Admin.PageController do
       %Newsletter{newsletter | stats: stats}
     end)
 
-    render(conn, :index, newsletters: newsletters)
+    draft_episodes =
+      Episode.unpublished
+      |> Episode.newest_last(:recorded_at)
+      |> Repo.all
+      |> Episode.preload_podcast
+
+    draft_posts =
+      Post.unpublished
+      |> Post.newest_last(:inserted_at)
+      |> Repo.all
+      |> Post.preload_author
+
+    render(conn, :index, newsletters: newsletters, draft_episodes: draft_episodes, draft_posts: draft_posts)
   end
 end
