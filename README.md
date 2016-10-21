@@ -1,9 +1,37 @@
 # changelog.com
 
-Getting started:
+## What is this?
+
+This is the CMS behind [changelog.com](https://changelog.com). It's an [Elixir](https://elixirlang.org) application built on the [Phoenix](http://www.phoenixframework.org) web framework, [PostgreSQL](https://www.postgresql.org), and [many other]() great open source efforts.
+
+## Why is it open source?
+
+A few reasons:
+
+1. We _love_ open source. Our careers (and livelihoods) wouldn't be possible without open source. Keeping it closed (despite that natural inclination we had to do so) just feels _wrong_.
+2. Phoenix is really great, but it's young enough in its lifecycle that there aren't _too many_ in-production, open source sites for people to refer to as examples or inspiration. We want to throw our hat into that ring and hopefully others will follow.
+3. Changelog is a community of hackers. We know open sourcing the website will lead to good things from y'all (such as bug reports, feature requests, and pull requests).
+
+## Should I fork this and use it as a platform?
+
+Probably not. We won't stop you from doing it, but we don't advise it. _This is not a general purpose podcasting CMS_. It is a CMS that is specific to Changelog and our needs. From the design and layout to the data structures and file hosting, we built this for our specific needs. An example of just how custom this is — [we literally have our podcast slugs hardcoded in areas of the code](https://github.com/thechangelog/changelog.com/blob/master/web/controllers/slack_controller.ex#L8). Yuck.
+
+## What is it good for?
+
+If you're building a web application with Phoenix (or aspire to), this is a great place to poke around and see what one looks like when it's all wired together. It's not perfect by any means, but it works. And that's something. We've also been told that [it is ridiculously fast](https://twitter.com/augiedb/status/788344626663096320).
+
+If you have questions about any of the code, holler [@Changelog](https://twitter.com/changelog). Better yet, [join the community](https://changelog.com/community) where we have in-depth discussions about software development, industry trends, and everything else under the sun.
+
+## Can I contribute?
+
+Absolutely! Please keep in mind that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) if you have a feature in mind before putting the time in to code it up and open a PR. We'd hate for you to waste _any_ of your time building a feature that may ultimately fall on the cutting room floor.
+
+## How do I run the code?
+
+Assuming you're running macOS:
 
   1. `./script/setup`
   2. `mix ecto.create && mix ecto.migrate`
   3. `mix phoenix.server`
 
-Now visit [`localhost:4000`](http://localhost:4000) in your browser.
+Now visit [`localhost:4000`](http://localhost:4000) in your browser. You'll probably want some seed data, but we don't have any. (That'd make a good first PR.)
