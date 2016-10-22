@@ -5,12 +5,12 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var common = {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: [/node_modules/, /semantic/, /uploads/],
         loader: "babel",
-        query: {
+        options: {
           presets: ["es2015"]
         }
       },
