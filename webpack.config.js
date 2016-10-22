@@ -20,7 +20,7 @@ var common = {
       },
       {
         test: [/\.sass$/, /\.css$/],
-        loader: ExtractTextPlugin.extract("style", "css!sass")
+        loader: ExtractTextPlugin.extract({fallbackLoader: "style", loader: "css!sass"})
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -52,7 +52,10 @@ module.exports = [
       filename: "js/app.js"
     },
     resolve: {
-      modulesDirectories: ["node_modules", __dirname + "/web/static/app"]
+      modules: [
+        "node_modules",
+        __dirname + "/web/static/app"
+      ]
     },
     plugins: [
       new CopyWebpackPlugin([{ from: "./web/static/assets"}]),
@@ -71,7 +74,10 @@ module.exports = [
       filename: "js/admin.js"
     },
     resolve: {
-      modulesDirectories: ["node_modules", __dirname + "/web/static/admin"]
+      modules: [
+        "node_modules",
+        __dirname + "/web/static/admin"
+      ]
     },
     plugins: [
       new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
