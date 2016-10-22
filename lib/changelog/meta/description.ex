@@ -1,5 +1,5 @@
 defmodule Changelog.Meta.Description do
-  alias Changelog.{EpisodeView, PodcastView, PostView}
+  alias Changelog.{EpisodeView, PageView, PodcastView, PostView}
 
   import Changelog.Helpers.ViewHelpers, only: [md_to_text: 1]
 
@@ -19,6 +19,14 @@ defmodule Changelog.Meta.Description do
     else
       post.title
     end
+  end
+
+  defp get(%{view_module: PageView, view_template: "weekly.html"}) do
+    "Our editorialized take on this week in open source and software development. It's the email you need to read to not miss out."
+  end
+
+  defp get(%{view_module: PageView, view_template: "nightly.html"}) do
+    "Get the hottest new and top repos in your inbox every night. No fluff, just repos."
   end
 
   defp get(_), do: "Podcasts, News, and Films by/for developers. Hacker to the heart."
