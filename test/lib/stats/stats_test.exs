@@ -1,7 +1,7 @@
 defmodule ChangelogStatsTest do
   use Changelog.ModelCase
 
-  alias Changelog.Stats
+  alias Changelog.{Stats, Episode, Podcast, Repo}
 
   # TODO need some kind of mocking/expectation solution to test this right
   describe "process" do
@@ -28,6 +28,9 @@ defmodule ChangelogStatsTest do
       assert length(stats) == 1
       stat = get_stat(stats, e1)
       assert stat.downloads == 1.83
+
+      assert refreshed_download_count(e1) == 1.83
+      assert refreshed_download_count(podcast) == 1.83
     end
 
     test "it processes known logs from 2016-10-11" do
@@ -55,55 +58,81 @@ defmodule ChangelogStatsTest do
 
       stat = get_stat(stats, e1)
       assert stat.downloads == 1
+      assert refreshed_download_count(e1) == 1
 
       stat = get_stat(stats, e2)
       assert stat.downloads == 1.06
+      assert refreshed_download_count(e2) == 1.06
 
       stat = get_stat(stats, e3)
       assert stat.downloads == 0.04
+      assert refreshed_download_count(e3) == 0.04
 
       stat = get_stat(stats, e4)
       assert stat.downloads == 3.2
+      assert refreshed_download_count(e4) == 3.2
 
       stat = get_stat(stats, e5)
       assert stat.downloads == 2
+      assert refreshed_download_count(e5) == 2
 
       stat = get_stat(stats, e6)
       assert stat.downloads == 1
+      assert refreshed_download_count(e6) == 1
 
       stat = get_stat(stats, e7)
       assert stat.downloads == 1
+      assert refreshed_download_count(e7) == 1
 
       stat = get_stat(stats, e8)
       assert stat.downloads == 2
+      assert refreshed_download_count(e8) == 2
 
       stat = get_stat(stats, e9)
       assert stat.downloads == 2
+      assert refreshed_download_count(e9) == 2
 
       stat = get_stat(stats, e10)
       assert stat.downloads == 2.84
+      assert refreshed_download_count(e10) == 2.84
 
       stat = get_stat(stats, e11)
       assert stat.downloads == 2.89
+      assert refreshed_download_count(e11) == 2.89
 
       stat = get_stat(stats, e12)
       assert stat.downloads == 1
+      assert refreshed_download_count(e12) == 1
 
       stat = get_stat(stats, e13)
       assert stat.downloads == 4.22
+      assert refreshed_download_count(e13) == 4.22
 
       stat = get_stat(stats, e14)
       assert stat.downloads == 1
+      assert refreshed_download_count(e14) == 1
 
       stat = get_stat(stats, e15)
       assert stat.downloads == 5.73
+      assert refreshed_download_count(e15) == 5.73
 
       stat = get_stat(stats, e16)
       assert stat.downloads == 10.18
+      assert refreshed_download_count(e16) == 10.18
+
+      assert refreshed_download_count(podcast) == 41.16
     end
 
     defp get_stat(stats, episode) do
       Enum.find(stats, fn(x) -> x.episode_id == episode.id end)
+    end
+
+    defp refreshed_download_count(%Episode{id: id}) do
+      Repo.get(Episode, id).download_count
+    end
+
+    defp refreshed_download_count(%Podcast{id: id}) do
+      Repo.get(Podcast, id).download_count
     end
   end
 end
