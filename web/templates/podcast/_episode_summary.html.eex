@@ -39,7 +39,7 @@
 
       <%= link "Share",
           title: "Share on Twitter",
-          to: tweet_url(@episode.title, episode_path(@conn, :show, @episode.podcast.slug, @episode.slug)),
+          to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
           class: "toolbar_item toolbar_item--button js-share-popup",
           style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
     </nav>
