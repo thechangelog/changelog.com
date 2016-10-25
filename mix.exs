@@ -10,7 +10,14 @@ defmodule Changelog.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases,
-     deps: deps]
+     deps: deps,
+     preferred_cli_env: [
+        "coveralls": :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test,
+     ],
+     test_coverage: [tool: ExCoveralls],
+    ]
   end
 
   # Configuration for the OTP application.
@@ -53,7 +60,9 @@ defmodule Changelog.Mixfile do
      {:httpoison, "~> 0.9.0"},
      {:exjsx, "~> 3.2.0"},
      {:con_cache, "~> 0.11.1"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:excoveralls, "~> 0.5.7", only: :test},
+    ]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
