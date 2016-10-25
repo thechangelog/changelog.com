@@ -3,6 +3,7 @@ use Mix.Config
 config :changelog, Changelog.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "changelog.com", port: 443],
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   static_url: [scheme: "https", host: "cdn.changelog.com", port: 443],
   cache_static_manifest: "priv/static/manifest.json"
 
