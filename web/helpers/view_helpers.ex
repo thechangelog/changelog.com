@@ -75,7 +75,7 @@ defmodule Changelog.Helpers.ViewHelpers do
 
   def website_link(model) do
     if model.website do
-      external_link model.website, to: model.website
+      external_link domain_only(model.website), to: model.website
     end
   end
 
