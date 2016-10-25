@@ -1,5 +1,7 @@
 # changelog.com
 
+[Read the announcement post!](https://changelog.com/posts/changelog-is-open-source)
+
 ## What is this?
 
 This is the CMS behind [changelog.com](https://changelog.com). It's an [Elixir](https://elixirlang.org) application built on the [Phoenix](http://www.phoenixframework.org) web framework, [PostgreSQL](https://www.postgresql.org), and [many](https://github.com/thechangelog/changelog.com/blob/master/mix.exs#L33) [other](https://github.com/thechangelog/changelog.com/blob/master/package.json) great open source efforts.
