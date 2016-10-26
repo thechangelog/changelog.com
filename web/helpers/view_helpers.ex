@@ -39,22 +39,12 @@ defmodule Changelog.Helpers.ViewHelpers do
   end
 
   def plural_form(list, singular, plural) when is_list(list), do: plural_form(length(list), singular, plural)
-  def plural_form(count, singular, plural) do
-    if count == 1 do
-      singular
-    else
-      plural
-    end
-  end
+  def plural_form(1, singular, _plural), do: singular
+  def plural_form(_count, _singular, plural), do: plural
 
   def pluralize(list, singular, plural) when is_list(list), do: pluralize(length(list), singular, plural)
-  def pluralize(count, singular, plural) do
-    if count == 1 do
-      "#{count} #{singular}"
-    else
-      "#{count} #{plural}"
-    end
-  end
+  def pluralize(1, singular, _plural), do: "1 #{singular}"
+  def pluralize(count, _singular, plural), do: "#{count} #{plural}"
 
   def sans_p_tags(html), do: String.replace(html, ~r/<\/?p>/, "")
 
