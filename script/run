@@ -1,3 +1,3 @@
 #!/bin/bash -ex
 
-mix phoenix.server
+DB_URL="postgres://postgres@localhost:5432/changelog_dev" mix phoenix.server
