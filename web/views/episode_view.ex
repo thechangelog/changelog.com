@@ -7,20 +7,23 @@ defmodule Changelog.EpisodeView do
     AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
   end
 
-  def audio_url(episode) do
-    url = if episode.audio_file do
+  def audio_local_path(episode) do
+    AudioFile.url({episode.audio_file.file_name, episode}, :original)
+    |> String.replace(~r{^/}, "") # Arc 0.6 now prepends / to *all* URLs
+  end
+
+  def audio_path(episode) do
+    if episode.audio_file do
       episode
       |> audio_local_path
       |> String.replace_leading("priv", "")
     else
       "/california.mp3"
     end
-
-    static_url(Endpoint, url)
   end
 
-  def audio_local_path(episode) do
-    AudioFile.url({episode.audio_file.file_name, episode}, :original)
+  def audio_url(episode) do
+    static_url(Endpoint, audio_path(episode))
   end
 
   def classy_highlight(episode) do
