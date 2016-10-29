@@ -1,13 +1,11 @@
-
-/_build
-/db
-/deps
+_build
+deps
 /*.ez
 
 erl_crash.dump
 
-/node_modules
-/priv/static/
+node_modules
+priv/static/
 
 .git
 README.md
