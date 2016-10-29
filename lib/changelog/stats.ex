@@ -3,7 +3,7 @@ defmodule Changelog.Stats do
   import Ecto.Changeset
 
   alias Changelog.{Podcast, Repo, Episode, EpisodeStat}
-  alias Changelog.Stats.{Analyzer, Parser}
+  alias Changelog.Stats.{Analyzer, Parser, S3}
 
   require Logger
 
@@ -23,7 +23,7 @@ defmodule Changelog.Stats do
   end
 
   defp process_podcast(date, podcast) do
-    fetch_files(date, podcast.slug)
+    S3.logs(date, podcast.slug)
     |> Parser.parse_files
     |> Enum.group_by(&(&1.episode))
     |> Enum.map(fn({slug, entries}) -> process_episode(date, podcast, slug, entries) end)
@@ -54,13 +54,6 @@ defmodule Changelog.Stats do
         stat
       {:error, _} -> log("Failed to insert/update episode: #{date} #{podcast.slug} #{slug}")
     end
-  end
-
-  def fetch_files(date, slug) do
-    log("Fetching files for #{date} – #{slug}")
-    file_dir = "/Users/jerod/src/changelog/changelog.com/test/fixtures/logs/#{date}"
-    {:ok, files} = File.ls(file_dir)
-    files |> Enum.map(fn(file) -> "#{file_dir}/#{file}" end)
   end
 
   defp log(message) do

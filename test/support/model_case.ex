@@ -61,4 +61,8 @@ defmodule Changelog.ModelCase do
     |> Ecto.Changeset.traverse_errors(&Changelog.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
+
+  def fixtures_path do
+    Path.dirname(__ENV__.file) <> "/../fixtures"
+  end
 end

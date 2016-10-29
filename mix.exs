@@ -21,7 +21,7 @@ defmodule Changelog.Mixfile do
      applications: [:bamboo, :bamboo_smtp, :phoenix, :phoenix_pubsub,
                     :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex,
                     :ex_machina, :httpoison, :exjsx, :con_cache, :timex_ecto,
-                    :nimble_csv]]
+                    :nimble_csv, :ex_aws, :sweet_xml, :hackney, :briefly]]
   end
 
   # Specifies which paths to compile per environment.
@@ -54,6 +54,12 @@ defmodule Changelog.Mixfile do
      {:exjsx, "~> 3.2.0"},
      {:con_cache, "~> 0.11.1"},
      {:nimble_csv, "~> 0.1.0"},
+     {:ex_aws, "~> 1.0.0-rc.3"},
+     {:poison, "~> 2.0"},
+     {:hackney, "~> 1.6"},
+     {:sweet_xml, "~> 0.5"},
+     {:briefly, "~> 0.3"},
+     {:mock, "~> 0.2.0", only: :test},
      {:cowboy, "~> 1.0"}]
   end
 

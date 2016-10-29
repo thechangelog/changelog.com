@@ -1,30 +1,25 @@
 defmodule ChangelogStatsTest do
   use Changelog.ModelCase
 
+  import Mock
+
   alias Changelog.{Stats, Episode, Podcast, Repo}
 
-  # TODO need some kind of mocking/expectation solution to test this right
+  defp fixture_list(date) do
+    file_dir = "#{fixtures_path}/logs/#{date}"
+    {:ok, files} = File.ls(file_dir)
+     Enum.map(files, fn(file) -> "#{file_dir}/#{file}" end)
+  end
+
   describe "process" do
-    @tag :skip
-    test "when just given a date, it processes all published podcasts" do
-      insert(:podcast)
-      insert(:podcast)
-      Stats.process(Timex.today)
-    end
-
-    @tag :skip
-    test "when given a date and list of podcasts, it processes them" do
-      podcast1 = insert(:podcast)
-      podcast2 = insert(:podcast)
-      Stats.process(Timex.today, [podcast1, podcast2])
-    end
-
-    test "it processes known logs from 2016-10-10" do
+    test_with_mock "it processes known logs from 2016-10-10", Stats.S3,
+      [logs: fn(date, _slug) -> fixture_list(date) end] do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "223", bytes: 80743303)
 
       stats = Stats.process(~D[2016-10-10], podcast)
+
       assert length(stats) == 1
       stat = get_stat(stats, e1)
       assert stat.downloads == 1.83
@@ -33,7 +28,8 @@ defmodule ChangelogStatsTest do
       assert refreshed_download_count(podcast) == 1.83
     end
 
-    test "it processes known logs from 2016-10-11" do
+    test_with_mock "it processes known logs from 2016-10-11", Stats.S3,
+      [logs: fn(date, _slug) -> fixture_list(date) end] do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "114", bytes: 26238621)
