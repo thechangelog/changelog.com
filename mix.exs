@@ -52,7 +52,8 @@ defmodule Changelog.Mixfile do
      {:httpoison, "~> 0.9.0"},
      {:exjsx, "~> 3.2.0"},
      {:con_cache, "~> 0.11.1"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:credo, "~> 0.4", only: [:dev, :test]}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
