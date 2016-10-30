@@ -9,7 +9,7 @@ defmodule Changelog.PageController do
     case action_name(conn) do
       :home           -> home(conn, params)
       :weekly_archive -> weekly_archive(conn, params)
-      action          -> render(conn, action)
+      name            -> render(conn, name)
     end
   end
 

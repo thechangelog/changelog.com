@@ -33,19 +33,17 @@ defmodule Changelog.AuthController do
     [email, auth_token] = Person.decoded_auth(token)
     person = Repo.get_by(Person, email: email, auth_token: auth_token)
 
-    cond do
-      person &&
-      Timex.before?(Timex.now, person.auth_token_expires_at) ->
-        Repo.update(Person.sign_in_changes(person))
-        conn
-        |> assign(:current_user, person)
-        |> put_encrypted_cookie("_changelog_user", person.id)
-        |> configure_session(renew: true)
-        |> redirect(to: page_path(conn, :home))
-      true ->
-        conn
-        |> put_flash(:info, "Whoops!")
-        |> render("new.html", person: nil)
+    if person && Timex.before?(Timex.now, person.auth_token_expires_at) do
+      Repo.update(Person.sign_in_changes(person))
+      conn
+      |> assign(:current_user, person)
+      |> put_encrypted_cookie("_changelog_user", person.id)
+      |> configure_session(renew: true)
+      |> redirect(to: page_path(conn, :home))
+    else
+      conn
+      |> put_flash(:info, "Whoops!")
+      |> render("new.html", person: nil)
     end
   end
 
