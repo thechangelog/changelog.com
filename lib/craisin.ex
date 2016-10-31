@@ -4,7 +4,11 @@ defmodule Craisin do
   require Logger
 
   defp auth do
-    Base.encode64((System.get_env("CM_API_TOKEN") || "") <> ":x")
+    Application.get_env(:changelog, Craisin, [])
+    |> Keyword.get(:api_token, "")
+    |> Kernel.||("")
+    |> Kernel.<>(":x")
+    |> Base.encode64
   end
 
   defp process_url(url) do
