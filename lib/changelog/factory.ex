@@ -58,6 +58,6 @@ defmodule Changelog.Factory do
   end
 
   defp stub_audio_file do
-    %{file_name: "test.mp3", updated_at: Ecto.DateTime.from_erl(:calendar.gregorian_seconds_to_datetime(63633830567))}
+    %{file_name: "test.mp3", updated_at: Ecto.DateTime.from_erl(:calendar.gregorian_seconds_to_datetime(63_633_830_567))}
   end
 end

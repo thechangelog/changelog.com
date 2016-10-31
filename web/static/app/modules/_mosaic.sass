@@ -4,8 +4,11 @@
     background-size: cover
     background-position: center
     color: $white
-    min-height: 200px
+    min-height: 120px
     position: relative
+
+    @media (min-width: $tablet)
+        min-height: 200px
 
     & > *
       position: relative
@@ -20,9 +23,12 @@
         right: 0
         bottom: 0
 
-    &--blue:before
-        background: rgba($blue, 0.8)
+    &--blue
         min-height: 0
+
+        &:before
+            background: rgba($blue, 0.8)
+            min-height: 0
 
     // Based on mockups, this may be intended to be the default black rather than $changelogs grey in this scenario
     // &--podcast

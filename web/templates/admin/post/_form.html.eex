@@ -31,7 +31,7 @@
     <div class="ui horizontal selection list js-channels">
       <%= inputs_for f, :post_channels, fn i -> %>
         <% channel = channel_from_model_or_params(i.model, i.params) %>
-        <div class="item persisted">
+        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
           <%= hidden_input i, :channel_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 

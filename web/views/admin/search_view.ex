@@ -3,38 +3,20 @@ defmodule Changelog.Admin.SearchView do
 
   alias Changelog.Endpoint
 
-  def render("all.json", _params = %{results: results, query: query}) do
-    limit = 3
+  @limit 3
 
+  def render("all.json", _params = %{results: results, query: query}) do
     response = %{results: %{
-      channels: %{
-        name: "Channels",
-        results: (results.channels |> Enum.take(limit) |> Enum.map(&channel_result/1))
-      },
-      episodes: %{
-        name: "Episodes",
-        results: (results.episodes |> Enum.take(limit) |> Enum.map(&episode_result/1))
-      },
-      people: %{
-        name: "People",
-        results: (results.people |> Enum.take(limit) |> Enum.map(&person_result/1))
-      },
-      posts: %{
-        name: "Posts",
-        results: (results.posts |> Enum.take(limit) |> Enum.map(&post_result/1))
-      },
-      sponsors: %{
-        name: "Sponsors",
-        results: (results.sponsors |> Enum.take(limit) |> Enum.map(&sponsor_result/1))
-      }
-    }}
+      channels: %{name: "Channels", results: process_results(results.channels, &channel_result/1)},
+      episodes: %{name: "Episodes", results: process_results(results.episodes, &episode_result/1)},
+      people: %{name: "People", results: process_results(results.people, &person_result/1)},
+      posts: %{name: "Posts", results: process_results(results.posts, &post_result/1)},
+      sponsors: %{name: "Sponsors", results: process_results(results.sponsors, &sponsor_result/1)}}}
 
     counts = Enum.map(results, fn({_type, results}) -> Enum.count(results) end)
-    if Enum.any?(counts, fn(count) -> count > limit end) do
-      Map.put(response, :action, %{
-        url: "/admin/search?q=#{query}",
-        text: "View all #{Enum.sum(counts)} results"
-      })
+    if Enum.any?(counts, fn(count) -> count > @limit end) do
+      response
+      |> Map.put(:action, %{url: "/admin/search?q=#{query}", text: "View all #{Enum.sum(counts)} results"})
     else
       response
     end
@@ -52,6 +34,12 @@ defmodule Changelog.Admin.SearchView do
     %{results: Enum.map(results, &sponsor_result/1)}
   end
 
+  defp process_results(records, processFn) do
+    records
+    |> Enum.take(@limit)
+    |> Enum.map(processFn)
+  end
+
   defp channel_result(channel) do
     %{id: channel.id,
       title: channel.name,
@@ -60,11 +48,9 @@ defmodule Changelog.Admin.SearchView do
   end
 
   defp episode_result(episode) do
-    %{
-      id: episode.id,
+    %{id: episode.id,
       title: Changelog.EpisodeView.numbered_title(episode),
-      url: admin_podcast_episode_path(Endpoint, :edit, episode.podcast.slug, episode.slug)
-    }
+      url: admin_podcast_episode_path(Endpoint, :edit, episode.podcast.slug, episode.slug)}
   end
 
   defp person_result(person) do

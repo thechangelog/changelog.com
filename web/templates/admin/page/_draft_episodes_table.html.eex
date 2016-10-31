@@ -1,0 +1,28 @@
+<table class="ui celled striped small table">
+  <thead>
+    <tr>
+      <th>Episode</th>
+      <th>Record Time</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for episode <- @draft_episodes do %>
+    <tr>
+      <td><%= episode.podcast.name %> / <%= episode.slug %></td>
+      <td><%= ts(episode.recorded_at) %></td>
+      <td class="center aligned">
+        <div class="ui small basic icon buttons">
+          <%= link to: episode_path(@conn, :preview, episode.podcast.slug, episode.slug), class: "ui button" do %>
+            <i class="external icon"></i>
+          <% end %>
+
+          <%= link to: admin_podcast_episode_path(@conn, :edit, episode.podcast.slug, episode.slug), class: "ui button" do %>
+            <i class="edit icon"></i>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

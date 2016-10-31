@@ -12,7 +12,7 @@ defmodule Changelog.EpisodeController do
       assoc(podcast, :episodes)
       |> Episode.published
       |> Repo.get_by!(slug: slug)
-      |> Repo.preload(:podcast)
+      |> Episode.preload_podcast
       |> Episode.preload_guests
       |> Episode.preload_sponsors
 

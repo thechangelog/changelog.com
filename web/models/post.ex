@@ -37,8 +37,16 @@ defmodule Changelog.Post do
     from p in query, where: p.published == true
   end
 
-  def newest_first(query \\ __MODULE__) do
-    from p in query, order_by: [desc: p.published_at]
+  def unpublished(query \\ __MODULE__) do
+    from p in query, where: p.published == false
+  end
+
+  def newest_first(query \\ __MODULE__, field \\ :published_at) do
+    from e in query, order_by: [desc: ^field]
+  end
+
+  def newest_last(query \\ __MODULE__, field \\ :published_at) do
+    from e in query, order_by: [asc: ^field]
   end
 
   def preload_all(post) do

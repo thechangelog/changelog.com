@@ -44,8 +44,7 @@ defmodule Changelog.Mixfile do
      {:scrivener_html, "~> 1.3.0"},
      {:cmark, "~> 0.6"},
      {:html_sanitize_ex, "~> 0.1.0"},
-     {:arc, "~> 0.5.2"},
-     {:arc_ecto, "~> 0.4.2"},
+     {:arc_ecto, "~> 0.5.0-rc1"},
      {:hashids, "~> 2.0"},
      {:bamboo, "~> 0.7"},
      {:bamboo_smtp, "~> 1.2.1"},
@@ -53,7 +52,8 @@ defmodule Changelog.Mixfile do
      {:httpoison, "~> 0.9.0"},
      {:exjsx, "~> 3.2.0"},
      {:con_cache, "~> 0.11.1"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:credo, "~> 0.4", only: [:dev, :test]}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

@@ -7,6 +7,11 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def domain_only(url) do
+    uri = URI.parse(url)
+    uri.host
+  end
+
   def external_link(text, opts) do
     link text, (opts ++ [rel: "external"])
   end
@@ -34,22 +39,12 @@ defmodule Changelog.Helpers.ViewHelpers do
   end
 
   def plural_form(list, singular, plural) when is_list(list), do: plural_form(length(list), singular, plural)
-  def plural_form(count, singular, plural) do
-    if count == 1 do
-      singular
-    else
-      plural
-    end
-  end
+  def plural_form(1, singular, _plural), do: singular
+  def plural_form(_count, _singular, plural), do: plural
 
   def pluralize(list, singular, plural) when is_list(list), do: pluralize(length(list), singular, plural)
-  def pluralize(count, singular, plural) do
-    if count == 1 do
-      "#{count} #{singular}"
-    else
-      "#{count} #{plural}"
-    end
-  end
+  def pluralize(1, singular, _plural), do: "1 #{singular}"
+  def pluralize(count, _singular, plural), do: "#{count} #{plural}"
 
   def sans_p_tags(html), do: String.replace(html, ~r/<\/?p>/, "")
 
@@ -70,13 +65,16 @@ defmodule Changelog.Helpers.ViewHelpers do
 
   def website_link(model) do
     if model.website do
-      external_link model.website, to: model.website
+      external_link domain_only(model.website), to: model.website
     end
   end
 
-  def tweet_url(text, url) do
+  def tweet_url(text, url, via \\ "changelog")
+  def tweet_url(text, url, nil), do: tweet_url(text, url)
+  def tweet_url(text, url, via) do
     text = URI.encode(text)
-    "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=changelog&related=changelog"
+    related = ["changelog", via] |> List.flatten |> Enum.uniq |> Enum.join(",")
+    "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=#{via}&related=#{related}"
   end
 
   def truncate(string, length) when is_binary(string) do

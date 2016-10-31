@@ -9,6 +9,7 @@ defmodule Changelog.SponsorView do
     end
 
     module.url({file, sponsor}, version)
-    |> String.replace_leading("priv", "")
+    |> String.replace_leading("/priv", "/")
+    |> String.replace(~r{^//}, "/") # Arc 0.6 now prepends / to *all* URLs
   end
 end

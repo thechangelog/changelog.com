@@ -66,6 +66,7 @@
           <%= link "Community", to: page_path(@conn, :community) %>
           <%= link "About", to: page_path(@conn, :about) %>
           <%= link "Contact", to: page_path(@conn, :contact) %>
+          <%= link "View Source", to: "https://github.com/thechangelog/changelog.com" %>
         </nav>
       </div>
     </div>

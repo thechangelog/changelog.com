@@ -42,7 +42,7 @@ defmodule Changelog.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_changelog_key",
-    signing_salt: "8bAOekZm"
+    signing_salt: System.get_env("SIGNING_SALT") || "8bAOekZm"
 
   plug Changelog.Router
 end
