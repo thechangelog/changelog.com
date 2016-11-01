@@ -9,24 +9,10 @@
       </h3>
 
       <div class="post-summary_content_description">
-        <div>
+        <div class="richtext">
           <%= raw md_to_html(@post.tldr) %>
         </div>
       </div>
     </div>
-
-    <h4 class="accessibility-hidden">Post Navigation</h4>
-    <nav class="toolbar toolbar--left">
-      <%= link "View Post",
-          title: "",
-          to: post_path(@conn, :show, @post.slug),
-          class: "toolbar_item toolbar_item--button js-share-popup",
-          style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
-      <%= link "Share",
-          title: "Share on Twitter",
-          to: tweet_url(@post.title, post_path(@conn, :show, @post.slug)),
-          class: "toolbar_item toolbar_item--button js-share-popup",
-          style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
-    </nav>
   </div>
 </article>
