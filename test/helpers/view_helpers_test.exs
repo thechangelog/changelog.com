@@ -3,6 +3,14 @@ defmodule Changelog.ViewHelpersTest do
 
   import Changelog.Helpers.ViewHelpers
 
+  describe "comma_separated" do
+    test "it separates integers with commas" do
+      assert comma_separated(123_456_123) == "123,456,123"
+      assert comma_separated(1234) == "1,234"
+      assert comma_separated(0) == "0"
+    end
+  end
+
   describe "pluralize" do
     test "when it is sent a count" do
       assert pluralize(1, "person", "people") == "1 person"

@@ -19,7 +19,7 @@
       <% else %>
       <td><%= ts(episode.recorded_at) %></td>
       <% end %>
-      <td>TODO</td>
+      <td><%= download_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui button" do %>
