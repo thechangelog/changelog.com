@@ -49,6 +49,10 @@ defmodule Changelog.Post do
     from e in query, order_by: [asc: ^field]
   end
 
+  def limit(query, count) do
+    from e in query, limit: ^count
+  end
+
   def preload_all(post) do
     post
     |> preload_author

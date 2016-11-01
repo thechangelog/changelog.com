@@ -1,23 +1,23 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Posts From Changelog and Friends</h2>
-    </header>
-    <div class="content_body">
-      <ul>
-      <%= for post <- @posts do %>
-        <li>
-          <%= link post.title, to: post_path(@conn, :show, post.slug) %>
-        </li>
-      <% end %>
-      </ul>
+<nav class="subnav">
+  <ul>
+    <li class="subnav-item"><%= link "Posts", to: post_path(@conn, :index) %></li>
+  </ul>
+</nav>
 
+<div class="container container--skinny container--has-padding">
+  <div class="posts">
+    <%= for post <- @posts do %>
+      <%= render("_post_summary.html", conn: @conn, post: post) %>
+    <% end %>
+  </div>
+
+  <nav class="pagination" role="menubar" aria-label="Pagination">
     <%= if @page.page_number > 1 do %>
-      <%= link "<< Newer", to: post_path(@conn, :index, page: @page.page_number - 1) %>
+      <%= link "Newer", to: post_path(@conn, :index, page: @page.page_number - 1), class: "pagination_item pagination_item--button" %>
+      <span class="pagination_item pagination_item--current"><%= @page.page_number %></span>
     <% end %>
     <%= if @page.page_number < @page.total_pages do %>
-      <%= link "Older >>", to: post_path(@conn, :index, page: @page.page_number + 1) %>
+      <%= link "Older", to: post_path(@conn, :index, page: @page.page_number + 1), class: "pagination_item pagination_item--button" %>
     <% end %>
-    </div>
-  </div>
-</article>
+  </nav>
+</div>

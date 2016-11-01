@@ -1,3 +1,4 @@
+.post-summary,
 .episode-summary
     border-top: 1px solid $border-color
     margin: $padding-large / 2 auto
@@ -5,7 +6,10 @@
     position: relative
 
     @media (min-width: $tablet)
-        padding-right: 75px
+        padding: 0 75px 0 0
+
+    @media (max-width: $smartphone)
+        padding-top: 4rem
 
     &--btn
         margin-left: 0
@@ -33,21 +37,24 @@
     &_title
         font-size: 1.5em
         line-height: 1.25em
-        margin: 0
-        position: relative
+        margin: 0 0 0.5em
+
+        @media (min-width: $smartphone)
+            position: relative
 
         & > a
             color: inherit
 
         &_number
+            position: absolute
             display: block
             font-weight: 300
             margin: 1em 0 0.5em
+            top: 0
 
             @media (min-width: $smartphone)
                 left: -($padding-extra-large)
                 margin: 0
-                position: absolute
                 width: $padding-extra-large
 
         & > img
@@ -71,3 +78,11 @@
 
             & > div
                 flex: 0 1 auto
+
+            p
+                margin-top: 0
+
+        .wistia_responsive_padding,
+        img
+            max-width: 100%
+            margin: 1rem 0

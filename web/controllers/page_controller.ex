@@ -1,7 +1,7 @@
 defmodule Changelog.PageController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Episode}
+  alias Changelog.{Episode,Post}
 
   # pages that need special treatment get their own matched function
   # all others simply render the template of the same name
@@ -22,6 +22,13 @@ defmodule Changelog.PageController do
       |> Repo.all
       |> Episode.preload_podcast
       |> Episode.preload_sponsors
+
+    # posts =
+    #   Post.published
+    #   |> order_by([p], desc: p.published_at)
+    #   |> Post.newest_first
+    #   |> Post.limit(5)
+    #   |> Repo.all
 
     render(conn, :home, featured: featured)
   end
