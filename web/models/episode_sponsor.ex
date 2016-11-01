@@ -24,7 +24,6 @@ defmodule Changelog.EpisodeSponsor do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:link_url, Regexp.http, message: Regexp.http_message)
-    |> mark_for_deletion()
   end
 
   def by_position do
@@ -33,13 +32,5 @@ defmodule Changelog.EpisodeSponsor do
 
   def newest_first(query) do
     from s in query, order_by: [desc: s.inserted_at]
-  end
-
-  defp mark_for_deletion(changeset) do
-    if get_change(changeset, :delete) do
-      %{changeset | action: :delete}
-    else
-      changeset
-    end
   end
 end

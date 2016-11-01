@@ -17,18 +17,9 @@ defmodule Changelog.EpisodeChannel do
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> mark_for_deletion()
   end
 
   def by_position do
     from p in __MODULE__, order_by: p.position
-  end
-
-  defp mark_for_deletion(changeset) do
-    if get_change(changeset, :delete) do
-      %{changeset | action: :delete}
-    else
-      changeset
-    end
   end
 end
