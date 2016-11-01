@@ -5,7 +5,7 @@ defmodule Changelog.Repo.Migrations.CreateEpisodeStat do
     create table(:episode_stats) do
       add :date, :date, null: false
       add :episode_bytes, :integer, default: 0
-      add :total_bytes, :integer, default: 0
+      add :total_bytes, :bigint, default: 0
       add :downloads, :float, default: 0.0
       add :uniques, :integer, default: 0
       add :demographics, :jsonb
