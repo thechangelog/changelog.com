@@ -3,7 +3,6 @@ defmodule Changelog.EpisodeChannel do
 
   schema "episode_channels" do
     field :position, :integer
-    field :delete, :boolean, virtual: true
 
     belongs_to :channel, Changelog.Channel
     belongs_to :episode, Changelog.Episode
@@ -12,7 +11,7 @@ defmodule Changelog.EpisodeChannel do
   end
 
   @required_fields ~w(position)
-  @optional_fields ~w(episode_id channel_id delete)
+  @optional_fields ~w(episode_id channel_id)
 
   def changeset(model, params \\ %{}) do
     model

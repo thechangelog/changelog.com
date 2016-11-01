@@ -3,7 +3,6 @@ defmodule Changelog.PostChannel do
 
   schema "post_channels" do
     field :position, :integer
-    field :delete, :boolean, virtual: true
 
     belongs_to :channel, Changelog.Channel
     belongs_to :post, Changelog.Post
@@ -12,7 +11,7 @@ defmodule Changelog.PostChannel do
   end
 
   @required_fields ~w(position)
-  @optional_fields ~w(post_id channel_id delete)
+  @optional_fields ~w(post_id channel_id)
 
   def changeset(model, params \\ %{}) do
     model
