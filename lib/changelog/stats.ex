@@ -18,7 +18,8 @@ defmodule Changelog.Stats do
 
   def process(date, podcasts) do
     podcasts
-    |> Enum.map(fn(podcast) -> process_podcast(date, podcast) end)
+    |> Enum.map(&Task.async(fn -> process_podcast(date, &1) end))
+    |> Enum.map(&Task.await(&1, 600_000)) # 10 minutes
     |> List.flatten
   end
 
@@ -30,29 +31,31 @@ defmodule Changelog.Stats do
   end
 
   defp process_episode(date, podcast, slug, entries) do
-    episode = assoc(podcast, :episodes) |> Repo.get_by!(slug: slug)
+    if episode = Repo.get_by(assoc(podcast, :episodes), slug: slug) do
+      stat = case Repo.get_by(assoc(episode, :episode_stats), date: date) do
+        nil -> %EpisodeStat{episode_id: episode.id, podcast_id: podcast.id, date: date, episode_bytes: episode.bytes}
+        found -> found
+      end
 
-    stat = case Repo.get_by(assoc(episode, :episode_stats), date: date) do
-      nil -> %EpisodeStat{episode_id: episode.id, podcast_id: podcast.id, date: date, episode_bytes: episode.bytes}
-      found -> found
-    end
+      stat = change(stat, %{
+        total_bytes: Analyzer.bytes(entries),
+        downloads: Analyzer.downloads(entries, stat.episode_bytes),
+        uniques: Analyzer.uniques_count(entries),
+        demographics: %{
+          agents: Analyzer.downloads_by(entries, :agent, stat.episode_bytes),
+          countries: Analyzer.downloads_by(entries, :country_code, stat.episode_bytes)
+        }
+      })
 
-    stat = change(stat, %{
-      total_bytes: Analyzer.bytes(entries),
-      downloads: Analyzer.downloads(entries, stat.episode_bytes),
-      uniques: Analyzer.uniques_count(entries),
-      demographics: %{
-        agents: Analyzer.downloads_by(entries, :agent, stat.episode_bytes),
-        countries: Analyzer.downloads_by(entries, :country_code, stat.episode_bytes)
-      }
-    })
-
-    case Repo.insert_or_update(stat) do
-      {:ok, stat} ->
-        Episode.update_download_count(episode)
-        Podcast.update_download_count(podcast)
-        stat
-      {:error, _} -> log("Failed to insert/update episode: #{date} #{podcast.slug} #{slug}")
+      case Repo.insert_or_update(stat) do
+        {:ok, stat} ->
+          Episode.update_download_count(episode)
+          Podcast.update_download_count(podcast)
+          stat
+        {:error, _} -> log("Failed to insert/update episode: #{date} #{podcast.slug} #{slug}")
+      end
+    else
+      log("could not find #{podcast.name} with slug #{slug}")
     end
   end
 
