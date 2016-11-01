@@ -26,10 +26,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
-
 # Configure phoenix generators
 config :phoenix, :generators,
   migration: true,
@@ -38,3 +34,11 @@ config :phoenix, :generators,
 config :scrivener_html,
   routes_helper: Changelog.Router.Helpers,
   view_style: :semantic
+
+# Configures Craisin
+config :changelog, Craisin,
+  api_token: System.get_env("CM_API_TOKEN")
+
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{Mix.env}.exs"
