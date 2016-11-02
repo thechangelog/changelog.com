@@ -4,6 +4,7 @@ defmodule Changelog.Stats.Parser do
 
   # e.g. – <134>2016-10-13T18:09:07Z cache-fra1237 S3TheChangelog[415970]:
   @prefix_regex ~r/^\<\d+\>\d{4}-\d{2}-\d{2}\w\d{2}:\d{2}:\d{2}\w .*?:\s/
+  @double_quotes_regex ~r/\"\"/
 
   def parse_files(files) do
     files
@@ -23,6 +24,7 @@ defmodule Changelog.Stats.Parser do
   def parse_line(line) do
     values = line
     |> String.replace(@prefix_regex, "")
+    |> String.replace(@double_quotes_regex, "\"")
     |> CSV.parse_string(headers: false)
     |> List.first
 
