@@ -38,3 +38,7 @@ config :phoenix, :generators,
 config :scrivener_html,
   routes_helper: Changelog.Router.Helpers,
   view_style: :semantic
+
+config :ex_aws,
+  access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"}
