@@ -24,6 +24,7 @@
     <url><loc><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></loc></url>
   <% end %>
 
+  <url><loc><%= post_url(@conn, :index) %></loc></url>
   <%= for post <- @posts do %>
     <url><loc><%= post_url(@conn, :show, post.slug) %></loc></url>
   <% end %>
