@@ -16,6 +16,14 @@ defmodule Changelog.Factory do
     }
   end
 
+  def episode_stat_factory do
+    %Changelog.EpisodeStat{
+      date: Timex.today,
+      episode: build(:episode),
+      podcast: build(:podcast)
+    }
+  end
+
   def published_episode_factory do
     %Changelog.Episode{episode_factory | audio_file: stub_audio_file(),
       published: true,

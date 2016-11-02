@@ -39,6 +39,11 @@ config :scrivener_html,
 config :changelog, Craisin,
   api_token: System.get_env("CM_API_TOKEN")
 
+# Configures ExAws
+config :ex_aws,
+  access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"}
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

@@ -2,7 +2,7 @@ defmodule Changelog.Episode do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.Regexp
+  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,  EpisodeSponsor, Podcast, Regexp}
 
   schema "episodes" do
     field :slug, :string
@@ -27,15 +27,19 @@ defmodule Changelog.Episode do
     field :bytes, :integer
     field :duration, :integer
 
-    belongs_to :podcast, Changelog.Podcast
-    has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
+    field :download_count, :float
+    field :import_count, :float
+
+    belongs_to :podcast, Podcast
+    has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
     has_many :hosts, through: [:episode_hosts, :person]
-    has_many :episode_guests, Changelog.EpisodeGuest, on_delete: :delete_all
+    has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
     has_many :guests, through: [:episode_guests, :person]
-    has_many :episode_channels, Changelog.EpisodeChannel, on_delete: :delete_all
+    has_many :episode_channels, EpisodeChannel, on_delete: :delete_all
     has_many :channels, through: [:episode_channels, :channel]
-    has_many :episode_sponsors, Changelog.EpisodeSponsor, on_delete: :delete_all
+    has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
     has_many :sponsors, through: [:episode_sponsors, :sponsor]
+    has_many :episode_stats, EpisodeStat
 
     timestamps
   end
@@ -108,19 +112,19 @@ defmodule Changelog.Episode do
 
   def preload_channels(episode) do
     episode
-    |> Repo.preload(episode_channels: {Changelog.EpisodeChannel.by_position, :channel})
+    |> Repo.preload(episode_channels: {EpisodeChannel.by_position, :channel})
     |> Repo.preload(:channels)
   end
 
   def preload_hosts(episode) do
     episode
-    |> Repo.preload(episode_hosts: {Changelog.EpisodeHost.by_position, :person})
+    |> Repo.preload(episode_hosts: {EpisodeHost.by_position, :person})
     |> Repo.preload(:hosts)
   end
 
   def preload_guests(episode) do
     episode
-    |> Repo.preload(episode_guests: {Changelog.EpisodeGuest.by_position, :person})
+    |> Repo.preload(episode_guests: {EpisodeGuest.by_position, :person})
     |> Repo.preload(:guests)
   end
 
@@ -130,8 +134,20 @@ defmodule Changelog.Episode do
 
   def preload_sponsors(episode) do
     episode
-    |> Repo.preload(episode_sponsors: {Changelog.EpisodeSponsor.by_position, :sponsor})
+    |> Repo.preload(episode_sponsors: {EpisodeSponsor.by_position, :sponsor})
     |> Repo.preload(:sponsors)
+  end
+
+  def update_download_count(episode) do
+    new_count = assoc(episode, :episode_stats)
+    |> Repo.all
+    |> Enum.map(&(&1.downloads))
+    |> Enum.sum
+    |> Kernel.+(episode.import_count)
+    |> Kernel./(1)
+    |> Float.round(2)
+
+    Repo.update!(change(episode, %{download_count: new_count}))
   end
 
   defp derive_bytes_and_duration(changeset, params) do

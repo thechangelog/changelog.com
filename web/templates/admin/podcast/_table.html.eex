@@ -27,7 +27,7 @@
       <td><%= twitter_link(podcast) %></td>
       <td><%= vanity_link(podcast) %></td>
       <td><%= episode_count(podcast) %></td>
-      <td>TODO</td>
+      <td><%= download_count(podcast) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button" do %>

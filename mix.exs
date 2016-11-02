@@ -20,7 +20,8 @@ defmodule Changelog.Mixfile do
     [mod: {Changelog, []},
      applications: [:bamboo, :bamboo_smtp, :phoenix, :phoenix_pubsub,
                     :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex,
-                    :ex_machina, :httpoison, :exjsx, :con_cache, :timex_ecto]]
+                    :ex_machina, :httpoison, :exjsx, :con_cache, :timex_ecto,
+                    :nimble_csv, :ex_aws, :briefly]]
   end
 
   # Specifies which paths to compile per environment.
@@ -52,8 +53,13 @@ defmodule Changelog.Mixfile do
      {:httpoison, "~> 0.9.0"},
      {:exjsx, "~> 3.2.0"},
      {:con_cache, "~> 0.11.1"},
-     {:cowboy, "~> 1.0"},
-     {:credo, "~> 0.4", only: [:dev, :test]}]
+     {:credo, "~> 0.4", only: [:dev, :test]},
+     {:nimble_csv, "~> 0.1.0"},
+     {:ex_aws, "~> 1.0.0-rc.3"},
+     {:sweet_xml, "~> 0.5"},
+     {:briefly, "~> 0.3"},
+     {:mock, "~> 0.2.0", only: :test},
+     {:cowboy, "~> 1.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

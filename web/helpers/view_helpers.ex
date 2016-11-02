@@ -7,6 +7,15 @@ defmodule Changelog.Helpers.ViewHelpers do
     end
   end
 
+  def comma_separated(number) do
+    number
+    |> Integer.to_char_list
+    |> Enum.reverse
+    |> Enum.chunk(3, 3, [])
+    |> Enum.join(",")
+    |> String.reverse
+  end
+
   def domain_only(url) do
     uri = URI.parse(url)
     uri.host

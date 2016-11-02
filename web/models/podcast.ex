@@ -2,7 +2,7 @@ defmodule Changelog.Podcast do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.{Episode, Regexp}
+  alias Changelog.{Episode, EpisodeStat, PodcastHost, Regexp}
 
   schema "podcasts" do
     field :name, :string
@@ -15,10 +15,12 @@ defmodule Changelog.Podcast do
     field :itunes_url, :string
     field :ping_url, :string
     field :schedule_note, :string
+    field :download_count, :float
 
     has_many :episodes, Episode, on_delete: :delete_all
-    has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
+    has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
+    has_many :episode_stats, EpisodeStat
 
     timestamps
   end
@@ -118,7 +120,18 @@ defmodule Changelog.Podcast do
 
   def preload_hosts(podcast) do
     podcast
-    |> Repo.preload(podcast_hosts: {Changelog.PodcastHost.by_position, :person})
+    |> Repo.preload(podcast_hosts: {PodcastHost.by_position, :person})
     |> Repo.preload(:hosts)
+  end
+
+  def update_download_count(podcast) do
+    new_count = assoc(podcast, :episodes)
+    |> Repo.all
+    |> Enum.map(&(&1.download_count))
+    |> Enum.sum
+    |> Kernel./(1)
+    |> Float.round(2)
+
+    Repo.update!(change(podcast, %{download_count: new_count}))
   end
 end
