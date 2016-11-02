@@ -10,7 +10,7 @@ defmodule Changelog.PostController do
     |> Post.published
     |> order_by([p], desc: p.published_at)
     |> preload(:author)
-    |> Repo.paginate(params)
+    |> Repo.paginate(Map.put(params, :page_size, 15))
 
     render(conn, :index, posts: page.entries, page: page)
   end
