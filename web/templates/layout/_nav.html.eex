@@ -38,6 +38,7 @@
             </header>
             <%= link to: page_path(@conn, :weekly) do %><span>Weekly</span><% end %>
             <%= link to: page_path(@conn, :nightly) do %><span>Nightly</span><% end %>
+            <%= link to: post_path(@conn, :index) do %><span>Posts</span><% end %>
           </nav>
           <nav class="navigation-tray-section">
             <header>

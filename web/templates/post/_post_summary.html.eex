@@ -1,0 +1,18 @@
+<article class="post-summary">
+  <time class="post-summary_date"><%= TimeView.pretty_date(@post.published_at) %></time>
+  <div class="post-summary_content">
+    <div class="post-summary_content_wrap">
+      <h3 class="post-summary_title">
+        <%= link to: post_path(@conn, :show, @post.slug) do %>
+          <%= @post.title %>
+        <% end %>
+      </h3>
+
+      <div class="post-summary_content_description">
+        <div class="richtext">
+          <%= raw md_to_html(@post.tldr) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

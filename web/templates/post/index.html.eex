@@ -1,0 +1,23 @@
+<nav class="subnav">
+  <ul>
+    <li class="subnav-item"><%= link "Posts", to: post_path(@conn, :index) %></li>
+  </ul>
+</nav>
+
+<div class="container container--skinny container--has-padding">
+  <div class="posts">
+    <%= for post <- @posts do %>
+      <%= render("_post_summary.html", conn: @conn, post: post) %>
+    <% end %>
+  </div>
+
+  <nav class="pagination" role="menubar" aria-label="Pagination">
+    <%= if @page.page_number > 1 do %>
+      <%= link "Newer", to: post_path(@conn, :index, page: @page.page_number - 1), class: "pagination_item pagination_item--button" %>
+      <span class="pagination_item pagination_item--current"><%= @page.page_number %></span>
+    <% end %>
+    <%= if @page.page_number < @page.total_pages do %>
+      <%= link "Older", to: post_path(@conn, :index, page: @page.page_number + 1), class: "pagination_item pagination_item--button" %>
+    <% end %>
+  </nav>
+</div>
