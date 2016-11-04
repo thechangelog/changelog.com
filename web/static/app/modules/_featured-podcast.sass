@@ -182,10 +182,18 @@
                     @extend %display-font
                     color: $half-white
                     font-size: 0.85em
-                    margin-top: 0
+                    margin: 0
 
                 & > a
-                    margin: 0 1rem
+                    display: block
+                    margin-left: 2rem
+                    &:first-of-type
+                        margin-left: 0px
+
+                    @media (min-width: $smartphone)
+                        margin-left: 3rem
 
                 & img
-                    height: 1.5rem
+                    width: 3.75rem
+                    @media (min-width: $smartphone)
+                        width: 5.75rem
