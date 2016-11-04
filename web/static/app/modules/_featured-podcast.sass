@@ -184,16 +184,20 @@
                     font-size: 0.85em
                     margin: 0
 
-                & > a
-                    display: block
-                    margin-left: 2rem
-                    &:first-of-type
-                        margin-left: 0px
+                &_logos
+                    display: flex
+                    flex: 0 1 auto
 
-                    @media (min-width: $smartphone)
-                        margin-left: 3rem
+                    & > a
+                        display: block
+                        margin-left: 2rem
+                        &:first-of-type
+                            margin-left: 0px
 
-                & img
-                    width: 3.75rem
-                    @media (min-width: $smartphone)
-                        width: 5.75rem
+                        @media (min-width: $smartphone)
+                            margin-left: 3rem
+
+                    & img
+                        width: 3.75rem
+                        @media (min-width: $smartphone)
+                            width: 5.75rem
