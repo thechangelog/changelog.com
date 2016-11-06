@@ -6,6 +6,7 @@ defmodule ChangelogStatsParserTest do
   @log1 ~s{<134>2016-10-14T16:56:41Z cache-jfk8141 S3TheChangelog[81772]: 142.169.78.110,[14/Oct/2016:16:56:40 +0000],/uploads/podcast/145/the-changelog-145.mp3,2,206,"AppleCoreMedia/1.0.0.14A403 (iPhone; U; CPU OS 10_0_1 like Mac OS X; en_ca)",45.500,-73.583,"(null)",NA,CA,"Canada"}
   @log2 ~s{<134>2016-10-13T18:09:07Z cache-fra1237 S3TheChangelog[415970]: 78.35.187.78,[13/Oct/2016:18:09:04 +0000],/uploads/podcast/219/the-changelog-219.mp3,262144,200,"Mozilla/5.0 (Linux; Android 6.0.1; HUAWEI RIO-L01 Build/HuaweiRIO-L01) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36",50.933,6.950,"Köln",EU,DE,"Germany"}
   @log3 ~s{<134>2016-10-14T06:21:01Z cache-bma7035 S3TheChangelog[465510]: 122.163.200.110,[14/Oct/2016:06:18:55 +0000],/uploads/podcast/204/the-changelog-204.mp3,13132042,206,""Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0"",26.850,80.917,"Lucknow",AS,IN,"India"}
+  @log4 ~s{<134>2016-11-03T09:06:02Z cache-cdg8721 S3TheChangelog[301760]: 149.202.170.38,[03/Nov/2016:09:06:00 +0000],/uploads/podcast/224/the-changelog-224.mp3,0,200,"<div style="display:none;">",48.867,2.333,"Paris",EU,FR,"France"}
   @file1 ~s{test/fixtures/logs/2016-10-14T13:00:00.000-oe6twX9qexnc62cAAAAA.log}
   @file2 ~s{test/fixtures/logs/2016-10-13T08:00:00.000-aQlu8sDqCqHgsnMAAAAA.log}
 
@@ -74,6 +75,10 @@ defmodule ChangelogStatsParserTest do
         continent_code: "AS",
         country_code: "IN",
         country_name: "India"}
+    end
+
+    test "it rescues CSV parse errors and returns a 0 byte entry otherwise" do
+      assert Parser.parse_line(@log4) == %Entry{bytes: 0}
     end
   end
 end

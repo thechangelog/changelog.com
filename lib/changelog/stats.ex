@@ -52,14 +52,10 @@ defmodule Changelog.Stats do
           Episode.update_download_count(episode)
           Podcast.update_download_count(podcast)
           stat
-        {:error, _} -> log("Failed to insert/update episode: #{date} #{podcast.slug} #{slug}")
+        {:error, _} -> Logger.info("Stats: Failed to insert/update episode: #{date} #{podcast.slug} #{slug}")
       end
     else
-      log("could not find #{podcast.name} with slug #{slug}")
+      Logger.info("Stats: could not find #{podcast.name} with slug #{slug}")
     end
-  end
-
-  defp log(message) do
-    Logger.info("Stats: #{message}")
   end
 end
