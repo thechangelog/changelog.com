@@ -3,19 +3,12 @@ defmodule Craisin do
 
   require Logger
 
-  defp auth do
-    Application.get_env(:changelog, Craisin, [])
-    |> Keyword.get(:api_token, "")
-    |> Kernel.||("")
-    |> Kernel.<>(":x")
-    |> Base.encode64
-  end
-
   defp process_url(url) do
     "https://api.createsend.com/api/v3.1/#{url}.json"
   end
 
   defp process_request_headers(headers) do
+    auth = Application.get_env(:changelog, :cm_api_token)
     Enum.into(headers, [{"Authorization", "Basic #{auth}"}])
   end
 
