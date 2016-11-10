@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= page_title(assigns) %></title>
+    <link rel="canonical" content="<%= canonical_url(@conn) %>">
+
+    <meta name="description" content="<%= description(assigns) %>">
+    <meta name="copyright" content="Changelog Media LLC">
+
+    <meta name="twitter:card" content="<%= twitter_card_type(assigns) %>">
+    <meta name="twitter:site" content="@Changelog">
+    <meta name="twitter:url" content="<%= canonical_url(@conn) %>">
+    <meta name="twitter:title" content="<%= share_title(assigns) || page_title(assigns) %>">
+    <meta name="twitter:description" content="<%= description(assigns) %>">
+    <meta name="twitter:image" content="<%= static_url(@conn, twitter_image(assigns)) %>">
+
+    <meta property="og:url" content="<%= canonical_url(@conn) %>">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<%= share_title(assigns) || page_title(assigns) %>">
+    <meta property="og:image" content="<%= static_url(@conn, fb_image(assigns)) %>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="627">
+    <meta property="og:description" content="<%= description(assigns) %>">
+    <meta property="og:site_name" content="Changelog">
+    <meta property="og:locale" content="en_US">
+
+  <%= for feed <- rss_feeds(assigns) do %>
+    <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
+  <% end %>
+
+    <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
+    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+  <%= if Mix.env == :prod do %>
+    <%= render("_head_scripts.html", assigns) %>
+  <% end %>
+  </head>
+  <body><!--[if lt IE 8]>
+<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+    <main class="main">
+      <%= render(@view_module, @view_template, assigns) %>
+    </main>
+  </body>
+</html>
