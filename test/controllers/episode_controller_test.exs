@@ -4,6 +4,10 @@ defmodule Changelog.EpisodeControllerTest do
   test "getting a published podcast episode page" do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
+    insert(:episode_host, episode: e)
+    insert(:episode_host, episode: e)
+    insert(:episode_sponsor, episode: e)
+
     conn = get(build_conn, episode_path(build_conn, :show, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
   end
@@ -37,6 +41,9 @@ defmodule Changelog.EpisodeControllerTest do
   test "previewing a podcast episode when signed in as admin", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
+    insert(:episode_guest, episode: e)
+    insert(:episode_guest, episode: e)
+    insert(:episode_sponsor, episode: e)
 
     conn = get(conn, episode_path(conn, :preview, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
