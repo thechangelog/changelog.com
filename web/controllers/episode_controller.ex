@@ -14,7 +14,7 @@ defmodule Changelog.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
-    render conn, :show, podcast: podcast, episode: episode
+    render(conn, :show, podcast: podcast, episode: episode)
   end
 
   def preview(conn, %{"podcast" => podcast, "slug" => slug}) do
@@ -23,11 +23,9 @@ defmodule Changelog.EpisodeController do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
-      |> Repo.preload(:podcast)
-      |> Episode.preload_guests
-      |> Episode.preload_sponsors
+      |> Episode.preload_all
 
-    render conn, :show, podcast: podcast, episode: episode
+    render(conn, :show, podcast: podcast, episode: episode)
   end
 
   def play(conn, %{"podcast" => podcast, "slug" => slug}) do
@@ -57,7 +55,7 @@ defmodule Changelog.EpisodeController do
       |> Episode.limit(1)
       |> Repo.one
 
-    render conn, "play.json", podcast: podcast, episode: episode, prev: preloaded(prev), next: preloaded(next)
+    render(conn, "play.json", podcast: podcast, episode: episode, prev: preloaded(prev), next: preloaded(next))
   end
 
   defp preloaded(episode) when is_nil(episode), do: nil
