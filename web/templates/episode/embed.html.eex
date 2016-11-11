@@ -1,1 +1,31 @@
-Episode Embed
+<figure class="episode-player js-player">
+  <%= link to: "/", class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" do %><img src="<%= static_url(@conn, "/images/changelog-mark-only.svg") %>" alt="Changelog Media" width="40" height="40"><% end %>
+
+  <div class="episode-player_details">
+    <button class="episode-player_details_button js-player-play-button">Play</button>
+
+    <div class="episode-player_details_vwrap">
+      <h2 class="episode-player_details_podcast">
+        <%= link @podcast.name, to: podcast_path(@conn, :archive, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
+        <%= if number = number(@episode) do %>
+          <%= link "##{number}", to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank" %>
+        <% end %>
+      </h2>
+      <h1 class="episode-player_details_title">
+        <%= link @episode.title, to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank" %>
+      </h1>
+    </div>
+  </div>
+
+  <form class="episode-player_slider">
+    <div class="range-slider">
+      <span class="range-slider_above"><span class="js-player-now-playing"></span></span>
+      <div class="range-slider_range_wrap">
+        <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="500"/>
+        <div class="range-slider_range_track js-player-track"></div>
+      </div>
+      <span class="range-slider_below"> <span class="js-player-title"></span>
+        <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= @episode.duration %></span></output></span>
+    </div>
+  </form>
+</figure>

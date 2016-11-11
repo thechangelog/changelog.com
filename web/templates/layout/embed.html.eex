@@ -31,18 +31,16 @@
     <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
   <% end %>
 
-    <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
-    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+    <link rel="stylesheet" href="<%= static_url(@conn, "/css/embed.css") %>">
+    <script src="<%= static_url(@conn, "/js/embed.js") %>"></script>
   <%= if Mix.env == :prod do %>
     <%= render("_head_scripts.html", assigns) %>
   <% end %>
   </head>
-  <body><!--[if lt IE 8]>
+  <body class="embed"><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-    <main class="main">
-      <%= render(@view_module, @view_template, assigns) %>
-    </main>
+    <%= render(@view_module, @view_template, assigns) %>
   </body>
 </html>

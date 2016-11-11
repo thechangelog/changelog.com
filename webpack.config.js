@@ -64,6 +64,27 @@ module.exports = [
   }),
   merge(common, {
     entry: [
+      "normalize.css",
+      "./web/static/app/embed.sass",
+      "./web/static/app/app.js"
+    ],
+    output: {
+      path: "./priv/static",
+      filename: "js/embed.js"
+    },
+    resolve: {
+      modules: [
+        "node_modules",
+        __dirname + "/web/static/app"
+      ]
+    },
+    plugins: [
+      new CopyWebpackPlugin([{ from: "./web/static/assets"}]),
+      new ExtractTextPlugin("css/embed.css")
+    ]
+  }),
+  merge(common, {
+    entry: [
       "./web/static/semantic/semantic.css",
       "./web/static/semantic/semantic.js",
       "./web/static/admin/admin.css",

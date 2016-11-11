@@ -1,0 +1,75 @@
+// Body
+.embed
+    background: $black
+    padding: 100px 0
+
+// Variables
+$gutter: 2rem
+$height: 200px
+
+// Embedded Player
+.episode-player
+    background: #1e242c
+    height: $height
+    margin: 0 auto
+    // Temporary for styling
+    max-width: 900px
+    overflow: hidden
+    position: relative
+
+    &_site-link
+        position: absolute
+        right: 1rem
+        top: 1rem
+
+        img
+            height: 30px
+            width: 30px
+            @media (min-width: $smartphone)
+                height: 40px
+                width: 40px
+
+    &_details
+        $button_size: 4rem
+        $button_spacing: $button_size + $gutter * 2
+        display: table
+        font-size: 10px
+        height: 140px
+        padding: 0 50px 0 $button_spacing
+        position: relative
+
+        @media (min-width: $smartphone)
+            font-size: 12px
+            padding-right: 60px
+
+        @media (min-width: $tablet)
+            font-size: 14px
+
+        &_button
+          background: $green
+          border-radius: $button_size
+          display: block
+          height: $button_size
+          left: $gutter
+          margin-right: 2rem
+          margin-top: -($gutter)
+          position: absolute
+          top: 50%
+          width: $button_size
+
+        &_vwrap
+            display: table-cell
+            vertical-align: middle
+
+        &_podcast
+            @extend %display-font
+            color: $green
+            font-size: 1.25em
+            margin: 0 0 0.5em
+
+        &_title
+            font-size: 1.8em
+            margin: 0
+
+            a
+                color: $white
