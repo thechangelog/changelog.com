@@ -19,6 +19,8 @@
       <a class="footer_link" href="https://www.instagram.com/thechangelog/">Instagram</a>
       <%= link "Newsletters", to: page_path(@conn, :weekly), class: "footer_link" %>
       <a class="footer_link" href="https://github.com/thechangelog/changelog.com">Source</a>
+      <a class="footer_link" href="/terms">Terms</a>
+      <a class="footer_link" href="/privacy">Privacy</a>
     </nav>
   </footer>
 </section>
