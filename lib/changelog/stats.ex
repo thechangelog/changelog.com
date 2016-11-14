@@ -49,8 +49,8 @@ defmodule Changelog.Stats do
 
       case Repo.insert_or_update(stat) do
         {:ok, stat} ->
-          Episode.update_download_count(episode)
-          Podcast.update_download_count(podcast)
+          Episode.update_stat_counts(episode)
+          Podcast.update_stat_counts(podcast)
           stat
         {:error, _} -> Logger.info("Stats: Failed to insert/update episode: #{date} #{podcast.slug} #{slug}")
       end

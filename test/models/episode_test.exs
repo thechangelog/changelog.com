@@ -42,27 +42,29 @@ defmodule Changelog.EpisodeTest do
     assert found_titles == [yes1.title, yes2.title]
   end
 
-  describe "update_download_count" do
+  describe "update_stat_counts" do
     test "it defaults to 0 when episode has no imports or stats" do
       episode = insert(:episode, import_count: 0.0)
-      episode = Episode.update_download_count(episode)
+      episode = Episode.update_stat_counts(episode)
       assert episode.download_count == 0
+      assert episode.reach_count == 0
     end
 
     test "it uses import count when episode has import count but not stats" do
       episode = insert(:episode, import_count: 83.3)
-      episode = Episode.update_download_count(episode)
+      episode = Episode.update_stat_counts(episode)
       assert episode.download_count == 83.3
     end
 
-    test "it adds together import count and stat downloads counts" do
+    test "it adds together import count and stat downloads counts, sums uniques" do
       episode = insert(:episode, import_count: 98.5)
-      insert(:episode_stat, date: ~D[2016-01-01], episode: episode, downloads: 100.75)
-      insert(:episode_stat, date: ~D[2016-01-02], episode: episode, downloads: 84.0)
+      insert(:episode_stat, date: ~D[2016-01-01], episode: episode, downloads: 100.75, uniques: 4)
+      insert(:episode_stat, date: ~D[2016-01-02], episode: episode, downloads: 84.0, uniques: 45)
       insert(:episode_stat, date: ~D[2016-01-03], episode: episode, downloads: 53.4)
       insert(:episode_stat, downloads: 100.0)
-      episode = Episode.update_download_count(episode)
+      episode = Episode.update_stat_counts(episode)
       assert episode.download_count == 98.5+100.75+84+53.4
+      assert episode.reach_count == 4+45
     end
   end
 end

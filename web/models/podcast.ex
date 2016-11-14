@@ -16,6 +16,7 @@ defmodule Changelog.Podcast do
     field :ping_url, :string
     field :schedule_note, :string
     field :download_count, :float
+    field :reach_count, :integer
 
     has_many :episodes, Episode, on_delete: :delete_all
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
@@ -124,14 +125,23 @@ defmodule Changelog.Podcast do
     |> Repo.preload(:hosts)
   end
 
-  def update_download_count(podcast) do
-    new_count = assoc(podcast, :episodes)
-    |> Repo.all
-    |> Enum.map(&(&1.download_count))
-    |> Enum.sum
-    |> Kernel./(1)
-    |> Float.round(2)
+  def update_stat_counts(podcast) do
+    episodes = Repo.all(assoc(podcast, :episodes))
 
-    Repo.update!(change(podcast, %{download_count: new_count}))
+    new_downloads =
+      episodes
+      |> Enum.map(&(&1.download_count))
+      |> Enum.sum
+      |> Kernel./(1)
+      |> Float.round(2)
+
+    new_reach =
+      episodes
+      |> Enum.map(&(&1.reach_count))
+      |> Enum.sum
+
+    podcast
+    |> change(%{download_count: new_downloads, reach_count: new_reach})
+    |> Repo.update!
   end
 end

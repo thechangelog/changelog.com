@@ -29,6 +29,7 @@ defmodule Changelog.Episode do
 
     field :download_count, :float
     field :import_count, :float
+    field :reach_count, :integer
 
     belongs_to :podcast, Podcast
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
@@ -138,16 +139,25 @@ defmodule Changelog.Episode do
     |> Repo.preload(:sponsors)
   end
 
-  def update_download_count(episode) do
-    new_count = assoc(episode, :episode_stats)
-    |> Repo.all
-    |> Enum.map(&(&1.downloads))
-    |> Enum.sum
-    |> Kernel.+(episode.import_count)
-    |> Kernel./(1)
-    |> Float.round(2)
+  def update_stat_counts(episode) do
+    stats = Repo.all(assoc(episode, :episode_stats))
 
-    Repo.update!(change(episode, %{download_count: new_count}))
+    new_downloads =
+      stats
+      |> Enum.map(&(&1.downloads))
+      |> Enum.sum
+      |> Kernel.+(episode.import_count)
+      |> Kernel./(1)
+      |> Float.round(2)
+
+    new_reach =
+      stats
+      |> Enum.map(&(&1.uniques))
+      |> Enum.sum
+
+    episode
+    |> change(%{download_count: new_downloads, reach_count: new_reach})
+    |> Repo.update!
   end
 
   defp derive_bytes_and_duration(changeset, params) do
