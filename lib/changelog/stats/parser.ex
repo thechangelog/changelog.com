@@ -6,7 +6,8 @@ defmodule Changelog.Stats.Parser do
 
   # e.g. – <134>2016-10-13T18:09:07Z cache-fra1237 S3TheChangelog[415970]:
   @prefix_regex ~r/^\<\d+\>\d{4}-\d{2}-\d{2}\w\d{2}:\d{2}:\d{2}\w .*?:\s/
-  @double_quotes_regex ~r/\"\"/
+  # e.g. – ,""user agent"", but not ,"",
+  @double_double_quotes_regex ~r/\"\"\b|\b\"\"/
 
   def parse_files(files) do
     files
@@ -20,14 +21,14 @@ defmodule Changelog.Stats.Parser do
     |> String.split("\n")
     |> Enum.reject(fn(x) -> String.length(x) == 0 end)
     |> Enum.map(&parse_line/1)
-    |> Enum.reject(fn(entry) -> entry.bytes == 0 end)
+    |> Enum.reject(&useless_entry/1)
   end
 
   def parse_line(line) do
     try do
       values = line
       |> String.replace(@prefix_regex, "")
-      |> String.replace(@double_quotes_regex, "\"")
+      |> String.replace(@double_double_quotes_regex, "\"")
       |> CSV.parse_string(headers: false)
       |> List.first
 
@@ -43,8 +44,8 @@ defmodule Changelog.Stats.Parser do
              country_code: get_country_code(values),
              country_name: get_country_name(values)}
     rescue
-      NimbleCSV.ParseError ->
-        Logger.info("Stats: Parse Error #{line}")
+      e in NimbleCSV.ParseError ->
+        Logger.info("Stats: Parse Error '#{e.message}'\n#{line}")
         %Entry{bytes: 0}
     end
   end
@@ -62,4 +63,8 @@ defmodule Changelog.Stats.Parser do
   defp get_continent_code(list), do: Enum.at(list, 9)
   defp get_country_code(list), do: Enum.at(list, 10)
   defp get_country_name(list), do: Enum.at(list, 11)
+
+  defp useless_entry(entry) do
+    entry.bytes == 0 || entry.status == 301
+  end
 end
