@@ -1,5 +1,5 @@
 #!/bin/bash -ex
 
-npm install
+yarn install
 
-npm run-script compile
+yarn run compile
