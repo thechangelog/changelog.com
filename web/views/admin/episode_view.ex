@@ -11,6 +11,13 @@ defmodule Changelog.Admin.EpisodeView do
   def megabytes(episode), do: EpisodeView.megabytes(episode)
 
   def download_count(episode), do: episode.download_count |> round |> comma_separated
+  def reach_count(episode) do
+    if episode.reach_count > episode.download_count do
+      comma_separated(episode.reach_count)
+    else
+      download_count(episode)
+    end
+  end
 
   def person_from_model_or_params(model, params) do
     (model |> Repo.preload(:person)).person ||

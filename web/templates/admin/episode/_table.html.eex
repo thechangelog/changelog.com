@@ -5,6 +5,7 @@
       <th>Name</th>
       <th>Record/Publish Time</th>
       <th>Downloads</th>
+      <th>Reach</th>
       <th></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
       <td><%= ts(episode.recorded_at) %></td>
       <% end %>
       <td><%= download_count(episode) %></td>
+      <td><%= reach_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui button" do %>

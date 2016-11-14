@@ -2,12 +2,12 @@
   <thead>
     <tr>
       <th></th>
-      <th>Slug</th>
       <th>Status</th>
       <th>Twitter</th>
       <th>Vanity Domain</th>
       <th>Episodes</th>
       <th>Downloads</th>
+      <th>Reach</th>
       <th></th>
     </tr>
   </thead>
@@ -22,12 +22,12 @@
         </h2>
         <% end %>
       </td>
-      <td><%= link "/#{podcast.slug}", to: podcast_path(@conn, :show, podcast.slug) %></td>
       <td><%= status_label(podcast) %></td>
       <td><%= twitter_link(podcast) %></td>
       <td><%= vanity_link(podcast) %></td>
       <td><%= episode_count(podcast) %></td>
       <td><%= download_count(podcast) %></td>
+      <td><%= reach_count(podcast) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button" do %>
