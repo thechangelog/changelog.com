@@ -13,7 +13,13 @@
 </div>
 
 <div class="ui basic segment">
+<%= if Enum.any?(@drafts) do %>
+  <h2 class="ui dividing header">Drafts</h2>
+  <%= render "_table.html", conn: @conn, posts: @drafts %>
+<% end %>
+
 <%= if Enum.any?(@posts) do %>
+  <h2 class="ui dividing header">Published</h2>
   <%= render "_table.html", conn: @conn, posts: @posts %>
   <%= pagination_links @conn, @page, path: &admin_post_path/3 %>
 <% end %>
