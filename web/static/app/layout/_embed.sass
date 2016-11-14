@@ -5,7 +5,7 @@
 
 // Variables
 $gutter: 2rem
-$height: 200px
+$height: 220px
 
 // Embedded Player
 .episode-player
@@ -29,33 +29,80 @@ $height: 200px
                 height: 40px
                 width: 40px
 
+    &_toggle-nav
+        background: url("/images/more.svg") center no-repeat
+        background-size: contain
+        display: block
+        height: 10px
+        width: 20px
+
     &_details
         $button_size: 4rem
         $button_spacing: $button_size + $gutter * 2
         display: table
         font-size: 10px
-        height: 140px
-        padding: 0 50px 0 $button_spacing
+        height: 135px
+        margin-top: 1.5rem
+        padding: 0 50px 0 (2rem + $gutter * 2)
         position: relative
 
         @media (min-width: $smartphone)
             font-size: 12px
-            padding-right: 60px
+            padding: 0 60px 0 $button_spacing
 
-        @media (min-width: $tablet)
+        @media (min-width: $tablet - 150px)
             font-size: 14px
 
         &_button
-          background: $green
-          border-radius: $button_size
           display: block
-          height: $button_size
-          left: $gutter
+          left: $gutter / 2
           margin-right: 2rem
           margin-top: -($gutter)
+          padding: 0
           position: absolute
+          text-indent: -9999px
           top: 50%
-          width: $button_size
+
+          &:hover
+              .episode-player_details_button_bg
+                  transform: scale(1.1)
+              // &:before
+              //     transform: scale(1.05)
+
+          &_bg
+              background-color: $green
+              border-radius: $button_size
+              display: block
+              height: $button_size
+              transition: all 0.2s ease-in-out
+              width: $button_size
+
+          &_icon
+              background: url("/images/icon-play-white.svg") center no-repeat
+              position: absolute
+              top: 0
+              right: 0
+              bottom: 0
+              left: 0
+
+          @media (min-width: $smartphone)
+              left: $gutter
+
+          &:before
+              content: ''
+              height: 18rem
+              left: 50%
+              margin-left: -9rem
+              margin-top: -9rem
+              opacity: .2
+              position: absolute
+              top: 50%
+              transition: all 0.2s ease-in-out
+              width: 18rem
+
+              @each $podcast in $podcasts
+                  .episode-player--#{$podcast} &
+                      background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)
 
         &_vwrap
             display: table-cell

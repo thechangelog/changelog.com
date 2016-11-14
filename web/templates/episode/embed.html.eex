@@ -1,8 +1,11 @@
-<figure class="episode-player js-player">
+<figure class="episode-player episode-player--<%= @podcast.slug %> js-player">
   <%= link to: "/", class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" do %><img src="<%= static_url(@conn, "/images/changelog-mark-only.svg") %>" alt="Changelog Media" width="40" height="40"><% end %>
 
   <div class="episode-player_details">
-    <button class="episode-player_details_button js-player-play-button">Play</button>
+    <button class="episode-player_details_button js-player-play-button">
+      <div class="episode-player_details_button_bg"></div>
+      <div class="episode-player_details_button_icon">Play</div>
+    </button>
 
     <div class="episode-player_details_vwrap">
       <h2 class="episode-player_details_podcast">
@@ -19,13 +22,14 @@
 
   <form class="episode-player_slider">
     <div class="range-slider">
-      <span class="range-slider_above"><span class="js-player-now-playing"></span></span>
       <div class="range-slider_range_wrap">
         <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="500"/>
         <div class="range-slider_range_track js-player-track"></div>
       </div>
-      <span class="range-slider_below"> <span class="js-player-title"></span>
-        <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= @episode.duration %></span></output></span>
+      <span class="range-slider_below">
+        <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= @episode.duration %></span></output>
+        <a class="episode-player_toggle-nav" href="#" title="View Menu"></a>
+      </span>
     </div>
   </form>
 </figure>

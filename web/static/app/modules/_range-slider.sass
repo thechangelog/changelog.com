@@ -102,6 +102,11 @@ $range-label-width: 60px !default
         justify-content: space-between
         align-items: center
 
+        .episode-player &
+            padding: 0.5rem 1.25rem 0.5rem 1rem
+            @media (min-width: $smartphone)
+                padding: 0.5rem 1.25rem 0.5rem 2rem
+
         & > span
             display: none
             font-size: 1.15em
@@ -115,6 +120,10 @@ $range-label-width: 60px !default
             text-align: right
             color: $half-white
             font-size: 0.75em
+
+            .episode-player &
+              margin-left: 0
+              text-align: left
 
             & > b
                 color: $green
