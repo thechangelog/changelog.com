@@ -22,7 +22,8 @@ defmodule Changelog.Factory do
       episode: build(:episode),
       podcast: build(:podcast),
       downloads: 0.0,
-      uniques: 0
+      uniques: 0,
+      demographics: %{"agents" => %{}, "countries" => %{}}
     }
   end
 

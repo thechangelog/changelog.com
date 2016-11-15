@@ -23,4 +23,15 @@ defmodule Changelog.EpisodeStat do
     |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics))
     |> validate_required([:date, :episode_id, :podcast_id])
   end
+
+  def downloads_by_country(stats) when is_list(stats) do
+    stats
+    |> Enum.map(&(Map.get(&1.demographics, "countries")))
+    |> Enum.reduce(fn(x, acc) -> Map.merge(acc, x, fn(_k, v1, v2) -> v1 + v2 end) end)
+    |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
+  end
+
+  def downloads_by_country(stat) do
+    downloads_by_country([stat])
+  end
 end

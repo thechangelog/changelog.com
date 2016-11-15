@@ -4,7 +4,7 @@ defmodule Changelog.Admin.EpisodeView do
   import Changelog.Admin.SharedView
   import Scrivener.HTML
 
-  alias Changelog.{EpisodeView, TimeView, Repo}
+  alias Changelog.{EpisodeView, TimeView, Repo, EpisodeStat}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
   def audio_url(episode), do: EpisodeView.audio_url(episode)
@@ -48,5 +48,11 @@ defmodule Changelog.Admin.EpisodeView do
     else
       :preview
     end
+  end
+
+  def top_countries(stats) do
+    stats
+    |> EpisodeStat.downloads_by_country
+    |> Enum.take(10)
   end
 end

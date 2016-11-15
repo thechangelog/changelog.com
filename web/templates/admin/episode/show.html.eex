@@ -8,6 +8,61 @@
 
 <div class="ui basic segment">
 <%= if Enum.any?(@stats) do %>
+  <h2 class="ui dividing header">Demographics</h2>
+
+  <div class="ui centered stackable grid">
+    <div class="ui five wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="world icon"></i>
+            Top Countries
+          </div>
+        </h3>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for country <- top_countries(@stats) do %>
+          <div class="item"><%= Changelog.Countries.name(elem(country, 0)) %> &ndash; (<%= round(elem(country, 1)) %>)</div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui five wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="browser icon"></i>
+            Top Clients
+          </div>
+        </h3>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for client <- ["TODO"] do %>
+          <div class="item">Coming Soon</div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui five wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="browser icon"></i>
+            Top Operating Systems
+          </div>
+        </h3>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for os <- ["TODO"] do %>
+          <div class="item">Coming Soon</div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h2 class="ui dividing header">Stats</h2>
 
   <table class="ui celled striped table">
