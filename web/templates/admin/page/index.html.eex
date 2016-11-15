@@ -1,6 +1,28 @@
 <div class="ui basic segment">
+  <div class="ui stackable grid">
+    <div class="ui eight wide column">
+      <h1 class="ui dividing header">Episode Drafts</h1>
+    <%= if Enum.any?(@draft_episodes) do %>
+      <%= render("_draft_episodes_table.html", assigns) %>
+    <% else %>
+      <p>There are no draft episodes at this time.</p>
+    <% end %>
+    </div>
+
+    <div class="ui eight wide column">
+      <h1 class="ui dividing header">Post Drafts</h1>
+    <%= if Enum.any?(@draft_posts) do %>
+      <%= render("_draft_posts_table.html", assigns) %>
+    <% else %>
+      <p>There are no draft posts at this time.</p>
+    <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="ui basic segment">
   <div class="ui stackable centered grid">
-    <%= for newsletter <- @newsletters do %>
+  <%= for newsletter <- @newsletters do %>
     <div class="ui five wide column">
       <div class="ui segment">
         <h3 class="ui header">
@@ -29,28 +51,44 @@
         </div>
       </div>
     </div>
-    <% end %>
+      <% end %>
   </div>
 </div>
 
 <div class="ui basic segment">
-  <div class="ui stackable grid">
+  <div class="ui stackable centered grid">
+  <%= for podcast <- @podcasts do %>
     <div class="ui eight wide column">
-      <h1 class="ui dividing header">Episode Drafts</h1>
-    <%= if Enum.any?(@draft_episodes) do %>
-      <%= render("_draft_episodes_table.html", assigns) %>
-    <% else %>
-      <p>There are no draft episodes at this time.</p>
-    <% end %>
-    </div>
+      <div class="ui segment">
+        <h3 class="ui header">
+          <div class="content">
+            <i class="sound icon"></i>
+            <%= link podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug) %>
+          </div>
+        </h3>
 
-    <div class="ui eight wide column">
-      <h1 class="ui dividing header">Post Drafts</h1>
-    <%= if Enum.any?(@draft_posts) do %>
-      <%= render("_draft_posts_table.html", assigns) %>
-    <% else %>
-      <p>There are no draft posts at this time.</p>
-    <% end %>
+        <table class="ui striped small unstackable table">
+          <thead>
+            <tr>
+              <th>Ep</th>
+              <th>Published</th>
+              <th>Downloads</th>
+              <th>Reach</th>
+            </tr>
+          </thead>
+          <tbody>
+          <%= for episode <- recent_episodes(podcast) do %>
+            <tr>
+              <td><%= episode.slug %></td>
+              <td><%= TimeView.pretty_date(episode.published_at) %></td>
+              <td><%= EpisodeView.download_count(episode) %></td>
+              <td><%= EpisodeView.reach_count(episode) %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
+  <% end %>
   </div>
 </div>

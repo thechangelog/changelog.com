@@ -3,6 +3,8 @@ defmodule Changelog.Admin.PageController do
 
   alias Changelog.{Episode, Newsletter, Post}
 
+  plug Changelog.Plug.LoadPodcasts, "index" when action in [:index]
+
   def index(conn, _params) do
     newsletters = [
       %Newsletter{name: "Weekly", list_id: "eddd53c07cf9e23029fe8a67fe84731f", web_id: "82E49C221D20C4F7"},
@@ -17,18 +19,20 @@ defmodule Changelog.Admin.PageController do
       %Newsletter{newsletter | stats: stats}
     end)
 
-    draft_episodes =
-      Episode.unpublished
-      |> Episode.newest_last(:recorded_at)
-      |> Repo.all
-      |> Episode.preload_podcast
-
-    draft_posts =
-      Post.unpublished
-      |> Post.newest_last(:inserted_at)
-      |> Repo.all
-      |> Post.preload_author
-
     render(conn, :index, newsletters: newsletters, draft_episodes: draft_episodes, draft_posts: draft_posts)
+  end
+
+  defp draft_episodes do
+    Episode.unpublished
+    |> Episode.newest_last(:recorded_at)
+    |> Repo.all
+    |> Episode.preload_podcast
+  end
+
+  defp draft_posts do
+    Post.unpublished
+    |> Post.newest_last(:inserted_at)
+    |> Repo.all
+    |> Post.preload_author
   end
 end
