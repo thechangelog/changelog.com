@@ -24,6 +24,13 @@
       <td><%= reach_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
+        <%= if episode.published do %>
+          <%= link to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button" do %>
+            <i class="line chart icon"></i>
+            Stats
+          <% end %>
+        <% end %>
+
           <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui button" do %>
             <i class="external icon"></i>
             Public

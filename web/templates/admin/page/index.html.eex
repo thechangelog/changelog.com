@@ -67,26 +67,7 @@
           </div>
         </h3>
 
-        <table class="ui striped small unstackable table">
-          <thead>
-            <tr>
-              <th>Ep</th>
-              <th>Published</th>
-              <th>Downloads</th>
-              <th>Reach</th>
-            </tr>
-          </thead>
-          <tbody>
-          <%= for episode <- recent_episodes(podcast) do %>
-            <tr>
-              <td><%= episode.slug %></td>
-              <td><%= TimeView.pretty_date(episode.published_at) %></td>
-              <td><%= EpisodeView.download_count(episode) %></td>
-              <td><%= EpisodeView.reach_count(episode) %></td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+        <%= render("_podcast_episodes_table.html", conn: @conn, podcast: podcast) %>
       </div>
     </div>
   <% end %>

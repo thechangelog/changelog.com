@@ -38,7 +38,7 @@
         </h3>
 
         <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for client <- ["TODO"] do %>
+        <%= for _client <- ["TODO"] do %>
           <div class="item">Coming Soon</div>
         <% end %>
         </div>
@@ -55,7 +55,7 @@
         </h3>
 
         <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for os <- ["TODO"] do %>
+        <%= for _os <- ["TODO"] do %>
           <div class="item">Coming Soon</div>
         <% end %>
         </div>
