@@ -14,6 +14,10 @@ defmodule Changelog.EpisodeStat do
     timestamps
   end
 
+  def newest_first(query, field \\ :date) do
+    from e in query, order_by: [desc: ^field]
+  end
+
   def changeset(episode_stat, params \\ %{}) do
     episode_stat
     |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics))

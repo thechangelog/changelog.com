@@ -20,7 +20,9 @@ defmodule Changelog.Factory do
     %Changelog.EpisodeStat{
       date: Timex.today,
       episode: build(:episode),
-      podcast: build(:podcast)
+      podcast: build(:podcast),
+      downloads: 0.0,
+      uniques: 0
     }
   end
 

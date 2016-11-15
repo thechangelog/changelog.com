@@ -1,8 +1,8 @@
 defmodule Changelog.Admin.PageView do
   use Changelog.Web, :view
 
-  alias Changelog.{Episode, Repo, TimewView}
-  alias Changelog.Admin.{NewsletterView, EpisodeView, PodcastView}
+  alias Changelog.{Episode, Repo, TimeView}
+  alias Changelog.Admin.{NewsletterView, EpisodeView}
 
   def recent_episodes(podcast, limit \\ 5) do
     podcast

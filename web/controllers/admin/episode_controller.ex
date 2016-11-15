@@ -1,7 +1,7 @@
 defmodule Changelog.Admin.EpisodeController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Podcast, Episode, EpisodeHost}
+  alias Changelog.{Podcast, Episode, EpisodeHost, EpisodeStat}
 
   plug :assign_podcast
   plug :scrub_params, "episode" when action in [:create, :update]
@@ -28,6 +28,22 @@ defmodule Changelog.Admin.EpisodeController do
       |> Repo.all
 
     render(conn, "index.html", episodes: page.entries, drafts: drafts, page: page)
+  end
+
+  def show(conn, %{"id" => slug}, podcast) do
+    episode =
+      podcast
+      |> assoc(:episodes)
+      |> Repo.get_by!(slug: slug)
+      |> Episode.preload_all
+
+    stats =
+      episode
+      |> assoc(:episode_stats)
+      |> EpisodeStat.newest_first
+      |> Repo.all
+
+    render(conn, "show.html", episode: episode, stats: stats)
   end
 
   def new(conn, _params, podcast) do

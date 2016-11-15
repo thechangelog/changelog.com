@@ -1,0 +1,32 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link @episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, @episode.podcast.slug) %>
+    &raquo;
+    <%= @episode.slug %>
+  </h1>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@stats) do %>
+  <h2 class="ui dividing header">Stats</h2>
+
+  <table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Downloads</th>
+        <th>Reach</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for stat <- @stats do %>
+      <tr>
+        <td><%= TimeView.pretty_date(stat.date) %></td>
+        <td><%= stat.downloads %></td>
+        <td><%= stat.uniques %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
