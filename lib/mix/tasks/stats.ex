@@ -3,6 +3,8 @@ defmodule Mix.Tasks.Changelog.Stats do
 
   alias Timex.Duration
 
+  require Logger
+
   @shortdoc "Processes stats for given date, or yesterday"
 
   def run(args) when is_nil(args), do: run([])
@@ -14,6 +16,8 @@ defmodule Mix.Tasks.Changelog.Stats do
       {:error, _message} -> Timex.today |> Timex.subtract(Duration.from_days(1))
     end
 
+    Logger.info("Stats: Start processing for #{date}")
     Changelog.Stats.process(date)
+    Logger.info("Stats: Finished processing for #{date}")
   end
 end
