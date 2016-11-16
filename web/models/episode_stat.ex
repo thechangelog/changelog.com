@@ -24,14 +24,30 @@ defmodule Changelog.EpisodeStat do
     |> validate_required([:date, :episode_id, :podcast_id])
   end
 
+  def downloads_by_client(stats) when is_list(stats) do
+    stats
+    |> Enum.map(&(Map.get(&1.demographics, "agents")))
+    |> Enum.map(fn(agents) ->
+      Enum.reduce(agents, %{}, fn({agent, downloads}, acc) ->
+        # the 'client' is the section of the user agent prior to a '/'
+        key = List.first(String.split(agent, "/"))
+        Map.update(acc, key, downloads, &(&1 + downloads))
+      end)
+    end)
+    |> downloads_list_merged_and_sorted
+  end
+  def downloads_by_client(stat), do: downloads_by_client([stat])
+
   def downloads_by_country(stats) when is_list(stats) do
     stats
     |> Enum.map(&(Map.get(&1.demographics, "countries")))
+    |> downloads_list_merged_and_sorted
+  end
+  def downloads_by_country(stat), do: downloads_by_country([stat])
+
+  defp downloads_list_merged_and_sorted(list) do
+    list
     |> Enum.reduce(fn(x, acc) -> Map.merge(acc, x, fn(_k, v1, v2) -> v1 + v2 end) end)
     |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
-  end
-
-  def downloads_by_country(stat) do
-    downloads_by_country([stat])
   end
 end

@@ -38,4 +38,24 @@ defmodule Changelog.EpisodeStatTest do
       assert List.last(by_country) == {"NP", 0.0}
     end
   end
+
+  describe "downloads_by_client" do
+    test "when passed one stat, it returns downloads grouped/sorted by agent" do
+      stat = build(:episode_stat, demographics: @demo)
+
+      by_agent = EpisodeStat.downloads_by_client(stat)
+
+      assert Enum.take(by_agent, 3) == [{"Overcast", 1819.94}, {"AppleCoreMedia", 1192.2399999999998}, {"Pocket Casts", 889.2}]
+      assert List.last(by_agent) == {"iTMS", 0.0}
+    end
+
+    test "when passed multiple stats, it returns downloads grouped/sorted by agent" do
+      stat1 = build(:episode_stat, date: ~D[2016-01-01], demographics: @demo)
+      stat2 = build(:episode_stat, date: ~D[2016-01-02], demographics: @demo)
+
+      by_agent = EpisodeStat.downloads_by_client([stat1, stat2])
+
+      assert Enum.take(by_agent, 3) == [{"Overcast", 3639.88}, {"AppleCoreMedia", 2384.4799999999996}, {"Pocket Casts", 1778.4}]
+    end
+  end
 end
