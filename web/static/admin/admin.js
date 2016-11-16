@@ -48,6 +48,12 @@ $("input[readonly]").popup({
 $(".ui.dropdown").dropdown();
 $(".ui.checkbox").checkbox();
 $(".ui.button, [data-popup=true]").popup();
+$(".ui.modal").modal();
+
+$(".js-modal").on("click", function() {
+  const modalSelector = $(this).data("modal");
+  $(modalSelector).modal("show");
+});
 
 $("span.time").each(function() {
   let $span = $(this);

@@ -50,9 +50,11 @@ defmodule Changelog.Admin.EpisodeView do
     end
   end
 
-  def top_countries(stats) do
-    stats
-    |> EpisodeStat.downloads_by_country
-    |> Enum.take(10)
+  def client_name(name) do
+    case name do
+      "AppleCoreMedia" -> "Apple Podcasts"
+      "Mozilla" -> "Browsers"
+      _else -> name
+    end
   end
 end

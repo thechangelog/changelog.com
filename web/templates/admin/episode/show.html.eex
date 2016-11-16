@@ -11,24 +11,40 @@
   <h2 class="ui dividing header">Demographics</h2>
 
   <div class="ui centered stackable grid">
-    <div class="ui five wide column">
+    <div class="ui four wide column">
       <div class="ui segment">
         <h3 class="ui centered header">
           <div class="content">
             <i class="world icon"></i>
             Top Countries
+
           </div>
         </h3>
 
+        <% countries = EpisodeStat.downloads_by_country(@stats) %>
+
         <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for country <- top_countries(@stats) do %>
+        <%= for country <- Enum.take(countries, 10) do %>
           <div class="item"><%= Changelog.Countries.name(elem(country, 0)) %> &ndash; (<%= round(elem(country, 1)) %>)</div>
         <% end %>
+        </div>
+
+        <button class="ui basic tiny centered button js-modal" data-modal="#countries-modal">View All</button>
+
+        <div class="ui small modal" id="countries-modal">
+          <div class="header">All Countries</div>
+          <div class="content">
+            <ol>
+            <%= for country <- countries do %>
+              <li><%= Changelog.Countries.name(elem(country, 0)) %> &ndash; (<%= round(elem(country, 1)) %>)</li>
+            <% end %>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="ui five wide column">
+    <div class="ui four wide column">
       <div class="ui segment">
         <h3 class="ui centered header">
           <div class="content">
@@ -37,15 +53,47 @@
           </div>
         </h3>
 
+        <% clients = EpisodeStat.downloads_by_client(@stats) %>
+
         <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for _client <- ["TODO"] do %>
+        <%= for client <- Enum.take(clients, 10) do %>
+          <div class="item"><%= client_name(elem(client, 0)) %> &ndash; (<%= round(elem(client, 1)) %>)</div>
+        <% end %>
+        </div>
+
+        <button class="ui basic tiny centered button js-modal" data-modal="#clients-modal">View All</button>
+
+        <div class="ui small modal" id="clients-modal">
+          <div class="header">All Clients</div>
+          <div class="content">
+            <ol>
+            <%= for client <- clients do %>
+              <li><%= client_name(elem(client, 0)) %> &ndash; (<%= round(elem(client, 1)) %>)</li>
+            <% end %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui four wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="browser icon"></i>
+            Top Browsers
+          </div>
+        </h3>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for _os <- ["TODO"] do %>
           <div class="item">Coming Soon</div>
         <% end %>
         </div>
       </div>
     </div>
 
-    <div class="ui five wide column">
+    <div class="ui four wide column">
       <div class="ui segment">
         <h3 class="ui centered header">
           <div class="content">
