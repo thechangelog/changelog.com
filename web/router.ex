@@ -76,6 +76,8 @@ defmodule Changelog.Router do
     get "/soundcheck", PageController, :soundcheck
     get "/team", PageController, :team
     get "/live", PageController, :live
+    get "/privacy", PageController, :privacy
+    get "/terms", PageController, :terms
 
     get "/nightly", PageController, :nightly
     get "/nightly/confirmed", PageController, :nightly_confirmed
