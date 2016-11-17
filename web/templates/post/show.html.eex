@@ -11,6 +11,7 @@
       <h1><%= @post.title %></h1>
       <div class="content_byline">
         <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>
+        <%= if @current_user && @current_user.admin do %>&nbsp;<%= link "[Edit]", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
       </div>
     </header>
     <div class="content_body">

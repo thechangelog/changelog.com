@@ -46,7 +46,7 @@
       <% end %>
       <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time>
       &nbsp;/&nbsp;<%= TimeView.rounded_minutes(@episode.duration) %> Min
-      &nbsp;
+      &nbsp;<%= if @current_user && @current_user.admin do %><%= link "[Edit]", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug), data: [turbolinks: false] %><% end %>
       <a href="<%= audio_url(@episode) %>" download>
         <img src="<%= static_url(@conn, "/images/download.svg") %>"">
         &nbsp;Download MP3 (<%= megabytes(@episode) %>MB)
