@@ -8,7 +8,7 @@
         <span class="breadcrumbs_crumb breadcrumbs_crumb--active"><%= Changelog.TimeView.pretty_date(@post.published_at) %></span>
     </nav>
     <header class="content_header">
-      <h2><%= @post.title %></h2>
+      <h1><%= @post.title %></h1>
       <div class="content_byline">
         <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>
       </div>
