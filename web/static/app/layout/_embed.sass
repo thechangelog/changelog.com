@@ -35,6 +35,69 @@ $height: 220px
         display: block
         height: 10px
         width: 20px
+        position: relative
+        z-index: 99
+
+    &_nav
+        background: rgba($black,0.99)
+        display: none
+        padding: 72px 0
+        // Position
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+
+        body.show-nav
+            display: flex
+
+        &_list
+            display: flex
+            height: 75px
+            margin: 0 auto
+            justify-content: space-around
+            list-style-type: none
+            vertical-align: middle
+
+            img
+                border: 1px solid $dark-grey
+
+            &_item
+                @extend %display-font
+                align-items: center
+                border-right: 1px solid $dark-grey
+                display: flex
+                font-size: 0.8em
+                flex: 1 0 auto
+                justify-content: space-around
+                line-height: 1.25em
+                min-width: 70px
+                padding: 0 0.75rem
+                text-align: center
+
+                a
+                    background: top center no-repeat
+                    color: $white
+                    display: block
+                    padding-top: 30px
+
+                &--show
+                    padding: 0
+                    a
+                        padding-top: 0
+
+                &--listen-on a
+                    background: left center no-repeat
+                    background-size: 46px
+                    max-width: 145px
+                    min-height: 45px
+                    padding: 1em 0 1em 55px
+                    text-align: left
+
+                &:first-child,
+                &:last-child
+                    border-right: 0
 
     &_details
         $button_size: 4rem

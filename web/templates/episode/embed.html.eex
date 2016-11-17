@@ -32,4 +32,38 @@
       </span>
     </div>
   </form>
+
+  <nav class="episode-player_nav">
+    <ul class="episode-player_nav_list">
+      <li class="episode-player_nav_list_item episode-player_nav_list_item--show"><a href="#" title="<%= @podcast.name %> on Changelog.com"><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/ width="75" height="75"></a></li>
+      <li class="episode-player_nav_list_item">
+        <%= link "Share",
+            title: "Share on Twitter",
+            to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+            class: "js-share-popup",
+            target: "_blank",
+            style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+      </li>
+      <li class="episode-player_nav_list_item">
+        <%= link "Download",
+            title: "Download Episode",
+            to: "#",
+            target: "_blank",
+            style: "background-image: url('#{static_url(@conn, "/images/icon-download.svg")}')" %>
+      </li>
+      <li class="episode-player_nav_list_item">
+        <%= link "Subscribe",
+            title: "Subscribe to #{@podcast.name}",
+            to: PodcastView.subscribe_link(@episode.podcast),
+            target: "_blank",
+            style: "background-image: url('#{static_url(@conn, "/images/icon-subscribe.svg")}')" %>
+      </li>
+      <li class="episode-player_nav_list_item episode-player_nav_list_item--listen-on">
+        <%= link "Listen on Changelog.com",
+            to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug),
+            target: "_blank",
+            style: "background-image: url('#{static_url(@conn, "/images/podcasts.svg")}')" %>
+      </li>
+    </ul>
+  </nav>
 </figure>
