@@ -57,4 +57,9 @@ defmodule Changelog.Admin.EpisodeView do
       _else -> name
     end
   end
+
+  def stat_date(stat) do
+    {:ok, result} = Timex.format(stat.date, "{WDshort}, {M}/{D}")
+    result
+  end
 end

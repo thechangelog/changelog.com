@@ -3,6 +3,7 @@
     <%= link @episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, @episode.podcast.slug) %>
     &raquo;
     <%= @episode.slug %>
+    <div class="sub header"><%= @episode.title %></div>
   </h1>
 </div>
 
@@ -113,19 +114,19 @@
 
   <h2 class="ui dividing header">Stats</h2>
 
-  <table class="ui celled striped table">
+  <table class="ui celled striped unstackable table">
     <thead>
       <tr>
         <th>Date</th>
-        <th>Downloads</th>
-        <th>Reach</th>
+        <th>Downloads &ndash; (<%= download_count(@episode) %>)</th>
+        <th>Reach &ndash; (<%= reach_count(@episode) %>)</th>
       </tr>
     </thead>
 
     <tbody>
     <%= for stat <- @stats do %>
       <tr>
-        <td><%= TimeView.pretty_date(stat.date) %></td>
+        <td><%= stat_date(stat) %></td>
         <td><%= stat.downloads %></td>
         <td><%= stat.uniques %></td>
       </tr>
