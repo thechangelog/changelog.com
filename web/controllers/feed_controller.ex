@@ -48,6 +48,7 @@ defmodule Changelog.FeedController do
     posts =
       Post.published
       |> Post.newest_first
+      |> Post.limit(100)
       |> Repo.all
       |> Post.preload_author
 
