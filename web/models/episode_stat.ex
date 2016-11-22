@@ -63,6 +63,24 @@ defmodule Changelog.EpisodeStat do
   end
   def downloads_by_country(stat), do: downloads_by_country([stat])
 
+  def downloads_by_os(stats) when is_list(stats) do
+    stats
+    |> Enum.map(&(Map.get(&1.demographics, "agents")))
+    |> Enum.map(fn(agents) ->
+      agents
+      |> Enum.filter(fn({agent, _downloads}) -> String.match?(agent, ~r/^Mozilla\//) end)
+      |> Enum.reduce(%{}, fn({agent, downloads}, acc) ->
+          os = case UserAgentParser.detect_os(agent) do
+            %UA.OS{family: family} -> family
+            :unknown -> "Unknown"
+          end
+          Map.update(acc, os, downloads, &(&1 + downloads))
+        end)
+    end)
+    |> downloads_list_merged_and_sorted
+  end
+  def downloads_by_os(stat), do: downloads_by_os([stat])
+
   defp downloads_list_merged_and_sorted(list) do
     list
     |> Enum.reduce(fn(x, acc) -> Map.merge(acc, x, fn(_k, v1, v2) -> v1 + v2 end) end)

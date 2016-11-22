@@ -78,4 +78,24 @@ defmodule Changelog.EpisodeStatTest do
       assert Enum.take(by_agent, 3) == [{"Overcast", 3639.88}, {"AppleCoreMedia", 2384.4799999999996}, {"Pocket Casts", 1778.4}]
     end
   end
+
+  describe "downloads_by_os" do
+    test "when passed one stat, it returns downloads grouped by OS" do
+      stat = build(:episode_stat, date: ~D[2016-01-01], demographics: @demo)
+
+      by_os = EpisodeStat.downloads_by_os(stat)
+
+      assert Enum.take(by_os, 2) == [{"Linux", 100.44}, {"Android", 55.39999999999999}]
+    end
+
+    test "when passed multiple stats, it returns downloads grouped by browser" do
+      stat1 = build(:episode_stat, date: ~D[2016-01-01], demographics: @demo)
+      stat2 = build(:episode_stat, date: ~D[2016-01-02], demographics: @demo)
+
+      by_os = EpisodeStat.downloads_by_os([stat1, stat2])
+
+      assert Enum.take(by_os, 2) == [{"Linux", 200.88}, {"Android", 110.79999999999998}]
+      assert List.last(by_os) == {"Windows XP", 0.0}
+    end
+  end
 end
