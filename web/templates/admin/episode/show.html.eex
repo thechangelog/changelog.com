@@ -97,7 +97,7 @@
         <button class="ui basic tiny centered button js-modal" data-modal="#browsers-modal">View All</button>
 
         <div class="ui small modal" id="browsers-modal">
-          <div class="header">All Clients</div>
+          <div class="header">All Browsers</div>
           <div class="content">
             <ol>
             <%= for browser <- browsers do %>
@@ -118,10 +118,25 @@
           </div>
         </h3>
 
+        <% oses = EpisodeStat.downloads_by_os(@stats) %>
+
         <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for _os <- ["TODO"] do %>
-          <div class="item">Coming Soon</div>
+        <%= for os <- Enum.take(oses, 10) do %>
+          <div class="item"><%= elem(os, 0) %> &ndash; (<%= round(elem(os, 1)) %>)</div>
         <% end %>
+        </div>
+
+        <button class="ui basic tiny centered button js-modal" data-modal="#oses-modal">View All</button>
+
+        <div class="ui small modal" id="oses-modal">
+          <div class="header">All OSes</div>
+          <div class="content">
+            <ol>
+            <%= for os <- oses do %>
+              <li><%= elem(os, 0) %> &ndash; (<%= round(elem(os, 1)) %>)</li>
+            <% end %>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
