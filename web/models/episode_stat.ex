@@ -24,6 +24,24 @@ defmodule Changelog.EpisodeStat do
     |> validate_required([:date, :episode_id, :podcast_id])
   end
 
+  def downloads_by_browser(stats) when is_list(stats) do
+    stats
+    |> Enum.map(&(Map.get(&1.demographics, "agents")))
+    |> Enum.map(fn(agents) ->
+      agents
+      |> Enum.filter(fn({agent, _downloads}) -> String.match?(agent, ~r/^Mozilla\//) end)
+      |> Enum.reduce(%{}, fn({agent, downloads}, acc) ->
+          browser = case UserAgentParser.detect_browser(agent) do
+            %UA.Browser{family: family} -> family
+            :unknown -> "Unknown"
+          end
+          Map.update(acc, browser, downloads, &(&1 + downloads))
+        end)
+    end)
+    |> downloads_list_merged_and_sorted
+  end
+  def downloads_by_browser(stat), do: downloads_by_browser([stat])
+
   def downloads_by_client(stats) when is_list(stats) do
     stats
     |> Enum.map(&(Map.get(&1.demographics, "agents")))

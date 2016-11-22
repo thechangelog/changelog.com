@@ -17,6 +17,26 @@ defmodule Changelog.EpisodeStatTest do
     refute changeset.valid?
   end
 
+  describe "downloads_by_browser" do
+    test "when passed one stat, it returns downloads grouped by browser" do
+      stat = build(:episode_stat, date: ~D[2016-01-01], demographics: @demo)
+
+      by_browser = EpisodeStat.downloads_by_browser(stat)
+
+      assert Enum.take(by_browser, 2) == [{"Unknown", 126.13}, {"Android", 47.19}]
+    end
+
+    test "when passed multiple stats, it returns downloads grouped by browser" do
+      stat1 = build(:episode_stat, date: ~D[2016-01-01], demographics: @demo)
+      stat2 = build(:episode_stat, date: ~D[2016-01-02], demographics: @demo)
+
+      by_browser = EpisodeStat.downloads_by_browser([stat1, stat2])
+
+      assert Enum.take(by_browser, 2) == [{"Unknown", 252.26}, {"Android", 94.38}]
+      assert List.last(by_browser) == {"YandexBot", 0.0}
+    end
+  end
+
   describe "downloads_by_country" do
     test "when passed one stat, it returns downloads sorted by country" do
       stat = build(:episode_stat, demographics: @demo)
