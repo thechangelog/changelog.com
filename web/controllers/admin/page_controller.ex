@@ -13,7 +13,7 @@ defmodule Changelog.Admin.PageController do
     ]
     |> Enum.map(fn(newsletter) ->
       stats = ConCache.get_or_store(:app_cache, "newsletter_#{newsletter.list_id}_stats", fn() ->
-        %ConCache.Item{value: Craisin.List.stats(newsletter.list_id), ttl: :timer.hours(12)}
+        %ConCache.Item{value: Craisin.List.stats(newsletter.list_id), ttl: :timer.hours(1)}
       end)
 
       %Newsletter{newsletter | stats: stats}
