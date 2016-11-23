@@ -6,6 +6,7 @@
   <div class="author_bio">
     <p>
       <%= link @person.name, to: PersonView.external_url(@person) %>
+      &ndash;
       <%= @person.bio |> md_to_html |> sans_p_tags |> raw %>
     </p>
 
