@@ -64,7 +64,7 @@
 
       <h2>Changelog Weekly</h2>
 
-      <p>Every Saturday we ship our weekly email to 7,500 die-hard readers.</p>
+      <p>Every weekend we ship our email to <%= @weekly |> NewsletterView.subscribers(:all, 7500) |> comma_separated %> die-hard readers.</p>
 
       <ul>
         <li><mark>$250 per week with a two (2) week minimum</mark></li>
