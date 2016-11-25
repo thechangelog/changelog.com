@@ -50,7 +50,7 @@ defmodule Changelog.Admin.SearchView do
   defp episode_result(episode) do
     %{id: episode.id,
       title: Changelog.EpisodeView.numbered_title(episode),
-      url: admin_podcast_episode_path(Endpoint, :edit, episode.podcast.slug, episode.slug)}
+      url: admin_podcast_episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)}
   end
 
   defp person_result(person) do
