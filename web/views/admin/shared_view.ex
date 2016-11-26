@@ -8,20 +8,16 @@ defmodule Changelog.Admin.SharedView do
       Repo.get(Changelog.Channel, (Map.get(model, "channel_id") || params["channel_id"]))
   end
 
-  def semantic_datetime_select(form, field, opts \\ []) do
-    builder = fn b ->
-      ~e"""
-      <div class="fields">
-        <div class="three wide field"><%= b.(:month, []) %></div>
-        <div class="two wide field"><%= b.(:day, []) %></div>
-        <div class="two wide field"><%= b.(:year, [options: 2008..2025]) %></div> at
-        <div class="two wide field"><%= b.(:hour, []) %></div>:
-        <div class="two wide field"><%= b.(:minute, []) %></div>&nbsp;UTC
+  def semantic_calendar_field(form, field) do
+    ~e"""
+    <div class="ui calendar">
+      <div class="ui input left icon">
+        <i class="calendar icon"></i>
+        <%= text_input(form, field, name: "", id: "") %>
+        <%= hidden_input(form, field) %>
       </div>
-      """
-    end
-
-    datetime_select form, field, [builder: builder] ++ opts
+    </div>
+    """
   end
 
   def error_class(form, field) do

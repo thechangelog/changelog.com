@@ -1,5 +1,6 @@
 import SearchWidget from "components/searchWidget";
 import Slugifier from "components/slugifier";
+import CalendarField from "components/calendarField";
 
 export default class PostView {
   new() {
@@ -10,8 +11,9 @@ export default class PostView {
       }
     });
 
-    let $slugifier = new Slugifier("#post_title", "#post_slug");
-    let $channelWidget = new SearchWidget("channel", "post", "channels");
+    new Slugifier("#post_title", "#post_slug");
+    new SearchWidget("channel", "post", "channels");
+    new CalendarField(".ui.calendar");
   }
 
   edit() {

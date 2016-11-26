@@ -66,6 +66,8 @@ module.exports = [
     entry: [
       "./web/static/semantic/semantic.css",
       "./web/static/semantic/semantic.js",
+      "./web/static/semantic/calendar.css",
+      "./web/static/semantic/calendar.js",
       "./web/static/admin/admin.css",
       "./web/static/admin/admin.js"
     ],
