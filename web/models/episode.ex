@@ -94,6 +94,7 @@ defmodule Changelog.Episode do
     |> cast_attachments(params, ~w(audio_file))
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> validate_featured_has_highlight
+    |> validate_published_has_published_at
     |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)
     |> cast_assoc(:episode_guests)
@@ -195,6 +196,17 @@ defmodule Changelog.Episode do
 
     if featured && is_nil(highlight) do
       add_error(changeset, :highlight, "can't be blank when featured")
+    else
+      changeset
+    end
+  end
+
+  defp validate_published_has_published_at(changeset) do
+    published = get_field(changeset, :published)
+    published_at = get_field(changeset, :published_at)
+
+    if published && is_nil(published_at) do
+      add_error(changeset, :published_at, "can't be blank when published")
     else
       changeset
     end

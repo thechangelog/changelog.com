@@ -30,6 +30,7 @@ defmodule Changelog.Post do
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
+    |> validate_published_has_published_at
     |> cast_assoc(:post_channels)
   end
 
@@ -68,5 +69,16 @@ defmodule Changelog.Post do
     post
     |> Repo.preload(post_channels: {Changelog.PostChannel.by_position, :channel})
     |> Repo.preload(:channels)
+  end
+
+  defp validate_published_has_published_at(changeset) do
+    published = get_field(changeset, :published)
+    published_at = get_field(changeset, :published_at)
+
+    if published && is_nil(published_at) do
+      add_error(changeset, :published_at, "can't be blank when published")
+    else
+      changeset
+    end
   end
 end
