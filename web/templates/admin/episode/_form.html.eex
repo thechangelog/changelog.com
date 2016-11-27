@@ -49,18 +49,6 @@
     <%= text_input f, :subhighlight, placeholder: "–Matz <sup>Creator of the Ruby programming language</sup>" %>
   </div>
 
-  <div class="field <%= error_class(f, :recorded_at) %>">
-    <%= label(f, :recorded_at, "Record Date/Time") %>
-    <%= semantic_calendar_field(f, :recorded_at) %>
-    <%= error_message f, :recorded_at %>
-  </div>
-
-  <div class="field <%= error_class(f, :published_at) %>">
-    <%= label(f, :published_at, "Publish Date/Time") %>
-    <%= semantic_calendar_field(f, :published_at) %>
-    <%= error_message(f, :published_at) %>
-  </div>
-
   <div class="required field">
     <%= label f, :hosts %>
 
@@ -234,6 +222,22 @@
     <% end %>
 
     <%= file_input f, :audio_file %>
+  </div>
+
+  <div class="two fields">
+    <div class="field <%= error_class(f, :published_at) %>">
+      <%= label(f, :published_at) do %>
+        Publish Time <%= help_icon("To schedule: set this in the future and toggle 'Published'") %>
+      <% end %>
+      <%= semantic_calendar_field(f, :published_at) %>
+      <%= error_message(f, :published_at) %>
+    </div>
+
+    <div class="field <%= error_class(f, :recorded_at) %>">
+      <%= label(f, :recorded_at, "Record Time") %>
+      <%= semantic_calendar_field(f, :recorded_at) %>
+      <%= error_message f, :recorded_at %>
+    </div>
   </div>
 
   <div class="inline field">

@@ -3,7 +3,11 @@
     <tr>
       <th>Slug</th>
       <th>Name</th>
-      <th>Record/Publish Time</th>
+    <%= if @status == "draft" do %>
+      <th>Record Time</th>
+    <% else %>
+      <th>Publish Time</th>
+    <% end %>
       <th>Downloads</th>
       <th>Reach</th>
       <th></th>
@@ -14,7 +18,7 @@
   <%= for episode <- @episodes do %>
     <tr>
       <td><%= episode.slug %></td>
-      <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= status_label(episode) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
+      <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
       <%= if episode.published do %>
       <td><%= ts(episode.published_at) %></td>
       <% else %>

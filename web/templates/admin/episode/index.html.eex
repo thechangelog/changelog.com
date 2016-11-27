@@ -12,12 +12,17 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@drafts) do %>
   <h2 class="ui dividing header">Drafts</h2>
-  <%= render "_table.html", conn: @conn, podcast: @podcast, episodes: @drafts %>
+  <%= render("_table.html", conn: @conn, status: "draft", podcast: @podcast, episodes: @drafts) %>
+<% end %>
+
+<%= if Enum.any?(@scheduled) do %>
+  <h2 class="ui dividing header">Scheduled</h2>
+  <%= render("_table.html", conn: @conn, status: "scheduled", podcast: @podcast, episodes: @scheduled) %>
 <% end %>
 
 <%= if Enum.any?(@episodes) do %>
   <h2 class="ui dividing header">Published</h2>
-  <%= render "_table.html", conn: @conn, podcast: @podcast, episodes: @episodes %>
+  <%= render("_table.html", conn: @conn, status: "published", podcast: @podcast, episodes: @episodes) %>
   <%= pagination_links @conn, @page, [@podcast.slug], path: &admin_podcast_episode_path/4 %>
 <% end %>
 </div>

@@ -13,21 +13,27 @@ defmodule Changelog.Admin.EpisodeController do
   end
 
   def index(conn, params, podcast) do
+    episodes = assoc(podcast, :episodes)
+
     page =
-      podcast
-      |> assoc(:episodes)
+      episodes
       |> Episode.published
       |> Episode.newest_first
       |> Repo.paginate(params)
 
+    scheduled =
+      episodes
+      |> Episode.scheduled
+      |> Episode.newest_first
+      |> Repo.all
+
     drafts =
-      podcast
-      |> assoc(:episodes)
+      episodes
       |> Episode.unpublished
       |> Episode.newest_first(:inserted_at)
       |> Repo.all
 
-    render(conn, "index.html", episodes: page.entries, drafts: drafts, page: page)
+    render(conn, "index.html", episodes: page.entries, scheduled: scheduled, drafts: drafts, page: page)
   end
 
   def show(conn, %{"id" => slug}, podcast) do

@@ -4,7 +4,7 @@ defmodule Changelog.Admin.EpisodeView do
   import Changelog.Admin.SharedView
   import Scrivener.HTML
 
-  alias Changelog.{EpisodeView, TimeView, Repo, EpisodeStat}
+  alias Changelog.{Episode, EpisodeView, TimeView, Repo, EpisodeStat}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
   def audio_url(episode), do: EpisodeView.audio_url(episode)
@@ -43,7 +43,7 @@ defmodule Changelog.Admin.EpisodeView do
   end
 
   def show_or_preview(episode) do
-    if episode.published do
+    if Episode.is_public(episode) do
       :show
     else
       :preview

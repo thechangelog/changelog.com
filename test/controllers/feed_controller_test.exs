@@ -2,7 +2,7 @@ defmodule Changelog.FeedControllerTest do
   use Changelog.ConnCase
 
   test "the sitemap" do
-    post = insert(:post, published: true)
+    post = insert(:published_post)
     podcast = insert(:podcast)
     episode = insert(:published_episode)
     conn = get(build_conn, feed_path(build_conn, :sitemap))

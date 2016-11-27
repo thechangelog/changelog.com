@@ -2,9 +2,10 @@ defmodule Changelog.PostControllerTest do
   use Changelog.ConnCase
 
   test "getting the posts index" do
-    p1 = insert(:post, published: true)
-    p2 = insert(:post, published: true)
+    p1 = insert(:published_post)
+    p2 = insert(:published_post)
     unpublished = insert(:post, published: false)
+    scheduled = insert(:scheduled_post)
 
     conn = get(build_conn, post_path(build_conn, :index))
 
@@ -12,10 +13,11 @@ defmodule Changelog.PostControllerTest do
     assert conn.resp_body =~ p1.title
     assert conn.resp_body =~ p2.title
     refute conn.resp_body =~ unpublished.title
+    refute conn.resp_body =~ scheduled.title
   end
 
   test "getting a published post page" do
-    p = insert(:post, published: true)
+    p = insert(:published_post)
     conn = get(build_conn, post_path(build_conn, :show, p.slug))
     assert html_response(conn, 200) =~ p.title
   end

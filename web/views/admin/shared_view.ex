@@ -36,6 +36,7 @@ defmodule Changelog.Admin.SharedView do
 
   def form_actions do
     ~e"""
+    <div class="ui section divider"></div>
     <button class="ui primary basic button" type="submit">Save</button>
     <button class="ui secondary basic button" type="submit" name="close">Save and Close</button>
     """

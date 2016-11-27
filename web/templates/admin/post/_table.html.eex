@@ -3,7 +3,7 @@
       <tr>
         <th>Author</th>
         <th>Title</th>
-        <th>Status</th>
+        <th>Create Time</th>
         <th>Publish Time</th>
         <th></th>
       </tr>
@@ -18,7 +18,7 @@
           <% end %>
         </td>
         <td><%= link truncate(post.title, 50), to: admin_post_path(@conn, :edit, post) %></td>
-        <td><%= status_label(post) %></td>
+        <td><%= ts(post.inserted_at) %></td>
         <td><%= ts(post.published_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">

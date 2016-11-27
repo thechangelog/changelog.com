@@ -53,7 +53,17 @@ defmodule Changelog.Episode do
   end
 
   def published(query \\ __MODULE__) do
-    from e in query, where: e.published == true, where: not(is_nil(e.audio_file))
+    from e in query,
+      where: e.published == true,
+      where: not(is_nil(e.audio_file)),
+      where: e.published_at <= ^Timex.now
+  end
+
+  def scheduled(query \\ __MODULE__) do
+    from e in query,
+      where: e.published == true,
+      where: not(is_nil(e.audio_file)),
+      where: e.published_at > ^Timex.now
   end
 
   def unpublished(query \\ __MODULE__) do
@@ -86,6 +96,10 @@ defmodule Changelog.Episode do
 
   def limit(query, count) do
     from e in query, limit: ^count
+  end
+
+  def is_public(episode, as_of \\ Timex.now) do
+    episode.published && episode.published_at <= as_of
   end
 
   def changeset(episode, params \\ %{}) do

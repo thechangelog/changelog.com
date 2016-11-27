@@ -12,6 +12,15 @@ defmodule Changelog.EpisodeControllerTest do
     assert html_response(conn, 200) =~ e.title
   end
 
+  test "getting a scheduled episode's page" do
+    p = insert(:podcast)
+    e = insert(:scheduled_episode, podcast: p)
+
+    assert_raise Ecto.NoResultsError, fn ->
+      get(build_conn, episode_path(build_conn, :show, p.slug, e.slug))
+    end
+  end
+
   test "getting a podcast episode page that is not published" do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)

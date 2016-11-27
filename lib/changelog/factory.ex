@@ -57,7 +57,14 @@ defmodule Changelog.Factory do
   def published_episode_factory do
     %Changelog.Episode{episode_factory | audio_file: stub_audio_file(),
       published: true,
-      published_at: Timex.now
+      published_at: Timex.subtract(Timex.now, Timex.Duration.from_hours(1))
+    }
+  end
+
+  def scheduled_episode_factory do
+    %Changelog.Episode{episode_factory | audio_file: stub_audio_file(),
+      published: true,
+      published_at: Timex.add(Timex.now, Timex.Duration.from_hours(1))
     }
   end
 
@@ -86,7 +93,13 @@ defmodule Changelog.Factory do
   end
 
   def published_post_factory do
-    %Changelog.Post{post_factory | published: true, published_at: Timex.now}
+    published_at = Timex.subtract(Timex.now, Timex.Duration.from_hours(1))
+    %Changelog.Post{post_factory | published: true, published_at: published_at}
+  end
+
+  def scheduled_post_factory do
+    published_at = Timex.add(Timex.now, Timex.Duration.from_hours(1))
+    %Changelog.Post{post_factory | published: true, published_at: published_at}
   end
 
   def sponsor_factory do

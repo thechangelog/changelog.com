@@ -12,13 +12,19 @@ defmodule Changelog.Admin.PostController do
       |> preload(:author)
       |> Repo.paginate(params)
 
+    scheduled =
+      Post.scheduled
+      |> Post.newest_first
+      |> preload(:author)
+      |> Repo.all
+
     drafts =
       Post.unpublished
       |> Post.newest_first(:inserted_at)
       |> preload(:author)
       |> Repo.all
 
-    render(conn, :index, posts: page.entries, drafts: drafts, page: page)
+    render(conn, :index, posts: page.entries, scheduled: scheduled, drafts: drafts, page: page)
   end
 
   def new(conn, _params) do

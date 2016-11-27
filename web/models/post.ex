@@ -35,7 +35,15 @@ defmodule Changelog.Post do
   end
 
   def published(query \\ __MODULE__) do
-    from p in query, where: p.published == true
+    from p in query,
+      where: p.published == true,
+      where: p.published_at <= ^Timex.now
+  end
+
+  def scheduled(query \\ __MODULE__) do
+    from p in query,
+      where: p.published == true,
+      where: p.published_at > ^Timex.now
   end
 
   def unpublished(query \\ __MODULE__) do
@@ -52,6 +60,10 @@ defmodule Changelog.Post do
 
   def limit(query, count) do
     from e in query, limit: ^count
+  end
+
+  def is_public(post, as_of \\ Timex.now) do
+    post.published && post.published_at <= as_of
   end
 
   def preload_all(post) do
