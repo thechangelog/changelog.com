@@ -1,7 +1,6 @@
 export default class CalendarField {
   constructor(selector) {
     let tz = new Date().toLocaleTimeString("en-us", {timeZoneName: "short"}).split(" ")[2];
-
     $(selector).calendar({
       today: true,
       selector: {
@@ -11,7 +10,9 @@ export default class CalendarField {
       },
       parser: {
         date: function(text, settings) {
-          return new Date(text);
+          // given format: 2010-08-19 13:00:00Z
+          // safari requires: 2010-08-19T13:00:00Z
+          return new Date(text.replace(" ", "T"));
         }
       },
       formatter: {
