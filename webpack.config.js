@@ -79,7 +79,6 @@ module.exports = [
       ]
     },
     plugins: [
-      new CopyWebpackPlugin([{ from: "./web/static/assets"}]),
       new ExtractTextPlugin("css/embed.css")
     ]
   }),
