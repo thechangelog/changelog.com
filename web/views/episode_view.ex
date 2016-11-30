@@ -33,6 +33,12 @@ defmodule Changelog.EpisodeView do
     |> raw
   end
 
+  def embed_code(episode), do: embed_code(episode, episode.podcast)
+  def embed_code(episode, podcast) do
+    embed_url = episode_url(Endpoint, :embed, podcast.slug, episode.slug)
+    ~s{<audio src="#{audio_url(episode)}" preload="none" class="changelog-episode" data-embed="#{embed_url}" controls></audio><script async src="//cdn.changelog.com/embed.js"></script>}
+  end
+
   def guid(episode) do
     episode.guid || "changelog.com/#{episode.podcast_id}/#{episode.id}"
   end
