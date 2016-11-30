@@ -32,7 +32,6 @@
   <% end %>
 
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/embed.css") %>">
-    <script src="<%= static_url(@conn, "/js/embed.js") %>"></script>
   <%= if Mix.env == :prod do %>
     <%= render("_head_scripts.html", assigns) %>
   <% end %>
@@ -42,5 +41,6 @@
 <![endif]-->
 
     <%= render(@view_module, @view_template, assigns) %>
+    <script src="<%= static_url(@conn, "/js/embed.js") %>"></script>
   </body>
 </html>

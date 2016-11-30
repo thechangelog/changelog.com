@@ -37,7 +37,7 @@ $height: 220px
 
     &_nav
         background: rgba($black,0.99)
-        display: none
+        display: flex
         padding: 72px 0
         // Position
         position: absolute
@@ -95,6 +95,9 @@ $height: 220px
                 &:first-child,
                 &:last-child
                     border-right: 0
+
+    &_nav--is-hidden
+      display: none
 
     &_details
         $button_size: 4rem

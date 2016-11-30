@@ -1,11 +1,12 @@
 <figure class="episode-player episode-player--<%= @podcast.slug %> js-player">
-  <%= link to: "/", class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" do %><img src="<%= static_url(@conn, "/images/changelog-mark-only.svg") %>" alt="Changelog Media" width="40" height="40"><% end %>
+  <%= link to: page_url(@conn, :home), class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" do %><img src="<%= static_url(@conn, "/images/changelog-mark-only.svg") %>" alt="Changelog Media" width="40" height="40"><% end %>
 
   <div class="episode-player_details">
-    <button class="episode-player_details_button js-player-play-button">
+    <%= link to: audio_url(@episode), role: "button", class: "episode-player_details_button js-player-play-button",
+      data: [podcast: @podcast.name, title: @episode.title, duration: @episode.duration] do %>
       <div class="episode-player_details_button_bg"></div>
       <div class="episode-player_details_button_icon">Play</div>
-    </button>
+    <% end %>
 
     <div class="episode-player_details_vwrap">
       <h2 class="episode-player_details_podcast">
@@ -23,19 +24,25 @@
   <form class="episode-player_slider">
     <div class="range-slider">
       <div class="range-slider_range_wrap">
-        <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="500"/>
+        <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="<%= @episode.duration %>"/>
         <div class="range-slider_range_track js-player-track"></div>
       </div>
       <span class="range-slider_below">
-        <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= @episode.duration %></span></output>
-        <a class="episode-player_toggle-nav" href="#" title="View Menu"></a>
+        <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= TimeView.duration(@episode.duration) %></span></output>
+        <a class="episode-player_toggle-nav js-nav-toggle-button" href="#" title="View Menu"></a>
       </span>
     </div>
   </form>
 
-  <nav class="episode-player_nav">
+  <nav class="episode-player_nav episode-player_nav--is-hidden js-nav">
     <ul class="episode-player_nav_list">
-      <li class="episode-player_nav_list_item episode-player_nav_list_item--show"><a href="#" title="<%= @podcast.name %> on Changelog.com"><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/ width="75" height="75"></a></li>
+      <li class="episode-player_nav_list_item episode-player_nav_list_item--show">
+        <%= link to: podcast_url(@conn, :show, @podcast.slug),
+          title: "#{@podcast.name} on Changelog.com",
+          alt: "#{@podcast.name} Podcast" do %>
+          <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/ width="75" height="75">
+        <% end %>
+      </li>
       <li class="episode-player_nav_list_item">
         <%= link "Share",
             title: "Share on Twitter",
@@ -45,11 +52,13 @@
             style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
       </li>
       <li class="episode-player_nav_list_item">
-        <%= link "Download",
-            title: "Download Episode",
-            to: "#",
-            target: "_blank",
-            style: "background-image: url('#{static_url(@conn, "/images/icon-download.svg")}')" %>
+        <a
+          href="<%= audio_url(@episode) %>"
+          title="Download Episode"
+          style="background-image: url('<%= static_url(@conn, "/images/icon-download.svg") %>')"
+          download>
+          Download
+        </a>
       </li>
       <li class="episode-player_nav_list_item">
         <%= link "Subscribe",

@@ -66,7 +66,7 @@ module.exports = [
     entry: [
       "normalize.css",
       "./web/static/app/embed.sass",
-      "./web/static/app/app.js"
+      "./web/static/app/embed.js"
     ],
     output: {
       path: "./priv/static",

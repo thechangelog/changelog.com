@@ -1,10 +1,10 @@
 import Turbolinks from "turbolinks";
 import { u } from "umbrellajs";
-import Player from "components/player";
+import OnsitePlayer from "components/onsite_player";
 import Slider from "components/slider";
 import Log from "components/log";
 
-const player = new Player("#player");
+const player = new OnsitePlayer("#player");
 const featured = new Slider(".featured_podcast");
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
