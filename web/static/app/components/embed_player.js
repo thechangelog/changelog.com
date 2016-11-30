@@ -2,6 +2,7 @@ import { u } from "umbrellajs";
 import Episode from "components/episode";
 import Log from "components/log";
 import ChangelogAudio from "components/audio";
+import gup from "components/gup";
 
 export default class EmbedPlayer {
   constructor(selector) {
@@ -55,7 +56,8 @@ export default class EmbedPlayer {
 
     Log.track("Embed Play", {
       podcast: this.episode.podcastName(),
-      episode: this.episode.title()
+      episode: this.episode.title(),
+      from: (gup("from") || "None")
     });
   }
 
