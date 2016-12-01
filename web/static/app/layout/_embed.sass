@@ -1,34 +1,42 @@
-// Body
-.embed
-    background: #1e242c
-
 // Variables
 $gutter: 2rem
 $height: 220px
 
+// Dark (Default) and Day themes
+body.embed
+    &,
+    .episode-player
+        background: #1e242c
+
+    &--day
+      &,
+      .episode-player
+          background: $white
+
 // Embedded Player
 .episode-player
-    background: #1e242c
     height: $height
     margin: 0 auto
     overflow: hidden
     position: relative
 
     &_site-link
+        background: url("/images/changelog-mark-only.svg") center no-repeat
+        display: block
+        height: 30px
         position: absolute
         right: $gutter / 2
+        text-indent: -9999px
         top: 1rem
+        width: 30px
+
+        body.embed--day &
+            background: url("/images/changelog-mark-dark.svg") center no-repeat
 
         @media (min-width: $smartphone)
             right: $gutter
-
-        img
-            margin-right: -3px
-            height: 30px
-            width: 30px
-            @media (min-width: $smartphone)
-                height: 40px
-                width: 40px
+            height: 40px
+            width: 40px
 
     &_toggle-nav
         background: url("/images/more.svg") center no-repeat
@@ -142,7 +150,7 @@ $height: 220px
         $button_spacing: $button_size + $gutter * 2
         display: table
         font-size: 10px
-        height: 135px
+        height: 130px
         margin-top: 1.5rem
         padding: 0 50px 0 (2rem + $gutter * 2)
         position: relative
@@ -170,16 +178,16 @@ $height: 220px
           &:hover
               .episode-player_details_button_bg
                   transform: scale(1.1)
-              // &:before
-              //     transform: scale(1.05)
 
           &_bg
               background-color: $green
               border-radius: $button_size
               display: block
               height: $button_size
+              position: relative
               transition: all 0.2s $ease-in-out-quint
               width: $button_size
+              z-index: 2
 
           &_icon
               background: url("/images/icon-play-white.svg") center no-repeat
@@ -188,6 +196,7 @@ $height: 220px
               right: 0
               bottom: 0
               left: 0
+              z-index: 2
 
               .episode-player.is-paused &
                   background-image: url("/images/icon-play-white.svg")
@@ -249,3 +258,6 @@ $height: 220px
 
             a
                 color: $white
+
+                body.embed--day &
+                    color: $black

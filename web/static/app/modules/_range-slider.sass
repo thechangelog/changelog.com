@@ -38,6 +38,9 @@ $range-label-width: 60px !default
     border: none
     margin: 8px 0
 
+    body.embed--day &
+        background: $light-grey
+
     .episode-player &
       height: 6px
 
@@ -124,9 +127,12 @@ $range-label-width: 60px !default
             color: $half-white
             font-size: 0.75em
 
+            body.embed--day &
+                color: $half-black
+
             .episode-player &
-              margin-left: 0
-              text-align: left
+                margin-left: 0
+                text-align: left
 
             & > b
                 color: $green
