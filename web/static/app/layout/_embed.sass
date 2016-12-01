@@ -16,10 +16,14 @@ $height: 220px
 
     &_site-link
         position: absolute
-        right: 1rem
+        right: $gutter / 2
         top: 1rem
 
+        @media (min-width: $smartphone)
+            right: $gutter
+
         img
+            margin-right: -3px
             height: 30px
             width: 30px
             @media (min-width: $smartphone)
@@ -28,17 +32,23 @@ $height: 220px
 
     &_toggle-nav
         background: url("/images/more.svg") center no-repeat
-        background-size: contain
+        background-size: 20px
         display: block
-        height: 10px
+        height: 30px
         width: 20px
         position: relative
         z-index: 99
 
+        .episode-player.nav-open &
+            background: url("/images/icon-close.svg") center no-repeat
+            background-size: 15px
+
     &_nav
+        +animate-zoom-out(".episode-player.nav-open &")
+        align-items: center
         background: rgba($black,0.99)
         display: flex
-        padding: 72px 0
+        padding: 0
         // Position
         position: absolute
         top: 0
@@ -46,15 +56,13 @@ $height: 220px
         bottom: 0
         left: 0
 
-        body.show-nav
-            display: flex
-
         &_list
             display: flex
-            height: 75px
-            margin: 0 auto
+            flex-wrap: wrap
             justify-content: space-around
             list-style-type: none
+            margin: 0 auto
+            padding: 0
             vertical-align: middle
 
             img
@@ -66,38 +74,68 @@ $height: 220px
                 border-right: 1px solid $dark-grey
                 display: flex
                 font-size: 0.8em
-                flex: 1 0 auto
+                flex: 1 0 33.333%
                 justify-content: space-around
                 line-height: 1.25em
                 min-width: 70px
                 padding: 0 0.75rem
                 text-align: center
 
+                // For desktop, let items be whatever width they want
+                @media (min-width: 404px)
+                    flex: 1 0 auto
+
+                // Since the "listen on" drops down, let's not show a border on subscribe
+                &:nth-child(4)
+                    @media (max-width: 403px)
+                        border-right: 0
+
                 a
+                    transition: opacity 0.2s ease-in-out
                     background: top center no-repeat
                     color: $white
                     display: block
                     padding-top: 30px
 
+                    &:hover
+                        opacity: 0.8
+
                 &--show
+                    display: none
                     padding: 0
+
+                    @media (min-width: 540px)
+                        display: block
+
                     a
                         padding-top: 0
 
-                &--listen-on a
-                    background: left center no-repeat
-                    background-size: 46px
-                    max-width: 145px
-                    min-height: 45px
-                    padding: 1em 0 1em 55px
-                    text-align: left
+                &--listen-on
+                    padding-top: 1rem
+
+                    @media (min-width: 404px)
+                        padding-top: 0
+
+                    @media (max-width: 404px)
+                        flex: none
+
+                    a
+                      background: left center no-repeat
+                      background-size: 46px
+                      max-width: 145px
+                      min-height: 45px
+                      padding: 1em 0 1em 55px
+                      text-align: left
 
                 &:first-child,
                 &:last-child
                     border-right: 0
 
-    &_nav--is-hidden
-      display: none
+    &_slider
+        padding: 0 $gutter / 2
+
+        @media (min-width: $smartphone)
+            padding: 0 $gutter
 
     &_details
         $button_size: 4rem
@@ -126,6 +164,9 @@ $height: 220px
           text-indent: -9999px
           top: 50%
 
+          @media (min-width: $smartphone)
+              left: $gutter
+
           &:hover
               .episode-player_details_button_bg
                   transform: scale(1.1)
@@ -148,8 +189,28 @@ $height: 220px
               bottom: 0
               left: 0
 
-          @media (min-width: $smartphone)
-              left: $gutter
+              .episode-player.is-paused &
+                  background-image: url("/images/icon-play-white.svg")
+              .episode-player.is-playing &
+                  background-image: url("/images/icon-pause-white.svg")
+              .episode-player.is-loading &
+                  $spin: spin 1s ease-in-out infinite
+                  background-image: url("/images/loading-white.svg")
+                  -webkit-animation: $spin
+                  -moz-animation: $spin
+                  animation: $spin
+
+                  &:after
+                      -webkit-animation: $spin
+                      -moz-animation: $spin
+                      animation: $spin
+                      content: ""
+                      background: url("/images/loading-2-white.svg") center no-repeat
+                      position: absolute
+                      top: 0
+                      right: 0
+                      bottom: 0
+                      left: 0
 
           &:before
               content: ''
@@ -162,6 +223,9 @@ $height: 220px
               top: 50%
               transition: all 0.2s ease-in-out
               width: 18rem
+
+              .episode-player.is-playing &
+                  transform: rotate(720deg)
 
               @each $podcast in $podcasts
                   .episode-player--#{$podcast} &

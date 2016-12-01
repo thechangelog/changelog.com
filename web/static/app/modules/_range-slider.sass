@@ -15,7 +15,7 @@ $range-label-width: 60px !default
     width: $range-handle-size
     height: $range-handle-size
     border: none
-    border-radius: 50%
+    border-radius: $range-handle-size
     background: $range-handle-color
     cursor: pointer
     transition: background .15s ease-in-out
@@ -37,6 +37,9 @@ $range-label-width: 60px !default
     border-radius: 1px
     border: none
     margin: 8px 0
+
+    .episode-player &
+      height: 6px
 
 .range-slider
     margin: 0
@@ -103,9 +106,9 @@ $range-label-width: 60px !default
         align-items: center
 
         .episode-player &
-            padding: 0.5rem 1.25rem 0.5rem 1rem
+            padding: 0 0 0 1rem
             @media (min-width: $smartphone)
-                padding: 0.5rem 1.25rem 0.5rem 2rem
+                padding: 0
 
         & > span
             display: none

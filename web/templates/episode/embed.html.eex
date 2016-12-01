@@ -34,7 +34,7 @@
     </div>
   </form>
 
-  <nav class="episode-player_nav episode-player_nav--is-hidden js-nav">
+  <nav class="episode-player_nav js-nav">
     <ul class="episode-player_nav_list">
       <li class="episode-player_nav_list_item episode-player_nav_list_item--show">
         <%= link to: podcast_url(@conn, :show, @podcast.slug),

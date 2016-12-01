@@ -32,7 +32,7 @@ export default class EmbedPlayer {
   }
 
   load() {
-    this.playButton.addClass("is-loading");
+    this.player.addClass("is-loading");
     // different from the onsite player:
     // these are both local since we have all info we need
     this.loadAudio();
@@ -72,12 +72,12 @@ export default class EmbedPlayer {
   play() {
     requestAnimationFrame(this.step.bind(this));
     this.audio.play();
-    this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
+    this.player.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
     this.audio.pause();
-    this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
+    this.player.addClass("is-paused").removeClass("is-playing is-loading");
   }
 
   togglePlayPause() {
@@ -89,7 +89,7 @@ export default class EmbedPlayer {
   }
 
   toggleNav() {
-    this.nav.toggleClass("episode-player_nav--is-hidden");
+    this.player.toggleClass("nav-open");
   }
 
   step() {
