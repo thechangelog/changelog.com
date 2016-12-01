@@ -17,7 +17,7 @@ defmodule Changelog.EpisodeController do
     render(conn, :show, podcast: podcast, episode: episode)
   end
 
-  def embed(conn, %{"podcast" => podcast, "slug" => slug}) do
+  def embed(conn, params = %{"podcast" => podcast, "slug" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: podcast)
 
     episode =
@@ -27,8 +27,8 @@ defmodule Changelog.EpisodeController do
       |> Episode.preload_all
 
     conn
-    |> put_layout("embed.html")
-    |> render(:embed, podcast: podcast, episode: episode)
+    |> put_layout(false)
+    |> render(:embed, podcast: podcast, episode: episode, theme: params["theme"] || "night")
   end
 
   def preview(conn, %{"podcast" => podcast, "slug" => slug}) do

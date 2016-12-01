@@ -3,6 +3,8 @@ defmodule Changelog.EpisodeView do
 
   alias Changelog.{AudioFile, Endpoint, PersonView, SharedView, PodcastView, SponsorView, TimeView}
 
+  import Changelog.Meta.{Title, Description}
+
   def audio_filename(episode) do
     AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
   end
@@ -36,7 +38,7 @@ defmodule Changelog.EpisodeView do
   def embed_code(episode), do: embed_code(episode, episode.podcast)
   def embed_code(episode, podcast) do
     embed_url = episode_url(Endpoint, :embed, podcast.slug, episode.slug)
-    ~s{<audio src="#{audio_url(episode)}" preload="none" class="changelog-episode" data-embed="#{embed_url}" controls></audio><script async src="//cdn.changelog.com/embed.js"></script>}
+    ~s{<audio src="#{audio_url(episode)}" preload="none" class="changelog-episode" data-src="#{embed_url}" data-theme="night" controls></audio><script async src="//cdn.changelog.com/embed.js"></script>}
   end
 
   def guid(episode) do
