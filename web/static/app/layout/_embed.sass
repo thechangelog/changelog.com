@@ -178,7 +178,7 @@ $height: 220px
               border-radius: $button_size
               display: block
               height: $button_size
-              transition: all 0.2s ease-in-out
+              transition: all 0.2s $ease-in-out-quint
               width: $button_size
 
           &_icon
@@ -220,12 +220,14 @@ $height: 220px
               margin-top: -9rem
               opacity: .2
               position: absolute
+              pointer-events: none
               top: 50%
-              transition: all 0.2s ease-in-out
+              transition: none
               width: 18rem
 
               .episode-player.is-playing &
-                  transform: rotate(720deg)
+                  transition: all 0.2s $ease-in-out-quint
+                  transform: rotate(360deg) translate3d(0, 0, 0)
 
               @each $podcast in $podcasts
                   .episode-player--#{$podcast} &
