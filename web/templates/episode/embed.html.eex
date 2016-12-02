@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/embed.css") %>">
 
   <%= if Mix.env == :prod do %>
-    <%= render("_head_scripts.html", assigns) %>
+    <%= render(LayoutView, "_head_scripts.html", assigns) %>
   <% end %>
   </head>
   <body class="embed embed--<%= @theme %>"><!--[if lt IE 8]>
