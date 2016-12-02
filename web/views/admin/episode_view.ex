@@ -8,6 +8,8 @@ defmodule Changelog.Admin.EpisodeView do
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
   def audio_url(episode), do: EpisodeView.audio_url(episode)
+  def embed_code(episode), do: EpisodeView.embed_code(episode)
+  def embed_code(episode, podcast), do: EpisodeView.embed_code(episode, podcast)
   def megabytes(episode), do: EpisodeView.megabytes(episode)
 
   def download_count(episode), do: episode.download_count |> round |> comma_separated

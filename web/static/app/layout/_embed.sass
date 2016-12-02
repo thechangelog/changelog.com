@@ -1,0 +1,268 @@
+// Variables
+$gutter: 2rem
+$height: 220px
+
+// Dark (Default) and Day themes
+body.embed
+    &,
+    .episode-player
+        background: #1e242c
+
+    &--day
+      &,
+      .episode-player
+          background: $white
+
+// Embedded Player
+.episode-player
+    height: $height
+    margin: 0 auto
+    overflow: hidden
+    position: relative
+
+    &_site-link
+        background: url("/images/changelog-mark-only.svg") center no-repeat
+        display: block
+        height: 30px
+        position: absolute
+        right: $gutter / 2
+        text-indent: -9999px
+        top: 1rem
+        width: 30px
+        z-index: 4
+
+        body.embed--day &
+            background: url("/images/changelog-mark-dark.svg") center no-repeat
+
+        @media (min-width: $smartphone)
+            right: $gutter
+            height: 40px
+            width: 40px
+
+    &_toggle-nav
+        background: url("/images/more.svg") center no-repeat
+        background-size: 20px
+        display: block
+        height: 30px
+        width: 20px
+        padding: 0
+        position: relative
+        z-index: 99
+
+        .episode-player.nav-open &
+            background: url("/images/icon-close.svg") center no-repeat
+            background-size: 15px
+
+    &_nav
+        +animate-zoom-out(".episode-player.nav-open &")
+        align-items: center
+        background: rgba($black,0.99)
+        display: flex
+        padding: 0
+        // Position
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        z-index: 10
+
+        &_list
+            display: flex
+            flex-wrap: wrap
+            justify-content: space-around
+            list-style-type: none
+            margin: 0 auto
+            padding: 0
+            vertical-align: middle
+
+            img
+                border: 1px solid $dark-grey
+
+            &_item
+                @extend %display-font
+                align-items: center
+                border-right: 1px solid $dark-grey
+                display: flex
+                font-size: 0.8em
+                flex: 1 0 33.333%
+                justify-content: space-around
+                line-height: 1.25em
+                min-width: 70px
+                padding: 0 0.75rem
+                text-align: center
+
+                // For desktop, let items be whatever width they want
+                @media (min-width: 404px)
+                    flex: 1 0 auto
+
+                // Since the "listen on" drops down, let's not show a border on subscribe
+                &:nth-child(4)
+                    @media (max-width: 403px)
+                        border-right: 0
+
+                a
+                    transition: opacity 0.2s ease-in-out
+                    background: top center no-repeat
+                    color: $white
+                    display: block
+                    padding-top: 30px
+
+                    &:hover
+                        opacity: 0.8
+
+                &--show
+                    display: none
+                    padding: 0
+
+                    @media (min-width: 540px)
+                        display: block
+
+                    a
+                        padding-top: 0
+
+                &--listen-on
+                    padding-top: 1rem
+
+                    @media (min-width: 404px)
+                        padding-top: 0
+
+                    @media (max-width: 404px)
+                        flex: none
+
+                    a
+                      background: left center no-repeat
+                      background-size: 46px
+                      max-width: 145px
+                      min-height: 45px
+                      padding: 1em 0 1em 55px
+                      text-align: left
+
+                &:first-child,
+                &:last-child
+                    border-right: 0
+
+    &_slider
+        padding: 0 $gutter / 2
+
+        @media (min-width: $smartphone)
+            padding: 0 $gutter
+
+    &_details
+        $button_size: 4rem
+        $button_spacing: $button_size + $gutter * 2
+        display: table
+        font-size: 10px
+        height: 130px
+        margin-top: 1.5rem
+        padding: 0 50px 0 (2rem + $gutter * 2)
+        position: relative
+
+        @media (min-width: $smartphone)
+            font-size: 12px
+            padding: 0 60px 0 $button_spacing
+
+        @media (min-width: $tablet - 150px)
+            font-size: 14px
+
+        &_button
+          display: block
+          left: $gutter / 2
+          margin-right: 2rem
+          margin-top: -($gutter)
+          padding: 0
+          position: absolute
+          text-indent: -9999px
+          top: 50%
+
+          @media (min-width: $smartphone)
+              left: $gutter
+
+          &:hover
+              .episode-player_details_button_bg
+                  transform: scale(1.1)
+
+          &_bg
+              background-color: $green
+              border-radius: $button_size
+              display: block
+              height: $button_size
+              position: relative
+              transition: all 0.2s $ease-in-out-quint
+              width: $button_size
+              z-index: 2
+
+          &_icon
+              background: url("/images/icon-play-white.svg") center no-repeat
+              position: absolute
+              top: 0
+              right: 0
+              bottom: 0
+              left: 0
+              z-index: 2
+
+              .episode-player.is-paused &
+                  background-image: url("/images/icon-play-white.svg")
+              .episode-player.is-playing &
+                  background-image: url("/images/icon-pause-white.svg")
+              .episode-player.is-loading &
+                  $spin: spin 1s ease-in-out infinite
+                  background-image: url("/images/loading-white.svg")
+                  -webkit-animation: $spin
+                  -moz-animation: $spin
+                  animation: $spin
+
+                  &:after
+                      -webkit-animation: $spin
+                      -moz-animation: $spin
+                      animation: $spin
+                      content: ""
+                      background: url("/images/loading-2-white.svg") center no-repeat
+                      position: absolute
+                      top: 0
+                      right: 0
+                      bottom: 0
+                      left: 0
+
+          &:before
+              content: ''
+              height: 18rem
+              left: 50%
+              margin-left: -9rem
+              margin-top: -9rem
+              opacity: .2
+              position: absolute
+              pointer-events: none
+              top: 50%
+              transition: none
+              width: 18rem
+
+              .episode-player.is-playing &
+                  transition: all 0.2s $ease-in-out-quint
+                  transform: rotate(360deg) translate3d(0, 0, 0)
+
+              @each $podcast in $podcasts
+                  .episode-player--#{$podcast} &
+                      background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)
+
+        &_vwrap
+            display: table-cell
+            vertical-align: middle
+            position: relative
+            z-index: 3
+
+        &_podcast
+            @extend %display-font
+            color: $green
+            font-size: 1.25em
+            margin: 0 0 0.5em
+
+        &_title
+            font-size: 1.8em
+            margin: 0
+
+            a
+                color: $white
+
+                body.embed--day &
+                    color: $black

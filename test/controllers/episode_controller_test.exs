@@ -1,7 +1,7 @@
 defmodule Changelog.EpisodeControllerTest do
   use Changelog.ConnCase
 
-  test "getting a published podcast episode page" do
+  test "getting a published podcast episode page and its embed" do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
     insert(:episode_host, episode: e)
@@ -9,6 +9,9 @@ defmodule Changelog.EpisodeControllerTest do
     insert(:episode_sponsor, episode: e)
 
     conn = get(build_conn, episode_path(build_conn, :show, p.slug, e.slug))
+    assert html_response(conn, 200) =~ e.title
+
+    conn = get(build_conn, episode_path(build_conn, :embed, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
   end
 
