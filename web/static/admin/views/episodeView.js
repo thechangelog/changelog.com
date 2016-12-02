@@ -14,6 +14,10 @@ export default class EpisodeView {
       $(e.trigger).popup({variation: "inverted", content: "Copied!"}).popup("show");
       e.clearSelection();
     });
+
+    clipboard.on("error", function(e) {
+      console.log(e);
+    });
   }
 
   new() {
