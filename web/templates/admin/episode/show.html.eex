@@ -19,6 +19,12 @@
 </div>
 
 <div class="ui basic segment">
+  <h2 class="ui dividing header">Embed Code</h2>
+  <div class="ui fluid action input">
+    <input type="text" value="<%= embed_code(@episode) %>">
+    <button class="ui basic icon clipboard button"><i class="clipboard icon"></i></button>
+  </div>
+
 <%= if Enum.any?(@stats) do %>
   <h2 class="ui dividing header">Demographics</h2>
 

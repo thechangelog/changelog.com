@@ -1,7 +1,21 @@
 import SearchWidget from "components/searchWidget";
 import CalendarField from "components/calendarField";
+import Clipboard from "clipboard";
 
 export default class EpisodeView {
+  show() {
+    let clipboard = new Clipboard(".clipboard.button", {
+      target: function(trigger) {
+        return trigger.previousElementSibling;
+      }
+    });
+
+    clipboard.on("success", function(e) {
+      $(e.trigger).popup({variation: "inverted", content: "Copied!"}).popup("show");
+      e.clearSelection();
+    });
+  }
+
   new() {
     new SearchWidget("person", "episode", "hosts");
     new SearchWidget("person", "episode", "guests");
