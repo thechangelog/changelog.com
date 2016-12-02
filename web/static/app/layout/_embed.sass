@@ -29,6 +29,7 @@ body.embed
         text-indent: -9999px
         top: 1rem
         width: 30px
+        z-index: 4
 
         body.embed--day &
             background: url("/images/changelog-mark-dark.svg") center no-repeat
@@ -246,6 +247,8 @@ body.embed
         &_vwrap
             display: table-cell
             vertical-align: middle
+            position: relative
+            z-index: 3
 
         &_podcast
             @extend %display-font

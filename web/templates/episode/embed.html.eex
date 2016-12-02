@@ -49,7 +49,7 @@
           </div>
           <span class="range-slider_below">
             <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= TimeView.duration(@episode.duration) %></span></output>
-            <a class="episode-player_toggle-nav js-nav-toggle-button" href="#" title="View Menu"></a>
+            <button class="episode-player_toggle-nav js-nav-toggle-button" title="View Menu"></button>
           </span>
         </div>
       </form>
