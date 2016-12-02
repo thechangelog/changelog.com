@@ -28,6 +28,7 @@ defmodule Changelog.EpisodeController do
 
     conn
     |> put_layout(false)
+    |> delete_resp_header("x-frame-options")
     |> render(:embed, podcast: podcast, episode: episode, theme: params["theme"] || "night")
   end
 
