@@ -19,6 +19,10 @@ export default class ChangelogAudio {
     this.audio.load();
   }
 
+  onEnd(callback) {
+    this.runOnce("ended", callback);
+  }
+
   canPlay() {
     return this.hasAudio;
   }
@@ -34,6 +38,40 @@ export default class ChangelogAudio {
 
   playing() {
     return this.audio.duration > 0 && !this.audio.paused;
+  }
+
+  willLoop() {
+    return this.audio.loop;
+  }
+
+  loop() {
+    this.audio.loop = true;
+  }
+
+  volume() {
+    return this.audio.volume;
+  }
+
+  setVolume(value) {
+    if (value < 0) return false;
+
+    if (value > 1) {
+      this.audio.volume = value / 100;
+    } else {
+      this.audio.volume = value;
+    }
+  }
+
+  isMuted() {
+    return this.audio.muted;
+  }
+
+  mute() {
+    this.audio.muted = true;
+  }
+
+  unmute() {
+    this.audio.muted = false;
   }
 
   currentSeek() {

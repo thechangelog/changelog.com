@@ -2,6 +2,7 @@ import { u } from "umbrellajs";
 import Episode from "components/episode";
 import Log from "components/log";
 import ChangelogAudio from "components/audio";
+import Embedly from "components/embedly";
 import gup from "components/gup";
 
 export default class EmbedPlayer {
@@ -10,6 +11,7 @@ export default class EmbedPlayer {
     this.audioLoaded = false;
     this.attachUI(selector);
     this.attachEvents();
+    this.embedly = new Embedly(this);
   }
 
   attachUI(selector) {
@@ -25,10 +27,11 @@ export default class EmbedPlayer {
   }
 
   attachEvents() {
-    this.playButton.handle("click", () => { if (this.isLoaded()) { this.togglePlayPause() } else { this.load() }; });
-    this.navButton.handle("click", ()  => { this.toggleNav() });
+    this.playButton.handle("click", () => { this.isLoaded() ? this.togglePlayPause() : this.load(); });
+    this.navButton.handle("click", ()  => { this.toggleNav(); });
     this.scrubber.on("input",  (event) => { if (this.isLoaded()) this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { if (this.isLoaded()) this.scrubEnd(event.target.value); });
+    this.audio.onEnd((event) => { console.log("onEnd"); this.embedly.emit("ended"); });
   }
 
   load() {
@@ -51,7 +54,7 @@ export default class EmbedPlayer {
     this.episode = new Episode({
       podcast: this.playButton.data("podcast"),
       title: this.playButton.data("title"),
-      duration: this.playButton.data("title")
+      duration: this.playButton.data("duration")
     });
 
     Log.track("Embed Play", {
@@ -73,11 +76,13 @@ export default class EmbedPlayer {
     requestAnimationFrame(this.step.bind(this));
     this.audio.play();
     this.player.addClass("is-playing").removeClass("is-paused is-loading");
+    this.embedly.emit("play");
   }
 
   pause() {
     this.audio.pause();
     this.player.addClass("is-paused").removeClass("is-playing is-loading");
+    this.embedly.emit("pause");
   }
 
   togglePlayPause() {
@@ -92,8 +97,32 @@ export default class EmbedPlayer {
     this.player.toggleClass("nav-open");
   }
 
+  loop() {
+    this.audio.loop();
+  }
+
+  willLoop() {
+    return this.audio.willLoop();
+  }
+
+  mute() {
+    this.audio.mute();
+  }
+
+  unmute() {
+    this.audio.unmute();
+  }
+
+  isMuted() {
+    return this.audio.isMuted();
+  }
+
+  currentTime() {
+    return Math.round(this.audio.currentSeek() || 0);
+  }
+
   step() {
-    const seek = Math.round(this.audio.currentSeek() || 0);
+    const seek = this.currentTime();
     const percentComplete = seek / this.episode.duration() * 100;
 
     if (!this.isScrubbing) {
@@ -104,6 +133,7 @@ export default class EmbedPlayer {
 
     if (this.isPlaying()) {
       requestAnimationFrame(this.step.bind(this));
+      this.embedly.emit("timeupdate", {seconds: seek, duration: this.episode.duration()});
     }
   }
 
