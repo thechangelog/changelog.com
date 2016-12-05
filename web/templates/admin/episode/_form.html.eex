@@ -202,7 +202,9 @@
   </div>
 
   <div class="field">
-    <%= label f, :audio_file %>
+    <%= label(f, :audio_file) do %>
+      Audio File <%= help_icon("Upload after Slug, Publish Time, and Title are finalized so correct ID3 tags get written.") %>
+    <% end %>
 
     <%= if f.data.audio_file  do %>
       <div class="ui raised segment items js-audio-file">
@@ -221,7 +223,7 @@
       </div>
     <% end %>
 
-    <%= file_input f, :audio_file %>
+    <%= file_input(f, :audio_file) %>
   </div>
 
   <div class="two fields">
