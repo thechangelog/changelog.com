@@ -15,6 +15,7 @@ export default class ChangelogAudio {
       this.runOnce("canplaythrough", callback);
     }
 
+    this.audio.type = "audio/mpeg";
     this.audio.src = file;
     this.audio.load();
   }

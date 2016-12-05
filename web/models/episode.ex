@@ -114,7 +114,7 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_guests)
     |> cast_assoc(:episode_sponsors)
     |> cast_assoc(:episode_channels)
-    |> derive_bytes_and_duration(params)
+    |> derive_bytes_and_duration
   end
 
   def preload_all(episode) do
@@ -175,17 +175,13 @@ defmodule Changelog.Episode do
     |> Repo.update!
   end
 
-  defp derive_bytes_and_duration(changeset, params) do
+  defp derive_bytes_and_duration(changeset) do
     if new_audio_file = get_change(changeset, :audio_file) do
-      # adding the album art to the mp3 file throws off ffmpeg's duration
-      # detection (bitrate * filesize). So, we use the raw_file to get accurate
-      # duration and the tagged_file to get accurate bytes
-      raw_file = params["audio_file"].path
       tagged_file = Changelog.EpisodeView.audio_local_path(%{changeset.data | audio_file: new_audio_file})
 
       case File.stat(tagged_file) do
         {:ok, stats} ->
-          seconds = extract_duration_seconds(raw_file)
+          seconds = extract_duration_seconds(tagged_file)
           change(changeset, bytes: stats.size, duration: seconds)
         {:error, _} -> changeset
       end

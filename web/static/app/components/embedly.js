@@ -74,7 +74,7 @@ export default class Embedly {
         this.send("getMuted", this.player.isMuted(), message.listener);
         break;
       case "getDuration":
-        this.send("getDuration", this.player.episode.duration(), message.listener);
+        this.send("getDuration", this.player.episodeDuration(), message.listener);
         break;
       case "setCurrentTime":
         this.player.scrubEnd(message.value);

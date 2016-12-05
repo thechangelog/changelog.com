@@ -31,7 +31,7 @@ export default class EmbedPlayer {
     this.navButton.handle("click", ()  => { this.toggleNav(); });
     this.scrubber.on("input",  (event) => { if (this.isLoaded()) this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { if (this.isLoaded()) this.scrubEnd(event.target.value); });
-    this.audio.onEnd((event) => { console.log("onEnd"); this.embedly.emit("ended"); });
+    this.audio.onEnd((event) => { this.embedly.emit("ended"); });
   }
 
   load() {
@@ -46,6 +46,13 @@ export default class EmbedPlayer {
     const audioUrl = this.playButton.attr("href");
     this.audio.load(audioUrl, () => {
       this.audioLoaded = true;
+
+      Log.track("Embed Play", {
+        podcast: this.episode.podcastName(),
+        episode: this.episode.title(),
+        from: (gup("referrer") || "None")
+      });
+
       this.play();
     });
   }
@@ -55,12 +62,6 @@ export default class EmbedPlayer {
       podcast: this.playButton.data("podcast"),
       title: this.playButton.data("title"),
       duration: this.playButton.data("duration")
-    });
-
-    Log.track("Embed Play", {
-      podcast: this.episode.podcastName(),
-      episode: this.episode.title(),
-      from: (gup("from") || "None")
     });
   }
 
@@ -117,13 +118,17 @@ export default class EmbedPlayer {
     return this.audio.isMuted();
   }
 
+  episodeDuration() {
+    return this.episode.duration();
+  }
+
   currentTime() {
     return Math.round(this.audio.currentSeek() || 0);
   }
 
   step() {
     const seek = this.currentTime();
-    const percentComplete = seek / this.episode.duration() * 100;
+    const percentComplete = seek / this.episodeDuration() * 100;
 
     if (!this.isScrubbing) {
       this.current.text(Episode.formatTime(seek));
@@ -133,13 +138,13 @@ export default class EmbedPlayer {
 
     if (this.isPlaying()) {
       requestAnimationFrame(this.step.bind(this));
-      this.embedly.emit("timeupdate", {seconds: seek, duration: this.episode.duration()});
+      this.embedly.emit("timeupdate", {seconds: seek, duration: this.episodeDuration()});
     }
   }
 
   scrub(to) {
     this.isScrubbing = true;
-    const percentComplete = to / this.episode.duration() * 100;
+    const percentComplete = to / this.episodeDuration() * 100;
     this.current.text(Episode.formatTime(to));
     this.track.first().style.width = `${percentComplete}%`;
   }
@@ -147,9 +152,9 @@ export default class EmbedPlayer {
   scrubEnd(to) {
     this.isScrubbing = false;
     this.audio.seek(to, () => {
-      this.playButton.addClass("is-loading");
+      this.player.addClass("is-loading");
     }, () => {
-      this.playButton.removeClass("is-loading");
+      this.player.removeClass("is-loading");
     });
   }
 }
