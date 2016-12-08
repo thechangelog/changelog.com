@@ -94,6 +94,15 @@ export default class ChangelogAudio {
     this.audio.currentTime = to;
   }
 
+  changeSpeed() {
+    if (this.audio.playbackRate === 2) {
+      this.audio.playbackRate = 1;
+      return;
+    }
+
+    this.audio.playbackRate += 0.5;
+  }
+
   runOnce(eventName, fn) {
     let listener = () => {
       fn.call();
