@@ -12,6 +12,11 @@
 
 alias Changelog.Repo
 alias Changelog.{Episode, Person, Podcast}
+# Clean slate
+
+Repo.delete_all Episode
+Repo.delete_all Podcast
+Repo.delete_all Person
 
 # People
 
