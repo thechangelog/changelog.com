@@ -39,8 +39,8 @@ export default class Embedly {
 
   receive(event) {
     const message = JSON.parse(event.data);
+    if (message.context !== "player.js") return false;
     if (!message.method) return false;
-    if (!message.context == "player.js") return false;
 
     switch (message.method) {
       case "play":
@@ -118,6 +118,7 @@ export default class Embedly {
   }
 
   emit(event, value) {
+    // console.log("emit", event, value, this.listeners);
     if (!this.listeners.hasOwnProperty(event)) return false;
 
     for (var i = 0; i < this.listeners[event].length; i++) {

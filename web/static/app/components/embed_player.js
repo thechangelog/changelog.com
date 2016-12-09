@@ -11,6 +11,7 @@ export default class EmbedPlayer {
     this.audioLoaded = false;
     this.attachUI(selector);
     this.attachEvents();
+    this.loadDetails();
     this.embedly = new Embedly(this);
   }
 
@@ -31,15 +32,12 @@ export default class EmbedPlayer {
     this.navButton.handle("click", ()  => { this.toggleNav(); });
     this.scrubber.on("input",  (event) => { if (this.isLoaded()) this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { if (this.isLoaded()) this.scrubEnd(event.target.value); });
-    this.audio.onEnd((event) => { this.embedly.emit("ended"); });
+    this.audio.onEnd((event) => { console.log("onEnd"); this.embedly.emit("ended"); });
   }
 
   load() {
     this.player.addClass("is-loading");
-    // different from the onsite player:
-    // these are both local since we have all info we need
     this.loadAudio();
-    this.loadDetails();
   }
 
   loadAudio() {
@@ -50,7 +48,7 @@ export default class EmbedPlayer {
       Log.track("Embed Play", {
         podcast: this.episode.podcastName(),
         episode: this.episode.title(),
-        from: (gup("referrer") || "None")
+        referrer: (gup("referrer") || "None")
       });
 
       this.play();
