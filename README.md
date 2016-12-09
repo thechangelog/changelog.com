@@ -33,7 +33,8 @@ Absolutely! Please remember that we have a product roadmap in mind so [open an i
 Assuming you're on macOS:
 
   1. `./script/setup`
-  2. `mix ecto.create && mix ecto.migrate`
+  2. `mix ecto.setup`
   3. `mix phoenix.server`
 
-Now visit [`localhost:4000`](http://localhost:4000) in your browser. You'll probably want some seed data, but we don't have any. _(That'd make a good PR!)_
+Now visit [`localhost:4000`](http://localhost:4000) in your browser.
+The database contains some seed data you can start with.
