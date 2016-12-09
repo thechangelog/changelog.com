@@ -11,16 +11,18 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Changelog.Repo
-alias Changelog.{Episode, Person, Podcast}
+alias Changelog.{Episode, Person, Podcast, PodcastHost}
+
 # Clean slate
 
 Repo.delete_all Episode
+Repo.delete_all PodcastHost
 Repo.delete_all Podcast
 Repo.delete_all Person
 
 # People
 
-Repo.insert! %Person{
+adamstac = Repo.insert! %Person{
   name: "Adam Stacoviak",
   email: "adam@stacoviak.com",
   handle: "adamstac",
@@ -31,7 +33,7 @@ Repo.insert! %Person{
   admin: true
 }
 
-Repo.insert! %Person{
+jerodsanto = Repo.insert! %Person{
   name: "Jerod Santo",
   email: "jerod.santo@gmail.com",
   handle: "jerodsanto",
@@ -42,8 +44,56 @@ Repo.insert! %Person{
   admin: true
 }
 
-# Podcasts
+carlisia = Repo.insert! %Person{
+  name: "Carlisia Pinto",
+  email: "carlisia@changelog.com",
+  handle: "carlisia",
+  twitter_handle: "carlisia",
+  github_handle: "carlisia",
+  bio: "Distributing all your systems @fastly • #golang dev • @golangbridge • @remotemeetupGo • co-host of @GoTimeFM • runner",
+  website: "https://keybase.io/carlisia"
+}
 
+erikstmartin = Repo.insert! %Person{
+  name: "Erik St. Martin",
+  email: "erikstmartin@changelog.com",
+  handle: "erikstmartin",
+  twitter_handle: "erikstmartin",
+  github_handle: "erikstmartin",
+  bio: "@GopherCon Organizer, Co-author Go in Action, Co-founder @GopherAcademy, Co-host @gotimefm, Kubernetes / Container fanatic"
+}
+
+bketelsen = Repo.insert! %Person{
+  name: "Brian Ketelsen",
+  email: "bketelsen@gmail.com",
+  handle: "bketelsen",
+  twitter_handle: "bketelsen",
+  github_handle: "bketelsen",
+  bio: "@GopherCon Organizer, Co-author Go in Action, Co-founder @GopherAcademy, Co-host @gotimefm, Kubernetes / Container fanatic",
+  website: "http://www.brianketelsen.com"
+}
+
+nayafia = Repo.insert! %Person{
+  name: "Nadia Eghbal",
+  email: "nadia.eghbal@gmail.com",
+  handle: "nayafia",
+  twitter_handle: "nayafia",
+  github_handle: "nayafia",
+  bio: "Subtle + overt = subvert",
+  website: "http://nadiaeghbal.com/"
+}
+
+mikeal = Repo.insert! %Person{
+  name: "Mikeal Rogers",
+  email: "mikeal.rogers@gmail.com",
+  handle: "mikeal",
+  twitter_handle: "mikeal",
+  github_handle: "mikeal",
+  bio: "Community Organizer @ Node.js Foundation. Creator of request, NodeConf, lots of thing. Co-host of the RFC podcast.",
+  website: "http://mikealrogers.com/"
+}
+
+# Podcasts
 changelog = Repo.insert! %Podcast{
   name: "The Changelog",
   slug: "podcast",
@@ -52,7 +102,17 @@ changelog = Repo.insert! %Podcast{
   twitter_handle: "changelog",
   itunes_url: "https://itunes.apple.com/us/podcast/the-changelog/id341623264?mt=2",
   ping_url: "https://github.com/thechangelog/ping",
-  schedule_note: "New show every Friday!"
+  schedule_note: "New show every Friday!",
+  podcast_hosts: [
+    %PodcastHost{
+      position: 1,
+      person: adamstac
+    },
+    %PodcastHost{
+      position: 2,
+      person: jerodsanto
+    }
+  ]
 }
 
 founderstalk = Repo.insert! %Podcast{
@@ -60,7 +120,13 @@ founderstalk = Repo.insert! %Podcast{
   slug: "founderstalk",
   status: 2,
   description: "An interview podcast, featuring in-depth, one on one, conversations with Founders.",
-  itunes_url: "https://itunes.apple.com/us/podcast/founders-talk/id396900791?mt=2"
+  itunes_url: "https://itunes.apple.com/us/podcast/founders-talk/id396900791?mt=2",
+  podcast_hosts: [
+    %PodcastHost{
+      position: 1,
+      person: adamstac
+    }
+  ]
 }
 
 gotime = Repo.insert! %Podcast{
@@ -72,7 +138,21 @@ gotime = Repo.insert! %Podcast{
   twitter_handle: "gotimefm",
   itunes_url: "https://itunes.apple.com/us/podcast/go-time/id1120964487?mt=2",
   ping_url: "https://github.com/gotimefm/ping",
-  schedule_note: "Records LIVE every Thursday at 12pm PST!"
+  schedule_note: "Records LIVE every Thursday at 12pm PST!",
+  podcast_hosts: [
+    %PodcastHost{
+      position: 1,
+      person: erikstmartin
+    },
+    %PodcastHost{
+      position: 2,
+      person: carlisia
+    },
+    %PodcastHost{
+      position: 3,
+      person: bketelsen
+    }
+  ]
 }
 
 rfc = Repo.insert! %Podcast{
@@ -80,7 +160,17 @@ rfc = Repo.insert! %Podcast{
   slug: "rfc",
   status: 2,
   description: "Exploring different perspectives in open source sustainability. It's about the human side of code.",
-  itunes_url: "https://itunes.apple.com/us/podcast/request-for-commits/id1141345001?mt=2"
+  itunes_url: "https://itunes.apple.com/us/podcast/request-for-commits/id1141345001?mt=2",
+  podcast_hosts: [
+    %PodcastHost{
+      position: 1,
+      person: nayafia
+    },
+    %PodcastHost{
+      position: 2,
+      person: mikeal
+    }
+  ]
 }
 
 # Podcast Episodes
