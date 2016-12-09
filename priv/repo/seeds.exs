@@ -178,20 +178,6 @@ changelog = Repo.insert! %Podcast{
   ]
 }
 
-founderstalk = Repo.insert! %Podcast{
-  name: "Founders Talk",
-  slug: "founderstalk",
-  status: 2,
-  description: "An interview podcast, featuring in-depth, one on one, conversations with Founders.",
-  itunes_url: "https://itunes.apple.com/us/podcast/founders-talk/id396900791?mt=2",
-  podcast_hosts: [
-    %PodcastHost{
-      position: 1,
-      person: adamstac
-    }
-  ]
-}
-
 gotime = Repo.insert! %Podcast{
   name: "Go Time",
   slug: "gotime",
@@ -232,6 +218,20 @@ rfc = Repo.insert! %Podcast{
     %PodcastHost{
       position: 2,
       person: mikeal
+    }
+  ]
+}
+
+founderstalk = Repo.insert! %Podcast{
+  name: "Founders Talk",
+  slug: "founderstalk",
+  status: 2,
+  description: "An interview podcast, featuring in-depth, one on one, conversations with Founders.",
+  itunes_url: "https://itunes.apple.com/us/podcast/founders-talk/id396900791?mt=2",
+  podcast_hosts: [
+    %PodcastHost{
+      position: 1,
+      person: adamstac
     }
   ]
 }
