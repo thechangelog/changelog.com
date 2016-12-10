@@ -20,8 +20,12 @@ export default class ChangelogAudio {
     this.audio.load();
   }
 
+  onTimeUpdate(callback) {
+    this.run("timeupdate", callback);
+  }
+
   onEnd(callback) {
-    this.runOnce("ended", callback);
+    this.run("ended", callback);
   }
 
   canPlay() {
@@ -45,8 +49,8 @@ export default class ChangelogAudio {
     return this.audio.loop;
   }
 
-  loop() {
-    this.audio.loop = true;
+  loop(bool) {
+    this.audio.loop = bool;
   }
 
   volume() {
@@ -92,6 +96,10 @@ export default class ChangelogAudio {
     }
 
     this.audio.currentTime = to;
+  }
+
+  run(eventName, fn) {
+    this.audio.addEventListener(eventName, fn);
   }
 
   runOnce(eventName, fn) {

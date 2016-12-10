@@ -32,7 +32,8 @@ export default class EmbedPlayer {
     this.navButton.handle("click", ()  => { this.toggleNav(); });
     this.scrubber.on("input",  (event) => { if (this.isLoaded()) this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { if (this.isLoaded()) this.scrubEnd(event.target.value); });
-    this.audio.onEnd((event) => { console.log("onEnd"); this.embedly.emit("ended"); });
+    this.audio.onEnd((event) => { this.embedly.emit("ended"); });
+    this.audio.onTimeUpdate((event) => { this.embedly.emit("timeupdate", {seconds: this.currentTime(), duration: this.episodeDuration()}); });
   }
 
   load() {
@@ -96,8 +97,8 @@ export default class EmbedPlayer {
     this.player.toggleClass("nav-open");
   }
 
-  loop() {
-    this.audio.loop();
+  loop(bool) {
+    this.audio.loop(bool);
   }
 
   willLoop() {
@@ -136,7 +137,6 @@ export default class EmbedPlayer {
 
     if (this.isPlaying()) {
       requestAnimationFrame(this.step.bind(this));
-      this.embedly.emit("timeupdate", {seconds: seek, duration: this.episodeDuration()});
     }
   }
 

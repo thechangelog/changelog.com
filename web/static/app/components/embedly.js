@@ -53,7 +53,7 @@ export default class Embedly {
         this.send("getPaused", !this.player.isPlaying(), message.listener);
         break;
       case "setLoop":
-        this.player.loop();
+        this.player.loop(message.value);
         break;
       case "getLoop":
         this.send("getLoop", this.player.willLoop(), message.listener);
@@ -118,7 +118,6 @@ export default class Embedly {
   }
 
   emit(event, value) {
-    // console.log("emit", event, value, this.listeners);
     if (!this.listeners.hasOwnProperty(event)) return false;
 
     for (var i = 0; i < this.listeners[event].length; i++) {
