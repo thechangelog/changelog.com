@@ -63,7 +63,9 @@
   </div>
 
   <div class="field <%= error_class(f, :schedule_note) %>">
-    <%= label f, :schedule_note %>
+    <%= label(f, :schedule_note) do %>
+      Schedule Note <%= help_icon("Markdown supported.") %>
+    <% end %>
     <%= text_input f, :schedule_note, placeholder: "New show every Friday!" %>
     <%= error_message(f, :schedule_note) %>
   </div>
