@@ -61,6 +61,11 @@ export default class OnsitePlayer {
         event.preventDefault();
         this.togglePlayPause();
       }
+
+      // 83 == s
+      if (event.keyCode == 83 && !u(event.target).is("input, textarea")) {
+        this.changeSpeed();
+      }
     });
   }
 
@@ -93,6 +98,10 @@ export default class OnsitePlayer {
     } else {
       this.play();
     }
+  }
+
+  changeSpeed() {
+    this.audio.changeSpeed();
   }
 
   seekBy(to) {
