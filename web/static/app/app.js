@@ -19,7 +19,12 @@ u(document).on("click", "[data-play]", function(event) {
   if (player.canPlay()) {
     event.preventDefault();
     const clicked = u(event.target).closest("a, button");
-    player.load(clicked.attr("href"), clicked.data("play"));
+    if(player.currentlyLoaded === clicked.data("play")) {
+      player.togglePlayPause();
+    } else {
+      player.load(clicked.attr("href"), clicked.data("play"));
+    }
+
   }
 });
 
