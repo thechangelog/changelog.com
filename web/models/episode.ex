@@ -99,7 +99,7 @@ defmodule Changelog.Episode do
   end
 
   def search(query, search_term) do
-    from e in __MODULE__,
+    from e in query,
       where: ilike(e.title, ^"%#{search_term}%") or ilike(e.summary, ^"%#{search_term}%") or ilike(e.notes, ^"%#{search_term}%")
   end
 

@@ -13,13 +13,17 @@
     </div>
 
     <%= if @query do %>
-      <h2>Results for "<%= @query %>"</h2>
+      <%= if @results.count > 0 do %>
+        <h2><%= pluralize(@results.count, "result", "results") %> for "<%= @query %>"</h2>
 
-      <%= if Enum.any?(@results.episodes) do %>
-        <h3>Episodes</h3>
-        <%= for episode <- @results.episodes do %>
-          <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
+        <%= if Enum.any?(@results.episodes) do %>
+          <h3>Episodes</h3>
+          <%= for episode <- @results.episodes do %>
+            <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
+          <% end %>
         <% end %>
+      <% else %>
+        <h2>There are no results for "<%= @query %>"</h2>
       <% end %>
     <% end %>
   </div>

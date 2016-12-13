@@ -19,6 +19,7 @@ defmodule Changelog.SearchController do
           |> Episode.preload_guests
 
         results = %{
+          count: length(episodes),
           episodes: episodes
         }
 
