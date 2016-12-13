@@ -1,16 +1,31 @@
 defmodule Changelog.SearchController do
   use Changelog.Web, :controller
 
-  # alias Changelog.{Episode, Podcast, Post}
+  alias Changelog.{Episode}
 
   require Logger
 
-  # TODO: Cases when there is …
-  # - no query
-  # - a query and results
-  # - a query and no results
   def search(conn, params) do
-    query = params["q"]
-    render(conn, "search.html", query: query)
+    case params do
+      %{"q" => query} ->
+        episodes =
+          Episode
+          |> Episode.published
+          |> Episode.search(query)
+          |> Episode.newest_first
+          |> Episode.limit(10)
+          |> Repo.all
+          |> Episode.preload_podcast
+          |> Episode.preload_guests
+
+        results = %{
+          episodes: episodes
+        }
+
+        render(conn, "search.html", query: query, results: results)
+
+      _else ->
+        render(conn, "search.html", query: nil, results: nil)
+    end
   end
 end

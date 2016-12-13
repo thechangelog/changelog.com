@@ -11,5 +11,16 @@
         </div>
       </form>
     </div>
+
+    <%= if @query do %>
+      <h2>Results for "<%= @query %>"</h2>
+
+      <%= if Enum.any?(@results.episodes) do %>
+        <h3>Episodes</h3>
+        <%= for episode <- @results.episodes do %>
+          <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
 </section>
