@@ -1,0 +1,15 @@
+<section id="search">
+  <div class="container container--has-padding container--skinny">
+    <div class="content_body">
+      <form action="<%= search_path(@conn, :search) %>" method="get" class="form">
+        <div class="form_element_wrap">
+          <label for="name">Search for …</label>
+          <div class="form_element search-box">
+            <input name="q" type="text" value="<%= @query %>" />
+            <input type="submit" value="Search">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

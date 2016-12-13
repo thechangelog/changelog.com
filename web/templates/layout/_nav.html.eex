@@ -64,6 +64,7 @@
           <h3 class="navigation-tray-side-nav_heading">More Info</h3>
           <%= link "Subscribe", to: page_path(@conn, :subscribe) %>
           <%= link "Sponsorship", to: page_path(@conn, :sponsorship) %>
+          <%= link "Search", to: search_path(@conn, :search) %>
           <%= link "Community", to: page_path(@conn, :community) %>
           <%= link "About", to: page_path(@conn, :about) %>
           <%= link "Contact", to: page_path(@conn, :contact) %>
