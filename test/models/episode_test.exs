@@ -67,4 +67,41 @@ defmodule Changelog.EpisodeTest do
       assert episode.reach_count == 4+45
     end
   end
+
+  describe "search" do
+    setup do
+      {:ok, phoenix: insert(:published_episode, slug: "phoenix-episode", title: "Phoenix", summary: "A web framework for Elixir", notes: "Chris McCord"),
+            rails: insert(:published_episode, slug: "rails-episode", title: "Rails", summary: "A web framework for Ruby", notes: "DHH") }
+    end
+
+    test "finds episode by matching title" do
+      episode_titles =
+        Episode
+        |> Episode.search("Rails")
+        |> Repo.all
+        |> Enum.map(&(&1.title))
+
+      assert episode_titles == ["Rails"]
+    end
+
+    test "finds episode by matching summary" do
+      episode_titles =
+        Episode
+        |> Episode.search("Elixir")
+        |> Repo.all
+        |> Enum.map(&(&1.title))
+
+      assert episode_titles == ["Phoenix"]
+    end
+
+    test "finds episode by matching notes" do
+      episode_titles =
+        Episode
+        |> Episode.search("McCord")
+        |> Repo.all
+        |> Enum.map(&(&1.title))
+
+      assert episode_titles == ["Phoenix"]
+    end
+  end
 end
