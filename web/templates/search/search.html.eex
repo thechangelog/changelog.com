@@ -17,11 +17,23 @@
         <h2><%= pluralize(@results.count, "result", "results") %> for "<%= @query %>"</h2>
 
         <%= if Enum.any?(@results.episodes) do %>
-          <h3>Episodes</h3>
-          <%= for episode <- @results.episodes do %>
-            <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
-          <% end %>
+          <section class="search-results">
+            <h3>Episodes</h3>
+            <%= for episode <- @results.episodes do %>
+              <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
+            <% end %>
+          </section>
         <% end %>
+
+        <%= if Enum.any?(@results.posts) do %>
+          <section class="search-results">
+            <h3>Posts</h3>
+            <%= for post <- @results.posts do %>
+              <%= render(PostView, "_post_summary.html", conn: @conn, post: post) %>
+            <% end %>
+          </section>
+        <% end %>
+
       <% else %>
         <h2>There are no results for "<%= @query %>"</h2>
       <% end %>
