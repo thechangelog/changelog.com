@@ -11,7 +11,7 @@
     iframe.setAttribute("src", src + "?theme=" + theme + "&referrer=" + d.location.href);
     iframe.setAttribute("width", "100%");
     iframe.setAttribute("height", "220");
-    iframe.setAttribute("srcolling", "no");
+    iframe.setAttribute("scrolling", "no");
     iframe.setAttribute("frameborder", "no");
     element.parentNode.replaceChild(iframe, element);
 
