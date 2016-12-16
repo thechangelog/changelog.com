@@ -64,7 +64,7 @@ defmodule Changelog.Post do
 
   def search(query, search_term) do
     from e in query,
-      where: ilike(e.title, ^"%#{search_term}%") or ilike(e.tldr, ^"%#{search_term}%") or ilike(e.body, ^"%#{search_term}%")
+      where: fragment("search_vector @@ to_tsquery('english', ?)", ^search_term)
   end
 
   def is_public(post, as_of \\ Timex.now) do
