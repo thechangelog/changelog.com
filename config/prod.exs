@@ -24,3 +24,7 @@ config :changelog, Changelog.Mailer,
   port: 587,
   username: {:system, "CM_SMTP_TOKEN"},
   password: {:system, "CM_SMTP_TOKEN"}
+
+config :quantum, cron: [
+  "0 9 * * *": {Mix.Tasks.Changelog.Stats, :run}
+]

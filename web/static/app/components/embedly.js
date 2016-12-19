@@ -39,8 +39,8 @@ export default class Embedly {
 
   receive(event) {
     const message = JSON.parse(event.data);
+    if (message.context !== "player.js") return false;
     if (!message.method) return false;
-    if (!message.context == "player.js") return false;
 
     switch (message.method) {
       case "play":
@@ -53,7 +53,7 @@ export default class Embedly {
         this.send("getPaused", !this.player.isPlaying(), message.listener);
         break;
       case "setLoop":
-        this.player.loop();
+        this.player.loop(message.value);
         break;
       case "getLoop":
         this.send("getLoop", this.player.willLoop(), message.listener);

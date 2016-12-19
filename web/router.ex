@@ -46,6 +46,12 @@ defmodule Changelog.Router do
     resources "/sponsors", SponsorController
   end
 
+  scope "/api", Changelog, as: :api do
+    pipe_through [:api]
+
+    get "/oembed", ApiController, :oembed
+  end
+
   scope "/", Changelog do
     pipe_through [:browser, :public]
 
