@@ -7,9 +7,16 @@ defmodule Changelog.Stats do
 
   require Logger
 
+  def process do
+    yesterday = Timex.subtract(Timex.today, Timex.Duration.from_days(1))
+    process(yesterday)
+  end
+
   def process(date) do
+    Logger.info("Stats: Start processing for #{date}")
     podcasts = Podcast.public |> Repo.all
     process(date, podcasts)
+    Logger.info("Stats: Finished processing for #{date}")
   end
 
   def process(date, podcast) when not is_list(podcast) do
