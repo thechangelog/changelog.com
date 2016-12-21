@@ -28,6 +28,14 @@ defmodule Changelog.Router do
     plug Changelog.Plug.Turbolinks
   end
 
+  scope "/auth", Changelog do
+    pipe_through [:browser, :public]
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+  end
+
   scope "/admin", Changelog.Admin, as: :admin do
     pipe_through [:browser, :admin]
 

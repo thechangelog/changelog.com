@@ -28,6 +28,14 @@ defmodule Changelog.Person do
   @required_fields ~w(name email handle)
   @optional_fields ~w(github_handle twitter_handle bio website admin)
 
+  def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
+    Repo.get_by(__MODULE__, twitter_handle: handle)
+  end
+  def get_by_ueberauth(%{provider: :github, info: %{nickname: handle}}) do
+    Repo.get_by(__MODULE__, github_handle: handle)
+  end
+  def get_by_ueberauth(_), do: nil
+
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
@@ -38,6 +46,8 @@ defmodule Changelog.Person do
     |> unique_constraint(:name)
     |> unique_constraint(:email)
     |> unique_constraint(:handle)
+    |> unique_constraint(:github_handle)
+    |> unique_constraint(:twitter_handle)
   end
 
   def auth_changeset(model, params \\ %{}) do
