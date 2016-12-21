@@ -21,7 +21,8 @@ defmodule Changelog.Mixfile do
      applications: [:bamboo, :bamboo_smtp, :phoenix, :phoenix_pubsub,
                     :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex,
                     :ex_machina, :httpoison, :exjsx, :con_cache, :timex_ecto,
-                    :nimble_csv, :ex_aws, :briefly, :user_agent_parser, :quantum]]
+                    :nimble_csv, :ex_aws, :briefly, :user_agent_parser,
+                    :quantum, :ueberauth_github, :ueberauth_twitter]]
   end
 
   # Specifies which paths to compile per environment.
@@ -58,6 +59,9 @@ defmodule Changelog.Mixfile do
      {:cowboy, "~> 1.0"},
      {:user_agent_parser, "~> 1.0"},
      {:quantum, ">= 1.8.1"},
+     {:oauth, github: "tim/erlang-oauth"},
+     {:ueberauth_github, "~> 0.4"},
+     {:ueberauth_twitter, "~> 0.2"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:ex_machina, "~> 1.0"},
      {:credo, "~> 0.4", only: [:dev, :test]},

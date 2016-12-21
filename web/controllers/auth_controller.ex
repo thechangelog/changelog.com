@@ -3,6 +3,8 @@ defmodule Changelog.AuthController do
 
   alias Changelog.{Person, Email, Mailer}
 
+  plug Ueberauth
+
   def new(conn, %{"auth" =>  %{"email" => email}}) do
     person = Repo.one!(from p in Person, where: p.email == ^email)
 
@@ -26,7 +28,7 @@ defmodule Changelog.AuthController do
   end
 
   def new(conn, _params) do
-    render conn, "new.html", person: nil
+    render(conn, "new.html", person: nil)
   end
 
   def create(conn, %{"token" => token}) do
@@ -34,12 +36,7 @@ defmodule Changelog.AuthController do
     person = Repo.get_by(Person, email: email, auth_token: auth_token)
 
     if person && Timex.before?(Timex.now, person.auth_token_expires_at) do
-      Repo.update(Person.sign_in_changes(person))
-      conn
-      |> assign(:current_user, person)
-      |> put_encrypted_cookie("_changelog_user", person.id)
-      |> configure_session(renew: true)
-      |> redirect(to: page_path(conn, :home))
+      sign_in_and_redirect(conn, person, page_path(conn, :home))
     else
       conn
       |> put_flash(:info, "Whoops!")
@@ -52,5 +49,33 @@ defmodule Changelog.AuthController do
       |> configure_session(drop: true)
       |> delete_resp_cookie("_changelog_user")
       |> redirect(to: page_path(conn, :home))
+  end
+
+  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+    person = Person.get_by_ueberauth(auth)
+
+    if person do
+      sign_in_and_redirect(conn, person, page_path(conn, :home))
+    else
+      conn
+      |> put_flash(:info, "Whoops!")
+      |> render("new.html", person: nil)
+    end
+  end
+
+  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
+    conn
+    |> put_flash(:info, "Whoops!")
+    |> render("new.html", person: nil)
+  end
+
+  defp sign_in_and_redirect(conn, person, route) do
+    Repo.update(Person.sign_in_changes(person))
+
+    conn
+    |> assign(:current_user, person)
+    |> put_encrypted_cookie("_changelog_user", person.id)
+    |> configure_session(renew: true)
+    |> redirect(to: route)
   end
 end

@@ -11,7 +11,11 @@
         <p>Psst! Since you're hacking we'll just skip the email process. <%= link "click here", to: auth_path(@conn, @person), data: [turbolinks: false] %> instead!</p>
       <% end %>
     <% else %>
-      <p>Please enter your email address.</p>
+      <p>Sign in with <a href="/auth/twitter">Twitter</a>.</p>
+
+      <p>Sign in with <a href="/auth/github">GitHub</a>.</p>
+
+      <p>Sign in with email.</p>
       <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form js-remote"], fn f -> %>
         <div class="form_element_wrap">
           <label>Email<span>*</span></label>
