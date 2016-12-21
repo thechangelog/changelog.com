@@ -76,6 +76,14 @@
     <%= error_message(f, :description) %>
   </div>
 
+  <div class="field <%= error_class(f, :extended_description) %>">
+    <%= label(f, :extended_description) do %>
+      Extended Description <%= help_icon("Only used in RSS for SEO.") %>
+    <% end %>
+    <%= textarea f, :extended_description %>
+    <%= error_message(f, :extneded_description) %>
+  </div>
+
   <div class="field <%= error_class(f, :keywords) %>">
     <%= label f, :keywords %>
     <%= text_input f, :keywords, placeholder: "changelog, open source, software, development" %>
