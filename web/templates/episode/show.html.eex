@@ -54,14 +54,15 @@
     </cite>
 
     <footer class="episode_footer episode_footer--<%= @podcast.slug %>">
-      <%= if Enum.any?(@episode.guests) do %>
+      <% participants = @episode.guests ++ @episode.hosts %>
+      <%= if Enum.any?(participants) do %>
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/guest-gray.svg") %>" alt="Show notes"></div>
         <div class="episode-footer-section_content">
           <h3>Featuring</h3>
           <div class="richtext">
             <ul>
-            <%= for person <- @episode.guests ++ @episode.hosts do %>
+            <%= for person <- participants do %>
               <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links |> raw %></li>
             <% end %>
             </ul>
