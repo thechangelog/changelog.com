@@ -12,25 +12,29 @@
       </form>
     </div>
 
-    <%= if @query do %>
-      <%= if @results.count > 0 do %>
-        <h2><%= pluralize(@results.count, "result", "results") %> for "<%= @query %>"</h2>
+    <%= if @results do %>
+      <%= if @results.count_total > 0 do %>
+        <%= if @results.count_episodes > 0 && @results.count_posts > 0 do %>
+          <h2><%= pluralize(@results.count_total, "result", "results") %> for "<%= @query %>"</h2>
+        <% end %>
 
-        <%= if Enum.any?(@results.episodes) do %>
+        <%= if @results.count_episodes > 0 do %>
           <section class="search-results">
-            <h3>Episodes</h3>
+            <h3><%= pluralize(@results.count_episodes, "episode", "episodes") %></h3>
             <%= for episode <- @results.episodes do %>
               <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
             <% end %>
+            <%= pagination_links(@conn, @results.episodes, type: "episodes", action: :search, q: @query, path: &search_path/3) %>
           </section>
         <% end %>
 
-        <%= if Enum.any?(@results.posts) do %>
+        <%= if @results.count_posts > 0 do %>
           <section class="search-results">
-            <h3>Posts</h3>
+            <h3><%= pluralize(@results.count_posts, "post", "posts") %></h3>
             <%= for post <- @results.posts do %>
               <%= render(PostView, "_post_summary.html", conn: @conn, post: post) %>
             <% end %>
+            <%= pagination_links(@conn, @results.posts, type: "posts", action: :search, q: @query, path: &search_path/3) %>
           </section>
         <% end %>
 
