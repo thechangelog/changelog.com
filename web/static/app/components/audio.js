@@ -104,9 +104,6 @@ export default class ChangelogAudio {
     } else {
       this.audio.playbackRate += 0.25;
     }
-  }
-
-  this.audio.playbackRate += 0.5;
 }
 
   run(eventName, fn) {
