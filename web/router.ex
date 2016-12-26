@@ -110,9 +110,10 @@ defmodule Changelog.Router do
 
     get "/confirmation-pending", PageController, :confirmation_pending
 
+    # auth
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
-    get "/in/:token", AuthController, :create, as: :create_sign_in
+    get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
     get "/podcasts", PodcastController, :index, as: :podcast
