@@ -9,11 +9,14 @@
       <p>Things you can do:</p>
 
       <ul>
-        <li>Edit your profile</li>
-        <li>Send yourself a Slack invite</li>
+      <%= if @current_user.admin do %>
+        <li><%= link "Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+       <% end %>
+        <li><%= link "Edit your profile", to: home_path(@conn, :edit) %></li>
+        <li>Request a Slack invite</li>
         <li>Subscribe to Changelog Weekly</li>
         <li>Subscribe to Changelog Nightly</li>
-        <li><%= link "Sign Out", to: sign_out_path(@conn, :delete) %></li>
+        <li><%= link "Sign out", to: sign_out_path(@conn, :delete) %></li>
         <li>More coming!</li>
       </ul>
     </div>
