@@ -30,7 +30,7 @@ defmodule Changelog.AuthController do
     person = Repo.get_by(Person, email: email, auth_token: auth_token)
 
     if person && Timex.before?(Timex.now, person.auth_token_expires_at) do
-      sign_in_and_redirect(conn, person, page_path(conn, :home))
+      sign_in_and_redirect(conn, person, home_path(conn, :show))
     else
       conn
       |> put_flash(:error, "Whoops!")
@@ -47,7 +47,7 @@ defmodule Changelog.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     if person = Person.get_by_ueberauth(auth) do
-      sign_in_and_redirect(conn, person, page_path(conn, :home))
+      sign_in_and_redirect(conn, person, home_path(conn, :show))
     else
       conn
       |> put_flash(:success, "Almost there! Please complete your profile now.")
@@ -74,6 +74,7 @@ defmodule Changelog.AuthController do
 
     conn
     |> assign(:current_user, person)
+    |> put_flash(:success, "Welcome to Changelog!")
     |> put_encrypted_cookie("_changelog_user", person.id)
     |> configure_session(renew: true)
     |> redirect(to: route)
