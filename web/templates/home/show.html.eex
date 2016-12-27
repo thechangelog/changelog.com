@@ -4,6 +4,18 @@
       <h2>Howdy, <%= @current_user.handle %></h2>
     </header>
     <div class="content_body">
+      <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
+
+      <p>Things you can do:</p>
+
+      <ul>
+        <li>Edit your profile</li>
+        <li>Send yourself a Slack invite</li>
+        <li>Subscribe to Changelog Weekly</li>
+        <li>Subscribe to Changelog Nightly</li>
+        <li><%= link "Sign Out", to: sign_out_path(@conn, :delete) %></li>
+        <li>More coming!</li>
+      </ul>
     </div>
   </div>
 </article>

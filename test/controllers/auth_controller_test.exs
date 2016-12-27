@@ -55,7 +55,7 @@ defmodule Changelog.AuthControllerTest do
 
     conn = get(conn, "/in/#{encoded}")
 
-    assert redirected_to(conn) == page_path(conn, :home)
+    assert redirected_to(conn) == home_path(conn, :show)
     assert get_encrypted_cookie(conn, "_changelog_user") == person.id
   end
 
@@ -85,7 +85,7 @@ defmodule Changelog.AuthControllerTest do
         |> assign(:ueberauth_auth, %{provider: :github, info: %{nickname: "joeblow"}})
         |> get("/auth/github/callback")
 
-      assert redirected_to(conn) == page_path(conn, :home)
+      assert redirected_to(conn) == home_path(conn, :show)
       assert get_encrypted_cookie(conn, "_changelog_user") == person.id
     end
 
@@ -118,7 +118,7 @@ defmodule Changelog.AuthControllerTest do
         |> assign(:ueberauth_auth, %{provider: :twitter, info: %{nickname: "joeblow"}})
         |> get("/auth/github/callback")
 
-      assert redirected_to(conn) == page_path(conn, :home)
+      assert redirected_to(conn) == home_path(conn, :show)
       assert get_encrypted_cookie(conn, "_changelog_user") == person.id
     end
 
