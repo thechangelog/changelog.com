@@ -44,8 +44,8 @@ defmodule Changelog.ConnCase do
     end
 
     user = cond do
-      tags[:as_admin] -> %Changelog.Person{admin: true}
-      tags[:as_user]  -> %Changelog.Person{admin: false}
+      tags[:as_admin] -> Changelog.Factory.build(:person, admin: true)
+      tags[:as_user]  -> Changelog.Factory.build(:person, admin: false)
       true -> nil
     end
 
