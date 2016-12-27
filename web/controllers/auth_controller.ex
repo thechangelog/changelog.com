@@ -3,6 +3,7 @@ defmodule Changelog.AuthController do
 
   alias Changelog.{Person, Email, Mailer}
 
+  plug RequireGuest, "before signing in" when action in [:new, :create]
   plug Ueberauth
 
   def new(conn, %{"auth" =>  %{"email" => email}}) do

@@ -3,7 +3,7 @@ defmodule Changelog.PostController do
 
   alias Changelog.Post
 
-  plug Changelog.Plug.RequireAdmin, "before preview" when action in [:preview]
+  plug RequireAdmin, "before preview" when action in [:preview]
 
   def index(conn, params) do
     page = Post

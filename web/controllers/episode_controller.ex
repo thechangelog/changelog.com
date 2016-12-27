@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeController do
 
   alias Changelog.{Podcast, Episode}
 
-  plug Changelog.Plug.RequireAdmin, "before preview" when action in [:preview]
+  plug RequireAdmin, "before preview" when action in [:preview]
 
   def show(conn, %{"podcast" => podcast, "slug" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: podcast)

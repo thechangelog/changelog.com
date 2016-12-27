@@ -13,9 +13,16 @@ defmodule Changelog.AuthControllerTest do
   end
 
   test "getting the sign in form", %{conn: conn} do
-    conn = get(conn, "/in")
+    conn = get(conn, sign_in_path(conn, :new))
 
     assert html_response(conn, 200) =~ "Sign In"
+  end
+
+  @tag :as_user
+  test "getting the sign in form when signed in is not allowed", %{conn: conn} do
+    conn = get(conn, sign_in_path(conn, :new))
+    assert html_response(conn, 302)
+    assert conn.halted
   end
 
   test "submitting the form with known email sets auth token and sends email", %{conn: conn} do
