@@ -29,6 +29,12 @@ defmodule Changelog.AuthControllerTest do
     assert_delivered_email Changelog.Email.sign_in_email(person)
   end
 
+  test "submitting the form with unknown email sends you to join", %{conn: conn} do
+    conn = post(conn, "/in", auth: %{email: "joe@blow.com"})
+
+    assert redirected_to(conn) == person_path(conn, :new, %{email: "joe@blow.com"})
+  end
+
   test "following a valid auth token signs you in", %{conn: conn} do
     person = insert(:person)
 
