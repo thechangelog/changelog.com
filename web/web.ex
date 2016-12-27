@@ -32,6 +32,7 @@ defmodule Changelog.Web do
       use Phoenix.Controller
 
       alias Changelog.Repo
+      alias Changelog.Plug.{RequireAdmin, RequireUser, RequireGuest}
       import Ecto
       import Ecto.Query
 

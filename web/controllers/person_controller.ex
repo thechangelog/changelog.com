@@ -3,6 +3,8 @@ defmodule Changelog.PersonController do
 
   alias Changelog.Person
 
+  plug RequireGuest, "before joining" when action in [:new, :create]
+
   def new(conn, params) do
     person = %Person{
       name: Map.get(params, "name"),

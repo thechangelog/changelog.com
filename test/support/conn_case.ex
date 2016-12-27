@@ -43,14 +43,16 @@ defmodule Changelog.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Changelog.Repo, {:shared, self()})
     end
 
-    conn = Phoenix.ConnTest.build_conn()
-
-    if tags[:as_admin] do
-      user = %Changelog.Person{admin: true}
-      conn = Plug.Conn.assign(conn, :current_user, user)
-      {:ok, conn: conn, user: user}
-    else
-      {:ok, conn: conn}
+    user = cond do
+      tags[:as_admin] -> %Changelog.Person{admin: true}
+      tags[:as_user]  -> %Changelog.Person{admin: false}
+      true -> nil
     end
+
+    conn =
+      Phoenix.ConnTest.build_conn()
+      |> Plug.Conn.assign(:current_user, user)
+
+    {:ok, conn: conn, user: user}
   end
 end
