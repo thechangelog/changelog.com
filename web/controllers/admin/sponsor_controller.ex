@@ -10,16 +10,16 @@ defmodule Changelog.Admin.SponsorController do
     |> order_by([p], desc: p.id)
     |> Repo.paginate(params)
 
-    render conn, :index, sponsors: page.entries, page: page
+    render(conn, :index, sponsors: page.entries, page: page)
   end
 
   def new(conn, _params) do
-    changeset = Sponsor.changeset(%Sponsor{})
-    render conn, "new.html", changeset: changeset
+    changeset = Sponsor.admin_changeset(%Sponsor{})
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, params = %{"sponsor" => sponsor_params}) do
-    changeset = Sponsor.changeset(%Sponsor{}, sponsor_params)
+    changeset = Sponsor.admin_changeset(%Sponsor{}, sponsor_params)
 
     case Repo.insert(changeset) do
       {:ok, sponsor} ->
@@ -35,13 +35,13 @@ defmodule Changelog.Admin.SponsorController do
 
   def edit(conn, %{"id" => id}) do
     sponsor = Repo.get!(Sponsor, id)
-    changeset = Sponsor.changeset(sponsor)
+    changeset = Sponsor.admin_changeset(sponsor)
     render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "sponsor" => sponsor_params}) do
     sponsor = Repo.get!(Sponsor, id)
-    changeset = Sponsor.changeset(sponsor, sponsor_params)
+    changeset = Sponsor.admin_changeset(sponsor, sponsor_params)
 
     case Repo.update(changeset) do
       {:ok, sponsor} ->

@@ -27,9 +27,6 @@ defmodule Changelog.Podcast do
     timestamps()
   end
 
-  @required_fields ~w(name slug status)
-  @optional_fields ~w(vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url)
-
   def master do
   %__MODULE__{
     name: "Changelog Master Feed",
@@ -41,9 +38,10 @@ defmodule Changelog.Podcast do
   }
   end
 
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url))
+    |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)
     |> validate_format(:ping_url, Regexp.http, message: Regexp.http_message)

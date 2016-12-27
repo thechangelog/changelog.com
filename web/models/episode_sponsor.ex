@@ -17,12 +17,10 @@ defmodule Changelog.EpisodeSponsor do
     timestamps()
   end
 
-  @required_fields ~w(position title link_url)
-  @optional_fields ~w(episode_id sponsor_id description delete)
-
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(position title link_url episode_id sponsor_id description delete))
+    |> validate_required([:position, :title, :link_url])
     |> validate_format(:link_url, Regexp.http, message: Regexp.http_message)
     |> mark_for_deletion()
   end

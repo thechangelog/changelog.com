@@ -3,17 +3,16 @@ defmodule Changelog.PostTest do
 
   alias Changelog.Post
 
-  @valid_attrs %{slug: "what-a-post", title: "What a Post", author_id: 42}
-  @invalid_attrs %{title: "What a Post"}
+  describe "admin_changeset" do
+    test "with valid attributes" do
+      changeset = Post.admin_changeset(%Post{}, %{slug: "what-a-post", title: "What a Post", author_id: 42})
+      assert changeset.valid?
+    end
 
-  test "changeset with valid attributes" do
-    changeset = Post.changeset(%Post{}, @valid_attrs)
-    assert changeset.valid?
-  end
-
-  test "changeset with invalid attributes" do
-    changeset = Post.changeset(%Post{}, @invalid_attrs)
-    refute changeset.valid?
+    test "with invalid attributes" do
+      changeset = Post.admin_changeset(%Post{}, %{title: "What a Post"})
+      refute changeset.valid?
+    end
   end
 
   describe "search" do

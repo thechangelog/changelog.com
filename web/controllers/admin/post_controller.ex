@@ -28,12 +28,12 @@ defmodule Changelog.Admin.PostController do
   end
 
   def new(conn, _params) do
-    changeset = Post.changeset(%Post{})
-    render conn, "new.html", changeset: changeset
+    changeset = Post.admin_changeset(%Post{})
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, params = %{"post" => post_params}) do
-    changeset = Post.changeset(%Post{}, post_params)
+    changeset = Post.admin_changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
       {:ok, post} ->
@@ -50,13 +50,13 @@ defmodule Changelog.Admin.PostController do
   def edit(conn, %{"id" => id}) do
     post = Repo.get!(Post, id) |> Post.preload_all
 
-    changeset = Post.changeset(post)
-    render conn, "edit.html", post: post, changeset: changeset
+    changeset = Post.admin_changeset(post)
+    render(conn, "edit.html", post: post, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "post" => post_params}) do
     post = Repo.get!(Post, id) |> Post.preload_all
-    changeset = Post.changeset(post, post_params)
+    changeset = Post.admin_changeset(post, post_params)
 
     case Repo.update(changeset) do
       {:ok, post} ->

@@ -3,16 +3,15 @@ defmodule Changelog.ChannelTest do
 
   alias Changelog.Channel
 
-  @valid_attrs %{name: "Ruby on Rails", slug: "ruby-on-rails"}
-  @invalid_attrs %{}
+  describe "admin_changeset" do
+    test "with valid attributes" do
+      changeset = Channel.admin_changeset(%Channel{}, %{name: "Ruby on Rails", slug: "ruby-on-rails"})
+      assert changeset.valid?
+    end
 
-  test "changeset with valid attributes" do
-    changeset = Channel.changeset(%Channel{}, @valid_attrs)
-    assert changeset.valid?
-  end
-
-  test "changeset with invalid attributes" do
-    changeset = Channel.changeset(%Channel{}, @invalid_attrs)
-    refute changeset.valid?
+    test "with invalid attributes" do
+      changeset = Channel.admin_changeset(%Channel{}, %{})
+      refute changeset.valid?
+    end
   end
 end

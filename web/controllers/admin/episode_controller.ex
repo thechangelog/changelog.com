@@ -70,16 +70,16 @@ defmodule Changelog.Admin.EpisodeController do
       |> build_assoc(:episodes,
         episode_hosts: default_hosts,
         slug: default_slug)
-      |> Episode.changeset
+      |> Episode.admin_changeset
 
-    render conn, "new.html", changeset: changeset
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, params = %{"episode" => episode_params}, podcast) do
     changeset =
       build_assoc(podcast, :episodes)
       |> Episode.preload_all
-      |> Episode.changeset(episode_params)
+      |> Episode.admin_changeset(episode_params)
 
     case Repo.insert(changeset) do
       {:ok, episode} ->
@@ -99,7 +99,7 @@ defmodule Changelog.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
-    changeset = Episode.changeset(episode)
+    changeset = Episode.admin_changeset(episode)
     render conn, "edit.html", episode: episode, changeset: changeset
   end
 
@@ -109,7 +109,7 @@ defmodule Changelog.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
-    changeset = Episode.changeset(episode, episode_params)
+    changeset = Episode.admin_changeset(episode, episode_params)
 
     case Repo.update(changeset) do
       {:ok, episode} ->

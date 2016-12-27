@@ -25,9 +25,6 @@ defmodule Changelog.Person do
     timestamps()
   end
 
-  @required_fields ~w(name email handle)
-  @optional_fields ~w(github_handle twitter_handle bio website admin)
-
   def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
     Repo.get_by(__MODULE__, twitter_handle: handle)
   end
@@ -36,10 +33,27 @@ defmodule Changelog.Person do
   end
   def get_by_ueberauth(_), do: nil
 
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def auth_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(auth_token auth_token_expires_at))
+  end
+
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(name email handle github_handle twitter_handle bio website admin))
+    |> shared_changeset
+  end
+
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(name email handle github_handle twitter_handle bio website))
+    |> shared_changeset
+  end
+
+  defp shared_changeset(struct, params \\ %{}) do
+    struct
     |> cast_attachments(params, ~w(avatar))
+    |> validate_required([:name, :email, :handle])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
     |> validate_length(:handle, max: 40, message: "max 40 chars")
@@ -48,11 +62,6 @@ defmodule Changelog.Person do
     |> unique_constraint(:handle)
     |> unique_constraint(:github_handle)
     |> unique_constraint(:twitter_handle)
-  end
-
-  def auth_changeset(model, params \\ %{}) do
-    model
-    |> cast(params, ~w(auth_token auth_token_expires_at), [])
   end
 
   def sign_in_changes(model) do

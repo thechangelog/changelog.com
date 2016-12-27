@@ -14,12 +14,12 @@ defmodule Changelog.Admin.PersonController do
   end
 
   def new(conn, _params) do
-    changeset = Person.changeset(%Person{})
+    changeset = Person.admin_changeset(%Person{})
     render conn, "new.html", changeset: changeset
   end
 
   def create(conn, params = %{"person" => person_params}) do
-    changeset = Person.changeset(%Person{}, person_params)
+    changeset = Person.admin_changeset(%Person{}, person_params)
 
     case Repo.insert(changeset) do
       {:ok, person} ->
@@ -35,13 +35,13 @@ defmodule Changelog.Admin.PersonController do
 
   def edit(conn, %{"id" => id}) do
     person = Repo.get!(Person, id)
-    changeset = Person.changeset(person)
+    changeset = Person.admin_changeset(person)
     render(conn, "edit.html", person: person, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "person" => person_params}) do
     person = Repo.get!(Person, id)
-    changeset = Person.changeset(person, person_params)
+    changeset = Person.admin_changeset(person, person_params)
 
     case Repo.update(changeset) do
       {:ok, person} ->

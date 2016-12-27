@@ -18,8 +18,8 @@ defmodule Changelog.EpisodeStat do
     from e in query, order_by: [desc: ^field]
   end
 
-  def changeset(episode_stat, params \\ %{}) do
-    episode_stat
+  def changeset(struct, params \\ %{}) do
+    struct
     |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics))
     |> validate_required([:date, :episode_id, :podcast_id])
   end

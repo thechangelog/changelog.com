@@ -16,12 +16,10 @@ defmodule Changelog.Channel do
     timestamps()
   end
 
-  @required_fields ~w(name slug)
-  @optional_fields ~w(description)
-
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(name slug description))
+    |> validate_required([:name, :slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
   end
