@@ -6,24 +6,17 @@ defmodule Changelog.AuthController do
   plug Ueberauth
 
   def new(conn, %{"auth" =>  %{"email" => email}}) do
-    person = Repo.one!(from p in Person, where: p.email == ^email)
-
-    auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
-    expires_at = Timex.now |> Timex.add(Timex.Duration.from_minutes(15))
-
-    changeset = Person.auth_changeset(person, %{
-      auth_token: auth_token,
-      auth_token_expires_at: expires_at
-    })
-
-    case Repo.update(changeset) do
-      {:ok, person} ->
-        Email.sign_in_email(person) |> Mailer.deliver_later
-        render conn, "new.html", person: person
-      {:error, _} ->
-        conn
-        |> put_flash(:info, "try again!")
-        |> render("new.html", person: nil)
+    if person = Repo.one(from p in Person, where: p.email == ^email) do
+      auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
+      expires_at = Timex.add(Timex.now, Timex.Duration.from_minutes(15))
+      changeset = Person.auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})
+      {:ok, person} = Repo.update(changeset)
+      Email.sign_in_email(person) |> Mailer.deliver_later
+      render(conn, "new.html", person: person)
+    else
+      conn
+      |> put_flash(:success, "You aren't in our system! No worries, it's free to join. 💚")
+      |> redirect(to: person_path(conn, :new, %{email: email}))
     end
   end
 
@@ -39,7 +32,7 @@ defmodule Changelog.AuthController do
       sign_in_and_redirect(conn, person, page_path(conn, :home))
     else
       conn
-      |> put_flash(:info, "Whoops!")
+      |> put_flash(:error, "Whoops!")
       |> render("new.html", person: nil)
     end
   end
@@ -52,9 +45,7 @@ defmodule Changelog.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    person = Person.get_by_ueberauth(auth)
-
-    if person do
+    if person = Person.get_by_ueberauth(auth) do
       sign_in_and_redirect(conn, person, page_path(conn, :home))
     else
       conn
