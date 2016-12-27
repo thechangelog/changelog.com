@@ -63,56 +63,69 @@ defmodule Changelog.AuthControllerTest do
     refute get_encrypted_cookie(conn, "_changelog_user") == person.id
   end
 
-  test "successful github auth on existing person signs you in", %{conn: conn} do
-    person = insert(:person, github_handle: "joeblow")
+  describe "github auth" do
+    test "successful auth on existing person signs you in", %{conn: conn} do
+      person = insert(:person, github_handle: "joeblow")
 
-    conn =
-      conn
-      |> assign(:ueberauth_auth, %{provider: :github, info: %{nickname: "joeblow"}})
-      |> get("/auth/github/callback")
+      conn =
+        conn
+        |> assign(:ueberauth_auth, %{provider: :github, info: %{nickname: "joeblow"}})
+        |> get("/auth/github/callback")
 
-    assert redirected_to(conn) == page_path(conn, :home)
-    assert get_encrypted_cookie(conn, "_changelog_user") == person.id
+      assert redirected_to(conn) == page_path(conn, :home)
+      assert get_encrypted_cookie(conn, "_changelog_user") == person.id
+    end
+
+    test "successful auth on new person sends you to join", %{conn: conn} do
+      conn =
+        conn
+        |> assign(:ueberauth_auth, %{provider: :github, info: %{name: "Joe Blow", nickname: "joeblow"}})
+        |> get("/auth/github/callback")
+
+      assert redirected_to(conn) == person_path(conn, :new, %{name: "Joe Blow", handle: "joeblow", github_handle: "joeblow"})
+    end
+
+    test "failed auth doesn't sign you in", %{conn: conn} do
+      conn =
+        conn
+        |> assign(:ueberauth_failure, %{})
+        |> get("/auth/github/callback")
+
+      assert conn.status == 200
+      assert get_encrypted_cookie(conn, "_changelog_user") == nil
+    end
   end
 
-  test "failed github auth doesn't sign you in", %{conn: conn} do
-    conn =
-      conn
-      |> assign(:ueberauth_failure, %{})
-      |> get("/auth/github/callback")
+  describe "twitter auth" do
+    test "successful twitter auth on existing person signs you in", %{conn: conn} do
+      person = insert(:person, twitter_handle: "joeblow")
 
-    assert conn.status == 200
-    assert get_encrypted_cookie(conn, "_changelog_user") == nil
-  end
+      conn =
+        conn
+        |> assign(:ueberauth_auth, %{provider: :twitter, info: %{nickname: "joeblow"}})
+        |> get("/auth/github/callback")
 
-  test "successful github auth on new person sends you to join", %{conn: conn} do
-    conn =
-      conn
-      |> assign(:ueberauth_auth, %{provider: :github, info: %{nickname: "joeblow"}})
-      |> get("/auth/github/callback")
+      assert redirected_to(conn) == page_path(conn, :home)
+      assert get_encrypted_cookie(conn, "_changelog_user") == person.id
+    end
 
-    assert redirected_to(conn) == person_path(conn, :new)
-  end
+    test "successful twitter auth on new person sends you to join", %{conn: conn} do
+      conn =
+        conn
+        |> assign(:ueberauth_auth, %{provider: :twitter, info: %{name: "Joe Blow", nickname: "joeblow"}})
+        |> get("/auth/github/callback")
 
-  test "successful twitter auth on existing person signs you in", %{conn: conn} do
-    person = insert(:person, twitter_handle: "joeblow")
+      assert redirected_to(conn) == person_path(conn, :new, %{name: "Joe Blow", handle: "joeblow", twitter_handle: "joeblow"})
+    end
 
-    conn =
-      conn
-      |> assign(:ueberauth_auth, %{provider: :twitter, info: %{nickname: "joeblow"}})
-      |> get("/auth/github/callback")
+    test "failed twitter auth doesn't sign you in", %{conn: conn} do
+      conn =
+        conn
+        |> assign(:ueberauth_failure, %{})
+        |> get("/auth/twitter/callback")
 
-    assert redirected_to(conn) == page_path(conn, :home)
-    assert get_encrypted_cookie(conn, "_changelog_user") == person.id
-  end
-
-  test "failed twitter auth doesn't sign you in", %{conn: conn} do
-    conn =
-      conn
-      |> assign(:ueberauth_failure, %{})
-      |> get("/auth/twitter/callback")
-
-    assert conn.status == 200
-    assert get_encrypted_cookie(conn, "_changelog_user") == nil
+      assert conn.status == 200
+      assert get_encrypted_cookie(conn, "_changelog_user") == nil
+    end
   end
 end
