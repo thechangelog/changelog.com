@@ -92,15 +92,15 @@ defmodule Changelog.Admin.EpisodeControllerTest do
     assert html_response(conn, 200) =~ ~r/error/
   end
 
-  test "requires user auth on all actions" do
+  test "requires user auth on all actions", %{conn: conn} do
     Enum.each([
-      get(build_conn(), admin_podcast_episode_path(build_conn(), :index, "1")),
-      get(build_conn(), admin_podcast_episode_path(build_conn(), :new, "1")),
-      get(build_conn(), admin_podcast_episode_path(build_conn(), :show, "1", "2")),
-      post(build_conn(), admin_podcast_episode_path(build_conn(), :create, "1"), episode: @valid_attrs),
-      get(build_conn(), admin_podcast_episode_path(build_conn(), :edit, "1", "123")),
-      put(build_conn(), admin_podcast_episode_path(build_conn(), :update, "1", "123"), episode: @valid_attrs),
-      delete(build_conn(), admin_podcast_episode_path(build_conn(), :delete, "1", "123")),
+      get(conn, admin_podcast_episode_path(conn, :index, "1")),
+      get(conn, admin_podcast_episode_path(conn, :new, "1")),
+      get(conn, admin_podcast_episode_path(conn, :show, "1", "2")),
+      post(conn, admin_podcast_episode_path(conn, :create, "1"), episode: @valid_attrs),
+      get(conn, admin_podcast_episode_path(conn, :edit, "1", "123")),
+      put(conn, admin_podcast_episode_path(conn, :update, "1", "123"), episode: @valid_attrs),
+      delete(conn, admin_podcast_episode_path(conn, :delete, "1", "123")),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

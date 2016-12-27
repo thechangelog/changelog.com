@@ -1,7 +1,7 @@
 defmodule Changelog.PageControllerTest do
   use Changelog.ConnCase
 
-  test "static pages all render" do
+  test "static pages all render", %{conn: conn} do
     Enum.each([
       "/",
       "/about",
@@ -23,15 +23,15 @@ defmodule Changelog.PageControllerTest do
       "/gotime/confirmed",
       "/rfc/confirmed"
     ], fn route ->
-      conn = get(build_conn(), route)
+      conn = get(conn, route)
       assert conn.status == 200
     end)
   end
 
-  test "home page includes featured episode" do
+  test "home page includes featured episode", %{conn: conn} do
     featured = insert :published_episode, featured: true, highlight: "ohai"
 
-    conn = get(build_conn(), "/")
+    conn = get(conn, "/")
 
     assert html_response(conn, 200) =~ featured.title
   end
