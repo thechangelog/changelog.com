@@ -59,7 +59,7 @@ defmodule Changelog.AuthController do
     else
       conn
       |> put_flash(:success, "Almost there! Please complete your profile now.")
-      |> redirect(to: person_path(conn, :new))
+      |> redirect(to: person_path(conn, :new, params_from_ueberauth(auth)))
     end
   end
 
@@ -67,6 +67,14 @@ defmodule Changelog.AuthController do
     conn
     |> put_flash(:error, "Something went wrong. 😭")
     |> render("new.html", person: nil)
+  end
+
+  defp params_from_ueberauth(%{provider: :github, info: info}) do
+    %{name: info.name, handle: info.nickname, github_handle: info.nickname}
+  end
+
+  defp params_from_ueberauth(%{provider: :twitter, info: info}) do
+    %{name: info.name, handle: info.nickname, twitter_handle: info.nickname}
   end
 
   defp sign_in_and_redirect(conn, person, route) do
