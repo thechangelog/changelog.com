@@ -70,6 +70,14 @@ defmodule Changelog.Router do
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
 
+    # people and auth
+    resources "/people", PersonController, only: [:new, :create]
+
+    get "/in", AuthController, :new, as: :sign_in
+    post "/in", AuthController, :new, as: :sign_in
+    get "/in/:token", AuthController, :create, as: :sign_in
+    get "/out", AuthController, :delete, as: :sign_out
+
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
 
@@ -109,12 +117,6 @@ defmodule Changelog.Router do
     get "/rfc/confirmed", PageController, :rfc_confirmed
 
     get "/confirmation-pending", PageController, :confirmation_pending
-
-    # auth
-    get "/in", AuthController, :new, as: :sign_in
-    post "/in", AuthController, :new, as: :sign_in
-    get "/in/:token", AuthController, :create, as: :sign_in
-    get "/out", AuthController, :delete, as: :sign_out
 
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast

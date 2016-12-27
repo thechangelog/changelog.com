@@ -1,6 +1,8 @@
 defmodule Changelog.PersonView do
   use Changelog.Web, :view
 
+  alias Changelog.SharedView
+
   def avatar_url(person), do: avatar_url(person, :small)
   def avatar_url(person, version) do
     if person.avatar do
@@ -9,6 +11,16 @@ defmodule Changelog.PersonView do
       |> String.replace(~r{^//}, "/") # Arc 0.6 now prepends / to *all* URLs
     else
       gravatar_url(person.email, version)
+    end
+  end
+
+  def error_message(form, field) do
+    case form.errors[field] do
+      {message, _} ->
+        content_tag :p, class: "form_element_note" do
+          message
+        end
+      nil -> ""
     end
   end
 

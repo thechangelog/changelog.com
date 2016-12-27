@@ -21,6 +21,10 @@ defmodule Changelog.Helpers.ViewHelpers do
     uri.host
   end
 
+  def error_class(form, field) do
+    if form.errors[field], do: "error", else: ""
+  end
+
   def external_link(text, opts) do
     link text, (opts ++ [rel: "external"])
   end

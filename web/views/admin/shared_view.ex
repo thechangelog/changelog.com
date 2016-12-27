@@ -20,10 +20,6 @@ defmodule Changelog.Admin.SharedView do
     """
   end
 
-  def error_class(form, field) do
-    if form.errors[field], do: "error", else: ""
-  end
-
   def error_message(form, field) do
     case form.errors[field] do
       {message, _} ->

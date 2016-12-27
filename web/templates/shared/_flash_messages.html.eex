@@ -1,0 +1,3 @@
+<%= for {type, message} <- get_flash(@conn) do %>
+  <div class="form_submit_response form_submit_response--<%= type %>"><%= message %></div>
+<% end %>

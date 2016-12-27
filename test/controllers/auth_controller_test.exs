@@ -85,6 +85,15 @@ defmodule Changelog.AuthControllerTest do
     assert get_encrypted_cookie(conn, "_changelog_user") == nil
   end
 
+  test "successful github auth on new person sends you to join", %{conn: conn} do
+    conn =
+      conn
+      |> assign(:ueberauth_auth, %{provider: :github, info: %{nickname: "joeblow"}})
+      |> get("/auth/github/callback")
+
+    assert redirected_to(conn) == person_path(conn, :new)
+  end
+
   test "successful twitter auth on existing person signs you in", %{conn: conn} do
     person = insert(:person, twitter_handle: "joeblow")
 

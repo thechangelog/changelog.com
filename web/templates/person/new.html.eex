@@ -1,0 +1,56 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Join the Changelog Community</h2>
+    </header>
+    <div class="content_body">
+    <%= form_for @changeset, person_path(@conn, :create), [class: "form", multipart: true], fn f -> %>
+      <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
+
+      <div class="form_element_wrap <%= error_class(f, :name) %>">
+        <label>Name<span>*</span></label>
+        <div class="form_element">
+          <%= text_input(f, :name, placeholder: "Grace Hopper") %>
+          <%= error_message(f, :name) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :email) %>">
+        <label>Email<span>*</span></label>
+        <div class="form_element">
+          <%= email_input(f, :email, placeholder: "grace@hopper.com") %>
+          <%= error_message(f, :email) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :handle) %>">
+        <label>Handle<span>*</span></label>
+        <div class="form_element">
+          <%= text_input(f, :handle, placeholder: "gracehopper") %>
+          <%= error_message(f, :handle) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :github_handle) %>">
+        <label>On GitHub</label>
+        <div class="form_element">
+          <%= text_input(f, :github_handle, placeholder: "gracehopper") %>
+          <%= error_message(f, :github_handle) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :twitter_handle) %>">
+        <label>On Twitter</label>
+        <div class="form_element">
+          <%= text_input(f, :twitter_handle, placeholder: "gracehopper") %>
+          <%= error_message(f, :twitter_handle) %>
+        </div>
+      </div>
+
+      <div class="form_submit">
+        <input type="submit" value="Join Now">
+        <div class="form_submit_responses"></div>
+      </div>
+    <% end %>
+  </div>
+</article>
