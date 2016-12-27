@@ -58,14 +58,14 @@ defmodule Changelog.AuthController do
       sign_in_and_redirect(conn, person, page_path(conn, :home))
     else
       conn
-      |> put_flash(:info, "Whoops!")
-      |> render("new.html", person: nil)
+      |> put_flash(:success, "Almost there! Please complete your profile now.")
+      |> redirect(to: person_path(conn, :new))
     end
   end
 
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
-    |> put_flash(:info, "Whoops!")
+    |> put_flash(:error, "Something went wrong. 😭")
     |> render("new.html", person: nil)
   end
 
