@@ -20,12 +20,10 @@ defmodule Changelog.Sponsor do
     timestamps()
   end
 
-  @required_fields ~w(name)
-  @optional_fields ~w(description website github_handle twitter_handle)
-
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(name description website github_handle twitter_handle))
+    |> validate_required([:name])
     |> cast_attachments(params, ~w(color_logo dark_logo light_logo))
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:name)

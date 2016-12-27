@@ -45,9 +45,6 @@ defmodule Changelog.Episode do
     timestamps()
   end
 
-  @required_fields ~w(slug title published featured)
-  @optional_fields ~w(headline subheadline highlight subhighlight summary notes published_at recorded_at guid)
-
   def featured(query \\ __MODULE__) do
     from e in query, where: e.featured == true, where: not(is_nil(e.highlight))
   end
@@ -107,10 +104,11 @@ defmodule Changelog.Episode do
     episode.published && episode.published_at <= as_of
   end
 
-  def changeset(episode, params \\ %{}) do
-    episode
-    |> cast(params, @required_fields, @optional_fields)
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(slug title published featured headline subheadline highlight subhighlight summary notes published_at recorded_at guid))
     |> cast_attachments(params, ~w(audio_file))
+    |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> validate_featured_has_highlight
     |> validate_published_has_published_at

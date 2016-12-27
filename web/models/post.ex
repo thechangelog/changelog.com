@@ -22,12 +22,10 @@ defmodule Changelog.Post do
     timestamps()
   end
 
-  @required_fields ~w(title slug author_id)
-  @optional_fields ~w(published published_at body tldr)
-
-  def changeset(post, params \\ %{}) do
-    post
-    |> cast(params, @required_fields, @optional_fields)
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(title slug author_id published published_at body tldr))
+    |> validate_required([:title, :slug, :author_id])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
     |> validate_published_has_published_at
