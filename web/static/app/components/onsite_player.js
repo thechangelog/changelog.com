@@ -50,21 +50,20 @@ export default class OnsitePlayer {
   attachKeyboardShortcuts() {
     u(document).on("keydown", (event) => {
       if (!this.isActive()) return;
+      if (u(event.target).is("input, textarea")) return;
 
-      // 27 == escape
-      if (event.keyCode == 27) {
-        this.close();
-      }
-
-      // 32 == space bar
-      if (event.keyCode == 32 && !u(event.target).is("input, textarea")) {
-        event.preventDefault();
-        this.togglePlayPause();
-      }
-
-      // 83 == s
-      if (event.keyCode == 83 && !u(event.target).is("input, textarea")) {
-        this.changeSpeed();
+      switch (event.keyCode) {
+        case 27: // escape
+          this.close();
+          break;
+        case 32: // space bar
+          event.preventDefault();
+          this.togglePlayPause();
+          break;
+        case 83: // s
+          this.changeSpeed();
+          break;
+        default:
       }
     });
   }

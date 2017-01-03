@@ -98,13 +98,12 @@ export default class ChangelogAudio {
     this.audio.currentTime = to;
   }
 
-changeSpeed() {
-  if (this.audio.playbackRate === 2) {
-    this.audio.playbackRate = 1;
-    return;
-  }
-
-  this.audio.playbackRate += 0.5;
+  changeSpeed() {
+    if (this.audio.playbackRate == 1.75) {
+      this.audio.playbackRate = 1;
+    } else {
+      this.audio.playbackRate += 0.25;
+    }
 }
 
   run(eventName, fn) {

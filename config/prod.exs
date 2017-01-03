@@ -25,6 +25,8 @@ config :changelog, Changelog.Mailer,
   username: {:system, "CM_SMTP_TOKEN"},
   password: {:system, "CM_SMTP_TOKEN"}
 
-config :quantum, cron: [
-  "0 9 * * *": {Mix.Tasks.Changelog.Stats, :run}
-]
+config :quantum,
+  cron: [
+    "0 9 * * *": {Changelog.Stats, :process}
+  ],
+  global?: true

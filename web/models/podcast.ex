@@ -9,6 +9,7 @@ defmodule Changelog.Podcast do
     field :slug, :string
     field :status, PodcastStatus
     field :description, :string
+    field :extended_description, :string
     field :vanity_domain, :string
     field :keywords, :string
     field :twitter_handle, :string
@@ -27,7 +28,7 @@ defmodule Changelog.Podcast do
   end
 
   @required_fields ~w(name slug status)
-  @optional_fields ~w(vanity_domain schedule_note description keywords twitter_handle itunes_url ping_url)
+  @optional_fields ~w(vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url)
 
   def master do
   %__MODULE__{
