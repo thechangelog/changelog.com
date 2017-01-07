@@ -1,45 +1,49 @@
-<section id="search">
+<section class="search">
   <div class="container container--has-padding container--skinny">
     <div class="content_body">
-      <form action="<%= search_path(@conn, :search) %>" method="get" class="form">
-        <div class="form_element_wrap">
-          <label for="name">Search for …</label>
-          <div class="form_element search-box">
-            <input name="q" type="text" value="<%= @query %>" />
-            <input type="submit" value="Search">
-          </div>
-        </div>
+      <form action="<%= search_path(@conn, :search) %>" method="get" class="search-form">
+        <label class="accessibility-hidden" for="name">Search</label>
+        <input name="q" type="text" placeholder="Search..." value="<%= @query %>" />
       </form>
     </div>
 
     <%= if @results do %>
       <%= if @results.count_total > 0 do %>
-        <%= if @results.count_episodes > 0 && @results.count_posts > 0 do %>
-          <h2><%= pluralize(@results.count_total, "result", "results") %> for "<%= @query %>"</h2>
-        <% end %>
+        <header class="search_header">
+          <h1>“<%= @query %>”</h1>
+          <ul class="search_links">
+            <li><%= link pluralize(@results.count_episodes, "episode", "episodes"), to: "#episodes" %></li><li><%= link pluralize(@results.count_posts, "post", "posts"), to: "#posts" %></li>
+          </ul>
+        </header>
 
         <%= if @results.count_episodes > 0 do %>
-          <section class="search-results">
-            <h3><%= pluralize(@results.count_episodes, "episode", "episodes") %></h3>
+          <section id="episodes" class="search_results">
+            <h3 class="search_results_heading"><%= pluralize(@results.count_episodes, "episode", "episodes") %></h3>
             <%= for episode <- @results.episodes do %>
               <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
             <% end %>
+            <!-- TODO: Don't show this if there is only one page -->
             <%= pagination_links(@conn, @results.episodes, type: "episodes", action: :search, q: @query, path: &search_path/3) %>
           </section>
         <% end %>
 
         <%= if @results.count_posts > 0 do %>
-          <section class="search-results">
-            <h3><%= pluralize(@results.count_posts, "post", "posts") %></h3>
+          <section id="posts" class="search_results">
+            <h3 class="search_results_heading"><%= pluralize(@results.count_posts, "post", "posts") %></h3>
             <%= for post <- @results.posts do %>
               <%= render(PostView, "_post_summary.html", conn: @conn, post: post) %>
             <% end %>
+            <!-- TODO: Don't show this if there is only one page -->
             <%= pagination_links(@conn, @results.posts, type: "posts", action: :search, q: @query, path: &search_path/3) %>
           </section>
         <% end %>
 
       <% else %>
-        <h2>There are no results for "<%= @query %>"</h2>
+        <%= if @query != "" do %>
+          <header class="search_header">
+            <h1>There are no results for “<%= @query %>”</h1>
+          </header>
+        <% end %>
       <% end %>
     <% end %>
   </div>
