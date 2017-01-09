@@ -33,7 +33,6 @@ defmodule Changelog.SearchControllerTest do
       conn = get(build_conn, search_path(build_conn, :search, q: "phoenix"))
 
       assert conn.status == 200
-      assert conn.resp_body =~ "2 results"
       assert conn.resp_body =~ "1 episode"
       assert conn.resp_body =~ "1 post"
       assert conn.resp_body =~ episode1.title
