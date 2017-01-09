@@ -3,7 +3,7 @@
     <div class="content_body">
       <form action="<%= search_path(@conn, :search) %>" method="get" class="search-form">
         <label class="accessibility-hidden" for="name">Search</label>
-        <input name="q" type="text" placeholder="Search..." value="<%= @query %>" />
+        <input name="q" type="text" placeholder="Search all Episodes and Posts..." value="<%= @query %>" />
       </form>
     </div>
 
@@ -22,8 +22,9 @@
             <%= for episode <- @results.episodes do %>
               <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
             <% end %>
-            <!-- TODO: Don't show this if there is only one page -->
-            <%= pagination_links(@conn, @results.episodes, type: "episodes", action: :search, q: @query, path: &search_path/3) %>
+            <%= if @results.episodes.total_pages > 1 do %>
+              <%= pagination_links(@conn, @results.episodes, type: "episodes", action: :search, q: @query, path: &search_path/3) %>
+            <% end %>
           </section>
         <% end %>
 
@@ -33,17 +34,15 @@
             <%= for post <- @results.posts do %>
               <%= render(PostView, "_post_summary.html", conn: @conn, post: post) %>
             <% end %>
-            <!-- TODO: Don't show this if there is only one page -->
-            <%= pagination_links(@conn, @results.posts, type: "posts", action: :search, q: @query, path: &search_path/3) %>
+            <%= if @results.posts.total_pages > 1 do %>
+              <%= pagination_links(@conn, @results.posts, type: "posts", action: :search, q: @query, path: &search_path/3) %>
+            <% end %>
           </section>
         <% end %>
-
       <% else %>
-        <%= if @query != "" do %>
-          <header class="search_header">
-            <h1>There are no results for “<%= @query %>”</h1>
-          </header>
-        <% end %>
+        <header class="search_header">
+          <h1>There are no results for “<%= @query %>”</h1>
+        </header>
       <% end %>
     <% end %>
   </div>
