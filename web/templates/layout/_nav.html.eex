@@ -3,14 +3,19 @@
   <%= link to: "/", class: "navigation-bar_logo" do %>
     <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="Changelog Media"></h1>
   <% end %>
+
   <nav class="navigation-bar_links">
     <h2 class="accessibility-hidden">Quick Links</h2>
     <%= link "Podcasts", to: podcast_path(@conn, :index), class: "navigation-bar-link" %>
-    <%= link "Weekly", to: page_path(@conn, :weekly), class: "navigation-bar-link" %>
-    <%= link "Nightly", to: page_path(@conn, :nightly), class: "navigation-bar-link" %>
     <%= link "Subscribe", to: page_path(@conn, :subscribe), class: "navigation-bar-link" %>
-    <%= link "Advertise", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
+    <%= link "Sponsor", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
   </nav>
+
+  <form action="<%= search_path(@conn, :search) %>" method="get" class="navigation-bar_search">
+    <label class="accessibility-hidden" for="name">Search</label>
+    <input name="q" type="text" placeholder="Search..." value="" />
+  </form>
+
   <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
   <div class="navigation-bar_tray">
     <div class="navigation-tray">
@@ -64,6 +69,7 @@
           <h3 class="navigation-tray-side-nav_heading">More Info</h3>
           <%= link "Subscribe", to: page_path(@conn, :subscribe) %>
           <%= link "Sponsorship", to: page_path(@conn, :sponsorship) %>
+          <%= link "Search", to: search_path(@conn, :search) %>
           <%= link "Community", to: page_path(@conn, :community) %>
           <%= link "About", to: page_path(@conn, :about) %>
           <%= link "Contact", to: page_path(@conn, :contact) %>

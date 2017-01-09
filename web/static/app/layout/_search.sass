@@ -1,0 +1,31 @@
+.search
+    padding: $padding-large 1rem
+
+    @media (min-width: $desktop)
+        padding: $padding-extra-large 0
+
+    &_results
+        margin-top: 2rem
+
+        & + .search_results
+            border-top: 4px solid $border-color
+            padding-top: 2rem
+
+        &_heading
+            @extend %display-font
+            padding-top: 1em
+
+    &_header
+        margin: 3em 0
+        text-align: center
+
+    &_links
+        @extend %display-font
+        font-size: 1.25em
+        list-style-type: none
+        padding: 0
+
+        li
+            display: inline-block
+            margin: 0 1em
+            padding: 0

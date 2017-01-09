@@ -1,6 +1,8 @@
 .pagination
     margin: 2rem 0 4rem
     text-align: center
+
+    .item,
     &_item
         @extend %display-font
         color: $body-copy-color
@@ -18,5 +20,6 @@
                 background-color: $green
                 color: $white
 
+        &.active,
         &--current
             border-color: transparent
