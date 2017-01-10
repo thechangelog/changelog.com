@@ -11,16 +11,20 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Changelog.Repo
-alias Changelog.{Episode, EpisodeGuest, EpisodeHost, EpisodeSponsor, Person, Podcast, PodcastHost, Sponsor}
+alias Changelog.{Channel, Episode, EpisodeChannel, EpisodeGuest, EpisodeHost, EpisodeSponsor, Person, Podcast, PodcastHost, Post, PostChannel, Sponsor}
 
 # Clean slate
 
+Repo.delete_all EpisodeChannel
+Repo.delete_all PostChannel
+Repo.delete_all Channel
 Repo.delete_all EpisodeSponsor
 Repo.delete_all EpisodeGuest
 Repo.delete_all EpisodeHost
 Repo.delete_all Episode
 Repo.delete_all PodcastHost
 Repo.delete_all Podcast
+Repo.delete_all Post
 Repo.delete_all Person
 Repo.delete_all Sponsor
 
@@ -153,6 +157,20 @@ andrewgodwin = Repo.insert! %Person{
   github_handle: "andrewgodwin",
   bio: "A programmer (of Python, Django, and plenty of other languages depending on the situation), a British expat who now lives in mostly-sunny San Francisco, a reasonably well-travelled technical public speaker, and an alumnus of Magdalen College, Oxford.",
   website: "http://www.aeracode.org/"
+}
+
+# Channels
+
+practice = Repo.insert! %Channel{
+  name: "Practice",
+  slug: "practice",
+  description: "Description for the practice channel"
+}
+
+updates = Repo.insert! %Channel{
+  name: "Updates",
+  slug: "updates",
+  description: "Description for the updates channel"
 }
 
 # Podcasts
@@ -550,6 +568,96 @@ Repo.insert! %Episode{
       title: "Linode",
       link_url: "https://linode.com/rfc",
       description: "*Our cloud server of choice!* Get one of the fastest, most efficient SSD cloud servers for only $10/mo. We host everything we do on Linode servers. Use the code `rfc20` to get 2 months free!"
+    }
+  ]
+}
+
+# Posts
+
+Repo.insert! %Post{
+  title: "Introducing Changelog 2.0",
+  slug: "introducing-changelog-2-0",
+  published: true,
+  published_at: Timex.to_datetime({{2016, 10, 11}, {11, 25, 00}}, :local),
+  author: adamstac,
+  tldr: "**I'm excited to finally be able to introduce you to Changelog 2.0! This might seem like a simple visual update, but trust me when I tell you this is literally the biggest launch we’ve ever done.**
+
+tl;dr — We launched a new brand and CMS to power the future of our digital media company.",
+  body: "## The New Logo
+
+There is so much in a logo. It carries the weight of all you do. It goes before you to set the tone for how you will be perceived. It represents you when you can't be directly involved. It's what people attach their feelings to. It's the sticker on a laptop representing an affinity or belief.
+
+For 7 years, we have been primarily known as \"The Changelog podcast\" and our album art is that sticker on a listener's laptop — so we couldn't just carelessly make changes to our logo. We needed to seek out the right help and guidance through the process.
+
+Nearly one year ago we began the process of rebranding The Changelog. But before we get to that, more than two years ago we purchased `changelog.com` for $1,000 in hope of one day taking the [advice of JT](https://www.youtube.com/watch?v=k06fsS9Vjn4) to drop the \"The.\" It’s cleaner.
+
+We are now simply, Changelog.",
+  post_channels: [
+    %PostChannel{
+      position: 1,
+      channel: updates
+    }
+  ]
+}
+
+Repo.insert! %Post{
+  title: "Changelog.com is Open Source",
+  slug: "changelog-is-open-source",
+  published: true,
+  published_at: Timex.to_datetime({{2016, 10, 25}, {16, 45, 30}}, :local),
+  author: jerodsanto,
+  tldr: "This morning we open sourced the code that powers the new Changelog.com!",
+  body: "As we promised in [our relaunch announcement](/posts/introducing-changelog-2-0), this morning we open sourced the code that powers the new Changelog.com!
+
+Don't want the full rundown? Go star [the source code on GitHub](https://github.com/thechangelog/changelog.com).",
+  post_channels: [
+    %PostChannel{
+      position: 1,
+      channel: updates
+    }
+  ]
+}
+
+Repo.insert! %Post{
+  title: "Slow Down to Go Faster",
+  slug: "slow-down-to-go-faster",
+  published: true,
+  published_at: Timex.to_datetime({{2016, 11, 25}, {10, 30, 00}}, :local),
+  author: jerodsanto,
+  tldr: "What many people fail to realize — and what I’ll emphasize in this post — is that the compromises we often make when optimizing for development speed can actually slow us down.",
+  body: "***Editor's Note:*** I originally wrote this for Fuel Your Coding back in October of 2010. Unfortunately, that site is now defunct, so I'm republishing the article here for posterity's sake1. I considered updating it for modern times, but I think it holds up well enough as is. Enjoy.
+- - -
+Today’s software development culture promotes [rapid development methodologies](http://en.wikipedia.org/wiki/Rapid_application_development), [minimum viable products](http://en.wikipedia.org/wiki/Minimum_viable_product), releasing early & often, and the axiom that [\"real artists ship\"](http://www.folklore.org/StoryView.py?story=Real_Artists_Ship.txt). What common thread weaves its way through all of these things?
+
+**SPEED.**
+
+If you haven’t felt the pressure to squeeze one more feature in before the release date, to fix an interface bug “RIGHT NOW!”, to get your product launched before your competition, or to shave a week off of your development schedule then you haven’t been developing software for all that long.
+
+What many people fail to realize — and what I’ll emphasize in this post — is that the compromises we often make when optimizing for development speed can actually slow us down. More succinctly:
+
+<mark>If you want to move faster, you have to slow down.</mark>
+
+Allow me to demonstrate this concept in a few key areas of software development.",
+  post_channels: [
+    %PostChannel{
+      position: 1,
+      channel: practice
+    }
+  ]
+}
+
+Repo.insert! %Post{
+  title: "This is a draft",
+  slug: "this-is-a-draft",
+  published: false,
+  published_at: Timex.now,
+  author: adamstac,
+  tldr: "Not published yet, But it will be awesome. All the new tech people are raging about!",
+  body: "This is content that will be published soon. For now it is just sitting, waiting, wishing – in the database.",
+  post_channels: [
+    %PostChannel{
+      position: 1,
+      channel: practice
     }
   ]
 }

@@ -98,6 +98,11 @@ defmodule Changelog.Episode do
     from e in query, limit: ^count
   end
 
+  def search(query, search_term) do
+    from e in query,
+      where: fragment("search_vector @@ to_tsquery('english', ?)", ^search_term)
+  end
+
   def is_public(episode, as_of \\ Timex.now) do
     episode.published && episode.published_at <= as_of
   end

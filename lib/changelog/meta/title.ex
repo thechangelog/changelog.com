@@ -1,5 +1,5 @@
 defmodule Changelog.Meta.Title do
-  alias Changelog.{AuthView, EpisodeView, PageView, PersonView, PodcastView, PostView}
+  alias Changelog.{AuthView, EpisodeView, PageView, PersonView, PodcastView, PostView, SearchView}
 
   @suffix "Changelog"
 
@@ -12,6 +12,9 @@ defmodule Changelog.Meta.Title do
   defp put_suffix(title), do: title <> " | " <> @suffix
 
   defp get(%{view_module: AuthView}), do: "Sign In"
+
+  defp get(%{view_module: SearchView, view_template: "search.html", query: query}), do: query
+  defp get(%{view_module: SearchView, view_template: "search.html"}), do: "Search"
 
   defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
     "#{podcast.name} #{EpisodeView.numbered_title(episode, "#")}"

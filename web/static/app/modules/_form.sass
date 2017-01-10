@@ -1,3 +1,27 @@
+.search-form
+    $accent: $green
+    margin: 0 0 1em
+
+    input
+        @extend %display-font
+        background: $white
+        border: 2px solid rgba($accent, 0.8)
+        border-radius: 100px
+        font-size: 1.5em
+        // color: $white
+        padding: 1em 2em 0.85em
+        text-transform: none
+        width: 100%
+
+        &:focus,
+        &:active
+            border-color: $accent
+
+        &::placeholder
+            color: $dark-grey
+            opacity: 1
+            text-transform: uppercase
+
 .form
     $border-color: #e0dfe0
     clear: both

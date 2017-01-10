@@ -62,6 +62,11 @@ defmodule Changelog.Post do
     from e in query, limit: ^count
   end
 
+  def search(query, search_term) do
+    from e in query,
+      where: fragment("search_vector @@ to_tsquery('english', ?)", ^search_term)
+  end
+
   def is_public(post, as_of \\ Timex.now) do
     post.published && post.published_at <= as_of
   end
