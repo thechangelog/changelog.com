@@ -1,0 +1,37 @@
+.share_overlay {
+  background: $black;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  text-align: center;
+
+  align-items: center;
+  display: flex;
+
+  &-wrap {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  &-section {
+    flex: 0 1 340px;
+    padding: 20px;
+
+    &-heading {
+      color: $white;
+      text-transform: uppercase;
+    }
+
+    &:nth-child(2) {
+      border-left: 2px solid $dark-grey;
+    }
+  }
+
+  textarea {
+    width: 100%;
+  }
+}

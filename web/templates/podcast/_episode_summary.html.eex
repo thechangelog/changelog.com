@@ -45,3 +45,46 @@
     </nav>
   </div>
 </article>
+
+<div class="share_overlay">
+  <div class="share_overlay-wrap">
+    <div class="share_overlay-section">
+      <h3 class="share_overlay-section-heading">Share</h3>
+      <textarea><%= episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) %></textarea>
+      <ul class="share_overlay-links">
+        <li class="share_overlay-links-item">
+          <%= link "Share",
+              title: "Share on Twitter",
+              to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+        </li>
+        <li class="share_overlay-links-item">
+          <%= link "Share",
+              title: "Share on Hacker News",
+              to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+        </li>
+        <li class="share_overlay-links-item">
+          <%= link "Share",
+              title: "Share on Reddit",
+              to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+        </li>
+        <li class="share_overlay-links-item">
+          <%= link "Share",
+              title: "Share on Facebook",
+              to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+        </li>
+      </ul>
+    </div>
+    <div class="share_overlay-section">
+      <h3 class="share_overlay-section-heading">Embed</h3>
+      <textarea>TODO: Make This Dynamic <audio data-theme="night" src="https://cdn.changelog.com/uploads/rfc/11/request-for-commits-11.mp3" preload="none" class="changelog-episode" data-src="https://changelog.com/rfc/11/embed" data-theme="night" controls></audio><p><a href="https://changelog.com/rfc/11">Request For Commits 11: Funding the Web with Brendan Eich</a> – Listen on <a href="https://changelog.com/">Changelog.com</a></p><script async src="//cdn.changelog.com/embed.js"></script></textarea>
+    </div>
+  </div>
+</div>
