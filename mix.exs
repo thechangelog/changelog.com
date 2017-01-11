@@ -62,7 +62,6 @@ defmodule Changelog.Mixfile do
      {:oauth, github: "tim/erlang-oauth"},
      {:ueberauth_github, "~> 0.4"},
      {:ueberauth_twitter, "~> 0.2"},
-     {:turbolinks_plug, "~> 0.1.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:ex_machina, "~> 1.0"},
      {:credo, "~> 0.4", only: [:dev, :test]},
