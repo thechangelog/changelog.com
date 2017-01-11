@@ -1,5 +1,5 @@
 defmodule Changelog.SearchView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 
   alias Changelog.{PodcastView, PostView}
 
