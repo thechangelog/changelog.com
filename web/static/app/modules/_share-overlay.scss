@@ -33,6 +33,7 @@
     flex: 0 0 auto;
     min-width: 300px;
     max-width: 380px;
+    width: 100%;
     padding: 30px;
 
     &-heading {
@@ -44,8 +45,7 @@
     &:nth-child(2) {
       border-top: 2px solid $dark-grey;
 
-      @media (min-width: 687px) {
-        // TODO: Make this work for screensizes around the breakpoint
+      @media (min-width: 760px) {
         border-left: 2px solid $dark-grey;
         border-top: 0;
       }
