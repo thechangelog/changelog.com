@@ -11,7 +11,7 @@
     <%= link "Sponsor", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
   </nav>
 
-  <form action="<%= search_path(@conn, :search) %>" method="get" class="navigation-bar_search">
+  <form action="<%= search_path(@conn, :search) %>" method="get" class="navigation-bar_search js-remote">
     <label class="accessibility-hidden" for="name">Search</label>
     <input name="q" type="text" placeholder="Search..." value="" />
   </form>

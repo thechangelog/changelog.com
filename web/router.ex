@@ -25,6 +25,7 @@ defmodule Changelog.Router do
 
   pipeline :public do
     plug Changelog.Plug.LoadPodcasts
+    plug Changelog.Plug.Turbolinks
   end
 
   scope "/admin", Changelog.Admin, as: :admin do

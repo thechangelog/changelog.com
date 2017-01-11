@@ -12,7 +12,7 @@
       <% end %>
     <% else %>
       <p>Please enter your email address.</p>
-      <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form"], fn f -> %>
+      <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form js-remote"], fn f -> %>
         <div class="form_element_wrap">
           <label>Email<span>*</span></label>
           <div class="form_element">

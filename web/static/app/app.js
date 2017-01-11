@@ -1,5 +1,5 @@
 import Turbolinks from "turbolinks";
-import { u } from "umbrellajs";
+import { u, ajax } from "umbrellajs";
 import OnsitePlayer from "components/onsite_player";
 import Slider from "components/slider";
 import Log from "components/log";
@@ -68,6 +68,31 @@ u(document).on("submit", "form.js-cm", function(event) {
   const script = document.createElement("script");
   script.src = form.attr("action") + "?callback=afterSubscribe&" + form.serialize();
   document.body.appendChild(script);
+});
+
+// integrate ajax forms with Turbolinks
+u(document).on("submit", "form.js-remote", function(event) {
+  event.preventDefault();
+
+  const form = u(this);
+  const action = form.attr("action");
+  const method = form.attr("method");
+  const data = form.serialize();
+
+  if (method == "get") {
+    return Turbolinks.visit(`${action}?${data}`);
+  }
+
+  const options = {method: method, body: data, headers: {"Turbolinks-Referrer": window.location}};
+  const andThen = function(err, resp, req) {
+    if (req.getResponseHeader("content-type").match(/javascript/)) {
+      eval(resp);
+    } else {
+      document.body = Turbolinks.Snapshot.wrap(resp).body;
+    }
+  }
+
+  ajax(action, options, andThen);
 });
 
 // handle featured sliders
