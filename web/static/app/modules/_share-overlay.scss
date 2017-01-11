@@ -1,5 +1,7 @@
 .share_overlay {
+  align-items: center;
   background: $black;
+  display: flex;
   position: fixed;
   top: 0;
   right: 0;
@@ -8,30 +10,168 @@
   z-index: 9999;
   text-align: center;
 
-  align-items: center;
-  display: flex;
+  &-close {
+    padding: 0;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+    & > img {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
 
   &-wrap {
     display: flex;
     flex: 1 1 auto;
+    flex-wrap: wrap;
     justify-content: center;
   }
 
   &-section {
-    flex: 0 1 340px;
-    padding: 20px;
+    flex: 0 0 auto;
+    min-width: 300px;
+    max-width: 380px;
+    padding: 30px;
 
     &-heading {
       color: $white;
+      font-size: 1.625em;
       text-transform: uppercase;
     }
 
     &:nth-child(2) {
-      border-left: 2px solid $dark-grey;
+      border-top: 2px solid $dark-grey;
+
+      @media (min-width: 687px) {
+        // TODO: Make this work for screensizes around the breakpoint
+        border-left: 2px solid $dark-grey;
+        border-top: 0;
+      }
+    }
+  }
+
+  &-links {
+    padding: 0;
+    text-align: center;
+
+    &-item {
+      display: inline-block;
+      margin: 5px;
+      a {
+        background-color: #000;
+        background-repeat: no-repeat;
+        background-position: 1em center;
+        border-radius: 2em;
+        display: block;
+        font-size: 1em;
+        padding: 0.6em 1em 0.5em 3em;
+        transition: opacity 0.2s ease-in-out;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
     }
   }
 
   textarea {
+    background: #000;
+    border: none;
+    border-radius: 2px;
+    color: $green;
+    font-family: $code;
+    font-size: 0.9em;
+    line-height: 1.5em;
+    padding: 0.8em 1.2em;
+    resize: none;
     width: 100%;
+  }
+}
+
+// A copyable textarea
+.copyable {
+  position: relative;
+
+  &-button {
+    background: $green;
+    border-radius: 0 2px;
+    color: #000;
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 8px 8px 5px 10px;
+    text-transform: uppercase;
+    transition: background 0.2s ease-in-out;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    &:hover {
+      background: $white;
+    }
+  }
+}
+
+// Toggle Button for Dark Embed (O ) Light Embed
+.horizontal_toggle {
+  align-items: center;
+  display: flex;
+  margin: 0 0 1em;
+  justify-content: center;
+  width: 100%;
+
+  & > * {
+    flex: 0 0 auto;
+  }
+
+  &-text {
+    color: $white;
+    padding: 0 1em;
+  }
+}
+
+.toggle {
+  width: 40px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: $green;
+  overflow: hidden;
+  box-shadow: inset 0 0 2px 1px rgba(0,0,0,.05);
+  position: relative;
+
+  .check {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 6;
+
+    &:checked ~ .switch {
+      right: 2px;
+      left: 22px;
+      transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+      transition-property: left, right;
+      transition-delay: .05s, 0s;
+    }
+  }
+
+  .switch {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    bottom: 2px;
+    right: 22px;
+    background-color: #000;
+    border-radius: 36px;
+    z-index: 1;
+    transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+    transition-property: left, right;
+    transition-delay: 0s, .05s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
   }
 }
