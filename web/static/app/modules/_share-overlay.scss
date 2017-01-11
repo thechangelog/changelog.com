@@ -1,7 +1,7 @@
 .share_overlay {
   align-items: center;
   background: $black;
-  display: flex;
+  display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -9,6 +9,10 @@
   left: 0;
   z-index: 9999;
   text-align: center;
+
+  &.is-visible {
+    display: flex;
+  }
 
   &-close {
     padding: 0;
@@ -97,6 +101,7 @@
   &-button {
     background: $green;
     border-radius: 0 2px;
+    box-shadow: -2px 2px 2px 1px #000;
     color: #000;
     font-size: 0.75em;
     font-weight: bold;

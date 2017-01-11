@@ -1,0 +1,58 @@
+<div class="share_overlay is-visible">
+  <button class="share_overlay-close js-toggle-overlay"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide share overlay"></button>
+
+  <div class="share_overlay-wrap">
+    <div class="share_overlay-section">
+      <h3 class="share_overlay-section-heading">Share</h3>
+      <div class="copyable">
+        <textarea rows="1">http://changelog.com/path/to/episode</textarea>
+        <button class="copyable-button">Copy</button>
+      </div>
+      <ul class="share_overlay-links">
+        <li class="share_overlay-links-item">
+          <%= link "Twitter",
+              title: "Share on Twitter",
+              to: tweet_url("Episode Title", "http://changelog.com"),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-twitter.svg")}')" %>
+        </li>
+        <li class="share_overlay-links-item">
+          <%= link "Hacker News",
+              title: "Share on Hacker News",
+              to: hackernews_url("Episode Title", "http://changelog.com"),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-hackernews.svg")}')" %>
+        </li>
+        <li class="share_overlay-links-item">
+          <%= link "Reddit",
+              title: "Share on Reddit",
+              to: reddit_url("Episode Title", "http://changelog.com"),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-reddit.svg")}')" %>
+        </li>
+        <li class="share_overlay-links-item">
+          <%= link "Facebook",
+              title: "Share on Facebook",
+              to: tweet_url("Episode Title", "http://changelog.com"),
+              class: "js-share-popup",
+              style: "background-image: url('#{static_url(@conn, "/images/icon-facebook.svg")}')" %>
+        </li>
+      </ul>
+    </div>
+    <div class="share_overlay-section">
+      <h3 class="share_overlay-section-heading">Embed</h3>
+      <div class="horizontal_toggle">
+        <div class="horizontal_toggle-text">Dark Embed</div>
+        <div class="toggle">
+          <input type="checkbox" class="check">
+          <div class="switch"></div>
+        </div>
+        <div class="horizontal_toggle-text">Light Embed</div>
+      </div>
+      <div class="copyable">
+        <textarea rows="4"><audio data-theme="night" src="https://cdn.changelog.com/uploads/rfc/11/request-for-commits-11.mp3" preload="none" class="changelog-episode" data-src="https://changelog.com/rfc/11/embed" data-theme="night" controls></audio><p><a href="https://changelog.com/rfc/11">Request For Commits 11: Funding the Web with Brendan Eich</a> – Listen on <a href="https://changelog.com/">Changelog.com</a></p><script async src="//cdn.changelog.com/embed.js"></script></textarea>
+        <button class="copyable-button">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
