@@ -38,9 +38,10 @@
           style: "background-image: url('#{static_url(@conn, "/images/icon-details.svg")}')" %>
 
       <%= link "Share",
-          title: "Share on Twitter",
-          to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
-          class: "toolbar_item toolbar_item--button js-share-popup",
+          title: "Share",
+          to: "javascript:void(0);",
+          class: "toolbar_item toolbar_item--button",
+          data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
           style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
     </nav>
   </div>

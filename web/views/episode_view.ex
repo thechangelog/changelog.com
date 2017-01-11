@@ -37,7 +37,7 @@ defmodule Changelog.EpisodeView do
 
   def embed_code(episode), do: embed_code(episode, episode.podcast)
   def embed_code(episode, podcast) do
-    ~s{<audio src="#{audio_url(episode)}" preload="none" class="changelog-episode" data-src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}" data-theme="night" controls></audio>} <>
+    ~s{<audio data-theme="night" data-src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
     ~s{<p><a href="#{episode_url(Endpoint, :show, podcast.slug, episode.slug)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{page_url(Endpoint, :home)}">Changelog.com</a></p>} <>
     ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
@@ -115,5 +115,16 @@ defmodule Changelog.EpisodeView do
     end
 
     info
+  end
+
+  def render("share.json", %{podcast: podcast, episode: episode}) do
+    url = episode_url(Endpoint, :show, podcast.slug, episode.slug)
+
+    %{url: url,
+      twitter: tweet_url(episode.title, url),
+      hackernews: hackernews_url(episode.title, url),
+      reddit: reddit_url(episode.title, url),
+      facebook: facebook_url(url),
+      embed: embed_code(episode)}
   end
 end

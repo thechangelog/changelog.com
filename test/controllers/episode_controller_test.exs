@@ -93,4 +93,15 @@ defmodule Changelog.EpisodeControllerTest do
       assert conn.resp_body =~ next.slug
     end
   end
+
+  describe "share" do
+    test "for published episode" do
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p)
+
+      conn = get(build_conn, episode_path(build_conn, :share, p.slug, e.slug))
+      assert conn.status == 200
+      assert conn.resp_body =~ e.title
+    end
+  end
 end

@@ -2,9 +2,11 @@ import Turbolinks from "turbolinks";
 import { u } from "umbrellajs";
 import OnsitePlayer from "components/onsite_player";
 import Slider from "components/slider";
+import Sharer from "components/sharer";
 import Log from "components/log";
 
 const player = new OnsitePlayer("#player");
+const sharer = new Sharer("#share");
 const featured = new Slider(".featured_podcast");
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
@@ -21,6 +23,10 @@ u(document).on("click", "[data-play]", function(event) {
     const clicked = u(event.target).closest("a, button");
     player.load(clicked.attr("href"), clicked.data("play"));
   }
+});
+
+u(document).handle("click", "[data-share]", function(event) {
+  sharer.load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
