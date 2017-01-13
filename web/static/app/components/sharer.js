@@ -14,31 +14,12 @@ export default class Sharer {
     // ui
     this.embed = this.content.find(".js-share-embed");
     this.toggleEmbedButton = this.content.find(".js-share-embed-toggle");
-
-    this.copyUrlButton = new Clipboard(".js-share-copy-url", {
-      target: function(trigger) { return trigger.previousElementSibling; }
-    }).on("success", function(e) {
-      u(e.trigger).text("Copied!");
-      window.setTimeout(function() {
-        u(e.trigger).text("Copy");
-      }, 3000);
-      e.clearSelection();
-    });
-
-    this.copyEmbedButton = new Clipboard(".js-share-copy-embed", {
-      target: function(trigger) { return trigger.previousElementSibling; }
-    }).on("success", function(e) {
-      u(e.trigger).text("Copied!");
-      window.setTimeout(function() {
-        u(e.trigger).text("Copy");
-      }, 3000);
-      e.clearSelection();
-    });
-
+    this.copyUrlButton = this.clipboardFor(".js-share-copy-url");
+    this.copyEmbedButton = this.clipboardFor(".js-share-copy-embed");
     // events
     this.closeButton.handle("click", () => { this.hide(); });
     this.toggleEmbedButton.on("change", () => { this.toggleEmbed(); });
-
+    // yup
     this.isAttached = true;
   }
 
@@ -86,5 +67,17 @@ export default class Sharer {
 
   hide() {
     this.container.removeClass("is-visible");
+  }
+
+  clipboardFor(selector) {
+    return new Clipboard(selector, {
+      target: function(trigger) { return trigger.previousElementSibling; }
+    }).on("success", function(e) {
+      u(e.trigger).text("Copied!");
+      window.setTimeout(function() {
+        u(e.trigger).text("Copy");
+      }, 3000);
+      e.clearSelection();
+    });
   }
 }
