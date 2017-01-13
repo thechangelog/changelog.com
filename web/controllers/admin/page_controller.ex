@@ -13,7 +13,7 @@ defmodule Changelog.Admin.PageController do
        Newsletter.jsparty()]
       |> Enum.map(&Newsletter.get_stats/1)
 
-    render(conn, :index, newsletters: newsletters, draft_episodes: draft_episodes, draft_posts: draft_posts)
+    render(conn, :index, newsletters: newsletters, draft_episodes: draft_episodes(), draft_posts: draft_posts())
   end
 
   defp draft_episodes do

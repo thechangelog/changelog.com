@@ -7,7 +7,7 @@ defmodule Changelog.Repo.Migrations.CreateEpisodeHost do
       add :person_id, references(:people, on_delete: :nothing)
       add :episode_id, references(:episodes, on_delete: :nothing)
 
-      timestamps
+      timestamps()
     end
 
     create index(:episode_hosts, [:person_id])

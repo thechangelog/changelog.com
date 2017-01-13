@@ -62,7 +62,7 @@ defmodule Changelog.ModelCase do
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
 
-  def fixtures_path do
+  def fixtures_path() do
     Path.dirname(__ENV__.file) <> "/../fixtures"
   end
 end

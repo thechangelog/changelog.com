@@ -8,7 +8,7 @@ defmodule Changelog.PostChannel do
     belongs_to :channel, Changelog.Channel
     belongs_to :post, Changelog.Post
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(position)

@@ -7,7 +7,7 @@ defmodule Changelog.PostControllerTest do
     unpublished = insert(:post, published: false)
     scheduled = insert(:scheduled_post)
 
-    conn = get(build_conn, post_path(build_conn, :index))
+    conn = get(build_conn(), post_path(build_conn(), :index))
 
     assert conn.status == 200
     assert conn.resp_body =~ p1.title
@@ -18,7 +18,7 @@ defmodule Changelog.PostControllerTest do
 
   test "getting a published post page" do
     p = insert(:published_post)
-    conn = get(build_conn, post_path(build_conn, :show, p.slug))
+    conn = get(build_conn(), post_path(build_conn(), :show, p.slug))
     assert html_response(conn, 200) =~ p.title
   end
 
@@ -26,20 +26,20 @@ defmodule Changelog.PostControllerTest do
     p = insert(:post)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(build_conn, post_path(build_conn, :show, p.slug))
+      get(build_conn(), post_path(build_conn(), :show, p.slug))
     end
   end
 
   test "geting a post page that doesn't exist" do
     assert_raise Ecto.NoResultsError, fn ->
-      get(build_conn, post_path(build_conn, :show, "bad-post"))
+      get(build_conn(), post_path(build_conn(), :show, "bad-post"))
     end
   end
 
   test "previewing a post when not an admin" do
     p = insert(:post)
 
-    conn = get(build_conn, post_path(build_conn, :preview, p.slug))
+    conn = get(build_conn(), post_path(build_conn(), :preview, p.slug))
     assert conn.halted
   end
 

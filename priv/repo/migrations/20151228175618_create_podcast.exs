@@ -10,7 +10,7 @@ defmodule Changelog.Repo.Migrations.CreatePodcast do
       add :keywords, :string
       add :twitter_handle, :string
 
-      timestamps
+      timestamps()
     end
 
     create unique_index(:podcasts, [:slug])

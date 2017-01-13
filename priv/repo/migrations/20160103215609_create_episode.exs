@@ -12,7 +12,7 @@ defmodule Changelog.Repo.Migrations.CreateEpisode do
       add :summary, :text
       add :podcast_id, references(:podcasts)
 
-      timestamps
+      timestamps()
     end
     create index(:episodes, [:podcast_id])
     create unique_index(:episodes, [:slug, :podcast_id])

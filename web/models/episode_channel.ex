@@ -8,7 +8,7 @@ defmodule Changelog.EpisodeChannel do
     belongs_to :channel, Changelog.Channel
     belongs_to :episode, Changelog.Episode
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(position)

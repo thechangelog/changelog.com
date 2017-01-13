@@ -11,7 +11,7 @@ defmodule Changelog.Repo.Migrations.CreateEpisodeStat do
       add :demographics, :jsonb
       add :episode_id, references(:episodes)
       add :podcast_id, references(:podcasts)
-      timestamps
+      timestamps()
     end
 
     create index(:episode_stats, [:date])

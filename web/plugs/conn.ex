@@ -9,8 +9,8 @@ defmodule Changelog.Plug.Conn do
 
     encrypted = Plug.Crypto.MessageEncryptor.encrypt_and_sign(
       :erlang.term_to_binary(value),
-      generate(conn, @signing_salt, key_opts),
-      generate(conn, @encryption_salt, key_opts))
+      generate(conn, @signing_salt, key_opts()),
+      generate(conn, @encryption_salt, key_opts()))
 
     put_resp_cookie conn, key, encrypted, opts
   end
@@ -22,8 +22,8 @@ defmodule Changelog.Plug.Conn do
       encrypted ->
         {:ok, decrypted} = Plug.Crypto.MessageEncryptor.verify_and_decrypt(
           encrypted,
-          generate(conn, @signing_salt, key_opts),
-          generate(conn, @encryption_salt, key_opts))
+          generate(conn, @signing_salt, key_opts()),
+          generate(conn, @encryption_salt, key_opts()))
 
         :erlang.binary_to_term(decrypted)
     end

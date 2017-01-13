@@ -8,7 +8,7 @@
 
     <div class="field required <%= error_class(f, :status) %>">
       <%= label f, :status %>
-      <%= select f, :status, status_options, class: "ui fluid dropdown" %>
+      <%= select f, :status, status_options(), class: "ui fluid dropdown" %>
     </div>
   </div>
 
@@ -102,5 +102,5 @@
     <%= error_message(f, :ping_url) %>
   </div>
 
-  <%= form_actions %>
+  <%= form_actions() %>
 <% end %>

@@ -14,7 +14,7 @@ defmodule Changelog.EpisodeSponsor do
     belongs_to :episode, Changelog.Episode
     belongs_to :sponsor, Changelog.Sponsor
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(position title link_url)

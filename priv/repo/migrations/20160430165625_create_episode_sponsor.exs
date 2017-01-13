@@ -10,7 +10,7 @@ defmodule Changelog.Repo.Migrations.CreateEpisodeSponsor do
       add :episode_id, references(:episodes, on_delete: :nothing)
       add :sponsor_id, references(:sponsors, on_delete: :nothing)
 
-      timestamps
+      timestamps()
     end
 
     create index(:episode_sponsors, [:episode_id])

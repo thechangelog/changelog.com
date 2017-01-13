@@ -13,7 +13,7 @@ defmodule Changelog.Channel do
     has_many :post_channels, Changelog.PostChannel, on_delete: :delete_all
     has_many :posts, through: [:post_channels, :post]
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(name slug)

@@ -24,7 +24,7 @@ defmodule Changelog.Podcast do
     has_many :hosts, through: [:podcast_hosts, :person]
     has_many :episode_stats, EpisodeStat
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(name slug status)
@@ -62,9 +62,9 @@ defmodule Changelog.Podcast do
 
   def get_by_slug(slug) do
     if slug == "master" do
-      master
+      master()
     else
-      public
+      public()
       |> Repo.get_by!(slug: slug)
       |> preload_hosts
     end

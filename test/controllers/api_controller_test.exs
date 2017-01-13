@@ -6,7 +6,7 @@ defmodule Changelog.APIControllerTest do
       episode = insert(:published_episode)
       episode_url = "https://changelog.com/#{episode.podcast.slug}/#{episode.slug}"
 
-      conn = get(build_conn, "/api/oembed?url=#{episode_url}")
+      conn = get(build_conn(), "/api/oembed?url=#{episode_url}")
 
       assert conn.status == 200
       assert conn.resp_body =~ "iframe"
@@ -15,13 +15,13 @@ defmodule Changelog.APIControllerTest do
 
     test "with invalid url param" do
       assert_raise Ecto.NoResultsError, fn ->
-        get(build_conn, "/api/oembed?url=https://changelog.com")
+        get(build_conn(), "/api/oembed?url=https://changelog.com")
       end
     end
 
     test "with no url param" do
       assert_raise Ecto.NoResultsError, fn ->
-        get(build_conn, "/api/oembed")
+        get(build_conn(), "/api/oembed")
       end
     end
   end

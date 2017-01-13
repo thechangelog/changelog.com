@@ -22,7 +22,7 @@ defmodule Changelog.Person do
     has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
     has_many :episode_guests, Changelog.EpisodeGuest, on_delete: :delete_all
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(name email handle)

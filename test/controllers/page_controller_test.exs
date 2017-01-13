@@ -23,7 +23,7 @@ defmodule Changelog.PageControllerTest do
       "/gotime/confirmed",
       "/rfc/confirmed"
     ], fn route ->
-      conn = get(build_conn, route)
+      conn = get(build_conn(), route)
       assert conn.status == 200
     end)
   end
@@ -31,7 +31,7 @@ defmodule Changelog.PageControllerTest do
   test "home page includes featured episode" do
     featured = insert :published_episode, featured: true, highlight: "ohai"
 
-    conn = get(build_conn, "/")
+    conn = get(build_conn(), "/")
 
     assert html_response(conn, 200) =~ featured.title
   end

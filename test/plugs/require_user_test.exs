@@ -3,7 +3,7 @@ defmodule Changelog.RequireUserTest do
 
   setup _config do
     conn =
-      build_conn
+      build_conn()
       |> bypass_through(Changelog.Router, :browser)
       |> get("/")
     {:ok, %{conn: conn}}

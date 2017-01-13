@@ -8,7 +8,7 @@ defmodule Changelog.PodcastHost do
     belongs_to :podcast, Changelog.Podcast
     belongs_to :person, Changelog.Person
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(position)

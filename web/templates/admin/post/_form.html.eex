@@ -81,5 +81,5 @@
     </div>
   </div>
 
-  <%= form_actions %>
+  <%= form_actions() %>
 <% end %>

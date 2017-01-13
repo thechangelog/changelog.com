@@ -8,7 +8,7 @@ defmodule Changelog.Repo.Migrations.CreateTopic do
       add :description, :text
       add :website, :string
 
-      timestamps
+      timestamps()
     end
 
     create index(:topics, [:name])

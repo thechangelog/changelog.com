@@ -17,7 +17,7 @@ defmodule Changelog.Sponsor do
 
     has_many :episode_sponsors, Changelog.EpisodeSponsor, on_delete: :delete_all
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(name)

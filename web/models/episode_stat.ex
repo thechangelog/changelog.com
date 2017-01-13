@@ -11,7 +11,7 @@ defmodule Changelog.EpisodeStat do
 
     belongs_to :episode, Changelog.Episode
     belongs_to :podcast, Changelog.Podcast
-    timestamps
+    timestamps()
   end
 
   def newest_first(query, field \\ :date) do

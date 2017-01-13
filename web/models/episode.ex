@@ -42,7 +42,7 @@ defmodule Changelog.Episode do
     has_many :sponsors, through: [:episode_sponsors, :sponsor]
     has_many :episode_stats, EpisodeStat
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(slug title published featured)

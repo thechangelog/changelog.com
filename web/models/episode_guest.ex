@@ -8,7 +8,7 @@ defmodule Changelog.EpisodeGuest do
     belongs_to :person, Changelog.Person
     belongs_to :episode, Changelog.Episode
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(position)

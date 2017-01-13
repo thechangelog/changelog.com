@@ -11,7 +11,7 @@ defmodule Changelog.Repo.Migrations.CreatePerson do
       add :bio, :text
       add :website, :string
 
-      timestamps
+      timestamps()
     end
 
     create unique_index(:people, [:name])

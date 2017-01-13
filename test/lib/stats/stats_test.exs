@@ -6,7 +6,7 @@ defmodule ChangelogStatsTest do
   alias Changelog.{Stats, Episode, Podcast, Repo}
 
   defp fixture_list(date) do
-    file_dir = "#{fixtures_path}/logs/#{date}"
+    file_dir = "#{fixtures_path()}/logs/#{date}"
     {:ok, files} = File.ls(file_dir)
      Enum.map(files, fn(file) -> "#{file_dir}/#{file}" end)
   end

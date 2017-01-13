@@ -8,10 +8,10 @@ defmodule Changelog.EpisodeControllerTest do
     insert(:episode_host, episode: e)
     insert(:episode_sponsor, episode: e)
 
-    conn = get(build_conn, episode_path(build_conn, :show, p.slug, e.slug))
+    conn = get(build_conn(), episode_path(build_conn(), :show, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
 
-    conn = get(build_conn, episode_path(build_conn, :embed, p.slug, e.slug))
+    conn = get(build_conn(), episode_path(build_conn(), :embed, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
   end
 
@@ -20,7 +20,7 @@ defmodule Changelog.EpisodeControllerTest do
     e = insert(:scheduled_episode, podcast: p)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(build_conn, episode_path(build_conn, :show, p.slug, e.slug))
+      get(build_conn(), episode_path(build_conn(), :show, p.slug, e.slug))
     end
   end
 
@@ -29,7 +29,7 @@ defmodule Changelog.EpisodeControllerTest do
     e = insert(:episode, podcast: p)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(build_conn, episode_path(build_conn, :show, p.slug, e.slug))
+      get(build_conn(), episode_path(build_conn(), :show, p.slug, e.slug))
     end
   end
 
@@ -37,7 +37,7 @@ defmodule Changelog.EpisodeControllerTest do
     p = insert(:podcast)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(build_conn, episode_path(build_conn, :show, p.slug, "bad-episode"))
+      get(build_conn(), episode_path(build_conn(), :show, p.slug, "bad-episode"))
     end
   end
 
@@ -45,7 +45,7 @@ defmodule Changelog.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    conn = get(build_conn, episode_path(build_conn, :preview, p.slug, e.slug))
+    conn = get(build_conn(), episode_path(build_conn(), :preview, p.slug, e.slug))
     assert conn.halted
   end
 
@@ -67,7 +67,7 @@ defmodule Changelog.EpisodeControllerTest do
       e = insert(:episode, podcast: p)
 
       assert_raise Ecto.NoResultsError, fn ->
-        get(build_conn, episode_path(build_conn, :play, p.slug, e.slug))
+        get(build_conn(), episode_path(build_conn(), :play, p.slug, e.slug))
       end
     end
 
@@ -75,7 +75,7 @@ defmodule Changelog.EpisodeControllerTest do
       p = insert(:podcast)
       e = insert(:published_episode, podcast: p)
 
-      conn = get(build_conn, episode_path(build_conn, :play, p.slug, e.slug))
+      conn = get(build_conn(), episode_path(build_conn(), :play, p.slug, e.slug))
       assert conn.status == 200
       assert conn.resp_body =~ p.name
       assert conn.resp_body =~ e.title
@@ -87,7 +87,7 @@ defmodule Changelog.EpisodeControllerTest do
       e = insert(:published_episode, podcast: p, slug: "2")
       next = insert(:published_episode, podcast: p, slug: "3")
 
-      conn = get(build_conn, episode_path(build_conn, :play, p.slug, e.slug))
+      conn = get(build_conn(), episode_path(build_conn(), :play, p.slug, e.slug))
       assert conn.status == 200
       assert conn.resp_body =~ prev.slug
       assert conn.resp_body =~ next.slug
@@ -99,7 +99,7 @@ defmodule Changelog.EpisodeControllerTest do
       p = insert(:podcast)
       e = insert(:published_episode, podcast: p)
 
-      conn = get(build_conn, episode_path(build_conn, :share, p.slug, e.slug))
+      conn = get(build_conn(), episode_path(build_conn(), :share, p.slug, e.slug))
       assert conn.status == 200
       assert conn.resp_body =~ e.title
     end

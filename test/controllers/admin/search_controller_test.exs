@@ -38,7 +38,7 @@ defmodule Changelog.Admin.SearchControllerTest do
   end
 
   test "requires user auth" do
-    conn = get(build_conn, "/admin/search/channel?q=ect&f=json")
+    conn = get(build_conn(), "/admin/search/channel?q=ect&f=json")
     assert html_response(conn, 302)
     assert conn.halted
   end

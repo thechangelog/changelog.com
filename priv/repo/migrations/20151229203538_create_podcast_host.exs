@@ -7,7 +7,7 @@ defmodule Changelog.Repo.Migrations.CreatePodcastHost do
       add :podcast_id, references(:podcasts)
       add :person_id, references(:people)
 
-      timestamps
+      timestamps()
     end
 
     create index(:podcast_hosts, [:podcast_id])

@@ -3,7 +3,7 @@ defmodule Changelog.SearchControllerTest do
 
   describe "without query" do
     test "getting the search" do
-      conn = get(build_conn, search_path(build_conn, :search))
+      conn = get(build_conn(), search_path(build_conn(), :search))
 
       assert conn.status == 200
     end
@@ -15,7 +15,7 @@ defmodule Changelog.SearchControllerTest do
       episode1 = insert(:published_episode, podcast: podcast, slug: "1", title: "Phoenix")
       episode2 = insert(:published_episode, podcast: podcast, slug: "2", title: "Rails")
 
-      conn = get(build_conn, search_path(build_conn, :search, q: "phoenix"))
+      conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
 
       assert conn.status == 200
       assert conn.resp_body =~ "1 episode"
@@ -30,7 +30,7 @@ defmodule Changelog.SearchControllerTest do
       post1 = insert(:published_post, title: "Phoenix")
       post2 = insert(:published_post, title: "Rails")
 
-      conn = get(build_conn, search_path(build_conn, :search, q: "phoenix"))
+      conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
 
       assert conn.status == 200
       assert conn.resp_body =~ "1 episode"
@@ -45,7 +45,7 @@ defmodule Changelog.SearchControllerTest do
       podcast = insert(:podcast)
       Enum.map(1..11, fn(x) -> insert(:published_episode, podcast: podcast, title: "Elixir #{x}") end)
 
-      conn = get(build_conn, search_path(build_conn, :search, q: "elixir", type: "episodes", page: 2))
+      conn = get(build_conn(), search_path(build_conn(), :search, q: "elixir", type: "episodes", page: 2))
 
       assert conn.status == 200
       assert conn.resp_body =~ "11 episodes"
@@ -54,7 +54,7 @@ defmodule Changelog.SearchControllerTest do
     end
 
     test "getting the search without results" do
-      conn = get(build_conn, search_path(build_conn, :search, q: "phoenix"))
+      conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
 
       assert conn.status == 200
       assert conn.resp_body =~ "There are no results"
