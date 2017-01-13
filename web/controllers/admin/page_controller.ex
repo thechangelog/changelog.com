@@ -9,7 +9,8 @@ defmodule Changelog.Admin.PageController do
     newsletters =
       [Newsletter.weekly(),
        Newsletter.nightly(),
-       Newsletter.gotime()]
+       Newsletter.gotime(),
+       Newsletter.jsparty()]
       |> Enum.map(&Newsletter.get_stats/1)
 
     render(conn, :index, newsletters: newsletters, draft_episodes: draft_episodes, draft_posts: draft_posts)

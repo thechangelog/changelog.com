@@ -23,7 +23,7 @@
 <div class="ui basic segment">
   <div class="ui stackable centered grid">
   <%= for newsletter <- @newsletters do %>
-    <div class="ui five wide column">
+    <div class="ui four wide column">
       <div class="ui segment">
         <h3 class="ui header">
           <div class="content">
@@ -36,17 +36,17 @@
         <div class="ui three tiny statistics">
           <div class="statistic">
             <div class="value"><i class="angle up icon"></i> <%= NewsletterView.subscribers(newsletter, :daily) %></div>
-            <div class="label">Today</div>
+            <div class="label">Day</div>
           </div>
 
           <div class="statistic">
             <div class="value"><i class="angle up icon"></i> <%= NewsletterView.subscribers(newsletter, :weekly) %></div>
-            <div class="label">This Week</div>
+            <div class="label">Week</div>
           </div>
 
           <div class="statistic">
             <div class="value"><i class="angle up icon"></i> <%= NewsletterView.subscribers(newsletter, :monthly) %></div>
-            <div class="label">This Month</div>
+            <div class="label">Month</div>
           </div>
         </div>
       </div>

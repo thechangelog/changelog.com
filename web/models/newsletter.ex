@@ -10,6 +10,12 @@ defmodule Changelog.Newsletter do
                 web_id: "B4546FE361E47720"}
   end
 
+  def jsparty() do
+    %__MODULE__{name: "JS Party",
+                list_id: "20e33901de0aaa012a2cb03a4b5022ae",
+                web_id: "7BE6863044968997"}
+  end
+
   def nightly() do
     %__MODULE__{name: "Nightly",
                 list_id: "95a8fbc221a2240ac7469d661bac650a",
