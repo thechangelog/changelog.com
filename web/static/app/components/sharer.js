@@ -17,10 +17,22 @@ export default class Sharer {
 
     this.copyUrlButton = new Clipboard(".js-share-copy-url", {
       target: function(trigger) { return trigger.previousElementSibling; }
+    }).on("success", function(e) {
+      u(e.trigger).text("Copied!");
+      window.setTimeout(function() {
+        u(e.trigger).text("Copy");
+      }, 3000);
+      e.clearSelection();
     });
 
     this.copyEmbedButton = new Clipboard(".js-share-copy-embed", {
       target: function(trigger) { return trigger.previousElementSibling; }
+    }).on("success", function(e) {
+      u(e.trigger).text("Copied!");
+      window.setTimeout(function() {
+        u(e.trigger).text("Copy");
+      }, 3000);
+      e.clearSelection();
     });
 
     // events
