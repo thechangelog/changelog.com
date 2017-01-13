@@ -1,0 +1,7 @@
+<div id="share" class="share_overlay" data-turbolinks-permanent>
+  <button class="share_overlay-close js-share-close"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide share overlay"></button>
+  <div class="share_overlay-curtain js-share-close"></div>
+  <div class="share_overlay-scroll_wrap">
+    <div class="share_overlay-wrap js-share-content"></div>
+  </div>
+</div>

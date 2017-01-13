@@ -73,6 +73,18 @@ defmodule Changelog.EpisodeController do
     render(conn, "play.json", podcast: podcast, episode: episode, prev: preloaded(prev), next: preloaded(next))
   end
 
+  def share(conn, %{"podcast" => podcast, "slug" => slug}) do
+    podcast = Repo.get_by!(Podcast, slug: podcast)
+
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Repo.get_by!(slug: slug)
+      |> Episode.preload_podcast
+
+    render(conn, "share.json", podcast: podcast, episode: episode)
+  end
+
   defp preloaded(episode) when is_nil(episode), do: nil
   defp preloaded(episode), do: Episode.preload_podcast(episode)
 end

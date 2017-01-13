@@ -4,6 +4,30 @@
     @media (min-width: $desktop)
         padding: $padding-extra-large 0
 
+    &-form
+        $accent: $green
+        margin: 0 0 1em
+
+        input
+            @extend %display-font
+            background: $white
+            border: 2px solid rgba($accent, 0.8)
+            border-radius: 100px
+            font-size: 1.5em
+            // color: $white
+            padding: 1em 2em 0.85em
+            text-transform: none
+            width: 100%
+
+            &:focus,
+            &:active
+                border-color: $accent
+
+            +placeholder
+                color: $dark-grey
+                opacity: 1
+                text-transform: uppercase
+
     &_results
         margin-top: 2rem
 

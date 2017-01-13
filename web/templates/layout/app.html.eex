@@ -44,6 +44,7 @@
     <main class="main">
       <%= render(@view_module, @view_template, assigns) %>
     </main>
+    <%= render("_share_overlay.html", assigns) %>
     <%= render("_footer.html", assigns) %>
     <%= render("_player.html", assigns) %>
   </body>
