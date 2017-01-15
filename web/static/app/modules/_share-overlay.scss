@@ -67,6 +67,10 @@
     width: 100%;
     padding: 30px;
 
+    @media (min-width: 760px) {
+      width: 50%;
+    }
+
     &-heading {
       color: $white;
       font-size: 1.625em;
