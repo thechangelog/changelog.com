@@ -1,7 +1,7 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2>Howdy, <%= @current_user.handle %></h2>
+      <h2>Welcome $HOME</h2>
     </header>
     <div class="content_body">
       <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
@@ -10,13 +10,15 @@
 
       <ul>
       <%= if @current_user.admin do %>
-        <li><%= link "Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+        <li><%= link("Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
        <% end %>
-        <li><%= link "Edit your profile", to: home_path(@conn, :edit) %></li>
-        <li>Request a Slack invite</li>
+        <li><%= link("Edit your profile", to: home_path(@conn, :edit)) %></li>
+        <li><%= link("Request a Slack Invite", to: home_path(@conn, :slack), method: :post) %></li>
+        <li><%= link("Launch Slack", to: "https://changelog.slack.com") %></li>
         <li>Subscribe to Changelog Weekly</li>
         <li>Subscribe to Changelog Nightly</li>
-        <li><%= link "Sign out", to: sign_out_path(@conn, :delete) %></li>
+        <li>Shop Changelog Merch</li>
+        <li><%= link("Sign out", to: sign_out_path(@conn, :delete)) %></li>
         <li>More coming!</li>
       </ul>
     </div>

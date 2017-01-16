@@ -4,7 +4,7 @@ defmodule Changelog.HomeControllerTest do
   @tag :as_user
   test "renders the home page", %{conn: conn, user: user} do
     conn = get(conn, home_path(conn, :show))
-    assert html_response(conn, 200) =~ user.handle
+    assert html_response(conn, 200)
   end
 
   @tag :as_user

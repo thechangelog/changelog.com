@@ -54,6 +54,11 @@ u(document).on("click", "a[href^=http]", function(event) {
   }
 });
 
+// our own little phoenix_html
+u(document).handle("click", "a[data-submit=parent]", function(event) {
+  u(event.target.parentNode).trigger("submit");
+});
+
 // submit Campain Monitor forms via jsonp
 u(document).on("submit", "form.js-cm", function(event) {
   event.preventDefault();
@@ -76,8 +81,8 @@ u(document).on("submit", "form.js-cm", function(event) {
   document.body.appendChild(script);
 });
 
-// integrate ajax forms with Turbolinks
-u(document).on("submit", "form.js-remote", function(event) {
+// submit all other forms with Turbolinks
+u(document).on("submit", "form:not(.js-cm)", function(event) {
   event.preventDefault();
 
   const form = u(this);
