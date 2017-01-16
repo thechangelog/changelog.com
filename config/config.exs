@@ -16,7 +16,8 @@ config :changelog, Changelog.Endpoint,
 
 config :changelog,
   ecto_repos: [Changelog.Repo],
-  cm_api_token: Base.encode64("#{System.get_env("CM_API_TOKEN")}:x")
+  cm_api_token: Base.encode64("#{System.get_env("CM_API_TOKEN")}:x"),
+  slack_api_token: System.get_env("SLACK_API_TOKEN")
 
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.LocalAdapter
