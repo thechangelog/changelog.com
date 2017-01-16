@@ -1,8 +1,5 @@
 defmodule Changelog.Admin.PostView do
-  use Changelog.Web, :view
-
-  import Changelog.Admin.SharedView, only: :functions
-  import Scrivener.HTML
+  use Changelog.Web, :admin_view
 
   alias Changelog.Post
 

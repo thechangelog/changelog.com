@@ -1,5 +1,5 @@
 defmodule Changelog.ErrorView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 
   # In case no render clause matches or no
   # template is found, let's render it as 500

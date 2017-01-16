@@ -1,5 +1,5 @@
 defmodule Changelog.FeedView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 
   alias Changelog.{EpisodeView, PersonView, PodcastView, PostView, TimeView}
   alias Changelog.Podcast

@@ -1,5 +1,5 @@
 defmodule Changelog.SponsorView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 
   def logo_url(sponsor, type, version) do
     {module, file} = case type do

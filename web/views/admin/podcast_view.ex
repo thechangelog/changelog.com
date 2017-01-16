@@ -1,7 +1,5 @@
 defmodule Changelog.Admin.PodcastView do
-  use Changelog.Web, :view
-
-  import Changelog.Admin.SharedView
+  use Changelog.Web, :admin_view
 
   alias Changelog.PodcastView
 

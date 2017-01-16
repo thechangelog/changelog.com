@@ -1,5 +1,5 @@
 defmodule Changelog.Admin.PageView do
-  use Changelog.Web, :view
+  use Changelog.Web, :admin_view
 
   alias Changelog.{Episode, Repo, TimeView}
   alias Changelog.Admin.{NewsletterView, EpisodeView}
