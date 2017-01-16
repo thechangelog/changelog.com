@@ -19,7 +19,7 @@ defmodule Changelog.Slack.Client do
 
   def invite(email) do
     token = Application.get_env(:changelog, :slack_api_token)
-    form = ~s(email=#{email}&token=#{token}&set_active=true)
+    form = ~s(email=#{email}&token=#{token}&resend=true)
     {_, response} = post("/users.admin.invite", form)
     response.body
   end

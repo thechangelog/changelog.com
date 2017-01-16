@@ -16,7 +16,7 @@
       <p>Sign in with <a href="/auth/github">GitHub</a>.</p>
 
       <p>Sign in with email.</p>
-      <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form js-remote"], fn f -> %>
+      <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form"], fn f -> %>
         <div class="form_element_wrap">
           <label>Email<span>*</span></label>
           <div class="form_element">
