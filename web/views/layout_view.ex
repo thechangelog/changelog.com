@@ -1,5 +1,5 @@
 defmodule Changelog.LayoutView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 
   import Changelog.Meta.{AdminTitle, Title, Image, Description, Feeds, Twitter}
 

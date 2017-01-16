@@ -1,8 +1,5 @@
 defmodule Changelog.Admin.PersonView do
-  use Changelog.Web, :view
-
-  import Changelog.Admin.SharedView
-  import Scrivener.HTML
+  use Changelog.Web, :admin_view
 
   def avatar_url(person), do: Changelog.PersonView.avatar_url(person)
   def episode_count(person), do: Changelog.Person.episode_count(person)

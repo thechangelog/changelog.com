@@ -1,3 +1,3 @@
 defmodule Changelog.EmailView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 end

@@ -1,5 +1,5 @@
 defmodule Changelog.Admin.SearchView do
-  use Changelog.Web, :view
+  use Changelog.Web, :admin_view
 
   alias Changelog.Endpoint
 

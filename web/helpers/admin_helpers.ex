@@ -1,4 +1,4 @@
-defmodule Changelog.Admin.SharedView do
+defmodule Changelog.Helpers.AdminHelpers do
   use Phoenix.HTML
 
   alias Changelog.Repo
@@ -18,6 +18,10 @@ defmodule Changelog.Admin.SharedView do
       </div>
     </div>
     """
+  end
+
+  def error_class(form, field) do
+    if form.errors[field], do: "error", else: ""
   end
 
   def error_message(form, field) do
@@ -45,4 +49,19 @@ defmodule Changelog.Admin.SharedView do
   end
 
   def is_persisted(struct), do: is_integer(struct.id)
+
+  def truncate(string, length) when is_binary(string) do
+    if String.length(string) > length do
+      String.slice(string, 0, length) <> "..."
+    else
+      string
+    end
+  end
+  def truncate(_string, _length), do: ""
+
+  def ts(ts) when is_nil(ts), do: ""
+  def ts(ts) do
+    {:ok, formatted} = Timex.format(ts, "{ISO:Extended}")
+    {:safe, "<span class='time'>#{formatted}</span>"}
+  end
 end

@@ -1,5 +1,6 @@
 defmodule Changelog.AuthView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
+
   alias Changelog.Person
 
   def auth_path(conn, person) do

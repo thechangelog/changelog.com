@@ -1,7 +1,7 @@
 defmodule Changelog.Meta.Description do
   alias Changelog.{EpisodeView, PageView, PodcastView, PostView}
 
-  import Changelog.Helpers.ViewHelpers, only: [md_to_text: 1]
+  import Changelog.Helpers.PublicHelpers, only: [md_to_text: 1]
 
   def description(assigns), do: assigns |> get
 

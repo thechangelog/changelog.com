@@ -1,8 +1,5 @@
 defmodule Changelog.Admin.EpisodeView do
-  use Changelog.Web, :view
-
-  import Changelog.Admin.SharedView
-  import Scrivener.HTML
+  use Changelog.Web, :admin_view
 
   alias Changelog.{Episode, EpisodeView, TimeView, Repo, EpisodeStat}
 
