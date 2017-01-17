@@ -15,7 +15,7 @@ defmodule Craisin do
   defp process_response_body(body), do: JSX.decode!(body)
 
   def handle({:ok, %HTTPoison.Response{status_code: 200, body: body}}), do: body
-  def handle({:ok, %HTTPoison.Response{status_code: 401, body: body}}) do
+  def handle({:ok, %HTTPoison.Response{status_code: code, body: body}}) when code > 400 do
     log(body["Message"])
     %{}
   end
