@@ -6,7 +6,8 @@
     <%= if @status == "draft" do %>
       <th>Record Time</th>
     <% else %>
-      <th>Publish Time</th>
+      <th>Duration</th>
+      <th>Publish Date</th>
     <% end %>
       <th>Downloads</th>
       <th>Reach</th>
@@ -20,7 +21,8 @@
       <td><%= episode.slug %></td>
       <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
       <%= if episode.published do %>
-      <td><%= ts(episode.published_at) %></td>
+      <td><%= TimeView.duration(episode.duration) %></td>
+      <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <% else %>
       <td><%= ts(episode.recorded_at) %></td>
       <% end %>
