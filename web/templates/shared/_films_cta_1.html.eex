@@ -6,13 +6,13 @@
     </header>
     <article class="film">
       <header class="film_header">
-        <h3>Beyond Code: Season 3 / GopherCon 2015</h3>
-        <time datetime="2016-06-01T12:00">June 2016</time>
+        <h3>GopherCon 2016 Conference Recap</h3>
+        <time datetime="2016-07-13T12:00">July 2016</time>
       </header>
-      <script src="//fast.wistia.com/embed/medias/flcb9g0nkr.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_flcb9g0nkr videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+      <script src="//fast.wistia.com/embed/medias/wmee2ytxqe.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wmee2ytxqe videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
     </article>
     <footer class="btn-container btn-container--flex">
-      <a class="btn" href="#">Hire us</a>
+      <a class="btn" href="/contact">Hire us</a>
       <%= link "View more films", to: page_path(@conn, :films), class: "btn btn--white" %>
     </footer>
   </section>
