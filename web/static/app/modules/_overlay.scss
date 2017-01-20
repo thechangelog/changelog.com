@@ -1,4 +1,4 @@
-.share_overlay {
+.overlay {
   background: $black;
   display: none;
   position: fixed;
@@ -71,10 +71,17 @@
       width: 50%;
     }
 
+    &-lead_in {
+      @extend %display-font;
+      color: $medium-grey;
+      margin: 0 0 0.5em;
+    }
+
     &-heading {
       color: $white;
       font-size: 1.625em;
       text-transform: uppercase;
+      margin: 0 0 1em;
     }
 
     &:nth-child(2) {
@@ -87,6 +94,27 @@
     }
   }
 
+  // Simple nav similar to main nav lists
+  &-nav {
+    margin: 0;
+    padding: 0;
+
+    li {
+      @extend %display-font;
+      display: block;
+      font-family: $display;
+      font-size: 1.15em;
+      line-height: 1.25em;
+      margin: 0.75em 0;
+
+      a {
+        color: $green;
+        &:hover { color: $white; }
+      }
+    }
+  }
+
+  // For Share Overlay style button links
   &-links {
     padding: 0;
     text-align: center;
