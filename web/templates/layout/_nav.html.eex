@@ -16,65 +16,91 @@
     <input name="q" type="text" placeholder="Search..." value="" />
   </form>
 
-  <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
-  <div class="navigation-bar_tray">
-    <div class="navigation-tray">
-      <h2 class="accessibility-hidden">Site Navigation</h2>
-      <div class="navigation-bar">
-        <%= link to: "/", class: "navigation-tray_logo navigation-bar_logo" do %>
-          <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="Changelog Media"></h1>
-        <% end %>
-        <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide site navigation menu"></button>
+  <div class="navigation-bar_right">
+    <%= link to: "~", class: "navigation-bar_user" do %>
+      <img src="https://pbs.twimg.com/profile_images/625162548984176640/QepijcVh_400x400.jpg" width="35" height="35" alt="Your Profile Photo">
+    <% end %>
+    <div id="account" class="overlay overlay--account" data-turbolinks-permanent>
+      <button class="overlay-close js-share-close"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide share overlay"></button>
+      <div class="overlay-curtain js-share-close"></div>
+      <div class="overlay-scroll_wrap">
+        <div class="overlay-wrap">
+          <div class="overlay-section">
+            <p class="overlay-section-lead_in">Signed in as</p>
+            <h3 class="overlay-section-heading">User Name Here</h3>
+            <ul class="overlay-nav">
+              <li><%= link "My Account", to: "" %></li>
+              <li><%= link "Account Settings", to: "" %></li>
+              <li><%= link "Launch Slack", to: "" %></li>
+              <li><%= link "Sign Out", to: "" %></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="navigation-tray_content">
-        <div class="navigation-tray_content_sections">
-          <aside class="navigation-tray-section navigation-tray-section--aside">
-            <header>
-              <img src="<%= static_url(@conn, "/images/logo-changelog-white.svg") %>" alt="Changelog Media">
-            </header>
-            <p>Changelog is a digital media company focused on telling developer-centric stories that get to the heart. We exist to enrich the lives of developers.</p>
-            <p class="tagline">Hacker to the heart</p>
-          </aside>
-          <nav class="navigation-tray-section">
-            <header>
-              <img class="desktop-only" src="<%= static_url(@conn, "/images/logo-news-white.svg") %>" alt="Changelog news graphic">
-              <img class="mobile-only" src="<%= static_url(@conn, "/images/logo-news-wide-white.svg") %>" alt="">
-              <h3 class="accessibility-hidden">News</h3>
-            </header>
-            <%= link to: page_path(@conn, :weekly) do %><span>Weekly</span><% end %>
-            <%= link to: page_path(@conn, :nightly) do %><span>Nightly</span><% end %>
-            <%= link to: post_path(@conn, :index) do %><span>Posts</span><% end %>
-          </nav>
-          <nav class="navigation-tray-section">
-            <header>
-              <img class="desktop-only" src="<%= static_url(@conn, "/images/logo-podcasts-white.svg") %>" alt="Changelog podcasts graphic">
-              <img class="mobile-only" src="<%= static_url(@conn, "/images/logo-podcasts-wide-white.svg") %>" alt="">
-              <h3 class="accessibility-hidden">Podcasts</h3>
-            </header>
-            <%= for podcast <- @podcasts do %>
-              <%= link to: podcast_path(@conn, :show, podcast.slug) do %><span><%= podcast.name %></span><% end %>
-            <% end %>
-            <%= link to: podcast_path(@conn, :show, "master") do %><span>Master</span><% end %>
-          </nav>
-          <nav class="navigation-tray-section">
-            <header>
-              <img class="desktop-only" src="<%= static_url(@conn, "/images/logo-films-white.svg") %>" alt="Changelog films graphic">
-              <img class="mobile-only" src="<%= static_url(@conn, "/images/logo-films-wide-white.svg") %>" alt="">
-              <h3 class="accessibility-hidden">Films</h3>
-            </header>
-            <%= link to: page_path(@conn, :films) do %><span>Learn More</span><% end %>
+    </div>
+
+    <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
+    <div class="navigation-bar_tray">
+      <div class="navigation-tray">
+        <h2 class="accessibility-hidden">Site Navigation</h2>
+        <div class="navigation-bar">
+          <%= link to: "/", class: "navigation-tray_logo navigation-bar_logo" do %>
+            <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="Changelog Media"></h1>
+          <% end %>
+          <div class="navigation-bar_right">
+            <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide site navigation menu"></button>
+          </div>
+        </div>
+        <div class="navigation-tray_content">
+          <div class="navigation-tray_content_sections">
+            <aside class="navigation-tray-section navigation-tray-section--aside">
+              <header>
+                <img src="<%= static_url(@conn, "/images/logo-changelog-white.svg") %>" alt="Changelog Media">
+              </header>
+              <p>Changelog is a digital media company focused on telling developer-centric stories that get to the heart. We exist to enrich the lives of developers.</p>
+              <p class="tagline">Hacker to the heart</p>
+            </aside>
+            <nav class="navigation-tray-section">
+              <header>
+                <img class="desktop-only" src="<%= static_url(@conn, "/images/logo-news-white.svg") %>" alt="Changelog news graphic">
+                <img class="mobile-only" src="<%= static_url(@conn, "/images/logo-news-wide-white.svg") %>" alt="">
+                <h3 class="accessibility-hidden">News</h3>
+              </header>
+              <%= link to: page_path(@conn, :weekly) do %><span>Weekly</span><% end %>
+              <%= link to: page_path(@conn, :nightly) do %><span>Nightly</span><% end %>
+              <%= link to: post_path(@conn, :index) do %><span>Posts</span><% end %>
+            </nav>
+            <nav class="navigation-tray-section">
+              <header>
+                <img class="desktop-only" src="<%= static_url(@conn, "/images/logo-podcasts-white.svg") %>" alt="Changelog podcasts graphic">
+                <img class="mobile-only" src="<%= static_url(@conn, "/images/logo-podcasts-wide-white.svg") %>" alt="">
+                <h3 class="accessibility-hidden">Podcasts</h3>
+              </header>
+              <%= for podcast <- @podcasts do %>
+                <%= link to: podcast_path(@conn, :show, podcast.slug) do %><span><%= podcast.name %></span><% end %>
+              <% end %>
+              <%= link to: podcast_path(@conn, :show, "master") do %><span>Master</span><% end %>
+            </nav>
+            <nav class="navigation-tray-section">
+              <header>
+                <img class="desktop-only" src="<%= static_url(@conn, "/images/logo-films-white.svg") %>" alt="Changelog films graphic">
+                <img class="mobile-only" src="<%= static_url(@conn, "/images/logo-films-wide-white.svg") %>" alt="">
+                <h3 class="accessibility-hidden">Films</h3>
+              </header>
+              <%= link to: page_path(@conn, :films) do %><span>Learn More</span><% end %>
+            </nav>
+          </div>
+          <nav class="navigation-tray-side-nav">
+            <h3 class="navigation-tray-side-nav_heading">More Info</h3>
+            <%= link "Subscribe", to: page_path(@conn, :subscribe) %>
+            <%= link "Sponsorship", to: page_path(@conn, :sponsorship) %>
+            <%= link "Search", to: search_path(@conn, :search) %>
+            <%= link "Community", to: page_path(@conn, :community) %>
+            <%= link "About", to: page_path(@conn, :about) %>
+            <%= link "Contact", to: page_path(@conn, :contact) %>
+            <%= link "View Source", to: "https://github.com/thechangelog/changelog.com" %>
           </nav>
         </div>
-        <nav class="navigation-tray-side-nav">
-          <h3 class="navigation-tray-side-nav_heading">More Info</h3>
-          <%= link "Subscribe", to: page_path(@conn, :subscribe) %>
-          <%= link "Sponsorship", to: page_path(@conn, :sponsorship) %>
-          <%= link "Search", to: search_path(@conn, :search) %>
-          <%= link "Community", to: page_path(@conn, :community) %>
-          <%= link "About", to: page_path(@conn, :about) %>
-          <%= link "Contact", to: page_path(@conn, :contact) %>
-          <%= link "View Source", to: "https://github.com/thechangelog/changelog.com" %>
-        </nav>
       </div>
     </div>
   </div>
