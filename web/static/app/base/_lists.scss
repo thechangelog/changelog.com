@@ -29,3 +29,45 @@
     &:last-child { border-bottom: none; }
   }
 }
+
+// Button List
+.button_list {
+  padding: 0;
+
+  &--center {
+    text-align: center;
+  }
+
+  &-item {
+    display: inline-block;
+    margin: 5px;
+    a {
+      background-color: #000;
+      background-repeat: no-repeat;
+      background-position: 1em center;
+      border-radius: 2em;
+      color: $green;
+      display: block;
+      font-size: 1em;
+      padding: 0.6em 1em 0.5em 3em;
+      transition: opacity 0.2s ease-in-out;
+
+      &:hover { opacity: 0.8; }
+
+      &.twitter    { background-image: url("/images/icon-twitter.svg"); }
+      &.hackernews { background-image: url("/images/icon-hackernews.svg"); }
+      &.reddit     { background-image: url("/images/icon-reddit.svg"); }
+      &.facebook   { background-image: url("/images/icon-facebook.svg"); }
+
+      .button_list--green & {
+        background-color: $green;
+        color: $black;
+
+        &.twitter    { background-image: url("/images/icon-twitter-black.svg"); }
+        &.hackernews { background-image: url("/images/icon-hackernews-black.svg"); }
+        &.reddit     { background-image: url("/images/icon-reddit-black.svg"); }
+        &.facebook   { background-image: url("/images/icon-facebook-black.svg"); }
+      }
+    }
+  }
+}

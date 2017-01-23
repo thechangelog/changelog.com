@@ -14,6 +14,15 @@
     <div class="profile-card-bio">
       <p>Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</p>
     </div>
+
+    <ul class="button_list button_list--green">
+      <li class="button_list-item">
+        <a href="" title="on Twitter" class="twitter">@codypeterson</a>
+      </li>
+      <li class="button_list-item">
+        <a href="" title="on Github" class="github">@codyjames</a>
+      </li>
+    </ul>
   </div>
 
   <div class="profile-introduction">
