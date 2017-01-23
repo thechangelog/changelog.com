@@ -10,6 +10,7 @@ export default class Embedly {
       "removeEventListener"];
 
     window.addEventListener("message", (event) => { this.receive(event); });
+    window.addEventListener("load", (event) => { this.sendHeight(); })
     window.addEventListener("resize", (event) => { this.sendHeight(); })
 
     this.send("ready", {
