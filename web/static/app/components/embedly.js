@@ -10,6 +10,7 @@ export default class Embedly {
       "removeEventListener"];
 
     window.addEventListener("message", (event) => { this.receive(event); });
+    window.addEventListener("resize", (event) => { this.sendHeight(); })
 
     this.send("ready", {
       src: window.location.toString(),
@@ -33,6 +34,17 @@ export default class Embedly {
     if (listener != undefined) {
       message.listener = listener;
     }
+
+    window.parent.postMessage(JSON.stringify(message), origin);
+  }
+
+  sendHeight() {
+    let message = {
+      src: window.location.toString(),
+      context: "iframe.resize",
+      height: 220
+    }
+    let origin = "*";
 
     window.parent.postMessage(JSON.stringify(message), origin);
   }
