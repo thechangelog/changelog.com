@@ -1,0 +1,31 @@
+.checklist {
+  font-size: 16px;
+  list-style-type: none;
+  padding: 0;
+
+  &-item {
+    background-position: left center;
+    background-repeat: no-repeat;
+    border-bottom: 2px solid $border-color;
+    padding: 1em 0 1em 60px;
+    position: relative;
+
+    &:before {
+      border: 2px solid $green;
+      content: "";
+      display: block;
+      height: 20px;
+      left: 20px;
+      position: absolute;
+      width: 20px;
+      top: 15px;
+    }
+
+    // TODO: This needs tweaked to look more like the icon (open on the top right)
+    &--checked:before {
+      background-image: url(/images/form-checkmark.svg);
+    }
+
+    &:last-child { border-bottom: none; }
+  }
+}
