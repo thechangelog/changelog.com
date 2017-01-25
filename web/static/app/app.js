@@ -129,4 +129,9 @@ u(document).on("turbolinks:load", function() {
   tallestSlide();
 });
 
+// Make sure homepage featured section is the correct size (after fonts and images load)
+window.setTimeout(function() {
+  tallestSlide();
+}, 500);
+
 Turbolinks.start();
