@@ -1,7 +1,7 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
     <header class="content_header">
-      <h2>Edit your Profile</h2>
+      <h2>Edit Profile</h2>
     </header>
     <div class="content_body">
     <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
@@ -31,6 +31,24 @@
         </div>
       </div>
 
+      <div class="form_element_wrap <%= error_class(f, :bio) %>">
+        <label>Bio</label>
+        <div class="form_element">
+          <%= textarea(f, :bio) %>
+          <%= error_message(f, :bio) %>
+          <p class="form_element_note">Try some Markdown. It *may* work.</p>
+        </div>
+      </div>
+
+      <hr>
+      <div class="form_element_wrap <%= error_class(f, :website) %>">
+        <label>My Website</label>
+        <div class="form_element">
+          <%= text_input(f, :website, placeholder: "https://gracehopper.com") %>
+          <%= error_message(f, :website) %>
+        </div>
+      </div>
+
       <div class="form_element_wrap <%= error_class(f, :github_handle) %>">
         <label>On GitHub</label>
         <div class="form_element">
@@ -47,22 +65,7 @@
         </div>
       </div>
 
-      <div class="form_element_wrap <%= error_class(f, :website) %>">
-        <label>My Website</label>
-        <div class="form_element">
-          <%= text_input(f, :website, placeholder: "https://gracehopper.com") %>
-          <%= error_message(f, :website) %>
-        </div>
-      </div>
-
-      <div class="form_element_wrap <%= error_class(f, :bio) %>">
-        <label>Bio</label>
-        <div class="form_element">
-          <%= textarea(f, :bio) %>
-          <%= error_message(f, :bio) %>
-          <p class="form_element_note">Try some Markdown. It *may* work.</p>
-        </div>
-      </div>
+      <hr>
 
       <div class="form_submit">
         <input type="submit" value="Update Profile">
