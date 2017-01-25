@@ -17,7 +17,7 @@
   </form>
 
   <div class="navigation-bar_right">
-    <%= link to: "~", class: "navigation-bar_user" do %>
+    <%= link to: "/~", class: "navigation-bar_user" do %>
       <img src="https://pbs.twimg.com/profile_images/625162548984176640/QepijcVh_400x400.jpg" width="35" height="35" alt="Your Profile Photo">
     <% end %>
     <div id="account" class="overlay overlay--account" data-turbolinks-permanent>

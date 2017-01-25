@@ -10,19 +10,27 @@
     padding: 1em 0 1em 60px;
     position: relative;
 
+    &:after,
     &:before {
       border: 2px solid $green;
       content: "";
       display: block;
-      height: 20px;
+      height: 14px;
       left: 20px;
       position: absolute;
-      width: 20px;
-      top: 15px;
+      width: 15px;
+      top: 18px;
+    }
+    &:after {
+      border: none;
+      top: 14px;
+      left: 22px;
+      height: 18px;
+      width: 18px;
     }
 
     // TODO: This needs tweaked to look more like the icon (open on the top right)
-    &--checked:before {
+    &--checked:after {
       background-image: url(/images/form-checkmark.svg);
     }
 
@@ -58,6 +66,7 @@
       &.hackernews { background-image: url("/images/icon-hackernews.svg"); }
       &.reddit     { background-image: url("/images/icon-reddit.svg"); }
       &.facebook   { background-image: url("/images/icon-facebook.svg"); }
+      &.github   { background-image: url("/images/icon-github.svg"); }
 
       .button_list--green & {
         background-color: $green;
@@ -67,6 +76,7 @@
         &.hackernews { background-image: url("/images/icon-hackernews-black.svg"); }
         &.reddit     { background-image: url("/images/icon-reddit-black.svg"); }
         &.facebook   { background-image: url("/images/icon-facebook-black.svg"); }
+        &.github   { background-image: url("/images/icon-github-black.svg"); }
       }
     }
   }
