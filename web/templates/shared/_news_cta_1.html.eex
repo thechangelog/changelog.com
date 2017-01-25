@@ -35,6 +35,11 @@
                   to: page_path(@conn, :nightly),
                   class: "toolbar_item toolbar_item--button",
                   style: "background-image: url('#{static_url(@conn, "/images/icon-subscribe.svg")}')" %>
+              <%= link "Details",
+                  title: "",
+                  to: page_path(@conn, :nightly),
+                  class: "toolbar_item toolbar_item--button",
+                  style: "background-image: url('#{static_url(@conn, "/images/icon-details.svg")}')" %>
             </nav>
           </article>
         </div>
