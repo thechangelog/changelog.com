@@ -19,6 +19,13 @@
     &-image {
       @extend %image-shadow;
       margin-bottom: $padding-large;
+      height: 80px;
+      width: 80px;
+
+      @media (min-width: $tablet) {
+        height: 120px;
+        width: 120px;
+      }
     }
 
     &-heading {
@@ -46,6 +53,7 @@
 
         &--date { background-image: url(/images/icon-date.svg); }
         &--location { background-image: url(/images/icon-location.svg); }
+        &--link { background-image: url(/images/icon-link.svg); }
       }
     }
 
@@ -69,6 +77,10 @@
 
     p {
       margin: 0 0 1em;
+    }
+
+    code {
+      font-size: 1em;
     }
   }
 }

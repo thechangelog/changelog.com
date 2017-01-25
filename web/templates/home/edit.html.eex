@@ -24,7 +24,7 @@
       </div>
 
       <div class="form_element_wrap <%= error_class(f, :handle) %>">
-        <label>Handle<span>*</span></label>
+        <label>Username / Handle<span>*</span></label>
         <div class="form_element">
           <%= text_input(f, :handle, placeholder: "gracehopper") %>
           <%= error_message(f, :handle) %>
@@ -60,11 +60,12 @@
         <div class="form_element">
           <%= textarea(f, :bio) %>
           <%= error_message(f, :bio) %>
+          <p class="form_element_note">Try some Markdown. It *may* work.</p>
         </div>
       </div>
 
       <div class="form_submit">
-        <input type="submit" value="Update my Profile">
+        <input type="submit" value="Update Profile">
         <div class="form_submit_responses"></div>
       </div>
     <% end %>

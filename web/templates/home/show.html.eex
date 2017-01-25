@@ -9,6 +9,7 @@
     <ul class="profile-card-stats">
       <li class="profile-card-stats-item profile-card-stats-item--location">Portland, Oregon</li>
       <li class="profile-card-stats-item profile-card-stats-item--date">Joined February 2017</li>
+      <li class="profile-card-stats-item profile-card-stats-item--link">HumanShapes.co</li>
     </ul>
 
     <div class="profile-card-bio">
