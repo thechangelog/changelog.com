@@ -2,15 +2,21 @@ import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import OnsitePlayer from "components/onsite_player";
 import Slider from "components/slider";
-import Sharer from "components/sharer";
+import Overlay from "components/overlay";
+import Share from "components/share";
 import Log from "components/log";
 
 const player = new OnsitePlayer("#player");
-const sharer = new Sharer("#share");
+const overlay = new Overlay("#overlay");
 const featured = new Slider(".featured_podcast");
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
+});
+
+u(document).handle("click", ".js-account-nav", function(event) {
+  const content = u(".js-account-nav-content").html();
+  overlay.html(content).show();
 });
 
 u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
@@ -26,7 +32,7 @@ u(document).on("click", "[data-play]", function(event) {
 });
 
 u(document).handle("click", "[data-share]", function(event) {
-  sharer.load(u(this).data("share"));
+  new Share(overlay).load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -132,6 +138,7 @@ window.onresize = function() {
 // on page load
 u(document).on("turbolinks:load", function() {
   u("body").removeClass("nav-open");
+  overlay.hide();
   tallestSlide();
 });
 

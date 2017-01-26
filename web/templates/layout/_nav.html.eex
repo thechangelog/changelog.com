@@ -17,28 +17,28 @@
   </form>
 
   <div class="navigation-bar_right">
-    <%= link to: "/~", class: "navigation-bar_user" do %>
-      <img src="https://pbs.twimg.com/profile_images/625162548984176640/QepijcVh_400x400.jpg" width="35" height="35" alt="Your Profile Photo">
+  <%= if @current_user do %>
+    <%= link to: home_path(@conn, :show), class: "navigation-bar_user js-account-nav", title: "Go $HOME" do %>
+      <img src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
     <% end %>
-    <div id="account" class="overlay overlay--account" data-turbolinks-permanent>
-      <button class="overlay-close js-share-close"><img src="<%= static_url(@conn, "/images/close.svg") %>" alt="Hide share overlay"></button>
-      <div class="overlay-curtain js-share-close"></div>
-      <div class="overlay-scroll_wrap">
-        <div class="overlay-wrap">
-          <div class="overlay-section">
-            <p class="overlay-section-lead_in">Signed in as</p>
-            <h3 class="overlay-section-heading">User Name Here</h3>
-            <ul class="overlay-nav">
-              <li><%= link "My Account", to: "" %></li>
-              <li><%= link "Account Settings", to: "" %></li>
-              <li><%= link "Launch Slack", to: "" %></li>
-              <li><%= link "Sign Out", to: "" %></li>
-            </ul>
-          </div>
-        </div>
+    <div class="js-account-nav-content" style="display: none;">
+      <div class="overlay-section">
+        <p class="overlay-section-lead_in">Signed in as</p>
+        <h3 class="overlay-section-heading"><%= @current_user.handle %></h3>
+        <ul class="overlay-nav">
+        <%= if @current_user.admin do %>
+          <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+        <% end %>
+          <li><%= link "My Account", to: home_path(@conn, :show) %></li>
+          <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
+          <li><%= link "Launch Slack", to: "https://changelog.slack.com" %></li>
+          <li><%= link "Sign Out", to: sign_out_path(@conn, :delete) %></li>
+        </ul>
       </div>
     </div>
-
+  <% else %>
+    <%= link "Sign In", to: sign_in_path(@conn, :new) %>
+  <% end %>
     <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
     <div class="navigation-bar_tray">
       <div class="navigation-tray">
