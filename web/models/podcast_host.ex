@@ -3,7 +3,6 @@ defmodule Changelog.PodcastHost do
 
   schema "podcast_hosts" do
     field :position, :integer
-    field :delete, :boolean, virtual: true
 
     belongs_to :podcast, Changelog.Podcast
     belongs_to :person, Changelog.Person
@@ -12,23 +11,14 @@ defmodule Changelog.PodcastHost do
   end
 
   @required_fields ~w(position)
-  @optional_fields ~w(podcast_id person_id delete)
+  @optional_fields ~w(podcast_id person_id)
 
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> mark_for_deletion()
   end
 
   def by_position do
     from p in __MODULE__, order_by: p.position
-  end
-
-  defp mark_for_deletion(changeset) do
-    if get_change(changeset, :delete) do
-      %{changeset | action: :delete}
-    else
-      changeset
-    end
   end
 end

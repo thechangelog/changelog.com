@@ -3,7 +3,6 @@ defmodule Changelog.EpisodeHost do
 
   schema "episode_hosts" do
     field :position, :integer
-    field :delete, :boolean, virtual: true
 
     belongs_to :person, Changelog.Person
     belongs_to :episode, Changelog.Episode
@@ -12,12 +11,11 @@ defmodule Changelog.EpisodeHost do
   end
 
   @required_fields ~w(position)
-  @optional_fields ~w(episode_id person_id delete)
+  @optional_fields ~w(episode_id person_id)
 
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> mark_for_deletion()
   end
 
   def by_position do
@@ -26,13 +24,5 @@ defmodule Changelog.EpisodeHost do
 
   def build_and_preload({person, position}) do
     %__MODULE__{position: position, person_id: person.id} |> Repo.preload(:person)
-  end
-
-  defp mark_for_deletion(changeset) do
-    if get_change(changeset, :delete) do
-      %{changeset | action: :delete}
-    else
-      changeset
-    end
   end
 end

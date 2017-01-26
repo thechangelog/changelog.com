@@ -9,7 +9,6 @@ defmodule Changelog.EpisodeSponsor do
     field :link_url, :string
     field :description, :string
 
-    field :delete, :boolean, virtual: true
 
     belongs_to :episode, Changelog.Episode
     belongs_to :sponsor, Changelog.Sponsor
@@ -18,13 +17,12 @@ defmodule Changelog.EpisodeSponsor do
   end
 
   @required_fields ~w(position title link_url)
-  @optional_fields ~w(episode_id sponsor_id description delete)
+  @optional_fields ~w(episode_id sponsor_id description)
 
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:link_url, Regexp.http, message: Regexp.http_message)
-    |> mark_for_deletion()
   end
 
   def by_position do
@@ -33,13 +31,5 @@ defmodule Changelog.EpisodeSponsor do
 
   def newest_first(query) do
     from s in query, order_by: [desc: s.inserted_at]
-  end
-
-  defp mark_for_deletion(changeset) do
-    if get_change(changeset, :delete) do
-      %{changeset | action: :delete}
-    else
-      changeset
-    end
   end
 end
