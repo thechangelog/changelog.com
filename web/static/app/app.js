@@ -126,6 +126,7 @@ window.onresize = function() {
 
 // on page load
 u(document).on("turbolinks:load", function() {
+  u("body").removeClass("nav-open");
   tallestSlide();
 });
 
