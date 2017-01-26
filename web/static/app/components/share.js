@@ -2,22 +2,19 @@ import { u, ajax } from "umbrellajs";
 import template from "templates/share.hbs";
 import Clipboard from "clipboard";
 
-export default class Sharer {
-  constructor(selector) {
-    this.container = u(selector);
-    this.closeButton = this.container.find(".js-share-close");
-    this.content = this.container.find(".js-share-content");
+export default class Share {
+  constructor(overlay) {
+    this.overlay = overlay;
     this.isAttached = false;
   }
 
   attach() {
     // ui
-    this.embed = this.content.find(".js-share-embed");
-    this.toggleEmbedButton = this.content.find(".js-share-embed-toggle");
+    this.embed = this.overlay.find(".js-share-embed");
+    this.toggleEmbedButton = this.overlay.find(".js-share-embed-toggle");
     this.copyUrlButton = this.clipboardFor(".js-share-copy-url");
     this.copyEmbedButton = this.clipboardFor(".js-share-copy-embed");
     // events
-    this.closeButton.handle("click", () => { this.hide(); });
     this.toggleEmbedButton.on("change", () => { this.toggleEmbed(); });
     // yup
     this.isAttached = true;
@@ -29,20 +26,19 @@ export default class Sharer {
     }
 
     // events
-    this.closeButton.off("click");
     this.toggleEmbedButton.off("change");
     this.copyUrlButton.destroy();
     this.copyEmbedButton.destroy();
     // ui
-    this.content.html("");
+    this.overlay.html("");
   }
 
   load(detailsUrl) {
     this.detach();
-    this.show();
+    this.overlay.show();
 
     ajax(detailsUrl, {}, (error, data) => {
-      this.content.html(template(data));
+      this.overlay.html(template(data));
       this.attach();
       this.embed.text(data.embed);
     });
@@ -59,14 +55,6 @@ export default class Sharer {
     });
 
     this.embed.text(after);
-  }
-
-  show() {
-    this.container.addClass("is-visible");
-  }
-
-  hide() {
-    this.container.removeClass("is-visible");
   }
 
   clipboardFor(selector) {
