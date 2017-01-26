@@ -33,6 +33,31 @@
         <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
       </ul>
 
+      <h3><a href="/jsparty">JS Party</a></h3>
+
+      <ul>
+        <li>Each episode includes two (2) mid-roll sponsorships</li>
+        <li><mark>$700 for mid-roll spots</mark></li>
+        <li>Recorded live and published weekly</li>
+        <li>Logo will appear on the homepage when the show is featured</li>
+        <li>Logo and link will appear on the episode page of shows you sponsor</li>
+        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
+      </ul>
+
+      <h3><a href="/gotime">Go Time</a></h3>
+
+      <ul>
+        <li>Each episode includes two (2) live read mid-roll sponsorships</li>
+        <li><mark>$500 for mid-roll spots</mark></li>
+        <li>Reaches an average 3,000 to 5,000 listens per episode</li>
+        <li>Reaches an average 18,000 listens per month podcast-wide</li>
+        <li>Recorded live and published weekly</li>
+        <li>Each sponsor gets mentioned at the top of the show</li>
+        <li>Logo will appear on the homepage when the show is featured</li>
+        <li>Logo and link will appear on the episode page of shows you sponsor</li>
+        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
+      </ul>
+
       <h3><a href="/rfc">Request For Commits</a></h3>
 
       <ul>
@@ -46,20 +71,6 @@
         <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
       </ul>
 
-      <h3><a href="/gotime">Go Time</a></h3>
-
-      <ul>
-        <li>Each episode includes two (2) live read mid-roll sponsorships</li>
-        <li><mark>$500 for mid-roll spots</mark></li>
-        <li>Reaches an average 3,000 to 5,000 listens per episode</li>
-        <li>Reaches an average 18,000 listens per month podcast-wide</li>
-        <li>Published weekly</li>
-        <li>Each sponsor gets mentioned at the top of the show</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
       <hr>
 
       <h2>Changelog Weekly</h2>
@@ -67,7 +78,7 @@
       <p>Every weekend we ship our email to <%= @weekly |> NewsletterView.subscribers(:all, 7500) |> comma_separated %> die-hard readers.</p>
 
       <ul>
-        <li><mark>$250 per week with a two (2) week minimum</mark></li>
+        <li><mark>$250 per week with a four (4) week minimum</mark></li>
         <li>We maintain <em>very high</em> engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
         <li>The breakdown is a linked heading with 2-3 lines of supporting text with links.</li>
         <li>We take a native content approach to sponsored links included in Changelog Weekly. Since most organizations treat their blog, ebooks, webinars and other content as their inbound funnel, we leverage that to share that content with our readers and let your marketing funnel do what it was designed to do &mdash; convert!</li>
