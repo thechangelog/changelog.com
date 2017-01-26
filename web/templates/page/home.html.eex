@@ -51,3 +51,13 @@
   <% end %>
   <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: Podcast.master) %>
 </section>
+
+<%= render SharedView, "_news_cta_1.html", assigns %>
+
+<div class="wrapper wrapper--half-gray">
+  <%= render SharedView, "_community_cta_2.html", assigns %>
+</div>
+
+<div class="wrapper wrapper--gray">
+  <%= render SharedView, "_films_cta_1.html", assigns %>
+</div>
