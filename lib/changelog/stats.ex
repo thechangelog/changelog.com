@@ -31,6 +31,7 @@ defmodule Changelog.Stats do
   end
 
   defp process_podcast(date, podcast) do
+    Logger.info("Stats: Processing #{podcast.name}")
     S3.logs(date, podcast.slug)
     |> Parser.parse_files
     |> Enum.group_by(&(&1.episode))
