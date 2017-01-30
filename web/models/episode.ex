@@ -100,7 +100,7 @@ defmodule Changelog.Episode do
 
   def search(query, search_term) do
     from e in query,
-      where: fragment("search_vector @@ to_tsquery('english', ?)", ^search_term)
+      where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^search_term)
   end
 
   def is_public(episode, as_of \\ Timex.now) do
