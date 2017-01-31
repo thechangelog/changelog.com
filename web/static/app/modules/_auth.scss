@@ -1,0 +1,25 @@
+.auth {
+  font-size: 1.2875em;
+  line-height: 1.5em;
+  margin: $padding-small auto;
+  max-width: 500px;
+  padding: 30px;
+
+  @media (min-width: $desktop) {
+    margin: $padding-large auto $padding-extra-large;
+  }
+
+  &-header {
+    text-align: center;
+  }
+
+  .button_list {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  hr {
+    border: 1px solid $border-color;
+    margin: $padding-large 0;
+  }
+}

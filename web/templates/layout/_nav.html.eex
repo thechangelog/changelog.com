@@ -37,7 +37,7 @@
       </div>
     </div>
   <% else %>
-    <%= link "Sign In", to: sign_in_path(@conn, :new) %>
+    <%= link "Sign In", to: sign_in_path(@conn, :new), class: "navigation-bar_user" %>
   <% end %>
     <button class="navigation-bar_menu-button js-toggle-nav"><img src="<%= static_url(@conn, "/images/hamburger.svg") %>" alt="Show site navigation menu"></button>
     <div class="navigation-bar_tray">
