@@ -24,13 +24,14 @@
       </div>
 
       <div class="form_element_wrap <%= error_class(f, :handle) %>">
-        <label>Handle<span>*</span></label>
+        <label>Username / Handle<span>*</span></label>
         <div class="form_element">
           <%= text_input(f, :handle, placeholder: "gracehopper") %>
           <%= error_message(f, :handle) %>
         </div>
       </div>
 
+      <hr>
       <div class="form_element_wrap <%= error_class(f, :github_handle) %>">
         <label>On GitHub</label>
         <div class="form_element">

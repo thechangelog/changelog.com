@@ -40,7 +40,6 @@
         </div>
       </div>
 
-      <hr>
       <div class="form_element_wrap <%= error_class(f, :website) %>">
         <label>My Website</label>
         <div class="form_element">

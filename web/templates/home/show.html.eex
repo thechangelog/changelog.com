@@ -1,8 +1,8 @@
+<%= render(SharedView, "_flash_messages.html", conn: @conn) %>
 <section class="profile">
-  <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
 
   <div class="profile-card">
-    <img class="profile-card-image" src="https://pbs.twimg.com/profile_images/625162548984176640/QepijcVh_400x400.jpg" width="120" height="120" alt="Profile Photo">
+    <img class="profile-card-image" src="<%= PersonView.avatar_url(@current_user) %>" width="120" height="120" alt="<%= @current_user.name %> Avatar">
 
     <h1 class="profile-card-heading"><%= @current_user.name %></h1>
 
