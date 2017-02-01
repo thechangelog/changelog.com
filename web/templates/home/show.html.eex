@@ -44,10 +44,12 @@
     <%= if @current_user.admin do %>
       <li class="checklist-item"><%= link("Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
     <% end %>
-      <li class="checklist-item checklist-item<%= if PersonView.is_profile_complete(@current_user) do "--checked" end %>">
+      <li class="checklist-item <%= checked_class_if(PersonView.is_profile_complete(@current_user)) %>">
         <%= link("Complete your profile (public profiles launching soon!)", to: home_path(@conn, :edit)) %>
       </li>
-      <li class="checklist-item"><%= link("Request a Slack Invite", to: home_path(@conn, :slack), method: :post) %></li>
+      <li class="checklist-item <%= checked_class_if(@current_user.slack_id) %>">
+        <%= link("Request a Slack Invite", to: home_path(@conn, :slack), method: :post) %>
+      </li>
       <li class="checklist-item">Subscribe to Changelog Weekly</li>
       <li class="checklist-item">Subscribe to Changelog Nightly</li>
     </ul>

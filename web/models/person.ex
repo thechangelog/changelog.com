@@ -67,13 +67,17 @@ defmodule Changelog.Person do
     |> unique_constraint(:twitter_handle)
   end
 
-  def sign_in_changes(person) do
+  def sign_in_changeset(person) do
     change(person, %{
       auth_token: nil,
       auth_token_expires_at: nil,
       signed_in_at: Timex.now,
       joined_at: (person.joined_at || Timex.now)
     })
+  end
+
+  def slack_changeset(person, slack_id) do
+    change(person, %{slack_id: slack_id})
   end
 
   def refresh_auth_token(person, expires_in \\ 15) do

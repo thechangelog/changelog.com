@@ -67,7 +67,7 @@ defmodule Changelog.AuthController do
   end
 
   defp sign_in_and_redirect(conn, person, route) do
-    Repo.update(Person.sign_in_changes(person))
+    Repo.update(Person.sign_in_changeset(person))
 
     conn
     |> assign(:current_user, person)

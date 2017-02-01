@@ -3,4 +3,10 @@ defmodule Changelog.HomeView do
 
   alias Changelog.SharedView
   alias Changelog.{SharedView, PersonView}
+
+  def checked_class_if(boolean) do
+    if boolean do
+      "checklist-item--checked"
+    end
+  end
 end
