@@ -41,6 +41,10 @@ defmodule Changelog.PersonView do
     |> Enum.join(", ")
   end
 
+  def is_profile_complete(person) do
+    !!(person.bio && person.website && person.location)
+  end
+
   @spec comma_separated_names([binary()]) :: binary()
   def comma_separated_names(people)
   def comma_separated_names([first]),                do: first.name

@@ -7,33 +7,46 @@
     <h1 class="profile-card-heading"><%= @current_user.name %></h1>
 
     <ul class="profile-card-stats">
-      <li class="profile-card-stats-item profile-card-stats-item--location">Portland, Oregon</li>
-      <li class="profile-card-stats-item profile-card-stats-item--date">Joined February 2017</li>
-      <li class="profile-card-stats-item profile-card-stats-item--link">HumanShapes.co</li>
+    <%= if @current_user.location do %>
+      <li class="profile-card-stats-item profile-card-stats-item--location"><%= @current_user.location %></li>
+    <% end %>
+      <li class="profile-card-stats-item profile-card-stats-item--date">Joined <%= TimeView.pretty_date(@current_user.joined_at) %></li>
+    <%= if @current_user.website do %>
+      <li class="profile-card-stats-item profile-card-stats-item--link"><%= domain_only(@current_user.website) %></li>
+    <% end %>
     </ul>
 
+  <%= if @current_user.bio do %>
     <div class="profile-card-bio">
-      <p>Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</p>
+      <%= @current_user.bio |> md_to_html |> raw %>
     </div>
+  <% end %>
 
     <ul class="button_list button_list--green">
+    <%= if @current_user.twitter_handle do %>
       <li class="button_list-item">
-        <a href="" title="on Twitter" class="twitter">@codypeterson</a>
+        <a class="twitter" href="<%= twitter_url(@current_user.twitter_handle) %>" title="<%= @current_user.name %> on Twitter">@<%= @current_user.twitter_handle %></a>
       </li>
+    <% end %>
+
+    <%= if @current_user.github_handle do %>
       <li class="button_list-item">
-        <a href="" title="on Github" class="github">@codyjames</a>
+        <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on Github"><%= @current_user.github_handle %></a>
       </li>
+    <% end %>
     </ul>
   </div>
 
   <div class="profile-introduction">
-    <p>Hello Cody, <br>We’re glad you’re here. We’ve got big plans for the site including community discussion, posting, and more. In the meantime, here are a few things you can do here:</p>
+    <p>Well Hello, <br>We’re glad you’re here! We have big plans for the site including community discussion, posting, and more. In the meantime, here are a few things you can do here:</p>
 
     <ul class="checklist">
-      <%= if @current_user.admin do %>
-        <li class="checklist-item"><%= link("Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
-      <% end %>
-      <li class="checklist-item checklist-item--checked"><%= link("Complete your profile (public profiles launching soon!)", to: home_path(@conn, :edit)) %></li>
+    <%= if @current_user.admin do %>
+      <li class="checklist-item"><%= link("Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
+    <% end %>
+      <li class="checklist-item checklist-item<%= if PersonView.is_profile_complete(@current_user) do "--checked" end %>">
+        <%= link("Complete your profile (public profiles launching soon!)", to: home_path(@conn, :edit)) %>
+      </li>
       <li class="checklist-item"><%= link("Request a Slack Invite", to: home_path(@conn, :slack), method: :post) %></li>
       <li class="checklist-item">Subscribe to Changelog Weekly</li>
       <li class="checklist-item">Subscribe to Changelog Nightly</li>
