@@ -30,11 +30,11 @@ defmodule Changelog.HomeController do
 
   def slack(%{assigns: %{current_user: current_user}} = conn, _params) do
     {updated_user, flash} = case Slack.Client.invite(current_user.email) do
-      %{ok: true} ->
+      %{"ok" => true} ->
         {set_slack_id(current_user), "Invite sent! Check your email 🎯"}
-      %{ok: false, error: "already_in_team"} ->
+      %{"ok" => false, "error" => "already_in_team"} ->
         {set_slack_id(current_user), "You're on the team! We'll see you in there ✊"}
-      %{ok: false, error: error} ->
+      %{"ok" => false, "error" => error} ->
         {current_user, "Hmm, Slack is saying '#{error}' 🤔"}
     end
 

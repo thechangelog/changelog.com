@@ -12,7 +12,7 @@ defmodule Craisin do
     Enum.into(headers, [{"Authorization", "Basic #{auth}"}])
   end
 
-  defp process_response_body(body), do: JSX.decode!(body)
+  defp process_response_body(body), do: Poison.decode!(body)
 
   def handle({:ok, %HTTPoison.Response{status_code: 200, body: body}}), do: body
   def handle({:ok, %HTTPoison.Response{status_code: code, body: body}}) when code > 400 do

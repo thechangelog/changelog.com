@@ -7,7 +7,7 @@ defmodule Changelog.Slack.Client do
 
   def process_response_body(body) do
     try do
-      Poison.decode!(body, keys: :atoms!)
+      Poison.decode!(body)
     rescue
       _ -> body
     end
@@ -17,10 +17,16 @@ defmodule Changelog.Slack.Client do
     [{"content-type", "application/x-www-form-urlencoded"} | headers]
   end
 
+  def handle({:ok, %HTTPoison.Response{status_code: 200, body: body}}), do: body
+
   def invite(email) do
     token = Application.get_env(:changelog, :slack_api_token)
     form = ~s(email=#{email}&token=#{token}&resend=true)
-    {_, response} = post("/users.admin.invite", form)
-    response.body
+    post("/users.admin.invite", form) |> handle
+  end
+
+  def list do
+    token = Application.get_env(:changelog, :slack_api_token)
+    get("/users.list?token=#{token}") |> handle
   end
 end
