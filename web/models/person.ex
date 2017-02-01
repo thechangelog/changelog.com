@@ -10,10 +10,13 @@ defmodule Changelog.Person do
     field :handle, :string
     field :github_handle, :string
     field :twitter_handle, :string
+    field :slack_id, :string
     field :website, :string
     field :bio, :string
+    field :location, :string
     field :auth_token, :string
     field :auth_token_expires_at, Timex.Ecto.DateTime
+    field :joined_at, Timex.Ecto.DateTime
     field :signed_in_at, Timex.Ecto.DateTime
     field :admin, :boolean
     field :avatar, Changelog.Avatar.Type
@@ -40,13 +43,13 @@ defmodule Changelog.Person do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(name email handle github_handle twitter_handle bio website admin))
+    |> cast(params, ~w(name email handle github_handle twitter_handle bio website location admin))
     |> shared_changeset
   end
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(name email handle github_handle twitter_handle bio website))
+    |> cast(params, ~w(name email handle github_handle twitter_handle bio location website))
     |> shared_changeset
   end
 

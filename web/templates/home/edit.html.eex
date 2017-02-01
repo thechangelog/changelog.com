@@ -31,6 +31,14 @@
         </div>
       </div>
 
+      <div class="form_element_wrap <%= error_class(f, :location) %>">
+        <label>From</label>
+        <div class="form_element">
+          <%= text_input(f, :location, placeholder: "New York, New York") %>
+          <%= error_message(f, :location) %>
+        </div>
+      </div>
+
       <div class="form_element_wrap <%= error_class(f, :bio) %>">
         <label>Bio</label>
         <div class="form_element">
