@@ -18,7 +18,7 @@
 
   <%= if @current_user.bio do %>
     <div class="profile-card-bio">
-      <%= @current_user.bio |> md_to_html |> raw %>
+      <%= @current_user.bio |> md_to_safe_html |> raw %>
     </div>
   <% end %>
 

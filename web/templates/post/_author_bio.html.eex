@@ -7,7 +7,7 @@
     <p>
       <%= link @person.name, to: PersonView.external_url(@person) %>
       &ndash;
-      <%= @person.bio |> md_to_html |> sans_p_tags |> raw %>
+      <%= @person.bio |> md_to_safe_html |> sans_p_tags |> raw %>
     </p>
 
     <ul class="author_bio_social">

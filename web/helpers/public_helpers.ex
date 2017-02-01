@@ -15,6 +15,9 @@ defmodule Changelog.Helpers.PublicHelpers do
     end
   end
 
+  def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
+  def md_to_safe_html(md) when is_nil(md), do: ""
+
   def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
   def md_to_html(md) when is_nil(md), do: ""
 
