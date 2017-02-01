@@ -2,7 +2,7 @@ defmodule Changelog.HomeControllerTest do
   use Changelog.ConnCase
 
   @tag :as_user
-  test "renders the home page", %{conn: conn, user: user} do
+  test "renders the home page", %{conn: conn} do
     conn = get(conn, home_path(conn, :show))
     assert html_response(conn, 200)
   end
