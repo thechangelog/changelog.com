@@ -16,11 +16,19 @@
     <%= if @current_user do %>
       <p>You're already community member! <%= link("Click here", to: home_path(@conn, :show)) %> to visit your home page.</p>
     <% else %>
-      <p>Join via <a href="/auth/twitter">Twitter</a>.</p>
-
-      <p>Join via <a href="/auth/github">GitHub</a>.</p>
-
-      <p>Join via <%= link "Email", to: person_path(@conn, :new) %>.</p>
+      <div class="auth-wrap">
+        <ul class="button_list button_list--green">
+          <li class="button_list-item">
+            <a href="/auth/twitter" title="Sign up via Twitter" class="twitter">Join via Twitter</a>
+          </li>
+          <li class="button_list-item">
+            <a href="/auth/github" title="Sign up via Github" class="github">Join via Github</a>
+          </li>
+          <li class="button_list-item">
+            <%= link "Join via Email", to: person_path(@conn, :new), title: "Join via Email", class: "email" %>
+          </li>
+        </ul>
+      </div>
     <% end %>
 
       <p><small>Call <a href="tel:+18889742454">888-974-CHLG (2454)</a>, or email us at <a href="mailto:community@changelog.com">community@changelog.com</a> if you have any questions.</small></p>

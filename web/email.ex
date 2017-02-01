@@ -10,6 +10,15 @@ defmodule Changelog.Email do
     |> render(:sign_in)
   end
 
+  def welcome_email(person) do
+    base_email()
+    |> put_header("X-CMail-GroupName", "Welcome")
+    |> to(person)
+    |> subject("Welcome! Confirm Your Address")
+    |> assign(:person, person)
+    |> render(:welcome)
+  end
+
   defp base_email do
     new_email()
     |> from("robot@changelog.com")

@@ -1,0 +1,10 @@
+<tr>
+  <td class="content-block">
+    You can sign in by clicking the link below.
+  </td>
+</tr>
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <%= link "Sign In", to: Changelog.AuthView.auth_url(Changelog.Endpoint, @person), class: "btn-primary", itemprop: "url" %>
+  </td>
+</tr>

@@ -72,6 +72,14 @@ defmodule Changelog.Person do
     })
   end
 
+  def refresh_auth_token(person, expires_in \\ 15) do
+    auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
+    expires_at = Timex.add(Timex.now, Timex.Duration.from_minutes(expires_in))
+    changeset = auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})
+    {:ok, person} = Repo.update(changeset)
+    person
+  end
+
   def encoded_auth(model) do
     {:ok, Base.encode16("#{model.email}|#{model.auth_token}")}
   end

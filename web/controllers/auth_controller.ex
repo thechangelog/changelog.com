@@ -8,10 +8,7 @@ defmodule Changelog.AuthController do
 
   def new(conn, %{"auth" =>  %{"email" => email}}) do
     if person = Repo.one(from p in Person, where: p.email == ^email) do
-      auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
-      expires_at = Timex.add(Timex.now, Timex.Duration.from_minutes(15))
-      changeset = Person.auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})
-      {:ok, person} = Repo.update(changeset)
+      person = Person.refresh_auth_token(person)
       Email.sign_in_email(person) |> Mailer.deliver_later
       render(conn, "new.html", person: person)
     else
