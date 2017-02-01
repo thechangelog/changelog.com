@@ -1,7 +1,7 @@
 defmodule Changelog.PersonController do
   use Changelog.Web, :controller
 
-  alias Changelog.Person
+  alias Changelog.{Email, Mailer, Person}
 
   plug RequireGuest, "before joining" when action in [:new, :create]
 
@@ -13,21 +13,32 @@ defmodule Changelog.PersonController do
       github_handle: Map.get(params, "github_handle"),
       twitter_handle: Map.get(params, "twitter_handle")}
 
-    render(conn, "new.html", changeset: Person.changeset(person))
+    render(conn, :new, changeset: Person.changeset(person), person: nil)
   end
 
-  def create(conn, %{"person" => person_params}) do
-    changeset = Person.changeset(%Person{}, person_params)
+  def create(conn, %{"person" => person_params = %{"email" => email}}) do
+    if person = Repo.one(from p in Person, where: p.email == ^email) do
+      welcome(conn, person)
+    else
+      changeset = Person.changeset(%Person{}, person_params)
 
-    case Repo.insert(changeset) do
-      {:ok, _person} ->
-        conn
-        |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
-        |> redirect(to: page_path(conn, :home))
-      {:error, changeset} ->
-        conn
-        |> put_flash(:error, "Something went wrong. 😭")
-        |> render("new.html", changeset: changeset)
+      case Repo.insert(changeset) do
+        {:ok, person} ->
+          welcome(conn, person)
+        {:error, changeset} ->
+          conn
+          |> put_flash(:error, "Something went wrong. 😭")
+          |> render(:new, changeset: changeset, person: nil)
+      end
     end
+  end
+
+  defp welcome(conn, person) do
+    person = Person.refresh_auth_token(person)
+    Email.welcome_email(person) |> Mailer.deliver_later
+
+    conn
+    |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
+    |> render(:new, person: person)
   end
 end
