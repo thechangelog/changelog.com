@@ -49,7 +49,7 @@ defmodule Changelog.Mixfile do
      {:hashids, "~> 2.0"},
      {:bamboo, "~> 0.7"},
      {:bamboo_smtp, "~> 1.2.1"},
-     {:httpoison, "~> 0.9.0"},
+     {:httpoison, "~> 0.11.0"},
      {:con_cache, "~> 0.11.1"},
      {:ex_aws, "~> 1.0.0-rc.3"},
      {:exjsx, "~> 3.2.0"},
