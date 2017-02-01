@@ -105,7 +105,9 @@ u(document).on("submit", "form:not(.js-cm)", function(event) {
     if (req.getResponseHeader("content-type").match(/javascript/)) {
       eval(resp);
     } else {
-      document.body = Turbolinks.Snapshot.wrap(resp).body;
+      const snapshot = Turbolinks.Snapshot.wrap(resp);
+      Turbolinks.controller.cache.put(action, snapshot);
+      Turbolinks.visit(action, {action: "restore"});
     }
   }
 
