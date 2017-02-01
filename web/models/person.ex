@@ -67,11 +67,12 @@ defmodule Changelog.Person do
     |> unique_constraint(:twitter_handle)
   end
 
-  def sign_in_changes(model) do
-    change(model, %{
+  def sign_in_changes(person) do
+    change(person, %{
       auth_token: nil,
       auth_token_expires_at: nil,
-      signed_in_at: Timex.now
+      signed_in_at: Timex.now,
+      joined_at: (person.joined_at || Timex.now)
     })
   end
 
@@ -83,8 +84,8 @@ defmodule Changelog.Person do
     person
   end
 
-  def encoded_auth(model) do
-    {:ok, Base.encode16("#{model.email}|#{model.auth_token}")}
+  def encoded_auth(person) do
+    {:ok, Base.encode16("#{person.email}|#{person.auth_token}")}
   end
 
   def decoded_auth(encoded) do
