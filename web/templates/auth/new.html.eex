@@ -31,6 +31,9 @@
         </div>
         <div class="form_submit">
           <input type="submit" value="Enter">
+          <div class="form_submit_responses">
+            <div>Need an account? <em><%= link "Sign up", to: person_path(@conn, :new), title: "" %></em></div>
+          </div>
         </div>
       <% end %>
     <% end %>
