@@ -53,7 +53,9 @@
 
         <div class="form_submit">
           <input type="submit" value="Join Now">
-          <div class="form_submit_responses"></div>
+          <div class="form_submit_responses">
+            <div>Already a member? <a href="/in" title=""><em>Sign in</em></a></div>
+          </div>
         </div>
       <% end %>
     <% end %>
