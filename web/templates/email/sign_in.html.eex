@@ -1,10 +1,11 @@
 <tr>
-  <td class="content-block">
-    You can sign in by clicking the link below.
-  </td>
-</tr>
-<tr>
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-    <%= link "Sign In", to: Changelog.AuthView.auth_url(Changelog.Endpoint, @person), class: "btn-primary", itemprop: "url" %>
+    <h1>Hello!</h1>
+    <p>You requested a fancy, passwordless login link. <em>Here it is:</em></p>
+
+    <%= link "Sign in to Changelog", to: Changelog.AuthView.auth_url(Changelog.Endpoint, @person), class: "btn-primary", itemprop: "url" %>
+
+    <p><em>This link will expire in 15 minutes.</em><p>
+    <p>Already expired? <em><%= link "Request a new link.", to: "http://changelog.com/in" %></em></p>
   </td>
 </tr>

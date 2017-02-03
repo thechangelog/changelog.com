@@ -14,6 +14,13 @@
     <td></td>
     <td class="container" width="600">
       <div class="content">
+        <div class="header">
+          <table width="100%">
+            <tr>
+              <td class="aligncenter header-logo"><a href="http://changelog.com" title="logo"><img src="<%= static_url(Changelog.Endpoint, "/images/email-logomark.png") %>" alt="Changelog" width="60" height="60"></a></td>
+            </tr>
+          </table>
+        </div></div>
         <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction">
           <tr>
             <td class="content-wrap">
@@ -27,7 +34,7 @@
         <div class="footer">
           <table width="100%">
             <tr>
-              <td class="aligncenter content-block">Follow <a href="http://twitter.com/changelog">@Changelog</a> on Twitter.</td>
+              <td class="aligncenter content-block"><a href="http://changelog.com" title="">Changelog.com</a></td>
             </tr>
           </table>
         </div></div>

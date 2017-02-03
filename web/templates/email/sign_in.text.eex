@@ -1,1 +1,5 @@
-Click here to sign in: <%= Changelog.AuthView.auth_url(Changelog.Endpoint, @person) %>
+Hello!
+You requested a fancy, passwordless login link. Here it is: <%= Changelog.AuthView.auth_url(Changelog.Endpoint, @person) %>
+
+This link will expire in 15 minutes.
+Already Expired? Request a new link: http://changelog.com/in
