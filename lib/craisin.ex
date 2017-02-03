@@ -4,7 +4,11 @@ defmodule Craisin do
   require Logger
 
   def process_url(url) do
-    "https://api.createsend.com/api/v3.1/#{url}.json"
+    case String.split(url, "?") do
+      [path, params] -> "https://api.createsend.com/api/v3.1/#{path}.json?#{params}"
+      [path] -> "https://api.createsend.com/api/v3.1/#{path}.json"
+    end
+
   end
 
   def process_request_headers(headers) do
@@ -12,9 +16,15 @@ defmodule Craisin do
     Enum.into(headers, [{"Authorization", "Basic #{auth}"}])
   end
 
-  def process_response_body(body), do: Poison.decode!(body)
+  def process_response_body(body) do
+    try do
+      Poison.decode!(body)
+    rescue
+      _ -> body
+    end
+  end
 
-  def handle({:ok, %HTTPoison.Response{status_code: 200, body: body}}), do: body
+  def handle({:ok, %HTTPoison.Response{status_code: code, body: body}}) when code in 200..201, do: body
   def handle({:ok, %HTTPoison.Response{status_code: code, body: body}}) when code > 400 do
     log(body["Message"])
     %{}

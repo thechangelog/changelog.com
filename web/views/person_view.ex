@@ -45,6 +45,13 @@ defmodule Changelog.PersonView do
     !!(person.bio && person.website && person.location)
   end
 
+  def is_subscribed(person, newsletter) do
+    case Craisin.Subscriber.details(newsletter.list_id, person.email) do
+      %{"State" => "Active"} -> true
+      _else -> false
+    end
+  end
+
   @spec comma_separated_names([binary()]) :: binary()
   def comma_separated_names(people)
   def comma_separated_names([first]),                do: first.name

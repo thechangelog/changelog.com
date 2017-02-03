@@ -74,6 +74,8 @@ defmodule Changelog.Router do
     resources "/people", PersonController, only: [:new, :create]
     resources "/~", HomeController, only: [:show, :edit, :update], singleton: true
     post "/~/slack", HomeController, :slack
+    post "/~/subscribe/:id", HomeController, :subscribe
+    post "/~/unsubscribe/:id", HomeController, :unsubscribe
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
