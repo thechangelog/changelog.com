@@ -1,6 +1,6 @@
 .overlay {
+  @include animate-zoom-out("&.is-visible");
   background: $black;
-  display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -8,10 +8,6 @@
   left: 0;
   z-index: 9999;
   text-align: center;
-
-  &.is-visible {
-    display: block;
-  }
 
   &-curtain {
     cursor: pointer;
