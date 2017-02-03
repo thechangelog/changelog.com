@@ -95,19 +95,20 @@ u(document).on("submit", "form:not(.js-cm)", function(event) {
   const action = form.attr("action");
   const method = form.attr("method");
   const data = form.serialize();
+  const referrer = window.location.href;
 
   if (method == "get") {
     return Turbolinks.visit(`${action}?${data}`);
   }
 
-  const options = {method: method, body: data, headers: {"Turbolinks-Referrer": window.location}};
+  const options = {method: method, body: data, headers: {"Turbolinks-Referrer": referrer}};
   const andThen = function(err, resp, req) {
     if (req.getResponseHeader("content-type").match(/javascript/)) {
       eval(resp);
     } else {
       const snapshot = Turbolinks.Snapshot.wrap(resp);
-      Turbolinks.controller.cache.put(action, snapshot);
-      Turbolinks.visit(action, {action: "restore"});
+      Turbolinks.controller.cache.put(referrer, snapshot);
+      Turbolinks.visit(referrer, {action: "restore"});
     }
   }
 
