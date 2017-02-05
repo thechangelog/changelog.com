@@ -1,11 +1,11 @@
 <tr>
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <h1>Hello!</h1>
-    <p>You requested a fancy, passwordless login link. <em>Here it is:</em></p>
+    <p>You requested a fancy, passwordless sign in link. <em>Here you go:</em></p>
 
-    <%= link "Sign in to Changelog", to: Changelog.AuthView.auth_url(Changelog.Endpoint, @person), class: "btn-primary", itemprop: "url" %>
+    <%= link "Sign in to Changelog", to: AuthView.auth_url(Endpoint, @person), class: "btn-primary", itemprop: "url" %>
 
     <p><em>This link will expire in 15 minutes.</em><p>
-    <p>Already expired? <em><%= link "Request a new link.", to: "http://changelog.com/in" %></em></p>
+    <p>Already expired? <em><%= link "Request a new link.", to: sign_in_url(Endpoint, :new) %></em></p>
   </td>
 </tr>

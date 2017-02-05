@@ -1,11 +1,11 @@
 <tr>
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <h1>Hello!</h1>
-    <p>Changelog uses passwordless login. Each time you log in we’ll send you a temporarily link to your email. That’s one less email to worry about (yay!). <em>Here’s your first one:</em></p>
+    <p>We don't use passwords. Each time you sign in we’ll send you a temporarily link to your email. That’s one less password to worry about (yay!). <em>Here’s your first one:</em></p>
 
-    <%= link "Sign in to Changelog", to: Changelog.AuthView.auth_url(Changelog.Endpoint, @person), class: "btn-primary", itemprop: "url" %>
+    <%= link "Sign in to Changelog", to: AuthView.auth_url(Endpoint, @person), class: "btn-primary", itemprop: "url" %>
 
     <p><em>This link will expire in 15 minutes.</em><p>
-    <p>Already expired? <em><%= link "Request a new link.", to: "http://changelog.com/in" %></em></p>
+    <p>Already expired? <em><%= link "Request a new link.", to: sign_in_url(Endpoint, :new) %></em></p>
   </td>
 </tr>

@@ -3,7 +3,7 @@ defmodule Changelog.LayoutView do
 
   import Changelog.Meta.{AdminTitle, Title, Image, Description, Feeds, Twitter}
 
-  alias Changelog.PersonView
+  alias Changelog.{AuthView, Endpoint, PersonView}
 
   def active_class(conn, controllers) when is_list(controllers) do
     if Enum.member?(controllers, Phoenix.Controller.controller_module(conn)) do

@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Changelog Email</title>
-<link media="all" rel="stylesheet" href="<%= static_url(Changelog.Endpoint, "/css/email.css") %>">
+<link media="all" rel="stylesheet" href="<%= static_url(Endpoint, "/css/email.css") %>">
 </head>
 
 <body itemscope itemtype="http://schema.org/EmailMessage">
@@ -17,7 +17,7 @@
         <div class="header">
           <table width="100%">
             <tr>
-              <td class="aligncenter header-logo"><a href="http://changelog.com" title="logo"><img src="<%= static_url(Changelog.Endpoint, "/images/email-logomark.png") %>" alt="Changelog" width="60" height="60"></a></td>
+              <td class="aligncenter header-logo"><a href="https://changelog.com" title="logo"><img src="<%= static_url(Endpoint, "/images/email-logomark.png") %>" alt="Changelog" width="60" height="60"></a></td>
             </tr>
           </table>
         </div></div>
@@ -34,7 +34,7 @@
         <div class="footer">
           <table width="100%">
             <tr>
-              <td class="aligncenter content-block"><a href="http://changelog.com" title="">Changelog.com</a></td>
+              <td class="aligncenter content-block"><a href="https://changelog.com" title="">Changelog.com</a></td>
             </tr>
           </table>
         </div></div>
