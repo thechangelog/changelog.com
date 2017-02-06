@@ -3,14 +3,14 @@ defmodule Changelog.PodcastHostTest do
 
   alias Changelog.PodcastHost
 
-  describe "admin_changeset" do
+  describe "changeset" do
     test "valid attributes" do
-      changeset = PodcastHost.admin_changeset(%PodcastHost{}, %{position: 42})
+      changeset = PodcastHost.changeset(%PodcastHost{}, %{position: 42})
       assert changeset.valid?
     end
 
     test "invalid attributes" do
-      changeset = PodcastHost.admin_changeset(%PodcastHost{}, %{})
+      changeset = PodcastHost.changeset(%PodcastHost{}, %{})
       refute changeset.valid?
     end
   end

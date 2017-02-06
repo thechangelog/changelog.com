@@ -3,14 +3,14 @@ defmodule Changelog.PostChannelTest do
 
   alias Changelog.PostChannel
 
-  describe "admin_changeset" do
+  describe "changeset" do
     test "valid attributes" do
-      changeset = PostChannel.admin_changeset(%PostChannel{}, %{position: 42})
+      changeset = PostChannel.changeset(%PostChannel{}, %{position: 42})
       assert changeset.valid?
     end
 
     test "invalid attributes" do
-      changeset = PostChannel.admin_changeset(%PostChannel{}, %{})
+      changeset = PostChannel.changeset(%PostChannel{}, %{})
       refute changeset.valid?
     end
   end

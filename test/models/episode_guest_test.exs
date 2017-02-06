@@ -3,14 +3,14 @@ defmodule Changelog.EpisodeGuestTest do
 
   alias Changelog.EpisodeGuest
 
-  describe "admin_changeset" do
+  describe "changeset" do
     test "valid attributes" do
-      changeset = EpisodeGuest.admin_changeset(%EpisodeGuest{}, %{position: 42})
+      changeset = EpisodeGuest.changeset(%EpisodeGuest{}, %{position: 42})
       assert changeset.valid?
     end
 
     test "invalid attributes" do
-      changeset = EpisodeGuest.admin_changeset(%EpisodeGuest{}, %{})
+      changeset = EpisodeGuest.changeset(%EpisodeGuest{}, %{})
       refute changeset.valid?
     end
   end

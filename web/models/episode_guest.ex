@@ -11,7 +11,7 @@ defmodule Changelog.EpisodeGuest do
     timestamps()
   end
 
-  def admin_changeset(struct, params \\ %{}) do
+  def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(position episode_id person_id delete))
     |> validate_required([:position])

@@ -3,14 +3,14 @@ defmodule Changelog.EpisodeChannelTest do
 
   alias Changelog.EpisodeChannel
 
-  describe "admin_changeset" do
+  describe "changeset" do
     test "valid attributes" do
-      changeset = EpisodeChannel.admin_changeset(%EpisodeChannel{}, %{position: 42})
+      changeset = EpisodeChannel.changeset(%EpisodeChannel{}, %{position: 42})
       assert changeset.valid?
     end
 
     test "invalid attributes" do
-      changeset = EpisodeChannel.admin_changeset(%EpisodeChannel{}, %{})
+      changeset = EpisodeChannel.changeset(%EpisodeChannel{}, %{})
       refute changeset.valid?
     end
   end

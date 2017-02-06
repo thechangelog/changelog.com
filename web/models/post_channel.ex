@@ -11,7 +11,7 @@ defmodule Changelog.PostChannel do
     timestamps()
   end
 
-  def admin_changeset(struct, params \\ %{}) do
+  def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(position post_id channel_id delete))
     |> validate_required([:position])

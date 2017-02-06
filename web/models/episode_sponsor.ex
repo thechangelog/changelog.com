@@ -17,7 +17,7 @@ defmodule Changelog.EpisodeSponsor do
     timestamps()
   end
 
-  def admin_changeset(struct, params \\ %{}) do
+  def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(position title link_url episode_id sponsor_id description delete))
     |> validate_required([:position, :title, :link_url])
