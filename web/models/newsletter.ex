@@ -4,6 +4,12 @@ defmodule Changelog.Newsletter do
   alias ConCache.Item
   alias Craisin.List
 
+  def community() do
+    %__MODULE__{name: "Community",
+                list_id: "08773ce58bee33c04899904bc699a7e8",
+                web_id: "C7D35AA52CE2DAF7"}
+  end
+
   def gotime() do
     %__MODULE__{name: "Go Time",
                 list_id: "96f7328735b814e82d384ce1ddaf8420",

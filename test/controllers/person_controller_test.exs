@@ -2,6 +2,8 @@ defmodule Changelog.PersonControllerTest do
   use Changelog.ConnCase
   use Bamboo.Test
 
+  import Mock
+
   alias Changelog.Person
 
   test "getting new person form", %{conn: conn} do
@@ -28,7 +30,10 @@ defmodule Changelog.PersonControllerTest do
   test "submission with required data creates person, sends email, and re-renders", %{conn: conn} do
     count_before = count(Person)
 
-    conn = post(conn, person_path(conn, :create), person: %{email: "joe@blow.com", name: "Joe Blow", handle: "joeblow"})
+    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+       post(conn, person_path(conn, :create), person: %{email: "joe@blow.com", name: "Joe Blow", handle: "joeblow"})
+    end
+
     person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
     assert_delivered_email Changelog.Email.welcome_email(person)
     assert html_response(conn, 200) =~ ~r/check your email/i
@@ -39,7 +44,10 @@ defmodule Changelog.PersonControllerTest do
     existing = insert(:person)
     count_before = count(Person)
 
-    conn = post(conn, person_path(conn, :create), person: %{email: existing.email, name: "Joe Blow", handle: "joeblow"})
+    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+       post(conn, person_path(conn, :create), person: %{email: existing.email, name: "Joe Blow", handle: "joeblow"})
+    end
+
     existing = Repo.one(from p in Person, where: p.email == ^existing.email)
 
     assert_delivered_email Changelog.Email.welcome_email(existing)

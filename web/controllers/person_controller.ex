@@ -1,7 +1,8 @@
 defmodule Changelog.PersonController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Email, Mailer, Person}
+  alias Changelog.{Email, Mailer, Newsletter, Person}
+  alias Craisin.Subscriber
 
   plug RequireGuest, "before joining" when action in [:new, :create]
 
@@ -35,7 +36,10 @@ defmodule Changelog.PersonController do
 
   defp welcome(conn, person) do
     person = Person.refresh_auth_token(person)
+    community = Newsletter.community()
+
     Email.welcome_email(person) |> Mailer.deliver_later
+    Subscriber.subscribe(community.list_id, person.email, person.name)
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
