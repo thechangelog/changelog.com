@@ -42,20 +42,19 @@ defmodule Changelog.Person do
   end
 
   def admin_changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, ~w(name email handle github_handle twitter_handle bio website location admin))
-    |> shared_changeset
+    allowed = ~w(name email handle github_handle twitter_handle bio website location admin)
+    changeset_with_allowed_params(struct, params, allowed)
   end
 
   def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, ~w(name email handle github_handle twitter_handle bio location website))
-    |> shared_changeset
+    allowed = ~w(name email handle github_handle twitter_handle bio website location)
+    changeset_with_allowed_params(struct, params, allowed)
   end
 
-  defp shared_changeset(struct, params \\ %{}) do
+  defp changeset_with_allowed_params(struct, params \\ %{}, allowed \\ []) do
     struct
     |> cast_attachments(params, ~w(avatar))
+    |> cast(params, allowed)
     |> validate_required([:name, :email, :handle])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
