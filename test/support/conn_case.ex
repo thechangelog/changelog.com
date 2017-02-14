@@ -25,7 +25,7 @@ defmodule Changelog.ConnCase do
       import Ecto.Query, only: [from: 2]
       import Plug.Conn, only: [assign: 3]
 
-      defp count(query), do: Repo.one(from p in query, select: count(p.id))
+      defp count(query), do: Repo.count(query)
 
       import Changelog.Router.Helpers
       import Changelog.Factory

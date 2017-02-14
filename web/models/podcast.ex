@@ -79,8 +79,7 @@ defmodule Changelog.Podcast do
   def episode_count(podcast) do
     podcast
     |> assoc(:episodes)
-    |> Ecto.Query.select([e], count(e.id))
-    |> Repo.one
+    |> Repo.count
   end
 
   def is_master(podcast) do
@@ -96,9 +95,7 @@ defmodule Changelog.Podcast do
       |> Episode.published
     end
 
-    query
-    |> Ecto.Query.select([e], count(e.id))
-    |> Repo.one
+    Repo.count(query)
   end
 
   def last_numbered_slug(podcast) do

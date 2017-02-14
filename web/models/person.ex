@@ -2,7 +2,7 @@ defmodule Changelog.Person do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.Regexp
+  alias Changelog.{EpisodeHost, EpisodeGuest, PodcastHost, Regexp}
 
   schema "people" do
     field :name, :string
@@ -21,9 +21,9 @@ defmodule Changelog.Person do
     field :admin, :boolean
     field :avatar, Changelog.Avatar.Type
 
-    has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
-    has_many :episode_hosts, Changelog.EpisodeHost, on_delete: :delete_all
-    has_many :episode_guests, Changelog.EpisodeGuest, on_delete: :delete_all
+    has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
+    has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
+    has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
 
     timestamps()
   end
@@ -97,20 +97,12 @@ defmodule Changelog.Person do
   end
 
   def episode_count(person) do
-    host_count = Repo.one from(e in Changelog.EpisodeHost,
-      where: e.person_id == ^person.id,
-      select: count(e.id))
-
-    guest_count = Repo.one from(e in Changelog.EpisodeGuest,
-      where: e.person_id == ^person.id,
-      select: count(e.id))
-
+    host_count = Repo.count(from(e in EpisodeHost, where: e.person_id == ^person.id))
+    guest_count = Repo.count(from(e in EpisodeGuest, where: e.person_id == ^person.id))
     host_count + guest_count
   end
 
   def post_count(person) do
-    Repo.one from(p in Changelog.Post,
-      where: p.author_id == ^person.id,
-      select: count(p.id))
+    Repo.count(from(p in Changelog.Post, where: p.author_id == ^person.id))
   end
 end
