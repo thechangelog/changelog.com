@@ -28,6 +28,19 @@ defmodule Changelog.Person do
     timestamps()
   end
 
+  def in_slack(query \\ __MODULE__) do
+    from(p in query, where: not(is_nil(p.slack_id)))
+  end
+
+  def joined(query \\ __MODULE__) do
+    from(p in query, where: not(is_nil(p.joined_at)))
+  end
+
+  def joined_today(query \\ __MODULE__) do
+    today = Timex.subtract(Timex.now, Timex.Duration.from_days(1))
+    from(p in query, where: p.joined_at > ^today)
+  end
+
   def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
     Repo.get_by(__MODULE__, twitter_handle: handle)
   end

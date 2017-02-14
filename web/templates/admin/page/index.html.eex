@@ -22,9 +22,9 @@
 
 <div class="ui basic segment">
   <div class="ui centered stackable grid">
-    <div class="ui ten wide column">
+    <div class="ui twelve wide column">
       <h1 class="ui dividing header">Newsletters</h1>
-      <table class="ui celled table">
+      <table class="ui striped table">
         <thead>
           <tr>
             <th>List</th>
@@ -44,6 +44,32 @@
             <td><%= NewsletterView.subscribers(newsletter, :all) |> comma_separated %></td>
           </tr>
         <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ui four wide column">
+      <h1 class="ui dividing header">Members</h1>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>New Today</td>
+            <td><%= @members[:today] %></td>
+          </tr>
+          <tr>
+            <td>In Slack</td>
+            <td><%= @members[:slack] %></td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td><%= @members[:total] %></td>
+          </tr>
         </tbody>
       </table>
     </div>
