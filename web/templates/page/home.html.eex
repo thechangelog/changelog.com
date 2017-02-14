@@ -24,7 +24,7 @@
           <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
           <%= if Enum.any?(light_logo_sponsorships) do %>
             <aside>
-              <h4>Sponsored by:</h4>
+              <h4>Brought to you by</h4>
               <div class="featured_podcast_logos">
                 <%= for episode_sponsor <- light_logo_sponsorships do %>
                   <%= link to: episode_sponsor.link_url do %>
