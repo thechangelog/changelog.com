@@ -9,13 +9,13 @@ defmodule Changelog.Plug.RequireGuest do
   end
 
   def call(conn, _opts) do
-    if !conn.assigns[:current_user] do
-      conn
-    else
+    if conn.assigns[:current_user] do
       conn
       |> put_flash(:error, "Guests only!")
       |> redirect(to: Helpers.page_path(conn, :home))
       |> halt()
+    else
+      conn
     end
   end
 end
