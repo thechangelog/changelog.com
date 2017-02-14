@@ -51,7 +51,7 @@ defmodule Changelog.Person do
     changeset_with_allowed_params(struct, params, allowed)
   end
 
-  defp changeset_with_allowed_params(struct, params \\ %{}, allowed \\ []) do
+  defp changeset_with_allowed_params(struct, params, allowed) do
     struct
     |> cast_attachments(params, ~w(avatar))
     |> cast(params, allowed)
