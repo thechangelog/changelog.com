@@ -5,8 +5,12 @@ defmodule Craisin.Subscriber do
     get("subscribers/#{list_id}?email=#{email}") |> local_handle
   end
 
-  def subscribe(list_id, email, name) do
-    fields = %{"EmailAddress" => email, "Name" => name,"Resubscribe" => true}
+  def subscribe(list_id, person, custom_fields \\ %{}) do
+    fields = %{"EmailAddress" => person.email,
+              "Name" => person.name,
+              "Resubscribe" => true,
+              "CustomFields" => mapped_custom_fields(custom_fields)}
+
     post("subscribers/#{list_id}", Poison.encode!(fields)) |> local_handle
   end
 
@@ -21,5 +25,9 @@ defmodule Craisin.Subscriber do
 
   defp not_in_list do
     %{"State" => "NotInList"}
+  end
+
+  defp mapped_custom_fields(custom_fields) do
+    Enum.map(custom_fields, fn({k, v}) -> %{"Key" => k, "Value" => v} end)
   end
 end

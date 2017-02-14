@@ -39,7 +39,7 @@ defmodule Changelog.PersonController do
     community = Newsletter.community()
 
     Email.welcome_email(person) |> Mailer.deliver_later
-    Subscriber.subscribe(community.list_id, person.email, person.name)
+    Subscriber.subscribe(community.list_id, person, handle: person.handle)
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")

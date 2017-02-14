@@ -30,7 +30,7 @@ defmodule Changelog.HomeController do
   end
 
   def subscribe(%{assigns: %{current_user: current_user}} = conn, %{"id" => newsletter_id}) do
-    Subscriber.subscribe(newsletter_id, current_user.email, current_user.name)
+    Subscriber.subscribe(newsletter_id, current_user)
 
     conn
     |> put_flash(:success, "One more step! Check your email to confirm your subscription. Then we'll hook you up 📥")
