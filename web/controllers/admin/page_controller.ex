@@ -7,7 +7,8 @@ defmodule Changelog.Admin.PageController do
 
   def index(conn, _params) do
     newsletters =
-      [Newsletter.weekly(),
+      [Newsletter.community(),
+       Newsletter.weekly(),
        Newsletter.nightly(),
        Newsletter.gotime(),
        Newsletter.jsparty()]
