@@ -99,6 +99,13 @@
     <%= error_message(f, :schedule_note) %>
   </div>
 
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :recorded_live, class: "hidden") %>
+      <label>Recorded Live</label>
+    </div>
+  </div>
+
   <div class="field <%= error_class(f, :description) %>">
     <%= label f, :description %>
     <%= textarea f, :description, placeholder: "Markdown enabled." %>

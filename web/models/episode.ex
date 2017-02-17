@@ -22,6 +22,7 @@ defmodule Changelog.Episode do
     field :published, :boolean, default: false
     field :published_at, Timex.Ecto.DateTime
     field :recorded_at, Timex.Ecto.DateTime
+    field :recorded_live, :boolean, default: false
 
     field :audio_file, Changelog.AudioFile.Type
     field :bytes, :integer
@@ -106,7 +107,7 @@ defmodule Changelog.Episode do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(slug title published featured headline subheadline highlight subhighlight summary notes published_at recorded_at guid))
+    |> cast(params, ~w(slug title published featured headline subheadline highlight subhighlight summary notes published_at recorded_at recorded_live guid))
     |> cast_attachments(params, ~w(audio_file))
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)

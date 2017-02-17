@@ -18,6 +18,7 @@ defmodule Changelog.Podcast do
     field :schedule_note, :string
     field :download_count, :float
     field :reach_count, :integer
+    field :recorded_live, :boolean, default: false
 
     has_many :episodes, Episode, on_delete: :delete_all
     has_many :podcast_channels, PodcastChannel, on_delete: :delete_all
@@ -42,7 +43,7 @@ defmodule Changelog.Podcast do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url))
+    |> cast(params, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live))
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)

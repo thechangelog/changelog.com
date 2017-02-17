@@ -78,6 +78,7 @@ defmodule Changelog.Admin.EpisodeController do
       |> build_assoc(:episodes,
         episode_channels: default_channels,
         episode_hosts: default_hosts,
+        recorded_live: podcast.recorded_live,
         slug: default_slug)
       |> Episode.admin_changeset
 
