@@ -28,8 +28,7 @@
           to: EpisodeView.audio_url(@episode),
           data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
           role: "button",
-          class: "toolbar_item toolbar_item--button",
-          style: "background-image: url('#{static_url(@conn, "/images/icon-play.svg")}')" %>
+          class: "toolbar_item toolbar_item--button playbar playbar_play" %>
 
       <%= link "Details",
           title: "Episode Details",

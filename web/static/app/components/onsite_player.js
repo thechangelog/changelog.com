@@ -2,6 +2,7 @@ import { u, ajax } from "umbrellajs";
 import Episode from "components/episode";
 import Log from "components/log";
 import ChangelogAudio from "components/audio";
+import Playbar from "components/playbar";
 
 export default class OnsitePlayer {
   constructor(selector) {
@@ -10,6 +11,8 @@ export default class OnsitePlayer {
       this.audio = new ChangelogAudio();
       this.detailsLoaded = false;
       this.audioLoaded = false;
+      this.playbar = new Playbar();
+      this.currentlyLoaded = "";
       this.attachUI(selector);
       this.attachEvents();
       this.attachKeyboardShortcuts();
@@ -83,11 +86,13 @@ export default class OnsitePlayer {
   play() {
     requestAnimationFrame(this.step.bind(this));
     this.audio.play();
+    this.playbar.play();
     this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
     this.audio.pause();
+    this.playbar.pause();
     this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
   }
 
@@ -112,6 +117,9 @@ export default class OnsitePlayer {
   load(audioUrl, detailsUrl) {
     this.resetUI();
     this.playButton.addClass("is-loading");
+    this.playButton.attr('data-loaded', detailsUrl);
+    this.currentlyLoaded = detailsUrl;
+    this.playbar.belongsTo(this.currentlyLoaded);
     this.loadAudio(audioUrl);
     this.loadDetails(detailsUrl);
   }
@@ -169,6 +177,7 @@ export default class OnsitePlayer {
     this.title.text("");
     this.current.text("0:00");
     this.duration.text("0:00");
+    this.playButton.first().removeAttribute("data-loaded");
     this.resetPrevUI();
     this.resetNextUI();
     this.scrubber.first().value = 0;
