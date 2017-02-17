@@ -1,16 +1,58 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Changelog Live Stream</h2>
-    </header>
-    <div class="content_body">
+<section class="live">
+  <div class="live-content">
+    <%= link to: "http://knight.wavestreamer.com:1882/Live", role: "button", class: "live-button js-player-play-button",
+      data: [] do %>
+      <div class="live-button-bg"></div>
+      <div class="live-button-icon">Play</div>
+    <% end %>
 
-      <p>The live player will attempt to autoplay. You might need to click play or refresh.</p>
+    <div class="live-info">
+      <header class="live-info-header">
+        <h2 class="live-info-header-show"><%= link "GoTime #58", to: "", title: "View GoTime Archive", target: "_blank" %></h2>
+        <h1 class="live-info-header-title">Episode Working Title with Shiya Luo</h1>
+        <p class="live-info-header-description">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Vestibulum id ligula porta felis euismod semper.</p>
+      </header>
 
-      <audio autoplay="autoplay" controls="controls" src="http://knight.wavestreamer.com:1882/Live">
-        <source src="http://knight.wavestreamer.com:1882/Live" />
-      </audio>
+      <div class="live-info-guests">
+        <article class="live-info-guests-item">
+          <a href="" target="_blank" title="More Info">
+            <img src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
+            <h2 class="live-info-guests-item-title">Host</h2>
+            <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
+          </a>
+        </article>
+        <article class="live-info-guests-item">
+          <a href="" target="_blank" title="More Info">
+            <img src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
+            <h2 class="live-info-guests-item-title">Host</h2>
+            <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
+          </a>
+        </article>
+      </div>
 
+      <div class="live-info-cta">
+        <img class="live-info-cta-icon" src="" alt="Slack Logomark">
+        <p class="live-info-text">Join the discussion in our #GoTime Slack channel.</p>
+        <p class="live-info-text"><small>Not a member yet? Join the Changelog Community.</small></p>
+      </div>
     </div>
   </div>
-</article>
+
+  <footer class="live-footer">
+    <div class="live-footer-status">Upcoming</div>
+
+    <div class="live-footer-viewers">103</div>
+
+    <ul class="live-footer-stats">
+      <li><strong>Start Time</strong> 12:00 ET</li>
+      <li><strong>Elapsed</strong> 00:00:00</li>
+    </ul>
+
+    <%= link "Share",
+        title: "Share",
+        to: "#",
+        class: "js-share-popup",
+        target: "_blank",
+        style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+  </footer>
+</section>
