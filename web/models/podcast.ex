@@ -2,7 +2,7 @@ defmodule Changelog.Podcast do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.{Episode, EpisodeStat, PodcastHost, Regexp}
+  alias Changelog.{Episode, EpisodeStat, PodcastChannel, PodcastHost, Regexp}
 
   schema "podcasts" do
     field :name, :string
@@ -20,6 +20,8 @@ defmodule Changelog.Podcast do
     field :reach_count, :integer
 
     has_many :episodes, Episode, on_delete: :delete_all
+    has_many :podcast_channels, PodcastChannel, on_delete: :delete_all
+    has_many :channels, through: [:podcast_channels, :channel]
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
     has_many :episode_stats, EpisodeStat
@@ -47,6 +49,7 @@ defmodule Changelog.Podcast do
     |> validate_format(:ping_url, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
+    |> cast_assoc(:podcast_channels)
     |> cast_assoc(:podcast_hosts)
   end
 
@@ -113,6 +116,12 @@ defmodule Changelog.Podcast do
     |> Episode.newest_first
     |> Ecto.Query.first
     |> Repo.one
+  end
+
+  def preload_channels(podcast) do
+    podcast
+    |> Repo.preload(podcast_channels: {PodcastChannel.by_position, :channel})
+    |> Repo.preload(:channels)
   end
 
   def preload_hosts(podcast) do
