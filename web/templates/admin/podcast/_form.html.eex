@@ -62,12 +62,48 @@
     </div>
   </div>
 
+  <div class="field">
+    <%= label f, :channels %>
+
+    <div class="ui horizontal selection list js-channels">
+      <%= inputs_for f, :podcast_channels, fn i -> %>
+        <% channel = channel_from_model_or_params(i.model, i.params) %>
+        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
+          <%= hidden_input i, :channel_id %>
+          <%= hidden_input i, :position, class: "js-position" %>
+
+          <div class="content">
+            <a class="ui label">
+              <%= channel.name %>
+              <i class="delete icon js-remove"></i>
+              <%= hidden_input i, :delete %>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Channel">
+        <i class="block layout icon"></i>
+      </div>
+    </div>
+  </div>
+
   <div class="field <%= error_class(f, :schedule_note) %>">
     <%= label(f, :schedule_note) do %>
       Schedule Note <%= help_icon("Markdown supported.") %>
     <% end %>
     <%= text_input f, :schedule_note, placeholder: "New show every Friday!" %>
     <%= error_message(f, :schedule_note) %>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :recorded_live, class: "hidden") %>
+      <label>Recorded Live</label>
+    </div>
   </div>
 
   <div class="field <%= error_class(f, :description) %>">

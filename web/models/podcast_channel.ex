@@ -1,29 +1,25 @@
-defmodule Changelog.EpisodeChannel do
+defmodule Changelog.PodcastChannel do
   use Changelog.Web, :model
 
-  schema "episode_channels" do
+  schema "podcast_channels" do
     field :position, :integer
     field :delete, :boolean, virtual: true
 
+    belongs_to :podcast, Changelog.Podcast
     belongs_to :channel, Changelog.Channel
-    belongs_to :episode, Changelog.Episode
 
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(position episode_id channel_id delete))
+    |> cast(params, ~w(position podcast_id channel_id delete))
     |> validate_required([:position])
     |> mark_for_deletion()
   end
 
   def by_position do
     from p in __MODULE__, order_by: p.position
-  end
-
-  def build_and_preload({channel, position}) do
-    %__MODULE__{position: position, channel_id: channel.id} |> Repo.preload(:channel)
   end
 
   defp mark_for_deletion(changeset) do

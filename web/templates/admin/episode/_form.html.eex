@@ -244,7 +244,14 @@
 
   <div class="inline field">
     <div class="ui toggle checkbox">
-      <%= checkbox f, :published, class: "hidden" %>
+      <%= checkbox(f, :recorded_live, class: "hidden") %>
+      <label>Recorded Live</label>
+    </div>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :published, class: "hidden") %>
       <label>Published</label>
     </div>
   </div>
