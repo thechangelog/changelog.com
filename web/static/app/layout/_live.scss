@@ -1,0 +1,46 @@
+.page-live {
+  background-color: $black;
+  background-image: linear-gradient(to bottom right, transparent, rgba($green,0.3));
+
+  .footer {
+    display: none;
+  }
+}
+
+.live {
+
+  &-info {
+    margin: 0 auto;
+    max-width: 880px;
+
+    &-header {
+      color: $white;
+      text-align: center;
+
+      &-show {
+        @extend %display-font;
+
+        a {
+          color: $medium-grey;
+        }
+      }
+
+      &-title {
+        font-size: 1.825em;
+      }
+
+      p {
+        color: $medium-grey;
+        font-size: 1.25em;
+      }
+    }
+  }
+
+  &-footer {
+    background: $red;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+}
