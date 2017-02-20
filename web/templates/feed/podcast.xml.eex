@@ -33,6 +33,7 @@
         <dc:creator>Changelog Media</dc:creator>
       <% end %>
         <description><![CDATA[
+          <audio src="<%= EpisodeView.audio_url(episode) %>" preload="none" controls></audio>
           <%= md_to_html(episode.summary) %>
         <%= if Enum.any?(episode.sponsors) do %>
           <p>Sponsors</p>
