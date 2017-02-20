@@ -11,7 +11,7 @@
   <tbody>
   <%= for episode <- recent_episodes(@podcast) do %>
     <tr>
-      <td><%= episode.slug %></td>
+      <td data-popup="true" data-title="<%= episode.title %>"><%= episode.slug %></td>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <td><%= EpisodeView.download_count(episode) %></td>
       <td><%= EpisodeView.reach_count(episode) %></td>
