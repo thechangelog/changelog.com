@@ -7,16 +7,24 @@
 }
 
 .live {
-  align-items: center;
-  display: flex;
   color: $white;
   height: 100%;
   width: 100%;
   padding-bottom: 100px;
 
-  &-content {
+  @media (min-width: $tablet) {
+    align-items: center;
     display: flex;
+  }
+
+  &-content {
+    margin: $padding-medium auto;
+    max-width: 1080px;
     width: 100%;
+
+    @media (min-width: $tablet) {
+      display: flex;
+    }
   }
 
   // Button
@@ -26,13 +34,18 @@
     @include large-play-button(".live", $gutter, $button_size, "");
     align-items: center;
     display: flex;
-    width: 30%;
-    left: $gutter / 2;
-    margin-right: 2rem;
-    margin-top: -($gutter);
+    margin-bottom: $padding-medium;
+    margin-right: 0;
     padding: 0;
     position: relative;
     text-indent: -9999px;
+
+    @media (min-width: $tablet) {
+      left: $gutter / 2;
+      margin-bottom: 0;
+      margin-top: -($gutter);
+      width: 30%;
+    }
   }
 
   // Info
@@ -40,6 +53,8 @@
     max-width: 880px;
     position: relative;
     z-index: 2;
+    padding: 0 $padding-medium;
+    width: 100%;
 
     // Header
     &-header {
@@ -48,6 +63,7 @@
 
       &-show {
         @extend %display-font;
+        margin-top: 0;
 
         a {
           color: $medium-grey;
@@ -57,17 +73,34 @@
       &-title {
         font-size: 1.825em;
       }
+    }
 
-      p {
-        color: $medium-grey;
-        font-size: 1.25em;
+    // More
+    &-more {
+      display: none;
+
+      @media (min-width: $tablet) {
+        display: block;
       }
+    }
+
+    // Description
+    &-description {
+      color: $medium-grey;
+      font-size: 1.25em;
+      margin: 0 auto 30px;
+      max-width: 600px;
+      text-align: center;
     }
 
     // Guests
     &-guests {
-      display: flex;
+      display: none;
       justify-content: center;
+
+      @media (min-width: $tablet) {
+        display: flex;
+      }
 
       &-item {
         flex: 0 0 240px;
@@ -110,10 +143,13 @@
 
       p {
         font-size: 1.25em;
-        margin: 0;
+        line-height: 1.25em;
+        margin: 0 0 0.25em;
 
         small {
+          display: block;
           color: $green;
+          line-height: 1.5em;
 
           a {
             color: $green;
@@ -130,28 +166,45 @@
     align-items: center;
     background: rgba($black, 0.7);
     display: flex;
+    flex-wrap: wrap;
     position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
-    padding: $padding-medium;
     width: 100%;
+    z-index: 99;
+
+    @media (min-width: $tablet) {
+      padding: $padding-medium;
+    }
 
     &-status {
       background: #FF5252;
       font-size: $largeText;
       height: 60px;
-      min-width: 230px;
+      width: 100%;
+      margin: $padding-small 0 0;
       padding: 0.4em 10px 0.3em;
       text-align: center;
+
+      @media (min-width: $tablet) {
+        margin: 0 $padding-small 0 0;
+        min-width: 230px;
+        order: -1;
+        width: auto;
+      }
     }
 
     &-viewers {
       align-items: center;
-      display: flex;
+      display: none;
       font-size: $largeText;
       // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
-      padding: 0 40px;
+      margin: 0 $padding-small;
+
+      @media (min-width: $tablet) {
+        display: flex;
+      }
 
       img {
         margin: 0 10px 0 0;
@@ -166,7 +219,7 @@
       color: $white;
       display: flex;
       list-style-type: none;
-      margin: 0;
+      margin: 0 $padding-small;
       padding: 0;
 
       li {

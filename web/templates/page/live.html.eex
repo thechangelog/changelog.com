@@ -10,37 +10,38 @@
       <header class="live-info-header">
         <h2 class="live-info-header-show"><%= link "GoTime #58", to: "", title: "View GoTime Archive", target: "_blank" %></h2>
         <h1 class="live-info-header-title">Episode Working Title with Shiya Luo</h1>
-        <p class="live-info-header-description">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Vestibulum id ligula porta felis euismod semper.</p>
       </header>
 
-      <div class="live-info-guests">
-        <article class="live-info-guests-item">
-          <a href="" target="_blank" title="More Info">
-            <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
-            <h2 class="live-info-guests-item-title">Host</h2>
-            <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
-          </a>
-        </article>
-        <article class="live-info-guests-item">
-          <a href="" target="_blank" title="More Info">
-            <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
-            <h2 class="live-info-guests-item-title">Host</h2>
-            <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
-          </a>
-        </article>
-      </div>
+      <div class="live-info-more">
+        <p class="live-info-description">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Vestibulum id ligula porta felis euismod semper.</p>
 
-      <div class="live-info-cta">
-        <img class="live-info-cta-icon" src="/images/icon-slack-white.svg" alt="Slack Logomark" width="25" height="25">
-        <p>Join the discussion in our #GoTime Slack channel.</p>
-        <p><small>Not a member yet? <a href="/join" title="">Join the Changelog Community</a>.</small></p>
+        <div class="live-info-guests">
+          <article class="live-info-guests-item">
+            <a href="" target="_blank" title="More Info">
+              <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
+              <h2 class="live-info-guests-item-title">Host</h2>
+              <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
+            </a>
+          </article>
+          <article class="live-info-guests-item">
+            <a href="" target="_blank" title="More Info">
+              <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
+              <h2 class="live-info-guests-item-title">Host</h2>
+              <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
+            </a>
+          </article>
+        </div>
+
+        <div class="live-info-cta">
+          <img class="live-info-cta-icon" src="/images/icon-slack-white.svg" alt="Slack Logomark" width="25" height="25">
+          <p>Join the discussion in our #GoTime&nbsp;Slack channel.</p>
+          <p><small>Not a member yet? <a href="/join" title="">Join the Changelog&nbsp;Community</a>.</small></p>
+        </div>
       </div>
     </div>
   </div>
 
   <footer class="live-footer">
-    <div class="live-footer-status">Upcoming</div>
-
     <div class="live-footer-viewers">
       <img class="live-info-cta-icon" src="/images/icon-eye.svg" alt="Viewers" width="37" height="26">
       <span>103</span>
@@ -59,5 +60,7 @@
           class: "js-share-popup",
           target: "_blank" %>
     </p>
+
+    <div class="live-footer-status">Upcoming</div>
   </footer>
 </section>
