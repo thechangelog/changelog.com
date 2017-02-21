@@ -1,0 +1,89 @@
+@mixin large-play-button($parent, $gutter: 2rem, $button-size: 8rem, $button-spacing: "") {
+  @if $button_spacing == "" {
+    $button_spacing: $button_size + $gutter * 2;
+  }
+
+  &:hover &-bg {
+    transform: scale(1.1);
+  }
+
+  &-bg,
+  &-icon {
+    height: $button_size;
+    width: $button_size;
+    margin: 0 auto;
+  }
+
+  &-bg {
+    background-color: $green;
+    border-radius: $button_size;
+    display: block;
+    position: relative;
+    transition: all 0.2s $ease-in-out-quint;
+    z-index: 2;
+  }
+
+  &-icon {
+    background: url("/images/icon-play-white.svg") center no-repeat;
+    background-size: auto 40%;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    transform: translateY(-50%);
+
+    #{$parent}.is-paused & {
+      background-image: url("/images/icon-play-white.svg");
+    }
+    #{$parent}.is-playing & {
+      background-image: url("/images/icon-pause-white.svg");
+    }
+    #{$parent}.is-loading & {
+      $spin: spin 1s ease-in-out infinite;
+      background-image: url("/images/loading-white.svg");
+      -webkit-animation: $spin;
+      -moz-animation: $spin;
+      animation: $spin;
+
+      &:after {
+        -webkit-animation: $spin;
+        -moz-animation: $spin;
+        animation: $spin;
+        content: "";
+        background: url("/images/loading-2-white.svg") center no-repeat;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+  }
+
+  &:before {
+    content: '';
+    height: 30rem;
+    left: 50%;
+    margin-left: -15rem;
+    margin-top: -15rem;
+    opacity: .2;
+    position: absolute;
+    pointer-events: none;
+    top: 50%;
+    transition: none;
+    width: 30rem;
+
+    #{$parent}.is-playing & {
+      transition: all 0.2s $ease-in-out-quint;
+      transform: rotate(360deg) translate3d(0, 0, 0);
+    }
+
+    @each $podcast in $podcasts {
+      #{$parent}--#{$podcast} & {
+        background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg);
+      }
+    }
+  }
+}

@@ -22,10 +22,10 @@
       <%= link "Changelog", to: page_url(@conn, :home), class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" %>
 
       <div class="episode-player_details">
-        <%= link to: audio_url(@episode), role: "button", class: "episode-player_details_button js-player-play-button",
+        <%= link to: audio_url(@episode), role: "button", class: "episode-player_details-button js-player-play-button",
           data: [podcast: @podcast.name, title: @episode.title, duration: @episode.duration] do %>
-          <div class="episode-player_details_button_bg"></div>
-          <div class="episode-player_details_button_icon">Play</div>
+          <div class="episode-player_details-button-bg"></div>
+          <div class="episode-player_details-button-icon">Play</div>
         <% end %>
 
         <div class="episode-player_details_vwrap">
