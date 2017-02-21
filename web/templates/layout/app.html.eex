@@ -37,6 +37,7 @@
     <%= render("_head_scripts.html", assigns) %>
   <% end %>
   </head>
+  <!-- TODO: Allow a class to be added on a template or layout basis -->
   <body class="page-live"><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->

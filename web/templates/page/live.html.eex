@@ -1,4 +1,4 @@
-<section class="live">
+<section class="live live--gotime is-playing">
   <div class="live-content">
     <%= link to: "http://knight.wavestreamer.com:1882/Live", role: "button", class: "live-button js-player-play-button",
       data: [] do %>
@@ -16,14 +16,14 @@
       <div class="live-info-guests">
         <article class="live-info-guests-item">
           <a href="" target="_blank" title="More Info">
-            <img src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
+            <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
             <h2 class="live-info-guests-item-title">Host</h2>
             <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
           </a>
         </article>
         <article class="live-info-guests-item">
           <a href="" target="_blank" title="More Info">
-            <img src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
+            <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
             <h2 class="live-info-guests-item-title">Host</h2>
             <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
           </a>
@@ -31,9 +31,9 @@
       </div>
 
       <div class="live-info-cta">
-        <img class="live-info-cta-icon" src="" alt="Slack Logomark">
-        <p class="live-info-text">Join the discussion in our #GoTime Slack channel.</p>
-        <p class="live-info-text"><small>Not a member yet? Join the Changelog Community.</small></p>
+        <img class="live-info-cta-icon" src="/images/icon-slack-white.svg" alt="Slack Logomark" width="25" height="25">
+        <p>Join the discussion in our #GoTime Slack channel.</p>
+        <p><small>Not a member yet? <a href="/join" title="">Join the Changelog Community</a>.</small></p>
       </div>
     </div>
   </div>
@@ -41,18 +41,23 @@
   <footer class="live-footer">
     <div class="live-footer-status">Upcoming</div>
 
-    <div class="live-footer-viewers">103</div>
+    <div class="live-footer-viewers">
+      <img class="live-info-cta-icon" src="/images/icon-eye.svg" alt="Viewers" width="37" height="26">
+      <span>103</span>
+    </div>
 
     <ul class="live-footer-stats">
       <li><strong>Start Time</strong> 12:00 ET</li>
       <li><strong>Elapsed</strong> 00:00:00</li>
     </ul>
 
-    <%= link "Share",
-        title: "Share",
-        to: "#",
-        class: "js-share-popup",
-        target: "_blank",
-        style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+    <p class="live-footer-share">
+      <img src="/images/icon-share-white.svg" alt="Share" width="29" height="26">
+      <%= link "Share",
+          title: "Share",
+          to: "#",
+          class: "js-share-popup",
+          target: "_blank" %>
+    </p>
   </footer>
 </section>

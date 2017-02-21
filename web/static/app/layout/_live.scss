@@ -1,6 +1,5 @@
 .page-live {
   background-color: $black;
-  background-image: linear-gradient(to bottom right, transparent, rgba($green,0.3));
 
   .footer {
     display: none;
@@ -8,11 +7,120 @@
 }
 
 .live {
+  align-items: center;
+  display: flex;
+  color: $white;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 100px;
 
+  &-content {
+    display: flex;
+    width: 100%;
+  }
+
+  // Button
+  &-button {
+    $gutter: 2rem;
+    $button_size: 8rem;
+    $button_spacing: $button_size + $gutter * 2;
+
+    align-items: center;
+    display: flex;
+
+    left: $gutter / 2;
+    margin-right: 2rem;
+    margin-top: -($gutter);
+    padding: 0;
+    position: relative;
+    text-indent: -9999px;
+    width: 30%;
+
+    &:hover .live-button-bg {
+      transform: scale(1.1);
+    }
+
+    &-bg {
+      background-color: $green;
+      border-radius: $button_size;
+      display: block;
+      height: $button_size;
+      margin: 0 auto;
+      position: relative;
+      transition: all 0.2s $ease-in-out-quint;
+      width: $button_size;
+      z-index: 2;
+    }
+
+    &-icon {
+      background: url("/images/icon-play-white.svg") center no-repeat;
+      background-size: 30px auto;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
+
+      .live.is-paused & {
+        background-image: url("/images/icon-play-white.svg");
+      }
+      .live.is-playing & {
+        background-image: url("/images/icon-pause-white.svg");
+      }
+      .live.is-loading & {
+        $spin: spin 1s ease-in-out infinite;
+        background-image: url("/images/loading-white.svg");
+        -webkit-animation: $spin;
+        -moz-animation: $spin;
+        animation: $spin;
+
+        &:after {
+          -webkit-animation: $spin;
+          -moz-animation: $spin;
+          animation: $spin;
+          content: "";
+          background: url("/images/loading-2-white.svg") center no-repeat;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+        }
+      }
+    }
+
+    &:before {
+      content: '';
+      height: 30rem;
+      left: 50%;
+      margin-left: -15rem;
+      margin-top: -15rem;
+      opacity: .2;
+      position: absolute;
+      pointer-events: none;
+      top: 50%;
+      transition: none;
+      width: 30rem;
+
+      .live.is-playing & {
+        transition: all 0.2s $ease-in-out-quint;
+        transform: rotate(360deg) translate3d(0, 0, 0);
+      }
+
+      @each $podcast in $podcasts {
+        .live--#{$podcast} & {
+          background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg);
+        }
+      }
+    }
+  }
+
+  // Info
   &-info {
-    margin: 0 auto;
     max-width: 880px;
 
+    // Header
     &-header {
       color: $white;
       text-align: center;
@@ -34,13 +142,138 @@
         font-size: 1.25em;
       }
     }
+
+    // Guests
+    &-guests {
+      display: flex;
+      justify-content: center;
+
+      &-item {
+        flex: 0 0 240px;
+        text-align: center;
+
+        &-image {
+          border-radius: 200px;
+          margin-bottom: 1em;
+        }
+        &-title {
+          @extend %display-font;
+          font-size: 1.25em;
+          margin: 0 0 0.5em;
+        }
+        &-name {
+          @extend %display-font;
+          font-size: 1.5em;
+          font-weight: normal;
+          color: $white;
+          margin: 0;
+          text-transform: none;
+        }
+      }
+    }
+
+    // Slack CTA
+    &-cta {
+      margin: 2em 0 0;
+      text-align: center;
+
+      &,
+      p,
+      a {
+        color: $white;
+      }
+
+      &-icon {
+        margin-bottom: 4px;
+      }
+
+      p {
+        font-size: 1.25em;
+        margin: 0;
+
+        small {
+          color: $green;
+
+          a {
+            color: $green;
+            font-weight: bold;
+          }
+        }
+      }
+    }
   }
 
   &-footer {
-    background: $red;
-    position: absolute;
+    $largeText: 2.25em;
+    @extend %display-font;
+    align-items: center;
+    background: rgba($black, 0.7);
+    display: flex;
+    position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
+    padding: $padding-medium;
+    width: 100%;
+
+    &-status {
+      background: #FF5252;
+      font-size: $largeText;
+      height: 60px;
+      min-width: 230px;
+      padding: 0.4em 10px 0.3em;
+      text-align: center;
+    }
+
+    &-viewers {
+      align-items: center;
+      display: flex;
+      font-size: $largeText;
+      // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
+      padding: 0 40px;
+
+      img {
+        margin: 0 10px 0 0;
+      }
+
+      span {
+        padding-top: 0.125em;
+      }
+    }
+
+    &-stats {
+      color: $white;
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        font-size: 1.25em;
+        margin: 0 2em 0 0;
+      }
+
+      strong {
+        color: $green;
+        display: block;
+        font-weight: normal;
+        margin-bottom: 0.25em;
+      }
+    }
+
+    &-share {
+      margin: 0 0 0 auto;
+
+      img {
+        transform: translateY(2px);
+        margin: 0 5px 0 0;
+      }
+
+      a {
+        color: $white;
+        font-size: $largeText;
+        // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
+      }
+    }
   }
 }
