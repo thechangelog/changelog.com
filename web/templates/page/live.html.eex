@@ -44,7 +44,7 @@
   <footer class="live-footer">
     <div class="live-footer-viewers">
       <img class="live-info-cta-icon" src="/images/icon-eye.svg" alt="Viewers" width="37" height="26">
-      <span>103</span>
+      <span>000</span>
     </div>
 
     <ul class="live-footer-stats">

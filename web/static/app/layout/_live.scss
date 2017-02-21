@@ -8,13 +8,14 @@
 
 .live {
   color: $white;
-  height: 100%;
-  width: 100%;
-  padding-bottom: 100px;
+  padding-bottom: 160px;
 
   @media (min-width: $tablet) {
     align-items: center;
     display: flex;
+    padding-bottom: 100px;
+    height: 100%;
+    width: 100%;
   }
 
   &-content {
@@ -171,6 +172,7 @@
     bottom: 0;
     right: 0;
     left: 0;
+    padding: $padding-extra-small;
     width: 100%;
     z-index: 99;
 
@@ -206,25 +208,24 @@
         display: flex;
       }
 
-      img {
-        margin: 0 10px 0 0;
-      }
-
-      span {
-        padding-top: 0.125em;
-      }
+      img { margin: 0 10px 0 0; }
+      span { padding-top: 0.125em; }
     }
 
     &-stats {
       color: $white;
       display: flex;
       list-style-type: none;
-      margin: 0 $padding-small;
+      margin: 0 $padding-small 0 0;
       padding: 0;
+
+      @media (min-width: $tablet) {
+        margin: 0 $padding-small;
+      }
 
       li {
         font-size: 1.25em;
-        margin: 0 2em 0 0;
+        margin: 0 $padding-small 0 0;
       }
 
       strong {
@@ -237,16 +238,24 @@
 
     &-share {
       margin: 0 0 0 auto;
+      text-align: center;
 
       img {
-        transform: translateY(2px);
-        margin: 0 5px 0 0;
+        @media (min-width: $tablet) {
+          transform: translateY(2px);
+          margin: 0 5px 0 0;
+        }
       }
 
       a {
         color: $white;
-        font-size: $largeText;
+        display: block;
         // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
+
+        @media (min-width: $tablet) {
+          display: inline-block;
+          font-size: $largeText;
+        }
       }
     }
   }
