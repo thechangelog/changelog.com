@@ -4,17 +4,8 @@ defmodule Changelog.AuthControllerTest do
 
   alias Changelog.Person
 
-  def valid_expires_at do
-    Timex.now |> Timex.add(Timex.Duration.from_minutes(15))
-  end
-
-  def invalid_expires_at do
-    Timex.now |> Timex.subtract(Timex.Duration.from_minutes(15))
-  end
-
   test "getting the sign in form", %{conn: conn} do
     conn = get(conn, sign_in_path(conn, :new))
-
     assert html_response(conn, 200) =~ "Sign In"
   end
 
@@ -47,7 +38,7 @@ defmodule Changelog.AuthControllerTest do
 
     changeset = Person.auth_changeset(person, %{
       auth_token: "12345",
-      auth_token_expires_at: valid_expires_at()
+      auth_token_expires_at: hours_from_now(0.25)
     })
 
     {:ok, person} = Repo.update(changeset)
@@ -64,7 +55,7 @@ defmodule Changelog.AuthControllerTest do
 
     changeset = Person.auth_changeset(person, %{
       auth_token: "12345",
-      auth_token_expires_at: invalid_expires_at()
+      auth_token_expires_at: hours_ago(0.25)
     })
 
     {:ok, person} = Repo.update(changeset)

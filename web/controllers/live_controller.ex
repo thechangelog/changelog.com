@@ -1,11 +1,11 @@
 defmodule Changelog.LiveController do
   use Changelog.Web, :controller
 
-  alias Changelog.Episode
+  alias Changelog.{Episode, TimeView}
 
   def index(conn, _params) do
-    live_window_start = Timex.subtract(Timex.now, Timex.Duration.from_hours(3))
-    live_window_end = Timex.add(Timex.now, Timex.Duration.from_hours(12))
+    live_window_start = TimeView.hours_ago(3)
+    live_window_end = TimeView.hours_from_now(12)
 
     episodes =
       Episode.recorded_live

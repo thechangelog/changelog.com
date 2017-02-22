@@ -1,26 +1,24 @@
 defmodule Changelog.LiveControllerTest do
   use Changelog.ConnCase
 
+  import Changelog.TimeView, only: [hours_from_now: 1, hours_ago: 1]
+
   describe "with episodes inside the live window" do
     test "it renders live data when episode is 12 hours from now", %{conn: conn} do
-      time = Timex.add(Timex.now, Timex.Duration.from_hours(12))
-      episode = insert(:episode, recorded_live: true, recorded_at: time)
+      episode = insert(:episode, recorded_live: true, recorded_at: hours_from_now(12))
       conn = get(conn, live_path(conn, :index))
       assert html_response(conn, 200) =~ episode.title
     end
 
     test "it renders live data when episode started 2.5 hours ago", %{conn: conn} do
-      time = Timex.subtract(Timex.now, Timex.Duration.from_hours(2.5))
-      episode = insert(:episode, recorded_live: true, recorded_at: time)
+      episode = insert(:episode, recorded_live: true, recorded_at: hours_ago(2.5))
       conn = get(conn, live_path(conn, :index))
       assert html_response(conn, 200) =~ episode.title
     end
 
     test "it renders the episode that is up next when multiple upcoming", %{conn: conn} do
-      time1 = Timex.add(Timex.now, Timex.Duration.from_hours(8))
-      time2 = Timex.add(Timex.now, Timex.Duration.from_hours(10))
-      episode1 = insert(:episode, recorded_live: true, recorded_at: time1)
-      episode2 = insert(:episode, recorded_live: true, recorded_at: time2)
+      episode1 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(8))
+      episode2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(10))
       conn = get(conn, live_path(conn, :index))
       assert html_response(conn, 200) =~ episode1.title
       refute html_response(conn, 200) =~ episode2.title
@@ -29,10 +27,8 @@ defmodule Changelog.LiveControllerTest do
 
   describe "with no episodes inside the live window" do
     test "it renders a list of upcoming episodes", %{conn: conn} do
-      time1 = Timex.add(Timex.now, Timex.Duration.from_hours(24))
-      time2 = Timex.add(Timex.now, Timex.Duration.from_hours(48))
-      episode1 = insert(:episode, recorded_live: true, recorded_at: time1)
-      episode2 = insert(:episode, recorded_live: true, recorded_at: time2)
+      episode1 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(24))
+      episode2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(48))
       conn = get(conn, live_path(conn, :index))
       assert html_response(conn, 200) =~ "Upcoming"
       assert html_response(conn, 200) =~ episode1.title

@@ -1,5 +1,6 @@
 defmodule Changelog.Factory do
   use ExMachina.Ecto, repo: Changelog.Repo
+  import Changelog.TimeView, only: [hours_from_now: 1, hours_ago: 1]
 
   def channel_factory do
     %Changelog.Channel{
@@ -57,14 +58,14 @@ defmodule Changelog.Factory do
   def published_episode_factory do
     %Changelog.Episode{episode_factory() | audio_file: stub_audio_file(),
       published: true,
-      published_at: Timex.subtract(Timex.now, Timex.Duration.from_hours(1))
+      published_at: hours_ago(1)
     }
   end
 
   def scheduled_episode_factory do
     %Changelog.Episode{episode_factory() | audio_file: stub_audio_file(),
       published: true,
-      published_at: Timex.add(Timex.now, Timex.Duration.from_hours(1))
+      published_at: hours_from_now(1)
     }
   end
 
@@ -94,13 +95,11 @@ defmodule Changelog.Factory do
   end
 
   def published_post_factory do
-    published_at = Timex.subtract(Timex.now, Timex.Duration.from_hours(1))
-    %Changelog.Post{post_factory() | published: true, published_at: published_at}
+    %Changelog.Post{post_factory() | published: true, published_at: hours_ago(1)}
   end
 
   def scheduled_post_factory do
-    published_at = Timex.add(Timex.now, Timex.Duration.from_hours(1))
-    %Changelog.Post{post_factory() | published: true, published_at: published_at}
+    %Changelog.Post{post_factory() | published: true, published_at: hours_from_now(1)}
   end
 
   def sponsor_factory do

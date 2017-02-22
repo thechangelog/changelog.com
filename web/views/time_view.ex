@@ -11,6 +11,14 @@ defmodule Changelog.TimeView do
     "#{hours}:#{duration(remaining)}"
   end
 
+  def hours_ago(hours) do
+    Timex.subtract(Timex.now, Timex.Duration.from_hours(hours))
+  end
+
+  def hours_from_now(hours) do
+    Timex.add(Timex.now, Timex.Duration.from_hours(hours))
+  end
+
   def pretty_date(ts) when is_nil(ts), do: ""
   def pretty_date(ts) when is_binary(ts) do
     {:ok, result} = Timex.parse(ts, "{YYYY}-{0M}-{0D} {h24}:{m}:{s}")
