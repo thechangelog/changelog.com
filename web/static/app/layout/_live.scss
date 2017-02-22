@@ -42,10 +42,14 @@
     text-indent: -9999px;
 
     @media (min-width: $tablet) {
+      flex: 0 1 200px;
       left: $gutter / 2;
       margin-bottom: 0;
       margin-top: -($gutter);
-      width: 30%;
+    }
+
+    @media (min-width: $desktop) {
+      flex: 0 1 500px;
     }
   }
 
@@ -56,6 +60,10 @@
     z-index: 2;
     padding: 0 $padding-medium;
     width: 100%;
+
+    @media (min-width: $tablet) {
+      flex: 1 1 600px;
+    }
 
     // Header
     &-header {
@@ -73,6 +81,7 @@
 
       &-title {
         font-size: 1.825em;
+        line-height: 1.25em;
       }
     }
 
@@ -80,7 +89,7 @@
     &-more {
       display: none;
 
-      @media (min-width: $tablet) {
+      @media (min-height: 800px) {
         display: block;
       }
     }
@@ -101,15 +110,59 @@
 
       @media (min-width: $tablet) {
         display: flex;
+        flex-wrap: wrap;
       }
 
       &-item {
-        flex: 0 0 240px;
+        flex: 0 0 180px;
+        padding: 0 10px;
         text-align: center;
 
+        a { display: block; }
+
+        .live-info-guests--3 & {
+          flex: 0 0 150px;
+        }
+
+        .live-info-guests--4 &,
+        .live-info-guests--5 &,
+        .live-info-guests--6 & {
+          flex: 0 0 130px;
+          font-size: 12px;
+        }
+
         &-image {
-          border-radius: 200px;
-          margin-bottom: 1em;
+          $size: 150px;
+          background: lighten($black, 5%);
+          border-radius: $size;
+          box-shadow: 0 15px 30px rgba(#000, 0.8);
+          color: $black;
+          display: block;
+          margin: 0 auto 1em;
+          transition: transform 0.1s $ease-in-out-quad;
+          line-height: $size;
+          width: $size;
+          height: $size;
+
+          a:hover & {
+            transform: translateY(-5px);
+          }
+
+          .live-info-guests--3 & {
+            $size: 125px;
+            line-height: $size;
+            width: $size;
+            height: $size;
+          }
+
+          .live-info-guests--4 &,
+          .live-info-guests--5 &,
+          .live-info-guests--6 & {
+            $size: 100px;
+            line-height: $size;
+            width: $size;
+            height: $size;
+          }
         }
         &-title {
           @extend %display-font;
@@ -129,7 +182,7 @@
 
     // Slack CTA
     &-cta {
-      margin: 2em 0 0;
+      margin: $padding-large 0 0;
       text-align: center;
 
       &,
@@ -146,6 +199,15 @@
         font-size: 1.25em;
         line-height: 1.25em;
         margin: 0 0 0.25em;
+
+        a {
+          transition: opacity 0.3s $ease-in-out-quad;
+          font-weight: bold;
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
 
         small {
           display: block;
