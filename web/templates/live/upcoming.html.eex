@@ -1,0 +1,11 @@
+<section class="TODO">
+<h1>Upcoming</h1>
+<%= if Enum.any?(@episodes) do %>
+<table>
+  <%= for episode <- @episodes do %>
+  <td><%= episode.title %></td>
+  <% end %>
+</table>
+<% else %>
+<% end %>
+</section>

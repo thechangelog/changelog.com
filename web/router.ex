@@ -87,6 +87,7 @@ defmodule Changelog.Router do
 
     get "/slack/gotime", SlackController, :gotime
 
+    get "/live", LiveController, :index
     get "/search", SearchController, :search
 
     # static pages
@@ -104,7 +105,6 @@ defmodule Changelog.Router do
     get "/store", PageController, :store
     get "/soundcheck", PageController, :soundcheck
     get "/team", PageController, :team
-    get "/live", PageController, :live
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms
 
