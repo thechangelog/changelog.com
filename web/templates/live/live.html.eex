@@ -8,36 +8,34 @@
 
     <div class="live-info">
       <header class="live-info-header">
-        <h2 class="live-info-header-show"><%= link "GoTime #58", to: "", title: "View GoTime Archive", target: "_blank" %></h2>
-        <%= if @episode.title do %>
+        <h2 class="live-info-header-show">
+          <%= link "#{@podcast.name} #{EpisodeView.number_with_pound(@episode)}", to: podcast_path(@conn, :archive, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
+        </h2>
         <h1 class="live-info-header-title"><%= @episode.title %></h1>
-        <% end %>
       </header>
 
       <div class="live-info-more">
-        <p class="live-info-description">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Vestibulum id ligula porta felis euismod semper.</p>
+        <p class="live-info-description"><%= @podcast.description %></p>
 
         <div class="live-info-guests">
+        <% participants = @episode.guests ++ @episode.hosts %>
+        <%= for person <- participants do %>
           <article class="live-info-guests-item">
-            <a href="" target="_blank" title="More Info">
-              <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
-              <h2 class="live-info-guests-item-title">Host</h2>
-              <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
-            </a>
+            <%= link to: PersonView.external_url(person), title: "More Info", target: "_blank" do %>
+              <img class="live-info-guests-item-image" src="<%= PersonView.avatar_url(person) %>" alt="Profile Photo">
+              <h2 class="live-info-guests-item-title"><%= host_or_guest(@episode, person) %></h2>
+              <h1 class="live-info-guests-item-name"><%= person.name %></h1>
+            <% end %>
           </article>
-          <article class="live-info-guests-item">
-            <a href="" target="_blank" title="More Info">
-              <img class="live-info-guests-item-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Profile Photo">
-              <h2 class="live-info-guests-item-title">Host</h2>
-              <h1 class="live-info-guests-item-name">Adam Stacoviak</h1>
-            </a>
-          </article>
+        <% end %>
         </div>
 
         <div class="live-info-cta">
-          <img class="live-info-cta-icon" src="/images/icon-slack-white.svg" alt="Slack Logomark" width="25" height="25">
-          <p>Join the discussion in our #GoTime&nbsp;Slack channel.</p>
-          <p><small>Not a member yet? <a href="/join" title="">Join the Changelog&nbsp;Community</a>.</small></p>
+          <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
+          <p>Join the discussion in our <%= link "##{@podcast.slug}", to: "https://changelog.slack.com/messages/#{@podcast.slug}" %>&nbsp;Slack channel.</p>
+        <% if !@current_user do %>
+          <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a>.</small></p>
+        <% end %>
         </div>
       </div>
     </div>

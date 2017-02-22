@@ -17,7 +17,7 @@ defmodule Changelog.LiveController do
     up_next = List.first(episodes)
 
     if up_next && up_next.recorded_at < live_window_end do
-      render(conn, :live, episode: up_next)
+      render(conn, :live, episode: up_next, podcast: up_next.podcast)
     else
       render(conn, :upcoming, episodes: episodes)
     end
