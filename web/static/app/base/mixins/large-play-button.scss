@@ -80,16 +80,16 @@
 
   &:before {
     content: '';
-    height: 30rem;
     left: 50%;
-    margin-left: -15rem;
-    margin-top: -15rem;
+    margin-left: -($button-size * 2);
+    margin-top: -($button-size * 2);
     opacity: .2;
     position: absolute;
     pointer-events: none;
     top: 50%;
     transition: none;
-    width: 30rem;
+    height: ($button-size * 4);
+    width: ($button-size * 4);
 
     #{$parent}.is-playing & {
       transition: all 0.2s $ease-in-out-quint;

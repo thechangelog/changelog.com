@@ -35,9 +35,7 @@
 
   // Button
   &-button {
-    $gutter: 2rem;
-    $button_size: 8rem;
-    @include large-play-button(".live", $gutter, $button_size, "");
+    @include large-play-button(".live", 2rem, 6rem);
     align-items: center;
     display: flex;
     margin-bottom: $padding-medium;
@@ -46,7 +44,11 @@
     position: relative;
     text-indent: -9999px;
 
+    $gutter: 2rem;
+    $button_size: 8rem;
+
     @media (min-width: $tablet) {
+      @include large-play-button(".live", $gutter, $button_size, "");
       flex: 0 1 200px;
       left: $gutter / 2;
       margin-bottom: 0;
