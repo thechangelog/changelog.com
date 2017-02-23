@@ -1,6 +1,11 @@
 .page-live {
   background-color: $black;
 
+  .main {
+    align-items: center;
+    display: flex;
+  }
+
   .footer {
     display: none;
   }
@@ -8,14 +13,14 @@
 
 .live {
   color: $white;
-  padding-bottom: 160px;
+  padding: 60px 0 160px;
+  width: 100%;
 
   @media (min-width: $tablet) {
     align-items: center;
     display: flex;
-    padding-bottom: 100px;
+    padding: 80px 0 100px;
     height: 100%;
-    width: 100%;
   }
 
   &-content {
@@ -89,7 +94,7 @@
     &-more {
       display: none;
 
-      @media (min-height: 800px) {
+      @media (min-height: 680px) and (min-width: $tablet) {
         display: block;
       }
     }
