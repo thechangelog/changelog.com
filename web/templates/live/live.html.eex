@@ -23,7 +23,7 @@
         <%= for person <- participants do %>
           <article class="live-info-guests-item">
             <%= link to: PersonView.external_url(person), title: "More Info", target: "_blank" do %>
-              <img class="live-info-guests-item-image" src="<%= PersonView.avatar_url(person) %>" alt="Profile Photo" width="150" height="150">
+              <img class="live-info-guests-item-image" src="<%= PersonView.avatar_url(person) %>" alt="<%= String.at(person.name,0) %>" width="150" height="150">
               <h2 class="live-info-guests-item-title"><%= host_or_guest(@episode, person) %></h2>
               <h1 class="live-info-guests-item-name"><%= person.name %></h1>
             <% end %>
@@ -33,7 +33,7 @@
 
         <div class="live-info-cta">
           <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
-          <p>Join the discussion in our <%= link raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel."), to: "https://changelog.slack.com/messages/#{@podcast.slug}" %></p>
+          <p>Join the discussion in our <%= link raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{@podcast.slug}" %>.</p>
         <% if !@current_user do %>
           <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a>.</small></p>
         <% end %>

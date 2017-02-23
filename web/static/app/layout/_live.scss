@@ -133,14 +133,16 @@
 
         &-image {
           $size: 150px;
-          background: lighten($black, 5%);
+          background: lighten($black, 10%);
           border-radius: $size;
           box-shadow: 0 15px 30px rgba(#000, 0.8);
           color: $black;
           display: block;
-          margin: 0 auto 1em;
+          font-size: 4em;
+          font-weight: bold;
+          margin: 0 auto $padding-small;
           transition: transform 0.1s $ease-in-out-quad;
-          line-height: $size;
+          line-height: ($size * 1.1);
           width: $size;
           height: $size;
 
@@ -150,7 +152,7 @@
 
           .live-info-guests--3 & {
             $size: 125px;
-            line-height: $size;
+            line-height: ($size * 1.1);
             width: $size;
             height: $size;
           }
@@ -159,7 +161,7 @@
           .live-info-guests--5 &,
           .live-info-guests--6 & {
             $size: 100px;
-            line-height: $size;
+            line-height: ($size * 1.1);
             width: $size;
             height: $size;
           }
