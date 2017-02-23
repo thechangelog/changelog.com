@@ -48,7 +48,7 @@
     </div>
 
     <ul class="live-footer-stats">
-      <li><strong>Start Time</strong> 12:00 ET</li>
+      <li><strong>Start Time</strong> <%= TimeView.ts(@episode.recorded_at, "live") %></li>
       <li><strong>Elapsed</strong> 00:00:00</li>
     </ul>
 

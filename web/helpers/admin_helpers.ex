@@ -1,7 +1,7 @@
 defmodule Changelog.Helpers.AdminHelpers do
   use Phoenix.HTML
 
-  alias Changelog.Repo
+  alias Changelog.{Repo, TimeView}
 
   def channel_from_model_or_params(model, params) do
     (model |> Repo.preload(:channel)).channel ||
@@ -59,9 +59,5 @@ defmodule Changelog.Helpers.AdminHelpers do
   end
   def truncate(_string, _length), do: ""
 
-  def ts(ts) when is_nil(ts), do: ""
-  def ts(ts) do
-    {:ok, formatted} = Timex.format(ts, "{ISO:Extended}")
-    {:safe, "<span class='time'>#{formatted}</span>"}
-  end
+  def ts(ts), do: TimeView.ts(ts)
 end

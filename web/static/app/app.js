@@ -5,6 +5,7 @@ import Slider from "components/slider";
 import Overlay from "components/overlay";
 import Share from "components/share";
 import Log from "components/log";
+import ts from "../shared/ts";
 
 const player = new OnsitePlayer("#player");
 const overlay = new Overlay("#overlay");
@@ -139,6 +140,15 @@ function tallestSlide() {
   u(".featured").attr("style", "height: " + tallestFeatured + "px;");
 }
 
+function formatTimes() {
+  u("span.time").each(function(el) {
+    const span = u(el);
+    let date = new Date(span.text());
+    let style = span.data("style");
+    span.text(ts(date, style));
+  });
+}
+
 window.onresize = function() {
   tallestSlide();
 }
@@ -148,11 +158,9 @@ u(document).on("turbolinks:load", function() {
   u("body").removeClass("nav-open");
   overlay.hide();
   tallestSlide();
+  formatTimes();
+  // Make sure homepage featured section is the correct size (after fonts and images load)
+  window.setTimeout(function() { tallestSlide(); }, 500);
 });
-
-// Make sure homepage featured section is the correct size (after fonts and images load)
-window.setTimeout(function() {
-  tallestSlide();
-}, 500);
 
 Turbolinks.start();

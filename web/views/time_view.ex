@@ -55,6 +55,13 @@ defmodule Changelog.TimeView do
     end
   end
 
+  def ts(ts, style \\ "admin")
+  def ts(ts, _style) when is_nil(ts), do: ""
+  def ts(ts, style) do
+    {:ok, formatted} = Timex.format(ts, "{ISO:Extended}")
+    {:safe, "<span class='time' data-style='#{style}'>#{formatted}</span>"}
+  end
+
   defp to_seconds(:hours, str), do: string_to_rounded_integer(str) * 3600
   defp to_seconds(:minutes, str), do: string_to_rounded_integer(str) * 60
   defp to_seconds(str), do: string_to_rounded_integer(str)
