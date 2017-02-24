@@ -50,6 +50,10 @@ defmodule Changelog.Episode do
     from e in query, where: e.featured == true, where: not(is_nil(e.highlight))
   end
 
+  def recorded_live(query \\ __MODULE__) do
+    from e in query, where: e.recorded_live == true
+  end
+
   def published(query \\ __MODULE__) do
     from e in query,
       where: e.published == true,
@@ -78,6 +82,12 @@ defmodule Changelog.Episode do
 
   def next_after(query, episode) do
     from e in query, where: e.published_at > ^episode.published_at
+  end
+
+  def recorded_between(query, start_time, end_time) do
+    from e in query,
+      where: e.recorded_at <= ^start_time,
+      where: e.end_time < ^end_time
   end
 
   def recorded_future_to(query, time) do

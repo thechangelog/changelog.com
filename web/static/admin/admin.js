@@ -4,6 +4,7 @@ import channelView from "views/channelView";
 import episodeView from "views/episodeView";
 import podcastView from "views/podcastView";
 import postView from "views/postView";
+import ts from "../shared/ts";
 
 let views = {
   "ChannelView": channelView,
@@ -11,32 +12,6 @@ let views = {
   "EpisodeView": episodeView,
   "PostView": postView
 };
-
-let timeString = function(date) {
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear().toString().substr(2, 2);
-  let day = date.getDate();
-  let hours = date.getHours();
-  let amPm = "AM";
-  let tz =  date.toString().match(/\(([\w\s]+)\)/)[0];
-
-  if (hours > 12) {
-    hours = hours - 12;
-    amPm = "PM";
-  }
-
-  let minutes = date.getMinutes();
-
-  if (minutes == 0) {
-    minutes = "";
-  } else if (minutes < 10) {
-    minutes = `:0${minutes}`;
-  } else {
-    minutes = `:${minutes}`;
-  }
-
-  return `${month}/${day}/${year} – ${hours}${minutes}${amPm} ${tz}`;
-}
 
 autosize($("textarea"));
 
@@ -56,9 +31,10 @@ $(".js-modal").on("click", function() {
 });
 
 $("span.time").each(function() {
-  let $span = $(this);
+  const $span = $(this);
   let date = new Date($span.text());
-  $span.text(timeString(date));
+  let style = $span.data("style");
+  $span.text(ts(date, style));
 });
 
 $(".ui.navigation.search").search({

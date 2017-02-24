@@ -1,14 +1,20 @@
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import OnsitePlayer from "components/onsite_player";
+import LivePlayer from "components/live_player";
 import Slider from "components/slider";
 import Overlay from "components/overlay";
 import Share from "components/share";
 import Log from "components/log";
+import ts from "../shared/ts";
 
 const player = new OnsitePlayer("#player");
+const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
 const featured = new Slider(".featured_podcast");
+
+window.u = u;
+window.live = live;
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
@@ -139,6 +145,15 @@ function tallestSlide() {
   u(".featured").attr("style", "height: " + tallestFeatured + "px;");
 }
 
+function formatTimes() {
+  u("span.time").each(function(el) {
+    const span = u(el);
+    let date = new Date(span.text());
+    let style = span.data("style");
+    span.text(ts(date, style));
+  });
+}
+
 window.onresize = function() {
   tallestSlide();
 }
@@ -147,12 +162,11 @@ window.onresize = function() {
 u(document).on("turbolinks:load", function() {
   u("body").removeClass("nav-open");
   overlay.hide();
+  live.check();
   tallestSlide();
+  formatTimes();
+  // Make sure homepage featured section is the correct size (after fonts and images load)
+  window.setTimeout(function() { tallestSlide(); }, 500);
 });
-
-// Make sure homepage featured section is the correct size (after fonts and images load)
-window.setTimeout(function() {
-  tallestSlide();
-}, 500);
 
 Turbolinks.start();

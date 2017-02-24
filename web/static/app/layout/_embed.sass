@@ -173,85 +173,19 @@ body.embed
         @media (min-width: $tablet - 150px)
             font-size: 14px
 
-        &_button
-          display: block
-          left: $gutter / 2
-          margin-right: 2rem
-          margin-top: -($gutter)
-          padding: 0
-          position: absolute
-          text-indent: -9999px
-          top: 50%
+        &-button
+            +large-play-button('.episode-player', $gutter, $button_size, $button_spacing)
+            display: block
+            left: $gutter / 2
+            margin-right: 2rem
+            margin-top: -($gutter)
+            padding: 0
+            position: absolute
+            text-indent: -9999px
+            top: 50%
 
-          @media (min-width: $smartphone)
-              left: $gutter
-
-          &:hover
-              .episode-player_details_button_bg
-                  transform: scale(1.1)
-
-          &_bg
-              background-color: $green
-              border-radius: $button_size
-              display: block
-              height: $button_size
-              position: relative
-              transition: all 0.2s $ease-in-out-quint
-              width: $button_size
-              z-index: 2
-
-          &_icon
-              background: url("/images/icon-play-white.svg") center no-repeat
-              position: absolute
-              top: 0
-              right: 0
-              bottom: 0
-              left: 0
-              z-index: 2
-
-              .episode-player.is-paused &
-                  background-image: url("/images/icon-play-white.svg")
-              .episode-player.is-playing &
-                  background-image: url("/images/icon-pause-white.svg")
-              .episode-player.is-loading &
-                  $spin: spin 1s ease-in-out infinite
-                  background-image: url("/images/loading-white.svg")
-                  -webkit-animation: $spin
-                  -moz-animation: $spin
-                  animation: $spin
-
-                  &:after
-                      -webkit-animation: $spin
-                      -moz-animation: $spin
-                      animation: $spin
-                      content: ""
-                      background: url("/images/loading-2-white.svg") center no-repeat
-                      position: absolute
-                      top: 0
-                      right: 0
-                      bottom: 0
-                      left: 0
-
-          &:before
-              content: ''
-              height: 18rem
-              left: 50%
-              margin-left: -9rem
-              margin-top: -9rem
-              opacity: .2
-              position: absolute
-              pointer-events: none
-              top: 50%
-              transition: none
-              width: 18rem
-
-              .episode-player.is-playing &
-                  transition: all 0.2s $ease-in-out-quint
-                  transform: rotate(360deg) translate3d(0, 0, 0)
-
-              @each $podcast in $podcasts
-                  .episode-player--#{$podcast} &
-                      background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg)
+            @media (min-width: $smartphone)
+                left: $gutter
 
         &_vwrap
             display: table-cell

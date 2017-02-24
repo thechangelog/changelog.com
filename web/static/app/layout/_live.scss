@@ -1,0 +1,333 @@
+.page-live {
+  background-color: $black;
+
+  .main {
+    align-items: center;
+    display: flex;
+  }
+
+  .footer {
+    display: none;
+  }
+}
+
+.live {
+  color: $white;
+  padding: 60px 0 160px;
+  width: 100%;
+
+  @media (min-width: $tablet) {
+    align-items: center;
+    display: flex;
+    padding: 80px 0 100px;
+    height: 100%;
+  }
+
+  &-content {
+    margin: $padding-medium auto;
+    max-width: 1080px;
+    width: 100%;
+
+    @media (min-width: $tablet) {
+      display: flex;
+    }
+  }
+
+  // Button
+  &-button {
+    @include large-play-button(".live", 2rem, 6rem);
+    align-items: center;
+    display: flex;
+    margin-bottom: $padding-medium;
+    margin-right: 0;
+    padding: 0;
+    position: relative;
+    text-indent: -9999px;
+
+    $gutter: 2rem;
+    $button_size: 8rem;
+
+    @media (min-width: $tablet) {
+      @include large-play-button(".live", $gutter, $button_size, "");
+      flex: 0 1 200px;
+      left: $gutter / 2;
+      margin-bottom: 0;
+      margin-top: -($gutter);
+    }
+
+    @media (min-width: $desktop) {
+      flex: 0 1 500px;
+    }
+  }
+
+  // Info
+  &-info {
+    max-width: 880px;
+    position: relative;
+    z-index: 2;
+    padding: 0 $padding-medium;
+    width: 100%;
+
+    @media (min-width: $tablet) {
+      flex: 1 1 600px;
+    }
+
+    // Header
+    &-header {
+      color: $white;
+      text-align: center;
+
+      &-show {
+        @extend %display-font;
+        margin-top: 0;
+
+        a {
+          color: $medium-grey;
+        }
+      }
+
+      &-title {
+        font-size: 1.825em;
+        line-height: 1.25em;
+      }
+    }
+
+    // More
+    &-more {
+      display: none;
+
+      @media (min-height: 680px) and (min-width: $tablet) {
+        display: block;
+      }
+    }
+
+    // Description
+    &-description {
+      color: $medium-grey;
+      font-size: 1.25em;
+      margin: 0 auto 30px;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    // Guests
+    &-guests {
+      display: none;
+      justify-content: center;
+
+      @media (min-width: $tablet) {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      &-item {
+        flex: 0 0 180px;
+        padding: 0 10px;
+        text-align: center;
+
+        a { display: block; }
+
+        .live-info-guests--3 & {
+          flex: 0 0 150px;
+        }
+
+        .live-info-guests--4 &,
+        .live-info-guests--5 &,
+        .live-info-guests--6 & {
+          flex: 0 0 130px;
+          font-size: 12px;
+        }
+
+        &-image {
+          $size: 150px;
+          background: lighten($black, 10%);
+          border-radius: $size;
+          box-shadow: 0 15px 30px rgba(#000, 0.8);
+          color: $black;
+          display: block;
+          font-size: 4em;
+          font-weight: bold;
+          margin: 0 auto $padding-small;
+          transition: transform 0.1s $ease-in-out-quad;
+          line-height: ($size * 1.1);
+          width: $size;
+          height: $size;
+
+          a:hover & {
+            transform: translateY(-5px);
+          }
+
+          .live-info-guests--3 & {
+            $size: 125px;
+            line-height: ($size * 1.1);
+            width: $size;
+            height: $size;
+          }
+
+          .live-info-guests--4 &,
+          .live-info-guests--5 &,
+          .live-info-guests--6 & {
+            $size: 100px;
+            line-height: ($size * 1.1);
+            width: $size;
+            height: $size;
+          }
+        }
+        &-title {
+          @extend %display-font;
+          font-size: 1.25em;
+          margin: 0 0 0.5em;
+        }
+        &-name {
+          @extend %display-font;
+          font-size: 1.5em;
+          font-weight: normal;
+          color: $white;
+          margin: 0;
+          text-transform: none;
+        }
+      }
+    }
+
+    // Slack CTA
+    &-cta {
+      margin: $padding-large 0 0;
+      text-align: center;
+
+      &,
+      p,
+      a {
+        color: $white;
+      }
+
+      &-icon {
+        margin-bottom: 4px;
+      }
+
+      p {
+        font-size: 1.25em;
+        line-height: 1.25em;
+        margin: 0 0 0.25em;
+
+        a {
+          transition: opacity 0.3s $ease-in-out-quad;
+          font-weight: bold;
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+
+        small {
+          display: block;
+          color: $green;
+          line-height: 1.5em;
+
+          a {
+            color: $green;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  &-footer {
+    $largeText: 2.25em;
+    @extend %display-font;
+    align-items: center;
+    background: rgba($black, 0.7);
+    display: flex;
+    flex-wrap: wrap;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: $padding-extra-small;
+    width: 100%;
+    z-index: 99;
+
+    @media (min-width: $tablet) {
+      padding: $padding-medium;
+    }
+
+    &-status {
+      background: #FF5252;
+      font-size: $largeText;
+      height: 60px;
+      width: 100%;
+      margin: $padding-small 0 0;
+      padding: 0.4em 10px 0.3em;
+      text-align: center;
+
+      @media (min-width: $tablet) {
+        margin: 0 $padding-small 0 0;
+        min-width: 230px;
+        order: -1;
+        width: auto;
+      }
+    }
+
+    &-viewers {
+      align-items: center;
+      display: none;
+      font-size: $largeText;
+      // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
+      margin: 0 $padding-small;
+
+      @media (min-width: $tablet) {
+        display: flex;
+      }
+
+      img { margin: 0 10px 0 0; }
+      span { padding-top: 0.125em; }
+    }
+
+    &-stats {
+      color: $white;
+      display: flex;
+      list-style-type: none;
+      margin: 0 $padding-small 0 0;
+      padding: 0;
+
+      @media (min-width: $tablet) {
+        margin: 0 $padding-small;
+      }
+
+      li {
+        font-size: 1.25em;
+        margin: 0 $padding-small 0 0;
+      }
+
+      strong {
+        color: $green;
+        display: block;
+        font-weight: normal;
+        margin-bottom: 0.25em;
+      }
+    }
+
+    &-share {
+      margin: 0 0 0 auto;
+      text-align: center;
+
+      img {
+        @media (min-width: $tablet) {
+          transform: translateY(2px);
+          margin: 0 5px 0 0;
+        }
+      }
+
+      a {
+        color: $white;
+        display: block;
+        // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
+
+        @media (min-width: $tablet) {
+          display: inline-block;
+          font-size: $largeText;
+        }
+      }
+    }
+  }
+}

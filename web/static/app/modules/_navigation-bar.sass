@@ -9,6 +9,13 @@
     max-height: 6.42rem
     z-index: 1000
 
+    .page-live &
+        background: none
+        position: absolute
+        top: 0
+        right: 0
+        left: 0
+
     &_logo
         flex: 0 0 auto
 
@@ -33,6 +40,9 @@
 
         margin: 0 0 0 2rem
 
+        .page-live &
+            display: none
+
     &_search
         $accent: #5D6B7C
         display: none
@@ -41,6 +51,9 @@
         @media (min-width: $smartphone + 140)
             display: flex
             width: 100%
+
+        .page-live &
+            display: none
 
         input
             @extend %display-font

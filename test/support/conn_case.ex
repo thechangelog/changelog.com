@@ -30,6 +30,7 @@ defmodule Changelog.ConnCase do
       import Changelog.Router.Helpers
       import Changelog.Factory
       import Changelog.Plug.Conn
+      import Changelog.TimeView, only: [hours_from_now: 1, hours_ago: 1]
 
       # The default endpoint for testing
       @endpoint Changelog.Endpoint

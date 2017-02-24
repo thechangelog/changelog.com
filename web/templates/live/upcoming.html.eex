@@ -1,0 +1,31 @@
+<section class="live_upcoming">
+  <h1 class="live_upcoming-heading">Upcoming Live Shows</h1>
+  <%= if Enum.any?(@episodes) do %>
+    <div class="live_upcoming-grid">
+      <%= for episode <- @episodes do %>
+        <div class="live_upcoming-grid-item">
+          <div class="live_upcoming-grid-item-image">
+            <%= link to: podcast_path(@conn, :archive, episode.podcast.slug), title: "View Podcast" do %>
+              <img alt="<%= episode.podcast.name %> Show Artwork" src="<%= static_url(@conn, "/images/podcasts/#{episode.podcast.slug}-cover-art.svg") %>" alt="<%= episode.podcast.name %> Podcast" width="120" height="120"/>
+            <% end %>
+          </div>
+
+          <div class="live_upcoming-grid-item-time">
+            <div>
+              <p><strong>Thursday, March 26</strong></p>
+              <p>12:00 PM EST</p>
+            </div>
+          </div>
+
+          <div class="live_upcoming-grid-item-info">
+            <div>
+              <p><strong><%= link to: podcast_path(@conn, :archive, episode.podcast.slug), title: "View Podcast" do %><%= episode.podcast.name %> #99<% end %></strong></p>
+              <p><%= episode.title %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+  <% end %>
+</section>
