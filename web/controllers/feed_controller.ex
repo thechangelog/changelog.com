@@ -10,7 +10,7 @@ defmodule Changelog.FeedController do
       Episode.published
       |> Episode.newest_first
       |> Repo.all
-      |> Episode.preload_podcast
+      |> Episode.preload_all
 
     posts =
       Post.published
