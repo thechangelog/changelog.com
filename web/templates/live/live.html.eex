@@ -1,4 +1,4 @@
-<section class="live live--<%= @episode.podcast.slug %> is-playing">
+<section class="live live--<%= @episode.podcast.slug %> is-upcoming js-live">
   <div class="live-content">
     <%= link to: Wavestreamer.live_url(), role: "button", class: "live-button js-live-play-button",
       data: [] do %>
@@ -44,15 +44,15 @@
   <footer class="live-footer">
     <div class="live-footer-viewers">
       <img class="live-info-cta-icon" src="/images/icon-eye.svg" alt="Viewers" width="37" height="26">
-      <span>000</span>
+      <span class="js-live-viewers">0</span>
     </div>
 
     <ul class="live-footer-stats">
       <li><strong>Start Time</strong> <%= TimeView.ts(@episode.recorded_at, "live") %></li>
-      <li><strong>Elapsed</strong> 00:00:00</li>
+      <!--<li><strong>Elapsed</strong> 00:00:00</li>-->
     </ul>
 
-    <p class="live-footer-share">
+    <!--<p class="live-footer-share">
       <img src="/images/icon-share-white.svg" alt="Share" width="29" height="26">
       <%= link "Share",
           title: "Share",
@@ -60,8 +60,8 @@
           class: "js-share-popup",
           data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
           target: "_blank" %>
-    </p>
+    </p>-->
 
-    <div class="live-footer-status">Upcoming</div>
+    <div class="live-footer-status js-live-status">Upcoming</div>
   </footer>
 </section>
