@@ -110,7 +110,7 @@ defmodule Changelog.Admin.EpisodeController do
       |> Episode.preload_all
 
     changeset = Episode.admin_changeset(episode)
-    render conn, "edit.html", episode: episode, changeset: changeset
+    render(conn, "edit.html", episode: episode, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => slug, "episode" => episode_params}, podcast) do
