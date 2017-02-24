@@ -1,6 +1,6 @@
 <section class="live live--<%= @episode.podcast.slug %> is-playing">
   <div class="live-content">
-    <%= link to: "http://knight.wavestreamer.com:1882/Live", role: "button", class: "live-button js-player-play-button",
+    <%= link to: Wavestreamer.live_url(), role: "button", class: "live-button js-live-play-button",
       data: [] do %>
       <div class="live-button-bg"></div>
       <div class="live-button-icon">Play</div>

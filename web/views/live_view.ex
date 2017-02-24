@@ -1,7 +1,7 @@
 defmodule Changelog.LiveView do
   use Changelog.Web, :public_view
 
-  alias Changelog.{EpisodeView, PersonView}
+  alias Changelog.{EpisodeView, PersonView, Wavestreamer}
 
   def host_or_guest(episode, person) do
     if Enum.member?(episode.hosts, person) do

@@ -1,7 +1,7 @@
 defmodule Changelog.LiveController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Episode, TimeView}
+  alias Changelog.{Episode, TimeView, Wavestreamer}
 
   def index(conn, _params) do
     live_window_start = TimeView.hours_ago(3)
@@ -21,5 +21,9 @@ defmodule Changelog.LiveController do
     else
       render(conn, :upcoming, episodes: episodes)
     end
+  end
+
+  def status(conn, _params) do
+    json(conn, Wavestreamer.get_stats())
   end
 end
