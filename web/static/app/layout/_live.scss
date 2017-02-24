@@ -11,6 +11,11 @@
   }
 }
 
+.live.is-upcoming {
+  .live-footer-status {
+    background-color: $green;
+  }
+}
 .live {
   color: $white;
   padding: 60px 0 160px;
