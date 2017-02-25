@@ -1,3 +1,6 @@
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const months = ["January", "February", "March", "April", "May", "June", "July", "August","September","October","November","December"];
+
 class Time {
   constructor(date) {
     this.date = date;
@@ -54,8 +57,24 @@ class Time {
     return this.date.toString().match(/\(([\w\s]+)\)/)[1];
   }
 
+  weekday() {
+    return days[this.date.getDay()];
+  }
+
+  month() {
+    return months[this.date.getMonth()];
+  }
+
+  amPmStyle() {
+    return `${this.hours12()}${this.minutes(":00")} ${this.amPm()} ${this.tz()}`;
+  }
+
   adminStyle() {
     return `${this.month()}/${this.day()}/${this.year()} – ${this.hours12()}${this.minutes("")}${this.amPm()} (${this.tz()})`;
+  }
+
+  dayAndDateStyle() {
+    return `${this.weekday()}, ${this.month()} ${this.day()}`;
   }
 
   liveStyle() {
