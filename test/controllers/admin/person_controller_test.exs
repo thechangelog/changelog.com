@@ -1,5 +1,9 @@
 defmodule Changelog.Admin.PersonControllerTest do
   use Changelog.ConnCase
+  use Bamboo.Test
+
+  import Mock
+
   alias Changelog.Person
 
   @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
@@ -25,8 +29,12 @@ defmodule Changelog.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person and smart redirects", %{conn: conn} do
-    conn = post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
+    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+      post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
+    end
 
+    person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
+    assert_delivered_email Changelog.Email.welcome_email(person)
     assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 1
   end

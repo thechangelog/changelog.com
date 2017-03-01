@@ -1,7 +1,8 @@
 defmodule Changelog.Admin.PersonController do
   use Changelog.Web, :controller
 
-  alias Changelog.Person
+  alias Changelog.{Email, Mailer, Newsletter, Person}
+  alias Craisin.Subscriber
 
   plug :scrub_params, "person" when action in [:create, :update]
 
@@ -23,6 +24,12 @@ defmodule Changelog.Admin.PersonController do
 
     case Repo.insert(changeset) do
       {:ok, person} ->
+        person = Person.refresh_auth_token(person, 60*24)
+        community = Newsletter.community()
+
+        Email.welcome_email(person) |> Mailer.deliver_later
+        Subscriber.subscribe(community.list_id, person, handle: person.handle)
+
         conn
         |> put_flash(:result, "success")
         |> smart_redirect(person, params)

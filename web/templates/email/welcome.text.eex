@@ -1,5 +1,14 @@
-Hello!
-We don't use passwords. Each time you sign in we’ll send you a temporarily link to your email. That’s one less password to worry about (yay!). Here’s your first one: <%= AuthView.auth_url(Endpoint, @person) %>
+Hey <%= PersonView.first_name(@person) %>,
 
-This link will expire in 15 minutes.
+Welcome to the Changelog Community!
+
+Sign in to your account to access our Slack, manage your email subscriptions, and complete your profile.
+
+We don't use passwords. Each time you sign in we’ll send you a temporary link to your email address. That’s one less password to worry about (yay!). Here’s your first one:
+
+<%= AuthView.auth_url(Endpoint, @person) %>
+
+
+This link will self-destruct in <%= auth_link_expires_in(@person) %>.
+
 Already Expired? Request a new link: <%= sign_in_url(Endpoint, :new) %>

@@ -31,27 +31,6 @@ defmodule Changelog.PersonView do
     "https://secure.gravatar.com/avatar/#{hash}.jpg?s=#{size}&d=mm"
   end
 
-  def list_of_links(person) do
-    [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
-     %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
-     %{value: person.website, text: "Website", url: person.website}]
-    |> Enum.reject(fn(x) -> x.value == nil end)
-    |> Enum.map(fn(x) -> link(x.text, to: x.url) end)
-    |> Enum.map(fn({:safe, list}) -> Enum.join(list) end)
-    |> Enum.join(", ")
-  end
-
-  def is_profile_complete(person) do
-    !!(person.bio && person.website && person.location)
-  end
-
-  def is_subscribed(person, newsletter) do
-    case Craisin.Subscriber.details(newsletter.list_id, person.email) do
-      %{"State" => "Active"} -> true
-      _else -> false
-    end
-  end
-
   @spec comma_separated_names([binary()]) :: binary()
   def comma_separated_names(people)
   def comma_separated_names([first]),                do: first.name
@@ -70,5 +49,32 @@ defmodule Changelog.PersonView do
         github_url(person.github_handle)
       true -> "#"
     end
+  end
+
+  def first_name(person) do
+    person.name
+    |> String.split(" ")
+    |> List.first
+  end
+
+  def is_profile_complete(person) do
+    !!(person.bio && person.website && person.location)
+  end
+
+  def is_subscribed(person, newsletter) do
+    case Craisin.Subscriber.details(newsletter.list_id, person.email) do
+      %{"State" => "Active"} -> true
+      _else -> false
+    end
+  end
+
+  def list_of_links(person) do
+    [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
+     %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
+     %{value: person.website, text: "Website", url: person.website}]
+    |> Enum.reject(fn(x) -> x.value == nil end)
+    |> Enum.map(fn(x) -> link(x.text, to: x.url) end)
+    |> Enum.map(fn({:safe, list}) -> Enum.join(list) end)
+    |> Enum.join(", ")
   end
 end

@@ -1,11 +1,14 @@
 <tr>
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-    <h1>Hello!</h1>
+    <h1>Hey <%= PersonView.first_name(@person) %>,</h1>
+
     <p>You requested a fancy, passwordless sign in link. <em>Here you go:</em></p>
 
     <%= link "Sign in to Changelog", to: AuthView.auth_url(Endpoint, @person), class: "btn-primary", itemprop: "url" %>
 
-    <p><em>This link will expire in 15 minutes.</em><p>
+    <%= link "Sign in to Changelog", to: AuthView.auth_url(Endpoint, @person), class: "btn-primary", itemprop: "url" %>
+
+    <p><em>This link will self-destruct in <%= auth_link_expires_in(@person) %>.</em><p>
     <p>Already expired? <em><%= link "Request a new link.", to: sign_in_url(Endpoint, :new) %></em></p>
   </td>
 </tr>
