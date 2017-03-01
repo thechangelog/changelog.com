@@ -27,7 +27,7 @@ config :changelog, Changelog.Mailer,
 
 config :quantum,
   cron: [
-    "0 9 * * *": {Changelog.Stats, :process},
+    "0 11 * * *": {Changelog.Stats, :process},
     "0 10 * * *": {Changelog.Slack.Tasks, :import_member_ids}
   ],
   global?: true
