@@ -37,6 +37,7 @@ defmodule Changelog.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0-rc"},
      {:phoenix_html, "~> 2.3"},
+     {:plug, "1.2.3"},
      {:postgrex, "~> 0.11.1"},
      {:timex, "~> 3.1.0"},
      {:timex_ecto, "~> 3.0"},
