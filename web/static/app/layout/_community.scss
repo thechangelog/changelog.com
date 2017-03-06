@@ -1,0 +1,133 @@
+.community {
+  font-size: 16px;
+
+  &-section {
+    padding: $padding-extra-large 0;
+
+    &--intro {
+      background: #000;
+      color: $white;
+
+      p {
+        color: $half-white;
+      }
+    }
+
+    &-header {
+      padding: $padding-large;
+      margin: 0 auto;
+      max-width: 1080px;
+      text-align: center;
+
+      h1,
+      h2 {
+        font-size: 2.25em;
+      }
+
+      h2 { font-weight: normal; }
+      p { font-size: 1.25em; }
+    }
+
+    // Community Features
+    &-features {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1080px;
+      text-align: center;
+      padding: $padding-large;
+      text-align: center;
+
+      a {
+        color: $white;
+        display: block;
+        opacity: 0.75;
+        padding-top: 100px;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    // Content (Two Columns)
+    &-content {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      max-width: 1280px;
+
+      &-image {
+        flex: 0 1 60%;
+        height: 630px;
+        order: 2;
+        position: relative;
+
+        img {
+          border: 1px solid $light-grey;
+          box-shadow: 0 30px 40px 20px rgba($black, 0.2);
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          height: 100%;
+        }
+      }
+
+      &-info {
+        justify-content: space-between;
+        display: flex;
+        flex: 1 1 300px;
+        flex-direction: column;
+        padding: 0 $padding-extra-large;
+
+        &-bottom {
+          align-self: flex-end;
+        }
+
+        h3 {
+          font-size: 1.625em;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  // Community Section
+  &-quote {
+    font-size: 1.125em;
+    margin: 0;
+    padding: 0;
+
+    &:before {
+      color: $half-black;
+      content: '“';
+      display: block;
+      font-size: 2.5em;
+      height: 20px;
+      margin-bottom: $padding-large;
+      text-align: center;
+    }
+
+    footer {
+      font-size: 14px;
+      margin-top: $padding-large;
+      text-align: center;
+
+      img {
+        box-shadow: 0 20px 30px 10px rgba($black, 0.2);
+        display: block;
+        margin: 0 auto 1em;
+      }
+
+      a {
+        color: $half-black;
+        display: block;
+
+        &:hover {
+          color: $black;
+        }
+      }
+    }
+  }
+}
