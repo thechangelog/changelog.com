@@ -1,5 +1,5 @@
 <div class="navigation-tray_curtain js-toggle-nav"></div>
-<div class="navigation-bar">
+<div class="navigation-bar navigation-bar--primary">
   <%= link to: "/", class: "navigation-bar_logo" do %>
     <h1><img src="<%= static_url(@conn, "/images/changelog-logo.svg") %>" alt="Changelog Media"></h1>
   <% end %>
