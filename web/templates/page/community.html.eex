@@ -4,11 +4,8 @@
       <h1>Join Our Global Hacker Community</h1>
       <p>Laboris irure duis ea est cillum cupidatat aliquip laboris mollit eiusmod ex nisi commodo minim velit. Id nisi est mollit mollit veniam laborum culpa ad minim sit nisi id ullamco. Nulla anim velit Lorem in ullamco ea pariatur labore.</p>
 
-      <ul class="button_list button_list--green">
-        <li class="button_list-item">
-          <%= link "Join via Email", to: person_path(@conn, :new), title: "Join via Email", class: "email" %>
-        </li>
-      </ul>
+      <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
+      <p class="btn_note">It’s free!</p>
     </header>
 
     <ul class="community-section-features">
@@ -60,30 +57,34 @@
       <p>Laboris nisi veniam laborum aliquip id non tempor laboris mollit esse. Velit id enim anim aliquip Lorem consectetur amet reprehenderit tempor duis voluptate irure. Aute do reprehenderit reprehenderit culpa aliquip aute incididunt et excepteur dolore.</p>
     </header>
     <div class="community-section-logos">
-      <img src="" alt="">
-      <img src="" alt="">
-      <img src="" alt="">
-      <img src="" alt="">
-      <img src="" alt="">
-      <img src="" alt="">
-      <img src="" alt="">
-      <img src="" alt="">
-      <img src="" alt="">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-ato.png") %>' alt="All thing open.">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-codeschool.png") %>' alt="Code School">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-codeship.png") %>' alt="Codeship">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-digital-ocean.png") %>' alt="Digital Ocean">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-flatiron.png") %>' alt="Flatiron School">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-gocd.png") %>' alt="Go">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-gosquared.png") %>' alt="Go Squared">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-heap.png") %>' alt="Heap">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-ibm.png") %>' alt="IBM">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-oscon.png") %>' alt="OSCON">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-rollbar.png") %>' alt="Rollbar">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-stackimpact.png") %>' alt="Stack Impact">
+      <img src='<%= static_url(@conn, "/images/community/sponsor-toptal.png") %>' alt="Toptal">
     </div>
   </section>
 
   <section class="community-section community-section--map">
     <header class="community-section-header">
-      <i><img src="" alt="Changelog Logomark"></i>
+      <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
       <h2>Because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept one.</h2>
 
-      <ul class="button_list button_list--green">
-        <li class="button_list-item">
-          <%= link "Join via Email", to: person_path(@conn, :new), title: "Join via Email", class: "email" %>
-        </li>
-      </ul>
+      <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
+      <p class="btn_note">It’s free!</p>
     </header>
 
-    <img src="" alt="Map">
+    <img class="community-map" src='<%= static_url(@conn, "/images/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
   </section>
 </article>

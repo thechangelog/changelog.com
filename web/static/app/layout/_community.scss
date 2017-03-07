@@ -2,10 +2,15 @@
   font-size: 16px;
 
   &-section {
-    padding: $padding-extra-large 0;
+    padding: $padding-large 0;
 
+    @media (min-width: $tablet) {
+      padding: $padding-extra-large 0;
+    }
+
+    &--map,
     &--intro {
-      background: #000;
+      background: $black;
       color: $white;
 
       p {
@@ -14,18 +19,53 @@
     }
 
     &-header {
-      padding: $padding-large;
       margin: 0 auto;
       max-width: 1080px;
+      padding: $padding-large;
       text-align: center;
+
+      @media (min-width: $tablet) {
+        padding: $padding-large $padding-large $padding-extra-large;
+      }
 
       h1,
       h2 {
-        font-size: 2.25em;
+        font-size: 1.75em;
+        line-height: 1.25em;
+
+        @media (min-width: $tablet) {
+          font-size: 2.25em;
+        }
+
+        .community-section--map & {
+          color: $half-white;
+          font-size: 1.25em;
+          line-height: 1.5em;
+
+          @media (min-width: $tablet) {
+            font-size: 1.5em;
+          }
+        }
       }
 
-      h2 { font-weight: normal; }
-      p { font-size: 1.25em; }
+      h2,
+      h3 {
+        font-weight: normal;
+      }
+
+      p {
+        font-size: 1em;
+
+        @media (min-width: $tablet) {
+          font-size: 1.25em;
+        }
+      }
+
+      .btn {
+        font-size: 1.25em;
+        color: $black !important;
+        padding: 0.6em 1.5em 0.5em;
+      }
     }
 
     // Community Features
@@ -52,34 +92,60 @@
 
     // Content (Two Columns)
     &-content {
-      display: flex;
+      $breakpoint: 900px;
       flex-wrap: wrap;
+      justify-content: center;
       margin: 0 auto;
-      max-width: 1280px;
+      max-width: 1680px;
+
+      @media (min-width: $breakpoint) {
+        display: flex;
+      }
 
       &-image {
-        flex: 0 1 60%;
-        height: 630px;
-        order: 2;
-        position: relative;
+        display: none;
+        padding: $padding-large;
+
+        @media (min-width: $smartphone) {
+          display: block;
+        }
+        @media (min-width: $breakpoint) {
+          flex: 1 1 400px;
+          height: 630px;
+          order: 2;
+          padding: 0;
+          position: relative;
+        }
 
         img {
           border: 1px solid $light-grey;
           box-shadow: 0 30px 40px 20px rgba($black, 0.2);
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          height: 100%;
+          width: 100%;
+
+          @media (min-width: $breakpoint) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            margin: 0;
+            width: auto;
+          }
         }
       }
 
       &-info {
         justify-content: space-between;
         display: flex;
-        flex: 1 1 300px;
+        flex: 0 1 500px;
         flex-direction: column;
-        padding: 0 $padding-extra-large;
+        padding: 0 $padding-large;
+        text-align: center;
+
+        @media (min-width: $tablet) {
+          padding: 0 $padding-extra-large;
+          text-align: left;
+        }
 
         &-bottom {
           align-self: flex-end;
@@ -91,13 +157,37 @@
         }
       }
     }
+
+    // Sponsor Logos
+    &-logos {
+      align-items: center;
+      justify-content: space-around;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      padding: 0 $padding-large;
+      max-width: 960px;
+
+      img {
+        flex: 0 50%;
+        max-width: 200px;
+
+        @media (min-width: $tablet) {
+          flex: 0 25%;
+        }
+      }
+    }
   }
 
-  // Community Section
+  // Community specific bloquote styles
   &-quote {
     font-size: 1.125em;
     margin: 0;
     padding: 0;
+
+    &-body {
+      font-style: italic;
+    }
 
     &:before {
       color: $half-black;
@@ -129,5 +219,15 @@
         }
       }
     }
+  }
+
+  // Map
+  &-map {
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    max-width: 1080px;
+    padding: 0 $padding-large;
+    width: 100%;
   }
 }
