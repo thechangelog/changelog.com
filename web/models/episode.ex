@@ -76,6 +76,10 @@ defmodule Changelog.Episode do
     from e in query, where: fragment("slug ~ E'^\\\\d+$'")
   end
 
+  def with_podcast_slug(query, slug) do
+    from e in query, join: p in Podcast, where: e.podcast_id == p.id, where: p.slug == ^slug
+  end
+
   def previous_to(query, episode) do
     from e in query, where: e.published_at < ^episode.published_at
   end
@@ -158,6 +162,7 @@ defmodule Changelog.Episode do
     |> Repo.preload(:guests)
   end
 
+  def preload_podcast(nil), do: nil
   def preload_podcast(episode) do
     episode |> Repo.preload(:podcast)
   end

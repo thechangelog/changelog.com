@@ -55,6 +55,10 @@ defmodule Changelog.Factory do
     }
   end
 
+  def live_episode_factory do
+    %Changelog.Episode{episode_factory() | recorded_live: true}
+  end
+
   def published_episode_factory do
     %Changelog.Episode{episode_factory() | audio_file: stub_audio_file(),
       published: true,

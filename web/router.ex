@@ -61,6 +61,13 @@ defmodule Changelog.Router do
     get "/oembed", ApiController, :oembed
   end
 
+  scope "/slack", Changelog do
+    pipe_through [:api]
+
+    get "/gotime", SlackController, :gotime
+    get "/countdown/:slug", SlackController, :countdown
+  end
+
   scope "/", Changelog do
     pipe_through [:browser, :public]
 
@@ -84,8 +91,6 @@ defmodule Changelog.Router do
 
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
-
-    get "/slack/gotime", SlackController, :gotime
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status
