@@ -18,6 +18,11 @@
       }
     }
 
+    &--intro {
+      background: $black url('/images/community/grid.jpg') top center;
+      background-size: 650px;
+    }
+
     &-header {
       margin: 0 auto;
       max-width: 1080px;
@@ -71,12 +76,22 @@
     // Community Features
     &-features {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       margin: 0 auto;
       max-width: 1080px;
       text-align: center;
       padding: $padding-large;
       text-align: center;
+
+      li {
+        flex: 0 0 50%;
+        padding: 0.5rem;
+
+        @media (min-width: $tablet) {
+          flex: 0 0 25%;
+        }
+      }
 
       a {
         color: $white;
@@ -168,13 +183,17 @@
       padding: 0 $padding-large;
       max-width: 960px;
 
-      img {
-        flex: 0 50%;
+      &-item {
+        flex: 0 1 50%;
         max-width: 200px;
 
         @media (min-width: $tablet) {
           flex: 0 25%;
         }
+      }
+
+      img {
+        width: 100%;
       }
     }
   }
