@@ -85,6 +85,8 @@
       <p class="btn_note">It’s free!</p>
     </header>
 
-    <img class="community-map" src='<%= static_url(@conn, "/images/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+    <div class="community-map">
+      <img src='<%= static_url(@conn, "/images/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+    </div>
   </section>
 </article>

@@ -97,7 +97,7 @@
         color: $white;
         display: block;
         opacity: 0.75;
-        padding-top: 100px;
+        padding-top: 80px;
 
         &:hover {
           opacity: 1;
@@ -246,7 +246,21 @@
     height: auto;
     margin: 0 auto;
     max-width: 1080px;
-    padding: 0 $padding-large;
+    overflow: hidden;
     width: 100%;
+
+    img {
+      margin-left: -10%;
+      width: 120%;
+    }
+
+    @media (min-width: $tablet) {
+      padding: 0 $padding-large;
+
+      img {
+        margin: 0;
+        width: 100%;
+      }
+    }
   }
 }
