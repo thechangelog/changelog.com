@@ -1,23 +1,59 @@
-<section class="footer mosaic">
-  <h2><%= Enum.random(["Hacker to the Heart", "!imposter", "Open Source Moves Fast", "Keep Up", "Long Live the Hacker", "Nerd to the Core", "In the Trenches"]) %></h2>
-  <footer class="container">
-    <div class="footer_copyright">
-      <small>&copy; 2009&ndash;2017<span> Changelog Media LLC</span></small>
-      <address>
-        <a class="footer_link" href="tel:+18889742454">888-974-CHLG (2454)</a>
-        <%= link "Contact", to: page_path(@conn, :contact), class: "footer_link" %>
-      </address>
+<footer class="site_footer">
+  <nav class="site_footer-nav">
+    <%= link to: "/", class: "site_footer-nav-logo" do %>
+      <img src="<%= static_url(@conn, "/images/changelog-mark-dark.svg") %>" alt="Changelog" width="70" height="70">
+    <% end %>
+    <div class="site_footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/podcasts" title="">Podcasts</a></h4>
+      <ul>
+        <%= for podcast <- @podcasts do %>
+          <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
+        <% end %>
+      </ul>
     </div>
-    <nav class="footer_nav">
-      <h2 class="accessibility-hidden">Social Media Links</h2>
-      <a class="footer_link" href="https://twitter.com/changelog">Twitter</a>
-      <a class="footer_link" href="https://github.com/thechangelog">GitHub</a>
-      <a class="footer_link" href="https://www.youtube.com/c/thechangelog">YouTube</a>
-      <a class="footer_link" href="https://www.instagram.com/thechangelog/">Instagram</a>
-      <%= link "Newsletters", to: page_path(@conn, :weekly), class: "footer_link" %>
-      <a class="footer_link" href="https://github.com/thechangelog/changelog.com">Source</a>
-      <a class="footer_link" href="/terms">Terms</a>
-      <a class="footer_link" href="/privacy">Privacy</a>
-    </nav>
-  </footer>
-</section>
+    <div class="site_footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/news" title="">News</a></h4>
+      <ul>
+        <li><%= link "Newsletters", to: page_path(@conn, :weekly) %></li>
+        <li><a href="https://github.com/thechangelog">GitHub</a></li>
+        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
+        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="site_footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/community" title="">Community</a></h4>
+      <ul>
+        <li><a href="https://twitter.com/changelog">Twitter</a></li>
+        <li><a href="https://github.com/thechangelog">GitHub</a></li>
+        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
+        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="site_footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/contact" title="">Contact</a></h4>
+      <ul>
+        <li><a href="tel:+18889742454">888-974-CHLG (2454)</a></li>
+        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
+        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
+        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="site_footer-nav-list">
+      <h4><a class="js-toggle-parent" href="https://twitter.com/changelog" title="">Social</a></h4>
+      <ul>
+        <li><a href="https://twitter.com/changelog">Twitter</a></li>
+        <li><a href="https://github.com/thechangelog">GitHub</a></li>
+        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
+        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="site_footer-nav-list">
+      <h4><a class="js-toggle-parent" href="#" title="">Etc.</a></h4>
+      <ul>
+        <li><a href="https://github.com/thechangelog/changelog.com">Source</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+      </ul>
+    </div>
+  </nav>
+</site_footer>

@@ -2,7 +2,7 @@
   <section class="community-section community-section--intro">
     <header class="community-section-header">
       <h1>Join Our Global Hacker Community</h1>
-      <p>Laboris irure duis ea est cillum cupidatat aliquip laboris mollit eiusmod ex nisi commodo minim velit. Id nisi est mollit mollit veniam laborum culpa ad minim sit nisi id ullamco. Nulla anim velit Lorem in ullamco ea pariatur labore.</p>
+      <p>Laboris irure duis ea est cillum cupidatat aliquip laboris mollit eiusmod ex nisi commodo minim velit. Id nisi est mollit mollit veniam laborum culpa ad minim sit nisi id ullamco. Nulla anim velit Lorem in ullamco ea pariatur&nbsp;labore.</p>
 
       <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
       <p class="btn_note">It’s free!</p>
@@ -19,8 +19,8 @@
   <section class="community-section">
     <header class="community-section-header">
       <i><img src='<%= static_url(@conn, "/images/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
-      <h2>Slack Everyday with Friends</h2>
-      <p>Laboris nisi veniam laborum aliquip id non tempor laboris mollit esse. Velit id enim anim aliquip Lorem consectetur amet reprehenderit tempor duis voluptate irure. Aute do reprehenderit reprehenderit culpa aliquip aute incididunt et excepteur dolore.</p>
+      <h2>Slack Everyday with&nbsp;Friends</h2>
+      <p>Laboris nisi veniam laborum aliquip id non tempor laboris mollit esse. Velit id enim anim aliquip Lorem consectetur amet reprehenderit tempor duis voluptate irure. Aute do reprehenderit reprehenderit culpa aliquip aute incididunt et excepteur&nbsp;dolore.</p>
     </header>
 
     <div class="community-section-content community-section-content--slack">
@@ -29,14 +29,14 @@
       </div>
       <div class="community-section-content-info">
         <div class="community-section-content-info-top">
-          <h3>There are no imposters here.</h3>
-          <p>Aute aute cillum in veniam Lorem magna nisi reprehenderit eiusmod irure incididunt aliquip amet cillum officia do laborum. Deserunt tempor laborum dolore quis consectetur reprehenderit dolor et laboris ad eiusmod ad velit ea. Enim deserunt sunt et ullamco incididunt irure velit laborum dolor.</p>
+          <h3>There are no imposters&nbsp;here.</h3>
+          <p>Aute aute cillum in veniam Lorem magna nisi reprehenderit eiusmod irure incididunt aliquip amet cillum officia do laborum. Deserunt tempor laborum dolore quis consectetur reprehenderit dolor et laboris ad eiusmod ad velit ea. Enim deserunt sunt et ullamco incididunt irure velit laborum&nbsp;dolor.</p>
         </div>
 
         <div class="community-section-content-info-bottom">
           <blockquote class="community-quote">
             <div class="community-quote-body">
-              <p>There is no way to truely say how much value I get from the Changelog Community Slack channel. I’m there everyday, and there’s always a daily topic being discussed by other members of the community. It’s awesome.</p>
+              <p>There is no way to truely say how much value I get from the Changelog Community Slack channel. I’m there everyday, and there’s always a daily topic being discussed by other members of the community. It’s&nbsp;awesome.</p>
             </div>
             <footer class="community-quote-footer">
               <a href="" title="Justin Dorfman on Twitter">
@@ -79,7 +79,7 @@
   <section class="community-section community-section--map">
     <header class="community-section-header">
       <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
-      <h2>Because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept one.</h2>
+      <h2>Because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept&nbsp;one.</h2>
 
       <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
       <p class="btn_note">It’s free!</p>
