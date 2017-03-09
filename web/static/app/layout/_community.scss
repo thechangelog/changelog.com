@@ -70,6 +70,10 @@
         font-size: 1.25em;
         color: $black !important;
         padding: 0.6em 1.5em 0.5em;
+
+        &:hover {
+          background: darken($green, 5%);
+        }
       }
     }
 

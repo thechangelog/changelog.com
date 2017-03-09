@@ -57,22 +57,37 @@
       <p>Laboris nisi veniam laborum aliquip id non tempor laboris mollit esse. Velit id enim anim aliquip Lorem consectetur amet reprehenderit tempor duis voluptate irure. Aute do reprehenderit reprehenderit culpa aliquip aute incididunt et excepteur dolore.</p>
     </header>
     <div class="community-section-logos">
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ato.png") %>' alt="All things open."></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeschool.png") %>' alt="Code School"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeship.png") %>' alt="Codeship"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-flatiron.png") %>' alt="Flatiron School"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gocd.png") %>' alt="Go"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gosquared.png") %>' alt="Go Squared"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-heap.png") %>' alt="Heap"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ibm.png") %>' alt="IBM"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-oscon.png") %>' alt="OSCON"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-rollbar.png") %>' alt="Rollbar"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-stackimpact.png") %>' alt="Stack Impact"></a></div>
-      <div class="community-section-logos-item"><a href="#" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-toptal.png") %>' alt="Toptal"></a></div>
+      <div class="community-section-logos-item"><a href="https://www.toptal.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-toptal.png") %>' alt="Toptal"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://fastly.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://www.linode.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://rollbar.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-rollbar.png") %>' alt="Rollbar"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://ibm.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ibm.png") %>' alt="IBM"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://codeship.io" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeship.png") %>' alt="Codeship"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://flatironschool.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-flatiron.png") %>' alt="Flatiron School"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.codeschool.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeschool.png") %>' alt="Code School"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://digitalocean.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://golang.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gocd.png") %>' alt="Go"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://heapanalytics.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-heap.png") %>' alt="Heap"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://gosquared.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gosquared.png") %>' alt="Go Squared"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://allthingsopen.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ato.png") %>' alt="All things open."></a></div>
+
+      <div class="community-section-logos-item"><a href="http://oscon.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-oscon.png") %>' alt="OSCON"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://stackimpact.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-stackimpact.png") %>' alt="Stack Impact"></a></div>
     </div>
   </section>
 

@@ -56,4 +56,19 @@
       </ul>
     </div>
   </nav>
-</site_footer>
+
+  <div class="site_footer-sponsors">
+    <div class="site_footer-sponsors-item">
+      <a href="https://www.fastly.com/" title="Visit Fastly.com">
+        <p>Bandwidth provided by</p>
+        <img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly">
+      </a>
+    </div>
+    <div class="site_footer-sponsors-item">
+      <a href="https://www.linode.com/" title="Visit Linode.com">
+        <p>Hosting provided by</p>
+        <img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode">
+      </a>
+    </div>
+  </div>
+</footer>

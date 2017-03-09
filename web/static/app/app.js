@@ -22,7 +22,7 @@ u(document).handle("click", ".js-toggle-nav", function(event) {
 
 u(document).handle("click", ".js-toggle-parent", function(event) {
   event.preventDefault();
-  u(event.target).parent().toggleClass("is-toggled");
+  u(event.target).parent().parent().toggleClass("is-toggled");
 });
 
 u(document).handle("click", ".js-account-nav", function(event) {

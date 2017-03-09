@@ -4,9 +4,9 @@
   &-nav {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
+    margin: $padding-extra-large auto $padding-large;
     max-width: 1440px;
-    padding: $padding-extra-large $padding-large;
+    padding: 0 $padding-large;
     width: 100%;
 
     &-logo {
@@ -66,18 +66,47 @@
       ul {
         display: none;
         list-style-type: none;
+        margin: 0 0 1em;
         padding: 0;
 
         @media (min-width: $smartphone) {
           display: block;
+          margin: 1em 0;
         }
       }
 
       a {
         color: $black;
         &:hover {
-          color: $green;
+          color: $medium-grey;
         }
+      }
+    }
+  }
+
+  &-sponsors {
+    justify-content: space-around;
+    display: flex;
+    flex-wrap: wrap;
+    margin: $padding-large auto;
+    max-width: 540px;
+
+    &-item {
+      flex: 0 200px;
+      text-align: center;
+
+      p {
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        margin: 0 5%;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      img {
+        height: auto;
+        width: 100%;
       }
     }
   }
