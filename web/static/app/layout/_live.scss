@@ -15,6 +15,10 @@
   .live-footer-status {
     background-color: $green;
   }
+
+  .live-footer-viewers {
+    display: none;
+  }
 }
 .live {
   color: $white;
