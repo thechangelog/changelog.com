@@ -14,28 +14,27 @@
     <div class="site_footer-nav-list">
       <h4><a class="js-toggle-parent" href="/news" title="">News</a></h4>
       <ul>
-        <li><%= link "Newsletters", to: page_path(@conn, :weekly) %></li>
-        <li><a href="https://github.com/thechangelog">GitHub</a></li>
-        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
-        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+        <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
+        <li><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></li>
+        <li><%= link "Blog", to: post_path(@conn, :index) %></li>
+        <li><%= link "Search", to: search_path(@conn, :search) %></li>
       </ul>
     </div>
     <div class="site_footer-nav-list">
       <h4><a class="js-toggle-parent" href="/community" title="">Community</a></h4>
       <ul>
-        <li><a href="https://twitter.com/changelog">Twitter</a></li>
-        <li><a href="https://github.com/thechangelog">GitHub</a></li>
-        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
-        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+        <li><%= link "Join the Community", to: page_path(@conn, :community) %></li>
+        <li><%= link "Sign in to Slack", to: "https://changelog.slack.com/" %></li>
+        <li><%= link "Perks", to: page_path(@conn, :community) %></li>
       </ul>
     </div>
     <div class="site_footer-nav-list">
       <h4><a class="js-toggle-parent" href="/contact" title="">Contact</a></h4>
       <ul>
         <li><a href="tel:+18889742454">888-974-CHLG (2454)</a></li>
-        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
-        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
-        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+        <li><%= link "Contact Us", to: page_path(@conn, :contact) %></li>
+        <li><%= link "Advertise With Us", to: page_path(@conn, :sponsorship) %></li>
+        <li><%= link "Partner With Us", to: page_path(@conn, :sponsorship) %></li>
       </ul>
     </div>
     <div class="site_footer-nav-list">
