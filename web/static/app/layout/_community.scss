@@ -20,17 +20,17 @@
 
     &--intro {
       background: $black url('/images/community/grid.jpg') top center;
-      background-size: 650px;
+      background-size: 1300px;
     }
 
     &-header {
-      margin: 0 auto;
+      margin: $padding-large auto;
       max-width: 880px;
-      padding: $padding-large;
+      padding: 0 $padding-large;
       text-align: center;
 
       @media (min-width: $tablet) {
-        padding: $padding-large $padding-large $padding-extra-large;
+        margin-bottom: $padding-extra-large;
       }
 
       h1,
@@ -86,29 +86,43 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin: 0 auto;
+      margin: $padding-large auto;
       max-width: 1080px;
       text-align: center;
-      padding: $padding-large;
+      padding: 0 $padding-large;
       text-align: center;
 
-      li {
+      &-item {
         flex: 0 0 50%;
         padding: 0.5rem;
 
         @media (min-width: $tablet) {
           flex: 0 0 20%;
         }
-      }
 
-      a {
-        color: $white;
-        display: block;
-        opacity: 0.75;
-        padding-top: 80px;
+        img {
+          transition: all 0.2s ease-in-out;
+          display: block;
+          margin: 0 auto 1em;
+        }
 
-        &:hover {
-          opacity: 1;
+        span {
+          color: $white;
+          font-size: 12px;
+          display: block;
+          line-height: 1.25em;
+
+          @media (min-width: $tablet) {
+            font-size: 14px;
+          }
+        }
+
+        a {
+          display: block;
+
+          &:hover img {
+            transform: translateY(-5px);
+          }
         }
       }
     }
@@ -202,8 +216,9 @@
       }
 
       img {
-        width: 100%;
         filter: grayscale(100%);
+        transition: filter 0.2s ease-in-out;
+        width: 100%;
 
         &:hover {
           filter: grayscale(0%);

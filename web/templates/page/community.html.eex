@@ -5,18 +5,34 @@
       <p>Join more than 1,000 community members all over the world with a backstage pass to everything we do. This includes access to our Slack community, features only community members get access to, exclusive deals and discounts from our partners, and more.</p>
 
       <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
-      <p class="btn_note">It's free!</p>
+      <p class="btn_note">It’s free!</p>
     </header>
 
     <ul class="community-section-features">
-      <li><a href="#section" title="Jump to section">Access to our Slack community</a></li>
-      <li><a href="#section" title="Jump to section">Deals &amp; Discounts from our partners</a></li>
-      <li><a href="#section" title="Jump to section">Early access to new podcasts and content</a></li>
-      <li><a href="#section" title="Jump to section">Exclusive features for community members</a></li>
+      <li class="community-section-features-item">
+        <a href="#community" title="Jump to section">
+          <img src='<%= static_url(@conn, "/images/icon-large-chat.svg") %>' width="60" height="60" alt="Chat Icon">
+          <span>Access to our Slack community</span>
+        </a>
+      </li>
+      <li class="community-section-features-item">
+        <a href="#deals" title="Jump to section">
+          <img src='<%= static_url(@conn, "/images/icon-large-percent.svg") %>' width="60" height="60" alt="Deals Icon">
+          <span>Deals &amp; Discounts from our partners</span>
+        </a>
+      </li>
+      <li class="community-section-features-item">
+        <img src='<%= static_url(@conn, "/images/icon-large-ticket.svg") %>' width="60" height="60" alt="Ticket Icon">
+        <span>Early access to new podcasts and content</span>
+      </li>
+      <li class="community-section-features-item">
+        <img src='<%= static_url(@conn, "/images/icon-large-bolt.svg") %>' width="60" height="60" alt="Bolt Icon">
+        <span>Exclusive features for community members</span>
+      </li>
     </ul>
   </section>
 
-  <section class="community-section">
+  <section id="community" class="community-section">
     <header class="community-section-header">
       <i><img src='<%= static_url(@conn, "/images/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
       <h2>Slack Everyday with&nbsp;Friends</h2>
@@ -52,7 +68,7 @@
     </div>
   </section>
 
-  <section class="community-section">
+  <section id="deals" class="community-section">
     <header class="community-section-header">
       <h2>Deals &amp; Discounts From Our Sponsors and Partners</h2>
       <p>We work hard to develop relationships with the most trusted brands, products, and services &mdash; we give the rewards of those efforts to you, the hacker community.</p>

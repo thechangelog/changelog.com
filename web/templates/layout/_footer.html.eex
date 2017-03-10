@@ -1,9 +1,9 @@
-<footer class="site_footer">
-  <nav class="site_footer-nav">
-    <%= link to: "/", class: "site_footer-nav-logo" do %>
+<footer class="footer">
+  <nav class="footer-nav">
+    <%= link to: "/", class: "footer-nav-logo" do %>
       <img src="<%= static_url(@conn, "/images/changelog-mark-dark.svg") %>" alt="Changelog" width="70" height="70">
     <% end %>
-    <div class="site_footer-nav-list">
+    <div class="footer-nav-list">
       <h4><a class="js-toggle-parent" href="/podcasts" title="">Podcasts</a></h4>
       <ul>
         <%= for podcast <- @podcasts do %>
@@ -11,7 +11,7 @@
         <% end %>
       </ul>
     </div>
-    <div class="site_footer-nav-list">
+    <div class="footer-nav-list">
       <h4><a class="js-toggle-parent" href="/news" title="">News</a></h4>
       <ul>
         <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
@@ -20,7 +20,7 @@
         <li><%= link "Search", to: search_path(@conn, :search) %></li>
       </ul>
     </div>
-    <div class="site_footer-nav-list">
+    <div class="footer-nav-list">
       <h4><a class="js-toggle-parent" href="/community" title="">Community</a></h4>
       <ul>
         <li><%= link "Join the Community", to: page_path(@conn, :community) %></li>
@@ -28,7 +28,7 @@
         <li><%= link "Perks", to: page_path(@conn, :community) %></li>
       </ul>
     </div>
-    <div class="site_footer-nav-list">
+    <div class="footer-nav-list">
       <h4><a class="js-toggle-parent" href="/contact" title="">Company</a></h4>
       <ul>
         <li><%= link "Sponsor", to: page_path(@conn, :sponsorship) %></li>
@@ -37,7 +37,7 @@
         <li><a href="tel:+18889742454">888-974-CHLG (2454)</a></li>
       </ul>
     </div>
-    <div class="site_footer-nav-list">
+    <div class="footer-nav-list">
       <h4><a class="js-toggle-parent" href="https://twitter.com/changelog" title="">Social</a></h4>
       <ul>
         <li><a href="https://twitter.com/changelog">Twitter</a></li>
@@ -46,7 +46,7 @@
         <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
       </ul>
     </div>
-    <div class="site_footer-nav-list">
+    <div class="footer-nav-list">
       <h4><a class="js-toggle-parent" href="#" title="">Etc.</a></h4>
       <ul>
         <li><a href="https://github.com/thechangelog/changelog.com">Source</a></li>
@@ -56,14 +56,14 @@
     </div>
   </nav>
 
-  <div class="site_footer-sponsors">
-    <div class="site_footer-sponsors-item">
+  <div class="footer-sponsors">
+    <div class="footer-sponsors-item">
       <a href="https://www.fastly.com/?utm_source=changelog" title="Visit Fastly.com">
         <p>Bandwidth provided by</p>
         <img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly">
       </a>
     </div>
-    <div class="site_footer-sponsors-item">
+    <div class="footer-sponsors-item">
       <a href="https://www.linode.com/changelog" title="Visit Linode.com">
         <p>Hosting provided by</p>
         <img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode">
