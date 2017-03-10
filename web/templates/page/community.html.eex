@@ -2,17 +2,17 @@
   <section class="community-section community-section--intro">
     <header class="community-section-header">
       <h1>Join Our Global Hacker Community</h1>
-      <p>Laboris irure duis ea est cillum cupidatat aliquip laboris mollit eiusmod ex nisi commodo minim velit. Id nisi est mollit mollit veniam laborum culpa ad minim sit nisi id ullamco. Nulla anim velit Lorem in ullamco ea pariatur&nbsp;labore.</p>
+      <p>Join more than 1,000 community members all over the world with a backstage pass to everything we do. This includes access to our Slack community, features only community members get access to, exclusive deals and discounts from our partners, and more.</p>
 
       <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
-      <p class="btn_note">It’s free!</p>
+      <p class="btn_note">It's free!</p>
     </header>
 
     <ul class="community-section-features">
-      <li><a href="#section" title="Jump to section">Officia et veniam excepteur</a></li>
-      <li><a href="#section" title="Jump to section">Officia et veniam excepteur</a></li>
-      <li><a href="#section" title="Jump to section">Officia et veniam excepteur</a></li>
-      <li><a href="#section" title="Jump to section">Officia et veniam excepteur</a></li>
+      <li><a href="#section" title="Jump to section">Access to our Slack community</a></li>
+      <li><a href="#section" title="Jump to section">Deals &amp; Discounts from our partners</a></li>
+      <li><a href="#section" title="Jump to section">Early access to new podcasts and content</a></li>
+      <li><a href="#section" title="Jump to section">Exclusive features for community members</a></li>
     </ul>
   </section>
 
@@ -20,7 +20,7 @@
     <header class="community-section-header">
       <i><img src='<%= static_url(@conn, "/images/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
       <h2>Slack Everyday with&nbsp;Friends</h2>
-      <p>Laboris nisi veniam laborum aliquip id non tempor laboris mollit esse. Velit id enim anim aliquip Lorem consectetur amet reprehenderit tempor duis voluptate irure. Aute do reprehenderit reprehenderit culpa aliquip aute incididunt et excepteur&nbsp;dolore.</p>
+      <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
     </header>
 
     <div class="community-section-content community-section-content--slack">
@@ -30,19 +30,20 @@
       <div class="community-section-content-info">
         <div class="community-section-content-info-top">
           <h3>There are no imposters&nbsp;here.</h3>
-          <p>Aute aute cillum in veniam Lorem magna nisi reprehenderit eiusmod irure incididunt aliquip amet cillum officia do laborum. Deserunt tempor laborum dolore quis consectetur reprehenderit dolor et laboris ad eiusmod ad velit ea. Enim deserunt sunt et ullamco incididunt irure velit laborum&nbsp;dolor.</p>
+          <p>Everyone is welcome. You are not an imposter. No matter where you are on your hacker path &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
+          <p><%= link "Join the community", to: person_path(@conn, :new), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
         </div>
 
         <div class="community-section-content-info-bottom">
           <blockquote class="community-quote">
             <div class="community-quote-body">
-              <p>There is no way to truely say how much value I get from the Changelog Community Slack channel. I’m there everyday, and there’s always a daily topic being discussed by other members of the community. It’s&nbsp;awesome.</p>
+              <p>There's no way to truely say how much value I get from being a part of Changelog Community. I'm there everyday, and there's always something being discussed by the community. It's&nbsp;awesome.</p>
             </div>
             <footer class="community-quote-footer">
-              <a href="" title="Justin Dorfman on Twitter">
+              <a href="https://twitter.com/jdorfman" title="Justin Dorfman on Twitter">
                 <img src='<%= static_url(@conn, "/images/community/justin-dorfman.jpg") %>' alt="A smiling man in a ballcap and glasses." width="65" height="65">
-                Justin Dorfman
-                <br>Developer Relations, Sticker Mule
+                <strong>Justin Dorfman</strong>
+                <span class="quote-title">Developer Relations at Sticker Mule</span>
               </a>
             </footer>
           </blockquote>
@@ -53,48 +54,64 @@
 
   <section class="community-section">
     <header class="community-section-header">
-      <h2>Deep Discounts From Our Sponsors and Partners</h2>
-      <p>Laboris nisi veniam laborum aliquip id non tempor laboris mollit esse. Velit id enim anim aliquip Lorem consectetur amet reprehenderit tempor duis voluptate irure. Aute do reprehenderit reprehenderit culpa aliquip aute incididunt et excepteur dolore.</p>
+      <h2>Deals &amp; Discounts From Our Sponsors and Partners</h2>
+      <p>We work hard to develop relationships with the most trusted brands, products, and services &mdash; we give the rewards of those efforts to you, the hacker community.</p>
     </header>
     <div class="community-section-logos">
-      <div class="community-section-logos-item"><a href="https://www.toptal.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-toptal.png") %>' alt="Toptal"></a></div>
+      <div class="community-section-logos-item"><a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-toptal.png") %>' alt="Toptal"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://fastly.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly"></a></div>
+      <div class="community-section-logos-item"><a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://www.linode.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode"></a></div>
+      <div class="community-section-logos-item"><a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://rollbar.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-rollbar.png") %>' alt="Rollbar"></a></div>
+      <div class="community-section-logos-item"><a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-rollbar.png") %>' alt="Rollbar"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://ibm.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ibm.png") %>' alt="IBM"></a></div>
+      <div class="community-section-logos-item"><a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ibm.png") %>' alt="IBM"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://codeship.io" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeship.png") %>' alt="Codeship"></a></div>
+      <div class="community-section-logos-item"><a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-strongloop.png") %>' alt="StrongLoop"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://flatironschool.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-flatiron.png") %>' alt="Flatiron School"></a></div>
+      <div class="community-section-logos-item"><a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-flatiron.png") %>' alt="Flatiron School"></a></div>
 
-      <div class="community-section-logos-item"><a href="https://www.codeschool.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeschool.png") %>' alt="Code School"></a></div>
+      <div class="community-section-logos-item"><a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeschool.png") %>' alt="Code School"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://digitalocean.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a></div>
+      <div class="community-section-logos-item"><a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://golang.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gocd.png") %>' alt="Go"></a></div>
+      <div class="community-section-logos-item"><a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gocd.png") %>' alt="Go"></a></div>
 
-      <div class="community-section-logos-item"><a href="https://heapanalytics.com/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-heap.png") %>' alt="Heap"></a></div>
+      <div class="community-section-logos-item"><a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-heap.png") %>' alt="Heap"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-sentry.png") %>' alt="Sentry"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ato.png") %>' alt="All things open."></a></div>
+
+      <div class="community-section-logos-item"><a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-elixirconf.png") %>' alt="ElixirConf"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-compose.png") %>' alt="Compose"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hired.png") %>' alt="Hired"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-datadog.png") %>' alt="Datadog"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-casper.png") %>' alt="Casper"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-imgix.png") %>' alt="imgix"></a></div>
 
       <div class="community-section-logos-item"><a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a></div>
 
-      <div class="community-section-logos-item"><a href="http://gosquared.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gosquared.png") %>' alt="Go Squared"></a></div>
-
-      <div class="community-section-logos-item"><a href="http://allthingsopen.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ato.png") %>' alt="All things open."></a></div>
-
-      <div class="community-section-logos-item"><a href="http://oscon.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-oscon.png") %>' alt="OSCON"></a></div>
-
-      <div class="community-section-logos-item"><a href="http://stackimpact.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-stackimpact.png") %>' alt="Stack Impact"></a></div>
+      <div class="community-section-logos-item"><a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeship.png") %>' alt="Codeship"></a></div>
     </div>
   </section>
 
   <section class="community-section community-section--map">
     <header class="community-section-header">
       <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
-      <h2>Because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept&nbsp;one.</h2>
+      <h2>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best podcasts and email newsletters. Our community and content is in every corner of the&nbsp;globe.</h2>
 
       <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
       <p class="btn_note">It’s free!</p>

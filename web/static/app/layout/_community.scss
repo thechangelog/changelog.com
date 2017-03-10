@@ -25,7 +25,7 @@
 
     &-header {
       margin: 0 auto;
-      max-width: 1080px;
+      max-width: 880px;
       padding: $padding-large;
       text-align: center;
 
@@ -69,7 +69,11 @@
       .btn {
         font-size: 1.25em;
         color: $black !important;
-        padding: 0.6em 1.5em 0.5em;
+        padding: 0.9em 2.4em 0.7em;
+
+        @media (min-width: $tablet) {
+          margin-top: $padding-medium;
+        }
 
         &:hover {
           background: darken($green, 5%);
@@ -93,7 +97,7 @@
         padding: 0.5rem;
 
         @media (min-width: $tablet) {
-          flex: 0 0 25%;
+          flex: 0 0 20%;
         }
       }
 
@@ -138,7 +142,8 @@
 
         img {
           border: 1px solid $light-grey;
-          box-shadow: 0 30px 40px 20px rgba($black, 0.2);
+          // box-shadow: 0 30px 40px 20px rgba($black, 0.2);
+          box-shadow: -20px 20px 50px 0 rgba($black, 0.2), -60px 60px 30px 0 rgba($black, 0.03);
           width: 100%;
 
           @media (min-width: $breakpoint) {
@@ -198,6 +203,11 @@
 
       img {
         width: 100%;
+        filter: grayscale(100%);
+
+        &:hover {
+          filter: grayscale(0%);
+        }
       }
     }
   }
@@ -216,7 +226,7 @@
       color: $half-black;
       content: '“';
       display: block;
-      font-size: 2.5em;
+      font-size: 4em;
       height: 20px;
       margin-bottom: $padding-large;
       text-align: center;
@@ -228,18 +238,33 @@
       text-align: center;
 
       img {
-        box-shadow: 0 20px 30px 10px rgba($black, 0.2);
+        border: 1px solid $light-grey;
+        box-shadow: -5px 5px 40px 5px rgba($black, 0.2);
+        border-radius: 2px;
+        // box-shadow: 0 0 40px 0 rgba($black, 0.2);
         display: block;
         margin: 0 auto 1em;
       }
 
-      a {
-        color: $half-black;
-        display: block;
+      strong {
+        display: inline-block;
+        padding-bottom: 2px;
+      }
 
-        &:hover {
-          color: $black;
+      span {
+        clear: left;
+        font-style: italic;
+
+        &:before {
+          content: "\A";
+          white-space: pre;
         }
+
+      }
+
+      a {
+        color: black;
+        display: block;
       }
     }
   }
@@ -249,13 +274,14 @@
     display: block;
     height: auto;
     margin: 0 auto;
-    max-width: 1080px;
+    max-width: 1200px;
     overflow: hidden;
     width: 100%;
 
     img {
-      margin-left: -10%;
-      width: 120%;
+      display: block;
+      margin: 0 auto;
+      width: 97%;
     }
 
     @media (min-width: $tablet) {
