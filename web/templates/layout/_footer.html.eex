@@ -1,23 +1,73 @@
-<section class="footer mosaic">
-  <h2><%= Enum.random(["Hacker to the Heart", "!imposter", "Open Source Moves Fast", "Keep Up", "Long Live the Hacker", "Nerd to the Core", "In the Trenches"]) %></h2>
-  <footer class="container">
-    <div class="footer_copyright">
-      <small>&copy; 2009&ndash;2017<span> Changelog Media LLC</span></small>
-      <address>
-        <a class="footer_link" href="tel:+18889742454">888-974-CHLG (2454)</a>
-        <%= link "Contact", to: page_path(@conn, :contact), class: "footer_link" %>
-      </address>
+<footer class="footer">
+  <nav class="footer-nav">
+    <%= link to: "/", class: "footer-nav-logo" do %>
+      <img src="<%= static_url(@conn, "/images/changelog-mark-dark.svg") %>" alt="Changelog" width="70" height="70">
+    <% end %>
+    <div class="footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/podcasts" title="">Podcasts</a></h4>
+      <ul>
+        <%= for podcast <- @podcasts do %>
+          <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
+        <% end %>
+      </ul>
     </div>
-    <nav class="footer_nav">
-      <h2 class="accessibility-hidden">Social Media Links</h2>
-      <a class="footer_link" href="https://twitter.com/changelog">Twitter</a>
-      <a class="footer_link" href="https://github.com/thechangelog">GitHub</a>
-      <a class="footer_link" href="https://www.youtube.com/c/thechangelog">YouTube</a>
-      <a class="footer_link" href="https://www.instagram.com/thechangelog/">Instagram</a>
-      <%= link "Newsletters", to: page_path(@conn, :weekly), class: "footer_link" %>
-      <a class="footer_link" href="https://github.com/thechangelog/changelog.com">Source</a>
-      <a class="footer_link" href="/terms">Terms</a>
-      <a class="footer_link" href="/privacy">Privacy</a>
-    </nav>
-  </footer>
-</section>
+    <div class="footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/news" title="">News</a></h4>
+      <ul>
+        <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
+        <li><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></li>
+        <li><%= link "Blog", to: post_path(@conn, :index) %></li>
+        <li><%= link "Search", to: search_path(@conn, :search) %></li>
+      </ul>
+    </div>
+    <div class="footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/community" title="">Community</a></h4>
+      <ul>
+        <li><%= link "Join the Community", to: page_path(@conn, :community) %></li>
+        <li><%= link "Sign in to Slack", to: "https://changelog.slack.com/" %></li>
+        <li><%= link "Perks", to: page_path(@conn, :community) %></li>
+      </ul>
+    </div>
+    <div class="footer-nav-list">
+      <h4><a class="js-toggle-parent" href="/contact" title="">Company</a></h4>
+      <ul>
+        <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
+        <li><%= link "About", to: page_path(@conn, :about) %></li>
+        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
+        <li><a href="tel:+18889742454">888-974-CHLG (2454)</a></li>
+      </ul>
+    </div>
+    <div class="footer-nav-list">
+      <h4><a class="js-toggle-parent" href="https://twitter.com/changelog" title="">Social</a></h4>
+      <ul>
+        <li><a href="https://twitter.com/changelog">Twitter</a></li>
+        <li><a href="https://github.com/thechangelog">GitHub</a></li>
+        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
+        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="footer-nav-list">
+      <h4><a class="js-toggle-parent" href="#" title="">Etc.</a></h4>
+      <ul>
+        <li><a href="https://github.com/thechangelog/changelog.com">Source</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="footer-sponsors">
+    <div class="footer-sponsors-item">
+      <a href="https://www.fastly.com/?utm_source=changelog" title="Visit Fastly.com">
+        <p>Bandwidth provided by</p>
+        <img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly">
+      </a>
+    </div>
+    <div class="footer-sponsors-item">
+      <a href="https://www.linode.com/changelog" title="Visit Linode.com">
+        <p>Hosting provided by</p>
+        <img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode">
+      </a>
+    </div>
+  </div>
+</footer>

@@ -1,37 +1,140 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Changelog Community</h2>
+<article class="community">
+  <section class="community-section community-section--intro">
+    <header class="community-section-header">
+      <h1>Join Our Global Hacker Community</h1>
+      <p>Join more than 1,000 community members all over the world with a backstage pass to everything we do. This includes access to our Slack community, features only community members get access to, exclusive deals and discounts from our partners, and more.</p>
+
+      <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "btn" %>
+      <p class="btn_note">It’s free!</p>
     </header>
-    <div class="content_body">
-      <p>Join the community and we'll give you an all-access pass to everything we do.</p>
-      <ul>
-        <li><b>24/7 Slack</b>  &ndash; Participate during our live shows. The community Slack room never closes.</li>
-        <li><b>Early Access</b> &ndash; Hear new shows and play with site features before anyone else.</li>
-        <li><b>Connect</b> &ndash; Hang with hundreds of like-minded developers from all over the world.</li>
-        <li><b>Level Up</b> &ndash; Get feedback on what you're working on. We're a community who cares.</li>
-        <li><b>Exclusive Discounts</b> &ndash; Access to more than $3,000 in savings from our partners.</li>
-      </ul>
 
-    <%= if @current_user do %>
-      <p>You're already community member! <%= link("Click here", to: home_path(@conn, :show)) %> to visit your home page.</p>
-    <% else %>
-      <div class="auth-wrap">
-        <ul class="button_list button_list--green">
-          <li class="button_list-item">
-            <a href="/auth/twitter" title="Sign up via Twitter" class="twitter">Join via Twitter</a>
-          </li>
-          <li class="button_list-item">
-            <a href="/auth/github" title="Sign up via Github" class="github">Join via Github</a>
-          </li>
-          <li class="button_list-item">
-            <%= link "Join via Email", to: person_path(@conn, :new), title: "Join via Email", class: "email" %>
-          </li>
-        </ul>
+    <ul class="community-section-features">
+      <li class="community-section-features-item">
+        <a href="#community" title="Jump to section">
+          <img src='<%= static_url(@conn, "/images/icon-large-chat.svg") %>' width="60" height="60" alt="Chat Icon">
+          <span>Access to our Slack community</span>
+        </a>
+      </li>
+      <li class="community-section-features-item">
+        <a href="#deals" title="Jump to section">
+          <img src='<%= static_url(@conn, "/images/icon-large-percent.svg") %>' width="60" height="60" alt="Deals Icon">
+          <span>Deals &amp; Discounts from our partners</span>
+        </a>
+      </li>
+      <li class="community-section-features-item">
+        <img src='<%= static_url(@conn, "/images/icon-large-ticket.svg") %>' width="60" height="60" alt="Ticket Icon">
+        <span>Early access to new podcasts and content</span>
+      </li>
+      <li class="community-section-features-item">
+        <img src='<%= static_url(@conn, "/images/icon-large-bolt.svg") %>' width="60" height="60" alt="Bolt Icon">
+        <span>Exclusive features for community members</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="community" class="community-section">
+    <header class="community-section-header">
+      <i><img src='<%= static_url(@conn, "/images/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
+      <h2>Slack Everyday with&nbsp;Friends</h2>
+      <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
+    </header>
+
+    <div class="community-section-content community-section-content--slack">
+      <div class="community-section-content-image">
+        <img src='<%= static_url(@conn, "/images/community/slack-screenshot.jpg") %>' alt="Screenshot of a Slack channel conversation.">
       </div>
-    <% end %>
+      <div class="community-section-content-info">
+        <div class="community-section-content-info-top">
+          <h3>There are no imposters&nbsp;here.</h3>
+          <p>Everyone is welcome. You are not an imposter. No matter where you are on your hacker path &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
+          <p><%= link "Join the community", to: page_path(@conn, :join), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
+        </div>
 
-      <p><small>Call <a href="tel:+18889742454">888-974-CHLG (2454)</a>, or email us at <a href="mailto:community@changelog.com">community@changelog.com</a> if you have any questions.</small></p>
+        <div class="community-section-content-info-bottom">
+          <blockquote class="community-quote">
+            <div class="community-quote-body">
+              <p>There's no way to truely say how much value I get from being a part of Changelog Community. I'm there everyday, and there's always something being discussed by the community. It's&nbsp;awesome.</p>
+            </div>
+            <footer class="community-quote-footer">
+              <a href="https://twitter.com/jdorfman" title="Justin Dorfman on Twitter">
+                <img src='<%= static_url(@conn, "/images/community/justin-dorfman.jpg") %>' alt="A smiling man in a ballcap and glasses." width="65" height="65">
+                <strong>Justin Dorfman</strong>
+                <span class="quote-title">Developer Relations at Sticker Mule</span>
+              </a>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section id="deals" class="community-section">
+    <header class="community-section-header">
+      <h2>Deals &amp; Discounts From Our Sponsors and Partners</h2>
+      <p>We work hard to develop relationships with the most trusted brands, products, and services &mdash; we give the rewards of those efforts to you, the hacker community.</p>
+    </header>
+    <div class="community-section-logos">
+      <div class="community-section-logos-item"><a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-toptal.png") %>' alt="Toptal"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-rollbar.png") %>' alt="Rollbar"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ibm.png") %>' alt="IBM"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-strongloop.png") %>' alt="StrongLoop"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-flatiron.png") %>' alt="Flatiron School"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeschool.png") %>' alt="Code School"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gocd.png") %>' alt="Go"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-heap.png") %>' alt="Heap"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-sentry.png") %>' alt="Sentry"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ato.png") %>' alt="All things open."></a></div>
+
+      <div class="community-section-logos-item"><a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-elixirconf.png") %>' alt="ElixirConf"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-compose.png") %>' alt="Compose"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hired.png") %>' alt="Hired"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-datadog.png") %>' alt="Datadog"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-casper.png") %>' alt="Casper"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-imgix.png") %>' alt="imgix"></a></div>
+
+      <div class="community-section-logos-item"><a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a></div>
+
+      <div class="community-section-logos-item"><a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeship.png") %>' alt="Codeship"></a></div>
+    </div>
+  </section>
+
+  <section class="community-section community-section--map">
+    <header class="community-section-header">
+      <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
+      <h2>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best podcasts and email newsletters. Our community and content is in every corner of the&nbsp;globe.</h2>
+
+      <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "btn" %>
+      <p class="btn_note">It’s free!</p>
+    </header>
+
+    <div class="community-map">
+      <img src='<%= static_url(@conn, "/images/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+    </div>
+  </section>
 </article>

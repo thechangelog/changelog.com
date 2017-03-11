@@ -1,5 +1,5 @@
 defmodule Changelog.Meta.Title do
-  alias Changelog.{AuthView, EpisodeView, PageView, PersonView, PodcastView, PostView, SearchView}
+  alias Changelog.{AuthView, EpisodeView, LiveView, PageView, PersonView, PodcastView, PostView, SearchView}
 
   @suffix "Changelog"
 
@@ -20,11 +20,16 @@ defmodule Changelog.Meta.Title do
     "#{podcast.name} #{EpisodeView.numbered_title(episode, "#")}"
   end
 
+  defp get(%{view_module: LiveView}) do
+    "Live and Upcoming Shows"
+  end
+
   defp get(%{view_module: PageView, view_template: template}) do
     case template do
-      "home.html"    -> nil
-      "weekly.html"  -> "Subscribe to Changelog Weekly"
-      "nightly.html" -> "Subscribe to Changelog Nightly"
+      "community.html" -> "Join Changelog's Global Hacker Community"
+      "home.html"      -> nil
+      "weekly.html"    -> "Subscribe to Changelog Weekly"
+      "nightly.html"   -> "Subscribe to Changelog Nightly"
       _else ->
         template
         |> String.replace(".html", "")

@@ -20,6 +20,11 @@ u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
 });
 
+u(document).handle("click", ".js-toggle-parent", function(event) {
+  event.preventDefault();
+  u(event.target).parent().parent().toggleClass("is-toggled");
+});
+
 u(document).handle("click", ".js-account-nav", function(event) {
   const content = u(".js-account-nav-content").html();
   overlay.html(content).show();

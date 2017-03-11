@@ -84,6 +84,8 @@ defmodule Changelog.Router do
     post "/~/subscribe/:id", HomeController, :subscribe
     post "/~/unsubscribe/:id", HomeController, :unsubscribe
 
+    get "/community", PageController, :community
+    get "/join", PageController, :join
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
     get "/in/:token", AuthController, :create, as: :sign_in
@@ -102,12 +104,11 @@ defmodule Changelog.Router do
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015
-    get "/community", PageController, :community
     get "/benefits", PageController, :benefits
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership
-    get "/sponsorship", PageController, :sponsorship
+    get "/sponsor", PageController, :sponsor
     get "/store", PageController, :store
     get "/soundcheck", PageController, :soundcheck
     get "/team", PageController, :team

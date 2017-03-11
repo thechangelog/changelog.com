@@ -73,7 +73,7 @@
 
       <h4>Can I sponsor Changelog Nightly?</h4>
 
-      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: page_path(@conn, :sponsorship) %>.</p>
+      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: page_path(@conn, :sponsor) %>.</p>
 
       <h4>Why do we require you to confirm your email address?</h4>
 
