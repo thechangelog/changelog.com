@@ -31,7 +31,7 @@
     <div class="footer-nav-list">
       <h4><a class="js-toggle-parent" href="/contact" title="">Company</a></h4>
       <ul>
-        <li><%= link "Sponsor", to: page_path(@conn, :sponsorship) %></li>
+        <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
         <li><%= link "About", to: page_path(@conn, :about) %></li>
         <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
         <li><a href="tel:+18889742454">888-974-CHLG (2454)</a></li>

@@ -17,7 +17,7 @@
 
     <%= link "Sponsor",
         title: "",
-        to: page_path(@conn, :sponsorship),
+        to: page_path(@conn, :sponsor),
         class: "toolbar_item toolbar_item--button",
         style: "background-image: url('#{static_url(@conn, "/images/icon-sponsor.svg")}')" %>
 

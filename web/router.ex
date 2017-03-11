@@ -103,7 +103,7 @@ defmodule Changelog.Router do
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership
-    get "/sponsorship", PageController, :sponsorship
+    get "/sponsor", PageController, :sponsor
     get "/store", PageController, :store
     get "/soundcheck", PageController, :soundcheck
     get "/team", PageController, :team

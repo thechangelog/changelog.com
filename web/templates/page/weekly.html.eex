@@ -49,7 +49,7 @@
 
       <h4>Can I sponsor a Headline, Link, Repo, or Video?</h4>
 
-      Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsorship) %>
+      Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsor) %>
 
       <h4>Why do we require you to verify your email address?</h4>
 

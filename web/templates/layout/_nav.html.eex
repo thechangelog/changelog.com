@@ -9,7 +9,7 @@
     <%= link "Podcasts", to: podcast_path(@conn, :index), class: "navigation-bar-link" %>
     <%= link "Community", to: page_path(@conn, :community), class: "navigation-bar-link" %>
     <%= link "Subscribe", to: page_path(@conn, :subscribe), class: "navigation-bar-link" %>
-    <%= link "Sponsor", to: page_path(@conn, :sponsorship), class: "navigation-bar-link" %>
+    <%= link "Sponsor", to: page_path(@conn, :sponsor), class: "navigation-bar-link" %>
   </nav>
 
   <form action="<%= search_path(@conn, :search) %>" method="get" class="navigation-bar_search">
@@ -97,7 +97,7 @@
             <%= link "Community", to: page_path(@conn, :community) %>
             <%= link "Subscribe", to: page_path(@conn, :subscribe) %>
             <%= link "Search", to: search_path(@conn, :search) %>
-            <%= link "Sponsorship", to: page_path(@conn, :sponsorship) %>
+            <%= link "Sponsor", to: page_path(@conn, :sponsor) %>
             <%= link "About", to: page_path(@conn, :about) %>
             <%= link "Contact", to: page_path(@conn, :contact) %>
             <%= link "View Source", to: "https://github.com/thechangelog/changelog.com" %>

@@ -10,7 +10,7 @@ defmodule Changelog.PageController do
   def action(conn, params) do
     case action_name(conn) do
       :home           -> home(conn, params)
-      :sponsorship    -> sponsorship(conn, params)
+      :sponsor        -> sponsor(conn, params)
       :weekly_archive -> weekly_archive(conn, params)
       name            -> render(conn, name)
     end
@@ -29,10 +29,10 @@ defmodule Changelog.PageController do
     render(conn, :home, featured: featured)
   end
 
-  def sponsorship(conn, _params) do
-    weekly = Newsletter.weekly() |> Newsletter.get_stats
+  def sponsor(conn, _params) do
+    weekly = Newsletter.weekly() |> Newsletter.get_stats()
 
-    render(conn, :sponsorship, weekly: weekly)
+    render(conn, :sponsor, weekly: weekly)
   end
 
   def weekly_archive(conn, _params) do
