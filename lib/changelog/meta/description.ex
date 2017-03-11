@@ -21,6 +21,10 @@ defmodule Changelog.Meta.Description do
     end
   end
 
+  defp get(%{view_module: PageView, view_template: "community.html"}) do
+    "Join community members all over the world with a backstage pass to everything we do."
+  end
+
   defp get(%{view_module: PageView, view_template: "weekly.html"}) do
     "Our editorialized take on this week in open source and software development. It's the email you need to read to not miss out."
   end
@@ -29,5 +33,5 @@ defmodule Changelog.Meta.Description do
     "Get the hottest new and top repos in your inbox every night. No fluff, just repos."
   end
 
-  defp get(_), do: "Podcasts, News, and Films by/for developers. Hacker to the heart."
+  defp get(_), do: "Podcasts, News, and Films for && by developers. Hacker to the heart."
 end
