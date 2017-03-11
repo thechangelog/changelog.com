@@ -13,7 +13,7 @@
         <div class="form_element_wrap <%= error_class(f, :name) %>">
           <label>Name<span>*</span></label>
           <div class="form_element">
-            <%= text_input(f, :name, placeholder: "Grace Hopper") %>
+            <%= text_input(f, :name, placeholder: "Grace Hopper", autofocus: true) %>
             <%= error_message(f, :name) %>
           </div>
         </div>

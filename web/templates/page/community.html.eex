@@ -4,7 +4,7 @@
       <h1>Join Our Global Hacker Community</h1>
       <p>Join more than 1,000 community members all over the world with a backstage pass to everything we do. This includes access to our Slack community, features only community members get access to, exclusive deals and discounts from our partners, and more.</p>
 
-      <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
+      <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "btn" %>
       <p class="btn_note">It’s free!</p>
     </header>
 
@@ -47,7 +47,7 @@
         <div class="community-section-content-info-top">
           <h3>There are no imposters&nbsp;here.</h3>
           <p>Everyone is welcome. You are not an imposter. No matter where you are on your hacker path &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
-          <p><%= link "Join the community", to: person_path(@conn, :new), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
+          <p><%= link "Join the community", to: page_path(@conn, :join), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
         </div>
 
         <div class="community-section-content-info-bottom">
@@ -129,7 +129,7 @@
       <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
       <h2>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best podcasts and email newsletters. Our community and content is in every corner of the&nbsp;globe.</h2>
 
-      <%= link "Join Now", to: person_path(@conn, :new), title: "", class: "btn" %>
+      <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "btn" %>
       <p class="btn_note">It’s free!</p>
     </header>
 
