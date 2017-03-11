@@ -1,7 +1,7 @@
 defmodule Changelog.SlackController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Episode, Podcast}
+  alias Changelog.{Episode}
   alias Changelog.Slack.Countdown
 
   def countdown(conn, %{"slug" => slug}) do
