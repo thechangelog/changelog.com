@@ -1,19 +1,34 @@
 defmodule Changelog.PageController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Episode, Newsletter}
+  alias Changelog.{Episode, Newsletter, Podcast}
 
   plug RequireGuest, "before joining" when action in [:join, :community]
 
   # pages that need special treatment get their own matched function
   # all others simply render the template of the same name
-  def action(conn, params) do
+  def action(conn, _) do
     case action_name(conn) do
-      :home           -> home(conn, params)
-      :sponsor        -> sponsor(conn, params)
-      :weekly_archive -> weekly_archive(conn, params)
+      :be_our_guest   -> be_our_guest(conn, Map.get(conn.params, "slug"))
+      :home           -> home(conn, conn.params)
+      :sponsor        -> sponsor(conn, conn.params)
+      :weekly_archive -> weekly_archive(conn, conn.params)
       name            -> render(conn, name)
     end
+  end
+
+  def be_our_guest(conn, slug) when is_nil(slug), do: be_our_guest(conn, "podcast")
+  def be_our_guest(conn, slug) do
+    podcast = Podcast.get_by_slug(slug)
+    episode =
+      Podcast.get_episodes(podcast)
+      |> Episode.published
+      |> Episode.newest_first
+      |> Episode.limit(1)
+      |> Repo.one
+      |> Episode.preload_podcast
+
+    render(conn, :be_our_guest, podcast: podcast, episode: episode)
   end
 
   def home(conn, _params) do

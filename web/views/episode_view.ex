@@ -42,6 +42,11 @@ defmodule Changelog.EpisodeView do
     ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
 
+  def embed_iframe(episode, theme), do: embed_iframe(episode, episode.podcast, theme)
+  def embed_iframe(episode, podcast, theme) do
+    ~s{<iframe src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}?theme=#{theme}" width="100%" height=220 scrolling=no frameborder=no></iframe>}
+  end
+
   def guid(episode) do
     episode.guid || "changelog.com/#{episode.podcast_id}/#{episode.id}"
   end
