@@ -101,18 +101,17 @@ defmodule Changelog.Router do
     # static pages
     get "/", PageController, :home
     get "/about", PageController, :about
-    get "/be-our-guest/:slug", PageController, :be_our_guest
-    get "/be-our-guest", PageController, :be_our_guest
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015
+    get "/guest/:slug", PageController, :guest
+    get "/guest", PageController, :guest
     get "/benefits", PageController, :benefits
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership
     get "/sponsor", PageController, :sponsor
     get "/store", PageController, :store
-    get "/soundcheck", PageController, :soundcheck
     get "/team", PageController, :team
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms

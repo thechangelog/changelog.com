@@ -9,7 +9,7 @@ defmodule Changelog.PageController do
   # all others simply render the template of the same name
   def action(conn, _) do
     case action_name(conn) do
-      :be_our_guest   -> be_our_guest(conn, Map.get(conn.params, "slug"))
+      :guest          -> guest(conn, Map.get(conn.params, "slug"))
       :home           -> home(conn, conn.params)
       :sponsor        -> sponsor(conn, conn.params)
       :weekly_archive -> weekly_archive(conn, conn.params)
@@ -17,8 +17,8 @@ defmodule Changelog.PageController do
     end
   end
 
-  def be_our_guest(conn, slug) when is_nil(slug), do: be_our_guest(conn, "podcast")
-  def be_our_guest(conn, slug) do
+  def guest(conn, slug) when is_nil(slug), do: guest(conn, "podcast")
+  def guest(conn, slug) do
     podcast = Podcast.get_by_slug(slug)
     episode =
       Podcast.get_episodes(podcast)
@@ -28,7 +28,7 @@ defmodule Changelog.PageController do
       |> Repo.one
       |> Episode.preload_podcast
 
-    render(conn, :be_our_guest, podcast: podcast, episode: episode)
+    render(conn, :guest, podcast: podcast, episode: episode)
   end
 
   def home(conn, _params) do

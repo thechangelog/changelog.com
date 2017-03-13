@@ -35,16 +35,16 @@ defmodule Changelog.PageControllerTest do
     assert html_response(conn, 200) =~ featured.title
   end
 
-  describe "be-our-guest" do
+  describe "guest" do
     test "it falls back to The Changelog with no slug", %{conn: conn} do
       changelog = insert(:podcast, name: "The Changelog", slug: "podcast")
-      conn = get(conn, "/be-our-guest")
+      conn = get(conn, "/guest")
       assert html_response(conn, 200) =~ changelog.name
     end
 
     test "it uses the provided Podcast slug", %{conn: conn} do
       rfc = insert(:podcast, name: "Request For Commits", slug: "rfc")
-      conn = get(conn, "/be-our-guest/rfc")
+      conn = get(conn, "/guest/rfc")
       assert html_response(conn, 200) =~ rfc.name
     end
   end
