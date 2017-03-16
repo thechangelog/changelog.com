@@ -31,7 +31,7 @@
 
     <%= if @current_user.github_handle do %>
       <li class="button_list-item">
-        <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on Github"><%= @current_user.github_handle %></a>
+        <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on GitHub"><%= @current_user.github_handle %></a>
       </li>
     <% end %>
     </ul>
