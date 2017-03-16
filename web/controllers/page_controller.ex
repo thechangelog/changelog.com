@@ -3,7 +3,7 @@ defmodule Changelog.PageController do
 
   alias Changelog.{Episode, Newsletter, Podcast}
 
-  plug RequireGuest, "before joining" when action in [:join, :community]
+  plug RequireGuest, "before joining" when action in [:join]
 
   # pages that need special treatment get their own matched function
   # all others simply render the template of the same name
