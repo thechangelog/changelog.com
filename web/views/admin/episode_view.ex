@@ -18,13 +18,13 @@ defmodule Changelog.Admin.EpisodeView do
     end
   end
 
-  def person_from_model_or_params(model, params) do
-    (model |> Repo.preload(:person)).person ||
-      Repo.get(Changelog.Person, (Map.get(model, "person_id") || params["person_id"]))
+  def person_from_data_or_params(data, params) do
+    Repo.preload(data, :person).person ||
+      Repo.get(Changelog.Person, (Map.get(data, "person_id") || params["person_id"]))
   end
-  def sponsor_from_model_or_params(model, params) do
-    (model |> Repo.preload(:sponsor)).sponsor ||
-      Repo.get(Changelog.Sponsor, (Map.get(model, "sponsor_id") || params["sponsor_id"]))
+  def sponsor_from_data_or_params(data, params) do
+    Repo.preload(data, :sponsor).sponsor ||
+      Repo.get(Changelog.Sponsor, (Map.get(data, "sponsor_id") || params["sponsor_id"]))
   end
 
   def featured_label(episode) do

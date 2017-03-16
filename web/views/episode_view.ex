@@ -11,14 +11,14 @@ defmodule Changelog.EpisodeView do
 
   def audio_local_path(episode) do
     AudioFile.url({episode.audio_file.file_name, episode}, :original)
-    |> String.replace(~r{^/}, "") # Arc 0.6 now prepends / to *all* URLs
+    |> String.replace_leading("/priv", "priv") # remove Arc's "/" when storage is priv
   end
 
   def audio_path(episode) do
     if episode.audio_file do
       episode
       |> audio_local_path
-      |> String.replace_leading("priv", "")
+      |> String.replace_leading("priv", "") # ensure relative reference is removed
     else
       "/california.mp3"
     end

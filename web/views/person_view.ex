@@ -7,8 +7,7 @@ defmodule Changelog.PersonView do
   def avatar_url(person, version) do
     if person.avatar do
       Changelog.Avatar.url({person.avatar, person}, version)
-      |> String.replace_leading("/priv", "/")
-      |> String.replace(~r{^//}, "/") # Arc 0.6 now prepends / to *all* URLs
+      |> String.replace_leading("/priv", "")
     else
       gravatar_url(person.email, version)
     end
@@ -73,8 +72,7 @@ defmodule Changelog.PersonView do
      %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
      %{value: person.website, text: "Website", url: person.website}]
     |> Enum.reject(fn(x) -> x.value == nil end)
-    |> Enum.map(fn(x) -> link(x.text, to: x.url) end)
-    |> Enum.map(fn({:safe, list}) -> Enum.join(list) end)
+    |> Enum.map(fn(x) -> ~s{<a href="#{x.url}">#{x.text}</a>} end)
     |> Enum.join(", ")
   end
 end

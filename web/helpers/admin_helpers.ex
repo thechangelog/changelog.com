@@ -3,9 +3,9 @@ defmodule Changelog.Helpers.AdminHelpers do
 
   alias Changelog.{Repo, TimeView}
 
-  def channel_from_model_or_params(model, params) do
-    (model |> Repo.preload(:channel)).channel ||
-      Repo.get(Changelog.Channel, (Map.get(model, "channel_id") || params["channel_id"]))
+  def channel_from_data_or_params(data, params) do
+    Repo.preload(data, :channel).channel ||
+      Repo.get(Changelog.Channel, (Map.get(data, "channel_id") || params["channel_id"]))
   end
 
   def semantic_calendar_field(form, field) do

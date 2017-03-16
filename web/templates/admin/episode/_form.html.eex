@@ -54,8 +54,8 @@
 
     <div class="ui middle aligned selection list js-hosts">
       <%= inputs_for f, :episode_hosts, fn i -> %>
-        <% host = person_from_model_or_params(i.model, i.params) %>
-        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
+        <% host = person_from_data_or_params(i.data, i.params) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
           <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(host) %>">
@@ -85,8 +85,8 @@
 
     <div class="ui middle aligned selection list js-guests">
       <%= inputs_for f, :episode_guests, fn i -> %>
-        <% guest = person_from_model_or_params(i.model, i.params) %>
-        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
+        <% guest = person_from_data_or_params(i.data, i.params) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
           <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(guest) %>">
@@ -116,8 +116,8 @@
 
     <div class="ui middle aligned selection list js-sponsors">
       <%= inputs_for f, :episode_sponsors, fn i -> %>
-        <% sponsor = sponsor_from_model_or_params(i.model, i.params) %>
-        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
+        <% sponsor = sponsor_from_data_or_params(i.data, i.params) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :sponsor_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
@@ -127,7 +127,7 @@
           </div>
 
           <h4 class="ui sponsor header">
-            #<span class="js-position-display"><%= i.model.position || i.params["position"] %></span> &mdash;
+            #<span class="js-position-display"><%= i.data.position || i.params["position"] %></span> &mdash;
             <%= sponsor.name %>
           </h4>
 
@@ -166,8 +166,8 @@
 
     <div class="ui horizontal selection list js-channels">
       <%= inputs_for f, :episode_channels, fn i -> %>
-        <% channel = channel_from_model_or_params(i.model, i.params) %>
-        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
+        <% channel = channel_from_data_or_params(i.data, i.params) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :channel_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 

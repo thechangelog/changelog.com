@@ -37,13 +37,13 @@
 
     <div class="ui middle aligned selection list js-hosts">
       <%= inputs_for f, :podcast_hosts, fn i -> %>
-        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(i.model.person) %>">
+          <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(i.data.person) %>">
 
           <div class="content">
-            <div class="header"><%= i.model.person.name %> (@<%= i.model.person.handle %>)</div>
+            <div class="header"><%= i.data.person.name %> (@<%= i.data.person.handle %>)</div>
           </div>
 
           <div class="right floated content">
@@ -67,8 +67,8 @@
 
     <div class="ui horizontal selection list js-channels">
       <%= inputs_for f, :podcast_channels, fn i -> %>
-        <% channel = channel_from_model_or_params(i.model, i.params) %>
-        <div class="item <%= if is_persisted(i.model), do: "persisted" %>">
+        <% channel = channel_from_data_or_params(i.data, i.params) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :channel_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
