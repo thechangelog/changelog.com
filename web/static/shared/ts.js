@@ -62,6 +62,10 @@ class Time {
   }
 
   month() {
+    return this.date.getMonth() + 1;
+  }
+
+  monthName() {
     return months[this.date.getMonth()];
   }
 
@@ -74,7 +78,7 @@ class Time {
   }
 
   dayAndDateStyle() {
-    return `${this.weekday()}, ${this.month()} ${this.day()}`;
+    return `${this.weekday()}, ${this.monthName()} ${this.day()}`;
   }
 
   liveStyle() {
