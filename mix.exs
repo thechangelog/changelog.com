@@ -50,7 +50,7 @@ defmodule Changelog.Mixfile do
      {:bamboo, "~> 0.8"},
      {:bamboo_smtp, "~> 1.3"},
      {:httpoison, "~> 0.11.0"},
-     {:con_cache, "~> 0.12"},
+     {:con_cache, "~> 0.11.1"},
      {:ex_aws, "~> 1.1"},
      {:exjsx, "~> 4.0"},
      {:nimble_csv, "~> 0.1.0"},
