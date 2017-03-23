@@ -48,8 +48,7 @@ defmodule Changelog.Web do
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1,get_flash: 2, view_module: 1]
       import Scrivener.HTML
       import Changelog.Router.Helpers
-      import Changelog.Helpers.SharedHelpers
-      import Changelog.Helpers.AdminHelpers
+      import Changelog.Helpers.{AdminHelpers, SharedHelpers}
       alias Changelog.TimeView
     end
   end
@@ -60,8 +59,7 @@ defmodule Changelog.Web do
       use Phoenix.HTML
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1,get_flash: 2, view_module: 1]
       import Changelog.Router.Helpers
-      import Changelog.Helpers.SharedHelpers
-      import Changelog.Helpers.PublicHelpers
+      import Changelog.Helpers.{PublicHelpers, SharedHelpers}
       alias Changelog.TimeView
     end
   end

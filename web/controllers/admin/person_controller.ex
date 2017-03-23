@@ -24,7 +24,7 @@ defmodule Changelog.Admin.PersonController do
 
     case Repo.insert(changeset) do
       {:ok, person} ->
-        person = Person.refresh_auth_token(person, 60*24)
+        person = Person.refresh_auth_token(person, 60 * 24)
         community = Newsletter.community()
 
         Email.welcome_email(person) |> Mailer.deliver_later

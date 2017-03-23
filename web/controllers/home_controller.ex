@@ -10,11 +10,11 @@ defmodule Changelog.HomeController do
     render(conn, :show)
   end
 
-  def edit(%{assigns: %{current_user: current_user}} = conn, _params) do
+  def edit(conn = %{assigns: %{current_user: current_user}}, _params) do
     render(conn, :edit, changeset: Person.changeset(current_user))
   end
 
-  def update(%{assigns: %{current_user: current_user}} = conn, %{"person" => person_params}) do
+  def update(conn = %{assigns: %{current_user: current_user}}, %{"person" => person_params}) do
     changeset = Person.changeset(current_user, person_params)
 
     case Repo.update(changeset) do
@@ -29,7 +29,7 @@ defmodule Changelog.HomeController do
     end
   end
 
-  def subscribe(%{assigns: %{current_user: current_user}} = conn, %{"id" => newsletter_id}) do
+  def subscribe(conn = %{assigns: %{current_user: current_user}}, %{"id" => newsletter_id}) do
     Subscriber.subscribe(newsletter_id, current_user)
 
     conn
@@ -37,7 +37,7 @@ defmodule Changelog.HomeController do
     |> render(:show)
   end
 
-  def unsubscribe(%{assigns: %{current_user: current_user}} = conn, %{"id" => newsletter_id}) do
+  def unsubscribe(conn = %{assigns: %{current_user: current_user}}, %{"id" => newsletter_id}) do
     Subscriber.unsubscribe(newsletter_id, current_user.email)
 
     conn
@@ -45,7 +45,7 @@ defmodule Changelog.HomeController do
     |> render(:show)
   end
 
-  def slack(%{assigns: %{current_user: current_user}} = conn, _params) do
+  def slack(conn = %{assigns: %{current_user: current_user}}, _params) do
     {updated_user, flash} = case Slack.Client.invite(current_user.email) do
       %{"ok" => true} ->
         {set_slack_id(current_user), "Invite sent! Check your email 🎯"}

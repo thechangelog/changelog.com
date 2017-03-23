@@ -42,7 +42,7 @@ defmodule Changelog.AuthController do
       |> redirect(to: page_path(conn, :home))
   end
 
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+  def callback(conn = %{assigns: %{ueberauth_auth: auth}}, _params) do
     if person = Person.get_by_ueberauth(auth) do
       sign_in_and_redirect(conn, person, home_path(conn, :show))
     else
@@ -52,7 +52,7 @@ defmodule Changelog.AuthController do
     end
   end
 
-  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
+  def callback(conn = %{assigns: %{ueberauth_failure: _fails}}, _params) do
     conn
     |> put_flash(:error, "Something went wrong. 😭")
     |> render("new.html", person: nil)
