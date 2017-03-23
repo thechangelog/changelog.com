@@ -2,7 +2,7 @@ export default class ChangelogAudio {
   constructor() {
     if (typeof Audio === "undefined") {
       this.hasAudio = false;
-      return
+      return;
     } else {
       this.hasAudio = true;
     }
