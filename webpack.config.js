@@ -20,7 +20,7 @@ var common = {
       },
       {
         test: [/\.sass$/, /\.css$/],
-        loader: ExtractTextPlugin.extract({fallbackLoader: "style-loader", loader: "css-loader!sass-loader"})
+        loader: ExtractTextPlugin.extract({use: "css-loader!sass-loader", fallback: "style-loader"})
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -44,11 +44,11 @@ module.exports = [
   merge(common, {
     entry: [
       "normalize.css",
-      "./web/static/app/app.sass",
-      "./web/static/app/app.js"
+      __dirname + "/web/static/app/app.sass",
+      __dirname + "/web/static/app/app.js"
     ],
     output: {
-      path: "./priv/static",
+      path: __dirname + "/priv/static",
       filename: "js/app.js"
     },
     resolve: {
@@ -58,18 +58,18 @@ module.exports = [
       ]
     },
     plugins: [
-      new CopyWebpackPlugin([{ from: "./web/static/assets"}]),
+      new CopyWebpackPlugin([{ from: __dirname + "/web/static/assets"}]),
       new ExtractTextPlugin("css/app.css")
     ]
   }),
   merge(common, {
     entry: [
       "normalize.css",
-      "./web/static/app/embed.sass",
-      "./web/static/app/embed.js"
+      __dirname + "/web/static/app/embed.sass",
+      __dirname + "/web/static/app/embed.js"
     ],
     output: {
-      path: "./priv/static",
+      path: __dirname + "/priv/static",
       filename: "js/embed.js"
     },
     resolve: {
@@ -84,15 +84,15 @@ module.exports = [
   }),
   merge(common, {
     entry: [
-      "./web/static/semantic/semantic.css",
-      "./web/static/semantic/semantic.js",
-      "./web/static/semantic/calendar.css",
-      "./web/static/semantic/calendar.js",
-      "./web/static/admin/admin.css",
-      "./web/static/admin/admin.js"
+      __dirname + "/web/static/semantic/semantic.css",
+      __dirname + "/web/static/semantic/semantic.js",
+      __dirname + "/web/static/semantic/calendar.css",
+      __dirname + "/web/static/semantic/calendar.js",
+      __dirname + "/web/static/admin/admin.css",
+      __dirname + "/web/static/admin/admin.js"
     ],
     output: {
-      path: "./priv/static",
+      path: __dirname + "/priv/static",
       filename: "js/admin.js"
     },
     resolve: {
@@ -107,9 +107,9 @@ module.exports = [
     ]
   }),
   merge(common, {
-    entry: "./web/static/email/email.css",
+    entry: __dirname + "/web/static/email/email.css",
     output: {
-      path: "./priv/static",
+      path: __dirname + "/priv/static",
       filename: "css/email.css"
     },
     plugins: [
