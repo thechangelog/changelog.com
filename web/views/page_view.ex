@@ -8,6 +8,7 @@ defmodule Changelog.PageView do
       "podcast" -> "changelog-2"
       "gotime"  -> "changelog-4"
       "rfc"     -> "changelog-3"
+      "jsparty" -> "changelog-3"
     end
   end
 end
