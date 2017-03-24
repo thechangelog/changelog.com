@@ -2,10 +2,11 @@
   <section class="community-section community-section--intro">
     <header class="community-section-header">
       <h1>Join Our Global Hacker Community</h1>
-      <p>Join more than 1,000 community members all over the world with a backstage pass to everything we do. This includes access to our Slack community, features only community members get access to, exclusive deals and discounts from our partners, and more.</p>
+      <p>More than 1,000 community members from all over the world get a backstage pass to everything we do. Access to our Slack community, exclusive community member only features, discounts and special offers from our partners, and more.</p>
 
     <%= if @current_user do %>
-      <%= link "You're In!", to: home_path(@conn, :show), title: "", class: "btn" %>
+      <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "btn" %>
+      <p class="btn_note_hacker">It's good to be $home</p>
     <% else %>
       <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "btn" %>
       <p class="btn_note">It’s free!</p>
@@ -16,13 +17,13 @@
       <li class="community-section-features-item">
         <a href="#community" title="Jump to section">
           <img src='<%= static_url(@conn, "/images/icon-large-chat.svg") %>' width="60" height="60" alt="Chat Icon">
-          <span>Access to our Slack community</span>
+          <span>Access to our private Slack community</span>
         </a>
       </li>
       <li class="community-section-features-item">
         <a href="#deals" title="Jump to section">
           <img src='<%= static_url(@conn, "/images/icon-large-percent.svg") %>' width="60" height="60" alt="Deals Icon">
-          <span>Deals &amp; Discounts from our partners</span>
+          <span>Discounts and special offers from our partners</span>
         </a>
       </li>
       <li class="community-section-features-item">
@@ -76,7 +77,7 @@
 
   <section id="deals" class="community-section">
     <header class="community-section-header">
-      <h2>Deals &amp; Discounts From Our Sponsors and Partners</h2>
+      <h2>Discounts and Special Offers From Our Partners</h2>
       <p>We work hard to develop relationships with the most trusted brands, products, and services &mdash; we give the rewards of those efforts to you, the hacker community.</p>
     </header>
     <div class="community-section-logos">
