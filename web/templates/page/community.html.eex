@@ -137,7 +137,8 @@
       <h2>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best podcasts and email newsletters. Our community and content is in every corner of the&nbsp;globe.</h2>
 
     <%= if @current_user do %>
-      <%= link "You're In!", to: home_path(@conn, :show), title: "", class: "btn" %>
+      <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "btn" %>
+      <p class="btn_note_hacker">It's good to be $home</p>
     <% else %>
       <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "btn" %>
       <p class="btn_note">It’s free!</p>
