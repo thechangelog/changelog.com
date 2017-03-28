@@ -29,7 +29,7 @@
         <div class="form_element_wrap <%= error_class(f, :handle) %>">
           <label>Username / Handle<span>*</span></label>
           <div class="form_element">
-            <%= text_input(f, :handle, placeholder: "gracehopper") %>
+            <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
             <%= error_message(f, :handle) %>
           </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="form_element_wrap <%= error_class(f, :github_handle) %>">
           <label>On GitHub</label>
           <div class="form_element">
-            <%= text_input(f, :github_handle, placeholder: "gracehopper") %>
+            <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
             <%= error_message(f, :github_handle) %>
           </div>
         </div>
@@ -46,7 +46,7 @@
         <div class="form_element_wrap <%= error_class(f, :twitter_handle) %>">
           <label>On Twitter</label>
           <div class="form_element">
-            <%= text_input(f, :twitter_handle, placeholder: "gracehopper") %>
+            <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
             <%= error_message(f, :twitter_handle) %>
           </div>
         </div>
