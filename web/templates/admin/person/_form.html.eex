@@ -7,7 +7,7 @@
 
   <div class="field required <%= error_class(f, :email) %>">
     <%= label f, :email, "Email" %>
-    <%= email_input f, :email, placeholder: "grace@hopper.com" %>
+    <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
     <%= error_message(f, :email) %>
   </div>
 

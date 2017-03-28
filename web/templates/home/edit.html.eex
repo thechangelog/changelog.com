@@ -18,7 +18,7 @@
       <div class="form_element_wrap <%= error_class(f, :email) %>">
         <label>Email<span>*</span></label>
         <div class="form_element">
-          <%= email_input(f, :email, placeholder: "grace@hopper.com") %>
+          <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
           <%= error_message(f, :email) %>
         </div>
       </div>
