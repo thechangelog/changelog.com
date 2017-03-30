@@ -14,7 +14,7 @@
       <td class="center aligned">
         <div class="ui small basic icon buttons">
           <%= link to: post_path(@conn, :preview, post.slug), class: "ui button" do %>
-            <i class="external icon"></i>
+            <i class="eye icon"></i>
           <% end %>
 
           <%= link to: admin_post_path(@conn, :edit, post), class: "ui button" do %>

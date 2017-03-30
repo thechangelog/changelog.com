@@ -31,7 +31,7 @@
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button" do %>
-            <i class="external icon"></i>
+            <i class="eye icon"></i>
             Public
           <% end %>
 
@@ -41,7 +41,7 @@
           <% end %>
 
           <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug), class: "ui button" do %>
-            <i class="eye icon"></i>
+            <i class="list icon"></i>
             Episodes
           <% end %>
 

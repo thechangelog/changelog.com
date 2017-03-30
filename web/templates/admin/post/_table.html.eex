@@ -23,7 +23,7 @@
         <td class="center aligned">
           <div class="ui small basic buttons">
             <%= link to: post_path(@conn, show_or_preview(post), post.slug), class: "ui button" do %>
-              <i class="external icon"></i>
+              <i class="eye icon"></i>
               Public
             <% end %>
 

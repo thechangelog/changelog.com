@@ -38,7 +38,7 @@
         <% end %>
 
           <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui button" do %>
-            <i class="external icon"></i>
+            <i class="eye icon"></i>
             Public
           <% end %>
 
