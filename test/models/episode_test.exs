@@ -103,4 +103,18 @@ defmodule Changelog.EpisodeTest do
       assert episode_titles == ["Phoenix"]
     end
   end
+
+  describe "is_publishable" do
+    test "is false when episode is missing required fields" do
+      refute Episode.is_publishable(build(:episode))
+    end
+
+    test "is false when episode is published" do
+      refute Episode.is_publishable(build(:published_episode))
+    end
+
+    test "is true when episode has all fields and isn't published" do
+      assert Episode.is_publishable(build(:publishable_episode))
+    end
+  end
 end

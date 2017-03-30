@@ -50,6 +50,8 @@ defmodule Changelog.Router do
     resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
+      post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
+      post "/episodes/:id/unpublish", EpisodeController, :unpublish, as: :episode
     end
     resources "/posts", PostController
     resources "/sponsors", SponsorController

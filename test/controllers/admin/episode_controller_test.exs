@@ -92,6 +92,28 @@ defmodule Changelog.Admin.EpisodeControllerTest do
     assert html_response(conn, 200) =~ ~r/error/
   end
 
+  @tag :as_admin
+  test "publishes an episode", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 1
+  end
+
+  @tag :as_admin
+  test "unpublishes an episode", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:published_episode, podcast: p)
+
+    conn = post(conn, admin_podcast_episode_path(conn, :unpublish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 0
+  end
+
   test "requires user auth on all actions", %{conn: conn} do
     Enum.each([
       get(conn, admin_podcast_episode_path(conn, :index, "1")),
@@ -101,6 +123,8 @@ defmodule Changelog.Admin.EpisodeControllerTest do
       get(conn, admin_podcast_episode_path(conn, :edit, "1", "123")),
       put(conn, admin_podcast_episode_path(conn, :update, "1", "123"), episode: @valid_attrs),
       delete(conn, admin_podcast_episode_path(conn, :delete, "1", "123")),
+      post(conn, admin_podcast_episode_path(conn, :publish, "1", "123")),
+      post(conn, admin_podcast_episode_path(conn, :unpublish, "1", "123"))
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

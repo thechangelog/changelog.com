@@ -116,7 +116,22 @@ defmodule Changelog.Episode do
   end
 
   def is_public(episode, as_of \\ Timex.now) do
-    episode.published && episode.published_at <= as_of
+    is_published(episode) && episode.published_at <= as_of
+  end
+
+  def is_published(episode) do
+    episode.published
+  end
+
+  def is_publishable(episode) do
+    validated =
+      change(episode, %{})
+      |> validate_required([:slug, :title, :published_at, :summary, :audio_file])
+      |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
+      |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
+      |> cast_assoc(:episode_hosts)
+
+    validated.valid? && !is_published(episode)
   end
 
   def admin_changeset(struct, params \\ %{}) do

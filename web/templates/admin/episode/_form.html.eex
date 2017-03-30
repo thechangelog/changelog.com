@@ -226,6 +226,13 @@
     <%= file_input(f, :audio_file) %>
   </div>
 
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :recorded_live, class: "hidden") %>
+      <label>Recorded Live</label>
+    </div>
+  </div>
+
   <div class="two fields">
     <div class="field <%= error_class(f, :published_at) %>">
       <%= label(f, :published_at) do %>
@@ -238,23 +245,27 @@
     <div class="field <%= error_class(f, :recorded_at) %>">
       <%= label(f, :recorded_at, "Record Time") %>
       <%= semantic_calendar_field(f, :recorded_at) %>
-      <%= error_message f, :recorded_at %>
+      <%= error_message(f, :recorded_at) %>
     </div>
   </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(f, :recorded_live, class: "hidden") %>
-      <label>Recorded Live</label>
+  <div class="ui section divider"></div>
+  <div class="ui equal width stackable grid">
+    <div class="column">
+      <button class="ui primary fluid basic button" type="submit">Save</button>
     </div>
-  </div>
-
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(f, :published, class: "hidden") %>
-      <label>Published</label>
+    <div class="column">
+      <button class="ui secondary fluid basic button" type="submit" name="close">Save and Close</button>
     </div>
+  <% end %>
+  <div class="column">
+  <%= cond do %>
+  <% Episode.is_published(@changeset.data) -> %>
+    <%= link "Unpublish", to: "#{@action}/unpublish", class: "ui red fluid basic button", method: :post, data: [confirm: "Are you sure?"] %>
+  <% Episode.is_publishable(@changeset.data) -> %>
+    <%= link "Publish", to: "#{@action}/publish", class: "ui green fluid basic button", method: :post %>
+  <% true -> %>
+    <button class="ui green fluid basic disabled button">Publish</button>
+  <% end %>
   </div>
-
-  <%= form_actions() %>
-<% end %>
+</div>

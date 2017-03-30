@@ -133,6 +133,44 @@ defmodule Changelog.Admin.EpisodeController do
     end
   end
 
+  def publish(conn, _params = %{"id" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Repo.get_by!(slug: slug)
+
+    changeset = Ecto.Changeset.change(episode, %{published: true})
+
+    case Repo.update(changeset) do
+      {:ok, episode} ->
+        conn
+        |> put_flash(:result, "success")
+        |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", episode: episode, changeset: changeset)
+    end
+  end
+
+  def unpublish(conn, _params = %{"id" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Repo.get_by!(slug: slug)
+
+    changeset = Ecto.Changeset.change(episode, %{published: false})
+
+    case Repo.update(changeset) do
+      {:ok, episode} ->
+        conn
+        |> put_flash(:result, "success")
+        |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:result, "failure")
+        |> render("edit.html", episode: episode, changeset: changeset)
+    end
+  end
+
   defp assign_podcast(conn, _) do
     podcast = Repo.get_by!(Podcast, slug: conn.params["podcast_id"])
     assign conn, :podcast, podcast
