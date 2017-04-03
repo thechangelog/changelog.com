@@ -28,3 +28,4 @@ npm-debug.log*
 /config/prod.secret.exs
 /priv/uploads
 /import/cookies.yml
+/cover

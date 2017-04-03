@@ -18,8 +18,6 @@ defmodule Changelog.Mixfile do
      ],
      test_coverage: [tool: ExCoveralls],
     ]
-     aliases: aliases(),
-     deps: deps()]
   end
 
   # Configuration for the OTP application.
@@ -61,7 +59,6 @@ defmodule Changelog.Mixfile do
      {:httpoison, "~> 0.11.0"},
      {:con_cache, "~> 0.11.1"},
      {:ex_aws, "~> 1.1"},
-     {:exjsx, "~> 4.0"},
      {:nimble_csv, "~> 0.1.0"},
      {:sweet_xml, "~> 0.5"},
      {:briefly, "~> 0.3"},
@@ -74,7 +71,7 @@ defmodule Changelog.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:ex_machina, "~> 1.0"},
      {:credo, "~> 0.4", only: [:dev, :test]},
-     {:excoveralls, "~> 0.5.7", only: :test},
+     {:excoveralls, "~> 0.6", only: :test},
      {:mock, "~> 0.2.0", only: :test}]
   end
 
