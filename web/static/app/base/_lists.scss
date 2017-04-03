@@ -4,33 +4,36 @@
   padding: 0;
 
   &-item {
-    background-position: left center;
-    background-repeat: no-repeat;
-    border-bottom: 2px solid $border-color;
-    padding: 1em 0 1em 60px;
-    position: relative;
-
-    &:after,
-    &:before {
-      border: 2px solid $green;
-      content: "";
+    a {
       display: block;
-      height: 14px;
-      left: 20px;
-      position: absolute;
-      width: 15px;
-      top: 18px;
-    }
-    &:after {
-      border: none;
-      top: 14px;
-      left: 22px;
-      height: 18px;
-      width: 18px;
+      background-position: left center;
+      background-repeat: no-repeat;
+      border-bottom: 2px solid $border-color;
+      padding: 1em 0 1em 60px;
+      position: relative;
+
+      &:after,
+      &:before {
+        border: 2px solid $green;
+        content: "";
+        display: block;
+        height: 14px;
+        left: 20px;
+        position: absolute;
+        width: 15px;
+        top: 18px;
+      }
+      &:after {
+        border: none;
+        top: 14px;
+        left: 22px;
+        height: 18px;
+        width: 18px;
+      }
     }
 
     // TODO: This needs tweaked to look more like the icon (open on the top right)
-    &--checked:after {
+    &--checked a:after {
       background-image: url(/images/form-checkmark.svg);
     }
 
