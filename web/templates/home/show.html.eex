@@ -12,7 +12,7 @@
     <% end %>
       <li class="profile-card-stats-item profile-card-stats-item--date">Joined <%= TimeView.pretty_date(@current_user.joined_at) %></li>
     <%= if @current_user.website do %>
-      <li class="profile-card-stats-item profile-card-stats-item--link"><%= domain_only(@current_user.website) %></li>
+      <li class="profile-card-stats-item profile-card-stats-item--link"><%= link domain_only(@current_user.website), to: @current_user.website %></li>
     <% end %>
     </ul>
 
