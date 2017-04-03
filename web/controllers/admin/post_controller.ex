@@ -6,21 +6,34 @@ defmodule Changelog.Admin.PostController do
   plug :scrub_params, "post" when action in [:create, :update]
 
   def index(conn, params) do
-    page = Post
-    |> order_by([p], desc: p.published_at)
-    |> preload(:author)
-    |> Repo.paginate(params)
+    page =
+      Post.published
+      |> Post.newest_first
+      |> preload(:author)
+      |> Repo.paginate(params)
 
-    render conn, :index, posts: page.entries, page: page
+    scheduled =
+      Post.scheduled
+      |> Post.newest_first
+      |> preload(:author)
+      |> Repo.all
+
+    drafts =
+      Post.unpublished
+      |> Post.newest_first(:inserted_at)
+      |> preload(:author)
+      |> Repo.all
+
+    render(conn, :index, posts: page.entries, scheduled: scheduled, drafts: drafts, page: page)
   end
 
   def new(conn, _params) do
-    changeset = Post.changeset(%Post{})
-    render conn, "new.html", changeset: changeset
+    changeset = Post.admin_changeset(%Post{})
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, params = %{"post" => post_params}) do
-    changeset = Post.changeset(%Post{}, post_params)
+    changeset = Post.admin_changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
       {:ok, post} ->
@@ -37,13 +50,13 @@ defmodule Changelog.Admin.PostController do
   def edit(conn, %{"id" => id}) do
     post = Repo.get!(Post, id) |> Post.preload_all
 
-    changeset = Post.changeset(post)
-    render conn, "edit.html", post: post, changeset: changeset
+    changeset = Post.admin_changeset(post)
+    render(conn, "edit.html", post: post, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "post" => post_params}) do
     post = Repo.get!(Post, id) |> Post.preload_all
-    changeset = Post.changeset(post, post_params)
+    changeset = Post.admin_changeset(post, post_params)
 
     case Repo.update(changeset) do
       {:ok, post} ->

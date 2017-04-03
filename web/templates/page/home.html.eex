@@ -24,12 +24,14 @@
           <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
           <%= if Enum.any?(light_logo_sponsorships) do %>
             <aside>
-              <h4>Sponsored by:</h4>
-              <%= for episode_sponsor <- light_logo_sponsorships do %>
-                <%= link to: episode_sponsor.link_url do %>
-                <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :light_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
+              <h4>Brought to you by</h4>
+              <div class="featured_podcast_logos">
+                <%= for episode_sponsor <- light_logo_sponsorships do %>
+                  <%= link to: episode_sponsor.link_url do %>
+                  <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :light_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
+                  <% end %>
                 <% end %>
-              <% end %>
+              </div>
             </aside>
           <% end %>
         </div>
@@ -49,3 +51,13 @@
   <% end %>
   <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: Podcast.master) %>
 </section>
+
+<%= render SharedView, "_news_cta_1.html", assigns %>
+
+<div class="wrapper wrapper--half-gray">
+  <%= render SharedView, "_community_cta_2.html", assigns %>
+</div>
+
+<div class="wrapper wrapper--gray">
+  <%= render SharedView, "_films_cta_1.html", assigns %>
+</div>

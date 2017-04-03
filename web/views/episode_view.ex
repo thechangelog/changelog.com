@@ -1,26 +1,31 @@
 defmodule Changelog.EpisodeView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 
-  alias Changelog.{AudioFile, Endpoint, PersonView, SharedView, PodcastView, SponsorView, TimeView}
+  alias Changelog.{AudioFile, Endpoint, LayoutView, PersonView, SharedView, PodcastView, SponsorView, TimeView}
+
+  import Changelog.Meta.{Title, Description}
 
   def audio_filename(episode) do
     AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
   end
 
-  def audio_url(episode) do
-    url = if episode.audio_file do
+  def audio_local_path(episode) do
+    AudioFile.url({episode.audio_file.file_name, episode}, :original)
+    |> String.replace_leading("/priv", "priv") # remove Arc's "/" when storage is priv
+  end
+
+  def audio_path(episode) do
+    if episode.audio_file do
       episode
       |> audio_local_path
-      |> String.replace_leading("priv", "")
+      |> String.replace_leading("priv", "") # ensure relative reference is removed
     else
       "/california.mp3"
     end
-
-    static_url(Endpoint, url)
   end
 
-  def audio_local_path(episode) do
-    AudioFile.url({episode.audio_file.file_name, episode}, :original)
+  def audio_url(episode) do
+    static_url(Endpoint, audio_path(episode))
   end
 
   def classy_highlight(episode) do
@@ -28,6 +33,18 @@ defmodule Changelog.EpisodeView do
     |> no_widowed_words
     |> with_smart_quotes
     |> raw
+  end
+
+  def embed_code(episode), do: embed_code(episode, episode.podcast)
+  def embed_code(episode, podcast) do
+    ~s{<audio data-theme="night" data-src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
+    ~s{<p><a href="#{episode_url(Endpoint, :show, podcast.slug, episode.slug)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{page_url(Endpoint, :home)}">Changelog.com</a></p>} <>
+    ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
+  end
+
+  def embed_iframe(episode, theme), do: embed_iframe(episode, episode.podcast, theme)
+  def embed_iframe(episode, podcast, theme) do
+    ~s{<iframe src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}?theme=#{theme}" width="100%" height=220 scrolling=no frameborder=no></iframe>}
   end
 
   def guid(episode) do
@@ -103,5 +120,16 @@ defmodule Changelog.EpisodeView do
     end
 
     info
+  end
+
+  def render("share.json", %{podcast: podcast, episode: episode}) do
+    url = episode_url(Endpoint, :show, podcast.slug, episode.slug)
+
+    %{url: url,
+      twitter: tweet_url(episode.title, url),
+      hackernews: hackernews_url(episode.title, url),
+      reddit: reddit_url(episode.title, url),
+      facebook: facebook_url(url),
+      embed: embed_code(episode)}
   end
 end

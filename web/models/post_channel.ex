@@ -8,15 +8,13 @@ defmodule Changelog.PostChannel do
     belongs_to :channel, Changelog.Channel
     belongs_to :post, Changelog.Post
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(position)
-  @optional_fields ~w(post_id channel_id delete)
-
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(position post_id channel_id delete))
+    |> validate_required([:position])
     |> mark_for_deletion()
   end
 

@@ -1,7 +1,7 @@
 .navigation-bar
     display: flex
     position: relative
-    justify-content: space-between
+    justify-content: flex-start
     align-content: center
     align-items: center
     padding: $padding-extra-small
@@ -9,12 +9,15 @@
     max-height: 6.42rem
     z-index: 1000
 
-    &_logo
-        // Push menu button to far right on mobile
-        flex: 1 0 auto
+    .page-live &--primary
+        background: none
+        position: absolute
+        top: 0
+        right: 0
+        left: 0
 
-        @media (min-width: $tablet)
-            flex: 0 0 auto
+    &_logo
+        flex: 0 0 auto
 
         & > h1
             display: flex
@@ -23,26 +26,75 @@
 
             & > img
                 max-width: 100%
-                height: 3.85rem
-                width: 12.85rem
+                height: auto
+                width: 11rem
+
+                @media (min-width: $smartphone)
+                    width: 12.85rem
 
     &_links
         display: none
 
-        @media (min-width: $tablet + 100)
+        @media (min-width: $tablet + 190)
             display: flex
-            margin: 0 auto 0 3rem
+
+        margin: 0 0 0 2rem
+
+        .page-live &
+            display: none
+
+    &_search
+        $accent: #5D6B7C
+        display: none
+        margin: 0 2rem
+
+        @media (min-width: $smartphone + 140)
+            display: flex
+            width: 100%
+
+        .page-live &
+            display: none
+
+        input
+            @extend %display-font
+            background: #000 url(/images/icon-search.svg) 10px center no-repeat
+            border: 2px solid rgba($accent, 0.4)
+            border-radius: 100px
+            color: $white
+            padding: 12px 20px 10px 40px
+            text-transform: none
+            min-width: 100px
+            max-width: 260px
+            width: 100%
+
+            &:focus,
+            &:active
+                border-color: rgba($accent, 0.6)
+
+            +placeholder
+                color: $accent
+                opacity: 1
+                text-transform: uppercase
+
+    &_right
+        align-items: center
+        display: flex
+        flex: 0 0 auto
+        margin-left: auto
+
+    &_user
+        display: inline-block
+        margin-right: 5px
+        padding: 0
+
+        img
+            border-radius: 70px
 
     &_menu-button
-        min-width: 3rem
-        flex: 0 0 auto
 
         & > img
             width: 1.9rem
             height: 1.25rem
-
-        @media (min-width: $tablet)
-            margin-left: auto
 
     &_tray
         +animate-zoom-out("body.nav-open &")

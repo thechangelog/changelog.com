@@ -44,6 +44,10 @@
         &:focus
             border-color: $green
 
+    textarea
+        height: 6em
+        resize: vertical
+
     input[type=submit],
     button.submit
         @extend %primary-button
@@ -65,6 +69,9 @@
         margin-bottom: 1.5rem
         position: relative
         width: 100%
+
+        .form--full_width &
+          padding-right: 0 !important
 
         @media (min-width: $smartphone)
             max-width: 640px

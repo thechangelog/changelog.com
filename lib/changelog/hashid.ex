@@ -1,9 +1,9 @@
 defmodule Changelog.Hashid do
-  def encode(ids) when is_list(ids), do: Hashids.encode(hashid, ids)
-  def encode(id), do: Hashids.encode(hashid, [id])
+  def encode(ids) when is_list(ids), do: Hashids.encode(hashid(), ids)
+  def encode(id), do: Hashids.encode(hashid(), [id])
 
   def decode(encoded) do
-    decoded = Hashids.decode! hashid, encoded
+    decoded = Hashids.decode!(hashid(), encoded)
 
     if length(decoded) > 1 do
       decoded

@@ -1,8 +1,7 @@
 defmodule Changelog.Admin.PostView do
-  use Changelog.Web, :view
+  use Changelog.Web, :admin_view
 
-  import Changelog.Admin.SharedView, only: :functions
-  import Scrivener.HTML
+  alias Changelog.Post
 
   def status_label(post) do
     if post.published do
@@ -13,7 +12,7 @@ defmodule Changelog.Admin.PostView do
   end
 
   def show_or_preview(post) do
-    if post.published do
+    if Post.is_public(post) do
       :show
     else
       :preview

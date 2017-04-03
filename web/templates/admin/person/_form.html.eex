@@ -7,26 +7,26 @@
 
   <div class="field required <%= error_class(f, :email) %>">
     <%= label f, :email, "Email" %>
-    <%= email_input f, :email, placeholder: "grace@hopper.com" %>
+    <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
     <%= error_message(f, :email) %>
   </div>
 
   <div class="three fields">
     <div class="field required <%= error_class(f, :handle) %>">
       <%= label f, :handle, "Handle" %>
-      <%= text_input f, :handle, placeholder: "gracehopper" %>
+      <%= text_input f, :handle, placeholder: "gracehopper", autocapitalize: "none" %>
       <%= error_message(f, :handle) %>
     </div>
 
     <div class="field <%= error_class(f, :github_handle) %>">
       <%= label f, :github_handle, "On GitHub" %>
-      <%= text_input f, :github_handle, placeholder: "gracehopper" %>
+      <%= text_input f, :github_handle, placeholder: "gracehopper", autocapitalize: "none" %>
       <%= error_message(f, :github_handle) %>
     </div>
 
     <div class="field <%= error_class(f, :twitter_handle) %>">
       <%= label f, :twitter_handle, "On Twitter" %>
-      <%= text_input f, :twitter_handle, placeholder: "gracehopper" %>
+      <%= text_input f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none" %>
       <%= error_message(f, :twitter_handle) %>
     </div>
   </div>
@@ -54,10 +54,18 @@
     <%= file_input f, :avatar %>
   </div>
 
-  <div class="field <%= error_class(f, :website) %>">
-    <%= label f, :website %>
-    <%= text_input f, :website, placeholder: "https://en.wikipedia.org/wiki/Grace_Hopper" %>
-    <%= error_message(f, :website) %>
+  <div class="two fields">
+    <div class="field <%= error_class(f, :website) %>">
+      <%= label f, :website %>
+      <%= text_input f, :website, placeholder: "https://en.wikipedia.org/wiki/Grace_Hopper", autocapitalize: "none" %>
+      <%= error_message(f, :website) %>
+    </div>
+
+    <div class="field <%= error_class(f, :location) %>">
+      <%= label f, :location %>
+      <%= text_input f, :location, placeholder: "New York, New York" %>
+      <%= error_message(f, :location) %>
+    </div>
   </div>
 
   <div class="field <%= error_class(f, :bio) %>">
@@ -73,5 +81,5 @@
     </div>
   </div>
 
-  <%= form_actions %>
+  <%= form_actions() %>
 <% end %>

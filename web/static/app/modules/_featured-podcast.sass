@@ -57,6 +57,10 @@
             background: $founderstalk-transparent
         &--backstage
             background: $backstage-transparent
+        &--spotlight
+            background: $spotlight-transparent
+        &--jsparty
+            background: $jsparty-transparent
 
         &_wrap
             position: absolute !important
@@ -74,7 +78,7 @@
                     padding: $padding-extra-large 0
 
         &_content
-            max-width: 800px
+            max-width: 900px
             margin: 0 auto
             position: relative
             padding: 0 $padding-large $padding-large
@@ -182,10 +186,22 @@
                     @extend %display-font
                     color: $half-white
                     font-size: 0.85em
-                    margin-top: 0
+                    margin: 0
 
-                & > a
-                    margin: 0 1rem
+        &_logos
+            display: flex
+            flex: 0 1 auto
 
-                & img
-                    height: 1.5rem
+            & > a
+                display: block
+                margin-left: 2rem
+                &:first-of-type
+                    margin-left: 0px
+
+                @media (min-width: $smartphone)
+                    margin-left: 3rem
+
+            & img
+                width: 3.75rem
+                @media (min-width: $smartphone)
+                    width: 5.75rem

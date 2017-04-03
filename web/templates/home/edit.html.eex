@@ -1,0 +1,83 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Edit Profile</h2>
+    </header>
+    <div class="content_body">
+    <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
+      <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
+
+      <div class="form_element_wrap <%= error_class(f, :name) %>">
+        <label>Name<span>*</span></label>
+        <div class="form_element">
+          <%= text_input(f, :name, placeholder: "Grace Hopper") %>
+          <%= error_message(f, :name) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :email) %>">
+        <label>Email<span>*</span></label>
+        <div class="form_element">
+          <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
+          <%= error_message(f, :email) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :handle) %>">
+        <label>Username / Handle<span>*</span></label>
+        <div class="form_element">
+          <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <%= error_message(f, :handle) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :location) %>">
+        <label>From</label>
+        <div class="form_element">
+          <%= text_input(f, :location, placeholder: "New York, New York") %>
+          <%= error_message(f, :location) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :bio) %>">
+        <label>Bio</label>
+        <div class="form_element">
+          <%= textarea(f, :bio) %>
+          <%= error_message(f, :bio) %>
+          <p class="form_element_note">Try some Markdown. It *may* work.</p>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :website) %>">
+        <label>My Website</label>
+        <div class="form_element">
+          <%= text_input(f, :website, placeholder: "https://gracehopper.com", autocapitalize: "none") %>
+          <%= error_message(f, :website) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :github_handle) %>">
+        <label>On GitHub</label>
+        <div class="form_element">
+          <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <%= error_message(f, :github_handle) %>
+        </div>
+      </div>
+
+      <div class="form_element_wrap <%= error_class(f, :twitter_handle) %>">
+        <label>On Twitter</label>
+        <div class="form_element">
+          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <%= error_message(f, :twitter_handle) %>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="form_submit">
+        <input type="submit" value="Update Profile">
+        <div class="form_submit_responses"></div>
+      </div>
+    <% end %>
+  </div>
+</article>

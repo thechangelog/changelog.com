@@ -1,0 +1,55 @@
+.search
+    padding: $padding-large 1rem
+
+    @media (min-width: $desktop)
+        padding: $padding-extra-large 0
+
+    &-form
+        $accent: $green
+        margin: 0 0 1em
+
+        input
+            @extend %display-font
+            background: $white
+            border: 2px solid rgba($accent, 0.8)
+            border-radius: 100px
+            font-size: 1.5em
+            // color: $white
+            padding: 1em 2em 0.85em
+            text-transform: none
+            width: 100%
+
+            &:focus,
+            &:active
+                border-color: $accent
+
+            +placeholder
+                color: $dark-grey
+                opacity: 1
+                text-transform: uppercase
+
+    &_results
+        margin-top: 2rem
+
+        & + .search_results
+            border-top: 4px solid $border-color
+            padding-top: 2rem
+
+        &_heading
+            @extend %display-font
+            padding-top: 1em
+
+    &_header
+        margin: 3em 0
+        text-align: center
+
+    &_links
+        @extend %display-font
+        font-size: 1.25em
+        list-style-type: none
+        padding: 0
+
+        li
+            display: inline-block
+            margin: 0 1em
+            padding: 0

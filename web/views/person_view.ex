@@ -1,11 +1,13 @@
 defmodule Changelog.PersonView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
+
+  alias Changelog.SharedView
 
   def avatar_url(person), do: avatar_url(person, :small)
   def avatar_url(person, version) do
     if person.avatar do
       Changelog.Avatar.url({person.avatar, person}, version)
-      |> String.replace_leading("priv", "")
+      |> String.replace_leading("/priv", "")
     else
       gravatar_url(person.email, version)
     end
@@ -28,32 +30,13 @@ defmodule Changelog.PersonView do
     "https://secure.gravatar.com/avatar/#{hash}.jpg?s=#{size}&d=mm"
   end
 
-  def list_of_links(person) do
-    [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
-     %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
-     %{value: person.website, text: "Website", url: person.website}]
-    |> Enum.reject(fn(x) -> x.value == nil end)
-    |> Enum.map(fn(x) -> link(x.text, to: x.url) end)
-    |> Enum.map(fn({:safe, list}) -> Enum.join(list) end)
-    |> Enum.join(", ")
-  end
-
-  def comma_separated_names(people) when not is_list(people), do: comma_separated_names([])
-  def comma_separated_names(people) do
-    # I bet this can be more Elixirey by using head/tail and recursion, but I'm
-    # not quite there yet, because the tail case has 2 elements, which I can't
-    # quite figure out – JMS
-    case length(people) do
-      0 -> ""
-      1 -> List.first(people).name
-      2 -> "#{List.first(people).name} and #{List.last(people).name}"
-      _ ->
-        last = List.last(people)
-        rest = List.delete_at(people, -1)
-        commas = Enum.map(rest, &(&1.name)) |> Enum.join(", ")
-        "#{commas}, and #{last.name}"
-    end
-  end
+  @spec comma_separated_names([binary()]) :: binary()
+  def comma_separated_names(people)
+  def comma_separated_names([first]),                do: first.name
+  def comma_separated_names([first, second]),        do: "#{first.name} and #{second.name}"
+  def comma_separated_names([first, second, third]), do: "#{first.name}, #{second.name}, and #{third.name}"
+  def comma_separated_names([first | rest]),         do: "#{first.name}, #{comma_separated_names(rest)}"
+  def comma_separated_names(_unhandled),             do: ""
 
   def external_url(person) do
     cond do
@@ -65,5 +48,31 @@ defmodule Changelog.PersonView do
         github_url(person.github_handle)
       true -> "#"
     end
+  end
+
+  def first_name(person) do
+    person.name
+    |> String.split(" ")
+    |> List.first
+  end
+
+  def is_profile_complete(person) do
+    !!(person.bio && person.website && person.location)
+  end
+
+  def is_subscribed(person, newsletter) do
+    case Craisin.Subscriber.details(newsletter.list_id, person.email) do
+      %{"State" => "Active"} -> true
+      _else -> false
+    end
+  end
+
+  def list_of_links(person) do
+    [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
+     %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
+     %{value: person.website, text: "Website", url: person.website}]
+    |> Enum.reject(fn(x) -> x.value == nil end)
+    |> Enum.map(fn(x) -> ~s{<a href="#{x.url}">#{x.text}</a>} end)
+    |> Enum.join(", ")
   end
 end

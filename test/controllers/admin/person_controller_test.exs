@@ -1,5 +1,9 @@
 defmodule Changelog.Admin.PersonControllerTest do
   use Changelog.ConnCase
+  use Bamboo.Test
+
+  import Mock
+
   alias Changelog.Person
 
   @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
@@ -25,8 +29,12 @@ defmodule Changelog.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person and smart redirects", %{conn: conn} do
-    conn = post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
+    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+      post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
+    end
 
+    person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
+    assert_delivered_email Changelog.Email.welcome_email(person)
     assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 1
   end
@@ -79,14 +87,14 @@ defmodule Changelog.Admin.PersonControllerTest do
     assert count(Person) == 0
   end
 
-  test "requires user auth on all actions" do
+  test "requires user auth on all actions", %{conn: conn} do
     Enum.each([
-      get(build_conn, admin_person_path(build_conn, :index)),
-      get(build_conn, admin_person_path(build_conn, :new)),
-      post(build_conn, admin_person_path(build_conn, :create), person: @valid_attrs),
-      get(build_conn, admin_person_path(build_conn, :edit, "123")),
-      put(build_conn, admin_person_path(build_conn, :update, "123"), person: @valid_attrs),
-      delete(build_conn, admin_person_path(build_conn, :delete, "123")),
+      get(conn, admin_person_path(conn, :index)),
+      get(conn, admin_person_path(conn, :new)),
+      post(conn, admin_person_path(conn, :create), person: @valid_attrs),
+      get(conn, admin_person_path(conn, :edit, "123")),
+      put(conn, admin_person_path(conn, :update, "123"), person: @valid_attrs),
+      delete(conn, admin_person_path(conn, :delete, "123")),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

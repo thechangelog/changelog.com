@@ -3,16 +3,15 @@ defmodule Changelog.EpisodeHostTest do
 
   alias Changelog.EpisodeHost
 
-  @valid_attrs %{position: 42}
-  @invalid_attrs %{}
+  describe "changeset" do
+    test "valid attributes" do
+      changeset = EpisodeHost.changeset(%EpisodeHost{}, %{position: 42})
+      assert changeset.valid?
+    end
 
-  test "changeset with valid attributes" do
-    changeset = EpisodeHost.changeset(%EpisodeHost{}, @valid_attrs)
-    assert changeset.valid?
-  end
-
-  test "changeset with invalid attributes" do
-    changeset = EpisodeHost.changeset(%EpisodeHost{}, @invalid_attrs)
-    refute changeset.valid?
+    test "invalid attributes" do
+      changeset = EpisodeHost.changeset(%EpisodeHost{}, %{})
+      refute changeset.valid?
+    end
   end
 end

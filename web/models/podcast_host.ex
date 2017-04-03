@@ -8,15 +8,13 @@ defmodule Changelog.PodcastHost do
     belongs_to :podcast, Changelog.Podcast
     belongs_to :person, Changelog.Person
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(position)
-  @optional_fields ~w(podcast_id person_id delete)
-
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(position podcast_id person_id delete))
+    |> validate_required([:position])
     |> mark_for_deletion()
   end
 

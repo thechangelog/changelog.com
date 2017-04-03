@@ -10,7 +10,7 @@ defmodule Changelog.Repo.Migrations.CreateSponsor do
       add :twitter_handle, :string
       add :website, :string
 
-      timestamps
+      timestamps()
     end
 
     create unique_index(:sponsors, [:name])

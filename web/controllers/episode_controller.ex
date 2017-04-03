@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeController do
 
   alias Changelog.{Podcast, Episode}
 
-  plug Changelog.Plug.RequireAdmin, "before preview" when action in [:preview]
+  plug RequireAdmin, "before preview" when action in [:preview]
 
   def show(conn, %{"podcast" => podcast, "slug" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: podcast)
@@ -12,11 +12,24 @@ defmodule Changelog.EpisodeController do
       assoc(podcast, :episodes)
       |> Episode.published
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_podcast
-      |> Episode.preload_guests
-      |> Episode.preload_sponsors
+      |> Episode.preload_all
 
-    render conn, :show, podcast: podcast, episode: episode
+    render(conn, :show, podcast: podcast, episode: episode)
+  end
+
+  def embed(conn, params = %{"podcast" => podcast, "slug" => slug}) do
+    podcast = Repo.get_by!(Podcast, slug: podcast)
+
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Repo.get_by!(slug: slug)
+      |> Episode.preload_all
+
+    conn
+    |> put_layout(false)
+    |> delete_resp_header("x-frame-options")
+    |> render(:embed, podcast: podcast, episode: episode, theme: params["theme"] || "night")
   end
 
   def preview(conn, %{"podcast" => podcast, "slug" => slug}) do
@@ -25,11 +38,9 @@ defmodule Changelog.EpisodeController do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
-      |> Repo.preload(:podcast)
-      |> Episode.preload_guests
-      |> Episode.preload_sponsors
+      |> Episode.preload_all
 
-    render conn, :show, podcast: podcast, episode: episode
+    render(conn, :show, podcast: podcast, episode: episode)
   end
 
   def play(conn, %{"podcast" => podcast, "slug" => slug}) do
@@ -59,7 +70,19 @@ defmodule Changelog.EpisodeController do
       |> Episode.limit(1)
       |> Repo.one
 
-    render conn, "play.json", podcast: podcast, episode: episode, prev: preloaded(prev), next: preloaded(next)
+    render(conn, "play.json", podcast: podcast, episode: episode, prev: preloaded(prev), next: preloaded(next))
+  end
+
+  def share(conn, %{"podcast" => podcast, "slug" => slug}) do
+    podcast = Repo.get_by!(Podcast, slug: podcast)
+
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published
+      |> Repo.get_by!(slug: slug)
+      |> Episode.preload_podcast
+
+    render(conn, "share.json", podcast: podcast, episode: episode)
   end
 
   defp preloaded(episode) when is_nil(episode), do: nil

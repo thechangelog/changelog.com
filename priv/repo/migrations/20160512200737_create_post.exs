@@ -10,7 +10,7 @@ defmodule Changelog.Repo.Migrations.CreatePost do
       add :body, :text
       add :author_id, references(:people, on_delete: :nothing)
 
-      timestamps
+      timestamps()
     end
 
     create index(:posts, [:author_id])

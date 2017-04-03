@@ -15,7 +15,7 @@ $range-label-width: 60px !default
     width: $range-handle-size
     height: $range-handle-size
     border: none
-    border-radius: 50%
+    border-radius: $range-handle-size
     background: $range-handle-color
     cursor: pointer
     transition: background .15s ease-in-out
@@ -37,6 +37,12 @@ $range-label-width: 60px !default
     border-radius: 1px
     border: none
     margin: 8px 0
+
+    body.embed--day &
+        background: $light-grey
+
+    .episode-player &
+        height: 6px
 
 .range-slider
     margin: 0
@@ -89,6 +95,10 @@ $range-label-width: 60px !default
               width: 0%
               margin-top: -1px
 
+              .episode-player &
+                 height: 6px
+                 margin-top: -3px
+
     &_above
         display: none
         color: $green
@@ -101,6 +111,9 @@ $range-label-width: 60px !default
         display: flex
         justify-content: space-between
         align-items: center
+
+        .episode-player &
+            padding: 0
 
         & > span
             display: none
@@ -115,6 +128,13 @@ $range-label-width: 60px !default
             text-align: right
             color: $half-white
             font-size: 0.75em
+
+            body.embed--day &
+                color: $half-black
+
+            .episode-player &
+                margin-left: 0
+                text-align: left
 
             & > b
                 color: $green

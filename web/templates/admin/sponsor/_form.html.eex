@@ -75,5 +75,5 @@
     <%= error_message(f, :description) %>
   </div>
 
-  <%= form_actions %>
+  <%= form_actions() %>
 <% end %>

@@ -1,0 +1,94 @@
+.checklist {
+  font-size: 16px;
+  list-style-type: none;
+  padding: 0;
+
+  &-item {
+    a {
+      display: block;
+      background-position: left center;
+      background-repeat: no-repeat;
+      border-bottom: 2px solid $border-color;
+      padding: 1em 0 1em 60px;
+      position: relative;
+
+      &:after,
+      &:before {
+        border: 2px solid $green;
+        content: "";
+        display: block;
+        height: 14px;
+        left: 20px;
+        position: absolute;
+        width: 15px;
+        top: 18px;
+      }
+      &:after {
+        border: none;
+        top: 14px;
+        left: 22px;
+        height: 18px;
+        width: 18px;
+      }
+    }
+
+    // TODO: This needs tweaked to look more like the icon (open on the top right)
+    &--checked a:after {
+      background-image: url(/images/form-checkmark.svg);
+    }
+
+    &:last-child { border-bottom: none; }
+  }
+}
+
+// Button List
+.button_list {
+  font-size: 16px;
+  padding: 0;
+
+  &--center {
+    text-align: center;
+  }
+
+  &-item {
+    display: inline-block;
+    margin: 5px !important;
+    a {
+      background-color: #000;
+      background-repeat: no-repeat;
+      background-position: 1em center;
+      border-radius: 2em;
+      color: $green;
+      display: block;
+      font-size: 1em;
+      padding: 0.6em 1em 0.5em 3em;
+      transition: opacity 0.2s ease-in-out;
+
+      &:hover { opacity: 0.8; }
+
+      &.twitter    { background-image: url("/images/icon-twitter.svg"); }
+      &.hackernews { background-image: url("/images/icon-hackernews.svg"); }
+      &.reddit     { background-image: url("/images/icon-reddit.svg"); }
+      &.facebook   { background-image: url("/images/icon-facebook.svg"); }
+      &.github     { background-image: url("/images/icon-github.svg"); }
+      &.email      { background-image: url("/images/icon-email.svg"); }
+
+      .button_list--green & {
+        background-color: $green;
+
+        &,
+        &:hover {
+          color: $black;
+          text-decoration: none;
+        }
+
+        &.twitter    { background-image: url("/images/icon-twitter-black.svg"); }
+        &.hackernews { background-image: url("/images/icon-hackernews-black.svg"); }
+        &.reddit     { background-image: url("/images/icon-reddit-black.svg"); }
+        &.facebook   { background-image: url("/images/icon-facebook-black.svg"); }
+        &.github     { background-image: url("/images/icon-github-black.svg"); }
+        &.email      { background-image: url("/images/icon-email-black.svg"); }
+      }
+    }
+  }
+}

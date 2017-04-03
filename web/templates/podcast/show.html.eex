@@ -10,7 +10,7 @@
 
       <div class="podcast-header_hosts">
       <%= if !is_master(@podcast) do %>
-        <p class="podcast-header_hosts_heading"><i><%= @podcast.schedule_note %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i></p>
+        <p class="podcast-header_hosts_heading"><i><%= @podcast.schedule_note |> md_to_html |> sans_p_tags |> raw %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i></p>
         <div class="hosts-list">
         <%= for person <- @podcast.hosts do %>
           <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>

@@ -3,8 +3,14 @@
     <tr>
       <th>Slug</th>
       <th>Name</th>
-      <th>Record/Publish Time</th>
+    <%= if @status == "draft" do %>
+      <th>Record Time</th>
+    <% else %>
+      <th>Duration</th>
+      <th>Publish Date</th>
+    <% end %>
       <th>Downloads</th>
+      <th>Reach</th>
       <th></th>
     </tr>
   </thead>
@@ -13,17 +19,26 @@
   <%= for episode <- @episodes do %>
     <tr>
       <td><%= episode.slug %></td>
-      <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= status_label(episode) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
+      <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
       <%= if episode.published do %>
-      <td><%= ts(episode.published_at) %></td>
+      <td><%= TimeView.duration(episode.duration) %></td>
+      <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <% else %>
       <td><%= ts(episode.recorded_at) %></td>
       <% end %>
-      <td>TODO</td>
+      <td><%= download_count(episode) %></td>
+      <td><%= reach_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
+        <%= if episode.published do %>
+          <%= link to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button" do %>
+            <i class="line chart icon"></i>
+            Stats
+          <% end %>
+        <% end %>
+
           <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui button" do %>
-            <i class="external icon"></i>
+            <i class="eye icon"></i>
             Public
           <% end %>
 

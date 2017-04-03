@@ -8,7 +8,7 @@ defmodule Changelog.Repo.Migrations.CreateEpisodeLink do
       add :position, :integer
       add :episode_id, references(:episodes, on_delete: :nothing)
 
-      timestamps
+      timestamps()
     end
 
     create index(:episode_links, [:episode_id])

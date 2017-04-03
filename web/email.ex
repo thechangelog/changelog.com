@@ -2,7 +2,7 @@ defmodule Changelog.Email do
   use Bamboo.Phoenix, view: Changelog.EmailView
 
   def sign_in_email(person) do
-    base_email
+    base_email()
     |> put_header("X-CMail-GroupName", "Sign In")
     |> to(person)
     |> subject("Your Sign In Link")
@@ -10,8 +10,17 @@ defmodule Changelog.Email do
     |> render(:sign_in)
   end
 
+  def welcome_email(person) do
+    base_email()
+    |> put_header("X-CMail-GroupName", "Welcome")
+    |> to(person)
+    |> subject("Welcome! Confirm Your Address")
+    |> assign(:person, person)
+    |> render(:welcome)
+  end
+
   defp base_email do
-    new_email
+    new_email()
     |> from("robot@changelog.com")
     |> put_header("Reply-To", "editors@changelog.com")
     |> put_html_layout({Changelog.LayoutView, "email.html"})

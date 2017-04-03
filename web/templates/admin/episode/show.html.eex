@@ -1,0 +1,195 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link @episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, @episode.podcast.slug) %>
+    &raquo;
+    <%= link @episode.slug, to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug) %>
+    <%= if @episode.published do %>
+      <%= link "(View)",
+        to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
+        class: "view",
+        rel: "external" %>
+    <% else %>
+      <%= link "(Preview)",
+        to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
+        class: "view",
+        rel: "external" %>
+    <% end %>
+    <div class="sub header"><%= @episode.title %></div>
+  </h1>
+</div>
+
+<div class="ui basic segment">
+  <div class="ui equal width grid">
+    <div class="column">
+      <h2 class="ui dividing header">Embed Via JS</h2>
+      <div class="ui fluid action input">
+        <input type="text" value="<%= embed_code(@episode) %>">
+        <button class="ui basic icon clipboard button"><i class="clipboard icon"></i></button>
+      </div>
+    </div>
+
+    <div class="column">
+      <h2 class="ui dividing header">Embed Via Frame</h2>
+      <div class="ui fluid action input">
+        <input type="text" value="<%= embed_iframe(@episode, "night") %>">
+        <button class="ui basic icon clipboard button"><i class="clipboard icon"></i></button>
+      </div>
+    </div>
+  </div>
+
+<%= if Enum.any?(@stats) do %>
+  <h2 class="ui dividing header">Demographics</h2>
+
+  <div class="ui centered stackable grid">
+    <div class="ui four wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="world icon"></i>
+            Top Countries
+
+          </div>
+        </h3>
+
+        <% countries = EpisodeStat.downloads_by_country(@stats) %>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for country <- Enum.take(countries, 10) do %>
+          <div class="item"><%= Changelog.Countries.name(elem(country, 0)) %> &ndash; (<%= round(elem(country, 1)) %>)</div>
+        <% end %>
+        </div>
+
+        <button class="ui basic tiny centered button js-modal" data-modal="#countries-modal">View All</button>
+
+        <div class="ui small modal" id="countries-modal">
+          <div class="header">All Countries</div>
+          <div class="content">
+            <ol>
+            <%= for country <- countries do %>
+              <li><%= Changelog.Countries.name(elem(country, 0)) %> &ndash; (<%= round(elem(country, 1)) %>)</li>
+            <% end %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui four wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="browser icon"></i>
+            Top Clients
+          </div>
+        </h3>
+
+        <% clients = EpisodeStat.downloads_by_client(@stats) %>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for client <- Enum.take(clients, 10) do %>
+          <div class="item"><%= client_name(elem(client, 0)) %> &ndash; (<%= round(elem(client, 1)) %>)</div>
+        <% end %>
+        </div>
+
+        <button class="ui basic tiny centered button js-modal" data-modal="#clients-modal">View All</button>
+
+        <div class="ui small modal" id="clients-modal">
+          <div class="header">All Clients</div>
+          <div class="content">
+            <ol>
+            <%= for client <- clients do %>
+              <li><%= client_name(elem(client, 0)) %> &ndash; (<%= round(elem(client, 1)) %>)</li>
+            <% end %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui four wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="browser icon"></i>
+            Top Browsers
+          </div>
+        </h3>
+
+        <% browsers = EpisodeStat.downloads_by_browser(@stats) %>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for browser <- Enum.take(browsers, 10) do %>
+          <div class="item"><%= elem(browser, 0) %> &ndash; (<%= round(elem(browser, 1)) %>)</div>
+        <% end %>
+        </div>
+
+        <button class="ui basic tiny centered button js-modal" data-modal="#browsers-modal">View All</button>
+
+        <div class="ui small modal" id="browsers-modal">
+          <div class="header">All Browsers</div>
+          <div class="content">
+            <ol>
+            <%= for browser <- browsers do %>
+              <li><%= elem(browser, 0) %> &ndash; (<%= round(elem(browser, 1)) %>)</li>
+            <% end %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui four wide column">
+      <div class="ui segment">
+        <h3 class="ui centered header">
+          <div class="content">
+            <i class="browser icon"></i>
+            Top Operating Systems
+          </div>
+        </h3>
+
+        <% oses = EpisodeStat.downloads_by_os(@stats) %>
+
+        <div class="ui relaxed divided ordered list" style="text-align: left;">
+        <%= for os <- Enum.take(oses, 10) do %>
+          <div class="item"><%= elem(os, 0) %> &ndash; (<%= round(elem(os, 1)) %>)</div>
+        <% end %>
+        </div>
+
+        <button class="ui basic tiny centered button js-modal" data-modal="#oses-modal">View All</button>
+
+        <div class="ui small modal" id="oses-modal">
+          <div class="header">All OSes</div>
+          <div class="content">
+            <ol>
+            <%= for os <- oses do %>
+              <li><%= elem(os, 0) %> &ndash; (<%= round(elem(os, 1)) %>)</li>
+            <% end %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="ui dividing header">Stats</h2>
+
+  <table class="ui celled striped unstackable table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Downloads &ndash; (<%= download_count(@episode) %>)</th>
+        <th>Reach &ndash; (<%= reach_count(@episode) %>)</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for stat <- @stats do %>
+      <tr>
+        <td><%= stat_date(stat) %></td>
+        <td><%= stat.downloads %></td>
+        <td><%= stat.uniques %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

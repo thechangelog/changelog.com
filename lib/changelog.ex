@@ -12,6 +12,7 @@ defmodule Changelog do
       # Start the Ecto repository
       worker(Changelog.Repo, []),
       # Here you could define other workers and supervisors as children
+      worker(UA.Parser, []),
       # worker(Changelog.Worker, [arg1, arg2, arg3]),
       worker(ConCache, [[ttl_check: :timer.seconds(1)], [name: :app_cache]])
     ]

@@ -1,34 +1,43 @@
 defmodule Changelog.Admin.PageController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Episode, Newsletter, Post}
+  alias Changelog.{Episode, Newsletter, Person, Post}
+
+  plug Changelog.Plug.LoadPodcasts, "index" when action in [:index]
 
   def index(conn, _params) do
-    newsletters = [
-      %Newsletter{name: "Weekly", list_id: "eddd53c07cf9e23029fe8a67fe84731f", web_id: "82E49C221D20C4F7"},
-      %Newsletter{name: "Nightly", list_id: "95a8fbc221a2240ac7469d661bac650a", web_id: "82E49C221D20C4F7"},
-      %Newsletter{name: "Go Time", list_id: "96f7328735b814e82d384ce1ddaf8420", web_id: "B4546FE361E47720"}
-    ]
-    |> Enum.map(fn(newsletter) ->
-      stats = ConCache.get_or_store(:app_cache, "newsletter_#{newsletter.list_id}_stats", fn() ->
-        %ConCache.Item{value: Craisin.List.stats(newsletter.list_id), ttl: :timer.hours(12)}
-      end)
+    newsletters =
+      [Newsletter.community(),
+       Newsletter.weekly(),
+       Newsletter.nightly(),
+       Newsletter.gotime(),
+       Newsletter.jsparty()]
+      |> Enum.map(&Newsletter.get_stats/1)
 
-      %Newsletter{newsletter | stats: stats}
-    end)
+    render(conn, :index,
+      newsletters: newsletters,
+      draft_episodes: draft_episodes(),
+      draft_posts: draft_posts(),
+      members: members())
+  end
 
-    draft_episodes =
-      Episode.unpublished
-      |> Episode.newest_last(:recorded_at)
-      |> Repo.all
-      |> Episode.preload_podcast
+  defp draft_episodes do
+    Episode.unpublished
+    |> Episode.newest_last(:recorded_at)
+    |> Repo.all
+    |> Episode.preload_podcast
+  end
 
-    draft_posts =
-      Post.unpublished
-      |> Post.newest_last(:inserted_at)
-      |> Repo.all
-      |> Post.preload_author
+  defp draft_posts do
+    Post.unpublished
+    |> Post.newest_last(:inserted_at)
+    |> Repo.all
+    |> Post.preload_author
+  end
 
-    render(conn, :index, newsletters: newsletters, draft_episodes: draft_episodes, draft_posts: draft_posts)
+  defp members do
+    %{today: Repo.count(Person.joined_today()),
+      slack: Repo.count(Person.in_slack()),
+      total: Repo.count(Person.joined())}
   end
 end

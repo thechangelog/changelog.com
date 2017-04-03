@@ -32,6 +32,7 @@ defmodule Changelog.Web do
       use Phoenix.Controller
 
       alias Changelog.Repo
+      alias Changelog.Plug.{RequireAdmin, RequireUser, RequireGuest}
       import Ecto
       import Ecto.Query
 
@@ -40,20 +41,26 @@ defmodule Changelog.Web do
     end
   end
 
-  def view do
+  def admin_view do
     quote do
       use Phoenix.View, root: "web/templates"
-
-      # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
-
-      # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
-      use Changelog.Helpers.ViewHelpers
-
-      alias Changelog.TimeView
-
+      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1,get_flash: 2, view_module: 1]
+      import Scrivener.HTML
       import Changelog.Router.Helpers
+      import Changelog.Helpers.{AdminHelpers, SharedHelpers}
+      alias Changelog.TimeView
+    end
+  end
+
+  def public_view do
+    quote do
+      use Phoenix.View, root: "web/templates"
+      use Phoenix.HTML
+      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1,get_flash: 2, view_module: 1]
+      import Changelog.Router.Helpers
+      import Changelog.Helpers.{PublicHelpers, SharedHelpers}
+      alias Changelog.TimeView
     end
   end
 

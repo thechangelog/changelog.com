@@ -25,6 +25,15 @@ defmodule Changelog.Router do
 
   pipeline :public do
     plug Changelog.Plug.LoadPodcasts
+    plug Changelog.Plug.Turbolinks
+  end
+
+  scope "/auth", Changelog do
+    pipe_through [:browser, :public]
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
   end
 
   scope "/admin", Changelog.Admin, as: :admin do
@@ -46,6 +55,19 @@ defmodule Changelog.Router do
     resources "/sponsors", SponsorController
   end
 
+  scope "/api", Changelog, as: :api do
+    pipe_through [:api]
+
+    get "/oembed", ApiController, :oembed
+  end
+
+  scope "/slack", Changelog do
+    pipe_through [:api]
+
+    get "/gotime", SlackController, :gotime
+    get "/countdown/:slug", SlackController, :countdown
+  end
+
   scope "/", Changelog do
     pipe_through [:browser, :public]
 
@@ -55,10 +77,26 @@ defmodule Changelog.Router do
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
 
-    resources "/posts", PostController, only: [:show]
+    # people and auth
+    resources "/people", PersonController, only: [:new, :create]
+    resources "/~", HomeController, only: [:show, :edit, :update], singleton: true
+    post "/~/slack", HomeController, :slack
+    post "/~/subscribe/:id", HomeController, :subscribe
+    post "/~/unsubscribe/:id", HomeController, :unsubscribe
+
+    get "/community", PageController, :community
+    get "/join", PageController, :join
+    get "/in", AuthController, :new, as: :sign_in
+    post "/in", AuthController, :new, as: :sign_in
+    get "/in/:token", AuthController, :create, as: :sign_in
+    get "/out", AuthController, :delete, as: :sign_out
+
+    resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
 
-    get "/slack/gotime", SlackController, :gotime
+    get "/live", LiveController, :index
+    get "/live/status", LiveController, :status
+    get "/search", SearchController, :search
 
     # static pages
     get "/", PageController, :home
@@ -66,16 +104,18 @@ defmodule Changelog.Router do
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015
-    get "/community", PageController, :community
+    get "/films/gophercon-2016", PageController, :films_gophercon_2016
+    get "/guest/:slug", PageController, :guest
+    get "/guest", PageController, :guest
     get "/benefits", PageController, :benefits
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership
-    get "/sponsorship", PageController, :sponsorship
+    get "/sponsor", PageController, :sponsor
     get "/store", PageController, :store
-    get "/soundcheck", PageController, :soundcheck
     get "/team", PageController, :team
-    get "/live", PageController, :live
+    get "/privacy", PageController, :privacy
+    get "/terms", PageController, :terms
 
     get "/nightly", PageController, :nightly
     get "/nightly/confirmed", PageController, :nightly_confirmed
@@ -91,17 +131,14 @@ defmodule Changelog.Router do
 
     get "/confirmation-pending", PageController, :confirmation_pending
 
-    get "/in", AuthController, :new, as: :sign_in
-    post "/in", AuthController, :new, as: :sign_in
-    get "/in/:token", AuthController, :create, as: :create_sign_in
-    get "/out", AuthController, :delete, as: :sign_out
-
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast
     get "/:slug/archive", PodcastController, :archive, as: :podcast
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
+    get "/:podcast/:slug/embed", EpisodeController, :embed, as: :episode
     get "/:podcast/:slug/preview", EpisodeController, :preview, as: :episode
     get "/:podcast/:slug/play", EpisodeController, :play, as: :episode
+    get "/:podcast/:slug/share", EpisodeController, :share, as: :episode
   end
 end

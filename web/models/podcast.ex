@@ -2,29 +2,33 @@ defmodule Changelog.Podcast do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.{Episode, Regexp}
+  alias Changelog.{Episode, EpisodeStat, PodcastChannel, PodcastHost, Regexp}
 
   schema "podcasts" do
     field :name, :string
     field :slug, :string
     field :status, PodcastStatus
     field :description, :string
+    field :extended_description, :string
     field :vanity_domain, :string
     field :keywords, :string
     field :twitter_handle, :string
     field :itunes_url, :string
     field :ping_url, :string
     field :schedule_note, :string
+    field :download_count, :float
+    field :reach_count, :integer
+    field :recorded_live, :boolean, default: false
 
     has_many :episodes, Episode, on_delete: :delete_all
-    has_many :podcast_hosts, Changelog.PodcastHost, on_delete: :delete_all
+    has_many :podcast_channels, PodcastChannel, on_delete: :delete_all
+    has_many :channels, through: [:podcast_channels, :channel]
+    has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
+    has_many :episode_stats, EpisodeStat
 
-    timestamps
+    timestamps()
   end
-
-  @required_fields ~w(name slug status)
-  @optional_fields ~w(vanity_domain schedule_note description keywords twitter_handle itunes_url ping_url)
 
   def master do
   %__MODULE__{
@@ -37,14 +41,16 @@ defmodule Changelog.Podcast do
   }
   end
 
-  def changeset(model, params \\ %{}) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live))
+    |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)
     |> validate_format(:ping_url, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
+    |> cast_assoc(:podcast_channels)
     |> cast_assoc(:podcast_hosts)
   end
 
@@ -58,9 +64,9 @@ defmodule Changelog.Podcast do
 
   def get_by_slug(slug) do
     if slug == "master" do
-      master
+      master()
     else
-      public
+      public()
       |> Repo.get_by!(slug: slug)
       |> preload_hosts
     end
@@ -77,8 +83,7 @@ defmodule Changelog.Podcast do
   def episode_count(podcast) do
     podcast
     |> assoc(:episodes)
-    |> Ecto.Query.select([e], count(e.id))
-    |> Repo.one
+    |> Repo.count
   end
 
   def is_master(podcast) do
@@ -94,9 +99,7 @@ defmodule Changelog.Podcast do
       |> Episode.published
     end
 
-    query
-    |> Ecto.Query.select([e], count(e.id))
-    |> Repo.one
+    Repo.count(query)
   end
 
   def last_numbered_slug(podcast) do
@@ -116,9 +119,35 @@ defmodule Changelog.Podcast do
     |> Repo.one
   end
 
+  def preload_channels(podcast) do
+    podcast
+    |> Repo.preload(podcast_channels: {PodcastChannel.by_position, :channel})
+    |> Repo.preload(:channels)
+  end
+
   def preload_hosts(podcast) do
     podcast
-    |> Repo.preload(podcast_hosts: {Changelog.PodcastHost.by_position, :person})
+    |> Repo.preload(podcast_hosts: {PodcastHost.by_position, :person})
     |> Repo.preload(:hosts)
+  end
+
+  def update_stat_counts(podcast) do
+    episodes = Repo.all(assoc(podcast, :episodes))
+
+    new_downloads =
+      episodes
+      |> Enum.map(&(&1.download_count))
+      |> Enum.sum
+      |> Kernel./(1)
+      |> Float.round(2)
+
+    new_reach =
+      episodes
+      |> Enum.map(&(&1.reach_count))
+      |> Enum.sum
+
+    podcast
+    |> change(%{download_count: new_downloads, reach_count: new_reach})
+    |> Repo.update!
   end
 end

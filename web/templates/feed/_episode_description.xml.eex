@@ -1,0 +1,23 @@
+<%= md_to_html(@episode.summary) %>
+<%= if Enum.any?(@episode.sponsors) do %>
+  <p>Sponsors</p>
+  <ul>
+  <%= for sponsor <- @episode.episode_sponsors do %>
+    <li>
+      <%= link(sponsor.title, to: sponsor.link_url) |> safe_to_string %> – 
+      <%= sponsor.description |> md_to_html |> sans_p_tags %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+<% participants = @episode.guests ++ @episode.hosts %>
+<%= if Enum.any?(participants) do %>
+  <p>Featuring</p>
+  <ul>
+  <%= for person <- participants do %>
+    <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links %></li>
+  <% end %>
+  </ul>
+<% end %>
+<p>Notes and Links</p>
+<%= md_to_html(@episode.notes) %>

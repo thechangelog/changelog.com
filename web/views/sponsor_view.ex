@@ -1,5 +1,5 @@
 defmodule Changelog.SponsorView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
 
   def logo_url(sponsor, type, version) do
     {module, file} = case type do
@@ -9,6 +9,7 @@ defmodule Changelog.SponsorView do
     end
 
     module.url({file, sponsor}, version)
-    |> String.replace_leading("priv", "")
+    |> String.replace_leading("/priv", "/")
+    |> String.replace(~r{^//}, "/") # Arc 0.6 now prepends / to *all* URLs
   end
 end

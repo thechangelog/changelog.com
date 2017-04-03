@@ -70,14 +70,14 @@ defmodule Changelog.Admin.ChannelControllerTest do
     assert count(Channel) == count_before
   end
 
-  test "requires user auth on all actions" do
+  test "requires user auth on all actions", %{conn: conn} do
     Enum.each([
-      get(build_conn, admin_channel_path(build_conn, :index)),
-      get(build_conn, admin_channel_path(build_conn, :new)),
-      post(build_conn, admin_channel_path(build_conn, :create), channel: @valid_attrs),
-      get(build_conn, admin_channel_path(build_conn, :edit, "123")),
-      put(build_conn, admin_channel_path(build_conn, :update, "123"), channel: @valid_attrs),
-      delete(build_conn, admin_channel_path(build_conn, :delete, "123")),
+      get(conn, admin_channel_path(conn, :index)),
+      get(conn, admin_channel_path(conn, :new)),
+      post(conn, admin_channel_path(conn, :create), channel: @valid_attrs),
+      get(conn, admin_channel_path(conn, :edit, "123")),
+      put(conn, admin_channel_path(conn, :update, "123"), channel: @valid_attrs),
+      delete(conn, admin_channel_path(conn, :delete, "123")),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

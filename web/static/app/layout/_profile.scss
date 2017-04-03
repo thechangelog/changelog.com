@@ -1,0 +1,86 @@
+.profile {
+  margin: 0 auto;
+  max-width: $desktop;
+  padding: $padding-small;
+
+  @media (min-width: $tablet) {
+    display: flex;
+    justify-content: space-between;
+    padding: 100px $padding-medium;
+  }
+
+  &-card {
+    padding-right: 60px;
+
+    @media (min-width: $tablet) {
+      flex: 0 1 400px;
+    }
+
+    &-image {
+      @extend %image-shadow;
+      margin-bottom: $padding-large;
+      height: 80px;
+      width: 80px;
+
+      @media (min-width: $tablet) {
+        height: 120px;
+        width: 120px;
+      }
+    }
+
+    &-heading {
+      @extend %display-font;
+      font-weight: bold;
+      margin: 0;
+      text-transform: none;
+    }
+
+    &-stats {
+      @extend %display-font;
+      color: $medium-grey;
+      font-size: 1.05em;
+      letter-spacing: 0.05em;
+      list-style-type: none;
+      margin: 0.5rem 0 1rem;
+      padding: 0;
+      text-transform: none;
+
+      &-item {
+        background-position: left center;
+        background-repeat: no-repeat;
+        min-height: 20px;
+        padding: 2px 0 2px 30px;
+
+        &--date { background-image: url(/images/icon-date.svg); }
+        &--location { background-image: url(/images/icon-location.svg); }
+        &--link { background-image: url(/images/icon-link.svg); }
+      }
+    }
+
+    &-bio {
+      // font-size: 1.125em;
+    }
+  }
+
+  &-introduction {
+    border-top: 2px solid $border-color;
+    font-size: 1.25em;
+    margin-top: 2rem;
+    padding-top: 2rem;
+
+    @media (min-width: $tablet) {
+      border-top: none;
+      flex: 1 1 520px;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    p {
+      margin: 0 0 1em;
+    }
+
+    code {
+      font-size: 1em;
+    }
+  }
+}

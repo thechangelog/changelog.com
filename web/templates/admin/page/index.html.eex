@@ -1,39 +1,4 @@
 <div class="ui basic segment">
-  <div class="ui stackable centered grid">
-    <%= for newsletter <- @newsletters do %>
-    <div class="ui five wide column">
-      <div class="ui segment">
-        <h3 class="ui header">
-          <div class="content">
-            <i class="newspaper icon"></i>
-            <a href="<%= NewsletterView.web_url(newsletter) %>" rel="external"><%= newsletter.name %></a>
-            <div class="sub header"><%= pluralize(NewsletterView.subscribers(newsletter, :all), "Subscriber", "Subscribers") %></div>
-          </div>
-        </h3>
-
-        <div class="ui three tiny statistics">
-          <div class="statistic">
-            <div class="value"><i class="angle up icon"></i> <%= NewsletterView.subscribers(newsletter, :daily) %></div>
-            <div class="label">Today</div>
-          </div>
-
-          <div class="statistic">
-            <div class="value"><i class="angle up icon"></i> <%= NewsletterView.subscribers(newsletter, :weekly) %></div>
-            <div class="label">This Week</div>
-          </div>
-
-          <div class="statistic">
-            <div class="value"><i class="angle up icon"></i> <%= NewsletterView.subscribers(newsletter, :monthly) %></div>
-            <div class="label">This Month</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <% end %>
-  </div>
-</div>
-
-<div class="ui basic segment">
   <div class="ui stackable grid">
     <div class="ui eight wide column">
       <h1 class="ui dividing header">Episode Drafts</h1>
@@ -52,5 +17,80 @@
       <p>There are no draft posts at this time.</p>
     <% end %>
     </div>
+  </div>
+</div>
+
+<div class="ui basic segment">
+  <div class="ui centered stackable grid">
+    <div class="ui twelve wide column">
+      <h1 class="ui dividing header">Newsletters</h1>
+      <table class="ui striped table">
+        <thead>
+          <tr>
+            <th>List</th>
+            <th>Today</th>
+            <th>This Week</th>
+            <th>This Month</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+        <%= for newsletter <- @newsletters do %>
+          <tr>
+            <td><a href="<%= NewsletterView.web_url(newsletter) %>" rel="external"><%= newsletter.name %></a></td>
+          <%= for period <- [:daily, :weekly, :monthly] do %>
+            <td><i class="caret up icon"></i><%= NewsletterView.subscribers(newsletter, period) %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= NewsletterView.unsubscribers(newsletter, period) %></td>
+          <% end %>
+            <td><%= NewsletterView.subscribers(newsletter, :all) |> comma_separated %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ui four wide column">
+      <h1 class="ui dividing header">Members</h1>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>New Today</td>
+            <td><%= @members[:today] %></td>
+          </tr>
+          <tr>
+            <td>In Slack</td>
+            <td><%= @members[:slack] %></td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td><%= @members[:total] %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="ui basic segment">
+  <div class="ui stackable centered grid">
+  <%= for podcast <- @podcasts do %>
+    <div class="ui eight wide column">
+      <div class="ui segment">
+        <h3 class="ui header">
+          <div class="content">
+            <i class="sound icon"></i>
+            <%= link podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug) %>
+          </div>
+        </h3>
+
+        <%= render("_podcast_episodes_table.html", conn: @conn, podcast: podcast) %>
+      </div>
+    </div>
+  <% end %>
   </div>
 </div>

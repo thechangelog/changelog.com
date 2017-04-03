@@ -1,0 +1,38 @@
+<div class="overlay-section">
+  <h3 class="overlay-section-heading">Share</h3>
+  <div class="copyable">
+    <textarea rows="1" spellcheck="false">{{url}}</textarea>
+    <button class="copyable-button js-share-copy-url">Copy</button>
+  </div>
+  <ul class="button_list button_list--center">
+    <li class="button_list-item">
+      <a href="{{twitter}}" title="Share on Twitter" class="js-share-popup twitter">Twitter</a>
+    </li>
+    <li class="button_list-item">
+      <a href="{{hackernews}}" title="Share on Hacker News" class="js-share-popup hackernews">Hacker News</a>
+    </li>
+    <li class="button_list-item">
+      <a href="{{reddit}}" title="Share on Reddit" class="js-share-popup reddit">Reddit</a>
+    </li>
+    <li class="button_list-item">
+      <a href="{{facebook}}" title="Share on Facebook" class="js-share-popup facebook">Facebook</a>
+    </li>
+  </ul>
+</div>
+{{#embed}}
+<div class="overlay-section">
+  <h3 class="overlay-section-heading">Embed</h3>
+  <div class="horizontal_toggle">
+    <div class="horizontal_toggle-text">Dark Embed</div>
+    <div class="toggle">
+      <input type="checkbox" class="check js-share-embed-toggle">
+      <div class="switch"></div>
+    </div>
+    <div class="horizontal_toggle-text">Light Embed</div>
+  </div>
+  <div class="copyable">
+    <textarea rows="4" class="js-share-embed" spellcheck="false"></textarea>
+    <button class="copyable-button js-share-copy-embed">Copy</button>
+  </div>
+</div>
+{{/embed}}

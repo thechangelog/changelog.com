@@ -1,14 +1,33 @@
 import Turbolinks from "turbolinks";
-import { u } from "umbrellajs";
-import Player from "components/player";
+import { u, ajax } from "umbrellajs";
+import OnsitePlayer from "components/onsite_player";
+import LivePlayer from "components/live_player";
 import Slider from "components/slider";
+import Overlay from "components/overlay";
+import Share from "components/share";
 import Log from "components/log";
+import ts from "../shared/ts";
 
-const player = new Player("#player");
+const player = new OnsitePlayer("#player");
+const live = new LivePlayer(".js-live");
+const overlay = new Overlay("#overlay");
 const featured = new Slider(".featured_podcast");
+
+window.u = u;
+window.live = live;
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
+});
+
+u(document).handle("click", ".js-toggle-parent", function(event) {
+  event.preventDefault();
+  u(event.target).parent().parent().toggleClass("is-toggled");
+});
+
+u(document).handle("click", ".js-account-nav", function(event) {
+  const content = u(".js-account-nav-content").html();
+  overlay.html(content).show();
 });
 
 u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
@@ -19,8 +38,17 @@ u(document).on("click", "[data-play]", function(event) {
   if (player.canPlay()) {
     event.preventDefault();
     const clicked = u(event.target).closest("a, button");
-    player.load(clicked.attr("href"), clicked.data("play"));
+    if(player.currentlyLoaded === clicked.data("play")) {
+      player.togglePlayPause();
+    } else {
+      player.load(clicked.attr("href"), clicked.data("play"));
+    }
+
   }
+});
+
+u(document).handle("click", "[data-share]", function(event) {
+  new Share(overlay).load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -48,6 +76,11 @@ u(document).on("click", "a[href^=http]", function(event) {
   }
 });
 
+// our own little phoenix_html
+u(document).handle("click", "a[data-submit=parent]", function(event) {
+  u(event.target.parentNode).trigger("submit");
+});
+
 // submit Campain Monitor forms via jsonp
 u(document).on("submit", "form.js-cm", function(event) {
   event.preventDefault();
@@ -70,6 +103,34 @@ u(document).on("submit", "form.js-cm", function(event) {
   document.body.appendChild(script);
 });
 
+// submit all other forms with Turbolinks
+u(document).on("submit", "form:not(.js-cm)", function(event) {
+  event.preventDefault();
+
+  const form = u(this);
+  const action = form.attr("action");
+  const method = form.attr("method");
+  const data = form.serialize();
+  const referrer = window.location.href;
+
+  if (method == "get") {
+    return Turbolinks.visit(`${action}?${data}`);
+  }
+
+  const options = {method: method, body: data, headers: {"Turbolinks-Referrer": referrer}};
+  const andThen = function(err, resp, req) {
+    if (req.getResponseHeader("content-type").match(/javascript/)) {
+      eval(resp);
+    } else {
+      const snapshot = Turbolinks.Snapshot.wrap(resp);
+      Turbolinks.controller.cache.put(referrer, snapshot);
+      Turbolinks.visit(referrer, {action: "restore"});
+    }
+  }
+
+  ajax(action, options, andThen);
+});
+
 // handle featured sliders
 u(document).handle("click", ".js-featured-next", function(event) { featured.slide(+1); });
 u(document).handle("click", ".js-featured-previous", function(event) { featured.slide(-1); });
@@ -89,13 +150,28 @@ function tallestSlide() {
   u(".featured").attr("style", "height: " + tallestFeatured + "px;");
 }
 
+function formatTimes() {
+  u("span.time").each(function(el) {
+    const span = u(el);
+    let date = new Date(span.text());
+    let style = span.data("style");
+    span.text(ts(date, style));
+  });
+}
+
 window.onresize = function() {
   tallestSlide();
 }
 
 // on page load
 u(document).on("turbolinks:load", function() {
+  u("body").removeClass("nav-open");
+  overlay.hide();
+  live.check();
   tallestSlide();
+  formatTimes();
+  // Make sure homepage featured section is the correct size (after fonts and images load)
+  window.setTimeout(function() { tallestSlide(); }, 500);
 });
 
 Turbolinks.start();

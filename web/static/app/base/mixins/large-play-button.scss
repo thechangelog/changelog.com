@@ -1,0 +1,105 @@
+@mixin large-play-button($parent, $gutter: 2rem, $button-size: 8rem, $button-spacing: "") {
+  @if $button_spacing == "" {
+    $button_spacing: $button_size + $gutter * 2;
+  }
+
+  position: relative;
+  #{$parent}.is-upcoming & { pointer-events: none; }
+  &:hover &-bg { transform: scale(1.1); }
+
+  &-bg,
+  &-icon {
+    height: $button_size;
+    width: $button_size;
+    margin: 0 auto;
+  }
+
+  &-bg {
+    background-color: $green;
+    border-radius: $button_size;
+    display: block;
+    position: relative;
+    transition: all 0.2s $ease-in-out-quint;
+    z-index: 2;
+
+    #{$parent}.is-upcoming & {
+      background-color: darken($black, 4%);
+    }
+  }
+
+  &-icon {
+    background: url("/images/icon-play-white.svg") center no-repeat;
+    background-size: auto 40%;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    transform: translateY(-50%);
+    transition: opacity 0.2s $ease-in-out-quint;
+
+    #{$parent}.is-paused & {
+      background-image: url("/images/icon-play-white.svg");
+    }
+    #{$parent}.is-playing & {
+      background-image: url("/images/icon-pause-white.svg");
+    }
+    #{$parent}.is-upcoming & {
+      opacity: 0.2;
+    }
+    #{$parent}.is-loading & {
+      $spin: spin 1s ease-in-out infinite;
+      background: none;
+
+      &:before,
+      &:after {
+        -webkit-animation: $spin;
+        -moz-animation: $spin;
+        animation: $spin;
+        content: "";
+        background: url("/images/loading-2-white.svg") center no-repeat;
+        background-size: auto 60%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      &:before {
+        background-image: url("/images/loading-white.svg");
+        background-size: auto 60%;
+        -webkit-animation: $spin;
+        -moz-animation: $spin;
+        animation: $spin;
+      }
+    }
+  }
+
+  &:before {
+    content: '';
+    left: 50%;
+    margin-left: -($button-size * 2);
+    margin-top: -($button-size * 2);
+    opacity: .2;
+    position: absolute;
+    pointer-events: none;
+    top: 50%;
+    transition: none;
+    height: ($button-size * 4);
+    width: ($button-size * 4);
+
+    #{$parent}.is-playing & {
+      transition: all 0.2s $ease-in-out-quint;
+      transform: rotate(360deg) translate3d(0, 0, 0);
+    }
+
+    @each $podcast in $podcasts {
+      #{$parent}--#{$podcast} & {
+        background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg);
+      }
+    }
+  }
+}

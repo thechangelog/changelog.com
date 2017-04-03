@@ -1,16 +1,17 @@
 <article class="section content">
   <div class="container container--has-padding container--skinny">
-    <!--<nav class="breadcrumbs breadcrumbs--slashes">
-        <a class="breadcrumbs_crumb" href="#">Home</a>
+    <nav class="breadcrumbs breadcrumbs--slashes">
+        <a class="breadcrumbs_crumb" href="/">Home</a>
         /
-        <a class="breadcrumbs_crumb" href="#">Blog</a>
+        <a class="breadcrumbs_crumb" href="/posts/">Posts</a>
         /
         <span class="breadcrumbs_crumb breadcrumbs_crumb--active"><%= Changelog.TimeView.pretty_date(@post.published_at) %></span>
-    </nav>-->
+    </nav>
     <header class="content_header">
-      <h2><%= @post.title %></h2>
+      <h1><%= @post.title %></h1>
       <div class="content_byline">
         <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= Changelog.TimeView.pretty_date(@post.published_at) %></time>
+        <%= if @current_user && @current_user.admin do %>&nbsp;<%= link "[Edit]", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
       </div>
     </header>
     <div class="content_body">

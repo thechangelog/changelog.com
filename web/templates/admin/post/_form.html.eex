@@ -30,8 +30,8 @@
 
     <div class="ui horizontal selection list js-channels">
       <%= inputs_for f, :post_channels, fn i -> %>
-        <% channel = channel_from_model_or_params(i.model, i.params) %>
-        <div class="item persisted">
+        <% channel = channel_from_data_or_params(i.data, i.params) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :channel_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
@@ -66,10 +66,12 @@
     <%= error_message(f, :body) %>
   </div>
 
-  <div class="field <%= error_class f, :published_at %>">
-    <%= label f, :published_at, "Publish At" %>
-    <%= semantic_datetime_select f, :published_at, default: :os.timestamp |> :calendar.now_to_datetime %>
-    <%= error_message f, :published_at %>
+  <div class="field <%= error_class(f, :published_at) %>">
+    <%= label(f, :published_at) do %>
+      Publish Time <%= help_icon("To schedule: set this in the future and toggle 'Published'") %>
+    <% end %>
+    <%= semantic_calendar_field(f, :published_at) %>
+    <%= error_message(f, :published_at) %>
   </div>
 
   <div class="inline field">
@@ -79,5 +81,5 @@
     </div>
   </div>
 
-  <%= form_actions %>
+  <%= form_actions() %>
 <% end %>

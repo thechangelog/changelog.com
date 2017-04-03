@@ -16,7 +16,7 @@
 
       <p>You should follow us on Twitter too, if you don't already.</p>
 
-      <p><a href="https://twitter.com/changelog" class="twitter-follow-button" data-size="large" data-dnt="true" data-show-count="false">Follow @changelog</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+      <p><a href="https://twitter.com/Changelog" class="twitter-follow-button" data-size="large" data-dnt="true" data-show-count="false">Follow @Changelog</a></p>
 
       <hr />
 
@@ -26,7 +26,7 @@
 
       <h3>Become a Sponsor</h3>
 
-      <p><%= link "Become a sponsor", to: page_path(@conn, :sponsorship) %> and we'll help you get the right exposure for your contenct, product or service.</p>
+      <p><%= link "Become a sponsor", to: page_path(@conn, :sponsor) %> and we'll help you get the right exposure for your contenct, product or service.</p>
     </div>
   </div>
 </article>

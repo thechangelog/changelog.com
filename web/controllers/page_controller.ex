@@ -1,16 +1,34 @@
 defmodule Changelog.PageController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Episode}
+  alias Changelog.{Episode, Newsletter, Podcast}
+
+  plug RequireGuest, "before joining" when action in [:join]
 
   # pages that need special treatment get their own matched function
   # all others simply render the template of the same name
-  def action(conn, params) do
+  def action(conn, _) do
     case action_name(conn) do
-      :home           -> home(conn, params)
-      :weekly_archive -> weekly_archive(conn, params)
-      action          -> render(conn, action)
+      :guest          -> guest(conn, Map.get(conn.params, "slug"))
+      :home           -> home(conn, conn.params)
+      :sponsor        -> sponsor(conn, conn.params)
+      :weekly_archive -> weekly_archive(conn, conn.params)
+      name            -> render(conn, name)
     end
+  end
+
+  def guest(conn, slug) when is_nil(slug), do: guest(conn, "podcast")
+  def guest(conn, slug) do
+    podcast = Podcast.get_by_slug(slug)
+    episode =
+      Podcast.get_episodes(podcast)
+      |> Episode.published
+      |> Episode.newest_first
+      |> Episode.limit(1)
+      |> Repo.one
+      |> Episode.preload_podcast
+
+    render(conn, :guest, podcast: podcast, episode: episode)
   end
 
   def home(conn, _params) do
@@ -24,6 +42,12 @@ defmodule Changelog.PageController do
       |> Episode.preload_sponsors
 
     render(conn, :home, featured: featured)
+  end
+
+  def sponsor(conn, _params) do
+    weekly = Newsletter.weekly() |> Newsletter.get_stats()
+
+    render(conn, :sponsor, weekly: weekly)
   end
 
   def weekly_archive(conn, _params) do

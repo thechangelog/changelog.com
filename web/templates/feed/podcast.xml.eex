@@ -6,15 +6,10 @@
     <link><%= PodcastView.vanity_domain_with_fallback_url(@podcast) %></link>
     <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="self" type="application/rss+xml" />
     <language>en-us</language>
-    <description><%= md_to_text(@podcast.description) %></description>
-    <image>
-      <url><%= static_url(@conn, PodcastView.cover_art_path(@podcast, "png")) %></url>
-      <title><%= @podcast.name %></title>
-      <link><%= PodcastView.vanity_domain_with_fallback_url(@podcast) %></link>
-    </image>
+    <description><%= md_to_text(@podcast.description) %> <%= @podcast.extended_description %></description>
     <itunes:subtitle><%= @podcast.name %></itunes:subtitle>
     <itunes:author>Changelog Media</itunes:author>
-    <itunes:summary><%= md_to_text(@podcast.description) %></itunes:summary>
+    <itunes:summary><%= md_to_text(@podcast.description) %> <%= @podcast.extended_description %></itunes:summary>
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= static_url(@conn, PodcastView.cover_art_path(@podcast, "png")) %>"/>
     <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
@@ -32,40 +27,12 @@
         <link><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
-        <image>
-          <url><%= static_url(@conn, PodcastView.cover_art_path(episode.podcast, "png")) %></url>
-          <title><%= episode.podcast.name %></title>
-          <link><%= PodcastView.vanity_domain_with_fallback_url(episode.podcast)  %></link>
-        </image>
       <%= if Enum.any?(episode.hosts) do %>
         <dc:creator><%= PersonView.comma_separated_names(episode.hosts) %></dc:creator>
       <% else %>
         <dc:creator>Changelog Media</dc:creator>
       <% end %>
-        <description><![CDATA[
-          <%= md_to_html(episode.summary) %>
-        <%= if Enum.any?(episode.sponsors) do %>
-          <p>Sponsors</p>
-          <ul>
-          <%= for sponsor <- episode.episode_sponsors do %>
-            <li>
-              <%= link(sponsor.title, to: sponsor.link_url) |> safe_to_string %> – 
-              <%= sponsor.description |> md_to_html |> sans_p_tags %>
-            </li>
-          <% end %>
-          </ul>
-        <% end %>
-        <%= if Enum.any?(episode.guests) do %>
-          <p>Guests</p>
-          <ul>
-          <%= for person <- episode.guests do %>
-            <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links %></li>
-          <% end %>
-          </ul>
-        <% end %>
-          <p>Notes and Links</p>
-          <%= md_to_html(episode.notes) %>
-        ]]></description>
+        <description><![CDATA[<%= render("_episode_description.xml", episode: episode) %>]]></description>
         <enclosure url="<%= EpisodeView.audio_url(episode) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
       <%= if Enum.any?(episode.hosts) do %>
         <itunes:author><%= PersonView.comma_separated_names(episode.hosts) %></itunes:author>

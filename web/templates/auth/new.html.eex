@@ -1,9 +1,9 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
+<article class="auth">
+  <div class="auth-wrap">
+    <header class="auth-header">
       <h2>Sign In</h2>
     </header>
-    <div class="content_body">
+    <div class="auth-wrap">
     <%= if @person do %>
       <div class="form_submit_response form_submit_response--success">Check your email! We sent you a single-use sign in link. It will expire in 15 minutes.</div>
 
@@ -11,16 +11,29 @@
         <p>Psst! Since you're hacking we'll just skip the email process. <%= link "click here", to: auth_path(@conn, @person), data: [turbolinks: false] %> instead!</p>
       <% end %>
     <% else %>
-      <p>Please enter your email address.</p>
-      <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form"], fn f -> %>
+      <ul class="button_list button_list--green">
+        <li class="button_list-item">
+          <a href="/auth/twitter" title="Sign in via Twitter" class="twitter">via Twitter</a>
+        </li>
+        <li class="button_list-item">
+          <a href="/auth/github" title="Sign in via GitHub" class="github">via GitHub</a>
+        </li>
+      </ul>
+
+      <hr>
+
+      <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form form--full_width"], fn f -> %>
         <div class="form_element_wrap">
-          <label>Email<span>*</span></label>
+          <label>Via Email<span>*</span></label>
           <div class="form_element">
-            <%= email_input f, :email, required: true %>
+            <%= email_input(f, :email, required: true, autocapitalize: "none") %>
           </div>
         </div>
         <div class="form_submit">
           <input type="submit" value="Enter">
+          <div class="form_submit_responses">
+            <div>Need an account? <em><%= link "Sign up", to: person_path(@conn, :new), title: "" %></em></div>
+          </div>
         </div>
       <% end %>
     <% end %>

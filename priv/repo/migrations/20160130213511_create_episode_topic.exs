@@ -7,7 +7,7 @@ defmodule Changelog.Repo.Migrations.CreateEpisodeTopic do
       add :topic_id, references(:topics, on_delete: :nothing)
       add :episode_id, references(:episodes, on_delete: :nothing)
 
-      timestamps
+      timestamps()
     end
 
     create index(:episode_topics, [:topic_id])

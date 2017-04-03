@@ -1,18 +1,19 @@
 defmodule Changelog.PageControllerTest do
   use Changelog.ConnCase
 
-  test "static pages all render" do
+  test "static pages all render", %{conn: conn} do
     Enum.each([
       "/",
       "/about",
       "/contact",
       "/films",
       "/community",
+      "/join",
       "/nightly",
       "/nightly/confirmed",
       "/nightly/unsubscribed",
       "/partnership",
-      "/sponsorship",
+      "/sponsor",
       "/store",
       "/team",
       "/weekly",
@@ -23,16 +24,28 @@ defmodule Changelog.PageControllerTest do
       "/gotime/confirmed",
       "/rfc/confirmed"
     ], fn route ->
-      conn = get(build_conn, route)
+      conn = get(conn, route)
       assert conn.status == 200
     end)
   end
 
-  test "home page includes featured episode" do
-    featured = insert :published_episode, featured: true, highlight: "ohai"
-
-    conn = get(build_conn, "/")
-
+  test "home page includes featured episode", %{conn: conn} do
+    featured = insert(:published_episode, featured: true, highlight: "ohai")
+    conn = get(conn, "/")
     assert html_response(conn, 200) =~ featured.title
+  end
+
+  describe "guest" do
+    test "it falls back to The Changelog with no slug", %{conn: conn} do
+      changelog = insert(:podcast, name: "The Changelog", slug: "podcast")
+      conn = get(conn, "/guest")
+      assert html_response(conn, 200) =~ changelog.name
+    end
+
+    test "it uses the provided Podcast slug", %{conn: conn} do
+      rfc = insert(:podcast, name: "Request For Commits", slug: "rfc")
+      conn = get(conn, "/guest/rfc")
+      assert html_response(conn, 200) =~ rfc.name
+    end
   end
 end

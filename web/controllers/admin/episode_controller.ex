@@ -1,7 +1,7 @@
 defmodule Changelog.Admin.EpisodeController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Podcast, Episode, EpisodeHost}
+  alias Changelog.{Podcast, Episode, EpisodeChannel, EpisodeHost, EpisodeStat}
 
   plug :assign_podcast
   plug :scrub_params, "episode" when action in [:create, :update]
@@ -13,50 +13,83 @@ defmodule Changelog.Admin.EpisodeController do
   end
 
   def index(conn, params, podcast) do
-    page = Episode
-    |> where([e], e.podcast_id == ^podcast.id)
-    |> order_by([e], desc: e.published_at)
-    |> Repo.paginate(params)
+    episodes = assoc(podcast, :episodes)
 
-    render conn, "index.html", episodes: page.entries, page: page
+    page =
+      episodes
+      |> Episode.published
+      |> Episode.newest_first
+      |> Repo.paginate(params)
+
+    scheduled =
+      episodes
+      |> Episode.scheduled
+      |> Episode.newest_first
+      |> Repo.all
+
+    drafts =
+      episodes
+      |> Episode.unpublished
+      |> Episode.newest_first(:inserted_at)
+      |> Repo.all
+
+    render(conn, "index.html", episodes: page.entries, scheduled: scheduled, drafts: drafts, page: page)
+  end
+
+  def show(conn, %{"id" => slug}, podcast) do
+    episode =
+      podcast
+      |> assoc(:episodes)
+      |> Repo.get_by!(slug: slug)
+      |> Episode.preload_all
+
+    stats =
+      episode
+      |> assoc(:episode_stats)
+      |> EpisodeStat.newest_first
+      |> Repo.all
+
+    render(conn, "show.html", episode: episode, stats: stats)
   end
 
   def new(conn, _params, podcast) do
-    podcast = podcast |> Repo.preload(:hosts)
+    podcast =
+      podcast
+      |> Podcast.preload_channels
+      |> Podcast.preload_hosts
 
     default_hosts =
       podcast.hosts
       |> Enum.with_index(1)
       |> Enum.map(&EpisodeHost.build_and_preload/1)
 
+    default_channels =
+      podcast.channels
+      |> Enum.with_index(1)
+      |> Enum.map(&EpisodeChannel.build_and_preload/1)
+
     default_slug = case Podcast.last_numbered_slug(podcast) do
       {float, _} -> round(Float.floor(float) + 1)
       _ -> ""
     end
 
-    default_ts =
-      Timex.now
-      |> Timex.to_erl
-      |> Tuple.delete_at(1)
-      |> Tuple.insert_at(1, {20, 0, 0}) # 2pm US Central
-
     changeset =
       podcast
       |> build_assoc(:episodes,
+        episode_channels: default_channels,
         episode_hosts: default_hosts,
-        slug: default_slug,
-        recorded_at: default_ts,
-        published_at: default_ts)
-      |> Episode.changeset
+        recorded_live: podcast.recorded_live,
+        slug: default_slug)
+      |> Episode.admin_changeset
 
-    render conn, "new.html", changeset: changeset
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, params = %{"episode" => episode_params}, podcast) do
     changeset =
       build_assoc(podcast, :episodes)
       |> Episode.preload_all
-      |> Episode.changeset(episode_params)
+      |> Episode.admin_changeset(episode_params)
 
     case Repo.insert(changeset) do
       {:ok, episode} ->
@@ -76,8 +109,8 @@ defmodule Changelog.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
-    changeset = Episode.changeset(episode)
-    render conn, "edit.html", episode: episode, changeset: changeset
+    changeset = Episode.admin_changeset(episode)
+    render(conn, "edit.html", episode: episode, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => slug, "episode" => episode_params}, podcast) do
@@ -86,7 +119,7 @@ defmodule Changelog.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
-    changeset = Episode.changeset(episode, episode_params)
+    changeset = Episode.admin_changeset(episode, episode_params)
 
     case Repo.update(changeset) do
       {:ok, episode} ->

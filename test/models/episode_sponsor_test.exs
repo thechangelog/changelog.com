@@ -3,16 +3,15 @@ defmodule Changelog.EpisodeSponsorTest do
 
   alias Changelog.EpisodeSponsor
 
-  @valid_attrs %{position: 42, title: "some content", link_url: "http://apple.com"}
-  @invalid_attrs %{}
+  describe "changeset" do
+    test "valid attributes" do
+      changeset = EpisodeSponsor.changeset(%EpisodeSponsor{}, %{position: 42, title: "some content", link_url: "http://apple.com"})
+      assert changeset.valid?
+    end
 
-  test "changeset with valid attributes" do
-    changeset = EpisodeSponsor.changeset(%EpisodeSponsor{}, @valid_attrs)
-    assert changeset.valid?
-  end
-
-  test "changeset with invalid attributes" do
-    changeset = EpisodeSponsor.changeset(%EpisodeSponsor{}, @invalid_attrs)
-    refute changeset.valid?
+    test "invalid attributes" do
+      changeset = EpisodeSponsor.changeset(%EpisodeSponsor{}, %{})
+      refute changeset.valid?
+    end
   end
 end

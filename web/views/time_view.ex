@@ -11,6 +11,14 @@ defmodule Changelog.TimeView do
     "#{hours}:#{duration(remaining)}"
   end
 
+  def hours_ago(hours) do
+    Timex.subtract(Timex.now, Timex.Duration.from_hours(hours))
+  end
+
+  def hours_from_now(hours) do
+    Timex.add(Timex.now, Timex.Duration.from_hours(hours))
+  end
+
   def pretty_date(ts) when is_nil(ts), do: ""
   def pretty_date(ts) when is_binary(ts) do
     {:ok, result} = Timex.parse(ts, "{YYYY}-{0M}-{0D} {h24}:{m}:{s}")
@@ -45,6 +53,13 @@ defmodule Changelog.TimeView do
       [s] -> to_seconds(s)
       _ -> 0
     end
+  end
+
+  def ts(ts, style \\ "admin")
+  def ts(ts, _style) when is_nil(ts), do: ""
+  def ts(ts, style) do
+    {:ok, formatted} = Timex.format(ts, "{ISO:Extended}")
+    {:safe, "<span class='time' data-style='#{style}'>#{formatted}</span>"}
   end
 
   defp to_seconds(:hours, str), do: string_to_rounded_integer(str) * 3600

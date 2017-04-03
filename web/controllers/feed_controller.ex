@@ -10,7 +10,7 @@ defmodule Changelog.FeedController do
       Episode.published
       |> Episode.newest_first
       |> Repo.all
-      |> Episode.preload_podcast
+      |> Episode.preload_all
 
     posts =
       Post.published
@@ -38,12 +38,6 @@ defmodule Changelog.FeedController do
       |> Repo.all
       |> Episode.preload_all
 
-    referer = get_req_header(conn, "referer")
-    if !is_nil(referer) do
-      agent = get_req_header(conn, "user-agent")
-      Logger.info("Feed referer for #{podcast.name}: #{referer} – #{agent}")
-    end
-
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
@@ -54,6 +48,7 @@ defmodule Changelog.FeedController do
     posts =
       Post.published
       |> Post.newest_first
+      |> Post.limit(100)
       |> Repo.all
       |> Post.preload_author
 

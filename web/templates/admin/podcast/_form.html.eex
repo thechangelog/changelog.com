@@ -8,7 +8,7 @@
 
     <div class="field required <%= error_class(f, :status) %>">
       <%= label f, :status %>
-      <%= select f, :status, status_options, class: "ui fluid dropdown" %>
+      <%= select f, :status, status_options(), class: "ui fluid dropdown" %>
     </div>
   </div>
 
@@ -37,13 +37,13 @@
 
     <div class="ui middle aligned selection list js-hosts">
       <%= inputs_for f, :podcast_hosts, fn i -> %>
-        <div class="item persisted">
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(i.model.person) %>">
+          <img class="ui avatar image" src="<%= Changelog.PersonView.avatar_url(i.data.person) %>">
 
           <div class="content">
-            <div class="header"><%= i.model.person.name %> (@<%= i.model.person.handle %>)</div>
+            <div class="header"><%= i.data.person.name %> (@<%= i.data.person.handle %>)</div>
           </div>
 
           <div class="right floated content">
@@ -62,16 +62,62 @@
     </div>
   </div>
 
+  <div class="field">
+    <%= label f, :channels %>
+
+    <div class="ui horizontal selection list js-channels">
+      <%= inputs_for f, :podcast_channels, fn i -> %>
+        <% channel = channel_from_data_or_params(i.data, i.params) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
+          <%= hidden_input i, :channel_id %>
+          <%= hidden_input i, :position, class: "js-position" %>
+
+          <div class="content">
+            <a class="ui label">
+              <%= channel.name %>
+              <i class="delete icon js-remove"></i>
+              <%= hidden_input i, :delete %>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Channel">
+        <i class="block layout icon"></i>
+      </div>
+    </div>
+  </div>
+
   <div class="field <%= error_class(f, :schedule_note) %>">
-    <%= label f, :schedule_note %>
+    <%= label(f, :schedule_note) do %>
+      Schedule Note <%= help_icon("Markdown supported.") %>
+    <% end %>
     <%= text_input f, :schedule_note, placeholder: "New show every Friday!" %>
     <%= error_message(f, :schedule_note) %>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :recorded_live, class: "hidden") %>
+      <label>Recorded Live</label>
+    </div>
   </div>
 
   <div class="field <%= error_class(f, :description) %>">
     <%= label f, :description %>
     <%= textarea f, :description, placeholder: "Markdown enabled." %>
     <%= error_message(f, :description) %>
+  </div>
+
+  <div class="field <%= error_class(f, :extended_description) %>">
+    <%= label(f, :extended_description) do %>
+      Extended Description <%= help_icon("Only used in RSS for SEO.") %>
+    <% end %>
+    <%= textarea f, :extended_description %>
+    <%= error_message(f, :extneded_description) %>
   </div>
 
   <div class="field <%= error_class(f, :keywords) %>">
@@ -92,5 +138,5 @@
     <%= error_message(f, :ping_url) %>
   </div>
 
-  <%= form_actions %>
+  <%= form_actions() %>
 <% end %>

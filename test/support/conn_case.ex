@@ -23,12 +23,14 @@ defmodule Changelog.ConnCase do
       alias Changelog.Repo
       import Ecto
       import Ecto.Query, only: [from: 2]
+      import Plug.Conn, only: [assign: 3]
 
-      defp count(query), do: Repo.one(from p in query, select: count(p.id))
+      defp count(query), do: Repo.count(query)
 
       import Changelog.Router.Helpers
       import Changelog.Factory
       import Changelog.Plug.Conn
+      import Changelog.TimeView, only: [hours_from_now: 1, hours_ago: 1]
 
       # The default endpoint for testing
       @endpoint Changelog.Endpoint
@@ -42,14 +44,17 @@ defmodule Changelog.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Changelog.Repo, {:shared, self()})
     end
 
-    conn = Phoenix.ConnTest.build_conn()
-
-    if tags[:as_admin] do
-      user = %Changelog.Person{admin: true}
-      conn = Plug.Conn.assign(conn, :current_user, user)
-      {:ok, conn: conn, user: user}
-    else
-      {:ok, conn: conn}
+    user = cond do
+      tags[:as_admin] -> Changelog.Factory.build(:person, admin: true)
+      tags[:as_user] -> Changelog.Factory.build(:person, admin: false)
+      tags[:as_inserted_user] -> Changelog.Factory.insert(:person, admin: false)
+      true -> nil
     end
+
+    conn =
+      Phoenix.ConnTest.build_conn()
+      |> Plug.Conn.assign(:current_user, user)
+
+    {:ok, conn: conn, user: user}
   end
 end

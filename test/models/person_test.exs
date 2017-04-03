@@ -24,4 +24,30 @@ defmodule Changelog.PersonTest do
 
     assert ["jenny@hits.com", "8675309"] = Person.decoded_auth(encoded)
   end
+
+  describe "get_by_ueberauth" do
+    setup do
+      person = insert(:person, twitter_handle: "JoeBlow", github_handle: "kokomo")
+      [person: person]
+    end
+
+    test "it gets person with matching ci twitter handle", context do
+      auth = %{provider: :twitter, info: %{nickname: "joeBLOW"}}
+      assert Person.get_by_ueberauth(auth) == context[:person]
+    end
+
+    test "it gets person with matching ci github handle", context do
+      auth = %{provider: :github, info: %{nickname: "KOKOMO"}}
+      assert Person.get_by_ueberauth(auth) == context[:person]
+    end
+
+    test "it returns nil when no matching ci handles" do
+      auth = %{provider: :twitter, info: %{nickname: "joejoe"}}
+      assert Person.get_by_ueberauth(auth) == nil
+    end
+
+    test "it returns nil when no provider match" do
+      assert Person.get_by_ueberauth(%{}) == nil
+    end
+  end
 end

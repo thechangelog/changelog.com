@@ -1,14 +1,15 @@
 defmodule Changelog.AuthView do
-  use Changelog.Web, :view
+  use Changelog.Web, :public_view
+
   alias Changelog.Person
 
   def auth_path(conn, person) do
     {:ok, encoded} = Person.encoded_auth(person)
-    create_sign_in_path(conn, :create, encoded)
+    sign_in_path(conn, :create, encoded)
   end
 
   def auth_url(conn, person) do
     {:ok, encoded} = Person.encoded_auth(person)
-    create_sign_in_url(conn, :create, encoded)
+    sign_in_url(conn, :create, encoded)
   end
 end

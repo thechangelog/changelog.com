@@ -24,3 +24,10 @@ config :changelog, Changelog.Mailer,
   port: 587,
   username: {:system, "CM_SMTP_TOKEN"},
   password: {:system, "CM_SMTP_TOKEN"}
+
+config :quantum, :changelog,
+  cron: [
+    "0 11 * * *": {Changelog.Stats, :process},
+    "0 10 * * *": {Changelog.Slack.Tasks, :import_member_ids}
+  ],
+  global?: true
