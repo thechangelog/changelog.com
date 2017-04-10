@@ -105,15 +105,5 @@ module.exports = [
       new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
       new ExtractTextPlugin("css/admin.css")
     ]
-  }),
-  merge(common, {
-    entry: __dirname + "/web/static/email/email.css",
-    output: {
-      path: __dirname + "/priv/static",
-      filename: "css/email.css"
-    },
-    plugins: [
-      new ExtractTextPlugin("css/email.css")
-    ]
   })
 ];
