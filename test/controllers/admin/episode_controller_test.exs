@@ -1,5 +1,6 @@
 defmodule Changelog.Admin.EpisodeControllerTest do
   use Changelog.ConnCase
+  use Bamboo.Test
 
   alias Changelog.Episode
 
@@ -101,6 +102,42 @@ defmodule Changelog.Admin.EpisodeControllerTest do
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
+  end
+
+  @tag :as_admin
+  test "publishes an episode, optionally sending thanks email to guests", %{conn: conn} do
+    g1 = insert(:person)
+    g2 = insert(:person)
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+    insert(:episode_guest, episode: e, person: g1)
+    insert(:episode_guest, episode: e, person: g2)
+
+    email_opts = %{"from" => "john@doe.com", "reply" => "john@doe.com", "message" => "ohai!"}
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), Map.merge(email_opts, %{"thanks" => "true"}))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 1
+    assert_delivered_email Changelog.Email.guest_thanks(g1, email_opts)
+    assert_delivered_email Changelog.Email.guest_thanks(g2, email_opts)
+  end
+
+  @tag :as_admin
+  test "publishes an episode, optionallly not sending thanks email to guests", %{conn: conn} do
+    g1 = insert(:person)
+    g2 = insert(:person)
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+    insert(:episode_guest, episode: e, person: g1)
+    insert(:episode_guest, episode: e, person: g2)
+
+    email_opts = %{"from" => "john@doe.com", "reply" => "john@doe.com", "message" => "ohai!"}
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), email_opts)
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 1
+    refute_delivered_email Changelog.Email.guest_thanks(g1, email_opts)
+    refute_delivered_email Changelog.Email.guest_thanks(g2, email_opts)
   end
 
   @tag :as_admin

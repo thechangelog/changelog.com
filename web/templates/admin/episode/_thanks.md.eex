@@ -1,0 +1,22 @@
+Your episode of The Changelog is now live! Here is the official link to share with your network of friends:
+
+[<%= episode_url(@conn, :show, @podcast.slug, @episode.slug) %>](<%= episode_url(@conn, :show, @podcast.slug, @episode.slug) %>)
+
+And here’s an embed snippet to use on your website and/or blog post:
+
+```
+<%= embed_code(@episode) %>
+
+```
+
+_(you can see it in action on the [HashiCorp blog](https://www.hashicorp.com/blog/vault-on-the-changelog-podcast.html))_
+
+You’re part of the Changelog family now. If there is _any way_ that we can help you in the future, don’t hesitate to contact us.
+
+We’d also love to send you a Changelog tee as a thanks for your time and all you do for the OSS community. Please reply with your t-shirt size and mailing address so we can get it sent out. Visit [this page](http://www.americanapparel.net/garmentspecs/Index.asp?GarmentSpecID=tr401) to see about our shirts and sizing info so you get one that fits well.
+
+Finally, if you haven't already, please take a look at our [Weekly newsletter](https://changelog.com/weekly) and let us know your thoughts. People seem to love it, but we're always interested in how we can make it better. Related: if you have any future news/announcements email us and we'll happily help you promote.
+
+Thanks again, you were great!
+
+<%= PersonView.first_name(@current_user) %>

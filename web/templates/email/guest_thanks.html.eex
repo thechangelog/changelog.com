@@ -1,0 +1,6 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p>Hey <%= PersonView.first_name(@person) %>,</p>
+    <%= md_to_html(@message) |> raw %>
+  </td>
+</tr>

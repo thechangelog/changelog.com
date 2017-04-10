@@ -1,7 +1,7 @@
 defmodule Changelog.Admin.EpisodeController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Podcast, Episode, EpisodeChannel, EpisodeHost, EpisodeStat}
+  alias Changelog.{Email, Episode, EpisodeChannel, EpisodeHost, EpisodeStat, Mailer, Podcast}
 
   plug :assign_podcast
   plug :scrub_params, "episode" when action in [:create, :update]
@@ -133,7 +133,7 @@ defmodule Changelog.Admin.EpisodeController do
     end
   end
 
-  def publish(conn, _params = %{"id" => slug}, podcast) do
+  def publish(conn, params = %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
@@ -142,6 +142,8 @@ defmodule Changelog.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
+        handle_thanks_email(episode, params)
+
         conn
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
@@ -160,7 +162,7 @@ defmodule Changelog.Admin.EpisodeController do
     changeset = Ecto.Changeset.change(episode, %{published: false})
 
     case Repo.update(changeset) do
-      {:ok, episode} ->
+      {:ok, _episode} ->
         conn
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
@@ -174,6 +176,17 @@ defmodule Changelog.Admin.EpisodeController do
   defp assign_podcast(conn, _) do
     podcast = Repo.get_by!(Podcast, slug: conn.params["podcast_id"])
     assign conn, :podcast, podcast
+  end
+
+  defp handle_thanks_email(episode, params) do
+    if Map.has_key?(params, "thanks") do
+      episode = Episode.preload_guests(episode)
+      email_opts = Map.take(params, ["from", "reply", "subject", "message"])
+
+      for guest <- episode.guests do
+        Email.guest_thanks(guest, email_opts) |> Mailer.deliver_later
+      end
+    end
   end
 
   defp smart_redirect(conn, podcast, _episode, %{"close" => _true}) do

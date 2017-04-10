@@ -1,0 +1,3 @@
+Hey <%= PersonView.first_name(@person) %>,
+
+<%= @message %>

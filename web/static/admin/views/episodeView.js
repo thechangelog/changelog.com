@@ -1,5 +1,6 @@
 import SearchWidget from "components/searchWidget";
 import CalendarField from "components/calendarField";
+import Modal from "components/modal";
 import Clipboard from "clipboard";
 
 export default class EpisodeView {
@@ -30,5 +31,14 @@ export default class EpisodeView {
 
   edit() {
     this.new();
+
+    new Modal(".js-publish-modal", ".publish.modal");
+    $("input[name=thanks]").on("change", function() {
+      if ($(this).is(":checked")) {
+        $(".thanks.segment").show();
+      } else {
+        $(".thanks.segment").hide();
+      }
+    });
   }
 }

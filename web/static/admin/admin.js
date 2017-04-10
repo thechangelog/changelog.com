@@ -13,7 +13,7 @@ let views = {
   "PostView": postView
 };
 
-autosize($("textarea"));
+autosize($("textarea:not(.scroll)"));
 
 $("a[rel=external]").attr("target", "_blank");
 $("input[readonly]").popup({

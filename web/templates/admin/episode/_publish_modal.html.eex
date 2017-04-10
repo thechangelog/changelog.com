@@ -1,0 +1,41 @@
+<div class="ui publish modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Publishing: <em><%= @changeset.data.title %></em>
+  </div>
+  <div class="content">
+    <%= form_tag "#{@action}/publish", method: "POST", id: "publish", class: "ui small form" do %>
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <input type="checkbox" name="thanks" class="hidden" value="1" checked>
+          <label>Send "Thank You" email</label>
+        </div>
+      </div>
+
+      <div class="ui thanks segment">
+        <div class="two fields">
+          <div class="field">
+            <label>From</label>
+            <input type="text" name="from" value="<%= @current_user.email %>">
+          </div>
+          <div class="field">
+            <label>Reply To</label>
+            <input type="text" name="reply" value="editors@changelog.com">
+          </div>
+        </div>
+        <div class="field">
+          <label>Subject</label>
+          <input type="text" name="subject" value="You're on <%= @podcast.name %>!">
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea name="message" class="scroll"><%= render("_thanks.md", assigns) %></textarea>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="actions">
+    <input type="submit" form="publish" name="publish" class="ui primary basic button" value="Publish">
+    <div class="ui basic cancel button">Cancel</div>
+  </div>
+</div>
