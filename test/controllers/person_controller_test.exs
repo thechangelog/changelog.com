@@ -35,7 +35,7 @@ defmodule Changelog.PersonControllerTest do
     end
 
     person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
-    assert_delivered_email Changelog.Email.welcome_email(person)
+    assert_delivered_email Changelog.Email.welcome(person)
     assert html_response(conn, 200) =~ ~r/check your email/i
     assert count(Person) == count_before + 1
   end
@@ -50,7 +50,7 @@ defmodule Changelog.PersonControllerTest do
 
     existing = Repo.one(from p in Person, where: p.email == ^existing.email)
 
-    assert_delivered_email Changelog.Email.welcome_email(existing)
+    assert_delivered_email Changelog.Email.welcome(existing)
     assert html_response(conn, 200) =~ ~r/check your email/i
     assert count(Person) == count_before
   end

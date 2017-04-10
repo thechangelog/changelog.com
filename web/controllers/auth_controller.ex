@@ -9,7 +9,7 @@ defmodule Changelog.AuthController do
   def new(conn, %{"auth" =>  %{"email" => email}}) do
     if person = Repo.one(from p in Person, where: p.email == ^email) do
       person = Person.refresh_auth_token(person)
-      Email.sign_in_email(person) |> Mailer.deliver_later
+      Email.sign_in(person) |> Mailer.deliver_later
       render(conn, "new.html", person: person)
     else
       conn

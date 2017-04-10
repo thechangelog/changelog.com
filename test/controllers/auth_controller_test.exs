@@ -24,7 +24,7 @@ defmodule Changelog.AuthControllerTest do
 
     assert html_response(conn, 200) =~ "Check your email"
     assert person.auth_token != nil
-    assert_delivered_email Changelog.Email.sign_in_email(person)
+    assert_delivered_email Changelog.Email.sign_in(person)
   end
 
   test "submitting the form with unknown email sends you to join", %{conn: conn} do

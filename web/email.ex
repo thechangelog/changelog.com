@@ -19,7 +19,7 @@ defmodule Changelog.Email do
     |> render(:guest_thanks)
   end
 
-  def sign_in_email(person) do
+  def sign_in(person) do
     base_email()
     |> put_header("X-CMail-GroupName", "Sign In")
     |> to(person)
@@ -28,7 +28,7 @@ defmodule Changelog.Email do
     |> render(:sign_in)
   end
 
-  def welcome_email(person) do
+  def welcome(person) do
     base_email()
     |> put_header("X-CMail-GroupName", "Welcome")
     |> to(person)

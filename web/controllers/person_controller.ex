@@ -38,7 +38,7 @@ defmodule Changelog.PersonController do
     person = Person.refresh_auth_token(person)
     community = Newsletter.community()
 
-    Email.welcome_email(person) |> Mailer.deliver_later
+    Email.welcome(person) |> Mailer.deliver_later
     Subscriber.subscribe(community.list_id, person, handle: person.handle)
 
     conn

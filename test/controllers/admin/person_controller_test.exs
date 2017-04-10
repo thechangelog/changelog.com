@@ -34,7 +34,7 @@ defmodule Changelog.Admin.PersonControllerTest do
     end
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
-    assert_delivered_email Changelog.Email.welcome_email(person)
+    assert_delivered_email Changelog.Email.welcome(person)
     assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 1
   end

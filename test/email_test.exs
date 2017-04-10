@@ -8,7 +8,7 @@ defmodule Changelog.EmailTest do
 
   test "sign in email" do
     person = build(:person, auth_token: "12345", auth_token_expires_at: Timex.now)
-    email = Email.sign_in_email(person)
+    email = Email.sign_in(person)
 
     assert email.to == person
     assert email.html_body =~ "sign in"
