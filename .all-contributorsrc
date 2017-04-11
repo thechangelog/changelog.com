@@ -1,0 +1,161 @@
+{
+  "projectName": "changelog.com",
+  "projectOwner": "thechangelog",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "jerodsanto",
+      "name": "Jerod Santo",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8212?v=3",
+      "profile": "https://jerodsanto.net",
+      "contributions": [
+        "code",
+        "doc",
+        "infra"
+      ]
+    },
+    {
+      "login": "adamstac",
+      "name": "Adam Stacoviak",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2933?v=3",
+      "profile": "https://changelog.com/",
+      "contributions": [
+        "design",
+        "code",
+        "financial"
+      ]
+    },
+    {
+      "login": "codyjames",
+      "name": "Cody Peterson",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/378665?v=3",
+      "profile": "http://humanshapes.co",
+      "contributions": [
+        "design",
+        "code"
+      ]
+    },
+    {
+      "login": "jakestutzman",
+      "name": "Jake Stutzman",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/46854?v=3",
+      "profile": "http://elevate.co",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "TuckerCowie",
+      "name": "Tucker Cowie",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7838530?v=3",
+      "profile": "https://github.com/TuckerCowie",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "gerhard",
+      "name": "Gerhard Lazu",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3342?v=3",
+      "profile": "https://github.com/gerhard",
+      "contributions": [
+        "infra",
+        "code"
+      ]
+    },
+    {
+      "login": "dennisreimann",
+      "name": "Dennis Reimann",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/886?v=3",
+      "profile": "https://dennisreimann.de",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "stve",
+      "name": "Steve Agalloco",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/28044?v=3",
+      "profile": "http://beforeitwasround.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mcdado",
+      "name": "David Gasperoni",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/898057?v=3",
+      "profile": "http://david.gasperoni.org",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "nathany",
+      "name": "Nathan Youngman",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4566?v=3",
+      "profile": "https://nathany.com",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "mavimo",
+      "name": "Marco Vito Moscaritolo",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/43941?v=3",
+      "profile": "http://mavimo.org",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "fallenpeace",
+      "name": "0x4e",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5904417?v=3",
+      "profile": "https://github.com/fallenpeace",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sotojuan",
+      "name": "Juan Soto",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8217766?v=3",
+      "profile": "https://juansoto.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "lucidstack",
+      "name": "Andrea Rossi",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1248581?v=3",
+      "profile": "https://github.com/lucidstack",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Tuxified",
+      "name": "Tonći Galić",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/51889?v=3",
+      "profile": "http://tuxified.com",
+      "contributions": [
+        "infra"
+      ]
+    },
+    {
+      "login": "iamjarvo",
+      "name": "Jearvon Dharrie",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/321306?v=3",
+      "profile": "http://jearvondharrie.com",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}
