@@ -7,7 +7,7 @@ defmodule Changelog.Email do
     subject = opts["subject"] || "Your episode is live!"
     message = opts["message"]
 
-    new_email()
+    personal_email()
     |> from(from)
     |> put_header("Reply-To", reply)
     |> put_header("X-CMail-GroupName", "Guest Thanks")
@@ -15,12 +15,11 @@ defmodule Changelog.Email do
     |> subject(subject)
     |> assign(:person, person)
     |> assign(:message, message)
-    |> put_html_layout({Changelog.LayoutView, "email.html"})
     |> render(:guest_thanks)
   end
 
   def sign_in(person) do
-    base_email()
+    logbot_email()
     |> put_header("X-CMail-GroupName", "Sign In")
     |> to(person)
     |> subject("Your Sign In Link")
@@ -29,7 +28,7 @@ defmodule Changelog.Email do
   end
 
   def welcome(person) do
-    base_email()
+    logbot_email()
     |> put_header("X-CMail-GroupName", "Welcome")
     |> to(person)
     |> subject("Welcome! Confirm Your Address")
@@ -37,11 +36,16 @@ defmodule Changelog.Email do
     |> render(:welcome)
   end
 
-  defp base_email do
+  defp logbot_email do
     new_email()
-    |> from("robot@changelog.com")
+    |> from("logbot@changelog.com")
     |> put_header("Reply-To", "editors@changelog.com")
-    |> put_html_layout({Changelog.LayoutView, "email.html"})
+    |> put_html_layout({Changelog.LayoutView, "email_logbot.html"})
+  end
+
+  defp personal_email do
+    new_email()
+    |> put_html_layout({Changelog.LayoutView, "email_personal.html"})
   end
 end
 
