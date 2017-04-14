@@ -12,6 +12,7 @@ defmodule Changelog.PageController do
       :guest          -> guest(conn, Map.get(conn.params, "slug"))
       :home           -> home(conn, conn.params)
       :sponsor        -> sponsor(conn, conn.params)
+      :weekly         -> weekly(conn, conn.params)
       :weekly_archive -> weekly_archive(conn, conn.params)
       name            -> render(conn, name)
     end
@@ -50,16 +51,21 @@ defmodule Changelog.PageController do
     render(conn, :sponsor, weekly: weekly)
   end
 
+  def weekly(conn, _params) do
+    render(conn, :weekly, latest: List.first(get_weekly_issues()))
+  end
+
   def weekly_archive(conn, _params) do
-    issues =
-      ConCache.get_or_store(:app_cache, "weekly_archive", fn() ->
-        campaigns =
-          Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
-          |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
+    render(conn, :weekly_archive, issues: get_weekly_issues())
+  end
 
-        %ConCache.Item{value: campaigns, ttl: :timer.hours(24)}
-      end)
+  defp get_weekly_issues do
+    ConCache.get_or_store(:app_cache, "weekly_archive", fn() ->
+      campaigns =
+        Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
+        |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
 
-    render(conn, :weekly_archive, issues: issues)
+      %ConCache.Item{value: campaigns, ttl: :timer.hours(24)}
+    end)
   end
 end
