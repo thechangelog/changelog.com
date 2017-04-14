@@ -13,12 +13,25 @@ defmodule Changelog.FeedControllerTest do
   end
 
   test "the all feed", %{conn: conn} do
-    post = insert(:published_post)
-    episode = insert(:published_episode)
+    post = insert(:published_post, body: "zomg")
+    episode = insert(:published_episode, summary: "zomg")
     conn = get(conn, feed_path(conn, :all))
     assert conn.status == 200
-    assert conn.resp_body =~ post.slug
-    assert conn.resp_body =~ episode.slug
+    assert conn.resp_body =~ post.title
+    assert conn.resp_body =~ episode.title
+    assert conn.resp_body =~ post.body
+    assert conn.resp_body =~ episode.summary
+  end
+
+  test "the all feed with just titles", %{conn: conn} do
+    post = insert(:published_post, body: "zomg")
+    episode = insert(:published_episode, summary: "zomg")
+    conn = get(conn, feed_path(conn, :all_titles))
+    assert conn.status == 200
+    assert conn.resp_body =~ post.title
+    assert conn.resp_body =~ episode.title
+    refute conn.resp_body =~ post.body
+    refute conn.resp_body =~ episode.summary
   end
 
   test "the podcast feed", %{conn: conn} do

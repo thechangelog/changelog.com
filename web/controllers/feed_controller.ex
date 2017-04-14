@@ -6,26 +6,17 @@ defmodule Changelog.FeedController do
   require Logger
 
   def all(conn, _params) do
-    episodes =
-      Episode.published
-      |> Episode.newest_first
-      |> Repo.all
-      |> Episode.preload_all
-
-    posts =
-      Post.published
-      |> Post.newest_first
-      |> Repo.all
-      |> Post.preload_author
-
-    items = (episodes ++ posts)
-      |> Enum.sort(&(Timex.to_erl(&1.published_at) > Timex.to_erl(&2.published_at)))
-      |> Enum.take(50)
-
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("all.xml", items: items)
+    |> render("all.xml", items: get_all_items())
+  end
+
+  def all_titles(conn, _params) do
+    conn
+    |> put_layout(false)
+    |> put_resp_content_type("application/xml")
+    |> render("all_titles.xml", items: get_all_items())
   end
 
   def podcast(conn, %{"slug" => slug}) do
@@ -73,5 +64,23 @@ defmodule Changelog.FeedController do
     conn
     |> put_layout(false)
     |> render("sitemap.xml", episodes: episodes, posts: posts)
+  end
+
+  defp get_all_items do
+    episodes =
+      Episode.published
+      |> Episode.newest_first
+      |> Repo.all
+      |> Episode.preload_all
+
+    posts =
+      Post.published
+      |> Post.newest_first
+      |> Repo.all
+      |> Post.preload_author
+
+    (episodes ++ posts)
+      |> Enum.sort(&(Timex.to_erl(&1.published_at) > Timex.to_erl(&2.published_at)))
+      |> Enum.take(50)
   end
 end

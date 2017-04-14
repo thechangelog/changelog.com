@@ -75,6 +75,7 @@ defmodule Changelog.Router do
 
     #feeds
     get "/feed", FeedController, :all
+    get "/feed/titles", FeedController, :all_titles
     get "/posts/feed", FeedController, :posts
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
