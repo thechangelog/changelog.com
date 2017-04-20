@@ -4,7 +4,7 @@
 <p>
   <%= link "Direct (RSS)", to: feed_path(@conn, :podcast, @podcast.slug), data: [turbolinks: false] %> &bull;
 <%= if @podcast.itunes_url do %>
-  <%= link "iTunes", to: @podcast.itunes_url %> &bull;
+  <%= link "Apple Podcasts", to: @podcast.itunes_url %> &bull;
   <%= link "Overcast", to: subscribe_on_overcast_url(@podcast) %> &bull;
 <% end %>
   <%= link "Android", to: subscribe_on_android_url(@podcast) %>
