@@ -5,6 +5,7 @@ export default class Modal {
     $(triggerSelector).on("click", (event) => {
       event.preventDefault();
       this.$modal.modal("show");
+      $(".ui.button, [data-popup=true]").popup();
     });
   }
 }

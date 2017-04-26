@@ -7,11 +7,16 @@
     <%= form_tag "#{@action}/publish", method: "POST", id: "publish", class: "ui small form" do %>
       <div class="inline field">
         <div class="ui toggle checkbox">
+        <%= if Enum.any?(@changeset.data.guests) do %>
           <input type="checkbox" name="thanks" class="hidden" value="1" checked>
+        <% else %>
+          <input type="checkbox" class="hidden" value="0" disabled>
+        <% end %>
           <label>Send "Thank You" email</label>
         </div>
       </div>
 
+    <%= if Enum.any?(@changeset.data.guests) do %>
       <div class="ui thanks segment">
         <div class="two fields">
           <div class="field">
@@ -28,10 +33,11 @@
           <input type="text" name="subject" value="You're on <%= @podcast.name %>!">
         </div>
         <div class="field">
-          <label>Message</label>
+          <label>Message <%= help_icon("The guest's name will be added automatically.") %></label>
           <textarea name="message" class="scroll"><%= render("_thanks.md", assigns) %></textarea>
         </div>
       </div>
+    <% end %>
     <% end %>
   </div>
   <div class="actions">
