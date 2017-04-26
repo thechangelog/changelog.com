@@ -10,8 +10,8 @@ defmodule Changelog.LiveControllerTest do
       assert html_response(conn, 200) =~ episode.title
     end
 
-    test "it renders live data when episode started 2.5 hours ago", %{conn: conn} do
-      episode = insert(:episode, recorded_live: true, recorded_at: hours_ago(2.5))
+    test "it renders live data when episode started 1.5 hours ago", %{conn: conn} do
+      episode = insert(:episode, recorded_live: true, recorded_at: hours_ago(1.5))
       conn = get(conn, live_path(conn, :index))
       assert html_response(conn, 200) =~ episode.title
     end

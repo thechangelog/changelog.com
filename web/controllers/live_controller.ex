@@ -4,7 +4,7 @@ defmodule Changelog.LiveController do
   alias Changelog.{Episode, TimeView, Wavestreamer}
 
   def index(conn, _params) do
-    live_window_start = TimeView.hours_ago(3)
+    live_window_start = TimeView.hours_ago(2)
     live_window_end = TimeView.hours_from_now(12)
 
     episodes =

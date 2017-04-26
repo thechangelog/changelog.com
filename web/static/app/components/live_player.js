@@ -6,10 +6,12 @@ export default class LivePlayer {
     this.selector = selector;
     this.isAttached = false;
     this.streaming = false;
+    this.failed = false;
     this.listeners = 0;
     this.audio = new Audio();
     this.audio.type = "audio/mpeg";
     this.audio.autoplay = true;
+    this.audio.addEventListener("error", (e) => { this.loadFailed(e) });
   }
 
   check() {
@@ -63,6 +65,10 @@ export default class LivePlayer {
   }
 
   monitorStatus() {
+    if (this.failed) {
+      return;
+    }
+
     ajax("/live/status", {}, (error, data) => {
       if (data.streaming && !this.streaming) {
         this.load();
@@ -90,6 +96,14 @@ export default class LivePlayer {
     this.audio.src = this.streamSrc;
     this.audio.load();
     this.play();
+  }
+
+  loadFailed(event) {
+    this.failed = true;
+    this.status.text("Error");
+    this.container.removeClass("is-upcoming");
+    console.log("Stream failed to load", "The error:", event.target.error, "The URL", this.audio.src);
+    alert("Doh! Our stream failed to load. Maybe you're behind a firewall that blocks port 1882? If not, try refreshing!");
   }
 
   play() {
