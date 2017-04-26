@@ -25,11 +25,7 @@ defmodule Changelog.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Changelog, []},
-     applications: [:bamboo, :bamboo_smtp, :phoenix, :phoenix_pubsub,
-                    :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex,
-                    :ex_machina, :httpoison, :exjsx, :con_cache, :timex_ecto,
-                    :nimble_csv, :ex_aws, :briefly, :user_agent_parser,
-                    :quantum, :ueberauth_github, :ueberauth_twitter]]
+     extra_applications: [:logger]]
   end
 
   # Specifies which paths to compile per environment.
