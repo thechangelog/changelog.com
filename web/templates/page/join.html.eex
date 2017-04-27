@@ -9,7 +9,7 @@
           <a href="/auth/twitter" title="Sign in via Twitter" class="twitter">via Twitter</a>
         </li>
         <li class="button_list-item">
-          <a href="/auth/github" title="Sign in via GitHub" class="github">via GitHub</a>
+          <a href="/auth/github?scope=user" title="Sign in via GitHub" class="github">via GitHub</a>
         </li>
       </ul>
 
