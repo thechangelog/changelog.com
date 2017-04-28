@@ -5,7 +5,7 @@
       <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
 
     <%= if Enum.any?(@episodes) do %>
-      <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes)) %>
+      <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes), podcast: @podcast) %>
     <% end %>
 
       <div class="podcast-header_hosts">

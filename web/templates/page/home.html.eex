@@ -21,7 +21,7 @@
           </h3>
         </div>
         <div class="featured_podcast_footer">
-          <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode) %>
+          <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: episode, podcast: episode.podcast) %>
           <%= if Enum.any?(light_logo_sponsorships) do %>
             <aside>
               <h4>Brought to you by</h4>

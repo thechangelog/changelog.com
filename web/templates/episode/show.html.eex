@@ -21,7 +21,7 @@
         <% end %>
       </div>
 
-      <%= render("_play_bar.html", conn: @conn, episode: @episode) %>
+      <%= render("_play_bar.html", assigns) %>
 
       <% dark_logo_sponsorships = sponsorships_with_dark_logo(@episode) %>
       <%= if Enum.any?(dark_logo_sponsorships) do %>

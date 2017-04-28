@@ -11,7 +11,7 @@
 
     <%= link "Subscribe",
         title: "",
-        to: PodcastView.subscribe_link(@episode.podcast),
+        to: PodcastView.subscribe_link(@podcast),
         class: "toolbar_item toolbar_item--button",
         style: "background-image: url('#{static_url(@conn, "/images/icon-subscribe.svg")}')" %>
 
