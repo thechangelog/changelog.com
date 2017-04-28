@@ -40,7 +40,7 @@ config :ex_aws,
 
 config :ueberauth, Ueberauth,
   providers: [
-    github: {Ueberauth.Strategy.Github, []},
+    github: {Ueberauth.Strategy.Github, [default_scope: "user"]},
     twitter: {Ueberauth.Strategy.Twitter, []}
   ]
 
@@ -48,11 +48,6 @@ config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: System.get_env("GITHUB_CLIENT_ID"),
   client_secret: System.get_env("GITHUB_CLIENT_SECRET")
 
-config :ueberauth, Ueberauth,
-  providers: [
-    github: {Ueberauth.Strategy.Github, [default_scope: "user"]}
-  ]
-  
 config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
   consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
