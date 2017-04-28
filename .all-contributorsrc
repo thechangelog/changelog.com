@@ -173,6 +173,15 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/197567?v=3",
       "profile": "http://twitter.com/lee_jarvis",
       "contributions": []
+    },
+    {
+      "login": "agustif",
+      "name": "Agusti Fernandez",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6601142?v=3",
+      "profile": "https://github.com/agustif",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
