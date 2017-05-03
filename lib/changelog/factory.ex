@@ -2,6 +2,13 @@ defmodule Changelog.Factory do
   use ExMachina.Ecto, repo: Changelog.Repo
   import Changelog.TimeView, only: [hours_from_now: 1, hours_ago: 1]
 
+  def benefit_factory do
+    %Changelog.Benefit{
+      offer: "Free stuff!",
+      sponsor: build(:sponsor),
+    }
+  end
+
   def channel_factory do
     %Changelog.Channel{
       name: sequence(:name, &"Channel #{&1}"),

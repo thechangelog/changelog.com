@@ -46,6 +46,7 @@ defmodule Changelog.Router do
     get "/search/post", SearchController, :post
     get "/search/sponsor", SearchController, :sponsor
 
+    resources "/benefits", BenefitController, except: [:show]
     resources "/channels", ChannelController, except: [:show]
     resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
@@ -53,7 +54,7 @@ defmodule Changelog.Router do
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
       post "/episodes/:id/unpublish", EpisodeController, :unpublish, as: :episode
     end
-    resources "/posts", PostController
+    resources "/posts", PostController, except: [:show]
     resources "/sponsors", SponsorController
   end
 

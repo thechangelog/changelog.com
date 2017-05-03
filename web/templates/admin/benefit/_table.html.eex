@@ -1,0 +1,35 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Sponsor</th>
+      <th>Offer</th>
+      <th>Code</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for benefit <- @benefits do %>
+    <tr>
+      <td>
+        <%= benefit.sponsor.name %>
+      </td>
+      <td><%= benefit.offer %></td>
+      <td><%= benefit.code %></td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= link to: admin_benefit_path(@conn, :edit, benefit), class: "ui button" do %>
+            <i class="edit icon"></i>
+            Edit
+          <% end %>
+
+          <%= link to: admin_benefit_path(@conn, :delete, benefit), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
+            <i class="trash icon"></i>
+            Delete
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

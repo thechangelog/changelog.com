@@ -12,9 +12,18 @@ defmodule Changelog.Benefit do
     timestamps()
   end
 
-  def changeset(struct, params \\ %{}) do
+  def admin_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(offer notes code link_url sponsor_id))
     |> validate_required([:offer, :sponsor_id])
+  end
+
+  def preload_all(benefit) do
+    benefit
+    |> preload_sponsor
+  end
+
+  def preload_sponsor(benefit) do
+    Repo.preload(benefit, :sponsor)
   end
 end

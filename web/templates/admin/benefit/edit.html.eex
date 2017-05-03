@@ -1,0 +1,8 @@
+<div class="ui basic segment text container">
+  <h1 class="ui dividing header">
+    <%= link "Benefits", to: admin_benefit_path(@conn, :index) %>
+    &raquo; Edit
+  </h1>
+
+  <%= render("_form.html", changeset: @changeset, action: admin_benefit_path(@conn, :update, @benefit)) %>
+</div>

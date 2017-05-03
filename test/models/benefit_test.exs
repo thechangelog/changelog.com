@@ -3,13 +3,15 @@ defmodule Changelog.BenefitTest do
 
   alias Changelog.Benefit
 
-  test "changeset with valid attributes" do
-    changeset = Benefit.changeset(%Benefit{}, %{offer: "Free stuff!", sponsor_id: 1})
-    assert changeset.valid?
-  end
+  describe "admin_changeset" do
+    test "with valid attributes" do
+      changeset = Benefit.admin_changeset(%Benefit{}, %{offer: "Free stuff!", sponsor_id: 1})
+      assert changeset.valid?
+    end
 
-  test "changeset with invalid attributes" do
-    changeset = Benefit.changeset(%Benefit{}, %{})
-    refute changeset.valid?
+    test "with invalid attributes" do
+      changeset = Benefit.admin_changeset(%Benefit{}, %{})
+      refute changeset.valid?
+    end
   end
 end

@@ -13,7 +13,7 @@
 
   <div class="field required <%= error_class(f, :author_id) %>">
     <%= label f, :author_id, "Author" %>
-    <div class="ui fluid remote search selection dropdown">
+    <div class="ui fluid remote author search selection dropdown">
       <%= hidden_input f, :author_id %>
       <i class="dropdown icon"></i>
       <%= if is_persisted(f.data) do %>

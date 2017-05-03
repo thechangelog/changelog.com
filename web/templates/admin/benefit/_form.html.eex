@@ -1,0 +1,45 @@
+<%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
+  <div class="field required <%= error_class(f, :sponsor_id) %>">
+    <%= label(f, :sponsor_id, "Sponsor") %>
+    <div class="ui fluid remote sponsor search selection dropdown">
+      <%= hidden_input(f, :sponsor_id) %>
+      <i class="dropdown icon"></i>
+      <%= if is_persisted(f.data) do %>
+        <div class="selected text"><%= f.data.sponsor.name %></div>
+      <% else %>
+        <div class="default text">Select Sponsor</div>
+      <% end %>
+    </div>
+    <%= error_message(f, :sponsor_id) %>
+  </div>
+
+  <div class="field required <%= error_class(f, :offer) %>">
+    <%= label(f, :offer, "Offer") %>
+    <%= text_input(f, :offer, placeholder: "Get a $20 hosting credit when creating a new account") %>
+    <%= error_message(f, :offer) %>
+  </div>
+
+  <div class="two fields">
+    <div class="field <%= error_class(f, :code) %>">
+      <%= label(f, :code) %>
+      <%= text_input(f, :code, placeholder: "changelog-20") %>
+      <%= error_message(f, :code) %>
+    </div>
+
+    <div class="field <%= error_class(f, :link_url) %>">
+      <%= label(f, :link_url) %>
+      <%= text_input(f, :link_url, placeholder: "https://linode.com/changelog-members") %>
+      <%= error_message(f, :link_url) %>
+    </div>
+  </div>
+
+  <div class="field <%= error_class(f, :notes) %>">
+    <%= label(f, :notes) do %>
+      Notes <%= help_icon("Markdown supported.") %>
+    <% end %>
+    <%= text_input(f, :notes, placeholder: "This offer is for NEW ACCOUNTS only") %>
+    <%= error_message(f, :notes) %>
+  </div>
+
+  <%= form_actions() %>
+<% end %>
