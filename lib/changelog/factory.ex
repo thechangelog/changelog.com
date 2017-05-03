@@ -6,6 +6,7 @@ defmodule Changelog.Factory do
     %Changelog.Benefit{
       offer: "Free stuff!",
       sponsor: build(:sponsor),
+      link_url: "https://benefits.com"
     }
   end
 
