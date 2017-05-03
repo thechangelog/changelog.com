@@ -24,6 +24,7 @@ defmodule Changelog.Admin.PageController do
   defp draft_episodes do
     Episode.unpublished
     |> Episode.newest_last(:recorded_at)
+    |> Episode.distinct_podcast
     |> Repo.all
     |> Episode.preload_podcast
   end

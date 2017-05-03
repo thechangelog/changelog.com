@@ -1,7 +1,7 @@
 <div class="ui basic segment">
   <div class="ui stackable grid">
     <div class="ui eight wide column">
-      <h1 class="ui dividing header">Episode Drafts</h1>
+      <h1 class="ui dividing header">Episode Drafts (Next Up)</h1>
     <%= if Enum.any?(@draft_episodes) do %>
       <%= render("_draft_episodes_table.html", assigns) %>
     <% else %>

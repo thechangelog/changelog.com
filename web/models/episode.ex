@@ -110,6 +110,10 @@ defmodule Changelog.Episode do
     from e in query, limit: ^count
   end
 
+  def distinct_podcast(query) do
+    from e in query, distinct: e.podcast_id
+  end
+
   def search(query, search_term) do
     from e in query,
       where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^search_term)
