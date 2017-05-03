@@ -2,7 +2,7 @@ defmodule Changelog.Sponsor do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.{EpisodeSponsor, Regexp}
+  alias Changelog.{Benefit, EpisodeSponsor, Regexp}
 
   schema "sponsors" do
     field :name, :string
@@ -15,6 +15,7 @@ defmodule Changelog.Sponsor do
     field :dark_logo, Changelog.DarkLogo.Type
     field :light_logo, Changelog.LightLogo.Type
 
+    has_many :benefits, Benefit, on_delete: :delete_all
     has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
 
     timestamps()
