@@ -34,7 +34,7 @@ defmodule Changelog.EpisodeViewTest do
     end
   end
 
-  test "megabtyes" do
+  test "megabytes" do
     assert megabytes(%Episode{bytes: 1000}) == 0
     assert megabytes(%Episode{bytes: 1_000_000}) == 1
     assert megabytes(%Episode{bytes: 68_530_176}) == 69
