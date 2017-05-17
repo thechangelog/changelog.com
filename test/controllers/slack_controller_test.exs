@@ -34,4 +34,43 @@ defmodule Changelog.SlackControllerTest do
       assert conn.resp_body =~ "There aren't any"
     end
   end
+
+  describe "the event endpoint" do
+    setup do
+      conn = Plug.Conn.put_req_header(build_conn(), "accept", "application/json")
+      {:ok, conn: conn}
+    end
+
+    test "it responds to verification challenge", %{conn: conn} do
+      conn = post(conn, slack_path(conn, :event, %{
+        "type" => "url_verification",
+        "token" => "Jhj5dZrVaK7ZwHHjRyZWjbDl",
+        "challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"
+      }))
+
+      assert json_response(conn, 200) == %{"challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"}
+    end
+
+    test "it responds to the team_join event", %{conn: conn} do
+      conn = post(conn, slack_path(conn, :event, %{
+        "type" => "event_callback",
+        "event" => %{
+          "type" => "team_join",
+          "user" => %{
+            "id" => "U2XU53R",
+            "name" => "@gracehopper"
+          }
+        }
+
+      }))
+
+      assert conn.status == 200
+    end
+
+    test "it responds with method not allowed for unsupported events", %{conn: conn} do
+      conn = post(conn, slack_path(conn, :event, %{"type" => "event_callback", "event" => %{"type" => "channel_join"}}))
+
+      assert conn.status == 405
+    end
+  end
 end

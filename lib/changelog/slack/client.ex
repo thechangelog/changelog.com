@@ -20,13 +20,19 @@ defmodule Changelog.Slack.Client do
   def handle({:ok, %HTTPoison.Response{status_code: 200, body: body}}), do: body
 
   def invite(email) do
-    token = Application.get_env(:changelog, :slack_api_token)
+    token = Application.get_env(:changelog, :slack_invite_api_token)
     form = ~s(email=#{email}&token=#{token}&resend=true)
     post("/users.admin.invite", form) |> handle
   end
 
   def list do
-    token = Application.get_env(:changelog, :slack_api_token)
+    token = Application.get_env(:changelog, :slack_app_api_token)
     get("/users.list?token=#{token}") |> handle
+  end
+
+  def im(username, message) do
+    token = Application.get_env(:changelog, :slack_app_api_token)
+    form = ~s(token=#{token}&channel=#{username}&text=#{message})
+    post("/chat.postMessage", form) |> handle
   end
 end
