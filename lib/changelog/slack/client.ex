@@ -30,9 +30,24 @@ defmodule Changelog.Slack.Client do
     get("/users.list?token=#{token}") |> handle
   end
 
-  def im(username, message) do
+  def im(user, message) do
+    if String.starts_with?(user, "@") do
+      message(user, message)
+    else
+      %{"channel" => %{"id" => channel}} = open_im(user)
+      message(channel, message)
+    end
+  end
+
+  def message(channel, message) do
     token = Application.get_env(:changelog, :slack_app_api_token)
-    form = ~s(token=#{token}&channel=#{username}&text=#{message})
+    form = ~s(token=#{token}&channel=#{channel}&as_user=true&text=#{message})
     post("/chat.postMessage", form) |> handle
+  end
+
+  defp open_im(user_id) do
+    token = Application.get_env(:changelog, :slack_app_api_token)
+    form = ~s(token=#{token}&user=#{user_id})
+    post("/im.open", form) |> handle
   end
 end
