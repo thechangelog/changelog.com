@@ -8,13 +8,19 @@ defmodule Changelog.Stats do
   require Logger
 
   def process do
-    yesterday = Timex.subtract(Timex.today, Timex.Duration.from_days(1))
-    process(yesterday)
+    start_date = EpisodeStat.oldest_date
+    end_date = Timex.today
+
+    for date <- Timex.Interval.new(from: start_date, until: end_date) do
+      if !EpisodeStat.any_on_date?(date) do
+        process(date)
+      end
+    end
   end
 
   def process(date) do
     Logger.info("Stats: Start processing for #{date}")
-    podcasts = Podcast.public |> Repo.all
+    podcasts = Repo.all(Podcast.public)
     process(date, podcasts)
     Logger.info("Stats: Finished processing for #{date}")
   end

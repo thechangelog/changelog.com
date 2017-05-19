@@ -11,11 +11,25 @@ defmodule Changelog.EpisodeStat do
 
     belongs_to :episode, Changelog.Episode
     belongs_to :podcast, Changelog.Podcast
+
     timestamps()
   end
 
   def newest_first(query, field \\ :date) do
-    from e in query, order_by: [desc: ^field]
+    from s in query, order_by: [desc: ^field]
+  end
+
+  def on_date(date, query \\ __MODULE__) do
+    from s in query, where: s.date == ^date
+  end
+
+  def oldest_date do
+    Repo.one(from s in __MODULE__, select: [min(s.date)], limit: 1)
+    |> List.first
+  end
+
+  def any_on_date?(date) do
+    Repo.count(on_date(date)) > 0
   end
 
   def changeset(struct, params \\ %{}) do
