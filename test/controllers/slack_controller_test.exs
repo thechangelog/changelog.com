@@ -1,13 +1,19 @@
 defmodule Changelog.SlackControllerTest do
   use Changelog.ConnCase
 
-  describe "the countdown robot" do
+  describe "the countdown endpoint" do
     setup do
       {:ok, conn: build_conn(), podcast: insert(:podcast, name: "Go Time", slug: "gotime")}
     end
 
     test "it works when no episode is found", %{conn: conn, podcast: podcast} do
       conn = get(conn, slack_path(conn, :countdown, podcast.slug))
+      assert conn.status == 200
+      assert conn.resp_body =~ "There aren't any"
+    end
+
+    test "it works with post requests", %{conn: conn, podcast: podcast} do
+      conn = post(conn, slack_path(conn, :countdown, podcast.slug))
       assert conn.status == 200
       assert conn.resp_body =~ "There aren't any"
     end

@@ -68,6 +68,7 @@ defmodule Changelog.Router do
     pipe_through [:api]
 
     get "/countdown/:slug", SlackController, :countdown
+    post "/countdown/:slug", SlackController, :countdown
     post "/event", SlackController, :event
   end
 
