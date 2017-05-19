@@ -25,7 +25,8 @@ defmodule Changelog.SlackController do
     json(conn, %{challenge: challenge})
   end
 
-  def event(conn, %{"type" => "event_callback", "event" => %{"type" => "team_join", "user" => _user}}) do
+  def event(conn, %{"type" => "event_callback", "event" => %{"type" => "team_join", "user" => user}}) do
+    Logger.info("Slack: team_join #{inspect(user)}")
     json(conn, %{})
   end
 
