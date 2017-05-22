@@ -11,7 +11,8 @@ defmodule Changelog.Stats do
     start_date = EpisodeStat.oldest_date
     end_date = Timex.today
 
-    for date <- Timex.Interval.new(from: start_date, until: end_date) do
+    for time <- Timex.Interval.new(from: start_date, until: end_date) do
+      date = Timex.to_date(time)
       if !EpisodeStat.any_on_date?(date) do
         process(date)
       end
