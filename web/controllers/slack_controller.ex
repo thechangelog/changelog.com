@@ -2,7 +2,7 @@ defmodule Changelog.SlackController do
   use Changelog.Web, :controller
 
   alias Changelog.{Episode}
-  alias Changelog.Slack.Countdown
+  alias Changelog.Slack.{Client, Countdown, Messages, Tasks}
 
   require Logger
 
@@ -25,8 +25,11 @@ defmodule Changelog.SlackController do
     json(conn, %{challenge: challenge})
   end
 
-  def event(conn, %{"type" => "event_callback", "event" => %{"type" => "team_join", "user" => user}}) do
-    Logger.info("Slack: team_join #{inspect(user)}")
+  def event(conn, %{"type" => "event_callback", "event" => %{"type" => "team_join", "user" => member}}) do
+    id = Map.get(member, "id")
+    email = get_in(member, ["profile", "email"]) || ""
+    Client.im(id, Messages.welcome())
+    Tasks.import_member_id(id, email)
     json(conn, %{})
   end
 

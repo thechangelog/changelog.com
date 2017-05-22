@@ -1,4 +1,4 @@
-defmodule Changelog.Slack.Welcome do
+defmodule Changelog.Slack.Messages do
   def welcome do
     ~s"""
     Welcome to Changelog's Community Slack team! :clap:

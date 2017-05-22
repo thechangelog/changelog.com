@@ -123,7 +123,7 @@ defmodule Changelog.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
-  test "publishes an episode, optionallly not sending thanks email to guests", %{conn: conn} do
+  test "publishes an episode, optionally not sending thanks email to guests", %{conn: conn} do
     g1 = insert(:person)
     g2 = insert(:person)
     p = insert(:podcast)

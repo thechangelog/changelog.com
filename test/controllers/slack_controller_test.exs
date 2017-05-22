@@ -1,6 +1,10 @@
 defmodule Changelog.SlackControllerTest do
   use Changelog.ConnCase
 
+  import Mock
+
+  alias Changelog.Slack.{Client, Messages, Tasks}
+
   describe "the countdown endpoint" do
     setup do
       {:ok, conn: build_conn(), podcast: insert(:podcast, name: "Go Time", slug: "gotime")}
@@ -57,20 +61,33 @@ defmodule Changelog.SlackControllerTest do
       assert json_response(conn, 200) == %{"challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"}
     end
 
-    test "it responds to the team_join event", %{conn: conn} do
-      conn = post(conn, slack_path(conn, :event, %{
-        "type" => "event_callback",
-        "event" => %{
-          "type" => "team_join",
-          "user" => %{
-            "id" => "U2XU53R",
-            "name" => "@gracehopper"
-          }
-        }
+    test "it responds to the team_join event, importing id & sending welcome message", %{conn: conn} do
+      with_mocks([
+        {Client,
+         [],
+        [im: fn(_, _) -> nil end]},
+        {Tasks,
+         [],
+         [import_member_id: fn(_, _) -> nil end]}
+      ]) do
+        conn = post(conn, slack_path(conn, :event, %{
+            "type" => "event_callback",
+            "event" => %{
+              "type" => "team_join",
+              "user" => %{
+                "id" => "U2XU53R",
+                "name" => "gracehopper",
+                "profile" => %{
+                  "email" => "grace@hopper.com"
+                }
+              }
+            }
+          }))
 
-      }))
-
-      assert conn.status == 200
+        assert called Client.im("U2XU53R", Messages.welcome())
+        assert called Tasks.import_member_id("U2XU53R", "grace@hopper.com")
+        assert conn.status == 200
+      end
     end
 
     test "it responds with method not allowed for unsupported events", %{conn: conn} do
