@@ -27,6 +27,7 @@ defmodule Changelog.Meta.Title do
   defp get(%{view_module: PageView, view_template: template}) do
     case template do
       "community.html" -> "Join Changelog's Global Hacker Community"
+      "coc.html"       -> "Code of Conduct"
       "home.html"      -> nil
       "weekly.html"    -> "Subscribe to Changelog Weekly"
       "nightly.html"   -> "Subscribe to Changelog Nightly"

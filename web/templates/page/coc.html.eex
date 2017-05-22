@@ -1,0 +1,54 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Code of Conduct</h2>
+    </header>
+    <div class="content_body">
+      <h3>Our Pledge</h3>
+
+      <p>In the interest of fostering an open and welcoming environment, we as Changelog community members pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.</p>
+
+    <h3>Our Standards</h3>
+
+    <p>Examples of behavior that contributes to creating a positive environment include:</p>
+
+    <ul>
+      <li>Using welcoming and inclusive language</li>
+      <li>Being respectful of differing viewpoints and experiences</li>
+      <li>Gracefully accepting constructive criticism</li>
+      <li>Focusing on what is best for the community</li>
+      <li>Showing empathy towards other community members</li>
+    </ul>
+
+    <p>Examples of unacceptable behavior by participants include:</p>
+
+    <ul>
+      <li>The use of sexualized language or imagery and unwelcome sexual attention or advances</li>
+      <li>Trolling, insulting/derogatory comments, and personal or political attacks</li>
+      <li>Public or private harassment</li>
+      <li>Publishing others' private information, such as a physical or electronic address, without explicit permission</li>
+      <li>Other conduct which could reasonably be considered inappropriate in a professional setting</li>
+    </ul>
+
+    <h3>Our Responsibilities</h3>
+
+    <p>Changelog staff members are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.</p>
+
+    <p>Changelog staff members have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.</p>
+
+    <h3>Scope</h3>
+
+    <p>This Code of Conduct applies both within project spaces and in public spaces when an individual is representing Changelog or its community. Examples of representing Changelog or community include using an official Changelog email address, posting via an official social media account, or acting as an appointed
+representative at an online or offline event. Representation of Changelog may be further defined and clarified by Changelog staff members.</p>
+
+    <h3>Enforcement</h3>
+
+    <p>Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the Changelog team at editors@changelog.com. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The Changelog team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.</p>
+
+    <p>Changelog staff who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of Changelog leadership.</p>
+
+    <h3>Attribution</h3>
+
+    <p>This Code of Conduct is adapted from the <a href="http://contributor-covenant.org">Contributor Covenant</a>, version <a href="http://contributor-covenant.org/version/1/4">1.4</a></p>
+  </div>
+</article>

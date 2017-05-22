@@ -107,6 +107,7 @@ defmodule Changelog.Router do
     # static pages
     get "/", PageController, :home
     get "/about", PageController, :about
+    get "/coc", PageController, :coc
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015

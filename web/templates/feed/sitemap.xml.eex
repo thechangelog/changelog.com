@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc><%= page_url(@conn, :home) %></loc></url>
   <url><loc><%= page_url(@conn, :about) %></loc></url>
+  <url><loc><%= page_url(@conn, :coc) %></loc></url>
   <url><loc><%= page_url(@conn, :contact) %></loc></url>
   <url><loc><%= page_url(@conn, :films) %></loc></url>
   <url><loc><%= page_url(@conn, :community) %></loc></url>
@@ -14,6 +15,7 @@
   <url><loc><%= page_url(@conn, :nightly) %></loc></url>
   <url><loc><%= live_url(@conn, :index) %></loc></url>
 
+  <url><loc><%= podcast_url(@conn, :index) %></loc></url>
   <%= for podcast <- @podcasts ++ [Podcast.master] do %>
     <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
     <url><loc><%= podcast_url(@conn, :archive, podcast.slug) %></loc></url>

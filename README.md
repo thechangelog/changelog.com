@@ -28,6 +28,10 @@ If you have questions about any of the code, holler [@Changelog](https://twitter
 
 Absolutely! Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
 
+## Code of Conduct
+
+[Contributor Code of Conduct](https://changelog.com/coc). By participating in this project you agree to abide by its terms.
+
 ## How do I run the code?
 
 Assuming you're on macOS:
