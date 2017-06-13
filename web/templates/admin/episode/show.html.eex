@@ -53,22 +53,37 @@
 
         <% countries = EpisodeStat.downloads_by_country(@stats) %>
 
-        <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for country <- Enum.take(countries, 10) do %>
-          <div class="item"><%= Changelog.Countries.name(elem(country, 0)) %> &ndash; (<%= round(elem(country, 1)) %>)</div>
-        <% end %>
-        </div>
+        <table class="ui basic compact striped table">
+          <tbody>
+          <%= for {country, index} <- Enum.take(countries, 10) |> Enum.with_index do %>
+            <% downloads = round(elem(country, 1)) %>
+            <tr>
+              <td><%= index + 1 %>) <%= Changelog.Countries.name(elem(country, 0)) %></td>
+              <td><%= downloads %></td>
+              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
 
         <button class="ui basic tiny centered button js-modal" data-modal="#countries-modal">View All</button>
 
         <div class="ui small modal" id="countries-modal">
           <div class="header">All Countries</div>
           <div class="content">
-            <ol>
-            <%= for country <- countries do %>
-              <li><%= Changelog.Countries.name(elem(country, 0)) %> &ndash; (<%= round(elem(country, 1)) %>)</li>
-            <% end %>
-            </ol>
+            <table class="ui striped table">
+              <tbody>
+              <%= for {country, index} <- Enum.with_index(countries) do %>
+                <% downloads = round(elem(country, 1)) %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= Changelog.Countries.name(elem(country, 0)) %></td>
+                  <td><%= downloads %></td>
+                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -85,22 +100,36 @@
 
         <% clients = EpisodeStat.downloads_by_client(@stats) %>
 
-        <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for client <- Enum.take(clients, 10) do %>
-          <div class="item"><%= client_name(elem(client, 0)) %> &ndash; (<%= round(elem(client, 1)) %>)</div>
-        <% end %>
-        </div>
+        <table class="ui basic compact striped table">
+          <tbody>
+          <%= for {client, index} <- Enum.take(clients, 10) |> Enum.with_index do %>
+            <% downloads = round(elem(client, 1)) %>
+            <tr>
+              <td><%= index + 1 %>) <%= client_name(elem(client, 0)) %></td>
+              <td><%= downloads %></td>
+              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
 
         <button class="ui basic tiny centered button js-modal" data-modal="#clients-modal">View All</button>
 
         <div class="ui small modal" id="clients-modal">
           <div class="header">All Clients</div>
           <div class="content">
-            <ol>
-            <%= for client <- clients do %>
-              <li><%= client_name(elem(client, 0)) %> &ndash; (<%= round(elem(client, 1)) %>)</li>
-            <% end %>
-            </ol>
+            <table class="ui striped table">
+              <tbody>
+              <%= for {client, index} <- Enum.with_index(clients) do %>
+                <% downloads = round(elem(client, 1)) %>
+                <tr>
+                  <td><%= index + 1 %>) <%= client_name(elem(client, 0)) %></td>
+                  <td><%= downloads %></td>
+                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -117,22 +146,36 @@
 
         <% browsers = EpisodeStat.downloads_by_browser(@stats) %>
 
-        <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for browser <- Enum.take(browsers, 10) do %>
-          <div class="item"><%= elem(browser, 0) %> &ndash; (<%= round(elem(browser, 1)) %>)</div>
-        <% end %>
-        </div>
+        <table class="ui basic compact striped table">
+          <tbody>
+          <%= for {browser, index} <- Enum.take(browsers, 10) |> Enum.with_index do %>
+            <% downloads = round(elem(browser, 1)) %>
+            <tr>
+              <td><%= index + 1 %>) <%= elem(browser, 0) %></td>
+              <td><%= downloads %></td>
+              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
 
         <button class="ui basic tiny centered button js-modal" data-modal="#browsers-modal">View All</button>
 
         <div class="ui small modal" id="browsers-modal">
           <div class="header">All Browsers</div>
           <div class="content">
-            <ol>
-            <%= for browser <- browsers do %>
-              <li><%= elem(browser, 0) %> &ndash; (<%= round(elem(browser, 1)) %>)</li>
-            <% end %>
-            </ol>
+            <table class="ui striped table">
+              <tbody>
+              <%= for {browser, index} <- Enum.with_index(browsers) do %>
+                <% downloads = round(elem(browser, 1)) %>
+                <tr>
+                  <td><%= index + 1 %>) <%= elem(browser, 0) %></td>
+                  <td><%= downloads %></td>
+                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -149,22 +192,36 @@
 
         <% oses = EpisodeStat.downloads_by_os(@stats) %>
 
-        <div class="ui relaxed divided ordered list" style="text-align: left;">
-        <%= for os <- Enum.take(oses, 10) do %>
-          <div class="item"><%= elem(os, 0) %> &ndash; (<%= round(elem(os, 1)) %>)</div>
-        <% end %>
-        </div>
+        <table class="ui basic compact striped table">
+          <tbody>
+          <%= for {os, index} <- Enum.take(oses, 10) |> Enum.with_index do %>
+            <% downloads = round(elem(os, 1)) %>
+            <tr>
+              <td><%= index + 1 %>) <%= elem(os, 0) %></td>
+              <td><%= downloads %></td>
+              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
 
         <button class="ui basic tiny centered button js-modal" data-modal="#oses-modal">View All</button>
 
         <div class="ui small modal" id="oses-modal">
           <div class="header">All OSes</div>
           <div class="content">
-            <ol>
-            <%= for os <- oses do %>
-              <li><%= elem(os, 0) %> &ndash; (<%= round(elem(os, 1)) %>)</li>
-            <% end %>
-            </ol>
+            <table class="ui striped table">
+              <tbody>
+              <%= for {os, index} <- Enum.with_index(oses) do %>
+                <% downloads = round(elem(os, 1)) %>
+                <tr>
+                  <td><%= index + 1 %>) <%= elem(os, 0) %></td>
+                  <td><%= downloads %></td>
+                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

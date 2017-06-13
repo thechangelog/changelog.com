@@ -35,6 +35,10 @@ defmodule Changelog.Admin.EpisodeView do
     end
   end
 
+  def percent_of_downloads(episode, count) do
+     ((count / episode.download_count) * 100) |> round
+  end
+
   def status_label(episode) do
     if episode.published do
       content_tag :span, "Published", class: "ui tiny green basic label"
