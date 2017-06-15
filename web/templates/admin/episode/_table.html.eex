@@ -31,20 +31,17 @@
       <td class="center aligned">
         <div class="ui small basic buttons">
         <%= if episode.published do %>
-          <%= link to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button" do %>
+          <%= link to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui icon button" do %>
             <i class="line chart icon"></i>
-            Stats
           <% end %>
         <% end %>
 
-          <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui button" do %>
+          <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui icon button" do %>
             <i class="eye icon"></i>
-            Public
           <% end %>
 
-          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug), class: "ui button" do %>
+          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug), class: "ui icon button" do %>
             <i class="edit icon"></i>
-            Edit
           <% end %>
         </div>
       </td>
