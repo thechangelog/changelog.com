@@ -4,7 +4,7 @@
     <title><%= @podcast.name %></title>
     <copyright>All rights reserved</copyright>
     <link><%= PodcastView.vanity_domain_with_fallback_url(@podcast) %></link>
-    <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="self" type="application/rss+xml" />
+    <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="application/rss+xml" />
     <language>en-us</language>
     <description><%= md_to_text(@podcast.description) %> <%= @podcast.extended_description %></description>
     <itunes:subtitle><%= @podcast.name %></itunes:subtitle>
