@@ -8,14 +8,10 @@ defmodule Changelog.Stats do
   require Logger
 
   def process do
-    start_date = EpisodeStat.oldest_date
-    end_date = Timex.today
+    date_range = Timex.Interval.new(from: Timex.shift(Timex.today, weeks: -1), until: Timex.today)
 
-    for time <- Timex.Interval.new(from: start_date, until: end_date) do
-      date = Timex.to_date(time)
-      if !EpisodeStat.any_on_date?(date) do
-        process(date)
-      end
+    for time <- date_range do
+      Timex.to_date(time) |> process
     end
   end
 
