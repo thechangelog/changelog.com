@@ -5,7 +5,7 @@ import ChangelogAudio from "components/audio";
 import Playbar from "components/playbar";
 
 export default class OnsitePlayer {
-  constructor(selector) {
+  constructor(selector, window) {
     // not using turbolinks:load event because we want this to run exactly once
     window.onload = () => {
       this.audio = new ChangelogAudio();
@@ -13,6 +13,7 @@ export default class OnsitePlayer {
       this.audioLoaded = false;
       this.playbar = new Playbar();
       this.currentlyLoaded = "";
+      this.deepLink = 0;
       this.attachUI(selector);
       this.attachEvents();
       this.attachKeyboardShortcuts();

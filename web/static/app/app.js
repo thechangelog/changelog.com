@@ -1,7 +1,7 @@
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
-import OnsitePlayer from "components/onsite_player";
-import LivePlayer from "components/live_player";
+import OnsitePlayer from "components/onsitePlayer";
+import LivePlayer from "components/livePlayer";
 import Slider from "components/slider";
 import Overlay from "components/overlay";
 import Share from "components/share";
@@ -38,12 +38,12 @@ u(document).on("click", "[data-play]", function(event) {
   if (player.canPlay()) {
     event.preventDefault();
     const clicked = u(event.target).closest("a, button");
-    if(player.currentlyLoaded === clicked.data("play")) {
+
+    if (player.currentlyLoaded == clicked.data("play")) {
       player.togglePlayPause();
     } else {
       player.load(clicked.attr("href"), clicked.data("play"));
     }
-
   }
 });
 

@@ -3,7 +3,7 @@ import Episode from "components/episode";
 import Log from "components/log";
 import ChangelogAudio from "components/audio";
 import Embedly from "components/embedly";
-import gup from "components/gup";
+import gup from "../../shared/gup";
 
 export default class EmbedPlayer {
   constructor(selector) {
