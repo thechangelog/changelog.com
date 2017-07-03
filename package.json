@@ -17,11 +17,13 @@
     "babel-core": "^6.17.0",
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.16.0",
+    "babel-register": "^6.24.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
-    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "handlebars-loader": "^1.3.0",
+    "mocha": "^3.4.2",
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
@@ -32,6 +34,7 @@
     "start": "webpack --watch-stdin --color",
     "compile": "webpack -p",
     "add": "all-contributors add",
-    "generate": "all-contributors generate"
+    "generate": "all-contributors generate",
+    "test": "mocha --compilers js:babel-register test/js/**/*.js"
   }
 }
