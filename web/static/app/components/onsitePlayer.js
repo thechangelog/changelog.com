@@ -5,23 +5,28 @@ import ChangelogAudio from "components/audio";
 import Playbar from "components/playbar";
 
 export default class OnsitePlayer {
-  constructor(selector, window) {
-    // not using turbolinks:load event because we want this to run exactly once
-    window.onload = () => {
-      this.audio = new ChangelogAudio();
-      this.detailsLoaded = false;
-      this.audioLoaded = false;
-      this.playbar = new Playbar();
-      this.currentlyLoaded = "";
-      this.deepLink = 0;
-      this.attachUI(selector);
-      this.attachEvents();
-      this.attachKeyboardShortcuts();
-    }
+  constructor(selector) {
+    this.selector = selector;
+    this.isAttached = false;
   }
 
-  attachUI(selector) {
-    this.container = u(selector);
+  attach() {
+    if (this.isAttached) return;
+
+    this.audio = new ChangelogAudio();
+    this.detailsLoaded = false;
+    this.audioLoaded = false;
+    this.playbar = new Playbar();
+    this.currentlyLoaded = "";
+    this.deepLink = 0;
+    this.attachUI();
+    this.attachEvents();
+    this.attachKeyboardShortcuts();
+    this.isAttached = true;
+  }
+
+  attachUI() {
+    this.container = u(this.selector);
     this.player = this.container.find(".js-player");
     this.art = this.container.find(".js-player-art");
     this.nowPlaying = this.container.find(".js-player-now-playing");
@@ -81,7 +86,7 @@ export default class OnsitePlayer {
   }
 
   isPlaying() {
-    return this.audio.playing();
+    return !!this.audio && this.audio.playing();
   }
 
   play() {
@@ -115,21 +120,22 @@ export default class OnsitePlayer {
   }
 
   // begins the process of playing the audio, fetching the details
-  load(audioUrl, detailsUrl) {
+  load(audioUrl, detailsUrl, andThen) {
     this.resetUI();
     this.playButton.addClass("is-loading");
-    this.playButton.attr('data-loaded', detailsUrl);
+    this.playButton.attr("data-loaded", detailsUrl);
     this.currentlyLoaded = detailsUrl;
     this.playbar.belongsTo(this.currentlyLoaded);
-    this.loadAudio(audioUrl);
+    this.loadAudio(audioUrl, andThen);
     this.loadDetails(detailsUrl);
   }
 
-  loadAudio(audioUrl) {
+  loadAudio(audioUrl, andThen) {
     this.audioLoaded = false;
     this.audio.load(audioUrl, () => {
       this.audioLoaded = true;
       this.play();
+      if (andThen) andThen();
     });
   }
 

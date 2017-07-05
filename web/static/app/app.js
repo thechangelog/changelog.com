@@ -7,6 +7,8 @@ import Overlay from "components/overlay";
 import Share from "components/share";
 import Log from "components/log";
 import ts from "../shared/ts";
+import gup from "../shared/gup";
+import parseTime from "../shared/parseTime";
 
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
@@ -14,7 +16,6 @@ const overlay = new Overlay("#overlay");
 const featured = new Slider(".featured_podcast");
 
 window.u = u;
-window.live = live;
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
@@ -68,12 +69,22 @@ u(document).handle("click", ".js-share-popup", function(event) {
 u(document).on("click", "a[href^=http]", function(event) {
   if (player.isActive()) {
     let href = u(this).attr("href");
-    if (!href.match(window.location.hostname)) {
+    if (!href.match(location.hostname)) {
       event.preventDefault();
       let newWindow = window.open(href, "_blank");
       newWindow.opener = null;
     }
   }
+});
+
+// hijack audio deep links
+u(document).on("click", "a[href^=\\#]", function(event) {
+  let href = u(event.target).attr("href");
+
+  if (deepLink(href)) {
+    event.preventDefault();
+    history.replaceState({}, document.title, href);
+  };
 });
 
 // our own little phoenix_html
@@ -111,7 +122,7 @@ u(document).on("submit", "form:not(.js-cm)", function(event) {
   const action = form.attr("action");
   const method = form.attr("method");
   const data = form.serialize();
-  const referrer = window.location.href;
+  const referrer = location.href;
 
   if (method == "get") {
     return Turbolinks.visit(`${action}?${data}`);
@@ -159,6 +170,22 @@ function formatTimes() {
   });
 }
 
+function deepLink(href) {
+  let linkTime = parseTime(gup("t", (href || location.href), "#"));
+  if (!linkTime) return false;
+
+  if (player.isPlaying()) {
+    player.scrubEnd(linkTime);
+  } else {
+    let playable = u("[data-play]");
+    player.load(playable.attr("href"), playable.data("play"), function() {
+      player.scrubEnd(linkTime);
+    });
+  }
+
+  return true;
+}
+
 window.onresize = function() {
   tallestSlide();
 }
@@ -166,10 +193,12 @@ window.onresize = function() {
 // on page load
 u(document).on("turbolinks:load", function() {
   u("body").removeClass("nav-open");
+  player.attach();
   overlay.hide();
   live.check();
   tallestSlide();
   formatTimes();
+  deepLink();
   // Make sure homepage featured section is the correct size (after fonts and images load)
   window.setTimeout(function() { tallestSlide(); }, 500);
 });

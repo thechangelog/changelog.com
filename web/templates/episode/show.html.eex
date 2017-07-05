@@ -59,7 +59,7 @@
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/guest-gray.svg") %>" alt="Show notes"></div>
         <div class="episode-footer-section_content">
-          <h3>Featuring</h3>
+          <h3 id="featuring">Featuring</h3>
           <div class="richtext">
             <ul>
             <%= for person <- participants do %>
@@ -75,7 +75,7 @@
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/sponsor-gray.svg") %>" alt="Show sponsors"></div>
         <div class="episode-footer-section_content">
-          <h3>Sponsors</h3>
+          <h3 id="sponsors">Sponsors</h3>
           <dl class="sponsors-list">
           <%= for sponsor <- @episode.episode_sponsors do %>
             <div class="sponsors-list_item">
@@ -92,7 +92,7 @@
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
         <div class="episode-footer-section_content">
-          <h3>Notes &amp; Links</h3>
+          <h3 id="notes">Notes &amp; Links</h3>
           <div class="richtext">
             <%= @episode.notes |> md_to_html |> raw %>
           </div>

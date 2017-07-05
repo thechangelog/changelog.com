@@ -1,5 +1,7 @@
 // courtesy https://github.com/davatron5000/TimeJump
 export default function parseTime(string) {
+  if (!string) return null;
+
   let seconds = /^\d+(\.\d+)?$/g;
   let colons  = /^(?:colons:)?(?:(?:(\d+):)?(\d\d?):)?(\d\d?)(\.\d+)?$/;
   let youtube = /^(?:(\d\d?)[hH])?(?:(\d\d?)[mM])?(\d\d?)[sS]$/;

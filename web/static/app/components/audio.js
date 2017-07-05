@@ -11,9 +11,7 @@ export default class ChangelogAudio {
   }
 
   load(file, callback) {
-    if (callback) {
-      this.runOnce("canplaythrough", callback);
-    }
+    if (callback) this.runOnce("canplaythrough", callback);
 
     this.audio.type = "audio/mpeg";
     this.audio.src = file;
@@ -87,13 +85,8 @@ export default class ChangelogAudio {
     to = parseInt(to, 10);
     if (to < 0) to = 0;
 
-    if (before) {
-      this.runOnce("seeking", before);
-    }
-
-    if (after) {
-      this.runOnce("seeked", after);
-    }
+    if (before) this.runOnce("seeking", before);
+    if (after) this.runOnce("seeked", after);
 
     this.audio.currentTime = to;
   }

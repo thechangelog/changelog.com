@@ -21,9 +21,7 @@ export default class Share {
   }
 
   detach() {
-    if (!this.isAttached) {
-      return false;
-    }
+    if (!this.isAttached) return false;
 
     // events
     this.toggleEmbedButton.off("change");

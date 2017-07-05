@@ -21,4 +21,8 @@ describe("parseTime", function() {
   it("returns 0 when parsing fails", function() {
     assert.equal(0, parseTime("notevenclose"));
   });
+
+  it("returns null when given nothing", function() {
+    assert.equal(null, parseTime());
+  });
 });
