@@ -78,7 +78,7 @@ u(document).on("click", "a[href^=http]", function(event) {
 });
 
 // hijack audio deep links
-u(document).on("click", "a[href^=\\#]", function(event) {
+u(document).on("click", "a[href^=\\#t]", function(event) {
   let href = u(event.target).attr("href");
 
   if (deepLink(href)) {
