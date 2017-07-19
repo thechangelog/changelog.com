@@ -190,6 +190,10 @@ window.onresize = function() {
   tallestSlide();
 }
 
+window.onhashchange = function() {
+  deepLink();
+}
+
 // on page load
 u(document).on("turbolinks:load", function() {
   u("body").removeClass("nav-open");
