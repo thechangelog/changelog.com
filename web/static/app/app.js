@@ -98,6 +98,7 @@ u(document).on("submit", "form.js-cm", function(event) {
 
   const form = u(this);
   const status = form.find(".form_submit_responses");
+  const scriptSrc = form.attr("action") + "?callback=afterSubscribe&" + form.serialize();
 
   status.html("<div class='form_submit_response'>Sending...</div>");
 
@@ -109,9 +110,11 @@ u(document).on("submit", "form.js-cm", function(event) {
     }
   }
 
-  const script = document.createElement("script");
-  script.src = form.attr("action") + "?callback=afterSubscribe&" + form.serialize();
-  document.body.appendChild(script);
+  if (u(`script[src='${scriptSrc}']`).length == 0) {
+    const script = document.createElement("script");
+    script.src = scriptSrc;
+    document.body.appendChild(script);
+  }
 });
 
 // submit all other forms with Turbolinks
