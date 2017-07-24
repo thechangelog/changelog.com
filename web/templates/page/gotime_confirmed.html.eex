@@ -30,7 +30,7 @@
 
       <h3>Become a Sponsor</h3>
 
-      <p><%= link "Become a sponsor", to: page_path(@conn, :sponsor) %> and we'll help you get the right exposure for your contenct, product or service.</p>
+      <p><%= link "Become a sponsor", to: page_path(@conn, :sponsor) %> and we'll help you get the right exposure for your content, product or service.</p>
     </div>
   </div>
 </article>
