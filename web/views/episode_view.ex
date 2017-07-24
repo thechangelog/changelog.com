@@ -78,6 +78,10 @@ defmodule Changelog.EpisodeView do
     end
   end
 
+  def participants(episode) do
+    Changelog.Episode.participants(episode)
+  end
+
   def sponsorships_with_light_logo(episode) do
     Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.light_logo) end)
   end

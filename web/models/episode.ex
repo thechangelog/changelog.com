@@ -154,6 +154,14 @@ defmodule Changelog.Episode do
     |> derive_bytes_and_duration
   end
 
+  def participants(episode) do
+    episode = episode
+    |> preload_guests
+    |> preload_hosts
+
+    episode.guests ++ episode.hosts
+  end
+
   def preload_all(episode) do
     episode
     |> preload_podcast

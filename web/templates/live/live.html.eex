@@ -17,7 +17,7 @@
       <div class="live-info-more">
         <p class="live-info-description"><%= @podcast.description %></p>
 
-        <% participants = @episode.guests ++ @episode.hosts %>
+        <% participants = EpisodeView.participants(@episode) %>
         <div class="live-info-guests live-info-guests--<%= length(participants) %>">
         <%= for person <- participants do %>
           <article class="live-info-guests-item">

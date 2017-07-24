@@ -54,7 +54,7 @@
     </cite>
 
     <footer class="episode_footer episode_footer--<%= @podcast.slug %>">
-      <% participants = @episode.guests ++ @episode.hosts %>
+      <% participants = participants(@episode) %>
       <%= if Enum.any?(participants) do %>
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/guest-gray.svg") %>" alt="Show notes"></div>
