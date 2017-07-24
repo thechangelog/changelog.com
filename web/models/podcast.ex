@@ -104,10 +104,14 @@ defmodule Changelog.Podcast do
 
   def last_numbered_slug(podcast) do
     Repo.preload(podcast, :episodes).episodes
-    |> Enum.sort_by(&(&1.id))
-    |> Enum.reverse
-    |> Enum.map(&(Float.parse(&1.slug)))
-    |> Enum.find(fn(x) -> x != :error end)
+    |> Enum.map(fn(x) ->
+      case Integer.parse(x.slug) do
+        {int, _remainder} -> int
+        :error -> nil
+      end
+    end)
+    |> Enum.reject(&is_nil/1)
+    |> Enum.max(fn -> 0 end)
   end
 
   def latest_episode(podcast) do

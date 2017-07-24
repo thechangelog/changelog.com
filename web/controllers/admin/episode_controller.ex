@@ -68,10 +68,7 @@ defmodule Changelog.Admin.EpisodeController do
       |> Enum.with_index(1)
       |> Enum.map(&EpisodeChannel.build_and_preload/1)
 
-    default_slug = case Podcast.last_numbered_slug(podcast) do
-      {float, _} -> round(Float.floor(float) + 1)
-      _ -> ""
-    end
+    default_slug = Podcast.last_numbered_slug(podcast) + 1
 
     changeset =
       podcast
