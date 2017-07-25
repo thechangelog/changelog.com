@@ -2,7 +2,7 @@ defmodule Changelog.TranscriptFragment do
   use Ecto.Schema
 
   embedded_schema do
-    field :person_name
+    field :title
     field :person_id
     field :body
   end
@@ -10,6 +10,8 @@ end
 
 defmodule Changelog.Transcript do
   use Changelog.Web, :model
+
+  alias Changelog.{Episode, TranscriptFragment}
 
   schema "transcripts" do
     field :raw, :string
@@ -25,30 +27,38 @@ defmodule Changelog.Transcript do
     |> validate_required([:episode_id, :raw])
   end
 
-  def parse_raw(transcript) do
+  def update_fragments(transcript) do
     transcript = Repo.preload(transcript, :episode)
-    participants = Changelog.Episode.participants(transcript.episode)
-    speaker_pattern = ~r{\*\*(.*?):\*\*}
+    participants = Episode.participants(transcript.episode)
+    speaker_regex = ~r{\*\*(.*?):\*\*}
 
-    speaker_pattern
-    |> Regex.split(transcript.raw, include_captures: true, trim: true)
-    |> Enum.chunk(2)
-    |> Enum.take(1) # temp
-    |> Enum.each(fn(tuple) ->
-      [speaker_section, content_section] = tuple
+    fragments =
+      speaker_regex
+      |> Regex.split(transcript.raw, include_captures: true, trim: true)
+      |> Enum.chunk(2)
+      |> Enum.map(fn(tuple) ->
+        [speaker_section, content_section] = tuple
 
-      speaker = case Regex.run(speaker_pattern, speaker_section) do
-        [_, name] -> Enum.find(participants, fn(x) -> x.name == name end)
-        nil -> nil
-      end
+        speaker_name = case Regex.run(speaker_regex, speaker_section) do
+          [_, name] -> name
+          nil -> "Unknown"
+        end
 
-      content_section
-      |> String.split("\r\n\r\n", trim: true)
-      |> Enum.each(fn(line) ->
-        IO.puts "#{speaker.name} said: #{String.trim(line)}"
+        speaker_id = Enum.find_value(participants, fn(x) -> if x.name == speaker_name do x.id end end)
+
+        content_section
+        |> String.split("\r\n\r\n", trim: true)
+        |> Enum.map(fn(line) ->
+          %TranscriptFragment{title: speaker_name,
+                              person_id: speaker_id,
+                              body: String.trim(line)}
+        end)
       end)
-    end)
+      |> List.flatten
 
     transcript
+    |> change
+    |> put_embed(:fragments, fragments)
+    |> Repo.update!
   end
 end

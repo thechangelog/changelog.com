@@ -127,6 +127,13 @@ defmodule Changelog.Factory do
     }
   end
 
+  def transcript_factory do
+    %Changelog.Transcript{
+      episode: build(:episode),
+      raw: ""
+    }
+  end
+
   defp stub_audio_file do
     %{file_name: "test.mp3", updated_at: Ecto.DateTime.from_erl(:calendar.gregorian_seconds_to_datetime(63_633_830_567))}
   end
