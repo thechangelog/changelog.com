@@ -13,6 +13,7 @@ defmodule Changelog.EpisodeController do
       |> Episode.published
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
+      |> Episode.preload_transcript
 
     render(conn, :show, podcast: podcast, episode: episode)
   end
@@ -39,6 +40,7 @@ defmodule Changelog.EpisodeController do
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
+      |> Episode.preload_transcript
 
     render(conn, :show, podcast: podcast, episode: episode)
   end

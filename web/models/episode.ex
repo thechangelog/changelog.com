@@ -2,7 +2,8 @@ defmodule Changelog.Episode do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,  EpisodeSponsor, Podcast, Regexp}
+  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,
+                   EpisodeSponsor, Podcast, Regexp, Transcript}
 
   schema "episodes" do
     field :slug, :string
@@ -33,6 +34,7 @@ defmodule Changelog.Episode do
     field :reach_count, :integer
 
     belongs_to :podcast, Podcast
+    has_one :transcript, Transcript
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
     has_many :hosts, through: [:episode_hosts, :person]
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
@@ -198,6 +200,10 @@ defmodule Changelog.Episode do
     episode
     |> Repo.preload(episode_sponsors: {EpisodeSponsor.by_position, :sponsor})
     |> Repo.preload(:sponsors)
+  end
+
+  def preload_transcript(episode) do
+    episode |> Repo.preload(:transcript)
   end
 
   def update_stat_counts(episode) do

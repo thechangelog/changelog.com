@@ -3,7 +3,7 @@ defmodule Changelog.TranscriptFragment do
 
   embedded_schema do
     field :title
-    field :person_id
+    field :person_id, :integer
     field :body
   end
 end
