@@ -49,5 +49,40 @@ defmodule Changelog.TranscriptTest do
 
       assert titles == ["Adam Stacoviak", "Jerod Santo", "Raquel Vélez", "Break"]
     end
+
+    test "JS Party 1" do
+      podcast = insert(:podcast, name: "JS Party")
+      episode = insert(:episode, slug: "1", title: "Security on the Web, Node async/await, and AR.js", podcast: podcast)
+      alex = insert(:person, name: "Alex Sexton")
+      mikeal = insert(:person, name: "Mikeal Rogers")
+      rachel = insert(:person, name: "Rachel White")
+
+      insert(:episode_host, episode: episode, person: alex)
+      insert(:episode_host, episode: episode, person: mikeal)
+      insert(:episode_host, episode: episode, person: rachel)
+
+      raw = File.read!("#{fixtures_path()}/transcripts/js-party-1.md")
+
+      transcript =
+        insert(:transcript, episode: episode, raw: raw)
+        |> Transcript.update_fragments()
+
+      assert length(transcript.fragments) == 210
+
+      people_ids =
+        transcript.fragments
+        |> Enum.map(&(&1.person_id))
+        |> Enum.uniq
+        |> Enum.reject(&is_nil/1)
+
+      assert people_ids == [mikeal.id, alex.id, rachel.id]
+
+      titles =
+        transcript.fragments
+        |> Enum.map(&(&1.title))
+        |> Enum.uniq
+
+      assert titles == ["Mikeal Rogers", "Alex Sexton", "Rachel White", "Break"]
+    end
   end
 end

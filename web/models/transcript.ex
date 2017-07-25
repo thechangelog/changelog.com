@@ -47,7 +47,7 @@ defmodule Changelog.Transcript do
         speaker_id = Enum.find_value(participants, fn(x) -> if x.name == speaker_name do x.id end end)
 
         content_section
-        |> String.split("\r\n\r\n", trim: true)
+        |> String.split("\n\n", trim: true)
         |> Enum.map(fn(line) ->
           %TranscriptFragment{title: speaker_name,
                               person_id: speaker_id,
