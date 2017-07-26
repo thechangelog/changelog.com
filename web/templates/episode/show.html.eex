@@ -100,17 +100,17 @@
       </section>
       <% end %>
 
-      <%= if @episode.transcript do %>
+      <%= if Enum.any?(@episode.transcript) do %>
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show transcript"></div>
         <div class="episode-footer-section_content">
           <h3 id="transcript">Transcript</h3>
           <div class="richtext">
             <ol>
-            <%= for fragment <- @episode.transcript.fragments do %>
-              <li id="<%= TranscriptView.fragment_short_id(fragment) %>">
-                <span><%= link fragment.title, to: TranscriptView.fragment_permalink(fragment) %></span>
-                <%= fragment.body |> md_to_html |> sans_p_tags |> with_timestamp_links |> raw %>
+            <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
+              <li id="transcript-<%= index %>">
+                <span><%= link part["title"], to: "transcript-#{index}" %></span>
+                <%= part["body"] |> md_to_html |> sans_p_tags |> with_timestamp_links |> raw %>
               </li>
             <% end %>
             </ol>

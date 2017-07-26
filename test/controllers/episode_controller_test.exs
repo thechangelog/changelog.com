@@ -18,13 +18,10 @@ defmodule Changelog.EpisodeControllerTest do
   test "getting a published podcast episode page that has a transcript", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
-    host = insert(:episode_host, episode: e)
-    guest = insert(:episode_guest, episode: e)
-    insert(:transcript, episode: e, fragments: [
-      %Changelog.TranscriptFragment{title: "Host", person_id: host.id, body: "Welcome!"},
-      %Changelog.TranscriptFragment{title: "Guest", person_id: guest.id, body: "Thanks!"},
-      %Changelog.TranscriptFragment{title: "Break", body: "Thanks to our Sponsors"}
-    ])
+    insert(:episode_host, episode: e)
+    insert(:episode_guest, episode: e)
+
+    Changelog.Episode.update_transcript(e, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n**Break:** Thanks to our Sponsors")
 
     conn = get(conn, episode_path(conn, :show, p.slug, e.slug))
 

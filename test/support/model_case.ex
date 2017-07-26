@@ -19,6 +19,7 @@ defmodule Changelog.ModelCase do
       alias Changelog.Repo
       import Ecto
       import Ecto.Query, only: [from: 2]
+      import Changelog.TestCase
       import Changelog.ModelCase
       import Changelog.Factory
     end
@@ -60,9 +61,5 @@ defmodule Changelog.ModelCase do
     struct.__struct__.changeset(struct, data)
     |> Ecto.Changeset.traverse_errors(&Changelog.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
-  end
-
-  def fixtures_path() do
-    Path.dirname(__ENV__.file) <> "/../fixtures"
   end
 end

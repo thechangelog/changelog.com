@@ -3,7 +3,7 @@ defmodule Changelog.Episode do
   use Arc.Ecto.Schema
 
   alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,
-                   EpisodeSponsor, Podcast, Regexp, Transcript}
+                   EpisodeSponsor, Podcast, Regexp, Transcripts}
 
   schema "episodes" do
     field :slug, :string
@@ -33,8 +33,9 @@ defmodule Changelog.Episode do
     field :import_count, :float
     field :reach_count, :integer
 
+    field :transcript, {:array, :map}
+
     belongs_to :podcast, Podcast
-    has_one :transcript, Transcript
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
     has_many :hosts, through: [:episode_hosts, :person]
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
@@ -202,10 +203,6 @@ defmodule Changelog.Episode do
     |> Repo.preload(:sponsors)
   end
 
-  def preload_transcript(episode) do
-    episode |> Repo.preload(:transcript)
-  end
-
   def update_stat_counts(episode) do
     stats = Repo.all(assoc(episode, :episode_stats))
 
@@ -224,6 +221,14 @@ defmodule Changelog.Episode do
 
     episode
     |> change(%{download_count: new_downloads, reach_count: new_reach})
+    |> Repo.update!
+  end
+
+  def update_transcript(episode, text) do
+    parsed = Transcripts.Parser.parse_text(text, participants(episode))
+
+    episode
+    |> change(transcript: parsed)
     |> Repo.update!
   end
 
