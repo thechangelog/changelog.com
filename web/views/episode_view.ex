@@ -2,7 +2,7 @@ defmodule Changelog.EpisodeView do
   use Changelog.Web, :public_view
 
   alias Changelog.{AudioFile, Endpoint, LayoutView, PersonView, SharedView,
-                   PodcastView, SponsorView, TimeView}
+                   PodcastView, SponsorView, TimeView, TranscriptView}
 
   import Changelog.Meta.{Title, Description}
 

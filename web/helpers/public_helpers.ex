@@ -73,4 +73,8 @@ defmodule Changelog.Helpers.PublicHelpers do
     |> String.replace_leading("\"", "“")
     |> String.replace_trailing("\"", "”")
   end
+
+  def with_timestamp_links(string) do
+    String.replace(string, ~r/(\d\d:)?(\d\d?:)(\d\d)(\.\d\d?)?/, ~S{<a href="#t=\0">\0</a>})
+  end
 end

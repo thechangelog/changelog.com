@@ -108,8 +108,9 @@
           <div class="richtext">
             <ol>
             <%= for fragment <- @episode.transcript.fragments do %>
-              <li id="<%= String.slice(fragment.id, 0..7) %>">
-                <span><%= link fragment.title, to: "##{ String.slice(fragment.id, 0..7)}" %></span> &ndash; <%= fragment.body %>
+              <li id="<%= TranscriptView.fragment_short_id(fragment) %>">
+                <span><%= link fragment.title, to: TranscriptView.fragment_permalink(fragment) %></span>
+                <%= fragment.body |> md_to_html |> sans_p_tags |> with_timestamp_links |> raw %>
               </li>
             <% end %>
             </ol>
