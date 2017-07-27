@@ -47,7 +47,7 @@ defmodule Changelog.SlackControllerTest do
 
   describe "the event endpoint" do
     setup do
-      conn = Plug.Conn.put_req_header(build_conn(), "accept", "application/json")
+      conn = put_req_header(build_conn(), "accept", "application/json")
       {:ok, conn: conn}
     end
 

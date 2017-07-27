@@ -64,6 +64,12 @@ defmodule Changelog.Router do
     get "/oembed", ApiController, :oembed
   end
 
+  scope "/github", Changelog do
+    pipe_through [:api]
+
+    post "/event", GithubController, :event
+  end
+
   scope "/slack", Changelog do
     pipe_through [:api]
 
