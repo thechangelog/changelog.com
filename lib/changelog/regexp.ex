@@ -22,4 +22,8 @@ defmodule Changelog.Regexp do
   def timestamp do
     ~r/(\d\d:)?(\d\d?:)(\d\d)(\.\d\d?)?/
   end
+
+  def transcript_slugs do
+    ~r/(?<podcast>.*)\/.*-(?<episode>\w+).md/
+  end
 end

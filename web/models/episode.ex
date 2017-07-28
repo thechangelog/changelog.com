@@ -79,6 +79,10 @@ defmodule Changelog.Episode do
     from e in query, where: fragment("slug ~ E'^\\\\d+$'")
   end
 
+  def with_slug(query, slug) do
+    from e in query, where: e.slug == ^slug
+  end
+
   def with_podcast_slug(query, slug) do
     from e in query, join: p in Podcast, where: e.podcast_id == p.id, where: p.slug == ^slug
   end
