@@ -1,7 +1,8 @@
 defmodule Changelog.Admin.EpisodeController do
   use Changelog.Web, :controller
 
-  alias Changelog.{Email, Episode, EpisodeChannel, EpisodeHost, EpisodeStat, Mailer, Podcast}
+  alias Changelog.{Email, Episode, EpisodeChannel, EpisodeHost, EpisodeStat,
+                   Mailer, Podcast, Transcripts}
 
   plug :assign_podcast
   plug :scrub_params, "episode" when action in [:create, :update]
@@ -168,6 +169,18 @@ defmodule Changelog.Admin.EpisodeController do
         |> put_flash(:result, "failure")
         |> render("edit.html", episode: episode, changeset: changeset)
     end
+  end
+
+  def transcript(conn, _params = %{"id" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Repo.get_by!(slug: slug)
+
+    Transcripts.Updater.update(episode)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
 
   defp assign_podcast(conn, _) do

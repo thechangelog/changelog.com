@@ -2,7 +2,9 @@ defmodule Changelog.Admin.EpisodeControllerTest do
   use Changelog.ConnCase
   use Bamboo.Test
 
-  alias Changelog.Episode
+  import Mock
+
+  alias Changelog.{Episode, Transcripts}
 
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
@@ -151,6 +153,19 @@ defmodule Changelog.Admin.EpisodeControllerTest do
     assert count(Episode.published) == 0
   end
 
+  @tag :as_admin
+  test "fetches and updates transcript", %{conn: conn} do
+    p = insert(:podcast, name: "Happy Cast", slug: "happy")
+    e = insert(:published_episode, podcast: p, slug: "12")
+
+    with_mock Transcripts.Updater, [update: fn(_) -> true end] do
+      conn = post(conn, admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
+
+      assert called Transcripts.Updater.update(:_)
+      assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    end
+  end
+
   test "requires user auth on all actions", %{conn: conn} do
     Enum.each([
       get(conn, admin_podcast_episode_path(conn, :index, "1")),
@@ -161,7 +176,8 @@ defmodule Changelog.Admin.EpisodeControllerTest do
       put(conn, admin_podcast_episode_path(conn, :update, "1", "123"), episode: @valid_attrs),
       delete(conn, admin_podcast_episode_path(conn, :delete, "1", "123")),
       post(conn, admin_podcast_episode_path(conn, :publish, "1", "123")),
-      post(conn, admin_podcast_episode_path(conn, :unpublish, "1", "123"))
+      post(conn, admin_podcast_episode_path(conn, :unpublish, "1", "123")),
+      post(conn, admin_podcast_episode_path(conn, :transcript, "1", "123"))
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted
