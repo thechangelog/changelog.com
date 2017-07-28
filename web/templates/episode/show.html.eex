@@ -109,7 +109,15 @@
             <ol>
             <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
               <li id="transcript-<%= index %>">
-                <span><%= link part["title"], to: "transcript-#{index}" %></span>
+                <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
+                <span>
+                <%= if speaker do %>
+                  <%= link to: PersonView.external_url(speaker), class: "hosts-list_item", title: speaker.name, rel: "external" do %>
+                    <img src="<%= PersonView.avatar_url(speaker) %>" width=75 height=75 alt="<%= speaker.name %>"/>
+                  <% end %>
+                <% end %>
+                  <%= link part["title"], to: "transcript-#{index}" %>
+                </span>
                 <%= part["body"] |> md_to_html |> sans_p_tags |> with_timestamp_links |> raw %>
               </li>
             <% end %>
