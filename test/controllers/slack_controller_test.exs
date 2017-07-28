@@ -52,11 +52,11 @@ defmodule Changelog.SlackControllerTest do
     end
 
     test "it responds to verification challenge", %{conn: conn} do
-      conn = post(conn, slack_path(conn, :event, %{
+      conn = post(conn, slack_path(conn, :event), %{
         "type" => "url_verification",
         "token" => "Jhj5dZrVaK7ZwHHjRyZWjbDl",
         "challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"
-      }))
+      })
 
       assert json_response(conn, 200) == %{"challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"}
     end
@@ -70,7 +70,7 @@ defmodule Changelog.SlackControllerTest do
          [],
          [import_member_id: fn(_, _) -> nil end]}
       ]) do
-        conn = post(conn, slack_path(conn, :event, %{
+        conn = post(conn, slack_path(conn, :event), %{
             "type" => "event_callback",
             "event" => %{
               "type" => "team_join",
@@ -82,7 +82,7 @@ defmodule Changelog.SlackControllerTest do
                 }
               }
             }
-          }))
+          })
 
         assert called Client.im("U2XU53R", Messages.welcome())
         assert called Tasks.import_member_id("U2XU53R", "grace@hopper.com")
@@ -91,7 +91,7 @@ defmodule Changelog.SlackControllerTest do
     end
 
     test "it responds with method not allowed for unsupported events", %{conn: conn} do
-      conn = post(conn, slack_path(conn, :event, %{"type" => "event_callback", "event" => %{"type" => "channel_join"}}))
+      conn = post(conn, slack_path(conn, :event), %{"type" => "event_callback", "event" => %{"type" => "channel_join"}})
 
       assert conn.status == 405
     end
