@@ -121,7 +121,6 @@ defmodule Changelog.Router do
     get "/films/gophercon-2016", PageController, :films_gophercon_2016
     get "/guest/:slug", PageController, :guest
     get "/guest", PageController, :guest
-    get "/benefits", PageController, :benefits
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership
