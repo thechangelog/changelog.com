@@ -11,6 +11,11 @@ defmodule Changelog.Wavestreamer do
     host() <> "/Live"
   end
 
+  def is_streaming do
+    stats = get_stats()
+    stats.streaming
+  end
+
   def stats_url do
     host() <> "/stats?sid=1&json=1"
   end

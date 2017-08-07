@@ -1,7 +1,11 @@
 defmodule Changelog.Slack.CountdownTest do
   use ExUnit.Case
+
+  import Mock
   import Changelog.TimeView, only: [hours_from_now: 1, hours_ago: 1]
+
   alias Changelog.Slack.Countdown
+  alias Changelog.Wavestreamer
 
   describe "live" do
     test "when there's no upcoming recording" do
@@ -24,9 +28,18 @@ defmodule Changelog.Slack.CountdownTest do
       assert response.text =~ ":eyes: There's just"
     end
 
-    test "when the upcoming recording is in session" do
-      response = Countdown.live(%{recorded_at: hours_ago(1), podcast: %{name: "Go Time"}})
+    test "when the upcoming recording is in session and stream is live" do
+      response = with_mock Wavestreamer, [is_streaming: fn() -> true end] do
+        Countdown.live(%{recorded_at: hours_ago(1), podcast: %{name: "Go Time"}})
+      end
       assert response.text =~ ":tada: It's noOOoOow GO TIME!"
+    end
+
+    test "when the upcoming recording is in session but stream is not live" do
+      response = with_mock Wavestreamer, [is_streaming: fn() -> false end] do
+        Countdown.live(%{recorded_at: hours_ago(1), podcast: %{name: "Go Time"}})
+      end
+      assert response.text =~ ":thinking_face: Go Time _should_ be live"
     end
   end
 end
