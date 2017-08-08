@@ -77,6 +77,6 @@ defmodule Changelog.Helpers.PublicHelpers do
   end
 
   def with_timestamp_links(string) do
-    String.replace(string, Regexp.timestamp, ~S{<a href="#t=\0">\0</a>})
+    String.replace(string, Regexp.timestamp, ~S{<a class="timestamp" href="#t=\0">\0</a>})
   end
 end

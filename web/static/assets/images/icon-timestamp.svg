@@ -1,0 +1,28 @@
+<svg width="13" height="13" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>timestamp-icon</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-266 234)">
+<g id="timestamp-icon">
+<g id="Ellipse 2">
+<mask id="mask0_outline_ins">
+<use xlink:href="#path0_fill" fill="white" transform="translate(266 -234)"/>
+</mask>
+<g mask="url(#mask0_outline_ins)">
+<use xlink:href="#path1_stroke_2x" transform="translate(266 -234)" fill="#808080"/>
+</g>
+</g>
+<g id="Line 3">
+<use xlink:href="#path2_stroke" transform="matrix(6.12323e-17 -1 1 6.12323e-17 273 -227)" fill="#808080"/>
+</g>
+<g id="Line 3">
+<use xlink:href="#path3_stroke" transform="translate(273 -227)" fill="#808080"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 13 6.5C 13 10.0899 10.0899 13 6.5 13C 2.91015 13 0 10.0899 0 6.5C 0 2.91015 2.91015 0 6.5 0C 10.0899 0 13 2.91015 13 6.5Z"/>
+<path id="path1_stroke_2x" d="M 12 6.5C 12 9.53757 9.53757 12 6.5 12L 6.5 14C 10.6421 14 14 10.6421 14 6.5L 12 6.5ZM 6.5 12C 3.46243 12 1 9.53757 1 6.5L -1 6.5C -1 10.6421 2.35786 14 6.5 14L 6.5 12ZM 1 6.5C 1 3.46243 3.46243 1 6.5 1L 6.5 -1C 2.35786 -1 -1 2.35786 -1 6.5L 1 6.5ZM 6.5 1C 9.53757 1 12 3.46243 12 6.5L 14 6.5C 14 2.35786 10.6421 -1 6.5 -1L 6.5 1Z"/>
+<path id="path2_stroke" d="M 0 0L 4 0L 4 -1L 0 -1L 0 0Z"/>
+<path id="path3_stroke" d="M 0 0L 3 0L 3 -1L 0 -1L 0 0Z"/>
+</defs>
+</svg>
