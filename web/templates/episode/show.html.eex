@@ -126,6 +126,7 @@
             <div  class="transcript-item transcript-item--break">
               <div class="transcript-item-text">
                 <strong class="transcript-break">The End</strong>
+                <p class="transcript-edit"><%= link "Edit or Improve this Transcription on Github", to: "#", title: "", rel: "external" %></p>
               </div>
             </div>
           </div>
