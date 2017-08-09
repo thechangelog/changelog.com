@@ -1,7 +1,7 @@
 <div class="mosaic mosaic--overlap mosaic--<%= @podcast.slug %>"></div>
 <div class="container container--has-padding container--extra-skinny">
   <article class="episode">
-    <!-- <header class="episode_header">
+    <header class="episode_header">
       <%= link to: podcast_path(@conn, :show, @podcast.slug), class: "episode_header_art" do %>
         <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="  <%= @podcast.name %> Podcast"/>
       <% end %>
@@ -51,10 +51,10 @@
         <img src="<%= static_url(@conn, "/images/download.svg") %>"">
         &nbsp;Download MP3 (<%= megabytes(@episode) %>MB)
       </a>
-    </cite> -->
+    </cite>
 
     <footer class="episode_footer episode_footer--<%= @podcast.slug %>">
-      <!-- <% participants = participants(@episode) %>
+      <% participants = participants(@episode) %>
       <%= if Enum.any?(participants) do %>
       <section class="episode-footer-section">
         <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/guest-gray.svg") %>" alt="Show notes"></div>
@@ -98,7 +98,7 @@
           </div>
         </div>
       </section>
-      <% end %> -->
+      <% end %>
 
       <%= if Enum.any?(@episode.transcript) do %>
       <section class="episode-footer-section">
