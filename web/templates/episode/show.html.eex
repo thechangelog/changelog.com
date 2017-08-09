@@ -118,7 +118,7 @@
                   </div>
                 <% end %>
                 <div class="transcript-item-text">
-                  <%= unless speaker do %><strong class="transcript-break">Break</strong><% end %>
+                  <%= unless speaker do %><strong class="transcript-break"><%= part["title"] %></strong><% end %>
                   <%= part["body"] |> md_to_html |> sans_p_tags |> with_timestamp_links |> raw %>
                 </div>
               </div>
