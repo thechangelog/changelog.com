@@ -2,7 +2,8 @@ defmodule Changelog.Episode do
   use Changelog.Web, :model
   use Arc.Ecto.Schema
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,  EpisodeSponsor, Podcast, Regexp}
+  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,
+                   EpisodeSponsor, Podcast, Regexp, Transcripts}
 
   schema "episodes" do
     field :slug, :string
@@ -31,6 +32,8 @@ defmodule Changelog.Episode do
     field :download_count, :float
     field :import_count, :float
     field :reach_count, :integer
+
+    field :transcript, {:array, :map}
 
     belongs_to :podcast, Podcast
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
@@ -74,6 +77,10 @@ defmodule Changelog.Episode do
 
   def with_numbered_slug(query \\ __MODULE__) do
     from e in query, where: fragment("slug ~ E'^\\\\d+$'")
+  end
+
+  def with_slug(query, slug) do
+    from e in query, where: e.slug == ^slug
   end
 
   def with_podcast_slug(query, slug) do
@@ -154,6 +161,14 @@ defmodule Changelog.Episode do
     |> derive_bytes_and_duration
   end
 
+  def participants(episode) do
+    episode = episode
+    |> preload_guests
+    |> preload_hosts
+
+    episode.guests ++ episode.hosts
+  end
+
   def preload_all(episode) do
     episode
     |> preload_podcast
@@ -210,6 +225,14 @@ defmodule Changelog.Episode do
 
     episode
     |> change(%{download_count: new_downloads, reach_count: new_reach})
+    |> Repo.update!
+  end
+
+  def update_transcript(episode, text) do
+    parsed = Transcripts.Parser.parse_text(text, participants(episode))
+
+    episode
+    |> change(transcript: parsed)
     |> Repo.update!
   end
 

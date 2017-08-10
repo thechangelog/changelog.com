@@ -1,6 +1,8 @@
 defmodule Changelog.Helpers.PublicHelpers do
   use Phoenix.HTML
 
+  alias Changelog.Regexp
+
   def error_class(form, field) do
     if form.errors[field], do: "error", else: ""
   end
@@ -44,7 +46,7 @@ defmodule Changelog.Helpers.PublicHelpers do
   def plural_form(1, singular, _plural), do: singular
   def plural_form(_count, _singular, plural), do: plural
 
-  def sans_p_tags(html), do: String.replace(html, ~r/<\/?p>/, "")
+  def sans_p_tags(html), do: String.replace(html, Regexp.p_tag, "")
 
   def tweet_url(text, url, via \\ "changelog")
   def tweet_url(text, url, nil), do: tweet_url(text, url)
@@ -72,5 +74,9 @@ defmodule Changelog.Helpers.PublicHelpers do
     string
     |> String.replace_leading("\"", "“")
     |> String.replace_trailing("\"", "”")
+  end
+
+  def with_timestamp_links(string) do
+    String.replace(string, Regexp.timestamp, ~S{<a class="timestamp" href="#t=\0">\0</a>})
   end
 end

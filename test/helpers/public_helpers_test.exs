@@ -34,4 +34,23 @@ defmodule Changelog.PublicHelpersTest do
       assert plural_form([1], "person", "people") == "person"
     end
   end
+
+  describe "with_timestamp_links" do
+    test "normal use inside brackets" do
+      assert with_timestamp_links("[00:11:24.05]") == ~s{[<a class="timestamp" href="#t=00:11:24.05">00:11:24.05</a>]}
+    end
+
+    test "normal use outside brackets" do
+      assert with_timestamp_links("yup 00:01:00.5") == ~s{yup <a class="timestamp" href="#t=00:01:00.5">00:01:00.5</a>}
+    end
+
+    test "short-hand use" do
+      assert with_timestamp_links("[1:24] something") == ~s{[<a class="timestamp" href="#t=1:24">1:24</a>] something}
+    end
+
+    test "muliple occurrences" do
+      plain = "but [unintelligible 00:15:18.13] has helped with [00:14:19.03] stuff"
+      assert with_timestamp_links(plain) == ~s{but [unintelligible <a class="timestamp" href="#t=00:15:18.13">00:15:18.13</a>] has helped with [<a class="timestamp" href="#t=00:14:19.03">00:14:19.03</a>] stuff}
+    end
+  end
 end

@@ -15,6 +15,23 @@ defmodule Changelog.EpisodeControllerTest do
     assert html_response(conn, 200) =~ e.title
   end
 
+  test "getting a published podcast episode page that has a transcript", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:published_episode, podcast: p)
+    insert(:episode_host, episode: e)
+    insert(:episode_guest, episode: e)
+
+    Changelog.Episode.update_transcript(e, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n**Break:** Thanks to our Sponsors")
+
+    conn = get(conn, episode_path(conn, :show, p.slug, e.slug))
+
+    assert conn.status == 200
+    assert conn.resp_body =~ e.title
+    assert conn.resp_body =~ "Welcome!"
+    assert conn.resp_body =~ "Thanks!"
+    assert conn.resp_body =~ "Break"
+  end
+
   test "getting a scheduled episode's page", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:scheduled_episode, podcast: p)

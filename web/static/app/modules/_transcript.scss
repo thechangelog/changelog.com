@@ -1,0 +1,105 @@
+.transcript {
+  font-size: 16px;
+  margin: 20px 0;
+
+  &-item {
+    padding: 0.5em 0;
+    position: relative;
+
+    //
+    //
+    // Green Line
+    &:before {
+      content: "";
+      border-left: 1px solid $green;
+      bottom: 0;
+      position: absolute;
+      width: 1px;
+      top: 0;
+      left: 18px;
+    }
+
+    // Break styles
+    &--break {
+      padding: 1.25em 0 1em;
+
+      &:before {
+        border-left: 1px dashed $green;
+      }
+    }
+    // set z-index for other elements
+    &-speaker,
+    &-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    //
+    //
+    // Speaker
+    &-speaker {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+
+      &-image {
+        $size: 36px;
+        background: $black;
+        border: 3px solid $white;
+        border-radius: $size;
+        display: block;
+        height: $size;
+        margin-right: 10px;
+        width: $size;
+      }
+
+      &-name {
+        font-family: $display;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0;
+        text-transform: uppercase;
+
+        a {
+          color: $black;
+        }
+      }
+    }
+
+    //
+    //
+    // Text
+    &-text {
+      padding-left: 48px;
+    }
+  }
+
+  // Simple styling for break text
+  &-break {
+    font-family: $display;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  &-edit {
+    margin: 0;
+    font-size: 0.875em;
+  }
+}
+
+//
+//
+// Timestamps
+a.timestamp {
+  background: $light-grey url("/images/icon-timestamp.svg") 6px center no-repeat;
+  border-radius: 1em;
+  color: $medium-grey;
+  font-family: $display;
+  font-size: 12px;
+  padding: 0.5em 0.75em 0.35em 23px;
+  transition: background 0.1s ease-in-out;
+
+  &:hover {
+    background-color: darken($light-grey, 5%);
+  }
+}

@@ -10,7 +10,7 @@
   <% end %>
   </ul>
 <% end %>
-<% participants = @episode.guests ++ @episode.hosts %>
+<% participants = EpisodeView.participants(@episode) %>
 <%= if Enum.any?(participants) do %>
   <p>Featuring</p>
   <ul>

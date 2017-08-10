@@ -34,6 +34,10 @@
           <%= link to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui icon button" do %>
             <i class="line chart icon"></i>
           <% end %>
+
+          <%= link to: admin_podcast_episode_path(@conn, :transcript, @podcast.slug, episode.slug), method: :post, class: "ui icon button", title: "Refresh Transcript" do %>
+            <i class="refresh icon"></i>
+          <% end %>
         <% end %>
 
           <%= link to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug), class: "ui icon button" do %>
