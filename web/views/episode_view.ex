@@ -1,10 +1,10 @@
 defmodule Changelog.EpisodeView do
   use Changelog.Web, :public_view
 
-  alias Changelog.{AudioFile, Endpoint, LayoutView, PersonView, SharedView,
-                   PodcastView, SponsorView, TimeView}
-
   import Changelog.Meta.{Title, Description}
+
+  alias Changelog.{AudioFile, Endpoint, LayoutView, PersonView, SharedView,
+                   PodcastView, SponsorView, TimeView, Transcripts}
 
   def audio_filename(episode) do
     AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
@@ -89,6 +89,10 @@ defmodule Changelog.EpisodeView do
 
   def sponsorships_with_dark_logo(episode) do
     Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.dark_logo) end)
+  end
+
+  def transcript_source_url(episode) do
+    Transcripts.Source.html_url(episode)
   end
 
   def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do

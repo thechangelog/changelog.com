@@ -106,6 +106,17 @@
         <div class="episode-footer-section_content">
           <h3 id="transcript">Transcript</h3>
           <div class="transcript">
+            <div  class="transcript-item transcript-item--break">
+              <div class="transcript-item-speaker">
+                <%= link to: page_path(@conn, :about), title: "Changelog Media" do %>
+                  <img class="transcript-item-speaker-image" src="<%= static_url(@conn, "/images/changelog-mark-only.svg") %>" width=36 height=36 />
+                <% end %>
+                <p class="transcript-item-speaker-name">Changelog</p>
+              </div>
+              <div class="transcript-item-text">
+                Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.
+              </div>
+            </div>
             <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
               <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
               <div id="transcript-<%= index %>" class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
@@ -124,9 +135,14 @@
               </div>
             <% end %>
             <div  class="transcript-item transcript-item--break">
+              <div class="transcript-item-speaker">
+                <%= link to: page_path(@conn, :about), title: "Changelog Media" do %>
+                  <img class="transcript-item-speaker-image" src="<%= static_url(@conn, "/images/changelog-mark-only.svg") %>" width=36 height=36 />
+                <% end %>
+                <p class="transcript-item-speaker-name">Changelog</p>
+              </div>
               <div class="transcript-item-text">
-                <strong class="transcript-break">The End</strong>
-                <p class="transcript-edit"><%= link "Edit or Improve this Transcription on Github", to: "#", title: "", rel: "external" %></p>
+                Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.
               </div>
             </div>
           </div>
