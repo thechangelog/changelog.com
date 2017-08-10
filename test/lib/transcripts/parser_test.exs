@@ -24,7 +24,7 @@ defmodule Changelog.Transcripts.ParserTest do
 
     parsed = Parser.parse_text(text, [adam, jerod, raquel])
 
-    assert length(parsed) == 216
+    assert length(parsed) == 181
 
     people_ids =
       parsed
@@ -51,7 +51,7 @@ defmodule Changelog.Transcripts.ParserTest do
 
     parsed = Parser.parse_text(text, [alex, mikeal, rachel])
 
-    assert length(parsed) == 210
+    assert length(parsed) == 185
 
     people_ids =
       parsed

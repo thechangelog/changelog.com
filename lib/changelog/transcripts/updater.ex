@@ -14,8 +14,8 @@ defmodule Changelog.Transcripts.Updater do
   end
   def update(item), do: update([item])
 
-  defp get_episode(item) when is_map(item), do: item
-  defp get_episode(item) when is_binary(item) do
+  defp get_episode(item = %Episode{}), do: item
+  defp get_episode(item) do
     %{"podcast" => p_slug, "episode" => e_slug} = Regex.named_captures(Regexp.transcript_slugs, item)
 
     Episode.published

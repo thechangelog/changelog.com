@@ -17,13 +17,9 @@ defmodule Changelog.Transcripts.Parser do
 
       speaker_id = Enum.find_value(participants, fn(x) -> if x.name == speaker_name do x.id end end)
 
-      content_section
-      |> String.split("\n\n", trim: true)
-      |> Enum.map(fn(line) ->
-        %{title: speaker_name,
-          person_id: speaker_id,
-          body: String.trim(line)}
-      end)
+      %{title: speaker_name,
+        person_id: speaker_id,
+        body: String.trim(content_section)}
     end)
     |> List.flatten
   end
