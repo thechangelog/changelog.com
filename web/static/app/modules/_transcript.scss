@@ -44,13 +44,19 @@
 
       &-image {
         $size: 36px;
-        background: $black;
+        background: $black center no-repeat;
         border: 3px solid $white;
         border-radius: $size;
         display: block;
         height: $size;
         margin-right: 10px;
         width: $size;
+
+        &--changelog {
+          background-image: url("/images/changelog-mark-only.svg");
+          background-position: 5px center;
+          background-size: auto 20px;
+        }
       }
 
       &-name {
@@ -71,6 +77,14 @@
     // Text
     &-text {
       padding-left: 48px;
+
+      p {
+        margin: 0 0 1em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
     }
   }
 
