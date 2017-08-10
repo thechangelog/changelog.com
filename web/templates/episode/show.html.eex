@@ -114,7 +114,7 @@
                 <p class="transcript-item-speaker-name">Changelog</p>
               </div>
               <div class="transcript-item-text">
-                Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.
+                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
               </div>
             </div>
             <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
@@ -130,7 +130,7 @@
                 <% end %>
                 <div class="transcript-item-text">
                   <%= unless speaker do %><strong class="transcript-break"><%= part["title"] %></strong><% end %>
-                  <%= part["body"] |> md_to_html |> sans_p_tags |> with_timestamp_links |> raw %>
+                  <%= part["body"] |> md_to_html |> with_timestamp_links |> raw %>
                 </div>
               </div>
             <% end %>
@@ -142,7 +142,7 @@
                 <p class="transcript-item-speaker-name">Changelog</p>
               </div>
               <div class="transcript-item-text">
-                Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.
+                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
               </div>
             </div>
           </div>
