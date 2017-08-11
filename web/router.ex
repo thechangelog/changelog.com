@@ -12,10 +12,12 @@ defmodule Changelog.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Changelog.Plug.Auth, repo: Changelog.Repo
+    plug PlugEtsCache.Plug
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug PlugEtsCache.Plug
   end
 
   pipeline :admin do

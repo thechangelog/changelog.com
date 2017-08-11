@@ -1,5 +1,6 @@
 defmodule Changelog.FeedController do
   use Changelog.Web, :controller
+  use PlugEtsCache.Phoenix
 
   alias Changelog.{Episode, Podcast, Post}
 
@@ -10,6 +11,7 @@ defmodule Changelog.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("all.xml", items: get_all_items())
+    |> cache_response
   end
 
   def all_titles(conn, _params) do
@@ -17,6 +19,7 @@ defmodule Changelog.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("all_titles.xml", items: get_all_items())
+    |> cache_response
   end
 
   def podcast(conn, %{"slug" => slug}) do
@@ -33,6 +36,7 @@ defmodule Changelog.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("podcast.xml", podcast: podcast, episodes: episodes)
+    |> cache_response
   end
 
   def posts(conn, _params) do
@@ -47,6 +51,7 @@ defmodule Changelog.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("posts.xml", posts: posts)
+    |> cache_response
   end
 
   def sitemap(conn, _params) do
@@ -64,6 +69,7 @@ defmodule Changelog.FeedController do
     conn
     |> put_layout(false)
     |> render("sitemap.xml", episodes: episodes, posts: posts)
+    |> cache_response
   end
 
   defp get_all_items do
