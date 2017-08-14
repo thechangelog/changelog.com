@@ -41,7 +41,7 @@ config :ex_aws,
 
 config :ueberauth, Ueberauth,
   providers: [
-    github: {Ueberauth.Strategy.Github, [default_scope: "user"]},
+    github: {Ueberauth.Strategy.Github, [default_scope: "user:email"]},
     twitter: {Ueberauth.Strategy.Twitter, []}
   ]
 
