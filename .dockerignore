@@ -1,0 +1,15 @@
+_build
+deps
+/*.ez
+
+erl_crash.dump
+
+node_modules
+priv/static/
+
+.git
+README.md
+docker-compose.yml
+.gitignore
+.editorconfig
+Dockerfile

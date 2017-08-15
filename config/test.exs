@@ -16,7 +16,9 @@ config :changelog, Changelog.Mailer,
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "changelog_test",
+  url: (
+    System.get_env("DB_URL") || "postgres://postgres@localhost:5432/changelog"
+  ) <> "_test"
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :arc,

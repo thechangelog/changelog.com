@@ -1,0 +1,15 @@
+version: '2'
+services:
+  db:
+    image: "postgres:9.5.3"
+  web:
+    build: .
+    command: "mix phoenix.server"
+    environment:
+      - DB_URL=postgres://postgres@localhost:5432/changelog
+    volumes:
+      - .:/code
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
