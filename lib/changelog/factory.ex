@@ -68,24 +68,15 @@ defmodule Changelog.Factory do
   end
 
   def publishable_episode_factory do
-    %Changelog.Episode{episode_factory() | audio_file: stub_audio_file(),
-      summary: "An episode",
-      published_at: hours_ago(1)
-    }
+    %Changelog.Episode{episode_factory() | summary: "An episode", published_at: hours_ago(1)}
   end
 
   def published_episode_factory do
-    %Changelog.Episode{episode_factory() | audio_file: stub_audio_file(),
-      published: true,
-      published_at: hours_ago(1)
-    }
+    %Changelog.Episode{episode_factory() | published: true, published_at: hours_ago(1)}
   end
 
   def scheduled_episode_factory do
-    %Changelog.Episode{episode_factory() | audio_file: stub_audio_file(),
-      published: true,
-      published_at: hours_from_now(1)
-    }
+    %Changelog.Episode{episode_factory() | published: true, published_at: hours_from_now(1)}
   end
 
   def person_factory do
@@ -125,9 +116,5 @@ defmodule Changelog.Factory do
     %Changelog.Sponsor{
       name: sequence(:name, &"Sponsor #{&1}")
     }
-  end
-
-  defp stub_audio_file do
-    %{file_name: "test.mp3", updated_at: Ecto.DateTime.from_erl(:calendar.gregorian_seconds_to_datetime(63_633_830_567))}
   end
 end

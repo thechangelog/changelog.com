@@ -60,14 +60,12 @@ defmodule Changelog.Episode do
   def published(query \\ __MODULE__) do
     from e in query,
       where: e.published == true,
-      where: not(is_nil(e.audio_file)),
       where: e.published_at <= ^Timex.now
   end
 
   def scheduled(query \\ __MODULE__) do
     from e in query,
       where: e.published == true,
-      where: not(is_nil(e.audio_file)),
       where: e.published_at > ^Timex.now
   end
 

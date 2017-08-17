@@ -4,7 +4,7 @@ defmodule Changelog.Mixfile do
   def project do
     [app: :changelog,
      version: "0.0.1",
-     elixir: "~> 1.4",
+     elixir: "~> 1.5",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -36,7 +36,7 @@ defmodule Changelog.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.0"},
+    [{:phoenix, "~> 1.3.0"},
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:phoenix_html, "~> 2.3"},
@@ -52,12 +52,12 @@ defmodule Changelog.Mixfile do
      {:hashids, "~> 2.0"},
      {:bamboo, "~> 0.8"},
      {:bamboo_smtp, "~> 1.3"},
-     {:httpoison, "~> 0.11.0"},
+     {:httpoison, "~> 0.13.0"},
      {:con_cache, "~> 0.12.0"},
-     {:plug_ets_cache, "~> 0.1.0"},
+     {:plug_ets_cache, github: "gnufede/plug_ets_cache"},
      {:exjsx, "~> 3.2.1 or ~> 4.0"},
      {:ex_aws, "~> 1.1"},
-     {:nimble_csv, "~> 0.1.0"},
+     {:nimble_csv, "~> 0.2.0"},
      {:sweet_xml, "~> 0.5"},
      {:briefly, "~> 0.3"},
      {:cowboy, "~> 1.0"},
@@ -67,7 +67,7 @@ defmodule Changelog.Mixfile do
      {:ueberauth_github, "~> 0.4"},
      {:ueberauth_twitter, "~> 0.2"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:ex_machina, "~> 1.0"},
+     {:ex_machina, "~> 2.0"},
      {:credo, "~> 0.4", only: [:dev, :test]},
      {:excoveralls, "~> 0.6", only: :test},
      {:mock, "~> 0.2.0", only: :test}]

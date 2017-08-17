@@ -22,7 +22,7 @@ defmodule Changelog.PersonView do
     end
 
     hash = email
-      |> String.strip
+      |> String.trim
       |> String.downcase
       |> :erlang.md5
       |> Base.encode16(case: :lower)

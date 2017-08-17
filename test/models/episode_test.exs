@@ -114,7 +114,7 @@ defmodule Changelog.EpisodeTest do
     end
 
     test "is true when episode has all fields and isn't published" do
-      assert Episode.is_publishable(build(:publishable_episode))
+      assert Episode.is_publishable(stub_audio_file(build(:publishable_episode)))
     end
   end
 end

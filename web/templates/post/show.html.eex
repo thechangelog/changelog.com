@@ -25,7 +25,7 @@
             <%= for channel <- @post.channels do %>
               <li><%= channel.name %></li>
             <% end %>
-          <%= end %>
+          <% end %>
         </ul>
         <ul class="toolbar_item toolbar_item--icon_list toolbar_item--right" style="background-image: url(/images/icon-share-white.svg);">
           <li>

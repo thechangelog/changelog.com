@@ -3,7 +3,7 @@ defmodule Changelog.Helpers.SharedHelpers do
 
   def comma_separated(number) do
     number
-    |> Integer.to_char_list
+    |> Integer.to_charlist
     |> Enum.reverse
     |> Enum.chunk(3, 3, [])
     |> Enum.join(",")

@@ -8,7 +8,7 @@ defmodule Changelog.EpisodeViewTest do
     test "is a path on the local file system with relative storage dir" do
       orig_env = Application.get_env(:arc, :storage_dir)
       Application.put_env(:arc, :storage_dir, "priv/static")
-      episode = insert(:published_episode)
+      episode = insert(:published_episode) |> stub_audio_file
       assert audio_local_path(episode) =~ ~r{^priv/static}
       Application.put_env(:arc, :storage_dir, orig_env)
     end
@@ -16,7 +16,7 @@ defmodule Changelog.EpisodeViewTest do
     test "is a path on the local file system with absolute storage dir" do
       orig_env = Application.get_env(:arc, :storage_dir)
       Application.put_env(:arc, :storage_dir, "/test")
-      episode = insert(:published_episode)
+      episode = insert(:published_episode) |> stub_audio_file
       assert audio_local_path(episode) =~ ~r{^/test/}
       Application.put_env(:arc, :storage_dir, orig_env)
     end
@@ -29,7 +29,7 @@ defmodule Changelog.EpisodeViewTest do
     end
 
     test "starts with the publicly served path when episode has file" do
-      episode = insert(:published_episode)
+      episode = insert(:published_episode) |> stub_audio_file
       assert audio_path(episode) =~ ~r{^/uploads/}
     end
   end
