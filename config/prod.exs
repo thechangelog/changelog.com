@@ -1,6 +1,6 @@
 use Mix.Config
 
-config :changelog, Changelog.Endpoint,
+config :changelog, ChangelogWeb.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "changelog.com", port: 443],
   secret_key_base: System.get_env("SECRET_KEY_BASE"),

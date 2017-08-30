@@ -1,7 +1,8 @@
 defmodule Mix.Tasks.Changelog.Avatars do
   use Mix.Task
 
-  alias Changelog.{Person, PersonView, Repo}
+  alias Changelog.{Person, Repo}
+  alias ChangelogWeb.{PersonView}
 
   @shortdoc "Downloads all people's avatars to a temp directory"
 

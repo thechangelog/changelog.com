@@ -15,7 +15,7 @@ defmodule Changelog.Transcripts.Source do
   end
 
   defp path(episode) do
-    podcast_name = Changelog.PodcastView.dasherized_name(episode.podcast)
+    podcast_name = ChangelogWeb.PodcastView.dasherized_name(episode.podcast)
     podcast_slug = episode.podcast.slug
     episode_slug = episode.slug
 

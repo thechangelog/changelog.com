@@ -35,6 +35,6 @@
     "compile": "webpack -p",
     "add": "all-contributors add",
     "generate": "all-contributors generate",
-    "test": "mocha --compilers js:babel-register test/js/**/*.js"
+    "test": "mocha --compilers js:babel-register test/**/*.js"
   }
 }

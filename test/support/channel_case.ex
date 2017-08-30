@@ -1,4 +1,4 @@
-defmodule Changelog.ChannelCase do
+defmodule ChangelogWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -26,7 +26,7 @@ defmodule Changelog.ChannelCase do
 
 
       # The default endpoint for testing
-      @endpoint Changelog.Endpoint
+      @endpoint ChangelogWeb.Endpoint
     end
   end
 

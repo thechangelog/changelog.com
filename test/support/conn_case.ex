@@ -1,4 +1,4 @@
-defmodule Changelog.ConnCase do
+defmodule ChangelogWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -27,14 +27,14 @@ defmodule Changelog.ConnCase do
 
       defp count(query), do: Repo.count(query)
 
-      import Changelog.Router.Helpers
+      import ChangelogWeb.Router.Helpers
       import Changelog.TestCase
       import Changelog.Factory
-      import Changelog.Plug.Conn
-      import Changelog.TimeView, only: [hours_from_now: 1, hours_ago: 1]
+      import ChangelogWeb.Plug.Conn
+      import ChangelogWeb.TimeView, only: [hours_from_now: 1, hours_ago: 1]
 
       # The default endpoint for testing
-      @endpoint Changelog.Endpoint
+      @endpoint ChangelogWeb.Endpoint
     end
   end
 

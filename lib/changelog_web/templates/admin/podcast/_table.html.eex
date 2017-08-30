@@ -1,0 +1,57 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Status</th>
+      <th>Twitter</th>
+      <th>Vanity Domain</th>
+      <th>Episodes</th>
+      <th>Downloads</th>
+      <th>Reach</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for podcast <- @podcasts do %>
+    <tr>
+      <td class="center aligned">
+        <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug) do %>
+        <h2 class="ui circular image header">
+          <img src="<%= static_url(@conn, ChangelogWeb.PodcastView.cover_art_path(podcast)) %>" class="ui image"/>
+        </h2>
+        <% end %>
+      </td>
+      <td><%= status_label(podcast) %></td>
+      <td><%= twitter_link(podcast) %></td>
+      <td><%= vanity_link(podcast) %></td>
+      <td><%= episode_count(podcast) %></td>
+      <td><%= download_count(podcast) %></td>
+      <td><%= reach_count(podcast) %></td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button" do %>
+            <i class="eye icon"></i>
+            Public
+          <% end %>
+
+          <%= link to: admin_podcast_path(@conn, :edit, podcast.slug), class: "ui button" do %>
+            <i class="edit icon"></i>
+            Edit
+          <% end %>
+
+          <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug), class: "ui button" do %>
+            <i class="list icon"></i>
+            Episodes
+          <% end %>
+
+          <%= link to: admin_podcast_episode_path(@conn, :new, podcast.slug), class: "ui button" do %>
+            <i class="add icon"></i>
+            Episode
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

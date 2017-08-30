@@ -1,0 +1,25 @@
+<article class="section content">
+  <div class="container container--has-padding container--skinny">
+    <header class="content_header">
+      <h2>Subscribe</h2>
+    </header>
+    <div class="content_body">
+      <h1>Newsletters</h1>
+      <hr />
+      <h2>Changelog Weekly</h2>
+      <p><%= link "Our editorialized take", to: page_path(@conn, :weekly) %> on this week in open source and software development.</p>
+      <hr />
+      <h2>Changelog Nightly</h2>
+      <p><%= link "Our automated nightly email", to: page_path(@conn, :nightly) %> unearths the hottest new repos on GitHub before they blow up.</p>
+
+      <br />
+
+      <h1>Podcasts</h1>
+      <%= render(ChangelogWeb.PodcastView, "_subscribe.html", conn: @conn, podcast: Changelog.Podcast.master) %>
+
+      <%= for podcast <- @podcasts do %>
+        <%= render(ChangelogWeb.PodcastView, "_subscribe.html", conn: @conn, podcast: podcast) %>
+      <% end %>
+    </div>
+  </div>
+</article>

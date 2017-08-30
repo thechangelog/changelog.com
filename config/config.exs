@@ -5,7 +5,7 @@
 # is restricted to this project.
 use Mix.Config
 
-config :changelog, Changelog.Endpoint,
+config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
   static_url: [host: "localhost"],
   root: Path.dirname(__DIR__),
@@ -32,7 +32,7 @@ config :phoenix, :generators,
   binary_id: false
 
 config :scrivener_html,
-  routes_helper: Changelog.Router.Helpers,
+  routes_helper: ChangelogWeb.Router.Helpers,
   view_style: :semantic
 
 config :ex_aws,
