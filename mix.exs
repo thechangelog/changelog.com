@@ -70,7 +70,7 @@ defmodule Changelog.Mixfile do
      {:ex_machina, "~> 2.0"},
      {:credo, "~> 0.4", only: [:dev, :test]},
      {:excoveralls, "~> 0.6", only: :test},
-     {:mock, "~> 0.2.0", only: :test}]
+     {:mock, "~> 0.3.0", only: :test}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
