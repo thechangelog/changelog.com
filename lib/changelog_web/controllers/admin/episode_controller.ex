@@ -11,7 +11,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   # pass assigned podcast as a function arg
   def action(conn, _) do
     arg_list = [conn, conn.params, conn.assigns.podcast]
-    apply __MODULE__, action_name(conn), arg_list
+    apply(__MODULE__, action_name(conn), arg_list)
   end
 
   def index(conn, params, podcast) do

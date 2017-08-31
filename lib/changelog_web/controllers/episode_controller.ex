@@ -4,10 +4,14 @@ defmodule ChangelogWeb.EpisodeController do
   alias Changelog.{Podcast, Episode}
 
   plug RequireAdmin, "before preview" when action in [:preview]
+  plug :assign_podcast
 
-  def show(conn, %{"podcast" => podcast, "slug" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: podcast)
+  def action(conn, _) do
+    arg_list = [conn, conn.params, conn.assigns.podcast]
+    apply(__MODULE__, action_name(conn), arg_list)
+  end
 
+  def show(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Episode.published
@@ -17,9 +21,7 @@ defmodule ChangelogWeb.EpisodeController do
     render(conn, :show, podcast: podcast, episode: episode)
   end
 
-  def embed(conn, params = %{"podcast" => podcast, "slug" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: podcast)
-
+  def embed(conn, params = %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Episode.published
@@ -32,9 +34,7 @@ defmodule ChangelogWeb.EpisodeController do
     |> render(:embed, podcast: podcast, episode: episode, theme: params["theme"] || "night")
   end
 
-  def preview(conn, %{"podcast" => podcast, "slug" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: podcast)
-
+  def preview(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
@@ -43,9 +43,7 @@ defmodule ChangelogWeb.EpisodeController do
     render(conn, :show, podcast: podcast, episode: episode)
   end
 
-  def play(conn, %{"podcast" => podcast, "slug" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: podcast)
-
+  def play(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Episode.published
@@ -73,9 +71,7 @@ defmodule ChangelogWeb.EpisodeController do
     render(conn, "play.json", podcast: podcast, episode: episode, prev: preloaded(prev), next: preloaded(next))
   end
 
-  def share(conn, %{"podcast" => podcast, "slug" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: podcast)
-
+  def share(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Episode.published
@@ -83,6 +79,11 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.preload_podcast
 
     render(conn, "share.json", podcast: podcast, episode: episode)
+  end
+
+  defp assign_podcast(conn, _) do
+    podcast = Repo.get_by!(Podcast, slug: conn.params["podcast"])
+    assign(conn, :podcast, podcast)
   end
 
   defp preloaded(episode) when is_nil(episode), do: nil
