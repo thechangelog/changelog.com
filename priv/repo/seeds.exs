@@ -11,7 +11,9 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Changelog.Repo
-alias Changelog.{Channel, Episode, EpisodeChannel, EpisodeGuest, EpisodeHost, EpisodeSponsor, Person, Podcast, PodcastHost, Post, PostChannel, Sponsor}
+alias Changelog.{Channel, Episode, EpisodeChannel, EpisodeGuest, EpisodeHost,
+                 EpisodeSponsor, Person, Podcast, PodcastHost, Post,
+                 PostChannel, Sponsor}
 
 # Clean slate
 

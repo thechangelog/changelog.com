@@ -3,10 +3,12 @@ defmodule Changelog.Podcast do
 
   alias Changelog.{Episode, EpisodeStat, PodcastChannel, PodcastHost, Regexp}
 
+  defenum Status, draft: 0, soon: 1, published: 2, retired: 3
+
   schema "podcasts" do
     field :name, :string
     field :slug, :string
-    field :status, PodcastStatus
+    field :status, Status
     field :description, :string
     field :extended_description, :string
     field :vanity_domain, :string

@@ -2,7 +2,6 @@ defmodule Changelog.Post do
   use Changelog.Data
 
   alias Changelog.{Person, PostChannel, Regexp}
-  alias Timex.Ecto
 
   schema "posts" do
     field :title, :string
@@ -14,7 +13,7 @@ defmodule Changelog.Post do
     field :body, :string
 
     field :published, :boolean, default: false
-    field :published_at, Ecto.DateTime
+    field :published_at, DateTime
 
     belongs_to :author, Person
     has_many :post_channels, PostChannel, on_delete: :delete_all

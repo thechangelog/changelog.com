@@ -8,8 +8,10 @@ defmodule Changelog.Data do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+      import EctoEnum, only: [defenum: 2]
 
       alias Changelog.Repo
+      alias Timex.Ecto.DateTime
     end
   end
 end

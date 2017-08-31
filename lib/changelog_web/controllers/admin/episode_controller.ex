@@ -186,7 +186,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
   defp assign_podcast(conn, _) do
     podcast = Repo.get_by!(Podcast, slug: conn.params["podcast_id"])
-    assign conn, :podcast, podcast
+    assign(conn, :podcast, podcast)
   end
 
   defp handle_thanks_email(episode, params) do

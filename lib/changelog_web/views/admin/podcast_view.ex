@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.Admin.PodcastView do
   use ChangelogWeb, :admin_view
 
+  alias Changelog.Podcast
   alias ChangelogWeb.PodcastView
 
   def episode_count(podcast), do: PodcastView.episode_count(podcast)
@@ -23,7 +24,7 @@ defmodule ChangelogWeb.Admin.PodcastView do
   end
 
   def status_options do
-    PodcastStatus.__enum_map__()
+    Podcast.Status.__enum_map__()
     |> Enum.map(fn({k, _v}) -> {String.capitalize(Atom.to_string(k)), k} end)
   end
 

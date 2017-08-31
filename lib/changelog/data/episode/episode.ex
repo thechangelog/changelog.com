@@ -21,8 +21,8 @@ defmodule Changelog.Episode do
     field :notes, :string
 
     field :published, :boolean, default: false
-    field :published_at, Timex.Ecto.DateTime
-    field :recorded_at, Timex.Ecto.DateTime
+    field :published_at, DateTime
+    field :recorded_at, DateTime
     field :recorded_live, :boolean, default: false
 
     field :audio_file, AudioFile.Type
@@ -160,9 +160,10 @@ defmodule Changelog.Episode do
   end
 
   def participants(episode) do
-    episode = episode
-    |> preload_guests
-    |> preload_hosts
+    episode =
+      episode
+      |> preload_guests
+      |> preload_hosts
 
     episode.guests ++ episode.hosts
   end

@@ -2,7 +2,7 @@ defmodule Changelog.Person do
   use Changelog.Data
 
   alias Changelog.{Avatar, EpisodeHost, EpisodeGuest, PodcastHost, Post, Regexp}
-  alias Timex.{Ecto, Duration}
+  alias Timex.Duration
 
   schema "people" do
     field :name, :string
@@ -15,9 +15,9 @@ defmodule Changelog.Person do
     field :bio, :string
     field :location, :string
     field :auth_token, :string
-    field :auth_token_expires_at, Ecto.DateTime
-    field :joined_at, Ecto.DateTime
-    field :signed_in_at, Ecto.DateTime
+    field :auth_token_expires_at, DateTime
+    field :joined_at, DateTime
+    field :signed_in_at, DateTime
     field :admin, :boolean
     field :avatar, Avatar.Type
 
