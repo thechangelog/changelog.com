@@ -10,6 +10,8 @@ defmodule Changelog.NewsSource do
     field :regex, :string
 
     field :icon, Icon.Type
+
+    has_many :news_items, NewsItem, on_delete: :nilify_all
   end
 
   def admin_changeset(news_source, attrs \\ %{}) do
