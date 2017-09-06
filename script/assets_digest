@@ -1,3 +1,3 @@
 #!/bin/bash -ex
 
-mix phoenix.digest
+mix phx.digest
