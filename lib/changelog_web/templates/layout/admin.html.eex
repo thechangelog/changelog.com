@@ -20,7 +20,9 @@
         <i class="unmute icon"></i>Podcasts
       <% end %>
 
-      <a href="#" class="item disabled"><i class="newspaper icon"></i>News</a>
+      <%= link to: admin_news_item_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.NewsItemController)}" do %>
+        <i class="newspaper icon"></i>News</a>
+      <% end %>
 
       <%= link to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PostController)}" do %>
         <i class="write icon"></i>Posts

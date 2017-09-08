@@ -3,7 +3,7 @@ defmodule Changelog.NewsSource do
 
   alias Changelog.{Icon, Regexp}
 
-  schema "" do
+  schema "news_sources" do
     field :name, :string
     field :slug, :string
     field :website, :string
@@ -12,6 +12,8 @@ defmodule Changelog.NewsSource do
     field :icon, Icon.Type
 
     has_many :news_items, NewsItem, on_delete: :nilify_all
+
+    timestamps()
   end
 
   def admin_changeset(news_source, attrs \\ %{}) do

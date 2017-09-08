@@ -52,6 +52,7 @@ defmodule ChangelogWeb.Router do
 
     resources "/benefits", BenefitController, except: [:show]
     resources "/channels", ChannelController, except: [:show]
+    resources "/news/items", NewsItemController, except: [:show]
     resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController

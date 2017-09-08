@@ -16,7 +16,7 @@
     <div class="ui fluid remote author search selection dropdown">
       <%= hidden_input f, :author_id %>
       <i class="dropdown icon"></i>
-      <%= if is_persisted(f.data) do %>
+      <%= if is_loaded(f.data.author) do %>
         <div class="selected text"><%= f.data.author.name %></div>
       <% else %>
         <div class="default text">Select Author</div>

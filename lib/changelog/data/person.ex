@@ -1,7 +1,8 @@
 defmodule Changelog.Person do
   use Changelog.Data
 
-  alias Changelog.{Avatar, EpisodeHost, EpisodeGuest, PodcastHost, Post, Regexp}
+  alias Changelog.{Avatar, EpisodeHost, EpisodeGuest, NewsItem, PodcastHost,
+                   Post, Regexp}
   alias Timex.Duration
 
   schema "people" do
@@ -24,6 +25,7 @@ defmodule Changelog.Person do
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
+    has_many :news_items, NewsItem, foreign_key: :author_id
 
     timestamps()
   end

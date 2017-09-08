@@ -51,6 +51,10 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   def is_persisted(struct), do: is_integer(struct.id)
 
+  def is_loaded(nil), do: false
+  def is_loaded(%Ecto.Association.NotLoaded{}), do: false
+  def is_loaded(_association), do: true
+
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do
       String.slice(string, 0, length) <> "..."

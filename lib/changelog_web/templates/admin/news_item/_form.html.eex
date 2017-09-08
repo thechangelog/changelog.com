@@ -1,0 +1,63 @@
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+  <div class="field required <%= error_class(f, :url) %>">
+    <%= label(f, :url, "URL") %>
+    <%= text_input(f, :url) %>
+    <%= error_message(f, :url) %>
+  </div>
+
+  <div class="three fields">
+    <div class="field required <%= error_class(f, :type) %>">
+      <%= label(f, :type, "Type") %>
+      <%= select f, :type, type_options(), class: "ui fluid dropdown" %>
+    </div>
+
+    <div class="field required <%= error_class(f, :author_id) %>">
+      <%= label(f, :author_id, "Author") %>
+      <div class="ui fluid remote author search selection dropdown">
+        <%= hidden_input(f, :author_id) %>
+        <i class="dropdown icon"></i>
+        <%= if is_loaded(f.data.author) do %>
+          <div class="selected text"><%= f.data.author.name %></div>
+        <% else %>
+          <div class="default text">Select Author</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :author_id) %>
+    </div>
+
+    <div class="field <%= error_class(f, :source_id) %>">
+      <%= label(f, :source_id, "Source") %>
+      <div class="ui fluid remote source search selection dropdown">
+        <%= hidden_input(f, :source_id) %>
+        <i class="dropdown icon"></i>
+        <%= if is_loaded(f.data.source) do %>
+          <div class="selected text"><%= f.data.source.name %></div>
+        <% else %>
+          <div class="default text">Select Source</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :source_id) %>
+    </div>
+  </div>
+
+  <div class="field required <%= error_class(f, :headline) %>">
+    <%= label(f, :headline, "Headline") %>
+    <%= text_input(f, :headline, placeholder: "10 Best Blog Post Titles") %>
+    <%= error_message(f, :headline) %>
+  </div>
+
+  <div class="field <%= error_class(f, :story) %>">
+    <%= label(f, :story) %>
+    <%= textarea(f, :story, placeholder: "Markdown enabled.", rows: 10)%>
+    <%= error_message(f, :story) %>
+  </div>
+
+  <%= if is_persisted(f.data) do %>
+    <%= form_actions() %>
+  <% else %>
+    <div class="ui section divider"></div>
+    <button class="ui primary basic button" type="submit" name="queue" value="last">Publish Whenevs</button>
+    <button class="ui secondary basic button" type="submit" name="queue" value="publish">Publish Now</button>
+    <button class="ui secondary basic button" type="submit" name="queue" value="first">Publish Next</button>
+  <% end %>
+<% end %>

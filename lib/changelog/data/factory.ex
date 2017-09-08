@@ -80,6 +80,20 @@ defmodule Changelog.Factory do
     %Changelog.Episode{episode_factory() | published: true, published_at: hours_from_now(1)}
   end
 
+  def news_item_factory do
+    %Changelog.NewsItem{
+      type: :link,
+      status: :queued,
+      headline: sequence(:headline, &"Read all about it #{&1}!"),
+      url: "https://changelog.com/posts/read-all-about-it",
+      author: build(:person)
+    }
+  end
+
+  def published_news_item_factory do
+    %Changelog.NewsItem{news_item_factory() | status: :published, published_at: hours_ago(1)}
+  end
+
   def person_factory do
     %Changelog.Person{
       name: sequence(:name, &"Joe Blow #{&1}"),
