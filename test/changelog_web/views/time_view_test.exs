@@ -69,4 +69,20 @@ defmodule ChangelogWeb.TimeViewTest do
       assert seconds("01:35:10.70") == 5711
     end
   end
+
+  describe "ts" do
+    test "when passed nil" do
+      assert ts(nil) == ""
+    end
+
+    test "when passed a naive date time" do
+      {:safe, html} = ts(~N[2017-07-19 00:29:57])
+      assert html == "<span class='time' data-style='admin'>2017-07-19T00:29:57Z</span>"
+    end
+
+    test "when passed a naive date time and style" do
+      {:safe, html} = ts(~N[2017-07-19 00:29:57], "fancy")
+      assert html == "<span class='time' data-style='fancy'>2017-07-19T00:29:57Z</span>"
+    end
+  end
 end

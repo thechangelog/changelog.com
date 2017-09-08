@@ -61,7 +61,7 @@ defmodule ChangelogWeb.TimeView do
   def ts(ts, style \\ "admin")
   def ts(ts, _style) when is_nil(ts), do: ""
   def ts(ts, style) do
-    {:ok, formatted} = Timex.format(ts, "{ISO:Extended}")
+    {:ok, formatted} = Timex.format(ts, "{ISO:Extended:Z}")
     {:safe, "<span class='time' data-style='#{style}'>#{formatted}</span>"}
   end
 
