@@ -19,7 +19,7 @@ var common = {
         loader: "handlebars-loader"
       },
       {
-        test: [/\.sass$/, /\.css$/],
+        test: [/\.scss$/, /\.css$/],
         loader: ExtractTextPlugin.extract({use: "css-loader!sass-loader", fallback: "style-loader"})
       },
       {
@@ -44,7 +44,7 @@ module.exports = [
   merge(common, {
     entry: [
       "normalize.css",
-      __dirname + "/app/app.sass",
+      __dirname + "/app/app.scss",
       __dirname + "/app/app.js"
     ],
     output: {
@@ -65,7 +65,7 @@ module.exports = [
   merge(common, {
     entry: [
       "normalize.css",
-      __dirname + "/app/embed.sass",
+      __dirname + "/app/embed.scss",
       __dirname + "/app/embed.js"
     ],
     output: {

@@ -1,0 +1,60 @@
+// Colors
+$black: #121921;
+$half-black: rgba($black, 0.5);
+$white: #ffffff;
+$half-white: rgba($white, 0.5);
+$green: #61c192;
+$light-yellow: #fffedb;
+$blue: #2D3589;
+$lightest-grey: #f5f5f5;
+$light-grey: #e6e5e6;
+$medium-grey: #878b8f;
+$dark-grey: #474b4f;
+$red: #ef5125;
+
+// Podcasts - Sometimes we wanna loop through 'em
+$podcasts: backstage, founderstalk, gotime, master, podcast, rfc, spotlight, jsparty;
+
+// Podcast Colors
+$changelog: #9E978E;
+$changelog-transparent: rgba(darken($changelog, 45%), 0.6);
+
+$gotime: #59CBE8;
+$gotime-transparent: rgba(darken($gotime, 50%), 0.3);
+
+$rfc: #E10098;
+$rfc-transparent: rgba(darken($rfc, 30%), 0.3);
+
+$founderstalk: #3CDBC0;
+$founderstalk-transparent: rgba(darken($founderstalk, 40%), 0.3);
+
+$backstage: #FC4C02;
+$backstage-transparent: rgba(darken($backstage, 30%), 0.6);
+
+$spotlight: #F9A05D;
+$spotlight-transparent: rgba(darken($spotlight, 30%), 0.4);
+
+$jsparty: #FFCD00;
+$jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
+
+$border-color: rgba($black, 0.05);
+
+// Typography
+$body-copy-color: $black;
+$root-font-size: 14px; // 1 rem
+$content-fallback: Arial, sans-serif;
+$content: 'Sana Sans', $content-fallback;
+$display-fallback: 'Arial Narrow', sans-serif;
+$display: 'DIN 2014 Narrow', $display-fallback;
+$code: Menlo, Monaco, Consolas, Courier, monospace;
+
+// Layout
+$smartphone: 452px;
+$tablet: 768px;
+$desktop: 1080px;
+
+$padding-extra-small: 12px / $root-font-size * 1rem;
+$padding-small: 16px / $root-font-size * 1rem;
+$padding-medium: 20px / $root-font-size * 1rem;
+$padding-large: 26px / $root-font-size * 1rem;
+$padding-extra-large: 54px / $root-font-size * 1rem;

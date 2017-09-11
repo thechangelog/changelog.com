@@ -1,8 +1,8 @@
 import { u, ajax } from "umbrellajs";
-import Episode from "components/episode";
-import Log from "components/log";
-import ChangelogAudio from "components/audio";
-import Playbar from "components/playbar";
+import Episode from "modules/episode";
+import Log from "modules/log";
+import ChangelogAudio from "modules/audio";
+import Playbar from "modules/playbar";
 
 export default class OnsitePlayer {
   constructor(selector) {

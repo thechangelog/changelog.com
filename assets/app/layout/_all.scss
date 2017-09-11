@@ -1,0 +1,40 @@
+@import 'community';
+@import 'live';
+@import 'live-upcoming';
+@import 'profile';
+@import 'search';
+
+// Sticky Footer
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.main {
+  flex: 1 0 auto;
+}
+
+// Full width wrap
+.wrapper {
+  width: 100%;
+
+  &--gray {
+    background-color: rgba($black, 0.1);
+  }
+
+  &--half-gray {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      top: 50%;
+      height: 50%;
+      width: 100%;
+      left: 0;
+      right: 0;
+      content: '';
+      z-index: -1;
+      background-color: rgba($black, 0.1);
+    }
+  }
+}

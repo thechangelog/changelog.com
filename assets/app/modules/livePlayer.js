@@ -1,5 +1,5 @@
 import { u, ajax } from "umbrellajs";
-import Log from "components/log";
+import Log from "modules/log";
 
 export default class LivePlayer {
   constructor(selector) {

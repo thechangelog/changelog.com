@@ -1,11 +1,11 @@
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
-import OnsitePlayer from "components/onsitePlayer";
-import LivePlayer from "components/livePlayer";
-import Slider from "components/slider";
-import Overlay from "components/overlay";
-import Share from "components/share";
-import Log from "components/log";
+import OnsitePlayer from "modules/onsitePlayer";
+import LivePlayer from "modules/livePlayer";
+import Slider from "modules/slider";
+import Overlay from "modules/overlay";
+import Share from "modules/share";
+import Log from "modules/log";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";

@@ -1,8 +1,8 @@
 import { u } from "umbrellajs";
-import Episode from "components/episode";
-import Log from "components/log";
-import ChangelogAudio from "components/audio";
-import Embedly from "components/embedly";
+import Episode from "modules/episode";
+import Log from "modules/log";
+import ChangelogAudio from "modules/audio";
+import Embedly from "modules/embedly";
 import gup from "../../shared/gup";
 
 export default class EmbedPlayer {
