@@ -37,16 +37,23 @@ $spotlight-transparent: rgba(darken($spotlight, 30%), 0.4);
 $jsparty: #FFCD00;
 $jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
 
+
+// Borders
 $border-color: rgba($black, 0.05);
+$base-border-radius: 3px;
 
 // Typography
 $body-copy-color: $black;
-$root-font-size: 14px; // 1 rem
+$root-font-size: 16px;
 $content-fallback: Arial, sans-serif;
 $content: 'Sana Sans', $content-fallback;
 $display-fallback: 'Arial Narrow', sans-serif;
 $display: 'DIN 2014 Narrow', $display-fallback;
 $code: Menlo, Monaco, Consolas, Courier, monospace;
+
+// Spacing
+$base-spacing: 30px;
+$mobile-spacing: 20px;
 
 // Layout
 $smartphone: 452px;

@@ -1,3 +1,83 @@
 .header {
-  background: $black;
+  align-items: center;
+  background-color: $black;
+  display: flex;
+  padding: $base-spacing/2;
+
+  //
+  //
+  // Logo
+  &-logo {
+    $size: 50px;
+    margin: 0 $base-spacing 0 0;
+    text-indent: -9999px;
+
+    a {
+      background: url('../assets/images/changelog-mark-only-white.svg') left center no-repeat;
+      background-size: auto $size;
+      display: block;
+      height: $size;
+      width: $size;
+    }
+  }
+
+  //
+  //
+  // Primary Navigation
+  &-primary_nav {
+    flex: 1 0 auto; // Pushes secondary nav to the far right
+    margin: 0 10px;
+
+    &-item {
+      border-bottom: 3px solid transparent;
+      color: $white;
+      font-weight: 600;
+      margin: 0 10px;
+      padding: 6px 0;
+
+      &:hover {
+        border-bottom-color: $dark-grey;
+      }
+    }
+  }
+
+  //
+  //
+  // Secondary Nav
+  &-secondary_nav {
+    align-items: center;
+    display: flex;
+
+    &-user {
+      $size: 30px;
+      margin-right: $base-spacing/2;
+
+      &,
+      img {
+        display: block;
+        height: $size;
+        width: $size;
+      }
+      img {
+        $size: 30px;
+        border-radius: $base-border-radius;
+      }
+    }
+  }
+
+  //
+  //
+  // Search
+  &-search {
+    input {
+      background: #252B32;
+      border: 0;
+      color: $white;
+      padding: 0.4em 0.6em 0.3em;
+
+      &::placeholder {
+        color: $medium-grey;
+      }
+    }
+  }
 }

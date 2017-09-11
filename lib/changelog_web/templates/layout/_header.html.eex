@@ -1,13 +1,11 @@
 <header class="header">
-  <%= link to: "/", class: "header-logo" do %>
-    <h1><img src="" alt="Changelog"></h1>
-  <% end %>
+  <h1 class="header-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
 
   <nav class="header-primary_nav">
-    <%= link "Podcasts", to: podcast_path(@conn, :index), class: "navigation-bar-link" %>
-    <%= link "Community", to: page_path(@conn, :community), class: "navigation-bar-link" %>
-    <%= link "Subscribe", to: page_path(@conn, :subscribe), class: "navigation-bar-link" %>
-    <%= link "Sponsor", to: page_path(@conn, :sponsor), class: "navigation-bar-link" %>
+    <%= link "Podcasts", to: podcast_path(@conn, :index), class: "header-primary_nav-item" %>
+    <%= link "Community", to: page_path(@conn, :community), class: "header-primary_nav-item" %>
+    <%= link "Subscribe", to: page_path(@conn, :subscribe), class: "header-primary_nav-item" %>
+    <%= link "Sponsor", to: page_path(@conn, :sponsor), class: "header-primary_nav-item" %>
   </nav>
 
   <div class="header-secondary_nav">
@@ -36,7 +34,7 @@
     <% end %>
 
     <form action="<%= search_path(@conn, :search) %>" method="get" class="header-search">
-      <label class="accessibility-hidden" for="name">Search</label>
+      <label class="visually_hidden" for="name">Search</label>
       <input name="q" type="text" placeholder="Search..." value="" />
     </form>
   </div>
