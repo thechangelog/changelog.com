@@ -8,7 +8,7 @@
   <h2 class="news_item-title">
     <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>
       <%= if number = EpisodeView.number(@episode) do %>
-        <span>#<%= number %>&nbsp;</span>
+        <span><%= number %>:</span>
       <% end %>
       <%= @episode.title %>
     <% end %>
