@@ -1,0 +1,36 @@
+// Miscellaneous style fixes/hacks for browser inconsistencies or
+// issues that could potentially be resolved at some point in the future.
+// Check relevance on occasion to keep up to date.
+
+// Stops ios from changing your font sizes.
+// Fixes issue with certain fonts rendering "fat"
+// http://www.lighterra.com/articles/macosxtextaabug/
+body {
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// No dotted outline when you click links
+a:active,
+button:focus {
+  outline: none;
+}
+
+// Apply a natural box layout model to all elements, but allowing components to change
+// https://www.paulirish.com/2012/box-sizing-border-box-ftw/
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+img {
+  -ms-interpolation-mode: bicubic; // IE image enhancement
+  display: block; // Fixes phantom margins
+}
+
+svg:not(:root) { overflow: hidden; }

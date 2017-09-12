@@ -1,38 +1,38 @@
 <section class="show show--<%= @podcast.slug %>">
-    <header class="show-header">
-      <h2 class="show-header-art"><%= @podcast.name %></h2>
+  <header class="show-header">
+    <h2 class="show-header-art"><%= @podcast.name %></h2>
 
-      <div class="show-header-description">
-        <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
-        <%= @podcast.schedule_note |> md_to_html |> raw %>
-      </div>
+    <div class="show-header-description">
+      <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
+      <%= @podcast.schedule_note |> md_to_html |> raw %>
+    </div>
 
-      <div class="show-header-buttons">
-        <a class="show-header-buttons-item" href="#" title="Subscribe on Apple">Apple</a>
-        <a class="show-header-buttons-item" href="#" title="Subscribe on Overcast">Overcast</a>
-        <a class="show-header-buttons-item" href="#" title="Subscribe on Android">Android</a>
-        <a class="show-header-buttons-item" href="#" title="Subscribe on RSS">RSS</a>
-      </div>
+    <div class="show-header-buttons">
+      <a class="show-header-buttons-item" href="#" title="Subscribe on Apple">Apple</a>
+      <a class="show-header-buttons-item" href="#" title="Subscribe on Overcast">Overcast</a>
+      <a class="show-header-buttons-item" href="#" title="Subscribe on Android">Android</a>
+      <a class="show-header-buttons-item" href="#" title="Subscribe on RSS">RSS</a>
+    </div>
 
-      <div class="show-header-hosts">
-        <%= if !is_master(@podcast) do %>
-          <%= for person <- @podcast.hosts do %>
-            <%= link to: PersonView.external_url(person), class: "show-header-hosts-item", title: person.name, rel: "external" do %>
-              <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
-              <p><%= person.name %></p>
-            <% end %>
+    <div class="show-header-hosts">
+      <%= if !is_master(@podcast) do %>
+        <%= for person <- @podcast.hosts do %>
+          <%= link to: PersonView.external_url(person), class: "show-header-hosts-item", title: person.name, rel: "external" do %>
+            <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
+            <p><%= person.name %></p>
           <% end %>
         <% end %>
-      </div>
-    </header>
+      <% end %>
+    </div>
+  </header>
+
+  <div class="show-feed">
+    <%= for episode <- @episodes do %>
+      <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
+    <% end %>
   </div>
 
-  <%= for episode <- @episodes do %>
-    <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
-  <% end %>
-  </div>
-
-  <%= render(SharedView, "_community_cta_1.html", assigns) %>
+  <!-- <%= render(SharedView, "_community_cta_1.html", assigns) %>
 
   <% post_cta_episodes = Enum.slice(@episodes, 2, length(@episodes)) %>
   <div class="container container--skinny">
@@ -45,5 +45,5 @@
         <img src="<%= static_url(@conn, "/images/arrow-down.svg") %>" alt="Show all episodes"/>Show All Episodes
       <% end %>
     </div>
-  </div>
+  </div> -->
 </section>

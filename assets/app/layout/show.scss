@@ -1,4 +1,5 @@
 .show {
+  // Header
   &-header {
     background: $dark-grey;
     color: $white;
@@ -84,5 +85,13 @@
         }
       }
     }
+  }
+
+  // Feed
+  &-feed {
+    margin: 0 auto;
+    max-width: 940px;
+    padding: $base-spacing*2 $base-spacing;
+    padding: calc(2em + 2vw) $base-spacing;
   }
 }
