@@ -1,3 +1,63 @@
+// Usage
+// @include list;
+// @include list(ol);
+@mixin list($type: ul) {
+  margin: 1em 0 1.5em 5px;
+  padding: 0 0 0 20px;
+  list-style-type: none;
+
+  @include breakpoint(mobile) {
+    margin-left: 10px;
+  }
+
+  li {
+    margin-bottom: .5em;
+    font-size: 1em;
+    line-height: 1.5em;
+  }
+
+  ul,
+  ol {
+    font-size: 1em;
+    margin-left: 0;
+  }
+
+  @if $type == ul {
+    // list-style-type: disc;
+    li {
+      position: relative;
+    }
+
+    li:before {
+      $size: 8px;
+      @include position(absolute, 10px null null -20px);
+      @include size($size);
+      content: " ";
+      background: $purple;
+      border-radius: $size;
+      display: block;
+      margin-right: $size;
+    }
+
+    ul li:before {
+      $size: 6px;
+      @include size($size);
+      background: $pink;
+      margin-right: $size;
+      top: 11px;
+    }
+  }
+  @if $type == ol { list-style-type: decimal; }
+}
+
+// Set default styles
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+
 .checklist {
   font-size: 16px;
   list-style-type: none;

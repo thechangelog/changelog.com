@@ -1,8 +1,6 @@
 <article class="show_list-shows-item show_list-shows-item--<%= @podcast.slug %>">
-  <div class="show_list-shows-item-art">
-    <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show_list-shows-item-widget_link">
-      <span class="accessibility-hidden">View show page</span>
-    </a>
+  <div class="show_list-shows-item-wrap">
+    <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show_list-shows-item-art"></a>
     <!-- <div class="show_list-shows-item-widget_menu">
       <div class="tooltip tooltip--inline">
         <h3 class="tooltip_heading"><%= @podcast.name %></h3>
@@ -20,19 +18,17 @@
     </div>
     <button class="show_list-shows-item-widget_toggle"></button>
     -->
-  </div>
-  <div class="show_list-shows-item-content">
-    <%= @podcast.description |> md_to_html |> raw %>
-    <%= if Enum.any?(@podcast.hosts) do %>
-    <cite>Hosted by
-      <%= for person <- @podcast.hosts do %>
-        <%= link person.name, to: ChangelogWeb.PersonView.external_url(person) %>
+    <div class="show_list-shows-item-content">
+      <h2><a href="<%= podcast_path(@conn, :show, @podcast.slug) %>"><%= @podcast.name %></a></h2>
+      <%= @podcast.description |> md_to_html |> raw %>
+      <%= if Enum.any?(@podcast.hosts) do %>
+        <h3>Hosted by:</h3>
+        <ul>
+          <%= for person <- @podcast.hosts do %>
+            <li><%= link person.name, to: ChangelogWeb.PersonView.external_url(person) %></li>
+          <% end %>
+        </ul>
       <% end %>
-    </cite>
-    <% end %>
-    <% episode_count = ChangelogWeb.PodcastView.published_episode_count(@podcast) %>
-    <%= if episode_count > 0 do %>
-      <%= link pluralize(episode_count, "Episode", "Episodes"), to: podcast_path(@conn, :show, @podcast.slug), class: "show_list-shows-item_content_count-link" %>
-    <% end %>
+    </div>
   </div>
 </article>

@@ -22,6 +22,7 @@ var common = {
       {
         test: /\.svg$/,
         loader: 'svg-sprite-loader',
+        exclude: /fonts/,
         options: {
           extract: true,
           spriteFilename: '/images/sprite-[hash:6].svg',
@@ -36,7 +37,8 @@ var common = {
         loader: "file-loader?name=/images/[name].[ext]"
       },
       {
-        test: /\.(ttf|eot|woff2?)$/,
+        test: /\.(ttf|eot|woff2|svg?)$/,
+        exclude: /images/,
         loader: "file-loader?name=/fonts/[name].[ext]",
       }
     ]
