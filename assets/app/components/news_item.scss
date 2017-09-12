@@ -2,6 +2,11 @@
   border-bottom: 1px solid $light-grey;
   margin-bottom: $base-spacing;
   padding-bottom: $base-spacing;
+  position: relative;
+
+  @include breakpoint(mobile) {
+    padding-left: 70px;
+  }
 
   a {
     color: $black;
@@ -13,11 +18,36 @@
   }
 
   &-source {
+    align-items: center;
+    display: flex;
     font-size: 0.875em;
     margin: 0 0 10px;
+
+    &-image {
+      $size: 30px;
+      background: $black;
+      border-radius: $base-border-radius;
+      color: $white;
+      display: block;
+      font-size: 10px;
+      line-height: 1em;
+      margin-right: 10px;
+      height: $size;
+      width: $size;
+
+      @include breakpoint(mobile) {
+        $size: 50px;
+        position: absolute;
+        top: 22px;
+        left: 0;
+        height: $size;
+        width: $size;
+      }
+    }
   }
 
   &-title {
+    line-height: 1.25em;
     margin: 10px 0;
   }
 
@@ -26,17 +56,36 @@
     flex-wrap: wrap;
 
     &-item {
-      align-items: center;
-      display: flex;
       margin-right: $base-spacing/2;
+    }
+
+    &-reactions {
+      margin-right: 0;
     }
 
     &-button {
       @include toolbar_button();
+      height: 33px;
+      margin-bottom: 10px;
+      text-indent: -9999px;
+      padding-left: 0.75em;
+      padding-right: 0.65em;
+
+      span {
+        $size: 7px;
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: $size solid transparent;
+        border-bottom: $size solid transparent;
+        border-left: 12px solid $black;
+      }
     }
 
     &-meta {
       font-size: 0.875em;
+      margin-top: 6px;
+      line-height: 1.5em;
     }
   }
 }

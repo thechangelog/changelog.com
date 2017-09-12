@@ -1,5 +1,10 @@
 <article class="news_item">
-  <p class="news_item-source"><a href="#source" title="">medium.com</a></p>
+  <p class="news_item-source">
+    <%= link to: "#source" do %>
+      <img class="news_item-source-image" src="" alt="Source Avatar" />
+    <% end %>
+    <a href="#source" title="">medium.com</a>
+  </p>
   <h2 class="news_item-title">
     <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>
       <%= if number = EpisodeView.number(@episode) do %>
@@ -12,12 +17,13 @@
   <div class="news_item-description"><%= raw md_to_html(@episode.summary) %></div>
 
   <div class="news_item-toolbar">
-    <%= link "Play",
-        title: "Play Episode",
+    <%= link title: "Play Episode",
         to: EpisodeView.audio_url(@episode),
         data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
         role: "button",
-        class: "news_item-toolbar-item news_item-toolbar-button playbar playbar_play" %>
+        class: "news_item-toolbar-item news_item-toolbar-button news_item-toolbar-button--play playbar playbar_play" do %>
+        <span>Play</span>
+    <% end %>
 
     <div class="news_item-toolbar-item reactions">
       <button class="reactions-item" title="Like"><span>👍</span> 1</button>
@@ -27,13 +33,21 @@
     </div>
 
     <div class="news_item-toolbar-item news_item-toolbar-meta">
-      logged <%= TimeView.pretty_date(@episode.published_at) %>
-      &bull;&nbsp;&nbsp;
-      <%= link "show notes", to: EpisodeView.audio_url(@episode) %>
-      &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-      <%= link "discuss", to: EpisodeView.audio_url(@episode) %>
-      &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-      <%= link "tags +2", to: EpisodeView.audio_url(@episode) %>
+      <span class="news_item-toolbar-meta-item">
+        logged <%= TimeView.pretty_date(@episode.published_at) %>
+      </span>
+      &bull;
+      <span class="news_item-toolbar-meta-item">
+        <%= link "show notes", to: EpisodeView.audio_url(@episode) %>
+      </span>
+      &bull;
+      <span class="news_item-toolbar-meta-item">
+        <%= link "discuss", to: EpisodeView.audio_url(@episode) %>
+      </span>
+      &bull;
+      <span class="news_item-toolbar-meta-item">
+        <%= link "tags +2", to: EpisodeView.audio_url(@episode) %>
+      </span>
     </div>
   </div>
 </article>
