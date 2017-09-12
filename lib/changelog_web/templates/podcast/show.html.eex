@@ -1,54 +1,33 @@
-<section>
-  <div class="mosaic mosaic--<%= @podcast.slug %>">
-    <header class="flex-column podcast-header">
-      <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
-      <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
+<section class="show show--<%= @podcast.slug %>">
+    <header class="show-header">
+      <h2 class="show-header-art"><%= @podcast.name %></h2>
 
-    <%= if Enum.any?(@episodes) do %>
-      <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes), podcast: @podcast) %>
-    <% end %>
+      <div class="show-header-description">
+        <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
+        <%= @podcast.schedule_note |> md_to_html |> raw %>
+      </div>
 
-      <div class="podcast-header_hosts">
-      <%= if !is_master(@podcast) do %>
-        <p class="podcast-header_hosts_heading"><i><%= @podcast.schedule_note |> md_to_html |> sans_p_tags |> raw %> Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:</i></p>
-        <div class="hosts-list">
-        <%= for person <- @podcast.hosts do %>
-          <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-            <img src="<%= PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
+      <div class="show-header-buttons">
+        <a class="show-header-buttons-item" href="#" title="Subscribe on Apple">Apple</a>
+        <a class="show-header-buttons-item" href="#" title="Subscribe on Overcast">Overcast</a>
+        <a class="show-header-buttons-item" href="#" title="Subscribe on Android">Android</a>
+        <a class="show-header-buttons-item" href="#" title="Subscribe on RSS">RSS</a>
+      </div>
+
+      <div class="show-header-hosts">
+        <%= if !is_master(@podcast) do %>
+          <%= for person <- @podcast.hosts do %>
+            <%= link to: PersonView.external_url(person), class: "show-header-hosts-item", title: person.name, rel: "external" do %>
+              <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
+              <p><%= person.name %></p>
+            <% end %>
           <% end %>
         <% end %>
-        </div>
-      <% end %>
       </div>
     </header>
   </div>
 
-  <% pre_cta_episodes = Enum.slice(@episodes, 0, 2) %>
-  <div class="container container--skinny container--has-padding">
-  <%= if latest = List.first(pre_cta_episodes) do %>
-    <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
-      <h3>The Latest</h3>
-    <%= if latest.highlight do %>
-      <q><%= EpisodeView.classy_highlight(latest) %></q>
-    <% end %>
-      <button href="<%= EpisodeView.audio_url(latest) %>" data-play="<%= episode_path(@conn, :play, latest.podcast.slug, latest.slug) %>">
-          <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>
-          <span class="accessibility-hidden">Play</span>
-      </button>
-      <cite>
-        <%= (latest.headline || latest.title) |> no_widowed_words |> raw %>
-      <%= if number = EpisodeView.number(latest) do %>
-        <%= if is_master(@podcast) do %>
-          <span><%= latest.podcast.name %> #<%= number %></span>
-        <% else %>
-          <span>#<%= number %></span>
-        <% end %>
-      <% end %>
-      </cite>
-    </article>
-  <% end %>
-
-  <%= for episode <- pre_cta_episodes do %>
+  <%= for episode <- @episodes do %>
     <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
   <% end %>
   </div>

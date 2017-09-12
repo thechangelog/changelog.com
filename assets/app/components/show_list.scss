@@ -28,20 +28,13 @@
     padding: $base-spacing 20px;
 
     &-item {
-      flex: 0 100%;
       padding: $base-spacing 10px;
 
-      @include breakpoint(tiny) {
-        flex: 0 50%;
-      }
-
-      @include breakpoint(mobile) {
-        flex: 0 33.3333%;
-      }
-
-      @include breakpoint(desktop) {
-        flex: 0 25%;
-      }
+      // Size ramp
+      flex: 0 100%;
+      @include breakpoint(tiny) { flex: 0 50%; }
+      @include breakpoint(mobile) { flex: 0 33.3333%; }
+      @include breakpoint(desktop) { flex: 0 25%; }
 
       &-wrap {
         margin: 0 auto;

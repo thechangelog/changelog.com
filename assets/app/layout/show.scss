@@ -1,0 +1,88 @@
+.show {
+  &-header {
+    background: $dark-grey;
+    color: $white;
+    padding: $base-spacing*2 $base-spacing;
+    padding: calc(2em + 2vw) $base-spacing;
+    text-align: center;
+
+    // Artwork
+    &-art {
+      $size: 260px;
+      height: $size;
+      margin: 0 auto $base-spacing;
+      text-indent: -9999px;
+      width: $size;
+
+      @each $podcast in $podcasts {
+        .show--#{$podcast} & {
+          background-image: url('../assets/images/podcasts/#{$podcast}-cover-art.svg');
+        }
+      }
+    }
+
+    // Description
+    &-description {
+      color: $medium-grey;
+      font-size: 1.125em;
+      margin: $base-spacing auto;
+      max-width: 680px;
+
+      p {
+        margin-bottom: 0.5em;
+      }
+    }
+
+    // Buttons
+    &-buttons {
+      font-size: 0;
+      margin: 20px 0;
+      text-align: center;
+
+      &-item {
+        background: #252B32;
+        border: 1px solid #333A42;
+        border-radius: $base-border-radius;
+        color: $white;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px;
+        padding: 1em 1.5em 0.8em;
+        transition: background 0.1s $base-easing;
+
+        &:hover {
+          background: #333A42;
+        }
+      }
+    }
+
+    // Hosts
+    &-hosts {
+      display: flex;
+      justify-content: center;
+
+      &-item {
+        display: block;
+        font-size: 0.875em;
+        margin: 1em;
+        text-align: center;
+
+        &:hover {
+          p { color: $white; }
+        }
+
+        img {
+          background: #000;
+          display: block;
+          margin: 0 auto;
+        }
+
+        p {
+          color: $medium-grey;
+          margin: 1em 0 0;
+          transition: color 0.1s $base-easing;
+        }
+      }
+    }
+  }
+}
