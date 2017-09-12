@@ -1,0 +1,39 @@
+.show_list {
+  background: $black;
+  color: $white;
+  margin: 1px 0;
+  padding: $base-spacing*2 $base-spacing;
+
+  &-header {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 880px;
+
+    p {
+      color: $medium-grey;
+      font-size: 1.25em;
+    }
+  }
+
+  //
+  //
+  // Shows
+  &-shows {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: $base-spacing;
+
+    &-item {
+      flex: 0 25%;
+      padding: $base-spacing;
+
+      &-art {
+        background-color: lighten($black, 2%);
+        width: 100%;
+        height: 225px;
+      }
+    }
+  }
+}
