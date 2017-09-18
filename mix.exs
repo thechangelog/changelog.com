@@ -62,7 +62,7 @@ defmodule Changelog.Mixfile do
      {:briefly, "~> 0.3"},
      {:cowboy, "~> 1.0"},
      {:user_agent_parser, "~> 1.0"},
-     {:quantum, ">= 1.8.1"},
+     {:quantum, ">= 2.1.0"},
      {:oauth, github: "tim/erlang-oauth"},
      {:ueberauth_github, "~> 0.4"},
      {:ueberauth_twitter, "~> 0.2"},
