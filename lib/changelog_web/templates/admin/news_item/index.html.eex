@@ -5,6 +5,11 @@
   </h1>
 
   <div class="actions">
+    <%= link to: admin_news_source_path(@conn, :new), class: "ui right floated basic button" do %>
+      <i class="add write icon"></i>
+      Add Source
+    <% end %>
+
     <%= link to: admin_news_item_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="add write icon"></i>
       Add Item
