@@ -19,7 +19,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   end
 
   @tag :as_admin
-  test "renders form to create new post", %{conn: conn} do
+  test "renders form to create new item", %{conn: conn} do
     conn = get(conn, admin_news_item_path(conn, :new))
     assert html_response(conn, 200) =~ ~r/new/
   end

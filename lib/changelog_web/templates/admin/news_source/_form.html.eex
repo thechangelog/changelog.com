@@ -1,0 +1,27 @@
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+  <div class="two fields">
+    <div class="field required <%= error_class(f, :name) %>">
+      <%= label(f, :name, "Name") %>
+      <%= text_input(f, :name, placeholder: "Wired") %>
+    </div>
+
+    <div class="field required <%= error_class(f, :slug) %>">
+      <%= label(f, :slug, "Slug") %>
+      <%= text_input(f, :slug, placeholder: "wired") %>
+    </div>
+  </div>
+
+  <div class="two fields">
+    <div class="field required <%= error_class(f, :website) %>">
+      <%= label(f, :website, "Website") %>
+      <%= text_input(f, :website, placeholder: "https://wired.com") %>
+    </div>
+
+    <div class="field <%= error_class(f, :regex) %>">
+      <%= label(f, :regex, "Regex") %>
+      <%= text_input(f, :regex, placeholder: "*wired.com*") %>
+    </div>
+  </div>
+
+  <%= form_actions() %>
+<% end %>

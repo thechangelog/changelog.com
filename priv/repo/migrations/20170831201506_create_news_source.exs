@@ -8,6 +8,8 @@ defmodule Changelog.Repo.Migrations.CreateNewsSource do
       add :website, :string, null: false
       add :regex, :string
       add :icon, :string
+
+      timestamps()
     end
 
     create unique_index(:news_sources, [:slug])

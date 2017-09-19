@@ -94,6 +94,14 @@ defmodule Changelog.Factory do
     %Changelog.NewsItem{news_item_factory() | status: :published, published_at: hours_ago(1)}
   end
 
+  def news_source_factory do
+    %Changelog.NewsSource{
+      name: "Wired",
+      slug: "wired",
+      website: "https://wired.com"
+    }
+  end
+
   def person_factory do
     %Changelog.Person{
       name: sequence(:name, &"Joe Blow #{&1}"),

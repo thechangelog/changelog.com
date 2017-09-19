@@ -1,7 +1,7 @@
 defmodule Changelog.NewsSource do
   use Changelog.Data
 
-  alias Changelog.{Icon, Regexp}
+  alias Changelog.{Icon, NewsItem, Regexp}
 
   schema "news_sources" do
     field :name, :string
