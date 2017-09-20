@@ -2,9 +2,12 @@
     <thead>
       <tr>
         <th>Author</th>
+        <th>Type</th>
         <th>Headline</th>
+        <th>URL</th>
         <th>Create Time</th>
         <th>Publish Time</th>
+        <th>Sponsored</th>
         <th></th>
       </tr>
     </thead>
@@ -17,9 +20,12 @@
             <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(item.author) %>">
           <% end %>
         </td>
+        <td><%= item.type %></td>
         <td><%= link truncate(item.headline, 50), to: admin_news_item_path(@conn, :edit, item) %></td>
+        <td><%= link item.url, to: item.url %></td>
         <td><%= ts(item.inserted_at) %></td>
         <td><%= ts(item.published_at) %></td>
+        <td><%= item.sponsored %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
             <%= link to: admin_news_item_path(@conn, :edit, item), class: "ui button" do %>

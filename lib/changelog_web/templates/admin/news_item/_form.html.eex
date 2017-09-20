@@ -52,6 +52,27 @@
     <%= error_message(f, :story) %>
   </div>
 
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox f, :sponsored, class: "hidden" %>
+      <label>Sponsored</label>
+    </div>
+  </div>
+
+  <div class="field js-sponsor <%= error_class(f, :sponsor_id) %>">
+    <%= label(f, :sponsor_id, "Sponsor") %>
+    <div class="ui fluid remote sponsor search selection dropdown">
+      <%= hidden_input(f, :sponsor_id) %>
+      <i class="dropdown icon"></i>
+      <%= if is_loaded(f.data.sponsor) do %>
+        <div class="selected text"><%= f.data.sponsor.name %></div>
+      <% else %>
+        <div class="default text">Select Author</div>
+      <% end %>
+    </div>
+    <%= error_message(f, :sponsor_id) %>
+  </div>
+
   <%= if is_persisted(f.data) do %>
     <%= form_actions() %>
   <% else %>

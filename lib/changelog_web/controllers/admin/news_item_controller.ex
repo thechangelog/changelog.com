@@ -19,6 +19,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     changeset =
       conn.assigns.current_user
       |> build_assoc(:news_items)
+      |> NewsItem.preload_all
       |> NewsItem.admin_changeset()
 
     render(conn, "new.html", changeset: changeset)

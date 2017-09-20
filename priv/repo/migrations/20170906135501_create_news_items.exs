@@ -8,17 +8,21 @@ defmodule Changelog.Repo.Migrations.CreateNewsItems do
       add :headline, :string, null: false
       add :url, :string, null: false
       add :published_at, :naive_datetime
+      add :sponsored, :boolean, default: false
       add :story, :text
       add :image, :string
       add :author_id, references(:people)
       add :source_id, references(:news_sources), on_delete: :nilify_all
+      add :sponsor_id, references(:sponsors)
 
       timestamps()
     end
 
     create index(:news_items, [:author_id])
     create index(:news_items, [:source_id])
+    create index(:news_items, [:sponsor_id])
     create index(:news_items, [:status])
     create index(:news_items, [:type])
+    create index(:news_items, [:sponsored])
   end
 end

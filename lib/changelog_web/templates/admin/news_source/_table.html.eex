@@ -1,7 +1,7 @@
 <table class="ui celled striped table">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Source</th>
         <th>Slug</th>
         <th>Website</th>
         <th>Regex</th>
@@ -14,7 +14,10 @@
     <tbody>
     <%= for news_source <- @news_sources do %>
       <tr>
-        <td><%= link news_source.name, to: admin_news_source_path(@conn, :edit, news_source) %></td>
+        <td>
+          <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(news_source) %>">
+          <%= link news_source.name, to: admin_news_source_path(@conn, :edit, news_source) %>
+        </td>
         <td><%= news_source.slug %></td>
         <td><%= link news_source.website, to: news_source.website, rel: "external" %></td>
         <td><%= news_source.regex %></td>
