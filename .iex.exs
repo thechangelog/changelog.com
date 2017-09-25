@@ -1,5 +1,5 @@
 alias Changelog.{Repo, Person, Episode, EpisodeHost, EpisodeGuest, NewsItem,
-                 Podcast, Topic, Sponsor, Post}
+                 NewsSource, NewsQueue, Podcast, Topic, Sponsor, Post}
 
 import Ecto
 import Ecto.Changeset

@@ -94,6 +94,13 @@ defmodule Changelog.Factory do
     %Changelog.NewsItem{news_item_factory() | status: :published, published_at: hours_ago(1)}
   end
 
+  def news_queue_factory do
+    %Changelog.NewsQueue{
+      position: sequence(:position, &(&1)),
+      item: build(:news_item)
+    }
+  end
+
   def news_source_factory do
     %Changelog.NewsSource{
       name: "Wired",
