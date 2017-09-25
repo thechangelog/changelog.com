@@ -1,7 +1,7 @@
 defmodule Changelog.NewsQueueTest do
   use Changelog.DataCase
 
-  alias Changelog.NewsQueue
+  alias Changelog.{NewsItem, NewsQueue}
 
   describe "append" do
     test "when queue is empty" do
@@ -103,6 +103,34 @@ defmodule Changelog.NewsQueueTest do
 
       assert length(entries) == 3
       assert Enum.map(entries, &(&1.item_id)) == [item.id, i1.id, i2.id]
+    end
+  end
+
+  describe "publish_next" do
+    test "it is a no-op when queue is empty" do
+      assert NewsQueue.publish_next() == true
+    end
+
+    test "it publishes the next news item, removing it from the queue" do
+      assert Repo.count(NewsItem.published) == 0
+
+      i1 = insert(:news_item)
+      i2 = insert(:news_item)
+
+      insert(:news_queue, item: i1, position: 1.0)
+      insert(:news_queue, item: i2, position: 2.0)
+
+      NewsQueue.publish_next()
+
+      published = Repo.all(NewsItem.published)
+      assert Enum.map(published, &(&1.id)) == [i1.id]
+      assert Repo.count(NewsQueue) == 1
+
+      NewsQueue.publish_next()
+
+      published = NewsItem.published |> NewsItem.newest_first |> Repo.all
+      assert Enum.map(published, &(&1.id)) == [i2.id, i1.id]
+      assert Repo.count(NewsQueue) == 0
     end
   end
 end

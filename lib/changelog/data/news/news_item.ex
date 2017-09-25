@@ -50,6 +50,12 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:sponsor)
   end
 
+  def publish!(news_item) do
+    news_item
+    |> change(%{status: :published, published_at: Timex.now})
+    |> Repo.update!
+  end
+
   def published(query \\ __MODULE__) do
     from p in query,
       where: p.status == ^:published

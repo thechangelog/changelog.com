@@ -71,4 +71,13 @@ defmodule Changelog.NewsQueue do
 
     Repo.insert(entry)
   end
+
+  def publish_next do
+    case NewsQueue.ordered |> Ecto.Query.preload(:item) |> Repo.all do
+      [entry | _rest] ->
+        NewsItem.publish!(entry.item)
+        Repo.delete!(entry)
+      [] -> true
+    end
+  end
 end
