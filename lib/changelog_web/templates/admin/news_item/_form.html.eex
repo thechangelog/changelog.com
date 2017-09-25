@@ -77,8 +77,8 @@
     <%= form_actions() %>
   <% else %>
     <div class="ui section divider"></div>
-    <button class="ui primary basic button" type="submit" name="queue" value="last">Publish Whenevs</button>
+    <button class="ui primary basic button" type="submit" name="queue" value="append">Publish Whenevs</button>
     <button class="ui secondary basic button" type="submit" name="queue" value="publish">Publish Now</button>
-    <button class="ui secondary basic button" type="submit" name="queue" value="first">Publish Next</button>
+    <button class="ui secondary basic button" type="submit" name="queue" value="prepend">Publish Next</button>
   <% end %>
 <% end %>

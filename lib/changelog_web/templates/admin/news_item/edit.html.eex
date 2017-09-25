@@ -2,12 +2,12 @@
   <h1 class="ui dividing header">
     <%= link "News", to: admin_news_item_path(@conn, :index) %>
     &raquo; Edit
-  <%= if NewsItem.is_published(@item) do %>
+  <%= if NewsItem.is_published(@news_item) do %>
     <%= link "(View)",
       to: "TODO",
       class: "view" %>
   <% end %>
   </h1>
 
-  <%= render "_form.html", changeset: @changeset, action: admin_news_item_path(@conn, :update, @item) %>
+  <%= render "_form.html", changeset: @changeset, action: admin_news_item_path(@conn, :update, @news_item) %>
 </div>

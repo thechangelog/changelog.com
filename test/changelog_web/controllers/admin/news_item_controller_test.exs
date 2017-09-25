@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.NewsItem
+  alias Changelog.{NewsItem, NewsQueue}
 
   @valid_attrs %{type: :project, headline: "Ruby on Rails", url: "https://rubyonrails.org", author_id: 1}
   @invalid_attrs %{type: :project, headline: "Ruby on Rails", url: ""}
@@ -25,12 +25,23 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   end
 
   @tag :as_admin
-  test "creates news item and smart redirects", %{conn: conn} do
+  test "creates news item and publishes immediately", %{conn: conn} do
     author = insert(:person)
-    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | author_id: author.id}, close: true)
+    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | author_id: author.id}, queue: "publish")
+
+    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert count(NewsItem.published) == 1
+  end
+
+  @tag :as_admin
+  test "creates news item and queues it", %{conn: conn} do
+    author = insert(:person)
+    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | author_id: author.id}, queue: "append")
 
     assert redirected_to(conn) == admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
+    assert count(NewsItem.published) == 0
+    assert count(NewsQueue) == 1
   end
 
   @tag :as_admin

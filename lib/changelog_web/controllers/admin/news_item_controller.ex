@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.NewsItem
+  alias Changelog.{NewsItem, NewsQueue}
 
   plug :scrub_params, "news_item" when action in [:create, :update]
 
@@ -29,12 +29,16 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     changeset = NewsItem.admin_changeset(%NewsItem{}, item_params)
 
     case Repo.insert(changeset) do
-      {:ok, item} ->
-        # queue_action = Map.get(params, "queue", "last")
-        # NewsQueue.action(queue_action, item)
+      {:ok, news_item} ->
+        case Map.get(params, "queue", "append") do
+          "publish" -> NewsItem.publish!(news_item)
+          "prepend" -> NewsQueue.prepend(news_item)
+          "append" -> NewsQueue.append(news_item)
+        end
+
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(item, params)
+        |> redirect(to: admin_news_item_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -43,30 +47,30 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   def edit(conn, %{"id" => id}) do
-    item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
-    changeset = NewsItem.admin_changeset(item)
-    render(conn, "edit.html", item: item, changeset: changeset)
+    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
+    changeset = NewsItem.admin_changeset(news_item)
+    render(conn, "edit.html", news_item: news_item, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_item" => item_params}) do
-    item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
-    changeset = NewsItem.admin_changeset(item, item_params)
+    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
+    changeset = NewsItem.admin_changeset(news_item, item_params)
 
     case Repo.update(changeset) do
-      {:ok, item} ->
+      {:ok, news_item} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(item, params)
+        |> smart_redirect(news_item, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", item: item, changeset: changeset)
+        |> render("edit.html", news_item: news_item, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    item = Repo.get!(NewsItem, id)
-    Repo.delete!(item)
+    news_item = Repo.get!(NewsItem, id)
+    Repo.delete!(news_item)
 
     conn
     |> put_flash(:result, "success")
