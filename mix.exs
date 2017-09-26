@@ -24,8 +24,8 @@ defmodule Changelog.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Changelog, []},
      extra_applications: [:logger]]
+    [mod: {Changelog.Application, []},
   end
 
   # Specifies which paths to compile per environment.
