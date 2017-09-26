@@ -1,3 +1,4 @@
+import Sortable from "sortablejs";
 import linkItem from "templates/linkItem.hbs";
 
 export default class ListWidget {

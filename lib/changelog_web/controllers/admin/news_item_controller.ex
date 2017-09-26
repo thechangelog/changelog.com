@@ -6,13 +6,19 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   plug :scrub_params, "news_item" when action in [:create, :update]
 
   def index(conn, params) do
+    queued =
+      NewsQueue.ordered
+      |> NewsQueue.preload_all
+      |> Repo.all
+      |> Enum.map(&(&1.item))
+
     page =
       NewsItem.published
       |> NewsItem.newest_first
       |> NewsItem.preload_all
       |> Repo.paginate(params)
 
-    render(conn, :index, items: page.entries, page: page)
+    render(conn, :index, queued: queued, published: page.entries, page: page)
   end
 
   def new(conn, _params) do
@@ -75,6 +81,12 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_item_path(conn, :index))
+  end
+
+  def move(conn, %{"id" => id, "position" => position}) do
+    news_item = Repo.get!(NewsItem, id)
+    NewsQueue.move(news_item, String.to_integer(position))
+    send_resp(conn, 200, "")
   end
 
   defp smart_redirect(conn, _item, %{"close" => _true}) do

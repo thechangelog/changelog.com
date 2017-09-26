@@ -18,9 +18,14 @@
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@items) do %>
+<%= if Enum.any?(@queued) do %>
+  <h2 class="ui dividing header">Queued</h2>
+  <%= render("_table.html", conn: @conn, status: "queued", news_items: @queued) %>
+<% end %>
+
+<%= if Enum.any?(@published) do %>
   <h2 class="ui dividing header">Published</h2>
-  <%= render("_table.html", conn: @conn, status: "published", items: @items) %>
+  <%= render("_table.html", conn: @conn, status: "published", news_items: @published) %>
   <%= pagination_links(@conn, @page, path: &admin_news_item_path/3) %>
 <% end %>
 </div>

@@ -57,6 +57,14 @@ defmodule Changelog.NewsQueue do
     Repo.update(entry)
   end
 
+  def preload_all(query = %Ecto.Query{}) do
+    Ecto.Query.preload(query, [item: :author])
+  end
+
+  def preload_all(entry) do
+    Repo.preload(entry, [item: :author])
+  end
+
   def prepend(item) do
     entry = change(%NewsQueue{}, %{item_id: item.id})
 

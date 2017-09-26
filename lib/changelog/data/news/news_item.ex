@@ -1,7 +1,7 @@
 defmodule Changelog.NewsItem do
   use Changelog.Data
 
-  alias Changelog.{NewsSource, Person, Regexp, Sponsor}
+  alias Changelog.{NewsQueue, NewsSource, Person, Regexp, Sponsor}
 
   defenum Status, queued: 0, submitted: 1, declined: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
@@ -21,6 +21,7 @@ defmodule Changelog.NewsItem do
     belongs_to :author, Person
     belongs_to :source, NewsSource
     belongs_to :sponsor, Sponsor
+    has_one :news_queue, NewsQueue, foreign_key: :item_id, on_delete: :delete_all
 
     timestamps()
   end
