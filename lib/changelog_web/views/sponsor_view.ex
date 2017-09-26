@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.SponsorView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{ColorLogo, DarkLogo, LightLogo}
+  alias Changelog.Files.{ColorLogo, DarkLogo, LightLogo}
 
   def logo_url(sponsor, type, version) do
     {module, file} = case type do

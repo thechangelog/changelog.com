@@ -1,7 +1,7 @@
 defmodule Changelog.Person do
   use Changelog.Data
 
-  alias Changelog.{Avatar, EpisodeHost, EpisodeGuest, NewsItem, PodcastHost,
+  alias Changelog.{EpisodeHost, EpisodeGuest, Files, NewsItem, PodcastHost,
                    Post, Regexp}
   alias Timex.Duration
 
@@ -20,7 +20,7 @@ defmodule Changelog.Person do
     field :joined_at, DateTime
     field :signed_in_at, DateTime
     field :admin, :boolean
-    field :avatar, Avatar.Type
+    field :avatar, Files.Avatar.Type
 
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all

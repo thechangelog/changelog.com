@@ -1,8 +1,8 @@
 defmodule Changelog.Episode do
   use Changelog.Data
 
-  alias Changelog.{AudioFile, EpisodeHost, EpisodeGuest, EpisodeChannel,
-                   EpisodeStat, EpisodeSponsor, Podcast, Regexp, Transcripts}
+  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,
+                   EpisodeSponsor, Files, Podcast, Regexp, Transcripts}
   alias ChangelogWeb.{EpisodeView, TimeView}
 
   schema "episodes" do
@@ -25,7 +25,7 @@ defmodule Changelog.Episode do
     field :recorded_at, DateTime
     field :recorded_live, :boolean, default: false
 
-    field :audio_file, AudioFile.Type
+    field :audio_file, Files.Audio.Type
     field :bytes, :integer
     field :duration, :integer
 

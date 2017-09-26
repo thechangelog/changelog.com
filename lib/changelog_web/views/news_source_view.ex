@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsSourceView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.Icon
+  alias Changelog.Files.Icon
 
   def icon_url(news_source), do: icon_url(news_source, :small)
   def icon_url(news_source, version) do

@@ -1,16 +1,11 @@
-defmodule Changelog.AudioFile do
+defmodule Changelog.Files.Audio do
+  use Changelog.File, [:mp3]
   use Arc.Definition
   use Arc.Ecto.Definition
 
   alias ChangelogWeb.{PodcastView}
 
   @versions [:original]
-
-  def __storage, do: Arc.Storage.Local
-
-  def validate({file, _}) do
-    ~w(.mp3) |> Enum.member?(Path.extname(file.file_name))
-  end
 
   def filename(_version, {_file, scope}) do
     "#{PodcastView.dasherized_name(scope.podcast)}-#{scope.slug}"
