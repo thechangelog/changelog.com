@@ -1,41 +1,48 @@
 <header class="header">
   <h1 class="header-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
 
-  <nav class="header-primary_nav">
-    <%= link "Podcasts", to: podcast_path(@conn, :index), class: "header-primary_nav-item" %>
-    <%= link "Community", to: page_path(@conn, :community), class: "header-primary_nav-item" %>
-    <%= link "Subscribe", to: page_path(@conn, :subscribe), class: "header-primary_nav-item" %>
-    <%= link "Sponsor", to: page_path(@conn, :sponsor), class: "header-primary_nav-item" %>
-  </nav>
+  <nav class="header-nav">
+    <div class="header-nav-wrap">
+      <h1 class="header-nav-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
+      <button class="header-nav-close js-toggle_nav">✕</button>
 
-  <div class="header-secondary_nav">
-    <%= if @current_user do %>
-      <%= link to: home_path(@conn, :show), class: "header-secondary_nav-user js-account-nav", title: "Go $HOME" do %>
-        <img src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
-      <% end %>
-      <div class="js-account-nav-content" style="display: none;">
-        <div class="overlay-section">
-          <p class="overlay-section-lead_in">Signed in as</p>
-          <h3 class="overlay-section-heading"><%= @current_user.handle %></h3>
-          <ul class="overlay-nav">
-          <%= if @current_user.admin do %>
-            <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+      <ul class="header-nav-primary">
+        <li class="header-nav-primary-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
+        <li class="header-nav-primary-item"><%= link "Community", to: page_path(@conn, :community) %></li>
+        <li class="header-nav-primary-item"><%= link "Subscribe", to: page_path(@conn, :subscribe) %></li>
+        <li class="header-nav-primary-item"><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
+      </ul>
+
+      <div class="header-nav-secondary">
+        <%= if @current_user do %>
+          <%= link to: home_path(@conn, :show), class: "header-nav-secondary-user js-account-nav", title: "Go $HOME" do %>
+            <img src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
           <% end %>
-            <li><%= link "My Account", to: home_path(@conn, :show) %></li>
-            <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
-            <li><%= link "Launch Slack", to: "https://changelog.slack.com" %></li>
-            <li><%= link "Sign Out", to: sign_out_path(@conn, :delete) %></li>
-          </ul>
-        </div>
-      </div>
-    <% else %>
-      <%= link "Log In", to: sign_in_path(@conn, :new), class: "header-button" %>
-      <%= link "Sign Up", to: page_path(@conn, :community), class: "header-button" %>
-    <% end %>
+          <div class="js-account-nav-content" style="display: none;">
+            <div class="overlay-section">
+              <p class="overlay-section-lead_in">Signed in as</p>
+              <h3 class="overlay-section-heading"><%= @current_user.handle %></h3>
+              <ul class="overlay-nav">
+              <%= if @current_user.admin do %>
+                <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+              <% end %>
+                <li><%= link "My Account", to: home_path(@conn, :show) %></li>
+                <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
+                <li><%= link "Launch Slack", to: "https://changelog.slack.com" %></li>
+                <li><%= link "Sign Out", to: sign_out_path(@conn, :delete) %></li>
+              </ul>
+            </div>
+          </div>
+        <% else %>
+          <%= link "Log In", to: sign_in_path(@conn, :new), class: "header-button" %>
+          <%= link "Sign Up", to: page_path(@conn, :community), class: "header-button" %>
+        <% end %>
 
-    <form action="<%= search_path(@conn, :search) %>" method="get" class="header-search">
-      <label class="visually_hidden" for="name">Search</label>
-      <input name="q" type="text" placeholder="Search..." value="" />
-    </form>
+        <form action="<%= search_path(@conn, :search) %>" method="get" class="header-nav-search">
+          <label class="visually_hidden" for="name">Search</label>
+          <input name="q" type="text" placeholder="Search..." value="" />
+        </form>
+      </div>
+    </div>
   </div>
 </header>

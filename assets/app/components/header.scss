@@ -8,13 +8,14 @@
   //
   //
   // Logo
+  &-nav-logo,
   &-logo {
     $size: 50px;
     margin: 0 $base-spacing 0 0;
     text-indent: -9999px;
 
     a {
-      background: url('../assets/images/changelog-mark-only-white.svg') left center no-repeat;
+      background: url('../assets/images/changelog-logomark-white.svg') left center no-repeat;
       background-size: auto $size;
       display: block;
       height: $size;
@@ -24,60 +25,140 @@
 
   //
   //
-  // Primary Navigation
-  &-primary_nav {
-    flex: 1 0 auto; // Pushes secondary nav to the far right
-    margin: 0 10px;
+  // Navigation
+  &-nav {
+    flex: 1 0 auto;
 
-    &-item {
-      border-bottom: 3px solid transparent;
-      color: $white;
-      font-weight: 600;
-      margin: 0 10px;
-      padding: 6px 0;
+    // Mobile Nav Styles
+    @include breakpoint(desktop, max) {
+      @include position(absolute, 10px);
+      background: $dark-grey;
+      box-shadow: 0 0 3px 3px rgba($black, 0.3);
+      border-radius: 5px;
+      display: flex;
+      margin: 0 0 auto;
+      padding: $base-spacing;
+      z-index: 9999;
+    }
 
-      &:hover {
-        border-bottom-color: #4D5258;
+    &-wrap {
+      @include breakpoint(desktop, max) {
+        flex-direction: column;
+        display: flex;
+        margin: auto;
+      }
+
+      @include breakpoint(desktop) {
+        align-items: center;
+        display: flex;
+        flex: 1 0 auto; // Pushes secondary nav to the far right
       }
     }
-  }
 
-  //
-  //
-  // Secondary Nav
-  &-secondary_nav {
-    align-items: center;
-    display: flex;
 
-    &-user {
-      $size: 30px;
-      margin-right: $base-spacing/2;
-
-      &,
-      img {
-        display: block;
-        height: $size;
-        width: $size;
+    // Mobile only logo and close button
+    &-logo,
+    &-close {
+      @include breakpoint(desktop) {
+        display: none;
       }
-      img {
+    }
+    &-logo {
+      margin: 0 0 $base-spacing;
+      text-align: center;
+
+      @include breakpoint(desktop) {
+        display: none;
+      }
+
+      a { margin: 0 auto; }
+    }
+    &-close {
+      @include position(absolute, 0 0 null null);
+      color: $green;
+      cursor: pointer;
+      font-size: 2em;
+      padding: 0.5em;
+    }
+
+    // Primary Navigation
+    &-primary {
+      text-align: center;
+
+      @include breakpoint(desktop) {
+        display: flex;
+        flex-wrap: wrap;
+        flex: 1 0 auto; // Pushes secondary nav to the far right
+        margin: 0 10px;
+      }
+
+      &-item {
+        font-weight: 600;
+        margin: 0 10px;
+
+        a {
+          color: $white;
+          border-bottom: 3px solid transparent;
+          display: inline-block;
+          padding: 6px 0;
+
+          &:hover {
+            border-bottom-color: #4D5258;
+          }
+        }
+      }
+    }
+
+    // Secondary Nav
+    &-secondary {
+      margin-top: $base-spacing;
+
+      @include breakpoint(desktop) {
+        align-items: center;
+        display: flex;
+        margin-top: 0;
+      }
+
+      &-user {
         $size: 30px;
-        border-radius: $base-border-radius;
+        text-align: center;
+
+        @include breakpoint(desktop) {
+          margin: $base-spacing/2;
+        }
+
+        &,
+        img {
+          display: block;
+          margin: 0 auto;
+          height: $size;
+          width: $size;
+        }
+        img {
+          $size: 30px;
+          border-radius: $base-border-radius;
+        }
       }
     }
-  }
 
-  //
-  //
-  // Search
-  &-search {
-    input {
-      background: #252B32;
-      border: 0;
-      color: $white;
-      padding: 0.4em 0.6em 0.3em;
+    // Search
+    &-search {
+      margin-top: $base-spacing;
+      text-align: center;
 
-      &::placeholder {
-        color: $medium-grey;
+      @include breakpoint(desktop) {
+        margin-top: 0;
+      }
+
+      input {
+        background: #252B32;
+        border: 0;
+        color: $white;
+        padding: 0.4em 0.6em 0.3em;
+
+        &::placeholder {
+          color: $medium-grey;
+        }
       }
     }
   }

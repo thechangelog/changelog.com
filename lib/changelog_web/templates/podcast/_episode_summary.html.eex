@@ -25,12 +25,7 @@
         <span>Play</span>
     <% end %>
 
-    <div class="news_item-toolbar-item reactions">
-      <button class="reactions-item" title="Like"><span>👍</span> 1</button>
-      <button class="reactions-item" title="Celebrate"><span>🎉</span> 5</button>
-      <button class="reactions-item" title="Confused"><span>😕</span> 0</button>
-      <button class="reactions-item" title="Heart"><span>💚</span> 1</button>
-    </div>
+    <button class="news_item-toolbar-item news_item-toolbar-button" title="Heart"><span>💚</span> 1</button>
 
     <div class="news_item-toolbar-item news_item-toolbar-meta">
       <span class="news_item-toolbar-meta-item">

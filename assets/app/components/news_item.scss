@@ -20,7 +20,8 @@
   &-source {
     align-items: center;
     display: flex;
-    font-size: 0.875em;
+    font-family: $code;
+    font-size: 0.75em;
     margin: 0 0 10px;
 
     &-image {
@@ -51,6 +52,12 @@
     margin: 10px 0;
   }
 
+  &-description p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &-toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -59,31 +66,31 @@
       margin-right: $base-spacing/2;
     }
 
-    &-reactions {
-      margin-right: 0;
-    }
-
     &-button {
       @include toolbar_button();
       height: 33px;
       margin-bottom: 10px;
-      text-indent: -9999px;
       padding-left: 0.75em;
       padding-right: 0.65em;
 
-      span {
-        $size: 7px;
-        display: block;
-        width: 0;
-        height: 0;
-        border-top: $size solid transparent;
-        border-bottom: $size solid transparent;
-        border-left: 12px solid $black;
+      &--play {
+        text-indent: -9999px;
+
+        span {
+          $size: 7px;
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: $size solid transparent;
+          border-bottom: $size solid transparent;
+          border-left: 12px solid $black;
+        }
       }
     }
 
     &-meta {
-      font-size: 0.875em;
+      font-family: $code;
+      font-size: 0.75em;
       margin-top: 6px;
       line-height: 1.5em;
     }

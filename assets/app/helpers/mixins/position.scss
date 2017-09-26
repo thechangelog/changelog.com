@@ -1,0 +1,35 @@
+@function unpack($shorthand) {
+  @if length($shorthand) == 1 {
+    @return nth($shorthand, 1) nth($shorthand, 1) nth($shorthand, 1) nth($shorthand, 1);
+  } @else if length($shorthand) == 2 {
+    @return nth($shorthand, 1) nth($shorthand, 2) nth($shorthand, 1) nth($shorthand, 2);
+  } @else if length($shorthand) == 3 {
+    @return nth($shorthand, 1) nth($shorthand, 2) nth($shorthand, 3) nth($shorthand, 2);
+  } @else {
+    @return $shorthand;
+  }
+}
+
+@mixin position($position: relative, $coordinates: null null null null) {
+  @if type-of($position) == list {
+    $coordinates: $position;
+    $position: relative;
+  }
+
+  $coordinates: unpack($coordinates);
+
+  $offsets: (
+    top:    nth($coordinates, 1),
+    right:  nth($coordinates, 2),
+    bottom: nth($coordinates, 3),
+    left:   nth($coordinates, 4)
+  );
+
+  position: $position;
+
+  @each $offset, $value in $offsets {
+    @if is-length($value) {
+      #{$offset}: $value;
+    }
+  }
+}
