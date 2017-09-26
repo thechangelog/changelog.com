@@ -30,5 +30,6 @@ config :changelog, Changelog.Scheduler,
   timezone: "US/Central",
   jobs: [
     {"0 4 * * *", {Changelog.Stats, :process, []}},
-    {"0 3 * * *", {Changelog.Slack.Tasks, :import_member_ids, []}}
+    {"0 3 * * *", {Changelog.Slack.Tasks, :import_member_ids, []}},
+    {"1 * * * *", {Changelog.NewsQueue, :publish_next, []}}
   ]
