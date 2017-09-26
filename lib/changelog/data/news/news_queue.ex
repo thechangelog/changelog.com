@@ -1,6 +1,8 @@
 defmodule Changelog.NewsQueue do
   use Changelog.Data
 
+  require Logger
+
   alias Changelog.{NewsItem, NewsQueue}
 
   schema "news_queue" do
@@ -85,7 +87,10 @@ defmodule Changelog.NewsQueue do
       [entry | _rest] ->
         NewsItem.publish!(entry.item)
         Repo.delete!(entry)
-      [] -> true
+        Logger.info("News: Published ##{entry.item.id}")
+      [] ->
+        Logger.info("News: Nothing to publish")
+        true
     end
   end
 end
