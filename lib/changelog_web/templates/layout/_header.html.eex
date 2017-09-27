@@ -4,7 +4,7 @@
   <nav class="header-nav">
     <div class="header-nav-wrap">
       <h1 class="header-nav-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
-      <button class="header-nav-close js-toggle_nav">✕</button>
+      <button class="header-nav-close js-toggle-nav">✕</button>
 
       <ul class="header-nav-primary">
         <li class="header-nav-primary-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
@@ -44,5 +44,7 @@
         </form>
       </div>
     </div>
-  </div>
+  </nav>
+
+  <button class="header-menu_icon js-toggle-nav">Menu</button>
 </header>

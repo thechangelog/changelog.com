@@ -8,6 +8,13 @@
   //
   //
   // Logo
+  &-logo {
+    flex: 1 0 auto;
+
+    @include breakpoint(desktop) {
+      flex: 0 auto;
+    }
+  }
   &-nav-logo,
   &-logo {
     $size: 50px;
@@ -25,6 +32,35 @@
 
   //
   //
+  // Menu Icon
+  &-menu_icon {
+    $size: 22px;
+    border-bottom: 2px solid $green;
+    border-top: 2px solid $green;
+    display: block;
+    color: $green;
+    cursor: pointer;
+    height: 18px;
+    margin-left: $base-spacing/2;
+    position: relative;
+    text-indent: -9999px;
+    width: $size;
+
+    @include breakpoint(desktop) {
+      display: none;
+    }
+
+    &:before {
+      @include position(absolute, 50% 0 null 0);
+      content: "";
+      background: $green;
+      height: 2px;
+      margin-top: -1px;
+    }
+  }
+
+  //
+  //
   // Navigation
   &-nav {
     flex: 1 0 auto;
@@ -33,12 +69,17 @@
     @include breakpoint(desktop, max) {
       @include position(absolute, 10px);
       background: $dark-grey;
+      border: 1px solid lighten($dark-grey, 5%);
       box-shadow: 0 0 3px 3px rgba($black, 0.3);
       border-radius: 5px;
-      display: flex;
+      display: none;
       margin: 0 0 auto;
       padding: $base-spacing;
       z-index: 9999;
+
+      body.nav-open & {
+        display: flex;
+      }
     }
 
     &-wrap {
@@ -78,7 +119,7 @@
       color: $green;
       cursor: pointer;
       font-size: 2em;
-      padding: 0.5em;
+      padding: 0.25em;
     }
 
     // Primary Navigation
@@ -89,7 +130,7 @@
         display: flex;
         flex-wrap: wrap;
         flex: 1 0 auto; // Pushes secondary nav to the far right
-        margin: 0 10px;
+        margin: 0;
       }
 
       &-item {
@@ -121,6 +162,7 @@
 
       &-user {
         $size: 30px;
+        margin: 0 auto;
         text-align: center;
 
         @include breakpoint(desktop) {
@@ -130,7 +172,6 @@
         &,
         img {
           display: block;
-          margin: 0 auto;
           height: $size;
           width: $size;
         }
