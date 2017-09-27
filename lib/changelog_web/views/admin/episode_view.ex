@@ -11,6 +11,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def embed_iframe(episode, theme), do: EpisodeView.embed_iframe(episode, theme)
   def embed_iframe(episode, podcast, theme), do: EpisodeView.embed_iframe(episode, podcast, theme)
   def megabytes(episode), do: EpisodeView.megabytes(episode)
+  def numbered_title(episode), do: EpisodeView.numbered_title(episode)
 
   def download_count(episode), do: episode.download_count |> round |> comma_separated
   def reach_count(episode) do

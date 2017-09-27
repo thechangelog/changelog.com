@@ -45,10 +45,7 @@ defmodule ChangelogWeb.Router do
 
     get "/", PageController, :index
     get "/search", SearchController, :all
-    get "/search/channel", SearchController, :channel
-    get "/search/person", SearchController, :person
-    get "/search/post", SearchController, :post
-    get "/search/sponsor", SearchController, :sponsor
+    get "/search/:type", SearchController, :one
 
     resources "/benefits", BenefitController, except: [:show]
     resources "/channels", ChannelController, except: [:show]

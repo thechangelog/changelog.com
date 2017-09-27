@@ -2,7 +2,9 @@ defmodule ChangelogWeb.Admin.SearchView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.{EpisodeSponsor, Repo}
-  alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, SponsorView}
+  alias ChangelogWeb.Endpoint
+  alias ChangelogWeb.Admin.{ChannelView, EpisodeView, NewsSourceView, PersonView,
+                            PostView, SponsorView}
 
   @limit 3
 
@@ -10,6 +12,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     response = %{results: %{
       channels: %{name: "Channels", results: process_results(results.channels, &channel_result/1)},
       episodes: %{name: "Episodes", results: process_results(results.episodes, &episode_result/1)},
+      news_sources: %{name: "News Sources", results: process_results(results.news_sources, &news_source_result/1)},
       people: %{name: "People", results: process_results(results.people, &person_result/1)},
       posts: %{name: "Posts", results: process_results(results.posts, &post_result/1)},
       sponsors: %{name: "Sponsors", results: process_results(results.sponsors, &sponsor_result/1)}}}
@@ -25,6 +28,10 @@ defmodule ChangelogWeb.Admin.SearchView do
 
   def render("channel.json", _params = %{results: results, query: _query}) do
     %{results: Enum.map(results, &channel_result/1)}
+  end
+
+  def render("news_source.json", _params = %{results: results, query: _query}) do
+    %{results: Enum.map(results, &news_source_result/1)}
   end
 
   def render("person.json", _params = %{results: results, query: _query}) do
@@ -46,6 +53,13 @@ defmodule ChangelogWeb.Admin.SearchView do
       title: channel.name,
       slug: channel.slug,
       url: admin_channel_path(Endpoint, :edit, channel)}
+  end
+
+  defp news_source_result(news_source) do
+    %{id: news_source.id,
+      title: news_source.name,
+      slug: news_source.slug,
+      url: admin_news_source_path(Endpoint, :edit, news_source)}
   end
 
   defp episode_result(episode) do

@@ -3,8 +3,8 @@
     Posts matching '<%= @query %>': <%= length(@results) %>
   </h1>
 
-  <%= if Enum.any?(@results) do %>
-    <%= render Changelog.Admin.PostView, "_table.html", conn: @conn, posts: @results %>
-  <% end %>
+<%= if Enum.any?(@results) do %>
+  <%= render(PostView, "_table.html", conn: @conn, posts: @results) %>
+<% end %>
 </div>
 

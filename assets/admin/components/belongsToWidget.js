@@ -5,7 +5,7 @@ export default class BelongsToWidget {
         case "person":
           return "<a href='/admin/people/new' target='_blank'>Add a Person</a>";
           break;
-        case "source":
+        case "news_source":
           return "<a href='/admin/news/sources/new' target='_blank'>Add a Source</a>";
           break
       }
@@ -14,8 +14,10 @@ export default class BelongsToWidget {
     $(`.remote.search.dropdown.${relationType}`).dropdown({
       fields: {name: "title", value: "id"},
       apiSettings: {
-        url: `/admin/search/${searchType}?q={query}&f=json`
+        url: `/admin/search/${searchType}?q={query}&f=json`,
+        cache: false
       },
+      saveRemoteData: false,
       message: {
         noResults: noResultsMessage()
       }

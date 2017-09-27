@@ -67,7 +67,7 @@
       <%= if is_loaded(f.data.sponsor) do %>
         <div class="selected text"><%= f.data.sponsor.name %></div>
       <% else %>
-        <div class="default text">Select Author</div>
+        <div class="default text">Select Sponsor</div>
       <% end %>
     </div>
     <%= error_message(f, :sponsor_id) %>

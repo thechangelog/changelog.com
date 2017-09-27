@@ -3,8 +3,8 @@
     Sponsors matching '<%= @query %>': <%= length(@results) %>
   </h1>
 
-  <%= if Enum.any?(@results) do %>
-    <%= render Changelog.Admin.SponsorView, "_table.html", conn: @conn, sponsors: @results %>
-  <% end %>
+<%= if Enum.any?(@results) do %>
+  <%= render(SponsorView, "_table.html", conn: @conn, sponsors: @results) %>
+<% end %>
 </div>
 
