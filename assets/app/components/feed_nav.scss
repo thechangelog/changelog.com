@@ -1,0 +1,22 @@
+.feed_nav {
+  border-bottom: 2px solid $light-grey;
+  margin-bottom: $base-spacing*1.5;
+
+  &-item {
+    display: inline-block;
+
+    a {
+      border-bottom: 3px solid transparent;
+      color: $black;
+      display: block;
+      padding: 1em;
+      transform: translateY(2px);
+      transition: border 0.2s $base-easing;
+    }
+
+    &.is-active a,
+    a:hover {
+      border-bottom-color: $green;
+    }
+  }
+}

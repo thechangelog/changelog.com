@@ -1,0 +1,10 @@
+.episode {
+  // Header
+  &-header {
+    background: $dark-grey;
+    color: $white;
+    padding: $base-spacing*2 $base-spacing;
+    padding: calc(2em + 2vw) $base-spacing;
+    text-align: center;
+  }
+}

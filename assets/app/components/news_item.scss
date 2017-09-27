@@ -31,18 +31,18 @@
       color: $white;
       display: block;
       font-size: 10px;
+      height: $size;
       line-height: 1em;
       margin-right: 10px;
-      height: $size;
       width: $size;
 
       @include breakpoint(mobile) {
         $size: 50px;
-        position: absolute;
-        top: 22px;
-        left: 0;
         height: $size;
+        left: 0;
+        position: absolute;
         width: $size;
+        top: 22px;
       }
     }
   }
@@ -69,7 +69,6 @@
     &-button {
       @include toolbar_button();
       height: 33px;
-      margin-bottom: 10px;
       padding-left: 0.75em;
       padding-right: 0.65em;
 

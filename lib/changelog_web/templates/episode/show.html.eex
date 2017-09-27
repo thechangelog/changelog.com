@@ -1,158 +1,157 @@
-<div class="mosaic mosaic--overlap mosaic--<%= @podcast.slug %>"></div>
-<div class="container container--has-padding container--extra-skinny">
-  <article class="episode">
-    <header class="episode_header">
-      <%= link to: podcast_path(@conn, :show, @podcast.slug), class: "episode_header_art" do %>
-        <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="  <%= @podcast.name %> Podcast"/>
-      <% end %>
+<article class="episode">
+  <header class="episode-header">
+    <h2 class="episode-header-show">
+      <%= @episode.podcast.name %> #999
+    </h2>
+    <h1 class="episode-header-title">
       <%= if @episode.headline do %>
-        <h2 class="episode_header_headline<%= if @episode.subheadline do %> episode_header_headline--has-subhead<% end %>"><%= @episode.headline %></h2>
-        <i class="episode_header_subhead<%= if @episode.guests do %> episode_header_subhead--has-guests<% end %>"><%= @episode.subheadline |> md_to_html |> sans_p_tags |> raw %></i>
+        <%= @episode.headline %>
       <% else %>
-        <h2 class="episode_header_headline<%= if @episode.guests do %> episode_header_headline--has-guests<% end %>"><%= @episode.title %></h2>
+        <%= @episode.title %>
       <% end %>
+    </h1>
+    <%= if @episode.subheadline do %>
+      <h3 class="episode-header-subtitle"><%= @episode.subheadline |> md_to_html |> sans_p_tags |> raw %></h3>
+    <% end %>
 
-      <div class="hosts-list section">
-        <h3 class="accessibility-hidden">Guests</h3>
-        <%= for person <- @episode.guests do %>
-          <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-            <img src="<%= PersonView.avatar_url(person) %>" width=75 height=75 alt="<%= person.name %>"/>
+    <div class="episode-header-guests">
+      <h4 class="visually_hidden">Guests</h4>
+      <%= for person <- @episode.guests do %>
+        <%= link to: PersonView.external_url(person), class: "episode-header-guests-item", title: person.name, rel: "external" do %>
+          <img src="<%= PersonView.avatar_url(person) %>" width=75 height=75 alt="<%= person.name %>"/>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= render("_play_bar.html", assigns) %>
+  </header>
+
+  <% dark_logo_sponsorships = sponsorships_with_dark_logo(@episode) %>
+  <%= if Enum.any?(dark_logo_sponsorships) do %>
+    <aside class="sponsors-ribbon">
+      <h3>Brought to you by</h3>
+      <div class="sponsors-ribbon_logos">
+        <%= for episode_sponsor <- dark_logo_sponsorships do %>
+          <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
+          <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
           <% end %>
         <% end %>
       </div>
+    </aside>
+  <% end %>
 
-      <%= render("_play_bar.html", assigns) %>
+  <%= @episode.summary |> md_to_html |> raw %>
 
-      <% dark_logo_sponsorships = sponsorships_with_dark_logo(@episode) %>
-      <%= if Enum.any?(dark_logo_sponsorships) do %>
-        <aside class="sponsors-ribbon">
-          <h3>Brought to you by</h3>
-          <div class="sponsors-ribbon_logos">
-            <%= for episode_sponsor <- dark_logo_sponsorships do %>
-              <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
-              <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
-              <% end %>
-            <% end %>
-          </div>
-        </aside>
-      <% end %>
-    </header>
+  <cite class="episode_meta">
+    <%= if number = number(@episode) do %>
+    <b>Episode #<%= number %></b>&nbsp;/&nbsp;
+    <% end %>
+    <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time>
+    &nbsp;/&nbsp;<%= TimeView.rounded_minutes(@episode.duration) %> Min
+    &nbsp;<%= if @current_user && @current_user.admin do %><%= link "[Edit]", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug), data: [turbolinks: false] %><% end %>
+    <a href="<%= audio_url(@episode) %>" download>
+      <img src="<%= static_url(@conn, "/images/download.svg") %>"">
+      &nbsp;Download MP3 (<%= megabytes(@episode) %>MB)
+    </a>
+  </cite>
 
-    <%= @episode.summary |> md_to_html |> raw %>
-
-    <cite class="episode_meta">
-      <%= if number = number(@episode) do %>
-      <b>Episode #<%= number %></b>&nbsp;/&nbsp;
-      <% end %>
-      <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time>
-      &nbsp;/&nbsp;<%= TimeView.rounded_minutes(@episode.duration) %> Min
-      &nbsp;<%= if @current_user && @current_user.admin do %><%= link "[Edit]", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug), data: [turbolinks: false] %><% end %>
-      <a href="<%= audio_url(@episode) %>" download>
-        <img src="<%= static_url(@conn, "/images/download.svg") %>"">
-        &nbsp;Download MP3 (<%= megabytes(@episode) %>MB)
-      </a>
-    </cite>
-
-    <footer class="episode_footer episode_footer--<%= @podcast.slug %>">
-      <% participants = participants(@episode) %>
-      <%= if Enum.any?(participants) do %>
-      <section class="episode-footer-section">
-        <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/guest-gray.svg") %>" alt="Show notes"></div>
-        <div class="episode-footer-section_content">
-          <h3 id="featuring">Featuring</h3>
-          <div class="richtext">
-            <ul>
-            <%= for person <- participants do %>
-              <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links |> raw %></li>
-            <% end %>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <% end %>
-
-      <%= if Enum.any?(@episode.episode_sponsors) do %>
-      <section class="episode-footer-section">
-        <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/sponsor-gray.svg") %>" alt="Show sponsors"></div>
-        <div class="episode-footer-section_content">
-          <h3 id="sponsors">Sponsors</h3>
-          <dl class="sponsors-list">
-          <%= for sponsor <- @episode.episode_sponsors do %>
-            <div class="sponsors-list_item">
-              <dt class="sponsors-list_name"><%= link sponsor.title, to: sponsor.link_url %></dt>
-              <dd class="sponsors-list_description"><%= sponsor.description |> md_to_html |> sans_p_tags |> raw %></dd>
-            <div>
+  <footer class="episode_footer episode_footer--<%= @podcast.slug %>">
+    <% participants = participants(@episode) %>
+    <%= if Enum.any?(participants) do %>
+    <section class="episode-footer-section">
+      <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/guest-gray.svg") %>" alt="Show notes"></div>
+      <div class="episode-footer-section_content">
+        <h3 id="featuring">Featuring</h3>
+        <div class="richtext">
+          <ul>
+          <%= for person <- participants do %>
+            <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links |> raw %></li>
           <% end %>
-          </dl>
+          </ul>
         </div>
-      </section>
-      <% end %>
+      </div>
+    </section>
+    <% end %>
 
-      <%= if @episode.notes do %>
-      <section class="episode-footer-section">
-        <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
-        <div class="episode-footer-section_content">
-          <h3 id="notes">Notes &amp; Links</h3>
-          <div class="richtext">
-            <%= @episode.notes |> md_to_html |> raw %>
-          </div>
+    <%= if Enum.any?(@episode.episode_sponsors) do %>
+    <section class="episode-footer-section">
+      <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/sponsor-gray.svg") %>" alt="Show sponsors"></div>
+      <div class="episode-footer-section_content">
+        <h3 id="sponsors">Sponsors</h3>
+        <dl class="sponsors-list">
+        <%= for sponsor <- @episode.episode_sponsors do %>
+          <div class="sponsors-list_item">
+            <dt class="sponsors-list_name"><%= link sponsor.title, to: sponsor.link_url %></dt>
+            <dd class="sponsors-list_description"><%= sponsor.description |> md_to_html |> sans_p_tags |> raw %></dd>
+          <div>
+        <% end %>
+        </dl>
+      </div>
+    </section>
+    <% end %>
+
+    <%= if @episode.notes do %>
+    <section class="episode-footer-section">
+      <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show notes"></div>
+      <div class="episode-footer-section_content">
+        <h3 id="notes">Notes &amp; Links</h3>
+        <div class="richtext">
+          <%= @episode.notes |> md_to_html |> raw %>
         </div>
-      </section>
-      <% end %>
+      </div>
+    </section>
+    <% end %>
 
-      <%= if Enum.any?(@episode.transcript) do %>
-      <section class="episode-footer-section">
-        <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show transcript"></div>
-        <div class="episode-footer-section_content">
-          <h3 id="transcript">Transcript</h3>
-          <div class="transcript">
-            <div  class="transcript-item transcript-item--break">
-              <div class="transcript-item-speaker">
-                <%= link to: page_path(@conn, :about), title: "Changelog Media" do %>
-                  <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
-                <% end %>
-                <p class="transcript-item-speaker-name">Changelog</p>
-              </div>
-              <div class="transcript-item-text">
-                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
-              </div>
+    <%= if Enum.any?(@episode.transcript) do %>
+    <section class="episode-footer-section">
+      <div class="episode-footer-section_icon"><img src="<%= static_url(@conn, "/images/notes.svg") %>" alt="Show transcript"></div>
+      <div class="episode-footer-section_content">
+        <h3 id="transcript">Transcript</h3>
+        <div class="transcript">
+          <div  class="transcript-item transcript-item--break">
+            <div class="transcript-item-speaker">
+              <%= link to: page_path(@conn, :about), title: "Changelog Media" do %>
+                <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
+              <% end %>
+              <p class="transcript-item-speaker-name">Changelog</p>
             </div>
-            <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
-              <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
-              <div id="transcript-<%= index %>" class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
-                <%= if speaker do %>
-                  <div class="transcript-item-speaker">
-                    <%= link to: PersonView.external_url(speaker), title: speaker.name, rel: "external" do %>
-                      <img class="transcript-item-speaker-image" src="<%= PersonView.avatar_url(speaker) %>" width=36 height=36 alt=""/>
-                    <% end %>
-                    <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>
-                  </div>
-                <% end %>
-                <div class="transcript-item-text">
-                  <%= unless speaker do %><strong class="transcript-break"><%= part["title"] %></strong><% end %>
-                  <%= part["body"] |> md_to_html |> with_timestamp_links |> raw %>
+            <div class="transcript-item-text">
+              <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
+            </div>
+          </div>
+          <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
+            <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
+            <div id="transcript-<%= index %>" class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
+              <%= if speaker do %>
+                <div class="transcript-item-speaker">
+                  <%= link to: PersonView.external_url(speaker), title: speaker.name, rel: "external" do %>
+                    <img class="transcript-item-speaker-image" src="<%= PersonView.avatar_url(speaker) %>" width=36 height=36 alt=""/>
+                  <% end %>
+                  <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>
                 </div>
-              </div>
-            <% end %>
-            <div  class="transcript-item transcript-item--break">
-              <div class="transcript-item-speaker">
-                <%= link to: page_path(@conn, :about), title: "Changelog Media" do %>
-                  <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
-                <% end %>
-                <p class="transcript-item-speaker-name">Changelog</p>
-              </div>
+              <% end %>
               <div class="transcript-item-text">
-                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
+                <%= unless speaker do %><strong class="transcript-break"><%= part["title"] %></strong><% end %>
+                <%= part["body"] |> md_to_html |> with_timestamp_links |> raw %>
               </div>
+            </div>
+          <% end %>
+          <div  class="transcript-item transcript-item--break">
+            <div class="transcript-item-speaker">
+              <%= link to: page_path(@conn, :about), title: "Changelog Media" do %>
+                <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
+              <% end %>
+              <p class="transcript-item-speaker-name">Changelog</p>
+            </div>
+            <div class="transcript-item-text">
+              <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
             </div>
           </div>
         </div>
-      </section>
-      <% end %>
+      </div>
+    </section>
+    <% end %>
 
-      <%= link "View all episodes", to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--block" %>
-    </footer>
-  </article>
-</div>
-
-<%= render SharedView, "_news_cta_1.html", assigns %>
+    <%= link "View all episodes", to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--block" %>
+  </footer>
+</article>

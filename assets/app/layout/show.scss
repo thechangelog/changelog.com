@@ -9,11 +9,17 @@
 
     // Artwork
     &-art {
-      $size: 260px;
+      $size: 130px;
       height: $size;
       margin: 0 auto $base-spacing;
       text-indent: -9999px;
       width: $size;
+
+      @include breakpoint(mobile) {
+        $size: 260px;
+        height: $size;
+        width: $size;
+      }
 
       @each $podcast in $podcasts {
         .show--#{$podcast} & {

@@ -27,6 +27,15 @@
   </header>
 
   <div class="show-feed">
+    <nav class="feed_nav">
+      <ul>
+        <li class="feed_nav-item is-active"><a href="#">Latest</a></li>
+        <li class="feed_nav-item"><a href="#">Nav Item</a></li>
+        <li class="feed_nav-item"><a href="#">Nav Item</a></li>
+        <li class="feed_nav-item"><a href="#">Nav Item</a></li>
+        <li class="feed_nav-item"><a href="#">Nav Item</a></li>
+      </ul>
+    </nav>
     <%= for episode <- @episodes do %>
       <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
     <% end %>
