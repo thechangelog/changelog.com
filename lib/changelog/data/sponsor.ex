@@ -20,13 +20,23 @@ defmodule Changelog.Sponsor do
     timestamps()
   end
 
-  def admin_changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, ~w(name description website github_handle twitter_handle))
+  def file_changeset(sponsor, attrs \\ %{}) do
+    sponsor
+    |> cast_attachments(attrs, ~w(color_logo dark_logo light_logo))
+  end
+
+  def insert_changeset(sponsor, attrs \\ %{}) do
+    sponsor
+    |> cast(attrs, ~w(name description website github_handle twitter_handle))
     |> validate_required([:name])
-    |> cast_attachments(params, ~w(color_logo dark_logo light_logo))
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:name)
+  end
+
+  def update_changeset(sponsor, attrs \\ %{}) do
+    sponsor
+    |> insert_changeset(attrs)
+    |> file_changeset(attrs)
   end
 
   def sponsorship_count(sponsor) do
