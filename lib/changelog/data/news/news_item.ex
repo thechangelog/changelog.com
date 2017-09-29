@@ -1,7 +1,7 @@
 defmodule Changelog.NewsItem do
   use Changelog.Data
 
-  alias Changelog.{NewsQueue, NewsSource, Person, Regexp, Sponsor}
+  alias Changelog.{Files, NewsQueue, NewsSource, Person, Regexp, Sponsor}
 
   defenum Status, queued: 0, submitted: 1, declined: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
@@ -13,7 +13,7 @@ defmodule Changelog.NewsItem do
     field :url, :string
     field :headline, :string
     field :story, :string
-    # field :image, Icon.Type
+    field :image, Files.Image.Type
 
     field :published_at, DateTime
     field :sponsored, :boolean, default: false
@@ -26,15 +26,24 @@ defmodule Changelog.NewsItem do
     timestamps()
   end
 
-  def admin_changeset(news_item, attrs \\ %{}) do
+  def file_changeset(news_item, attrs \\ %{}) do
+    cast_attachments(news_item, attrs, ~w(image))
+  end
+
+  def insert_changeset(news_item, attrs \\ %{}) do
     news_item
-    # |> cast_attachments(attrs, ~w(image))
-    |> cast(attrs, ~w(status type url headline story published_at sponsored author_id source_id sponsor_id))
+    |> cast(attrs, ~w(status type url headline story published_at sponsored newsletter author_id source_id sponsor_id))
     |> validate_required([:type, :url, :headline, :author_id, :sponsored])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:author_id)
     |> foreign_key_constraint(:sponsor_id)
     |> foreign_key_constraint(:source_id)
+  end
+
+  def update_changeset(news_item, attrs \\ %{}) do
+    news_item
+    |> insert_changeset(attrs)
+    |> file_changeset(attrs)
   end
 
   def preload_all(query = %Ecto.Query{}) do

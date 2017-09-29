@@ -2,19 +2,11 @@ defmodule Changelog.Files.Logo do
   defmacro __using__(prefix) do
     quote do
       use Changelog.File, [:jpg, :jpeg, :png, :svg]
-      use Arc.Definition
-      use Arc.Ecto.Definition
 
       @versions [:original, :large, :medium, :small]
 
-      def filename(version, _) do
-        "#{unquote(prefix)}_logo_#{version}"
-      end
-
-      def storage_dir(_version, {_file, scope}) do
-        hashed_id = Changelog.Hashid.encode(scope.id)
-        "#{Application.fetch_env!(:arc, :storage_dir)}/logos/#{hashed_id}"
-      end
+      def storage_dir(_, {_, scope}), do: expanded_dir("/logos/#{hashed(scope.id)}")
+      def filename(version, _), do: "#{unquote(prefix)}_logo_#{version}"
 
       def transform(version, {file, _scope}) do
         if file_type(file) == :svg do

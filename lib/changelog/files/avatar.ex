@@ -1,18 +1,10 @@
 defmodule Changelog.Files.Avatar do
   use Changelog.File, [:jpg, :jpeg, :png]
-  use Arc.Definition
-  use Arc.Ecto.Definition
 
   @versions [:original, :large, :medium, :small]
 
-  def storage_dir(_version, {_file, scope}) do
-    hashed_id = Changelog.Hashid.encode(scope.id)
-    "#{Application.fetch_env!(:arc, :storage_dir)}/avatars/#{hashed_id}"
-  end
-
-  def filename(version, _) do
-    "avatar_#{version}"
-  end
+  def storage_dir(_version, {_file, scope}), do: expanded_dir("/avatars/#{hashed(scope.id)}")
+  def filename(version, _), do: "avatar_#{version}"
 
   def transform(version, _) do
     {:convert, "-strip -resize #{dimensions(version)} -format png", :png}

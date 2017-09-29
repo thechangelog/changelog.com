@@ -21,8 +21,7 @@ defmodule Changelog.Sponsor do
   end
 
   def file_changeset(sponsor, attrs \\ %{}) do
-    sponsor
-    |> cast_attachments(attrs, ~w(color_logo dark_logo light_logo))
+    cast_attachments(sponsor, attrs, ~w(color_logo dark_logo light_logo))
   end
 
   def insert_changeset(sponsor, attrs \\ %{}) do

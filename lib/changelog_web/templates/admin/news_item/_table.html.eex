@@ -4,6 +4,7 @@
         <th>Author</th>
         <th>Type</th>
         <th>Headline</th>
+        <th>Image</th>
         <th>Create Time</th>
         <th>Publish Time</th>
         <th>Sponsored</th>
@@ -25,6 +26,11 @@
         </td>
         <td><%= item.type %></td>
         <td><%= link truncate(item.headline, 50), to: item.url %></td>
+        <td>
+        <%= if item.image do %>
+          <img class="ui inline image" src="<%= image_url(item, :small) %>" style="width: 75px">
+        <% end %>
+        </td>
         <td><%= ts(item.inserted_at) %></td>
         <td><%= ts(item.published_at) %></td>
         <td><%= item.sponsored %></td>

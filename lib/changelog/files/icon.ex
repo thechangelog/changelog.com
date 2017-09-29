@@ -1,22 +1,17 @@
 defmodule Changelog.Files.Icon do
-  use Changelog.File, [:jpg, :jpeg, :png]
-  use Arc.Definition
-  use Arc.Ecto.Definition
+  use Changelog.File, [:jpg, :jpeg, :png, :svg]
 
   @versions [:original, :large, :medium, :small]
 
-  def storage_dir(_version, {_file, scope}) do
-    {_, source} = scope.__meta__.source
-    hashed_id = Changelog.Hashid.encode(scope.id)
-    "#{Application.fetch_env!(:arc, :storage_dir)}/icons/#{source}/#{hashed_id}"
-  end
+  def storage_dir(_, {_, scope}), do: expanded_dir("/icons/#{source(scope)}/#{hashed(scope.id)}")
+  def filename(version, _), do: "icon_#{version}"
 
-  def filename(version, _) do
-    "icon_#{version}"
-  end
-
-  def transform(version, _) do
-    {:convert, "-strip -resize #{dimensions(version)} -format png", :png}
+  def transform(version, {file, _scope}) do
+    if file_type(file) == :svg do
+      :noaction
+    else
+      {:convert, "-strip -resize #{dimensions(version)} -format png", :png}
+    end
   end
 
   defp dimensions(:large), do: "600x600"

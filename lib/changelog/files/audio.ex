@@ -1,19 +1,12 @@
 defmodule Changelog.Files.Audio do
   use Changelog.File, [:mp3]
-  use Arc.Definition
-  use Arc.Ecto.Definition
 
   alias ChangelogWeb.{PodcastView}
 
   @versions [:original]
 
-  def filename(_version, {_file, scope}) do
-    "#{PodcastView.dasherized_name(scope.podcast)}-#{scope.slug}"
-  end
-
-  def storage_dir(_version, {_file, scope}) do
-    "#{Application.fetch_env!(:arc, :storage_dir)}/#{scope.podcast.slug}/#{scope.slug}"
-  end
+  def storage_dir(_, {_, scope}), do: expanded_dir("/#{scope.podcast.slug}/#{scope.slug}")
+  def filename(_, {_, scope}), do: "#{PodcastView.dasherized_name(scope.podcast)}-#{scope.slug}"
 
   def transform(_version, {_file, scope}) do
     podcast = scope.podcast

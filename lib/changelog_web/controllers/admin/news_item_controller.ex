@@ -26,16 +26,18 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       conn.assigns.current_user
       |> build_assoc(:news_items)
       |> NewsItem.preload_all
-      |> NewsItem.admin_changeset()
+      |> NewsItem.insert_changeset()
 
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, params = %{"news_item" => item_params}) do
-    changeset = NewsItem.admin_changeset(%NewsItem{}, item_params)
+  def create(conn, params = %{"news_item" => news_item_params}) do
+    changeset = NewsItem.insert_changeset(%NewsItem{}, news_item_params)
 
     case Repo.insert(changeset) do
       {:ok, news_item} ->
+        Repo.update(NewsItem.file_changeset(news_item, news_item_params))
+
         case Map.get(params, "queue", "append") do
           "publish" -> NewsItem.publish!(news_item)
           "prepend" -> NewsQueue.prepend(news_item)
@@ -54,13 +56,13 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   def edit(conn, %{"id" => id}) do
     news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
-    changeset = NewsItem.admin_changeset(news_item)
+    changeset = NewsItem.update_changeset(news_item)
     render(conn, "edit.html", news_item: news_item, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "news_item" => item_params}) do
+  def update(conn, params = %{"id" => id, "news_item" => news_item_params}) do
     news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
-    changeset = NewsItem.admin_changeset(news_item, item_params)
+    changeset = NewsItem.update_changeset(news_item, news_item_params)
 
     case Repo.update(changeset) do
       {:ok, news_item} ->

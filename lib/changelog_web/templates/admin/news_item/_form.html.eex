@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="field required <%= error_class(f, :url) %>">
     <%= label(f, :url, "URL") %>
     <%= text_input(f, :url) %>
@@ -50,6 +50,20 @@
     <%= label(f, :story) %>
     <%= textarea(f, :story, placeholder: "Markdown enabled.", rows: 10)%>
     <%= error_message(f, :story) %>
+  </div>
+
+  <div class="field">
+    <label for="image">
+      Image
+      <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
+    </label>
+
+    <%= if f.data.image do %>
+      <img src="<%= image_url(f.data, :large) %>" style="width: 100%; background: black;">
+    <% end %>
+    <br/>
+    <%= error_message(f, :image) %>
+    <%= file_input(f, :image) %>
   </div>
 
   <div class="inline field">
