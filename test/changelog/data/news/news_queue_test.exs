@@ -108,7 +108,7 @@ defmodule Changelog.NewsQueueTest do
 
   describe "publish_next" do
     test "it is a no-op when queue is empty" do
-      assert NewsQueue.publish_next() == true
+      assert NewsQueue.publish_next() == false
     end
 
     test "it publishes the next news item, removing it from the queue" do
@@ -131,6 +131,30 @@ defmodule Changelog.NewsQueueTest do
       published = NewsItem.published |> NewsItem.newest_first |> Repo.all
       assert Enum.map(published, &(&1.id)) == [i2.id, i1.id]
       assert Repo.count(NewsQueue) == 0
+    end
+  end
+
+  describe "publish" do
+    test "it is a no-op when queue is empty" do
+      assert NewsQueue.publish(%NewsItem{id: 1}) == false
+    end
+
+    test "it publishes the given item, removing it from the queue" do
+      assert Repo.count(NewsItem.published) == 0
+
+      i1 = insert(:news_item)
+      i2 = insert(:news_item)
+      i3 = insert(:news_item)
+
+      insert(:news_queue, item: i1, position: 1.0)
+      insert(:news_queue, item: i2, position: 2.0)
+      insert(:news_queue, item: i3, position: 3.0)
+
+      NewsQueue.publish(i2)
+
+      published = Repo.all(NewsItem.published)
+      assert Enum.map(published, &(&1.id)) == [i2.id]
+      assert Repo.count(NewsQueue) == 2
     end
   end
 end

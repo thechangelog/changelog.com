@@ -59,13 +59,8 @@ defmodule Changelog.NewsQueue do
     Repo.update(entry)
   end
 
-  def preload_all(query = %Ecto.Query{}) do
-    Ecto.Query.preload(query, [item: :author])
-  end
-
-  def preload_all(entry) do
-    Repo.preload(entry, [item: :author])
-  end
+  def preload_all(query = %Ecto.Query{}), do: Ecto.Query.preload(query, [item: :author])
+  def preload_all(entry), do: Repo.preload(entry, [item: :author])
 
   def prepend(item) do
     entry = change(%NewsQueue{}, %{item_id: item.id})
@@ -83,14 +78,27 @@ defmodule Changelog.NewsQueue do
   end
 
   def publish_next do
-    case NewsQueue.ordered |> Ecto.Query.preload(:item) |> Repo.all do
-      [entry | _rest] ->
-        NewsItem.publish!(entry.item)
-        Repo.delete!(entry)
-        Logger.info("News: Published ##{entry.item.id}")
-      [] ->
-        Logger.info("News: Nothing to publish")
-        true
+    case Repo.all(NewsQueue.ordered) do
+      [entry | _rest] -> publish(entry)
+      [] -> publish(nil)
     end
+  end
+
+  def publish(item = %NewsItem{}) do
+    NewsQueue
+    |> Repo.get_by(item_id: item.id)
+    |> publish()
+  end
+
+  def publish(entry = %NewsQueue{}) do
+    entry = Repo.preload(entry, :item)
+    NewsItem.publish!(entry.item)
+    Repo.delete!(entry)
+    Logger.info("News: Published ##{entry.item.id}")
+  end
+
+  def publish(nil) do
+    Logger.info("News: Published bupkis")
+    false
   end
 end
