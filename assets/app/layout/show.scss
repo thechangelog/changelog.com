@@ -9,14 +9,14 @@
 
     // Artwork
     &-art {
-      $size: 130px;
+      $size: 160px;
       height: $size;
       margin: 0 auto $base-spacing;
       text-indent: -9999px;
       width: $size;
 
       @include breakpoint(mobile) {
-        $size: 260px;
+        $size: 220px;
         height: $size;
         width: $size;
       }
@@ -47,19 +47,26 @@
       text-align: center;
 
       &-item {
-        background: #252B32;
+        background: #252B32 8px center no-repeat;
+        background-size: 30px;
         border: 1px solid #333A42;
         border-radius: $base-border-radius;
         color: $white;
         display: inline-block;
-        font-size: 16px;
+        font-family: $code;
+        font-size: 14px;
         margin: 10px;
-        padding: 1em 1.5em 0.8em;
+        padding: 15px 12px 14px 50px;
         transition: background 0.1s $base-easing;
 
         &:hover {
-          background: #333A42;
+          background-color: #333A42;
         }
+
+        &--apple { background-image: url('../assets/images/podcast_icon-apple.png'); }
+        &--overcast { background-image: url('../assets/images/podcast_icon-overcast.png'); }
+        &--android { background-image: url('../assets/images/podcast_icon-android.png'); }
+        &--rss { background-image: url('../assets/images/podcast_icon-rss.png'); }
       }
     }
 

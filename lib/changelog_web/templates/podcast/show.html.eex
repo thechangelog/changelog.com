@@ -8,10 +8,10 @@
     </div>
 
     <div class="show-header-buttons">
-      <a class="show-header-buttons-item" href="#" title="Subscribe on Apple">Apple</a>
-      <a class="show-header-buttons-item" href="#" title="Subscribe on Overcast">Overcast</a>
-      <a class="show-header-buttons-item" href="#" title="Subscribe on Android">Android</a>
-      <a class="show-header-buttons-item" href="#" title="Subscribe on RSS">RSS</a>
+      <a class="show-header-buttons-item show-header-buttons-item--apple" href="#" title="Subscribe on Apple">Apple</a>
+      <a class="show-header-buttons-item show-header-buttons-item--overcast" href="#" title="Subscribe on Overcast">Overcast</a>
+      <a class="show-header-buttons-item show-header-buttons-item--android" href="#" title="Subscribe on Android">Android</a>
+      <a class="show-header-buttons-item show-header-buttons-item--rss" href="#" title="Subscribe on RSS">RSS</a>
     </div>
 
     <div class="show-header-hosts">

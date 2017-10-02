@@ -2,7 +2,7 @@
   <header class="episode-header">
     <div class="episode-header-wrap">
       <h2 class="episode-header-show_title">
-        <%= @episode.podcast.name %>
+        <%= link @episode.podcast.name, to: podcast_path(@conn, :show, @episode.podcast.slug) %>
         <%= if number = number(@episode) do %>
           – Episode #<%= number %>
         <% end %>
@@ -33,6 +33,8 @@
     <div class="episode-header-toolbar">
       <%= render("_play_bar.html", assigns) %>
     </div>
+
+    <%= link "← All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button" %>
   </header>
 
   <div class="episode-body">
