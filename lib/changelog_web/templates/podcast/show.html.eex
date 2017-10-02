@@ -15,14 +15,16 @@
     </div>
 
     <div class="show-header-hosts">
-      <%= if !is_master(@podcast) do %>
-        <%= for person <- @podcast.hosts do %>
-          <%= link to: PersonView.external_url(person), class: "show-header-hosts-item", title: person.name, rel: "external" do %>
-            <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
-            <p><%= person.name %></p>
+      <div class="avatar_list">
+        <%= if !is_master(@podcast) do %>
+          <%= for person <- @podcast.hosts do %>
+            <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
+              <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
+              <p><%= person.name %></p>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </header>
 

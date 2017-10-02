@@ -9,3 +9,15 @@ button {
     box-shadow: 0 0 3px 2px rgba($green, 0.6);
   }
 }
+
+.button {
+  background: $dark-grey;
+  border-radius: $base-border-radius;
+  color: $white;
+  padding: 0.6em 0.825em 0.5em;
+  transition: background 0.1s $base-easing;
+
+  &:hover {
+    background: #000;
+  }
+}
