@@ -6,3 +6,14 @@
 
   &:hover { background: #f6f6f6; }
 }
+
+@mixin button($background, $color) {
+  background: $background;
+  border-radius: $base-border-radius;
+  color: $color;
+  font-weight: bold;
+  padding: 0.625em 0.825em 0.5em;
+  transition: background 0.1s $base-easing;
+
+  &:hover { background: darken($background, 10%); }
+}

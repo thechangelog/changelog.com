@@ -11,13 +11,12 @@ button {
 }
 
 .button {
-  background: $dark-grey;
-  border-radius: $base-border-radius;
-  color: $white;
-  padding: 0.6em 0.825em 0.5em;
-  transition: background 0.1s $base-easing;
+  @include button($dark-grey, $white);
+}
 
-  &:hover {
-    background: #000;
-  }
+.button_large {
+  @include button($green, $white);
+  display: inline-block;
+  font-size: 1.125em;
+  margin-bottom: 0.5em;
 }
