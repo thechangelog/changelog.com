@@ -1,6 +1,6 @@
 <section class="show_list" id="podcasts">
   <header class="show_list-header">
-    <h2>Podcasts for Every Developer</h2>
+    <h2>Our Shows</h2>
     <p>Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.</p>
   </header>
   <div class="show_list-shows">

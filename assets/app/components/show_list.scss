@@ -1,18 +1,19 @@
 .show_list {
-  background: $dark-grey;
-  color: $white;
   padding: $base-spacing*2 0;
   padding: calc(2em + 2vw) 0;
 
   &-header {
-    text-align: center;
     margin: 0 auto;
-    max-width: 880px;
+    max-width: 1150px;
     padding: 0 $base-spacing;
 
     p {
       color: $medium-grey;
       font-size: 1.25em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -61,14 +62,13 @@
           font-size: 1em;
 
           a {
-            color: $white;
+            color: $black;
           }
         }
 
         h3,
         ul,
         p {
-          color: $medium-grey;
           font-size: 0.875em;
         }
 
@@ -79,6 +79,7 @@
 
         li {
           font-style: italic;
+          font-weight: 500;
           line-height: 1.5em;
         }
       }

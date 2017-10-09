@@ -1,78 +1,93 @@
 <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
-<section class="profile">
 
-  <div class="profile-card">
-    <img class="profile-card-image" src="<%= PersonView.avatar_url(@current_user) %>" width="120" height="120" alt="<%= @current_user.name %> Avatar">
+<div class="topic">
+  <header class="topic-header">
+    <div class="topic-header-wrap">
+      <div class="topic-header-avatar">
+        <img src="<%= PersonView.avatar_url(@current_user) %>" width="80" height="80" alt="<%= @current_user.name %> Avatar">
+      </div>
 
-    <h1 class="profile-card-heading"><%= @current_user.name %></h1>
+      <h2 class="topic-header-title"><%= @current_user.name %></h2>
 
-    <ul class="profile-card-stats">
-    <%= if @current_user.location do %>
-      <li class="profile-card-stats-item profile-card-stats-item--location"><%= @current_user.location %></li>
-    <% end %>
-      <li class="profile-card-stats-item profile-card-stats-item--date">Joined <%= TimeView.pretty_date(@current_user.joined_at) %></li>
-    <%= if @current_user.website do %>
-      <li class="profile-card-stats-item profile-card-stats-item--link"><%= link domain_only(@current_user.website), to: @current_user.website %></li>
-    <% end %>
-    </ul>
+      <div class="topic-header-description">
+        <%= if @current_user.bio do %>
+          <%= @current_user.bio |> md_to_safe_html |> raw %>
+        <% end %>
+      </div>
 
-  <%= if @current_user.bio do %>
-    <div class="profile-card-bio">
-      <%= @current_user.bio |> md_to_safe_html |> raw %>
+      <div class="topic-header-meta">
+        <%= if @current_user.location do %>
+          <%= @current_user.location %>
+        <% end %>
+        &bull;
+        <%= if @current_user.website do %>
+          <%= link domain_only(@current_user.website), to: @current_user.website %>
+        <% end %>
+      </div>
+
+      <div class="topic-header-buttons">
+        <button class="topic-header-buttons-follow">Follow</button>
+        <button class="topic-header-buttons-more"><span class="visually_hidden">More</span></button>
+        <!-- <ul class="tooltip-list">
+          <%= if @current_user.twitter_handle do %>
+            <li class="tooltip-list-item">
+              <a class="twitter" href="<%= twitter_url(@current_user.twitter_handle) %>" title="<%= @current_user.name %> on Twitter">@<%= @current_user.twitter_handle %></a>
+            </li>
+          <% end %>
+          <%= if @current_user.github_handle do %>
+          <li class="tooltip-list-item">
+              <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on GitHub"><%= @current_user.github_handle %></a>
+            </li>
+          <% end %>
+        </ul> -->
+      </div>
     </div>
-  <% end %>
+  </header>
 
-    <ul class="button_list button_list--green">
-    <%= if @current_user.twitter_handle do %>
-      <li class="button_list-item">
-        <a class="twitter" href="<%= twitter_url(@current_user.twitter_handle) %>" title="<%= @current_user.name %> on Twitter">@<%= @current_user.twitter_handle %></a>
-      </li>
-    <% end %>
+  <div class="feed">
+    <nav class="feed_nav">
+      <ul>
+        <li class="feed_nav-item is-active"><a href="#">All</a></li>
+        <li class="feed_nav-item"><a href="#">Podcasts</a></li>
+        <li class="feed_nav-item"><a href="#">News</a></li>
+        <li class="feed_nav-item"><a href="#">Comments</a></li>
+        <li class="feed_nav-item"><a href="#">Jobs</a></li>
+      </ul>
+    </nav>
 
-    <%= if @current_user.github_handle do %>
-      <li class="button_list-item">
-        <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on GitHub"><%= @current_user.github_handle %></a>
-      </li>
-    <% end %>
-    </ul>
+
   </div>
+</div>
 
-  <div class="profile-introduction">
-    <p>Well Hello, <br>We’re glad you’re here! We have big plans for the site including community discussion, posting, and more. In the meantime, here are a few things you can do here:</p>
 
-    <ul class="checklist">
-    <%= if @current_user.admin do %>
-      <li class="checklist-item"><%= link("Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
-    <% end %>
-      <li class="checklist-item <%= checked_class_if(PersonView.is_profile_complete(@current_user)) %>">
-        <%= link "Complete your profile (public profiles launching soon!)", to: home_path(@conn, :edit) %>
-      </li>
-      <li class="checklist-item <%= checked_class_if(@current_user.slack_id) %>">
-        <%= link "Request a Slack Invite", to: home_path(@conn, :slack), method: :post %>
-      </li>
-    <% weekly = Changelog.Newsletters.weekly() %>
-    <%= if PersonView.is_subscribed(@current_user, weekly) do %>
-      <li class="checklist-item <%= checked_class_if(true) %>">
-        <%= link "Unsubscribe from Changelog Weekly", to: home_path(@conn, :unsubscribe, weekly.list_id), method: :post %>
-      </li>
-    <% else %>
-      <li class="checklist-item">
-        <%= link "Subscribe to Changelog Weekly", to: home_path(@conn, :subscribe, weekly.list_id), method: :post %>
-      </li>
-    <% end %>
-    <% nightly = Changelog.Newsletters.nightly() %>
-    <%= if PersonView.is_subscribed(@current_user, nightly) do %>
-      <li class="checklist-item <%= checked_class_if(true) %>">
-        <%= link "Unsubscribe from Changelog Nightly", to: home_path(@conn, :unsubscribe, nightly.list_id), method: :post %>
-      </li>
-    <% else %>
-      <li class="checklist-item">
-        <%= link "Subscribe to Changelog Nightly", to: home_path(@conn, :subscribe, nightly.list_id), method: :post %>
-      </li>
-    <% end %>
-    </ul>
-
-    <p>Welcome <code>$HOME</code>.</p>
-    <p><em>Sincerely, <br>The Changelog Team</em></p>
-  </div>
-</section>
+<!-- <ul class="checklist">
+<%= if @current_user.admin do %>
+  <li class="checklist-item"><%= link("Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
+<% end %>
+  <li class="checklist-item <%= checked_class_if(PersonView.is_profile_complete(@current_user)) %>">
+    <%= link "Complete your profile (public profiles launching soon!)", to: home_path(@conn, :edit) %>
+  </li>
+  <li class="checklist-item <%= checked_class_if(@current_user.slack_id) %>">
+    <%= link "Request a Slack Invite", to: home_path(@conn, :slack), method: :post %>
+  </li>
+<% weekly = Changelog.Newsletters.weekly() %>
+<%= if PersonView.is_subscribed(@current_user, weekly) do %>
+  <li class="checklist-item <%= checked_class_if(true) %>">
+    <%= link "Unsubscribe from Changelog Weekly", to: home_path(@conn, :unsubscribe, weekly.list_id), method: :post %>
+  </li>
+<% else %>
+  <li class="checklist-item">
+    <%= link "Subscribe to Changelog Weekly", to: home_path(@conn, :subscribe, weekly.list_id), method: :post %>
+  </li>
+<% end %>
+<% nightly = Changelog.Newsletters.nightly() %>
+<%= if PersonView.is_subscribed(@current_user, nightly) do %>
+  <li class="checklist-item <%= checked_class_if(true) %>">
+    <%= link "Unsubscribe from Changelog Nightly", to: home_path(@conn, :unsubscribe, nightly.list_id), method: :post %>
+  </li>
+<% else %>
+  <li class="checklist-item">
+    <%= link "Subscribe to Changelog Nightly", to: home_path(@conn, :subscribe, nightly.list_id), method: :post %>
+  </li>
+<% end %>
+</ul> -->

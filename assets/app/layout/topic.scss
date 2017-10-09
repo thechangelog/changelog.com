@@ -1,0 +1,61 @@
+.topic {
+  //
+  //
+  // Header
+  &-header {
+    @include masthead();
+
+    &-wrap {
+      margin: 0 auto;
+      max-width: 880px;
+    }
+
+    &-avatar {
+      margin: 0 auto $base-spacing;
+      text-align: center;
+
+      img {
+        border-radius: $base-border-radius;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+
+    &-title {
+      font-size: 2em;
+    }
+
+    &-description {
+      color: $medium-grey;
+      font-style: italic;
+    }
+    &-meta {
+      color: $medium-grey;
+      margin: 1.5em 0 0;
+    }
+
+    &-buttons {
+      margin: $base-spacing*1.5 0 $base-spacing/2;
+
+      & > * { margin: 0 5px; }
+
+      &-follow {
+        @include button($green, $white);
+        display: inline-block;
+        font-size: 1em;
+      }
+
+      &-more {
+        @include button($black, $white);
+        border: 2px solid #393F45;
+        position: relative;
+
+        &:before {
+          content: "…";
+          color: $white;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

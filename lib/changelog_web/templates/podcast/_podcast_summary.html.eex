@@ -1,23 +1,6 @@
 <article class="show_list-shows-item show_list-shows-item--<%= @podcast.slug %>">
   <div class="show_list-shows-item-wrap">
     <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show_list-shows-item-art"></a>
-    <!-- <div class="show_list-shows-item-widget_menu">
-      <div class="tooltip tooltip--inline">
-        <h3 class="tooltip_heading"><%= @podcast.name %></h3>
-        <nav class="tooltip_links">
-          <h4 class="accessibility-hidden">Podcast Menu</h4>
-          <%= if latest = Changelog.Podcast.latest_episode(@podcast) do %>
-            <% latest = latest |> Changelog.Repo.preload(:podcast) %>
-            <%= link "Play Latest", to: ChangelogWeb.EpisodeView.audio_url(latest), data: [play: episode_path(@conn, :play, latest.podcast.slug, latest.slug)] %>
-            <%= link "View Latest", to: episode_path(@conn, :show, @podcast.slug, latest.slug) %>
-          <% end %>
-          <%= link "View Podcast", to: podcast_path(@conn, :show, @podcast.slug) %>
-          <%= link "Subscribe", to: subscribe_link(@podcast) %>
-        </nav>
-      </div>
-    </div>
-    <button class="show_list-shows-item-widget_toggle"></button>
-    -->
     <div class="show_list-shows-item-content">
       <h2><a href="<%= podcast_path(@conn, :show, @podcast.slug) %>"><%= @podcast.name %></a></h2>
       <%= @podcast.description |> md_to_html |> raw %>

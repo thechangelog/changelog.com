@@ -28,7 +28,7 @@
     </div>
   </header>
 
-  <div class="show-feed">
+  <div class="feed">
     <nav class="feed_nav">
       <ul>
         <li class="feed_nav-item is-active"><a href="#">Latest</a></li>
