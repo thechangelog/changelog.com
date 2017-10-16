@@ -67,7 +67,7 @@
 
     <div class="ui horizontal selection list js-channels">
       <%= inputs_for f, :podcast_channels, fn i -> %>
-        <% channel = channel_from_data_or_params(i.data, i.params) %>
+        <% channel = load_from_form(i, Channel, :channel) %>
         <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :channel_id %>
           <%= hidden_input i, :position, class: "js-position" %>

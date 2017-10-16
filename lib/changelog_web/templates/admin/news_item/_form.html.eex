@@ -16,8 +16,9 @@
       <div class="ui fluid remote author search selection dropdown">
         <%= hidden_input(f, :author_id) %>
         <i class="dropdown icon"></i>
-        <%= if is_loaded(f.data.author) do %>
-          <div class="selected text"><%= f.data.author.name %></div>
+        <% author = load_from_form(f, Person, :author) %>
+        <%= if author do %>
+          <div class="selected text"><%= author.name %></div>
         <% else %>
           <div class="default text">Select Author</div>
         <% end %>
@@ -30,8 +31,9 @@
       <div class="ui fluid remote source search selection dropdown">
         <%= hidden_input(f, :source_id) %>
         <i class="dropdown icon"></i>
-        <%= if is_loaded(f.data.source) do %>
-          <div class="selected text"><%= f.data.source.name %></div>
+        <% source = load_from_form(f, NewsSource, :source) %>
+        <%= if source do %>
+          <div class="selected text"><%= source.name %></div>
         <% else %>
           <div class="default text">Select Source</div>
         <% end %>
@@ -85,8 +87,9 @@
     <div class="ui fluid remote sponsor search selection dropdown">
       <%= hidden_input(f, :sponsor_id) %>
       <i class="dropdown icon"></i>
-      <%= if is_loaded(f.data.sponsor) do %>
-        <div class="selected text"><%= f.data.sponsor.name %></div>
+      <% sponsor = load_from_form(f, Sponsor, :sponsor) %>
+      <%= if sponsor do %>
+        <div class="selected text"><%= sponsor.name %></div>
       <% else %>
         <div class="default text">Select Sponsor</div>
       <% end %>
