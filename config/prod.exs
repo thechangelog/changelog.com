@@ -25,9 +25,10 @@ config :changelog, Changelog.Mailer,
   username: {:system, "CM_SMTP_TOKEN"},
   password: {:system, "CM_SMTP_TOKEN"}
 
-config :quantum, :changelog,
-  cron: [
-    "0 11 * * *": {Changelog.Stats, :process},
-    "0 10 * * *": {Changelog.Slack.Tasks, :import_member_ids}
-  ],
-  global?: true
+config :changelog, Changelog.Scheduler,
+  global: true,
+  timezone: "US/Central",
+  jobs: [
+    {"0 4 * * *", {Changelog.Stats, :process, []}},
+    {"0 3 * * *", {Changelog.Slack.Tasks, :import_member_ids, []}}
+  ]

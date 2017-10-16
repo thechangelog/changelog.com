@@ -1,3 +1,4 @@
+import "phoenix_html";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import OnsitePlayer from "modules/onsitePlayer";
@@ -85,11 +86,6 @@ u(document).on("click", "a[href^=\\#t]", function(event) {
     event.preventDefault();
     history.replaceState({}, document.title, href);
   };
-});
-
-// our own little phoenix_html
-u(document).handle("click", "a[data-submit=parent]", function(event) {
-  u(event.target.parentNode).trigger("submit");
 });
 
 // submit Campain Monitor forms via jsonp
