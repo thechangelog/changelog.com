@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
   alias Changelog.{NewsItem, NewsQueue}
 
-  @valid_attrs %{type: :project, headline: "Ruby on Rails", url: "https://rubyonrails.org", author_id: 1}
+  @valid_attrs %{type: :project, headline: "Ruby on Rails", url: "https://rubyonrails.org", logger_id: 1}
   @invalid_attrs %{type: :project, headline: "Ruby on Rails", url: ""}
 
   @tag :as_admin
@@ -26,8 +26,8 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
   @tag :as_admin
   test "creates news item and publishes immediately", %{conn: conn} do
-    author = insert(:person)
-    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | author_id: author.id}, queue: "publish")
+    logger = insert(:person)
+    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "publish")
 
     assert redirected_to(conn) == admin_news_item_path(conn, :index)
     assert count(NewsItem.published) == 1
@@ -35,8 +35,8 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
   @tag :as_admin
   test "creates news item and queues it", %{conn: conn} do
-    author = insert(:person)
-    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | author_id: author.id}, queue: "append")
+    logger = insert(:person)
+    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "append")
 
     assert redirected_to(conn) == admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
@@ -63,10 +63,10 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
   @tag :as_admin
   test "updates news item and smart redirects", %{conn: conn} do
-    author = insert(:person)
-    news_item = insert(:news_item, author: author)
+    logger = insert(:person)
+    news_item = insert(:news_item, logger: logger)
 
-    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | author_id: author.id})
+    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id})
 
     assert redirected_to(conn) == admin_news_item_path(conn, :edit, news_item)
     assert count(NewsItem) == 1

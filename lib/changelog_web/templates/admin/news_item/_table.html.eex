@@ -1,6 +1,7 @@
 <table class="ui celled striped table">
     <thead>
       <tr>
+        <th>Logger</th>
         <th>Author</th>
         <th>Type</th>
         <th>Headline</th>
@@ -20,9 +21,16 @@
     <%= for item <- @news_items do %>
       <tr data-id="<%= item.id %>">
         <td class="center aligned">
-          <%= link to: admin_person_path(@conn, :edit, item.author) do %>
-            <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(item.author) %>">
+          <%= link to: admin_person_path(@conn, :edit, item.logger) do %>
+            <img class="ui avatar image" src="<%= PersonView.avatar_url(item.logger) %>">
           <% end %>
+        </td>
+        <td class="center aligned">
+        <%= if is_loaded(item.author) do %>
+            <%= link to: admin_person_path(@conn, :edit, item.author) do %>
+              <img class="ui avatar image" src="<%= PersonView.avatar_url(item.author) %>">
+            <% end %>
+        <% end %>
         </td>
         <td><%= item.type %></td>
         <td><%= link truncate(item.headline, 50), to: item.url %></td>

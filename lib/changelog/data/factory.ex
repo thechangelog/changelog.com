@@ -86,7 +86,7 @@ defmodule Changelog.Factory do
       status: :queued,
       headline: sequence(:headline, &"Read all about it #{&1}!"),
       url: "https://changelog.com/posts/read-all-about-it",
-      author: build(:person)
+      logger: build(:person)
     }
   end
 

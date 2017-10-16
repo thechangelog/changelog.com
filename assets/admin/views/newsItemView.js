@@ -23,6 +23,7 @@ export default class newsItemView {
 
   new() {
     new BelongsToWidget("author", "person");
+    new BelongsToWidget("logger", "person");
     new BelongsToWidget("source", "news_source");
     new BelongsToWidget("sponsor", "sponsor");
 

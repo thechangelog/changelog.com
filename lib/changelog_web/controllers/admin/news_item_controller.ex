@@ -24,7 +24,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   def new(conn, _params) do
     changeset =
       conn.assigns.current_user
-      |> build_assoc(:news_items)
+      |> build_assoc(:logged_news_items)
       |> NewsItem.preload_all
       |> NewsItem.insert_changeset()
 

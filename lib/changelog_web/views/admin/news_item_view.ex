@@ -2,6 +2,7 @@ defmodule ChangelogWeb.Admin.NewsItemView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.{Files, NewsItem, NewsSource, Person, Sponsor}
+  alias ChangelogWeb.PersonView
 
   def image_url(news_item, version) do
     Files.Image.url({news_item.image, news_item}, version)

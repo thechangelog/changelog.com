@@ -5,13 +5,56 @@
     <%= error_message(f, :url) %>
   </div>
 
-  <div class="three fields">
+  <div class="field required <%= error_class(f, :headline) %>">
+    <%= label(f, :headline, "Headline") %>
+    <%= text_input(f, :headline, placeholder: "10 Best Blog Post Titles") %>
+    <%= error_message(f, :headline) %>
+  </div>
+
+  <div class="field <%= error_class(f, :story) %>">
+    <%= label(f, :story) %>
+    <%= textarea(f, :story, placeholder: "Markdown enabled.", rows: 10)%>
+    <%= error_message(f, :story) %>
+  </div>
+
+  <div class="field">
+    <label for="image">
+      Image
+      <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
+    </label>
+
+    <%= if f.data.image do %>
+      <img src="<%= image_url(f.data, :large) %>" style="width: 100%; background: black;">
+    <% end %>
+    <br/>
+    <%= error_message(f, :image) %>
+    <%= file_input(f, :image) %>
+  </div>
+
+  <div class="two fields">
     <div class="field required <%= error_class(f, :type) %>">
       <%= label(f, :type, "Type") %>
       <%= select f, :type, type_options(), class: "ui fluid dropdown" %>
     </div>
 
-    <div class="field required <%= error_class(f, :author_id) %>">
+    <div class="field required <%= error_class(f, :logger_id) %>">
+      <%= label(f, :logger_id, "Logged By") %>
+      <div class="ui fluid remote logger search selection dropdown">
+        <%= hidden_input(f, :logger_id) %>
+        <i class="dropdown icon"></i>
+        <% logger = load_from_form(f, Person, :logger) %>
+        <%= if logger do %>
+          <div class="selected text"><%= logger.name %></div>
+        <% else %>
+          <div class="default text">Select Changelogger</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :logger_id) %>
+    </div>
+  </div>
+
+  <div class="two fields">
+    <div class="field <%= error_class(f, :author_id) %>">
       <%= label(f, :author_id, "Author") %>
       <div class="ui fluid remote author search selection dropdown">
         <%= hidden_input(f, :author_id) %>
@@ -40,32 +83,6 @@
       </div>
       <%= error_message(f, :source_id) %>
     </div>
-  </div>
-
-  <div class="field required <%= error_class(f, :headline) %>">
-    <%= label(f, :headline, "Headline") %>
-    <%= text_input(f, :headline, placeholder: "10 Best Blog Post Titles") %>
-    <%= error_message(f, :headline) %>
-  </div>
-
-  <div class="field <%= error_class(f, :story) %>">
-    <%= label(f, :story) %>
-    <%= textarea(f, :story, placeholder: "Markdown enabled.", rows: 10)%>
-    <%= error_message(f, :story) %>
-  </div>
-
-  <div class="field">
-    <label for="image">
-      Image
-      <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
-    </label>
-
-    <%= if f.data.image do %>
-      <img src="<%= image_url(f.data, :large) %>" style="width: 100%; background: black;">
-    <% end %>
-    <br/>
-    <%= error_message(f, :image) %>
-    <%= file_input(f, :image) %>
   </div>
 
   <div class="inline field">
