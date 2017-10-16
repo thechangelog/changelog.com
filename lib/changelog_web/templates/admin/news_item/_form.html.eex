@@ -68,7 +68,14 @@
 
   <div class="inline field">
     <div class="ui toggle checkbox">
-      <%= checkbox f, :sponsored, class: "hidden" %>
+      <%= checkbox(f, :newsletter, class: "hidden") %>
+      <label>In Newsletter</label>
+    </div>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :sponsored, class: "hidden") %>
       <label>Sponsored</label>
     </div>
   </div>

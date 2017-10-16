@@ -17,6 +17,7 @@ defmodule Changelog.NewsItem do
 
     field :published_at, DateTime
     field :sponsored, :boolean, default: false
+    field :newsletter, :boolean, default: true
 
     belongs_to :author, Person
     belongs_to :source, NewsSource

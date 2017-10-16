@@ -9,6 +9,7 @@ defmodule Changelog.Repo.Migrations.CreateNewsItems do
       add :url, :string, null: false
       add :published_at, :naive_datetime
       add :sponsored, :boolean, default: false
+      add :newsletter, :boolean, default: true
       add :story, :text
       add :image, :string
       add :author_id, references(:people)
