@@ -7,6 +7,7 @@ import Slider from "modules/slider";
 import Overlay from "modules/overlay";
 import Share from "modules/share";
 import Log from "modules/log";
+import Tooltip from "modules/tooltip";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
@@ -15,6 +16,7 @@ const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
 const featured = new Slider(".featured_podcast");
+const tooltips = new Tooltip(".has-tooltip");
 
 window.u = u;
 

@@ -1,0 +1,98 @@
+.tooltip {
+  $arrowSize: 10px;
+  $background: #252B32;
+  $padding: 10px 20px;
+  display: none;
+  margin: $arrowSize;
+  text-align: left;
+
+  &.is-visible { display: block; }
+
+  a {
+    color: $medium-grey;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  &-wrap {
+    background: $background;
+    padding: 5px 0;
+  }
+
+  &-list {
+    padding: $padding;
+  }
+
+  &-footer {
+    border-top: 1px solid #333A42;
+    padding: $padding;
+  }
+
+
+  //
+  //
+  // Arrow Style and Placement
+  &-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: $arrowSize;
+    border-color: $background;
+  }
+
+  &[x-placement^="top"] {
+    margin-bottom: $arrowSize + 5px;
+  }
+  &[x-placement^="top"] .tooltip-arrow {
+    border-width: $arrowSize $arrowSize 0 $arrowSize;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    bottom: -$arrowSize;
+    left: calc(50% - #{$arrowSize*2});
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  &[x-placement^="bottom"] {
+    margin-top: $arrowSize + 5px;
+  }
+  &[x-placement^="bottom"] .tooltip-arrow {
+    border-width: 0 $arrowSize $arrowSize;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    top: -$arrowSize;
+    left: calc(50% - #{$arrowSize*2});
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  &[x-placement^="right"] {
+    margin-left: $arrowSize + 5px;
+  }
+  &[x-placement^="right"] .tooltip-arrow {
+    border-width: $arrowSize $arrowSize $arrowSize 0;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    left: -$arrowSize;
+    top: calc(50% - #{$arrowSize*2});
+    margin-left: 0;
+    margin-right: 0;
+  }
+  &[x-placement^="left"] {
+    margin-right: $arrowSize + 5px;
+  }
+  &[x-placement^="left"] .tooltip-arrow {
+    border-width: $arrowSize 0 $arrowSize $arrowSize;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    right: -$arrowSize;
+    top: calc(50% - #{$arrowSize*2});
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
