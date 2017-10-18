@@ -25,7 +25,6 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     changeset =
       conn.assigns.current_user
       |> build_assoc(:logged_news_items)
-      |> NewsItem.preload_all
       |> NewsItem.insert_changeset()
 
     render(conn, "new.html", changeset: changeset)
@@ -55,13 +54,13 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   def edit(conn, %{"id" => id}) do
-    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
+    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
     changeset = NewsItem.update_changeset(news_item)
     render(conn, "edit.html", news_item: news_item, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_item" => news_item_params}) do
-    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_all
+    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
     changeset = NewsItem.update_changeset(news_item, news_item_params)
 
     case Repo.update(changeset) do

@@ -1,7 +1,7 @@
 defmodule Changelog.NewsItem do
   use Changelog.Data
 
-  alias Changelog.{Files, NewsQueue, NewsSource, Person, Regexp, Sponsor}
+  alias Changelog.{Files, NewsItemTopic, NewsQueue, NewsSource, Person, Regexp, Sponsor}
 
   defenum Status, queued: 0, submitted: 1, declined: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
@@ -24,6 +24,8 @@ defmodule Changelog.NewsItem do
     belongs_to :source, NewsSource
     belongs_to :sponsor, Sponsor
     has_one :news_queue, NewsQueue, foreign_key: :item_id, on_delete: :delete_all
+    has_many :news_item_topics, NewsItemTopic, foreign_key: :item_id, on_delete: :delete_all
+    has_many :topics, through: [:news_item_topics, :topic]
 
     timestamps()
   end
@@ -41,6 +43,7 @@ defmodule Changelog.NewsItem do
     |> foreign_key_constraint(:logger_id)
     |> foreign_key_constraint(:sponsor_id)
     |> foreign_key_constraint(:source_id)
+    |> cast_assoc(:news_item_topics)
   end
 
   def update_changeset(news_item, attrs \\ %{}) do
@@ -55,6 +58,7 @@ defmodule Changelog.NewsItem do
     |> Ecto.Query.preload(:logger)
     |> Ecto.Query.preload(:source)
     |> Ecto.Query.preload(:sponsor)
+    |> preload_topics
   end
 
   def preload_all(news_item) do
@@ -63,6 +67,19 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:logger)
     |> Repo.preload(:source)
     |> Repo.preload(:sponsor)
+    |> preload_topics
+  end
+
+  def preload_topics(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(news_item_topics: ^NewsItemTopic.by_position)
+    |> Ecto.Query.preload(:topics)
+  end
+
+  def preload_topics(news_item) do
+    news_item
+    |> Repo.preload(news_item_topics: {NewsItemTopic.by_position, :topic})
+    |> Repo.preload(:topics)
   end
 
   def publish!(news_item) do

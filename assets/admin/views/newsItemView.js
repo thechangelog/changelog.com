@@ -1,5 +1,6 @@
 import Sortable from "sortablejs";
 import BelongsToWidget from "components/belongsToWidget";
+import SearchWidget from "components/searchWidget";
 
 export default class newsItemView {
   index() {
@@ -22,8 +23,9 @@ export default class newsItemView {
   }
 
   new() {
-    new BelongsToWidget("author", "person");
+    new SearchWidget("topic", "news_item", "topics");
     new BelongsToWidget("logger", "person");
+    new BelongsToWidget("author", "person");
     new BelongsToWidget("source", "news_source");
     new BelongsToWidget("sponsor", "sponsor");
 

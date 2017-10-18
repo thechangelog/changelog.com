@@ -1,7 +1,7 @@
 defmodule Changelog.Topic do
   use Changelog.Data
 
-  alias Changelog.{EpisodeTopic, PostTopic, Regexp}
+  alias Changelog.{EpisodeTopic, NewsItemTopic, PostTopic, Regexp}
 
   schema "topics" do
     field :name, :string
@@ -10,6 +10,8 @@ defmodule Changelog.Topic do
 
     has_many :episode_topics, EpisodeTopic, on_delete: :delete_all
     has_many :episodes, through: [:episode_topics, :episode]
+    has_many :news_item_topics, NewsItemTopic, on_delete: :delete_all
+    has_many :news_items, through: [:news_item_topics, :news_item]
     has_many :post_topics, PostTopic, on_delete: :delete_all
     has_many :posts, through: [:post_topics, :post]
 

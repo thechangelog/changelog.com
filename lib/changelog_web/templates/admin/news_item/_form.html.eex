@@ -31,6 +31,35 @@
     <%= file_input(f, :image) %>
   </div>
 
+  <div class="field">
+    <%= label(f, :topics) %>
+
+    <div class="ui horizontal selection list js-topics">
+      <%= inputs_for f, :news_item_topics, fn i -> %>
+        <% topic = load_from_form(i, Topic, :topic) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
+          <%= hidden_input(i, :topic_id) %>
+          <%= hidden_input(i, :position, class: "js-position") %>
+
+          <div class="content">
+            <a class="ui label">
+              <%= topic.name %>
+              <i class="delete icon js-remove"></i>
+              <%= hidden_input(i, :delete) %>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Topic">
+        <i class="block layout icon"></i>
+      </div>
+    </div>
+  </div>
+
   <div class="two fields">
     <div class="field required <%= error_class(f, :type) %>">
       <%= label(f, :type, "Type") %>

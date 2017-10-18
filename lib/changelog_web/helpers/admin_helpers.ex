@@ -42,8 +42,8 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   # relationship on form data, then tries querying Repo.
   def load_from_form(form, module, relationship) do
     from_data = Map.get(form.data, relationship)
-    foreign_key = Atom.to_string(relationship) <> "_id"
-    record_id = Map.get(form.data, foreign_key, form.params[foreign_key])
+    foreign_key = "#{relationship}_id"
+    record_id = Map.get(form.data, String.to_atom(foreign_key)) || form.params[foreign_key]
 
     cond do
       is_loaded(from_data) -> from_data
