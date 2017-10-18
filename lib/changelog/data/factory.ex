@@ -11,10 +11,10 @@ defmodule Changelog.Factory do
     }
   end
 
-  def channel_factory do
-    %Changelog.Channel{
-      name: sequence(:name, &"Channel #{&1}"),
-      slug: sequence(:slug, &"channel-#{&1}")
+  def topic_factory do
+    %Changelog.Topic{
+      name: sequence(:name, &"Topic #{&1}"),
+      slug: sequence(:slug, &"topic-#{&1}")
     }
   end
 

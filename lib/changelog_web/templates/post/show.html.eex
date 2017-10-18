@@ -21,9 +21,9 @@
     <footer>
       <div class="toolbar toolbar--dark">
         <ul class="toolbar_item toolbar_item--list" style="background-image: url(/images/icon-tag-white.svg);">
-          <%= if Enum.any?(@post.channels) do %>
-            <%= for channel <- @post.channels do %>
-              <li><%= channel.name %></li>
+          <%= if Enum.any?(@post.topics) do %>
+            <%= for topic <- @post.topics do %>
+              <li><%= topic.name %></li>
             <% end %>
           <% end %>
         </ul>

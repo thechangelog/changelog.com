@@ -63,18 +63,18 @@
   </div>
 
   <div class="field">
-    <%= label f, :channels %>
+    <%= label f, :topics %>
 
-    <div class="ui horizontal selection list js-channels">
-      <%= inputs_for f, :podcast_channels, fn i -> %>
-        <% channel = load_from_form(i, Channel, :channel) %>
+    <div class="ui horizontal selection list js-topics">
+      <%= inputs_for f, :podcast_topics, fn i -> %>
+        <% topic = load_from_form(i, Topic, :topic) %>
         <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
-          <%= hidden_input i, :channel_id %>
+          <%= hidden_input i, :topic_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
           <div class="content">
             <a class="ui label">
-              <%= channel.name %>
+              <%= topic.name %>
               <i class="delete icon js-remove"></i>
               <%= hidden_input i, :delete %>
             </a>
@@ -85,7 +85,7 @@
 
     <div class="ui search">
       <div class="ui left icon input">
-        <input class="prompt" type="text" placeholder="Add a Channel">
+        <input class="prompt" type="text" placeholder="Add a Topic">
         <i class="block layout icon"></i>
       </div>
     </div>

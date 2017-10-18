@@ -1,7 +1,7 @@
 defmodule Changelog.Episode do
   use Changelog.Data
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeChannel, EpisodeStat,
+  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeTopic, EpisodeStat,
                    EpisodeSponsor, Files, Podcast, Regexp, Transcripts}
   alias ChangelogWeb.{EpisodeView, TimeView}
 
@@ -40,8 +40,8 @@ defmodule Changelog.Episode do
     has_many :hosts, through: [:episode_hosts, :person]
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
     has_many :guests, through: [:episode_guests, :person]
-    has_many :episode_channels, EpisodeChannel, on_delete: :delete_all
-    has_many :channels, through: [:episode_channels, :channel]
+    has_many :episode_topics, EpisodeTopic, on_delete: :delete_all
+    has_many :topics, through: [:episode_topics, :topic]
     has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
     has_many :sponsors, through: [:episode_sponsors, :sponsor]
     has_many :episode_stats, EpisodeStat
@@ -155,7 +155,7 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_hosts)
     |> cast_assoc(:episode_guests)
     |> cast_assoc(:episode_sponsors)
-    |> cast_assoc(:episode_channels)
+    |> cast_assoc(:episode_topics)
     |> derive_bytes_and_duration
   end
 
@@ -171,16 +171,16 @@ defmodule Changelog.Episode do
   def preload_all(episode) do
     episode
     |> preload_podcast
-    |> preload_channels
+    |> preload_topics
     |> preload_guests
     |> preload_hosts
     |> preload_sponsors
   end
 
-  def preload_channels(episode) do
+  def preload_topics(episode) do
     episode
-    |> Repo.preload(episode_channels: {EpisodeChannel.by_position, :channel})
-    |> Repo.preload(:channels)
+    |> Repo.preload(episode_topics: {EpisodeTopic.by_position, :topic})
+    |> Repo.preload(:topics)
   end
 
   def preload_hosts(episode) do

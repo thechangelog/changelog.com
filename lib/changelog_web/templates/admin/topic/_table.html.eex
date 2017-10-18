@@ -11,21 +11,21 @@
   </thead>
 
   <tbody>
-  <%= for channel <- @channels do %>
+  <%= for topic <- @topics do %>
     <tr>
-      <td><%= channel.name %></td>
-      <td><%= channel.slug %></td>
-      <td><%= truncate(channel.description, 60) %></td>
-      <td><%= episode_count(channel) %></td>
-      <td><%= post_count(channel) %></td>
+      <td><%= topic.name %></td>
+      <td><%= topic.slug %></td>
+      <td><%= truncate(topic.description, 60) %></td>
+      <td><%= episode_count(topic) %></td>
+      <td><%= post_count(topic) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= link to: admin_channel_path(@conn, :edit, channel), class: "ui button" do %>
+          <%= link to: admin_topic_path(@conn, :edit, topic), class: "ui button" do %>
             <i class="edit icon"></i>
             Edit
           <% end %>
 
-          <%= link to: admin_channel_path(@conn, :delete, channel), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
+          <%= link to: admin_topic_path(@conn, :delete, topic), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
             <i class="trash icon"></i>
             Delete
           <% end %>

@@ -1,12 +1,12 @@
 defmodule ChangelogWeb.Admin.SearchController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Channel, Episode, NewsSource, Person, Sponsor, Post}
+  alias Changelog.{Topic, Episode, NewsSource, Person, Sponsor, Post}
 
   def all(conn, params = %{"q" => query}) do
     render(conn, with_format("all", params["f"]), %{
       results: %{
-        channels: channel_query(query),
+        topics: topic_query(query),
         episodes: episode_query(query),
         news_sources: news_source_query(query),
         people: person_query(query),
@@ -19,7 +19,7 @@ defmodule ChangelogWeb.Admin.SearchController do
 
   def one(conn, params = %{"q" => query, "type" => type}) do
     results = case(type) do
-      "channel" -> channel_query(query)
+      "topic" -> topic_query(query)
       "episode" -> episode_query(query)
       "news_source" -> news_source_query(query)
       "person" -> person_query(query)
@@ -30,7 +30,7 @@ defmodule ChangelogWeb.Admin.SearchController do
     render(conn, with_format(type, params["f"]), %{results: results, query: query})
   end
 
-  defp channel_query(q),     do: Repo.all(from c in Channel, where: ilike(c.name, ^"%#{q}%"))
+  defp topic_query(q),     do: Repo.all(from c in Topic, where: ilike(c.name, ^"%#{q}%"))
   defp episode_query(q),     do: Repo.all(from e in Episode, where: ilike(e.title, ^"%#{q}%")) |> Repo.preload(:podcast)
   defp news_source_query(q), do: Repo.all(from s in NewsSource, where: ilike(s.name, ^"%#{q}%"))
   defp person_query(q),      do: Repo.all(from p in Person, where: ilike(p.name, ^"%#{q}%"))

@@ -1,13 +1,13 @@
-defmodule Changelog.PostChannel do
+defmodule Changelog.PostTopic do
   use Changelog.Data
 
-  alias Changelog.{Channel, Post}
+  alias Changelog.{Topic, Post}
 
-  schema "post_channels" do
+  schema "post_topics" do
     field :position, :integer
     field :delete, :boolean, virtual: true
 
-    belongs_to :channel, Channel
+    belongs_to :topic, Topic
     belongs_to :post, Post
 
     timestamps()
@@ -15,7 +15,7 @@ defmodule Changelog.PostChannel do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(position post_id channel_id delete))
+    |> cast(params, ~w(position post_id topic_id delete))
     |> validate_required([:position])
     |> mark_for_deletion()
   end

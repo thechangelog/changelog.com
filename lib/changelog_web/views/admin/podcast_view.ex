@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PodcastView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Channel, Podcast}
+  alias Changelog.{Topic, Podcast}
   alias ChangelogWeb.PodcastView
 
   def episode_count(podcast), do: PodcastView.episode_count(podcast)

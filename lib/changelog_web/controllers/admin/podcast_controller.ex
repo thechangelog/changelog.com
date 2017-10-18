@@ -33,14 +33,14 @@ defmodule ChangelogWeb.Admin.PodcastController do
   def edit(conn, %{"id" => slug}) do
     podcast = Repo.get_by!(Podcast, slug: slug)
       |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
-      |> Repo.preload([podcast_channels: {Changelog.PodcastChannel.by_position, :channel}])
+      |> Repo.preload([podcast_topics: {Changelog.PodcastTopic.by_position, :topic}])
     changeset = Podcast.admin_changeset(podcast)
     render(conn, "edit.html", podcast: podcast, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => slug, "podcast" => podcast_params}) do
     podcast = Repo.get_by!(Podcast, slug: slug)
-      |> Repo.preload(:podcast_channels)
+      |> Repo.preload(:podcast_topics)
       |> Repo.preload(:podcast_hosts)
     changeset = Podcast.admin_changeset(podcast, podcast_params)
 

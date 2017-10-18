@@ -2,7 +2,7 @@ import Sortable from "sortablejs";
 import autosize from "autosize";
 
 import personItem from "templates/personItem.hbs";
-import channelItem from "templates/channelItem.hbs";
+import topicItem from "templates/topicItem.hbs";
 import sponsorItem from "templates/sponsorItem.hbs";
 
 export default class SearchWidget {
@@ -26,8 +26,8 @@ export default class SearchWidget {
         case "sponsor":
           return "<a href='/admin/sponsors/new' target='_blank'>Add a Sponsor</a>";
           break
-        case "channel":
-          return "<a href='/admin/channels/new' target='_blank'>Add a Channel</a>";
+        case "topic":
+          return "<a href='/admin/topics/new' target='_blank'>Add a Topic</a>";
           break;
       }
     }
@@ -66,8 +66,8 @@ export default class SearchWidget {
           case "sponsor":
             $list.append(sponsorItem(context));
             break;
-          case "channel":
-            $list.append(channelItem(context));
+          case "topic":
+            $list.append(topicItem(context));
             break;
         }
 

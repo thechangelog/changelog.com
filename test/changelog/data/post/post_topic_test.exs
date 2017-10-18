@@ -1,16 +1,16 @@
-defmodule Changelog.PostChannelTest do
+defmodule Changelog.PostTopicTest do
   use Changelog.DataCase
 
-  alias Changelog.PostChannel
+  alias Changelog.PostTopic
 
   describe "changeset" do
     test "valid attributes" do
-      changeset = PostChannel.changeset(%PostChannel{}, %{position: 42})
+      changeset = PostTopic.changeset(%PostTopic{}, %{position: 42})
       assert changeset.valid?
     end
 
     test "invalid attributes" do
-      changeset = PostChannel.changeset(%PostChannel{}, %{})
+      changeset = PostTopic.changeset(%PostTopic{}, %{})
       refute changeset.valid?
     end
   end

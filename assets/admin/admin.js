@@ -1,7 +1,7 @@
 import "phoenix_html";
 import autosize from "autosize";
 import benefitView from "views/benefitView";
-import channelView from "views/channelView";
+import topicView from "views/topicView";
 import episodeView from "views/episodeView";
 import newsItemView from "views/newsItemView";
 import podcastView from "views/podcastView";
@@ -10,7 +10,7 @@ import ts from "../shared/ts";
 
 let views = {
   "BenefitView": benefitView,
-  "ChannelView": channelView,
+  "TopicView": topicView,
   "EpisodeView": episodeView,
   "NewsItemView": newsItemView,
   "PodcastView": podcastView,

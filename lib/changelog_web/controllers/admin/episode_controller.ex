@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, EpisodeChannel, EpisodeHost, EpisodeStat, Mailer,
+  alias Changelog.{Episode, EpisodeTopic, EpisodeHost, EpisodeStat, Mailer,
                    Podcast, Transcripts}
   alias ChangelogWeb.Email
 
@@ -57,7 +57,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   def new(conn, _params, podcast) do
     podcast =
       podcast
-      |> Podcast.preload_channels
+      |> Podcast.preload_topics
       |> Podcast.preload_hosts
 
     default_hosts =
@@ -65,17 +65,17 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Enum.with_index(1)
       |> Enum.map(&EpisodeHost.build_and_preload/1)
 
-    default_channels =
-      podcast.channels
+    default_topics =
+      podcast.topics
       |> Enum.with_index(1)
-      |> Enum.map(&EpisodeChannel.build_and_preload/1)
+      |> Enum.map(&EpisodeTopic.build_and_preload/1)
 
     default_slug = Podcast.last_numbered_slug(podcast) + 1
 
     changeset =
       podcast
       |> build_assoc(:episodes,
-        episode_channels: default_channels,
+        episode_topics: default_topics,
         episode_hosts: default_hosts,
         recorded_live: podcast.recorded_live,
         slug: default_slug)

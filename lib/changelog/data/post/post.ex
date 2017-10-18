@@ -1,7 +1,7 @@
 defmodule Changelog.Post do
   use Changelog.Data
 
-  alias Changelog.{Person, PostChannel, Regexp}
+  alias Changelog.{Person, PostTopic, Regexp}
 
   schema "posts" do
     field :title, :string
@@ -16,8 +16,8 @@ defmodule Changelog.Post do
     field :published_at, DateTime
 
     belongs_to :author, Person
-    has_many :post_channels, PostChannel, on_delete: :delete_all
-    has_many :channels, through: [:post_channels, :channel]
+    has_many :post_topics, PostTopic, on_delete: :delete_all
+    has_many :topics, through: [:post_topics, :topic]
 
     timestamps()
   end
@@ -29,7 +29,7 @@ defmodule Changelog.Post do
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
     |> validate_published_has_published_at
-    |> cast_assoc(:post_channels)
+    |> cast_assoc(:post_topics)
   end
 
   def published(query \\ __MODULE__) do
@@ -72,7 +72,7 @@ defmodule Changelog.Post do
   def preload_all(post) do
     post
     |> preload_author
-    |> preload_channels
+    |> preload_topics
   end
 
   def preload_author(post) do
@@ -80,10 +80,10 @@ defmodule Changelog.Post do
     |> Repo.preload(:author)
   end
 
-  def preload_channels(post) do
+  def preload_topics(post) do
     post
-    |> Repo.preload(post_channels: {PostChannel.by_position, :channel})
-    |> Repo.preload(:channels)
+    |> Repo.preload(post_topics: {PostTopic.by_position, :topic})
+    |> Repo.preload(:topics)
   end
 
   defp validate_published_has_published_at(changeset) do

@@ -14,11 +14,11 @@ defmodule ChangelogWeb.Admin.SearchControllerTest do
   end
 
   @tag :as_admin
-  test "searching channels", %{conn: conn} do
-    insert(:channel, name: "Elixir Phoenix")
-    insert(:channel, name: "Elixir Ecto")
+  test "searching topics", %{conn: conn} do
+    insert(:topic, name: "Elixir Phoenix")
+    insert(:topic, name: "Elixir Ecto")
 
-    conn = get(conn, "/admin/search/channel?q=ect&f=json")
+    conn = get(conn, "/admin/search/topic?q=ect&f=json")
 
     assert conn.status == 200
     assert conn.resp_body =~ "Elixir Ecto"
@@ -38,7 +38,7 @@ defmodule ChangelogWeb.Admin.SearchControllerTest do
   end
 
   test "requires user auth", %{conn: conn} do
-    conn = get(conn, "/admin/search/channel?q=ect&f=json")
+    conn = get(conn, "/admin/search/topic?q=ect&f=json")
     assert html_response(conn, 302)
     assert conn.halted
   end
