@@ -25,7 +25,7 @@
       <ul>
         <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
         <li><mark>$1,800 for the featured pre-roll spot at the top of the show</mark></li>
-        <li><mark>$1,500 for mid-roll spots</mark></li>
+        <li><mark>$1,600 for mid-roll spots</mark></li>
         <li>Four (4) week minimum</li>
         <li>Reaches an average 35,000 to 45,000 listens per episode</li>
         <li>Reaches an average 200,000 listens per month podcast-wide</li>
@@ -85,7 +85,7 @@
       <p>Every weekend we ship our email to <%= @weekly |> NewsletterView.subscribers(:all, 7500) |> comma_separated %> die-hard readers.</p>
 
       <ul>
-        <li><mark>$250 per week with a four (4) week minimum</mark></li>
+        <li><mark>$350 per week with a four (4) week minimum</mark></li>
         <li>We maintain <em>very high</em> engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
         <li>The breakdown is a linked heading with 2-3 lines of supporting text with links.</li>
         <li>We take a native content approach to sponsored links included in Changelog Weekly. Since most organizations treat their blog, ebooks, webinars and other content as their inbound funnel, we leverage that to share that content with our readers and let your marketing funnel do what it was designed to do &mdash; convert!</li>
