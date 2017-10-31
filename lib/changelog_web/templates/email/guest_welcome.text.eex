@@ -4,6 +4,7 @@ We're prepping for your show and just plugged your info in to our system. For th
 
 <%= page_url(Endpoint, :guest) %>
 
+
 You can use the magic link below to tweak your profile, join our Slack, and/or check out our awesome newsletters. Completely optional!
 
 <%= AuthView.auth_url(Endpoint, @person) %>

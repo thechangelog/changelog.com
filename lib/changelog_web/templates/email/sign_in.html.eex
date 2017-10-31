@@ -8,5 +8,7 @@
 
     <p><em>This link will self-destruct in <%= auth_link_expires_in(@person) %>.</em><p>
     <p>Already expired? <em><%= link "Request a new link.", to: sign_in_url(Endpoint, :new) %></em></p>
+
+    <p>💚, Logbot</p>
   </td>
 </tr>
