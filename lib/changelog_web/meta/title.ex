@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Meta.Title do
   alias ChangelogWeb.{AuthView, EpisodeView, LiveView, PageView, PersonView,
                       PodcastView, PostView, SearchView}
 
-  @suffix "Changelog"
+  @suffix "Changelog | News and podcasts for developers"
 
   def page_title(assigns), do: assigns |> get |> put_suffix
 
