@@ -75,11 +75,34 @@
   </div>
 
   <div class="inline field">
-    <div class="ui checkbox">
-      <%= checkbox f, :admin, class: "hidden" %>
-      <%= label f, :admin %>
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :admin, class: "hidden") %>
+      <%= label(f, :admin) %>
     </div>
   </div>
 
+<%= if !is_persisted(f.data) do %>
+  <div class="inline fields">
+    <label>Send Welcome Email</label>
+    <div class="field">
+      <div class="ui toggle radio checkbox">
+        <input type="radio" name="welcome" value="" checked>
+        <label>Nope <%= help_icon("Useful for News authors because they'll get an email when their news gets published instead.") %></label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui toggle radio checkbox">
+        <input type="radio" name="welcome" value="generic">
+        <label>Generic <%= help_icon("This is the email all new community members get when they sign up. Use this if you're creating an account on someone's behalf.") %></label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui toggle radio checkbox">
+        <input type="radio" name="welcome" value="guest">
+        <label>Guest <%= help_icon("This welcome email is written with guests in mind. Use this if you're creating a person to be a show guest.") %></label>
+      </div>
+    </div>
+  </div>
+<% end %>
   <%= form_actions() %>
 <% end %>

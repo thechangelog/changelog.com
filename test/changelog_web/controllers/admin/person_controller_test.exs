@@ -28,13 +28,37 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
-  test "creates person and smart redirects", %{conn: conn} do
+  test "creates person, sends no welcome, and smart redirects", %{conn: conn} do
     conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
       post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
     end
 
+    Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
+    assert_no_emails_delivered()
+    assert redirected_to(conn) == admin_person_path(conn, :index)
+    assert count(Person) == 1
+  end
+
+  @tag :as_admin
+  test "creates person, sends generic welcome, and smart redirects", %{conn: conn} do
+    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+      post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true, welcome: "generic")
+    end
+
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
     assert_delivered_email ChangelogWeb.Email.welcome(person)
+    assert redirected_to(conn) == admin_person_path(conn, :index)
+    assert count(Person) == 1
+  end
+
+  @tag :as_admin
+  test "creates person, sends guest welcome, and smart redirects", %{conn: conn} do
+    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+      post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true, welcome: "guest")
+    end
+
+    person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
+    assert_delivered_email ChangelogWeb.Email.guest_welcome(person)
     assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 1
   end

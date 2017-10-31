@@ -18,6 +18,15 @@ defmodule ChangelogWeb.Email do
     |> render(:guest_thanks)
   end
 
+  def guest_welcome(person) do
+    logbot_email()
+    |> put_header("X-CMail-GroupName", "Guest Welcome")
+    |> to(person)
+    |> subject("Thanks for guesting on a Changelog show!")
+    |> assign(:person, person)
+    |> render(:guest_welcome)
+  end
+
   def sign_in(person) do
     logbot_email()
     |> put_header("X-CMail-GroupName", "Sign In")
@@ -31,7 +40,7 @@ defmodule ChangelogWeb.Email do
     logbot_email()
     |> put_header("X-CMail-GroupName", "Welcome")
     |> to(person)
-    |> subject("Welcome! Confirm Your Address")
+    |> subject("Welcome! Confirm your address")
     |> assign(:person, person)
     |> render(:welcome)
   end

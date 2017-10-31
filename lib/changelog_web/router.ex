@@ -123,8 +123,8 @@ defmodule ChangelogWeb.Router do
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015
     get "/films/gophercon-2016", PageController, :films_gophercon_2016
-    get "/guest/:slug", PageController, :guest
     get "/guest", PageController, :guest
+    get "/guest/:slug", PageController, :guest
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership

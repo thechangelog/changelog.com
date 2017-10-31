@@ -25,11 +25,9 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     case Repo.insert(changeset) do
       {:ok, person} ->
-        person = Person.refresh_auth_token(person, 60 * 24)
         community = Newsletters.community()
-
-        Email.welcome(person) |> Mailer.deliver_later
         Subscriber.subscribe(community.list_id, person, handle: person.handle)
+        handle_welcome_email(person, params)
 
         conn
         |> put_flash(:result, "success")
@@ -70,6 +68,22 @@ defmodule ChangelogWeb.Admin.PersonController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_person_path(conn, :index))
+  end
+
+  defp handle_welcome_email(person, params) do
+    case Map.get(params, "welcome") do
+      "generic" -> handle_generic_welcome_email(person)
+      "guest" -> handle_guest_welcome_email(person)
+      _else -> false
+    end
+  end
+  defp handle_generic_welcome_email(person) do
+    person = Person.refresh_auth_token(person, 60 * 24)
+    Email.welcome(person) |> Mailer.deliver_later
+  end
+  defp handle_guest_welcome_email(person) do
+    person = Person.refresh_auth_token(person, 60 * 24)
+    Email.guest_welcome(person) |> Mailer.deliver_later
   end
 
   defp smart_redirect(conn, _person, %{"close" => _true}) do
