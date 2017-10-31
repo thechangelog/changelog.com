@@ -26,6 +26,14 @@
     </div>
   </div>
 
+  <div class="field <%= error_class(f, :feed) %>">
+    <label for="feed">
+      RSS Feed
+      <%= help_icon("Maybe we'll use these to easily draft news items?") %>
+    </label>
+    <%= text_input(f, :feed, placeholder: "https://www.wired.com/feed/rss") %>
+  </div>
+
   <div class="field">
     <label for="icon">
       Icon
