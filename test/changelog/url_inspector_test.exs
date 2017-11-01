@@ -36,9 +36,9 @@ defmodule Changelog.UrlInspectorTest do
       for body <- [~s{<title itemprop='name'>October's Best Gear</title>}, ~s{<title>October's Best Gear</title>}] do
         response = %{status_code: 200, body: body}
 
-        with_mock HTTPoison, [get!: fn(_) -> response end] do
+        with_mock HTTPoison, [get!: fn(_, _, _) -> response end] do
           assert UrlInspector.get_title(url) == "October's Best Gear"
-          assert called HTTPoison.get!(url)
+          assert called HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5])
         end
       end
     end
