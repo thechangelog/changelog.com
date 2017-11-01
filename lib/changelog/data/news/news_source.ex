@@ -26,4 +26,18 @@ defmodule Changelog.NewsSource do
     |> validate_format(:feed, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:slug)
   end
+
+  def get_by_url(url) do
+    try do
+      matching(url)
+      |> Repo.all
+      |> List.first
+    rescue
+      Postgrex.Error -> nil
+    end
+  end
+
+  def matching(url) do
+    from(s in __MODULE__, where: fragment("? ~* regex", ^url))
+  end
 end

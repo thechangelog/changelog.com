@@ -22,7 +22,7 @@
         Regex
         <%= help_icon("This is used to auto-assign source for a given URL") %>
       </label>
-      <%= text_input(f, :regex, placeholder: "*wired.com*") %>
+      <%= text_input(f, :regex, placeholder: "wired.com|twitter.com/wired") %>
     </div>
   </div>
 

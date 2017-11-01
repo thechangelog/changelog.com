@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, NewsQueue}
+  alias Changelog.{NewsItem, NewsQueue, UrlInspector}
 
   plug :scrub_params, "news_item" when action in [:create, :update]
 
@@ -21,10 +21,16 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     render(conn, :index, queued: queued, published: page.entries, page: page)
   end
 
-  def new(conn, _params) do
+  def new(conn, params) do
+    url = params["url"]
+
     changeset =
       conn.assigns.current_user
-      |> build_assoc(:logged_news_items)
+      |> build_assoc(:logged_news_items,
+        url: url,
+        headline: UrlInspector.get_title(url),
+        source: UrlInspector.get_source(url),
+        type: UrlInspector.get_type(url))
       |> NewsItem.insert_changeset()
 
     render(conn, "new.html", changeset: changeset)
