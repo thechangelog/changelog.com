@@ -36,6 +36,12 @@ export default class newsItemView {
         $(".js-sponsor").hide();
       }
     }).trigger("change");
+
+    if ($(".js-quick-form").length) {
+      $(".ui.menu").remove();
+      $("h1").remove();
+      $(".ui.very.padded.segment").removeClass("very padded");
+    }
   }
 
   edit() {

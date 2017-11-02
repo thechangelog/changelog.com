@@ -1,27 +1,14 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
-  <div class="two fields">
+  <%= if @quick do %>
+    <input type="hidden" name="quick" value="true" class="js-quick-form">
+  <% end %>
+
+  <div class="three fields">
     <div class="field required <%= error_class(f, :type) %>">
       <%= label(f, :type, "Type") %>
       <%= select(f, :type, type_options(), class: "ui fluid dropdown") %>
     </div>
 
-    <div class="field required <%= error_class(f, :logger_id) %>">
-      <%= label(f, :logger_id, "Logged By") %>
-      <div class="ui fluid remote logger search selection dropdown">
-        <%= hidden_input(f, :logger_id) %>
-        <i class="dropdown icon"></i>
-        <% logger = load_from_form(f, Person, :logger) %>
-        <%= if logger do %>
-          <div class="selected text"><%= logger.name %></div>
-        <% else %>
-          <div class="default text">Select Changelogger</div>
-        <% end %>
-      </div>
-      <%= error_message(f, :logger_id) %>
-    </div>
-  </div>
-
-  <div class="two fields">
     <div class="field <%= error_class(f, :source_id) %>">
       <%= label(f, :source_id, "Source") %>
       <div class="ui fluid remote source search selection dropdown">
@@ -55,7 +42,7 @@
 
   <div class="field required <%= error_class(f, :url) %>">
     <%= label(f, :url, "URL") %>
-    <%= text_input(f, :url, autofocus: true) %>
+    <%= text_input(f, :url) %>
     <%= error_message(f, :url) %>
   </div>
 
@@ -141,6 +128,21 @@
       <% end %>
     </div>
     <%= error_message(f, :sponsor_id) %>
+  </div>
+
+  <div class="field required <%= error_class(f, :logger_id) %>">
+    <%= label(f, :logger_id, "Logged By") %>
+    <div class="ui fluid remote logger search selection dropdown">
+      <%= hidden_input(f, :logger_id) %>
+      <i class="dropdown icon"></i>
+      <% logger = load_from_form(f, Person, :logger) %>
+      <%= if logger do %>
+        <div class="selected text"><%= logger.name %></div>
+      <% else %>
+        <div class="default text">Select Changelogger</div>
+      <% end %>
+    </div>
+    <%= error_message(f, :logger_id) %>
   </div>
 
   <%= if is_persisted(f.data) do %>

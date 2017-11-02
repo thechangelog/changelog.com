@@ -4,6 +4,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   alias Changelog.{NewsItem, NewsQueue, UrlInspector}
 
   plug :scrub_params, "news_item" when action in [:create, :update]
+  plug :detect_quick_form when action in [:new, :create]
 
   def index(conn, params) do
     queued =
@@ -49,9 +50,15 @@ defmodule ChangelogWeb.Admin.NewsItemController do
           "append" -> NewsQueue.append(news_item)
         end
 
+        destination = if conn.assigns.quick do
+          [external: news_item.url]
+        else
+          [to: admin_news_item_path(conn, :index)]
+        end
+
         conn
         |> put_flash(:result, "success")
-        |> redirect(to: admin_news_item_path(conn, :index))
+        |> redirect(destination)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -94,6 +101,10 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     news_item = Repo.get!(NewsItem, id)
     NewsQueue.move(news_item, String.to_integer(position))
     send_resp(conn, 200, "")
+  end
+
+  defp detect_quick_form(conn, _opts) do
+    assign(conn, :quick, Map.has_key?(conn.params, "quick"))
   end
 
   defp smart_redirect(conn, _item, %{"close" => _true}) do
