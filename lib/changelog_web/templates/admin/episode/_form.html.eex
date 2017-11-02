@@ -249,7 +249,8 @@
     </div>
   </div>
 
-  <div class="ui section divider"></div>
+  <div class="ui hidden divider"></div>
+
   <div class="ui equal width stackable grid">
     <div class="column">
       <button class="ui primary fluid basic button" type="submit">Save</button>

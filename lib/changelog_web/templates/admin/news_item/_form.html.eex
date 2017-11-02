@@ -146,9 +146,12 @@
   <%= if is_persisted(f.data) do %>
     <%= form_actions() %>
   <% else %>
-    <div class="ui section divider"></div>
-    <button class="ui primary basic button" type="submit" name="queue" value="append">Publish Whenevs</button>
-    <button class="ui secondary basic button" type="submit" name="queue" value="publish">Publish Now</button>
-    <button class="ui secondary basic button" type="submit" name="queue" value="prepend">Publish Next</button>
+    <div class="ui hidden divider"></div>
+
+    <div class="ui equal width stackable grid">
+      <div class="column"><button class="ui primary fluid basic button" type="submit" name="queue" value="append">Publish Whenevs</button></div>
+      <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="publish">Publish Now</button></div>
+      <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="prepend">Publish Next</button></div>
+    </div>
   <% end %>
 <% end %>

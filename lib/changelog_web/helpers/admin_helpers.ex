@@ -20,9 +20,11 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   def form_actions() do
     ~e"""
-    <div class="ui section divider"></div>
-    <button class="ui primary basic button" type="submit">Save</button>
-    <button class="ui secondary basic button" type="submit" name="close">Save and Close</button>
+    <div class="ui hidden divider"></div>
+    <div class="ui equal width stackable grid">
+    <div class="column"><button class="ui primary fluid basic button" type="submit">Save</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="close">Save and Close</button></div>
+    <div class="column"></div>
     """
   end
 
