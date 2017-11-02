@@ -5,6 +5,8 @@
   </h1>
 
   <div class="actions">
+    <button class="ui right floated basic icon clipboard button" title="Bookmarklet" data-clipboard-text="<%= bookmarklet_code() %>"><i class="book icon"></i></button>
+
     <%= link to: admin_news_source_path(@conn, :new), class: "ui right floated basic button" do %>
       <i class="add write icon"></i>
       Add Source

@@ -2,7 +2,12 @@ defmodule ChangelogWeb.Admin.NewsItemView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.{Files, NewsItem, NewsSource, Person, Sponsor, Topic}
-  alias ChangelogWeb.PersonView
+  alias ChangelogWeb.{Endpoint, PersonView}
+
+  def bookmarklet_code do
+    url = admin_news_item_url(Endpoint, :new, quick: true, url: "")
+    ~s/javascript:(function() {location='#{url}'+location.href;})();/
+  end
 
   def image_url(news_item, version) do
     Files.Image.url({news_item.image, news_item}, version)

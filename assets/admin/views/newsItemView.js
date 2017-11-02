@@ -1,6 +1,7 @@
 import Sortable from "sortablejs";
 import BelongsToWidget from "components/belongsToWidget";
 import SearchWidget from "components/searchWidget";
+import Clipboard from "clipboard";
 
 export default class newsItemView {
   index() {
@@ -20,6 +21,14 @@ export default class newsItemView {
         }
       });
     }
+
+    let clipboard = new Clipboard(".clipboard.button");
+
+    clipboard.on("success", function(e) {
+      $(e.trigger).popup({variation: "inverted", content: "Copied!"}).popup("show");
+    });
+
+    clipboard.on("error", function(e) { console.log(e); });
   }
 
   new() {
