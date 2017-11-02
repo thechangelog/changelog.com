@@ -22,20 +22,9 @@
         <td><%= ts(post.published_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= link to: post_path(@conn, show_or_preview(post), post.slug), class: "ui button" do %>
-              <i class="eye icon"></i>
-              Public
-            <% end %>
-
-            <%= link to: admin_post_path(@conn, :edit, post), class: "ui button" do %>
-              <i class="edit icon"></i>
-              Edit
-            <% end %>
-
-            <%= link to: admin_post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
-              <i class="trash icon"></i>
-              Delete
-            <% end %>
+            <%= icon_link "eye", to: post_path(@conn, show_or_preview(post), post.slug) %>
+            <%= icon_link "edit", to: admin_post_path(@conn, :edit, post) %>
+            <%= icon_link "trash", to: admin_post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %>
           </div>
         </td>
       </tr>

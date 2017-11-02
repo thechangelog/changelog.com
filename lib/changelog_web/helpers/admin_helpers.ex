@@ -32,6 +32,11 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     """
   end
 
+  def icon_link(icon_name, options) do
+    options = Keyword.put(options, :class, "ui icon button")
+    link content_tag(:i, "", class: "#{icon_name} icon"), options
+  end
+
   def is_persisted(struct), do: is_integer(struct.id)
 
   def is_loaded(nil), do: false
