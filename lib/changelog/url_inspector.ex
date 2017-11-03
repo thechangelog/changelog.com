@@ -10,9 +10,10 @@ defmodule Changelog.UrlInspector do
   def get_title(url) do
     case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
       %{status_code: 200, body: body} ->
-        ~r/<title.*?>(?<title>.*)<\/title>/
-        |> Regex.named_captures(body)
-        |> Map.get("title")
+        case Regex.named_captures(~r/<title.*?>(?<title>.*)<\/title>/, body) do
+          %{"title" => title} -> title
+          _else -> "Couldn't parse title. Report to Jerod!"
+        end
       _else -> nil
     end
   end
