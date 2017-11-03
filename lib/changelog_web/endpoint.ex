@@ -34,7 +34,7 @@ defmodule ChangelogWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     json_decoder: Poison,
-    length: 150_000_000
+    length: 200_000_000
 
   plug Plug.MethodOverride
   plug Plug.Head
