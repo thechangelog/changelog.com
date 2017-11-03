@@ -33,9 +33,9 @@
         <%= if episode.published do %>
           <%= icon_link "line chart", to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug) %>
           <%= icon_link "refresh", to: admin_podcast_episode_path(@conn, :transcript, @podcast.slug, episode.slug), method: :post, title: "Refresh Transcript" %>
+        <% end %>
           <%= icon_link "eye", to: episode_path(@conn, show_or_preview(episode), @podcast.slug, episode.slug) %>
           <%= icon_link "edit", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug) %>
-        <% end %>
         </div>
       </td>
     </tr>
