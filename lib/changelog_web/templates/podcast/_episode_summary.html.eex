@@ -3,13 +3,15 @@
     <%= link to: "#source" do %>
       <img class="news_item-source-image" src="" alt="Source Avatar" />
     <% end %>
-    <a href="#source" title="">medium.com</a>
+    <a href="#source" title="">
+      <%= @episode.podcast.name %>
+      <%= if number = EpisodeView.number(@episode) do %>
+        <span>#<%= number %></span>
+      <% end %>
+    </a>
   </p>
   <h2 class="news_item-title">
     <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) do %>
-      <%= if number = EpisodeView.number(@episode) do %>
-        <span><%= number %>:</span>
-      <% end %>
       <%= @episode.title %>
     <% end %>
   </h2>

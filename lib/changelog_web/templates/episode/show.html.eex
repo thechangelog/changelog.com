@@ -37,13 +37,13 @@
     <%= link "← All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button" %>
   </header>
 
-  <div class="episode-body">
-    <div class="episode-body-summary">
+  <div class="post-body episode-body">
+    <div class="post-body-summary">
       <% dark_logo_sponsorships = sponsorships_with_dark_logo(@episode) %>
       <%= if Enum.any?(dark_logo_sponsorships) do %>
-        <aside class="episode-body-summary-sponsors">
+        <aside class="post-body-summary-sponsors">
           <h3>Brought to you by</h3>
-          <div class="episode-body-summary-sponsors-list">
+          <div class="post-body-summary-sponsors-list">
             <%= for episode_sponsor <- dark_logo_sponsorships do %>
               <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
               <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
@@ -53,11 +53,11 @@
         </aside>
       <% end %>
 
-      <div class="episode-body-summary-description">
+      <div class="post-body-summary-description">
         <%= @episode.summary |> md_to_html |> raw %>
       </div>
 
-      <div class="episode-body-summary-meta">
+      <div class="post-body-summary-meta">
         Runtime <%= TimeView.rounded_minutes(@episode.duration) %> Min &bull;
         <time datetime="<%= @episode.published_at %>">Published <%= TimeView.pretty_date(@episode.published_at) %></time> &bull;
         <a href="<%= audio_url(@episode) %>" download>
@@ -66,14 +66,16 @@
         <%= if @current_user && @current_user.admin do %>&bull; <%= link "Edit", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug), data: [turbolinks: false] %><% end %>
       </div>
 
-      <ul class="episode-body-summary-tags">
-        <li class="episode-body-summary-tags-item"><a href="#" title="View Tag">Programming</a></li>
-        <li class="episode-body-summary-tags-item"><a href="#" title="View Tag">Computer Science</a></li>
-        <li class="episode-body-summary-tags-item"><a href="#" title="View Tag">Learning</a></li>
-      </ul>
+      <div class="post-body-summary-tags">
+        <ul class="tags">
+          <li class="tags-item"><a href="#" title="View Tag">Programming</a></li>
+          <li class="tags-item"><a href="#" title="View Tag">Computer Science</a></li>
+          <li class="tags-item"><a href="#" title="View Tag">Learning</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div class="episode-body-details episode-body-details--<%= @podcast.slug %>">
+    <div class="post-body-details post-body-details--<%= @podcast.slug %>">
       <% participants = participants(@episode) %>
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">

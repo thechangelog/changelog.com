@@ -1,54 +1,49 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <nav class="breadcrumbs breadcrumbs--slashes">
-        <a class="breadcrumbs_crumb" href="/">Home</a>
-        /
-        <a class="breadcrumbs_crumb" href="/posts/">Posts</a>
-        /
-        <span class="breadcrumbs_crumb breadcrumbs_crumb--active"><%= TimeView.pretty_date(@post.published_at) %></span>
-    </nav>
-    <header class="content_header">
-      <h1><%= @post.title %></h1>
-      <div class="content_byline">
-        <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
-        <%= if @current_user && @current_user.admin do %>&nbsp;<%= link "[Edit]", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
+<article class="post">
+  <header class="post-header">
+    <div class="post-header-wrap">
+      <h1 class="post-header-title"><%= @post.title %></h1>
+
+      <div class="post-header-author">
+        <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
+          <img class="author_image" src="<%= PersonView.avatar_url(@post.author) %>" width=30 height=30 alt="<%= @post.author.name %>"/>
+        <% end %>
+        <span><%= link @post.author.name, to: PersonView.external_url(@post.author) %> &ndash; Todo: Add author title</span>
       </div>
-    </header>
-    <div class="content_body">
-      <%= @post.body |> md_to_html |> raw %>
     </div>
 
-    <footer>
-      <div class="toolbar toolbar--dark">
-        <ul class="toolbar_item toolbar_item--list" style="background-image: url(/images/icon-tag-white.svg);">
-          <%= if Enum.any?(@post.channels) do %>
-            <%= for channel <- @post.channels do %>
-              <li><%= channel.name %></li>
-            <% end %>
-          <% end %>
-        </ul>
-        <ul class="toolbar_item toolbar_item--icon_list toolbar_item--right" style="background-image: url(/images/icon-share-white.svg);">
-          <li>
-            <%= link "Twitter",
-                title: "Share on Twitter",
-                to: tweet_url(@post.title, post_url(@conn, :show, @post.slug), @post.author.twitter_handle),
-                class: "toolbar_item_link js-share-popup",
-                style: "background-image: url('#{static_url(@conn, "/images/icon-twitter.svg")}')" %>
-          </li>
-        </ul>
-      </div>
+    <div class="post-header-toolbar">
 
-    <%= if @post.author.bio do %>
-      <%= render("_author_bio.html", person: @post.author) %>
-    <% end %>
-    </footer>
+    </div>
+
+    <%= link "← All Posts", to: "/posts", class: "post-header-all_posts_button" %>
+  </header>
+
+  <div class="post-body">
+    <div class="post-body-content richtext">
+      <%= @post.body |> md_to_html |> raw %>
+    </div>
   </div>
+
+  <footer class="post-footer">
+    <div class="post-footer-meta">
+      <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
+      <%= if @current_user && @current_user.admin do %> &bull; <%= link "Edit", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
+    </div>
+
+    <div class="post-footer-tags">
+      <ul class="tags">
+        <%= if Enum.any?(@post.channels) do %>
+          <%= for channel <- @post.channels do %>
+            <li class="tags-item"><a href="#" title="View Tag"><%= channel.name %></a></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="post-footer-author">
+      <%= if @post.author.bio do %>
+        <%= render("_author_bio.html", person: @post.author) %>
+      <% end %>
+    </div>
+  </footer>
 </article>
-
-<div class="wrapper wrapper--half-gray">
-  <%= render SharedView, "_community_cta_2.html", assigns %>
-</div>
-
-<div class="wrapper wrapper--gray">
-  <%= render SharedView, "_films_cta_1.html", assigns %>
-</div>

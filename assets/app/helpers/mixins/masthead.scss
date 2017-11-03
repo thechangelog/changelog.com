@@ -1,7 +1,31 @@
 @mixin masthead() {
   background: $dark-grey;
   color: $white;
+  margin-bottom: $base-spacing*2;
   padding: $base-spacing*2 $base-spacing;
   padding: calc(2em + 2vw) $base-spacing;
   text-align: center;
+}
+
+@mixin masthead-back() {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: #222C36;
+  border-radius: $base-border-radius;
+  color: rgba($white, 0.5);
+  display: none;
+  font-size: 0.875em;
+  font-weight: bold;
+  padding: 0.6em 0.825em 0.5em;
+  transition: all 0.1s $base-easing;
+
+  @include breakpoint(desktop) {
+    display: block;
+  }
+
+  &:hover {
+    background: lighten(#222C36, 5%);
+    color: $white;
+  }
 }

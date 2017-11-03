@@ -3,13 +3,8 @@
   //
   // Header
   &-header {
-    background: $dark-grey;
-    color: $white;
-    margin: 0 0 $base-spacing*2;
-    padding: $base-spacing*2 $base-spacing;
-    padding: calc(2em + 2vw) $base-spacing;
+    @include masthead();
     position: relative;
-    text-align: center;
 
     // Wrap
     &-wrap {
@@ -69,26 +64,7 @@
     }
 
     &-all_episodes_button {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background: #222C36;
-      border-radius: $base-border-radius;
-      color: rgba($white, 0.5);
-      display: none;
-      font-size: 0.875em;
-      font-weight: bold;
-      padding: 0.6em 0.825em 0.5em;
-      transition: all 0.1s $base-easing;
-
-      @include breakpoint(desktop) {
-        display: block;
-      }
-
-      &:hover {
-        background: lighten(#222C36, 5%);
-        color: $white;
-      }
+      @include masthead-back();
     }
   }
 
@@ -96,89 +72,6 @@
   //
   // Body
   &-body {
-    margin: 0 auto;
-    max-width: 940px;
-    padding-bottom: $base-spacing;
-
-    // Summary
-    &-summary {
-      border-bottom: 2px solid $light-grey;
-      margin-bottom: $base-spacing*2;
-      padding: $base-spacing;
-      text-align: center;
-
-      @include breakpoint(mobile) {
-        padding: $base-spacing $base-spacing*2 $base-spacing*2;
-      }
-
-      &-description {
-        text-align: left;
-
-        @include breakpoint(mobile) {
-          font-size: 1.25em;
-        }
-      }
-
-      &-sponsors {
-        margin: 0 0 $base-spacing;
-
-        h3 {
-          font-size: 0.825em;
-          font-weight: normal;
-          letter-spacing: 0.0625em;
-          margin: 0 0 2em;
-          text-transform: uppercase;
-        }
-
-        &-list {
-          display: flex;
-          justify-content: center;
-          width: 100%;
-
-          img {
-            height: auto;
-            padding: 0 1em;
-          }
-        }
-      }
-
-      &-meta {
-        font-family: $code;
-        font-size: 0.75em;
-        margin-top: $base-spacing;
-
-        &,
-        a {
-          color: $medium-grey;
-        }
-        a:hover { color: $dark-grey; }
-      }
-
-      &-tags {
-        font-size: 0.825em;
-        margin-top: $base-spacing;
-        text-align: center;
-
-        &-item {
-          display: inline-block;
-          margin: 0 5px 10px;
-
-          a {
-            background: #F3F3F3;
-            border-radius: $base-border-radius;
-            color: $dark-grey;
-            display: block;
-            padding: 0.5em 1em 0.45em;
-            transition: background 0.1s $base-easing;
-
-            &:hover {
-              background: darken($light-grey, 5%);
-            }
-          }
-        }
-      }
-    }
-
     // Sections
     &-section {
       margin: $base-spacing;

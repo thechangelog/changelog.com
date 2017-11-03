@@ -3,23 +3,10 @@
     <img class="author_image" src="<%= PersonView.avatar_url(@person) %>" width=75 height=75 alt="<%= @person.name %>"/>
   <% end %>
 
-  <div class="author_bio">
+  <div class="author-bio">
     <p>
       <%= link @person.name, to: PersonView.external_url(@person) %>
-      &ndash;
-      <%= @person.bio |> md_to_safe_html |> sans_p_tags |> raw %>
+      <p>Todo: Add author title</p>
     </p>
-
-    <ul class="author_bio_social">
-      <%= if @person.website do %>
-        <li><a class="author_bio_social_link author_bio_social_link--link" href="<%= @person.website %>" title="<%= @person.name %>'s Website"><%= domain_only(@person.website) %></a></li>
-      <% end %>
-      <%= if @person.twitter_handle do %>
-        <li><a class="author_bio_social_link author_bio_social_link--twitter" href="<%= twitter_url(@person.twitter_handle) %>" title="<%= @person.name %> on Twitter">@<%= @person.twitter_handle %></a></li>
-      <% end %>
-      <%= if @person.github_handle do %>
-        <li><a class="author_bio_social_link author_bio_social_link--github" href="<%= github_url(@person.github_handle) %>" title="<%= @person.name %> on GitHub"><%= @person.github_handle %></a></li>
-      <% end %>
-    </ul>
   </div>
 </div>
