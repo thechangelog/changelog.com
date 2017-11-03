@@ -44,6 +44,22 @@ defmodule Changelog.UrlInspectorTest do
     end
   end
 
+  describe "extract_title" do
+    test "when newlines are a thing" do
+      html = """
+      <head>
+      <meta charset="utf-8">
+      <title>
+      GraphQL + Relay Modern + Rails //
+      Collective Idea
+      | Crafting web and mobile software based in Holland, Michigan
+      </title>
+      """
+
+      assert UrlInspector.extract_title(html) == "GraphQL + Relay Modern + Rails //"
+    end
+  end
+
   describe "get_type" do
     test "it defaults to link" do
       assert UrlInspector.get_type(nil) == :link
