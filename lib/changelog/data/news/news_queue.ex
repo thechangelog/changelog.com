@@ -59,7 +59,7 @@ defmodule Changelog.NewsQueue do
     Repo.update(entry)
   end
 
-  def preload_all(query = %Ecto.Query{}), do: Ecto.Query.preload(query, [item: :logger])
+  def preload_all(query = %Ecto.Query{}), do: Ecto.Query.preload(query, [item: [:author, :logger]])
   def preload_all(entry), do: Repo.preload(entry, [item: :logger])
 
   def prepend(item) do
