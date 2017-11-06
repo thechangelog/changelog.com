@@ -134,7 +134,7 @@
   <section class="community-section community-section--map">
     <header class="community-section-header">
       <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
-      <h2>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best podcasts and email newsletters. Our community and content is in every corner of the&nbsp;globe.</h2>
+      <h2>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h2>
 
     <%= if @current_user do %>
       <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "btn" %>
