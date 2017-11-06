@@ -52,10 +52,17 @@
     margin: 10px 0;
   }
 
-  &-description p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  &-description {
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    img {
+      height: auto;
+      max-width: 100%;
+    }
   }
 
   &-toolbar {

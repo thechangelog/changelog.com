@@ -1,22 +1,36 @@
 .feed_nav {
-  border-bottom: 2px solid $light-grey;
+  border-bottom: 1px solid $light-grey;
   margin-bottom: $base-spacing*1.5;
 
-  &-item {
-    display: inline-block;
+  &-list {
 
-    a {
-      border-bottom: 3px solid transparent;
-      color: $black;
-      display: block;
-      padding: 1em;
-      transform: translateY(2px);
-      transition: border 0.2s $base-easing;
-    }
+    display: none;
+    @media (min-width: 901px) { display: block; }
 
-    &.is-active a,
-    a:hover {
-      border-bottom-color: $green;
+    &-item {
+      display: inline-block;
+
+      a {
+        border-bottom: 1px solid transparent;
+        color: $black;
+        display: block;
+        padding: 1em;
+        transform: translateY(1px);
+        transition: border 0.2s $base-easing;
+      }
+
+      &.is-active a,
+      a:hover {
+        border-bottom-color: $green;
+      }
     }
+  }
+
+  &-select {
+    display: block;
+    @media (min-width: 901px) { display: none; }
+    margin-bottom: $base-spacing/2;
+    padding: 0.5em;
+    width: 100%;
   }
 }

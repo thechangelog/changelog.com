@@ -10,6 +10,12 @@
       @include masthead-back();
     }
 
+    &-date {
+      color: $medium-grey;
+      font-family: $code;
+      font-size: 12px;
+    }
+
     &-author {
       align-items: center;
       color: $medium-grey;
@@ -114,9 +120,33 @@
 
   // Footer
   &-footer {
-    border-top: 2px solid $light-grey;
     margin: 0 auto;
     max-width: 940px;
     padding: 0 $base-spacing $base-spacing;
+
+    &-author {
+      align-items: center;
+      border-top: 1px solid $light-grey;
+      display: flex;
+      margin: 20px 0 $base-spacing;
+      padding-top: $base-spacing;
+
+      &-image {
+        border-radius: $base-border-radius;
+        margin-right: $base-spacing/2;
+      }
+
+      &-bio {
+        p {
+          line-height: 1.25em;
+          margin: 0;
+        }
+        &-name { font-weight: bold; }
+        &-title {
+          font-size: 0.875em;
+          font-style: italic;
+        }
+      }
+    }
   }
 }

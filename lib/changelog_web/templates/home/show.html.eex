@@ -54,16 +54,22 @@
 
   <div class="feed">
     <nav class="feed_nav">
-      <ul>
-        <li class="feed_nav-item is-active"><a href="#">All</a></li>
-        <li class="feed_nav-item"><a href="#">Podcasts</a></li>
-        <li class="feed_nav-item"><a href="#">News</a></li>
-        <li class="feed_nav-item"><a href="#">Comments</a></li>
-        <li class="feed_nav-item"><a href="#">Jobs</a></li>
+      <ul class="feed_nav-list">
+        <li class="feed_nav-list-item is-active"><a href="#">Latest</a></li>
+        <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
+        <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
+        <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
+        <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
       </ul>
+
+      <select class="feed_nav-select" name="select">
+        <option value="" selected>Latest</option>
+        <option value="">Nav Item</option>
+        <option value="">Nav Item</option>
+        <option value="">Nav Item</option>
+        <option value="">Nav Item</option>
+      </select>
     </nav>
-
-
   </div>
 </div>
 

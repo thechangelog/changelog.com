@@ -1,6 +1,10 @@
 <article class="post">
   <header class="post-header">
     <div class="post-header-wrap">
+      <p class="post-header-date">
+        <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
+        <%= if @current_user && @current_user.admin do %> &bull; <%= link "Edit", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
+      </p>
       <h1 class="post-header-title"><%= @post.title %></h1>
 
       <div class="post-header-author">
@@ -25,11 +29,6 @@
   </div>
 
   <footer class="post-footer">
-    <div class="post-footer-meta">
-      <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
-      <%= if @current_user && @current_user.admin do %> &bull; <%= link "Edit", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
-    </div>
-
     <div class="post-footer-tags">
       <ul class="tags">
         <%= if Enum.any?(@post.channels) do %>
@@ -40,10 +39,8 @@
       </ul>
     </div>
 
-    <div class="post-footer-author">
-      <%= if @post.author.bio do %>
-        <%= render("_author_bio.html", person: @post.author) %>
-      <% end %>
-    </div>
+    <%= if @post.author.bio do %>
+      <%= render("_author_bio.html", person: @post.author) %>
+    <% end %>
   </footer>
 </article>

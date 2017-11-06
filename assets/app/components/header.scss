@@ -3,7 +3,7 @@
   background-color: $black;
   display: flex;
   flex-wrap: wrap;
-  padding: $base-spacing/2;
+  padding: 10px $base-spacing/2;
 
   //
   //
@@ -17,7 +17,7 @@
   }
   &-nav-logo,
   &-logo {
-    $size: 50px;
+    $size: 35px;
     margin: 0 $base-spacing 0 0;
     text-indent: -9999px;
 
@@ -134,17 +134,18 @@
       }
 
       &-item {
+        font-size: 14px;
         font-weight: 600;
-        margin: 0 10px;
+        margin: 0 15px;
 
         a {
-          color: $white;
+          color: $medium-grey;
           border-bottom: 3px solid transparent;
           display: inline-block;
-          padding: 6px 0;
+          padding: 6px 0 2px;
 
           &:hover {
-            border-bottom-color: #4D5258;
+            color: $white;
           }
         }
       }
@@ -166,7 +167,7 @@
         text-align: center;
 
         @include breakpoint(desktop) {
-          margin: $base-spacing/2;
+          margin: 0 $base-spacing/2;
         }
 
         &,

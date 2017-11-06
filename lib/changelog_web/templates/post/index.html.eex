@@ -1,23 +1,32 @@
-<nav class="subnav">
-  <ul>
-    <li class="subnav-item"><%= link "Posts", to: post_path(@conn, :index) %></li>
-  </ul>
-</nav>
+<div class="feed">
+  <nav class="feed_nav">
+    <ul class="feed_nav-list">
+      <li class="feed_nav-list-item is-active"><a href="#">Latest</a></li>
+      <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
+      <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
+      <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
+      <li class="feed_nav-list-item"><a href="#">Nav Item</a></li>
+    </ul>
 
-<div class="container container--skinny container--has-padding">
-  <div class="posts">
-    <%= for post <- @posts do %>
-      <%= render("_post_summary.html", conn: @conn, post: post) %>
-    <% end %>
-  </div>
-
-  <nav class="pagination" role="menubar" aria-label="Pagination">
-    <%= if @page.page_number > 1 do %>
-      <%= link "Newer", to: post_path(@conn, :index, page: @page.page_number - 1), class: "pagination_item pagination_item--button" %>
-      <span class="pagination_item pagination_item--current"><%= @page.page_number %></span>
-    <% end %>
-    <%= if @page.page_number < @page.total_pages do %>
-      <%= link "Older", to: post_path(@conn, :index, page: @page.page_number + 1), class: "pagination_item pagination_item--button" %>
-    <% end %>
+    <select class="feed_nav-select" name="select">
+      <option value="" selected>Latest</option>
+      <option value="">Nav Item</option>
+      <option value="">Nav Item</option>
+      <option value="">Nav Item</option>
+      <option value="">Nav Item</option>
+    </select>
   </nav>
+  <%= for post <- @posts do %>
+    <%= render("_post_summary.html", conn: @conn, post: post) %>
+  <% end %>
 </div>
+
+<nav class="pagination" role="menubar" aria-label="Pagination">
+  <%= if @page.page_number > 1 do %>
+    <%= link "Newer", to: post_path(@conn, :index, page: @page.page_number - 1), class: "pagination_item pagination_item--button" %>
+    <span class="pagination_item pagination_item--current"><%= @page.page_number %></span>
+  <% end %>
+  <%= if @page.page_number < @page.total_pages do %>
+    <%= link "Older", to: post_path(@conn, :index, page: @page.page_number + 1), class: "pagination_item pagination_item--button" %>
+  <% end %>
+</nav>
