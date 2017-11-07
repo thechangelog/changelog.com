@@ -8,7 +8,6 @@
         <th>Image</th>
         <th>Create Time</th>
         <th>Publish Time</th>
-        <th>Sponsored</th>
         <th></th>
       </tr>
     </thead>
@@ -41,7 +40,6 @@
         </td>
         <td><%= ts(item.inserted_at) %></td>
         <td><%= ts(item.published_at) %></td>
-        <td><%= item.sponsored %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
           <%= if @status == "queued" do %>

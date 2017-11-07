@@ -36,15 +36,6 @@ export default class newsItemView {
     new BelongsToWidget("logger", "person");
     new BelongsToWidget("author", "person");
     new BelongsToWidget("source", "news_source");
-    new BelongsToWidget("sponsor", "sponsor");
-
-    $("#news_item_sponsored").on("change", function() {
-      if ($(this).is(":checked")) {
-        $(".js-sponsor").show();
-      } else {
-        $(".js-sponsor").hide();
-      }
-    }).trigger("change");
 
     if ($(".js-quick-form").length) {
       $(".ui.menu").remove();

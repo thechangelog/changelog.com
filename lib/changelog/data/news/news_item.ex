@@ -16,13 +16,11 @@ defmodule Changelog.NewsItem do
     field :image, Files.Image.Type
 
     field :published_at, DateTime
-    field :sponsored, :boolean, default: false
     field :newsletter, :boolean, default: true
 
     belongs_to :author, Person
     belongs_to :logger, Person
     belongs_to :source, NewsSource
-    belongs_to :sponsor, Sponsor
     has_one :news_queue, NewsQueue, foreign_key: :item_id, on_delete: :delete_all
     has_many :news_item_topics, NewsItemTopic, foreign_key: :item_id, on_delete: :delete_all
     has_many :topics, through: [:news_item_topics, :topic]
@@ -36,12 +34,11 @@ defmodule Changelog.NewsItem do
 
   def insert_changeset(news_item, attrs \\ %{}) do
     news_item
-    |> cast(attrs, ~w(status type url headline story published_at sponsored newsletter author_id logger_id source_id sponsor_id))
-    |> validate_required([:type, :url, :headline, :logger_id, :sponsored])
+    |> cast(attrs, ~w(status type url headline story published_at newsletter author_id logger_id source_id))
+    |> validate_required([:type, :url, :headline, :logger_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:author_id)
     |> foreign_key_constraint(:logger_id)
-    |> foreign_key_constraint(:sponsor_id)
     |> foreign_key_constraint(:source_id)
     |> cast_assoc(:news_item_topics)
   end
@@ -57,7 +54,6 @@ defmodule Changelog.NewsItem do
     |> Ecto.Query.preload(:author)
     |> Ecto.Query.preload(:logger)
     |> Ecto.Query.preload(:source)
-    |> Ecto.Query.preload(:sponsor)
     |> preload_topics
   end
 
@@ -66,7 +62,6 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:author)
     |> Repo.preload(:logger)
     |> Repo.preload(:source)
-    |> Repo.preload(:sponsor)
     |> preload_topics
   end
 
