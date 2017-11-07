@@ -34,7 +34,7 @@ defmodule Changelog.UrlKitTest do
       url = "https://www.wired.com/2017/10/things-we-loved-in-october/"
 
       for body <- [~s{<title itemprop='name'>October's Best Gear</title>}, ~s{<title>October's Best Gear</title>}] do
-        response = %{status_code: 200, body: body}
+        response = %{status_code: 200, headers: [], body: body}
 
         with_mock HTTPoison, [get!: fn(_, _, _) -> response end] do
           assert UrlKit.get_title(url) == "October's Best Gear"
@@ -57,6 +57,12 @@ defmodule Changelog.UrlKitTest do
       """
 
       assert UrlKit.extract_title(html) == "GraphQL + Relay Modern + Rails //"
+    end
+
+    test "when there are multiple title tags" do
+      html = "<title>Are holograms the future of how we capture memories?</title><title>Part Deux</title."
+
+      assert UrlKit.extract_title(html) == "Are holograms the future of how we capture memories?"
     end
   end
 

@@ -1,6 +1,19 @@
 defmodule Changelog.UrlKit do
   alias Changelog.NewsSource
 
+  def get_html(url) when is_nil(url), do: ""
+  def get_html(url) do
+    case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
+      %{status_code: 200, headers: headers, body: body} ->
+        case List.keyfind(headers, "Content-Encoding", 0) do
+          {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
+          {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
+          _else -> body
+        end
+      _else -> ""
+    end
+  end
+
   def get_source(url) when is_nil(url), do: nil
   def get_source(url) do
     NewsSource.get_by_url(url)
@@ -8,15 +21,11 @@ defmodule Changelog.UrlKit do
 
   def get_title(url) when is_nil(url), do: nil
   def get_title(url) do
-    case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
-      %{status_code: 200, body: body} ->
-        extract_title(body)
-      _else -> nil
-    end
+    url |> get_html |> extract_title
   end
 
   def extract_title(html) do
-    case Regex.named_captures(~r/<title.*?>(?<title>.*)<\/title>/s, html) do
+    case Regex.named_captures(~r/<title.*?>(?<title>.*?)<\/title>/s, html) do
       %{"title" => title} -> title |> String.trim() |> String.split("\n") |> List.first
       _else -> "Couldn't parse title. Report to Jerod!"
     end
