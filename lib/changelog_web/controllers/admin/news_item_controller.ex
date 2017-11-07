@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, NewsQueue, UrlInspector}
+  alias Changelog.{NewsItem, NewsQueue, UrlKit}
 
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
@@ -23,18 +23,18 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   def new(conn, params) do
-    url = params["url"]
+    url = UrlKit.normalize_url(params["url"])
 
     changeset =
       conn.assigns.current_user
       |> build_assoc(:logged_news_items,
         url: url,
-        headline: UrlInspector.get_title(url),
-        source: UrlInspector.get_source(url),
-        type: UrlInspector.get_type(url))
+        headline: UrlKit.get_title(url),
+        source: UrlKit.get_source(url),
+        type: UrlKit.get_type(url))
       |> NewsItem.insert_changeset()
 
-    render(conn, "new.html", changeset: changeset)
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"news_item" => news_item_params}) do
@@ -62,14 +62,14 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("new.html", changeset: changeset)
+        |> render(:new, changeset: changeset)
     end
   end
 
   def edit(conn, %{"id" => id}) do
     news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
     changeset = NewsItem.update_changeset(news_item)
-    render(conn, "edit.html", news_item: news_item, changeset: changeset)
+    render(conn, :edit, news_item: news_item, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_item" => news_item_params}) do
@@ -84,7 +84,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", news_item: news_item, changeset: changeset)
+        |> render(:edit, news_item: news_item, changeset: changeset)
     end
   end
 

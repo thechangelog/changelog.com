@@ -1,4 +1,4 @@
-defmodule Changelog.UrlInspector do
+defmodule Changelog.UrlKit do
   alias Changelog.NewsSource
 
   def get_source(url) when is_nil(url), do: nil
@@ -28,6 +28,31 @@ defmodule Changelog.UrlInspector do
       Enum.any?(project_regexes(), fn(r) -> Regex.match?(r, url) end) -> :project
       Enum.any?(video_regexes(), fn(r) -> Regex.match?(r, url) end) -> :video
       true -> :link
+    end
+  end
+
+  def normalize_url(url) when is_nil(url), do: nil
+  def normalize_url(url) do
+    parsed = URI.parse(url)
+    query = normalize_query_string(parsed.query)
+
+    parsed
+    |> Map.put(:query, query)
+    |> URI.to_string()
+  end
+
+  defp normalize_query_string(query) when is_nil(query), do: nil
+  defp normalize_query_string(query) do
+    normalized =
+      query
+      |> URI.decode_query()
+      |> Map.drop(~w(utm_source utm_campaign utm_medium utm_term utm_content))
+      |> URI.encode_query()
+
+    if String.length(normalized) == 0 do
+      nil
+    else
+      normalized
     end
   end
 
