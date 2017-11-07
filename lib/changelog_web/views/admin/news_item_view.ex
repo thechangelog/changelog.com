@@ -6,7 +6,7 @@ defmodule ChangelogWeb.Admin.NewsItemView do
 
   def bookmarklet_code do
     url = admin_news_item_url(Endpoint, :new, quick: true, url: "")
-    ~s/javascript:(function() {location='#{url}'+location.href;})();/
+    ~s/javascript:(function() {window.open('#{url}'+location.href);})();/
   end
 
   def image_url(news_item, version) do

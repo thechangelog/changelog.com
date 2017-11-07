@@ -50,15 +50,13 @@ defmodule ChangelogWeb.Admin.NewsItemController do
           "append" -> NewsQueue.append(news_item)
         end
 
-        destination = if conn.assigns.quick do
-          [external: news_item.url]
+        if conn.assigns.quick do
+          render(conn, :create, layout: false)
         else
-          [to: admin_news_item_path(conn, :index)]
+          conn
+          |> put_flash(:result, "success")
+          |> redirect(to: admin_news_item_path(conn, :index))
         end
-
-        conn
-        |> put_flash(:result, "success")
-        |> redirect(destination)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
