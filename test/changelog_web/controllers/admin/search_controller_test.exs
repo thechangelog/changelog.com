@@ -3,8 +3,8 @@ defmodule ChangelogWeb.Admin.SearchControllerTest do
 
   @tag :as_admin
   test "searching people", %{conn: conn} do
-    insert(:person, name: "joe blow")
-    insert(:person, name: "oh no")
+    insert(:person, name: "joe blow", handle: "joeblow")
+    insert(:person, name: "oh no", handle: "ohnoes")
 
     conn = get(conn, "/admin/search/person?q=jo&f=json")
 
