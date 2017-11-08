@@ -30,25 +30,10 @@
       <td><%= reach_count(podcast) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= link to: podcast_path(@conn, :show, podcast.slug), class: "ui button" do %>
-            <i class="eye icon"></i>
-            Public
-          <% end %>
-
-          <%= link to: admin_podcast_path(@conn, :edit, podcast.slug), class: "ui button" do %>
-            <i class="edit icon"></i>
-            Edit
-          <% end %>
-
-          <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug), class: "ui button" do %>
-            <i class="list icon"></i>
-            Episodes
-          <% end %>
-
-          <%= link to: admin_podcast_episode_path(@conn, :new, podcast.slug), class: "ui button" do %>
-            <i class="add icon"></i>
-            Episode
-          <% end %>
+          <%= icon_link "eye", to: podcast_path(@conn, :show, podcast.slug) %>
+          <%= icon_link "edit", to: admin_podcast_path(@conn, :edit, podcast.slug) %>
+          <%= icon_link "list", to: admin_podcast_episode_path(@conn, :index, podcast.slug) %>
+          <%= icon_link "add", to: admin_podcast_episode_path(@conn, :new, podcast.slug) %>
         </div>
       </td>
     </tr>

@@ -1,7 +1,7 @@
 defmodule Changelog.Podcast do
   use Changelog.Data
 
-  alias Changelog.{Episode, EpisodeStat, PodcastChannel, PodcastHost, Regexp}
+  alias Changelog.{Episode, EpisodeStat, PodcastTopic, PodcastHost, Regexp}
 
   defenum Status, draft: 0, soon: 1, published: 2, retired: 3
 
@@ -22,8 +22,8 @@ defmodule Changelog.Podcast do
     field :recorded_live, :boolean, default: false
 
     has_many :episodes, Episode, on_delete: :delete_all
-    has_many :podcast_channels, PodcastChannel, on_delete: :delete_all
-    has_many :channels, through: [:podcast_channels, :channel]
+    has_many :podcast_topics, PodcastTopic, on_delete: :delete_all
+    has_many :topics, through: [:podcast_topics, :topic]
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
     has_many :episode_stats, EpisodeStat
@@ -51,7 +51,7 @@ defmodule Changelog.Podcast do
     |> validate_format(:ping_url, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
-    |> cast_assoc(:podcast_channels)
+    |> cast_assoc(:podcast_topics)
     |> cast_assoc(:podcast_hosts)
   end
 
@@ -124,10 +124,10 @@ defmodule Changelog.Podcast do
     |> Repo.one
   end
 
-  def preload_channels(podcast) do
+  def preload_topics(podcast) do
     podcast
-    |> Repo.preload(podcast_channels: {PodcastChannel.by_position, :channel})
-    |> Repo.preload(:channels)
+    |> Repo.preload(podcast_topics: {PodcastTopic.by_position, :topic})
+    |> Repo.preload(:topics)
   end
 
   def preload_hosts(podcast) do

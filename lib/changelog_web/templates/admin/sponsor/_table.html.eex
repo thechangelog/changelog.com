@@ -25,20 +25,9 @@
       <td><%= sponsorship_count(sponsor) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= link to: admin_sponsor_path(@conn, :show, sponsor), class: "ui disabled button" do %>
-            <i class="eye icon"></i>
-            View
-          <% end %>
-
-          <%= link to: admin_sponsor_path(@conn, :edit, sponsor), class: "ui button" do %>
-            <i class="edit icon"></i>
-            Edit
-          <% end %>
-
-          <%= link to: admin_sponsor_path(@conn, :delete, sponsor), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
-            <i class="trash icon"></i>
-            Delete
-          <% end %>
+          <%= icon_link "eye", to: admin_sponsor_path(@conn, :show, sponsor) %>
+          <%= icon_link "edit", to: admin_sponsor_path(@conn, :edit, sponsor) %>
+          <%= icon_link "trash", to: admin_sponsor_path(@conn, :delete, sponsor), method: :delete, data: [confirm: "Are you sure?"] %>
         </div>
       </td>
     </tr>

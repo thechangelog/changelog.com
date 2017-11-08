@@ -14,15 +14,16 @@ defmodule ChangelogWeb.Admin.SponsorController do
   end
 
   def new(conn, _params) do
-    changeset = Sponsor.admin_changeset(%Sponsor{})
+    changeset = Sponsor.insert_changeset(%Sponsor{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, params = %{"sponsor" => sponsor_params}) do
-    changeset = Sponsor.admin_changeset(%Sponsor{}, sponsor_params)
+    changeset = Sponsor.insert_changeset(%Sponsor{}, sponsor_params)
 
     case Repo.insert(changeset) do
       {:ok, sponsor} ->
+        Repo.update(Sponsor.file_changeset(sponsor, sponsor_params))
         conn
         |> put_flash(:result, "success")
         |> smart_redirect(sponsor, params)
@@ -35,13 +36,13 @@ defmodule ChangelogWeb.Admin.SponsorController do
 
   def edit(conn, %{"id" => id}) do
     sponsor = Repo.get!(Sponsor, id)
-    changeset = Sponsor.admin_changeset(sponsor)
+    changeset = Sponsor.update_changeset(sponsor)
     render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "sponsor" => sponsor_params}) do
     sponsor = Repo.get!(Sponsor, id)
-    changeset = Sponsor.admin_changeset(sponsor, sponsor_params)
+    changeset = Sponsor.update_changeset(sponsor, sponsor_params)
 
     case Repo.update(changeset) do
       {:ok, sponsor} ->

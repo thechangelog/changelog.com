@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.EpisodeView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Episode, EpisodeStat, Person, Repo}
+  alias Changelog.{Topic, Episode, EpisodeStat, Person, Sponsor}
   alias ChangelogWeb.{EpisodeView, PersonView, TimeView}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
@@ -11,6 +11,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def embed_iframe(episode, theme), do: EpisodeView.embed_iframe(episode, theme)
   def embed_iframe(episode, podcast, theme), do: EpisodeView.embed_iframe(episode, podcast, theme)
   def megabytes(episode), do: EpisodeView.megabytes(episode)
+  def numbered_title(episode), do: EpisodeView.numbered_title(episode)
 
   def download_count(episode), do: episode.download_count |> round |> comma_separated
   def reach_count(episode) do
@@ -19,15 +20,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     else
       download_count(episode)
     end
-  end
-
-  def person_from_data_or_params(data, params) do
-    Repo.preload(data, :person).person ||
-      Repo.get(Person, (Map.get(data, "person_id") || params["person_id"]))
-  end
-  def sponsor_from_data_or_params(data, params) do
-    Repo.preload(data, :sponsor).sponsor ||
-      Repo.get(Sponsor, (Map.get(data, "sponsor_id") || params["sponsor_id"]))
   end
 
   def featured_label(episode) do

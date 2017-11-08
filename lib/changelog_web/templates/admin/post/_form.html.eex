@@ -16,7 +16,7 @@
     <div class="ui fluid remote author search selection dropdown">
       <%= hidden_input f, :author_id %>
       <i class="dropdown icon"></i>
-      <%= if is_persisted(f.data) do %>
+      <%= if is_loaded(f.data.author) do %>
         <div class="selected text"><%= f.data.author.name %></div>
       <% else %>
         <div class="default text">Select Author</div>
@@ -26,18 +26,18 @@
   </div>
 
   <div class="field">
-    <%= label f, :channels %>
+    <%= label f, :topics %>
 
-    <div class="ui horizontal selection list js-channels">
-      <%= inputs_for f, :post_channels, fn i -> %>
-        <% channel = channel_from_data_or_params(i.data, i.params) %>
+    <div class="ui horizontal selection list js-topics">
+      <%= inputs_for f, :post_topics, fn i -> %>
+        <% topic = load_from_form(i, Topic, :topic) %>
         <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
-          <%= hidden_input i, :channel_id %>
+          <%= hidden_input i, :topic_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
           <div class="content">
             <a class="ui label">
-              <%= channel.name %>
+              <%= topic.name %>
               <i class="delete icon js-remove"></i>
               <%= hidden_input i, :delete %>
             </a>
@@ -48,7 +48,7 @@
 
     <div class="ui search">
       <div class="ui left icon input">
-        <input class="prompt" type="text" placeholder="Add a Channel">
+        <input class="prompt" type="text" placeholder="Add a Topic">
         <i class="block layout icon"></i>
       </div>
     </div>

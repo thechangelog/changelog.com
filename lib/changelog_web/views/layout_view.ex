@@ -6,7 +6,13 @@ defmodule ChangelogWeb.LayoutView do
   alias ChangelogWeb.{Endpoint, LiveView, PersonView}
 
   def active_class(conn, controllers) when is_list(controllers) do
-    if Enum.member?(controllers, Phoenix.Controller.controller_module(conn)) do
+    active_controller =
+      Phoenix.Controller.controller_module(conn)
+      |> Module.split
+      |> List.last
+      |> String.replace("Controller", "")
+
+    if Enum.member?(controllers, active_controller) do
       "active"
     else
       ""

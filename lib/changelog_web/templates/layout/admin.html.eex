@@ -12,33 +12,35 @@
   <body data-module="<%= @view_module %>" data-template="<%= @view_template %>">
     <div class="ui fixed menu <%= get_flash(@conn, :result) %>">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
-      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PageController)}" do %>
+      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, "Page")}" do %>
         Admin
       <% end %>
 
-      <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PodcastController)}" do %>
+      <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, ["Podcast", "Episode"])}" do %>
         <i class="unmute icon"></i>Podcasts
       <% end %>
 
-      <a href="#" class="item disabled"><i class="newspaper icon"></i>News</a>
+      <%= link to: admin_news_item_path(@conn, :index), class: "item #{active_class(@conn, ["NewsItem", "NewsSource"])}" do %>
+        <i class="newspaper icon"></i>News</a>
+      <% end %>
 
-      <%= link to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PostController)}" do %>
+      <%= link to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, "Post")}" do %>
         <i class="write icon"></i>Posts
       <% end %>
 
-      <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.PersonController)}" do %>
+      <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, "Person")}" do %>
         <i class="user icon"></i>People
       <% end %>
 
-      <%= link to: admin_channel_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.ChannelController)}" do %>
-        <i class="hashtag icon"></i>Channels
+      <%= link to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, "Topic")}" do %>
+        <i class="hashtag icon"></i>Topics
       <% end %>
 
-      <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.SponsorController)}" do %>
+      <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, "Sponsor")}" do %>
         <i class="dollar icon"></i>Sponsors
       <% end %>
 
-      <%= link to: admin_benefit_path(@conn, :index), class: "item #{active_class(@conn, Changelog.Admin.BenefitController)}" do %>
+      <%= link to: admin_benefit_path(@conn, :index), class: "item #{active_class(@conn, "Benefit")}" do %>
         <i class="ticket icon"></i>Benefits
       <% end %>
 

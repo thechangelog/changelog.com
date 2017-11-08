@@ -3,8 +3,8 @@
     Episodes matching '<%= @query %>': <%= length(@results) %>
   </h1>
 
-  <%= if Enum.any?(@results) do %>
-    <%= render Changelog.Admin.EpisodeView, "_table.html", conn: @conn, podcast: List.first(@results).podcast, episodes: @results %>
-  <% end %>
+<%= if Enum.any?(@results) do %>
+  <%= render(EpisodeView, "_table.html", conn: @conn, podcast: List.first(@results).podcast, episodes: @results, status: "published") %>
+<% end %>
 </div>
 

@@ -3,16 +3,16 @@ defmodule ChangelogWeb.EpisodeView do
 
   import ChangelogWeb.Meta.{Title, Description}
 
-  alias Changelog.{AudioFile, Episode, Transcripts}
+  alias Changelog.{Episode, Files, Transcripts}
   alias ChangelogWeb.{Endpoint, LayoutView, PersonView, SharedView, PodcastView,
                       SponsorView, TimeView}
 
   def audio_filename(episode) do
-    AudioFile.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
+    Files.Audio.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
   end
 
   def audio_local_path(episode) do
-    AudioFile.url({episode.audio_file.file_name, episode}, :original)
+    Files.Audio.url({episode.audio_file.file_name, episode}, :original)
     |> String.replace_leading("/priv", "priv") # remove Arc's "/" when storage is priv
   end
 

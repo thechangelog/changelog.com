@@ -11,10 +11,10 @@ defmodule Changelog.Factory do
     }
   end
 
-  def channel_factory do
-    %Changelog.Channel{
-      name: sequence(:name, &"Channel #{&1}"),
-      slug: sequence(:slug, &"channel-#{&1}")
+  def topic_factory do
+    %Changelog.Topic{
+      name: sequence(:name, &"Topic #{&1}"),
+      slug: sequence(:slug, &"topic-#{&1}")
     }
   end
 
@@ -78,6 +78,35 @@ defmodule Changelog.Factory do
 
   def scheduled_episode_factory do
     %Changelog.Episode{episode_factory() | published: true, published_at: hours_from_now(1)}
+  end
+
+  def news_item_factory do
+    %Changelog.NewsItem{
+      type: :link,
+      status: :queued,
+      headline: sequence(:headline, &"Read all about it #{&1}!"),
+      url: "https://changelog.com/posts/read-all-about-it",
+      logger: build(:person)
+    }
+  end
+
+  def published_news_item_factory do
+    %Changelog.NewsItem{news_item_factory() | status: :published, published_at: hours_ago(1)}
+  end
+
+  def news_queue_factory do
+    %Changelog.NewsQueue{
+      position: sequence(:position, &(&1)),
+      item: build(:news_item)
+    }
+  end
+
+  def news_source_factory do
+    %Changelog.NewsSource{
+      name: "Wired",
+      slug: "wired",
+      website: "https://wired.com"
+    }
   end
 
   def person_factory do

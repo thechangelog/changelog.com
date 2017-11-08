@@ -25,7 +25,7 @@ export default class EpisodeView {
     new SearchWidget("person", "episode", "hosts");
     new SearchWidget("person", "episode", "guests");
     new SearchWidget("sponsor", "episode", "sponsors");
-    new SearchWidget("channel", "episode", "channels");
+    new SearchWidget("topic", "episode", "topics");
     new CalendarField(".ui.calendar");
   }
 

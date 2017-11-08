@@ -1,0 +1,10 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    News Sources matching '<%= @query %>': <%= length(@results) %>
+  </h1>
+
+<%= if Enum.any?(@results) do %>
+  <%= render(NewsSourceView, "_table.html", conn: @conn, news_sources: @results) %>
+<% end %>
+</div>
+

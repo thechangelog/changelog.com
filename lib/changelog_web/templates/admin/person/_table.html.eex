@@ -28,16 +28,8 @@
       <td><%= episode_count(person) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-
-          <%= link to: admin_person_path(@conn, :edit, person), class: "ui button" do %>
-            <i class="edit icon"></i>
-            Edit
-          <% end %>
-
-          <%= link to: admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
-            <i class="trash icon"></i>
-            Delete
-          <% end %>
+          <%= icon_link "edit", to: admin_person_path(@conn, :edit, person) %>
+          <%= icon_link "trash", to: admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"] %>
         </div>
       </td>
     </tr>

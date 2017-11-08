@@ -1,0 +1,30 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Slug</th>
+      <th>Description</th>
+      <th>Episodes</th>
+      <th>Posts</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for topic <- @topics do %>
+    <tr>
+      <td><%= topic.name %></td>
+      <td><%= topic.slug %></td>
+      <td><%= truncate(topic.description, 60) %></td>
+      <td><%= episode_count(topic) %></td>
+      <td><%= post_count(topic) %></td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= icon_link "edit", to: admin_topic_path(@conn, :edit, topic) %>
+          <%= icon_link "trash", to: admin_topic_path(@conn, :delete, topic), method: :delete, data: [confirm: "Are you sure?"] %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

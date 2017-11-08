@@ -3,8 +3,8 @@
     People matching '<%= @query %>': <%= length(@results) %>
   </h1>
 
-  <%= if Enum.any?(@results) do %>
-    <%= render Changelog.Admin.PersonView, "_table.html", conn: @conn, people: @results %>
-  <% end %>
+<%= if Enum.any?(@results) do %>
+  <%= render(PersonView, "_table.html", conn: @conn, people: @results) %>
+<% end %>
 </div>
 

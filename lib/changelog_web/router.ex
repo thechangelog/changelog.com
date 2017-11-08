@@ -45,13 +45,14 @@ defmodule ChangelogWeb.Router do
 
     get "/", PageController, :index
     get "/search", SearchController, :all
-    get "/search/channel", SearchController, :channel
-    get "/search/person", SearchController, :person
-    get "/search/post", SearchController, :post
-    get "/search/sponsor", SearchController, :sponsor
+    get "/search/:type", SearchController, :one
 
     resources "/benefits", BenefitController, except: [:show]
-    resources "/channels", ChannelController, except: [:show]
+    resources "/topics", TopicController, except: [:show]
+    get "/news", NewsItemController, :index
+    resources "/news/items", NewsItemController, except: [:show]
+    post "/news/items/:id/move", NewsItemController, :move, as: :news_item
+    resources "/news/sources", NewsSourceController, except: [:show]
     resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
@@ -123,8 +124,8 @@ defmodule ChangelogWeb.Router do
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015
     get "/films/gophercon-2016", PageController, :films_gophercon_2016
-    get "/guest/:slug", PageController, :guest
     get "/guest", PageController, :guest
+    get "/guest/:slug", PageController, :guest
     get "/styleguide", PageController, :styleguide
     get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership

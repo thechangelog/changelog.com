@@ -11,15 +11,15 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Changelog.Repo
-alias Changelog.{Channel, Episode, EpisodeChannel, EpisodeGuest, EpisodeHost,
+alias Changelog.{Topic, Episode, EpisodeTopic, EpisodeGuest, EpisodeHost,
                  EpisodeSponsor, Person, Podcast, PodcastHost, Post,
-                 PostChannel, Sponsor}
+                 PostTopic, Sponsor}
 
 # Clean slate
 
-Repo.delete_all EpisodeChannel
-Repo.delete_all PostChannel
-Repo.delete_all Channel
+Repo.delete_all EpisodeTopic
+Repo.delete_all PostTopic
+Repo.delete_all Topic
 Repo.delete_all EpisodeSponsor
 Repo.delete_all EpisodeGuest
 Repo.delete_all EpisodeHost
@@ -161,18 +161,18 @@ andrewgodwin = Repo.insert! %Person{
   website: "http://www.aeracode.org/"
 }
 
-# Channels
+# Topics
 
-practice = Repo.insert! %Channel{
+practice = Repo.insert! %Topic{
   name: "Practice",
   slug: "practice",
-  description: "Description for the practice channel"
+  description: "Description for the practice topic"
 }
 
-updates = Repo.insert! %Channel{
+updates = Repo.insert! %Topic{
   name: "Updates",
   slug: "updates",
-  description: "Description for the updates channel"
+  description: "Description for the updates topic"
 }
 
 # Podcasts
@@ -359,8 +359,8 @@ Repo.insert! %Episode{
 
 Repo.insert! %Episode{
   slug: "229",
-  title: "Python, Django, and Channels",
-  summary: "Django core contributor Andrew Godwin joins the show to tell us all about Python and Django. If you've ever wondered why people love Python, what Django's virtues are as a web framework, or how Django Channels measure up to Phoenix's Channels and Rails' Action Cable, this is the show for you. Also: Andrew's take on funding and sustaining open source efforts.",
+  title: "Python, Django, and Topics",
+  summary: "Django core contributor Andrew Godwin joins the show to tell us all about Python and Django. If you've ever wondered why people love Python, what Django's virtues are as a web framework, or how Django Topics measure up to Phoenix's Topics and Rails' Action Cable, this is the show for you. Also: Andrew's take on funding and sustaining open source efforts.",
   notes: "This episode started on Ping.",
   published: true,
   published_at: Timex.now,
@@ -594,10 +594,10 @@ For 7 years, we have been primarily known as \"The Changelog podcast\" and our a
 Nearly one year ago we began the process of rebranding The Changelog. But before we get to that, more than two years ago we purchased `changelog.com` for $1,000 in hope of one day taking the [advice of JT](https://www.youtube.com/watch?v=k06fsS9Vjn4) to drop the \"The.\" It’s cleaner.
 
 We are now simply, Changelog.",
-  post_channels: [
-    %PostChannel{
+  post_topics: [
+    %PostTopic{
       position: 1,
-      channel: updates
+      topic: updates
     }
   ]
 }
@@ -612,10 +612,10 @@ Repo.insert! %Post{
   body: "As we promised in [our relaunch announcement](/posts/introducing-changelog-2-0), this morning we open sourced the code that powers the new Changelog.com!
 
 Don't want the full rundown? Go star [the source code on GitHub](https://github.com/thechangelog/changelog.com).",
-  post_channels: [
-    %PostChannel{
+  post_topics: [
+    %PostTopic{
       position: 1,
-      channel: updates
+      topic: updates
     }
   ]
 }
@@ -640,10 +640,10 @@ What many people fail to realize — and what I’ll emphasize in this post — 
 <mark>If you want to move faster, you have to slow down.</mark>
 
 Allow me to demonstrate this concept in a few key areas of software development.",
-  post_channels: [
-    %PostChannel{
+  post_topics: [
+    %PostTopic{
       position: 1,
-      channel: practice
+      topic: practice
     }
   ]
 }
@@ -656,10 +656,10 @@ Repo.insert! %Post{
   author: adamstac,
   tldr: "Not published yet, But it will be awesome. All the new tech people are raging about!",
   body: "This is content that will be published soon. For now it is just sitting, waiting, wishing – in the database.",
-  post_channels: [
-    %PostChannel{
+  post_topics: [
+    %PostTopic{
       position: 1,
-      channel: practice
+      topic: practice
     }
   ]
 }

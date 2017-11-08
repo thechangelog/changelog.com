@@ -31,9 +31,9 @@
   <footer class="post-footer">
     <div class="post-footer-tags">
       <ul class="tags">
-        <%= if Enum.any?(@post.channels) do %>
-          <%= for channel <- @post.channels do %>
-            <li class="tags-item"><a href="#" title="View Tag"><%= channel.name %></a></li>
+        <%= if Enum.any?(@post.topics) do %>
+          <%= for topic <- @post.topics do %>
+            <li class="tags-item"><a href="#" title="View Tag"><%= topic.name %></a></li>
           <% end %>
         <% end %>
       </ul>

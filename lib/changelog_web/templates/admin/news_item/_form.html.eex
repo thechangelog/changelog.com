@@ -1,0 +1,137 @@
+<%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
+  <%= if @quick do %>
+    <input type="hidden" name="quick" value="true" class="js-quick-form">
+  <% end %>
+
+  <div class="three fields">
+    <div class="field required <%= error_class(f, :type) %>">
+      <%= label(f, :type, "Type") %>
+      <%= select(f, :type, type_options(), class: "ui fluid dropdown") %>
+    </div>
+
+    <div class="field <%= error_class(f, :source_id) %>">
+      <%= label(f, :source_id, "Source") %>
+      <div class="ui fluid remote source search selection dropdown">
+        <%= hidden_input(f, :source_id) %>
+        <i class="dropdown icon"></i>
+        <% source = load_from_form(f, NewsSource, :source) %>
+        <%= if source do %>
+          <div class="selected text"><%= source.name %></div>
+        <% else %>
+          <div class="default text">Select Source</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :source_id) %>
+    </div>
+
+    <div class="field <%= error_class(f, :author_id) %>">
+      <%= label(f, :author_id, "Author") %>
+      <div class="ui fluid remote author search selection dropdown">
+        <%= hidden_input(f, :author_id) %>
+        <i class="dropdown icon"></i>
+        <% author = load_from_form(f, Person, :author) %>
+        <%= if author do %>
+          <div class="selected text"><%= author.name %></div>
+        <% else %>
+          <div class="default text">Select Author</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :author_id) %>
+    </div>
+  </div>
+
+  <div class="field required <%= error_class(f, :url) %>">
+    <%= label(f, :url, "URL") %>
+    <%= text_input(f, :url) %>
+    <%= error_message(f, :url) %>
+  </div>
+
+  <div class="field required <%= error_class(f, :headline) %>">
+    <%= label(f, :headline, "Headline") %>
+    <%= text_input(f, :headline, placeholder: "10 Best Blog Post Titles") %>
+    <%= error_message(f, :headline) %>
+  </div>
+
+  <div class="field <%= error_class(f, :story) %>">
+    <%= label(f, :story) %>
+    <%= textarea(f, :story, placeholder: "Markdown enabled.", rows: 5)%>
+    <%= error_message(f, :story) %>
+  </div>
+
+  <div class="field">
+    <label for="image">
+      Image
+      <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
+    </label>
+
+    <%= if f.data.image do %>
+      <img src="<%= image_url(f.data, :large) %>" style="width: 100%; background: black;">
+    <% end %>
+    <br/>
+    <%= error_message(f, :image) %>
+    <%= file_input(f, :image) %>
+  </div>
+
+  <div class="field">
+    <%= label(f, :topics) %>
+
+    <div class="ui horizontal selection list js-topics">
+      <%= inputs_for f, :news_item_topics, fn i -> %>
+        <% topic = load_from_form(i, Topic, :topic) %>
+        <div class="item <%= if is_persisted(i.data), do: "persisted" %>">
+          <%= hidden_input(i, :topic_id) %>
+          <%= hidden_input(i, :position, class: "js-position") %>
+
+          <div class="content">
+            <a class="ui label">
+              <%= topic.name %>
+              <i class="delete icon js-remove"></i>
+              <%= hidden_input(i, :delete) %>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Topic">
+        <i class="block layout icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :newsletter, class: "hidden") %>
+      <label>In Newsletter</label>
+    </div>
+  </div>
+
+  <div class="field required <%= error_class(f, :logger_id) %>">
+    <%= label(f, :logger_id, "Logged By") %>
+    <div class="ui fluid remote logger search selection dropdown">
+      <%= hidden_input(f, :logger_id) %>
+      <i class="dropdown icon"></i>
+      <% logger = load_from_form(f, Person, :logger) %>
+      <%= if logger do %>
+        <div class="selected text"><%= logger.name %></div>
+      <% else %>
+        <div class="default text">Select Changelogger</div>
+      <% end %>
+    </div>
+    <%= error_message(f, :logger_id) %>
+  </div>
+
+  <%= if is_persisted(f.data) do %>
+    <%= form_actions() %>
+  <% else %>
+    <div class="ui hidden divider"></div>
+
+    <div class="ui equal width stackable grid">
+      <div class="column"><button class="ui primary fluid basic button" type="submit" name="queue" value="append">Publish Whenevs</button></div>
+      <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="publish">Publish Now</button></div>
+      <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="prepend">Publish Next</button></div>
+    </div>
+  <% end %>
+<% end %>

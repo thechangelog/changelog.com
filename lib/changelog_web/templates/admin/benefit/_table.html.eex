@@ -18,15 +18,8 @@
       <td><%= benefit.code %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= link to: admin_benefit_path(@conn, :edit, benefit), class: "ui button" do %>
-            <i class="edit icon"></i>
-            Edit
-          <% end %>
-
-          <%= link to: admin_benefit_path(@conn, :delete, benefit), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
-            <i class="trash icon"></i>
-            Delete
-          <% end %>
+          <%= icon_link "edit", to: admin_benefit_path(@conn, :edit, benefit) %>
+          <%= icon_link "trash", to: admin_benefit_path(@conn, :delete, benefit), method: :delete, data: [confirm: "Are you sure?"] %>
         </div>
       </td>
     </tr>
