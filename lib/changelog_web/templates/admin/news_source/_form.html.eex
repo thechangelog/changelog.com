@@ -41,7 +41,7 @@
     </label>
     <%= if is_persisted(f.data) do %>
       <img
-        src="<%= ChangelogWeb.NewsSourceView.icon_url(f.data, :small) %>"
+        src="<%= NewsView.icon_url(f.data, :small) %>"
         width=75
         height=75
       >

@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Plug.RequireUser do
     else
       conn
       |> put_flash(:error, "You must sign in first.")
-      |> redirect(to: Helpers.page_path(conn, :home))
+      |> redirect(to: Helpers.root_path(conn, :index))
       |> halt()
     end
   end

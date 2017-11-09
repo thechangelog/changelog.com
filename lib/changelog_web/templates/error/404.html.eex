@@ -27,7 +27,7 @@
           <div class="content_body">
             <p>You may have mistyped the address or the page may have moved.</p>
           </div>
-          <%= link "Take Me Home", to: page_path(@conn, :home), class: "btn btn--padded-bottom" %>
+          <%= link "Take Me Home", to: root_path(@conn, :index), class: "btn btn--padded-bottom" %>
         </div>
       </article>
     </main>

@@ -19,7 +19,7 @@
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <figure class="episode-player episode-player--<%= @podcast.slug %> js-player">
-      <%= link "Changelog", to: page_url(@conn, :home), class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" %>
+      <%= link "Changelog", to: root_url(@conn, :index), class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" %>
 
       <div class="episode-player_details">
         <%= link to: audio_url(@episode), role: "button", class: "episode-player_details-button js-player-play-button",

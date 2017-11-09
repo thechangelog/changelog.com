@@ -3,7 +3,7 @@
   <channel>
     <title>Changelog</title>
     <copyright>All rights reserved</copyright>
-    <link><%= page_url(@conn, :home) %></link>
+    <link><%= root_url(@conn, :index) %></link>
     <language>en-us</language>
     <description>Hacker to the Heart</description>
   <%= for item <- @items do %>

@@ -27,7 +27,7 @@
           <div class="content_body">
             <p>You may want to try to reload the page to see if the issue has cleared up.</p>
           </div>
-          <%= link "Take Me Home", to: page_path(@conn, :home), class: "btn btn--padded-bottom" %>
+          <%= link "Take Me Home", to: root_path(@conn, :index), class: "btn btn--padded-bottom" %>
         </div>
       </article>
     </main>

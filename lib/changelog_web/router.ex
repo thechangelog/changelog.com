@@ -108,6 +108,8 @@ defmodule ChangelogWeb.Router do
     get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
+    get "/", NewsController, :index, as: :root
+    resources "/news", NewsController, only: [:show]
     resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
@@ -117,7 +119,6 @@ defmodule ChangelogWeb.Router do
     get "/search", SearchController, :search
 
     # static pages
-    get "/", PageController, :home
     get "/about", PageController, :about
     get "/coc", PageController, :coc
     get "/contact", PageController, :contact
@@ -148,6 +149,7 @@ defmodule ChangelogWeb.Router do
     get "/rfc/confirmed", PageController, :rfc_confirmed
 
     get "/confirmation-pending", PageController, :confirmation_pending
+
 
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast

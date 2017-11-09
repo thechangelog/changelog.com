@@ -15,7 +15,7 @@
     <%= for news_source <- @news_sources do %>
       <tr>
         <td>
-          <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(news_source) %>">
+          <img class="ui avatar image" style="border-radius: 0" src="<%= NewsView.icon_url(news_source) %>">
           <%= link news_source.name, to: admin_news_source_path(@conn, :edit, news_source) %>
         </td>
         <td><%= news_source.slug %></td>

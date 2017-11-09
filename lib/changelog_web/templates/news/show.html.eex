@@ -1,0 +1,1 @@
+<%= render("_item_summary.html", conn: @conn, item: @item) %>
