@@ -29,12 +29,6 @@ defmodule ChangelogWeb.PageControllerTest do
     end)
   end
 
-  test "home page includes featured episode", %{conn: conn} do
-    featured = insert(:published_episode, featured: true, highlight: "ohai")
-    conn = get(conn, "/")
-    assert html_response(conn, 200) =~ featured.title
-  end
-
   describe "guest" do
     test "it falls back to The Changelog with no slug", %{conn: conn} do
       changelog = insert(:podcast, name: "The Changelog", slug: "podcast")
