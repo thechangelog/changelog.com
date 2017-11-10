@@ -50,6 +50,12 @@
   &-title {
     line-height: 1.25em;
     margin: 10px 0;
+
+    &-external {
+      background-image: url('../assets/images/icon-external.svg');
+      height: 15px;
+      width: 15px;
+    }
   }
 
   &-description {
@@ -100,5 +106,9 @@
       margin-top: 6px;
       line-height: 1.5em;
     }
+  }
+
+  &-content {
+    margin-top: 30px;
   }
 }

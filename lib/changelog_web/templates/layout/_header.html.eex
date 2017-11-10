@@ -7,7 +7,7 @@
       <button class="header-nav-close js-toggle-nav">✕</button>
 
       <ul class="header-nav-primary">
-        <li class="header-nav-primary-item"><%= link "News", to: podcast_path(@conn, :index) %></li>
+        <li class="header-nav-primary-item"><%= link "News", to: "/" %></li>
         <li class="header-nav-primary-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
         <li class="header-nav-primary-item"><%= link "Community", to: page_path(@conn, :community) %></li>
         <li class="header-nav-primary-item"><%= link "Subscribe", to: page_path(@conn, :subscribe) %></li>

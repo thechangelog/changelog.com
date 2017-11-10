@@ -36,13 +36,11 @@
       }
     }
 
-    // Buttons
-    &-buttons {
-      font-size: 0;
+    // Subscribe
+    &-subscribe {
       margin: 20px 0;
-      text-align: center;
 
-      &-item {
+      @mixin subscribe_button() {
         background: #252B32 8px center no-repeat;
         background-size: 30px;
         border: 1px solid #333A42;
@@ -51,18 +49,38 @@
         display: inline-block;
         font-family: $code;
         font-size: 14px;
-        margin: 10px;
-        padding: 15px 12px 14px 50px;
+        padding: 15px 12px 14px;
         transition: background 0.1s $base-easing;
 
         &:hover {
           background-color: #333A42;
         }
+      }
 
-        &--apple { background-image: url('../assets/images/podcast_icon-apple.png'); }
-        &--overcast { background-image: url('../assets/images/podcast_icon-overcast.png'); }
-        &--android { background-image: url('../assets/images/podcast_icon-android.png'); }
-        &--rss { background-image: url('../assets/images/podcast_icon-rss.png'); }
+      &-mobile {
+        @include subscribe_button();
+        width: 100%;
+
+        @include breakpoint(mobile) { display: none; }
+      }
+
+      &-buttons {
+        display: none;
+        font-size: 0;
+        text-align: center;
+
+        @include breakpoint(mobile) { display: block; }
+
+        &-item {
+          @include subscribe_button();
+          margin: 10px;
+          padding: 15px 12px 14px 50px;
+
+          &--apple { background-image: url('../assets/images/podcast_icon-apple.png'); }
+          &--overcast { background-image: url('../assets/images/podcast_icon-overcast.png'); }
+          &--android { background-image: url('../assets/images/podcast_icon-android.png'); }
+          &--rss { background-image: url('../assets/images/podcast_icon-rss.png'); }
+        }
       }
     }
 

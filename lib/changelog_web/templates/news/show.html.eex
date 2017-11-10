@@ -1,1 +1,11 @@
-<%= render("_item_summary.html", conn: @conn, item: @item) %>
+<div class="feed">
+  <article class="news_item">
+    <%= render("_item_summary_header.html", conn: @conn, item: @item) %>
+    <%= render("_item_summary_toolbar.html", conn: @conn, item: @item) %>
+    <%= if @item.story do %>
+      <div class="news_item-content richtext">
+        <p><%= @item.story %></p>
+      </div>
+    <% end %>
+  </article>
+</div>

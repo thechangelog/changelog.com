@@ -7,11 +7,26 @@
       <%= @podcast.schedule_note |> md_to_html |> raw %>
     </div>
 
-    <div class="show-header-buttons">
-      <a class="show-header-buttons-item show-header-buttons-item--apple" href="#" title="Subscribe on Apple">Apple</a>
-      <a class="show-header-buttons-item show-header-buttons-item--overcast" href="#" title="Subscribe on Overcast">Overcast</a>
-      <a class="show-header-buttons-item show-header-buttons-item--android" href="#" title="Subscribe on Android">Android</a>
-      <a class="show-header-buttons-item show-header-buttons-item--rss" href="#" title="Subscribe on RSS">RSS</a>
+    <div class="show-header-subscribe">
+      <div class="show-header-subscribe-buttons">
+        <a class="show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple" href="#" title="Subscribe on Apple">Apple</a>
+        <a class="show-header-subscribe-buttons-item show-header-subscribe-buttons-item--overcast" href="#" title="Subscribe on Overcast">Overcast</a>
+        <a class="show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android" href="#" title="Subscribe on Android">Android</a>
+        <a class="show-header-subscribe-buttons-item show-header-subscribe-buttons-item--rss" href="#" title="Subscribe on RSS">RSS</a>
+      </div>
+
+      <button class="show-header-subscribe-mobile has-tooltip">Subscribe</button>
+      <div class="tooltip">
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-wrap">
+          <ul class="tooltip-list tooltip-list--centered">
+            <li class="tooltip-list-item"><a href="" title="">Apple</a></li>
+            <li class="tooltip-list-item"><a href="" title="">Overcast</a></li>
+            <li class="tooltip-list-item"><a href="" title="">Android</a></li>
+            <li class="tooltip-list-item"><a href="" title="">RSS</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="show-header-hosts">

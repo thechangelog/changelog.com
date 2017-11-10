@@ -23,6 +23,8 @@
 
   &-list {
     padding: $padding;
+
+    &--centered { text-align: center; }
   }
 
   &-footer {
