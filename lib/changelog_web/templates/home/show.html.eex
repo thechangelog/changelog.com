@@ -25,30 +25,31 @@
         <% end %>
       </div>
 
-      <div class="topic-header-buttons">
-        <button class="topic-header-buttons-follow">Follow</button>
-        <button class="topic-header-buttons-more has-tooltip"><span class="visually_hidden">More</span></button>
-        <div class="tooltip">
-          <div class="tooltip-arrow"></div>
-          <div class="tooltip-wrap">
-            <ul class="tooltip-list">
-              <%= if @current_user.twitter_handle do %>
+      <%= if @current_user.twitter_handle || @current_user.github_handle do %>
+        <div class="topic-header-buttons">
+          <button class="topic-header-buttons-follow has-tooltip">Follow</button>
+          <div class="tooltip">
+            <div class="tooltip-arrow"></div>
+            <div class="tooltip-wrap">
+              <ul class="tooltip-list">
+                <%= if @current_user.twitter_handle do %>
+                  <li class="tooltip-list-item">
+                    <a class="twitter" href="<%= twitter_url(@current_user.twitter_handle) %>" title="<%= @current_user.name %> on Twitter">Follow on Twitter</a>
+                  </li>
+                <% end %>
+                <%= if @current_user.github_handle do %>
                 <li class="tooltip-list-item">
-                  <a class="twitter" href="<%= twitter_url(@current_user.twitter_handle) %>" title="<%= @current_user.name %> on Twitter">Follow on Twitter</a>
-                </li>
-              <% end %>
-              <%= if @current_user.github_handle do %>
-              <li class="tooltip-list-item">
-                  <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on GitHub">Follow on Github</a>
-                </li>
-              <% end %>
-            </ul>
-            <div class="tooltip-footer">
-              <a class="twitter" href="#" title="">Report Profile</a>
+                    <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on GitHub">Follow on Github</a>
+                  </li>
+                <% end %>
+              </ul>
+              <!-- <div class="tooltip-footer">
+                <a class="twitter" href="#" title="">Report Profile</a>
+              </div> -->
             </div>
           </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </header>
 
