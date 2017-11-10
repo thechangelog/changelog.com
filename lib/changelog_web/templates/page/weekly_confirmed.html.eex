@@ -10,7 +10,7 @@
 
       <p>Click the button below &mdash; Twitter will let you edit the tweet before you send it.</p>
 
-      <p><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just subscribed to Changelog Weekly. It's the best editorialized take on this week in open source!" data-url="https://changelog.com/weekly" data-via="changelog" data-related="adamstac,jerodsanto" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+      <p><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just subscribed to Changelog Weekly. Open source moves fast. Keep up!" data-url="https://changelog.com/weekly" data-via="changelog" data-related="adamstac,jerodsanto" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
       <hr>
 
