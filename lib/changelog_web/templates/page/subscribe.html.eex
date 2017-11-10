@@ -12,19 +12,25 @@
     <div class="show_list-shows">
       <article class="show_list-shows-item show_list-shows-item--podcast">
         <div class="show_list-shows-item-wrap">
-          <a href="/podcast" class="show_list-shows-item-art"></a>
+          <%= link "", to: page_path(@conn, :weekly), class: 'show_list-shows-item-art' %>
           <div class="show_list-shows-item-content">
             <h2><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></h2>
             <p>Our editorialized take on this week in open source and software development.</p>
+            <ul>
+              <li><%= link "Subscribe", to: page_path(@conn, :weekly) %></li>
+            </ul>
           </div>
         </div>
       </article>
       <article class="show_list-shows-item show_list-shows-item--gotime">
         <div class="show_list-shows-item-wrap">
-          <a href="/podcast" class="show_list-shows-item-art"></a>
+          <%= link "", to: page_path(@conn, :nightly), class: 'show_list-shows-item-art' %>
           <div class="show_list-shows-item-content">
             <h2><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></h2>
             <p>Our automated nightly email unearths the hottest new repos on GitHub before they blow up.</p>
+            <ul>
+              <li><%= link "Subscribe", to: page_path(@conn, :nightly) %></li>
+            </ul>
           </div>
         </div>
       </article>
