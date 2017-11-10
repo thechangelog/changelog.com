@@ -14,10 +14,7 @@
   </p>
   <h2 class="news_item-title">
     <%= link to: news_path(@conn, :show, @item.id) do %>
-      <%= @item.headline %>
-      <%= if @item.source do %>
-        <span class="news_item-title-external"></span>
-      <% end %>
+      <%= @item.headline %><%= if @item.source do %><span class="news_item-title-external"></span><% end %>
     <% end %>
   </h2>
 </header>

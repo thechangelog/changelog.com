@@ -1,19 +1,17 @@
 .show_list {
-  padding: $base-spacing*2 0;
-  padding: calc(2em + 2vw) 0;
-
   &-header {
     margin: 0 auto;
     max-width: 1150px;
     padding: 0 $base-spacing;
 
+    h2 {
+      margin-bottom: 0;
+    }
+
     p {
       color: $medium-grey;
       font-size: 1.25em;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
+      margin: 1em 0;
     }
   }
 
@@ -25,7 +23,7 @@
     flex-wrap: wrap;
     margin: 0 auto;
     max-width: 1200px;
-    padding: $base-spacing 20px;
+    padding: 0 20px;
 
     &-item {
       padding: $base-spacing 10px;

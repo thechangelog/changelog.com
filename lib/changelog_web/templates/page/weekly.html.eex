@@ -1,9 +1,12 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Subscribe to Changelog Weekly</h2>
-    </header>
-    <div class="content_body">
+<article class="post">
+  <header class="post-header">
+    <div class="post-header-wrap">
+      <h1 class="post-header-title">Subscribe to Changelog Weekly</h1>
+    </div>
+  </header>
+
+  <div class="post-body">
+    <div class="post-body-content richtext">
       <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
 
       <hr>
@@ -65,4 +68,3 @@
     </div>
   </div>
 </article>
-

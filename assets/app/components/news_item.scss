@@ -53,7 +53,9 @@
 
     &-external {
       background-image: url('../assets/images/icon-external.svg');
+      display: inline-block;
       height: 15px;
+      margin-left: 0.25em;
       width: 15px;
     }
   }
