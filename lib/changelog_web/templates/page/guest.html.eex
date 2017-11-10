@@ -4,7 +4,12 @@
       <h2>Be Our Guest</h2>
     </header>
     <div class="content_body">
-      <p>First off, <mark>thank you</mark> for joining us on <%= link @podcast.name, to: podcast_path(@conn, :show, @podcast.slug) %>! Here's what you can expect:</p>
+      <p>First off, <mark>thank you</mark> for joining us on <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
+        <option value="podcast" <%= if @podcast.slug == "podcast", do: "selected" %>>The Changelog</option>
+        <option value="gotime" <%= if @podcast.slug == "gotime", do: "selected" %>>Go Time</option>
+        <option value="rfc" <%= if @podcast.slug == "rfc", do: "selected" %>>Request For Commits</option>
+        <option value="jsparty" <%= if @podcast.slug == "jsparty", do: "selected" %>>JS Party</option>
+      </select>! Here's what you can expect:</p>
 
       <h3 id="before">Before Recording</h3>
 
