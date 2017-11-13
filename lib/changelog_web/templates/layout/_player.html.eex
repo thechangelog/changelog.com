@@ -17,7 +17,7 @@
       </div>-->
     </div>
     <div class="podcast-player_buttons">
-      <button class="podcast-player-button podcast-player-button--episode js-player-prev-button" title="Listen to the previous episode">
+      <button class="podcast-player-button podcast-player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
         <span class="js-player-prev-number"></span><img src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Previous episode"/>
       </button>
       <button class="podcast-player-button podcast-player-button--back15 js-player-back-button" title="Seek back 15 seconds"></button>
@@ -25,7 +25,7 @@
       <button class="podcast-player-button podcast-player-button--play js-player-play-button"></button>
 
       <button class="podcast-player-button podcast-player-button--forward15 js-player-forward-button" title="Seek forward 15 seconds"></button>
-      <button class="podcast-player-button podcast-player-button--episode js-player-next-button" title="Listen to the next episode">
+      <button class="podcast-player-button podcast-player-button--next_episode js-player-next-button" title="Listen to the next episode">
         <img class="flip-horizontal" src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Next episode"/><span class="js-player-next-number"></span>
       </button>
     </div>
