@@ -1,0 +1,98 @@
+.topic_list {
+  margin: 0 auto;
+  max-width: 1150px;
+  padding: 0 $base-spacing;
+
+  &-header {
+    h2 {
+      margin-bottom: 0;
+    }
+
+    p {
+      color: $medium-grey;
+      font-size: 1.25em;
+      margin: 1em 0;
+    }
+  }
+
+  //
+  //
+  // Topics
+  &-topics {
+    &-item {
+      border-bottom: 1px solid $light-grey;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      a {
+        align-items: center;
+        display: flex;
+
+        // Consistent type sizes
+        h3,
+        p {
+          font-size: 16px;
+          font-weight: normal;
+          line-height: 1.25em;
+          margin: 0;
+        }
+        p {
+          color: $medium-grey;
+        }
+      }
+
+      &-name,
+      &-description,
+      &-count {
+        padding: 1.5em 2em;
+      }
+
+      &-name {
+        align-items: center;
+        display: flex;
+        flex: 1 0 200px;
+        height: 100%;
+        padding: 0;
+
+        @media (min-width: 560px) {
+          flex: 0 200px;
+        }
+
+        img {
+          $size: 30px;
+          background-color: $black;
+          display: block;
+          height: $size;
+          width: $size;
+        }
+
+        h3 {
+          padding: 1.5em 1em;
+          color: $green;
+        }
+      }
+
+      &-description {
+        border-left: 1px solid $light-grey;
+        border-right: 1px solid $light-grey;
+        display: none;
+        flex: 1 1 auto;
+
+        @media (min-width: 560px) {
+          display: block;
+        }
+      }
+
+      &-count {
+        border-left: 1px solid $light-grey;
+        border-right: 0;
+
+        @media (min-width: 560px) {
+          border-left: 0;
+        }
+      }
+    }
+  }
+}
