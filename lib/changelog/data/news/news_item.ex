@@ -1,7 +1,7 @@
 defmodule Changelog.NewsItem do
   use Changelog.Data
 
-  alias Changelog.{Files, NewsItemTopic, NewsQueue, NewsSource, Person, Regexp, Sponsor}
+  alias Changelog.{Files, NewsItemTopic, NewsQueue, NewsSource, Person, Regexp}
 
   defenum Status, queued: 0, submitted: 1, declined: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
