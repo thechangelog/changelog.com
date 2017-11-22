@@ -15,7 +15,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
   def new(conn, _params) do
     changeset = NewsSource.admin_changeset(%NewsSource{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"news_source" => source_params}) do
@@ -29,14 +29,14 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("new.html", changeset: changeset)
+        |> render(:new, changeset: changeset)
     end
   end
 
   def edit(conn, %{"id" => id}) do
     news_source = Repo.get!(NewsSource, id)
     changeset = NewsSource.admin_changeset(news_source)
-    render(conn, "edit.html", news_source: news_source, changeset: changeset)
+    render(conn, :edit, news_source: news_source, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_source" => source_params}) do
@@ -51,7 +51,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", news_source: news_source, changeset: changeset)
+        |> render(:edit, news_source: news_source, changeset: changeset)
     end
   end
 

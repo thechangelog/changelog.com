@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Files, NewsItem, NewsSource, Person, Sponsor, Topic}
+  alias Changelog.{Files, NewsItem, NewsSource, Person, Topic}
   alias ChangelogWeb.{Endpoint, PersonView}
 
   def bookmarklet_code do
