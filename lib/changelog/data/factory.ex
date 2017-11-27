@@ -109,6 +109,14 @@ defmodule Changelog.Factory do
     }
   end
 
+  def news_sponsorship_factory do
+    %Changelog.NewsSponsorship{
+      name: "Test Sponsorship",
+      sponsor: build(:sponsor),
+      weeks: []
+    }
+  end
+
   def person_factory do
     %Changelog.Person{
       name: sequence(:name, &"Joe Blow #{&1}"),

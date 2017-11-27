@@ -54,6 +54,8 @@ defmodule ChangelogWeb.Router do
     resources "/news/items", NewsItemController, except: [:show]
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
     resources "/news/sources", NewsSourceController, except: [:show]
+    resources "/news/sponsorships", NewsSponsorshipController, except: [:show]
+    get "/news/sponsorships/schedule", NewsSponsorshipController, :schedule
     resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController

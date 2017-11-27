@@ -65,6 +65,10 @@ defmodule ChangelogWeb.TimeView do
     {:safe, "<span class='time' data-style='#{style}'>#{formatted}</span>"}
   end
 
+  def weeks(start_date \\ Timex.today, count \\ 8) do
+    Timex.Interval.new(from: Timex.beginning_of_week(start_date), until: [weeks: count], step: [weeks: 1])
+  end
+
   defp to_seconds(:hours, str), do: string_to_rounded_integer(str) * 3600
   defp to_seconds(:minutes, str), do: string_to_rounded_integer(str) * 60
   defp to_seconds(str), do: string_to_rounded_integer(str)

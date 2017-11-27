@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.NewsItemView do
 
   alias Changelog.{Files, NewsItem, NewsSource, Person, Topic}
   alias ChangelogWeb.{Endpoint, PersonView}
+  alias ChangelogWeb.Admin.NewsSponsorshipView
 
   def bookmarklet_code do
     url = admin_news_item_url(Endpoint, :new, quick: true, url: "")

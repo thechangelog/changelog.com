@@ -1,0 +1,37 @@
+<table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Weeks</th>
+        <th>Create Time</th>
+        <th>Update Time</th>
+        <th>Impressions</th>
+        <th>Clicks</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for news_sponsorship <- @news_sponsorships do %>
+      <tr>
+        <td>
+          <%= link news_sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, news_sponsorship.sponsor) %>
+          <%= if news_sponsorship.name do %>
+          &ndash; <%= news_sponsorship.name %>
+          <% end %>
+        </td>
+        <td><%= length(news_sponsorship.weeks) %></td>
+        <td><%= ts(news_sponsorship.inserted_at) %></td>
+        <td><%= ts(news_sponsorship.updated_at) %></td>
+        <td><%= news_sponsorship.impression_count %></td>
+        <td><%= news_sponsorship.click_count %></td>
+        <td class="center aligned">
+          <div class="ui small basic buttons">
+            <%= icon_link "edit", to: admin_news_sponsorship_path(@conn, :edit, news_sponsorship) %>
+            <%= icon_link "trash", to: admin_news_sponsorship_path(@conn, :delete, news_sponsorship), method: :delete, data: [confirm: "Are you sure?"] %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>

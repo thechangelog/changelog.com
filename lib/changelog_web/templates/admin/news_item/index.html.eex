@@ -8,25 +8,40 @@
     <button class="ui right floated basic icon clipboard button" title="Bookmarklet" data-clipboard-text="<%= bookmarklet_code() %>"><i class="book icon"></i></button>
 
     <%= link to: admin_news_source_path(@conn, :new), class: "ui right floated basic button" do %>
-      <i class="add write icon"></i>
-      Add Source
+      <i class="add icon"></i>
+      Source
     <% end %>
 
     <%= link to: admin_news_item_path(@conn, :new), class: "ui right floated primary basic button" do %>
-      <i class="add write icon"></i>
-      Add Item
+      <i class="add icon"></i>
+      Item
     <% end %>
   </div>
 </div>
 
 <div class="ui basic segment">
 <%= if Enum.any?(@queued) do %>
-  <h2 class="ui dividing header">Queued</h2>
+  <h2 class="ui header">Queued</h2>
   <%= render("_table.html", conn: @conn, status: "queued", news_items: @queued) %>
 <% end %>
 
+  <h2 class="ui header">
+    <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
+
+    <%= link to: admin_news_sponsorship_path(@conn, :new), class: "ui right floated basic button" do %>
+      <i class="add icon"></i>
+      Sponsorship
+    <% end %>
+
+    <%= link to: admin_news_sponsorship_path(@conn, :schedule), class: "ui right floated basic button" do %>
+      <i class="calendar icon"></i>
+      Full Schedule
+    <% end %>
+  </h2>
+  <%= render(NewsSponsorshipView, "_schedule.html", conn: @conn, weeks: TimeView.weeks()) %>
+
 <%= if Enum.any?(@published) do %>
-  <h2 class="ui dividing header">Published</h2>
+  <h2 class="ui header">Published</h2>
   <%= render("_table.html", conn: @conn, status: "published", news_items: @published) %>
   <%= pagination_links(@conn, @page, path: &admin_news_item_path/3) %>
 <% end %>

@@ -1,0 +1,10 @@
+<div class="ui basic segment text container">
+  <h1 class="ui dividing header">
+    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    &raquo;
+    <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
+    &raquo; Edit
+  </h1>
+
+  <%= render("_form.html", changeset: @changeset, action: admin_news_sponsorship_path(@conn, :update, @news_sponsorship)) %>
+</div>

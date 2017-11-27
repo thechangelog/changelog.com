@@ -1,0 +1,42 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Week of</th>
+      <th>Slot 1</th>
+      <th>Slot 2</th>
+      <th>Slot 3</th>
+      <th>Slot 4</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% this_week = Timex.beginning_of_week(Timex.today) %>
+
+  <%= for week <- @weeks do %>
+    <% sponsorships = sponsorships_for_week(week) %>
+    <tr class="<%= schedule_row_class(this_week, week) %>">
+      <td><%= TimeView.pretty_date(week) %></td>
+
+      <% sponsorship = Enum.at(sponsorships, 0, nil) %>
+      <td class="<%= schedule_cell_class(this_week, week, sponsorship) %>">
+        <%= schedule_cell_content(this_week, week, sponsorship) %>
+      </td>
+
+      <% sponsorship = Enum.at(sponsorships, 1, nil) %>
+      <td class="<%= schedule_cell_class(this_week, week, sponsorship) %>">
+        <%= schedule_cell_content(this_week, week, sponsorship) %>
+      </td>
+
+      <% sponsorship = Enum.at(sponsorships, 2, nil) %>
+      <td class="<%= schedule_cell_class(this_week, week, sponsorship) %>">
+        <%= schedule_cell_content(this_week, week, sponsorship) %>
+      </td>
+
+      <% sponsorship = Enum.at(sponsorships, 3, nil) %>
+      <td class="<%= schedule_cell_class(this_week, week, sponsorship) %>">
+        <%= schedule_cell_content(this_week, week, sponsorship) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
