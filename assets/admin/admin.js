@@ -1,13 +1,14 @@
 import "phoenix_html";
-import autosize from "autosize";
+
 import benefitView from "views/benefitView";
-import topicView from "views/topicView";
 import episodeView from "views/episodeView";
 import newsItemView from "views/newsItemView";
 import newsSponsorshipView from "views/newsSponsorshipView";
 import podcastView from "views/podcastView";
 import postView from "views/postView";
+import topicView from "views/topicView";
 import ts from "../shared/ts";
+import FormUI from "components/formUI";
 
 let views = {
   "BenefitView": benefitView,
@@ -19,16 +20,9 @@ let views = {
   "PostView": postView
 };
 
-autosize($("textarea:not(.scroll)"));
+FormUI.init();
 
 $("a[rel=external]").attr("target", "_blank");
-$("input[readonly]").popup({
-  content: "Read-only because danger. Use the console if you really need to edit this.",
-  variation: "very wide"
-});
-$(".ui.dropdown").dropdown();
-$(".ui.checkbox").checkbox();
-$(".ui.button, [data-popup=true]").popup();
 $(".ui.modal").modal();
 
 $(".js-modal").on("click", function() {

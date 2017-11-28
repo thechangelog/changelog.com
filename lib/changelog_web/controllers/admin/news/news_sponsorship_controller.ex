@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   def index(conn, params) do
     page = NewsSponsorship
     |> order_by([s], desc: s.id)
-    |> NewsSponsorship.preload_sponsor
+    |> NewsSponsorship.preload_all
     |> Repo.paginate(params)
 
     render(conn, :index, news_sponsorships: page.entries, page: page)
@@ -54,13 +54,13 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   end
 
   def edit(conn, %{"id" => id}) do
-    news_sponsorship = Repo.get!(NewsSponsorship, id)
+    news_sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
     changeset = NewsSponsorship.admin_changeset(news_sponsorship)
     render(conn, :edit, news_sponsorship: news_sponsorship, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_sponsorship" => sponsorship_params}) do
-    news_sponsorship = Repo.get!(NewsSponsorship, id)
+    news_sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
     changeset = NewsSponsorship.admin_changeset(news_sponsorship, sponsorship_params)
 
     case Repo.update(changeset) do

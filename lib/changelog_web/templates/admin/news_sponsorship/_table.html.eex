@@ -3,8 +3,10 @@
       <tr>
         <th>Campaign</th>
         <th>Weeks</th>
-        <th>Create Time</th>
-        <th>Update Time</th>
+        <th>Ads</th>
+        <th>Start Week</th>
+        <th>End Week</th>
+        <th>Last Edited</th>
         <th>Impressions</th>
         <th>Clicks</th>
         <th></th>
@@ -21,7 +23,9 @@
           <% end %>
         </td>
         <td><%= length(news_sponsorship.weeks) %></td>
-        <td><%= ts(news_sponsorship.inserted_at) %></td>
+        <td><%= length(news_sponsorship.ads) %></td>
+        <td><%= news_sponsorship.weeks |> List.first |> TimeView.pretty_date %></td>
+        <td><%= news_sponsorship.weeks |> List.last |> TimeView.pretty_date %></td>
         <td><%= ts(news_sponsorship.updated_at) %></td>
         <td><%= news_sponsorship.impression_count %></td>
         <td><%= news_sponsorship.click_count %></td>

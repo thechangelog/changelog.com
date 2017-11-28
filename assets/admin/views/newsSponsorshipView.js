@@ -1,5 +1,7 @@
 import BelongsToWidget from "components/belongsToWidget";
+import FormUI from "components/formUI";
 import weekLabel from "templates/weekLabel.hbs";
+import adSegment from "templates/adSegment.hbs";
 
 export default class newsSponsorshipView {
   index() {
@@ -7,10 +9,52 @@ export default class newsSponsorshipView {
 
   new() {
     new BelongsToWidget("sponsor", "sponsor");
+    this._handleAds();
+    this._handleWeeks();
+  }
 
-    let $weekPicker = $(".js-week-picker");
-    let $weeksField = $(".js-weeks");
-    let weeks = $weeksField.data("weeks") || [];
+  edit() {
+    this.new();
+  }
+
+  _handleAds() {
+    let $container = $(".js-ads");
+    let $addButton = $(".js-add-ad");
+
+    $addButton.on("click", function() {
+      let nextIndex = $container.find(".segment").length;
+      $container.append(adSegment({index: nextIndex}));
+      FormUI.refresh();
+    });
+
+    $container.on("click", ".js-remove", function(event) {
+      if (!confirm("Are you sure?")) return false;
+
+      let $clicked = $(this);
+      let $ad = $clicked.closest(".segment");
+
+      if ($ad.hasClass("persisted")) {
+        $ad.find("input[type=hidden]:first").val(true);
+        $ad.hide();
+      } else {
+        $ad.remove();
+      }
+    });
+
+    $container.on("change", ".js-newsletter", function(event) {
+      let $clicked = $(this);
+
+      if ($clicked.checkbox("is checked")) {
+        $(".js-newsletter").not($clicked).checkbox("uncheck");
+      }
+    });
+  }
+
+  _handleWeeks() {
+    let $container = $(".js-weeks");
+    let weeks = $container.data("weeks") || [];
+    let $picker = $(".js-week-picker");
+    let $addButton = $(".js-add-weeks");
 
     let dateAsValue = function(date) {
       let year = date.getUTCFullYear();
@@ -27,16 +71,16 @@ export default class newsSponsorshipView {
     }
 
     let renderLabels = function() {
-      $weeksField.html("");
+      $container.html("");
       weeks.sort().forEach(function(date) {
-        $weeksField.append(weekLabel({
+        $container.append(weekLabel({
           value: date,
           text: formatDateString(date)
         }));
       });
     }
 
-    $weekPicker.calendar({
+    $picker.calendar({
       type: "date",
       inline: true,
       firstDayOfWeek: 1,
@@ -51,16 +95,18 @@ export default class newsSponsorshipView {
       }
     });
 
-    $weeksField.on("click", ".js-remove", function(event) {
+    $addButton.on("click", function() {
+      $addButton.hide();
+      $picker.show();
+    });
+
+    $container.on("click", ".js-remove", function(event) {
       let value = $(this).find("input").val();
       weeks = weeks.filter(function(date) { return date != value; });
       renderLabels();
     });
 
+    $picker.hide();
     renderLabels();
-  }
-
-  edit() {
-    this.new();
   }
 }

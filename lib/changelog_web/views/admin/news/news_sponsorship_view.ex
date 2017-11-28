@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
 
   alias Changelog.{NewsSponsorship, Sponsor}
   alias ChangelogWeb.Endpoint
+  alias ChangelogWeb.Admin.NewsAdView
 
   def schedule_cell_class(focus_week, week, sponsorship) when is_nil(sponsorship) do
     focus_week_with_buffer = Timex.shift(focus_week, weeks: 1)

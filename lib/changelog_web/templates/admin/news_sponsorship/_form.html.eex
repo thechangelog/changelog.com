@@ -29,9 +29,81 @@
       data-weeks="<%= Poison.encode!(f.params["weeks"] || f.data.weeks) %>"
     ></div>
     <%= error_message(f, :weeks) %>
+
+    <div class="ui basic icon button js-add-weeks"><i class="add icon"></i></div>
   </div>
 
   <div class="field js-week-picker"></div>
+
+  <div class="field required">
+    <%= label(f, :ads, "Ads") %>
+
+    <div class="js-ads">
+      <%= inputs_for f, :ads, fn i -> %>
+        <div class="ui basic segment <%= if is_persisted(i.data), do: "persisted" %>">
+          <%= hidden_input(i, :delete) %>
+
+          <div class="two fields">
+            <div class="fourteen wide field required <%= error_class(i, :url) %>">
+              <%= label(i, :url, "URL") %>
+              <%= text_input(i, :url) %>
+              <%= error_message(i, :url) %>
+            </div>
+
+            <div class="two wide field">
+              <label>&nbsp;</label>
+              <div class="ui basic icon button js-remove"><i class="trash icon"></i></div>
+            </div>
+          </div>
+
+          <div class="field required <%= error_class(i, :headline) %>">
+            <%= label(i, :headline, "Headline") %>
+            <%= text_input(i, :headline, placeholder: "10 Best Blog Post Titles") %>
+            <%= error_message(i, :headline) %>
+          </div>
+
+          <div class="field <%= error_class(i, :story) %>">
+            <%= label(i, :story) %>
+            <%= textarea(i, :story, placeholder: "Markdown enabled.", rows: 3)%>
+            <%= error_message(i, :story) %>
+          </div>
+
+          <div class="field">
+            <label for="image">
+              Image
+              <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
+            </label>
+
+            <%= if i.data.image do %>
+              <img src="<%= NewsAdView.image_url(f.data, :large) %>" style="width: 100%; background: black;">
+            <% end %>
+            <br/>
+            <%= error_message(i, :image) %>
+            <%= file_input(i, :image) %>
+          </div>
+
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <%= checkbox(i, :active, class: "hidden") %>
+              <label>Active</label>
+            </div>
+
+            <div class="ui toggle checkbox js-newsletter">
+              <%= checkbox(i, :newsletter, class: "hidden") %>
+              <label for="newsletter">
+                In Newsletter
+                <%= help_icon("Force newsletter use (one per campaign)") %>
+              </label>
+            </div>
+          </div>
+
+          <div class="ui section divider"></div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui basic icon button js-add-ad"><i class="add icon"></i></div>
+  </div>
 
   <%= form_actions() %>
 <% end %>

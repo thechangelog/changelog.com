@@ -1,0 +1,51 @@
+<div class="ui basic segment ">
+  <div class="two fields">
+    <div class="fourteen wide field required ">
+      <label>URL</label>
+      <input name="news_sponsorship[ads][{{index}}][url]" type="text">
+    </div>
+
+    <div class="two wide field">
+      <label>&nbsp;</label>
+      <div class="ui basic icon button js-remove"><i class="trash icon"></i></div>
+    </div>
+  </div>
+
+  <div class="field required ">
+    <label>Headline</label>
+    <input name="news_sponsorship[ads][{{index}}][headline]" placeholder="10 Best Blog Post Titles" type="text">
+  </div>
+
+  <div class="field ">
+    <label>Story</label>
+    <textarea name="news_sponsorship[ads][{{index}}][story]" placeholder="Markdown enabled." rows="3"></textarea>
+  </div>
+
+  <div class="field">
+    <label for="image">
+      Image
+      <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="GIF, PNG, or JPG. Ideally >= 600px wide."></i>
+    </label>
+
+    <input name="news_sponsorship[ads][{{index}}][image]" type="file">
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <input name="news_sponsorship[ads][{{index}}][active]" type="hidden" value="false">
+      <input checked="checked" class="hidden" name="news_sponsorship[ads][{{index}}][active]" type="checkbox" value="true" tabindex="0">
+      <label>Active</label>
+    </div>
+
+    <div class="ui toggle checkbox js-newsletter">
+      <input name="news_sponsorship[ads][{{index}}][newsletter]" type="hidden" value="false">
+      <input class="hidden" name="news_sponsorship[ads][{{index}}][newsletter]" type="checkbox" value="true" tabindex="0">
+      <label for="newsletter">
+        In Newsletter
+          <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="Force newsletter use (one per campaign)"></i>
+      </label>
+    </div>
+  </div>
+
+  <div class="ui section divider"></div>
+</div>
