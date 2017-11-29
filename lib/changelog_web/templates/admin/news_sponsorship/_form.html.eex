@@ -68,6 +68,7 @@
             <%= error_message(i, :story) %>
           </div>
 
+        <%= if is_persisted(i.data) do %>
           <div class="field">
             <label for="image">
               Image
@@ -75,12 +76,13 @@
             </label>
 
             <%= if i.data.image do %>
-              <img src="<%= NewsAdView.image_url(f.data, :large) %>" style="width: 100%; background: black;">
+              <img src="<%= NewsAdView.image_url(i.data, :large) %>" style="width: 100%; background: black;">
             <% end %>
             <br/>
             <%= error_message(i, :image) %>
             <%= file_input(i, :image) %>
           </div>
+        <% end %>
 
           <div class="inline field">
             <div class="ui toggle checkbox">
