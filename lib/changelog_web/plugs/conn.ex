@@ -25,7 +25,7 @@ defmodule ChangelogWeb.Plug.Conn do
           generate(conn, @signing_salt, key_opts()),
           generate(conn, @encryption_salt, key_opts()))
 
-        :erlang.binary_to_term(decrypted)
+        :erlang.binary_to_term(decrypted, [safe])
     end
   end
 
