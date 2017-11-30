@@ -164,7 +164,7 @@ defmodule ChangelogWeb.Router do
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
     Rollbax.report(kind, reason, stacktrace, %{}, %{
       "request" => %{
-        "url" => "${conn.scheme}://${conn.host}#{conn.request_path}",
+        "url" => "#{conn.scheme}://#{conn.host}#{conn.request_path}",
         "user_ip" => (conn.remote_ip |> Tuple.to_list() |> Enum.join(".")),
         "method" => conn.method,
         "headers" => Enum.into(conn.req_headers, %{}),
