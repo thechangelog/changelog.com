@@ -21,3 +21,8 @@ config :changelog, Changelog.Repo,
 
 config :arc,
   storage_dir: "priv/uploads"
+
+config :rollbax,
+  access_token: "",
+  environment: "test",
+  enabled: false

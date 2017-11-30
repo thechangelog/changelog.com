@@ -33,3 +33,7 @@ config :changelog, Changelog.Scheduler,
     {"0 3 * * *", {Changelog.Slack.Tasks, :import_member_ids, []}},
     {"1 * * * *", {Changelog.NewsQueue, :publish_next, []}}
   ]
+
+config :rollbax,
+  access_token: {:system, "ROLLBAR_ACCESS_TOKEN"},
+  environment: "production"

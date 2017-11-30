@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Router do
   use ChangelogWeb, :router
+  use Plug.ErrorHandler
 
   alias ChangelogWeb.Plug
 
@@ -158,5 +159,17 @@ defmodule ChangelogWeb.Router do
     get "/:podcast/:slug/preview", EpisodeController, :preview, as: :episode
     get "/:podcast/:slug/play", EpisodeController, :play, as: :episode
     get "/:podcast/:slug/share", EpisodeController, :share, as: :episode
+  end
+
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+    Rollbax.report(kind, reason, stacktrace, %{}, %{
+      "request" => %{
+        "url" => "${conn.scheme}://${conn.host}#{conn.request_path}",
+        "user_ip" => (conn.remote_ip |> Tuple.to_list() |> Enum.join(".")),
+        "method" => conn.method,
+        "headers" => Enum.into(conn.req_headers, %{}),
+        "params" => conn.params
+      }
+    })
   end
 end
