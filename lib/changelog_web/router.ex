@@ -161,13 +161,16 @@ defmodule ChangelogWeb.Router do
     get "/:podcast/:slug/share", EpisodeController, :share, as: :episode
   end
 
+  defp handle_errors(_conn, %{reason: %Phoenix.Router.NoRouteError{}}), do: true
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+    headers = Enum.into(conn.req_headers, %{})
+
     Rollbax.report(kind, reason, stacktrace, %{}, %{
       "request" => %{
         "url" => "#{conn.scheme}://#{conn.host}#{conn.request_path}",
-        "user_ip" => (conn.remote_ip |> Tuple.to_list() |> Enum.join(".")),
+        "user_ip" => Map.get(headers, "x-forwarded-for"),
         "method" => conn.method,
-        "headers" => Enum.into(conn.req_headers, %{}),
+        "headers" => headers,
         "params" => conn.params
       }
     })
