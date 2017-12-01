@@ -58,6 +58,8 @@ config :plug_ets_cache,
   ttl_check: 30,
   ttl: 90
 
+config :mime, :types, %{"application/xml" => ["xml"]}
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
