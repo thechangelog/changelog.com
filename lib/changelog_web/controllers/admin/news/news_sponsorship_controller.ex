@@ -22,6 +22,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     end
 
     {:ok, start} = Date.new(year, 1, 1)
+    start = TimeView.closest_monday_to(start)
     weeks = TimeView.weeks(start, 52)
     render(conn, :schedule, year: year, weeks: weeks)
   end

@@ -3,6 +3,22 @@ defmodule ChangelogWeb.TimeViewTest do
 
   import ChangelogWeb.TimeView
 
+  describe "closest_monday_to" do
+    test "returns same day when Mon" do
+      assert closest_monday_to(~D[2017-01-02]) == ~D[2017-01-02]
+    end
+
+    test "returns previous Mon when Tues, Wed, Thur" do
+      assert closest_monday_to(~D[2017-01-03]) == ~D[2017-01-02]
+      assert closest_monday_to(~D[2017-01-04]) == ~D[2017-01-02]
+      assert closest_monday_to(~D[2017-01-05]) == ~D[2017-01-02]
+    end
+
+    test "returns next Mon when Fri, Sat, Sun" do
+      assert closest_monday_to(~D[2017-01-01]) == ~D[2017-01-02]
+    end
+  end
+
   describe "duration" do
     test "when input is nil or 0" do
       assert duration(nil) == "00:00"

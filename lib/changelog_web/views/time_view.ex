@@ -2,6 +2,20 @@ defmodule ChangelogWeb.TimeView do
 
   alias Timex.Duration
 
+  def closest_monday_to(date) do
+    offset = case Timex.weekday(date) do
+      1 ->  0
+      2 -> -1
+      3 -> -2
+      4 -> -3
+      5 ->  3
+      6 ->  2
+      7 ->  1
+    end
+
+    Timex.shift(date, days: offset)
+  end
+
   def duration(seconds) when is_nil(seconds), do: duration(0)
   def duration(seconds) when seconds < 3600 do
     minutes = div(seconds, 60)
