@@ -49,5 +49,12 @@ defmodule Changelog.Transcripts.UpdaterTest do
         assert called HTTPoison.get!(Source.raw_url(e2))
       end
     end
+
+    test "no-ops when items are not valid episodes" do
+      with_mock HTTPoison, [get!: fn(_) -> "markdown" end] do
+        Updater.update([".gitignore", "README.md"])
+        refute called HTTPoison.get!()
+      end
+    end
   end
 end

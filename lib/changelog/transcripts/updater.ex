@@ -16,12 +16,14 @@ defmodule Changelog.Transcripts.Updater do
 
   defp get_episode(item = %Episode{}), do: item
   defp get_episode(item) do
-    %{"podcast" => p_slug, "episode" => e_slug} = Regex.named_captures(Regexp.transcript_slugs, item)
-
-    Episode.published
-    |> Episode.with_podcast_slug(p_slug)
-    |> Episode.with_slug(e_slug)
-    |> Repo.one
+    case Regex.named_captures(Regexp.transcript_slugs, item) do
+      %{"podcast" => p, "episode" => e} ->
+        Episode.published
+        |> Episode.with_podcast_slug(p)
+        |> Episode.with_slug(e)
+        |> Repo.one
+      nil -> nil
+    end
   end
 
   defp update_episode(episode) when is_nil(episode), do: nil
