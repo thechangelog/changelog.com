@@ -20,10 +20,18 @@
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@queued) do %>
   <h2 class="ui header">Queued</h2>
-  <%= render("_table.html", conn: @conn, status: "queued", news_items: @queued) %>
-<% end %>
+  <%= if Enum.any?(@queued) do %>
+    <%= render("_table.html", conn: @conn, status: "queued", news_items: @queued) %>
+  <% else %>
+    <div class="ui basic segment icon message">
+      <i class="meh face icon"></i>
+      <div class="content">
+        <div class="header">No news items in the queue</div>
+        <p><%= link "Log", to: admin_news_item_path(@conn, :new) %> some news. <%= link "Add", to: admin_news_source_path(@conn, :new) %> a source. <%= link "Create", to: "#TODO" %> an issue.</p>
+      </div>
+    </div>
+  <% end %>
 
   <h2 class="ui header">
     <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
