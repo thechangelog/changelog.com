@@ -1,7 +1,7 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
     Topics
-    <div class="sub header">Create with care.</div>
+    <div class="sub header">Create with care. (Currently <%= length(@topics) %>)</div>
   </h1>
 
   <div class="actions">
@@ -15,6 +15,5 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@topics) do %>
   <%= render "_table.html", conn: @conn, topics: @topics %>
-  <%= pagination_links @conn, @page, path: &admin_topic_path/3 %>
 <% end %>
 </div>
