@@ -153,7 +153,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     end
   end
 
-  def unpublish(conn, _params = %{"id" => slug}, podcast) do
+  def unpublish(conn, %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
@@ -172,7 +172,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     end
   end
 
-  def transcript(conn, _params = %{"id" => slug}, podcast) do
+  def transcript(conn, %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)

@@ -11,7 +11,6 @@ defmodule Changelog.Data do
       import EctoEnum, only: [defenum: 2]
 
       alias Changelog.Repo
-      alias Timex.Ecto.DateTime
     end
   end
 end

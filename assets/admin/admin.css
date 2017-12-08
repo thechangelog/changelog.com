@@ -46,3 +46,7 @@
   -webkit-animation-duration: 3000ms;
   -webkit-animation-iteration-count: 1;
 }
+
+.actions.right {
+  text-align: right;
+}

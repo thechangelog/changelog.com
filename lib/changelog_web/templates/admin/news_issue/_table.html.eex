@@ -1,0 +1,35 @@
+<table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>Issue</th>
+        <th>Items</th>
+        <th>Ads</th>
+        <th>Create Time</th>
+        <th>Update Time</th>
+        <th>Publish Time</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for news_issue <- @news_issues do %>
+      <tr>
+        <td>
+          <%= link news_issue.slug, to: admin_news_issue_path(@conn, :edit, news_issue) %>
+        </td>
+        <td><%= item_count(news_issue) %></td>
+        <td><%= ad_count(news_issue) %></td>
+        <td><%= ts(news_issue.inserted_at) %></td>
+        <td><%= ts(news_issue.updated_at) %></td>
+        <td><%= ts(news_issue.published_at) %></td>
+        <td class="center aligned">
+          <div class="ui small basic buttons">
+            <%= icon_link "eye", to: news_issue_path(@conn, show_or_preview(news_issue), news_issue.slug) %>
+            <%= icon_link "edit", to: admin_news_issue_path(@conn, :edit, news_issue) %>
+            <%= icon_link "trash", to: admin_news_issue_path(@conn, :delete, news_issue), method: :delete, data: [confirm: "Are you sure?"] %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>

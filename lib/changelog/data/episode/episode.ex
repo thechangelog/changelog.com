@@ -21,8 +21,8 @@ defmodule Changelog.Episode do
     field :notes, :string
 
     field :published, :boolean, default: false
-    field :published_at, DateTime
-    field :recorded_at, DateTime
+    field :published_at, Timex.Ecto.DateTime
+    field :recorded_at, Timex.Ecto.DateTime
     field :recorded_live, :boolean, default: false
 
     field :audio_file, Files.Audio.Type
@@ -128,9 +128,7 @@ defmodule Changelog.Episode do
     is_published(episode) && episode.published_at <= as_of
   end
 
-  def is_published(episode) do
-    episode.published
-  end
+  def is_published(episode), do: episode.published
 
   def is_publishable(episode) do
     validated =

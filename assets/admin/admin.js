@@ -2,6 +2,7 @@ import "phoenix_html";
 
 import benefitView from "views/benefitView";
 import episodeView from "views/episodeView";
+import newsIssueView from "views/newsIssueView";
 import newsItemView from "views/newsItemView";
 import newsSponsorshipView from "views/newsSponsorshipView";
 import podcastView from "views/podcastView";
@@ -15,6 +16,7 @@ let views = {
   "TopicView": topicView,
   "EpisodeView": episodeView,
   "NewsItemView": newsItemView,
+  "NewsIssueView": newsIssueView,
   "NewsSponsorshipView": newsSponsorshipView,
   "PodcastView": podcastView,
   "PostView": postView

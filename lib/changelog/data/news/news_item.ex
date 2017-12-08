@@ -1,7 +1,8 @@
 defmodule Changelog.NewsItem do
   use Changelog.Data
 
-  alias Changelog.{Files, NewsItemTopic, NewsQueue, NewsSource, Person, Regexp}
+  alias Changelog.{Files, NewsItemTopic, NewsIssue, NewsQueue, NewsSource,
+                   Person, Regexp}
 
   defenum Status, queued: 0, submitted: 1, declined: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
@@ -15,7 +16,7 @@ defmodule Changelog.NewsItem do
     field :story, :string
     field :image, Files.Image.Type
 
-    field :published_at, DateTime
+    field :published_at, Timex.Ecto.DateTime
     field :newsletter, :boolean, default: true
 
     belongs_to :author, Person
@@ -54,7 +55,7 @@ defmodule Changelog.NewsItem do
     |> Ecto.Query.preload(:author)
     |> Ecto.Query.preload(:logger)
     |> Ecto.Query.preload(:source)
-    |> preload_topics
+    |> preload_topics()
   end
 
   def preload_all(news_item) do
@@ -62,7 +63,7 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:author)
     |> Repo.preload(:logger)
     |> Repo.preload(:source)
-    |> preload_topics
+    |> preload_topics()
   end
 
   def preload_topics(query = %Ecto.Query{}) do
@@ -83,16 +84,13 @@ defmodule Changelog.NewsItem do
     |> Repo.update!
   end
 
-  def published(query \\ __MODULE__) do
-    from p in query,
-      where: p.status == ^:published
-  end
+  def newest_first(query \\ __MODULE__, field \\ :published_at), do: from(q in query, order_by: [desc: ^field])
+  def newslettered(query \\ __MODULE__), do: from(q in query, where: q.newsletter == true)
+  def published(query \\ __MODULE__), do: from(q in query, where: q.status == ^:published)
+  def published_since(query \\ __MODULE__, issue_or_time)
+  def published_since(query, i = %NewsIssue{}), do: published(from(q in query, where: q.published_at >= ^i.published_at))
+  def published_since(query, time = %DateTime{}), do: published(from(q in query, where: q.published_at >= ^time))
+  def published_since(query, _), do: published()
 
-  def is_published(news_item) do
-    news_item.status == :published
-  end
-
-  def newest_first(query \\ __MODULE__, field \\ :published_at) do
-    from q in query, order_by: [desc: ^field]
-  end
+  def is_published(news_item), do: news_item.status == :published
 end

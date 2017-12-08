@@ -4,18 +4,29 @@
     <div class="sub header">Hot off the press</div>
   </h1>
 
-  <div class="actions">
-    <button class="ui right floated basic icon clipboard button" title="Bookmarklet" data-clipboard-text="<%= bookmarklet_code() %>"><i class="book icon"></i></button>
+  <div class="actions right">
+    <button class="ui basic icon clipboard button" title="Bookmarklet" data-clipboard-text="<%= bookmarklet_code() %>"><i class="book icon"></i></button>
 
-    <%= link to: admin_news_source_path(@conn, :new), class: "ui right floated basic button" do %>
-      <i class="add icon"></i>
-      Source
-    <% end %>
+    <div class="ui primary basic buttons">
+      <%= link "Items", to: admin_news_item_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_item_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
 
-    <%= link to: admin_news_item_path(@conn, :new), class: "ui right floated primary basic button" do %>
-      <i class="add icon"></i>
-      Item
-    <% end %>
+    <div class="ui basic buttons">
+      <%= link "Sources", to: admin_news_source_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_source_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
+
+    <div class="ui basic buttons">
+      <%= link "Issues", to: admin_news_issue_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_issue_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
   </div>
 </div>
 
@@ -36,15 +47,17 @@
   <h2 class="ui header">
     <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
 
-    <%= link to: admin_news_sponsorship_path(@conn, :new), class: "ui right floated basic button" do %>
-      <i class="add icon"></i>
-      Sponsorship
-    <% end %>
-
-    <%= link to: admin_news_sponsorship_path(@conn, :schedule), class: "ui right floated basic button" do %>
-      <i class="calendar icon"></i>
-      Full Schedule
-    <% end %>
+    <div class="ui right floated basic buttons">
+      <%= link to: admin_news_sponsorship_path(@conn, :index), class: "ui icon button", title: "View All" do %>
+        <i class="list icon"></i>
+      <% end %>
+      <%= link to: admin_news_sponsorship_path(@conn, :schedule), class: "ui icon button", title: "Full Schedule" do %>
+        <i class="calendar icon"></i>
+      <% end %>
+      <%= link to: admin_news_sponsorship_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
   </h2>
   <%= render(NewsSponsorshipView, "_schedule.html", conn: @conn, weeks: TimeView.weeks()) %>
 

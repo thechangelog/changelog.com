@@ -1,6 +1,6 @@
 defmodule ChangelogWeb.Meta.Description do
 
-  import ChangelogWeb.Helpers.PublicHelpers, only: [md_to_text: 1]
+  import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_text: 1]
 
   alias ChangelogWeb.{EpisodeView, PageView, PodcastView, PostView}
 

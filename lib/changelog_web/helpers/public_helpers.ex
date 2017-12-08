@@ -17,17 +17,6 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
     end
   end
 
-  def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
-  def md_to_safe_html(md) when is_nil(md), do: ""
-
-  def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
-  def md_to_html(md) when is_nil(md), do: ""
-
-  def md_to_text(md) when is_binary(md) do
-    HtmlSanitizeEx.strip_tags(md_to_html(md))
-  end
-  def md_to_text(md) when is_nil(md), do: ""
-
   def no_widowed_words(string) when is_nil(string), do: no_widowed_words("")
   def no_widowed_words(string) do
     words = String.split(string, " ")

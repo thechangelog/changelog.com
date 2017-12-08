@@ -27,6 +27,15 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
+  def md_to_safe_html(md) when is_nil(md), do: ""
+
+  def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
+  def md_to_html(md) when is_nil(md), do: ""
+
+  def md_to_text(md) when is_binary(md), do: HtmlSanitizeEx.strip_tags(md_to_html(md))
+  def md_to_text(md) when is_nil(md), do: ""
+
   def twitter_url(handle), do: "https://twitter.com/#{handle}"
 
   def twitter_link(model, string \\ nil) do

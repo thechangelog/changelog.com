@@ -1,6 +1,8 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link "News Sources", to: admin_news_source_path(@conn, :index) %>
+    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    &raquo;
+    <%= link "Sources", to: admin_news_source_path(@conn, :index) %>
     &raquo; Edit
   </h1>
 

@@ -6,7 +6,7 @@ export default class ListWidget {
     let $members = $(`.js-${relationType}`);
     let $add = $members.siblings(".js-add");
 
-    var setPositions = function() {
+    let setPositions = function() {
       $members.find(".item").each(function(index) {
         let $item = $(this);
         $item.find("input.js-position").val(index + 1);

@@ -80,6 +80,17 @@ defmodule Changelog.Factory do
     %Changelog.Episode{episode_factory() | published: true, published_at: hours_from_now(1)}
   end
 
+  def news_issue_factory do
+    %Changelog.NewsIssue{
+      slug: sequence(:slug, &"#{&1}"),
+      note: "Hope you like it"
+    }
+  end
+
+  def published_news_issue_factory do
+    %Changelog.NewsIssue{news_issue_factory() | published: true, published_at: hours_ago(1)}
+  end
+
   def news_item_factory do
     %Changelog.NewsItem{
       type: :link,

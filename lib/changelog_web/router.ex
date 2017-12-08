@@ -50,12 +50,17 @@ defmodule ChangelogWeb.Router do
 
     resources "/benefits", BenefitController, except: [:show]
     resources "/topics", TopicController, except: [:show]
+
     get "/news", NewsItemController, :index
     resources "/news/items", NewsItemController, except: [:show]
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
     resources "/news/sources", NewsSourceController, except: [:show]
     resources "/news/sponsorships", NewsSponsorshipController, except: [:show]
     get "/news/sponsorships/schedule", NewsSponsorshipController, :schedule
+    resources "/news/issues", NewsIssueController, except: [:show]
+    post "/news/issues/:id/publish", NewsIssueController, :publish, as: :news_issue
+    post "/news/issues/:id/unpublish", NewsIssueController, :unpublish, as: :news_issue
+
     resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
@@ -114,6 +119,8 @@ defmodule ChangelogWeb.Router do
     resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
+    get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
+    get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status
