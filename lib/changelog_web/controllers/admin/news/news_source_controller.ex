@@ -14,12 +14,12 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
   end
 
   def new(conn, _params) do
-    changeset = NewsSource.admin_changeset(%NewsSource{})
+    changeset = NewsSource.insert_changeset(%NewsSource{})
     render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"news_source" => source_params}) do
-    changeset = NewsSource.admin_changeset(%NewsSource{}, source_params)
+    changeset = NewsSource.insert_changeset(%NewsSource{}, source_params)
 
     case Repo.insert(changeset) do
       {:ok, source} ->
@@ -37,13 +37,13 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
   def edit(conn, %{"id" => id}) do
     source = Repo.get!(NewsSource, id)
-    changeset = NewsSource.admin_changeset(source)
+    changeset = NewsSource.update_changeset(source)
     render(conn, :edit, source: source, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_source" => source_params}) do
     source = Repo.get!(NewsSource, id)
-    changeset = NewsSource.admin_changeset(source, source_params)
+    changeset = NewsSource.update_changeset(source, source_params)
 
     case Repo.update(changeset) do
       {:ok, source} ->
