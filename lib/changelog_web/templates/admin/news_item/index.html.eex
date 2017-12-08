@@ -33,7 +33,7 @@
 <div class="ui basic segment">
   <h2 class="ui header">Queued</h2>
   <%= if Enum.any?(@queued) do %>
-    <%= render("_table.html", conn: @conn, status: "queued", news_items: @queued) %>
+    <%= render("_table.html", conn: @conn, status: "queued", items: @queued) %>
   <% else %>
     <div class="ui basic segment icon message">
       <i class="meh face icon"></i>
@@ -63,7 +63,7 @@
 
 <%= if Enum.any?(@published) do %>
   <h2 class="ui header">Published</h2>
-  <%= render("_table.html", conn: @conn, status: "published", news_items: @published) %>
+  <%= render("_table.html", conn: @conn, status: "published", items: @published) %>
   <%= pagination_links(@conn, @page, path: &admin_news_item_path/3) %>
 <% end %>
 </div>

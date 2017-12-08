@@ -22,8 +22,8 @@ defmodule Changelog.NewsAd do
     timestamps()
   end
 
-  def changeset(news_ad, attrs \\ %{}) do
-    news_ad
+  def changeset(ad, attrs \\ %{}) do
+    ad
     |> cast(attrs, ~w(url headline story active newsletter delete))
     |> cast_attachments(attrs, ~w(image))
     |> validate_required([:url, :headline])

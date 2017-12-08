@@ -17,7 +17,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       |> NewsIssue.newest_first(:inserted_at)
       |> Repo.all
 
-    render(conn, :index, news_issues: page.entries, drafts: drafts, page: page)
+    render(conn, :index, issues: page.entries, drafts: drafts, page: page)
   end
 
   def new(conn, _params) do
@@ -38,14 +38,14 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     render(conn, :new, changeset: changeset)
   end
 
-  def create(conn, params = %{"news_issue" => news_issue_params}) do
-    changeset = NewsIssue.admin_changeset(%NewsIssue{}, news_issue_params)
+  def create(conn, params = %{"news_issue" => issue_params}) do
+    changeset = NewsIssue.admin_changeset(%NewsIssue{}, issue_params)
 
     case Repo.insert(changeset) do
-      {:ok, news_issue} ->
+      {:ok, issue} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(news_issue, params)
+        |> smart_redirect(issue, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -54,33 +54,33 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
   end
 
   def edit(conn, %{"id" => id}) do
-    news_issue = NewsIssue |> Repo.get!(id) |> NewsIssue.preload_all()
-    changeset = NewsIssue.admin_changeset(news_issue)
-    render(conn, :edit, news_issue: news_issue, changeset: changeset)
+    issue = NewsIssue |> Repo.get!(id) |> NewsIssue.preload_all()
+    changeset = NewsIssue.admin_changeset(issue)
+    render(conn, :edit, issue: issue, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "news_issue" => news_issue_params}) do
-    news_issue = NewsIssue |> Repo.get!(id) |> NewsIssue.preload_all()
-    changeset = NewsIssue.admin_changeset(news_issue, news_issue_params)
+  def update(conn, params = %{"id" => id, "news_issue" => issue_params}) do
+    issue = NewsIssue |> Repo.get!(id) |> NewsIssue.preload_all()
+    changeset = NewsIssue.admin_changeset(issue, issue_params)
 
     case Repo.update(changeset) do
-      {:ok, news_issue} ->
+      {:ok, issue} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(news_issue, params)
+        |> smart_redirect(issue, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, news_issue: news_issue, changeset: changeset)
+        |> render(:edit, issue: issue, changeset: changeset)
     end
   end
 
   def publish(conn, %{"id" => id}) do
-    news_issue = NewsIssue |> Repo.get!(id)
-    changeset = Ecto.Changeset.change(news_issue, %{published: true, published_at: Timex.now})
+    issue = NewsIssue |> Repo.get!(id)
+    changeset = Ecto.Changeset.change(issue, %{published: true, published_at: Timex.now})
 
     case Repo.update(changeset) do
-      {:ok, _news_issue} ->
+      {:ok, _issue} ->
         conn
         |> put_flash(:result, "success")
         |> redirect(to: admin_news_issue_path(conn, :index))
@@ -92,11 +92,11 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
   end
 
   def unpublish(conn, %{"id" => id}) do
-    news_issue = NewsIssue |> Repo.get!(id)
-    changeset = Ecto.Changeset.change(news_issue, %{published: false, published_at: nil})
+    issue = NewsIssue |> Repo.get!(id)
+    changeset = Ecto.Changeset.change(issue, %{published: false, published_at: nil})
 
     case Repo.update(changeset) do
-      {:ok, _news_issue} ->
+      {:ok, _issue} ->
         conn
         |> put_flash(:result, "success")
         |> redirect(to: admin_news_issue_path(conn, :index))
@@ -108,18 +108,18 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
   end
 
   def delete(conn, %{"id" => id}) do
-    news_issue = Repo.get!(NewsIssue, id)
-    Repo.delete!(news_issue)
+    issue = Repo.get!(NewsIssue, id)
+    Repo.delete!(issue)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_issue_path(conn, :index))
   end
 
-  defp smart_redirect(conn, _news_issue, %{"close" => _true}) do
+  defp smart_redirect(conn, _issue, %{"close" => _true}) do
     redirect(conn, to: admin_news_issue_path(conn, :index))
   end
-  defp smart_redirect(conn, news_issue, _params) do
-    redirect(conn, to: admin_news_issue_path(conn, :edit, news_issue))
+  defp smart_redirect(conn, issue, _params) do
+    redirect(conn, to: admin_news_issue_path(conn, :edit, issue))
   end
 end

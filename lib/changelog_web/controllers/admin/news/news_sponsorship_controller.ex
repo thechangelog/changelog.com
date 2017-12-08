@@ -12,7 +12,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     |> NewsSponsorship.preload_all
     |> Repo.paginate(params)
 
-    render(conn, :index, news_sponsorships: page.entries, page: page)
+    render(conn, :index, sponsorships: page.entries, page: page)
   end
 
   def schedule(conn, params) do
@@ -30,12 +30,12 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   def new(conn, params) do
     start_week = Map.get(params, "week", "")
 
-    news_sponsorship = case Date.from_iso8601(start_week) do
+    sponsorship = case Date.from_iso8601(start_week) do
       {:ok, date} -> %NewsSponsorship{weeks: [date]}
       {:error, _} -> %NewsSponsorship{}
     end
 
-    changeset = NewsSponsorship.admin_changeset(news_sponsorship)
+    changeset = NewsSponsorship.admin_changeset(sponsorship)
     render(conn, :new, changeset: changeset)
   end
 
@@ -43,10 +43,10 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     changeset = NewsSponsorship.admin_changeset(%NewsSponsorship{}, sponsorship_params)
 
     case Repo.insert(changeset) do
-      {:ok, news_sponsorship} ->
+      {:ok, sponsorship} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(news_sponsorship, params)
+        |> smart_redirect(sponsorship, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -55,40 +55,40 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   end
 
   def edit(conn, %{"id" => id}) do
-    news_sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
-    changeset = NewsSponsorship.admin_changeset(news_sponsorship)
-    render(conn, :edit, news_sponsorship: news_sponsorship, changeset: changeset)
+    sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
+    changeset = NewsSponsorship.admin_changeset(sponsorship)
+    render(conn, :edit, sponsorship: sponsorship, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_sponsorship" => sponsorship_params}) do
-    news_sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
-    changeset = NewsSponsorship.admin_changeset(news_sponsorship, sponsorship_params)
+    sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
+    changeset = NewsSponsorship.admin_changeset(sponsorship, sponsorship_params)
 
     case Repo.update(changeset) do
-      {:ok, news_sponsorship} ->
+      {:ok, sponsorship} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(news_sponsorship, params)
+        |> smart_redirect(sponsorship, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, news_sponsorship: news_sponsorship, changeset: changeset)
+        |> render(:edit, sponsorship: sponsorship, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    news_sponsorship = Repo.get!(NewsSponsorship, id)
-    Repo.delete!(news_sponsorship)
+    sponsorship = Repo.get!(NewsSponsorship, id)
+    Repo.delete!(sponsorship)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_sponsorship_path(conn, :index))
   end
 
-  defp smart_redirect(conn, _news_sponsorship, %{"close" => _true}) do
+  defp smart_redirect(conn, _sponsorship, %{"close" => _true}) do
     redirect(conn, to: admin_news_sponsorship_path(conn, :index))
   end
-  defp smart_redirect(conn, news_sponsorship, _params) do
-    redirect(conn, to: admin_news_sponsorship_path(conn, :edit, news_sponsorship))
+  defp smart_redirect(conn, sponsorship, _params) do
+    redirect(conn, to: admin_news_sponsorship_path(conn, :edit, sponsorship))
   end
 end

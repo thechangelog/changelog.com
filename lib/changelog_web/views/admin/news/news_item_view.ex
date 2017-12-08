@@ -10,8 +10,8 @@ defmodule ChangelogWeb.Admin.NewsItemView do
     ~s/javascript:(function() {window.open('#{url}'+location.href);})();/
   end
 
-  def image_url(news_item, version) do
-    Files.Image.url({news_item.image, news_item}, version)
+  def image_url(item, version) do
+    Files.Image.url({item.image, item}, version)
     |> String.replace_leading("/priv", "")
   end
 

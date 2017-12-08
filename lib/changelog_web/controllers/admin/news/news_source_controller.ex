@@ -10,7 +10,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
     |> order_by([s], desc: s.id)
     |> Repo.paginate(params)
 
-    render(conn, :index, news_sources: page.entries, page: page)
+    render(conn, :index, sources: page.entries, page: page)
   end
 
   def new(conn, _params) do
@@ -22,10 +22,12 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
     changeset = NewsSource.admin_changeset(%NewsSource{}, source_params)
 
     case Repo.insert(changeset) do
-      {:ok, news_source} ->
+      {:ok, source} ->
+        Repo.update(NewsSource.file_changeset(source, source_params))
+
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(news_source, params)
+        |> smart_redirect(source, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -34,40 +36,40 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
   end
 
   def edit(conn, %{"id" => id}) do
-    news_source = Repo.get!(NewsSource, id)
-    changeset = NewsSource.admin_changeset(news_source)
-    render(conn, :edit, news_source: news_source, changeset: changeset)
+    source = Repo.get!(NewsSource, id)
+    changeset = NewsSource.admin_changeset(source)
+    render(conn, :edit, source: source, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "news_source" => source_params}) do
-    news_source = Repo.get!(NewsSource, id)
-    changeset = NewsSource.admin_changeset(news_source, source_params)
+    source = Repo.get!(NewsSource, id)
+    changeset = NewsSource.admin_changeset(source, source_params)
 
     case Repo.update(changeset) do
-      {:ok, news_source} ->
+      {:ok, source} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(news_source, params)
+        |> smart_redirect(source, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, news_source: news_source, changeset: changeset)
+        |> render(:edit, source: source, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    news_source = Repo.get!(NewsSource, id)
-    Repo.delete!(news_source)
+    source = Repo.get!(NewsSource, id)
+    Repo.delete!(source)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_source_path(conn, :index))
   end
 
-  defp smart_redirect(conn, _news_source, %{"close" => _true}) do
+  defp smart_redirect(conn, _source, %{"close" => _true}) do
     redirect(conn, to: admin_news_source_path(conn, :index))
   end
-  defp smart_redirect(conn, news_source, _params) do
-    redirect(conn, to: admin_news_source_path(conn, :edit, news_source))
+  defp smart_redirect(conn, source, _params) do
+    redirect(conn, to: admin_news_source_path(conn, :edit, source))
   end
 end

@@ -3,8 +3,8 @@ defmodule ChangelogWeb.Admin.NewsAdView do
 
   alias Changelog.{Files}
 
-  def image_url(news_ad, version) do
-    Files.Image.url({news_ad.image, news_ad}, version)
+  def image_url(ad, version) do
+    Files.Image.url({ad.image, ad}, version)
     |> String.replace_leading("/priv", "")
   end
 end

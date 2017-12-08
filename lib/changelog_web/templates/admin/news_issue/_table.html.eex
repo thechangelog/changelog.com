@@ -12,21 +12,21 @@
     </thead>
 
     <tbody>
-    <%= for news_issue <- @news_issues do %>
+    <%= for issue <- @issues do %>
       <tr>
         <td>
-          <%= link news_issue.slug, to: admin_news_issue_path(@conn, :edit, news_issue) %>
+          <%= link issue.slug, to: admin_news_issue_path(@conn, :edit, issue) %>
         </td>
-        <td><%= item_count(news_issue) %></td>
-        <td><%= ad_count(news_issue) %></td>
-        <td><%= ts(news_issue.inserted_at) %></td>
-        <td><%= ts(news_issue.updated_at) %></td>
-        <td><%= ts(news_issue.published_at) %></td>
+        <td><%= item_count(issue) %></td>
+        <td><%= ad_count(issue) %></td>
+        <td><%= ts(issue.inserted_at) %></td>
+        <td><%= ts(issue.updated_at) %></td>
+        <td><%= ts(issue.published_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link "eye", to: news_issue_path(@conn, show_or_preview(news_issue), news_issue.slug) %>
-            <%= icon_link "edit", to: admin_news_issue_path(@conn, :edit, news_issue) %>
-            <%= icon_link "trash", to: admin_news_issue_path(@conn, :delete, news_issue), method: :delete, data: [confirm: "Are you sure?"] %>
+            <%= icon_link "eye", to: news_issue_path(@conn, show_or_preview(issue), issue.slug) %>
+            <%= icon_link "edit", to: admin_news_issue_path(@conn, :edit, issue) %>
+            <%= icon_link "trash", to: admin_news_issue_path(@conn, :delete, issue), method: :delete, data: [confirm: "Are you sure?"] %>
           </div>
         </td>
       </tr>

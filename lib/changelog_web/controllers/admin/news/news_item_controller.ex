@@ -37,17 +37,17 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     render(conn, :new, changeset: changeset)
   end
 
-  def create(conn, params = %{"news_item" => news_item_params}) do
-    changeset = NewsItem.insert_changeset(%NewsItem{}, news_item_params)
+  def create(conn, params = %{"news_item" => item_params}) do
+    changeset = NewsItem.insert_changeset(%NewsItem{}, item_params)
 
     case Repo.insert(changeset) do
-      {:ok, news_item} ->
-        Repo.update(NewsItem.file_changeset(news_item, news_item_params))
+      {:ok, item} ->
+        Repo.update(NewsItem.file_changeset(item, item_params))
 
         case Map.get(params, "queue", "append") do
-          "publish" -> NewsItem.publish!(news_item)
-          "prepend" -> NewsQueue.prepend(news_item)
-          "append" -> NewsQueue.append(news_item)
+          "publish" -> NewsItem.publish!(item)
+          "prepend" -> NewsQueue.prepend(item)
+          "append" -> NewsQueue.append(item)
         end
 
         if conn.assigns.quick do
@@ -65,30 +65,30 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   def edit(conn, %{"id" => id}) do
-    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
-    changeset = NewsItem.update_changeset(news_item)
-    render(conn, :edit, news_item: news_item, changeset: changeset)
+    item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
+    changeset = NewsItem.update_changeset(item)
+    render(conn, :edit, item: item, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "news_item" => news_item_params}) do
-    news_item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
-    changeset = NewsItem.update_changeset(news_item, news_item_params)
+  def update(conn, params = %{"id" => id, "news_item" => item_params}) do
+    item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
+    changeset = NewsItem.update_changeset(item, item_params)
 
     case Repo.update(changeset) do
-      {:ok, news_item} ->
+      {:ok, item} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(news_item, params)
+        |> smart_redirect(item, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, news_item: news_item, changeset: changeset)
+        |> render(:edit, item: item, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    news_item = Repo.get!(NewsItem, id)
-    Repo.delete!(news_item)
+    item = Repo.get!(NewsItem, id)
+    Repo.delete!(item)
 
     conn
     |> put_flash(:result, "success")
@@ -96,8 +96,8 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   def move(conn, %{"id" => id, "position" => position}) do
-    news_item = Repo.get!(NewsItem, id)
-    NewsQueue.move(news_item, String.to_integer(position))
+    item = Repo.get!(NewsItem, id)
+    NewsQueue.move(item, String.to_integer(position))
     send_resp(conn, 200, "")
   end
 

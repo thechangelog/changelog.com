@@ -18,8 +18,8 @@ defmodule Changelog.NewsIssue do
     timestamps()
   end
 
-  def admin_changeset(news_issue, attrs \\ %{}) do
-    news_issue
+  def admin_changeset(issue, attrs \\ %{}) do
+    issue
     |> cast(attrs, ~w(slug note published published_at))
     |> validate_required([:slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
@@ -33,8 +33,8 @@ defmodule Changelog.NewsIssue do
   def published(query \\ __MODULE__), do: from(q in query, where: q.published == true)
   def unpublished(query \\ __MODULE__), do: from(q in query, where: q.published == false)
 
-  def preload_all(news_issue) do
-    news_issue |> preload_ads |> preload_items
+  def preload_all(issue) do
+    issue |> preload_ads |> preload_items
   end
 
   def preload_ads(query = %Ecto.Query{}) do
@@ -42,8 +42,8 @@ defmodule Changelog.NewsIssue do
     |> Ecto.Query.preload(news_issue_ads: ^NewsIssueAd.by_position)
     |> Ecto.Query.preload(:ads)
   end
-  def preload_ads(news_issue) do
-    news_issue
+  def preload_ads(issue) do
+    issue
     |> Repo.preload(news_issue_ads: {NewsIssueAd.by_position, :ad})
     |> Repo.preload(:ads)
   end
@@ -53,21 +53,21 @@ defmodule Changelog.NewsIssue do
     |> Ecto.Query.preload(news_issue_items: ^NewsIssueItem.by_position)
     |> Ecto.Query.preload(:items)
   end
-  def preload_items(news_issue) do
-    news_issue
+  def preload_items(issue) do
+    issue
     |> Repo.preload(news_issue_items: {NewsIssueItem.by_position, :item})
     |> Repo.preload(:items)
   end
 
-  def ad_count(news_issue) do
-    Repo.count(from(q in NewsIssueAd, where: q.issue_id == ^news_issue.id))
+  def ad_count(issue) do
+    Repo.count(from(q in NewsIssueAd, where: q.issue_id == ^issue.id))
   end
 
-  def item_count(news_issue) do
-    Repo.count(from(q in NewsIssueItem, where: q.issue_id == ^news_issue.id))
+  def item_count(issue) do
+    Repo.count(from(q in NewsIssueItem, where: q.issue_id == ^issue.id))
   end
 
-  def is_published(news_issue), do: news_issue.published
+  def is_published(issue), do: issue.published
 
-  def is_publishable(news_issue), do: is_integer(news_issue.id) && !is_published(news_issue)
+  def is_publishable(issue), do: is_integer(issue.id) && !is_published(issue)
 end

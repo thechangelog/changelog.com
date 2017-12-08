@@ -13,8 +13,8 @@ defmodule Changelog.NewsIssueItem do
     timestamps()
   end
 
-  def changeset(news_issue_item, params \\ %{}) do
-    news_issue_item
+  def changeset(issue_item, params \\ %{}) do
+    issue_item
     |> cast(params, ~w(position item_id issue_id delete))
     |> validate_required([:position])
     |> mark_for_deletion()

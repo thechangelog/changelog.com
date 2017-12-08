@@ -33,14 +33,14 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@drafts) do %>
   <h2 class="ui header">Drafts</h2>
-  <%= render("_table.html", conn: @conn, news_issues: @drafts) %>
+  <%= render("_table.html", conn: @conn, issues: @drafts) %>
 <% end %>
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@news_issues) do %>
+<%= if Enum.any?(@issues) do %>
   <h2 class="ui header">Published</h2>
-  <%= render("_table.html", conn: @conn, news_issues: @news_issues) %>
+  <%= render("_table.html", conn: @conn, issues: @issues) %>
   <%= pagination_links(@conn, @page, path: &admin_news_source_path/3) %>
 <% end %>
 </div>

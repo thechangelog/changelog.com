@@ -3,5 +3,5 @@ defmodule ChangelogWeb.Admin.NewsSourceView do
 
   alias ChangelogWeb.NewsSourceView
 
-  def icon_url(news_source), do: NewsSourceView.icon_url(news_source)
+  def icon_url(source), do: NewsSourceView.icon_url(source)
 end

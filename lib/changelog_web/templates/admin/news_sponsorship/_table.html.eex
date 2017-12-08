@@ -14,25 +14,25 @@
     </thead>
 
     <tbody>
-    <%= for news_sponsorship <- @news_sponsorships do %>
+    <%= for sponsorship <- @sponsorships do %>
       <tr>
         <td>
-          <%= link news_sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, news_sponsorship.sponsor) %>
-          <%= if news_sponsorship.name do %>
-          &ndash; <%= news_sponsorship.name %>
+          <%= link sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, sponsorship.sponsor) %>
+          <%= if sponsorship.name do %>
+          &ndash; <%= sponsorship.name %>
           <% end %>
         </td>
-        <td><%= length(news_sponsorship.weeks) %></td>
-        <td><%= length(news_sponsorship.ads) %></td>
-        <td><%= news_sponsorship.weeks |> List.first |> TimeView.pretty_date %></td>
-        <td><%= news_sponsorship.weeks |> List.last |> TimeView.pretty_date %></td>
-        <td><%= ts(news_sponsorship.updated_at) %></td>
-        <td><%= news_sponsorship.impression_count %></td>
-        <td><%= news_sponsorship.click_count %></td>
+        <td><%= length(sponsorship.weeks) %></td>
+        <td><%= length(sponsorship.ads) %></td>
+        <td><%= sponsorship.weeks |> List.first |> TimeView.pretty_date %></td>
+        <td><%= sponsorship.weeks |> List.last |> TimeView.pretty_date %></td>
+        <td><%= ts(sponsorship.updated_at) %></td>
+        <td><%= sponsorship.impression_count %></td>
+        <td><%= sponsorship.click_count %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link "edit", to: admin_news_sponsorship_path(@conn, :edit, news_sponsorship) %>
-            <%= icon_link "trash", to: admin_news_sponsorship_path(@conn, :delete, news_sponsorship), method: :delete, data: [confirm: "Are you sure?"] %>
+            <%= icon_link "edit", to: admin_news_sponsorship_path(@conn, :edit, sponsorship) %>
+            <%= icon_link "trash", to: admin_news_sponsorship_path(@conn, :delete, sponsorship), method: :delete, data: [confirm: "Are you sure?"] %>
           </div>
         </td>
       </tr>

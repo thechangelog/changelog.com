@@ -17,7 +17,7 @@
   <% else %>
     <tbody>
   <% end %>
-    <%= for item <- @news_items do %>
+    <%= for item <- @items do %>
       <tr data-id="<%= item.id %>">
         <td class="center aligned">
           <%= link to: admin_person_path(@conn, :edit, item.logger) do %>

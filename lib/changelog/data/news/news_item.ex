@@ -29,12 +29,12 @@ defmodule Changelog.NewsItem do
     timestamps()
   end
 
-  def file_changeset(news_item, attrs \\ %{}) do
-    cast_attachments(news_item, attrs, ~w(image))
+  def file_changeset(item, attrs \\ %{}) do
+    cast_attachments(item, attrs, ~w(image))
   end
 
-  def insert_changeset(news_item, attrs \\ %{}) do
-    news_item
+  def insert_changeset(item, attrs \\ %{}) do
+    item
     |> cast(attrs, ~w(status type url headline story published_at newsletter author_id logger_id source_id))
     |> validate_required([:type, :url, :headline, :logger_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
@@ -44,8 +44,8 @@ defmodule Changelog.NewsItem do
     |> cast_assoc(:news_item_topics)
   end
 
-  def update_changeset(news_item, attrs \\ %{}) do
-    news_item
+  def update_changeset(item, attrs \\ %{}) do
+    item
     |> insert_changeset(attrs)
     |> file_changeset(attrs)
   end
@@ -58,8 +58,8 @@ defmodule Changelog.NewsItem do
     |> preload_topics()
   end
 
-  def preload_all(news_item) do
-    news_item
+  def preload_all(item) do
+    item
     |> Repo.preload(:author)
     |> Repo.preload(:logger)
     |> Repo.preload(:source)
@@ -72,14 +72,14 @@ defmodule Changelog.NewsItem do
     |> Ecto.Query.preload(:topics)
   end
 
-  def preload_topics(news_item) do
-    news_item
+  def preload_topics(item) do
+    item
     |> Repo.preload(news_item_topics: {NewsItemTopic.by_position, :topic})
     |> Repo.preload(:topics)
   end
 
-  def publish!(news_item) do
-    news_item
+  def publish!(item) do
+    item
     |> change(%{status: :published, published_at: Timex.now})
     |> Repo.update!
   end
@@ -92,5 +92,5 @@ defmodule Changelog.NewsItem do
   def published_since(query, time = %DateTime{}), do: published(from(q in query, where: q.published_at >= ^time))
   def published_since(query, _), do: published()
 
-  def is_published(news_item), do: news_item.status == :published
+  def is_published(item), do: item.status == :published
 end

@@ -31,8 +31,8 @@
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@news_sources) do %>
-  <%= render("_table.html", conn: @conn, news_sources: @news_sources) %>
+<%= if Enum.any?(@sources) do %>
+  <%= render("_table.html", conn: @conn, sources: @sources) %>
   <%= pagination_links(@conn, @page, path: &admin_news_source_path/3) %>
 <% end %>
 </div>

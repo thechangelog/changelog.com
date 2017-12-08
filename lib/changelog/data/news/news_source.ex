@@ -17,8 +17,8 @@ defmodule Changelog.NewsSource do
     timestamps()
   end
 
-  def admin_changeset(news_source, attrs \\ %{}) do
-    news_source
+  def admin_changeset(source, attrs \\ %{}) do
+    source
     |> cast_attachments(attrs, ~w(icon))
     |> cast(attrs, ~w(name slug website regex feed icon))
     |> validate_required([:name, :slug, :website])
