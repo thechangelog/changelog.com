@@ -41,16 +41,9 @@ defmodule Changelog.Post do
     post.published && post.published_at <= as_of
   end
 
-  def preload_all(post) do
-    post
-    |> preload_author
-    |> preload_topics
-  end
+  def preload_all(post), do: post |> preload_author |> preload_topics
 
-  def preload_author(post) do
-    post
-    |> Repo.preload(:author)
-  end
+  def preload_author(post), do: Repo.preload(post, :author)
 
   def preload_topics(post) do
     post
