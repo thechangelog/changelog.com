@@ -33,6 +33,16 @@ defmodule Changelog.NewsIssue do
   def published(query \\ __MODULE__), do: from(q in query, where: q.published == true)
   def unpublished(query \\ __MODULE__), do: from(q in query, where: q.published == false)
 
+  def next_slug(issue) when is_nil(issue), do: 1
+  def next_slug(issue) do
+    last_slug = case Integer.parse(issue.slug) do
+      {int, _remainder} -> int
+      :error -> 0
+    end
+
+    last_slug + 1
+  end
+
   def preload_all(issue) do
     issue |> preload_ads |> preload_items
   end

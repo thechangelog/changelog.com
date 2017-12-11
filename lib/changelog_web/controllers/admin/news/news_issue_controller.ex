@@ -34,7 +34,11 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       |> Enum.with_index(1)
       |> Enum.map(&NewsIssueItem.build_and_preload/1)
 
-    changeset = NewsIssue.admin_changeset(%NewsIssue{news_issue_items: items})
+    changeset = NewsIssue.admin_changeset(%NewsIssue{
+      news_issue_items: items,
+      slug: NewsIssue.next_slug(last_issue)
+    })
+
     render(conn, :new, changeset: changeset)
   end
 
