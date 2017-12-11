@@ -1,7 +1,7 @@
 defmodule Changelog.NewsIssue do
   use Changelog.Data
 
-  alias Changelog.{NewsItem, NewsIssueItem, NewsIssueAd, Regexp}
+  alias Changelog.{NewsIssueItem, NewsIssueAd, Regexp}
 
   schema "news_issues" do
     field :slug, :string

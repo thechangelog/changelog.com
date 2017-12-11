@@ -84,6 +84,7 @@ defmodule Changelog.NewsItem do
     |> Repo.update!
   end
 
+  def limit(query, count), do: from(q in query, limit: ^count)
   def newest_first(query \\ __MODULE__, field \\ :published_at), do: from(q in query, order_by: [desc: ^field])
   def newslettered(query \\ __MODULE__), do: from(q in query, where: q.newsletter == true)
   def published(query \\ __MODULE__), do: from(q in query, where: q.status == ^:published)
