@@ -12,7 +12,7 @@ defmodule Changelog.NewsSource do
 
     field :icon, Files.Icon.Type
 
-    has_many :news_items, NewsItem, on_delete: :nilify_all
+    has_many :news_items, NewsItem, foreign_key: :source_id, on_delete: :nilify_all
 
     timestamps()
   end
