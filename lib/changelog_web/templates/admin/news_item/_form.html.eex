@@ -13,6 +13,7 @@
       <%= label(f, :source_id, "Source") %>
       <div class="ui fluid remote source search selection dropdown">
         <%= hidden_input(f, :source_id) %>
+        <i class="remove icon"></i>
         <i class="dropdown icon"></i>
         <% source = load_from_form(f, NewsSource, :source) %>
         <%= if source do %>
@@ -28,6 +29,7 @@
       <%= label(f, :author_id, "Author") %>
       <div class="ui fluid remote author search selection dropdown">
         <%= hidden_input(f, :author_id) %>
+        <i class="remove icon"></i>
         <i class="dropdown icon"></i>
         <% author = load_from_form(f, Person, :author) %>
         <%= if author do %>

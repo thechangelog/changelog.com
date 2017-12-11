@@ -11,7 +11,9 @@ export default class BelongsToWidget {
       }
     }
 
-    $(`.remote.search.dropdown.${relationType}`).dropdown({
+    let $container = $(`.remote.search.dropdown.${relationType}`);
+
+    $container.dropdown({
       fields: {name: "title", value: "id"},
       apiSettings: {
         url: `/admin/search/${searchType}?q={query}&f=json`,
@@ -21,6 +23,11 @@ export default class BelongsToWidget {
       message: {
         noResults: noResultsMessage()
       }
+    });
+
+    $container.on("click", ".remove.icon", function(e) {
+      $container.dropdown("clear");
+      e.stopPropagation();
     });
   }
 }
