@@ -6,6 +6,7 @@ defmodule Changelog.NewsIssue do
   schema "news_issues" do
     field :slug, :string
     field :note, :string
+    field :teaser, :string
 
     field :published, :boolean, default: false
     field :published_at, Timex.Ecto.DateTime
@@ -20,7 +21,7 @@ defmodule Changelog.NewsIssue do
 
   def admin_changeset(issue, attrs \\ %{}) do
     issue
-    |> cast(attrs, ~w(slug note published published_at))
+    |> cast(attrs, ~w(slug teaser note published published_at))
     |> validate_required([:slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)

@@ -1,8 +1,16 @@
 <%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
-  <div class="field required <%= error_class(f, :slug) %>">
-    <%= label(f, :slug) %>
-    <%= text_input(f, :slug, placeholder: "183", readonly: f.data.published) %>
-    <%= error_message(f, :slug) %>
+  <div class="two fields">
+    <div class="two wide field required <%= error_class(f, :slug) %>">
+      <%= label(f, :slug) %>
+      <%= text_input(f, :slug, placeholder: "183", readonly: f.data.published) %>
+      <%= error_message(f, :slug) %>
+    </div>
+
+    <div class="fourteen wide field">
+      <%= label(f, :teaser) %>
+      <%= text_input(f, :teaser, placeholder: "Cool, Stuff, You, Want, To, Read") %>
+      <%= error_message(f, :teaser) %>
+    </div>
   </div>
 
   <div class="field <%= error_class(f, :note) %>">
