@@ -1,5 +1,5 @@
 defmodule Changelog.NewsIssue do
-  use Changelog.Data
+  use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{NewsIssueItem, NewsIssueAd, Regexp}
 
@@ -28,7 +28,6 @@ defmodule Changelog.NewsIssue do
     |> cast_assoc(:news_issue_items)
   end
 
-  def newest_first(query \\ __MODULE__, field \\ :published_at), do: from(q in query, order_by: [desc: ^field])
   def with_numbered_slug(query \\ __MODULE__), do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
   def published(query \\ __MODULE__), do: from(q in query, where: q.published == true)
   def unpublished(query \\ __MODULE__), do: from(q in query, where: q.published == false)

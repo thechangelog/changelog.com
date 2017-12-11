@@ -1,5 +1,5 @@
 defmodule Changelog.EpisodeStat do
-  use Changelog.Data
+  use Changelog.Data, default_sort: :date
 
   alias Changelog.{Episode, Podcast}
 
@@ -17,13 +17,7 @@ defmodule Changelog.EpisodeStat do
     timestamps()
   end
 
-  def newest_first(query, field \\ :date) do
-    from s in query, order_by: [desc: ^field]
-  end
-
-  def on_date(date, query \\ __MODULE__) do
-    from s in query, where: s.date == ^date
-  end
+  def on_date(date, query \\ __MODULE__), do: from(q in query, where: q.date == ^date)
 
   def oldest_date do
     Repo.one(from s in __MODULE__, select: [min(s.date)], limit: 1)

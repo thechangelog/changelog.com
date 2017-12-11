@@ -1,5 +1,5 @@
 defmodule Changelog.Post do
-  use Changelog.Data
+  use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{Person, PostTopic, Regexp}
 
@@ -32,38 +32,10 @@ defmodule Changelog.Post do
     |> cast_assoc(:post_topics)
   end
 
-  def published(query \\ __MODULE__) do
-    from p in query,
-      where: p.published == true,
-      where: p.published_at <= ^Timex.now
-  end
-
-  def scheduled(query \\ __MODULE__) do
-    from p in query,
-      where: p.published == true,
-      where: p.published_at > ^Timex.now
-  end
-
-  def unpublished(query \\ __MODULE__) do
-    from p in query, where: p.published == false
-  end
-
-  def newest_first(query \\ __MODULE__, field \\ :published_at) do
-    from e in query, order_by: [desc: ^field]
-  end
-
-  def newest_last(query \\ __MODULE__, field \\ :published_at) do
-    from e in query, order_by: [asc: ^field]
-  end
-
-  def limit(query, count) do
-    from e in query, limit: ^count
-  end
-
-  def search(query, search_term) do
-    from e in query,
-      where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^search_term)
-  end
+  def published(query \\ __MODULE__),    do: from(q in query, where: q.published == true, where: q.published_at <= ^Timex.now)
+  def scheduled(query \\ __MODULE__),    do: from(q in query, where: q.published == true, where: q.published_at > ^Timex.now)
+  def search(query \\ __MODULE__, term), do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
+  def unpublished(query \\ __MODULE__),  do: from(q in query, where: q.published == false)
 
   def is_public(post, as_of \\ Timex.now) do
     post.published && post.published_at <= as_of

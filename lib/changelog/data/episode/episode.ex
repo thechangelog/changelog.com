@@ -1,5 +1,5 @@
 defmodule Changelog.Episode do
-  use Changelog.Data
+  use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeTopic, EpisodeStat,
                    EpisodeSponsor, Files, Podcast, Regexp, Transcripts}
@@ -51,9 +51,6 @@ defmodule Changelog.Episode do
 
   def distinct_podcast(query),                       do: from(q in query, distinct: q.podcast_id)
   def featured(query \\ __MODULE__),                 do: from(q in query, where: q.featured == true, where: not(is_nil(q.highlight)))
-  def limit(query \\ __MODULE__, count),             do: from(q in query, limit: ^count)
-  def newest_first(query, field \\ :published_at),   do: from(q in query, order_by: [desc: ^field])
-  def newest_last(query, field \\ :published_at),    do: from(q in query, order_by: [asc: ^field])
   def next_after(query \\ __MODULE__, episode),      do: from(q in query, where: q.published_at > ^episode.published_at)
   def previous_to(query \\ __MODULE__, episode),     do: from(q in query, where: q.published_at < ^episode.published_at)
   def published(query \\ __MODULE__),                do: from(q in query, where: q.published == true, where: q.published_at <= ^Timex.now)
@@ -61,7 +58,7 @@ defmodule Changelog.Episode do
   def recorded_future_to(query, time),               do: from(q in query, where: q.recorded_at > ^time)
   def recorded_live(query \\ __MODULE__),            do: from(q in query, where: q.recorded_live == true)
   def scheduled(query \\ __MODULE__),                do: from(q in query, where: q.published == true, where: q.published_at > ^Timex.now)
-  def search(query, search_term),                    do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^search_term))
+  def search(query, term),                           do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
   def unpublished(query \\ __MODULE__),              do: from(q in query, where: q.published == false)
   def with_numbered_slug(query \\ __MODULE__),       do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
   def with_slug(query \\ __MODULE__, slug),          do: from(q in query, where: q.slug == ^slug)

@@ -29,10 +29,6 @@ defmodule Changelog.EpisodeSponsor do
     from p in __MODULE__, order_by: p.position
   end
 
-  def newest_first(query) do
-    from s in query, order_by: [desc: s.inserted_at]
-  end
-
   defp mark_for_deletion(changeset) do
     if get_change(changeset, :delete) do
       %{changeset | action: :delete}

@@ -1,5 +1,5 @@
 defmodule Changelog.NewsItem do
-  use Changelog.Data
+  use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{Files, NewsItemTopic, NewsIssue, NewsQueue, NewsSource,
                    Person, Regexp}
@@ -84,14 +84,13 @@ defmodule Changelog.NewsItem do
     |> Repo.update!
   end
 
-  def limit(query, count), do: from(q in query, limit: ^count)
-  def newest_first(query \\ __MODULE__, field \\ :published_at), do: from(q in query, order_by: [desc: ^field])
   def newslettered(query \\ __MODULE__), do: from(q in query, where: q.newsletter == true)
-  def published(query \\ __MODULE__), do: from(q in query, where: q.status == ^:published)
+  def published(query \\ __MODULE__),    do: from(q in query, where: q.status == ^:published)
+
   def published_since(query \\ __MODULE__, issue_or_time)
-  def published_since(query, i = %NewsIssue{}), do: published(from(q in query, where: q.published_at >= ^i.published_at))
+  def published_since(query, i = %NewsIssue{}),   do: published(from(q in query, where: q.published_at >= ^i.published_at))
   def published_since(query, time = %DateTime{}), do: published(from(q in query, where: q.published_at >= ^time))
-  def published_since(query, _), do: published(query)
+  def published_since(query, _),                  do: published(query)
 
   def is_published(item), do: item.status == :published
 end
