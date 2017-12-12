@@ -10,9 +10,7 @@ defmodule Changelog.NewsQueue do
     belongs_to :item, NewsItem
   end
 
-  def ordered(query \\ NewsQueue) do
-    from i in query, order_by: [asc: :position]
-  end
+  def ordered(query \\ NewsQueue), do: from(q in query, order_by: [asc: :position])
 
   def append(item) do
     entry = change(%NewsQueue{}, %{item_id: item.id})
@@ -27,6 +25,7 @@ defmodule Changelog.NewsQueue do
     end
 
     Repo.insert(entry)
+    NewsItem.queue!(item)
   end
 
   def move(item = %NewsItem{}, to_index) do
@@ -75,6 +74,7 @@ defmodule Changelog.NewsQueue do
     end
 
     Repo.insert(entry)
+    NewsItem.queue!(item)
   end
 
   def publish_next do

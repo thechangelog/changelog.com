@@ -94,7 +94,7 @@ defmodule Changelog.Factory do
   def news_item_factory do
     %Changelog.NewsItem{
       type: :link,
-      status: :queued,
+      status: :draft,
       headline: sequence(:headline, &"Read all about it #{&1}!"),
       url: "https://changelog.com/posts/read-all-about-it",
       logger: build(:person)

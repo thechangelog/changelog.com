@@ -22,7 +22,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     ~e"""
     <div class="ui hidden divider"></div>
     <div class="ui equal width stackable grid">
-    <div class="column"><button class="ui primary fluid basic button" type="submit">Save</button></div>
+    <div class="column"><button class="ui primary fluid basic button" type="submit" name="stay">Save</button></div>
     <div class="column"><button class="ui secondary fluid basic button" type="submit" name="close">Save and Close</button></div>
     <div class="column"></div>
     """

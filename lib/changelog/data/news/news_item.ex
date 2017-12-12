@@ -4,11 +4,11 @@ defmodule Changelog.NewsItem do
   alias Changelog.{Files, NewsItemTopic, NewsIssue, NewsQueue, NewsSource,
                    Person, Regexp}
 
-  defenum Status, queued: 0, submitted: 1, declined: 2, published: 3
+  defenum Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
 
   schema "news_items" do
-    field :status, Status
+    field :status, Status, default: :draft
     field :type, Type
 
     field :url, :string
@@ -28,6 +28,16 @@ defmodule Changelog.NewsItem do
 
     timestamps()
   end
+
+  def drafted(query \\ __MODULE__),           do: from(q in query, where: q.status == ^:draft)
+  def logged_by(query \\ __MODULE__, person), do: from(q in query, where: q.logger_id == ^person.id)
+  def newslettered(query \\ __MODULE__),      do: from(q in query, where: q.newsletter == true)
+  def published(query \\ __MODULE__),         do: from(q in query, where: q.status == ^:published)
+
+  def published_since(query \\ __MODULE__, issue_or_time)
+  def published_since(query, i = %NewsIssue{}),   do: published(from(q in query, where: q.published_at >= ^i.published_at))
+  def published_since(query, time = %DateTime{}), do: published(from(q in query, where: q.published_at >= ^time))
+  def published_since(query, _),                  do: published(query)
 
   def file_changeset(item, attrs \\ %{}) do
     cast_attachments(item, attrs, ~w(image))
@@ -78,19 +88,9 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:topics)
   end
 
-  def publish!(item) do
-    item
-    |> change(%{status: :published, published_at: Timex.now})
-    |> Repo.update!
-  end
+  def queue!(item), do: item |> change(%{status: :queued}) |> Repo.update!
+  def publish!(item), do: item |> change(%{status: :published, published_at: Timex.now}) |> Repo.update!
 
-  def newslettered(query \\ __MODULE__), do: from(q in query, where: q.newsletter == true)
-  def published(query \\ __MODULE__),    do: from(q in query, where: q.status == ^:published)
-
-  def published_since(query \\ __MODULE__, issue_or_time)
-  def published_since(query, i = %NewsIssue{}),   do: published(from(q in query, where: q.published_at >= ^i.published_at))
-  def published_since(query, time = %DateTime{}), do: published(from(q in query, where: q.published_at >= ^time))
-  def published_since(query, _),                  do: published(query)
-
+  def is_draft(item), do: item.status == :draft
   def is_published(item), do: item.status == :published
 end

@@ -31,6 +31,11 @@
 </div>
 
 <div class="ui basic segment">
+  <%= if Enum.any?(@drafts) do %>
+    <h2 class="ui header">My Drafts</h2>
+    <%= render("_table.html", conn: @conn, status: "draft", items: @drafts) %>
+  <% end %>
+
   <h2 class="ui header">Queued</h2>
   <%= if Enum.any?(@queued) do %>
     <%= render("_table.html", conn: @conn, status: "queued", items: @queued) %>

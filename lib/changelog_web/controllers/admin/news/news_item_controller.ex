@@ -6,7 +6,14 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
 
-  def index(conn, params) do
+  def index(conn = %{assigns: %{current_user: me}}, params) do
+    drafts =
+      NewsItem.drafted
+      |> NewsItem.newest_last
+      |> NewsItem.logged_by(me)
+      |> NewsItem.preload_all
+      |> Repo.all
+
     queued =
       NewsQueue.ordered
       |> NewsQueue.preload_all
@@ -19,7 +26,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> NewsItem.preload_all
       |> Repo.paginate(params)
 
-    render(conn, :index, queued: queued, published: page.entries, page: page)
+    render(conn, :index, drafts: drafts, queued: queued, published: page.entries, page: page)
   end
 
   def new(conn, params) do
@@ -43,12 +50,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     case Repo.insert(changeset) do
       {:ok, item} ->
         Repo.update(NewsItem.file_changeset(item, item_params))
-
-        case Map.get(params, "queue", "append") do
-          "publish" -> NewsItem.publish!(item)
-          "prepend" -> NewsQueue.prepend(item)
-          "append" -> NewsQueue.append(item)
-        end
+        handle_status_changes(item, params)
 
         if conn.assigns.quick do
           render(conn, :create, layout: false)
@@ -76,6 +78,8 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     case Repo.update(changeset) do
       {:ok, item} ->
+        handle_status_changes(item, params)
+
         conn
         |> put_flash(:result, "success")
         |> smart_redirect(item, params)
@@ -105,10 +109,21 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     assign(conn, :quick, Map.has_key?(conn.params, "quick"))
   end
 
-  defp smart_redirect(conn, _item, %{"close" => _true}) do
-    redirect(conn, to: admin_news_item_path(conn, :index))
+  defp handle_status_changes(item, params) do
+    case Map.get(params, "queue", "draft") do
+      "publish" -> NewsItem.publish!(item)
+      "prepend" -> NewsQueue.prepend(item)
+      "append"  -> NewsQueue.append(item)
+      "draft"   -> true
+    end
   end
-  defp smart_redirect(conn, item, _params) do
+
+  # usually we want to stay on edit as the default, but in this case we
+  # actually want to close as the default and let stay be the exception case
+  defp smart_redirect(conn, item, %{"stay" => _true}) do
     redirect(conn, to: admin_news_item_path(conn, :edit, item))
+  end
+  defp smart_redirect(conn, _item, _params) do
+    redirect(conn, to: admin_news_item_path(conn, :index))
   end
 end
