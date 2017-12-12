@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsIssueController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsIssue, NewsItem, NewsIssueItem}
+  alias Changelog.{NewsIssue, NewsItem, NewsIssueAd, NewsIssueItem, NewsSponsorship}
 
   plug :scrub_params, "news_issue" when action in [:create, :update]
 
@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     page =
       NewsIssue.published
       |> order_by([s], desc: s.id)
-      |> NewsIssue.preload_all()
+      |> NewsIssue.preload_all
       |> Repo.paginate(params)
 
     drafts =
@@ -34,8 +34,19 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       |> Enum.with_index(1)
       |> Enum.map(&NewsIssueItem.build_and_preload/1)
 
+    ads =
+      Timex.today
+      |> NewsSponsorship.week_of
+      |> NewsSponsorship.preload_all
+      |> Repo.all
+      |> Enum.map(&NewsSponsorship.ad_for_issue/1)
+      |> Enum.reject(&is_nil/1)
+      |> Enum.with_index(1)
+      |> Enum.map(&NewsIssueAd.build_and_preload/1)
+
     changeset = NewsIssue.admin_changeset(%NewsIssue{
       news_issue_items: items,
+      news_issue_ads: ads,
       slug: NewsIssue.next_slug(last_issue)
     })
 

@@ -39,6 +39,28 @@
       </div>
     <% end %>
     </div>
+  </div>
+
+  <div class="field required">
+    <%= label(f, :ads) %>
+
+    <div class="ui big relaxed middle aligned celled list js-ads">
+    <%= inputs_for f, :news_issue_ads, fn i -> %>
+      <% ad = load_from_form(i, NewsAd, :ad) %>
+      <div class="item" style="background: white;">
+        <%= hidden_input i, :ad_id %>
+        <%= hidden_input i, :position, class: "js-position" %>
+
+        <div class="right floated content">
+          <div class="ui tiny basic icon button"><i class="move icon"></i></div>
+        </div>
+        <div class="content">
+          <%= link ad.headline, to: ad.url %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  </div>
 
   <div class="ui hidden divider"></div>
 

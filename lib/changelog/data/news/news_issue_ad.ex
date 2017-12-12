@@ -13,6 +13,8 @@ defmodule Changelog.NewsIssueAd do
     timestamps()
   end
 
+  def by_position, do: from(q in __MODULE__, order_by: q.position)
+
   def changeset(issue_ad, params \\ %{}) do
     issue_ad
     |> cast(params, ~w(position ad_id issue_id delete))
@@ -20,7 +22,9 @@ defmodule Changelog.NewsIssueAd do
     |> mark_for_deletion()
   end
 
-  def by_position, do: from(q in __MODULE__, order_by: q.position)
+  def build_and_preload({ad, position}) do
+    %__MODULE__{position: position, ad_id: ad.id} |> Repo.preload(:ad)
+  end
 
   defp mark_for_deletion(changeset) do
     if get_change(changeset, :delete) do

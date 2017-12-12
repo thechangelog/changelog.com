@@ -80,10 +80,25 @@ defmodule Changelog.Factory do
     %Changelog.Episode{episode_factory() | published: true, published_at: hours_from_now(1)}
   end
 
+  def news_ad_factory do
+    %Changelog.NewsAd{
+      url: "https://apple.com",
+      headline: "Apple Inc Is Cool I Guess?",
+      sponsorship: build(:news_sponsorship)
+    }
+  end
+
   def news_issue_factory do
     %Changelog.NewsIssue{
       slug: sequence(:slug, &"#{&1}"),
       note: "Hope you like it"
+    }
+  end
+
+  def news_issue_ad_factory do
+    %Changelog.NewsIssueAd{
+      issue: build(:news_issue),
+      ad: build(:news_ad)
     }
   end
 

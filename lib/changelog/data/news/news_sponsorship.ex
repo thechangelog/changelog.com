@@ -15,6 +15,11 @@ defmodule Changelog.NewsSponsorship do
     timestamps()
   end
 
+  def week_of(date) do
+    date = Timex.beginning_of_week(date)
+    from(s in __MODULE__, where: ^date in s.weeks)
+  end
+
   def admin_changeset(sponsorship, attrs \\ %{}) do
     sponsorship
     |> cast(attrs, ~w(name weeks sponsor_id))
@@ -36,5 +41,11 @@ defmodule Changelog.NewsSponsorship do
   def preload_sponsor(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :sponsor)
   def preload_sponsor(sponsorship), do: Repo.preload(sponsorship, :sponsor)
 
-  def week_of(date), do: from(s in __MODULE__, where: ^date in s.weeks)
+  def ad_for_issue(sponsorship), do: select_ad(preload_ads(sponsorship).ads)
+  defp select_ad([]), do: nil
+  defp select_ad(ads) do
+    Enum.find(ads, fn(x) -> x.newsletter end) ||
+    Enum.find(ads, fn(x) -> NewsAd.has_no_issues(x) end) ||
+    Enum.random(ads)
+  end
 end
