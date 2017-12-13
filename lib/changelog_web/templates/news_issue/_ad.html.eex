@@ -1,0 +1,12 @@
+<div class="list-item">
+  <h5 class="list-item__sponsored">Sponsored</h5>
+  <h2 class="list-item__title"><%= link(@ad.headline, to: @ad.url) %></h2>
+  <%= @ad.story |> md_to_html |> raw %>
+<%= if @ad.image do %>
+  <p>
+    <%= link to: @ad.url do %>
+      <img src="<%= NewsItemView.image_url(@ad, :large) %>" alt="<%= @ad.headline %>">
+    <% end %>
+  </p>
+<% end %>
+</div>

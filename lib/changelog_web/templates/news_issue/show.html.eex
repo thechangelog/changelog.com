@@ -67,18 +67,8 @@
 <img class="divider-25" src="<%= spacer_url() %>">
 
 <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff"><tbody><tr><td class="content-block content-block-white" bgcolor="#ffffff">
-<%= for item <- @issue.items do %>
-  <div class="list-item">
-    <h2 class="list-item__title"><%= link item.headline, to: item.url %></h2>
-    <%= item.story |> md_to_html |> raw %>
-  <%= if item.image do %>
-    <p>
-      <%= link to: item.url do %>
-        <img src="<%= NewsItemView.image_url(item, :large) %>" alt="<%= item.headline %>">
-      <% end %>
-    </p>
-  <% end %>
-  </div>
+<%= for item_or_ad <- items_with_ads(@issue.items, @issue.ads) do %>
+  <%= render_item_or_ad(item_or_ad) %>
 <% end %>
 
 <img class="divider-20" src="<%= spacer_url() %>">
@@ -98,7 +88,7 @@
 
         <p>You received this email because you are a subscriber of Changelog.com emails with the email address: [email]</p>
 
-        <p class="last-of-type">© 2013-2017 Changelog Media</p>
+        <p class="last-of-type">© 2013-<%= Timex.today.year %> Changelog Media</p>
 
         <img class="divider-20" src="<%= spacer_url() %>">
       </td>
