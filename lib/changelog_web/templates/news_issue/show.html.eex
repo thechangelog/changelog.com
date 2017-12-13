@@ -2,100 +2,118 @@
 <html>
 <head>
   <title>Changelog Weekly - Issue #<%= @issue.slug %></title>
-  <style type="text/css">body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;width:100%;background-color:#fff;margin:0;padding:0}.brand{width:175px}@media (max-width: 600px){.brand{width:150px}}.brand__tagline{color:#59b287;font-size:12px;text-align:right;text-transform:uppercase;margin:0 !important}.hide-on-desktop{display:none !important}.show-on-desktop{display:block !important}@media (max-width: 600px){.hide-on-mobile{display:none !important}.show-on-mobile{display:block !important}.last-of-type-on-mobile{margin-bottom:0 !important}}.last-of-type{margin-bottom:0 !important}.preamble{border-top:2px solid #59b287;color:#fff;background:#121921}.preamble__heading{margin-bottom:16px;text-transform:uppercase;font-size:13px;font-weight:bold;margin:0 0 20px 0}.preamble__heading a{text-decoration:none}.preamble__text{margin:0 0 10px 0}.preamble p{font-size:14px;line-height:1.5}.preamble a{color:#59b287}.content-block__title{border-bottom:2px solid #f5f5f5;color:#aaa;font-size:14px;font-weight:normal;margin-top:0;margin-bottom:18px;padding-bottom:5px;text-transform:uppercase}.list-item{margin-bottom:32px}.list-item:last-of-type,.list-item.last-of-type{margin-bottom:0 !important}.list-item__sponsored{color:#aaa;font-size:11px;font-weight:normal;margin-top:0;margin-bottom:4px;padding-top:0;padding-bottom:0;letter-spacing:1px;text-transform:uppercase}.list-item__title{color:#59b287;font-size:16px;font-weight:bold;line-height:1.4;margin-top:0;margin-bottom:5px;padding-top:0;padding-bottom:0}.list-item__title a{color:#59b287}.list-item a{color:#59b287}.list-item a:hover{color:#44946d;text-decoration:underline}.list-item p,.list-item li{color:#555}.list-item p,.list-item li{font-size:14px;line-height:1.5}.list-item p{margin-top:0;margin-bottom:10px;padding-top:0;padding-bottom:0}.list-item blockquote{border-left:4px solid #59b287;margin:10px 0;padding-left:12px}.list-item p img{max-width:110%;margin:10px -5%}@media (max-width: 600px){.list-item p img{max-width:100%;margin:10px 0}}.list-item ul,.list-item ol{margin-top:5px;margin-bottom:22px;padding-left:18px}.list-item li{margin-top:0;margin-bottom:4px}.list-item code,.list-item pre{margin:0;padding:0}.list-item pre{display:block;width:110%;margin:15px -5%}@media (max-width: 600px){.list-item pre{width:100%;margin:10px 0}}.list-item code{display:inline-block}.list-item pre code{display:block}.list-item code{border-top:2px solid #59b287;background-color:#121921;color:#59b287;font-family:"DejaVu Sans Mono",Menlo,Monaco,Consolas,Courier,monospace;font-size:14px;padding:15px}.list-item p code{background-color:#f8f8f8;border:1px solid #eaeaea;border-radius:3px;color:inherit;font-family:"DejaVu Sans Mono",Menlo,Monaco,Consolas,Courier,monospace;font-size:12px;margin:0 2px;padding:2px 5px}.list-item em{font-style:italic}.list-item mark,.list-item .highlight{font-style:normal;padding:3px 5px;background-color:#fffedb}.list-item .highlight-gray,.list-item .highlight-grey{font-style:normal;padding:3px 5px;background-color:#f5f5f5}@media (max-width: 600px){table{width:100%}}.content-block-footer{color:#777}@media (max-width: 600px){.content-block-footer{background-color:#f5f5f5}}.content-block-footer p{font-size:13px;line-height:1.5;margin:0 0 20px 0;padding:0 40px}.content-block-footer a{color:#121921}.image-bleed img{width:600px}.divider,.divider-10,.divider-15,.divider-20,.divider-25,.divider-30,.divider-35,.divider-40{display:block;width:1px}.divider-10{height:10px}.divider-15{height:15px}.divider-20{height:20px}.divider-25{height:25px}.divider-30{height:30px}.divider-35{height:35px}.divider-40{height:40px}.align-center{text-align:center !important}.align-right{text-align:right !important}.align-left{text-align:left !important}.align-justify{text-align:justify !important}.margin-top-negative-10{margin-top:-10px}.margin-top-10,.bq-solo{margin-top:10px !important}.margin-bottom-10,.bq-below{margin-bottom:10px !important}
-</style>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;width:100%;background-color:#fff;margin:0;padding:0}.brand{width:175px}@media (max-width: 600px){.brand{width:150px}}.brand__tagline{color:#59b287;font-size:12px;text-align:right;text-transform:uppercase;margin:0 !important}.hide-on-desktop{display:none !important}.show-on-desktop{display:block !important}@media (max-width: 600px){.hide-on-mobile{display:none !important}.show-on-mobile{display:block !important}.last-of-type-on-mobile{margin-bottom:0 !important}}.last-of-type{margin-bottom:0 !important}.preamble{border-top:2px solid #59b287;color:#fff;background:#121921}.preamble__heading{margin-bottom:16px;text-transform:uppercase;font-size:13px;font-weight:bold;margin:0 0 20px 0}.preamble__heading a{text-decoration:none}.preamble__text{margin:0 0 10px 0}.preamble p{font-size:14px;line-height:1.5}.preamble
+    a{color:#59b287}.content-block__title{border-bottom:2px solid #f5f5f5;color:#aaa;font-size:14px;font-weight:normal;margin-top:0;margin-bottom:18px;padding-bottom:5px;text-transform:uppercase}.list-item{margin-bottom:32px}.list-item:last-of-type,.list-item.last-of-type{margin-bottom:0 !important}.list-item__sponsored{color:#aaa;font-size:11px;font-weight:normal;margin-top:0;margin-bottom:4px;padding-top:0;padding-bottom:0;letter-spacing:1px;text-transform:uppercase}.list-item__title{color:#59b287;font-size:16px;font-weight:bold;line-height:1.4;margin-top:0;margin-bottom:5px;padding-top:0;padding-bottom:0}.list-item__title a{color:#59b287}.list-item a{color:#59b287}.list-item a:hover{color:#44946d;text-decoration:underline}.list-item p,.list-item li{color:#555}.list-item p,.list-item li{font-size:14px;line-height:1.5}.list-item
+    p{margin-top:0;margin-bottom:10px;padding-top:0;padding-bottom:0}.list-item blockquote{border-left:4px solid #59b287;margin:10px 0;padding-left:12px}.list-item p img{max-width:110%;margin:10px -5%}@media (max-width: 600px){.list-item p img{max-width:100%;margin:10px 0}}.list-item ul,.list-item ol{margin-top:5px;margin-bottom:22px;padding-left:18px}.list-item li{margin-top:0;margin-bottom:4px}.list-item code,.list-item pre{margin:0;padding:0}.list-item pre{display:block;width:110%;margin:15px -5%}@media (max-width: 600px){.list-item pre{width:100%;margin:10px 0}}.list-item code{display:inline-block}.list-item pre code{display:block}.list-item code{border-top:2px solid #59b287;background-color:#121921;color:#59b287;font-family:"DejaVu Sans Mono",Menlo,Monaco,Consolas,Courier,monospace;font-size:14px;padding:15px}.list-item p code{background-color:#f8f8f8;border:1px solid
+    #eaeaea;border-radius:3px;color:inherit;font-family:"DejaVu Sans Mono",Menlo,Monaco,Consolas,Courier,monospace;font-size:12px;margin:0 2px;padding:2px 5px}.list-item em{font-style:italic}.list-item mark,.list-item .highlight{font-style:normal;padding:3px 5px;background-color:#fffedb}.list-item .highlight-gray,.list-item .highlight-grey{font-style:normal;padding:3px 5px;background-color:#f5f5f5}@media (max-width: 600px){table{width:100%}}.content-block-footer{color:#777}@media (max-width: 600px){.content-block-footer{background-color:#f5f5f5}}.content-block-footer p{font-size:13px;line-height:1.5;margin:0 0 20px 0;padding:0 40px}.content-block-footer a{color:#121921}.image-bleed
+    img{width:600px}.divider,.divider-10,.divider-15,.divider-20,.divider-25,.divider-30,.divider-35,.divider-40{display:block;width:1px}.divider-10{height:10px}.divider-15{height:15px}.divider-20{height:20px}.divider-25{height:25px}.divider-30{height:30px}.divider-35{height:35px}.divider-40{height:40px}.align-center{text-align:center !important}.align-right{text-align:right !important}.align-left{text-align:left !important}.align-justify{text-align:justify !important}.margin-top-negative-10{margin-top:-10px}.margin-top-10,.bq-solo{margin-top:10px !important}.margin-bottom-10,.bq-below{margin-bottom:10px !important}
+  </style>
 </head>
-<body>
-  <p style="display: none !important;">TODO</p>
+<body class="183 183_index">
+  <p style="display: none !important;"><%= @issue.teaser %></p>
 
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"><tbody><tr><td width="100%" bgcolor="#ffffff"><table width="600" cellpadding="0" cellspacing="0" border="0" align="center"><tbody><tr><td width="600">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
-  <tbody>
-    <tr>
-      <td width="100%" bgcolor="#ffffff">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+    <tbody>
+      <tr>
+        <td width="100%" bgcolor="#ffffff">
+          <table width="600" cellpadding="0" cellspacing="0" border="0" align="center">
+            <tbody>
+              <tr>
+                <td width="600">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+                    <tbody>
+                      <tr>
+                        <td width="100%" bgcolor="#ffffff">
+                          <table width="600" cellpadding="0" cellspacing="0" border="0" align="center">
+                            <tbody>
+                              <tr>
+                                <td width="600">
+                                  <table width="600" cellpadding="20" cellspacing="0" border="0">
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <a href="https://changelog.com/">
+                                            <img class="brand" width="300" alt="Changelog" src="https://changelog-assets.s3.amazonaws.com/weekly/changelog-logo.png">
+                                          </a>
+                                        </td>
 
-        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center">
-          <tbody>
-            <tr>
-              <td width="600">
+                                        <td><p class="brand__tagline">Hacker to the Heart</p></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
 
-                <table width="600" cellpadding="20" cellspacing="0" border="0">
-                  <tbody>
-                    <tr>
-                      <td>
+                                  <img class="divider-10 hide-on-desktop show-on-mobile" src="<%= spacer_url() %>">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                        <a href="https://changelog.com/">
-                          <img class="brand" width="300" alt="Changelog" src="https://changelog-assets.s3.amazonaws.com/weekly/changelog-logo.png">
-                        </a>
+                  <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#121921">
+                    <tbody>
+                      <tr>
+                        <td class="content-block preamble content-block-dark" bgcolor="#121921">
+                          <h4 class="preamble__heading">Issue #<%= @issue.slug %> – <span style="border-bottom: none !important;"><currentmonthname> <currentday>, <currentyear></currentyear></currentday></currentmonthname></span></h4>
+                        <%= if @issue.note do %>
+                          <div class="preamble__text"><%= @issue.note |> md_to_html |> raw %></div>
+                        <% end %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                      </td>
-                      <td>
+                  <img class="divider-25" src="<%= spacer_url() %>">
 
-                        <p class="brand__tagline">Hacker to the Heart</p>
+                  <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff">
+                    <tbody>
+                      <tr>
+                        <td class="content-block content-block-white" bgcolor="#ffffff">
+                        <%= for item_or_ad <- items_with_ads(@issue.items, @issue.ads) do %>
+                          <%= render_item_or_ad(item_or_ad) %>
+                        <% end %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <img class="divider-20" src="<%= spacer_url() %>">
 
-                <img class="divider-10 hide-on-desktop show-on-mobile" src="<%= spacer_url() %>">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e5e5e5">
+                    <tbody>
+                      <tr><td bgcolor="#e5e5e5" height="1" width="100%"></td></tr>
+                    </tbody>
+                  </table>
 
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff">
+                    <tbody>
+                      <tr>
+                        <td class="content-block content-block-footer" bgcolor="#ffffff" align="center">
+                          <img class="divider-20" src="<%= spacer_url() %>">
+                          <p><unsubscribe>Unsubscribe</unsubscribe>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<preferences>Manage Subscription</preferences>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<a href="https://changelog.com/weekly/archive">View Archive</a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<webversion>View in Browser</webversion></p>
 
-      </td>
-    </tr>
-  </tbody>
-</table>
+                          <p>You received this email because you are a subscriber of Changelog.com emails with the email address: [email]</p>
 
-<table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#121921">
-  <tbody>
-    <tr>
-      <td class="content-block preamble content-block-dark" bgcolor="#121921">
+                          <p class="last-of-type">© 2013-<%= Timex.today.year %> Changelog Media</p>
 
-        <h4 class="preamble__heading">Issue #<%= @issue.slug %> – <span style="border-bottom: none !important;"><currentmonthname> <currentday>, <currentyear></currentyear></currentday></currentmonthname></span></h4>
-        <%= if @issue.note do %>
-        <div class="preamble__text"><%= @issue.note |> md_to_html |> raw %></div>
-        <% end %>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<img class="divider-25" src="<%= spacer_url() %>">
-
-<table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff"><tbody><tr><td class="content-block content-block-white" bgcolor="#ffffff">
-<%= for item_or_ad <- items_with_ads(@issue.items, @issue.ads) do %>
-  <%= render_item_or_ad(item_or_ad) %>
-<% end %>
-
-<img class="divider-20" src="<%= spacer_url() %>">
-
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e5e5e5">
-  <tbody>
-    <tr><td bgcolor="#e5e5e5" height="1" width="100%"></td></tr>
-  </tbody>
-</table>
-
-<table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff">
-  <tbody>
-    <tr>
-      <td class="content-block content-block-footer" bgcolor="#ffffff" align="center">
-        <img class="divider-20" src="<%= spacer_url() %>">
-        <p><unsubscribe>Unsubscribe</unsubscribe>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<preferences>Manage Subscription</preferences>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<a href="https://changelog.com/weekly/archive">View Archive</a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<webversion>View in Browser</webversion></p>
-
-        <p>You received this email because you are a subscriber of Changelog.com emails with the email address: [email]</p>
-
-        <p class="last-of-type">© 2013-<%= Timex.today.year %> Changelog Media</p>
-
-        <img class="divider-20" src="<%= spacer_url() %>">
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-    </td></tr></tbody></table></td></tr></tbody></table>
+                          <img class="divider-20" src="<%= spacer_url() %>">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 </html>
