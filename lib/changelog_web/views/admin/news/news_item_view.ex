@@ -12,6 +12,14 @@ defmodule ChangelogWeb.Admin.NewsItemView do
     ~s/javascript:(function() {window.open('#{url}'+location.href);})();/
   end
 
+  def show_or_preview(item) do
+    if NewsItem.is_published(item) do
+      :show
+    else
+      :preview
+    end
+  end
+
   def type_options do
     NewsItem.Type.__enum_map__()
     |> Enum.map(fn({k, _v}) -> {String.capitalize(Atom.to_string(k)), k} end)

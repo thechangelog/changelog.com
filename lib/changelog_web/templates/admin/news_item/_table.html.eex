@@ -45,6 +45,7 @@
           <%= if @status == "queued" do %>
             <%= icon_link "move", to: admin_news_item_path(@conn, :edit, item) %>
           <% end %>
+            <%= icon_link "eye", to: news_item_path(@conn, show_or_preview(item), item.id) %>
             <%= icon_link "edit", to: admin_news_item_path(@conn, :edit, item) %>
             <%= icon_link "trash", to: admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"] %>
           </div>
