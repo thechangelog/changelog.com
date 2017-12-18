@@ -19,6 +19,14 @@
     <%= error_message(f, :note) %>
   </div>
 
+<%= if NewsIssue.is_published(@changeset.data) do %>
+  <div class="field <%= error_class(f, :published_at) %>">
+    <%= label(f, :published_at, "Publish Time") %>
+    <%= semantic_calendar_field(f, :published_at) %>
+    <%= error_message(f, :published_at) %>
+  </div>
+<% end %>
+
   <div class="field required">
     <%= label(f, :items) %>
 

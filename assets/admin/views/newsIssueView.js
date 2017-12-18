@@ -1,4 +1,5 @@
 import Sortable from "sortablejs";
+import CalendarField from "components/calendarField";
 
 export default class newsIssueView {
   index() {
@@ -31,5 +32,6 @@ export default class newsIssueView {
 
   edit() {
     this.new();
+    new CalendarField(".ui.calendar");
   }
 }
