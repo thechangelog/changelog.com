@@ -6,8 +6,11 @@
         <th>Type</th>
         <th>Headline</th>
         <th>Image</th>
+      <%= if @status != "published" do %>
         <th>Create Time</th>
+      <% else %>
         <th>Publish Time</th>
+      <% end %>
         <th></th>
       </tr>
     </thead>
@@ -38,8 +41,11 @@
           <img class="ui inline image" src="<%= image_url(item, :small) %>" style="width: 75px">
         <% end %>
         </td>
+      <%= if @status != "published" do %>
         <td><%= ts(item.inserted_at) %></td>
+      <% else %>
         <td><%= ts(item.published_at) %></td>
+      <% end %>
         <td class="center aligned">
           <div class="ui small basic buttons">
           <%= if @status == "queued" do %>
