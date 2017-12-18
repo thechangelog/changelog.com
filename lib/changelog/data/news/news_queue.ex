@@ -109,9 +109,10 @@ defmodule Changelog.NewsQueue do
   end
 
   def publish(item = %NewsItem{}) do
-    NewsQueue
-    |> Repo.get_by(item_id: item.id)
-    |> publish()
+    case Repo.get_by(NewsQueue, item_id: item.id) do
+      entry = %NewsQueue{} -> publish(entry)
+      nil -> NewsItem.publish!(item)
+    end
   end
 
   def publish(entry = %NewsQueue{}) do

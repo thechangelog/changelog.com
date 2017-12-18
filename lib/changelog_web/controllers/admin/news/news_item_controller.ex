@@ -111,7 +111,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   defp handle_status_changes(item, params) do
     case Map.get(params, "queue", "draft") do
-      "publish" -> NewsItem.publish!(item)
+      "publish" -> NewsQueue.publish(item)
       "prepend" -> NewsQueue.prepend(item)
       "append"  -> NewsQueue.append(item)
       "draft"   -> true

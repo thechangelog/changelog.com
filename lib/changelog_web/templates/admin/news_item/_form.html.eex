@@ -125,16 +125,22 @@
     <%= error_message(f, :logger_id) %>
   </div>
 
-  <%= if is_persisted(f.data) && !NewsItem.is_draft(f.data) do %>
-    <%= form_actions() %>
-  <% else %>
-    <div class="ui hidden divider"></div>
+  <div class="ui hidden divider"></div>
 
-    <div class="ui equal width stackable grid">
-      <div class="column"><button class="ui primary   fluid basic button" type="submit" name="queue" value="draft">Save Draft</button></div>
-      <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="append">Pub Whenevs</button></div>
-      <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="publish">Pub Now</button></div>
-      <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="prepend">Pub Next</button></div>
+  <div class="ui equal width stackable grid">
+  <%= if is_persisted(f.data) && !NewsItem.is_draft(f.data) do %>
+    <div class="column"><button class="ui primary fluid basic button" type="submit" name="stay">Save</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="close">Save and Close</button></div>
+    <div class="column">
+    <%= if !NewsItem.is_published(f.data) do %>
+      <button class="ui green fluid basic button" type="submit" name="queue" value="publish">Publish</button>
+    <% end %>
     </div>
+  <% else %>
+    <div class="column"><button class="ui primary   fluid basic button" type="submit" name="queue" value="draft">Save Draft</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="append">Pub Whenevs</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="publish">Pub Now</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="prepend">Pub Next</button></div>
   <% end %>
+  </div>
 <% end %>
