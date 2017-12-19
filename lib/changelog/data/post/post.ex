@@ -32,10 +32,10 @@ defmodule Changelog.Post do
     |> cast_assoc(:post_topics)
   end
 
-  def published(query \\ __MODULE__),    do: from(q in query, where: q.published == true, where: q.published_at <= ^Timex.now)
-  def scheduled(query \\ __MODULE__),    do: from(q in query, where: q.published == true, where: q.published_at > ^Timex.now)
+  def published(query \\ __MODULE__),    do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now)
+  def scheduled(query \\ __MODULE__),    do: from(q in query, where: q.published, where: q.published_at > ^Timex.now)
   def search(query \\ __MODULE__, term), do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
-  def unpublished(query \\ __MODULE__),  do: from(q in query, where: q.published == false)
+  def unpublished(query \\ __MODULE__),  do: from(q in query, where: not(q.published))
 
   def is_public(post, as_of \\ Timex.now) do
     post.published && post.published_at <= as_of

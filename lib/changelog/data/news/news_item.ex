@@ -32,11 +32,11 @@ defmodule Changelog.NewsItem do
   def drafted(query \\ __MODULE__),           do: from(q in query, where: q.status == ^:draft)
   def logged_by(query \\ __MODULE__, person), do: from(q in query, where: q.logger_id == ^person.id)
   def newslettered(query \\ __MODULE__),      do: from(q in query, where: q.newsletter == true)
-  def published(query \\ __MODULE__),         do: from(q in query, where: q.status == ^:published)
+  def published(query \\ __MODULE__),         do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
 
   def published_since(query \\ __MODULE__, issue_or_time)
-  def published_since(query, i = %NewsIssue{}),   do: published(from(q in query, where: q.published_at >= ^i.published_at))
-  def published_since(query, time = %DateTime{}), do: published(from(q in query, where: q.published_at >= ^time))
+  def published_since(query, i = %NewsIssue{}),   do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^i.published_at)
+  def published_since(query, time = %DateTime{}), do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^time)
   def published_since(query, _),                  do: published(query)
 
   def file_changeset(item, attrs \\ %{}) do
