@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.Helpers.SharedHelpers do
   use Phoenix.HTML
 
+  alias Changelog.Regexp
+
   def comma_separated(number) do
     number
     |> Integer.to_charlist
@@ -35,6 +37,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def md_to_text(md) when is_binary(md), do: HtmlSanitizeEx.strip_tags(md_to_html(md))
   def md_to_text(md) when is_nil(md), do: ""
+
+  def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
   def twitter_url(handle), do: "https://twitter.com/#{handle}"
 

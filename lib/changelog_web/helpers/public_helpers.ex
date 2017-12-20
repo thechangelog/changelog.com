@@ -35,8 +35,6 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
   def plural_form(1, singular, _plural), do: singular
   def plural_form(_count, _singular, plural), do: plural
 
-  def sans_p_tags(html), do: String.replace(html, Regexp.p_tag, "")
-
   def tweet_url(text, url, via \\ "changelog")
   def tweet_url(text, url, nil), do: tweet_url(text, url)
   def tweet_url(text, url, via) do

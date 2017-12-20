@@ -7,8 +7,12 @@ defmodule Changelog.Regexp do
     "must include http(s)://"
   end
 
-  def p_tag do
-    ~r/<\/?p>/
+  def tag do
+    ~r/(?<open><\/?)(?<tag>.*?)(?<close>>)/
+  end
+
+  def tag(name) do
+    ~r/(?<open><\/?)#{name}(?<close>>)/
   end
 
   def slug do
