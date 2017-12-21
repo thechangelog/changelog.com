@@ -103,13 +103,6 @@
     </div>
   </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(f, :newsletter, class: "hidden") %>
-      <label>In Newsletter</label>
-    </div>
-  </div>
-
   <div class="field required <%= error_class(f, :logger_id) %>">
     <%= label(f, :logger_id, "Logged By") %>
     <div class="ui fluid remote logger search selection dropdown">

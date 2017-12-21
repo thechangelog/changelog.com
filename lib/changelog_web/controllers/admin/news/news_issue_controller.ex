@@ -29,7 +29,6 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
 
     items =
       NewsItem.published_since(last_issue)
-      |> NewsItem.newslettered
       |> NewsItem.newest_first
       |> Repo.all
       |> Enum.with_index(1)

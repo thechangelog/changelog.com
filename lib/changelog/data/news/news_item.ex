@@ -31,7 +31,6 @@ defmodule Changelog.NewsItem do
 
   def drafted(query \\ __MODULE__),           do: from(q in query, where: q.status == ^:draft)
   def logged_by(query \\ __MODULE__, person), do: from(q in query, where: q.logger_id == ^person.id)
-  def newslettered(query \\ __MODULE__),      do: from(q in query, where: q.newsletter == true)
   def published(query \\ __MODULE__),         do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
 
   def published_since(query \\ __MODULE__, issue_or_time)
@@ -45,7 +44,7 @@ defmodule Changelog.NewsItem do
 
   def insert_changeset(item, attrs \\ %{}) do
     item
-    |> cast(attrs, ~w(status type url headline story published_at newsletter author_id logger_id source_id))
+    |> cast(attrs, ~w(status type url headline story published_at author_id logger_id source_id))
     |> validate_required([:type, :url, :headline, :logger_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:author_id)
