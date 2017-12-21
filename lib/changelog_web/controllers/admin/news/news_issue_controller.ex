@@ -24,6 +24,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     last_issue =
       NewsIssue.published
       |> NewsIssue.newest_first
+      |> NewsIssue.limit(1)
       |> Repo.one
 
     items =

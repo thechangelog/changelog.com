@@ -30,40 +30,50 @@
   <div class="field required">
     <%= label(f, :items) %>
 
-    <div class="ui big relaxed middle aligned celled list js-items">
+    <div class="ui very relaxed large ordered divided list js-items">
     <%= inputs_for f, :news_issue_items, fn i -> %>
       <% item = load_from_form(i, NewsItem, :item) %>
-      <div class="item" style="background: white;">
-        <%= hidden_input i, :item_id %>
-        <%= hidden_input i, :position, class: "js-position" %>
+      <div class="item <%= if is_persisted(i.data), do: "persisted" %>" style="background: white;">
+        <%= hidden_input(i, :item_id) %>
+        <%= hidden_input(i, :position, class: "js-position") %>
 
         <div class="right floated content">
-          <div class="ui tiny basic icon button"><i class="move icon"></i></div>
+          <div class="ui tiny basic icon button js-move"><i class="move icon"></i></div>
+          <div class="ui tiny basic icon button js-remove"><i class="trash icon"></i></div>
+          <%= hidden_input(i, :delete) %>
         </div>
-        <div class="content">
-          <%= if item.image do %><i class="image icon"></i><% end %>
-          <%= link item.headline, to: item.url %>
+        <div class="content" style="margin-left: 6px;">
+          <%= link(item.headline, to: item.url, class: "header") %>
+          <div class="description">
+            <%= if item.image do %>
+              <i class="image icon"></i>
+            <% end %>
+            <%= item.story |> NewsItemView.teaser |> raw %>
+          </div>
         </div>
       </div>
     <% end %>
     </div>
   </div>
 
-  <div class="field required">
+  <div class="ui divider"></div>
+
+  <div class="field">
     <%= label(f, :ads) %>
 
-    <div class="ui big relaxed middle aligned celled list js-ads">
+    <div class="ui very relaxed large ordered divided list js-ads">
     <%= inputs_for f, :news_issue_ads, fn i -> %>
       <% ad = load_from_form(i, NewsAd, :ad) %>
-      <div class="item" style="background: white;">
-        <%= hidden_input i, :ad_id %>
-        <%= hidden_input i, :position, class: "js-position" %>
+      <div class="item <%= if is_persisted(i.data), do: "persisted" %>" style="background: white;">
+        <%= hidden_input(i, :ad_id) %>
+        <%= hidden_input(i, :position, class: "js-position") %>
 
         <div class="right floated content">
-          <div class="ui tiny basic icon button"><i class="move icon"></i></div>
+          <div class="ui tiny basic icon button js-move"><i class="move icon"></i></div>
         </div>
-        <div class="content">
-          <%= link ad.headline, to: ad.url %>
+        <div class="content" style="margin-left: 6px;">
+          <%= link(ad.headline, to: ad.url, class: "header") %>
+          <div class="description"><%= ad.story |> NewsItemView.teaser |> raw %></div>
         </div>
       </div>
     <% end %>

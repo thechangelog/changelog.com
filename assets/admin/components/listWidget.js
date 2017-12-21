@@ -14,11 +14,7 @@ export default class ListWidget {
       });
     }
 
-    Sortable.create($members[0], {
-      onSort: function(event) {
-        setPositions();
-      }
-    });
+    Sortable.create($members.get(0), {onSort: () => { setPositions(); }});
 
     $add.on("click", function(event) {
       event.preventDefault();
