@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, NewsAd, NewsItem, Regexp}
+  alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
 
   def image_url(item, version) do
     Files.Image.url({item.image, item}, version)
@@ -10,6 +10,14 @@ defmodule ChangelogWeb.NewsItemView do
 
   def render_item_or_ad(item = %NewsItem{}), do: render("_item.html", item: item)
   def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
+
+  def slug(item) do
+    item.headline
+    |> String.downcase
+    |> String.replace(~r/[^a-z0-9\s]/, "")
+    |> String.replace(~r/\s+/, "-")
+    |> Kernel.<>("-#{Hashid.encode(item.id)}")
+  end
 
   def teaser(story, max_words \\ 20) do
     word_count = story |> md_to_text |> String.split |> length

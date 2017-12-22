@@ -1,9 +1,10 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem}
+  alias Changelog.{Hashid, NewsItem}
+  alias ChangelogWeb.NewsItemView
 
-  plug RequireAdmin, "before all" when action in [:index, :show, :preview]
+  plug RequireAdmin, "before preview" when action in [:index, :preview]
   plug :put_layout, false
 
   def index(conn, params) do
@@ -16,13 +17,19 @@ defmodule ChangelogWeb.NewsItemController do
     render(conn, :index, items: page.entries, page: page)
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => slug}) do
+    hashid = slug |> String.split("-") |> List.last
+
     item =
       NewsItem.published
-      |> Repo.get_by!(id: id)
+      |> Repo.get_by!(id: Hashid.decode(hashid))
       |> NewsItem.preload_all
 
-    render(conn, :show, item: item)
+    if slug == hashid do
+      redirect(conn, to: news_item_path(conn, :show, NewsItemView.slug(item)))
+    else
+      render(conn, :show, item: item)
+    end
   end
 
   def preview(conn, %{"id" => id}) do

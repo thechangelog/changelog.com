@@ -12,11 +12,11 @@ defmodule ChangelogWeb.Admin.NewsItemView do
     ~s/javascript:(function() {window.open('#{url}'+location.href);})();/
   end
 
-  def show_or_preview(item) do
+  def show_or_preview_path(conn, item) do
     if NewsItem.is_published(item) do
-      :show
+      news_item_path(conn, :show, NewsItemView.slug(item))
     else
-      :preview
+      news_item_path(conn, :preview, item)
     end
   end
 
