@@ -1,0 +1,16 @@
+<div class="list-item">
+<%= if episode = NewsItemView.get_object(@item) do %>
+  <h5 class="list-item__sponsored"><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></h5>
+<% end %>
+
+  <h2 class="list-item__title"><%= link(@item.headline, to: @item.url) %></h2>
+  <%= @item.story |> md_to_html |> raw %>
+
+<%= if @item.image do %>
+  <p>
+    <%= link to: @item.url do %>
+      <img src="<%= NewsItemView.image_url(@item, :large) %>" alt="<%= @item.headline %>">
+    <% end %>
+  </p>
+<% end %>
+</div>

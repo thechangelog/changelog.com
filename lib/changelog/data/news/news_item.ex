@@ -15,9 +15,9 @@ defmodule Changelog.NewsItem do
     field :headline, :string
     field :story, :string
     field :image, Files.Image.Type
+    field :object_id, :string
 
     field :published_at, Timex.Ecto.DateTime
-    field :newsletter, :boolean, default: true
 
     belongs_to :author, Person
     belongs_to :logger, Person
@@ -44,7 +44,7 @@ defmodule Changelog.NewsItem do
 
   def insert_changeset(item, attrs \\ %{}) do
     item
-    |> cast(attrs, ~w(status type url headline story published_at author_id logger_id source_id))
+    |> cast(attrs, ~w(status type url headline story published_at author_id logger_id object_id source_id))
     |> validate_required([:type, :url, :headline, :logger_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:author_id)

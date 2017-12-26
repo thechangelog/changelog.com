@@ -134,9 +134,8 @@ defmodule Changelog.Episode do
   end
 
   def preload_podcast(nil), do: nil
-  def preload_podcast(episode) do
-    episode |> Repo.preload(:podcast)
-  end
+  def preload_podcast(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :podcast)
+  def preload_podcast(episode), do: Repo.preload(episode, :podcast)
 
   def preload_sponsors(episode) do
     episode

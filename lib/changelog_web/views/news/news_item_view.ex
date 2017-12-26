@@ -1,7 +1,24 @@
 defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
+  alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Regexp, Repo}
+
+  def get_object(item) do
+    case item.type do
+      :audio -> get_episode_object(item.object_id)
+      _else -> nil
+    end
+  end
+
+  defp get_episode_object(object_id) when is_nil(object_id), do: nil
+  defp get_episode_object(object_id) do
+    [p, e] = String.split(object_id, ":")
+    Episode.published
+    |> Episode.with_podcast_slug(p)
+    |> Episode.with_slug(e)
+    |> Episode.preload_podcast
+    |> Repo.one
+  end
 
   def image_url(item, version) do
     Files.Image.url({item.image, item}, version)

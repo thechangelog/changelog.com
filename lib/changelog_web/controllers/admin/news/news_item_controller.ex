@@ -45,6 +45,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   def create(conn, params = %{"news_item" => item_params}) do
+    item_params = detect_object_id(item_params)
     changeset = NewsItem.insert_changeset(%NewsItem{}, item_params)
 
     case Repo.insert(changeset) do
@@ -73,6 +74,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   def update(conn, params = %{"id" => id, "news_item" => item_params}) do
+    item_params = detect_object_id(item_params)
     item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
     changeset = NewsItem.update_changeset(item, item_params)
 
@@ -108,6 +110,11 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   defp detect_quick_form(conn, _opts) do
     assign(conn, :quick, Map.has_key?(conn.params, "quick"))
   end
+
+  defp detect_object_id(item_params = %{"type" => type, "url" => url}) do
+    Map.put_new(item_params, "object_id", UrlKit.get_object_id(type, url))
+  end
+  defp detect_object_id(item_params), do: item_params
 
   defp handle_status_changes(item, params) do
     case Map.get(params, "queue", "draft") do
