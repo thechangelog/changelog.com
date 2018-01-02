@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Router do
   use ChangelogWeb, :router
+  use Plug.ErrorHandler
 
   alias ChangelogWeb.Plug
 
@@ -8,7 +9,7 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "xml"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -49,10 +50,17 @@ defmodule ChangelogWeb.Router do
 
     resources "/benefits", BenefitController, except: [:show]
     resources "/topics", TopicController, except: [:show]
+
     get "/news", NewsItemController, :index
     resources "/news/items", NewsItemController, except: [:show]
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
     resources "/news/sources", NewsSourceController, except: [:show]
+    resources "/news/sponsorships", NewsSponsorshipController, except: [:show]
+    get "/news/sponsorships/schedule", NewsSponsorshipController, :schedule
+    resources "/news/issues", NewsIssueController, except: [:show]
+    post "/news/issues/:id/publish", NewsIssueController, :publish, as: :news_issue
+    post "/news/issues/:id/unpublish", NewsIssueController, :unpublish, as: :news_issue
+
     resources "/people", PersonController, except: [:show]
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
@@ -113,6 +121,10 @@ defmodule ChangelogWeb.Router do
     resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
+    resources "/news", NewsItemController, only: [:show], as: :news_item
+    get "/news/:id/preview", NewsItemController, :preview, as: :news_item
+    get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
+    get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status
@@ -160,5 +172,20 @@ defmodule ChangelogWeb.Router do
     get "/:podcast/:slug/preview", EpisodeController, :preview, as: :episode
     get "/:podcast/:slug/play", EpisodeController, :play, as: :episode
     get "/:podcast/:slug/share", EpisodeController, :share, as: :episode
+  end
+
+  defp handle_errors(_conn, %{reason: %Phoenix.Router.NoRouteError{}}), do: true
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+    headers = Enum.into(conn.req_headers, %{})
+
+    Rollbax.report(kind, reason, stacktrace, %{}, %{
+      "request" => %{
+        "url" => "#{conn.scheme}://#{conn.host}#{conn.request_path}",
+        "user_ip" => Map.get(headers, "x-forwarded-for"),
+        "method" => conn.method,
+        "headers" => headers,
+        "params" => conn.params
+      }
+    })
   end
 end

@@ -1,0 +1,27 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    &raquo;
+    Sponsorships
+    <div class="sub header">Show us the $$</div>
+  </h1>
+
+  <div class="actions">
+    <%= link to: admin_news_sponsorship_path(@conn, :new), class: "ui right floated primary basic button" do %>
+      <i class="add icon"></i>
+      Sponsorship
+    <% end %>
+
+    <%= link to: admin_news_sponsorship_path(@conn, :schedule), class: "ui right floated basic button" do %>
+      <i class="calendar icon"></i>
+      Schedule
+    <% end %>
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@sponsorships) do %>
+  <%= render("_table.html", conn: @conn, sponsorships: @sponsorships) %>
+  <%= pagination_links(@conn, @page, path: &admin_news_sponsorship_path/3) %>
+<% end %>
+</div>

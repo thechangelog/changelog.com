@@ -1,13 +1,14 @@
 defmodule Changelog.HashidTest do
   use ExUnit.Case
 
-  test "encode/decode a single id returns single id" do
-    encoded = Changelog.Hashid.encode 8675309
-    assert Changelog.Hashid.decode(encoded) == 8675309
+  alias Changelog.Hashid
+
+  test "encode/decode a valid id returns the id" do
+    encoded = Hashid.encode(8675309)
+    assert Hashid.decode(encoded) == 8675309
   end
 
-  test "encode/decode list of ids returns list of ids" do
-    encoded = Changelog.Hashid.encode [8, 6, 7]
-    assert Changelog.Hashid.decode(encoded) == [8, 6, 7]
+  test "decode an invalid id returns -1" do
+    assert Hashid.decode("not_a_valid_thing") == -1
   end
 end

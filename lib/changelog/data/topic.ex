@@ -30,6 +30,10 @@ defmodule Changelog.Topic do
     Repo.count(from(e in EpisodeTopic, where: e.topic_id == ^topic.id))
   end
 
+  def news_count(topic) do
+    Repo.count(from(e in NewsItemTopic, where: e.topic_id == ^topic.id))
+  end
+
   def post_count(topic) do
     Repo.count(from(p in PostTopic, where: p.topic_id == ^topic.id))
   end

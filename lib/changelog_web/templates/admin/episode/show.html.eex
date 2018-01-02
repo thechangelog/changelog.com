@@ -21,7 +21,7 @@
 <div class="ui basic segment">
   <div class="ui equal width grid">
     <div class="column">
-      <h2 class="ui dividing header">Embed Via JS</h2>
+      <h2 class="ui header">Embed Via JS</h2>
       <div class="ui fluid action input">
         <input type="text" value="<%= embed_code(@episode) %>">
         <button class="ui basic icon clipboard button"><i class="clipboard icon"></i></button>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="column">
-      <h2 class="ui dividing header">Embed Via Frame</h2>
+      <h2 class="ui header">Embed Via Frame</h2>
       <div class="ui fluid action input">
         <input type="text" value="<%= embed_iframe(@episode, "night") %>">
         <button class="ui basic icon clipboard button"><i class="clipboard icon"></i></button>
@@ -38,7 +38,7 @@
   </div>
 
 <%= if Enum.any?(@stats) do %>
-  <h2 class="ui dividing header">Demographics</h2>
+  <h2 class="ui header">Demographics</h2>
 
   <div class="ui centered stackable grid">
     <div class="ui four wide column">
@@ -228,7 +228,7 @@
     </div>
   </div>
 
-  <h2 class="ui dividing header">Stats</h2>
+  <h2 class="ui header">Stats</h2>
 
   <table class="ui celled striped unstackable table">
     <thead>

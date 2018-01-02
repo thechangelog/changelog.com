@@ -6,7 +6,7 @@ export default class ListWidget {
     let $members = $(`.js-${relationType}`);
     let $add = $members.siblings(".js-add");
 
-    var setPositions = function() {
+    let setPositions = function() {
       $members.find(".item").each(function(index) {
         let $item = $(this);
         $item.find("input.js-position").val(index + 1);
@@ -14,11 +14,7 @@ export default class ListWidget {
       });
     }
 
-    Sortable.create($members[0], {
-      onSort: function(event) {
-        setPositions();
-      }
-    });
+    Sortable.create($members.get(0), {onSort: () => { setPositions(); }});
 
     $add.on("click", function(event) {
       event.preventDefault();

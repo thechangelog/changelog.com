@@ -1,5 +1,5 @@
 defmodule Changelog.Post do
-  use Changelog.Data
+  use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{Person, PostTopic, Regexp}
 
@@ -13,7 +13,7 @@ defmodule Changelog.Post do
     field :body, :string
 
     field :published, :boolean, default: false
-    field :published_at, DateTime
+    field :published_at, Timex.Ecto.DateTime
 
     belongs_to :author, Person
     has_many :post_topics, PostTopic, on_delete: :delete_all
@@ -32,53 +32,18 @@ defmodule Changelog.Post do
     |> cast_assoc(:post_topics)
   end
 
-  def published(query \\ __MODULE__) do
-    from p in query,
-      where: p.published == true,
-      where: p.published_at <= ^Timex.now
-  end
-
-  def scheduled(query \\ __MODULE__) do
-    from p in query,
-      where: p.published == true,
-      where: p.published_at > ^Timex.now
-  end
-
-  def unpublished(query \\ __MODULE__) do
-    from p in query, where: p.published == false
-  end
-
-  def newest_first(query \\ __MODULE__, field \\ :published_at) do
-    from e in query, order_by: [desc: ^field]
-  end
-
-  def newest_last(query \\ __MODULE__, field \\ :published_at) do
-    from e in query, order_by: [asc: ^field]
-  end
-
-  def limit(query, count) do
-    from e in query, limit: ^count
-  end
-
-  def search(query, search_term) do
-    from e in query,
-      where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^search_term)
-  end
+  def published(query \\ __MODULE__),    do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now)
+  def scheduled(query \\ __MODULE__),    do: from(q in query, where: q.published, where: q.published_at > ^Timex.now)
+  def search(query \\ __MODULE__, term), do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
+  def unpublished(query \\ __MODULE__),  do: from(q in query, where: not(q.published))
 
   def is_public(post, as_of \\ Timex.now) do
     post.published && post.published_at <= as_of
   end
 
-  def preload_all(post) do
-    post
-    |> preload_author
-    |> preload_topics
-  end
+  def preload_all(post), do: post |> preload_author |> preload_topics
 
-  def preload_author(post) do
-    post
-    |> Repo.preload(:author)
-  end
+  def preload_author(post), do: Repo.preload(post, :author)
 
   def preload_topics(post) do
     post

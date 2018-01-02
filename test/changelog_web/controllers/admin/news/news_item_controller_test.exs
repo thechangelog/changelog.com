@@ -6,7 +6,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   @valid_attrs %{type: :project, headline: "Ruby on Rails", url: "https://rubyonrails.org", logger_id: 1}
   @invalid_attrs %{type: :project, headline: "Ruby on Rails", url: ""}
 
-  @tag :as_admin
+  @tag :as_inserted_admin
   test "lists all published news items", %{conn: conn} do
     i1 = insert(:published_news_item)
     i2 = insert(:news_item)
@@ -22,6 +22,17 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   test "renders form to create new item", %{conn: conn} do
     conn = get(conn, admin_news_item_path(conn, :new))
     assert html_response(conn, 200) =~ ~r/new/
+  end
+
+  @tag :as_admin
+  test "creates news item and leaves it as draft", %{conn: conn} do
+    logger = insert(:person)
+    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "draft")
+
+    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert count(NewsItem.drafted) == 1
+    assert count(NewsItem.published) == 0
+    assert count(NewsQueue) == 0
   end
 
   @tag :as_admin
@@ -68,8 +79,22 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
     conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id})
 
+    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert count(NewsItem) == 1
+  end
+
+  @tag :as_admin
+  test "updates draft news item, queues it, and smart redirects", %{conn: conn} do
+    logger = insert(:person)
+    news_item = insert(:news_item, logger: logger)
+
+    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, stay: true, queue: "append")
+
     assert redirected_to(conn) == admin_news_item_path(conn, :edit, news_item)
     assert count(NewsItem) == 1
+    assert count(NewsItem.published) == 0
+    assert count(NewsItem.drafted) == 0
+    assert count(NewsQueue) == 1
   end
 
   @tag :as_admin

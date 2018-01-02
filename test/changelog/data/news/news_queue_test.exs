@@ -135,8 +135,10 @@ defmodule Changelog.NewsQueueTest do
   end
 
   describe "publish" do
-    test "it is a no-op when queue is empty" do
-      assert NewsQueue.publish(%NewsItem{id: 1}) == false
+    test "it publishes the given item even if it's not in the queue" do
+      item = insert(:news_item)
+      NewsQueue.publish(item)
+      assert Repo.count(NewsItem.published) == 1
     end
 
     test "it publishes the given item, removing it from the queue" do

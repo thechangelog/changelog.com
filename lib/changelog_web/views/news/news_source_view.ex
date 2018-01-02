@@ -1,4 +1,4 @@
-defmodule ChangelogWeb.NewsView do
+defmodule ChangelogWeb.NewsSourceView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Files.Icon

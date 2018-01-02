@@ -13,11 +13,11 @@
       </label>
 
       <%= if f.data.color_logo do %>
-        <img src="<%= logo_url(f.data, :color_logo, :small) %>" width=100 height=100>
+        <img src="<%= logo_url(f.data, :color_logo, :small) %>" height=100>
+        <br/>
       <% end %>
-      <br/>
       <%= error_message(f, :color_logo) %>
-      <%= file_input f, :color_logo %>
+      <%= file_input(f, :color_logo) %>
     </div>
 
     <div class="field">
@@ -27,11 +27,11 @@
       </label>
 
       <%= if f.data.dark_logo do %>
-        <img src="<%= logo_url(f.data, :dark_logo, :small) %>" width=100 height=100 style="background: black;">
+        <img src="<%= logo_url(f.data, :dark_logo, :small) %>" height=100>
+        <br/>
       <% end %>
-      <br/>
       <%= error_message(f, :dark_logo) %>
-      <%= file_input f, :dark_logo %>
+      <%= file_input(f, :dark_logo) %>
     </div>
 
     <div class="field">
@@ -41,11 +41,11 @@
       </label>
 
       <%= if f.data.light_logo do %>
-        <img src="<%= logo_url(f.data, :light_logo, :small) %>" width=100 height=100 style="background: black;">
+        <img src="<%= logo_url(f.data, :light_logo, :small) %>" height=100 style="background: black;">
+        <br/>
       <% end %>
-      <br/>
       <%= error_message(f, :light_logo) %>
-      <%= file_input f, :light_logo %>
+      <%= file_input(f, :light_logo) %>
     </div>
   </div>
 

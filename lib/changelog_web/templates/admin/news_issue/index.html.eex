@@ -1,0 +1,46 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    &raquo;
+    Issues
+    <div class="sub header">No spam!</div>
+  </h1>
+
+  <div class="actions right">
+    <div class="ui basic buttons">
+      <%= link "Items", to: admin_news_item_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_item_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
+
+    <div class="ui basic buttons">
+      <%= link "Sources", to: admin_news_source_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_source_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
+
+    <div class="ui primary basic buttons">
+      <%= link "Issues", to: admin_news_issue_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_issue_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@drafts) do %>
+  <h2 class="ui header">Drafts</h2>
+  <%= render("_table.html", conn: @conn, issues: @drafts) %>
+<% end %>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@issues) do %>
+  <h2 class="ui header">Published</h2>
+  <%= render("_table.html", conn: @conn, issues: @issues) %>
+  <%= pagination_links(@conn, @page, path: &admin_news_source_path/3) %>
+<% end %>
+</div>

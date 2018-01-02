@@ -32,11 +32,7 @@ export default class SearchWidget {
       }
     }
 
-    Sortable.create($members[0], {
-      onSort: function(event) {
-        setPositions();
-      }
-    });
+    Sortable.create($members[0], {onSort: () => { setPositions(); }});
 
     $search.search({
       apiSettings: {

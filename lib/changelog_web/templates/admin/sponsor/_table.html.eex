@@ -6,6 +6,7 @@
       <th>GitHub</th>
       <th>Twitter</th>
       <th>Sponsored Eps</th>
+      <th>Sponsored News</th>
       <th></th>
     </tr>
   </thead>
@@ -23,6 +24,7 @@
       <td><%= github_link(sponsor) %></td>
       <td><%= twitter_link(sponsor) %></td>
       <td><%= sponsorship_count(sponsor) %></td>
+      <td>Soon</td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= icon_link "eye", to: admin_sponsor_path(@conn, :show, sponsor) %>

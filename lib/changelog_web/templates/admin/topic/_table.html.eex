@@ -4,6 +4,7 @@
       <th>Name</th>
       <th>Slug</th>
       <th>Description</th>
+      <th>News</th>
       <th>Episodes</th>
       <th>Posts</th>
       <th></th>
@@ -16,6 +17,7 @@
       <td><%= topic.name %></td>
       <td><%= topic.slug %></td>
       <td><%= truncate(topic.description, 60) %></td>
+      <td><%= news_count(topic) %></td>
       <td><%= episode_count(topic) %></td>
       <td><%= post_count(topic) %></td>
       <td class="center aligned">

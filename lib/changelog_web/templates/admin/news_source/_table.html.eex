@@ -12,28 +12,21 @@
     </thead>
 
     <tbody>
-    <%= for news_source <- @news_sources do %>
+    <%= for source <- @sources do %>
       <tr>
         <td>
-          <img class="ui avatar image" style="border-radius: 0" src="<%= NewsView.icon_url(news_source) %>">
-          <%= link news_source.name, to: admin_news_source_path(@conn, :edit, news_source) %>
+          <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(source) %>">
+          <%= link source.name, to: admin_news_source_path(@conn, :edit, source) %>
         </td>
-        <td><%= news_source.slug %></td>
-        <td><%= link news_source.website, to: news_source.website, rel: "external" %></td>
-        <td><%= news_source.regex %></td>
-        <td><%= ts(news_source.inserted_at) %></td>
-        <td><%= ts(news_source.updated_at) %></td>
+        <td><%= source.slug %></td>
+        <td><%= link source.website, to: source.website, rel: "external" %></td>
+        <td><%= source.regex %></td>
+        <td><%= ts(source.inserted_at) %></td>
+        <td><%= ts(source.updated_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= link to: admin_news_source_path(@conn, :edit, news_source), class: "ui button" do %>
-              <i class="edit icon"></i>
-              Edit
-            <% end %>
-
-            <%= link to: admin_news_source_path(@conn, :delete, news_source), method: :delete, data: [confirm: "Are you sure?"], class: "ui button" do %>
-              <i class="trash icon"></i>
-              Delete
-            <% end %>
+            <%= icon_link "edit", to: admin_news_source_path(@conn, :edit, source) %>
+            <%= icon_link "trash", to: admin_news_source_path(@conn, :delete, source), method: :delete, data: [confirm: "Are you sure?"] %>
           </div>
         </td>
       </tr>

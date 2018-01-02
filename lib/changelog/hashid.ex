@@ -3,16 +3,13 @@ defmodule Changelog.Hashid do
   def encode(id), do: Hashids.encode(hashid(), [id])
 
   def decode(encoded) do
-    decoded = Hashids.decode!(hashid(), encoded)
-
-    if length(decoded) > 1 do
-      decoded
-    else
-      List.first(decoded)
+    case Hashids.decode(hashid(), encoded) do
+      {:ok, decoded} -> List.first(decoded)
+      {:error, _} -> -1
     end
   end
 
   defp hashid do
-    Hashids.new salt: "long live the developer"
+    Hashids.new(salt: "long live the developer")
   end
 end

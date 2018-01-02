@@ -6,6 +6,11 @@
 
   <div class="actions">
     <%= link to: admin_sponsor_path(@conn, :new), class: "ui right floated primary basic button" do %>
+      <i class="plus icon"></i>
+      Add Sponsorship
+    <% end %>
+
+    <%= link to: admin_sponsor_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="dollar icon"></i>
       Add Sponsor
     <% end %>

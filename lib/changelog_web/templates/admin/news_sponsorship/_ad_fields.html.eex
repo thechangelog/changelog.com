@@ -1,0 +1,47 @@
+<div class="ui basic segment">
+  <div class="field required <%= error_class(@i, :url) %>">
+    <%= label(@i, :url, "URL") %>
+    <%= text_input(@i, :url) %>
+    <%= error_message(@i, :url) %>
+  </div>
+
+  <div class="field required <%= error_class(@i, :headline) %>">
+    <%= label(@i, :headline, "Headline") %>
+    <%= text_input(@i, :headline, placeholder: "10 Best Blog Post Titles") %>
+    <%= error_message(@i, :headline) %>
+  </div>
+
+  <div class="field <%= error_class(@i, :story) %>">
+    <%= label(@i, :story) %>
+    <%= textarea(@i, :story, placeholder: "Markdown enabled.", rows: 5)%>
+    <%= error_message(@i, :story) %>
+  </div>
+
+  <div class="field">
+    <label for="image">
+      Image
+      <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
+    </label>
+
+    <%= if @i.data.image do %>
+      <img src="<%= NewsAdView.image_url(@f.data, :large) %>" style="width: 100%; background: black;">
+    <% end %>
+    <br/>
+    <%= error_message(@i, :image) %>
+    <%= file_input(@i, :image) %>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(@i, :newsletter, class: "hidden") %>
+      <label>In Newsletter</label>
+    </div>
+  </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(@i, :active, class: "hidden") %>
+      <label>Active</label>
+    </div>
+  </div>
+</div>

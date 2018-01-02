@@ -22,7 +22,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     ~e"""
     <div class="ui hidden divider"></div>
     <div class="ui equal width stackable grid">
-    <div class="column"><button class="ui primary fluid basic button" type="submit">Save</button></div>
+    <div class="column"><button class="ui primary fluid basic button" type="submit" name="stay">Save</button></div>
     <div class="column"><button class="ui secondary fluid basic button" type="submit" name="close">Save and Close</button></div>
     <div class="column"></div>
     """
@@ -48,12 +48,12 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   # Attempts to load an associated record on a form. Starts with direct
   # relationship on form data, then tries querying Repo.
   def load_from_form(form, module, relationship) do
-    from_data = Map.get(form.data, relationship)
+    form_data = Map.get(form.data, relationship)
     foreign_key = "#{relationship}_id"
     record_id = Map.get(form.data, String.to_atom(foreign_key)) || form.params[foreign_key]
 
     cond do
-      is_loaded(from_data) -> from_data
+      is_loaded(form_data) -> form_data
       is_nil(record_id) -> nil
       true -> Repo.get(module, record_id)
     end

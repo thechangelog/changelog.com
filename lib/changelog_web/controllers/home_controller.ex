@@ -10,12 +10,12 @@ defmodule ChangelogWeb.HomeController do
     render(conn, :show)
   end
 
-  def edit(conn = %{assigns: %{current_user: current_user}}, _params) do
-    render(conn, :edit, changeset: Person.changeset(current_user))
+  def edit(conn = %{assigns: %{current_user: me}}, _params) do
+    render(conn, :edit, changeset: Person.changeset(me))
   end
 
-  def update(conn = %{assigns: %{current_user: current_user}}, %{"person" => person_params}) do
-    changeset = Person.changeset(current_user, person_params)
+  def update(conn = %{assigns: %{current_user: me}}, %{"person" => person_params}) do
+    changeset = Person.changeset(me, person_params)
 
     case Repo.update(changeset) do
       {:ok, _person} ->
@@ -25,34 +25,34 @@ defmodule ChangelogWeb.HomeController do
       {:error, changeset} ->
         conn
         |> put_flash(:error, "The was a problem updating your profile 😢")
-        |> render(:edit, person: current_user, changeset: changeset)
+        |> render(:edit, person: me, changeset: changeset)
     end
   end
 
-  def subscribe(conn = %{assigns: %{current_user: current_user}}, %{"id" => newsletter_id}) do
-    Subscriber.subscribe(newsletter_id, current_user)
+  def subscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
+    Subscriber.subscribe(newsletter_id, me)
 
     conn
     |> put_flash(:success, "One more step! Check your email to confirm your subscription. Then we'll hook you up 📥")
     |> render(:show)
   end
 
-  def unsubscribe(conn = %{assigns: %{current_user: current_user}}, %{"id" => newsletter_id}) do
-    Subscriber.unsubscribe(newsletter_id, current_user.email)
+  def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
+    Subscriber.unsubscribe(newsletter_id, me.email)
 
     conn
     |> put_flash(:success, "You're no longer subscribed. Come back any time 🤗")
     |> render(:show)
   end
 
-  def slack(conn = %{assigns: %{current_user: current_user}}, _params) do
-    {updated_user, flash} = case Slack.Client.invite(current_user.email) do
+  def slack(conn = %{assigns: %{current_user: me}}, _params) do
+    {updated_user, flash} = case Slack.Client.invite(me.email) do
       %{"ok" => true} ->
-        {set_slack_id(current_user), "Invite sent! Check your email 🎯"}
+        {set_slack_id(me), "Invite sent! Check your email 🎯"}
       %{"ok" => false, "error" => "already_in_team"} ->
-        {set_slack_id(current_user), "You're on the team! We'll see you in there ✊"}
+        {set_slack_id(me), "You're on the team! We'll see you in there ✊"}
       %{"ok" => false, "error" => error} ->
-        {current_user, "Hmm, Slack is saying '#{error}' 🤔"}
+        {me, "Hmm, Slack is saying '#{error}' 🤔"}
     end
 
     conn

@@ -1,0 +1,41 @@
+<table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Weeks</th>
+        <th>Ads</th>
+        <th>Start Week</th>
+        <th>End Week</th>
+        <th>Last Edited</th>
+        <th>Impressions</th>
+        <th>Clicks</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for sponsorship <- @sponsorships do %>
+      <tr>
+        <td>
+          <%= link sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, sponsorship.sponsor) %>
+          <%= if sponsorship.name do %>
+          &ndash; <%= sponsorship.name %>
+          <% end %>
+        </td>
+        <td><%= length(sponsorship.weeks) %></td>
+        <td><%= length(sponsorship.ads) %></td>
+        <td><%= sponsorship.weeks |> List.first |> TimeView.pretty_date %></td>
+        <td><%= sponsorship.weeks |> List.last |> TimeView.pretty_date %></td>
+        <td><%= ts(sponsorship.updated_at) %></td>
+        <td><%= sponsorship.impression_count %></td>
+        <td><%= sponsorship.click_count %></td>
+        <td class="center aligned">
+          <div class="ui small basic buttons">
+            <%= icon_link "edit", to: admin_news_sponsorship_path(@conn, :edit, sponsorship) %>
+            <%= icon_link "trash", to: admin_news_sponsorship_path(@conn, :delete, sponsorship), method: :delete, data: [confirm: "Are you sure?"] %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>

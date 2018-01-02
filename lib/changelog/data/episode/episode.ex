@@ -1,5 +1,5 @@
 defmodule Changelog.Episode do
-  use Changelog.Data
+  use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeTopic, EpisodeStat,
                    EpisodeSponsor, Files, Podcast, Regexp, Transcripts}
@@ -21,8 +21,8 @@ defmodule Changelog.Episode do
     field :notes, :string
 
     field :published, :boolean, default: false
-    field :published_at, DateTime
-    field :recorded_at, DateTime
+    field :published_at, Timex.Ecto.DateTime
+    field :recorded_at, Timex.Ecto.DateTime
     field :recorded_live, :boolean, default: false
 
     field :audio_file, Files.Audio.Type
@@ -49,88 +49,26 @@ defmodule Changelog.Episode do
     timestamps()
   end
 
-  def featured(query \\ __MODULE__) do
-    from e in query, where: e.featured == true, where: not(is_nil(e.highlight))
-  end
-
-  def recorded_live(query \\ __MODULE__) do
-    from e in query, where: e.recorded_live == true
-  end
-
-  def published(query \\ __MODULE__) do
-    from e in query,
-      where: e.published == true,
-      where: e.published_at <= ^Timex.now
-  end
-
-  def scheduled(query \\ __MODULE__) do
-    from e in query,
-      where: e.published == true,
-      where: e.published_at > ^Timex.now
-  end
-
-  def unpublished(query \\ __MODULE__) do
-    from e in query, where: e.published == false
-  end
-
-  def with_numbered_slug(query \\ __MODULE__) do
-    from e in query, where: fragment("slug ~ E'^\\\\d+$'")
-  end
-
-  def with_slug(query, slug) do
-    from e in query, where: e.slug == ^slug
-  end
-
-  def with_podcast_slug(query, slug) do
-    from e in query, join: p in Podcast, where: e.podcast_id == p.id, where: p.slug == ^slug
-  end
-
-  def previous_to(query, episode) do
-    from e in query, where: e.published_at < ^episode.published_at
-  end
-
-  def next_after(query, episode) do
-    from e in query, where: e.published_at > ^episode.published_at
-  end
-
-  def recorded_between(query, start_time, end_time) do
-    from e in query,
-      where: e.recorded_at <= ^start_time,
-      where: e.end_time < ^end_time
-  end
-
-  def recorded_future_to(query, time) do
-    from e in query, where: e.recorded_at > ^time
-  end
-
-  def newest_first(query, field \\ :published_at) do
-    from e in query, order_by: [desc: ^field]
-  end
-
-  def newest_last(query, field \\ :published_at) do
-    from e in query, order_by: [asc: ^field]
-  end
-
-  def limit(query, count) do
-    from e in query, limit: ^count
-  end
-
-  def distinct_podcast(query) do
-    from e in query, distinct: e.podcast_id
-  end
-
-  def search(query, search_term) do
-    from e in query,
-      where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^search_term)
-  end
+  def distinct_podcast(query),                       do: from(q in query, distinct: q.podcast_id)
+  def featured(query \\ __MODULE__),                 do: from(q in query, where: q.featured == true, where: not(is_nil(q.highlight)))
+  def next_after(query \\ __MODULE__, episode),      do: from(q in query, where: q.published_at > ^episode.published_at)
+  def previous_to(query \\ __MODULE__, episode),     do: from(q in query, where: q.published_at < ^episode.published_at)
+  def published(query \\ __MODULE__),                do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now)
+  def recorded_between(query, start_time, end_time), do: from(q in query, where: q.recorded_at <= ^start_time, where: q.end_time < ^end_time)
+  def recorded_future_to(query, time),               do: from(q in query, where: q.recorded_at > ^time)
+  def recorded_live(query \\ __MODULE__),            do: from(q in query, where: q.recorded_live == true)
+  def scheduled(query \\ __MODULE__),                do: from(q in query, where: q.published, where: q.published_at > ^Timex.now)
+  def search(query, term),                           do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
+  def unpublished(query \\ __MODULE__),              do: from(q in query, where: not(q.published))
+  def with_numbered_slug(query \\ __MODULE__),       do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
+  def with_slug(query \\ __MODULE__, slug),          do: from(q in query, where: q.slug == ^slug)
+  def with_podcast_slug(query \\ __MODULE__, slug),  do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
   def is_public(episode, as_of \\ Timex.now) do
     is_published(episode) && episode.published_at <= as_of
   end
 
-  def is_published(episode) do
-    episode.published
-  end
+  def is_published(episode), do: episode.published
 
   def is_publishable(episode) do
     validated =
@@ -196,9 +134,8 @@ defmodule Changelog.Episode do
   end
 
   def preload_podcast(nil), do: nil
-  def preload_podcast(episode) do
-    episode |> Repo.preload(:podcast)
-  end
+  def preload_podcast(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :podcast)
+  def preload_podcast(episode), do: Repo.preload(episode, :podcast)
 
   def preload_sponsors(episode) do
     episode

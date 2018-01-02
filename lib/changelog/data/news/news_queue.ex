@@ -10,9 +10,7 @@ defmodule Changelog.NewsQueue do
     belongs_to :item, NewsItem
   end
 
-  def ordered(query \\ NewsQueue) do
-    from i in query, order_by: [asc: :position]
-  end
+  def ordered(query \\ NewsQueue), do: from(q in query, order_by: [asc: :position])
 
   def append(item) do
     entry = change(%NewsQueue{}, %{item_id: item.id})
@@ -27,6 +25,7 @@ defmodule Changelog.NewsQueue do
     end
 
     Repo.insert(entry)
+    NewsItem.queue!(item)
   end
 
   def move(item = %NewsItem{}, to_index) do
@@ -75,6 +74,7 @@ defmodule Changelog.NewsQueue do
     end
 
     Repo.insert(entry)
+    NewsItem.queue!(item)
   end
 
   def publish_next do
@@ -84,10 +84,35 @@ defmodule Changelog.NewsQueue do
     end
   end
 
+  def publish_next_maybe(per_day, interval) do
+    if one_chance_in(5) && nothing_recent(interval) && no_max(per_day) do
+      publish_next()
+    end
+  end
+
+  defp one_chance_in(n), do: Enum.random(1..n) == 1
+
+  defp nothing_recent(interval) do
+    Timex.now
+    |> Timex.shift(minutes: -interval)
+    |> NewsItem.published_since()
+    |> Repo.count
+    |> Kernel.==(0)
+  end
+
+  defp no_max(per_day) do
+    Timex.now
+    |> Timex.shift(days: -1)
+    |> NewsItem.published_since()
+    |> Repo.count
+    |> Kernel.<(per_day)
+  end
+
   def publish(item = %NewsItem{}) do
-    NewsQueue
-    |> Repo.get_by(item_id: item.id)
-    |> publish()
+    case Repo.get_by(NewsQueue, item_id: item.id) do
+      entry = %NewsQueue{} -> publish(entry)
+      nil -> NewsItem.publish!(item)
+    end
   end
 
   def publish(entry = %NewsQueue{}) do

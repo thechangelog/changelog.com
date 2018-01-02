@@ -6,22 +6,33 @@
     <div class="sub header">/usr/local/src</div>
   </h1>
 
-  <div class="actions">
-    <%= link to: admin_news_item_path(@conn, :new), class: "ui right floated basic button" do %>
-      <i class="add write icon"></i>
-      Add Item
-    <% end %>
+  <div class="actions right">
+    <div class="ui basic buttons">
+      <%= link "Items", to: admin_news_item_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_item_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
 
-    <%= link to: admin_news_source_path(@conn, :new), class: "ui right floated primary basic button" do %>
-      <i class="add newspaper icon"></i>
-      Add Source
-    <% end %>
+    <div class="ui primary basic buttons">
+      <%= link "Sources", to: admin_news_source_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_source_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
+
+    <div class="ui basic buttons">
+      <%= link "Issues", to: admin_news_issue_path(@conn, :index), class: "ui button" %>
+      <%= link to: admin_news_issue_path(@conn, :new), class: "ui icon button" do %>
+        <i class="add icon"></i>
+      <% end %>
+    </div>
   </div>
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@news_sources) do %>
-  <%= render("_table.html", conn: @conn, news_sources: @news_sources) %>
+<%= if Enum.any?(@sources) do %>
+  <%= render("_table.html", conn: @conn, sources: @sources) %>
   <%= pagination_links(@conn, @page, path: &admin_news_source_path/3) %>
 <% end %>
 </div>

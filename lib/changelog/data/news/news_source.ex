@@ -12,19 +12,28 @@ defmodule Changelog.NewsSource do
 
     field :icon, Files.Icon.Type
 
-    has_many :news_items, NewsItem, on_delete: :nilify_all
+    has_many :news_items, NewsItem, foreign_key: :source_id, on_delete: :nilify_all
 
     timestamps()
   end
 
-  def admin_changeset(news_source, attrs \\ %{}) do
-    news_source
-    |> cast_attachments(attrs, ~w(icon))
-    |> cast(attrs, ~w(name slug website regex feed icon))
+  def file_changeset(source, attrs \\ %{}) do
+    cast_attachments(source, attrs, ~w(icon))
+  end
+
+  def insert_changeset(source, attrs \\ %{}) do
+    source
+    |> cast(attrs, ~w(name slug website regex feed))
     |> validate_required([:name, :slug, :website])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:feed, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:slug)
+  end
+
+  def update_changeset(source, attrs \\ %{}) do
+    source
+    |> insert_changeset(attrs)
+    |> file_changeset(attrs)
   end
 
   def get_by_url(url) do

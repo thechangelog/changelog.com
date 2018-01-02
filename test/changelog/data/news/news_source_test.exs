@@ -3,14 +3,14 @@ defmodule Changelog.NewsSourceTest do
 
   alias Changelog.NewsSource
 
-  describe "admin_changeset" do
+  describe "insert_changeset" do
     test "with valid attributes" do
-      changeset = NewsSource.admin_changeset(%NewsSource{}, %{name: "GitHub", slug: "github", website: "https://github.com"})
+      changeset = NewsSource.insert_changeset(%NewsSource{}, %{name: "GitHub", slug: "github", website: "https://github.com"})
       assert changeset.valid?
     end
 
     test "with invalid attributes" do
-      changeset = NewsSource.admin_changeset(%NewsSource{}, %{})
+      changeset = NewsSource.insert_changeset(%NewsSource{}, %{})
       refute changeset.valid?
     end
   end

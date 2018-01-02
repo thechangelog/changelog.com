@@ -14,6 +14,16 @@ defmodule Changelog.UrlKit do
     end
   end
 
+  def get_object_id(type, url) when is_nil(type) or is_nil(url), do: nil
+  def get_object_id(type, url) when is_binary(type), do: get_object_id(String.to_atom(type), url)
+  def get_object_id(_type, url) do
+    if is_self_hosted(url) do
+      String.split(url, "/") |> Enum.take(-2) |> Enum.join(":")
+    else
+      nil
+    end
+  end
+
   def get_source(url) when is_nil(url), do: nil
   def get_source(url) do
     NewsSource.get_by_url(url)
@@ -49,6 +59,8 @@ defmodule Changelog.UrlKit do
     |> Map.put(:query, query)
     |> URI.to_string()
   end
+
+  defp is_self_hosted(url), do: String.contains?(url, "changelog.com")
 
   defp normalize_query_string(query) when is_nil(query), do: nil
   defp normalize_query_string(query) do

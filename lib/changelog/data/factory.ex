@@ -80,10 +80,36 @@ defmodule Changelog.Factory do
     %Changelog.Episode{episode_factory() | published: true, published_at: hours_from_now(1)}
   end
 
+  def news_ad_factory do
+    %Changelog.NewsAd{
+      url: "https://apple.com",
+      headline: "Apple Inc Is Cool I Guess?",
+      sponsorship: build(:news_sponsorship)
+    }
+  end
+
+  def news_issue_factory do
+    %Changelog.NewsIssue{
+      slug: sequence(:slug, &"#{&1}"),
+      note: "Hope you like it"
+    }
+  end
+
+  def news_issue_ad_factory do
+    %Changelog.NewsIssueAd{
+      issue: build(:news_issue),
+      ad: build(:news_ad)
+    }
+  end
+
+  def published_news_issue_factory do
+    %Changelog.NewsIssue{news_issue_factory() | published: true, published_at: hours_ago(1)}
+  end
+
   def news_item_factory do
     %Changelog.NewsItem{
       type: :link,
-      status: :queued,
+      status: :draft,
       headline: sequence(:headline, &"Read all about it #{&1}!"),
       url: "https://changelog.com/posts/read-all-about-it",
       logger: build(:person)
@@ -106,6 +132,14 @@ defmodule Changelog.Factory do
       name: "Wired",
       slug: "wired",
       website: "https://wired.com"
+    }
+  end
+
+  def news_sponsorship_factory do
+    %Changelog.NewsSponsorship{
+      name: "Test Sponsorship",
+      sponsor: build(:sponsor),
+      weeks: []
     }
   end
 

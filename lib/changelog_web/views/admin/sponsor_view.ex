@@ -6,7 +6,5 @@ defmodule ChangelogWeb.Admin.SponsorView do
 
   def logo_url(sponsor, type, version), do: SponsorView.logo_url(sponsor, type, version)
 
-  def sponsorship_count(sponsor) do
-    Sponsor.sponsorship_count(sponsor)
-  end
+  def sponsorship_count(sponsor), do: Sponsor.sponsorship_count(sponsor)
 end

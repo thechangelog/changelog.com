@@ -24,6 +24,8 @@ defmodule ChangelogWeb.Meta.AdminTitle do
     |> Module.split
     |> List.last
     |> String.replace("View", "")
+    |> String.split(~r/(?=[A-Z])/)
+    |> Enum.join(" ")
   end
 
   defp get_template_name(template) do
