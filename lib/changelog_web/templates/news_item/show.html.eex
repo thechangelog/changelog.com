@@ -4,7 +4,7 @@
     <%= render("_item_summary_toolbar.html", conn: @conn, item: @item) %>
     <%= if @item.story do %>
       <div class="news_item-content richtext">
-        <p><%= @item.story %></p>
+        <p><%= @item.story |> md_to_html |> raw %></p>
       </div>
     <% end %>
   </article>
