@@ -6,11 +6,11 @@ defmodule ChangelogWeb.PostController do
   plug RequireAdmin, "before preview" when action in [:preview]
 
   def index(conn, params) do
-    page = Post
-    |> Post.published
-    |> order_by([p], desc: p.published_at)
-    |> preload(:author)
-    |> Repo.paginate(Map.put(params, :page_size, 15))
+    page =
+      Post.published
+      |> Post.newest_first
+      |> preload(:author)
+      |> Repo.paginate(Map.put(params, :page_size, 15))
 
     render(conn, :index, posts: page.entries, page: page)
   end
@@ -21,11 +21,11 @@ defmodule ChangelogWeb.PostController do
       |> Repo.get_by!(slug: slug)
       |> Post.preload_all
 
-    render(conn, "show.html", post: post)
+    render(conn, :show, post: post)
   end
 
   def preview(conn, %{"id" => slug}) do
     post = Repo.get_by!(Post, slug: slug) |> Post.preload_all
-    render(conn, "show.html", post: post)
+    render(conn, :show, post: post)
   end
 end

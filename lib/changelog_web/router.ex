@@ -122,9 +122,11 @@ defmodule ChangelogWeb.Router do
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
+
     resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
+    resources "/topics", TopicController, only: [:index, :show]
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status
