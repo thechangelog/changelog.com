@@ -126,7 +126,10 @@ defmodule ChangelogWeb.Router do
     resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
-    resources "/topics", TopicController, only: [:index, :show]
+
+    get "/source/:slug", NewsSourceController, :show, as: :news_source
+    get "/topics", TopicController, :index, as: :topic
+    get "/topic/:slug", TopicController, :show, as: :topic
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status

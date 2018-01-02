@@ -12,7 +12,7 @@ defmodule ChangelogWeb.TopicController do
     render(conn, :index, topics: page.entries, page: page)
   end
 
-  def show(conn, params = %{"id" => slug}) do
+  def show(conn, %{"slug" => slug}) do
     topic = Repo.get_by!(Topic, slug: slug)
     render(conn, :show, topic: topic)
   end
