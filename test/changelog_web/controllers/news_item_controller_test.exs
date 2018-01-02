@@ -4,6 +4,17 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   alias Changelog.Hashid
   alias ChangelogWeb.NewsItemView
 
+  test "getting the index", %{conn: conn} do
+    i1 = insert(:news_item)
+    i2 = insert(:published_news_item)
+
+    conn = get(conn, root_path(conn, :index))
+
+    assert conn.status == 200
+    refute conn.resp_body =~ i1.headline
+    assert conn.resp_body =~ i2.headline
+  end
+
   test "getting a published news item page via hashid", %{conn: conn} do
     item = insert(:published_news_item, headline: "Hash ID me!")
     hashid = Hashid.encode(item.id)

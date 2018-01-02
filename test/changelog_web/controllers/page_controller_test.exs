@@ -3,7 +3,6 @@ defmodule ChangelogWeb.PageControllerTest do
 
   test "static pages all render", %{conn: conn} do
     Enum.each([
-      "/",
       "/about",
       "/contact",
       "/films",

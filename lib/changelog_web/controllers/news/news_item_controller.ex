@@ -4,8 +4,7 @@ defmodule ChangelogWeb.NewsItemController do
   alias Changelog.{Hashid, NewsItem}
   alias ChangelogWeb.NewsItemView
 
-  plug RequireAdmin, "before preview" when action in [:index, :preview]
-  plug :put_layout, false
+  plug RequireAdmin, "before preview" when action in [:preview]
 
   def index(conn, params) do
     page = NewsItem

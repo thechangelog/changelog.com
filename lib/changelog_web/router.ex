@@ -116,15 +116,15 @@ defmodule ChangelogWeb.Router do
     get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
-    get "/", NewsController, :index, as: :root
-    resources "/news", NewsController, only: [:show]
-    resources "/benefits", BenefitController, only: [:index]
-    resources "/posts", PostController, only: [:index, :show]
-    get "/posts/:id/preview", PostController, :preview, as: :post
+
+    get "/", NewsItemController, :index, as: :root
     resources "/news", NewsItemController, only: [:show], as: :news_item
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
+    resources "/benefits", BenefitController, only: [:index]
+    resources "/posts", PostController, only: [:index, :show]
+    get "/posts/:id/preview", PostController, :preview, as: :post
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status

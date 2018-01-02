@@ -2,6 +2,7 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Regexp, Repo}
+  alias ChangelogWeb.{NewsSourceView}
 
   def get_object(item) do
     case item.type do
