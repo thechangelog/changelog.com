@@ -2,7 +2,7 @@ var webpack = require("webpack");
 var merge = require("webpack-merge");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var SpritePlugin = require('svg-sprite-loader/plugin');
+var SpritePlugin = require("svg-sprite-loader/plugin");
 
 var common = {
   module: {
@@ -21,11 +21,11 @@ var common = {
       },
       {
         test: /\.svg$/,
-        loader: 'svg-sprite-loader',
-        exclude: /fonts/,
+        loader: "svg-sprite-loader",
+        exclude: [/fonts/, /semantic/],
         options: {
           extract: true,
-          spriteFilename: '/images/sprite-[hash:6].svg',
+          spriteFilename: "/images/sprite-[hash:6].svg",
         }
       },
       {
@@ -37,7 +37,7 @@ var common = {
         loader: "file-loader?name=/images/[name].[ext]"
       },
       {
-        test: /\.(ttf|eot|woff2|svg?)$/,
+        test: /\.(ttf|eot|svg|woff2?)$/,
         exclude: /images/,
         loader: "file-loader?name=/fonts/[name].[ext]",
       }
@@ -48,7 +48,7 @@ var common = {
       compress: {warnings: false},
       output: {comments: false}
     }),
-    new SpritePlugin(),
+    new SpritePlugin()
   ]
 };
 
