@@ -5,9 +5,8 @@
       <p>Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.</p>
     </header>
     <div class="topic_list-topics">
-    <%= for topic <- @topics do %>
-      <div class="topic_list-topics-item">
-        <%= link to: topic_path(@conn, :show, topic.slug), title: "View Topic" do %>
+      <%= for topic <- @topics do %>
+        <%= link to: topic_path(@conn, :show, topic.slug), title: "View Topic", class: "topic_list-topics-item" do %>
           <div class="topic_list-topics-item-name">
             <!-- <img src="http://via.placeholder.com/60x60" alt=""> -->
             <h3><%= topic.name %></h3>
@@ -15,8 +14,7 @@
           <p class="topic_list-topics-item-description"><%= topic.description %></p>
           <p class="topic_list-topics-item-count"><%= news_count(topic) %></p>
         <% end %>
-      </div>
-    <% end %>
+      <% end %>
     </div>
   </section>
 </div>

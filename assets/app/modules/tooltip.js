@@ -16,7 +16,9 @@ export default class Tooltip {
       const tooltipElement = u(el).siblings(".tooltip").first();
       let placement = u(tooltipElement).data("placement");
 
-      if (placement === "") {
+      console.log(placement);
+
+      if (!placement) {
         placement = "bottom";
       }
 
