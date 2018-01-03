@@ -25,7 +25,7 @@ defmodule ChangelogWeb.LayoutView do
 
   def body_class(%{view_module: LiveView}), do: "page-live"
   def body_class(conn) do
-    "#{Phoenix.Controller.controller_module(conn) |> Phoenix.Naming.resource_name("Controller")}-#{Phoenix.Controller.action_name(conn)}"
+    "page-#{Phoenix.Controller.controller_module(conn) |> Phoenix.Naming.resource_name("Controller")}-#{Phoenix.Controller.action_name(conn)}"
   end
 
   def canonical_url(conn) do
