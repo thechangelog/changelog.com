@@ -1,0 +1,127 @@
+.signup {
+  background-color: $black;
+  padding: 60px 30px 80px;
+  position: relative;
+
+  .page-person-new & {
+    margin-top: -96px; // Match height of header
+    padding: 133px 30px 100px;
+
+    @include breakpoint(560px) {
+      padding: 23.7% 30px;
+    }
+    @include breakpoint(1160px) {
+      padding: 275px 30px;
+    }
+  }
+
+  &-content {
+    color: $white;
+    margin: 0 auto;
+    max-width: 760px;
+    text-align: center;
+    width: 100%;
+  }
+
+  &-icons {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-bottom: 30px;
+
+    &-item {
+      $size: 52px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: auto $size;
+      height: $size;
+      margin: 0 14px;
+      width: $size;
+
+      &--news {
+        background-image: url('../assets/images/icon-news.svg');
+      }
+
+      &--podcasts {
+        background-image: url('../assets/images/icon-podcasts.svg');
+      }
+    }
+  }
+
+  &-heading {
+    font-size: 26px;
+  }
+
+  &-text {
+    margin-bottom: 25px;
+    opacity: .65;
+  }
+
+  &-form {
+    background-color: $white;
+    height: 44px;
+    margin: 0 auto;
+    max-width: 520px;
+    position: relative;
+    width: 100%;
+
+    &-input,
+    &-submit-button {
+      border: none;
+      font-family: $code;
+      font-size: 12px;
+      height: 44px;
+      outline: none;
+    }
+
+    &-input {
+      padding: 5px 100px 5px 18px;
+      width: 100%;
+
+      &::placeholder {
+        transition: opacity .1s ease-in-out
+      }
+      &:hover::placeholder,
+      &:focus::placeholder {
+        opacity: .8;
+      }
+    }
+
+    &-submit {
+      @include position(absolute, 0 0 0 null);
+
+      &:before {
+        @include position(absolute, 6px null 6px 0);
+        background-color: $green;
+        content: "";
+        width: 1px;
+      }
+
+      &-button {
+        background-color: transparent;
+        color: $green;
+        cursor: pointer;
+        padding: 5px 18px;
+        transition: color .1s ease-in-out;
+
+        &:hover {
+          color: darken($green, 10%);
+        }
+      }
+    }
+  }
+
+  &-sign_in {
+    margin: 20px auto 0;
+    opacity: .75;
+  }
+
+  &-close {
+    @include position(absolute, 25px 25px null null);
+    color: $green;
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 20px;
+    padding: 5px;
+  }
+}

@@ -4,9 +4,14 @@
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
-  padding: 25px $base-spacing/2;
+  padding: 25px $base-spacing;
   width: 100%;
   z-index: 999;
+
+  .page-person-new & {
+    position: relative;
+    z-index: 101;
+  }
 
   //
   //
@@ -23,6 +28,10 @@
       display: block;
       height: $size;
       width: $size;
+    }
+
+    .page-person-new & a {
+      background-image: url('../assets/images/changelog-logomark-white.svg');
     }
   }
 
@@ -91,6 +100,15 @@
           &:hover {
             // TODO: Determine better hover state
             color: $medium-grey;
+          }
+        }
+
+        .page-person-new & a {
+          color: $white;
+
+          &:hover {
+            // TODO: Determine better hover state
+            color: $white;
           }
         }
       }
