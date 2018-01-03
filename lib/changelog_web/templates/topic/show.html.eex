@@ -12,7 +12,7 @@
       </div>
 
       <div class="topic-header-meta">
-        999 Stories
+        <%= pluralize(news_count(@topic), "Story", "Stories") %>
       </div>
     </div>
 
@@ -20,7 +20,9 @@
   </header>
 
   <div class="feed">
-    TODO: Add news items
+  <%= for item <- @topic.news_items do %>
+    <%= render(NewsItemView, "_item_summary.html", conn: @conn, item: NewsItem.preload_all(item)) %>
+  <% end %>
   </div>
 
   <nav class="pagination" role="menubar" aria-label="Pagination">

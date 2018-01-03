@@ -3,15 +3,7 @@ defmodule ChangelogWeb.Admin.TopicView do
 
   alias Changelog.{Topic}
 
-  def episode_count(topic) do
-    Topic.episode_count(topic)
-  end
-
-  def news_count(topic) do
-    Topic.news_count(topic)
-  end
-
-  def post_count(topic) do
-    Topic.post_count(topic)
-  end
+  def episode_count(topic), do: Topic.episode_count(topic)
+  def news_count(topic), do: Topic.news_count(topic)
+  def post_count(topic), do: Topic.post_count(topic)
 end

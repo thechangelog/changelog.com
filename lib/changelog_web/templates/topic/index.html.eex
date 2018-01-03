@@ -13,7 +13,7 @@
             <h3><%= topic.name %></h3>
           </div>
           <p class="topic_list-topics-item-description"><%= topic.description %></p>
-          <p class="topic_list-topics-item-count">999</p>
+          <p class="topic_list-topics-item-count"><%= news_count(topic) %></p>
         <% end %>
       </div>
     <% end %>

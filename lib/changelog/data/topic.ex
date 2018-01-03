@@ -26,6 +26,18 @@ defmodule Changelog.Topic do
     |> unique_constraint(:slug)
   end
 
+  def preload_news_items(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(news_item_topics: ^NewsItemTopic.by_position)
+    |> Ecto.Query.preload(:news_items)
+  end
+
+  def preload_news_items(topic) do
+    topic
+    |> Repo.preload(news_item_topics: {NewsItemTopic.by_position, :news_item})
+    |> Repo.preload(:news_items)
+  end
+
   def episode_count(topic) do
     Repo.count(from(e in EpisodeTopic, where: e.topic_id == ^topic.id))
   end
