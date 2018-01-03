@@ -22,7 +22,9 @@
   </header>
 
   <div class="feed">
-    TODO: Add news items
+  <%= for item <- @source.news_items do %>
+    <%= render(NewsItemView, "_item_summary.html", conn: @conn, item: NewsItem.preload_all(item)) %>
+  <% end %>
   </div>
 
   <nav class="pagination" role="menubar" aria-label="Pagination">
