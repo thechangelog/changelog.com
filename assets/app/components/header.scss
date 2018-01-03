@@ -1,28 +1,23 @@
 .header {
   align-items: center;
-  background-color: $black;
+  background-color: transparent;
   display: flex;
   flex-wrap: wrap;
-  padding: 10px $base-spacing/2;
+  margin: 0 auto;
+  padding: 25px $base-spacing/2;
+  width: 100%;
 
   //
   //
   // Logo
   &-logo {
-    flex: 1 0 auto;
-
-    @include breakpoint(desktop) {
-      flex: 0 auto;
-    }
-  }
-  &-nav-logo,
-  &-logo {
-    $size: 35px;
-    margin: 0 $base-spacing 0 0;
+    $size: 46px;
+    flex: 0 auto;
+    margin: 0 $base-spacing/2 0 0;
     text-indent: -9999px;
 
     a {
-      background: url('../assets/images/changelog-logomark-white.svg') left center no-repeat;
+      background: url('../assets/images/changelog-logomark.svg') left center no-repeat;
       background-size: auto $size;
       display: block;
       height: $size;
@@ -34,21 +29,16 @@
   //
   // Menu Icon
   &-menu_icon {
-    $size: 22px;
+    $size: 20px;
     border-bottom: 2px solid $green;
     border-top: 2px solid $green;
-    display: block;
     color: $green;
     cursor: pointer;
-    height: 18px;
+    height: $size;
     margin-left: $base-spacing/2;
     position: relative;
     text-indent: -9999px;
     width: $size;
-
-    @include breakpoint(desktop) {
-      display: none;
-    }
 
     &:before {
       @include position(absolute, 50% 0 null 0);
@@ -65,55 +55,13 @@
   &-nav {
     flex: 1 0 auto;
 
-    // Mobile Nav Styles
-    @include breakpoint(desktop, max) {
-      @include position(absolute, 10px);
-      background: $dark-grey;
-      border: 1px solid lighten($dark-grey, 5%);
-      box-shadow: 0 0 3px 3px rgba($black, 0.3);
-      border-radius: 5px;
-      display: none;
-      margin: 0 0 auto;
-      padding: $base-spacing;
-      z-index: 9999;
-
-      body.nav-open & {
-        display: flex;
-      }
-    }
-
     &-wrap {
-      @include breakpoint(desktop, max) {
-        flex-direction: column;
-        display: flex;
-        margin: auto;
-      }
-
-      @include breakpoint(desktop) {
-        align-items: center;
-        display: flex;
-        flex: 1 0 auto; // Pushes secondary nav to the far right
-      }
+      align-items: center;
+      display: flex;
+      flex: 1 0 auto; // Pushes secondary nav to the far right
     }
 
-
-    // Mobile only logo and close button
-    &-logo,
-    &-close {
-      @include breakpoint(desktop) {
-        display: none;
-      }
-    }
-    &-logo {
-      margin: 0 0 $base-spacing;
-      text-align: center;
-
-      @include breakpoint(desktop) {
-        display: none;
-      }
-
-      a { margin: 0 auto; }
-    }
+    // Close button
     &-close {
       @include position(absolute, 0 0 null null);
       color: $green;
@@ -122,53 +70,46 @@
       padding: 0.25em;
     }
 
-    // Primary Navigation
-    &-primary {
+    // Lists
+    &-list {
       text-align: center;
-
-      @include breakpoint(desktop) {
-        display: flex;
-        flex-wrap: wrap;
-        flex: 1 0 auto; // Pushes secondary nav to the far right
-        margin: 0;
-      }
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
 
       &-item {
-        font-size: 14px;
-        font-weight: 600;
-        margin: 0 15px;
+        font-size: 13px;
+        font-weight: 400;
+        margin: 0 8px;
 
         a {
-          color: $medium-grey;
-          border-bottom: 3px solid transparent;
+          color: $black;
           display: inline-block;
-          padding: 6px 0 2px;
+          padding: 6px 0 4px;
 
           &:hover {
-            color: $white;
+            // TODO: Determine better hover state
+            color: $medium-grey;
           }
         }
       }
     }
 
+    // Primary Navigation
+    &-primary {
+      flex: 1 0 auto; // Pushes secondary nav to the far right
+    }
+
     // Secondary Nav
     &-secondary {
-      margin-top: $base-spacing;
-
-      @include breakpoint(desktop) {
-        align-items: center;
-        display: flex;
-        margin-top: 0;
-      }
+      align-items: center;
+      display: flex;
+      margin-top: 0;
 
       &-user {
-        $size: 30px;
-        margin: 0 auto;
+        $size: 20px;
+        margin: 0 5px;
         text-align: center;
-
-        @include breakpoint(desktop) {
-          margin: 0 $base-spacing/2;
-        }
 
         &,
         img {
@@ -177,29 +118,7 @@
           width: $size;
         }
         img {
-          $size: 30px;
           border-radius: $base-border-radius;
-        }
-      }
-    }
-
-    // Search
-    &-search {
-      margin-top: $base-spacing;
-      text-align: center;
-
-      @include breakpoint(desktop) {
-        margin-top: 0;
-      }
-
-      input {
-        background: #252B32;
-        border: 0;
-        color: $white;
-        padding: 0.4em 0.6em 0.3em;
-
-        &::placeholder {
-          color: $medium-grey;
         }
       }
     }

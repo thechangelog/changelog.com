@@ -3,14 +3,12 @@
 
   <nav class="header-nav">
     <div class="header-nav-wrap">
-      <h1 class="header-nav-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
-      <button class="header-nav-close js-toggle-nav">✕</button>
+      <!-- <button class="header-nav-close js-toggle-nav">✕</button> -->
 
-      <ul class="header-nav-primary">
-        <li class="header-nav-primary-item"><%= link "News", to: "/" %></li>
-        <li class="header-nav-primary-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
-        <li class="header-nav-primary-item"><%= link "Community", to: page_path(@conn, :community) %></li>
-        <li class="header-nav-primary-item"><%= link "Subscribe", to: page_path(@conn, :subscribe) %></li>
+      <ul class="header-nav-primary header-nav-list">
+        <li class="header-nav-list-item"><%= link "News", to: "/" %></li>
+        <li class="header-nav-list-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
+        <li class="header-nav-list-item"><%= link "Community", to: page_path(@conn, :community) %></li>
       </ul>
 
       <div class="header-nav-secondary">
@@ -34,14 +32,10 @@
             </div>
           </div>
         <% else %>
-          <%= link "Log In", to: sign_in_path(@conn, :new), class: "header-button" %>
-          <%= link "Sign Up", to: page_path(@conn, :community), class: "header-button" %>
+          <ul class="header-nav-list">
+            <li class="header-nav-list-item"><%= link "Log In", to: sign_in_path(@conn, :new), class: "header-button" %></li>
+          </ul>
         <% end %>
-
-        <form action="<%= search_path(@conn, :search) %>" method="get" class="header-nav-search">
-          <label class="visually_hidden" for="name">Search Changelog</label>
-          <input name="q" type="text" placeholder="Search Changelog" value="" />
-        </form>
       </div>
     </div>
   </nav>
