@@ -1,1 +1,29 @@
-<%= @topic.name %>
+<div class="topic">
+  <header class="topic-header">
+    <div class="topic-header-wrap">
+      <div class="topic-header-avatar">
+        <img src="" width="80" height="80" alt="<%= @topic.name %> Icon">
+      </div>
+
+      <h2 class="topic-header-title"><%= @topic.name %></h2>
+
+      <div class="topic-header-description">
+        <%= @topic.description %>
+      </div>
+
+      <div class="topic-header-meta">
+        999 Stories
+      </div>
+    </div>
+
+    <%= link "All Topics", to: topic_path(@conn, :index), title: "View All Topics", class: "topic-header-back" %>
+  </header>
+
+  <div class="feed">
+    TODO: Add news items
+  </div>
+
+  <nav class="pagination" role="menubar" aria-label="Pagination">
+    TODO: Pagination
+  </nav>
+</div>

@@ -1,17 +1,15 @@
 <div class="news_item-toolbar">
-  <button class="news_item-toolbar-item news_item-toolbar-button" title="Heart"><span>💚</span> 1</button>
-
   <div class="news_item-toolbar-item news_item-toolbar-meta">
     <span class="news_item-toolbar-meta-item">
       logged by @<%= @item.logger.handle %> <%= TimeView.pretty_date(@item.published_at) %>
     </span>
-    &bull;
-    <span class="news_item-toolbar-meta-item">
-      <%= link "discuss", to: "#" %>
-    </span>
-    &bull;
-    <span class="news_item-toolbar-meta-item">
-      <%= link "tags +2", to: "#" %>
-    </span>
+    <%= if Enum.any?(@item.topics) do %>
+      &bull;
+      <span class="news_item-toolbar-meta-item">
+        <%= for topic <- @item.topics do %>
+          <%= link topic.name, to: topic_path(@conn, :show, topic.slug), title: "View Topic" %>,
+        <% end %>
+      </span>
+    <% end %>
   </div>
 </div>

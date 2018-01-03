@@ -27,8 +27,6 @@
         <span>Play</span>
     <% end %>
 
-    <button class="news_item-toolbar-item news_item-toolbar-button" title="Heart"><span>💚</span> 1</button>
-
     <div class="news_item-toolbar-item news_item-toolbar-meta">
       <span class="news_item-toolbar-meta-item">
         logged <%= TimeView.pretty_date(@episode.published_at) %>
@@ -36,10 +34,6 @@
       &bull;
       <span class="news_item-toolbar-meta-item">
         <%= link "show notes", to: EpisodeView.audio_url(@episode) %>
-      </span>
-      &bull;
-      <span class="news_item-toolbar-meta-item">
-        <%= link "discuss", to: EpisodeView.audio_url(@episode) %>
       </span>
       &bull;
       <span class="news_item-toolbar-meta-item">

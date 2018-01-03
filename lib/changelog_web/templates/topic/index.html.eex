@@ -9,10 +9,10 @@
       <div class="topic_list-topics-item">
         <%= link to: topic_path(@conn, :show, topic.slug), title: "View Topic" do %>
           <div class="topic_list-topics-item-name">
-            <img src="http://via.placeholder.com/60x60" alt="">
+            <!-- <img src="http://via.placeholder.com/60x60" alt=""> -->
             <h3><%= topic.name %></h3>
           </div>
-          <div class="topic_list-topics-item-description"><p><%= topic.description %></p></div>
+          <p class="topic_list-topics-item-description"><%= topic.description %></p>
           <p class="topic_list-topics-item-count">999</p>
         <% end %>
       </div>

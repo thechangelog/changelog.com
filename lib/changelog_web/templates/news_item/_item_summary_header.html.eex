@@ -1,15 +1,15 @@
 <header class="news_item-header">
   <p class="news_item-source">
     <%= if @item.source do %>
-      <%= link to: @item.source.website, title: @item.source.name do %>
+      <%= link to: news_source_path(@conn, :show, @item.source.slug), title: @item.source.name do %>
         <img class="news_item-source-image" src="<%= NewsSourceView.icon_url(@item.source) %>" alt="<%= @item.source.name %> Icon" />
       <% end %>
-      <%= link @item.source.name, to: @item.source.website, title: @item.source.name %>
+      <%= link @item.source.name, to: news_source_path(@conn, :show, @item.source.slug), title: @item.source.name %>
     <% else %>
-      <%= link to: "#TODO" do %>
+      <%= link to: "/" do %>
         <img class="news_item-source-image" src="" alt="Source Avatar" />
       <% end %>
-      <a href="#source" title="">Changelog</a>
+      <a href="/" title="">Changelog</a>
     <% end %>
   </p>
   <h2 class="news_item-title">

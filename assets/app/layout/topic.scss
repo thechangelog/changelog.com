@@ -4,6 +4,7 @@
   // Header
   &-header {
     @include masthead();
+    position: relative;
 
     &-wrap {
       margin: 0 auto;
@@ -15,6 +16,7 @@
       text-align: center;
 
       img {
+        background: #000;
         border-radius: $base-border-radius;
         display: block;
         margin: 0 auto;
@@ -55,6 +57,21 @@
           color: $white;
           font-size: 18px;
         }
+      }
+    }
+
+    &-back {
+      @include position(absolute, null null 1em 1em);
+      background: $blue-grey;
+      border-radius: 2px;
+      color: rgba($white, 0.6);
+      font-size: 0.875em;
+      font-weight: bold;
+      padding: 0.5em 0.75em 0.4em;
+      transition: color 0.1s $base-easing;
+
+      &:hover {
+        color: $white;
       }
     }
   }

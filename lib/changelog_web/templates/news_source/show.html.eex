@@ -1,1 +1,31 @@
-<%= @source.name %>
+<div class="topic">
+  <header class="topic-header">
+    <div class="topic-header-wrap">
+      <div class="topic-header-avatar">
+        <img src="" width="80" height="80" alt="<%= @source.name %> Avatar">
+      </div>
+
+      <h2 class="topic-header-title"><%= @source.name %></h2>
+
+      <div class="topic-header-description">
+
+      </div>
+
+      <div class="topic-header-meta">
+        <%= if @source.website do %>
+          <%= link domain_only(@source.website), to: @source.website %>
+        <% end %>
+        &bull;
+        999 Stories
+      </div>
+    </div>
+  </header>
+
+  <div class="feed">
+    TODO: Add news items
+  </div>
+
+  <nav class="pagination" role="menubar" aria-label="Pagination">
+    TODO: Pagination
+  </nav>
+</div>
