@@ -3,7 +3,7 @@
   $background: #252B32;
   $padding: 10px 20px;
   display: none;
-  margin: $arrowSize;
+  margin: $arrowSize 0;
   text-align: left;
 
   &.is-visible { display: block; }
@@ -70,6 +70,11 @@
     left: calc(50% - #{$arrowSize*2});
     margin-top: 0;
     margin-bottom: 0;
+  }
+  &[x-placement^="bottom-end"] .tooltip-arrow {
+    left: auto;
+    right: 0;
+    margin-right: 0;
   }
   &[x-placement^="right"] {
     margin-left: $arrowSize + 5px;

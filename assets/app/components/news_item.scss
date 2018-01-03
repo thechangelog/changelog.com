@@ -42,12 +42,13 @@
         left: 0;
         position: absolute;
         width: $size;
-        top: 22px;
+        top: 15px;
       }
     }
   }
 
   &-title {
+    font-size: 1.25em;
     line-height: 1.25em;
     margin: 10px 0;
 

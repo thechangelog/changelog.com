@@ -6,6 +6,7 @@
   margin: 0 auto;
   padding: 25px $base-spacing/2;
   width: 100%;
+  z-index: 999;
 
   //
   //
@@ -108,7 +109,7 @@
 
       &-user {
         $size: 20px;
-        margin: 0 5px;
+        margin: 0;
         text-align: center;
 
         &,

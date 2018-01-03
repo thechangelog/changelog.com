@@ -13,22 +13,23 @@
 
       <div class="header-nav-secondary">
         <%= if @current_user do %>
-          <%= link to: home_path(@conn, :show), class: "header-nav-secondary-user js-account-nav", title: "Go $HOME" do %>
-            <img src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
-          <% end %>
-          <div class="js-account-nav-content" style="display: none;">
-            <div class="overlay-section">
-              <p class="overlay-section-lead_in">Signed in as</p>
-              <h3 class="overlay-section-heading"><%= @current_user.handle %></h3>
-              <ul class="overlay-nav">
-              <%= if @current_user.admin do %>
-                <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
-              <% end %>
+          <button class="has-tooltip">
+            <img class="header-nav-secondary-user" src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
+          </button>
+          <div class="tooltip" data-placement="bottom-end">
+            <div class="tooltip-arrow"></div>
+            <div class="tooltip-wrap">
+              <ul class="tooltip-list">
+                <%= if @current_user.admin do %>
+                  <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+                <% end %>
                 <li><%= link "My Account", to: home_path(@conn, :show) %></li>
                 <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
                 <li><%= link "Launch Slack", to: "https://changelog.slack.com" %></li>
-                <li><%= link "Sign Out", to: sign_out_path(@conn, :delete) %></li>
               </ul>
+              <div class="tooltip-footer">
+                <%= link "Sign Out", to: sign_out_path(@conn, :delete) %>
+              </div>
             </div>
           </div>
         <% else %>
