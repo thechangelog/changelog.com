@@ -1,0 +1,53 @@
+.account_subscriptions {
+  border-top: 1px solid $border-color;
+  margin-bottom: $base-spacing;
+
+  &-item {
+    border-bottom: 1px solid $border-color;
+    padding: $base-spacing 0;
+
+    @include breakpoint(mobile) {
+      display: flex;
+    }
+
+    &-info {
+      flex: 1 auto;
+      margin-right: 20px;
+
+      h3 {
+        font-size: 1.25em;
+        margin: 0 0 0.5em;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+
+      &-meta {
+        color: $medium-grey;
+        font-family: $code;
+        font-size: 0.75em;
+        margin-top: 1em;
+      }
+    }
+
+    &-button {
+      align-items: center;
+      display: flex;
+      text-align: right;
+
+      a {
+        @include button($green, $white);
+        margin: 20px 0 0;
+
+        @include breakpoint(mobile) {
+          margin: 20px 0;
+        }
+
+        &.is-subscribed {
+          @include button($light-grey, $medium-grey);
+        }
+      }
+    }
+  }
+}

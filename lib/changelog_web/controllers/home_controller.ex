@@ -14,6 +14,14 @@ defmodule ChangelogWeb.HomeController do
     render(conn, :edit, changeset: Person.changeset(me))
   end
 
+  def subscriptions(conn, _params) do
+    render(conn, :subscriptions)
+  end
+
+  def profile(conn = %{assigns: %{current_user: me}}, _params) do
+    render(conn, :profile, changeset: Person.changeset(me))
+  end
+
   def update(conn = %{assigns: %{current_user: me}}, %{"person" => person_params}) do
     changeset = Person.changeset(me, person_params)
 

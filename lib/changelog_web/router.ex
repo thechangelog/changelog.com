@@ -105,6 +105,9 @@ defmodule ChangelogWeb.Router do
     # people and auth
     resources "/people", PersonController, only: [:new, :create]
     resources "/~", HomeController, only: [:show, :edit, :update], singleton: true
+    get "/~/profile", HomeController, :profile
+    get "/~/subscriptions", HomeController, :subscriptions
+
     post "/~/slack", HomeController, :slack
     post "/~/subscribe/:id", HomeController, :subscribe
     post "/~/unsubscribe/:id", HomeController, :unsubscribe

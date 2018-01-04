@@ -1,9 +1,21 @@
 .flash {
-  text-align: center;
-  background: $blue;
-  color: $white;
+  background: $light-blue;
+  color: $blue;
+  font-weight: bold;
+  margin-bottom: $base-spacing;
   padding: $padding-small;
+  text-align: center;
 
-  &--success { background: $green; }
-  &--error { background: $red; }
+  &--success {
+    background: $light-green;
+    color: $green;
+  }
+  &--error {
+    background: $light-red;
+    color: $red;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 }

@@ -3,14 +3,18 @@ $black: #121921;
 $half-black: rgba($black, 0.5);
 $white: #ffffff;
 $half-white: rgba($white, 0.5);
+$light-green: #D4EFE2;
 $green: #59B287;
 $light-yellow: #fffedb;
+$yellow: #C4A731;
+$light-blue: #9095C5;
 $blue: #2D3589;
 $lightest-grey: #f5f5f5;
 $light-grey: #e6e5e6;
 $medium-grey: #878b8f;
 $dark-grey: #171E25;
 $red: #ef5125;
+$light-red: lighten($red, 20%);
 $blue-grey: #222C36;
 
 // Podcasts - Sometimes we wanna loop through 'em
@@ -39,7 +43,7 @@ $jsparty: #FFCD00;
 $jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
 
 // Borders
-$border-color: rgba($black, 0.05);
+$border-color: #F2F3F3;
 $base-border-radius: 3px;
 
 // Typography

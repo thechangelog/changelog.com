@@ -1,76 +1,21 @@
 <div class="page_account">
-  <nav class="subnav">
-    <ul class="subnav-list">
-      <li class="subnav-list-item"><a href="#">Subscriptions</a></li>
-      <li class="subnav-list-item is-active"><a href="#">Public Profile <small><em>(inactive)</em></small></a></li>
-      <li class="subnav-list-item"><a href="#">Account</a></li>
-    </ul>
-
-    <select class="subnav-select" name="select">
-      <option value="" selected>Subscriptions</option>
-      <option value="">Public Profile</option>
-      <option value="">Account</option>
-    </select>
-  </nav>
+  <%= render("_nav.html", conn: @conn) %>
 
   <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
     <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
 
-    <div class="form-element_wrap form-element_wrap--2">
-      <div class="form-element <%= error_class(f, :name) %>">
-        <label>Name<span>*</span></label>
-        <%= text_input(f, :name, placeholder: "Grace Hopper") %>
-        <%= error_message(f, :name) %>
-      </div>
-
-      <div class="form-element <%= error_class(f, :handle) %>">
-        <label>Username / Handle<span>*</span></label>
-        <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
-        <%= error_message(f, :handle) %>
-      </div>
-    </div>
-
-    <div class="form-element_wrap form-element_wrap--2">
-      <div class="form-element <%= error_class(f, :location) %>">
-        <label>Location</label>
-        <%= text_input(f, :location, placeholder: "New York, New York") %>
-        <%= error_message(f, :location) %>
-      </div>
-
-      <div class="form-element <%= error_class(f, :website) %>">
-        <label>Website URL</label>
-        <%= text_input(f, :website, placeholder: "https://gracehopper.com", autocapitalize: "none") %>
-        <%= error_message(f, :website) %>
-      </div>
-    </div>
-
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :bio) %>">
-        <label>Bio</label>
-        <%= textarea(f, :bio) %>
-        <%= error_message(f, :bio) %>
-        <p class="form-element-note">Try some Markdown. It *may* work.</p>
-      </div>
-    </div>
-
-    <div class="form-element_wrap form-element_wrap--2">
-      <div class="form-element <%= error_class(f, :github_handle) %>">
-        <label>On GitHub</label>
-        <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-        <%= error_message(f, :github_handle) %>
-      </div>
-
-      <div class="form-element <%= error_class(f, :twitter_handle) %>">
-        <label>On Twitter</label>
-        <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-        <%= error_message(f, :twitter_handle) %>
+      <div class="form-element <%= error_class(f, :email) %>">
+        <label>Email</label>
+        <%= text_input(f, :email) %>
+        <%= error_message(f, :email) %>
       </div>
     </div>
 
     <div class="form-submit">
-      <p class="form-submit-toc">By creating a public profile you agree to our <a href="/coc">code of conduct</a>, <a href="/privacy">privacy</a>, and <a href="/terms">terms</a>.</p>
+      <p class="form-submit-toc"></p>
       <div>
-        <input type="submit" value="Update Profile">
+        <input type="submit" value="Save">
         <div class="form_submit_responses"></div>
       </div>
     </div>
