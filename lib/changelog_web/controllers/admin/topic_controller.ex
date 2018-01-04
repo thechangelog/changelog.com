@@ -15,34 +15,36 @@ defmodule ChangelogWeb.Admin.TopicController do
   end
 
   def new(conn, _params) do
-    changeset = Topic.admin_changeset(%Topic{})
-    render(conn, "new.html", changeset: changeset)
+    changeset = Topic.insert_changeset(%Topic{})
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"topic" => topic_params}) do
-    changeset = Topic.admin_changeset(%Topic{}, topic_params)
+    changeset = Topic.insert_changeset(%Topic{}, topic_params)
 
     case Repo.insert(changeset) do
       {:ok, topic} ->
+        Repo.update(Topic.file_changeset(topic, topic_params))
+
         conn
         |> put_flash(:result, "success")
         |> smart_redirect(topic, params)
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("new.html", changeset: changeset)
+        |> render(:new, changeset: changeset)
     end
   end
 
   def edit(conn, %{"id" => id}) do
     topic = Repo.get!(Topic, id)
-    changeset = Topic.admin_changeset(topic)
-    render(conn, "edit.html", topic: topic, changeset: changeset)
+    changeset = Topic.update_changeset(topic)
+    render(conn, :edit, topic: topic, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "topic" => topic_params}) do
     topic = Repo.get!(Topic, id)
-    changeset = Topic.admin_changeset(topic, topic_params)
+    changeset = Topic.update_changeset(topic, topic_params)
 
     case Repo.update(changeset) do
       {:ok, topic} ->
@@ -52,7 +54,7 @@ defmodule ChangelogWeb.Admin.TopicController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", topic: topic, changeset: changeset)
+        |> render(:edit, topic: topic, changeset: changeset)
     end
   end
 

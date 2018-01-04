@@ -14,7 +14,10 @@
   <tbody>
   <%= for topic <- @topics do %>
     <tr>
-      <td><%= topic.name %></td>
+      <td>
+        <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(topic) %>">
+        <%= topic.name %>
+      </td>
       <td><%= topic.slug %></td>
       <td><%= truncate(topic.description, 60) %></td>
       <td><%= news_count(topic) %></td>
