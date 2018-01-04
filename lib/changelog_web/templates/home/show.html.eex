@@ -21,7 +21,7 @@
         <% end %>
         &bull;
         <%= if @current_user.website do %>
-          <%= link domain_only(@current_user.website), to: @current_user.website %>
+          <%= link domain_name(@current_user.website), to: @current_user.website %>
         <% end %>
       </div>
 

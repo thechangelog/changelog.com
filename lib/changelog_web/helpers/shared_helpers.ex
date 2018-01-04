@@ -12,9 +12,14 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     |> String.reverse
   end
 
-  def domain_only(url) do
+  def domain_name(url) do
     uri = URI.parse(url)
     uri.host
+  end
+
+  def domain_url(url) do
+    uri = URI.parse(url)
+    "#{uri.scheme}://#{uri.host}"
   end
 
   def external_link(text, opts) do
@@ -50,7 +55,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def website_link(model) do
     if model.website do
-      external_link domain_only(model.website), to: model.website
+      external_link domain_name(model.website), to: model.website
     end
   end
 

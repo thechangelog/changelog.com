@@ -1,20 +1,9 @@
 <header class="news_item-header">
-  <p class="news_item-source">
-    <%= if @item.source do %>
-      <%= link to: news_source_path(@conn, :show, @item.source.slug), title: @item.source.name do %>
-        <img class="news_item-source-image" src="<%= NewsSourceView.icon_url(@item.source) %>" alt="<%= @item.source.name %> Icon" />
-      <% end %>
-      <%= link @item.source.name, to: news_source_path(@conn, :show, @item.source.slug), title: @item.source.name %>
-    <% else %>
-      <%= link to: "/" do %>
-        <img class="news_item-source-image" src="" alt="Source Avatar" />
-      <% end %>
-      <a href="/" title="">Changelog</a>
-    <% end %>
-  </p>
+  <p class="news_item-source"><%= render_item_header_source(@conn, @item) %></p>
   <h2 class="news_item-title">
-    <%= link to: news_item_path(@conn, :show, slug(@item)) do %>
-      <%= @item.headline %><%= if @item.source do %><span class="news_item-title-external"></span><% end %>
+    <%= link @item.headline, to: news_item_path(@conn, :show, slug(@item)) %>
+    <%= link to: @item.url do %>
+      <span class="news_item-title-external"></span>
     <% end %>
   </h2>
 </header>

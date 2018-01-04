@@ -13,7 +13,7 @@
 
       <div class="topic-header-meta">
         <%= if @source.website do %>
-          <%= link domain_only(@source.website), to: @source.website %>
+          <%= link domain_name(@source.website), to: @source.website %>
         <% end %>
         &bull;
         999 Stories
