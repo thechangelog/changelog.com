@@ -17,9 +17,7 @@ defmodule Changelog.NewsSource do
     timestamps()
   end
 
-  def file_changeset(source, attrs \\ %{}) do
-    cast_attachments(source, attrs, ~w(icon))
-  end
+  def file_changeset(source, attrs \\ %{}), do: cast_attachments(source, attrs, ~w(icon))
 
   def insert_changeset(source, attrs \\ %{}) do
     source
@@ -46,7 +44,5 @@ defmodule Changelog.NewsSource do
     end
   end
 
-  def matching(url) do
-    from(s in __MODULE__, where: fragment("? ~* regex", ^url))
-  end
+  def matching(url), do: from(s in __MODULE__, where: fragment("? ~* regex", ^url))
 end

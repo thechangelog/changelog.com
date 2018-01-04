@@ -1,12 +1,14 @@
 defmodule Changelog.Topic do
   use Changelog.Data
 
-  alias Changelog.{EpisodeTopic, NewsItemTopic, PostTopic, Regexp}
+  alias Changelog.{EpisodeTopic, Files, NewsItemTopic, PostTopic, Regexp}
 
   schema "topics" do
     field :name, :string
     field :slug, :string
     field :description, :string
+
+    field :icon, Files.Icon.Type
 
     has_many :episode_topics, EpisodeTopic, on_delete: :delete_all
     has_many :episodes, through: [:episode_topics, :episode]
@@ -18,23 +20,25 @@ defmodule Changelog.Topic do
     timestamps()
   end
 
-  def admin_changeset(topic, params \\ %{}) do
+  def file_changeset(topic, attrs \\ %{}), do: cast_attachments(topic, attrs, ~w(icon))
+
+  def insert_changeset(topic, attrs \\ %{}) do
     topic
-    |> cast(params, ~w(name slug description))
+    |> cast(attrs, ~w(name slug description))
     |> validate_required([:name, :slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
   end
 
-  def episode_count(topic) do
-    Repo.count(from(e in EpisodeTopic, where: e.topic_id == ^topic.id))
+  def update_changeset(topic, attrs \\ %{}) do
+    topic
+    |> insert_changeset(attrs)
+    |> file_changeset(attrs)
   end
 
-  def news_count(topic) do
-    Repo.count(from(e in NewsItemTopic, where: e.topic_id == ^topic.id))
-  end
+  def episode_count(topic), do: count(topic, EpisodeTopic)
+  def news_count(topic), do: count(topic, NewsItemTopic)
+  def post_count(topic), do: count(topic, PostTopic)
 
-  def post_count(topic) do
-    Repo.count(from(p in PostTopic, where: p.topic_id == ^topic.id))
-  end
+  defp count(topic, module), do: Repo.count(from(q in module, where: q.topic_id == ^topic.id))
 end

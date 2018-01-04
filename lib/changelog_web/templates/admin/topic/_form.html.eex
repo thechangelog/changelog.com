@@ -1,22 +1,38 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="two fields">
     <div class="field required <%= error_class(f, :name) %>">
-      <%= label f, :name, "Name" %>
-      <%= text_input f, :name, placeholder: "Ruby on Rails" %>
+      <%= label(f, :name, "Name") %>
+      <%= text_input(f, :name, placeholder: "Ruby on Rails") %>
       <%= error_message(f, :name) %>
     </div>
 
     <div class="field required <%= error_class(f, :slug) %>">
-      <%= label f, :slug, "Slug" %>
-      <%= text_input f, :slug, placeholder: "ror", readonly: f.data.id %>
+      <%= label(f, :slug, "Slug") %>
+      <%= text_input(f, :slug, placeholder: "ror", readonly: f.data.id) %>
       <%= error_message(f, :slug) %>
     </div>
   </div>
 
   <div class="field <%= error_class(f, :description) %>">
-    <%= label f, :description %>
-    <%= textarea f, :description %>
+    <label for="description">
+      Description
+      <%= help_icon("140 characters or less.") %>
+    </label>
+    <%= textarea(f, :description, placeholder: "Ruby on Rails (Rails) is a web application framework written in Ruby. It is meant to help simplify the building of complex websites.", rows: 2) %>
     <%= error_message(f, :description) %>
+  </div>
+
+  <div class="field">
+    <label for="icon">
+      Icon
+      <%= help_icon("Ideal size is 600px by 600px") %>
+    </label>
+    <%= if f.data.icon do %>
+      <img src="<%= ChangelogWeb.TopicView.icon_url(f.data, :small) %>" height=75>
+      <br/>
+    <% end %>
+    <%= error_message(f, :icon) %>
+    <%= file_input f, :icon %>
   </div>
 
   <%= form_actions() %>
