@@ -12,6 +12,20 @@
       </div>
     </div>
 
+    <div class="form-element_wrap form-element_wrap--2">
+      <div class="form-element <%= error_class(f, :github_handle) %>">
+        <label>On GitHub</label>
+        <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= error_message(f, :github_handle) %>
+      </div>
+
+      <div class="form-element <%= error_class(f, :twitter_handle) %>">
+        <label>On Twitter</label>
+        <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= error_message(f, :twitter_handle) %>
+      </div>
+    </div>
+
     <div class="form-submit">
       <p class="form-submit-toc"></p>
       <div>

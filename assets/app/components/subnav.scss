@@ -3,7 +3,6 @@
   margin-bottom: $base-spacing*1.5;
 
   &-list {
-
     display: none;
     @media (min-width: 901px) { display: block; }
 
@@ -14,9 +13,16 @@
         border-bottom: 1px solid transparent;
         color: $black;
         display: block;
+        height: 58px;
         padding: 1em;
         transform: translateY(1px);
         transition: border 0.2s $base-easing;
+
+        small {
+          margin: 0;
+          position: relative;
+          top: -1px;
+        }
       }
 
       &.is-active a,

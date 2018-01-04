@@ -1,10 +1,11 @@
 .account_subscriptions {
-  border-top: 1px solid $border-color;
-  margin-bottom: $base-spacing;
-
   &-item {
     border-bottom: 1px solid $border-color;
     padding: $base-spacing 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
 
     @include breakpoint(mobile) {
       display: flex;

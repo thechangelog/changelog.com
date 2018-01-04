@@ -1,12 +1,16 @@
 <nav class="subnav">
   <ul class="subnav-list">
-    <li class="subnav-list-item"><%= link "Subscriptions", to: home_path(@conn, :subscriptions) %></li>
     <li class="subnav-list-item is-active">
+      <%= link "Subscriptions", to: home_path(@conn, :subscriptions) %>
+    </li>
+    <li class="subnav-list-item">
       <%= link to: home_path(@conn, :profile) do %>
         Public Profile <small><em>(inactive)</em></small>
       <% end %>
     </li>
-    <li class="subnav-list-item"><%= link "Account", to: home_path(@conn, :edit) %></li>
+    <li class="subnav-list-item">
+      <%= link "Account", to: home_path(@conn, :edit) %>
+    </li>
   </ul>
 
   <select class="subnav-select" name="select">
