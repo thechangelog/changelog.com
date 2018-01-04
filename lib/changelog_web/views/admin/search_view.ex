@@ -52,7 +52,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{id: topic.id,
       title: topic.name,
       slug: topic.slug,
-      url: admin_topic_path(Endpoint, :edit, topic)}
+      url: admin_topic_path(Endpoint, :edit, topic.slug)}
   end
 
   defp news_source_result(news_source) do

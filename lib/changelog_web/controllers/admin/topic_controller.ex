@@ -36,14 +36,14 @@ defmodule ChangelogWeb.Admin.TopicController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    topic = Repo.get!(Topic, id)
+  def edit(conn, %{"id" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
     changeset = Topic.update_changeset(topic)
     render(conn, :edit, topic: topic, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "topic" => topic_params}) do
-    topic = Repo.get!(Topic, id)
+  def update(conn, params = %{"id" => slug, "topic" => topic_params}) do
+    topic = Repo.get_by!(Topic, slug: slug)
     changeset = Topic.update_changeset(topic, topic_params)
 
     case Repo.update(changeset) do
@@ -58,8 +58,8 @@ defmodule ChangelogWeb.Admin.TopicController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    topic = Repo.get!(Topic, id)
+  def delete(conn, %{"id" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
     Repo.delete!(topic)
 
     conn
@@ -71,6 +71,6 @@ defmodule ChangelogWeb.Admin.TopicController do
     redirect(conn, to: admin_topic_path(conn, :index))
   end
   defp smart_redirect(conn, topic, _params) do
-    redirect(conn, to: admin_topic_path(conn, :edit, topic))
+    redirect(conn, to: admin_topic_path(conn, :edit, topic.slug))
   end
 end

@@ -1,8 +1,7 @@
 <table class="ui celled striped table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Slug</th>
+      <th>Topic</th>
       <th>Description</th>
       <th>News</th>
       <th>Episodes</th>
@@ -16,17 +15,16 @@
     <tr>
       <td>
         <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(topic) %>">
-        <%= topic.name %>
+        <%= topic.name %> (<%= topic.slug %>)
       </td>
-      <td><%= topic.slug %></td>
-      <td><%= truncate(topic.description, 60) %></td>
+      <td><%= truncate(topic.description, 100) %></td>
       <td><%= news_count(topic) %></td>
       <td><%= episode_count(topic) %></td>
       <td><%= post_count(topic) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= icon_link "edit", to: admin_topic_path(@conn, :edit, topic) %>
-          <%= icon_link "trash", to: admin_topic_path(@conn, :delete, topic), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= icon_link("edit", to: admin_topic_path(@conn, :edit, topic.slug)) %>
+          <%= icon_link("trash", to: admin_topic_path(@conn, :delete, topic.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>
     </tr>
