@@ -45,7 +45,7 @@ defmodule ChangelogWeb.Admin.TopicControllerTest do
   test "renders form to edit topic", %{conn: conn} do
     topic = insert(:topic)
 
-    conn = get(conn, admin_topic_path(conn, :edit, topic))
+    conn = get(conn, admin_topic_path(conn, :edit, topic.slug))
     assert html_response(conn, 200) =~ ~r/edit/i
   end
 
@@ -53,9 +53,9 @@ defmodule ChangelogWeb.Admin.TopicControllerTest do
   test "updates topic and smart redirects", %{conn: conn} do
     topic = insert(:topic)
 
-    conn = put(conn, admin_topic_path(conn, :update, topic.id), topic: @valid_attrs)
+    conn = put(conn, admin_topic_path(conn, :update, topic.slug), topic: @valid_attrs)
 
-    assert redirected_to(conn) == admin_topic_path(conn, :edit, topic)
+    assert redirected_to(conn) == admin_topic_path(conn, :edit, "ruby-on-rails")
     assert count(Topic) == 1
   end
 
@@ -64,7 +64,7 @@ defmodule ChangelogWeb.Admin.TopicControllerTest do
     topic = insert(:topic)
     count_before = count(Topic)
 
-    conn = put(conn, admin_topic_path(conn, :update, topic.id), topic: @invalid_attrs)
+    conn = put(conn, admin_topic_path(conn, :update, topic.slug), topic: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Topic) == count_before
