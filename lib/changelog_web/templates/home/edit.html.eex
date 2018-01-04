@@ -1,8 +1,8 @@
 <div class="page_account">
   <nav class="subnav">
     <ul class="subnav-list">
-      <li class="subnav-list-item is-active"><a href="#">Subscriptions</a></li>
-      <li class="subnav-list-item"><a href="#">Public Profile <small><em>(inactive)</em></small></a></li>
+      <li class="subnav-list-item"><a href="#">Subscriptions</a></li>
+      <li class="subnav-list-item is-active"><a href="#">Public Profile <small><em>(inactive)</em></small></a></li>
       <li class="subnav-list-item"><a href="#">Account</a></li>
     </ul>
 
