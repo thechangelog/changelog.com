@@ -81,10 +81,10 @@
     }
 
     &:nth-child(2) {
-      border-top: 2px solid $dark-grey;
+      border-top: 2px solid $black;
 
       @media (min-width: 760px) {
-        border-left: 2px solid $dark-grey;
+        border-left: 2px solid $black;
         border-top: 0;
       }
     }

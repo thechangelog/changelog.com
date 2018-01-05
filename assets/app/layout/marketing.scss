@@ -24,6 +24,8 @@
     }
 
     &--intro {
+      padding-top: 96px;
+
       .marketing--community & {
         background: $black url('/images/community/grid.jpg') top center;
         background-size: 1300px;

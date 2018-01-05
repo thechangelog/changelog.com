@@ -23,9 +23,9 @@
                 <%= if @current_user.admin do %>
                   <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
                 <% end %>
-                <li><%= link "My Account", to: home_path(@conn, :show) %></li>
+                <li><%= link "My Subscriptions", to: home_path(@conn, :subscriptions) %></li>
+                <li><%= link "Profile Settings", to: home_path(@conn, :profile) %></li>
                 <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
-                <li><%= link "Launch Slack", to: "https://changelog.slack.com" %></li>
               </ul>
               <div class="tooltip-footer">
                 <%= link "Sign Out", to: sign_out_path(@conn, :delete) %>

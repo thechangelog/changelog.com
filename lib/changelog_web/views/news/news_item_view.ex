@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Regexp, Repo}
-  alias ChangelogWeb.{NewsSourceView}
+  alias ChangelogWeb.{NewsSourceView, PersonView}
 
   def get_object(item) do
     case item.type do
@@ -28,6 +28,14 @@ defmodule ChangelogWeb.NewsItemView do
 
   def render_item_or_ad(item = %NewsItem{}), do: render("_item.html", item: item)
   def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
+
+  def render_item_header_source(conn, item) do
+    cond do
+      item.source -> render("_item_summary_header_source.html", conn: conn, item: item, source: item.source)
+      item.author -> render("_item_summary_header_author.html", conn: conn, item: item, author: item.author)
+      true -> render("_item_summary_header_default.html", conn: conn, item: item)
+    end
+  end
 
   def slug(item) do
     item.headline

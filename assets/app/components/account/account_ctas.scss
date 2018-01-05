@@ -1,0 +1,40 @@
+.account_ctas {
+  margin: $base-spacing*1.5 0;
+
+  &-item {
+    background: $lightest-grey;
+    margin-bottom: $base-spacing;
+    padding: 20px;
+
+    @include breakpoint(mobile) {
+      display: flex;
+      padding: $base-spacing $base-spacing 20px;
+    }
+
+    &-icon {
+      margin: 0 20px 20px 0;
+    }
+
+    &-info {
+      h3 {
+        font-size: 1.25em;
+        margin: 0 0 0.5em;
+      }
+
+      p {
+        margin-bottom: 1.25em;
+      }
+
+      &-buttons {
+        a {
+          @include button($green, $white);
+          display: inline-block;
+          font-family: $code;
+          font-size: 0.75em;
+          margin: 0 5px 5px 0;
+          padding: 0.625em 1em;
+        }
+      }
+    }
+  }
+}

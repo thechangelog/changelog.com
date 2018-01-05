@@ -1,4 +1,6 @@
 .show_list {
+  color: $white;
+
   &-header {
     margin: 0 auto;
     max-width: 1150px;
@@ -10,8 +12,9 @@
 
     p {
       color: $medium-grey;
-      font-size: 1.25em;
+      font-size: 1.125em;
       margin: 1em 0;
+      max-width: 600px;
     }
   }
 
@@ -41,10 +44,17 @@
 
       &-art {
         background-color: $black;
+        border: 1px solid #3D444A;
         display: block;
+        margin-bottom: 10px;
         width: 100%;
         height: 0;
         padding-bottom: 100%;
+        transition: all 0.2s $base-easing;
+
+        &:hover {
+          border-color: $medium-grey;
+        }
 
         @each $podcast in $podcasts {
           .show_list-shows-item--#{$podcast} & {
@@ -55,13 +65,13 @@
 
       &-content {
         padding-top: 10px;
+        color: $medium-grey;
 
         h2 {
           font-size: 1em;
+          margin-bottom: 0.5em;
 
-          a {
-            color: $black;
-          }
+          a { color: $white; }
         }
 
         h3,

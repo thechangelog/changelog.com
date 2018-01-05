@@ -1,3 +1,52 @@
+// Dark Headers
+.page-podcast-index,
+.page-podcast-show,
+.page-episode-show,
+.page-page-community,
+.page-topic-show,
+.page-news_source-show,
+.page-person-new {
+  .header {
+    background: $black;
+
+    &-logo a {
+      background-image: url('../assets/images/changelog-logomark-white.svg');
+    }
+
+    &-nav-list-item a {
+      color: $white;
+      &:hover { color: rgba($white, 0.8); }
+    }
+  }
+}
+
+// Transparent/Overlay Headers
+.page-page-community,
+.page-person-new {
+  .header {
+    background-color: transparent;
+    position: relative;
+    z-index: 101;
+  }
+
+  .marketing,
+  .signup {
+    margin-top: -96px; // Match height of header
+  }
+
+  .signup {
+    padding: 133px 30px 100px;
+
+    @include breakpoint(560px) {
+      padding: 23.7% 30px;
+    }
+    @include breakpoint(1160px) {
+      padding: 275px 30px;
+    }
+  }
+}
+
+// Base Styles
 .header {
   align-items: center;
   background-color: transparent;
@@ -7,11 +56,6 @@
   padding: 25px $base-spacing;
   width: 100%;
   z-index: 999;
-
-  .page-person-new & {
-    position: relative;
-    z-index: 101;
-  }
 
   //
   //
@@ -28,10 +72,6 @@
       display: block;
       height: $size;
       width: $size;
-    }
-
-    .page-person-new & a {
-      background-image: url('../assets/images/changelog-logomark-white.svg');
     }
   }
 
@@ -100,15 +140,6 @@
           &:hover {
             // TODO: Determine better hover state
             color: $medium-grey;
-          }
-        }
-
-        .page-person-new & a {
-          color: $white;
-
-          &:hover {
-            // TODO: Determine better hover state
-            color: $white;
           }
         }
       }

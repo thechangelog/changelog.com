@@ -72,6 +72,8 @@
   //
   // Body
   &-body {
+    padding-top: $base-spacing*2;
+
     // Sections
     &-section {
       margin: $base-spacing;
