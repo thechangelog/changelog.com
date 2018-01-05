@@ -56,6 +56,15 @@ defmodule ChangelogWeb.NewsItemView do
     |> Enum.join(" ")
   end
 
+  def topic_link_list(conn, item) do
+    item.topics
+    |> Enum.map(fn(topic) ->
+      {:safe, el} = link(topic.name, to: topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
+      el
+      end)
+    |> Enum.join(", ")
+  end
+
   defp prepare_html(html) do
     html
     |> String.replace("\n", " ") # treat news lines as spaces

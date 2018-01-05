@@ -6,9 +6,7 @@
     <%= if Enum.any?(@item.topics) do %>
       &bull;
       <span class="news_item-toolbar-meta-item">
-        <%= for topic <- @item.topics do %>
-          <%= link topic.name, to: topic_path(@conn, :show, topic.slug), title: "View Topic" %>,
-        <% end %>
+        <%= topic_link_list(@conn, @item) |> raw %>
       </span>
     <% end %>
   </div>
