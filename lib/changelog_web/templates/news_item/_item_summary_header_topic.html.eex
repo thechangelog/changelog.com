@@ -1,0 +1,7 @@
+<%= if @topic.icon do %>
+  <%= link to: topic_path(@conn, :show, @topic.slug), title: @topic.name do %>
+    <img class="news_item-source-image" src="<%= TopicView.icon_url(@topic) %>" alt="<%= @topic.name %> Icon" />
+  <% end %>
+<% end %>
+
+<%= link domain_name(@item.url), to: domain_url(@item.url), title: domain_name(@item.url), rel: "external" %>

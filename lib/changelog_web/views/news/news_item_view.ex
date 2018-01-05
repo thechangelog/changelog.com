@@ -2,7 +2,8 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Regexp, Repo}
-  alias ChangelogWeb.{NewsSourceView, PersonView}
+  alias ChangelogWeb.{NewsSourceView, PersonView, TopicView}
+
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
       link("[Edit]", to: admin_news_item_path(conn, :edit, item), data: [turbolinks: false])
@@ -38,6 +39,7 @@ defmodule ChangelogWeb.NewsItemView do
     cond do
       item.source -> render("_item_summary_header_source.html", conn: conn, item: item, source: item.source)
       item.author -> render("_item_summary_header_author.html", conn: conn, item: item, author: item.author)
+      Enum.any?(item.topics) -> render("_item_summary_header_topic.html", conn: conn, item: item, topic: List.first(item.topics))
       true -> render("_item_summary_header_default.html", conn: conn, item: item)
     end
   end

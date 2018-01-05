@@ -68,9 +68,9 @@
 
       <div class="post-body-summary-tags">
         <ul class="tags">
-          <li class="tags-item"><a href="#" title="View Tag">Programming</a></li>
-          <li class="tags-item"><a href="#" title="View Tag">Computer Science</a></li>
-          <li class="tags-item"><a href="#" title="View Tag">Learning</a></li>
+        <%= for topic <- @episode.topics do %>
+          <li class="tags-item"><%= link topic.name, to: topic_path(@conn, :show, topic.slug), title: "View #{topic.name}" %></li>
+        <% end %>
         </ul>
       </div>
     </div>
