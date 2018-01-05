@@ -3,7 +3,7 @@
     <div class="post-header-wrap">
       <p class="post-header-date">
         <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
-        <%= if @current_user && @current_user.admin do %> &bull; <%= link "Edit", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
+        <%= admin_edit_link(@conn, @current_user, @post) %>
       </p>
       <h1 class="post-header-title"><%= @post.title %></h1>
 

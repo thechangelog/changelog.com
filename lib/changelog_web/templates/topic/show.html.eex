@@ -9,6 +9,7 @@
 
       <div class="topic-header-description">
         <%= @topic.description %>
+        <%= admin_edit_link(@conn, @current_user, @topic) %>
       </div>
 
       <div class="topic-header-meta">

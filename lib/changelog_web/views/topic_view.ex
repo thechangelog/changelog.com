@@ -5,6 +5,12 @@ defmodule ChangelogWeb.TopicView do
   alias ChangelogWeb.NewsItemView
   alias Changelog.Files.Icon
 
+  def admin_edit_link(conn, user, topic) do
+    if user && user.admin do
+      link("[Edit]", to: admin_topic_path(conn, :edit, topic.slug), data: [turbolinks: false])
+    end
+  end
+
   def icon_url(topic), do: icon_url(topic, :small)
   def icon_url(topic, version) do
     Icon.url({topic.icon, topic}, version)

@@ -3,6 +3,11 @@ defmodule ChangelogWeb.NewsItemView do
 
   alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Regexp, Repo}
   alias ChangelogWeb.{NewsSourceView, PersonView}
+  def admin_edit_link(conn, user, item) do
+    if user && user.admin do
+      link("[Edit]", to: admin_news_item_path(conn, :edit, item), data: [turbolinks: false])
+    end
+  end
 
   def get_object(item) do
     case item.type do

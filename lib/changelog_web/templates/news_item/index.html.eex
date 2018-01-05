@@ -1,6 +1,6 @@
 <div class="feed">
   <%= for item <- @items do %>
-    <%= render("_item_summary.html", conn: @conn, item: item) %>
+    <%= render("_item_summary.html", Map.merge(assigns, %{item: item})) %>
   <% end %>
 </div>
 

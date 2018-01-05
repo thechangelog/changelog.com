@@ -9,5 +9,6 @@
         <%= topic_link_list(@conn, @item) |> raw %>
       </span>
     <% end %>
+    <%= admin_edit_link(@conn, @current_user, @item) %>
   </div>
 </div>

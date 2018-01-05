@@ -63,7 +63,7 @@
         <a href="<%= audio_url(@episode) %>" download>
           Download MP3 (<%= megabytes(@episode) %>MB)
         </a>
-        <%= if @current_user && @current_user.admin do %>&bull; <%= link "Edit", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug), data: [turbolinks: false] %><% end %>
+        <%= admin_edit_link(@conn, @current_user, @episode) %>
       </div>
 
       <div class="post-body-summary-tags">
