@@ -1,70 +1,73 @@
-<article class="post">
+<article class="post article">
   <header class="post-header">
     <div class="post-header-wrap">
       <h1 class="post-header-title">Subscribe to Changelog Weekly</h1>
     </div>
   </header>
 
-  <div class="post-body">
-    <div class="post-body-content richtext">
-      <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
+  <div class="richtext">
+    <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
 
-      <hr>
+    <hr>
 
-      <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form js-cm">
-        <div class="form_element_wrap">
-          <label>Name</label>
-          <div class="form_element">
-            <input name="cm-name" type="text" placeholder="Full name..."/>
-          </div>
+    <!-- TODO: Style forms in richtext or make own component that works alongside richtext -->
+    <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form js-cm">
+      <div class="form_element_wrap">
+        <label>Name</label>
+        <div class="form_element">
+          <input name="cm-name" type="text" placeholder="Full name..."/>
         </div>
+      </div>
 
-        <div class="form_element_wrap">
-          <label>Email<span>*</span></label>
-          <div class="form_element">
-            <input name="cm-zjykt-zjykt" type="email" placeholder="Email address..." required />
-          </div>
+      <div class="form_element_wrap">
+        <label>Email<span>*</span></label>
+        <div class="form_element">
+          <input name="cm-zjykt-zjykt" type="email" placeholder="Email address..." required />
         </div>
+      </div>
 
-        <div class="form_submit">
-          <input type="submit" value="Start my Subscription">
-          <div class="form_submit_responses"></div>
-        </div>
-      </form>
+      <div class="form_submit">
+        <input type="submit" value="Start my Subscription">
+        <div class="form_submit_responses"></div>
+      </div>
+    </form>
 
-      <hr />
+    <hr />
 
-      <p>
-        Need a sneak peek?
-      <%= if @latest do %>
-        <a href="<%= @latest["WebVersionURL"] %>">Check out the latest issue</a>
-      <% else %>
-        <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a>
-      <% end %>
+    <p>
+      Need a sneak peek?
+    <%= if @latest do %>
+      <a href="<%= @latest["WebVersionURL"] %>">Check out the latest issue</a>
+    <% else %>
+      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a>
+    <% end %>
 
-        or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
+      or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
 
-      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
+  </div>
 
-      <hr />
+  <div class="image">
+    <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
+  </div>
 
-      <h4>Is my email address safe?</h4>
+  <div class="richtext">
 
-      <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
+    <h4>Is my email address safe?</h4>
 
-      <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
+    <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
 
-      <h4>Is there an archive of past issues?</h4>
+    <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
 
-      Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %>
+    <h4>Is there an archive of past issues?</h4>
 
-      <h4>Can I sponsor a Headline, Link, Repo, or Video?</h4>
+    <p>Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %></p>
 
-      Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsor) %>
+    <h4>Can I sponsor a Headline, Link, Repo, or Video?</h4>
 
-      <h4>Why do we require you to verify your email address?</h4>
+    <p>Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsor) %></p>
 
-      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
-    </div>
+    <h4>Why do we require you to verify your email address?</h4>
+
+    <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
   </div>
 </article>

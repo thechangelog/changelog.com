@@ -1,12 +1,11 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Code of Conduct</h2>
-    </header>
-    <div class="content_body">
-      <h3>Our Pledge</h3>
+<article class="article">
+  <header>
+    <h2>Code of Conduct</h2>
+  </header>
+  <div class="richtext">
+    <h3>Our Pledge</h3>
 
-      <p>In the interest of fostering an open and welcoming environment, we as Changelog community members pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.</p>
+    <p>In the interest of fostering an open and welcoming environment, we as Changelog community members pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.</p>
 
     <h3>Our Standards</h3>
 
@@ -39,7 +38,7 @@
     <h3>Scope</h3>
 
     <p>This Code of Conduct applies both within project spaces and in public spaces when an individual is representing Changelog or its community. Examples of representing Changelog or community include using an official Changelog email address, posting via an official social media account, or acting as an appointed
-representative at an online or offline event. Representation of Changelog may be further defined and clarified by Changelog staff members.</p>
+  representative at an online or offline event. Representation of Changelog may be further defined and clarified by Changelog staff members.</p>
 
     <h3>Enforcement</h3>
 

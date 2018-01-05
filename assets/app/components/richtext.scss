@@ -1,9 +1,73 @@
 .richtext {
+
   // A simple clearfix so we don't have to use overflow auto (which would break 100%+ width stuff)
   &:after {
     clear: both;
     content: "";
     display: table;
+  }
+
+  // Remove bottom-margin on last element in richtext
+  > *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  //
+  //
+  // Headings
+  h2, h3, h4, h5, h6 {
+    margin-top: 1.375em;
+    margin-bottom: .75em;
+
+    &:first-child { margin-top: 0; }
+
+    a { font-weight: 900; }
+  }
+
+  h2 {
+    font-size: 2em;
+    margin-top: 1.25em;
+  }
+  h3 {
+    font-size: 1.5em;
+  }
+  h4 {
+    font-size: 1.375em;
+  }
+  h5 {
+    font-size: 1.25em;
+  }
+  h6 {
+    font-size: 1.125em;
+  }
+
+  //
+  //
+  // Text
+  p {
+    font-size: 1.25em;
+
+    // If a <code> tag is within a <p> tag show it as a snippet
+    code {
+      background: rgba($black, .06);
+      // border: 1px solid rgba($black, .1);
+      color: $black;
+      display: inline-block;
+      font-size: 14px;
+      line-height: 1;
+      padding: .35em .5em;
+    }
+  }
+
+  pre {
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+  }
+
+  strong {
+    color: $black;
+    font-weight: 700;
   }
 
   a {
@@ -20,32 +84,12 @@
     }
   }
 
-  // If a <code> tag is within a <p> tag show it as a snippet
-  p code {
-    background: rgba($black, .06);
-    // border: 1px solid rgba($black, .1);
-    color: $black;
-    display: inline-block;
-    font-size: 14px;
-    line-height: 1;
-    padding: .35em .5em;
+  ul {
+    @include list;
   }
 
-  ul, ol {
-    list-style-position: inside;
-    padding-left: 0;
-    li {
-      margin: 0.5em 0;
-    }
-  }
-  // UL LIs will start with a > character
-  ul:not(.button_list) {
-    list-style: none;
-    li {
-      background: url("/images/ul-arrow.svg") no-repeat;
-      background-position: left 0.35em;
-      padding-left: 20px;
-    }
+  ol {
+    @include list(ol);
   }
 
   blockquote {
@@ -61,6 +105,9 @@
     }
   }
 
+  //
+  //
+  // Special/Layout
   .button {
     // @extend %primary-button;
     display: inline-block;
@@ -92,36 +139,10 @@
   .left { float: left; }
   .right { float: right; }
 
-  h2 {
-    font-size: 1.5em;
-    margin-top: 2em;
-  }
-  h3 {
-    font-size: 1.25em;
-    margin-top: 1.5em;
-  }
-  h4 {
-    font-size: 1.125em;
-    margin-top: 1.25em;
-  }
-  h5 {
-    font-size: 1em;
-    margin-top: 1.25em;
-  }
-  h6 {
-    font-size: 0.9em;
-    margin-top: 1.25em;
-  }
-  h2, h3, h4, h5, h6 {
-    a {
-      font-weight: 900;
-    }
-  }
-
   hr {
     border: 1px solid $border-color;
     clear: both;
-    margin: 2em 0;
+    margin: 65px 0;
   }
 
   img {
@@ -139,12 +160,6 @@
     &_light-grey { border: 1px solid $light-grey; }
     &_medium-grey { border: 1px solid $medium-grey; }
     &_black { border: 1px solid $black; }
-  }
-
-  // inline tags
-  strong {
-    color: $black;
-    font-weight: 700;
   }
 
   mark {

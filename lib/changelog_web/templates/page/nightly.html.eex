@@ -1,86 +1,88 @@
-<article class="post">
+<article class="post article">
   <header class="post-header">
     <div class="post-header-wrap">
       <h1 class="post-header-title">Subscribe to Changelog Nightly</h1>
     </div>
   </header>
 
-  <div class="post-body">
-    <div class="post-body-content richtext">
-      <p>Every night @ 10pm US Central we ship this email to unearth top new and starred repositories on GitHub before they blow up. No fluff, just repos. No spam!</p>
+  <div class="richtext">
+    <p>Every night @ 10pm US Central we ship this email to unearth top new and starred repositories on GitHub before they blow up. No fluff, just repos. No spam!</p>
 
-      <hr>
+    <hr>
 
-      <form action="https://changelog.createsend.com/t/t/s/hhatl/" method="post" class="form js-cm">
-        <div class="form_element_wrap">
-          <label for="name">Name</label>
-          <div class="form_element">
-            <input name="cm-name" type="text" placeholder="Full name..." />
+    <form action="https://changelog.createsend.com/t/t/s/hhatl/" method="post" class="form js-cm">
+      <div class="form_element_wrap">
+        <label for="name">Name</label>
+        <div class="form_element">
+          <input name="cm-name" type="text" placeholder="Full name..." />
+        </div>
+      </div>
+
+      <div class="form_element_wrap">
+        <label>Email<span>*</span></label>
+        <div class="form_element">
+          <input name="cm-hhatl-hhatl" type="email" placeholder="Email address..." required />
+        </div>
+      </div>
+
+      <div class="form_element_wrap">
+        <label for="name">Theme<span>*</span></label>
+        <div class="form_element">
+          <div class="form_element_select-wrap">
+            <select id="fielddjlhdi" name="cm-fo-djlhdi">
+              <option value="878239" selected="selected">Night Theme</option>
+              <option value="878240">Day Theme</option>
+            </select>
           </div>
         </div>
+      </div>
 
-        <div class="form_element_wrap">
-          <label>Email<span>*</span></label>
-          <div class="form_element">
-            <input name="cm-hhatl-hhatl" type="email" placeholder="Email address..." required />
-          </div>
-        </div>
+      <div class="form_submit">
+        <input type="submit" value="Start my Subscription">
+        <div class="form_submit_responses"></div>
+      </div>
+    </form>
 
-        <div class="form_element_wrap">
-          <label for="name">Theme<span>*</span></label>
-          <div class="form_element">
-            <div class="form_element_select-wrap">
-              <select id="fielddjlhdi" name="cm-fo-djlhdi">
-                <option value="878239" selected="selected">Night Theme</option>
-                <option value="878240">Day Theme</option>
-              </select>
-            </div>
-          </div>
-        </div>
+    <hr />
 
-        <div class="form_submit">
-          <input type="submit" value="Start my Subscription">
-          <div class="form_submit_responses"></div>
-        </div>
-      </form>
+    <p>Need a sneak peek? <a href="http://nightly.changelog.com/2016/10/06/">Check out the email for October 6, 2016</a>.</p>
 
-      <hr />
+  </div>
 
-      <p>Need a sneak peek? <a href="http://nightly.changelog.com/2016/10/06/">Check out the email for October 6, 2016</a>.</p>
+  <div class="image">
+    <a href="http://nightly.changelog.com/2016/10/06/"><img src="<%= static_url(@conn, "/images/changelog-nightly.jpg") %>" alt="Changelog Nightly" /></a>
+  </div>
 
-      <a href="http://nightly.changelog.com/2016/10/06/"><img src="<%= static_url(@conn, "/images/changelog-nightly.jpg") %>" alt="Changelog Nightly" /></a>
+  <div class="richtext">
 
-      <hr />
+    <h4>When do you send this email?</h4>
 
-      <h4>When do you send this email?</h4>
+    <p>Every night at <a href="http://www.thetimezoneconverter.com/?t=10:00%20pm&tz=Houston">10pm US Central.</a></p>
 
-      <p>Every night at <a href="http://www.thetimezoneconverter.com/?t=10:00%20pm&tz=Houston">10pm US Central.</a></p>
+    <h4>Is my email address safe?</h4>
 
-      <h4>Is my email address safe?</h4>
+    <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
 
-      <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
+    <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
 
-      <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
+    <h4>How does it work?</h4>
 
-      <h4>How does it work?</h4>
+    <p><a href="https://github.com/thechangelog/nightly">Changelog Nightly is open source on GitHub.</a> Check it out.</p>
 
-      <p><a href="https://github.com/thechangelog/nightly">Changelog Nightly is open source on GitHub.</a> Check it out.</p>
+    <h4>Is there an archive of past issues?</h4>
 
-      <h4>Is there an archive of past issues?</h4>
+    <p>There's no official archive yet, but you can directly access a specific night's issue by typing <code>http://nightly.changelog.com/YYYY/MM/DD</code> in your browser's address bar.</p>
 
-      <p>There's no official archive yet, but you can directly access a specific night's issue by typing <code>http://nightly.changelog.com/YYYY/MM/DD</code> in your browser's address bar.</p>
+    <h4>Is there a light color version of the email?</h4>
 
-      <h4>Is there a light color version of the email?</h4>
+    <p>Yes. <a href="/posts/changelog-nightly-design-updates/">Read the full details here.</a></p>
 
-      <p>Yes. <a href="/posts/changelog-nightly-design-updates/">Read the full details here.</a></p>
+    <h4>Can I sponsor Changelog Nightly?</h4>
 
-      <h4>Can I sponsor Changelog Nightly?</h4>
+    <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: page_path(@conn, :sponsor) %>.</p>
 
-      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: page_path(@conn, :sponsor) %>.</p>
+    <h4>Why do we require you to confirm your email address?</h4>
 
-      <h4>Why do we require you to confirm your email address?</h4>
-
-      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
-    </div>
+    <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
   </div>
 </article>

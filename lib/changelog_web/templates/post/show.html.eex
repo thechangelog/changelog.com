@@ -22,10 +22,8 @@
     <%= link "← All Posts", to: "/posts", class: "post-header-all_posts_button" %>
   </header>
 
-  <div class="post-body">
-    <div class="post-body-content richtext">
-      <%= @post.body |> md_to_html |> raw %>
-    </div>
+  <div class="richtext">
+    <%= @post.body |> md_to_html |> raw %>
   </div>
 
   <footer class="post-footer">

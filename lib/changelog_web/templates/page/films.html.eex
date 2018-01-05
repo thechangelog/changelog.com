@@ -1,135 +1,133 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Changelog Films</h2>
-    </header>
-    <div class="content_body">
-      <p><%= link "Hire us", to: page_path(@conn, :contact) %> to cover your conference or work on your next big idea.</p>
+<article class="article">
+  <header>
+    <h2>Changelog Films</h2>
+  </header>
+  <div class="richtext">
+    <p><%= link "Hire us", to: page_path(@conn, :contact) %> to cover your conference or work on your next big idea.</p>
 
-      <h3>GopherCon 2016 - Recap Video</h3>
+    <h3>GopherCon 2016 - Recap Video</h3>
 
-      <p>This is the promo video we shot for our friends at GopherCon 2016 &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2016) %>.</p>
+    <p>This is the promo video we shot for our friends at GopherCon 2016 &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2016) %>.</p>
 
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/wmee2ytxqe.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wmee2ytxqe videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>GopherCon 2016 - Day One Recap</h3>
-
-      <p>We wowed everyone this year when showed off this video to the whole conference on day two.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/vidxvzuz1k.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_vidxvzuz1k videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>UserTesting Engineering</h3>
-
-      <p>We teamed up with UserTesting to get a candid look at what their engineering team is all about.</p>
-
-      <div class="wide-gutter-wrap">
-        <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_qo5xiirel7 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>Beyond Code - Season 4 Trailer</h3>
-
-      <p>We shot our fourth season of Beyond Code at GopherCon.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/flcb9g0nkr.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_flcb9g0nkr videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>Beyond Code - Season 3 Trailer</h3>
-
-      <p>We shot our third season of Beyond Code at NEJS Conf.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/k801vbm631.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_k801vbm631 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>Beyond Code - Season 2 Trailer</h3>
-
-      <p>We shot our second season of Beyond Code at Space City JS.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/uvatyeaai5.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_uvatyeaai5 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>NEJS Conf 2015</h3>
-
-      <p>We caught up with Ethan Marcotte at NEJS Conf.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/74tfr1aidu.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_74tfr1aidu videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <p>We caught up with Christian Heilmann at NEJS Conf.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/ybyuuibpxf.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ybyuuibpxf videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>GopherCon 2015</h3>
-
-      <p>This is the promo video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %>.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/k4osu01wgp.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:42.71% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_k4osu01wgp videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <p>At GopherCon we talked with Andrew Gerrand on the future of Go.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/wz28qq9g20.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wz28qq9g20 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <p>At GopherCon we talked with Peter Bourgon about Go and microservices.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/ozljuzk5yh.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ozljuzk5yh videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <p><%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %> we shot at GopherCon 2015.</p>
-
-      <hr>
-
-      <h3>Beyond Code - Season 1 Trailer</h3>
-
-      <p>We shot our first season of Beyond Code at Keep Ruby Weird.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/h6bsioj24g.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_h6bsioj24g videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>Space City JS 2015</h3>
-
-      <p>We caught up with John Brown to talk about art in JavaScript.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/ddhereehf5.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ddhereehf5 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <p>We caught up with Sam Kaplia to talk about responsive design.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="//fast.wistia.com/embed/medias/9o76gfaz0s.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_9o76gfaz0s videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/wmee2ytxqe.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wmee2ytxqe videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
     </div>
+
+    <hr>
+
+    <h3>GopherCon 2016 - Day One Recap</h3>
+
+    <p>We wowed everyone this year when showed off this video to the whole conference on day two.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/vidxvzuz1k.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_vidxvzuz1k videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>UserTesting Engineering</h3>
+
+    <p>We teamed up with UserTesting to get a candid look at what their engineering team is all about.</p>
+
+    <div class="wide-gutter-wrap">
+      <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_qo5xiirel7 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>Beyond Code - Season 4 Trailer</h3>
+
+    <p>We shot our fourth season of Beyond Code at GopherCon.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/flcb9g0nkr.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_flcb9g0nkr videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>Beyond Code - Season 3 Trailer</h3>
+
+    <p>We shot our third season of Beyond Code at NEJS Conf.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/k801vbm631.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_k801vbm631 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>Beyond Code - Season 2 Trailer</h3>
+
+    <p>We shot our second season of Beyond Code at Space City JS.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/uvatyeaai5.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_uvatyeaai5 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>NEJS Conf 2015</h3>
+
+    <p>We caught up with Ethan Marcotte at NEJS Conf.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/74tfr1aidu.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_74tfr1aidu videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <p>We caught up with Christian Heilmann at NEJS Conf.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/ybyuuibpxf.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ybyuuibpxf videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>GopherCon 2015</h3>
+
+    <p>This is the promo video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %>.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/k4osu01wgp.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:42.71% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_k4osu01wgp videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <p>At GopherCon we talked with Andrew Gerrand on the future of Go.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/wz28qq9g20.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wz28qq9g20 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <p>At GopherCon we talked with Peter Bourgon about Go and microservices.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/ozljuzk5yh.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ozljuzk5yh videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <p><%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %> we shot at GopherCon 2015.</p>
+
+    <hr>
+
+    <h3>Beyond Code - Season 1 Trailer</h3>
+
+    <p>We shot our first season of Beyond Code at Keep Ruby Weird.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/h6bsioj24g.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_h6bsioj24g videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>Space City JS 2015</h3>
+
+    <p>We caught up with John Brown to talk about art in JavaScript.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/ddhereehf5.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ddhereehf5 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <p>We caught up with Sam Kaplia to talk about responsive design.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="//fast.wistia.com/embed/medias/9o76gfaz0s.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_9o76gfaz0s videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
   </div>
 </article>

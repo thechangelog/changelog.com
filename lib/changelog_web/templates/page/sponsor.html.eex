@@ -138,7 +138,8 @@
       <img src='<%= static_url(@conn, "/images/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
     </div>
 
-    <div class="content_body">
+    <!-- TODO: Style richtext for dark theme and add necessary layout styles -->
+    <div class="richtext">
       <p><strong><mark class="grey-background">Do you want to tell 100,000+ developers about your product or service?</mark></strong></p>
 
       <p>Our listeners and readers are a loyal audience of engineers, hackers, developers, polyglots, backend, frontend, full-stack, operations, designers, and everything in between. If you want to talk to software developers, we can help you.</p>

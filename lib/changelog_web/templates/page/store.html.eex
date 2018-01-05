@@ -1,80 +1,74 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Changelog Store</h2>
-    </header>
-    <div class="content_body">
-      <h3>The official uniform of Changelog members and fans!</h3>
+<article class="article">
+  <header>
+    <h2>Changelog Store</h2>
+  </header>
+  <div class="richtext">
+    <h3>The official uniform of Changelog members and fans!</h3>
 
-      <img src="https://changelog.com/wp-content/uploads/changelog-tee-700x560.png" alt="Changelog Tee" class="float float--right" width="350" height="280" style="width: 350px; height: 280px;">
+    <!-- TODO: Consider updating inline images to work better responsively -->
+    <img src="https://changelog.com/wp-content/uploads/changelog-tee-700x560.png" alt="Changelog Tee" class="float float--right" width="350" height="280" style="width: 350px; height: 280px;">
 
-      <p>This awesome tee is screen printed in a soft, water-based ink, on a black tri-blend (50% Polyester / 25% Cotton / 25% Rayon) short sleeve tee from American Apparel.</p>
+    <p>This awesome tee is screen printed in a soft, water-based ink, on a black tri-blend (50% Polyester / 25% Cotton / 25% Rayon) short sleeve tee from American Apparel.</p>
 
-      <p>The Polyester retains shape and elasticity; while the Cotton lends both comfort and durability. The addition of Rayon makes for a unique texture and allows the shirt to drape against the body for a slimming look.</p>
+    <p>The Polyester retains shape and elasticity; while the Cotton lends both comfort and durability. The addition of Rayon makes for a unique texture and allows the shirt to drape against the body for a slimming look.</p>
 
-      <p>The Polyester retains shape and elasticity; while the Cotton lends both comfort and durability. The addition of Rayon makes for a unique texture and allows the shirt to drape against the body for a slimming look.</p>
+    <p>The Polyester retains shape and elasticity; while the Cotton lends both comfort and durability. The addition of Rayon makes for a unique texture and allows the shirt to drape against the body for a slimming look.</p>
 
-      <p>View the sizing chart before ordering -- American Apparel items are fitted more snugly than most standard apparel.</p>
+    <p>View the sizing chart before ordering -- American Apparel items are fitted more snugly than most standard apparel.</p>
 
-      <ul>
-        <li>Men - <a href="http://www.americanapparel.net/garmentspecs/Index.asp?GarmentSpecID=tr401">American Apparel TR401 Sizing Chart</a></li>
-        <li>Women - <a href="http://www.americanapparel.net/garmentspecs/Index.asp?GarmentSpecID=tr301">American Apparel TR301 Sizing Chart</a></li>
-      </ul>
+    <ul>
+      <li>Men - <a href="http://www.americanapparel.net/garmentspecs/Index.asp?GarmentSpecID=tr401">American Apparel TR401 Sizing Chart</a></li>
+      <li>Women - <a href="http://www.americanapparel.net/garmentspecs/Index.asp?GarmentSpecID=tr301">American Apparel TR301 Sizing Chart</a></li>
+    </ul>
 
-      <hr />
+    <hr />
 
-      <h3>Order Form</h3>
+    <h3>Order Form</h3>
 
-      <p>New shirts ship every Friday!</p>
+    <p>New shirts ship every Friday!</p>
 
-      <div id="wufoo-s7x2p7">
-      Fill out my <a href="http://riznmedia.wufoo.com/forms/s7x2p7">online form</a>.
-      </div>
-
-      <script type="text/javascript">var s7x2p7;(function(d, t) {
-      var s = d.createElement(t), options = {
-      'userName':'riznmedia',
-      'formHash':'s7x2p7',
-      'autoResize':true,
-      'height':'340',
-      'async':true,
-      'header':'hide',
-      'ssl':true};
-      s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'wufoo.com/scripts/embed/form.js';
-      s.onload = s.onreadystatechange = function() {
-      var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
-      try { s7x2p7 = new WufooForm();s7x2p7.initialize(options);s7x2p7.display(); } catch (e) {}};
-      var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
-      })(document, 'script');</script>
-
-      <hr />
-
-      <h4>Is my credit card safe?</h4>
-
-      <p>We use <a href="https://stripe.com/?ref=thechangelog">Stripe</a> to process payments. <em>We never send your credit card details to our servers</em>, all sensitive communication happens between your browser and Stripe. If you have any questions about our billing process, please <a href="https://changelog.com/about/">contact us</a>.</p>
-
-      <h4>Is my data safe?</h4>
-
-      <p>We require TLS on this page and no data is stored locally in the browser. All web services are hosted on blazing fast <a href="https://changelog.com/r/digitalocean">DigitalOcean</a> SSD cloud servers in a private network behind a secured firewall.</p>
-
-      <h4>About our shipping</h4>
-
-      <p>Our tees ship via USPS (United States Postal Service) from Houston, Texas. Orders will be shipped in batches once per week on Friday. Customers in the US will receive their orders in approximately 10 days from the date of shipping.</p>
-
-      <h4>International shipping</h4>
-
-      <p>We ship internationally. Shipping to Canada is $7.50 and all other countries is $13. The added charge is to cover any additional shipping costs. Shipping times may vary depending on your country and location. Generally, international orders will take approximately 3-6 weeks. Customers are responsible for any customs fees, import duties, inspection fees, or taxes that may be imposed by the customs department of the customer's country.</p>
-
-      <h4>Returns &amp; exchanges</h4>
-
-      <p>All sales are final with the exception of a size exchange. You may request a different size of the exact same item originally ordered. Shirts must be returned unworn, unwashed and in the same condition received within 30 days of the shipping date. Return shipping charges are the responsibility of the customer unless the return is the fault of The Changelog.</p>
-
-      <p>To get started with an exchange, email us at <a href="mailto:store@thechangelog.com">store@thechangelog.com</a>.</p>
+    <div id="wufoo-s7x2p7">
+    Fill out my <a href="http://riznmedia.wufoo.com/forms/s7x2p7">online form</a>.
     </div>
+
+    <script type="text/javascript">var s7x2p7;(function(d, t) {
+    var s = d.createElement(t), options = {
+    'userName':'riznmedia',
+    'formHash':'s7x2p7',
+    'autoResize':true,
+    'height':'340',
+    'async':true,
+    'header':'hide',
+    'ssl':true};
+    s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'wufoo.com/scripts/embed/form.js';
+    s.onload = s.onreadystatechange = function() {
+    var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
+    try { s7x2p7 = new WufooForm();s7x2p7.initialize(options);s7x2p7.display(); } catch (e) {}};
+    var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
+    })(document, 'script');</script>
+
+    <hr />
+
+    <h4>Is my credit card safe?</h4>
+
+    <p>We use <a href="https://stripe.com/?ref=thechangelog">Stripe</a> to process payments. <em>We never send your credit card details to our servers</em>, all sensitive communication happens between your browser and Stripe. If you have any questions about our billing process, please <a href="https://changelog.com/about/">contact us</a>.</p>
+
+    <h4>Is my data safe?</h4>
+
+    <p>We require TLS on this page and no data is stored locally in the browser. All web services are hosted on blazing fast <a href="https://changelog.com/r/digitalocean">DigitalOcean</a> SSD cloud servers in a private network behind a secured firewall.</p>
+
+    <h4>About our shipping</h4>
+
+    <p>Our tees ship via USPS (United States Postal Service) from Houston, Texas. Orders will be shipped in batches once per week on Friday. Customers in the US will receive their orders in approximately 10 days from the date of shipping.</p>
+
+    <h4>International shipping</h4>
+
+    <p>We ship internationally. Shipping to Canada is $7.50 and all other countries is $13. The added charge is to cover any additional shipping costs. Shipping times may vary depending on your country and location. Generally, international orders will take approximately 3-6 weeks. Customers are responsible for any customs fees, import duties, inspection fees, or taxes that may be imposed by the customs department of the customer's country.</p>
+
+    <h4>Returns &amp; exchanges</h4>
+
+    <p>All sales are final with the exception of a size exchange. You may request a different size of the exact same item originally ordered. Shirts must be returned unworn, unwashed and in the same condition received within 30 days of the shipping date. Return shipping charges are the responsibility of the customer unless the return is the fault of The Changelog.</p>
+
+    <p>To get started with an exchange, email us at <a href="mailto:store@thechangelog.com">store@thechangelog.com</a>.</p>
   </div>
 </article>
-
-
-
-
-

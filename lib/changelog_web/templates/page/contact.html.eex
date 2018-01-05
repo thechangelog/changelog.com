@@ -1,14 +1,12 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Get in touch. Say hello.</h2>
-    </header>
-    <div class="content_body">
+<article class="article">
+  <header>
+    <h2>Get in touch. Say hello.</h2>
+  </header>
+  <div class="richtext">
 
-      <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open inbox on GitHub. Share your projects, news, feedback, or tips.</p>
+    <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open inbox on GitHub. Share your projects, news, feedback, or tips.</p>
 
-      <p>Email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a> if you'd like to get in touch privately.</p>
+    <p>Email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a> if you'd like to get in touch privately.</p>
 
-    </div>
   </div>
 </article>

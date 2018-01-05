@@ -2,52 +2,57 @@
 // @include list;
 // @include list(ol);
 @mixin list($type: ul) {
-  margin: 1em 0 1.5em 5px;
-  padding: 0 0 0 20px;
   list-style-type: none;
-
-  @include breakpoint(mobile) {
-    margin-left: 10px;
-  }
+  margin: 1em 0 2em 0;
+  padding: 0 0 0 20px;
 
   li {
-    margin-bottom: .5em;
-    font-size: 1em;
-    line-height: 1.5em;
+    font-size: 18px;
+    line-height: 1.25em;
+    margin-bottom: .375em;
   }
 
-  ul,
-  ol {
+  > ul, ol {
     font-size: 1em;
-    margin-left: 0;
+    margin: 0;
   }
 
   @if $type == ul {
-    // list-style-type: disc;
+    list-style-type: none;
+    margin-left: 0;
+
+    @include breakpoint(mobile) {
+      margin-left: 10px;
+    }
+
     li {
       position: relative;
     }
 
     li:before {
-      $size: 8px;
-      @include position(absolute, 10px null null -20px);
-      @include size($size);
+      $size: 6px;
+      @include position(absolute, 8px null null -20px);
       content: " ";
-      background: $purple;
+      background: $black;
       border-radius: $size;
       display: block;
+      height: $size;
       margin-right: $size;
-    }
-
-    ul li:before {
-      $size: 6px;
-      @include size($size);
-      background: $pink;
-      margin-right: $size;
-      top: 11px;
+      width: $size;
     }
   }
-  @if $type == ol { list-style-type: decimal; }
+  @if $type == ol {
+    list-style-type: decimal;
+    margin-left: -8px;
+
+    @include breakpoint(mobile) {
+      margin-left: 2px;
+    }
+
+    li {
+      padding-left: 8px;
+    }
+  }
 }
 
 // Set default styles
@@ -55,50 +60,6 @@ ul, ol {
   margin: 0;
   padding: 0;
   list-style-type: none;
-}
-
-
-.checklist {
-  font-size: 16px;
-  list-style-type: none;
-  padding: 0;
-
-  &-item {
-    a {
-      display: block;
-      background-position: left center;
-      background-repeat: no-repeat;
-      border-bottom: 2px solid $border-color;
-      padding: 1em 0 1em 60px;
-      position: relative;
-
-      &:after,
-      &:before {
-        border: 2px solid $green;
-        content: "";
-        display: block;
-        height: 14px;
-        left: 20px;
-        position: absolute;
-        width: 15px;
-        top: 18px;
-      }
-      &:after {
-        border: none;
-        top: 14px;
-        left: 22px;
-        height: 18px;
-        width: 18px;
-      }
-    }
-
-    // TODO: This needs tweaked to look more like the icon (open on the top right)
-    &--checked a:after {
-      background-image: url(/images/form-checkmark.svg);
-    }
-
-    &:last-child { border-bottom: none; }
-  }
 }
 
 // Button List

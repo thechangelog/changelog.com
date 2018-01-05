@@ -1,40 +1,38 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Subscription Confirmed</h2>
-    </header>
-    <div class="content_body">
-      <p>Thank you for verifying your email address. Your subscription to Changelog Weekly is confirmed.</p>
+<article class="article">
+  <header>
+    <h2>Subscription Confirmed</h2>
+  </header>
+  <div class="richtext">
+    <p>Thank you for verifying your email address. Your subscription to Changelog Weekly is confirmed.</p>
 
-      <p>Help spread the word by letting your followers know you've subscribed to Changelog Weekly.</p>
+    <p>Help spread the word by letting your followers know you've subscribed to Changelog Weekly.</p>
 
-      <p>Click the button below &mdash; Twitter will let you edit the tweet before you send it.</p>
+    <p>Click the button below &mdash; Twitter will let you edit the tweet before you send it.</p>
 
-      <p><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just subscribed to Changelog Weekly. Open source moves fast. Keep up!" data-url="https://changelog.com/weekly" data-via="changelog" data-related="adamstac,jerodsanto" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+    <p><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just subscribed to Changelog Weekly. Open source moves fast. Keep up!" data-url="https://changelog.com/weekly" data-via="changelog" data-related="adamstac,jerodsanto" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
-      <hr>
+    <hr>
 
-      <p>You should follow us on Twitter too, if you don't already.</p>
+    <p>You should follow us on Twitter too, if you don't already.</p>
 
-      <p><a href="https://twitter.com/Changelog" class="twitter-follow-button" data-size="large" data-dnt="true" data-show-count="false">Follow @Changelog</a>
+    <p><a href="https://twitter.com/Changelog" class="twitter-follow-button" data-size="large" data-dnt="true" data-show-count="false">Follow @Changelog</a>
 
-      <hr />
+    <hr />
 
-      <h3>Browse the Archive</h3>
+    <h3>Browse the Archive</h3>
 
-      <p><%= link "Browse the archive", to: page_path(@conn, :weekly_archive) %> to check out our past issues.</p>
+    <p><%= link "Browse the archive", to: page_path(@conn, :weekly_archive) %> to check out our past issues.</p>
 
-      <h3>Share your news</h3>
+    <h3>Share your news</h3>
 
-      <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open-inbox on GitHub to share projects, news, feedback, and guest suggestions.</p>
+    <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open-inbox on GitHub to share projects, news, feedback, and guest suggestions.</p>
 
-      <h3>Join the community</h3>
+    <h3>Join the community</h3>
 
-      <p><%= link "Join the member community", to: page_path(@conn, :community) %> to get access to our members-only Slack room, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
+    <p><%= link "Join the member community", to: page_path(@conn, :community) %> to get access to our members-only Slack room, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
 
-      <h3>Become a Sponsor</h3>
+    <h3>Become a Sponsor</h3>
 
-      <p><%= link "Become a sponsor", to: page_path(@conn, :sponsor) %> and we'll help you get the right exposure for your content, product or service.</p>
-    </div>
+    <p><%= link "Become a sponsor", to: page_path(@conn, :sponsor) %> and we'll help you get the right exposure for your content, product or service.</p>
   </div>
 </article>
