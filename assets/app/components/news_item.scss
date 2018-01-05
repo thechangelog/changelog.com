@@ -12,7 +12,7 @@
     color: $black;
 
     &:hover {
-      color: lighten($dark-grey, 20%);
+      color: lighten($black, 20%);
       transition: color 0.1s $base-easing;
     }
   }

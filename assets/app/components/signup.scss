@@ -3,18 +3,6 @@
   padding: 60px 30px 80px;
   position: relative;
 
-  .page-person-new & {
-    margin-top: -96px; // Match height of header
-    padding: 133px 30px 100px;
-
-    @include breakpoint(560px) {
-      padding: 23.7% 30px;
-    }
-    @include breakpoint(1160px) {
-      padding: 275px 30px;
-    }
-  }
-
   &-content {
     color: $white;
     margin: 0 auto;

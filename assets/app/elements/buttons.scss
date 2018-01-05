@@ -12,7 +12,7 @@ button {
 }
 
 .button {
-  @include button($dark-grey, $white);
+  @include button($black, $white);
 }
 
 .button_large {
