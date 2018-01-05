@@ -52,10 +52,7 @@ defmodule Changelog.Person do
   end
   def get_by_ueberauth(_), do: nil
 
-  def auth_changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, ~w(auth_token auth_token_expires_at))
-  end
+  def auth_changeset(struct, attrs \\ %{}), do: cast(struct, attrs, ~w(auth_token auth_token_expires_at))
 
   def admin_changeset(struct, params \\ %{}) do
     allowed = ~w(name email handle github_handle twitter_handle bio website location admin)
