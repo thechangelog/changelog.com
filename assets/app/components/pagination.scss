@@ -1,0 +1,10 @@
+.pagination {
+  justify-content: center;
+  display: flex;
+  text-align: center;
+
+  .item {
+    font-family: $code;
+    padding: 0.25em;
+  }
+}

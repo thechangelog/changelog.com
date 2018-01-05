@@ -1,0 +1,34 @@
+.search {
+  margin: 0 auto;
+  max-width: 940px;
+  padding: 0 $base-spacing;
+
+  &-form {
+    border-bottom: 1px solid $green;
+    display: flex;
+    font-family: $code;
+    font-size: 0.825em;
+
+    &:before {
+      content: "~ $ ";
+      padding: 1em 0;
+    }
+
+    input {
+      border: none;
+      font-family: $code;
+      flex: 1 auto;
+      padding: 1em 0.5em;
+    }
+  }
+
+  &-results_sentence {
+    font-family: $code;
+    font-size: 0.825em;
+    padding: 1em 0;
+  }
+
+  .feed {
+    padding: $base-spacing 0 $base-spacing*2;
+  }
+}
