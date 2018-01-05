@@ -1,13 +1,14 @@
 defmodule ChangelogWeb.Admin.SearchController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Topic, Episode, NewsSource, Person, Sponsor, Post}
+  alias Changelog.{Topic, Episode, NewsItem, NewsSource, Person, Sponsor, Post}
 
   def all(conn, params = %{"q" => query}) do
     render(conn, with_format("all", params["f"]), %{
       results: %{
         topics: topic_query(query),
         episodes: episode_query(query),
+        news_items: news_item_query(query),
         news_sources: news_source_query(query),
         people: person_query(query),
         posts: post_query(query),
@@ -21,6 +22,7 @@ defmodule ChangelogWeb.Admin.SearchController do
     results = case(type) do
       "topic" -> topic_query(query)
       "episode" -> episode_query(query)
+      "news_item" -> news_item_query(query)
       "news_source" -> news_source_query(query)
       "person" -> person_query(query)
       "post" -> post_query(query)
@@ -30,12 +32,13 @@ defmodule ChangelogWeb.Admin.SearchController do
     render(conn, with_format(type, params["f"]), %{results: results, query: query})
   end
 
-  defp episode_query(q),     do: Repo.all(from e in Episode, where: ilike(e.title, ^"%#{q}%")) |> Repo.preload(:podcast)
-  defp news_source_query(q), do: Repo.all(from s in NewsSource, where: ilike(s.name, ^"%#{q}%"))
-  defp person_query(q),      do: Repo.all(from p in Person, where: ilike(p.name, ^"%#{q}%"), or_where: ilike(p.handle, ^"%#{q}%"))
-  defp post_query(q),        do: Repo.all(from p in Post, where: ilike(p.title, ^"%#{q}%")) |> Repo.preload(:author)
-  defp sponsor_query(q),     do: Repo.all(from s in Sponsor, where: ilike(s.name, ^"%#{q}%"))
-  defp topic_query(q),       do: Repo.all(from c in Topic, where: ilike(c.name, ^"%#{q}%"))
+  defp episode_query(q),     do: Repo.all(Episode.published(from q in Episode, where: ilike(q.title, ^"%#{q}%"))) |> Repo.preload(:podcast)
+  defp news_item_query(q),   do: Repo.all(NewsItem.published(from q in NewsItem, where: ilike(q.headline, ^"%#{q}%")))
+  defp news_source_query(q), do: Repo.all(from q in NewsSource, where: ilike(q.name, ^"%#{q}%"))
+  defp person_query(q),      do: Repo.all(from q in Person, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.handle, ^"%#{q}%"))
+  defp post_query(q),        do: Repo.all(from q in Post, where: ilike(q.title, ^"%#{q}%")) |> Repo.preload(:author)
+  defp sponsor_query(q),     do: Repo.all(from q in Sponsor, where: ilike(q.name, ^"%#{q}%"))
+  defp topic_query(q),       do: Repo.all(from q in Topic, where: ilike(q.name, ^"%#{q}%"))
 
   defp with_format(view_name, "json"), do: "#{view_name}.json"
   defp with_format(view_name, _other), do: "#{view_name}.html"
