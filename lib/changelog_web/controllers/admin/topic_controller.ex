@@ -8,7 +8,7 @@ defmodule ChangelogWeb.Admin.TopicController do
   def index(conn, _params) do
     topics =
       Topic
-      |> order_by([c], asc: c.name)
+      |> order_by([q], asc: q.name)
       |> Repo.all
 
     render(conn, :index, topics: topics)

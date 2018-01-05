@@ -20,6 +20,13 @@ defmodule Changelog.Topic do
     timestamps()
   end
 
+  def with_news_items(query \\ __MODULE__) do
+    from(q in query,
+      distinct: true,
+      left_join: i in assoc(q, :news_item_topics),
+      where: not(is_nil(i.id)))
+  end
+
   def file_changeset(topic, attrs \\ %{}), do: cast_attachments(topic, attrs, ~w(icon))
 
   def insert_changeset(topic, attrs \\ %{}) do

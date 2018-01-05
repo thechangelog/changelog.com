@@ -4,10 +4,11 @@ defmodule ChangelogWeb.TopicControllerTest do
   test "getting the index", %{conn: conn} do
     t1 = insert(:topic)
     t2 = insert(:topic)
+    insert(:news_item_topic, topic: t1)
     conn = get(conn, topic_path(conn, :index))
     assert conn.status == 200
     assert conn.resp_body =~ t1.name
-    assert conn.resp_body =~ t2.name
+    refute conn.resp_body =~ t2.name
   end
 
   test "getting a topic page", %{conn: conn} do

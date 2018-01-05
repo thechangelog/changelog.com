@@ -120,6 +120,13 @@ defmodule Changelog.Factory do
     %Changelog.NewsItem{news_item_factory() | status: :published, published_at: hours_ago(1)}
   end
 
+  def news_item_topic_factory do
+    %Changelog.NewsItemTopic{
+      news_item: build(:news_item),
+      topic: build(:topic)
+    }
+  end
+
   def news_queue_factory do
     %Changelog.NewsQueue{
       position: sequence(:position, &(&1)),
