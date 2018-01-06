@@ -38,51 +38,75 @@
       padding: 0 $padding-large;
       text-align: center;
 
-      @media (min-width: $tablet) {
-        margin-bottom: $padding-extra-large;
-      }
-
       i {
         img { margin: 0 auto; }
       }
 
-      h1f {
+      h1 {
         font-size: 1.75em;
         line-height: 1.25em;
-
+        margin: 1em 0;
         @media (min-width: $tablet) {
           font-size: 2.25em;
+          margin: 1.25em 0;
         }
 
         .marketing-section--map & {
           color: $half-white;
           font-size: 1.25em;
           line-height: 1.5em;
-
-          @media (min-width: $tablet) {
-            font-size: 1.5em;
-          }
+          @media (min-width: $tablet) { font-size: 1.5em; }
         }
       }
 
       h2,
       h3 {
-        font-weight: 500;
+        margin: 1em 0;
       }
 
-      p {
-        font-size: 1em;
+      h2 {
+        font-size: 1.5em;
+        @media (min-width: $tablet) { font-size: 1.75em; }
+      }
 
-        @media (min-width: $tablet) {
-          font-size: 1.25em;
+      h3 {
+        font-size: 1.25em;
+        font-weight: normal;
+        line-height: 1.5em;
+        @media (min-width: $tablet) { font-size: 1.5625em; }
+
+        .marketing-section--map & {
+          color: $half-white;
         }
       }
 
+      p {
+        color: $medium-grey;
+        font-size: 1.125em;
+        @media (min-width: $tablet) { font-size: 1.25em; }
+      }
+
+      .marketing-section--intro & p {
+        font-size: 1em;
+        @media (min-width: $tablet) { font-size: 1.125em; }
+      }
+
       &-button {
-        margin-bottom: 0.5em;
+        padding-left: 30px;
+        padding-right: 30px;
+
+        .marketing-section--intro & {
+          margin-top: 20px;
+          @media (min-width: $tablet) { margin-top: 50px; }
+        }
+        .marketing-section--map & {
+          margin-top: 20px;
+          @media (min-width: $tablet) { margin-top: 40px; }
+        }
       }
       p.button_note {
         font-size: 16px;
+        font-style: italic;
       }
     }
 
@@ -91,7 +115,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin: $padding-large auto;
+      margin: $padding-large*2 auto $padding-large;
       max-width: 1080px;
       text-align: center;
       padding: 0 $padding-large;
@@ -168,6 +192,10 @@
         display: flex;
       }
 
+      &--slack {
+        margin-top: 80px;
+      }
+
       &-image {
         display: none;
         padding: $padding-large;
@@ -228,26 +256,30 @@
     // Sponsor Logos
     &-logos {
       align-items: center;
-      justify-content: space-around;
       display: flex;
       flex-wrap: wrap;
-      margin: 0 auto;
-      padding: 0 $padding-large;
-      max-width: 960px;
+      justify-content: center;
+      padding: 0 10px;
+      margin: 20px auto 0;
+      max-width: 980px;
 
-      &-item {
-        flex: 0 1 50%;
-        max-width: 200px;
+      @media (min-width: $tablet) {
+        margin-top: 50px;
 
-        @media (min-width: $tablet) {
-          flex: 0 25%;
-        }
+        a { margin: 10px 0; }
+      }
+
+      @include breakpoint(mobile, max) {
+        a { flex: 1 1 33.33%; }
       }
 
       img {
         filter: grayscale(100%);
+        padding: 0 22px;
+        margin: 0 auto;
+        max-height: 100px;
+        max-width: 100%;
         transition: filter 0.2s ease-in-out;
-        width: 100%;
 
         &:hover {
           filter: grayscale(0%);

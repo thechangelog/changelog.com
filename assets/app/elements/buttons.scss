@@ -18,6 +18,6 @@ button {
 .button_large {
   @include button($green, $white);
   display: inline-block;
-  font-size: 1.125em;
-  margin-bottom: 0.5em;
+  font-size: 1.1875em;
+  margin-bottom: 1em;
 }
