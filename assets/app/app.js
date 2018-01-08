@@ -3,7 +3,6 @@ import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import OnsitePlayer from "modules/onsitePlayer";
 import LivePlayer from "modules/livePlayer";
-import Slider from "modules/slider";
 import Overlay from "modules/overlay";
 import Share from "modules/share";
 import Log from "modules/log";
@@ -15,7 +14,6 @@ import parseTime from "../shared/parseTime";
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
-const featured = new Slider(".featured_podcast");
 const tooltips = new Tooltip(".has-tooltip");
 
 window.u = u;
@@ -143,25 +141,6 @@ u(document).on("submit", "form:not(.js-cm)", function(event) {
   ajax(action, options, andThen);
 });
 
-// handle featured sliders
-u(document).handle("click", ".js-featured-next", function(event) { featured.slide(+1); });
-u(document).handle("click", ".js-featured-previous", function(event) { featured.slide(-1); });
-
-// ensure all slider slides are the same height
-function tallestSlide() {
-  let tallestFeatured = 0;
-  u(".featured").attr("height", "auto");
-
-  u(".featured_podcast_wrap").each(function(el) {
-    let featuredHeight = u(el).size().height;
-    if (featuredHeight > tallestFeatured) {
-      tallestFeatured = featuredHeight;
-    }
-  });
-
-  u(".featured").attr("style", "height: " + tallestFeatured + "px;");
-}
-
 function formatTimes() {
   u("span.time").each(function(el) {
     const span = u(el);
@@ -188,7 +167,6 @@ function deepLink(href) {
 }
 
 window.onresize = function() {
-  tallestSlide();
 }
 
 window.onhashchange = function() {
@@ -201,11 +179,8 @@ u(document).on("turbolinks:load", function() {
   player.attach();
   overlay.hide();
   live.check();
-  tallestSlide();
   formatTimes();
   deepLink();
-  // Make sure homepage featured section is the correct size (after fonts and images load)
-  window.setTimeout(function() { tallestSlide(); }, 500);
 });
 
 Turbolinks.start();
