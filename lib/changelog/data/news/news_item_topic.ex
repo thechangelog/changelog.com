@@ -20,9 +20,7 @@ defmodule Changelog.NewsItemTopic do
     |> mark_for_deletion()
   end
 
-  def by_position do
-    from p in __MODULE__, order_by: p.position
-  end
+  def by_position, do: from(p in __MODULE__, order_by: p.position)
 
   def build_and_preload({topic, position}) do
     %__MODULE__{position: position, topic_id: topic.id} |> Repo.preload(:topic)

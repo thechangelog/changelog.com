@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.TopicView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{NewsItem, Topic}
+  alias Changelog.Topic
   alias ChangelogWeb.NewsItemView
   alias Changelog.Files.Icon
 

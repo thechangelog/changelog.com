@@ -21,12 +21,10 @@
   </header>
 
   <div class="feed">
-    <%= for item <- @topic.news_items do %>
-      <%= render(NewsItemView, "_item_summary.html", conn: @conn, item: NewsItem.preload_all(item)) %>
-    <% end %>
+  <%= for item <- @items do %>
+    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item})) %>
+  <% end %>
   </div>
 
-  <nav class="pagination" role="menubar" aria-label="Pagination">
-    <!-- TODO: Pagination -->
-  </nav>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 </div>

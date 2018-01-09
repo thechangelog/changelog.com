@@ -2,13 +2,13 @@
   <header class="topic-header">
     <div class="topic-header-wrap">
       <div class="topic-header-avatar">
-        <img src="" width="80" height="80" alt="<%= @source.name %> Avatar">
+        <img src="<%= icon_url(@source) %>" width="80" height="80" alt="<%= @source.name %> Icon">
       </div>
 
       <h2 class="topic-header-title"><%= @source.name %></h2>
 
       <div class="topic-header-description">
-
+        <%= admin_edit_link(@conn, @current_user, @source) %>
       </div>
 
       <div class="topic-header-meta">
@@ -16,14 +16,16 @@
           <%= link domain_name(@source.website), to: @source.website %>
         <% end %>
         &bull;
-        999 Stories
+        <%= pluralize(news_count(@source), "Story", "Stories") %>
       </div>
     </div>
   </header>
 
   <div class="feed">
-  <%= for item <- @source.news_items do %>
-    <%= render(NewsItemView, "_item_summary.html", conn: @conn, item: NewsItem.preload_all(item)) %>
+  <%= for item <- @items do %>
+    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item})) %>
   <% end %>
   </div>
+
+  <%= render(SharedView, "_pagination.html", assigns) %>
 </div>

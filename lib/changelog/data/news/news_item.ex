@@ -29,9 +29,11 @@ defmodule Changelog.NewsItem do
     timestamps()
   end
 
-  def drafted(query \\ __MODULE__),           do: from(q in query, where: q.status == ^:draft)
-  def logged_by(query \\ __MODULE__, person), do: from(q in query, where: q.logger_id == ^person.id)
-  def published(query \\ __MODULE__),         do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
+  def drafted(query \\ __MODULE__),             do: from(q in query, where: q.status == ^:draft)
+  def logged_by(query \\ __MODULE__, person),   do: from(q in query, where: q.logger_id == ^person.id)
+  def published(query \\ __MODULE__),           do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
+  def with_source(query \\ __MODULE__, source), do: from(q in query, where: q.source_id == ^source.id)
+  def with_topic(query \\ __MODULE__, topic),   do: from(q in query, join: t in assoc(q, :news_item_topics), where: t.topic_id == ^topic.id)
 
   def published_since(query \\ __MODULE__, issue_or_time)
   def published_since(query, i = %NewsIssue{}),   do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^i.published_at)

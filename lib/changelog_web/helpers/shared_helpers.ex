@@ -2,6 +2,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   use Phoenix.HTML
 
   alias Changelog.Regexp
+  alias Phoenix.Controller
 
   def comma_separated(number) do
     number
@@ -11,6 +12,9 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     |> Enum.join(",")
     |> String.reverse
   end
+
+  def current_path(conn), do: Controller.current_path(conn)
+  def current_path(conn, params), do: Controller.current_path(conn, params)
 
   def domain_name(url) do
     uri = URI.parse(url)

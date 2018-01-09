@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.TopicController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Topic
+  alias Changelog.{NewsItem, Topic}
 
   def index(conn, params) do
     page =
@@ -14,8 +14,17 @@ defmodule ChangelogWeb.TopicController do
     render(conn, :index, topics: page.entries, page: page)
   end
 
-  def show(conn, %{"slug" => slug}) do
-    topic = Repo.get_by!(Topic, slug: slug) |> Topic.preload_news_items
-    render(conn, :show, topic: topic)
+  def show(conn, params = %{"slug" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
+
+    page =
+      NewsItem
+      |> NewsItem.with_topic(topic)
+      |> NewsItem.published
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(params)
+
+    render(conn, :show, topic: topic, items: page.entries, page: page)
   end
 end

@@ -1,0 +1,9 @@
+<nav class="pagination" role="menubar" aria-label="Pagination">
+  <%= if @page.page_number > 1 do %>
+    <%= link "Newer", to: current_path(@conn, %{page: @page.page_number - 1}), class: "pagination_item pagination_item--button" %>
+    <span class="pagination_item pagination_item--current"><%= @page.page_number %></span>
+  <% end %>
+  <%= if @page.page_number < @page.total_pages do %>
+    <%= link "Older", to: current_path(@conn, %{page: @page.page_number + 1}), class: "pagination_item pagination_item--button" %>
+  <% end %>
+</nav>

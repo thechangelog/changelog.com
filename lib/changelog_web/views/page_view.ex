@@ -2,8 +2,7 @@ defmodule ChangelogWeb.PageView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Podcast
-  alias ChangelogWeb.{EpisodeView, NewsletterView, PodcastView, SharedView,
-                      SponsorView, TimeView}
+  alias ChangelogWeb.{EpisodeView, NewsletterView, PodcastView, TimeView}
 
   def skype_account(podcast) do
     case podcast.slug do

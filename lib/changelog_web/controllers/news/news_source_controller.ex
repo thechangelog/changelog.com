@@ -1,10 +1,19 @@
 defmodule ChangelogWeb.NewsSourceController do
   use ChangelogWeb, :controller
 
-  alias Changelog.NewsSource
+  alias Changelog.{NewsItem, NewsSource}
 
-  def show(conn, %{"slug" => slug}) do
-    source = Repo.get_by!(NewsSource, slug: slug) |> NewsSource.preload_news_items
-    render(conn, :show, source: source)
+  def show(conn, params = %{"slug" => slug}) do
+    source = Repo.get_by!(NewsSource, slug: slug)
+
+    page =
+      NewsItem
+      |> NewsItem.with_source(source)
+      |> NewsItem.published
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(params)
+
+    render(conn, :show, source: source, items: page.entries, page: page)
   end
 end
