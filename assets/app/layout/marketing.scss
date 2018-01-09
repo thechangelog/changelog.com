@@ -46,7 +46,8 @@
         font-size: 1.75em;
         line-height: 1.25em;
         margin: 1em 0;
-        @media (min-width: $tablet) {
+        @include breakpoint(tiny) { font-size: 2em; }
+        @include breakpoint(tablet) {
           font-size: 2.25em;
           margin: 1.25em 0;
         }

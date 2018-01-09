@@ -7,9 +7,10 @@
   padding: 0 0 0 20px;
 
   li {
-    font-size: 18px;
+    font-size: 1em;
     line-height: 1.25em;
     margin-bottom: .375em;
+    @include breakpoint(mobile) { font-size: 1.125em; }
   }
 
   > ul, ol {

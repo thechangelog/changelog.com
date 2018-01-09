@@ -14,7 +14,7 @@
   //
   //
   // Headings
-  h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h6 {
     margin-top: 1.375em;
     margin-bottom: .75em;
 
@@ -23,28 +23,46 @@
     a { font-weight: 900; }
   }
 
+  h1 {
+    font-size: 1.75em;
+    margin-bottom: 1.25em;
+    @include breakpoint(tiny) { font-size: 2em; }
+    @include breakpoint(tablet) { font-size: 2.25em; }
+  }
   h2 {
-    font-size: 2em;
+    font-size: 1.625em;
     margin-top: 1.25em;
+    @include breakpoint(tiny) { font-size: 1.75em; }
+    @include breakpoint(tablet) { font-size: 2em; }
   }
   h3 {
-    font-size: 1.5em;
+    font-size: 1.25em;
+    @include breakpoint(tiny) { font-size: 1.375em; }
+    @include breakpoint(tablet) { font-size: 1.5em; }
   }
   h4 {
-    font-size: 1.375em;
+    font-size: 1.125em;
+    @include breakpoint(tiny) { font-size: 1.25em; }
+    @include breakpoint(tablet) { font-size: 1.375em; }
   }
   h5 {
-    font-size: 1.25em;
+    font-size: 1em;
+    @include breakpoint(tiny) { font-size: 1.125em; }
+    @include breakpoint(tablet) { font-size: 1.25em; }
   }
   h6 {
-    font-size: 1.125em;
+    font-size: .875em;
+    @include breakpoint(tiny) { font-size: 1em; }
+    @include breakpoint(tablet) { font-size: 1.125em; }
   }
 
   //
   //
   // Text
   p {
-    font-size: 1.25em;
+    font-size: 1em;
+    @include breakpoint(tiny) { font-size: 1.125em; }
+    @include breakpoint(tablet) { font-size: 1.25em; }
 
     // If a <code> tag is within a <p> tag show it as a snippet
     code {
@@ -141,7 +159,10 @@
   hr {
     border: 1px solid $border-color;
     clear: both;
-    margin: 65px 0;
+    margin: 40px 0;
+
+    @include breakpoint(tiny) { margin: 45px 0; }
+    @include breakpoint(tablet) { margin: 50px 0; }
   }
 
   img {
