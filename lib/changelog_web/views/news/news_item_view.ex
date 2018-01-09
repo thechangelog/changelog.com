@@ -66,10 +66,10 @@ defmodule ChangelogWeb.NewsItemView do
   def topic_link_list(conn, item) do
     item.topics
     |> Enum.map(fn(topic) ->
-      {:safe, el} = link(topic.name, to: topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
+      {:safe, el} = link("\##{topic.slug}", to: topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
       el
       end)
-    |> Enum.join(", ")
+    |> Enum.join(" ")
   end
 
   defp prepare_html(html) do

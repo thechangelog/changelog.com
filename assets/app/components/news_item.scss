@@ -28,6 +28,7 @@
       $size: 30px;
       background: $black;
       border-radius: $base-border-radius;
+      box-shadow: 0 0 50px rgba($black, 0.3);
       color: $white;
       display: block;
       font-size: 10px;
@@ -35,6 +36,17 @@
       line-height: 1em;
       margin-right: 10px;
       width: $size;
+
+      &--fallback {
+        background: $green;
+        color: $white;
+        font-family: $code;
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 50px;
+        text-align: center;
+        text-transform: uppercase;
+      }
 
       @include breakpoint(mobile) {
         $size: 50px;
@@ -113,5 +125,11 @@
 
   &-content {
     margin-top: 30px;
+
+    &.richtext {
+      p {
+        font-size: 1em;
+      }
+    }
   }
 }
