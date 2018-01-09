@@ -1,6 +1,8 @@
 <div class="page_account">
   <%= render("_nav.html", conn: @conn) %>
 
+  <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
+
   <div class="flash flash--success">
     <p>Public profiles are launching soon. Add your info today to reserve your username.</p>
   </div>

@@ -1,7 +1,7 @@
 <nav class="subnav">
   <ul class="subnav-list">
     <li class="subnav-list-item is-active">
-      <%= link "Subscriptions", to: home_path(@conn, :subscriptions) %>
+      <%= link "Subscriptions", to: home_path(@conn, :show) %>
     </li>
     <li class="subnav-list-item">
       <%= link to: home_path(@conn, :profile) do %>

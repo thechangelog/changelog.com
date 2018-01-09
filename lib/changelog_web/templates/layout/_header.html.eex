@@ -1,45 +1,50 @@
 <header class="header">
-  <h1 class="header-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
+  <div class="header-wrap">
+    <h1 class="header-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
 
-  <nav class="header-nav">
-    <div class="header-nav-wrap">
-      <!-- <button class="header-nav-close js-toggle-nav">✕</button> -->
+    <nav class="header-nav">
+      <div class="header-nav-wrap">
+        <!-- <button class="header-nav-close js-toggle-nav">✕</button> -->
 
-      <ul class="header-nav-primary header-nav-list">
-        <li class="header-nav-list-item"><%= link "News", to: "/" %></li>
-        <li class="header-nav-list-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
-        <li class="header-nav-list-item"><%= link "Community", to: page_path(@conn, :community) %></li>
-      </ul>
+        <ul class="header-nav-primary header-nav-list">
+          <li class="header-nav-list-item"><%= link "News", to: "/" %></li>
+          <li class="header-nav-list-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
+          <li class="header-nav-list-item"><%= link "Community", to: page_path(@conn, :community) %></li>
+          <%= if !@current_user do %>
+            <li class="header-nav-list-item"><%= link "Subscribe", to: person_path(@conn, :new) %></li>
+          <% end %>
+        </ul>
 
-      <div class="header-nav-secondary">
-        <%= if @current_user do %>
-          <button class="has-tooltip">
-            <img class="header-nav-secondary-user" src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
-          </button>
-          <div class="tooltip" data-placement="bottom-end">
-            <div class="tooltip-arrow"></div>
-            <div class="tooltip-wrap">
-              <ul class="tooltip-list">
-                <%= if @current_user.admin do %>
-                  <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
-                <% end %>
-                <li><%= link "My Subscriptions", to: home_path(@conn, :subscriptions) %></li>
-                <li><%= link "Profile Settings", to: home_path(@conn, :profile) %></li>
-                <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
-              </ul>
-              <div class="tooltip-footer">
-                <%= link "Sign Out", to: sign_out_path(@conn, :delete) %>
+        <div class="header-nav-secondary">
+          <%= if @current_user do %>
+            <button class="has-tooltip">
+              <img class="header-nav-secondary-user" src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
+            </button>
+            <div class="tooltip" data-placement="bottom-end">
+              <div class="tooltip-arrow"></div>
+              <div class="tooltip-wrap">
+                <ul class="tooltip-list">
+                  <%= if @current_user.admin do %>
+                    <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+                  <% end %>
+                  <li><%= link "My Subscriptions", to: home_path(@conn, :show) %></li>
+                  <li><%= link "Profile Settings", to: home_path(@conn, :profile) %></li>
+                  <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
+                </ul>
+                <div class="tooltip-footer">
+                  <%= link "Sign Out", to: sign_out_path(@conn, :delete) %>
+                </div>
               </div>
             </div>
-          </div>
-        <% else %>
-          <ul class="header-nav-list">
-            <li class="header-nav-list-item"><%= link "Log In", to: sign_in_path(@conn, :new), class: "header-button" %></li>
-          </ul>
-        <% end %>
+          <% else %>
+            <ul class="header-nav-list">
+              <li class="header-nav-list-item"><%= link "Log In", to: sign_in_path(@conn, :new), class: "header-button" %></li>
+            </ul>
+          <% end %>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <button class="header-menu_icon js-toggle-nav">Menu</button>
+    <button class="header-menu_icon js-toggle-nav">Menu</button>
+  </div>
 </header>

@@ -48,14 +48,18 @@
 
 // Base Styles
 .header {
-  align-items: center;
   background-color: transparent;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto;
   padding: 25px $base-spacing;
   width: 100%;
   z-index: 999;
+
+  &-wrap {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1232px;
+  }
 
   //
   //

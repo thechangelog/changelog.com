@@ -1,9 +1,9 @@
 <div class="page_account">
   <%= render("_nav.html", conn: @conn) %>
 
-  <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
-    <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
+  <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
 
+  <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
     <div class="form-element_wrap">
       <div class="form-element <%= error_class(f, :email) %>">
         <label>Email</label>

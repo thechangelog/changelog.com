@@ -31,27 +31,33 @@
       box-shadow: 0 0 50px rgba($black, 0.3);
       color: $white;
       display: block;
-      font-size: 10px;
+      font-family: $code;
+      font-size: 6px;
+      font-weight: bold;
       height: $size;
-      line-height: 1em;
       margin-right: 10px;
+      overflow: hidden;
+      text-align: center;
       width: $size;
 
       &--fallback {
         background: $green;
         color: $white;
-        font-family: $code;
-        font-size: 18px;
-        font-weight: bold;
-        line-height: 50px;
-        text-align: center;
+        font-size: 12px;
+        line-height: $size;
         text-transform: uppercase;
+
+        @include breakpoint(mobile) {
+          font-size: 18px;
+          line-height: $size;
+        }
       }
 
       @include breakpoint(mobile) {
         $size: 50px;
         height: $size;
         left: 0;
+        line-height: $size;
         position: absolute;
         width: $size;
         top: 15px;
@@ -69,7 +75,9 @@
       display: inline-block;
       height: 15px;
       margin-left: 0.25em;
+      margin-right: -15px;
       width: 15px;
+      position: relative;
     }
   }
 
@@ -127,6 +135,7 @@
     margin-top: 30px;
 
     &.richtext {
+      blockquote,
       p {
         font-size: 1em;
       }

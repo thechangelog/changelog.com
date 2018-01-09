@@ -2,7 +2,9 @@
   justify-content: center;
   display: flex;
   text-align: center;
+  padding: $base-spacing $base-spacing $base-spacing*2;
 
+  &-item,
   .item {
     font-family: $code;
     padding: 0.25em;
