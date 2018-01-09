@@ -1,100 +1,100 @@
 .footer {
-  border-top: 2px solid $border-color;
+  $width: 1160px;
+  border-top: 1px solid $border-color;
+  font-family: $code;
   font-size: 14px;
 
-  &-nav {
-    display: flex;
-    flex-wrap: wrap;
-    margin: $padding-extra-large auto $padding-large;
-    max-width: 1440px;
-    padding: 0 $padding-large;
-    width: 100%;
+  &-primary {
+    border-bottom: 1px solid $border-color;
 
-    &-logo {
-      display: block;
-      margin-bottom: $padding-large;
-      text-align: center;
-      width: 100%;
-
-      @media (min-width: 900px) {
-        flex: 1 0 120px;
-      }
+    &_wrap {
+      max-width: $width;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0 auto;
+      padding: $base-spacing;
     }
 
-    &-list {
-      border-bottom: 1px solid $light-grey;
-      flex: 0 100%;
-      text-align: center;
+    ul {
+      display: flex;
 
-      &:last-child {
-        border-bottom: 0;
-      }
+      li {
+        margin: 2px 2em 0 0;
 
-      @media (min-width: $smartphone) {
-        border-bottom: 0;
-        padding: 0 0 $padding-large 0;
-        flex: 0 33.333%;
-      }
-      @media (min-width: $tablet) {
-        flex: 1 0 120px;
-        padding: 0 1em $padding-large 0;
-        text-align: left;
-      }
+        &:last-child { margin-right: 0; }
 
-      &.is-toggled ul {
-        display: block;
-      }
-
-      h4 {
-        margin-top: 0;
-        text-align: center;
-
-        @media (max-width: $smartphone) {
-          margin: 0;
-          display: block;
-
-          a {
-            display: block;
-            padding: 1em;
-          }
-        }
-
-        @media (min-width: $tablet) {
-          text-align: left;
-        }
-      }
-
-      ul {
-        display: none;
-        list-style-type: none;
-        margin: 0 0 1em;
-        padding: 0;
-
-        @media (min-width: $smartphone) {
-          display: block;
-          margin: 1em 0;
-        }
-      }
-
-      a {
-        color: $black;
-        &:hover {
-          color: $medium-grey;
+        a {
+          color: $black;
+          &:hover { color: $medium-grey; }
         }
       }
     }
   }
 
-  &-sponsors {
-    justify-content: space-around;
+  &-nav {
     display: flex;
     flex-wrap: wrap;
-    margin: $padding-large auto;
-    max-width: 540px;
+    margin: $base-spacing auto;
+    max-width: $width;
+    padding: 0 $base-spacing;
+    width: 100%;
+
+    @media (min-width: $smartphone) {
+      margin: $padding-extra-large auto $padding-large;
+    }
+
+    &-list {
+      padding: 0 0 $padding-large 0;
+      flex: 0 100%;
+
+      @media (min-width: $smartphone) {
+        flex: 0 50%;
+      }
+      @media (min-width: $tablet) {
+        flex: 1 1 25%;
+        padding: 0 2em $padding-large 0;
+      }
+
+      &.is-toggled ul { display: block; }
+
+      h4 { margin-top: 0; }
+
+      ul {
+        list-style-type: none;
+        margin: 1em 0;
+        padding: 0;
+
+        li { margin-bottom: 0.5em; }
+      }
+
+      a {
+        color: $black;
+
+        &:hover { color: $medium-grey; }
+      }
+    }
+  }
+
+  &-sponsors {
+    border-top: 1px solid $border-color;
+    margin: $padding-large auto 20px;
+    padding: $base-spacing 0 0;
+
+    &_wrap {
+      justify-content: space-around;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      max-width: 540px;
+    }
 
     &-item {
       flex: 0 200px;
+      font-family: $code;
       text-align: center;
+
+      a { color: $black; }
 
       p {
         font-size: 12px;
