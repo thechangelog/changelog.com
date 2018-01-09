@@ -14,7 +14,6 @@ import parseTime from "../shared/parseTime";
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
-const tooltips = new Tooltip(".has-tooltip");
 
 window.u = u;
 
@@ -175,6 +174,7 @@ window.onhashchange = function() {
 
 // on page load
 u(document).on("turbolinks:load", function() {
+  new Tooltip(".has-tooltip");
   u("body").removeClass("nav-open");
   player.attach();
   overlay.hide();
