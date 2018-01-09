@@ -44,11 +44,11 @@
         </div>
         <div class="content" style="margin-left: 6px;">
           <%= link(item.headline, to: item.url, class: "header") %>
-          <div class="description">
+          <div class="description" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             <%= if item.image do %>
               <i class="image icon"></i>
             <% end %>
-            <%= item.story |> NewsItemView.teaser |> raw %>
+            <%= item.story |> md_to_text %>
           </div>
         </div>
       </div>
