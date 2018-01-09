@@ -23,17 +23,17 @@
       <hr>
 
       <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form form--full_width"], fn f -> %>
-        <div class="form_element_wrap">
-          <label>Via Email<span>*</span></label>
-          <div class="form_element">
-            <%= email_input(f, :email, required: true, autocapitalize: "none") %>
+        <div class="form-element_wrap">
+          <div class="form-element">
+            <label>Email Address</label>
+            <%= email_input(f, :email, required: true, autocapitalize: "none", placeholer: "gracehopper@example.com") %>
           </div>
         </div>
-        <div class="form_submit">
-          <input type="submit" value="Enter">
-          <div class="form_submit_responses">
+        <div class="form-submit">
+          <div class="form-submit-note">
             <div>Need an account? <em><%= link "Sign up", to: person_path(@conn, :new), title: "" %></em></div>
           </div>
+          <input type="submit" value="Enter">
         </div>
       <% end %>
     <% end %>
