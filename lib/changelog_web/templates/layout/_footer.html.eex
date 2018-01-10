@@ -10,8 +10,8 @@
       <ul>
         <li><a href="https://twitter.com/changelog"><img src='<%= static_url(@conn, "/images/icon-twitter-black.svg") %>' title="Twitter"></a></li>
         <li><a href="https://github.com/thechangelog"><img src='<%= static_url(@conn, "/images/icon-github-black.svg") %>' title="Github"></a></li>
-        <li><a href="https://www.youtube.com/c/thechangelog"><img src='<%= static_url(@conn, "/images/icon-twitter-black.svg") %>' title="YouTube"></a></li>
-        <li><a href="https://www.instagram.com/thechangelog/"><img src='<%= static_url(@conn, "/images/icon-github-black.svg") %>' title="Instagram"></a></li>
+        <li><a href="https://www.youtube.com/c/thechangelog"><img src='<%= static_url(@conn, "/images/icon-youtube-black.svg") %>' title="YouTube"></a></li>
+        <li><a href="https://www.instagram.com/thechangelog/"><img src='<%= static_url(@conn, "/images/icon-instagram-black.svg") %>' title="Instagram"></a></li>
       </ul>
     </div>
   </nav>
