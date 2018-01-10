@@ -1,0 +1,7 @@
+<%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: @episode.title do %>
+  <%= for guest <- @episode.guests do %>
+    <img class="news_item-source-image" src="<%= PersonView.avatar_url(guest) %>" alt="<%= guest.name %> Avatar" />
+  <% end %>
+<% end %>
+
+<%= link EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @episode.podcast.slug), title: @episode.podcast.name %>

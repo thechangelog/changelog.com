@@ -20,9 +20,7 @@
           <div class="live_upcoming-grid-item-info">
             <div>
               <p><strong>
-                <%= link to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" do %>
-                <%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %>
-                <% end %>
+                <%= link EpisodeView.podcast_name_and_number(episode), to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" %>
               </strong></p>
               <p><%= episode.title %></p>
             </div>

@@ -1,6 +1,6 @@
 <div class="list-item">
 <%= if episode = NewsItemView.get_object(@item) do %>
-  <h5 class="list-item__sponsored"><%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %></h5>
+  <h5 class="list-item__sponsored"><%= EpisodeView.podcast_name_and_number(episode) %></h5>
 <% end %>
 
   <h2 class="list-item__title"><%= link(@item.headline, to: @item.url) %></h2>

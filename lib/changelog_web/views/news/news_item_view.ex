@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Regexp, Repo}
-  alias ChangelogWeb.{NewsSourceView, PersonView, TopicView}
+  alias ChangelogWeb.{NewsSourceView, EpisodeView, PersonView, TopicView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
@@ -23,7 +23,7 @@ defmodule ChangelogWeb.NewsItemView do
     Episode.published
     |> Episode.with_podcast_slug(p)
     |> Episode.with_slug(e)
-    |> Episode.preload_podcast
+    |> Episode.preload_all
     |> Repo.one
   end
 
@@ -35,12 +35,19 @@ defmodule ChangelogWeb.NewsItemView do
   def render_item_or_ad(item = %NewsItem{}), do: render("_item.html", item: item)
   def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
 
+  def render_item_header_source(conn, item = %{type: :audio}) do
+    if episode = get_object(item) do
+      render("_item_header_episode.html", conn: conn, item: item, episode: episode)
+    else
+      render_item_header_source(conn, Map.put(item, :type, :link))
+    end
+  end
   def render_item_header_source(conn, item) do
     cond do
-      item.source -> render("_item_summary_header_source.html", conn: conn, item: item, source: item.source)
-      item.author -> render("_item_summary_header_author.html", conn: conn, item: item, author: item.author)
-      Enum.any?(item.topics) -> render("_item_summary_header_topic.html", conn: conn, item: item, topic: List.first(item.topics))
-      true -> render("_item_summary_header_default.html", conn: conn, item: item)
+      item.source -> render("_item_header_source.html", conn: conn, item: item, source: item.source)
+      item.author -> render("_item_header_author.html", conn: conn, item: item, author: item.author)
+      Enum.any?(item.topics) -> render("_item_header_topic.html", conn: conn, item: item, topic: List.first(item.topics))
+      true -> render("_item_header_default.html", conn: conn, item: item)
     end
   end
 

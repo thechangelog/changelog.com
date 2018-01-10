@@ -1,7 +1,7 @@
 <article class="news_item">
-  <%= render("_item_summary_header.html", assigns) %>
+  <%= render("_item_header.html", assigns) %>
 <%= if @item.story do %>
   <div class="news_item-description"><p><%= @item.story |> md_to_text %></p></div>
 <% end %>
-  <%= render("_item_summary_toolbar.html", assigns) %>
+  <%= render("_item_toolbar.html", assigns) %>
 </article>

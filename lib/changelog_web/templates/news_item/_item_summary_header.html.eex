@@ -1,6 +1,0 @@
-<header class="news_item-header">
-  <p class="news_item-source"><%= render_item_header_source(@conn, @item) %></p>
-  <h2 class="news_item-title">
-    <%= link @item.headline, to: news_item_path(@conn, :show, slug(@item)) %><%= link to: @item.url do %>&nbsp;<span class="news_item-title-external"></span><% end %>
-  </h2>
-</header>
