@@ -1,0 +1,75 @@
+.post_header {
+  @include masthead();
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  position: relative;
+
+  // NOTE: Matches page_heading.scss spacing – consider merging
+  @include breakpoint(mobile) {
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+  }
+  @include breakpoint(tablet) {
+    margin-bottom: 60px;
+    padding-bottom: 60px;
+  }
+
+  &-all_posts_button {
+    @include masthead-back();
+  }
+
+  &-date {
+    line-height: 1em;
+    font-size: 1em;
+    font-weight: normal;
+    margin-bottom: 2em;
+
+    &,
+    a {
+      color: $medium-grey;
+    }
+    a:hover {
+      color: $light-grey;
+    }
+
+    @include breakpoint(mobile) {
+      font-size: 1.25em;
+    }
+  }
+
+  &-title {
+    font-size: 1.5em;
+    line-height: 1.25em;
+
+    @include breakpoint(mobile) {
+      font-size: 2em;
+    }
+  }
+
+  &-author {
+    align-items: center;
+    color: $medium-grey;
+    display: flex;
+    justify-content: center;
+
+    & > * {
+      margin: 0 5px;
+      text-align: left;
+    }
+
+    a {
+      font-weight: bold;
+    }
+
+    img {
+      background: #000;
+      border-radius: $base-border-radius;
+      display: inline-block;
+      font-size: 8px;
+    }
+
+    span {
+      margin-left: 0.5em;
+    }
+  }
+}

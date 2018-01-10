@@ -1,7 +1,5 @@
 .search {
-  margin: $base-spacing auto;
-  max-width: 940px;
-  padding: 0 $base-spacing;
+  @include wrap;
 
   &-form {
     border-bottom: 1px solid $green;

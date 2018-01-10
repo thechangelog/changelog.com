@@ -37,13 +37,13 @@
     <%= link "← All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button" %>
   </header>
 
-  <div class="post-body episode-body">
-    <div class="post-body-summary">
+  <div class="episode-body">
+    <div class="episode-body-summary">
       <% dark_logo_sponsorships = sponsorships_with_dark_logo(@episode) %>
       <%= if Enum.any?(dark_logo_sponsorships) do %>
-        <aside class="post-body-summary-sponsors">
+        <aside class="episode-body-summary-sponsors">
           <h3>Brought to you by</h3>
-          <div class="post-body-summary-sponsors-list">
+          <div class="episode-body-summary-sponsors-list">
             <%= for episode_sponsor <- dark_logo_sponsorships do %>
               <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
               <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
@@ -53,11 +53,11 @@
         </aside>
       <% end %>
 
-      <div class="post-body-summary-description">
+      <div class="episode-body-summary-description">
         <%= @episode.summary |> md_to_html |> raw %>
       </div>
 
-      <div class="post-body-summary-meta">
+      <div class="episode-body-summary-meta">
         Runtime <%= TimeView.rounded_minutes(@episode.duration) %> Min &bull;
         <time datetime="<%= @episode.published_at %>">Published <%= TimeView.pretty_date(@episode.published_at) %></time> &bull;
         <a href="<%= audio_url(@episode) %>" download>
@@ -66,7 +66,7 @@
         <%= admin_edit_link(@conn, @current_user, @episode) %>
       </div>
 
-      <div class="post-body-summary-tags">
+      <div class="episode-body-summary-tags">
         <ul class="tags">
         <%= for topic <- @episode.topics do %>
           <li class="tags-item"><%= link topic.name, to: topic_path(@conn, :show, topic.slug), title: "View #{topic.name}" %></li>
@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <div class="post-body-details post-body-details--<%= @podcast.slug %>">
+    <div class="episode-body-details episode-body-details--<%= @podcast.slug %>">
       <% participants = participants(@episode) %>
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">

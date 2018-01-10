@@ -1,10 +1,8 @@
 .pagination {
+  @include wrap;
   justify-content: space-between;
   display: flex;
   text-align: center;
-  margin: $base-spacing auto;
-  max-width: 940px;
-  padding: 0 $base-spacing;
 
   &-item,
   .item {

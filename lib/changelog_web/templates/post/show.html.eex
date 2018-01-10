@@ -1,44 +1,35 @@
-<article class="post">
-  <header class="post-header">
-    <div class="post-header-wrap">
-      <p class="post-header-date">
+<article class="article">
+  <header class="post_header">
+    <div class="post_header-wrap">
+      <p class="post_header-date">
         <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
         <%= admin_edit_link(@conn, @current_user, @post) %>
       </p>
-      <h1 class="post-header-title"><%= @post.title %></h1>
+      <h1 class="post_header-title"><%= @post.title %></h1>
 
-      <div class="post-header-author">
+      <div class="post_header-author">
         <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
-          <img class="author_image" src="<%= PersonView.avatar_url(@post.author) %>" width=30 height=30 alt="<%= @post.author.name %>"/>
+          <img src="<%= PersonView.avatar_url(@post.author) %>" width=30 height=30 alt="<%= @post.author.name %>"/>
         <% end %>
         <span><%= link @post.author.name, to: PersonView.external_url(@post.author) %> &ndash; Todo: Add author title</span>
       </div>
     </div>
-
-    <div class="post-header-toolbar">
-
-    </div>
-
-    <%= link "← All Posts", to: "/posts", class: "post-header-all_posts_button" %>
   </header>
 
   <div class="richtext">
     <%= @post.body |> md_to_html |> raw %>
   </div>
 
-  <footer class="post-footer">
-    <div class="post-footer-tags">
+  <footer class="post_footer">
+    <div class="post_footer-tags">
       <ul class="tags">
         <%= if Enum.any?(@post.topics) do %>
           <%= for topic <- @post.topics do %>
+            <!-- TODO: Link tags -->
             <li class="tags-item"><a href="#" title="View Tag"><%= topic.name %></a></li>
           <% end %>
         <% end %>
       </ul>
     </div>
-
-    <%= if @post.author.bio do %>
-      <%= render("_author_bio.html", person: @post.author) %>
-    <% end %>
   </footer>
 </article>

@@ -1,50 +1,44 @@
-<article class="post">
-  <header class="post-header">
-    <div class="post-header-wrap">
-      <h1 class="post-header-title">Subscribe</h1>
-    </div>
+<%= render(SharedView, "_page_heading.html", title: "Subscribe", conn: @conn) %>
+
+<section class="show_list" id="newsletters">
+  <header class="show_list-header">
+    <h2>Newsletters</h2>
   </header>
-
-  <section class="show_list" id="newsletters">
-    <header class="show_list-header">
-      <h2>Newsletters</h2>
-    </header>
-    <div class="show_list-shows">
-      <article class="show_list-shows-item show_list-shows-item--podcast">
-        <div class="show_list-shows-item-wrap">
-          <%= link "", to: page_path(@conn, :weekly), class: 'show_list-shows-item-art' %>
-          <div class="show_list-shows-item-content">
-            <h2><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></h2>
-            <p>Our editorialized take on this week in open source and software development.</p>
-            <ul>
-              <li><%= link "Subscribe", to: page_path(@conn, :weekly) %></li>
-            </ul>
-          </div>
+  <div class="show_list-shows">
+    <article class="show_list-shows-item show_list-shows-item--podcast">
+      <div class="show_list-shows-item-wrap">
+        <%= link "", to: page_path(@conn, :weekly), class: 'show_list-shows-item-art' %>
+        <div class="show_list-shows-item-content">
+          <h2><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></h2>
+          <p>Our editorialized take on this week in open source and software development.</p>
+          <ul>
+            <li><%= link "Subscribe", to: page_path(@conn, :weekly) %></li>
+          </ul>
         </div>
-      </article>
-      <article class="show_list-shows-item show_list-shows-item--gotime">
-        <div class="show_list-shows-item-wrap">
-          <%= link "", to: page_path(@conn, :nightly), class: 'show_list-shows-item-art' %>
-          <div class="show_list-shows-item-content">
-            <h2><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></h2>
-            <p>Our automated nightly email unearths the hottest new repos on GitHub before they blow up.</p>
-            <ul>
-              <li><%= link "Subscribe", to: page_path(@conn, :nightly) %></li>
-            </ul>
-          </div>
+      </div>
+    </article>
+    <article class="show_list-shows-item show_list-shows-item--gotime">
+      <div class="show_list-shows-item-wrap">
+        <%= link "", to: page_path(@conn, :nightly), class: 'show_list-shows-item-art' %>
+        <div class="show_list-shows-item-content">
+          <h2><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></h2>
+          <p>Our automated nightly email unearths the hottest new repos on GitHub before they blow up.</p>
+          <ul>
+            <li><%= link "Subscribe", to: page_path(@conn, :nightly) %></li>
+          </ul>
         </div>
-      </article>
-    </div>
-  </section>
+      </div>
+    </article>
+  </div>
+</section>
 
-  <section class="show_list" id="podcasts">
-    <header class="show_list-header">
-      <h2>Podcasts</h2>
-    </header>
-    <div class="show_list-shows">
-      <%= for podcast <- @podcasts do %>
-        <%= render(ChangelogWeb.PodcastView, "_subscribe.html", conn: @conn, podcast: podcast) %>
-      <% end %>
-    </div>
-  </section>
-</article>
+<section class="show_list" id="podcasts">
+  <header class="show_list-header">
+    <h2>Podcasts</h2>
+  </header>
+  <div class="show_list-shows">
+    <%= for podcast <- @podcasts do %>
+      <%= render(ChangelogWeb.PodcastView, "_subscribe.html", conn: @conn, podcast: podcast) %>
+    <% end %>
+  </div>
+</section>

@@ -11,6 +11,10 @@
     line-height: 1.25em;
     margin-bottom: .375em;
     @include breakpoint(mobile) { font-size: 1.125em; }
+
+    p {
+      font-size: 1em !important;
+    }
   }
 
   > ul, ol {

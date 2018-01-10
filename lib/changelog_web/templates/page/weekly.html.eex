@@ -1,9 +1,5 @@
-<article class="post article">
-  <header class="post-header">
-    <div class="post-header-wrap">
-      <h1 class="post-header-title">Subscribe to Changelog Weekly</h1>
-    </div>
-  </header>
+<article class="article">
+  <%= render(SharedView, "_page_heading.html", title: "Subscribe to Changelog Weekly", conn: @conn) %>
 
   <div class="richtext">
     <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>

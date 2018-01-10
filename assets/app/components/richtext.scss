@@ -1,10 +1,4 @@
 .richtext {
-  // A simple clearfix so we don't have to use overflow auto (which would break 100%+ width stuff)
-  &:after {
-    clear: both;
-    content: "";
-    display: table;
-  }
 
   // Remove bottom-margin on last element in richtext
   > *:last-child {
