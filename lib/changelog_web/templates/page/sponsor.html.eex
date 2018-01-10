@@ -1,238 +1,160 @@
 <article class="marketing marketing--sponsor">
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
-      <h1>Your Partner for Reaching Software Developers</h1>
-      <p>TK Monthly Podcast Listens • TK Monthly Pageviews • TK Newsletter Subscribers</p>
+      <p>Advertise with Changelog Media</p>
+      <h1>Reach thousands of developers and <br />creative software professionals.</h1>
+      <p>300,000 Monthly Pageviews • 225,000 Monthly Podcast Listens • 12,000 Email Subscribers</p>
 
-      <%= link "Get Started", to: "mailto:editors@changelog.com", title: "", class: "button_large" %>
+      <%= link "Get Started", to: "mailto:editors@changelog.com", title: "", class: "marketing-button button_large" %>
+      <p class="button_note">Or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
+    </header>
+  </section>
 
-      <h2>We Start With Your Goals</h2>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Nulla vitae elit libero, a pharetra augue. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum.</p>
+  <section class="marketing-section">
+    <header class="marketing-section-header">
+      <h2>Why Changelog?</h2>
+      <p>Developers come to Changelog to get the latest news and podcasts for software professionals. This includes developers looking to learn about new solutions to their problems which may overlap with your company, products, compeitors or industry. Advertise with Changelog to reach developers during the evaluation phase of their&nbsp;process.</p>
     </header>
 
-    <div class="marketing-section-questions">
-      <div class="marketing-section-questions-item">
-        <h3>Where do you get customers?</h3>
-        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Nulla vitae elit libero, a pharetra augue. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum.</p>
+    <div class="marketing-section-grid">
+      <div class="marketing-section-grid-item">
+        <h3>A large, engaged audience</h3>
+        <p>Changelog has a worldwide audience of more than 250,000 monthly unique visitors. In the US, Changelog users are highly educated and primarily live in metropolitan&nbsp;areas.</p>
       </div>
-      <div class="marketing-section-questions-item">
-        <h3>Where do you get customers?</h3>
-        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Nulla vitae elit libero, a pharetra augue. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum.</p>
+      <div class="marketing-section-grid-item">
+        <h3>Trusted audience</h3>
+        <p>Our readers and listeners trust that we only work with brands who represent products and services that developers want to hear about. We're <em>very</em>&nbsp;selective.</p>
       </div>
-      <div class="marketing-section-questions-item">
-        <h3>Where do you get customers?</h3>
-        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Nulla vitae elit libero, a pharetra augue. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum.</p>
+      <div class="marketing-section-grid-item">
+        <h3>Only quality content</h3>
+        <p>Users on Changelog create profiles based on their real identities and our moderation policies enforce civil discourse to ensure your message shows up alongside the highest quality&nbsp;content.</p>
       </div>
+      <div class="marketing-section-grid-item">
+        <h3>Measurable results</h3>
+        <!-- TODO: This doesn't read correctly. Update! -->
+        <p>Our team will work closely with you to determine your goals, then design a branded campaign focused on those goals, resonates with our audience, and gets&nbsp;results.</p>
+      </div>
+    </div>
+
+    <div class="marketing-section-centered">
+      <%= link "Get Started", to: "mailto:editors@changelog.com", title: "", class: "marketing-button button_large" %>
+      <p class="button_note">Or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
     </div>
   </section>
 
-  <section id="community" class="marketing-section">
+  <hr />
+
+  <section id="deals" class="marketing-section">
     <header class="marketing-section-header">
-      <i><img src='<%= static_url(@conn, "/images/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
-      <h2>Slack Everyday with&nbsp;Friends</h2>
-      <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
+      <h3>Brands who care about developers advertise with&nbsp;Changelog</h3>
     </header>
 
-    <div class="marketing-section-content marketing-section-content--slack">
-      <div class="marketing-section-content-image">
-        <img src='<%= static_url(@conn, "/images/community/slack-screenshot.jpg") %>' alt="Screenshot of a Slack channel conversation.">
-      </div>
-      <div class="marketing-section-content-info">
-        <div class="marketing-section-content-info-top">
-          <h3>There are no imposters&nbsp;here.</h3>
-          <p>Everyone is welcome. You are not an imposter. No matter where you are on your hacker path &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
-        <%= if !@current_user do %>
-          <p><%= link "Join the community", to: page_path(@conn, :join), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
-        <% end %>
-        </div>
-
-        <div class="marketing-section-content-info-bottom">
-          <blockquote class="marketing-quote">
-            <div class="marketing-quote-body">
-              <p>There's no way to truely say how much value I get from being a part of Changelog Community. I'm there everyday, and there's always something being discussed by the community. It's&nbsp;awesome.</p>
-            </div>
-            <footer class="marketing-quote-footer">
-              <a href="https://twitter.com/jdorfman" title="Justin Dorfman on Twitter">
-                <img src='<%= static_url(@conn, "/images/community/justin-dorfman.jpg") %>' alt="A smiling man in a ballcap and glasses." width="65" height="65">
-                <strong>Justin Dorfman</strong>
-                <span class="quote-title">Developer Relations at Sticker Mule</span>
-              </a>
-            </footer>
-          </blockquote>
-        </div>
-      </div>
+    <!-- TODO: Verify and update partners list -->
+    <div class="marketing-section-logos">
+      <a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-toptal.png") %>' alt="Toptal"></a>
+      <a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-fastly.png") %>' alt="Fastly"></a>
+      <a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linode.png") %>' alt="Linode"></a>
+      <a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-rollbar.png") %>' alt="Rollbar"></a>
+      <a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ibm.png") %>' alt="IBM"></a>
+      <a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-strongloop.png") %>' alt="StrongLoop"></a>
+      <a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-flatiron.png") %>' alt="Flatiron School"></a>
+      <a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeschool.png") %>' alt="Code School"></a>
+      <a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a>
+      <a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-gocd.png") %>' alt="Go"></a>
+      <a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-heap.png") %>' alt="Heap"></a>
+      <a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-sentry.png") %>' alt="Sentry"></a>
+      <a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a>
+      <a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a>
+      <a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ato.png") %>' alt="All things open."></a>
+      <a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a>
+      <a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-elixirconf.png") %>' alt="ElixirConf"></a>
+      <a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-compose.png") %>' alt="Compose"></a>
+      <a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hired.png") %>' alt="Hired"></a>
+      <a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-datadog.png") %>' alt="Datadog"></a>
+      <a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-casper.png") %>' alt="Casper"></a>
+      <a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-imgix.png") %>' alt="imgix"></a>
+      <a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a>
+      <a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeship.png") %>' alt="Codeship"></a>
     </div>
   </section>
 
   <section id="deals" class="marketing-section">
     <header class="marketing-section-header">
-      <h2>Discounts and Special Offers From Our Partners</h2>
-      <p>We work hard to develop relationships with the most trusted brands, products, and services &mdash; we give the rewards of those efforts to you, the hacker community.</p>
+      <h3>What our sponsors are saying</h3>
     </header>
-    <div class="marketing-section-logos">
-      <div class="marketing-section-logos-item"><a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-toptal.png") %>' alt="Toptal"></a></div>
 
-      <div class="marketing-section-logos-item"><a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-rollbar.png") %>' alt="Rollbar"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ibm.png") %>' alt="IBM"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-strongloop.png") %>' alt="StrongLoop"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-flatiron.png") %>' alt="Flatiron School"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeschool.png") %>' alt="Code School"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-gocd.png") %>' alt="Go"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-heap.png") %>' alt="Heap"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-sentry.png") %>' alt="Sentry"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-ato.png") %>' alt="All things open."></a></div>
-
-      <div class="marketing-section-logos-item"><a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-elixirconf.png") %>' alt="ElixirConf"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-compose.png") %>' alt="Compose"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hired.png") %>' alt="Hired"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-datadog.png") %>' alt="Datadog"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-casper.png") %>' alt="Casper"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-imgix.png") %>' alt="imgix"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a></div>
-
-      <div class="marketing-section-logos-item"><a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsor-codeship.png") %>' alt="Codeship"></a></div>
+    <div class="marketing-section-grid">
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/about/jerod.jpg") %>' alt="Breanden Boneschott">
+          <h3>Breanden Beneschott</h3>
+          <p class="marketing-section-grid-quote-title">Toptal &mdash; Co-Founder / COO</p>
+          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+        </div>
+      </div>
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/about/adam.jpg") %>' alt="David Roesch">
+          <h3>David Roesch</h3>
+          <p class="marketing-section-grid-quote-title">Linode &mdash; Director of Marketing</p>
+          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
+        </div>
+      </div>
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/about/jerod.jpg") %>' alt="Todd Lewis">
+          <h3>Todd Lewis</h3>
+          <p class="marketing-section-grid-quote-title">All Things Open &mdash; Creator and Chair</p>
+          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
+        </div>
+      </div>
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/about/heather.jpg") %>' alt="Elaine Greenberg">
+          <h3>Elaine Greenberg</h3>
+          <p class="marketing-section-grid-quote-title">Fastly &mdash; Communications</p>
+          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="marketing-section marketing-section--map">
+  <hr />
+
+  <section class="marketing-section">
     <header class="marketing-section-header">
-      <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
-      <h2>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best podcasts and email newsletters. Our community and content is in every corner of the&nbsp;globe.</h2>
-
-      <%= if @current_user do %>
-        <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "button_large" %>
-        <p class="button_note"><code>It’s good to be $HOME</code></p>
-      <% else %>
-        <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "button_large" %>
-        <p class="button_note">It’s free!</p>
-      <% end %>
+      <h2>Our Partners</h2>
+      <p>The following partners are commited to our mission on the&nbsp;long-term.<br />
+      Email us at <a href="mailto:partners@changelog.com">partners@changelog.com</a> if you're&nbsp;interested.</p>
     </header>
 
-    <div class="marketing-map">
-      <img src='<%= static_url(@conn, "/images/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
-    </div>
-
-    <!-- TODO: Style richtext for dark theme and add necessary layout styles -->
-    <div class="richtext">
-      <p><strong><mark class="grey-background">Do you want to tell 100,000+ developers about your product or service?</mark></strong></p>
-
-      <p>Our listeners and readers are a loyal audience of engineers, hackers, developers, polyglots, backend, frontend, full-stack, operations, designers, and everything in between. If you want to talk to software developers, we can help you.</p>
-
-      <p>Our sponsors range from web services, developer tools, courses, learning resources, conferences, and more.</p>
-
-      <h2>Grow Your Product By Sponsoring Our Content</h2>
-
-      <p>Podcast sponsorship and advertising with Changelog is so effective because our listeners trust that we only promote and endorse brands who represent trustworthy products and services. We've worked very hard to gain that trust, and we don't take that trust lightly. We believe the best way to tell any story, including the story we'll tell for your brand, is to put our listeners first.</p>
-
-      <p>We will work very closely with you to create a professionally produced sponsorship campaign that focuses on the goals we set together. If you're looking for results, count on us to deliver.</p>
-
-      <p><a href="mailto:adam@changelog.com">Email adam@changelog.com</a> to get started.</p>
-
-      <hr>
-
-      <h3><a href="/podcast">The Changelog (Podcast)</a></h3>
-
-      <ul>
-        <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-        <li><mark>$2,000 for the featured pre-roll spot at the top of the show</mark></li>
-        <li><mark>$1,750 for mid-roll spots</mark></li>
-        <li>Four (4) week minimum</li>
-        <li>Reaches an average 35,000 to 45,000 listens per episode</li>
-        <li>Reaches an average 200,000 listens per month, podcast-wide</li>
-        <li>Published weekly</li>
-        <li>Each sponsor gets mentioned at the top of the show</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <h3><a href="/weekly">Changelog Weekly (Newsletter)</a></h3>
-
-      <p>Every weekend we ship our email to <%= @weekly |> NewsletterView.subscribers(:all, 7500) |> comma_separated %> die-hard readers.</p>
-
-      <ul>
-        <li><mark>$350 per week with a four (4) week minimum</mark></li>
-        <li>We maintain <em>very high</em> engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
-        <li>The breakdown is a linked heading with 2-3 lines of supporting text with links.</li>
-        <li>We take a native content approach to sponsored links included in Changelog Weekly. Since most organizations treat their blog, ebooks, webinars and other content as their inbound funnel, we leverage that to share that content with our readers and let your marketing funnel do what it was designed to do &mdash; convert!</li>
-        <li>We can do all the writing for you so there's no work required on your part. You tell us what you'd like promoted and we take care of the rest.</li>
-        <li>Expect an average of 70-400 clicks &mdash; the better and more relevant the content, the better it will perform.</li>
-      </ul>
-
-      <h3><a href="/gotime">Go Time</a></h3>
-
-      <ul>
-        <li>Each episode includes two (2) live read mid-roll sponsorships</li>
-        <li><mark>$650 for mid-roll spots</mark></li>
-        <li>Four (4) week minimum</li>
-        <li>Reaches an average 6,000 to 7,500 listens per episode</li>
-        <li>Reaches an average 30,000 listens per month, podcast-wide</li>
-        <li>Recorded live and published weekly</li>
-        <li>Each sponsor gets mentioned at the top of the show</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <h3><a href="/rfc">Request For Commits</a></h3>
-
-      <ul>
-        <li>Each episode includes two (2) mid-roll sponsorships</li>
-        <li><mark>$500 for mid-roll spots</mark></li>
-        <li>Reaches an average 5,000 to 7,000 listens per episode</li>
-        <li>Published weekly</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <h3><a href="/jsparty">JS Party</a></h3>
-
-      <ul>
-        <li>Each episode includes two (2) mid-roll sponsorships</li>
-        <li><mark>$850 for mid-roll spots</mark></li>
-        <li>Four (4) week minimum</li>
-        <li>Reaches an average 2,100 to 3,200 listens per episode</li>
-        <li>Reaches an average 14,500 listens per month, podcast-wide</li>
-        <li>Recorded live and published weekly</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <hr>
-
-      <h3>Conference Sponsorship</h3>
-
-      <p>We love working with conferences! We have several options on how we support and partner with conference organizers.</p>
-
-      <p>We can come in as a media partner to help spread the word and provide the coverage you need, or we can involve <a href="https://changelog.com/films">Changelog Films</a> and help you tell your community's story like we have for our friends at <a href="https://changelog.com/films/gophercon-2015/">GopherCon</a>.</p>
+    <!-- TODO: Verify and update partners list -->
+    <div class="marketing-section-logos">
+      <a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-toptal.png") %>' alt="Toptal"></a>
+      <a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-fastly.png") %>' alt="Fastly"></a>
+      <a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linode.png") %>' alt="Linode"></a>
+      <a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-rollbar.png") %>' alt="Rollbar"></a>
+      <a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ibm.png") %>' alt="IBM"></a>
+      <a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-strongloop.png") %>' alt="StrongLoop"></a>
+      <a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-flatiron.png") %>' alt="Flatiron School"></a>
+      <a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeschool.png") %>' alt="Code School"></a>
+      <a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a>
+      <a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-gocd.png") %>' alt="Go"></a>
+      <a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-heap.png") %>' alt="Heap"></a>
+      <a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-sentry.png") %>' alt="Sentry"></a>
+      <a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a>
+      <a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a>
+      <a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ato.png") %>' alt="All things open."></a>
+      <a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a>
+      <a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-elixirconf.png") %>' alt="ElixirConf"></a>
+      <a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-compose.png") %>' alt="Compose"></a>
+      <a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hired.png") %>' alt="Hired"></a>
+      <a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-datadog.png") %>' alt="Datadog"></a>
+      <a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-casper.png") %>' alt="Casper"></a>
+      <a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-imgix.png") %>' alt="imgix"></a>
+      <a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a>
+      <a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeship.png") %>' alt="Codeship"></a>
     </div>
   </section>
+
 </article>

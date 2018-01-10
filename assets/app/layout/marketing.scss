@@ -2,6 +2,36 @@
   font-size: 16px;
   overflow-x: hidden;
 
+  hr {
+    border: 1px solid $border-color;
+    clear: both;
+    margin: 0 auto;
+    max-width: 860px;
+    padding: 0 30px;
+    width: 100%;
+  }
+
+  &-button {
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    @media (min-width: $tablet) { margin-top: 40px; }
+
+    .marketing-section--intro & {
+      margin-top: 20px;
+      @media (min-width: $tablet) { margin-top: 50px; }
+    }
+  }
+  p.button_note {
+    color: $medium-grey;
+    font-size: 14px !important;
+    font-style: italic;
+
+    a {
+      color: $medium-grey;
+    }
+  }
+
   &-section {
     padding: $padding-large 0;
 
@@ -45,11 +75,15 @@
       h1 {
         font-size: 1.75em;
         line-height: 1.25em;
-        margin: 1em 0;
+        margin: 1em 0 1.125em;
         @include breakpoint(tiny) { font-size: 2em; }
         @include breakpoint(tablet) {
           font-size: 2.25em;
-          margin: 1.25em 0;
+          margin: 1.125em 0 1.25em;
+        }
+
+        @include breakpoint(tablet, max) {
+          br { display: none; }
         }
 
         .marketing-section--map & {
@@ -92,23 +126,11 @@
         @media (min-width: $tablet) { font-size: 1.125em; }
       }
 
-      &-button {
-        padding-left: 30px;
-        padding-right: 30px;
+      p.button_note a { color: $half-white; }
+    }
 
-        .marketing-section--intro & {
-          margin-top: 20px;
-          @media (min-width: $tablet) { margin-top: 50px; }
-        }
-        .marketing-section--map & {
-          margin-top: 20px;
-          @media (min-width: $tablet) { margin-top: 40px; }
-        }
-      }
-      p.button_note {
-        font-size: 16px;
-        font-style: italic;
-      }
+    &-centered {
+      text-align: center;
     }
 
     // Community Features
@@ -153,30 +175,6 @@
           &:hover img {
             transform: translateY(-5px);
           }
-        }
-      }
-    }
-
-    // Questions (Three Columns, Used on the Sponsor Page)
-    &-questions {
-      $breakpoint: 900px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 0 auto;
-      max-width: 1080px;
-
-      @media (min-width: $breakpoint) {
-        display: flex;
-        padding: 0 $padding-large;
-      }
-
-      &-item {
-        flex: 1 0 240px;
-        padding: $padding-small;
-        text-align: center;
-
-        *:last-child {
-          margin-bottom: 0;
         }
       }
     }
@@ -284,6 +282,67 @@
 
         &:hover {
           filter: grayscale(0%);
+        }
+      }
+    }
+
+    // Two Column Grid
+    &-grid {
+      margin: 40px auto 0;
+      max-width: 1020px;
+      padding: 0 30px;
+      width: 100%;
+
+      @include breakpoint(mobile) { margin-top: 50px; }
+      @include breakpoint(tablet) {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 60px;
+        padding: 0 5px;
+      }
+
+      &-item {
+        padding: 10px 0;
+
+        @include breakpoint(tablet) {
+          flex: 1 1 50%;
+          padding: 25px;
+        }
+
+        h3 {
+          font-size: 1.25em;
+          margin-bottom: .5em;
+        }
+
+        p {
+          color: $medium-grey;
+        }
+      }
+
+      &-quote {
+        text-align: center;
+        margin: 0 auto;
+        max-width: 420px;
+
+        img {
+          border-radius: $base-border-radius;
+          display: inline-block;
+          margin-bottom: 10px;
+          width: 100px;
+        }
+
+        h3 {
+          margin-bottom: 2px;
+        }
+
+        &-title {
+          font-style: italic;
+        }
+
+        p {
+          font-size: 1em;
+          line-height: 1.25em;
         }
       }
     }
