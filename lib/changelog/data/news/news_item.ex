@@ -32,6 +32,7 @@ defmodule Changelog.NewsItem do
   def drafted(query \\ __MODULE__),           do: from(q in query, where: q.status == ^:draft)
   def logged_by(query \\ __MODULE__, person), do: from(q in query, where: q.logger_id == ^person.id)
   def published(query \\ __MODULE__),         do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
+  def with_url(query \\ __MODULE__, url),       do: from(q in query, where: q.url == ^url)
 
   def published_since(query \\ __MODULE__, issue_or_time)
   def published_since(query, i = %NewsIssue{}),   do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^i.published_at)
