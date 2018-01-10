@@ -20,6 +20,11 @@ body {
 }
 .main {
   flex: 1 0 calc(100vh - 182px);
+
+  .page-podcast-index &,
+  .page-person-new & {
+    background-color: $black;
+  }
 }
 
 // Full width wrap
