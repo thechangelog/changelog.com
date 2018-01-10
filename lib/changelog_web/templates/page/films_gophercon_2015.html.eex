@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>GopherCon 2015 / Changelog Films</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "GopherCon 2015 / Changelog Films", conn: @conn) %>
   <div class="richtext">
     <p>Like what you see here? <%= link "Hire us", to: page_path(@conn, :contact) %> to get creative for your conference.</p>
 

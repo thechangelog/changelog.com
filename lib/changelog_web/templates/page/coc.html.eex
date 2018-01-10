@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>Code of Conduct</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Code of Conduct", conn: @conn) %>
   <div class="richtext">
     <h3>Our Pledge</h3>
 

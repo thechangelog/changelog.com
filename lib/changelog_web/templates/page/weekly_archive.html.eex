@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>Changelog Weekly &ndash; Archive</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Changelog Weekly &ndash; Archive", conn: @conn) %>
   <div class="richtext">
     <p>This is the archive for Changelog Weekly, our editorialized take on this week in open source and software development.</p>
 

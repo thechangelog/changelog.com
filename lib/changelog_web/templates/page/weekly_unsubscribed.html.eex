@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>Whoa!? You've unsubscribed?</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Whoa!? You've unsubscribed?", conn: @conn) %>
   <div class="richtext">
     <p>I'm sorry to see you go. <%= link "Please get in touch", to: page_path(@conn, :contact) %> to let us know how we can improve our email.</p>
 

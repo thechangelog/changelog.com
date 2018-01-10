@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>Be Our Guest</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Be Our Guest", conn: @conn) %>
   <div class="richtext">
     <p>First off, <mark>thank you</mark> for joining us on <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
       <option value="podcast" <%= if @podcast.slug == "podcast", do: "selected" %>>The Changelog</option>

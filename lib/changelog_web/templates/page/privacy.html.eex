@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h1>Changelog Privacy Policy</h1>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Changelog Privacy Policy", conn: @conn) %>
   <div class="richtext">
 
     <%= render("_privacy_terms_introduction.html", assigns) %>

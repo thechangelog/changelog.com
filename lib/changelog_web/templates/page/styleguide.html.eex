@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>Styleguide</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Styleguide", conn: @conn) %>
   <div class="richtext">
     <p>This page simply showcases all of the available formatting options for pages within Changelog This is just a standard sentence/paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in consectetur ante, sed venenatis magna. Phasellus ultricies, purus ut feugiat tristique, nisi arcu accumsan urna, vestibulum lacinia odio justo eu ipsum. Aliquam cursus eu augue vitae commodo.</p>
 

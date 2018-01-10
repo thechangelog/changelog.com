@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>IMPORTANT! Verify your email.</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "IMPORTANT! Verify your email.", conn: @conn) %>
   <div class="richtext">
     <p>There's one more step! We require subscribers to verify their email address.</p>
 

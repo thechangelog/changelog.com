@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>Subscription Confirmed</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Subscription Confirmed", conn: @conn) %>
   <div class="richtext">
     <p>Thank you for verifying your email address. Your subscription to Changelog Nightly is confirmed.</p>
 

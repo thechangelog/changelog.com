@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>The Team</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "The Team", conn: @conn) %>
   <div class="richtext">
     <p><%= link "Become a member if you value our content.", to: page_path(@conn, :community) %></p>
 

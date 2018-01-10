@@ -1,7 +1,5 @@
 <article class="article">
-  <header class="page_heading">
-    <h2>Changelog Store</h2>
-  </header>
+  <%= render(SharedView, "_page_heading.html", title: "Changelog Store", conn: @conn) %>
   <div class="richtext">
     <h3>The official uniform of Changelog members and fans!</h3>
 
