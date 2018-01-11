@@ -18,15 +18,11 @@
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <main class="main">
-      <article class="section content">
-        <div class="container container--has-padding container--skinny">
-          <header class="content_header">
-            <h1>Server Error</h1>
-            <h2>Oops! Looks like the server had a hiccup.</h2>
-          </header>
-          <div class="content_body">
-            <p>You may want to try to reload the page to see if the issue has cleared up.</p>
-          </div>
+      <article class="article">
+        <%= render(SharedView, "_page_heading.html", title: "Server Error", conn: @conn) %>
+        <div class="richtext">
+          <h2>Oops! Looks like the server had a hiccup.</h2>
+          <p>You may want to try to reload the page to see if the issue has cleared up.</p>
           <%= link "Take Me Home", to: root_path(@conn, :index), class: "btn btn--padded-bottom" %>
         </div>
       </article>

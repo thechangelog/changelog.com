@@ -18,15 +18,11 @@
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <main class="main">
-      <article class="section content">
-        <div class="container container--has-padding container--skinny">
-          <header class="content_header">
-            <h1>404</h1>
-            <h2>Oops! The page you were looking for&nbsp;doesn’t exist.</h2>
-          </header>
-          <div class="content_body">
-            <p>You may have mistyped the address or the page may have moved.</p>
-          </div>
+      <article class="article">
+        <%= render(SharedView, "_page_heading.html", title: "404", conn: @conn) %>
+        <div class="richtext">
+          <h2>Oops! The page you were looking for&nbsp;doesn’t exist.</h2>
+          <p>You may have mistyped the address or the page may have moved.</p>
           <%= link "Take Me Home", to: root_path(@conn, :index), class: "btn btn--padded-bottom" %>
         </div>
       </article>
