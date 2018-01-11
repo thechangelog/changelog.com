@@ -1,4 +1,5 @@
 <nav class="subnav">
+  <!-- TODO: Dynamically set active classes -->
   <ul class="subnav-list">
     <li class="subnav-list-item is-active">
       <%= link "Subscriptions", to: home_path(@conn, :show) %>
@@ -13,6 +14,7 @@
     </li>
   </ul>
 
+  <!-- TODO: Finish mobile nav functionality -->
   <select class="subnav-select" name="select">
     <option value="" selected>Subscriptions</option>
     <option value="">Public Profile</option>
