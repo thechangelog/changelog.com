@@ -158,7 +158,7 @@
       <% end %>
 
       <div class="episode-body-pagination">
-        <%= link "View all episodes", to: podcast_path(@conn, :archive, @podcast.slug), class: "button" %>
+        <%= link "View all episodes", to: podcast_path(@conn, :show, @podcast.slug), class: "button" %>
       </div>
     </div>
   </div>

@@ -18,7 +18,6 @@
   <url><loc><%= podcast_url(@conn, :index) %></loc></url>
   <%= for podcast <- @podcasts ++ [Podcast.master] do %>
     <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
-    <url><loc><%= podcast_url(@conn, :archive, podcast.slug) %></loc></url>
   <% end %>
 
   <%= for episode <- @episodes do %>

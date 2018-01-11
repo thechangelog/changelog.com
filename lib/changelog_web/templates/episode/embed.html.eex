@@ -30,7 +30,7 @@
 
         <div class="episode-player_details_vwrap">
           <h2 class="episode-player_details_podcast">
-            <%= link @podcast.name, to: podcast_path(@conn, :archive, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
+            <%= link @podcast.name, to: podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
             <%= if number = number(@episode) do %>
               <%= link "##{number}", to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank" %>
             <% end %>
