@@ -1,10 +1,10 @@
 <div class="post_footer-author">
   <%= link to: PersonView.external_url(@person), title: @person.name, rel: "external" do %>
-    <img class="post-footer-author-image" src="<%= PersonView.avatar_url(@person) %>" width=50 height=50 alt="<%= @person.name %>"/>
+    <img class="post_footer-author-image" src="<%= PersonView.avatar_url(@person) %>" width=50 height=50 alt="<%= @person.name %>"/>
   <% end %>
 
-  <div class="post-footer-author-bio">
-    <p class="post-footer-author-bio-name"><%= link @person.name, to: PersonView.external_url(@person) %></p>
-    <p class="post-footer-author-bio-title">Todo: Add author title</p>
+  <div class="post_footer-author-bio">
+    <p class="post_footer-author-bio-name"><%= link @person.name, to: PersonView.external_url(@person) %></p>
+    <p class="post_footer-author-bio-title">Todo: Add author title</p>
   </div>
 </div>

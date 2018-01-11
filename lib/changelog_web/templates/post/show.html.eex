@@ -25,11 +25,16 @@
       <ul class="tags">
         <%= if Enum.any?(@post.topics) do %>
           <%= for topic <- @post.topics do %>
-            <!-- TODO: Link tags -->
-            <li class="tags-item"><a href="#" title="View Tag"><%= topic.name %></a></li>
+            <li class="tags-item">
+              <%= link topic.name, to: topic_path(@conn, :show, topic.slug), title: "View Topic" %>
+            </li>
           <% end %>
         <% end %>
       </ul>
     </div>
+
+    <%= if @post.author.bio do %>
+      <%= render("_author_bio.html", person: @post.author) %>
+    <% end %>
   </footer>
 </article>
