@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
-  alias ChangelogWeb.{NewsSourceView, EpisodeView, PersonView, TopicView}
+  alias ChangelogWeb.{NewsSourceView, EpisodeView, PersonView, SponsorView, TopicView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
@@ -15,8 +15,22 @@ defmodule ChangelogWeb.NewsItemView do
     |> String.replace_leading("/priv", "")
   end
 
-  def render_item_or_ad(item = %NewsItem{}), do: render("_item.html", item: item)
-  def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
+  def items_with_ads(items, []), do: items
+  def items_with_ads(items, ads) do
+    items
+    |> Enum.chunk_every(4)
+    |> Enum.with_index
+    |> Enum.map(fn{items, index} ->
+      case Enum.at(ads, index) do
+        nil -> items
+        ad -> items ++ [ad]
+      end
+    end)
+    |> List.flatten
+  end
+
+  def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_item_summary.html", Map.merge(assigns, %{item: item}))
+  def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render("_ad_summary.html", Map.merge(assigns, %{ad: ad}))
 
   def render_item_source(conn, item = %{type: :audio}) do
     if item.object do

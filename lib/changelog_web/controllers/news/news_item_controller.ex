@@ -1,23 +1,33 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsItem}
+  alias Changelog.{Hashid, NewsItem, NewsSponsorship}
   alias ChangelogWeb.NewsItemView
 
   plug RequireAdmin, "before preview" when action in [:preview]
 
   def index(conn, params) do
-    page = NewsItem
-    |> NewsItem.published
-    |> NewsItem.newest_first
-    |> NewsItem.preload_all
-    |> Repo.paginate(Map.put(params, :page_size, 15))
+    page =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(Map.put(params, :page_size, 15))
+
+    ads =
+      Timex.today
+      |> NewsSponsorship.week_of
+      |> NewsSponsorship.preload_all
+      |> Repo.all
+      |> Enum.take_random(2)
+      |> Enum.map(&NewsSponsorship.ad_for_index/1)
+      |> Enum.reject(&is_nil/1)
 
     items =
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :index, items: items, page: page)
+    render(conn, :index, ads: ads, items: items, page: page)
   end
 
   def show(conn, %{"id" => slug}) do

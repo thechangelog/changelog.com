@@ -1,7 +1,7 @@
 <div class="feed">
-  <%= for item <- @items do %>
-    <%= render("_item_summary.html", Map.merge(assigns, %{item: item})) %>
-  <% end %>
+<%= for item_or_ad <- items_with_ads(@items, @ads) do %>
+  <%= render_item_summary_or_ad(item_or_ad, assigns) %>
+<% end %>
 </div>
 
 <%= render(SharedView, "_pagination.html", assigns) %>

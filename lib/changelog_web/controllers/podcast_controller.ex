@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Podcast, Episode, NewsItem}
+  alias Changelog.{Podcast, NewsItem}
 
   def index(conn, _params) do
     render(conn, :index)
