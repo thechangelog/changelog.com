@@ -48,9 +48,9 @@
   </header>
 
   <div class="feed">
-    <%= for episode <- @episodes do %>
-      <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
-    <% end %>
+  <%= for item <- @items do %>
+    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item})) %>
+  <% end %>
   </div>
 
   <%= render(SharedView, "_pagination.html", assigns) %>

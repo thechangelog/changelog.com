@@ -1,7 +1,7 @@
 defmodule Changelog.NewsItem do
   use Changelog.Data, default_sort: :published_at
 
-  alias Changelog.{Files, NewsItemTopic, NewsIssue, NewsQueue, NewsSource,
+  alias Changelog.{Episode, Files, NewsItemTopic, NewsIssue, NewsQueue, NewsSource,
                    Person, Regexp}
 
   defenum Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3
@@ -29,12 +29,14 @@ defmodule Changelog.NewsItem do
     timestamps()
   end
 
-  def drafted(query \\ __MODULE__),             do: from(q in query, where: q.status == ^:draft)
-  def logged_by(query \\ __MODULE__, person),   do: from(q in query, where: q.logger_id == ^person.id)
-  def published(query \\ __MODULE__),           do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
-  def with_source(query \\ __MODULE__, source), do: from(q in query, where: q.source_id == ^source.id)
-  def with_topic(query \\ __MODULE__, topic),   do: from(q in query, join: t in assoc(q, :news_item_topics), where: t.topic_id == ^topic.id)
-  def with_url(query \\ __MODULE__, url),       do: from(q in query, where: q.url == ^url)
+  def audio(query \\ __MODULE__),                      do: from(q in query, where: q.type == ^:audio)
+  def drafted(query \\ __MODULE__),                    do: from(q in query, where: q.status == ^:draft)
+  def logged_by(query \\ __MODULE__, person),          do: from(q in query, where: q.logger_id == ^person.id)
+  def published(query \\ __MODULE__),                  do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
+  def with_object_prefix(query \\ __MODULE__, prefix), do: from(q in query, where: like(q.object_id, ^"#{prefix}%"))
+  def with_source(query \\ __MODULE__, source),        do: from(q in query, where: q.source_id == ^source.id)
+  def with_topic(query \\ __MODULE__, topic),          do: from(q in query, join: t in assoc(q, :news_item_topics), where: t.topic_id == ^topic.id)
+  def with_url(query \\ __MODULE__, url),              do: from(q in query, where: q.url == ^url)
 
   def published_since(query \\ __MODULE__, issue_or_time)
   def published_since(query, i = %NewsIssue{}),   do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^i.published_at)
@@ -61,6 +63,27 @@ defmodule Changelog.NewsItem do
     |> insert_changeset(attrs)
     |> file_changeset(attrs)
   end
+
+  def load_object(item) do
+    object = case item.type do
+      :audio -> load_episode_object(item.object_id)
+      _else -> nil
+    end
+
+    Map.put(item, :object, object)
+  end
+
+  defp load_episode_object(object_id) when is_nil(object_id), do: nil
+  defp load_episode_object(object_id) do
+    [p, e] = String.split(object_id, ":")
+    Episode.published
+    |> Episode.with_podcast_slug(p)
+    |> Episode.with_slug(e)
+    |> Episode.preload_podcast
+    |> Episode.preload_guests
+    |> Repo.one
+  end
+
 
   def preload_all(query = %Ecto.Query{}) do
     query

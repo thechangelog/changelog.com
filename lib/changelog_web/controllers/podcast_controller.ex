@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Podcast, Episode}
+  alias Changelog.{Podcast, Episode, NewsItem}
 
   def index(conn, _params) do
     render(conn, :index)
@@ -11,14 +11,17 @@ defmodule ChangelogWeb.PodcastController do
     podcast = Podcast.get_by_slug(slug)
 
     page =
-      Podcast.get_episodes(podcast)
-      |> Episode.published
-      |> Episode.newest_first
-      |> Episode.preload_podcast
-      |> Episode.preload_guests
-      |> Repo.paginate(Map.put(params, :page_size, 15))
+      Podcast.get_news_items(podcast)
+      |> NewsItem.published
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(Map.put(params, :page_size, 30))
 
-    render(conn, :show, podcast: podcast, episodes: page.entries, page: page)
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    render(conn, :show, podcast: podcast, items: items, page: page)
   end
 
   def archive(conn, %{"slug" => slug}) do

@@ -13,7 +13,11 @@ defmodule ChangelogWeb.NewsItemController do
     |> NewsItem.preload_all
     |> Repo.paginate(Map.put(params, :page_size, 15))
 
-    render(conn, :index, items: page.entries, page: page)
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    render(conn, :index, items: items, page: page)
   end
 
   def show(conn, %{"id" => slug}) do

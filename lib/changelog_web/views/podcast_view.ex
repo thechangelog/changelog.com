@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PodcastView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Podcast
-  alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, TimeView, SharedView}
+  alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, TimeView, SharedView}
 
   def cover_art_path(podcast, extension \\ "svg") do
     "/images/podcasts/#{podcast.slug}-cover-art.#{extension}"

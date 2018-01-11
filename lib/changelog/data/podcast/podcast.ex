@@ -1,7 +1,7 @@
 defmodule Changelog.Podcast do
   use Changelog.Data
 
-  alias Changelog.{Episode, EpisodeStat, PodcastTopic, PodcastHost, Regexp}
+  alias Changelog.{Episode, EpisodeStat, NewsItem, PodcastTopic, PodcastHost, Regexp}
 
   defenum Status, draft: 0, soon: 1, published: 2, retired: 3
 
@@ -79,6 +79,10 @@ defmodule Changelog.Podcast do
     else
       assoc(podcast, :episodes)
     end
+  end
+
+  def get_news_items(podcast) do
+    NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
   end
 
   def episode_count(podcast) do

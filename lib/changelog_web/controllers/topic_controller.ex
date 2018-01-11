@@ -25,6 +25,10 @@ defmodule ChangelogWeb.TopicController do
       |> NewsItem.preload_all
       |> Repo.paginate(params)
 
-    render(conn, :show, topic: topic, items: page.entries, page: page)
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    render(conn, :show, topic: topic, items: items, page: page)
   end
 end

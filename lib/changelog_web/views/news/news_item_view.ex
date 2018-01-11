@@ -1,30 +1,13 @@
 defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Regexp, Repo}
+  alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
   alias ChangelogWeb.{NewsSourceView, EpisodeView, PersonView, TopicView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
       link("[Edit]", to: admin_news_item_path(conn, :edit, item), data: [turbolinks: false])
     end
-  end
-
-  def get_object(item) do
-    case item.type do
-      :audio -> get_episode_object(item.object_id)
-      _else -> nil
-    end
-  end
-
-  defp get_episode_object(object_id) when is_nil(object_id), do: nil
-  defp get_episode_object(object_id) do
-    [p, e] = String.split(object_id, ":")
-    Episode.published
-    |> Episode.with_podcast_slug(p)
-    |> Episode.with_slug(e)
-    |> Episode.preload_all
-    |> Repo.one
   end
 
   def image_url(item, version) do
@@ -35,21 +18,38 @@ defmodule ChangelogWeb.NewsItemView do
   def render_item_or_ad(item = %NewsItem{}), do: render("_item.html", item: item)
   def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
 
-  def render_item_header_source(conn, item = %{type: :audio}) do
-    if episode = get_object(item) do
-      render("_item_header_episode.html", conn: conn, item: item, episode: episode)
+  def render_item_source(conn, item = %{type: :audio}) do
+    if item.object do
+      render("_item_source_episode.html", conn: conn, item: item, episode: item.object)
     else
-      render_item_header_source(conn, Map.put(item, :type, :link))
+      render_item_source(conn, Map.put(item, :type, :link))
     end
   end
-  def render_item_header_source(conn, item) do
+  def render_item_source(conn, item) do
     cond do
-      item.source -> render("_item_header_source.html", conn: conn, item: item, source: item.source)
-      item.author -> render("_item_header_author.html", conn: conn, item: item, author: item.author)
-      Enum.any?(item.topics) -> render("_item_header_topic.html", conn: conn, item: item, topic: List.first(item.topics))
-      true -> render("_item_header_default.html", conn: conn, item: item)
+      item.source -> render("_item_source_source.html", conn: conn, item: item, source: item.source)
+      item.author -> render("_item_source_author.html", conn: conn, item: item, author: item.author)
+      Enum.any?(item.topics) -> render("_item_source_topic.html", conn: conn, item: item, topic: List.first(item.topics))
+      true -> render("_item_source_default.html", conn: conn, item: item)
     end
   end
+
+  def render_item_title(conn, item) do
+    if item.object_id do
+      render("_item_title_internal.html", conn: conn, item: item)
+    else
+      render("_item_title_external.html", conn: conn, item: item)
+    end
+  end
+
+  def render_item_toolbar_button(conn, item = %{type: :audio}) do
+    if item.object do
+      render("_item_toolbar_button_episode.html", conn: conn, item: item, episode: item.object)
+    else
+      render_item_toolbar_button(conn, Map.put(item, :type, :link))
+    end
+  end
+  def render_item_toolbar_button(_conn, _item), do: ""
 
   def slug(item) do
     item.headline
