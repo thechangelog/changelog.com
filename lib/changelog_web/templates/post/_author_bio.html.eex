@@ -1,4 +1,4 @@
-<div class="post-footer-author">
+<div class="post_footer-author">
   <%= link to: PersonView.external_url(@person), title: @person.name, rel: "external" do %>
     <img class="post-footer-author-image" src="<%= PersonView.avatar_url(@person) %>" width=50 height=50 alt="<%= @person.name %>"/>
   <% end %>
