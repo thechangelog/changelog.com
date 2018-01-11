@@ -52,4 +52,6 @@
       <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
     <% end %>
   </div>
+
+  <%= render(SharedView, "_pagination.html", assigns) %>
 </section>
