@@ -5,6 +5,7 @@
 
     <hr>
 
+    <!-- TODO: Replace form with subscribe button (Also exists in weekly.html.eex) -->
     <form action="https://changelog.createsend.com/t/t/s/hhatl/" method="post" class="form js-cm">
       <div class="form_element_wrap">
         <label for="name">Name</label>

@@ -45,6 +45,7 @@
       </div>
     </nav>
 
+    <!-- TODO: Set up mobile navigation -->
     <button class="header-menu_icon js-toggle-nav">Menu</button>
   </div>
 </header>

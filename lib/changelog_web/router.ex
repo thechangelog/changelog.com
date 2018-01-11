@@ -148,7 +148,6 @@ defmodule ChangelogWeb.Router do
     get "/guest", PageController, :guest
     get "/guest/:slug", PageController, :guest
     get "/styleguide", PageController, :styleguide
-    get "/subscribe", PageController, :subscribe
     get "/partnership", PageController, :partnership
     get "/sponsor", PageController, :sponsor
     get "/store", PageController, :store
