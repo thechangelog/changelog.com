@@ -106,7 +106,6 @@ defmodule Changelog.NewsItem do
     |> Ecto.Query.preload(news_item_topics: ^NewsItemTopic.by_position)
     |> Ecto.Query.preload(:topics)
   end
-
   def preload_topics(item) do
     item
     |> Repo.preload(news_item_topics: {NewsItemTopic.by_position, :topic})

@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
-  alias ChangelogWeb.{NewsSourceView, EpisodeView, PersonView, SponsorView, TopicView}
+  alias ChangelogWeb.{NewsAdView, NewsSourceView, EpisodeView, PersonView, SponsorView, TopicView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
@@ -30,7 +30,7 @@ defmodule ChangelogWeb.NewsItemView do
   end
 
   def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_item_summary.html", Map.merge(assigns, %{item: item}))
-  def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render("_ad_summary.html", Map.merge(assigns, %{ad: ad}))
+  def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_ad_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
 
   def render_item_source(conn, item = %{type: :audio}) do
     if item.object do

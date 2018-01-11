@@ -1,0 +1,13 @@
+<header class="news_item-header">
+  <p class="news_item-source">
+    <%= link to: @ad.url, title: @sponsor.name do %>
+      <img class="news_item-source-image" src="<%= SponsorView.logo_url(@sponsor, :color_logo, :small) %>" alt="<%= @sponsor.name %> Icon" />
+    <% end %>
+
+    <%= link "Sponsored ~> #{@sponsor.name}", to: @ad.url, title: @sponsor.name %>
+  </p>
+  <h2 class="news_item-title">
+    <%= link @ad.headline, to: news_ad_path(@conn, :show, slug(@ad)) %>&nbsp;&nbsp;
+    <%= link to: @ad.url do %><span class="news_item-title-external"></span><% end %>
+  </h2>
+</header>
