@@ -67,8 +67,43 @@
         padding-top: 10px;
         color: $medium-grey;
 
+        &-heading {
+          align-items: flex-start;
+          display: flex;
+
+          &-subscribe {
+            background: $green;
+            border-radius: 50%;
+            height: 20px;
+            margin: -1px 0 0 8px;
+            position: relative;
+            text-indent: -9999px;
+            transition: background 0.2s ease-in-out;
+            width: 20px;
+
+            &:hover { background: darken($green, 10%); }
+
+            &:before,
+            &:after {
+              @include position(absolute, 50% null null 50%);
+              background: $white;
+              content: "";
+              height: 2px;
+              margin: -1px 0 0 -6px;
+              width: 12px;
+            }
+
+            &:before {
+              height: 12px;
+              margin: -6px 0 0 -1px;
+              width: 2px;
+            }
+          }
+        }
+
         h2 {
           font-size: 1em;
+          line-height: 1.375em;
           margin-bottom: 0.5em;
 
           a { color: $white; }

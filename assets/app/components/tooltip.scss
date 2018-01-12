@@ -9,11 +9,8 @@
   &.is-visible { display: block; }
 
   a {
-    color: $medium-grey;
-
-    &:hover {
-      color: $white;
-    }
+    color: $white;
+    &:hover { color: $green; }
   }
 
   &-wrap {
@@ -25,6 +22,19 @@
     padding: $padding;
 
     &--centered { text-align: center; }
+
+    li {
+      color: $white;
+      font-size: 16px;
+      font-style: normal;
+
+      &.tooltip-list-heading {
+        color: $half-white;
+        font-size: 12px;
+        font-weight: normal;
+        margin-bottom: 5px;
+      }
+    }
   }
 
   &-footer {
