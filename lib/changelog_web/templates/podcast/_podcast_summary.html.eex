@@ -19,10 +19,12 @@
               <%= if @podcast.twitter_handle do %>
                 <li><%= link "Twitter", to: twitter_url(@podcast.twitter_handle) %></li>
               <% end %>
-              <%= if @podcast.ping_url do %>
-                <li><%= link "Ping Us!", to: @podcast.ping_url %></li>
-              <% end %>
             </ul>
+            <div class="tooltip-footer">
+              <%= if @podcast.ping_url do %>
+                <%= link "Ping Us!", to: @podcast.ping_url %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>

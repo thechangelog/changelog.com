@@ -3,7 +3,7 @@ defmodule ChangelogWeb.LayoutView do
 
   import ChangelogWeb.Meta.{AdminTitle, Title, Image, Description, Feeds, Twitter}
 
-  alias ChangelogWeb.{Endpoint, LiveView, PersonView}
+  alias ChangelogWeb.{Endpoint, LiveView, PersonView, PodcastView, SharedView}
   alias Phoenix.{Controller, Naming}
 
   def active_class(conn, controllers) when is_list(controllers) do

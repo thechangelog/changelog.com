@@ -5,3 +5,7 @@
 </div>
 
 <%= render(SharedView, "_pagination.html", assigns) %>
+
+<div class="main-podcasts">
+  <%= render(PodcastView, "_show_list.html", conn: @conn, podcasts: @podcasts) %>
+</div>

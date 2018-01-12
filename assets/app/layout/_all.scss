@@ -40,6 +40,12 @@ body {
     display: flex;
     // flex: 1 0 auto;
   }
+
+  // TODO: Decide where this should go. Lives on the news index (homepage)
+  &-podcasts {
+    background: $black;
+    padding: $base-spacing*2 0;
+  }
 }
 
 // Full width wrap
