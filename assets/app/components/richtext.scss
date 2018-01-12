@@ -121,6 +121,7 @@
   // Special/Layout
   .button {
     // @extend %primary-button;
+    color: $white !important;
     display: inline-block;
     font-size: 1.325em;
     margin: 0.5em 0;

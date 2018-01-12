@@ -8,7 +8,9 @@
 .page-topic-show,
 .page-news_source-show,
 .page-person-new,
-.page-live-index {
+.page-live-index,
+.page-page-weekly,
+.page-page-nightly {
   .header {
     background: $black;
 
@@ -26,7 +28,9 @@
 // Transparent/Overlay Headers
 .page-page-community,
 .page-page-sponsor,
-.page-person-new {
+.page-person-new,
+.page-page-weekly,
+.page-page-nightly {
   .header {
     background-color: transparent;
     position: relative;
@@ -34,6 +38,7 @@
   }
 
   .marketing,
+  .article--marketing_header,
   .signup {
     margin-top: -96px; // Match height of header
   }

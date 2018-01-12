@@ -1,34 +1,20 @@
-<article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Subscribe to Changelog Weekly", conn: @conn) %>
+<article class="article article--marketing_header">
+  <section class="marketing-section marketing-section--intro">
+    <header class="marketing-section-header">
+      <h1>Subscribe to Changelog Weekly</h1>
+
+      <%= if @current_user do %>
+        <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "marketing-button button_large" %>
+      <% else %>
+        <%= link "Subscribe", to: person_path(@conn, :new), class: "marketing-button button_large" %>
+      <% end %>
+    </header>
+  </section>
 
   <div class="richtext">
     <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
 
     <hr>
-
-    <!-- TODO: Replace form with subscribe button (Also exists in nightly.html.eex) -->
-    <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form js-cm">
-      <div class="form_element_wrap">
-        <label>Name</label>
-        <div class="form_element">
-          <input name="cm-name" type="text" placeholder="Full name..."/>
-        </div>
-      </div>
-
-      <div class="form_element_wrap">
-        <label>Email<span>*</span></label>
-        <div class="form_element">
-          <input name="cm-zjykt-zjykt" type="email" placeholder="Email address..." required />
-        </div>
-      </div>
-
-      <div class="form_submit">
-        <input type="submit" value="Start my Subscription">
-        <div class="form_submit_responses"></div>
-      </div>
-    </form>
-
-    <hr />
 
     <p>
       Need a sneak peek?

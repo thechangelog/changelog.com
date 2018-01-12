@@ -21,6 +21,11 @@
       margin-top: 20px;
       @media (min-width: $tablet) { margin-top: 50px; }
     }
+
+    .page-page-weekly &,
+    .page-page-nightly & {
+      margin: 0;
+    }
   }
   p.button_note {
     color: $medium-grey;
