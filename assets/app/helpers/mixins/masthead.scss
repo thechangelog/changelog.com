@@ -1,9 +1,18 @@
 @mixin masthead() {
   background: $black;
   color: $white;
-  margin-bottom: 0;
-  padding: 0 $base-spacing $base-spacing*2;
+  margin-bottom: 40px;
+  padding: 0 $base-spacing 40px;
   text-align: center;
+
+  @include breakpoint(mobile) {
+    margin-bottom: 50px;
+    padding: 50px 0;
+  }
+  @include breakpoint(tablet) {
+    margin-bottom: 60px;
+    padding-bottom: 60px;
+  }
 }
 
 @mixin masthead-back() {

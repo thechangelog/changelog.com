@@ -38,10 +38,16 @@
   }
 
   &-section {
-    padding: $padding-large 0;
+    margin-bottom: 40px;
+    padding: 40px 0;
 
-    @media (min-width: $tablet) {
-      padding: $padding-extra-large 0;
+    @include breakpoint(mobile) {
+      margin-bottom: 50px;
+      padding: 50px 0;
+    }
+    @include breakpoint(tablet) {
+      margin-bottom: 60px;
+      padding: 60px 0;
     }
 
     &--map,

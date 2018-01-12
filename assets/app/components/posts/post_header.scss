@@ -1,18 +1,6 @@
 .post_header {
   @include masthead();
-  margin-bottom: 40px;
-  padding-bottom: 40px;
   position: relative;
-
-  // NOTE: Matches page_heading.scss spacing – consider merging
-  @include breakpoint(mobile) {
-    margin-bottom: 50px;
-    padding-bottom: 50px;
-  }
-  @include breakpoint(tablet) {
-    margin-bottom: 60px;
-    padding-bottom: 60px;
-  }
 
   &-all_posts_button {
     @include masthead-back();
