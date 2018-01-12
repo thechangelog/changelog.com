@@ -1,7 +1,10 @@
 .signup {
+  align-items: center;
   background-color: $black;
+  display: flex;
   padding: 60px 30px 80px;
   position: relative;
+  width: 100%;
 
   &-content {
     color: $white;

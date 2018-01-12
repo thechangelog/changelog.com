@@ -2,9 +2,10 @@
   margin: $padding-small auto;
   max-width: 500px;
   padding: 30px;
+  width: 100%;
 
   @media (min-width: $desktop) {
-    margin: $padding-large auto $padding-extra-large;
+    margin: $padding-large auto $padding-extra-large*2;
   }
 
   &-header {

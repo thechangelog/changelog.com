@@ -20,9 +20,23 @@ body {
 .main {
   flex: 1 0 calc(100vh - 182px);
 
+  // Pages that should have black backgrounds
   .page-podcast-index &,
   .page-person-new & {
     background-color: $black;
+  }
+
+  // Pages that should have their content vertically centered
+  .page-auth-new &,
+  .page-page-join & {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  // Sets up vertical centering for pages that use transparent headers over content
+  .page-person-new & {
+    display: flex;
   }
 }
 
