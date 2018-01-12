@@ -1,7 +1,7 @@
 <section class="search">
   <form action="<%= search_path(@conn, :search) %>" method="get" class="search-form">
     <label class="visually_hidden" for="name">Search</label>
-    <input name="q" type="text" placeholder="search all podcasts and news..." value="<%= @query %>" />
+    <input name="q" type="text" placeholder="search all podcasts and news..." value="<%= @query %>" autofocus />
   </form>
 
   <!-- TODO: Make this only search "news" -->
