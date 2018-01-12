@@ -2,7 +2,7 @@
   align-items: center;
   background-color: $black;
   display: flex;
-  padding: 60px 30px 80px;
+  padding: 0 30px 30px;
   position: relative;
   width: 100%;
 
@@ -10,8 +10,16 @@
     color: $white;
     margin: 0 auto;
     max-width: 760px;
+    padding: 40px 0;
     text-align: center;
     width: 100%;
+
+    @include breakpoint(mobile) {
+      padding: 50px 0;
+    }
+    @include breakpoint(tablet) {
+      padding: 60px 0;
+    }
   }
 
   &-icons {

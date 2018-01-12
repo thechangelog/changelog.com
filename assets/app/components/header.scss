@@ -37,21 +37,16 @@
     z-index: 101;
   }
 
+  $header-height: 96px;
+
   .marketing,
   .article--marketing_header,
   .signup {
-    margin-top: -96px; // Match height of header
+    margin-top: -$header-height;
   }
 
   .signup {
-    padding: 133px 30px 100px;
-
-    @include breakpoint(560px) {
-      padding: 23.7% 30px;
-    }
-    @include breakpoint(1160px) {
-      padding: 275px 30px;
-    }
+    padding-top: $header-height;
   }
 }
 

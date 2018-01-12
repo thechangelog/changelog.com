@@ -18,7 +18,8 @@ body {
   min-height: 100vh;
 }
 .main {
-  flex: 1 0 calc(100vh - 182px);
+  flex: 1;
+  min-height: calc(100vh - 182px);
 
   // Pages that should have black backgrounds
   .page-podcast-index &,
@@ -37,6 +38,7 @@ body {
   // Sets up vertical centering for pages that use transparent headers over content
   .page-person-new & {
     display: flex;
+    // flex: 1 0 auto;
   }
 }
 
