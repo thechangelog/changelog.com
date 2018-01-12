@@ -1,6 +1,4 @@
 .auth {
-  font-size: 1.2875em;
-  line-height: 1.5em;
   margin: $padding-small auto;
   max-width: 500px;
   padding: 30px;
@@ -10,16 +8,22 @@
   }
 
   &-header {
-    text-align: center;
+    font-size: 1.75em;
+    margin-bottom: .75em;
   }
 
-  .button_list {
-    font-size: 16px;
-    text-align: center;
-  }
+  &-links {
+    color: $blue-grey;
+    font-family: $code;
+    font-size: 0.75em;
+    font-style: italic;
+    margin-bottom: 25px;
 
-  hr {
-    border: 1px solid $border-color;
-    margin: $padding-large 0;
+    a {
+      color: $blue-grey;
+      border-bottom: 1px solid $blue-grey;
+
+      &:hover { color: $black; }
+    }
   }
 }
