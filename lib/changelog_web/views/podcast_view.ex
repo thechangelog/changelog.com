@@ -25,7 +25,9 @@ defmodule ChangelogWeb.PodcastView do
   def published_episode_count(podcast), do: Podcast.published_episode_count(podcast)
 
   def subscribe_link(podcast) do
-    page_path(Endpoint, :subscribe) <> "##{podcast.slug}"
+    # TODO: Fix this
+    ""
+    # podcast_path(@conn, :index) <> "##{podcast.slug}"
   end
 
   def subscribe_on_android_url(podcast) do
