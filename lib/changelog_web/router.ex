@@ -103,7 +103,7 @@ defmodule ChangelogWeb.Router do
     get "/:slug/feed", FeedController, :podcast
 
     # people and auth
-    resources "/people", PersonController, only: [:new, :create,]
+    resources "/people", PersonController, only: [:new, :create]
     # TODO: Forgive Cody for whatever this line is
     get "/people/join", PersonController, :join
     # TODO: End Forgiveness
