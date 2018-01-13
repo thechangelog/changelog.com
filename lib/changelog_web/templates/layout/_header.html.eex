@@ -4,10 +4,10 @@
 
     <nav class="header-nav">
       <div class="header-nav-wrap">
-        <!-- <button class="header-nav-close js-toggle-nav">✕</button> -->
 
+        <!-- TODO: Make active state dynamic using class "is-active" -->
         <ul class="header-nav-primary header-nav-list">
-          <li class="header-nav-list-item"><%= link "News", to: "/" %></li>
+          <li class="header-nav-list-item is-active"><%= link "News", to: "/" %></li>
           <li class="header-nav-list-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
           <li class="header-nav-list-item"><%= link "Community", to: page_path(@conn, :community) %></li>
           <%= if !@current_user do %>
@@ -38,14 +38,20 @@
             </div>
           <% else %>
             <ul class="header-nav-list">
-              <li class="header-nav-list-item"><%= link "Log In", to: sign_in_path(@conn, :new), class: "header-button" %></li>
+              <li class="header-nav-list-item"><%= link "Sign In", to: sign_in_path(@conn, :new), class: "header-button" %></li>
             </ul>
           <% end %>
         </div>
+
+        <form action="<%= search_path(@conn, :search) %>" method="get" class="header-search">
+          <label class="visually_hidden" for="name">Search</label>
+          <input name="q" type="text" placeholder="Search Changelog" value="" />
+        </form>
       </div>
     </nav>
 
     <!-- TODO: Set up mobile navigation -->
-    <button class="header-menu_icon js-toggle-nav">Menu</button>
+    <!-- <button class="header-menu_icon js-toggle-nav">Menu</button> -->
+    <!-- <button class="header-nav-close js-toggle-nav">✕</button> -->
   </div>
 </header>

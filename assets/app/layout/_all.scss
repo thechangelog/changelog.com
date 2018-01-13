@@ -15,11 +15,12 @@
 body {
   display: flex;
   flex-direction: column;
+  padding-top: $header-height;
   min-height: 100vh;
 }
 .main {
   flex: 1;
-  min-height: calc(100vh - 182px);
+  min-height: calc(100vh - #{($header-height + $footer-height)});
 
   // Pages that should have black backgrounds
   .page-podcast-index &,
@@ -29,16 +30,11 @@ body {
 
   // Pages that should have their content vertically centered
   .page-auth-new &,
-  .page-page-join & {
+  .page-page-join &,
+  .page-person-new & {
     align-items: center;
     display: flex;
     justify-content: center;
-  }
-
-  // Sets up vertical centering for pages that use transparent headers over content
-  .page-person-new & {
-    display: flex;
-    // flex: 1 0 auto;
   }
 
   // TODO: Decide where this should go. Lives on the news index (homepage)

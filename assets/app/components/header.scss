@@ -13,47 +13,46 @@
 .page-page-nightly {
   .header {
     background: $black;
+    border-bottom: 1px solid rgba($white, .08);
 
     &-logo a {
       background-image: url('../assets/images/changelog-logomark-white.svg');
     }
 
-    &-nav-list-item a {
-      color: $white;
-      &:hover { color: rgba($white, 0.8); }
+    &-nav-list-item {
+      &.is-active a { color: $white; }
+
+      &.is-active a,
+      a:hover {
+        &:before {
+          background: rgba($white, .08);
+        }
+      }
+    }
+
+    &-search {
+
+      input {
+        background: rgba($white, .08);
+        color: $white;
+
+        &::placeholder {
+          color: $medium-grey;
+        }
+
+        &:focus::placeholder { opacity: .7; }
+      }
     }
   }
 }
 
-// Transparent/Overlay Headers
-.page-page-community,
-.page-page-sponsor,
-.page-person-new,
-.page-page-weekly,
-.page-page-nightly {
-  .header {
-    background-color: transparent;
-    position: relative;
-    z-index: 101;
-  }
-
-  $header-height: 96px;
-
-  .marketing,
-  .article--marketing_header,
-  .signup {
-    margin-top: -$header-height;
-  }
-
-  .signup {
-    padding-top: $header-height;
-  }
-}
-
 // Base Styles
+// NOTE: Update $header-height in variables.scss when any changes affect height
 .header {
-  background-color: transparent;
-  padding: 25px $base-spacing;
+  @include position(fixed, 0 0 null);
+  background-color: rgba($white, .95);
+  border-bottom: 1px solid $light-grey;
+  padding: 13px $base-spacing;
   width: 100%;
   z-index: 999;
 
@@ -62,16 +61,16 @@
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    max-width: 1232px;
+    max-width: 1217px;
   }
 
   //
   //
   // Logo
   &-logo {
-    $size: 46px;
+    $size: 36px;
     flex: 0 auto;
-    margin: 0 $base-spacing/2 0 0;
+    margin: 0 12px 0 0;
     text-indent: -9999px;
 
     a {
@@ -136,18 +135,28 @@
       margin: 0;
 
       &-item {
-        font-size: 13px;
-        font-weight: 400;
-        margin: 0 8px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.125em;
+        margin: 0 16px;
 
         a {
-          color: $black;
+          color: $medium-grey;
           display: inline-block;
           padding: 6px 0 4px;
+          position: relative;
+        }
 
-          &:hover {
-            // TODO: Determine better hover state
-            color: $medium-grey;
+        &.is-active a { color: $black; }
+
+        &.is-active a,
+        a:hover {
+          &:before {
+            @include position(absolute, null 0 0);
+            content: "";
+            background: $light-grey;
+            height: 2px;
+            width: 100%;
           }
         }
       }
@@ -179,6 +188,27 @@
           border-radius: $base-border-radius;
         }
       }
+    }
+  }
+
+  &-search {
+
+    input {
+      background: $lightest-grey;
+      border: none;
+      color: $black;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.125em;
+      padding: 9px 10px;
+      width: 260px;
+
+      &::placeholder {
+        color: $medium-grey;
+        transition: opacity .1s ease-in-out;
+      }
+
+      &:focus::placeholder { opacity: .7; }
     }
   }
 }

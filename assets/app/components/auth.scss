@@ -4,10 +4,6 @@
   padding: 30px;
   width: 100%;
 
-  @media (min-width: $desktop) {
-    margin: $padding-large auto $padding-extra-large*2;
-  }
-
   &-header {
     font-size: 1.75em;
     margin-bottom: $base-spacing;
