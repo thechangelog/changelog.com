@@ -1,8 +1,17 @@
+// TODO: Move this
+.page_news_item {
+  @include wrap;
+}
+
 .news_item {
   border-bottom: 1px solid $light-grey;
   margin-bottom: $base-spacing;
   padding-bottom: $base-spacing;
   position: relative;
+
+  .page_news_item & {
+    border-bottom: 0;
+  }
 
   @include breakpoint(mobile) {
     padding-left: 70px;
@@ -138,6 +147,34 @@
       blockquote,
       p {
         font-size: 1em;
+      }
+    }
+  }
+
+  &-meta {
+    border-top: 1px solid $light-grey;
+    font-family: $code;
+    font-size: 0.875em;
+    margin-top: $base-spacing;
+    padding-top: $base-spacing;
+
+    &-item {
+      @include breakpoint(mobile) {
+        justify-content: flex-start;
+        display: flex;
+      }
+
+      span {
+        display: block;
+        margin-bottom: 0.5em;
+      }
+
+      &-key {
+        padding-right: 1em;
+      }
+      &-value a {
+        color: $base-link-color;
+        &:hover { color: $base-hover-color }
       }
     }
   }

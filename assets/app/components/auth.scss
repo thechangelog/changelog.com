@@ -10,7 +10,7 @@
 
   &-header {
     font-size: 1.75em;
-    margin-bottom: .75em;
+    margin-bottom: $base-spacing;
   }
 
   &-links {
@@ -18,13 +18,16 @@
     font-family: $code;
     font-size: 0.75em;
     font-style: italic;
-    margin-bottom: 25px;
+    margin-bottom: $base-spacing;
 
     a {
       color: $blue-grey;
       border-bottom: 1px solid $blue-grey;
 
-      &:hover { color: $black; }
+      &:hover {
+        color: $green;
+        border-bottom-color: $green;
+      }
     }
   }
 }

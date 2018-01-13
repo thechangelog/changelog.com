@@ -1,13 +1,13 @@
 <footer class="footer">
   <nav class="footer-primary">
     <div class="footer-primary_wrap">
-      <ul>
-        <li><%= link "About", to: page_path(@conn, :about) %></li>
+      <ul class="footer-primary-list footer-primary-list--company">
+        <li><%= link "About Changelog", to: page_path(@conn, :about) %></li>
         <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
         <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
       </ul>
 
-      <ul>
+      <ul class="footer-primary-list footer-primary-list--social">
         <li><a href="https://twitter.com/changelog"><img src='<%= static_url(@conn, "/images/icon-twitter-black.svg") %>' title="Twitter"></a></li>
         <li><a href="https://github.com/thechangelog"><img src='<%= static_url(@conn, "/images/icon-github-black.svg") %>' title="Github"></a></li>
         <li><a href="https://www.youtube.com/c/thechangelog"><img src='<%= static_url(@conn, "/images/icon-youtube-black.svg") %>' title="YouTube"></a></li>
@@ -19,10 +19,14 @@
     <div class="footer-nav-list">
       <h4><a href="/" title="">News</a></h4>
       <ul>
+        <li><%= link "Subscribe", to: person_path(@conn, :new) %></li>
+        <li><%= link "Latest", to: page_path(@conn, :weekly) %></li>
+        <li><%= link "Topics", to: topic_path(@conn, :index), title: "View All Topics" %></li>
+        <li>---</li>
         <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
         <li><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></li>
-        <li><%= link "Blog", to: post_path(@conn, :index) %></li>
-        <li><%= link "Search", to: search_path(@conn, :search) %></li>
+        <li>---</li>
+        <li><%= link "Submit a Story", to: "https://github.com/thechangelog/ping/issues" %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
@@ -49,6 +53,7 @@
         <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
         <li><a href="/terms">Terms &amp; Conditions</a></li>
         <li><a href="/privacy">Privacy Policy</a></li>
+        <li><%= link "Search", to: search_path(@conn, :search) %></li>
       </ul>
     </div>
   </nav>

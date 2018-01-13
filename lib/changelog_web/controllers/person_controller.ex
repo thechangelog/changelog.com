@@ -5,7 +5,7 @@ defmodule ChangelogWeb.PersonController do
   alias ChangelogWeb.Email
   alias Craisin.Subscriber
 
-  plug RequireGuest, "before joining" when action in [:new, :create]
+  plug RequireGuest, "before joining" when action in [:new, :create, :join]
 
   def new(conn, params) do
     person = %Person{
@@ -16,6 +16,18 @@ defmodule ChangelogWeb.PersonController do
       twitter_handle: Map.get(params, "twitter_handle")}
 
     render(conn, :new, changeset: Person.changeset(person), person: nil)
+  end
+
+  # TODO: Rework this. Basically, there should be a "new" for subscribers and a "new" for people coming from the community page
+  def join(conn, params) do
+    person = %Person{
+      name: Map.get(params, "name"),
+      email: Map.get(params, "email"),
+      handle: Map.get(params, "handle"),
+      github_handle: Map.get(params, "github_handle"),
+      twitter_handle: Map.get(params, "twitter_handle")}
+
+    render(conn, :join, changeset: Person.changeset(person), person: nil)
   end
 
   def create(conn, %{"person" => person_params = %{"email" => email}}) do

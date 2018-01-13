@@ -17,7 +17,7 @@
       </div>
       <div class="form-submit">
         <div class="form-submit-note">
-          <div>Need an account? <em><%= link "Sign up", to: page_path(@conn, :join), title: "" %></em></div>
+          <div>Need an account? <em><%= link "Sign up", to: person_path(@conn, :join), title: "" %></em></div>
         </div>
         <input type="submit" value="Enter">
       </div>

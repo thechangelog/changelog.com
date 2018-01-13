@@ -1,0 +1,59 @@
+<article class="auth">
+  <h1 class="auth-header">Join the Community</h1>
+  <%= form_for @changeset, person_path(@conn, :create), [class: "form form--full_width", multipart: true], fn f -> %>
+    <div class="form-element_wrap <%= error_class(f, :email) %>">
+      <div class="form-element">
+        <label>Email Address<span>*</span></label>
+        <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
+        <%= error_message(f, :email) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap <%= error_class(f, :name) %>">
+      <div class="form-element">
+        <label>Name<span>*</span></label>
+        <%= text_input(f, :name, placeholder: "Grace Hopper", autofocus: true) %>
+        <%= error_message(f, :name) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap <%= error_class(f, :email) %>">
+      <div class="form-element">
+        <label>Email<span>*</span></label>
+        <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
+        <%= error_message(f, :email) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap <%= error_class(f, :handle) %>">
+      <div class="form-element">
+        <label>Username / Handle<span>*</span></label>
+        <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= error_message(f, :handle) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap <%= error_class(f, :github_handle) %>">
+      <div class="form-element">
+        <label>On GitHub</label>
+        <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= error_message(f, :github_handle) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap <%= error_class(f, :twitter_handle) %>">
+      <div class="form-element">
+        <label>On Twitter</label>
+        <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= error_message(f, :twitter_handle) %>
+      </div>
+    </div>
+
+    <div class="form-submit">
+      <div class="form-submit-note">
+        <div>Already a member? <em><%= link "Sign in", to: sign_in_path(@conn, :new), title: "" %></em></div>
+      </div>
+      <input type="submit" value="Join Now">
+    </div>
+  <% end %>
+</article>

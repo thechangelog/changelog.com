@@ -103,7 +103,10 @@ defmodule ChangelogWeb.Router do
     get "/:slug/feed", FeedController, :podcast
 
     # people and auth
-    resources "/people", PersonController, only: [:new, :create]
+    resources "/people", PersonController, only: [:new, :create,]
+    # TODO: Forgive Cody for whatever this line is
+    get "/people/join", PersonController, :join
+    # TODO: End Forgiveness
     resources "/~", HomeController, only: [:show, :edit, :update], singleton: true
     get "/~/profile", HomeController, :profile
 
@@ -112,7 +115,6 @@ defmodule ChangelogWeb.Router do
     post "/~/unsubscribe/:id", HomeController, :unsubscribe
 
     get "/community", PageController, :community
-    get "/join", PageController, :join
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
     get "/in/:token", AuthController, :create, as: :sign_in

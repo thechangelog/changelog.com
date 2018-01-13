@@ -1,4 +1,4 @@
-<div class="feed">
+<div class="page_news_item">
   <article class="news_item">
     <%= render("_item_header.html", assigns) %>
     <%= render("_item_toolbar.html", assigns) %>
@@ -6,6 +6,11 @@
       <div class="news_item-content richtext">
         <p><%= @item.story |> md_to_html |> raw %></p>
       </div>
+    <% end %>
+    <%= if @item.url do %>
+      <ul class="news_item-meta">
+        <li class="news_item-meta-item"><span class="news_item-meta-item-key">Source:</span> <span class="news_item-meta-item-value"><%= link @item.url, to: domain_url(@item.url), title: domain_name(@item.url), rel: "external" %></span></li>
+      </ul>
     <% end %>
   </article>
 </div>

@@ -3,7 +3,7 @@
   background: $white;
   border-top: 2px solid $border-color;
   font-family: $code;
-  font-size: 14px;
+  font-size: 13px;
 
   &-primary {
     border-bottom: 1px solid $border-color;
@@ -14,20 +14,41 @@
       flex-wrap: wrap;
       justify-content: space-between;
       margin: 0 auto;
-      padding: $base-spacing;
+      padding: 20px $base-spacing;
     }
 
-    ul {
+    &-list {
       display: flex;
+      flex-wrap: wrap;
+      padding: 10px 0;
 
-      li {
-        margin: 2px 2em 0 0;
+      &--company {
+        margin-right: 0;
 
-        &:last-child { margin-right: 0; }
+        @include breakpoint(mobile) {
+          margin-right: 1em;
+        }
 
-        a {
-          color: $black;
-          &:hover { color: $medium-grey; }
+        li {
+          margin: 2px 1.5em 0 0;
+
+          @include breakpoint(mobile) {
+            margin-right: 2em;
+          }
+
+          &:last-child { margin-right: 0; }
+          a {
+            color: $black;
+            &:hover { color: $medium-grey; }
+          }
+        }
+      }
+
+      &--social {
+        li {
+          margin: 2px 20px 0 0;
+
+          &:last-child { margin-right: 0; }
         }
       }
     }

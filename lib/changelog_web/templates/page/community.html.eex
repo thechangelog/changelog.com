@@ -8,7 +8,7 @@
         <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "marketing-button button_large" %>
         <p class="button_note"><code>It’s good to be $HOME</code></p>
       <% else %>
-        <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "marketing-button button_large" %>
+        <%= link "Join Now", to: person_path(@conn, :join), title: "", class: "marketing-button button_large" %>
         <p class="button_note">It’s free!</p>
       <% end %>
     </header>
@@ -53,7 +53,7 @@
           <h3>There are no imposters&nbsp;here.</h3>
           <p>Everyone is welcome. You are not an imposter. No matter where you are on your hacker path &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
         <%= if !@current_user do %>
-          <p><%= link "Join the community", to: page_path(@conn, :join), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
+          <p><%= link "Join the community", to: person_path(@conn, :join), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
         <% end %>
         </div>
 
@@ -119,7 +119,7 @@
         <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "marketing-button button_large" %>
         <p class="button_note"><code>It’s good to be $HOME</code></p>
       <% else %>
-        <%= link "Join Now", to: page_path(@conn, :join), title: "", class: "marketing-button button_large" %>
+        <%= link "Join Now", to: person_path(@conn, :join), title: "", class: "marketing-button button_large" %>
         <p class="button_note">It’s free!</p>
       <% end %>
     </header>

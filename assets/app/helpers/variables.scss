@@ -54,6 +54,10 @@ $display-fallback: 'Arial Narrow', sans-serif;
 $display: 'DIN 2014 Narrow', $display-fallback;
 $code: Menlo, Monaco, Consolas, Courier, monospace;
 
+// Links
+$base-link-color: $green;
+$base-hover-color: darken($green, 10%);
+
 // Spacing
 $base-spacing: 30px;
 $mobile-spacing: 20px;
