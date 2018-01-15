@@ -5,11 +5,10 @@
     <nav class="header-nav">
       <div class="header-nav-wrap">
 
-        <!-- TODO: Make active state dynamic using class "is-active" -->
         <ul class="header-nav-primary header-nav-list">
-          <li class="header-nav-list-item is-active"><%= link "News", to: "/" %></li>
-          <li class="header-nav-list-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
-          <li class="header-nav-list-item"><%= link "Community", to: page_path(@conn, :community) %></li>
+          <li class="header-nav-list-item <%= active_class(@conn, ["news_item", "news_ad"]) %>"><%= link "News", to: root_path(@conn, :index) %></li>
+          <li class="header-nav-list-item <%= active_class(@conn, ["podcast"]) %>"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
+          <li class="header-nav-list-item <%= active_class(@conn, ["page-community"]) %>"><%= link "Community", to: page_path(@conn, :community) %></li>
           <%= if !@current_user do %>
             <li class="header-nav-list-item"><%= link "Subscribe", to: person_path(@conn, :new) %></li>
           <% end %>

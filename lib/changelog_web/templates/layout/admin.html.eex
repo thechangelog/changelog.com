@@ -12,35 +12,35 @@
   <body data-module="<%= @view_module %>" data-template="<%= @view_template %>">
     <div class="ui fixed menu <%= get_flash(@conn, :result) %>">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
-      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, "Page")}" do %>
+      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, "page", "active")}" do %>
         Admin
       <% end %>
 
-      <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, ["Podcast", "Episode"])}" do %>
+      <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, ["podcast", "episode"], "active")}" do %>
         <i class="unmute icon"></i>Podcasts
       <% end %>
 
-      <%= link to: admin_news_item_path(@conn, :index), class: "item #{active_class(@conn, ["NewsItem", "NewsSource"])}" do %>
+      <%= link to: admin_news_item_path(@conn, :index), class: "item #{active_class(@conn, ["news_item", "news_source"], "active")}" do %>
         <i class="newspaper icon"></i>News</a>
       <% end %>
 
-      <%= link to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, "Post")}" do %>
+      <%= link to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, "post", "active")}" do %>
         <i class="write icon"></i>Posts
       <% end %>
 
-      <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, "Person")}" do %>
+      <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, "person", "active")}" do %>
         <i class="user icon"></i>People
       <% end %>
 
-      <%= link to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, "Topic")}" do %>
+      <%= link to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, "topic", "active")}" do %>
         <i class="hashtag icon"></i>Topics
       <% end %>
 
-      <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, "Sponsor")}" do %>
+      <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, "sponsor", "active")}" do %>
         <i class="dollar icon"></i>Sponsors
       <% end %>
 
-      <%= link to: admin_benefit_path(@conn, :index), class: "item #{active_class(@conn, "Benefit")}" do %>
+      <%= link to: admin_benefit_path(@conn, :index), class: "item #{active_class(@conn, "benefit", "active")}" do %>
         <i class="ticket icon"></i>Benefits
       <% end %>
 
