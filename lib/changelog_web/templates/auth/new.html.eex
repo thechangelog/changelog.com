@@ -14,7 +14,7 @@
       <div class="form-element_wrap">
         <div class="form-element">
           <label>Via Email Address</label>
-          <input type="email" name="email" placeholder="myemail@example.com" required autofocus>
+          <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none", autofocus: true, required: true) %>
         </div>
       </div>
       <div class="form-submit">
