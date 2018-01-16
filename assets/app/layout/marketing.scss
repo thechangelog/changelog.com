@@ -38,26 +38,26 @@
   }
 
   &-section {
-    margin-bottom: 40px;
     padding: 40px 0;
 
     @include breakpoint(mobile) {
-      margin-bottom: 50px;
       padding: 50px 0;
     }
     @include breakpoint(tablet) {
-      margin-bottom: 60px;
       padding: 60px 0;
+    }
+
+    &> *:first-child { margin-top: 0; }
+    &> *:last-child { margin-bottom: 0; }
+
+    &--no_top_padding {
+      padding-top: 0;
     }
 
     &--map,
     &--intro {
-      background: #121921;
+      background: $black;
       color: $white;
-
-      .marketing--sponsor & {
-        background: #252B32;
-      }
 
       p {
         color: $half-white;
@@ -65,7 +65,6 @@
     }
 
     &--intro {
-      padding-top: 96px;
 
       .marketing--community & {
         background: $black url('/images/community/grid.jpg') top center;
@@ -83,14 +82,18 @@
         img { margin: 0 auto; }
       }
 
+      &-leadin {
+        margin-bottom: 40px;
+      }
+
       h1 {
         font-size: 1.75em;
         line-height: 1.25em;
-        margin: 1em 0 1.125em;
+        margin: 0 0 1.125em;
         @include breakpoint(tiny) { font-size: 2em; }
         @include breakpoint(tablet) {
           font-size: 2.25em;
-          margin: 1.125em 0 1.25em;
+          margin: 0 0 1.25em;
         }
 
         @include breakpoint(tablet, max) {

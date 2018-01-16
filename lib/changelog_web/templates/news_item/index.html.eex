@@ -6,9 +6,8 @@
 <%= for item_or_ad <- items_with_ads(@items, @ads) do %>
   <%= render_item_summary_or_ad(item_or_ad, assigns) %>
 <% end %>
-</div>
-
 <%= render(SharedView, "_pagination.html", assigns) %>
+</div>
 
 <%= if @page.page_number == 1 do %>
 <div class="main-podcasts">

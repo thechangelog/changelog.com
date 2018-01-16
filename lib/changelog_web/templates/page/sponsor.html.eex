@@ -1,7 +1,7 @@
 <article class="marketing marketing--sponsor">
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
-      <p>Advertise with Changelog Media</p>
+      <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
       <h1>Reach thousands of developers and <br />creative software professionals.</h1>
       <p>300,000 Monthly Pageviews • 225,000 Monthly Podcast Listens • 12,000 Email Subscribers</p>
 
@@ -44,7 +44,7 @@
 
   <hr />
 
-  <section id="deals" class="marketing-section">
+  <section class="marketing-section">
     <header class="marketing-section-header">
       <h3>Brands who care about developers advertise with&nbsp;Changelog</h3>
     </header>
@@ -78,11 +78,12 @@
     </div>
   </section>
 
-  <section id="deals" class="marketing-section">
+  <section class="marketing-section marketing-section--no_top_padding">
     <header class="marketing-section-header">
       <h3>What our sponsors are saying</h3>
     </header>
 
+    <!-- TODO: Add real sponsor images -->
     <div class="marketing-section-grid">
       <div class="marketing-section-grid-item">
         <div class="marketing-section-grid-quote">

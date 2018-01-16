@@ -1,5 +1,12 @@
 @mixin wrap() {
-  margin: $base-spacing auto;
+  margin: 40px auto;
   max-width: 940px;
   padding: 0 $base-spacing;
+
+  @include breakpoint(mobile) {
+    margin: 50px auto;
+  }
+  @include breakpoint(tablet) {
+    margin: 60px auto;
+  }
 }

@@ -11,45 +11,47 @@
     </header>
   </section>
 
-  <div class="richtext">
-    <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
+  <div class="marketing-section">
+    <div class="richtext">
+      <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
 
-    <hr>
+      <hr>
 
-    <p>
-      Need a sneak peek?
-    <%= if @latest do %>
-      <a href="<%= @latest["WebVersionURL"] %>">Check out the latest issue</a>
-    <% else %>
-      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a>
-    <% end %>
+      <p>
+        Need a sneak peek?
+      <%= if @latest do %>
+        <a href="<%= @latest["WebVersionURL"] %>">Check out the latest issue</a>
+      <% else %>
+        <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a>
+      <% end %>
 
-      or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
+        or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
 
-  </div>
+    </div>
 
-  <div class="image">
-    <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
-  </div>
+    <div class="image">
+      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
+    </div>
 
-  <div class="richtext">
+    <div class="richtext">
 
-    <h4>Is my email address safe?</h4>
+      <h4>Is my email address safe?</h4>
 
-    <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
+      <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
 
-    <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
+      <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
 
-    <h4>Is there an archive of past issues?</h4>
+      <h4>Is there an archive of past issues?</h4>
 
-    <p>Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %></p>
+      <p>Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %></p>
 
-    <h4>Can I sponsor a Headline, Link, Repo, or Video?</h4>
+      <h4>Can I sponsor a Headline, Link, Repo, or Video?</h4>
 
-    <p>Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsor) %></p>
+      <p>Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsor) %></p>
 
-    <h4>Why do we require you to verify your email address?</h4>
+      <h4>Why do we require you to verify your email address?</h4>
 
-    <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
+      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
+    </div>
   </div>
 </article>

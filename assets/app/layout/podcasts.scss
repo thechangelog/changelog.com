@@ -1,4 +1,11 @@
 .page_podcasts {
   background: $black;
-  padding: $base-spacing 0;
+  padding: 40px 0;
+
+  @include breakpoint(mobile) {
+    padding: 50px 0;
+  }
+  @include breakpoint(tablet) {
+    padding: 60px 0;
+  }
 }
