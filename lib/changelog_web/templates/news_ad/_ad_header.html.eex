@@ -4,7 +4,7 @@
       <img class="news_item-source-image" src="<%= SponsorView.logo_url(@sponsor, :color_logo, :small) %>" alt="<%= @sponsor.name %> Icon" />
     <% end %>
 
-    <%= link "Sponsored ~> #{@sponsor.name}", to: @ad.url, title: @sponsor.name %>
+    <%= link "#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name %>
   </p>
   <h2 class="news_item-title">
     <%= link @ad.headline, to: news_ad_path(@conn, :show, slug(@ad)) %>&nbsp;&nbsp;
