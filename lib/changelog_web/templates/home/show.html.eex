@@ -1,8 +1,6 @@
 <div class="page_account">
   <%= render("_nav.html", conn: @conn) %>
 
-  <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
-
   <div class="account_subscriptions">
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">

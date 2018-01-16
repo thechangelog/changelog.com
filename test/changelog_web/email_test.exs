@@ -13,7 +13,7 @@ defmodule ChangelogWeb.EmailTest do
 
       assert email.to == person
       assert email.from == "editors@changelog.com"
-      assert email.html_body =~ "shpedoinkel!"
+      assert email.html_body =~ ~r/shpedoinkel!/i
     end
 
     test "with more options" do
@@ -22,7 +22,7 @@ defmodule ChangelogWeb.EmailTest do
 
       assert email.to == person
       assert email.from == "john@doe.com"
-      assert email.html_body =~ "shpedoinkel!"
+      assert email.html_body =~ ~r/shpedoinkel!/i
     end
   end
 
@@ -31,15 +31,33 @@ defmodule ChangelogWeb.EmailTest do
     email = Email.sign_in(person)
 
     assert email.to == person
-    assert email.html_body =~ "sign in"
+    assert email.html_body =~ ~r/sign in/i
   end
 
-  test "welcome" do
+  test "community welcome" do
     person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now)
-    email = Email.welcome(person)
+    email = Email.community_welcome(person)
 
     assert email.to == person
-    assert email.subject =~ "Welcome"
-    assert email.html_body =~ "Welcome"
+    assert email.subject =~ ~r/welcome/i
+    assert email.html_body =~~r/welcome/i
+  end
+
+  test "guest welcome" do
+    person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now)
+    email = Email.guest_welcome(person)
+
+    assert email.to == person
+    assert email.subject =~ ~r/guest/i
+    assert email.html_body =~ ~r/guest/i
+  end
+
+  test "subscriber welcome" do
+    person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now)
+    email = Email.subscriber_welcome(person)
+
+    assert email.to == person
+    assert email.subject =~ ~r/welcome/i
+    assert email.html_body =~ ~r/subscribed/i
   end
 end

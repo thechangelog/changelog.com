@@ -79,7 +79,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
   defp handle_generic_welcome_email(person) do
     person = Person.refresh_auth_token(person, 60 * 24)
-    Email.welcome(person) |> Mailer.deliver_later
+    Email.community_welcome(person) |> Mailer.deliver_later
   end
   defp handle_guest_welcome_email(person) do
     person = Person.refresh_auth_token(person, 60 * 24)

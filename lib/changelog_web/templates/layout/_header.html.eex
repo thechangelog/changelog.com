@@ -8,9 +8,9 @@
         <ul class="header-nav-primary header-nav-list">
           <li class="header-nav-list-item <%= active_class(@conn, ["news_item", "news_ad"]) %>"><%= link "News", to: root_path(@conn, :index) %></li>
           <li class="header-nav-list-item <%= active_class(@conn, ["podcast"]) %>"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
-          <li class="header-nav-list-item <%= active_class(@conn, ["page-community"]) %>"><%= link "Community", to: page_path(@conn, :community) %></li>
+          <li class="header-nav-list-item <%= active_class(@conn, ["page-community", "person-join"]) %>"><%= link "Community", to: page_path(@conn, :community) %></li>
           <%= if !@current_user do %>
-            <li class="header-nav-list-item"><%= link "Subscribe", to: person_path(@conn, :new) %></li>
+            <li class="header-nav-list-item <%= active_class(@conn, ["person-subscribe"]) %>"><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
           <% end %>
         </ul>
 

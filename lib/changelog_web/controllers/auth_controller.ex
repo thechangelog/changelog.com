@@ -15,7 +15,7 @@ defmodule ChangelogWeb.AuthController do
     else
       conn
       |> put_flash(:success, "You aren't in our system! No worries, it's free to join. 💚")
-      |> redirect(to: person_path(conn, :new, %{email: email}))
+      |> redirect(to: person_path(conn, :join, %{email: email}))
     end
   end
 
@@ -49,7 +49,7 @@ defmodule ChangelogWeb.AuthController do
     else
       conn
       |> put_flash(:success, "Almost there! Please complete your profile now.")
-      |> redirect(to: person_path(conn, :new, params_from_ueberauth(auth)))
+      |> redirect(to: person_path(conn, :join, params_from_ueberauth(auth)))
     end
   end
 

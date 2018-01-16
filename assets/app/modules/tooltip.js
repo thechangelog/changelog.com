@@ -13,16 +13,14 @@ export default class Tooltip {
 
   attach(parents) {
     parents.each(function attachTooltip(el) {
-      const tooltipElement = u(el).siblings(".tooltip").first();
+      let tooltipElement = u(el).siblings(".tooltip").first();
       let placement = u(tooltipElement).data("placement");
-
-      console.log(placement);
 
       if (!placement) {
         placement = "bottom";
       }
 
-      const tooltip = new Popper(el, tooltipElement, {
+      let tooltip = new Popper(el, tooltipElement, {
         placement: placement,
       });
 

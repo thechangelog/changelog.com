@@ -30,7 +30,7 @@ defmodule ChangelogWeb.AuthControllerTest do
   test "submitting the form with unknown email sends you to join", %{conn: conn} do
     conn = post(conn, "/in", auth: %{email: "joe@blow.com"})
 
-    assert redirected_to(conn) == person_path(conn, :new, %{email: "joe@blow.com"})
+    assert redirected_to(conn) == person_path(conn, :join, %{email: "joe@blow.com"})
   end
 
   test "following a valid auth token signs you in", %{conn: conn} do
@@ -86,7 +86,7 @@ defmodule ChangelogWeb.AuthControllerTest do
         |> assign(:ueberauth_auth, %{provider: :github, info: %{name: "Joe Blow", nickname: "joeblow"}})
         |> get("/auth/github/callback")
 
-      assert redirected_to(conn) == person_path(conn, :new, %{name: "Joe Blow", handle: "joeblow", github_handle: "joeblow"})
+      assert redirected_to(conn) == person_path(conn, :join, %{name: "Joe Blow", handle: "joeblow", github_handle: "joeblow"})
     end
 
     test "failed auth doesn't sign you in", %{conn: conn} do
@@ -119,7 +119,7 @@ defmodule ChangelogWeb.AuthControllerTest do
         |> assign(:ueberauth_auth, %{provider: :twitter, info: %{name: "Joe Blow", nickname: "joeblow"}})
         |> get("/auth/github/callback")
 
-      assert redirected_to(conn) == person_path(conn, :new, %{name: "Joe Blow", handle: "joeblow", twitter_handle: "joeblow"})
+      assert redirected_to(conn) == person_path(conn, :join, %{name: "Joe Blow", handle: "joeblow", twitter_handle: "joeblow"})
     end
 
     test "failed twitter auth doesn't sign you in", %{conn: conn} do

@@ -19,7 +19,7 @@
     <div class="footer-nav-list">
       <h4><a href="/" title="">News</a></h4>
       <ul>
-        <li><%= link "Subscribe", to: person_path(@conn, :new) %></li>
+        <li><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
         <li><%= link "Latest", to: page_path(@conn, :weekly) %></li>
         <li><%= link "Topics", to: topic_path(@conn, :index), title: "View All Topics" %></li>
         <li>---</li>

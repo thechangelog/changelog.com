@@ -7,13 +7,13 @@
     <h1 class="signup-heading">News and podcasts for developers.</h1>
     <p class="signup-text">Subscribe now and get the latest news and podcasts for developers in your email inbox, <em>every&nbsp;week</em>.<br />
     We&rsquo;ve made it <em>super easy</em> to keep up with developer news that&nbsp;matters.</p>
-    <div class="signup-form">
+    <%= form_tag person_path(@conn, :subscribe), class: "signup-form" do %>
       <label class="visually_hidden">Email address...</label>
-      <input class="signup-form-input" placeholder="Email address..." />
+      <input name="email" class="signup-form-input" placeholder="Email address..." required autofocus/>
       <div class="signup-form-submit">
         <input class="signup-form-submit-button" type="submit" value="Sign Up">
       </div>
-    </div>
+    <% end %>
     <p class="signup-sign_in">Already a member? <a href="/in" title=""><em>Sign in</em></a></p>
   </div>
   <%= if @source != "page" do %>

@@ -36,13 +36,22 @@ defmodule ChangelogWeb.Email do
     |> render(:sign_in)
   end
 
-  def welcome(person) do
+  def community_welcome(person) do
     logbot_email()
     |> put_header("X-CMail-GroupName", "Welcome")
     |> to(person)
     |> subject("Welcome! Confirm your address")
     |> assign(:person, person)
-    |> render(:welcome)
+    |> render(:community_welcome)
+  end
+
+  def subscriber_welcome(person) do
+    logbot_email()
+    |> put_header("X-CMail-GroupName", "Welcome")
+    |> to(person)
+    |> subject("Welcome! Confirm your address")
+    |> assign(:person, person)
+    |> render(:subscriber_welcome)
   end
 
   defp logbot_email do

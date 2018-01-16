@@ -1,6 +1,4 @@
 <article class="auth">
-  <%= render(SharedView, "_flash_messages.html", conn: @conn) %>
-
   <h1 class="auth-header">Sign In</h1>
 
   <%= if @person do %>

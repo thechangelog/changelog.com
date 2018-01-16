@@ -1,1 +1,0 @@
-<%= render(SharedView, "_signup.html", source: "page") %>

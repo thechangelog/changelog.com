@@ -6,7 +6,7 @@
 
 <%= render(SharedView, "_pagination.html", assigns) %>
 
-<%= if @page.page_number === 1 do %>
+<%= if @page.page_number == 1 do %>
 <div class="main-podcasts">
   <%= render(PodcastView, "_show_list.html", conn: @conn, podcasts: @podcasts) %>
 </div>
