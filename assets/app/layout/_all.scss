@@ -24,14 +24,14 @@ body {
 
   // Pages that should have black backgrounds
   .page-podcast-index &,
-  .page-person-new & {
+  .page-person-subscribe & {
     background-color: $black;
   }
 
   // Pages that should have their content vertically centered
   .page-auth-new &,
   .page-person-join &,
-  .page-person-new & {
+  .page-person-subscribe & {
     align-items: center;
     display: flex;
     justify-content: center;
