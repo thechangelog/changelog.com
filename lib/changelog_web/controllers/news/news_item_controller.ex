@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsItem, NewsSponsorship, Podcast}
+  alias Changelog.{Hashid, NewsItem, NewsSponsorship}
   alias ChangelogWeb.NewsItemView
 
   plug RequireAdmin, "before preview" when action in [:preview]

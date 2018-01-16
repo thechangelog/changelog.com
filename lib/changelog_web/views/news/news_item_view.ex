@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
-  alias ChangelogWeb.{NewsAdView, NewsSourceView, EpisodeView, PersonView, SponsorView, TopicView, PodcastView}
+  alias ChangelogWeb.{NewsAdView, NewsSourceView, EpisodeView, PersonView, TopicView, PodcastView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do

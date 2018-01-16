@@ -22,7 +22,7 @@ defmodule ChangelogWeb.PersonController do
       case Repo.insert(changeset) do
         {:ok, person} ->
           welcome_subscriber(conn, person)
-        {:error, changeset} ->
+        {:error, _changeset} ->
           conn
           |> put_flash(:error, "Something went wrong. 😭")
           |> render(:subscribe)

@@ -3,7 +3,7 @@ defmodule ChangelogWeb.LayoutView do
 
   import ChangelogWeb.Meta.{AdminTitle, Title, Image, Description, Feeds, Twitter}
 
-  alias ChangelogWeb.{Endpoint, LiveView, PersonView, PodcastView, SharedView}
+  alias ChangelogWeb.{Endpoint, PersonView}
 
   def canonical_url(conn), do: url(conn) <> conn.request_path
 end

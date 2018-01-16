@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsAdController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsAd, NewsSponsorship}
+  alias Changelog.{Hashid, NewsAd}
   alias ChangelogWeb.NewsAdView
 
   def show(conn, %{"id" => slug}) do
