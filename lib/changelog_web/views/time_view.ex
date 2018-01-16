@@ -39,13 +39,13 @@ defmodule ChangelogWeb.TimeView do
   def pretty_date(ts) when is_nil(ts), do: ""
   def pretty_date(ts) when is_binary(ts) do
     {:ok, result} = Timex.parse(ts, "{YYYY}-{0M}-{0D} {h24}:{m}:{s}")
-    {:ok, result} = Timex.format(result, "{Mshort} {D} {YYYY}")
+    {:ok, result} = Timex.format(result, "{Mshort} {D}, {YYYY}")
     result
   end
   def pretty_date(ts) do
     {:ok, result} =
       ts
-      |> Timex.format("{Mshort} {D} {YYYY}")
+      |> Timex.format("{Mshort} {D}, {YYYY}")
     result
   end
 

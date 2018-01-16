@@ -8,7 +8,11 @@ class Time {
   }
 
   year() {
-    return this.date.getFullYear().toString().substr(2, 2);
+    return this.fullYear().substr(2, 2);
+  }
+
+  fullYear() {
+   return this.date.getFullYear().toString();
   }
 
   month() {
@@ -65,6 +69,10 @@ class Time {
     return this.date.getMonth() + 1;
   }
 
+  monthAbbrev() {
+    return this.monthName().substr(0, 3);
+  }
+
   monthName() {
     return months[this.date.getMonth()];
   }
@@ -77,12 +85,40 @@ class Time {
     return `${this.month()}/${this.day()}/${this.year()} – ${this.hours12()}${this.minutes("")}${this.amPm()} (${this.tz()})`;
   }
 
+  dateStyle() {
+    return `${this.monthAbbrev()} ${this.day()}, ${this.fullYear()}`;
+  }
+
   dayAndDateStyle() {
     return `${this.weekday()}, ${this.monthName()} ${this.day()}`;
   }
 
   liveStyle() {
     return `${this.hours12()}${this.minutes(":00")} ${this.tz()}`;
+  }
+
+  timeFirstStyle() {
+    return `${this.amPmStyle()} – ${this.dayAndDateStyle()}`;
+  }
+
+  relativeStyle() {
+    let seconds = Math.abs(new Date() - this.date) / 1000;
+
+    if (seconds < 60*60) {
+      return `${this._pluralize(Math.ceil(seconds / 60), "minute")} ago`;
+    } else if (seconds < 60*60*24) {
+      return `${this._pluralize(Math.round(seconds / 60 / 60), "hour")} ago`;
+    } else {
+      return `${this._pluralize(Math.round(seconds / 60 / 60 / 24), "day")} ago`;
+    }
+  }
+
+  _pluralize(number, string) {
+    if (number == 1) {
+      return `1 ${string}`;
+    } else {
+      return `${number} ${string}s`;
+    }
   }
 }
 

@@ -49,7 +49,7 @@
 
   <div class="feed">
   <%= for item <- @items do %>
-    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item})) %>
+    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
   <% end %>
   </div>
 

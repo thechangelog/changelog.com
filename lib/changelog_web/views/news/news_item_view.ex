@@ -29,7 +29,7 @@ defmodule ChangelogWeb.NewsItemView do
     |> List.flatten
   end
 
-  def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_item_summary.html", Map.merge(assigns, %{item: item}))
+  def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_item_summary.html", Map.merge(assigns, %{item: item, style: "relative"}))
   def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_ad_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
 
   def render_item_source(conn, item = %{type: :audio}) do

@@ -3,7 +3,7 @@
 
   <div class="news_item-toolbar-item news_item-toolbar-meta">
     <span class="news_item-toolbar-meta-item">
-      logged by @<%= @item.logger.handle %> <%= TimeView.pretty_date(@item.published_at) %>
+      logged by @<%= @item.logger.handle %> <%= TimeView.ts(@item.published_at, @style) %>
     </span>
     <%= if Enum.any?(@item.topics) do %>
       &bull;
