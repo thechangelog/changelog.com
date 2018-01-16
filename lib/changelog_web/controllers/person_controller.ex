@@ -40,6 +40,7 @@ defmodule ChangelogWeb.PersonController do
     Subscriber.subscribe(weekly.list_id, person)
 
     conn
+    |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
     |> redirect(to: root_path(conn, :index))
   end
@@ -80,6 +81,7 @@ defmodule ChangelogWeb.PersonController do
     Subscriber.subscribe(community.list_id, person, handle: person.handle)
 
     conn
+    |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
     |> redirect(to: root_path(conn, :index))
   end

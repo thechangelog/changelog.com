@@ -1,6 +1,7 @@
 import "phoenix_html";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
+import Cookies from "cookies-js";
 import OnsitePlayer from "modules/onsitePlayer";
 import LivePlayer from "modules/livePlayer";
 import Overlay from "modules/overlay";
@@ -70,6 +71,12 @@ u(document).on("click", "a[href^=http]", function(event) {
       newWindow.opener = null;
     }
   }
+});
+
+// hide subscribe CTA
+u(document).handle("click", ".js-hide-subscribe", function(event) {
+  Cookies.set("hide_subscribe_cta", "true");
+  u(this).closest("section").remove();
 });
 
 // hijack audio deep links

@@ -2,7 +2,19 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   use Phoenix.HTML
 
   alias Changelog.Regexp
-  alias Phoenix.Controller
+  alias Phoenix.{Controller, Naming}
+
+  def active_class(conn, controllers, class_name \\ "is-active")
+  def active_class(conn, controllers, class_name) when is_binary(controllers), do: active_class(conn, [controllers], class_name)
+  def active_class(conn, controllers, class_name) when is_list(controllers) do
+    active_id = controller_action_combo(conn)
+
+    if Enum.any?(controllers, fn(x) -> String.match?(active_id, ~r/#{x}/) end) do
+      class_name
+    end
+  end
+
+  def action_name(conn), do: Controller.action_name(conn)
 
   def comma_separated(number) do
     number
@@ -12,6 +24,9 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     |> Enum.join(",")
     |> String.reverse
   end
+
+  def controller_name(conn), do: Controller.controller_module(conn) |> Naming.resource_name("Controller")
+  def controller_action_combo(conn), do: [controller_name(conn), action_name(conn)] |> Enum.join("-")
 
   def current_path(conn), do: Controller.current_path(conn)
   def current_path(conn, params), do: Controller.current_path(conn, params)
