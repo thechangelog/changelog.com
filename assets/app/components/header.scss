@@ -52,9 +52,11 @@
   @include position(fixed, 0 0 null);
   background-color: rgba($white, .95);
   border-bottom: 1px solid $light-grey;
-  padding: 13px $base-spacing;
+  padding: 7px $base-spacing;
   width: 100%;
   z-index: 999;
+
+  @include breakpoint(tablet) { padding: 13px $base-spacing; }
 
   &-wrap {
     align-items: center;
@@ -84,25 +86,101 @@
 
   //
   //
-  // Menu Icon
-  &-menu_icon {
-    $size: 20px;
-    border-bottom: 2px solid $green;
-    border-top: 2px solid $green;
-    color: $green;
-    cursor: pointer;
-    height: $size;
-    margin-left: $base-spacing/2;
-    position: relative;
-    text-indent: -9999px;
-    width: $size;
+  // Hamburger Menu Button via https://github.com/jonsuh/hamburgers/blob/master/_sass/hamburgers/hamburgers.scss
+  &-menu {
 
-    &:before {
-      @include position(absolute, 50% 0 null 0);
-      content: "";
-      background: $green;
-      height: 2px;
-      margin-top: -1px;
+    // Settings
+    $button-padding-x: 10px;
+    $button-padding-y: 10px;
+    $button-layer-width: 20px;
+    $button-layer-height: 2px;
+    $button-layer-spacing: 4px;
+    $button-layer-color: $green;
+    $button-layer-border-radius: 0px;
+
+    // Reset
+    background-color: transparent;
+    border: 0;
+    box-shadow: none !important;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    overflow: visible;
+    text-transform: none;
+
+    // Style
+    align-items: center;
+    cursor: pointer;
+    margin-right: -10px;
+    padding: $button-padding-y $button-padding-x;
+    text-align: center;
+    display: flex;
+
+    @include breakpoint(tablet) {
+      display: none;
+    }
+
+    &-box {
+      flex: 0 0 auto;
+      width: $button-layer-width;
+      height: $button-layer-height * 3 + $button-layer-spacing * 2;
+      display: inline-block;
+      position: relative;
+    }
+
+    &-inner {
+      display: block;
+      margin-top: $button-layer-height / -2;
+      top: 50%;
+
+      &,
+      &:before,
+      &:after {
+        width: $button-layer-width;
+        height: $button-layer-height;
+        background-color: $button-layer-color;
+        border-radius: $button-layer-border-radius;
+        position: absolute;
+        transition-property: transform;
+        transition-duration: 0.15s;
+        transition-timing-function: ease;
+      }
+
+      &:before,
+      &:after {
+        content: "";
+        display: block;
+      }
+
+      &:before { top: ($button-layer-spacing + $button-layer-height) * -1; }
+      &:after { bottom: ($button-layer-spacing + $button-layer-height) * -1; }
+    }
+
+    // Animation Specific Styles
+    .header-menu-inner {
+      transition-duration: 0.1s;
+      transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+      &:before { transition: top 0.1s 0.14s ease, opacity 0.1s ease; }
+      &:after { transition: bottom 0.1s 0.14s ease, transform 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+    }
+
+    .nav-open &-inner {
+      transform: rotate(45deg);
+      transition-delay: 0.14s;
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+      &:before {
+        top: 0;
+        opacity: 0;
+        transition: top 0.1s ease,opacity 0.1s 0.14s ease;
+      }
+
+      &:after {
+        bottom: 0;
+        transform: rotate(-90deg);
+        transition: bottom 0.1s ease, transform 0.1s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
     }
   }
 
@@ -116,15 +194,8 @@
       align-items: center;
       display: flex;
       flex: 1 0 auto; // Pushes secondary nav to the far right
-    }
 
-    // Close button
-    &-close {
-      @include position(absolute, 0 0 null null);
-      color: $green;
-      cursor: pointer;
-      font-size: 2em;
-      padding: 0.25em;
+      @include breakpoint(tablet, max) { justify-content: flex-end; }
     }
 
     // Lists
@@ -164,7 +235,10 @@
 
     // Primary Navigation
     &-primary {
+      display:  none;
       flex: 1 0 auto; // Pushes secondary nav to the far right
+
+      @include breakpoint(tablet) { display: flex; }
     }
 
     // Secondary Nav
@@ -192,6 +266,8 @@
   }
 
   &-search {
+    display: none;
+    @include breakpoint(tablet) { display: block; }
 
     input {
       background: $lightest-grey;
@@ -201,7 +277,7 @@
       font-weight: 500;
       line-height: 1.125em;
       padding: 9px 10px;
-      width: 260px;
+      width: 160px;
 
       &::placeholder {
         color: $medium-grey;

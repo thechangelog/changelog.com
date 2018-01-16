@@ -46,11 +46,10 @@
           <label class="visually_hidden" for="name">Search</label>
           <input name="q" type="text" placeholder="Search Changelog" value="" />
         </form>
+        <button class="header-menu js-toggle-nav" title="Toggle Menu">
+          <span class="header-menu-box"><span class="header-menu-inner"></span></span>
+        </button>
       </div>
     </nav>
-
-    <!-- TODO: Set up mobile navigation -->
-    <!-- <button class="header-menu_icon js-toggle-nav">Menu</button> -->
-    <!-- <button class="header-nav-close js-toggle-nav">✕</button> -->
   </div>
 </header>
