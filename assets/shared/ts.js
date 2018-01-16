@@ -102,15 +102,39 @@ class Time {
   }
 
   relativeStyle() {
-    let seconds = Math.abs(new Date() - this.date) / 1000;
+    let minutes = Math.ceil(Math.abs(new Date() - this.date) / 1000 / 60);
 
-    if (seconds < 60*60) {
-      return `${this._pluralize(Math.ceil(seconds / 60), "minute")} ago`;
-    } else if (seconds < 60*60*24) {
-      return `${this._pluralize(Math.round(seconds / 60 / 60), "hour")} ago`;
-    } else {
-      return `${this._pluralize(Math.round(seconds / 60 / 60 / 24), "day")} ago`;
+    if (minutes < 60) {
+      return `${this._pluralize(minutes, "minute")} ago`;
     }
+
+    let hours = Math.round(minutes / 60);
+
+    if (hours < 24) {
+      return `${this._pluralize(hours, "hour")} ago`;
+    }
+
+    let days = Math.round(hours / 24);
+
+    if (days < 7) {
+      return `${this._pluralize(days, "day")} ago`;
+    }
+
+    let weeks = Math.round(days / 7);
+
+    if (weeks < 4) {
+      return `${this._pluralize(weeks, "week")} ago`;
+    }
+
+    let months = Math.round(weeks / 4);
+
+    if (months < 12) {
+      return `${this._pluralize(months, "month")} ago`;
+    }
+
+    let years = Math.round(months / 12);
+
+    return `${this._pluralize(years, "year")} ago`;
   }
 
   _pluralize(number, string) {
