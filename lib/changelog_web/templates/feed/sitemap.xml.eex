@@ -16,6 +16,14 @@
   <url><loc><%= person_url(@conn, :subscribe) %></loc></url>
   <url><loc><%= live_url(@conn, :index) %></loc></url>
 
+  <%= for item <- @news_items do %>
+    <url><loc><%= news_item_url(@conn, :show, NewsItemView.slug(item)) %></loc></url>
+  <% end %>
+
+  <%= for source <- @news_sources do %>
+    <url><loc><%= news_source_url(@conn, :show, source.slug) %></loc></url>
+  <% end %>
+
   <url><loc><%= podcast_url(@conn, :index) %></loc></url>
   <%= for podcast <- @podcasts ++ [Podcast.master] do %>
     <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
@@ -28,5 +36,10 @@
   <url><loc><%= post_url(@conn, :index) %></loc></url>
   <%= for post <- @posts do %>
     <url><loc><%= post_url(@conn, :show, post.slug) %></loc></url>
+  <% end %>
+
+  <url><loc><%= topic_url(@conn, :index) %></loc></url>
+  <%= for topic <- @topics do %>
+    <url><loc><%= topic_url(@conn, :show, topic.slug) %></loc></url>
   <% end %>
 </urlset>

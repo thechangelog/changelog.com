@@ -2,7 +2,8 @@ defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Podcast}
-  alias ChangelogWeb.{EpisodeView, PersonView, PodcastView, PostView, TimeView}
+  alias ChangelogWeb.{EpisodeView, NewsItemView, PersonView, PodcastView,
+                      PostView, TimeView}
 
   def podcast_title(podcast, episode) do
     title = EpisodeView.numbered_title(episode)

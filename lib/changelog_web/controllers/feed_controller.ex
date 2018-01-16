@@ -2,7 +2,7 @@ defmodule ChangelogWeb.FeedController do
   use ChangelogWeb, :controller
   use PlugEtsCache.Phoenix
 
-  alias Changelog.{Episode, Podcast, Post}
+  alias Changelog.{Episode, NewsItem, NewsSource, Podcast, Post, Topic}
 
   require Logger
 
@@ -55,6 +55,15 @@ defmodule ChangelogWeb.FeedController do
   end
 
   def sitemap(conn, _params) do
+    news_items =
+      NewsItem.published
+      |> NewsItem.newest_first
+      |> Repo.all
+
+    news_sources =
+      NewsSource
+      |> Repo.all
+
     episodes =
       Episode.published
       |> Episode.newest_first
@@ -66,9 +75,13 @@ defmodule ChangelogWeb.FeedController do
       |> Post.newest_first
       |> Repo.all
 
+    topics =
+      Topic.with_news_items
+      |> Repo.all
+
     conn
     |> put_layout(false)
-    |> render("sitemap.xml", episodes: episodes, posts: posts)
+    |> render("sitemap.xml", news_items: news_items, news_sources: news_sources, episodes: episodes, posts: posts, topics: topics)
     |> cache_response
   end
 
