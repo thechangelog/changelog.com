@@ -20,6 +20,10 @@ window.u = u;
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
+
+  setTimeout(() => {
+    u("body").toggleClass('nav-animate', "");
+  }, 50);
 });
 
 u(document).handle("click", ".js-account-nav", function(event) {

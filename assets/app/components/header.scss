@@ -47,7 +47,7 @@
 }
 
 // Base Styles
-// NOTE: Update $header-height in variables.scss when any changes affect height
+// NOTE: Update $header-height and $header-height--mobile in variables.scss when any changes affect height
 .header {
   @include position(fixed, 0 0 null);
   background-color: rgba($white, .95);
@@ -57,6 +57,19 @@
   z-index: 999;
 
   @include breakpoint(tablet) { padding: 13px $base-spacing; }
+
+  @include breakpoint(tablet, max) {
+    .nav-open & {
+      transition: background-color .2s ease-in-out;
+    }
+
+    .nav-open.nav-animate & {
+      background-color: $black;
+      border: none !important;
+
+      &-logo { opacity: 0; }
+    }
+  }
 
   &-wrap {
     align-items: center;
@@ -270,7 +283,7 @@
     @include breakpoint(tablet) { display: block; }
 
     input {
-      background: $lightest-grey;
+      background: rgba($black, .05);
       border: none;
       color: $black;
       font-size: 13px;

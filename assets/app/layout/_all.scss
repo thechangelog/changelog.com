@@ -15,8 +15,12 @@
 body {
   display: flex;
   flex-direction: column;
-  padding-top: $header-height;
+  padding-top: $header-height--mobile;
   min-height: 100vh;
+
+  @include breakpoint(tablet) {
+    padding-top: $header-height;
+  }
 }
 .main {
   flex: 1;

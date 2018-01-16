@@ -1,0 +1,96 @@
+.mobile_nav {
+  @include position(fixed, $header-height--mobile 0 0);
+  z-index: 100;
+  background-color: $black;
+  overflow: auto;
+  display: none;
+  opacity: 0;
+  text-align: center;
+
+  .nav-open & {
+    display: flex;
+    transition: opacity .2s ease-in-out;
+  }
+
+  .nav-animate & {
+    opacity: 1;
+  }
+
+  @include breakpoint(tablet) { display: none !important; }
+
+  &-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+    width: 100%;
+  }
+
+  &-search {
+    margin: 0;
+
+    &:before {
+      color: $medium-grey;
+    }
+
+    input {
+      background: transparent;
+      color: $white;
+    }
+  }
+
+  &-main {
+    flex: 1;
+    margin: 30px 0;
+
+    &-inner {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+
+      opacity: 0;
+      transform: translateY(10px);
+      transition: transform .2s ease-in-out, opacity .2s linear;
+
+      .nav-animate & {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &-bottom { margin-bottom: 30px; }
+
+  &-logo {
+    $size: 56px;
+    margin: 0 0 30px;
+    text-indent: -9999px;
+
+    a {
+      background: url('../assets/images/changelog-logomark-white.svg') left center no-repeat;
+      background-size: auto $size;
+      display: block;
+      height: $size;
+      width: $size;
+    }
+  }
+
+  &-list {
+    margin-bottom: 10px;
+
+    &-item {
+      font-size: 1.25em;
+      font-weight: 500;
+      margin: 10px 0;
+
+      a {
+        color: $green;
+
+        &.is-active {
+          color: $white;
+        }
+      }
+    }
+  }
+}
