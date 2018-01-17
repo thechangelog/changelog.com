@@ -1,10 +1,10 @@
 <%= if @topic.icon do %>
-  <%= link to: topic_path(@conn, :show, @topic.slug), title: @topic.name do %>
-    <img class="news_item-source-image" src="<%= TopicView.icon_url(@topic) %>" alt="<%= @topic.name %> Icon" />
+  <%= link to: topic_path(@conn, :show, @topic.slug), title: @topic.name, class: "news_item-source-image" do %>
+    <img src="<%= TopicView.icon_url(@topic) %>" alt="<%= @topic.name %> Icon" />
   <% end %>
 <% else %>
-  <%= link to: domain_url(@item.url), title: domain_name(@item.url) do %>
-    <span class="news_item-source-image news_item-source-image--fallback"><%= String.at(domain_name(@item.url),0) %></span>
+  <%= link to: domain_url(@item.url), title: domain_name(@item.url), class: "news_item-source-image news_item-source-image--fallback" do %>
+    <span><%= String.at(domain_name(@item.url),0) %></span>
   <% end %>
 <% end %>
 

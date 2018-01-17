@@ -1,5 +1,5 @@
-<%= link to: domain_url(@item.url), title: domain_name(@item.url) do %>
-  <span class="news_item-source-image news_item-source-image--fallback"><%= String.at(domain_name(@item.url),0) %></span>
+<%= link to: domain_url(@item.url), title: domain_name(@item.url), class: "news_item-source-image news_item-source-image--fallback" do %>
+  <span><%= String.at(domain_name(@item.url),0) %></span>
 <% end %>
 
 <%= link domain_name(@item.url), to: domain_url(@item.url), title: domain_name(@item.url), rel: "external" %>

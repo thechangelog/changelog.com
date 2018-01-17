@@ -35,21 +35,37 @@
 
     &-image {
       $size: 30px;
-      background: $white;
-      border-radius: $base-border-radius;
-      box-shadow: 0 0 50px rgba($black, 0.3);
       color: $white;
-      display: block;
       font-family: $code;
       font-size: 6px;
       font-weight: bold;
       height: $size;
       margin-right: 10px;
-      overflow: hidden;
+      position: relative;
       text-align: center;
       width: $size;
 
-      &--fallback {
+      span,
+      img {
+        background: $white;
+        border-radius: $base-border-radius;
+        position: absolute;
+        line-height: 1em;
+        width: $size;
+        height: $size;
+        top: 0;
+        left: 0;
+
+        &:nth-child(1) { box-shadow: 0 0 50px rgba($black, 0.3); }
+        &:nth-child(2) { transform: translateX(2px) translateY(2px); }
+        &:nth-child(3) { transform: translateX(4px) translateY(4px); }
+        &:nth-child(4) { transform: translateX(6px) translateY(6px); }
+        &:nth-child(5) { transform: translateX(8px) translateY(8px); }
+        &:nth-child(6) { transform: translateX(10px) translateY(10px); }
+        &:nth-child(7) { transform: translateX(12px) translateY(12px); }
+      }
+
+      &--fallback span {
         background: $green;
         color: $white;
         font-size: 12px;
@@ -70,6 +86,13 @@
         position: absolute;
         width: $size;
         top: 15px;
+
+        span,
+        img {
+          width: $size;
+          height: $size;
+          // top: 15px;
+        }
       }
     }
   }
