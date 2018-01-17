@@ -241,15 +241,18 @@ export default class OnsitePlayer {
   }
 
   show() {
+    u('body').addClass('player-open');
     this.player.addClass("podcast-player--is-active").removeClass("podcast-player--is-hidden");
   }
 
   hide() {
+    u('body').toggleClass('player-open');
     this.player.toggleClass("podcast-player--is-hidden");
   }
 
   close() {
     this.pause();
+    u('body').removeClass('player-open');
     this.player.removeClass("podcast-player--is-active");
   }
 }

@@ -6,6 +6,10 @@
   font-family: $code;
   font-size: 13px;
 
+  body.player-open & {
+    padding-bottom: 60px;
+  }
+
   &-primary {
     border-bottom: 1px solid $border-color;
 
