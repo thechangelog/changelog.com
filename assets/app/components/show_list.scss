@@ -43,6 +43,7 @@
       }
 
       &-art {
+        background-size: 100%;
         background-color: $black;
         border: 1px solid #3D444A;
         display: block;
@@ -58,7 +59,7 @@
 
         @each $podcast in $podcasts {
           .show_list-shows-item--#{$podcast} & {
-            background-image: url('../assets/images/podcasts/#{$podcast}-cover-art.svg');
+            background-image: url('/images/podcasts/#{$podcast}-cover-art.svg');
           }
         }
       }

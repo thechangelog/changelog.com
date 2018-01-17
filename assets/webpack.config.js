@@ -2,7 +2,6 @@ var webpack = require("webpack");
 var merge = require("webpack-merge");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var SpritePlugin = require("svg-sprite-loader/plugin");
 
 var common = {
   module: {
@@ -20,20 +19,12 @@ var common = {
         loader: "handlebars-loader"
       },
       {
-        test: /\.svg$/,
-        loader: "svg-sprite-loader",
-        exclude: [/fonts/, /semantic/],
-        options: {
-          extract: true,
-          spriteFilename: "/images/sprite-[hash:6].svg",
-        }
-      },
-      {
         test: [/\.scss$/, /\.css$/],
         loader: ExtractTextPlugin.extract({use: "css-loader!sass-loader", fallback: "style-loader"})
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|gif|svg)$/,
+        exclude: /fonts/,
         loader: "file-loader?name=/images/[name].[ext]"
       },
       {
@@ -48,7 +39,6 @@ var common = {
       compress: {warnings: false},
       output: {comments: false}
     }),
-    new SpritePlugin()
   ]
 };
 

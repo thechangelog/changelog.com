@@ -56,12 +56,12 @@
                     background-color: rgba($black, 0.9)
 
             &--hide
-                background-image: url("/images/icon-down.svg")
+                background-image: url("/images/icons/icon-down.svg")
                 .podcast-player--is-hidden &
-                    background-image: url("/images/icon-up.svg")
+                    background-image: url("/images/icons/icon-up.svg")
 
             &--close
-                background-image: url("/images/icon-close.svg")
+                background-image: url("/images/icons/icon-close.svg")
 
     &_art
         display: none
@@ -170,15 +170,15 @@
         color: $white
 
     &--play
-      background-image: url("/images/play.svg")
+      background-image: url("/images/icons/play.svg")
 
       &.is-paused
-          background-image: url("/images/play.svg")
+          background-image: url("/images/icons/play.svg")
           background-size: 18px
       &.is-playing
-          background-image: url("/images/pause.svg")
+          background-image: url("/images/icons/pause.svg")
       &.is-loading
-          background-image: url("/images/loading.svg")
+          background-image: url("/images/icons/loading.svg")
           -webkit-animation: spin 1s ease-in-out infinite
           animation: spin 1s ease-in-out infinite
 
@@ -186,7 +186,7 @@
               -webkit-animation: spin 1s ease-in-out infinite
               animation: spin 1s ease-in-out infinite
               content: ""
-              background: url("/images/loading-2.svg") center no-repeat
+              background: url("/images/icons/loading-2.svg") center no-repeat
               position: absolute
               top: 0
               right: 0
@@ -202,10 +202,10 @@
         margin: 0 0.5rem
 
     &--back15
-        background-image: url("/images/prev-15.svg")
+        background-image: url("/images/icons/prev-15.svg")
 
     &--forward15
-        background-image: url("/images/next-15.svg")
+        background-image: url("/images/icons/next-15.svg")
 
     &--next_episode,
     &--prev_episode
