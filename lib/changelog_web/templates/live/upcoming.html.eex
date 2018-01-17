@@ -1,6 +1,6 @@
 <section class="live_upcoming">
-  <h1 class="live_upcoming-heading">Upcoming Live Shows</h1>
   <%= if Enum.any?(@episodes) do %>
+    <h1 class="live_upcoming-heading">Upcoming Live Shows</h1>
     <div class="live_upcoming-grid">
       <%= for episode <- @episodes do %>
         <div class="live_upcoming-grid-item">
@@ -29,5 +29,6 @@
       <% end %>
     </div>
   <% else %>
+    <h1 class="live_upcoming-heading">No scheduled shows. Check back soon.</h1>
   <% end %>
 </section>

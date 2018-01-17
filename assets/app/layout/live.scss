@@ -87,8 +87,10 @@
       text-align: center;
 
       &-show {
-        @extend %display-font;
+        font-size: 1.25em;
+        font-weight: normal;
         margin-top: 0;
+        text-transform: none;
 
         a {
           color: $medium-grey;
@@ -96,7 +98,7 @@
       }
 
       &-title {
-        font-size: 1.825em;
+        font-size: 1.5em;
         line-height: 1.25em;
       }
     }
@@ -113,7 +115,7 @@
     // Description
     &-description {
       color: $medium-grey;
-      font-size: 1.25em;
+      font-size: 1em;
       margin: 0 auto 30px;
       max-width: 600px;
       text-align: center;
@@ -148,13 +150,13 @@
         }
 
         &-image {
-          $size: 150px;
+          $size: 100px;
           background: lighten($black, 10%);
           border-radius: $size;
           box-shadow: 0 15px 30px rgba(#000, 0.8);
           color: $black;
           display: block;
-          font-size: 4em;
+          font-size: 2em;
           font-weight: bold;
           margin: 0 auto $padding-small;
           transition: transform 0.1s $ease-in-out-quad;
@@ -167,7 +169,7 @@
           }
 
           .live-info-guests--3 & {
-            $size: 125px;
+            $size: 75px;
             line-height: ($size * 1.1);
             width: $size;
             height: $size;
@@ -176,7 +178,7 @@
           .live-info-guests--4 &,
           .live-info-guests--5 &,
           .live-info-guests--6 & {
-            $size: 100px;
+            $size: 50px;
             line-height: ($size * 1.1);
             width: $size;
             height: $size;
@@ -184,12 +186,12 @@
         }
         &-title {
           @extend %display-font;
-          font-size: 1.25em;
+          font-size: 1em;
           margin: 0 0 0.5em;
         }
         &-name {
           @extend %display-font;
-          font-size: 1.5em;
+          font-size: 1.25em;
           font-weight: normal;
           color: $white;
           margin: 0;
@@ -200,7 +202,7 @@
 
     // Slack CTA
     &-cta {
-      margin: $padding-large 0 0;
+      margin: 40px 0 0;
       text-align: center;
 
       &,
@@ -210,13 +212,13 @@
       }
 
       &-icon {
-        margin-bottom: 4px;
+        margin: 0 auto 4px;
       }
 
       p {
-        font-size: 1.25em;
+        font-size: 1em;
         line-height: 1.25em;
-        margin: 0 0 0.25em;
+        margin: 0.25em 0;
 
         a {
           transition: opacity 0.3s $ease-in-out-quad;
@@ -242,7 +244,7 @@
   }
 
   &-footer {
-    $largeText: 2.25em;
+    $largeText: 1.5em;
     @extend %display-font;
     align-items: center;
     background: rgba($black, 0.7);
@@ -264,9 +266,10 @@
       background: #FF5252;
       font-size: $largeText;
       height: 60px;
+      line-height: 60px;
       width: 100%;
       margin: $padding-small 0 0;
-      padding: 0.4em 10px 0.3em;
+      padding: 0 10px;
       text-align: center;
 
       @media (min-width: $tablet) {
