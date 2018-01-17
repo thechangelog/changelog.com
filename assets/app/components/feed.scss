@@ -1,3 +1,9 @@
 .feed {
   @include wrap;
+
+  @include breakpoint(mobile, max) {
+    padding: 0;
+
+    .pagination { padding: 0 $base-spacing; }
+  }
 }

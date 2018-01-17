@@ -1,4 +1,4 @@
-<article class="news_item">
+<article class="news_item news_item--sponsor">
   <%= render("_ad_header.html", assigns) %>
 <%= if @ad.story do %>
   <div class="news_item-description"><p><%= @ad.story |> md_to_text %></p></div>
