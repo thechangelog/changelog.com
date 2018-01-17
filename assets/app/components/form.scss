@@ -18,7 +18,7 @@
 
     &-note {
       font-family: $code;
-      font-size: 0.625em;
+      font-size: 0.6875em;
       font-style: italic;
       text-align: right;
       margin-top: 5px;
@@ -27,8 +27,8 @@
     label {
       display: block;
       font-family: $code;
-      font-weight: bold;
-      font-size: 0.6825em;
+      font-weight: 700;
+      font-size: 0.75em;
       margin-bottom: 0.5em;
     }
 
@@ -60,7 +60,7 @@
     &-toc {
       color: $blue-grey;
       font-family: $code;
-      font-size: 0.75em;
+      font-size: 0.8125em;
       font-style: italic;
       margin-bottom: 25px;
       max-width: 340px;

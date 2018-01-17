@@ -5,7 +5,7 @@
     border-bottom: 1px solid $green;
     display: flex;
     font-family: $code;
-    font-size: 0.825em;
+    font-size: 0.875em;
 
     &:before {
       content: "~ $ ";
@@ -22,7 +22,7 @@
 
   &-results_sentence {
     font-family: $code;
-    font-size: 0.825em;
+    font-size: 0.875em;
     padding: 1em 0;
   }
 

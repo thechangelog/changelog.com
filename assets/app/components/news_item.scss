@@ -30,15 +30,15 @@
     align-items: center;
     display: flex;
     font-family: $code;
-    font-size: 0.75em;
+    font-size: 0.8125em;
     margin: 0 0 10px;
 
     &-image {
       $size: 30px;
       color: $white;
       font-family: $code;
-      font-size: 6px;
-      font-weight: bold;
+      font-size: 7px;
+      font-weight: 700;
       height: $size;
       margin-right: 10px;
       position: relative;
@@ -167,7 +167,7 @@
 
     &-meta {
       font-family: $code;
-      font-size: 0.75em;
+      font-size: 0.8125em;
       margin-top: 6px;
       line-height: 1.5em;
     }
@@ -187,7 +187,7 @@
   &-meta {
     border-top: 1px solid $light-grey;
     font-family: $code;
-    font-size: 0.875em;
+    font-size: 0.9375em;
     margin-top: $base-spacing;
     padding-top: $base-spacing;
 

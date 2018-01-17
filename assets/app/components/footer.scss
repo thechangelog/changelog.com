@@ -4,7 +4,7 @@
   background: $white;
   border-top: 2px solid $border-color;
   font-family: $code;
-  font-size: 13px;
+  font-size: 14px;
 
   body.player-open & {
     padding-bottom: 60px;
@@ -124,7 +124,7 @@
       a { color: $black; }
 
       p {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 400;
         letter-spacing: 0.1em;
         margin: 0 5%;
