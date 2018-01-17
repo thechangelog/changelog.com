@@ -10,30 +10,26 @@ defmodule ChangelogWeb.HomeController do
     render(conn, :show)
   end
 
-  def edit(conn = %{assigns: %{current_user: me}}, _params) do
-    render(conn, :edit, changeset: Person.changeset(me))
-  end
-
-  def subscriptions(conn, _params) do
-    render(conn, :subscriptions)
+  def account(conn = %{assigns: %{current_user: me}}, _params) do
+    render(conn, :account, changeset: Person.changeset(me))
   end
 
   def profile(conn = %{assigns: %{current_user: me}}, _params) do
     render(conn, :profile, changeset: Person.changeset(me))
   end
 
-  def update(conn = %{assigns: %{current_user: me}}, %{"person" => person_params}) do
+  def update(conn = %{assigns: %{current_user: me}}, %{"person" => person_params, "from" => from}) do
     changeset = Person.changeset(me, person_params)
 
     case Repo.update(changeset) do
       {:ok, _person} ->
         conn
-        |> put_flash(:success, "Your profile has been updated! ✨")
+        |> put_flash(:success, "Your #{from} has been updated! ✨")
         |> redirect(to: home_path(conn, :show))
       {:error, changeset} ->
         conn
-        |> put_flash(:error, "The was a problem updating your profile 😢")
-        |> render(:edit, person: me, changeset: changeset)
+        |> put_flash(:error, "The was a problem updating your #{from}. 😢")
+        |> render(from, person: me, changeset: changeset)
     end
   end
 
@@ -66,7 +62,7 @@ defmodule ChangelogWeb.HomeController do
     conn
     |> assign(:current_user, updated_user)
     |> put_flash(:success, flash)
-    |> render(:show)
+    |> redirect(to: home_path(conn, :show))
   end
 
   defp set_slack_id(person) do

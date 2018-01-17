@@ -2,9 +2,12 @@
   background: $light-blue;
   color: $blue;
   font-weight: bold;
-  margin-bottom: $base-spacing;
   padding: $padding-small;
   text-align: center;
+
+  &--inline {
+    margin-bottom: $base-spacing;
+  }
 
   &--success {
     background: $light-green;

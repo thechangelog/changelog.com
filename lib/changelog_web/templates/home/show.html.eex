@@ -1,5 +1,5 @@
 <div class="page_account">
-  <%= render("_nav.html", conn: @conn) %>
+  <%= render("_nav.html", assigns) %>
 
   <div class="account_subscriptions">
     <div class="account_subscriptions-item">

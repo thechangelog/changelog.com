@@ -1,16 +1,15 @@
 <nav class="subnav">
-  <!-- TODO: Dynamically set active classes -->
   <ul class="subnav-list">
-    <li class="subnav-list-item is-active">
+    <li class="subnav-list-item <%= active_class(@conn, ["home-show"]) %>">
       <%= link "Subscriptions", to: home_path(@conn, :show) %>
     </li>
-    <li class="subnav-list-item">
+    <li class="subnav-list-item <%= active_class(@conn, ["home-profile"]) %>">
       <%= link to: home_path(@conn, :profile) do %>
         Public Profile <small><em>(inactive)</em></small>
       <% end %>
     </li>
-    <li class="subnav-list-item">
-      <%= link "Account", to: home_path(@conn, :edit) %>
+    <li class="subnav-list-item <%= active_class(@conn, ["home-account"]) %>">
+      <%= link "Account", to: home_path(@conn, :account) %>
     </li>
   </ul>
 

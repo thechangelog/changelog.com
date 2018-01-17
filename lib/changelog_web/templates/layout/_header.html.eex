@@ -28,7 +28,7 @@
                   <% end %>
                   <li><%= link "My Subscriptions", to: home_path(@conn, :show) %></li>
                   <li><%= link "Profile Settings", to: home_path(@conn, :profile) %></li>
-                  <li><%= link "Account Settings", to: home_path(@conn, :edit) %></li>
+                  <li><%= link "Account Settings", to: home_path(@conn, :account) %></li>
                 </ul>
                 <div class="tooltip-footer">
                   <%= link "Sign Out", to: sign_out_path(@conn, :delete) %>

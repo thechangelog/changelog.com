@@ -108,8 +108,9 @@ defmodule ChangelogWeb.Router do
     get "/subscribe", PersonController, :subscribe, as: :person
     post "/subscribe", PersonController, :subscribe, as: :person
 
-    resources "/~", HomeController, only: [:show, :edit, :update], singleton: true
+    resources "/~", HomeController, only: [:show, :update], singleton: true
     get "/~/profile", HomeController, :profile
+    get "/~/account", HomeController, :account
 
     post "/~/slack", HomeController, :slack
     post "/~/subscribe/:id", HomeController, :subscribe
