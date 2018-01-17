@@ -2,7 +2,7 @@ import { u, ajax } from "umbrellajs";
 import Episode from "modules/episode";
 import Log from "modules/log";
 import ChangelogAudio from "modules/audio";
-import Playbar from "modules/playbar";
+import PlayButton from "modules/playButton";
 
 export default class OnsitePlayer {
   constructor(selector) {
@@ -16,7 +16,7 @@ export default class OnsitePlayer {
     this.audio = new ChangelogAudio();
     this.detailsLoaded = false;
     this.audioLoaded = false;
-    this.playbar = new Playbar();
+    this.playButtons = new PlayButton();
     this.currentlyLoaded = "";
     this.deepLink = 0;
     this.attachUI();
@@ -92,13 +92,13 @@ export default class OnsitePlayer {
   play() {
     requestAnimationFrame(this.step.bind(this));
     this.audio.play();
-    this.playbar.play();
+    this.playButtons.play();
     this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
   }
 
   pause() {
     this.audio.pause();
-    this.playbar.pause();
+    this.playButtons.pause();
     this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
   }
 
@@ -125,7 +125,7 @@ export default class OnsitePlayer {
     this.playButton.addClass("is-loading");
     this.playButton.attr("data-loaded", detailsUrl);
     this.currentlyLoaded = detailsUrl;
-    this.playbar.belongsTo(this.currentlyLoaded);
+    this.playButtons.belongsTo(this.currentlyLoaded);
     this.loadAudio(audioUrl, andThen);
     this.loadDetails(detailsUrl);
   }
