@@ -36,10 +36,15 @@
     input {
       border: none;
       border-bottom: 1px solid $black;
-      color: #656565;
+      color: $black;
       line-height: 1.5em;
       padding: 0.75em 0;
       width: 100%;
+
+      &::placeholder {
+        color: $medium-grey;
+        text-decoration: line-through;
+      }
     }
   }
 

@@ -10,7 +10,7 @@
 
   a {
     color: $white;
-    &:hover { color: $green; }
+    &:hover { color: rgba($white, 0.8); }
   }
 
   &-wrap {
@@ -27,6 +27,7 @@
       color: $white;
       font-size: 16px;
       font-style: normal;
+      padding-right: 1em;
 
       &.tooltip-list-heading {
         color: $half-white;
