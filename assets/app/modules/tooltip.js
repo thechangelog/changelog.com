@@ -25,6 +25,7 @@ export default class Tooltip {
       });
 
       u(el).on("click", () => {
+        u(".tooltip").removeClass("is-visible");
         u(el).siblings(".tooltip").toggleClass("is-visible");
         tooltip.scheduleUpdate();
       });

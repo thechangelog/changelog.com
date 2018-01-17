@@ -259,6 +259,7 @@
       align-items: center;
       display: flex;
       margin-top: 0;
+      margin-right: $mobile-spacing;
 
       &-user {
         $size: 20px;
