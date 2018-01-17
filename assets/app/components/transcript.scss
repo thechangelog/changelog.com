@@ -53,7 +53,7 @@
         width: $size;
 
         &--changelog {
-          background-image: url("/images/changelog-mark-only.svg");
+          background-image: url("/images/icons/changelog-mark-only.svg");
           background-position: 5px center;
           background-size: auto 20px;
         }
@@ -105,7 +105,7 @@
 //
 // Timestamps
 a.timestamp {
-  background: $light-grey url("/images/icon-timestamp.svg") 6px center no-repeat;
+  background: $light-grey url("/images/icons/icon-timestamp.svg") 6px center no-repeat;
   border-radius: 1em;
   color: $medium-grey;
   font-family: $display;

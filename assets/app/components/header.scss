@@ -16,7 +16,7 @@
     border-bottom: 1px solid rgba($white, .08);
 
     &-logo a {
-      background-image: url('../assets/images/changelog-logomark-white.svg');
+      background-image: url('/images/brand/changelog-logomark-white.svg');
     }
 
     &-nav-list-item {
@@ -50,9 +50,9 @@
 // NOTE: Update $header-height and $header-height--mobile in variables.scss when any changes affect height
 .header {
   @include position(fixed, 0 0 null);
-  background-color: rgba($white, .95);
+  background-color: rgba($white, .98);
   border-bottom: 1px solid $light-grey;
-  padding: 7px $base-spacing;
+  padding: 7px $mobile-spacing;
   width: 100%;
   z-index: 999;
 
@@ -89,7 +89,7 @@
     text-indent: -9999px;
 
     a {
-      background: url('../assets/images/changelog-logomark.svg') left center no-repeat;
+      background: url('/images/brand/changelog-logomark.svg') left center no-repeat;
       background-size: auto $size;
       display: block;
       height: $size;
