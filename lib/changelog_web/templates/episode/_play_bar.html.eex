@@ -11,21 +11,22 @@
 
     <%= link "Subscribe",
         title: "",
-        to: PodcastView.subscribe_link(@podcast),
-        class: "toolbar_item toolbar_item--button",
-        style: "background-image: url('#{static_url(@conn, "/images/icon-subscribe.svg")}')" %>
+        to: "javascript:void(0);",
+        class: "toolbar_item toolbar_item--button has-tooltip",
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
+    <%= render(PodcastView, "_podcast_subscribe.html", conn: @conn, podcast: @episode.podcast) %>
 
     <%= link "Sponsor",
         title: "",
         to: page_path(@conn, :sponsor),
         class: "toolbar_item toolbar_item--button",
-        style: "background-image: url('#{static_url(@conn, "/images/icon-sponsor.svg")}')" %>
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-sponsor.svg")}')" %>
 
     <%= link "Share",
         title: "Share",
         to: "javascript:void(0);",
         class: "toolbar_item toolbar_item--button",
         data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
-        style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-share.svg")}')" %>
   </div>
 </div>
