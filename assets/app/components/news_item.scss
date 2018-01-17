@@ -45,7 +45,7 @@
       text-align: center;
       width: $size;
 
-      span,
+      &-icon,
       img {
         background: $white;
         border-radius: $base-border-radius;
@@ -62,17 +62,27 @@
         &:nth-child(4) { transform: translateX(6px) translateY(6px); }
         &:nth-child(5) { transform: translateX(8px) translateY(8px); }
         &:nth-child(6) { transform: translateX(10px) translateY(10px); }
-        &:nth-child(7) { transform: translateX(12px) translateY(12px); }
+        &:nth-child(7) { transform: translateX(12px) translateY(18px); }
       }
 
-      &--fallback span {
-        background: $green;
+      &-icon {
+        background-color: $black;
         color: $white;
         font-size: 12px;
         line-height: $size;
         text-transform: uppercase;
 
+        &--link {
+          background: $black url('/images/icons/type-link.svg') no-repeat center;
+          background-size: 20px;
+        }
+        &--project {
+          background: $black url('/images/icons/type-project.svg') no-repeat center;
+          background-size: 20px;
+        }
+
         @include breakpoint(mobile) {
+          background-size: 30px !important;
           font-size: 18px;
           line-height: $size;
         }
@@ -87,7 +97,7 @@
         width: $size;
         top: 15px;
 
-        span,
+        &-icon,
         img {
           width: $size;
           height: $size;
