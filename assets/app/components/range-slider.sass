@@ -101,8 +101,10 @@ $range-label-width: 60px !default
 
     &_above
         display: none
-        color: $green
-        @extend %display-font
+        color: $medium-grey
+        font-family: $code
+        font-size: 0.75em
+        text-transform: none
 
         @media (min-width: $tablet)
             display: inline
@@ -117,7 +119,7 @@ $range-label-width: 60px !default
 
         & > span
             display: none
-            font-size: 1.15em
+            font-size: 0.875em
             font-weight: 900
 
             @media (min-width: $tablet)
@@ -127,6 +129,8 @@ $range-label-width: 60px !default
             margin-left: auto
             text-align: right
             color: $half-white
+            font-family: $code
+            letter-spacing: -0.05em
             font-size: 0.75em
 
             body.embed--day &
