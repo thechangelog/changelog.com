@@ -47,9 +47,7 @@
       font-weight: normal;
     }
 
-    &-guests {
-
-    }
+    // &-guests {}
 
     &-toolbar {
       position: absolute;
@@ -76,7 +74,6 @@
     margin: 0 auto;
     max-width: 940px;
     padding-bottom: $base-spacing;
-    padding-top: $base-spacing;
 
     // Summary
     &-summary {
@@ -100,8 +97,12 @@
       &-sponsors {
         margin: 0 0 $base-spacing;
 
+        @include breakpoint(mobile) {
+          margin: 0 0 $base-spacing*2;
+        }
+
         h3 {
-          font-size: 0.825em;
+          font-size: 0.75em;
           font-weight: normal;
           letter-spacing: 0.0625em;
           margin: 0 0 2em;
@@ -113,9 +114,20 @@
           justify-content: center;
           width: 100%;
 
+          a {
+            display: block;
+            width: 5.75rem;
+            margin: 0 0.5rem;
+
+            @include breakpoint(mobile) {
+              margin: 0 1rem;
+            }
+          }
+
           img {
             height: auto;
-            padding: 0 1em;
+            padding: 0;
+            width: 100%;
           }
         }
       }
