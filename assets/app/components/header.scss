@@ -259,7 +259,11 @@
       align-items: center;
       display: flex;
       margin-top: 0;
-      margin-right: $mobile-spacing;
+      margin-right: 10px;
+
+      @include breakpoint(tablet) {
+        margin-right: 20px;
+      }
 
       &-user {
         $size: 20px;

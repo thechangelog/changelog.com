@@ -4,7 +4,6 @@
 
     <nav class="header-nav">
       <div class="header-nav-wrap">
-
         <ul class="header-nav-primary header-nav-list">
           <li class="header-nav-list-item <%= active_class(@conn, ["news_item", "news_ad"]) %>"><%= link "News", to: root_path(@conn, :index) %></li>
           <li class="header-nav-list-item <%= active_class(@conn, ["podcast"]) %>"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
@@ -61,11 +60,12 @@
       <div class="mobile_nav-main-inner">
         <h1 class="mobile_nav-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
         <ul class="mobile_nav-list">
-          <li class="mobile_nav-list-item <%= active_class(@conn, ["news_item", "news_ad"]) %>"><%= link "News", to: root_path(@conn, :index) %></li>
-          <li class="mobile_nav-list-item <%= active_class(@conn, ["podcast"]) %>"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
-          <li class="mobile_nav-list-item <%= active_class(@conn, ["page-community", "person-join"]) %>"><%= link "Community", to: page_path(@conn, :community) %></li>
+          <li class="mobile_nav-list-item"><%= link "News", to: root_path(@conn, :index) %></li>
+          <li class="mobile_nav-list-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
+          <li class="mobile_nav-list-item"><%= link "Community", to: page_path(@conn, :community) %></li>
+          <li class="mobile_nav-list-item"><%= link "About", to: page_path(@conn, :about) %></li>
           <%= if !@current_user do %>
-            <li class="mobile_nav-list-item <%= active_class(@conn, ["person-subscribe"]) %>"><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
+            <li class="mobile_nav-list-item"><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
           <% end %>
         </ul>
       </div>
