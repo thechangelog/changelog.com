@@ -101,13 +101,12 @@
         line-height: $size;
         position: absolute;
         width: $size;
-        top: 15px;
+        top: 45px;
 
         &-icon,
         img {
           width: $size;
           height: $size;
-          // top: 15px;
         }
       }
     }
