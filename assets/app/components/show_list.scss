@@ -39,7 +39,9 @@
 
       &-wrap {
         margin: 0 auto;
-        max-width: 220px;
+        max-width: 300px;
+
+        @include breakpoint(tiny) { max-width: 220px }
       }
 
       &-art {
