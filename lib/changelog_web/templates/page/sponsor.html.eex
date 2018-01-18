@@ -31,13 +31,12 @@
       </div>
       <div class="marketing-section-grid-item">
         <h3>Measurable results</h3>
-        <!-- TODO: This doesn't read correctly. Update! -->
-        <p>Our team will work closely with you to determine your goals, then design a branded campaign focused on those goals, resonates with our audience, and gets&nbsp;results.</p>
+        <p>Our team will work closely with you to determine your goals and design a branded campaign focused on your goals that resonates with our audience.</p>
       </div>
     </div>
 
     <div class="marketing-section-centered">
-      <%= link "Get Started", to: "mailto:editors@changelog.com", title: "", class: "marketing-button button_large" %>
+      <%= link "Get Started", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
       <p class="button_note">Or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
     </div>
   </section>
@@ -49,41 +48,18 @@
       <h3>Brands who care about developers advertise with&nbsp;Changelog</h3>
     </header>
 
-    <!-- TODO: Verify and update partners list -->
     <div class="marketing-section-logos">
-      <a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-toptal.png") %>' alt="Toptal"></a>
-      <a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-fastly.png") %>' alt="Fastly"></a>
-      <a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linode.png") %>' alt="Linode"></a>
-      <a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-rollbar.png") %>' alt="Rollbar"></a>
-      <a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ibm.png") %>' alt="IBM"></a>
-      <a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-strongloop.png") %>' alt="StrongLoop"></a>
-      <a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-flatiron.png") %>' alt="Flatiron School"></a>
-      <a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeschool.png") %>' alt="Code School"></a>
-      <a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a>
-      <a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-gocd.png") %>' alt="Go"></a>
-      <a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-heap.png") %>' alt="Heap"></a>
-      <a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-sentry.png") %>' alt="Sentry"></a>
-      <a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a>
-      <a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a>
-      <a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ato.png") %>' alt="All things open."></a>
-      <a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a>
-      <a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-elixirconf.png") %>' alt="ElixirConf"></a>
-      <a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-compose.png") %>' alt="Compose"></a>
-      <a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hired.png") %>' alt="Hired"></a>
-      <a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-datadog.png") %>' alt="Datadog"></a>
-      <a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-casper.png") %>' alt="Casper"></a>
-      <a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-imgix.png") %>' alt="imgix"></a>
-      <a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a>
-      <a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeship.png") %>' alt="Codeship"></a>
+      <%= render("_sponsors.html", assigns) %>
     </div>
   </section>
 
+  <!-- TODO
   <section class="marketing-section marketing-section--no_top_padding">
     <header class="marketing-section-header">
       <h3>What our sponsors are saying</h3>
     </header>
 
-    <!-- TODO: Add real sponsor images -->
+
     <div class="marketing-section-grid">
       <div class="marketing-section-grid-item">
         <div class="marketing-section-grid-quote">
@@ -118,44 +94,5 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <hr />
-
-  <section class="marketing-section">
-    <header class="marketing-section-header">
-      <h2>Our Partners</h2>
-      <p>The following partners are commited to our mission on the&nbsp;long-term.<br />
-      Email us at <a href="mailto:partners@changelog.com">partners@changelog.com</a> if you're&nbsp;interested.</p>
-    </header>
-
-    <!-- TODO: Verify and update partners list -->
-    <div class="marketing-section-logos">
-      <a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-toptal.png") %>' alt="Toptal"></a>
-      <a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-fastly.png") %>' alt="Fastly"></a>
-      <a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linode.png") %>' alt="Linode"></a>
-      <a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-rollbar.png") %>' alt="Rollbar"></a>
-      <a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ibm.png") %>' alt="IBM"></a>
-      <a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-strongloop.png") %>' alt="StrongLoop"></a>
-      <a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-flatiron.png") %>' alt="Flatiron School"></a>
-      <a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeschool.png") %>' alt="Code School"></a>
-      <a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a>
-      <a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-gocd.png") %>' alt="Go"></a>
-      <a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-heap.png") %>' alt="Heap"></a>
-      <a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-sentry.png") %>' alt="Sentry"></a>
-      <a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a>
-      <a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a>
-      <a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-ato.png") %>' alt="All things open."></a>
-      <a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a>
-      <a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-elixirconf.png") %>' alt="ElixirConf"></a>
-      <a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-compose.png") %>' alt="Compose"></a>
-      <a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hired.png") %>' alt="Hired"></a>
-      <a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-datadog.png") %>' alt="Datadog"></a>
-      <a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-casper.png") %>' alt="Casper"></a>
-      <a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-imgix.png") %>' alt="imgix"></a>
-      <a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a>
-      <a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/community/sponsors/sponsor-codeship.png") %>' alt="Codeship"></a>
-    </div>
-  </section>
-
+  </section> -->
 </article>

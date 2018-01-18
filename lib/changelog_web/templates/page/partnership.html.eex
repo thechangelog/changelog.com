@@ -1,6 +1,0 @@
-<!-- TODO: Add content or remove -->
-<article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "", conn: @conn) %>
-  <div class="richtext">
-  </div>
-</article>
