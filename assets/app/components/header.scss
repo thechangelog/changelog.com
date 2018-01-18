@@ -265,6 +265,10 @@
         margin-right: 20px;
       }
 
+      .header-nav-list-item:last-child {
+        margin-right: 0;
+      }
+
       &-user {
         $size: 20px;
         margin: 0;
