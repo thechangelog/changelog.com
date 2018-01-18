@@ -1,13 +1,13 @@
 <%= if @page.total_pages > 1 do %>
   <nav class="pagination" role="menubar" aria-label="Pagination">
     <%= if @page.page_number > 1 do %>
-      <%= link "Newer", to: current_path(@conn, %{page: @page.page_number - 1}), class: "pagination-item pagination-item--button" %>
+      <%= link "Newer", to: pagination_path(-1, assigns), class: "pagination-item pagination-item--button" %>
     <% else %>
       <span class="pagination-item">&nbsp;</span>
     <% end %>
     <span class="pagination-item pagination-item--current"><%= @page.page_number %></span>
     <%= if @page.page_number < @page.total_pages do %>
-      <%= link "Older", to: current_path(@conn, %{page: @page.page_number + 1}), class: "pagination-item pagination-item--button" %>
+      <%= link "Older", to: pagination_path(+1, assigns), class: "pagination-item pagination-item--button" %>
     <% else %>
       <span class="pagination-item">&nbsp;</span>
     <% end %>
