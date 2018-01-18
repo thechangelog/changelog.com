@@ -6,8 +6,5 @@
 
     <%= link "#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name %>
   </p>
-  <h2 class="news_item-title">
-    <%= link @ad.headline, to: news_ad_path(@conn, :show, slug(@ad)) %>&nbsp;&nbsp;
-    <%= link to: @ad.url do %><span class="news_item-title-external"></span><% end %>
-  </h2>
+  <h2 class="news_item-title"><%= link @ad.headline, to: @ad.url, rel: "external" %></h2>
 </header>

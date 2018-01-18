@@ -1,0 +1,5 @@
+<%= link to: @item.url, title: domain_name(@item.url), class: "news_item-source-image news_item-source-image--fallback" do %>
+  <span class="news_item-source-image-icon news_item-source-image-icon--<%= @item.type %>"></span>
+<% end %>
+
+<%= link domain_name(@item.url), to: @item.url, title: domain_name(@item.url), rel: "external" %>

@@ -1,11 +1,5 @@
-<%= if @topic.icon do %>
-  <%= link to: topic_path(@conn, :show, @topic.slug), title: @topic.name, class: "news_item-source-image" do %>
-    <img src="<%= TopicView.icon_url(@topic) %>" alt="<%= @topic.name %> Icon" />
-  <% end %>
-<% else %>
-  <%= link to: domain_url(@item.url), title: domain_name(@item.url), class: "news_item-source-image" do %>
-    <span class="news_item-source-image-icon news_item-source-image-icon--<%= @item.type %>"></span>
-  <% end %>
+<%= link to: topic_path(@conn, :show, @topic.slug), title: @topic.name, class: "news_item-source-image" do %>
+  <img src="<%= TopicView.icon_url(@topic) %>" alt="<%= @topic.name %> Icon" />
 <% end %>
 
-<%= link domain_name(@item.url), to: domain_url(@item.url), title: domain_name(@item.url), rel: "external" %>
+<%= link domain_name(@item.url), to: @item.url, title: domain_name(@item.url), rel: "external" %>

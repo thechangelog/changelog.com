@@ -5,6 +5,10 @@
     <span class="news_item-toolbar-meta-item">
       logged by @<%= @item.logger.handle %> <%= TimeView.ts(@item.published_at, @style) %>
     </span>
+    &bull;
+    <span class="news_item-toolbar-meta-item">
+      <%= link "permalink", to: news_item_path(@conn, :show, slug(@item)) %>
+    </span>
     <%= if Enum.any?(@item.topics) do %>
       &bull;
       <span class="news_item-toolbar-meta-item">

@@ -41,10 +41,10 @@ defmodule ChangelogWeb.NewsItemView do
   end
   def render_item_source(conn, item) do
     cond do
-      item.source -> render("_item_source_source.html", conn: conn, item: item, source: item.source)
+      item.source && item.source.icon -> render("_item_source_source.html", conn: conn, item: item, source: item.source)
       item.author -> render("_item_source_author.html", conn: conn, item: item, author: item.author)
-      Enum.any?(item.topics) -> render("_item_source_topic.html", conn: conn, item: item, topic: List.first(item.topics))
-      true -> render("_item_source_default.html", conn: conn, item: item)
+      topic = Enum.find(item.topics, &(&1.icon)) -> render("_item_source_topic.html", conn: conn, item: item, topic: topic)
+      true -> render("_item_source_fallback.html", conn: conn, item: item)
     end
   end
 

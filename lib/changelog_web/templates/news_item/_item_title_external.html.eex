@@ -1,1 +1,1 @@
-<%= link @item.headline, to: news_item_path(@conn, :show, slug(@item)) %>&nbsp;<%= link to: @item.url do %><span class="news_item-title-external"></span><% end %>
+<%= link @item.headline, to: @item.url, rel: "external" %>
