@@ -144,6 +144,10 @@
       position: absolute;
       right: 0;
 
+      .news_item--sponsor & {
+        background: $highlight;
+      }
+
       &:hover {
         color: darken($green, 10%) !important;
       }
@@ -159,6 +163,10 @@
         position: absolute;
         width: $size;
         top: 0;
+
+        .news_item--sponsor & {
+          background: linear-gradient(90deg, rgba($highlight, 0), $highlight);
+        }
       }
     }
 
