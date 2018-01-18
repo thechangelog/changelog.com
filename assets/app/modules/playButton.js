@@ -19,13 +19,13 @@ export default class PlayButton {
   play() {
     this.isPlaying = true;
     this.playBarButton().removeClass("playbar_play").addClass("playbar_pause").text("Pause");
-    this.newsItemButton().addClass("is-active").text("Pause");
+    this.newsItemButton().addClass("is-active").html("<span>Pause</span>");
   }
 
   pause() {
     this.isPlaying = false;
     this.playBarButton().removeClass("playbar_pause").addClass("playbar_play").text("Play");
-    this.newsItemButton().removeClass("is-active").text("Play");
+    this.newsItemButton().removeClass("is-active").html("<span>Play</span>");
   }
 
   playBarButton() {
@@ -33,6 +33,6 @@ export default class PlayButton {
   }
 
   newsItemButton() {
-    return u(`a.news_item-toolbar-button--play[data-play="${this.owner}"]`);
+    return u(`a.news_item-toolbar-play_button[data-play="${this.owner}"]`);
   }
 }

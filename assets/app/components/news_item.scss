@@ -140,28 +140,22 @@
     display: flex;
     flex-wrap: wrap;
 
-    &-item {
+    &-play_button,
+    &-meta {
       margin-right: $base-spacing/2;
     }
 
-    &-button {
-      @include toolbar_button();
+    &-play_button {
+      background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
+      border: 1px solid $light-grey;
+      border-radius: $base-border-radius;
+      padding: 0.5em 0.3em 0.3em;
       height: 33px;
-      padding-left: 0.75em;
-      padding-right: 0.65em;
+      width: 40px;
+      text-indent: -999px;
 
-      &--play {
-        text-indent: -9999px;
-
-        span {
-          $size: 7px;
-          display: block;
-          width: 0;
-          height: 0;
-          border-top: $size solid transparent;
-          border-bottom: $size solid transparent;
-          border-left: 12px solid $black;
-        }
+      &.is-active {
+        background-image: url('/images/icons/toolbar-pause.svg');
       }
     }
 
