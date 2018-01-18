@@ -5,9 +5,13 @@
   padding: 0 $base-spacing;
 
   @include breakpoint(mobile) {
-    margin-top: #{50px - $top_offset};
+    $v_margin: 50px;
+    margin-top: #{$v_margin - $top_offset};
+    margin-bottom: $v_margin;
   }
   @include breakpoint(tablet) {
-    margin-top: #{60px - $top_offset};
+    $v_margin: 60px;
+    margin-top: #{$v_margin - $top_offset};
+    margin-bottom: $v_margin;
   }
 }

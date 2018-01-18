@@ -36,6 +36,30 @@
 
   <div class="account_ctas">
     <div class="account_ctas-item">
+      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/changelog-logomark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+
+      <div class="account_ctas-item-info">
+        <h3>Changelog.com Profiles</h3>
+        <p>Public profiles are launching soon. Add your info today to reserve your username.</p>
+
+        <div class="account_ctas-item-info-buttons">
+          <%= link "Manage Profile", to: "#" %>
+        </div>
+      </div>
+    </div>
+    <div class="account_ctas-item">
+      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/podcasts.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+
+      <div class="account_ctas-item-info">
+        <h3>Changelog Podcasts</h3>
+        <p>Prefer not to listen on the web? Subscribe to Changelog podcasts from your app of choice.</p>
+
+        <div class="account_ctas-item-info-buttons">
+          <%= link "Subscribe to Podcasts", to: podcast_path(@conn, :index) %>
+        </div>
+      </div>
+    </div>
+    <div class="account_ctas-item">
       <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
 
       <div class="account_ctas-item-info">
@@ -45,18 +69,6 @@
         <div class="account_ctas-item-info-buttons">
           <%= link "Request Invite", to: home_path(@conn, :slack), method: :post %>
           <%= link "Launch Slack", to: "https://changelog.slack.com", target: "_blank" %>
-        </div>
-      </div>
-    </div>
-    <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/changelog-logomark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
-
-      <div class="account_ctas-item-info">
-        <h3>Changelog.com Profiles</h3>
-        <p>Public profiles are launching soon. Add your info today to reserve your username.</p>
-
-        <div class="account_ctas-item-info-buttons">
-          <%= link "Manage Profile", to: "#" %>
         </div>
       </div>
     </div>
