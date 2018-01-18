@@ -1,39 +1,27 @@
 defmodule ChangelogWeb.SearchController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, SearchResults}
+  alias Changelog.NewsItem
 
   require Logger
 
-  def search(conn, params) do
-    results = case params do
-      %{"q" => query, "page" => page} -> fetch_results(query, page)
-      %{"q" => query} -> fetch_results(query)
-      _else -> nil
-    end
+  def search(conn, params = %{"q" => query}) do
+    page =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.search(query)
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(Map.put(params, :page_size, 30))
 
-    render(conn, "search.html", results: results, query: params["q"])
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    render(conn, :search, items: items, page: page, query: params["q"])
   end
 
-  defp fetch_results(query, page \\ 1) do
-    news = find_news(query, page)
-
-    results(news)
-  end
-
-  defp results(news) do
-    %SearchResults{
-      count_total: news.total_entries,
-      news: news
-    }
-  end
-
-  defp find_news(query, page \\ 1, page_size \\ 10) do
-    NewsItem
-    |> NewsItem.published
-    |> NewsItem.search(query)
-    |> NewsItem.newest_first
-    |> NewsItem.preload_all
-    |> Repo.paginate(page: page, page_size: page_size)
+  def search(conn, _params) do
+    render(conn, :search, items: [], query: "")
   end
 end

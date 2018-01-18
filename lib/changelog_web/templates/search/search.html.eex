@@ -4,13 +4,13 @@
     <input name="q" type="text" placeholder="search changelog" value="<%= @query %>" autofocus />
   </form>
 
-  <%= if @results do %>
-    <%= if @results.count_total > 0 do %>
-      <p class="search-results_sentence">We found <%= link pluralize(@results.count_total, "item", "items"), to: "#results" %>.</p>
+  <%= if Enum.any?(@items) do %>
+    <%= if @page.total_entries > 0 do %>
+      <p class="search-results_sentence">We found <%= link pluralize(@page.total_entries, "item", "items"), to: "#results" %>.</p>
 
       <div class="feed">
-        <%= for news_item <- @results.news do %>
-          <%= render(NewsItemView, "_item_summary.html", conn: @conn, item: news_item) %>
+        <%= for item <- @items do %>
+          <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
         <% end %>
         <%= render(SharedView, "_pagination.html", assigns) %>
       </div>
