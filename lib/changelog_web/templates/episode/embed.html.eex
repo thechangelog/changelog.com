@@ -83,7 +83,7 @@
           <li class="episode-player_nav_list_item">
             <%= link "Subscribe",
                 title: "Subscribe to #{@podcast.name}",
-                to: PodcastView.subscribe_link(@episode.podcast),
+                to: podcast_url(@conn, :index),
                 target: "_blank",
                 style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
           </li>
