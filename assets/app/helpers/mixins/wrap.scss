@@ -1,6 +1,6 @@
-@mixin wrap() {
+@mixin wrap($width: 1000) {
   margin: 40px auto;
-  max-width: 940px;
+  max-width: #{$width - ($base-spacing*2)};
   padding: 0 $base-spacing;
 
   @include breakpoint(mobile) {

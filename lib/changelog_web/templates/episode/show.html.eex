@@ -34,7 +34,7 @@
       <%= render("_play_bar.html", assigns) %>
     </div>
 
-    <%= link "← All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button" %>
+    <%= link "All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button" %>
   </header>
 
   <div class="episode-body">
