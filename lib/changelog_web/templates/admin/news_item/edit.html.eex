@@ -9,5 +9,5 @@
   <% end %>
   </h1>
 
-  <%= render "_form.html", changeset: @changeset, action: admin_news_item_path(@conn, :update, @item), quick: false %>
+  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_news_item_path(@conn, :update, @item), quick: false) %>
 </div>

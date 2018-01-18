@@ -27,7 +27,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(source, params)
+        |> redirect_next(params, admin_news_source_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -46,10 +46,10 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
     changeset = NewsSource.update_changeset(source, source_params)
 
     case Repo.update(changeset) do
-      {:ok, source} ->
+      {:ok, _source} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(source, params)
+        |> redirect_next(params, admin_news_source_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -64,12 +64,5 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_source_path(conn, :index))
-  end
-
-  defp smart_redirect(conn, _source, %{"close" => _true}) do
-    redirect(conn, to: admin_news_source_path(conn, :index))
-  end
-  defp smart_redirect(conn, source, _params) do
-    redirect(conn, to: admin_news_source_path(conn, :edit, source))
   end
 end

@@ -25,8 +25,8 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
   end
 
   @tag :as_admin
-  test "creates sponsor and smart redirects", %{conn: conn} do
-    conn = post(conn, admin_sponsor_path(conn, :create), sponsor: @valid_attrs, close: true)
+  test "creates sponsor and redirects", %{conn: conn} do
+    conn = post(conn, admin_sponsor_path(conn, :create), sponsor: @valid_attrs)
 
     assert redirected_to(conn) == admin_sponsor_path(conn, :index)
     assert count(Sponsor) == 1
@@ -50,12 +50,12 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
   end
 
   @tag :as_admin
-  test "updates sponsor and smart redirects", %{conn: conn} do
+  test "updates sponsor and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
 
     conn = put conn, admin_sponsor_path(conn, :update, sponsor.id), sponsor: @valid_attrs
 
-    assert redirected_to(conn) == admin_sponsor_path(conn, :edit, sponsor)
+    assert redirected_to(conn) == admin_sponsor_path(conn, :index)
     assert count(Sponsor) == 1
   end
 

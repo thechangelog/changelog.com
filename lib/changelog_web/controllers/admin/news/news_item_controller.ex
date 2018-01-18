@@ -84,7 +84,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(item, params)
+        |> redirect_next(params, admin_news_item_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -123,14 +123,5 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       "append"  -> NewsQueue.append(item)
       "draft"   -> true
     end
-  end
-
-  # usually we want to stay on edit as the default, but in this case we
-  # actually want to close as the default and let stay be the exception case
-  defp smart_redirect(conn, item, %{"stay" => _true}) do
-    redirect(conn, to: admin_news_item_path(conn, :edit, item))
-  end
-  defp smart_redirect(conn, _item, _params) do
-    redirect(conn, to: admin_news_item_path(conn, :index))
   end
 end

@@ -28,7 +28,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
-  test "creates person, sends no welcome, and smart redirects", %{conn: conn} do
+  test "creates person, sends no welcome, and redirects", %{conn: conn} do
     conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
       post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
     end
@@ -40,9 +40,9 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
-  test "creates person, sends generic welcome, and smart redirects", %{conn: conn} do
+  test "creates person, sends generic welcome, and redirects", %{conn: conn} do
     conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
-      post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true, welcome: "generic")
+      post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "generic")
     end
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
@@ -52,9 +52,9 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
-  test "creates person, sends guest welcome, and smart redirects", %{conn: conn} do
+  test "creates person, sends guest welcome, and redirects", %{conn: conn} do
     conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
-      post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true, welcome: "guest")
+      post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "guest")
     end
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
@@ -81,12 +81,12 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
-  test "updates person and smart redirects", %{conn: conn} do
+  test "updates person and redirects", %{conn: conn} do
     person = insert(:person)
 
     conn = put conn, admin_person_path(conn, :update, person.id), person: @valid_attrs
 
-    assert redirected_to(conn) == admin_person_path(conn, :edit, person)
+    assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 1
   end
 

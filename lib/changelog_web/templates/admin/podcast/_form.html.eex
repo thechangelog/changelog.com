@@ -138,5 +138,5 @@
     <%= error_message(f, :ping_url) %>
   </div>
 
-  <%= form_actions() %>
+  <%= form_actions(@conn) %>
 <% end %>

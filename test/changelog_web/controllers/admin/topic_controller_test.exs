@@ -25,8 +25,8 @@ defmodule ChangelogWeb.Admin.TopicControllerTest do
   end
 
   @tag :as_admin
-  test "creates topic and smart redirects", %{conn: conn} do
-    conn = post(conn, admin_topic_path(conn, :create), topic: @valid_attrs, close: true)
+  test "creates topic and redirects", %{conn: conn} do
+    conn = post(conn, admin_topic_path(conn, :create), topic: @valid_attrs)
 
     assert redirected_to(conn) == admin_topic_path(conn, :index)
     assert count(Topic) == 1
@@ -50,12 +50,12 @@ defmodule ChangelogWeb.Admin.TopicControllerTest do
   end
 
   @tag :as_admin
-  test "updates topic and smart redirects", %{conn: conn} do
+  test "updates topic and redirects", %{conn: conn} do
     topic = insert(:topic)
 
     conn = put(conn, admin_topic_path(conn, :update, topic.slug), topic: @valid_attrs)
 
-    assert redirected_to(conn) == admin_topic_path(conn, :edit, "ruby-on-rails")
+    assert redirected_to(conn) == admin_topic_path(conn, :index)
     assert count(Topic) == 1
   end
 

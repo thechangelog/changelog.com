@@ -91,10 +91,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.admin_changeset(episode_params)
 
     case Repo.insert(changeset) do
-      {:ok, episode} ->
+      {:ok, _episode} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(podcast, episode, params)
+        |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -121,10 +121,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     changeset = Episode.admin_changeset(episode, episode_params)
 
     case Repo.update(changeset) do
-      {:ok, episode} ->
+      {:ok, _episode} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(podcast, episode, params)
+        |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -198,12 +198,5 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         Email.guest_thanks(guest, email_opts) |> Mailer.deliver_later
       end
     end
-  end
-
-  defp smart_redirect(conn, podcast, _episode, %{"close" => _true}) do
-    redirect(conn, to: admin_podcast_episode_path(conn, :index, podcast.slug))
-  end
-  defp smart_redirect(conn, podcast, episode, _params) do
-    redirect(conn, to: admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
   end
 end

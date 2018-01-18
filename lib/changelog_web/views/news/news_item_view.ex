@@ -6,7 +6,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
-      link("[Edit]", to: admin_news_item_path(conn, :edit, item), data: [turbolinks: false])
+      link("[Edit]", to: admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false])
     end
   end
 

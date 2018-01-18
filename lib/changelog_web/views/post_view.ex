@@ -5,7 +5,7 @@ defmodule ChangelogWeb.PostView do
 
   def admin_edit_link(conn, user, post) do
     if user && user.admin do
-      link("[Edit]", to: admin_post_path(conn, :edit, post), data: [turbolinks: false])
+      link("[Edit]", to: admin_post_path(conn, :edit, post, next: current_path(conn)), data: [turbolinks: false])
     end
   end
 

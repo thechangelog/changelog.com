@@ -16,5 +16,5 @@
   <% end %>
   </h1>
 
-  <%= render("_form.html", changeset: @changeset, action: admin_news_issue_path(@conn, :update, @issue)) %>
+  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_news_issue_path(@conn, :update, @issue)) %>
 </div>

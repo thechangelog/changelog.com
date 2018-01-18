@@ -28,7 +28,7 @@ defmodule ChangelogWeb.Admin.TopicController do
 
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(topic, params)
+        |> redirect_next(params, admin_topic_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -47,10 +47,10 @@ defmodule ChangelogWeb.Admin.TopicController do
     changeset = Topic.update_changeset(topic, topic_params)
 
     case Repo.update(changeset) do
-      {:ok, topic} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(topic, params)
+        |> redirect_next(params, admin_topic_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -65,12 +65,5 @@ defmodule ChangelogWeb.Admin.TopicController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_topic_path(conn, :index))
-  end
-
-  defp smart_redirect(conn, _topic, %{"close" => _true}) do
-    redirect(conn, to: admin_topic_path(conn, :index))
-  end
-  defp smart_redirect(conn, topic, _params) do
-    redirect(conn, to: admin_topic_path(conn, :edit, topic.slug))
   end
 end

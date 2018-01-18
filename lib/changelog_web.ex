@@ -10,6 +10,10 @@ defmodule ChangelogWeb do
 
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Plug.Conn
+
+      defp redirect_next(conn, %{"next" => ""}, fallback), do: redirect(conn, to: fallback)
+      defp redirect_next(conn, %{"next" => next}, _fallback), do: redirect(conn, to: next)
+      defp redirect_next(conn, _next, fallback), do: redirect(conn, to: fallback)
     end
   end
 

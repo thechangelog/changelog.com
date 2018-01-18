@@ -4,5 +4,5 @@
     &raquo; New
   </h1>
 
-  <%= render "_form.html", changeset: @changeset, action: admin_sponsor_path(@conn, :create) %>
+  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_sponsor_path(@conn, :create)) %>
 </div>

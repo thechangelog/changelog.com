@@ -7,7 +7,7 @@ defmodule ChangelogWeb.TopicView do
 
   def admin_edit_link(conn, user, topic) do
     if user && user.admin do
-      link("[Edit]", to: admin_topic_path(conn, :edit, topic.slug), data: [turbolinks: false])
+      link("[Edit]", to: admin_topic_path(conn, :edit, topic.slug, next: current_path(conn)), data: [turbolinks: false])
     end
   end
 
