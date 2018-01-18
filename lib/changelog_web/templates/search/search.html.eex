@@ -4,35 +4,17 @@
     <input name="q" type="text" placeholder="search changelog" value="<%= @query %>" autofocus />
   </form>
 
-  <!-- TODO: Make this only search "news" -->
-
   <%= if @results do %>
     <%= if @results.count_total > 0 do %>
-      <p class="search-results_sentence">We found <%= link pluralize(@results.count_episodes, "episode", "episodes"), to: "#episodes" %> and <%= link pluralize(@results.count_posts, "post", "posts"), to: "#posts" %>.</p>
+      <p class="search-results_sentence">We found <%= link pluralize(@results.count_total, "item", "items"), to: "#results" %>.</p>
 
-      <%= if @results.count_episodes > 0 do %>
-        <section id="episodes" class="feed">
-          <h3 class="search_results_heading"><%= pluralize(@results.count_episodes, "episode", "episodes") %></h3>
-          <%= for episode <- @results.episodes do %>
-            <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
-          <% end %>
-          <%= if @results.episodes.total_pages > 1 do %>
-            <%= pagination_links(@conn, @results.episodes, type: "episodes", action: :search, q: @query, path: &search_path/3) %>
-          <% end %>
-        </section>
-      <% end %>
+      <div class="feed">
+        <%= for news_item <- @results.news do %>
+          <%= render(NewsItemView, "_item_summary.html", conn: @conn, item: news_item) %>
+        <% end %>
+        <%= render(SharedView, "_pagination.html", assigns) %>
+      </div>
 
-      <%= if @results.count_posts > 0 do %>
-        <section id="posts" class="feed">
-          <h3 class="search_results_heading"><%= pluralize(@results.count_posts, "post", "posts") %></h3>
-          <%= for post <- @results.posts do %>
-            <%= render(PostView, "_post_summary.html", conn: @conn, post: post) %>
-          <% end %>
-          <%= if @results.posts.total_pages > 1 do %>
-            <%= pagination_links(@conn, @results.posts, type: "posts", action: :search, q: @query, path: &search_path/3) %>
-          <% end %>
-        </section>
-      <% end %>
     <% else %>
       <%= if String.length(@query) != 0 do %>
         <p class="search-results_sentence">
