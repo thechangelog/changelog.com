@@ -1,5 +1,12 @@
+.page_news_item,
 .feed {
-  @include wrap;
+  margin: 20px auto;
+  max-width: 940px;
+  padding: 0 $base-spacing;
+
+  @include breakpoint(mobile) {
+    margin: 30px auto;
+  }
 
   @include breakpoint(mobile, max) {
     padding: 0;
