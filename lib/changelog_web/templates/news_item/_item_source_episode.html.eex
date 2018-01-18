@@ -1,5 +1,4 @@
 <%= if Enum.any?(@episode.guests) do %>
-  <% primary_guest = List.first(@episode.guests) %>
   <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) <> "#featuring", title: @episode.title, class: "news_item-source-image news_item-source-image--#{ length(@episode.guests) }" do %>
     <%= for guest <- Enum.reverse(@episode.guests) do %>
       <img src="<%= PersonView.avatar_url(guest) %>" alt="<%= guest.name %> Avatar" />
