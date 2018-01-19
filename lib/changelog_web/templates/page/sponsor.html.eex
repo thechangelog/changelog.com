@@ -5,7 +5,7 @@
       <h1>Reach thousands of developers and <br />creative software professionals.</h1>
       <p>300,000 Monthly Pageviews • 225,000 Monthly Podcast Listens • 12,000 Email Subscribers</p>
 
-      <%= link "Get Started", to: "mailto:editors@changelog.com", title: "", class: "marketing-button button_large" %>
+      <%= link "Get Started", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
       <p class="button_note">Or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
     </header>
   </section>
