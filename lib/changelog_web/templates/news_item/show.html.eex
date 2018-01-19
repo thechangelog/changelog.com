@@ -7,8 +7,14 @@
         <p><%= @item.story |> md_to_html |> raw %></p>
       </div>
     <% end %>
+    <%= if @item.image do %>
+      <p>
+        <%= link to: @item.url do %>
+          <img src="<%= image_url(@item, :large) %>" alt="<%= @item.headline %>">
+        <% end %>
+      </p>
+    <% end %>
     <ul class="news_item-meta">
-      <li class="news_item-meta-item"><span class="news_item-meta-item-key">Source:</span> <span class="news_item-meta-item-value"><%= link @item.url, to: domain_url(@item.url), title: domain_name(@item.url), rel: "external" %></span></li>
     </ul>
   </article>
 </div>
