@@ -41,7 +41,7 @@
       <p>Every weekend we ship our email to <%= @weekly |> NewsletterView.subscribers(:all, 7500) |> comma_separated %> die-hard readers.</p>
 
       <ul>
-        <li><mark>$350 per week with a four (4) week minimum</mark></li>
+        <li><mark>$500 per week with a four (4) week minimum</mark></li>
         <li>We maintain <em>very high</em> engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
         <li>The breakdown is a linked heading with 2-3 lines of supporting text with links.</li>
         <li>We take a native content approach to sponsored links included in Changelog Weekly. Since most organizations treat their blog, ebooks, webinars and other content as their inbound funnel, we leverage that to share that content with our readers and let your marketing funnel do what it was designed to do &mdash; convert!</li>
