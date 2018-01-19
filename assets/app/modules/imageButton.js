@@ -5,6 +5,7 @@ export default class ImageButton {
   constructor(el) {
     this.el = u(el);
     this.imageUrl = this.el.attr("data-image");
+    this.imageWidth = this.el.attr("data-width");
     el.removeAttribute("data-image");
     this.item = this.el.closest(".news_item");
     this.load();
@@ -12,7 +13,7 @@ export default class ImageButton {
   }
 
   load() {
-    this.item.append(template({src: this.imageUrl}));
+    this.item.append(template({src: this.imageUrl, width: this.imageWidth}));
     this.show();
   }
 

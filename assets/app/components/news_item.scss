@@ -202,17 +202,18 @@
       margin-right: $base-spacing/2;
     }
 
+    // TODO: Update toolbar-image icon with desired type
     &-play_button {
-      background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
+      background: $white url('/images/icons/toolbar-image.svg') center no-repeat;
       border: 1px solid $light-grey;
       border-radius: $base-border-radius;
       padding: 0.5em 0.3em 0.3em;
       height: 33px;
       width: 40px;
-      text-indent: -999px;
+      text-indent: -9999px;
 
       &.is-active {
-        background-image: url('/images/icons/toolbar-pause.svg');
+        background-image: url('/images/icons/toolbar-close.svg');
       }
     }
 
@@ -263,6 +264,16 @@
         color: $base-link-color;
         &:hover { color: $base-hover-color }
       }
+    }
+  }
+
+  &-image {
+    margin-top: 1.5em;
+
+    &.is-hidden { display: none; }
+
+    img {
+      max-width: 100%;
     }
   }
 }
