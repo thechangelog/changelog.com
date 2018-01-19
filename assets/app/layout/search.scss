@@ -1,11 +1,13 @@
 .search {
   @include wrap;
+  padding: 0;
 
   &-form {
     border-bottom: 1px solid $green;
     display: flex;
     font-family: $code;
     font-size: 0.875em;
+    padding: 0 $base-spacing;
 
     &:before {
       content: "~ $ ";
@@ -23,10 +25,6 @@
   &-results_sentence {
     font-family: $code;
     font-size: 0.875em;
-    padding: 1em 0;
-  }
-
-  .feed {
-    padding: $base-spacing 0 $base-spacing*2;
+    padding: 1em $base-spacing;
   }
 }
