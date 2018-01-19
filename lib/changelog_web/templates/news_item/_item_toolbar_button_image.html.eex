@@ -1,4 +1,4 @@
 <!-- TODO: Pass the images original width here. We'll use that as the max-width -->
-<button class="news_item-toolbar-play_button" data-image="<%= image_url(@item, :large) %>" data-width="360">
+<button class="news_item-toolbar-image_button" data-image="<%= image_url(@item, :large) %>" data-width="360">
   View Image
 </button>

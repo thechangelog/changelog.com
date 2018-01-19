@@ -198,13 +198,14 @@
     display: flex;
 
     &-play_button,
+    &-image_button,
     &-meta {
       margin-right: $base-spacing/2;
     }
 
-    // TODO: Update toolbar-image icon with desired type
-    &-play_button {
-      background: $white url('/images/icons/toolbar-image.svg') center no-repeat;
+    &-play_button,
+    &-image_button {
+      background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
       border: 1px solid $light-grey;
       border-radius: $base-border-radius;
       padding: 0.5em 0.3em 0.3em;
@@ -212,9 +213,14 @@
       width: 40px;
       text-indent: -9999px;
 
-      &.is-active {
-        background-image: url('/images/icons/toolbar-close.svg');
-      }
+      &.is-active { background-image: url('/images/icons/toolbar-pause.svg'); }
+    }
+
+    // TODO: Update icons with desired types
+    &-image_button {
+      background-image: url('/images/icons/toolbar-image.svg');
+
+      &.is-active { background-image: url('/images/icons/toolbar-close.svg'); }
     }
 
     &-meta {
