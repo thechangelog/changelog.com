@@ -51,6 +51,7 @@ defmodule ChangelogWeb.NewsItemController do
       NewsItem
       |> Repo.get_by!(id: id)
       |> NewsItem.preload_all
+      |> NewsItem.load_object
 
     render(conn, :show, item: item)
   end
