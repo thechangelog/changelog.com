@@ -34,6 +34,7 @@ defmodule Changelog.NewsItem do
   def logged_by(query \\ __MODULE__, person),          do: from(q in query, where: q.logger_id == ^person.id)
   def published(query \\ __MODULE__),                  do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
   def search(query, term),                             do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
+  def with_object(query \\ __MODULE__),                do: from(q in query, where: not(is_nil(q.object_id)))
   def with_object_prefix(query \\ __MODULE__, prefix), do: from(q in query, where: like(q.object_id, ^"#{prefix}%"))
   def with_source(query \\ __MODULE__, source),        do: from(q in query, where: q.source_id == ^source.id)
   def with_topic(query \\ __MODULE__, topic),          do: from(q in query, join: t in assoc(q, :news_item_topics), where: t.topic_id == ^topic.id)
