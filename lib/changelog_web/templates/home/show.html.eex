@@ -43,7 +43,7 @@
         <p>Public profiles are launching soon. Add your info today to reserve your username.</p>
 
         <div class="account_ctas-item-info-buttons">
-          <%= link "Manage Profile", to: "#" %>
+          <%= link "Manage Profile", to: home_path(@conn, :profile) %>
         </div>
       </div>
     </div>
