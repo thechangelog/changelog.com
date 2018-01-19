@@ -11,6 +11,6 @@
   margin-bottom: 30px !important;
 
   @include breakpoint(mobile, max) {
-    .pagination { padding: 0 $base-spacing; }
+    .pagination { padding: $base-spacing $base-spacing 0; }
   }
 }
