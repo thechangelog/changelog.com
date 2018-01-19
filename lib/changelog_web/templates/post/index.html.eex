@@ -1,6 +1,0 @@
-<div class="feed">
-  <%= for post <- @posts do %>
-    <%= render("_post_summary.html", conn: @conn, post: post) %>
-  <% end %>
-  <%= render(SharedView, "_pagination.html", assigns) %>
-</div>
