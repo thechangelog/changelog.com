@@ -56,14 +56,13 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def render_item_toolbar_button(conn, item = %{type: :audio}) do
-    if item.object do
-      render("_item_toolbar_button_episode.html", conn: conn, item: item, episode: item.object)
-    else
-      render_item_toolbar_button(conn, Map.put(item, :type, :link))
+  def render_item_toolbar_button(conn, item) do
+    cond do
+      NewsItem.is_audio(item) && item.object -> render("_item_toolbar_button_episode.html", conn: conn, item: item, episode: item.object)
+      item.image -> render("_item_toolbar_button_image.html", conn: conn, item: item)
+      true -> ""
     end
   end
-  def render_item_toolbar_button(_conn, _item), do: ""
 
   def slug(item) do
     item.headline

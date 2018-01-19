@@ -6,6 +6,7 @@ import Cookies from "cookies-js";
 import OnsitePlayer from "modules/onsitePlayer";
 import LivePlayer from "modules/livePlayer";
 import Overlay from "modules/overlay";
+import ImageButton from "modules/imageButton";
 import Share from "modules/share";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
@@ -47,6 +48,10 @@ u(document).on("click", "[data-play]", function(event) {
       player.load(clicked.attr("href"), clicked.data("play"));
     }
   }
+});
+
+u(document).handle("click", "[data-image]", function(event) {
+  new ImageButton(this);
 });
 
 u(document).handle("click", "[data-share]", function(event) {
