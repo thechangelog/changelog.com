@@ -1,9 +1,10 @@
 .pagination {
   @include wrap;
+  border-top: 1px solid $light-grey;
   justify-content: space-between;
   display: flex;
-  margin: 30px auto !important;
-  padding: 0;
+  margin: 0 auto $base-spacing !important;
+  padding: $base-spacing 0 0;
   text-align: center;
 
   &-item,

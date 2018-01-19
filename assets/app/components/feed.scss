@@ -1,16 +1,16 @@
 .page_news_item,
 .feed {
-  margin: 20px auto;
-  max-width: 940px;
-  padding: 0 $base-spacing;
-
-  @include breakpoint(mobile) {
-    margin: 30px auto;
-  }
+  @include wrap;
 
   @include breakpoint(mobile, max) {
     padding: 0;
+  }
+}
 
+.feed {
+  margin-bottom: 30px !important;
+
+  @include breakpoint(mobile, max) {
     .pagination { padding: 0 $base-spacing; }
   }
 }

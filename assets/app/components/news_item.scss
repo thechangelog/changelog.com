@@ -2,12 +2,17 @@
   $horizontal-padding: 20px;
 
   border-bottom: 1px solid $light-grey;
-  padding: $base-spacing;
+  margin-top: $base-spacing;
+  padding: 0 $base-spacing $base-spacing;
   position: relative;
 
   &--sponsor {
     background-color: $highlight;
+    margin-top: 0;
+    padding-top: $base-spacing;
   }
+
+  &:last-of-type { border: none; }
 
   .page_news_item & {
     border-bottom: 0;
@@ -96,7 +101,7 @@
         line-height: $size;
         position: absolute;
         width: $size;
-        top: 45px;
+        top: 15px;
 
         &-icon,
         img {
