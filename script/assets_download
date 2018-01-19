@@ -1,0 +1,10 @@
+#!/bin/bash -ex
+
+for type in icons avatars logos news_items; do
+  rsync --recursive \
+        --partial \
+        --progress \
+        --ignore-existing \
+        cl-app:/data/www/uploads/$type \
+        priv/uploads/
+done
