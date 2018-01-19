@@ -103,6 +103,8 @@
         width: $size;
         top: 15px;
 
+        .news_item--sponsor & { top: 45px; }
+
         &-icon,
         img {
           width: $size;
