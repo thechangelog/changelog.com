@@ -63,7 +63,7 @@
     <div class="marketing-section-grid">
       <div class="marketing-section-grid-item">
         <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/about/jerod.jpg") %>' alt="Breanden Boneschott">
+          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Breanden Boneschott">
           <h3>Breanden Beneschott</h3>
           <p class="marketing-section-grid-quote-title">Toptal &mdash; Co-Founder / COO</p>
           <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
@@ -71,7 +71,7 @@
       </div>
       <div class="marketing-section-grid-item">
         <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/about/adam.jpg") %>' alt="David Roesch">
+          <img src='<%= static_url(@conn, "/images/content/about/adam.jpg") %>' alt="David Roesch">
           <h3>David Roesch</h3>
           <p class="marketing-section-grid-quote-title">Linode &mdash; Director of Marketing</p>
           <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
@@ -79,7 +79,7 @@
       </div>
       <div class="marketing-section-grid-item">
         <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/about/jerod.jpg") %>' alt="Todd Lewis">
+          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Todd Lewis">
           <h3>Todd Lewis</h3>
           <p class="marketing-section-grid-quote-title">All Things Open &mdash; Creator and Chair</p>
           <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
@@ -87,7 +87,7 @@
       </div>
       <div class="marketing-section-grid-item">
         <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/about/heather.jpg") %>' alt="Elaine Greenberg">
+          <img src='<%= static_url(@conn, "/images/content/about/heather.jpg") %>' alt="Elaine Greenberg">
           <h3>Elaine Greenberg</h3>
           <p class="marketing-section-grid-quote-title">Fastly &mdash; Communications</p>
           <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>

@@ -10,15 +10,10 @@
         <span class="js-player-now-playing"></span>
         <figcaption class="js-player-title"></figcaption>
       </div>
-      <!--<div class="podcast-player_details_share">
-        <div class="share-podcast">
-          <button class="share-podcast_btn"><img src="<%= static_url(@conn, "/images/share.svg") %>" alt="Share episode">Share</button>
-        </div>
-      </div>-->
     </div>
     <div class="podcast-player_buttons">
       <button class="podcast-player-button podcast-player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
-        <span class="js-player-prev-number"></span><img src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Previous episode"/>
+        <span class="js-player-prev-number"></span><img src="<%= static_url(@conn, "/images/icons/podcast-arrow.svg") %>" alt="Previous episode"/>
       </button>
       <button class="podcast-player-button podcast-player-button--back15 js-player-back-button" title="Seek back 15 seconds"></button>
 
@@ -26,7 +21,7 @@
 
       <button class="podcast-player-button podcast-player-button--forward15 js-player-forward-button" title="Seek forward 15 seconds"></button>
       <button class="podcast-player-button podcast-player-button--next_episode js-player-next-button" title="Listen to the next episode">
-        <img class="flip-horizontal" src="<%= static_url(@conn, "/images/podcast-arrow.svg") %>" alt="Next episode"/><span class="js-player-next-number"></span>
+        <img class="flip-horizontal" src="<%= static_url(@conn, "/images/icons/podcast-arrow.svg") %>" alt="Next episode"/><span class="js-player-next-number"></span>
       </button>
     </div>
     <form class="podcast-player_slider">

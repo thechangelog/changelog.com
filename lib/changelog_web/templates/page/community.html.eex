@@ -16,22 +16,22 @@
     <ul class="marketing-section-features">
       <li class="marketing-section-features-item">
         <a href="#community" title="Jump to section">
-          <img src='<%= static_url(@conn, "/images/icon-large-chat.svg") %>' width="60" height="60" alt="Chat Icon">
+          <img src='<%= static_url(@conn, "/images/icons/icon-large-chat.svg") %>' width="60" height="60" alt="Chat Icon">
           <span>Access to our private Slack community</span>
         </a>
       </li>
       <li class="marketing-section-features-item">
         <a href="#deals" title="Jump to section">
-          <img src='<%= static_url(@conn, "/images/icon-large-percent.svg") %>' width="60" height="60" alt="Deals Icon">
+          <img src='<%= static_url(@conn, "/images/icons/icon-large-percent.svg") %>' width="60" height="60" alt="Deals Icon">
           <span>Discounts and special offers from our partners</span>
         </a>
       </li>
       <li class="marketing-section-features-item">
-        <img src='<%= static_url(@conn, "/images/icon-large-ticket.svg") %>' width="60" height="60" alt="Ticket Icon">
+        <img src='<%= static_url(@conn, "/images/icons/icon-large-ticket.svg") %>' width="60" height="60" alt="Ticket Icon">
         <span>Early access to new podcasts and content</span>
       </li>
       <li class="marketing-section-features-item">
-        <img src='<%= static_url(@conn, "/images/icon-large-bolt.svg") %>' width="60" height="60" alt="Bolt Icon">
+        <img src='<%= static_url(@conn, "/images/icons/icon-large-bolt.svg") %>' width="60" height="60" alt="Bolt Icon">
         <span>Exclusive features for community members</span>
       </li>
     </ul>
@@ -39,14 +39,14 @@
 
   <section id="community" class="marketing-section">
     <header class="marketing-section-header">
-      <i><img src='<%= static_url(@conn, "/images/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
+      <i><img src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
       <h2>Slack Everyday with&nbsp;Friends</h2>
       <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
     </header>
 
     <div class="marketing-section-content marketing-section-content--slack">
       <div class="marketing-section-content-image">
-        <img src='<%= static_url(@conn, "/images/community/slack-screenshot.jpg") %>' alt="Screenshot of a Slack channel conversation.">
+        <img src='<%= static_url(@conn, "/images/content/community/slack-screenshot.jpg") %>' alt="Screenshot of a Slack channel conversation.">
       </div>
       <div class="marketing-section-content-info">
         <div class="marketing-section-content-info-top">
@@ -64,7 +64,7 @@
             </div>
             <footer class="marketing-quote-footer">
               <a href="https://twitter.com/jdorfman" title="Justin Dorfman on Twitter">
-                <img src='<%= static_url(@conn, "/images/community/justin-dorfman.jpg") %>' alt="A smiling man in a ballcap and glasses." width="65" height="65">
+                <img src='<%= static_url(@conn, "/images/content/community/justin-dorfman.jpg") %>' alt="A smiling man in a ballcap and glasses." width="65" height="65">
                 <strong>Justin Dorfman</strong>
                 <span class="quote-title">Developer Relations at Sticker Mule</span>
               </a>
@@ -88,7 +88,7 @@
 
   <section class="marketing-section marketing-section--map">
     <header class="marketing-section-header">
-      <i><img src='<%= static_url(@conn, "/images/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
+      <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
       <h3>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
 
       <%= if @current_user do %>
@@ -101,7 +101,7 @@
     </header>
 
     <div class="marketing-map">
-      <img src='<%= static_url(@conn, "/images/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+      <img src='<%= static_url(@conn, "/images/content/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
     </div>
   </section>
 </article>

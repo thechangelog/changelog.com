@@ -31,7 +31,7 @@
         </div>
 
         <div class="live-info-cta">
-          <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
+          <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icon/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
         <%= if @current_user do %>
           <p>Join the discussion in our <%= link raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{@podcast.slug}" %>.</p>
         <% else %>
@@ -45,7 +45,7 @@
 
   <footer class="live-footer">
     <div class="live-footer-viewers">
-      <img class="live-info-cta-icon" src="/images/icon-eye.svg" alt="Viewers" width="37" height="26">
+      <img class="live-info-cta-icon" src="/images/icon/icon-eye.svg" alt="Viewers" width="37" height="26">
       <span class="js-live-viewers">0</span>
     </div>
 
@@ -55,7 +55,7 @@
     </ul>
 
     <!--<p class="live-footer-share">
-      <img src="/images/icon-share-white.svg" alt="Share" width="29" height="26">
+      <img src="/images/icon/icon-share-white.svg" alt="Share" width="29" height="26">
       <%= link "Share",
           title: "Share",
           to: "javascript:void(0);",

@@ -22,7 +22,7 @@
     </div>
 
     <div class="image">
-      <a href="http://nightly.changelog.com/2016/10/06/"><img src="<%= static_url(@conn, "/images/changelog-nightly.jpg") %>" alt="Changelog Nightly" /></a>
+      <a href="http://nightly.changelog.com/2016/10/06/"><img src="<%= static_url(@conn, "/images/content/changelog-nightly.jpg") %>" alt="Changelog Nightly" /></a>
     </div>
 
     <div class="richtext">
