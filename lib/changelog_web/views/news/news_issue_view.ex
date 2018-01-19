@@ -7,7 +7,7 @@ defmodule ChangelogWeb.NewsIssueView do
   def items_with_ads(items, []), do: items
   def items_with_ads(items, ads) do
     items
-    |> Enum.chunk_every(items_per_ad(items, ads))
+    |> Enum.chunk_every(3)
     |> Enum.with_index
     |> Enum.map(fn{items, index} ->
       case Enum.at(ads, index) do
@@ -16,10 +16,6 @@ defmodule ChangelogWeb.NewsIssueView do
       end
     end)
     |> List.flatten
-  end
-
-  defp items_per_ad(items, ads) do
-    trunc(Float.ceil(length(items) / length(ads))) - 1
   end
 
   def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
