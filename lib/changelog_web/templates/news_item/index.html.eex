@@ -11,6 +11,16 @@
 
 <%= if @page.page_number == 1 do %>
 <div class="main-podcasts">
-  <%= render(PodcastView, "_show_list.html", conn: @conn, podcasts: @podcasts) %>
+  <section class="show_list" id="podcasts">
+    <header class="show_list-header">
+      <h2>Our Shows</h2>
+    </header>
+    <div class="show_list-shows">
+      <%= for podcast <- @podcasts do %>
+        <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast) %>
+      <% end %>
+      <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: Changelog.Podcast.master) %>
+    </div>
+  </section>
 </div>
 <% end %>

@@ -36,7 +36,7 @@
           <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
         <% end %>
         <li>---</li>
-        <li>Master</li>
+        <li><%= link "Master", to: podcast_path(@conn, :show, :master) %></li>
       </ul>
     </div>
     <div class="footer-nav-list">

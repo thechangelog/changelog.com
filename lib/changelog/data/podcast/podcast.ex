@@ -35,7 +35,7 @@ defmodule Changelog.Podcast do
   %__MODULE__{
     name: "Changelog Master Feed",
     slug: "master",
-    description: "The master feed of all Changelog podcasts.<br><code>git pull changelog master</code>",
+    description: "The master feed of all Changelog podcasts. <br><code>git pull changelog master</code>",
     keywords: "changelog, open source, oss, software, development, developer, hacker",
     itunes_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
     hosts: []
@@ -82,7 +82,11 @@ defmodule Changelog.Podcast do
   end
 
   def get_news_items(podcast) do
-    NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
+    if is_master(podcast) do
+      NewsItem.with_object(NewsItem.audio)
+    else
+      NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
+    end
   end
 
   def episode_count(podcast) do

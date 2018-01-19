@@ -154,6 +154,7 @@ function formatTimes() {
     let style = span.data("style");
     span.text(ts(date, style));
     span.attr("title", ts(date, "timeFirst"));
+    span.removeClass("time");
   });
 }
 
