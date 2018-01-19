@@ -159,6 +159,16 @@
         color: darken($green, 10%) !important;
       }
 
+      @include breakpoint(mobile) {
+        span {
+          transition: all 0.3s $base-easing;
+          opacity: 0;
+        }
+        .news_item:hover & {
+          span { opacity: 1; }
+        }
+      }
+
       &:before {
         $size: 40px;
         content: "";
