@@ -83,7 +83,7 @@
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">
           <h3 class="episode-body-section-heading"><span>Featuring</span></h3>
-          <div class="richtext">
+          <div class="richtext richtext--small">
             <ul>
             <%= for person <- participants do %>
               <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links |> raw %></li>
@@ -97,11 +97,13 @@
         <section class="episode-body-section">
           <a id="sponsors" class="anchor"></a>
           <h3 class="episode-body-section-heading"><span>Sponsors</span></h3>
-          <%= for sponsor <- @episode.episode_sponsors do %>
-            <p>
-              <strong><%= link sponsor.title, to: sponsor.link_url %></strong> – <%= sponsor.description |> md_to_html |> sans_p_tags |> raw %>
-            </p>
-          <% end %>
+          <div class="richtext richtext--small">
+            <%= for sponsor <- @episode.episode_sponsors do %>
+              <p>
+                <strong><%= link sponsor.title, to: sponsor.link_url %></strong> – <%= sponsor.description |> md_to_html |> sans_p_tags |> raw %>
+              </p>
+            <% end %>
+          </div>
         </section>
       <% end %>
 
@@ -109,7 +111,7 @@
         <section class="episode-body-section">
           <a id="notes" class="anchor"></a>
           <h3 class="episode-body-section-heading"><span>Notes &amp; Links</span></h3>
-          <div class="richtext">
+          <div class="richtext richtext--small">
             <%= @episode.notes |> md_to_html |> raw %>
           </div>
         </section>
