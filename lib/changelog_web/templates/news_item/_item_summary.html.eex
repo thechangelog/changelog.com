@@ -3,7 +3,6 @@
 <%= if @item.story do %>
   <div class="news_item-description">
     <p><%= @item.story |> md_to_text %></p>
-    <!-- TODO: Fix this for episodes -->
     <%= link to: news_item_path(@conn, :show, slug(@item)), class: "news_item-description-continue" do %>
       <span>read more...</span>
     <% end %>

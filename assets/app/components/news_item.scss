@@ -161,7 +161,7 @@
 
       @include breakpoint(mobile) {
         span {
-          transition: all 0.3s $base-easing;
+          transition: all 0.15s $base-easing;
           opacity: 0;
         }
         .news_item:hover & {
