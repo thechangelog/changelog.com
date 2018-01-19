@@ -37,6 +37,7 @@ defmodule ChangelogWeb.NewsItemController do
       NewsItem.published
       |> Repo.get_by!(id: Hashid.decode(hashid))
       |> NewsItem.preload_all
+      |> NewsItem.load_object
 
     if slug == hashid do
       redirect(conn, to: news_item_path(conn, :show, NewsItemView.slug(item)))
