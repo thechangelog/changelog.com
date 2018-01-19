@@ -21,7 +21,7 @@
     font-size: 1.75em;
     margin-bottom: 1.25em;
     @include breakpoint(tiny) { font-size: 2em; }
-    @include breakpoint(tablet) { font-size: 2.25em; }
+    @include breakpoint(tablet) {font-size: 2.25em; }
   }
   h2 {
     font-size: 1.625em;
@@ -50,6 +50,19 @@
     @include breakpoint(tablet) { font-size: 1.125em; }
   }
 
+  &--small {
+    h1 {
+      font-size: 1.675em;
+      @include breakpoint(tiny) { font-size: 1.75em; }
+      @include breakpoint(tablet) {font-size: 2em; }
+    }
+    h2 {
+      font-size: 1.5em;
+      @include breakpoint(tiny) { font-size: 1.675em; }
+      @include breakpoint(tablet) { font-size: 1.875em; }
+    }
+  }
+
   //
   //
   // Text
@@ -69,6 +82,8 @@
       padding: .35em .5em;
     }
   }
+
+  &--small p { font-size: 1em; }
 
   pre {
     overflow-x: auto;
@@ -103,6 +118,16 @@
     @include list(ol);
   }
 
+  &--small {
+    ul,
+    ol {
+      li {
+        font-size: .9375em;
+        @include breakpoint(mobile) { font-size: 1; }
+      }
+    }
+  }
+
   blockquote {
     border-left: 2px solid $green;
     font-size: 1.25em;
@@ -115,6 +140,8 @@
       color: $black;
     }
   }
+
+  &--small blockquote { font-size: 1.125em; }
 
   //
   //
@@ -132,6 +159,8 @@
       text-decoration: none;
     }
   }
+
+  &--small .button { font-size: 1.125em; }
 
   aside {
     padding-left: 1rem;
