@@ -7,7 +7,8 @@
   }
 }
 
-.feed {
+.feed,
+.search {
   margin-bottom: 30px !important;
 
   @include breakpoint(mobile, max) {
