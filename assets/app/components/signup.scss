@@ -116,11 +116,17 @@
   }
 
   &-close {
-    @include position(absolute, 25px 25px null null);
+    @include position(absolute, 30px 15px null null);
     color: $green;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 25px;
     line-height: 20px;
     padding: 5px;
+    opacity: .3;
+
+    &:hover {
+      opacity: 1;
+      transition: opacity 0.3s $base-easing;
+    }
   }
 }
