@@ -62,7 +62,7 @@
         top: 0;
         left: 0;
 
-        &:nth-child(1) { box-shadow: 0 0 50px rgba($black, 0.3); }
+        &:nth-child(1) { box-shadow: 0 0 30px rgba($black, 0.2); }
         &:nth-child(2) { transform: translateX(2px) translateY(2px); }
         &:nth-child(3) { transform: translateX(4px) translateY(4px); }
         &:nth-child(4) { transform: translateX(6px) translateY(6px); }
