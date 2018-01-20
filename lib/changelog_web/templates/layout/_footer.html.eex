@@ -2,9 +2,9 @@
   <nav class="footer-primary">
     <div class="footer-primary_wrap">
       <ul class="footer-primary-list footer-primary-list--company">
-        <li><%= link "About Changelog", to: page_path(@conn, :about) %></li>
-        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
         <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
+        <li><%= link "About", to: page_path(@conn, :about) %></li>
+        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
       </ul>
 
       <ul class="footer-primary-list footer-primary-list--social">
