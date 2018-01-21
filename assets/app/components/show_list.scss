@@ -45,10 +45,10 @@
       }
 
       &-art {
-        $border-color: #3D444A;
+        $border-color: #ffffff;
         background-size: 100%;
         background-color: $black;
-        border: 1px solid $border-color;
+        border: 1px solid rgba($border-color, 0.1);
         display: block;
         margin-bottom: 10px;
         width: 100%;
@@ -57,7 +57,7 @@
         transition: all 0.2s $base-easing;
 
         &:hover {
-          border-color: lighten($border-color, 5%);
+          border-color: rgba($border-color, 0.2);
         }
 
         @each $podcast in $podcasts {
@@ -104,6 +104,10 @@
               width: 2px;
             }
           }
+        }
+
+        &-hosts {
+          a:hover { text-decoration: underline; }
         }
 
         h2 {
