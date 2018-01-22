@@ -78,10 +78,10 @@
     </div>
 
     <div class="episode-body-details episode-body-details--<%= @podcast.slug %>">
-      <a id="featuring" class="anchor"></a>
       <% participants = participants(@episode) %>
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">
+          <a id="featuring" class="anchor"></a>
           <h3 class="episode-body-section-heading"><span>Featuring</span></h3>
           <div class="richtext richtext--small">
             <ul>
