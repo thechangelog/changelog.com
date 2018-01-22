@@ -64,6 +64,10 @@
   -webkit-animation-iteration-count: 1;
 }
 
+.ui.table tr.disabled td, .ui.table tr td.disabled, .ui.table tr.disabled:hover, .ui.table tr:hover td.disabled {
+    pointer-events: auto !important;
+}
+
 .actions.right {
   text-align: right;
 }
