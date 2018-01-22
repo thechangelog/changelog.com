@@ -32,6 +32,11 @@
     }
   }
 
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+
   &-source {
     align-items: center;
     display: flex;
@@ -186,11 +191,6 @@
         }
       }
     }
-
-    img {
-      height: auto;
-      max-width: 100%;
-    }
   }
 
   &-toolbar {
@@ -216,11 +216,16 @@
       &.is-active { background-image: url('/images/icons/toolbar-pause.svg'); }
     }
 
-    // TODO: Update icons with desired types
     &-image_button {
       background-image: url('/images/icons/toolbar-image.svg');
 
       &.is-active { background-image: url('/images/icons/toolbar-close.svg'); }
+    }
+
+    &-image_button {
+      background-size: auto 22px;
+
+      .page-news_item-show & { display: none; }
     }
 
     &-meta {

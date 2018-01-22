@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="22px" height="14px" viewBox="0 0 22 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Image</title>
-    <g id="news-item-button--view" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-8.000000, -9.000000)">
-        <g id="Group" transform="translate(8.000000, 9.000000)" fill="#252B32">
-            <path d="M11,14 C6.94991183,14 3.28324517,11.6666667 0,7 C3.28324517,2.33333333 6.94991183,0 11,0 C15.0500882,0 18.7167548,2.33333333 22,7 C18.7167548,11.6666667 15.0500882,14 11,14 Z M11,11 C13.209139,11 15,9.209139 15,7 C15,4.790861 13.209139,3 11,3 C8.790861,3 7,4.790861 7,7 C7,9.209139 8.790861,11 11,11 Z" id="toolbar-image"></path>
-        </g>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 20 22" style="enable-background:new 0 0 20 22;" xml:space="preserve">
+<path d="M10,6.3h3.1v3.1H10V6.3z M19.4,5.5v14.9c0,0.9-0.7,1.6-1.6,1.6H2.1c-0.9,0-1.6-0.7-1.6-1.6V1.6C0.6,0.7,1.3,0,2.1,0h11.8
+	L19.4,5.5z M17.9,6.3l-4.7-4.7h-11v17.3L6.9,11l3.1,6.3l3.1-3.1l4.7,4.7V6.3z"/>
 </svg>
