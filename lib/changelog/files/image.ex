@@ -10,11 +10,11 @@ defmodule Changelog.Files.Image do
     if file_type(file) == :gif do
       :noaction
     else
-      {:convert, "-strip -resize #{dimensions(version)} -format png", :png}
+      {:convert, "-strip -resize #{dimensions(version)}"}
     end
   end
 
-  defp dimensions(:large), do: "1200"
-  defp dimensions(:medium), do: "600"
-  defp dimensions(:small), do: "300"
+  defp dimensions(:large), do: "1200>"
+  defp dimensions(:medium), do: "600>"
+  defp dimensions(:small), do: "300>"
 end
