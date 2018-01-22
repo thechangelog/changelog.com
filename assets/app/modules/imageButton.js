@@ -1,11 +1,9 @@
 import { u } from "umbrellajs";
-import template from "templates/itemImage.hbs";
 
 export default class ImageButton {
   constructor(el) {
     this.el = u(el);
     this.imageUrl = this.el.attr("data-image");
-    this.imageWidth = this.el.attr("data-width");
     el.removeAttribute("data-image");
     this.item = this.el.closest(".news_item");
     this.load();
@@ -13,7 +11,21 @@ export default class ImageButton {
   }
 
   load() {
-    this.item.append(template({src: this.imageUrl, width: this.imageWidth}));
+    let container =  document.createElement("div");
+    container.className = "news_item-image is-hidden";
+    let image = new Image();
+
+    let item = this.item.first();
+    image.src = this.imageUrl;
+    image.onload = function() {
+      if (this.naturalWidth < item.clientWidth) {
+        image.width = this.naturalWidth;
+      }
+
+      container.appendChild(image);
+    }
+
+    this.item.append(container);
     this.show();
   }
 
