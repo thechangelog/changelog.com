@@ -51,7 +51,12 @@
       <br/>
     <% end %>
     <%= error_message(f, :avatar) %>
-    <%= file_input f, :avatar %>
+    <div class="field">
+      <%= text_input f, :avatar, placeholder: "Avatar image URL", value: "" %>
+    </div>
+    <div class="field">
+      <%= file_input f, :avatar %>
+    </div>
   </div>
 
   <div class="two fields">

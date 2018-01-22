@@ -16,6 +16,17 @@ defmodule Changelog.PersonTest do
     refute changeset.valid?
   end
 
+  test "admin_changeset with a local file path image URL attribute" do
+    person = insert(:person)
+    local_file_path = File.cwd! <> "/test/fixtures/avatar600x600.png"
+    attrs = Map.put(@valid_attrs, :avatar, local_file_path)
+
+    changeset = Person.admin_changeset(person, attrs)
+
+    assert changeset.valid?
+    refute Map.has_key?(changeset.changes, :avatar)
+  end
+
   test "encoded_auth and decoded_auth" do
     user = %Person{email: "jenny@hits.com", auth_token: "8675309"}
     {:ok, encoded} = Person.encoded_auth(user)
