@@ -3,7 +3,7 @@
 
   <div class="news_item-toolbar-item news_item-toolbar-meta">
     <span class="news_item-toolbar-meta-item">
-      logged by @<%= @item.logger.handle %> <%= TimeView.ts(@item.published_at, @style) %>
+      logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger), rel: "external" %></strong> <%= TimeView.ts(@item.published_at, @style) %>
     </span>
     &bull;
     <span class="news_item-toolbar-meta-item">

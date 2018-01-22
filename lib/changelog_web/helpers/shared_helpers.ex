@@ -72,7 +72,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
-  def twitter_url(handle), do: "https://twitter.com/#{handle}"
+  def twitter_url(handle) when is_binary(handle), do: "https://twitter.com/#{handle}"
+  def twitter_url(person), do: "https://twitter.com/#{person.handle}"
 
   def twitter_link(model, string \\ nil) do
     if model.twitter_handle do
