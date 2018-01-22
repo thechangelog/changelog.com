@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, NewsQueue, UrlKit}
+  alias Changelog.{NewsItem, NewsSource, NewsQueue, Topic, UrlKit}
 
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   def index(conn = %{assigns: %{current_user: me}}, params) do
     drafts =
       NewsItem.drafted
-      |> NewsItem.newest_last
+      |> NewsItem.newest_first(:inserted_at)
       |> NewsItem.logged_by(me)
       |> NewsItem.preload_all
       |> Repo.all
@@ -26,7 +26,23 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> NewsItem.preload_all
       |> Repo.paginate(params)
 
-    render(conn, :index, drafts: drafts, queued: queued, published: page.entries, page: page)
+    topic_activity =
+      Topic
+      |> Topic.newest_first(:updated_at)
+      |> Topic.limit(3)
+      |> Repo.all
+
+    source_activity =
+      NewsSource
+      |> NewsSource.newest_first(:updated_at)
+      |> NewsSource.limit(3)
+      |> Repo.all
+
+    activity =
+      (topic_activity ++ source_activity)
+      |> Enum.sort(&(&1.updated_at >= &2.updated_at))
+
+    render(conn, :index, drafts: drafts, queued: queued, activity: activity, published: page.entries, page: page)
   end
 
   def new(conn, params) do

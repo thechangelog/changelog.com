@@ -32,10 +32,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     drafts =
       episodes
       |> Episode.unpublished
-      |> Episode.newest_first(:inserted_at)
+      |> Episode.newest_first(:recorded_at)
       |> Repo.all
 
-    render(conn, "index.html", episodes: page.entries, scheduled: scheduled, drafts: drafts, page: page)
+    render(conn, :index, episodes: page.entries, scheduled: scheduled, drafts: drafts, page: page)
   end
 
   def show(conn, %{"id" => slug}, podcast) do
@@ -51,7 +51,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> EpisodeStat.newest_first
       |> Repo.all
 
-    render(conn, "show.html", episode: episode, stats: stats)
+    render(conn, :show, episode: episode, stats: stats)
   end
 
   def new(conn, _params, podcast) do
@@ -81,7 +81,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         slug: default_slug)
       |> Episode.admin_changeset
 
-    render(conn, "new.html", changeset: changeset)
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"episode" => episode_params}, podcast) do
@@ -98,7 +98,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("new.html", changeset: changeset)
+        |> render(:new, changeset: changeset)
     end
   end
 
@@ -109,7 +109,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.preload_all
 
     changeset = Episode.admin_changeset(episode)
-    render(conn, "edit.html", episode: episode, changeset: changeset)
+    render(conn, :edit, episode: episode, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => slug, "episode" => episode_params}, podcast) do
@@ -128,7 +128,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", episode: episode, changeset: changeset)
+        |> render(:edit, episode: episode, changeset: changeset)
     end
   end
 
@@ -149,7 +149,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", episode: episode, changeset: changeset)
+        |> render(:edit, episode: episode, changeset: changeset)
     end
   end
 
@@ -168,7 +168,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", episode: episode, changeset: changeset)
+        |> render(:edit, episode: episode, changeset: changeset)
     end
   end
 
