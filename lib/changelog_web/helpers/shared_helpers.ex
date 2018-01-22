@@ -67,11 +67,23 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
   def md_to_html(md) when is_nil(md), do: ""
 
-  def md_to_text(md) when is_binary(md), do: HtmlSanitizeEx.strip_tags(md_to_html(md))
+  def md_to_text(md) when is_binary(md), do: md |> md_to_html |> HtmlSanitizeEx.strip_tags |> sans_new_lines
   def md_to_text(md) when is_nil(md), do: ""
 
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
+  def sans_new_lines(string), do: String.replace(string, "\n", "")
+
+  def truncate(string, length) when is_binary(string) do
+    if String.length(string) > length do
+      String.slice(string, 0, length) <> "..."
+    else
+      string
+    end
+  end
+  def truncate(_string, _length), do: ""
+
+  def twitter_url(nil), do: nil
   def twitter_url(handle) when is_binary(handle), do: "https://twitter.com/#{handle}"
   def twitter_url(person), do: "https://twitter.com/#{person.handle}"
 

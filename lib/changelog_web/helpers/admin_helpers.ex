@@ -77,14 +77,5 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     """
   end
 
-  def truncate(string, length) when is_binary(string) do
-    if String.length(string) > length do
-      String.slice(string, 0, length) <> "..."
-    else
-      string
-    end
-  end
-  def truncate(_string, _length), do: ""
-
   def ts(ts), do: TimeView.ts(ts)
 end

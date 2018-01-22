@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Meta.Title do
 
-  alias ChangelogWeb.{AuthView, EpisodeView, LiveView, PageView, PersonView,
-                      PodcastView, PostView, SearchView}
+  alias ChangelogWeb.{AuthView, EpisodeView, LiveView, NewsItemView, NewsSourceView,
+                      PageView, PersonView, PodcastView, PostView, TopicView, SearchView}
 
   @suffix "Changelog | News and podcasts for developers"
 
@@ -24,6 +24,14 @@ defmodule ChangelogWeb.Meta.Title do
 
   defp get(%{view_module: LiveView}) do
     "Live and Upcoming Shows"
+  end
+
+  defp get(%{view_module: NewsItemView, view_template: "show.html", item: item}) do
+    item.headline
+  end
+
+  defp get(%{view_module: NewsSourceView, view_template: "show.html", source: source}) do
+    "Developer news from #{source.name}"
   end
 
   defp get(%{view_module: PageView, view_template: template}) do
@@ -56,6 +64,10 @@ defmodule ChangelogWeb.Meta.Title do
 
   defp get(%{view_module: PostView, post: post}) do
     post.title
+  end
+
+  defp get(%{view_module: TopicView, view_template: "show.html", topic: topic}) do
+    "Developer news about #{topic.name}"
   end
 
   defp get(_), do: nil
