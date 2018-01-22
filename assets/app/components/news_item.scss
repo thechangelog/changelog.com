@@ -46,6 +46,7 @@
 
     &-image {
       $size: 30px;
+      box-shadow: 0 0 30px rgba($black, 0.2);
       color: $white;
       font-family: $code;
       font-size: 7px;
@@ -67,13 +68,13 @@
         top: 0;
         left: 0;
 
-        &:nth-child(1) { box-shadow: 0 0 30px rgba($black, 0.2); }
-        &:nth-child(2) { transform: translateX(2px) translateY(2px); }
-        &:nth-child(3) { transform: translateX(4px) translateY(4px); }
-        &:nth-child(4) { transform: translateX(6px) translateY(6px); }
-        &:nth-child(5) { transform: translateX(8px) translateY(8px); }
-        &:nth-child(6) { transform: translateX(10px) translateY(10px); }
-        &:nth-child(7) { transform: translateX(12px) translateY(18px); }
+        &:nth-child(1) { z-index: 7; }
+        &:nth-child(2) { transform: translateX(-2px) translateY(-2px); z-index: 6; }
+        &:nth-child(3) { transform: translateX(-4px) translateY(-4px); z-index: 5; }
+        &:nth-child(4) { transform: translateX(-6px) translateY(-6px); z-index: 4; }
+        &:nth-child(5) { transform: translateX(-8px) translateY(-8px); z-index: 3; }
+        &:nth-child(6) { transform: translateX(-10px) translateY(-10px); z-index: 2; }
+        &:nth-child(7) { transform: translateX(-12px) translateY(-12px); z-index: 1; }
       }
 
       &-icon {
