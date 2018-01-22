@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Changelog Terms of&nbsp;Service", conn: @conn) %>
   <div class="richtext">
+    <h1>Changelog Terms of&nbsp;Service</h1>
 
     <%= render("_privacy_terms_introduction.html", assigns) %>
 

@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Changelog Weekly &ndash; Archive", conn: @conn) %>
   <div class="richtext">
+    <h1>Changelog Weekly &ndash; Archive</h1>
     <p>This is the archive for Changelog Weekly, our editorialized take on this week in open source and software development.</p>
 
     <p>If you're not a subscriber, <%= link "subscribe here", to: page_path(@conn, :weekly) %>.</p>

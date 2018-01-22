@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "About", conn: @conn) %>
   <div class="richtext">
+    <h1>About</h1>
 
     <p>Changelog is a digital media company focused on telling developer-centric stories that get to the heart. We exist to enrich the lives of developers.</p>
 

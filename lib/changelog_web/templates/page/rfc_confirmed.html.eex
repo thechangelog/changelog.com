@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Subscription Confirmed", conn: @conn) %>
   <div class="richtext">
+    <h1>Subscription Confirmed</h1>
     <p>Thank you for verifying your email address. Your subscription to Request For Commits is confirmed.</p>
 
     <p>Help spread the word by letting your followers know you've subscribed to Request For Commits.</p>

@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Get in touch. Say hello.", conn: @conn) %>
   <div class="richtext">
+    <h1>Get in touch. Say hello.</h1>
 
     <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open inbox on GitHub. Share your projects, news, feedback, or tips.</p>
 

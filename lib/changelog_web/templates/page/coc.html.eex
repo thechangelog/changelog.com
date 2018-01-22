@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Code of Conduct", conn: @conn) %>
   <div class="richtext">
+    <h1>Code of Conduct</h1>
     <h3>Our Pledge</h3>
 
     <p>In the interest of fostering an open and welcoming environment, we as Changelog community members pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.</p>

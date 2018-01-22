@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Changelog Films", conn: @conn) %>
   <div class="richtext">
+    <h1>Changelog Films</h1>
     <p><%= link "Hire us", to: page_path(@conn, :contact) %> to cover your conference or work on your next big idea.</p>
 
     <h3>GopherCon 2016 - Recap Video</h3>

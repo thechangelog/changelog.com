@@ -1,6 +1,6 @@
 <article class="article">
-  <%= render(SharedView, "_page_heading.html", title: "Be Our Guest", conn: @conn) %>
   <div class="richtext">
+    <h1>Be Our Guest</h1>
     <p>First off, <mark>thank you</mark> for joining us on <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
       <option value="podcast" <%= if @podcast.slug == "podcast", do: "selected" %>>The Changelog</option>
       <option value="gotime" <%= if @podcast.slug == "gotime", do: "selected" %>>Go Time</option>
