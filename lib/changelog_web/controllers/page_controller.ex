@@ -12,6 +12,7 @@ defmodule ChangelogWeb.PageController do
       :guest          -> guest(conn, Map.get(conn.params, "slug"))
       :home           -> home(conn, conn.params)
       :sponsor        -> sponsor(conn, conn.params)
+      :sponsor_pricing -> sponsor_pricing(conn, conn.params)
       :weekly         -> weekly(conn, conn.params)
       :weekly_archive -> weekly_archive(conn, conn.params)
       name            -> render(conn, name)
@@ -49,6 +50,12 @@ defmodule ChangelogWeb.PageController do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
 
     render(conn, :sponsor, weekly: weekly)
+  end
+
+  def sponsor_pricing(conn, _params) do
+    weekly = Newsletters.weekly() |> Newsletters.get_stats()
+
+    render(conn, :sponsor_pricing, weekly: weekly)
   end
 
   def weekly(conn, _params) do
