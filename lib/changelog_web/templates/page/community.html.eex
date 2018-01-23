@@ -37,7 +37,8 @@
     </ul>
   </section>
 
-  <section id="community" class="marketing-section">
+  <a id="community" class="anchor"></a>
+  <section class="marketing-section">
     <header class="marketing-section-header">
       <i><img src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
       <h2>Slack Everyday with&nbsp;Friends</h2>
@@ -75,7 +76,8 @@
     </div>
   </section>
 
-  <section id="deals" class="marketing-section">
+  <a id="deals" class="anchor"></a>
+  <section class="marketing-section">
     <header class="marketing-section-header">
       <h2>Discounts and Special Offers From Our&nbsp;Partners</h2>
       <p>We work hard to develop relationships with the most trusted brands, products, and services — we give the rewards of those efforts to you, the hacker&nbsp;community.</p>
