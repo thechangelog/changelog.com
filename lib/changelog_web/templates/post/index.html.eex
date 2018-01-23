@@ -1,0 +1,8 @@
+<section>
+  <div class="feed">
+  <%= for item <- @items do %>
+    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
+  <% end %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
+  </div>
+</section>
