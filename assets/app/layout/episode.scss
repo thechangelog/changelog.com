@@ -14,7 +14,8 @@
     }
 
     &-show_title {
-      font-size: 1em;
+      font-family: $code;
+      font-size: .70em;
       font-weight: normal;
       margin-bottom: 2em;
 
@@ -27,13 +28,14 @@
       }
 
       @include breakpoint(mobile) {
-        font-size: 1.25em;
+        font-size: .80em;
       }
     }
 
     &-title {
       font-size: 1.5em;
       line-height: 1.25em;
+      margin-bottom: 15px;
 
       @include breakpoint(mobile) {
         font-size: 2em;
