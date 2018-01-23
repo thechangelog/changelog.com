@@ -1,7 +1,7 @@
 <header class="news_item-header">
   <p class="news_item-source">
     <%= link to: @ad.url, title: @sponsor.name do %>
-      <img class="news_item-source-image" src="<%= SponsorView.logo_url(@sponsor, :color_logo, :small) %>" alt="<%= @sponsor.name %> Icon" />
+      <img class="news_item-source-image" src="<%= SponsorView.avatar_url(@sponsor, :small) %>" alt="<%= @sponsor.name %> Icon" />
     <% end %>
 
     <%= link "#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name %>

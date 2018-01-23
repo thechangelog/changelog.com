@@ -5,7 +5,22 @@
     <%= error_message(f, :name) %>
   </div>
 
-  <div class="three fields">
+  <div class="two fields">
+    <div class="field">
+      <label for="avatar">
+        Avatar
+        <%= help_icon "Ideal size is 600px by 600px." %>
+      </label>
+
+      <%= if f.data.avatar do %>
+        <img src="<%= avatar_url(f.data, :small) %>" height=100>
+        <br/>
+      <% end %>
+      <%= error_message(f, :avatar) %>
+      <%= file_input(f, :avatar) %>
+    </div>
+
+
     <div class="field">
       <label for="color_logo">
         Color Logo
@@ -19,7 +34,9 @@
       <%= error_message(f, :color_logo) %>
       <%= file_input(f, :color_logo) %>
     </div>
+  </div>
 
+  <div class="two fields">
     <div class="field">
       <label for="color_logo">
         Dark Logo
