@@ -136,6 +136,31 @@
         font-family: $code;
         font-size: 0.8125em;
         margin-top: $base-spacing;
+        text-align: left;
+
+        @include breakpoint(640px) {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          text-align: center;
+
+          li {
+            padding: 0 4px;
+
+            &:before {
+              content: "\2022";
+              padding-right: 8px;
+            }
+
+            &:first-child {
+              padding-left: 0;
+
+              &:before { display: none; }
+            }
+
+            &:last-child { padding-right: 0; }
+          }
+        }
 
         &,
         a {

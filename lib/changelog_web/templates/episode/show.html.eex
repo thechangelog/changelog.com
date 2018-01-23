@@ -57,14 +57,12 @@
         <%= @episode.summary |> md_to_html |> raw %>
       </div>
 
-      <div class="episode-body-summary-meta">
-        Runtime <%= TimeView.rounded_minutes(@episode.duration) %> Min &bull;
-        <time datetime="<%= @episode.published_at %>">Published <%= TimeView.pretty_date(@episode.published_at) %></time> &bull;
-        <a href="<%= audio_url(@episode) %>" download>
-          Download MP3 (<%= megabytes(@episode) %>MB)
-        </a>
-        <%= admin_edit_link(@conn, @current_user, @episode) %>
-      </div>
+      <ul class="episode-body-summary-meta">
+        <li>Runtime <%= TimeView.rounded_minutes(@episode.duration) %> Min</li>
+        <li><time datetime="<%= @episode.published_at %>">Published <%= TimeView.pretty_date(@episode.published_at) %></time></li>
+        <li><a href="<%= audio_url(@episode) %>" download>Download MP3 (<%= megabytes(@episode) %>MB)</a></li>
+        <li><%= admin_edit_link(@conn, @current_user, @episode) %></li>
+      </ul>
 
       <% if Enum.any?(@episode.topics) do %>
         <div class="episode-body-summary-tags">
