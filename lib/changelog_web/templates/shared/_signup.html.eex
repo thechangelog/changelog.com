@@ -11,7 +11,7 @@
       <label class="visually_hidden">Email address...</label>
       <input name="email" class="signup-form-input" placeholder="Email address..." required autofocus/>
       <div class="signup-form-submit">
-        <input class="signup-form-submit-button" type="submit" value="Sign Up">
+        <input class="signup-form-submit-button" type="submit" value="Subscribe">
       </div>
     <% end %>
     <p class="signup-sign_in">Already a member? <em><%= link "Sign in", to: sign_in_path(@conn, :new) %></em></p>
