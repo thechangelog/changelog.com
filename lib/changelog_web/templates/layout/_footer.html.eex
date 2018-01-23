@@ -51,10 +51,10 @@
       <h4>Etc.</h4>
       <ul>
         <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
+        <li><%= link "Search", to: search_path(@conn, :search) %></li>
         <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
         <li><a href="/terms">Terms &amp; Conditions</a></li>
         <li><a href="/privacy">Privacy Policy</a></li>
-        <li><%= link "Search", to: search_path(@conn, :search) %></li>
       </ul>
     </div>
   </nav>

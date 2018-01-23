@@ -38,5 +38,5 @@ defmodule ChangelogWeb.Meta.Description do
     "Get the hottest new and top repos in your inbox every night. No fluff, just repos."
   end
 
-  defp get(_), do: "News and podcasts for developers"
+  defp get(_), do: "News and Podcasts for Developers"
 end
