@@ -15,14 +15,14 @@ config :changelog, ChangelogWeb.Endpoint,
   watchers: [yarn: ["start", cd: Path.expand("../assets", __DIR__)]]
 
 # Watch static and templates for browser reloading.
-config :changelog, ChangelogWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{lib/changelog/web/views/.*(ex)$},
-      ~r{lib/changelog/web/templates/.*(eex)$}
-    ]
-  ]
+# config :changelog, ChangelogWeb.Endpoint,
+#   live_reload: [
+#     patterns: [
+#       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+#       ~r{lib/changelog/web/views/.*(ex)$},
+#       ~r{lib/changelog/web/templates/.*(eex)$}
+#     ]
+#   ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
