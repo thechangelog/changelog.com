@@ -13,7 +13,7 @@
 .page-page-nightly {
   .header {
     background: $black;
-    border-bottom: 1px solid rgba($white, .08);
+    border-bottom: 1px solid rgba($border-color, 0.1);
 
     &-logo a {
       background-image: url('/images/brand/changelog-logomark-white.svg');
@@ -25,7 +25,7 @@
       &.is-active a,
       a:hover {
         &:before {
-          background: rgba($white, .08);
+          background: rgba($border-color, 0.1);
         }
       }
     }
@@ -33,7 +33,7 @@
     &-search {
 
       input {
-        background: rgba($white, .08);
+        background: rgba($border-color, 0.1);
         color: $white;
 
         &::placeholder {

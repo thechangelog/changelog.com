@@ -33,8 +33,7 @@ body {
 
   // Pages that should have their content vertically centered
   .page-auth-new &,
-  .page-person-join &,
-  .page-person-subscribe & {
+  .page-person-join & {
     align-items: center;
     display: flex;
     justify-content: center;
@@ -43,6 +42,7 @@ body {
   // TODO: Decide where this should go. Lives on the news index (homepage)
   &-podcasts {
     background: $black;
+    border-top: 1px solid rgba($border-color, 0.1);
     padding: $base-spacing*2 0;
   }
 }
