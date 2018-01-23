@@ -85,7 +85,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def twitter_url(nil), do: nil
   def twitter_url(handle) when is_binary(handle), do: "https://twitter.com/#{handle}"
-  def twitter_url(person), do: "https://twitter.com/#{person.handle}"
+  def twitter_url(person), do: "https://twitter.com/#{person.twitter_handle}"
 
   def twitter_link(model, string \\ nil) do
     if model.twitter_handle do
