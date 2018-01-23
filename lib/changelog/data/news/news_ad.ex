@@ -51,6 +51,26 @@ defmodule Changelog.NewsAd do
 
   def has_no_issues(ad), do: preload_issues(ad).issues |> Enum.empty?
 
+  def track_click(ad) do
+    ad
+    |> change(%{click_count: ad.click_count + 1})
+    |> Repo.update!
+
+    ad.sponsorship
+    |> change(%{click_count: ad.sponsorship.click_count + 1})
+    |> Repo.update!
+  end
+
+  def track_impression(ad) do
+    ad
+    |> change(%{impression_count: ad.impression_count + 1})
+    |> Repo.update!
+
+    ad.sponsorship
+    |> change(%{impression_count: ad.sponsorship.impression_count + 1})
+    |> Repo.update!
+  end
+
   defp mark_for_deletion(changeset) do
     if get_change(changeset, :delete) do
       %{changeset | action: :delete}
