@@ -17,6 +17,7 @@ defmodule Changelog.NewsItem do
     field :image, Files.Image.Type
     field :object_id, :string
 
+    field :pinned, :boolean, default: false
     field :published_at, Timex.Ecto.DateTime
 
     belongs_to :author, Person
@@ -33,6 +34,8 @@ defmodule Changelog.NewsItem do
   def drafted(query \\ __MODULE__),                    do: from(q in query, where: q.status == ^:draft)
   def logged_by(query \\ __MODULE__, person),          do: from(q in query, where: q.logger_id == ^person.id)
   def published(query \\ __MODULE__),                  do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
+  def pinned(query \\ __MODULE__),                     do: from(q in query, where: q.pinned)
+  def unpinned(query \\ __MODULE__),                   do: from(q in query, where: not(q.pinned))
   def search(query, term),                             do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
   def with_object(query \\ __MODULE__),                do: from(q in query, where: not(is_nil(q.object_id)))
   def with_object_prefix(query \\ __MODULE__, prefix), do: from(q in query, where: like(q.object_id, ^"#{prefix}%"))
@@ -52,7 +55,7 @@ defmodule Changelog.NewsItem do
 
   def insert_changeset(item, attrs \\ %{}) do
     item
-    |> cast(attrs, ~w(status type url headline story published_at author_id logger_id object_id source_id))
+    |> cast(attrs, ~w(status type url headline story pinned published_at author_id logger_id object_id source_id))
     |> validate_required([:type, :url, :headline, :logger_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:author_id)

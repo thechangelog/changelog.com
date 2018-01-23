@@ -1,4 +1,9 @@
 <header class="news_item-header">
-  <p class="news_item-source"><%= render_item_source(@conn, @item) %></p>
+  <p class="news_item-source">
+    <%= render_item_source(@conn, @item) %>
+    <%= if @item.pinned do %>
+    &nbsp;–&nbsp;Pinned
+    <% end %>
+  </p>
   <h2 class="news_item-title"><%= render_item_title(@conn, @item) %></h2>
 </header>

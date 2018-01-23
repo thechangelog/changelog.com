@@ -7,9 +7,19 @@ defmodule ChangelogWeb.NewsItemController do
   plug RequireAdmin, "before preview" when action in [:preview]
 
   def index(conn, params) do
+    pinned =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.pinned
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.all
+      |> Enum.map(&NewsItem.load_object/1)
+
     page =
       NewsItem
       |> NewsItem.published
+      |> NewsItem.unpinned
       |> NewsItem.newest_first
       |> NewsItem.preload_all
       |> Repo.paginate(Map.put(params, :page_size, 15))
@@ -27,7 +37,7 @@ defmodule ChangelogWeb.NewsItemController do
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :index, ads: ads, items: items, page: page)
+    render(conn, :index, ads: ads, pinned: pinned, items: items, page: page)
   end
 
   def show(conn, %{"id" => slug}) do
