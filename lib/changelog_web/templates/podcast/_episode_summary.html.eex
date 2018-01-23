@@ -28,17 +28,9 @@
     <% end %>
 
     <div class="news_item-toolbar-item news_item-toolbar-meta">
-      <span class="news_item-toolbar-meta-item">
-        logged <%= TimeView.pretty_date(@episode.published_at) %>
-      </span>
-      &bull;
-      <span class="news_item-toolbar-meta-item">
-        <%= link "show notes", to: EpisodeView.audio_url(@episode) %>
-      </span>
-      &bull;
-      <span class="news_item-toolbar-meta-item">
-        <%= link "tags +2", to: EpisodeView.audio_url(@episode) %>
-      </span>
+      <span class="news_item-toolbar-meta-item">logged <%= TimeView.pretty_date(@episode.published_at) %></span>
+      <span class="news_item-toolbar-meta-item"><%= link "show notes", to: EpisodeView.audio_url(@episode) %></span>
+      <span class="news_item-toolbar-meta-item"><%= link "tags +2", to: EpisodeView.audio_url(@episode) %></span>
     </div>
   </div>
 </article>

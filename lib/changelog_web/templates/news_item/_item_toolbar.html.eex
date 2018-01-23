@@ -2,18 +2,10 @@
   <%= render_item_toolbar_button(@conn, @item) %>
 
   <div class="news_item-toolbar-item news_item-toolbar-meta">
-    <span class="news_item-toolbar-meta-item">
-      logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger), rel: "external" %></strong> <%= TimeView.ts(@item.published_at, @style) %>
-    </span>
-    &bull;
-    <span class="news_item-toolbar-meta-item">
-      <%= link "permalink", to: news_item_path(@conn, :show, slug(@item)) %>
-    </span>
+    <span class="news_item-toolbar-meta-item">logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger), rel: "external" %></strong> <%= TimeView.ts(@item.published_at, @style) %></span>
+    <span class="news_item-toolbar-meta-item"><%= link "permalink", to: news_item_path(@conn, :show, slug(@item)) %></span>
     <%= if Enum.any?(@item.topics) do %>
-      &bull;
-      <span class="news_item-toolbar-meta-item">
-        <%= topic_link_list(@conn, @item) |> raw %>
-      </span>
+      <span class="news_item-toolbar-meta-item"><%= topic_link_list(@conn, @item) |> raw %></span>
     <% end %>
     <%= admin_edit_link(@conn, @current_user, @item) %>
   </div>
