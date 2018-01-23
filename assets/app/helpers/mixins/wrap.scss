@@ -1,16 +1,16 @@
 @mixin wrap($width: 1000px, $top_offset: 0) {
-  $v_margin: 20px;
+  $v_margin: 40px;
   margin: #{$v_margin - $top_offset} auto $v_margin;
   max-width: #{$width - ($base-spacing*2)};
   padding: 0 $base-spacing;
 
   @include breakpoint(mobile) {
-    $v_margin: 45px;
+    $v_margin: 50px;
     margin-top: #{$v_margin - $top_offset};
     margin-bottom: $v_margin;
   }
   @include breakpoint(tablet) {
-    $v_margin: 45px;
+    $v_margin: 60px;
     margin-top: #{$v_margin - $top_offset};
     margin-bottom: $v_margin;
   }
