@@ -45,8 +45,8 @@
     margin: 0 0 10px;
 
     &-image {
-      $size: 30px;
-      box-shadow: 0 0 30px rgba($black, 0.2);
+      $size: 24px;
+      box-shadow: 0 0 $size rgba($black, 0.2);
       color: $white;
       font-family: $code;
       font-size: 7px;
