@@ -37,16 +37,16 @@ defmodule ChangelogWeb.HomeController do
     Subscriber.subscribe(newsletter_id, me)
 
     conn
-    |> put_flash(:success, "One more step! Check your email to confirm your subscription. Then we'll hook you up 📥")
-    |> render(:show)
+    |> put_flash(:success, "You're subscribed! You'll get the next issue in your inbox 📥")
+    |> redirect(to: home_path(conn, :show))
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
     Subscriber.unsubscribe(newsletter_id, me.email)
 
     conn
-    |> put_flash(:success, "You're no longer subscribed. Come back any time 🤗")
-    |> render(:show)
+    |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
+    |> redirect(to: home_path(conn, :show))
   end
 
   def slack(conn = %{assigns: %{current_user: me}}, _params) do
