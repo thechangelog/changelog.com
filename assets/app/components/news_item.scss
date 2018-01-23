@@ -254,6 +254,7 @@
 
       @include breakpoint(mobile, max) {
         font-size: 0.6825em;
+        line-height: 1.675em;
 
         &-item {
           &:first-child {
