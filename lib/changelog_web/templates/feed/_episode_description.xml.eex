@@ -1,4 +1,4 @@
-<%= md_to_html(@episode.summary) %>
+<description><![CDATA[<%= md_to_html(@episode.summary) %>
 <%= if Enum.any?(@episode.sponsors) do %>
   <p>Sponsors</p>
   <ul>
@@ -20,4 +20,4 @@
   </ul>
 <% end %>
 <p>Notes and Links</p>
-<%= md_to_html(@episode.notes) %>
+<%= md_to_html(@episode.notes) %>]]></description>

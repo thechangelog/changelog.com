@@ -2,7 +2,7 @@ defmodule Changelog.NewsItem do
   use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{Episode, Files, NewsItemTopic, NewsIssue, NewsQueue, NewsSource,
-                   Person, Regexp}
+                   Person, Post, Regexp}
 
   defenum Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
@@ -70,7 +70,7 @@ defmodule Changelog.NewsItem do
   def load_object(item) do
     object = case item.type do
       :audio -> load_episode_object(item.object_id)
-      _else -> nil
+      _else -> load_post_object(item.object_id)
     end
 
     Map.put(item, :object, object)
@@ -87,6 +87,13 @@ defmodule Changelog.NewsItem do
     |> Repo.one
   end
 
+  defp load_post_object(object_id) when is_nil(object_id), do: nil
+  defp load_post_object(object_id) do
+    [_, slug] = String.split(object_id, ":")
+    Post.published
+    |> Post.preload_all
+    |> Repo.get_by!(slug: slug)
+  end
 
   def preload_all(query = %Ecto.Query{}) do
     query

@@ -32,7 +32,7 @@
       <% else %>
         <dc:creator>Changelog Media</dc:creator>
       <% end %>
-        <description><![CDATA[<%= render("_episode_description.xml", episode: episode) %>]]></description>
+        <%= render("_episode_description.xml", episode: episode) %>
         <enclosure url="<%= EpisodeView.audio_url(episode) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
       <%= if Enum.any?(episode.hosts) do %>
         <itunes:author><%= PersonView.comma_separated_names(episode.hosts) %></itunes:author>

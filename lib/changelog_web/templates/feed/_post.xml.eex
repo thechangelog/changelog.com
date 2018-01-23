@@ -1,0 +1,2 @@
+<%= render("_post_title.xml", assigns) %>
+<description><![CDATA[<%= md_to_html(@post.body) %>]]></description>

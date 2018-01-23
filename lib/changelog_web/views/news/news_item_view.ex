@@ -73,7 +73,11 @@ defmodule ChangelogWeb.NewsItemView do
     |> String.downcase
     |> String.replace(~r/[^a-z0-9\s]/, "")
     |> String.replace(~r/\s+/, "-")
-    |> Kernel.<>("-#{Hashid.encode(item.id)}")
+    |> Kernel.<>("-#{slug_id(item)}")
+  end
+
+  def slug_id(item) do
+    Hashid.encode(item.id)
   end
 
   def teaser(story, max_words \\ 20) do
