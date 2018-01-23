@@ -29,6 +29,10 @@ defmodule ChangelogWeb.NewsItemView do
     |> List.flatten
   end
 
+  def permalink_path(conn, item) do
+    if item.object_id, do: dev_relative(item.url), else: news_item_path(conn, :show, slug(item))
+  end
+
   def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_item_summary.html", Map.merge(assigns, %{item: item, style: "relative"}))
   def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_ad_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
 
