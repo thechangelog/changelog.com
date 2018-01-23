@@ -35,7 +35,7 @@ defmodule ChangelogWeb.Meta.Description do
   end
 
   defp get(%{view_module: PageView, view_template: "nightly.html"}) do
-    "Get the hottest new and top repos in your inbox every night. No fluff, just repos."
+    "Get the hottest new and top GitHub repos in your inbox every night. No fluff, just repos."
   end
 
   defp get(_), do: "News and Podcasts for Developers"
