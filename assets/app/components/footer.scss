@@ -104,7 +104,7 @@
 
   &-sponsors {
     border-top: 1px solid $border-color;
-    margin: $padding-large auto 20px;
+    margin: $padding-large auto 0;
     padding: $base-spacing 0 0;
 
     &_wrap {
@@ -112,12 +112,13 @@
       display: flex;
       flex-wrap: wrap;
       margin: 0 auto;
-      max-width: 540px;
+      max-width: 810px;
     }
 
     &-item {
       flex: 0 200px;
       font-family: $code;
+      margin-bottom: 20px;
       text-align: center;
 
       a { color: $black; }
