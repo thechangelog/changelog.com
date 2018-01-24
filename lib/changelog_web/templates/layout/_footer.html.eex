@@ -43,6 +43,7 @@
       <h4><a href="/community" title="">Community</a></h4>
       <ul>
         <li><%= link "Join the Community", to: page_path(@conn, :community) %></li>
+        <li><%= link "Code of Conduct", to: page_path(@conn, :coc) %></li>
         <li><%= link "Sign in to Slack", to: "https://changelog.slack.com/" %></li>
         <li><%= link "Perks", to: page_path(@conn, :community) %></li>
       </ul>
@@ -52,6 +53,7 @@
       <ul>
         <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
         <li><%= link "Search", to: search_path(@conn, :search) %></li>
+        <li><%= link "Blog", to: post_path(@conn, :index) %></li>
         <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
         <li><a href="/terms">Terms &amp; Conditions</a></li>
         <li><a href="/privacy">Privacy Policy</a></li>
