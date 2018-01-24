@@ -6,7 +6,7 @@
       <div class="account_subscriptions-item-info">
         <h3>Changelog Weekly</h3>
         <p>Our editorialized take covering this week in open source and software development.</p>
-        <p class="account_subscriptions-item-info-meta">1 Email Per Week — Sent on Sundays</p>
+        <p class="account_subscriptions-item-info-meta">1 Email Per Week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
       </div>
       <div class="account_subscriptions-item-button">
         <% weekly = Changelog.Newsletters.weekly() %>
@@ -21,7 +21,7 @@
       <div class="account_subscriptions-item-info">
         <h3>Changelog Nightly</h3>
         <p>Our automated, nightly email unearths the hottest new repos on GitHub before they blow up.</p>
-        <p class="account_subscriptions-item-info-meta">7 Emails Per Week — Sent Daily at 6pm CST</p>
+        <p class="account_subscriptions-item-info-meta">7 Emails Per Week — Delivered Daily at 10pm US Central</p>
       </div>
       <div class="account_subscriptions-item-button">
         <% nightly = Changelog.Newsletters.nightly() %>
