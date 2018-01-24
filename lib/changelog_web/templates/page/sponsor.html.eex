@@ -2,8 +2,8 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
-      <h1>Reach thousands of developers and <br />creative software professionals</h1>
-      <p>100,000 Monthly Pageviews • 225,000 Monthly Podcast Listens • <%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> Email Subscribers</p>
+      <h1>Your Partner in Reaching Developers</h1>
+      <p>100,000 Monthly Pageviews&nbsp;&nbsp;•&nbsp;&nbsp;225,000 Monthly Podcast Listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> Email Subscribers</p>
 
       <%= link "Get Started", to: page_path(@conn, :sponsor_pricing), title: "", class: "marketing-button button_large" %>
       <p class="button_note">Or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
@@ -12,26 +12,26 @@
 
   <section class="marketing-section">
     <header class="marketing-section-header">
-      <h2>Why Changelog?</h2>
-      <p>Developers come to Changelog to get the latest news and podcasts for software professionals. This includes developers looking to learn about new solutions to their problems which may overlap with your company, products, compeitors or industry. Advertise with Changelog to reach developers during the evaluation phase of their&nbsp;process.</p>
+      <h2>Why partner with us?</h2>
+      <p>Developers have trusted Changelog since 2009 to share the latest news and podcasts for software professionals. Whether you want to increase exposure, generate awareness, build your company's brand, or test an idea with a large developer audience, we're here to help you develop the right strategy to achieve the results you're looking for.</p>
     </header>
 
     <div class="marketing-section-grid">
       <div class="marketing-section-grid-item">
-        <h3>A large, engaged audience</h3>
-        <p>Changelog has a worldwide audience of more than 250,000 monthly unique visitors. In the US, Changelog users are highly educated and primarily live in metropolitan&nbsp;areas.</p>
+        <h3>Large Engaged Audience</h3>
+        <p>Our news and podcasts reach a global audience of more than 100,000 developers each month. Trust us to help you put your brand in front of your target audience. We're built by developers for&nbsp;developers.</p>
       </div>
       <div class="marketing-section-grid-item">
-        <h3>Trusted audience</h3>
-        <p>Our readers and listeners trust that we only work with brands who represent products and services that developers want to hear about. We're <em>very</em>&nbsp;selective.</p>
+        <h3>Invested Partnership</h3>
+        <p>Your success is our success. We're passionate about partnering with you to develop campaigns that drive measurable results. Rely on our knowledge of developer marketing to create ads that get&nbsp;attention.</p>
       </div>
       <div class="marketing-section-grid-item">
-        <h3>Only quality content</h3>
-        <p>Users on Changelog create profiles based on their real identities and our moderation policies enforce civil discourse to ensure your message shows up alongside the highest quality&nbsp;content.</p>
+        <h3>Goals Focused, Measurable Results</h3>
+        <p>Our team will work closely with you to determine your goals and design a campaign focused on your goals with measurable results. By understanding your challenges we're able to help you share your message in an authentic&nbsp;way.</p>
       </div>
       <div class="marketing-section-grid-item">
-        <h3>Measurable results</h3>
-        <p>Our team will work closely with you to determine your goals and design a branded campaign focused on your goals that resonates with our audience.</p>
+        <h3>Loyal Trusted Community</h3>
+        <p>We're not just a podcast, or news site, we're a community. Everything we do is catered to developers to create an environment they love and trust. We have strict guidelines for the ads we accept on our site. Our ads are tasteful, non-intrusive, and meet the needs of our community members. Developers trust&nbsp;us.</p>
       </div>
     </div>
 

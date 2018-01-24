@@ -82,18 +82,17 @@
       }
 
       &-leadin {
-        margin-bottom: 40px;
+        font-family: $code;
+        font-size: 13px !important;
+        margin-bottom: 30px;
       }
 
       h1 {
-        font-size: 1.75em;
+        font-size: 1.5em;
         line-height: 1.25em;
         margin: 0 0 1.125em;
-        @include breakpoint(tiny) { font-size: 2em; }
-        @include breakpoint(tablet) {
-          font-size: 2.25em;
-          margin: 0 0 1.25em;
-        }
+        @include breakpoint(tiny) { font-size: 1.75em; }
+        @include breakpoint(tablet) { font-size: 2em; }
 
         @include breakpoint(tablet, max) {
           br { display: none; }
