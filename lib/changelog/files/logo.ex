@@ -8,6 +8,7 @@ defmodule Changelog.Files.Logo do
       def storage_dir(_, {_, scope}), do: expanded_dir("/logos/#{hashed(scope.id)}")
       def filename(version, _), do: "#{unquote(prefix)}_logo_#{version}"
 
+      def transform(:original, _), do: :noaction
       def transform(version, {file, _scope}) do
         if file_type(file) == :svg do
           :noaction

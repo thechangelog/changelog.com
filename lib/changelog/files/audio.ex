@@ -8,7 +8,7 @@ defmodule Changelog.Files.Audio do
   def storage_dir(_, {_, scope}), do: expanded_dir("/#{scope.podcast.slug}/#{scope.slug}")
   def filename(_, {_, scope}), do: "#{PodcastView.dasherized_name(scope.podcast)}-#{scope.slug}"
 
-  def transform(_version, {_file, scope}) do
+  def transform(:original, {_file, scope}) do
     podcast = scope.podcast
 
     # get podcast's cover art location and insert list of art options

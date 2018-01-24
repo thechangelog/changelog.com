@@ -6,6 +6,7 @@ defmodule Changelog.Files.Avatar do
   def storage_dir(_version, {_file, scope}), do: expanded_dir("/avatars/#{source(scope)}/#{hashed(scope.id)}")
   def filename(version, _), do: "avatar_#{version}"
 
+  def transform(:original, _), do: :noaction
   def transform(version, _) do
     {:convert, "-strip -resize #{dimensions(version)} -format png", :png}
   end
