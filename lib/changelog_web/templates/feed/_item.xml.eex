@@ -1,2 +1,2 @@
-<%= render("_item_title.html", assigns) %>
+<%= render("_item_title.xml", assigns) %>
 <description><![CDATA[<%= md_to_html(@item.story) %>]]></description>
