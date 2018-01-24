@@ -50,6 +50,16 @@ u(document).on("click", "[data-play]", function(event) {
   }
 });
 
+// track ad visits
+u(document).on("click", "[rel=external]", function(event) {
+  let adUrl = u(this).closest("[data-ad]").data("ad");
+
+  if (adUrl) {
+    event.preventDefault();
+    window.location = `${adUrl}/visit`;
+  }
+});
+
 u(document).handle("click", "[data-image]", function(event) {
   new ImageButton(this);
 });
@@ -154,12 +164,19 @@ u(document).on("submit", "form:not(.js-cm)", function(event) {
 
 function formatTimes() {
   u("span.time").each(function(el) {
-    const span = u(el);
+    let span = u(el);
     let date = new Date(span.text());
     let style = span.data("style");
     span.text(ts(date, style));
     span.attr("title", ts(date, "timeFirst"));
     span.removeClass("time");
+  });
+}
+
+function impress() {
+  u("[data-ad]").each(function(el) {
+    let ad = u(el).data("ad");
+    ajax(`${ad}/impress`);
   });
 }
 
@@ -196,6 +213,7 @@ u(document).on("turbolinks:load", function() {
   live.check();
   formatTimes();
   deepLink();
+  impress();
 });
 
 Turbolinks.start();
