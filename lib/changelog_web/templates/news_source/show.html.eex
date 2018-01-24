@@ -25,6 +25,6 @@
   <%= for item <- @items do %>
     <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
   <% end %>
-  <%= render(SharedView, "_pagination.html", assigns) %>
+  <%= render(SharedView, "_more_button.html", assigns) %>
   </div>
 </div>

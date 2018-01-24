@@ -11,7 +11,7 @@
 <%= for item_or_ad <- items_with_ads(@items, @ads) do %>
   <%= render_item_summary_or_ad(item_or_ad, assigns) %>
 <% end %>
-<%= render(SharedView, "_pagination.html", assigns) %>
+<%= render(SharedView, "_more_button.html", assigns) %>
 </div>
 
 <%= if @page.page_number == 1 do %>
