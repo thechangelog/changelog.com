@@ -18,8 +18,6 @@ defmodule Changelog.File do
         Enum.member?(unquote(types), file_type(file))
       end
 
-      def transform(:original, _), do: :noaction
-
       defp file_type(file) do
         file.file_name
         |> Path.extname
