@@ -44,11 +44,11 @@
         <aside class="episode-body-summary-sponsors">
           <h3>Brought to you by</h3>
           <div class="episode-body-summary-sponsors-list">
-            <%= for episode_sponsor <- dark_logo_sponsorships do %>
-              <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
-              <img src="http://changelog.com<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
-              <% end %>
+          <%= for episode_sponsor <- dark_logo_sponsorships do %>
+            <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
+              <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
             <% end %>
+          <% end %>
           </div>
         </aside>
       <% end %>
