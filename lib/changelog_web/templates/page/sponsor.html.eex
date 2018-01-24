@@ -36,8 +36,8 @@
     </div>
 
     <div class="marketing-section-centered">
-      <%= link "Get started", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
-      <p class="button_note">Or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
+      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), title: "", class: "marketing-button button_large" %>
+      <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
     </div>
   </section>
 
@@ -58,7 +58,6 @@
     <header class="marketing-section-header">
       <h3>What our sponsors are saying</h3>
     </header>
-
 
     <div class="marketing-section-grid">
       <div class="marketing-section-grid-item">
