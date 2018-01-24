@@ -1,16 +1,10 @@
 <article class="marketing marketing--community">
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
-      <h1>Join Our Global Hacker Community</h1>
-      <p>More than 1,000 community members from all over the world get a backstage pass to everything we do. Access to our Slack community, exclusive community member only features, discounts and special offers from our partners, and more.</p>
+      <h1>Changelog Developer Community</h1>
+      <p>More than 1,500 developers from all over the world get a backstage pass to everything we do. Access to our Slack community, exclusive community member only features, discounts and special offers from our partners, and more.</p>
 
-      <%= if @current_user do %>
-        <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "marketing-button button_large" %>
-        <p class="button_note"><code>It’s good to be $HOME</code></p>
-      <% else %>
-        <%= link "Join Now", to: person_path(@conn, :join), title: "", class: "marketing-button button_large" %>
-        <p class="button_note">It’s free!</p>
-      <% end %>
+      <%= render("_community_join_button.html", assigns) %>
     </header>
 
     <ul class="marketing-section-features">
@@ -61,7 +55,7 @@
         <div class="marketing-section-content-info-bottom">
           <blockquote class="marketing-quote">
             <div class="marketing-quote-body">
-              <p>There's no way to truely say how much value I get from being a part of Changelog Community. I'm there everyday, and there's always something being discussed by the community. It's&nbsp;awesome.</p>
+              <p>There's no way to truely say how much value I get from being a part of Changelog's developer community. I'm there everyday, and there's always something interesting being discussed. It's&nbsp;awesome.</p>
             </div>
             <footer class="marketing-quote-footer">
               <a href="https://twitter.com/jdorfman" title="Justin Dorfman on Twitter">
@@ -80,7 +74,7 @@
   <section class="marketing-section">
     <header class="marketing-section-header">
       <h2>Discounts and Special Offers From Our&nbsp;Partners</h2>
-      <p>We work hard to develop relationships with the most trusted brands, products, and services — we give the rewards of those efforts to you, the hacker&nbsp;community.</p>
+      <p>We work hard to develop relationships with the most trusted brands, products, and services — we give the rewards of those efforts to you, the developer&nbsp;community.</p>
     </header>
 
     <div class="marketing-section-logos">
@@ -91,15 +85,9 @@
   <section class="marketing-section marketing-section--map">
     <header class="marketing-section-header">
       <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
-      <h3>From Berlin to San Francisco and everywhere in between, hackers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
+      <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
 
-      <%= if @current_user do %>
-        <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "marketing-button button_large" %>
-        <p class="button_note"><code>It’s good to be $HOME</code></p>
-      <% else %>
-        <%= link "Join Now", to: person_path(@conn, :join), title: "", class: "marketing-button button_large" %>
-        <p class="button_note">It’s free!</p>
-      <% end %>
+      <%= render("_community_join_button.html", assigns) %>
     </header>
 
     <div class="marketing-map">

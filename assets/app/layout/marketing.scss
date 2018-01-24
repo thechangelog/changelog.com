@@ -29,8 +29,7 @@
   }
   p.button_note {
     color: $medium-grey;
-    font-size: 14px !important;
-    font-style: italic;
+    font-size: 13px !important;
 
     a {
       color: $medium-grey;
@@ -388,10 +387,8 @@
       text-align: center;
 
       img {
-        border: 1px solid $light-grey;
-        box-shadow: -5px 5px 40px 5px rgba($black, 0.2);
+        box-shadow: 0 0 30px 0 rgba($black, 0.2);
         border-radius: 2px;
-        // box-shadow: 0 0 40px 0 rgba($black, 0.2);
         display: block;
         margin: 0 auto 1em;
       }
