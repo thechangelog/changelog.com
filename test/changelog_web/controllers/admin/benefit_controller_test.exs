@@ -25,10 +25,10 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
   end
 
   @tag :as_admin
-  test "creates benefit and smart redirects", %{conn: conn} do
+  test "creates benefit and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
 
-    conn = post(conn, admin_benefit_path(conn, :create), benefit: %{@valid_attrs | sponsor_id: sponsor.id}, close: true)
+    conn = post(conn, admin_benefit_path(conn, :create), benefit: %{@valid_attrs | sponsor_id: sponsor.id}, next: "")
 
     assert redirected_to(conn) == admin_benefit_path(conn, :index)
     assert count(Benefit) == 1
@@ -52,13 +52,13 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
   end
 
   @tag :as_admin
-  test "updates benefit and smart redirects", %{conn: conn} do
+  test "updates benefit and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
     benefit = insert(:benefit, sponsor: sponsor)
 
     conn = put(conn, admin_benefit_path(conn, :update, benefit.id), benefit: %{@valid_attrs | sponsor_id: sponsor.id})
 
-    assert redirected_to(conn) == admin_benefit_path(conn, :edit, benefit)
+    assert redirected_to(conn) == admin_benefit_path(conn, :index)
     assert count(Benefit) == 1
   end
 

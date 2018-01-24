@@ -41,11 +41,32 @@ defmodule Changelog.NewsSponsorship do
   def preload_sponsor(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :sponsor)
   def preload_sponsor(sponsorship), do: Repo.preload(sponsorship, :sponsor)
 
-  def ad_for_issue(sponsorship), do: select_ad(preload_ads(sponsorship).ads)
-  defp select_ad([]), do: nil
-  defp select_ad(ads) do
+  def ad_for_index(sponsorship) do
+    sponsorship
+    |> preload_ads
+    |> Map.get(:ads, [])
+    |> select_ad_for_index
+    |> ad_with_sponsor_loaded(sponsorship)
+  end
+
+  def ad_for_issue(sponsorship) do
+    sponsorship
+    |> preload_ads
+    |> Map.get(:ads, [])
+    |> select_ad_for_issue
+    |> ad_with_sponsor_loaded(sponsorship)
+  end
+
+  defp select_ad_for_index([]), do: nil
+  defp select_ad_for_index(ads), do: Enum.random(ads)
+
+  defp select_ad_for_issue([]), do: nil
+  defp select_ad_for_issue(ads) do
     Enum.find(ads, fn(x) -> x.newsletter end) ||
     Enum.find(ads, fn(x) -> NewsAd.has_no_issues(x) end) ||
     Enum.random(ads)
   end
+
+  defp ad_with_sponsor_loaded(nil, _sponsorship), do: nil
+  defp ad_with_sponsor_loaded(ad, sponsorship), do: Map.put(ad, :sponsor, sponsorship.sponsor)
 end

@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   alias Changelog.Repo
   alias ChangelogWeb.{TimeView}
+  alias ChangelogWeb.Helpers.SharedHelpers
+  alias Phoenix.Controller
 
   def error_class(form, field) do
     if form.errors[field], do: "error", else: ""
@@ -18,12 +20,12 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     end
   end
 
-  def form_actions() do
+  def form_actions(conn) do
     ~e"""
     <div class="ui hidden divider"></div>
     <div class="ui equal width stackable grid">
-    <div class="column"><button class="ui primary fluid basic button" type="submit" name="stay">Save</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="close">Save and Close</button></div>
+    <div class="column"><button class="ui primary fluid basic button" type="submit" name="next" value="<%= SharedHelpers.current_path(conn) %>">Save</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="next" value="<%= next_param(conn) %>">Save and Close</button></div>
     <div class="column"></div>
     """
   end
@@ -59,6 +61,10 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     end
   end
 
+  def next_param(conn), do: Map.get(conn.params, "next")
+  def next_path(%{next: next}), do: next
+  def next_path(%{conn: conn}), do: Controller.current_path(conn)
+
   def semantic_calendar_field(form, field) do
     ~e"""
     <div class="ui calendar">
@@ -70,15 +76,6 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     </div>
     """
   end
-
-  def truncate(string, length) when is_binary(string) do
-    if String.length(string) > length do
-      String.slice(string, 0, length) <> "..."
-    else
-      string
-    end
-  end
-  def truncate(_string, _length), do: ""
 
   def ts(ts), do: TimeView.ts(ts)
 end

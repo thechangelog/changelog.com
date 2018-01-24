@@ -4,8 +4,14 @@ defmodule ChangelogWeb.EpisodeView do
   import ChangelogWeb.Meta.{Title, Description}
 
   alias Changelog.{Episode, Files, Transcripts}
-  alias ChangelogWeb.{Endpoint, LayoutView, PersonView, SharedView, PodcastView,
-                      SponsorView, TimeView}
+  alias ChangelogWeb.{Endpoint, LayoutView, PersonView, PodcastView, SponsorView, TimeView}
+
+  def admin_edit_link(conn, user, episode) do
+    if user && user.admin do
+      path = admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))
+      link("[Edit]", to: path, data: [turbolinks: false])
+    end
+  end
 
   def audio_filename(episode) do
     Files.Audio.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
@@ -40,7 +46,7 @@ defmodule ChangelogWeb.EpisodeView do
   def embed_code(episode), do: embed_code(episode, episode.podcast)
   def embed_code(episode, podcast) do
     ~s{<audio data-theme="night" data-src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
-    ~s{<p><a href="#{episode_url(Endpoint, :show, podcast.slug, episode.slug)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{page_url(Endpoint, :home)}">Changelog.com</a></p>} <>
+    ~s{<p><a href="#{episode_url(Endpoint, :show, podcast.slug, episode.slug)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
     ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
 
@@ -82,6 +88,10 @@ defmodule ChangelogWeb.EpisodeView do
 
   def participants(episode) do
     Episode.participants(episode)
+  end
+
+  def podcast_name_and_number(episode) do
+    "#{episode.podcast.name} #{number_with_pound(episode)}"
   end
 
   def sponsorships_with_light_logo(episode) do

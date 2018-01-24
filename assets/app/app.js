@@ -1,12 +1,15 @@
 import "phoenix_html";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
-import OnsitePlayer from "components/onsitePlayer";
-import LivePlayer from "components/livePlayer";
-import Slider from "components/slider";
-import Overlay from "components/overlay";
-import Share from "components/share";
-import Log from "components/log";
+import autosize from "autosize";
+import Cookies from "cookies-js";
+import OnsitePlayer from "modules/onsitePlayer";
+import LivePlayer from "modules/livePlayer";
+import Overlay from "modules/overlay";
+import ImageButton from "modules/imageButton";
+import Share from "modules/share";
+import Log from "modules/log";
+import Tooltip from "modules/tooltip";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
@@ -14,17 +17,15 @@ import parseTime from "../shared/parseTime";
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
-const featured = new Slider(".featured_podcast");
 
 window.u = u;
 
 u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
-});
 
-u(document).handle("click", ".js-toggle-parent", function(event) {
-  event.preventDefault();
-  u(event.target).parent().parent().toggleClass("is-toggled");
+  setTimeout(() => {
+    u("body").toggleClass('nav-animate', "");
+  }, 50);
 });
 
 u(document).handle("click", ".js-account-nav", function(event) {
@@ -47,6 +48,21 @@ u(document).on("click", "[data-play]", function(event) {
       player.load(clicked.attr("href"), clicked.data("play"));
     }
   }
+});
+
+// track outbound clicks
+u(document).on("click", "[rel=external]", function(event) {
+  let type = u(this).closest("[data-news-type]").data("news-type");
+  let id = u(this).closest("[data-news-id]").data("news-id");
+
+  if (id) {
+    event.preventDefault();
+    window.location = `${type}/${id}/visit`;
+  }
+});
+
+u(document).handle("click", "[data-image]", function(event) {
+  new ImageButton(this);
 });
 
 u(document).handle("click", "[data-share]", function(event) {
@@ -76,6 +92,12 @@ u(document).on("click", "a[href^=http]", function(event) {
       newWindow.opener = null;
     }
   }
+});
+
+// hide subscribe CTA
+u(document).handle("click", ".js-hide-subscribe", function(event) {
+  Cookies.set("hide_subscribe_cta", "true");
+  u(this).closest("section").remove();
 });
 
 // hijack audio deep links
@@ -141,32 +163,40 @@ u(document).on("submit", "form:not(.js-cm)", function(event) {
   ajax(action, options, andThen);
 });
 
-// handle featured sliders
-u(document).handle("click", ".js-featured-next", function(event) { featured.slide(+1); });
-u(document).handle("click", ".js-featured-previous", function(event) { featured.slide(-1); });
-
-// ensure all slider slides are the same height
-function tallestSlide() {
-  let tallestFeatured = 0;
-  u(".featured").attr("height", "auto");
-
-  u(".featured_podcast_wrap").each(function(el) {
-    let featuredHeight = u(el).size().height;
-    if (featuredHeight > tallestFeatured) {
-      tallestFeatured = featuredHeight;
-    }
-  });
-
-  u(".featured").attr("style", "height: " + tallestFeatured + "px;");
-}
-
 function formatTimes() {
   u("span.time").each(function(el) {
-    const span = u(el);
+    let span = u(el);
     let date = new Date(span.text());
     let style = span.data("style");
     span.text(ts(date, style));
+    span.attr("title", ts(date, "timeFirst"));
+    span.removeClass("time");
   });
+}
+
+function impress() {
+  let ads = Array.from(document.querySelectorAll("[data-news-type=ad]"));
+  let items = Array.from(document.querySelectorAll("[data-news-type=news]"));
+
+  if (ads.length) {
+    let adIds = ads.map(function(x) { return u(x).data("news-id"); });
+    let options = {
+      method: "POST",
+      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
+      body: {"ads": adIds}
+    };
+    ajax("/ad/impress", options);
+  }
+
+  if (items.length) {
+    let itemIds = items.map(function(x) { return u(x).data("news-id"); });
+    let options = {
+      method: "POST",
+      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
+      body: {"items": itemIds}
+    };
+    ajax("/news/impress", options);
+  }
 }
 
 function deepLink(href) {
@@ -186,7 +216,6 @@ function deepLink(href) {
 }
 
 window.onresize = function() {
-  tallestSlide();
 }
 
 window.onhashchange = function() {
@@ -195,15 +224,15 @@ window.onhashchange = function() {
 
 // on page load
 u(document).on("turbolinks:load", function() {
+  autosize(document.querySelectorAll("textarea"));
+  new Tooltip(".has-tooltip");
   u("body").removeClass("nav-open");
   player.attach();
   overlay.hide();
   live.check();
-  tallestSlide();
   formatTimes();
   deepLink();
-  // Make sure homepage featured section is the correct size (after fonts and images load)
-  window.setTimeout(function() { tallestSlide(); }, 500);
+  impress();
 });
 
 Turbolinks.start();

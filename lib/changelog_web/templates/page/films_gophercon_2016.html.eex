@@ -1,121 +1,117 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>GopherCon 2016 / Changelog Films</h2>
-    </header>
-    <div class="content_body">
-      <p>Like what you see here? <%= link "Hire us", to: page_path(@conn, :contact) %> to get creative for your conference.</p>
+<article class="article">
+  <div class="richtext">
+    <h1>GopherCon 2016 / Changelog Films</h1>
+    <p>Like what you see here? <%= link "Hire us", to: page_path(@conn, :contact) %> to get creative for your conference.</p>
 
-      <hr>
+    <hr>
 
-      <h3>GopherCon 2016 Recap Video</h3>
+    <h3>GopherCon 2016 Recap Video</h3>
 
-      <p>This is the promo video we shot for our friends at GopherCon 2016.</p>
+    <p>This is the promo video we shot for our friends at GopherCon 2016.</p>
 
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/wmee2ytxqe.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wmee2ytxqe videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3>GopherCon 2016 - Day One Recap</h3>
-
-      <p>We wowed everyone this year when showed off this video to the whole conference on day two.</p>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/vidxvzuz1k.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_vidxvzuz1k videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <p>Speaker interviews from GopherCon 2016.</p>
-
-      <h3 id="rick-hudson">Rick Hudson</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/ii98xk2thv.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ii98xk2thv videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="alan-shreve">Alan Shreve</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/6hsa2u6n31.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_6hsa2u6n31 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="carlisia-pinto">Carlisia Pinto</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/e3m9uxrge1.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_e3m9uxrge1 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="anand-babu-periasamy">Anand Babu Periasamy</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/hku42odm1i.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_hku42odm1i videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="johnny-boursiquot">Johnny Boursiquot</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/qnpgh5h1qk.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_qnpgh5h1qk videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="daniel-whitenack">Daniel Whitenack</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/opbzvq7mhp.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_opbzvq7mhp videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="corey-lanou">Corey LaNou</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/pidnulbtng.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_pidnulbtng videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="raphael-simon">Raphaël Simon</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/1cpa3sx49f.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_1cpa3sx49f videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="peter-hellberg">Peter Hellberg</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/mnivz7hx7g.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_mnivz7hx7g videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="chris-hines">Chris Hines</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/9e0uyl2c9k.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_9e0uyl2c9k videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
-      <hr>
-
-      <h3 id="mike-farmer">Mike Farmer</h3>
-
-      <div class="wide-gutter-wrap">
-        <script src="https://fast.wistia.com/embed/medias/6iyzebv6id.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_6iyzebv6id videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
-      </div>
-
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/wmee2ytxqe.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wmee2ytxqe videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
     </div>
+
+    <hr>
+
+    <h3>GopherCon 2016 - Day One Recap</h3>
+
+    <p>We wowed everyone this year when showed off this video to the whole conference on day two.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/vidxvzuz1k.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_vidxvzuz1k videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <p>Speaker interviews from GopherCon 2016.</p>
+
+    <h3 id="rick-hudson">Rick Hudson</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/ii98xk2thv.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ii98xk2thv videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="alan-shreve">Alan Shreve</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/6hsa2u6n31.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_6hsa2u6n31 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="carlisia-pinto">Carlisia Pinto</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/e3m9uxrge1.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_e3m9uxrge1 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="anand-babu-periasamy">Anand Babu Periasamy</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/hku42odm1i.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_hku42odm1i videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="johnny-boursiquot">Johnny Boursiquot</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/qnpgh5h1qk.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_qnpgh5h1qk videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="daniel-whitenack">Daniel Whitenack</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/opbzvq7mhp.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_opbzvq7mhp videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="corey-lanou">Corey LaNou</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/pidnulbtng.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_pidnulbtng videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="raphael-simon">Raphaël Simon</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/1cpa3sx49f.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_1cpa3sx49f videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="peter-hellberg">Peter Hellberg</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/mnivz7hx7g.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_mnivz7hx7g videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="chris-hines">Chris Hines</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/9e0uyl2c9k.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_9e0uyl2c9k videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3 id="mike-farmer">Mike Farmer</h3>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/6iyzebv6id.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_6iyzebv6id videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
   </div>
 </article>

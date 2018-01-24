@@ -1,0 +1,81 @@
+<header class="header">
+  <div class="header-wrap">
+    <h1 class="header-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
+
+    <nav class="header-nav">
+      <div class="header-nav-wrap">
+        <ul class="header-nav-primary header-nav-list">
+          <li class="header-nav-list-item <%= active_class(@conn, ["news_item", "news_ad"]) %>"><%= link "News", to: root_path(@conn, :index) %></li>
+          <li class="header-nav-list-item <%= active_class(@conn, ["podcast"]) %>"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
+          <li class="header-nav-list-item <%= active_class(@conn, ["page-community", "person-join"]) %>"><%= link "Community", to: page_path(@conn, :community) %></li>
+          <%= if !@current_user do %>
+            <li class="header-nav-list-item <%= active_class(@conn, ["person-subscribe"]) %>"><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
+          <% end %>
+        </ul>
+
+        <div class="header-nav-secondary">
+          <%= if @current_user do %>
+            <button class="has-tooltip">
+              <img class="header-nav-secondary-user" src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
+            </button>
+            <div class="tooltip" data-placement="bottom-end">
+              <div class="tooltip-arrow"></div>
+              <div class="tooltip-wrap">
+                <ul class="tooltip-list">
+                  <%= if @current_user.admin do %>
+                    <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+                  <% end %>
+                  <li><%= link "My Subscriptions", to: home_path(@conn, :show) %></li>
+                  <li><%= link "Profile Settings", to: home_path(@conn, :profile) %></li>
+                  <li><%= link "Account Settings", to: home_path(@conn, :account) %></li>
+                </ul>
+                <div class="tooltip-footer">
+                  <%= link "Sign Out", to: sign_out_path(@conn, :delete) %>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <ul class="header-nav-list">
+              <li class="header-nav-list-item"><%= link "Sign In", to: sign_in_path(@conn, :new), class: "header-button" %></li>
+            </ul>
+          <% end %>
+        </div>
+
+        <form action="<%= search_path(@conn, :search) %>" method="get" class="header-search">
+          <label class="visually_hidden" for="name">Search</label>
+          <input name="q" type="text" placeholder="Search Changelog" value="" />
+        </form>
+
+        <button class="header-menu js-toggle-nav" title="Toggle Menu">
+          <span class="header-menu-box"><span class="header-menu-inner"></span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<nav class="mobile_nav">
+  <div class="mobile_nav-inner">
+    <div class="mobile_nav-main">
+      <div class="mobile_nav-main-inner">
+        <h1 class="mobile_nav-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
+        <ul class="mobile_nav-list">
+          <li class="mobile_nav-list-item"><%= link "News", to: root_path(@conn, :index) %></li>
+          <li class="mobile_nav-list-item"><%= link "Podcasts", to: podcast_path(@conn, :index) %></li>
+          <li class="mobile_nav-list-item"><%= link "Community", to: page_path(@conn, :community) %></li>
+          <li class="mobile_nav-list-item"><%= link "About", to: page_path(@conn, :about) %></li>
+          <%= if !@current_user do %>
+            <li class="mobile_nav-list-item"><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mobile_nav-bottom">
+      <form action="<%= search_path(@conn, :search) %>" method="get" class="mobile_nav-search search-form">
+        <label class="visually_hidden" for="name">Search</label>
+        <input name="q" type="text" placeholder="Search Changelog" />
+      </form>
+    </div>
+  </div>
+</nav>

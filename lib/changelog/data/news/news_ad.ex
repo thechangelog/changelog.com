@@ -34,13 +34,42 @@ defmodule Changelog.NewsAd do
     |> mark_for_deletion()
   end
 
+  def preload_all(ad) do
+    ad
+    |> preload_issues
+    |> preload_sponsorship
+  end
+
   def preload_issues(ad) do
     ad
     |> Repo.preload(news_issue_ads: {NewsIssueAd.by_position, :issue})
     |> Repo.preload(:issues)
   end
 
+  def preload_sponsorship(query = %Ecto.Query{}), do: Ecto.Query.preload(query, sponsorship: :sponsor)
+  def preload_sponsorship(ad), do: Repo.preload(ad, sponsorship: :sponsor)
+
   def has_no_issues(ad), do: preload_issues(ad).issues |> Enum.empty?
+
+  def track_click(ad) do
+    ad
+    |> change(%{click_count: ad.click_count + 1})
+    |> Repo.update!
+
+    ad.sponsorship
+    |> change(%{click_count: ad.sponsorship.click_count + 1})
+    |> Repo.update!
+  end
+
+  def track_impression(ad) do
+    ad
+    |> change(%{impression_count: ad.impression_count + 1})
+    |> Repo.update!
+
+    ad.sponsorship
+    |> change(%{impression_count: ad.sponsorship.impression_count + 1})
+    |> Repo.update!
+  end
 
   defp mark_for_deletion(changeset) do
     if get_change(changeset, :delete) do

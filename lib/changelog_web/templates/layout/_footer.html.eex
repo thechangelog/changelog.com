@@ -1,73 +1,85 @@
 <footer class="footer">
+  <nav class="footer-primary">
+    <div class="footer-primary_wrap">
+      <ul class="footer-primary-list footer-primary-list--company">
+        <li><%= link "About", to: page_path(@conn, :about) %></li>
+        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
+        <li><a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></li>
+      </ul>
+
+      <ul class="footer-primary-list footer-primary-list--social">
+        <li><a href="https://twitter.com/changelog"><img src='<%= static_url(@conn, "/images/icons/icon-twitter-black.svg") %>' title="Twitter"></a></li>
+        <li><a href="https://github.com/thechangelog"><img src='<%= static_url(@conn, "/images/icons/icon-github-black.svg") %>' title="Github"></a></li>
+        <li><a href="https://www.youtube.com/c/thechangelog"><img src='<%= static_url(@conn, "/images/icons/icon-youtube-black.svg") %>' title="YouTube"></a></li>
+        <li><a href="https://www.instagram.com/thechangelog/"><img src='<%= static_url(@conn, "/images/icons/icon-instagram-black.svg") %>' title="Instagram"></a></li>
+      </ul>
+    </div>
+  </nav>
   <nav class="footer-nav">
-    <%= link to: "/", class: "footer-nav-logo" do %>
-      <img src="<%= static_url(@conn, "/images/changelog-mark-dark.svg") %>" alt="Changelog" width="70" height="70">
-    <% end %>
     <div class="footer-nav-list">
-      <h4><a class="js-toggle-parent" href="/podcasts" title="">Podcasts</a></h4>
+      <h4><a href="/" title="">News</a></h4>
+      <ul>
+        <li><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
+        <li><%= link "Topics", to: topic_path(@conn, :index), title: "View All Topics" %></li>
+        <li>---</li>
+        <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
+        <li><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></li>
+        <li>---</li>
+        <li><%= link "Submit a Story", to: "https://github.com/thechangelog/ping/issues" %></li>
+      </ul>
+    </div>
+    <div class="footer-nav-list">
+      <h4><%= link "Podcasts", to: podcast_path(@conn, :index) %></h4>
       <ul>
         <%= for podcast <- @podcasts do %>
           <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
         <% end %>
+        <li>---</li>
+        <li><%= link "Master", to: podcast_path(@conn, :show, :master) %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
-      <h4><a class="js-toggle-parent" href="/news" title="">News</a></h4>
-      <ul>
-        <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
-        <li><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></li>
-        <li><%= link "Blog", to: post_path(@conn, :index) %></li>
-        <li><%= link "Search", to: search_path(@conn, :search) %></li>
-      </ul>
-    </div>
-    <div class="footer-nav-list">
-      <h4><a class="js-toggle-parent" href="/community" title="">Community</a></h4>
+      <h4><a href="/community" title="">Community</a></h4>
       <ul>
         <li><%= link "Join the Community", to: page_path(@conn, :community) %></li>
+        <li><%= link "Code of Conduct", to: page_path(@conn, :coc) %></li>
         <li><%= link "Sign in to Slack", to: "https://changelog.slack.com/" %></li>
         <li><%= link "Perks", to: page_path(@conn, :community) %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
-      <h4><a class="js-toggle-parent" href="/contact" title="">Company</a></h4>
+      <h4>Etc.</h4>
       <ul>
         <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
-        <li><%= link "About", to: page_path(@conn, :about) %></li>
-        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
-        <li><a href="tel:+18889742454">888-974-CHLG (2454)</a></li>
-      </ul>
-    </div>
-    <div class="footer-nav-list">
-      <h4><a class="js-toggle-parent" href="https://twitter.com/changelog" title="">Social</a></h4>
-      <ul>
-        <li><a href="https://twitter.com/changelog">Twitter</a></li>
-        <li><a href="https://github.com/thechangelog">GitHub</a></li>
-        <li><a href="https://www.youtube.com/c/thechangelog">YouTube</a></li>
-        <li><a href="https://www.instagram.com/thechangelog/">Instagram</a></li>
-      </ul>
-    </div>
-    <div class="footer-nav-list">
-      <h4><a class="js-toggle-parent" href="#" title="">Etc.</a></h4>
-      <ul>
-        <li><a href="https://github.com/thechangelog/changelog.com">Source</a></li>
-        <li><a href="/terms">Terms</a></li>
-        <li><a href="/privacy">Privacy</a></li>
+        <li><%= link "Search", to: search_path(@conn, :search) %></li>
+        <li><%= link "Blog", to: post_path(@conn, :index) %></li>
+        <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
+        <li><a href="/terms">Terms &amp; Conditions</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
       </ul>
     </div>
   </nav>
 
   <div class="footer-sponsors">
-    <div class="footer-sponsors-item">
-      <a href="https://www.fastly.com/?utm_source=changelog" title="Visit Fastly.com">
-        <p>Bandwidth provided by</p>
-        <img src='<%= static_url(@conn, "/images/community/sponsor-fastly.png") %>' alt="Fastly">
-      </a>
-    </div>
-    <div class="footer-sponsors-item">
-      <a href="https://www.linode.com/changelog" title="Visit Linode.com">
-        <p>Hosting provided by</p>
-        <img src='<%= static_url(@conn, "/images/community/sponsor-linode.png") %>' alt="Linode">
-      </a>
+    <div class="footer-sponsors_wrap">
+      <div class="footer-sponsors-item">
+        <a href="https://www.fastly.com/?utm_source=changelog" title="Visit Fastly.com">
+          <p>Bandwidth provided by</p>
+          <img src='<%= static_url(@conn, "/images/content/footer/sponsor-fastly.png") %>' alt="Fastly">
+        </a>
+      </div>
+      <div class="footer-sponsors-item">
+        <a href="https://www.linode.com/changelog" title="Visit Linode.com">
+          <p>Hosting provided by</p>
+          <img src='<%= static_url(@conn, "/images/content/footer/sponsor-linode.png") %>' alt="Linode">
+        </a>
+      </div>
+      <div class="footer-sponsors-item">
+        <a href="https://rollbar.com/" title="Visit Linode.com">
+          <p>Error monitoring by</p>
+          <img src='<%= static_url(@conn, "/images/content/footer/sponsor-rollbar.png") %>' alt="Rollbar">
+        </a>
+      </div>
     </div>
   </div>
 </footer>

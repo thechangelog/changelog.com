@@ -1,0 +1,17 @@
+.page_news_item,
+.feed {
+  @include wrap;
+
+  @include breakpoint(mobile, max) {
+    padding: 0;
+  }
+}
+
+.feed,
+.search {
+  margin-bottom: 30px !important;
+
+  @include breakpoint(mobile, max) {
+    .pagination { padding: $base-spacing $base-spacing 0; }
+  }
+}

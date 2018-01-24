@@ -1,26 +1,24 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Community Benefits</h2>
-    </header>
-    <div class="content_body">
+<!-- NOTE: Should this page still exist? -->
 
-    <%= if @current_user do %>
-      <p>Hey there! Enjoy these exclusive benefits from our trusted partners.</p>
-    <% else %>
-      <p>Community members save $3,000+ with our trusted partners.</p>
+<article class="article">
+  <%= render(SharedView, "_page_heading.html", title: "Community Benefits", conn: @conn) %>
+  <div class="richtext">
 
-      <p><%= link "Join today", to: page_path(@conn, :community) %> to get access to the goods! It's FREE.</p>
+  <%= if @current_user do %>
+    <p>Hey there! Enjoy these exclusive benefits from our trusted partners.</p>
+  <% else %>
+    <p>Community members save $3,000+ with our trusted partners.</p>
+
+    <p><%= link "Join today", to: page_path(@conn, :community) %> to get access to the goods! It's FREE.</p>
+  <% end %>
+
+    <hr>
+
+    <ul>
+    <%= for benefit <- @benefits do %>
+      <li><%= render("_benefit.html", benefit: benefit, is_member: !is_nil(@current_user)) %></li>
     <% end %>
+    </ul>
 
-      <hr>
-
-      <ul>
-      <%= for benefit <- @benefits do %>
-        <li><%= render("_benefit.html", benefit: benefit, is_member: !is_nil(@current_user)) %></li>
-      <% end %>
-      </ul>
-
-    </div>
   </div>
 </article>

@@ -1,0 +1,29 @@
+.avatar_list {
+  display: flex;
+  justify-content: center;
+
+  &-item {
+    display: block;
+    font-size: 0.875em;
+    margin: 1em;
+    text-align: center;
+
+    &:hover {
+      p { color: $white; }
+    }
+
+    img {
+      background: #000;
+      border-radius: $base-border-radius;
+      display: block;
+      font-size: 8px;
+      margin: 0 auto;
+    }
+
+    p {
+      color: $medium-grey;
+      margin: 1em 0 0;
+      transition: color 0.1s $base-easing;
+    }
+  }
+}

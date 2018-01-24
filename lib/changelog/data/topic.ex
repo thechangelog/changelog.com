@@ -20,6 +20,13 @@ defmodule Changelog.Topic do
     timestamps()
   end
 
+  def with_news_items(query \\ __MODULE__) do
+    from(q in query,
+      distinct: true,
+      left_join: i in assoc(q, :news_item_topics),
+      where: not(is_nil(i.id)))
+  end
+
   def file_changeset(topic, attrs \\ %{}), do: cast_attachments(topic, attrs, ~w(icon))
 
   def insert_changeset(topic, attrs \\ %{}) do
@@ -34,6 +41,17 @@ defmodule Changelog.Topic do
     topic
     |> insert_changeset(attrs)
     |> file_changeset(attrs)
+  end
+
+  def preload_news_items(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(news_item_topics: ^NewsItemTopic.by_position)
+    |> Ecto.Query.preload(:news_items)
+  end
+  def preload_news_items(topic) do
+    topic
+    |> Repo.preload(news_item_topics: {NewsItemTopic.by_position, :news_item})
+    |> Repo.preload(:news_items)
   end
 
   def episode_count(topic), do: count(topic, EpisodeTopic)

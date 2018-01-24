@@ -120,6 +120,23 @@ defmodule Changelog.Factory do
     %Changelog.NewsItem{news_item_factory() | status: :published, published_at: hours_ago(1)}
   end
 
+  def episode_news_item(episode) do
+    object_id = "#{episode.podcast.slug}:#{episode.slug}"
+    %{published_news_item_factory() | type: :audio, headline: episode.title, url: "https://changelog.com/episodes/#{episode.slug}", object_id: object_id}
+  end
+
+  def post_news_item(post) do
+    object_id = "posts:#{post.slug}"
+    %{published_news_item_factory() | headline: post.title, url: "https://changelog.com/posts/#{post.slug}", object_id: object_id}
+  end
+
+  def news_item_topic_factory do
+    %Changelog.NewsItemTopic{
+      news_item: build(:news_item),
+      topic: build(:topic)
+    }
+  end
+
   def news_queue_factory do
     %Changelog.NewsQueue{
       position: sequence(:position, &(&1)),

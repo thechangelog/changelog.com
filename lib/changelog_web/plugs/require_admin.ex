@@ -16,7 +16,7 @@ defmodule ChangelogWeb.Plug.RequireAdmin do
     else
       conn
       |> put_flash(:error, "Admins only!")
-      |> redirect(to: Helpers.page_path(conn, :home))
+      |> redirect(to: Helpers.root_path(conn, :index))
       |> halt()
     end
   end

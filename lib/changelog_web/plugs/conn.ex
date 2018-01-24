@@ -12,7 +12,7 @@ defmodule ChangelogWeb.Plug.Conn do
       generate(conn, @signing_salt, key_opts()),
       generate(conn, @encryption_salt, key_opts()))
 
-    put_resp_cookie conn, key, encrypted, opts
+    put_resp_cookie(conn, key, encrypted, opts)
   end
 
   def get_encrypted_cookie(conn, key) do

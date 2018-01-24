@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Meta.Feeds do
 
   defp shared do
     [
-      %{url: feed_url(conn(), :all), title: "Fire Hose Feed (All Shows + All Posts)"},
+      %{url: feed_url(conn(), :news), title: "News Feed (The Proverbial Fire Hose)"},
       %{url: feed_url(conn(), :podcast, "master"), title: "Master Feed (All Shows)"}
     ]
   end

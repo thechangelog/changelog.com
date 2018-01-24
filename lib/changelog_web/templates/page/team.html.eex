@@ -1,39 +1,35 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>The Team</h2>
-    </header>
-    <div class="content_body">
-      <p><%= link "Become a member if you value our content.", to: page_path(@conn, :community) %></p>
+<article class="article">
+  <div class="richtext">
+    <h1>The Team</h1>
+    <p><%= link "Become a member if you value our content.", to: page_path(@conn, :community) %></p>
 
-      <ul>
-        <li><a href="https://twitter.com/adamstac"><strong>Adam Stacoviak</strong></a> &mdash; Founder &amp; Editor-in-chief</li>
-        <li><a href="https://twitter.com/jerodsanto"><strong>Jerod Santo</strong></a> &mdash; Partner &amp; Managing Editor</li>
-        <li><a href="https://twitter.com/beverlynelson">Beverly Nelson</a> &mdash; Learning Editor</li>
-      </ul>
+    <ul>
+      <li><a href="https://twitter.com/adamstac"><strong>Adam Stacoviak</strong></a> &mdash; Founder &amp; Editor-in-chief</li>
+      <li><a href="https://twitter.com/jerodsanto"><strong>Jerod Santo</strong></a> &mdash; Partner &amp; Managing Editor</li>
+      <li><a href="https://twitter.com/beverlynelson">Beverly Nelson</a> &mdash; Learning Editor</li>
+    </ul>
 
-      <h3>Retired</h3>
+    <h3>Retired</h3>
 
-      <p>Some have retired but their posts remain.</p>
+    <p>Some have retired but their posts remain.</p>
 
-      <ul>
-        <li><a href="https://twitter.com/andrewpthorp">Andrew Thorp</a></li>
-        <li><a href="https://twitter.com/voidfiles">Alex Kessinger</a></li>
-        <li><a href="https://twitter.com/steveklabnik">Steve Klabnik</a></li>
-        <li><a href="https://twitter.com/kennethreitz">Kenneth Reitz</a></li>
-        <li><a href="https://twitter.com/adamyonk">Adam Jahnke</a></li>
-        <li><a href="https://twitter.com/kellym">Kelly Martin</a></li>
-        <li><a href="https://twitter.com/miksago">Micheil Smith</a></li>
-        <li><a href="https://twitter.com/soffes">Sam Soffes</a></li>
-        <li><a href="https://twitter.com/creationix">Tim Caswell</a></li>
-        <li><a href="https://twitter.com/pengwynn">Wynn Netherland</a></li>
-      </ul>
+    <ul>
+      <li><a href="https://twitter.com/andrewpthorp">Andrew Thorp</a></li>
+      <li><a href="https://twitter.com/voidfiles">Alex Kessinger</a></li>
+      <li><a href="https://twitter.com/steveklabnik">Steve Klabnik</a></li>
+      <li><a href="https://twitter.com/kennethreitz">Kenneth Reitz</a></li>
+      <li><a href="https://twitter.com/adamyonk">Adam Jahnke</a></li>
+      <li><a href="https://twitter.com/kellym">Kelly Martin</a></li>
+      <li><a href="https://twitter.com/miksago">Micheil Smith</a></li>
+      <li><a href="https://twitter.com/soffes">Sam Soffes</a></li>
+      <li><a href="https://twitter.com/creationix">Tim Caswell</a></li>
+      <li><a href="https://twitter.com/pengwynn">Wynn Netherland</a></li>
+    </ul>
 
-      <hr />
+    <hr />
 
-      <h4>Can I write for The Changelog?</h4>
+    <h4>Can I write for The Changelog?</h4>
 
-      <p>Yes. We published <a href="https://github.com/thechangelog/draft">our editorial workflow</a> on GitHub. Check it out.</p>
-    </div>
+    <p>Yes. We published <a href="https://github.com/thechangelog/draft">our editorial workflow</a> on GitHub. Check it out.</p>
   </div>
 </article>

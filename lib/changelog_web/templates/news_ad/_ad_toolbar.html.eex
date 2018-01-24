@@ -1,0 +1,6 @@
+<div class="news_item-toolbar">
+  <div class="news_item-toolbar-item news_item-toolbar-meta">
+    <span class="news_item-toolbar-meta-item">logged by @logbot</span>
+    <span class="news_item-toolbar-meta-item"><%= link "permalink", to: news_ad_path(@conn, :show, slug(@ad)) %></span>
+  </div>
+</div>

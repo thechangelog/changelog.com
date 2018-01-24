@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Close</title>
+    <g id="news-item-button--view-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-12.000000, -9.000000)">
+        <g id="Play-Button" fill="#121921" fill-rule="nonzero">
+            <path d="M19.1568542,13.3284271 L23.3994949,9.08578644 L26.2279221,11.9142136 L21.9852814,16.1568542 L26.2279221,20.3994949 L23.3994949,23.2279221 L19.1568542,18.9852814 L14.9142136,23.2279221 L12.0857864,20.3994949 L16.3284271,16.1568542 L12.0857864,11.9142136 L14.9142136,9.08578644 L19.1568542,13.3284271 Z" id="toolbar-close"></path>
+        </g>
+    </g>
+</svg>

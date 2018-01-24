@@ -1,0 +1,312 @@
+// Dark Headers
+.page-podcast-index,
+.page-podcast-show,
+.page-episode-show,
+.page-post-show,
+.page-page-community,
+.page-page-sponsor,
+.page-topic-show,
+.page-news_source-show,
+.page-person-subscribe,
+.page-live-index,
+.page-page-weekly,
+.page-page-nightly {
+  .header {
+    background: $black;
+    border-bottom: 1px solid rgba($border-color, 0.1);
+
+    &-logo a {
+      background-image: url('/images/brand/changelog-logomark-white.svg');
+    }
+
+    &-nav-list-item {
+      &.is-active a { color: $white; }
+
+      &.is-active a,
+      a:hover {
+        &:before {
+          background: rgba($border-color, 0.1);
+        }
+      }
+    }
+
+    &-search {
+
+      input {
+        background: rgba($border-color, 0.1);
+        color: $white;
+
+        &::placeholder {
+          color: $medium-grey;
+        }
+
+        &:focus::placeholder { opacity: .7; }
+      }
+    }
+  }
+}
+
+// Base Styles
+// NOTE: Update $header-height and $header-height--mobile in variables.scss when any changes affect height
+.header {
+  @include position(fixed, 0 0 null);
+  background-color: rgba($white, .98);
+  border-bottom: 1px solid $light-grey;
+  padding: 7px $mobile-spacing;
+  width: 100%;
+  z-index: 999;
+
+  @include breakpoint(tablet) { padding: 13px $base-spacing; }
+
+  @include breakpoint(tablet, max) {
+    .nav-open & {
+      transition: background-color .2s ease-in-out;
+    }
+
+    .nav-open.nav-animate & {
+      background-color: $black;
+      border: none !important;
+
+      &-logo { opacity: 0; }
+    }
+  }
+
+  &-wrap {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1217px;
+  }
+
+  //
+  //
+  // Logo
+  &-logo {
+    $size: 36px;
+    flex: 0 auto;
+    margin: 0 12px 0 0;
+    text-indent: -9999px;
+
+    a {
+      background: url('/images/brand/changelog-logomark.svg') left center no-repeat;
+      background-size: auto $size;
+      display: block;
+      height: $size;
+      width: $size;
+    }
+  }
+
+  //
+  //
+  // Hamburger Menu Button via https://github.com/jonsuh/hamburgers/blob/master/_sass/hamburgers/hamburgers.scss
+  &-menu {
+
+    // Settings
+    $button-padding-x: 10px;
+    $button-padding-y: 10px;
+    $button-layer-width: 20px;
+    $button-layer-height: 2px;
+    $button-layer-spacing: 4px;
+    $button-layer-color: $green;
+    $button-layer-border-radius: 0px;
+
+    // Reset
+    background-color: transparent;
+    border: 0;
+    box-shadow: none !important;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    overflow: visible;
+    text-transform: none;
+
+    // Style
+    align-items: center;
+    cursor: pointer;
+    margin-right: -10px;
+    padding: $button-padding-y $button-padding-x;
+    text-align: center;
+    display: flex;
+
+    @include breakpoint(tablet) {
+      display: none;
+    }
+
+    &-box {
+      flex: 0 0 auto;
+      width: $button-layer-width;
+      height: $button-layer-height * 3 + $button-layer-spacing * 2;
+      display: inline-block;
+      position: relative;
+    }
+
+    &-inner {
+      display: block;
+      margin-top: $button-layer-height / -2;
+      top: 50%;
+
+      &,
+      &:before,
+      &:after {
+        width: $button-layer-width;
+        height: $button-layer-height;
+        background-color: $button-layer-color;
+        border-radius: $button-layer-border-radius;
+        position: absolute;
+        transition-property: transform;
+        transition-duration: 0.15s;
+        transition-timing-function: ease;
+      }
+
+      &:before,
+      &:after {
+        content: "";
+        display: block;
+      }
+
+      &:before { top: ($button-layer-spacing + $button-layer-height) * -1; }
+      &:after { bottom: ($button-layer-spacing + $button-layer-height) * -1; }
+    }
+
+    // Animation Specific Styles
+    .header-menu-inner {
+      transition-duration: 0.1s;
+      transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+      &:before { transition: top 0.1s 0.14s ease, opacity 0.1s ease; }
+      &:after { transition: bottom 0.1s 0.14s ease, transform 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+    }
+
+    .nav-open &-inner {
+      transform: rotate(45deg);
+      transition-delay: 0.14s;
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+      &:before {
+        top: 0;
+        opacity: 0;
+        transition: top 0.1s ease,opacity 0.1s 0.14s ease;
+      }
+
+      &:after {
+        bottom: 0;
+        transform: rotate(-90deg);
+        transition: bottom 0.1s ease, transform 0.1s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+    }
+  }
+
+  //
+  //
+  // Navigation
+  &-nav {
+    flex: 1 0 auto;
+
+    &-wrap {
+      align-items: center;
+      display: flex;
+      flex: 1 0 auto; // Pushes secondary nav to the far right
+
+      @include breakpoint(tablet, max) { justify-content: flex-end; }
+    }
+
+    // Lists
+    &-list {
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
+
+      &-item {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.125em;
+        margin: 0 16px;
+
+        a {
+          color: $medium-grey;
+          display: inline-block;
+          padding: 6px 0 4px;
+          position: relative;
+        }
+
+        &.is-active a { color: $black; }
+
+        &.is-active a,
+        a:hover {
+          &:before {
+            @include position(absolute, null 0 0);
+            content: "";
+            background: $light-grey;
+            height: 2px;
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    // Primary Navigation
+    &-primary {
+      display:  none;
+      flex: 1 0 auto; // Pushes secondary nav to the far right
+
+      @include breakpoint(tablet) { display: flex; }
+    }
+
+    // Secondary Nav
+    &-secondary {
+      align-items: center;
+      display: flex;
+      margin-top: 0;
+      margin-right: 10px;
+
+      @include breakpoint(tablet) {
+        margin-right: 20px;
+      }
+
+      .header-nav-list-item:last-child {
+        margin-right: 0;
+      }
+
+      &-user {
+        $size: 20px;
+        margin: 0;
+        text-align: center;
+
+        &,
+        img {
+          display: block;
+          height: $size;
+          width: $size;
+        }
+        img {
+          border-radius: $base-border-radius;
+        }
+      }
+    }
+  }
+
+  &-search {
+    display: none;
+    @include breakpoint(tablet) { display: block; }
+
+    input {
+      background: rgba($black, .05);
+      border: none;
+      color: $black;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.125em;
+      padding: 9px 10px;
+      width: 160px;
+
+      &::placeholder {
+        color: $medium-grey;
+        transition: opacity .1s ease-in-out;
+      }
+
+      &:focus::placeholder { opacity: .7; }
+    }
+  }
+}

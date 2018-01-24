@@ -1,3 +1,3 @@
-import EmbedPlayer from "components/embedPlayer";
+import EmbedPlayer from "modules/embedPlayer";
 
 const player = new EmbedPlayer("body");

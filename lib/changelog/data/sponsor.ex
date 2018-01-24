@@ -10,6 +10,7 @@ defmodule Changelog.Sponsor do
     field :github_handle, :string
     field :twitter_handle, :string
 
+    field :avatar, Files.Avatar.Type
     field :color_logo, Files.ColorLogo.Type
     field :dark_logo, Files.DarkLogo.Type
     field :light_logo, Files.LightLogo.Type
@@ -21,7 +22,7 @@ defmodule Changelog.Sponsor do
   end
 
   def file_changeset(sponsor, attrs \\ %{}) do
-    cast_attachments(sponsor, attrs, ~w(color_logo dark_logo light_logo))
+    cast_attachments(sponsor, attrs, ~w(avatar color_logo dark_logo light_logo))
   end
 
   def insert_changeset(sponsor, attrs \\ %{}) do

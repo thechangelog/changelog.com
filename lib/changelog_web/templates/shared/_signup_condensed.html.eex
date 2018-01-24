@@ -1,0 +1,6 @@
+<section class="announcement">
+  <div class="announcement-content">
+    <p>News and podcasts for developers<a href="#">Sign Up</a></p>
+  </div>
+  <button class="announcement-close">✕</button>
+</section>

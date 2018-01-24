@@ -1,0 +1,30 @@
+<div class="topic">
+  <header class="topic-header">
+    <div class="topic-header-wrap">
+      <div class="topic-header-avatar">
+        <img src="<%= icon_url(@source) %>" width="80" height="80" alt="<%= @source.name %> Icon">
+      </div>
+
+      <h2 class="topic-header-title"><%= @source.name %></h2>
+
+      <div class="topic-header-description">
+        <%= admin_edit_link(@conn, @current_user, @source) %>
+      </div>
+
+      <div class="topic-header-meta">
+        <%= if @source.website do %>
+          <%= link domain_name(@source.website), to: @source.website %>
+        <% end %>
+        &bull;
+        <%= pluralize(news_count(@source), "Story", "Stories") %>
+      </div>
+    </div>
+  </header>
+
+  <div class="feed">
+  <%= for item <- @items do %>
+    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
+  <% end %>
+  <%= render(SharedView, "_more_button.html", assigns) %>
+  </div>
+</div>

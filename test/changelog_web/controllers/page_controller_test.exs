@@ -3,18 +3,14 @@ defmodule ChangelogWeb.PageControllerTest do
 
   test "static pages all render", %{conn: conn} do
     Enum.each([
-      "/",
       "/about",
       "/contact",
       "/films",
       "/community",
-      "/join",
       "/nightly",
       "/nightly/confirmed",
       "/nightly/unsubscribed",
-      "/partnership",
       "/sponsor",
-      "/store",
       "/team",
       "/weekly",
       "/weekly/archive",
@@ -27,12 +23,6 @@ defmodule ChangelogWeb.PageControllerTest do
       conn = get(conn, route)
       assert conn.status == 200
     end)
-  end
-
-  test "home page includes featured episode", %{conn: conn} do
-    featured = insert(:published_episode, featured: true, highlight: "ohai")
-    conn = get(conn, "/")
-    assert html_response(conn, 200) =~ featured.title
   end
 
   describe "guest" do

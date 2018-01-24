@@ -36,11 +36,17 @@
   <%= if Mix.env == :prod do %>
     <%= render("_head_scripts.html", assigns) %>
   <% end %>
+
+   <meta property="csrf" content="<%= get_csrf_token() %>">
   </head>
-  <body class="<%= body_class(assigns) %>"><!--[if lt IE 8]>
-<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
-    <%= render("_nav.html", assigns) %>
+  <body class="page-<%= controller_action_combo(@conn) %>">
+    <!--[if lt IE 8]>
+      <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <%= render("_header.html", assigns) %>
+    <%= for {type, message} <- get_flash(@conn) do %>
+      <div class="flash flash--<%= type %>"><%= message %></div>
+    <% end %>
     <main class="main">
       <%= render(@view_module, @view_template, assigns) %>
     </main>

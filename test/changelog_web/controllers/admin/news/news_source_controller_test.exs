@@ -23,8 +23,8 @@ defmodule ChangelogWeb.Admin.NewsSourceControllerTest do
   end
 
   @tag :as_admin
-  test "creates news source and smart redirects", %{conn: conn} do
-    conn = post(conn, admin_news_source_path(conn, :create), news_source: @valid_attrs, close: true)
+  test "creates news source and redirects", %{conn: conn} do
+    conn = post(conn, admin_news_source_path(conn, :create), news_source: @valid_attrs)
 
     assert redirected_to(conn) == admin_news_source_path(conn, :index)
     assert count(NewsSource) == 1
@@ -48,11 +48,11 @@ defmodule ChangelogWeb.Admin.NewsSourceControllerTest do
   end
 
   @tag :as_admin
-  test "updates news source and smart redirects", %{conn: conn} do
+  test "updates news source and redirects", %{conn: conn} do
     news_source = insert(:news_source)
     conn = put(conn, admin_news_source_path(conn, :update, news_source.id), news_source: @valid_attrs)
 
-    assert redirected_to(conn) == admin_news_source_path(conn, :edit, news_source)
+    assert redirected_to(conn) == admin_news_source_path(conn, :index)
     assert count(NewsSource) == 1
   end
 

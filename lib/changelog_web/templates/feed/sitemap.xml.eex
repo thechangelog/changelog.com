@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc><%= page_url(@conn, :home) %></loc></url>
+  <url><loc><%= root_url(@conn, :index) %></loc></url>
   <url><loc><%= page_url(@conn, :about) %></loc></url>
   <url><loc><%= page_url(@conn, :coc) %></loc></url>
   <url><loc><%= page_url(@conn, :contact) %></loc></url>
   <url><loc><%= page_url(@conn, :films) %></loc></url>
   <url><loc><%= page_url(@conn, :community) %></loc></url>
-  <url><loc><%= page_url(@conn, :subscribe) %></loc></url>
-  <url><loc><%= page_url(@conn, :partnership) %></loc></url>
   <url><loc><%= page_url(@conn, :sponsor) %></loc></url>
-  <url><loc><%= page_url(@conn, :store) %></loc></url>
   <url><loc><%= page_url(@conn, :team) %></loc></url>
   <url><loc><%= page_url(@conn, :weekly) %></loc></url>
   <url><loc><%= page_url(@conn, :nightly) %></loc></url>
+  <url><loc><%= person_url(@conn, :join) %></loc></url>
+  <url><loc><%= person_url(@conn, :subscribe) %></loc></url>
   <url><loc><%= live_url(@conn, :index) %></loc></url>
+
+  <%= for item <- @news_items do %>
+    <url><loc><%= news_item_url(@conn, :show, NewsItemView.slug(item)) %></loc></url>
+  <% end %>
+
+  <%= for source <- @news_sources do %>
+    <url><loc><%= news_source_url(@conn, :show, source.slug) %></loc></url>
+  <% end %>
 
   <url><loc><%= podcast_url(@conn, :index) %></loc></url>
   <%= for podcast <- @podcasts ++ [Podcast.master] do %>
     <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
-    <url><loc><%= podcast_url(@conn, :archive, podcast.slug) %></loc></url>
   <% end %>
 
   <%= for episode <- @episodes do %>
@@ -28,5 +34,10 @@
   <url><loc><%= post_url(@conn, :index) %></loc></url>
   <%= for post <- @posts do %>
     <url><loc><%= post_url(@conn, :show, post.slug) %></loc></url>
+  <% end %>
+
+  <url><loc><%= topic_url(@conn, :index) %></loc></url>
+  <%= for topic <- @topics do %>
+    <url><loc><%= topic_url(@conn, :show, topic.slug) %></loc></url>
   <% end %>
 </urlset>

@@ -1,78 +1,76 @@
-<%= render(SharedView, "_flash_messages.html", conn: @conn) %>
-<section class="profile">
+<div class="page_account">
+  <%= render("_nav.html", assigns) %>
 
-  <div class="profile-card">
-    <img class="profile-card-image" src="<%= PersonView.avatar_url(@current_user) %>" width="120" height="120" alt="<%= @current_user.name %> Avatar">
-
-    <h1 class="profile-card-heading"><%= @current_user.name %></h1>
-
-    <ul class="profile-card-stats">
-    <%= if @current_user.location do %>
-      <li class="profile-card-stats-item profile-card-stats-item--location"><%= @current_user.location %></li>
-    <% end %>
-      <li class="profile-card-stats-item profile-card-stats-item--date">Joined <%= TimeView.pretty_date(@current_user.joined_at) %></li>
-    <%= if @current_user.website do %>
-      <li class="profile-card-stats-item profile-card-stats-item--link"><%= link domain_only(@current_user.website), to: @current_user.website %></li>
-    <% end %>
-    </ul>
-
-  <%= if @current_user.bio do %>
-    <div class="profile-card-bio">
-      <%= @current_user.bio |> md_to_safe_html |> raw %>
+  <div class="account_subscriptions">
+    <div class="account_subscriptions-item">
+      <div class="account_subscriptions-item-info">
+        <h3>Changelog Weekly</h3>
+        <p>Our editorialized take covering this week in open source and software development.</p>
+        <p class="account_subscriptions-item-info-meta">1 Email Per Week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
+      </div>
+      <div class="account_subscriptions-item-button">
+        <% weekly = Changelog.Newsletters.weekly() %>
+        <%= if PersonView.is_subscribed(@current_user, weekly) do %>
+          <%= link "Subscribed", to: home_path(@conn, :unsubscribe, weekly.list_id), method: :post, class: "is-subscribed" %>
+        <% else %>
+          <%= link "Subscribe", to: home_path(@conn, :subscribe, weekly.list_id), method: :post %>
+        <% end %>
+      </div>
     </div>
-  <% end %>
-
-    <ul class="button_list button_list--green">
-    <%= if @current_user.twitter_handle do %>
-      <li class="button_list-item">
-        <a class="twitter" href="<%= twitter_url(@current_user.twitter_handle) %>" title="<%= @current_user.name %> on Twitter">@<%= @current_user.twitter_handle %></a>
-      </li>
-    <% end %>
-
-    <%= if @current_user.github_handle do %>
-      <li class="button_list-item">
-        <a class="github" href="<%= github_url(@current_user.github_handle) %>" title="<%= @current_user.name %> on GitHub"><%= @current_user.github_handle %></a>
-      </li>
-    <% end %>
-    </ul>
+    <div class="account_subscriptions-item">
+      <div class="account_subscriptions-item-info">
+        <h3>Changelog Nightly</h3>
+        <p>Our automated, nightly email unearths the hottest new repos on GitHub before they blow up.</p>
+        <p class="account_subscriptions-item-info-meta">7 Emails Per Week — Delivered Daily at 10pm US Central</p>
+      </div>
+      <div class="account_subscriptions-item-button">
+        <% nightly = Changelog.Newsletters.nightly() %>
+        <%= if PersonView.is_subscribed(@current_user, nightly) do %>
+          <%= link "Subscribed", to: home_path(@conn, :unsubscribe, nightly.list_id), method: :post, class: "is-subscribed" %>
+        <% else %>
+          <%= link "Subscribe", to: home_path(@conn, :subscribe, nightly.list_id), method: :post %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
-  <div class="profile-introduction">
-    <p>Well Hello, <br>We’re glad you’re here! We have big plans for the site including community discussion, posting, and more. In the meantime, here are a few things you can do here:</p>
+  <div class="account_ctas">
+    <div class="account_ctas-item">
+      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/changelog-logomark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
 
-    <ul class="checklist">
-    <%= if @current_user.admin do %>
-      <li class="checklist-item"><%= link("Go to admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
-    <% end %>
-      <li class="checklist-item <%= checked_class_if(PersonView.is_profile_complete(@current_user)) %>">
-        <%= link "Complete your profile (public profiles launching soon!)", to: home_path(@conn, :edit) %>
-      </li>
-      <li class="checklist-item <%= checked_class_if(@current_user.slack_id) %>">
-        <%= link "Request a Slack Invite", to: home_path(@conn, :slack), method: :post %>
-      </li>
-    <% weekly = Changelog.Newsletters.weekly() %>
-    <%= if PersonView.is_subscribed(@current_user, weekly) do %>
-      <li class="checklist-item <%= checked_class_if(true) %>">
-        <%= link "Unsubscribe from Changelog Weekly", to: home_path(@conn, :unsubscribe, weekly.list_id), method: :post %>
-      </li>
-    <% else %>
-      <li class="checklist-item">
-        <%= link "Subscribe to Changelog Weekly", to: home_path(@conn, :subscribe, weekly.list_id), method: :post %>
-      </li>
-    <% end %>
-    <% nightly = Changelog.Newsletters.nightly() %>
-    <%= if PersonView.is_subscribed(@current_user, nightly) do %>
-      <li class="checklist-item <%= checked_class_if(true) %>">
-        <%= link "Unsubscribe from Changelog Nightly", to: home_path(@conn, :unsubscribe, nightly.list_id), method: :post %>
-      </li>
-    <% else %>
-      <li class="checklist-item">
-        <%= link "Subscribe to Changelog Nightly", to: home_path(@conn, :subscribe, nightly.list_id), method: :post %>
-      </li>
-    <% end %>
-    </ul>
+      <div class="account_ctas-item-info">
+        <h3>Changelog.com Profiles</h3>
+        <p>Public profiles are launching soon. Add your info today to reserve your username.</p>
 
-    <p>Welcome <code>$HOME</code>.</p>
-    <p><em>Sincerely, <br>The Changelog Team</em></p>
+        <div class="account_ctas-item-info-buttons">
+          <%= link "Manage Profile", to: home_path(@conn, :profile) %>
+        </div>
+      </div>
+    </div>
+    <div class="account_ctas-item">
+      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/podcasts.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+
+      <div class="account_ctas-item-info">
+        <h3>Changelog Podcasts</h3>
+        <p>Prefer not to listen on the web? Subscribe to Changelog podcasts from your app of choice.</p>
+
+        <div class="account_ctas-item-info-buttons">
+          <%= link "Subscribe to Podcasts", to: podcast_path(@conn, :index) %>
+        </div>
+      </div>
+    </div>
+    <div class="account_ctas-item">
+      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+
+      <div class="account_ctas-item-info">
+        <h3>Changelog Slack</h3>
+        <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
+
+        <div class="account_ctas-item-info-buttons">
+          <%= link "Request Invite", to: home_path(@conn, :slack), method: :post %>
+          <%= link "Launch Slack", to: "https://changelog.slack.com", target: "_blank" %>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
+</div>

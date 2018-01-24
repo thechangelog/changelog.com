@@ -1,0 +1,129 @@
+.signup {
+  align-items: center;
+  background-color: $black;
+  display: flex;
+  padding: 0 30px;
+  position: relative;
+  width: 100%;
+
+  &-content {
+    color: $white;
+    margin: 0 auto;
+    max-width: 760px;
+    padding: 40px 0;
+    text-align: center;
+    width: 100%;
+
+    @include breakpoint(mobile) {
+      padding: 50px 0;
+    }
+    @include breakpoint(tablet) {
+      padding: 60px 0;
+    }
+  }
+
+  &-icons {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-bottom: 30px;
+
+    &-item {
+      $size: 52px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: auto $size;
+      height: $size;
+      margin: 0 14px;
+      width: $size;
+
+      &--news {
+        background-image: url('/images/icons/icon-news.svg');
+      }
+
+      &--podcasts {
+        background-image: url('/images/icons/icon-podcasts.svg');
+      }
+    }
+  }
+
+  &-heading {
+    font-size: 26px;
+  }
+
+  &-text {
+    margin-bottom: 25px;
+    opacity: .65;
+  }
+
+  &-form {
+    background-color: $white;
+    height: 44px;
+    margin: 0 auto;
+    max-width: 520px;
+    position: relative;
+    width: 100%;
+
+    &-input,
+    &-submit-button {
+      border: none;
+      font-family: $code;
+      font-size: 13px;
+      height: 44px;
+      outline: none;
+    }
+
+    &-input {
+      padding: 5px 100px 5px 18px;
+      width: 100%;
+
+      &::placeholder {
+        transition: opacity .1s ease-in-out
+      }
+      &:hover::placeholder,
+      &:focus::placeholder {
+        opacity: .8;
+      }
+    }
+
+    &-submit {
+      @include position(absolute, 0 0 0 null);
+
+      &-button {
+        background-color: $green;
+        color: $white;
+        cursor: pointer;
+        padding: 5px 18px;
+        transition: background-color .1s ease-in-out;
+
+        &:hover {
+          background-color: darken($green, 10%);
+        }
+      }
+    }
+  }
+
+  &-sign_in {
+    margin: 20px auto 0;
+    opacity: .75;
+  }
+
+  &-close {
+    @include position(absolute, 20px 15px null null);
+    color: $green;
+    cursor: pointer;
+    font-size: 25px;
+    line-height: 20px;
+    padding: 5px;
+    opacity: .3;
+
+    @include breakpoint(mobile) {
+      @include position(absolute, 20px 20px null null);
+    }
+
+    &:hover {
+      opacity: 1;
+      transition: opacity 0.3s $base-easing;
+    }
+  }
+}

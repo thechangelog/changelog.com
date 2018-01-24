@@ -1,6 +1,6 @@
 <section class="live_upcoming">
-  <h1 class="live_upcoming-heading">Upcoming Live Shows</h1>
   <%= if Enum.any?(@episodes) do %>
+    <h1 class="live_upcoming-heading">Upcoming Live Shows</h1>
     <div class="live_upcoming-grid">
       <%= for episode <- @episodes do %>
         <div class="live_upcoming-grid-item">
@@ -20,9 +20,7 @@
           <div class="live_upcoming-grid-item-info">
             <div>
               <p><strong>
-                <%= link to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" do %>
-                <%= episode.podcast.name %> <%= EpisodeView.number_with_pound(episode) %>
-                <% end %>
+                <%= link EpisodeView.podcast_name_and_number(episode), to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" %>
               </strong></p>
               <p><%= episode.title %></p>
             </div>
@@ -31,5 +29,6 @@
       <% end %>
     </div>
   <% else %>
+    <h1 class="live_upcoming-heading">No scheduled shows. Check back soon.</h1>
   <% end %>
 </section>

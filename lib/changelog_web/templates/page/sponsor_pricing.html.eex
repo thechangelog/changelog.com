@@ -1,0 +1,98 @@
+<article class="article">
+  <div class="richtext">
+    <h1>Sponsorship Pricing</h1>
+    <p><strong><mark class="grey-background">Do you want to tell 100,000+ developers about your product or service?</mark></strong></p>
+
+    <p>Our listeners and readers are a loyal audience of engineers, hackers, developers, polyglots, backend, frontend, full-stack, operations, designers, and everything in between. If you want to talk to software developers, we can help you.</p>
+
+    <p>Our sponsors range from web services, developer tools, courses, learning resources, conferences, and more.</p>
+
+    <h2>Grow Your Product By Sponsoring Our Content</h2>
+
+    <p>Podcast sponsorship and advertising with Changelog is so effective because our listeners trust that we only promote and endorse brands who represent trustworthy products and services. We've worked very hard to gain that trust, and we don't take that trust lightly. We believe the best way to tell any story, including the story we'll tell for your brand, is to put our listeners first.</p>
+
+    <p>We will work very closely with you to create a professionally produced sponsorship campaign that focuses on the goals we set together. If you're looking for results, count on us to deliver.</p>
+
+    <p><a href="mailto:adam@changelog.com">Email adam@changelog.com</a> or <a href="tel:1-888-974-2454">call 888-974-CHLG (2454)</a> to get started.</p>
+
+    <hr>
+
+    <h3><a href="/podcast">The Changelog (Podcast)</a></h3>
+
+    <ul>
+      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li><mark>$2,000 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$1,750 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 35,000 to 45,000 listens per episode</li>
+      <li>Reaches an average 200,000 listens per month, podcast-wide</li>
+      <li>Published weekly</li>
+      <li>Each sponsor gets mentioned at the top of the show</li>
+      <li>Logo will appear on the homepage when the show is featured</li>
+      <li>Logo and link will appear on the episode page of shows you sponsor</li>
+      <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
+    </ul>
+
+    <h3><a href="/weekly">Changelog Weekly (Newsletter)</a></h3>
+
+    <p>Every weekend we ship our email to <%= @weekly |> NewsletterView.subscribers(:all, 7500) |> comma_separated %> die-hard readers.</p>
+
+    <ul>
+      <li><mark>$500 per week with a four (4) week minimum</mark></li>
+      <li>We maintain <em>very high</em> engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
+      <li>The breakdown is a linked heading with 2-3 lines of supporting text with links.</li>
+      <li>We take a native content approach to sponsored links included in Changelog Weekly. Since most organizations treat their blog, ebooks, webinars and other content as their inbound funnel, we leverage that to share that content with our readers and let your marketing funnel do what it was designed to do &mdash; convert!</li>
+      <li>We can do all the writing for you so there's no work required on your part. You tell us what you'd like promoted and we take care of the rest.</li>
+      <li>Expect an average of 70-400 clicks &mdash; the better and more relevant the content, the better it will perform.</li>
+    </ul>
+
+    <h3><a href="/gotime">Go Time</a></h3>
+
+    <ul>
+      <li>Each episode includes two (2) live read mid-roll sponsorships</li>
+      <li><mark>$650 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 6,000 to 7,500 listens per episode</li>
+      <li>Reaches an average 30,000 listens per month, podcast-wide</li>
+      <li>Recorded live and published weekly</li>
+      <li>Each sponsor gets mentioned at the top of the show</li>
+      <li>Logo will appear on the homepage when the show is featured</li>
+      <li>Logo and link will appear on the episode page of shows you sponsor</li>
+      <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
+    </ul>
+
+    <h3><a href="/rfc">Request For Commits</a></h3>
+
+    <ul>
+      <li>Each episode includes two (2) mid-roll sponsorships</li>
+      <li><mark>$500 for mid-roll spots</mark></li>
+      <li>Reaches an average 5,000 to 7,000 listens per episode</li>
+      <li>Published weekly</li>
+      <li>Logo will appear on the homepage when the show is featured</li>
+      <li>Logo and link will appear on the episode page of shows you sponsor</li>
+      <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
+    </ul>
+
+    <h3><a href="/jsparty">JS Party</a></h3>
+
+    <ul>
+      <li>Each episode includes two (2) mid-roll sponsorships</li>
+      <li><mark>$850 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 2,100 to 3,200 listens per episode</li>
+      <li>Reaches an average 14,500 listens per month, podcast-wide</li>
+      <li>Recorded live and published weekly</li>
+      <li>Logo will appear on the homepage when the show is featured</li>
+      <li>Logo and link will appear on the episode page of shows you sponsor</li>
+      <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
+    </ul>
+
+    <hr>
+
+    <h3>Conference Sponsorship</h3>
+
+    <p>We love working with conferences! We have several options on how we support and partner with conference organizers.</p>
+
+    <p>We can come in as a media partner to help spread the word and provide the coverage you need, or we can involve <a href="https://changelog.com/films">Changelog Films</a> and help you tell your community's story like we have for our friends at <a href="https://changelog.com/films/gophercon-2015/">GopherCon</a>.</p>
+  </div>
+</article>

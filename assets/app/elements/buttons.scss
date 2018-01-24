@@ -1,0 +1,19 @@
+button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+.button {
+  @include button($black, $white);
+}
+
+.button_large {
+  @include button($green, $white);
+  display: inline-block;
+  font-size: 1.1875em;
+  margin-bottom: 1em;
+}

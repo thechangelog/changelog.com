@@ -1,49 +1,26 @@
 <section class="search">
-  <div class="container container--has-padding container--skinny">
-    <div class="content_body">
-      <form action="<%= search_path(@conn, :search) %>" method="get" class="search-form">
-        <label class="accessibility-hidden" for="name">Search</label>
-        <input name="q" type="text" placeholder="Search all Episodes and Posts..." value="<%= @query %>" />
-      </form>
-    </div>
+  <form action="<%= search_path(@conn, :search) %>" method="get" class="search-form">
+    <label class="visually_hidden" for="name">Search</label>
+    <input name="q" type="text" placeholder="Search Changelog" value="<%= @query %>" autofocus />
+  </form>
 
-    <%= if @results do %>
-      <%= if @results.count_total > 0 do %>
-        <header class="search_header">
-          <h1>“<%= @query %>”</h1>
-          <ul class="search_links">
-            <li><%= link pluralize(@results.count_episodes, "episode", "episodes"), to: "#episodes" %></li><li><%= link pluralize(@results.count_posts, "post", "posts"), to: "#posts" %></li>
-          </ul>
-        </header>
+  <%= if Enum.any?(@items) do %>
+    <%= if @page.total_entries > 0 do %>
+      <p class="search-results_sentence">We found <%= pluralize(@page.total_entries, "result", "results") %>.</p>
 
-        <%= if @results.count_episodes > 0 do %>
-          <section id="episodes" class="search_results">
-            <h3 class="search_results_heading"><%= pluralize(@results.count_episodes, "episode", "episodes") %></h3>
-            <%= for episode <- @results.episodes do %>
-              <%= render(PodcastView, "_episode_summary.html", conn: @conn, episode: episode) %>
-            <% end %>
-            <%= if @results.episodes.total_pages > 1 do %>
-              <%= pagination_links(@conn, @results.episodes, type: "episodes", action: :search, q: @query, path: &search_path/3) %>
-            <% end %>
-          </section>
+      <div class="feed">
+        <%= for item <- @items do %>
+          <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
         <% end %>
+        <%= render(SharedView, "_more_button.html", assigns) %>
+      </div>
 
-        <%= if @results.count_posts > 0 do %>
-          <section id="posts" class="search_results">
-            <h3 class="search_results_heading"><%= pluralize(@results.count_posts, "post", "posts") %></h3>
-            <%= for post <- @results.posts do %>
-              <%= render(PostView, "_post_summary.html", conn: @conn, post: post) %>
-            <% end %>
-            <%= if @results.posts.total_pages > 1 do %>
-              <%= pagination_links(@conn, @results.posts, type: "posts", action: :search, q: @query, path: &search_path/3) %>
-            <% end %>
-          </section>
-        <% end %>
-      <% else %>
-        <header class="search_header">
-          <h1>There are no results for “<%= @query %>”</h1>
-        </header>
+    <% else %>
+      <%= if String.length(@query) != 0 do %>
+        <p class="search-results_sentence">
+          There are no results for “<%= @query %>”.
+        </p>
       <% end %>
     <% end %>
-  </div>
+  <% end %>
 </section>

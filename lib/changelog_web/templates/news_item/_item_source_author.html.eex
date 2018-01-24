@@ -1,0 +1,5 @@
+<%= link to: PersonView.external_url(@author), title: @author.name, rel: "external" do %>
+  <img class="news_item-source-image" src="<%= PersonView.avatar_url(@author) %>" alt="<%= @author.name %> Avatar" />
+<% end %>
+
+<%= link domain_name(@item.url), to: domain_url(@item.url), title: @author.name, rel: "external" %>

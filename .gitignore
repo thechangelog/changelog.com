@@ -10,6 +10,7 @@ erl_crash.dump
 
 # Static artifacts
 /assets/node_modules
+/assets/app/deprecated
 
 # npm logs
 npm-debug.log*

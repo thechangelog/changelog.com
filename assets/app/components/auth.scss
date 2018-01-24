@@ -1,0 +1,29 @@
+.auth {
+  margin: $padding-small auto;
+  max-width: 500px;
+  padding: 30px;
+  width: 100%;
+
+  &-header {
+    font-size: 1.75em;
+    margin-bottom: $base-spacing;
+  }
+
+  &-links {
+    color: $blue-grey;
+    font-family: $code;
+    font-size: 0.8125em;
+    font-style: italic;
+    margin-bottom: $base-spacing;
+
+    a {
+      color: $blue-grey;
+      border-bottom: 1px solid $blue-grey;
+
+      &:hover {
+        color: $green;
+        border-bottom-color: $green;
+      }
+    }
+  }
+}

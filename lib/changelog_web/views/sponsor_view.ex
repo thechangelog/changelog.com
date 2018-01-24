@@ -1,7 +1,13 @@
 defmodule ChangelogWeb.SponsorView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.Files.{ColorLogo, DarkLogo, LightLogo}
+  alias Changelog.Files.{Avatar, ColorLogo, DarkLogo, LightLogo}
+
+  def avatar_url(sponsor), do: avatar_url(sponsor, :small)
+  def avatar_url(sponsor, version) do
+    Avatar.url({sponsor.avatar, sponsor}, version)
+    |> String.replace_leading("/priv", "")
+  end
 
   def logo_url(sponsor, type, version) do
     {module, file} = case type do
@@ -11,7 +17,6 @@ defmodule ChangelogWeb.SponsorView do
     end
 
     module.url({file, sponsor}, version)
-    |> String.replace_leading("/priv", "/")
-    |> String.replace(~r{^//}, "/") # Arc 0.6 now prepends / to *all* URLs
+    |> String.replace_leading("/priv", "")
   end
 end

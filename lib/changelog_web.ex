@@ -10,6 +10,10 @@ defmodule ChangelogWeb do
 
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Plug.Conn
+
+      defp redirect_next(conn, %{"next" => ""}, fallback), do: redirect(conn, to: fallback)
+      defp redirect_next(conn, %{"next" => next}, _fallback), do: redirect(conn, to: next)
+      defp redirect_next(conn, _next, fallback), do: redirect(conn, to: fallback)
     end
   end
 
@@ -32,7 +36,7 @@ defmodule ChangelogWeb do
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1,get_flash: 2, view_module: 1]
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
-      alias ChangelogWeb.TimeView
+      alias ChangelogWeb.{SharedView, TimeView}
     end
   end
 

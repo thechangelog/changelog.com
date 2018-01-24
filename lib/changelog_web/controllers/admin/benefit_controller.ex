@@ -23,10 +23,10 @@ defmodule ChangelogWeb.Admin.BenefitController do
     changeset = Benefit.admin_changeset(%Benefit{}, benefit_params)
 
     case Repo.insert(changeset) do
-      {:ok, benefit} ->
+      {:ok, _benefit} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(benefit, params)
+        |> redirect_next(params, admin_benefit_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -45,10 +45,10 @@ defmodule ChangelogWeb.Admin.BenefitController do
     changeset = Benefit.admin_changeset(benefit, benefit_params)
 
     case Repo.update(changeset) do
-      {:ok, benefit} ->
+      {:ok, _benefit} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(benefit, params)
+        |> redirect_next(params, admin_benefit_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -63,12 +63,5 @@ defmodule ChangelogWeb.Admin.BenefitController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_benefit_path(conn, :index))
-  end
-
-  defp smart_redirect(conn, _benefit, %{"close" => _true}) do
-    redirect(conn, to: admin_benefit_path(conn, :index))
-  end
-  defp smart_redirect(conn, benefit, _params) do
-    redirect(conn, to: admin_benefit_path(conn, :edit, benefit))
   end
 end

@@ -38,7 +38,7 @@ Assuming you're on macOS:
 
   1. `./script/setup`
   2. `mix ecto.setup`
-  3. `mix phoenix.server`
+  3. `mix phx.server`
 
 Now visit [`localhost:4000`](http://localhost:4000) in your browser.
 The database contains some seed data you can start with.

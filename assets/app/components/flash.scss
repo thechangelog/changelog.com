@@ -1,0 +1,24 @@
+.flash {
+  background: $light-blue;
+  color: $blue;
+  font-weight: bold;
+  padding: $padding-small;
+  text-align: center;
+
+  &--inline {
+    margin-bottom: $base-spacing;
+  }
+
+  &--success, &--result {
+    background: $light-green;
+    color: $green;
+  }
+  &--error {
+    background: $light-red;
+    color: $red;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

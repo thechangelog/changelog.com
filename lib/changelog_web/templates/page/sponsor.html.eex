@@ -1,102 +1,98 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Sponsor Changelog.com</h2>
+<article class="marketing marketing--sponsor">
+  <section class="marketing-section marketing-section--intro">
+    <header class="marketing-section-header">
+      <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
+      <h1>Your partner in reaching developers</h1>
+      <p>100,000 monthly pageviews&nbsp;&nbsp;•&nbsp;&nbsp;225,000 monthly podcast listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> email subscribers</p>
+
+      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), title: "", class: "marketing-button button_large" %>
+      <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
     </header>
-    <div class="content_body">
-      <p><strong><mark class="grey-background">Do you want to tell 100,000+ developers about your product or service?</mark></strong></p>
+  </section>
 
-      <p>Our listeners and readers are a loyal audience of engineers, hackers, developers, polyglots, backend, frontend, full-stack, operations, designers, and everything in between. If you want to talk to software developers, we can help you.</p>
+  <section class="marketing-section">
+    <header class="marketing-section-header">
+      <h2>Why partner with us?</h2>
+      <p>Developers have trusted Changelog since 2009 to share the latest news and podcasts for software professionals. Whether you want to increase exposure, generate awareness, build your company's brand, or test an idea with a large developer audience, we're here to help you develop the right strategy to achieve the results you're looking for.</p>
+    </header>
 
-      <p>Our sponsors range from web services, developer tools, courses, learning resources, conferences, and more.</p>
-
-      <h2>Grow Your Product By Sponsoring Our Content</h2>
-
-      <p>Podcast sponsorship and advertising with Changelog is so effective because our listeners trust that we only promote and endorse brands who represent trustworthy products and services. We've worked very hard to gain that trust, and we don't take that trust lightly. We believe the best way to tell any story, including the story we'll tell for your brand, is to put our listeners first.</p>
-
-      <p>We will work very closely with you to create a professionally produced sponsorship campaign that focuses on the goals we set together. If you're looking for results, count on us to deliver.</p>
-
-      <p><a href="mailto:adam@changelog.com">Email adam@changelog.com</a> to get started.</p>
-
-      <hr>
-
-      <h3><a href="/podcast">The Changelog (Podcast)</a></h3>
-
-      <ul>
-        <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-        <li><mark>$2,000 for the featured pre-roll spot at the top of the show</mark></li>
-        <li><mark>$1,750 for mid-roll spots</mark></li>
-        <li>Four (4) week minimum</li>
-        <li>Reaches an average 35,000 to 45,000 listens per episode</li>
-        <li>Reaches an average 200,000 listens per month, podcast-wide</li>
-        <li>Published weekly</li>
-        <li>Each sponsor gets mentioned at the top of the show</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <h3><a href="/weekly">Changelog Weekly (Newsletter)</a></h3>
-
-      <p>Every weekend we ship our email to <%= @weekly |> NewsletterView.subscribers(:all, 7500) |> comma_separated %> die-hard readers.</p>
-
-      <ul>
-        <li><mark>$500 per week with a four (4) week minimum</mark></li>
-        <li>We maintain <em>very high</em> engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
-        <li>The breakdown is a linked heading with 2-3 lines of supporting text with links.</li>
-        <li>We take a native content approach to sponsored links included in Changelog Weekly. Since most organizations treat their blog, ebooks, webinars and other content as their inbound funnel, we leverage that to share that content with our readers and let your marketing funnel do what it was designed to do &mdash; convert!</li>
-        <li>We can do all the writing for you so there's no work required on your part. You tell us what you'd like promoted and we take care of the rest.</li>
-        <li>Expect an average of 70-400 clicks &mdash; the better and more relevant the content, the better it will perform.</li>
-      </ul>
-
-      <h3><a href="/gotime">Go Time</a></h3>
-
-      <ul>
-        <li>Each episode includes two (2) live read mid-roll sponsorships</li>
-        <li><mark>$650 for mid-roll spots</mark></li>
-        <li>Four (4) week minimum</li>
-        <li>Reaches an average 6,000 to 7,500 listens per episode</li>
-        <li>Reaches an average 30,000 listens per month, podcast-wide</li>
-        <li>Recorded live and published weekly</li>
-        <li>Each sponsor gets mentioned at the top of the show</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <h3><a href="/rfc">Request For Commits</a></h3>
-
-      <ul>
-        <li>Each episode includes two (2) mid-roll sponsorships</li>
-        <li><mark>$500 for mid-roll spots</mark></li>
-        <li>Reaches an average 5,000 to 7,000 listens per episode</li>
-        <li>Published weekly</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <h3><a href="/jsparty">JS Party</a></h3>
-
-      <ul>
-        <li>Each episode includes two (2) mid-roll sponsorships</li>
-        <li><mark>$850 for mid-roll spots</mark></li>
-        <li>Four (4) week minimum</li>
-        <li>Reaches an average 2,100 to 3,200 listens per episode</li>
-        <li>Reaches an average 14,500 listens per month, podcast-wide</li>
-        <li>Recorded live and published weekly</li>
-        <li>Logo will appear on the homepage when the show is featured</li>
-        <li>Logo and link will appear on the episode page of shows you sponsor</li>
-        <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
-      </ul>
-
-      <hr>
-
-      <h3>Conference Sponsorship</h3>
-
-      <p>We love working with conferences! We have several options on how we support and partner with conference organizers.</p>
-
-      <p>We can come in as a media partner to help spread the word and provide the coverage you need, or we can involve <a href="https://changelog.com/films">Changelog Films</a> and help you tell your community's story like we have for our friends at <a href="https://changelog.com/films/gophercon-2015/">GopherCon</a>.</p>
+    <div class="marketing-section-grid">
+      <div class="marketing-section-grid-item">
+        <h3>Large engaged audience</h3>
+        <p>Our news and podcasts reach a global audience of more than 100,000 developers each month. Trust us to help you put your brand in front of your target audience. We're built by developers for&nbsp;developers.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>Invested partnership</h3>
+        <p>Your success is our success. We're passionate about partnering with you to develop campaigns that drive measurable results. Rely on our knowledge of developer marketing to create ads that get&nbsp;attention.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>Goals focused, measurable results</h3>
+        <p>Our team will work closely with you to determine your goals and design a campaign focused on your goals with measurable results. By understanding your challenges we're able to help you share your message in an authentic&nbsp;way.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>Loyal trusted community</h3>
+        <p>We're not just a podcast, or news site, we're a community. Everything we do is catered to developers to create an environment they love and trust. We have strict guidelines for the ads we accept on our site. Our ads are tasteful, non-intrusive, and meet the needs of our community members. Developers trust&nbsp;us.</p>
+      </div>
     </div>
-  </div>
+
+    <div class="marketing-section-centered">
+      <%= link "Get started", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
+      <p class="button_note">Or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
+    </div>
+  </section>
+
+  <hr />
+
+  <section class="marketing-section">
+    <header class="marketing-section-header">
+      <h3>Brands who care about developers advertise with&nbsp;Changelog</h3>
+    </header>
+
+    <div class="marketing-section-logos">
+      <%= render("_sponsors.html", assigns) %>
+    </div>
+  </section>
+
+  <!-- TODO
+  <section class="marketing-section marketing-section--no_top_padding">
+    <header class="marketing-section-header">
+      <h3>What our sponsors are saying</h3>
+    </header>
+
+
+    <div class="marketing-section-grid">
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Breanden Boneschott">
+          <h3>Breanden Beneschott</h3>
+          <p class="marketing-section-grid-quote-title">Toptal &mdash; Co-Founder / COO</p>
+          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+        </div>
+      </div>
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/content/about/adam.jpg") %>' alt="David Roesch">
+          <h3>David Roesch</h3>
+          <p class="marketing-section-grid-quote-title">Linode &mdash; Director of Marketing</p>
+          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
+        </div>
+      </div>
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Todd Lewis">
+          <h3>Todd Lewis</h3>
+          <p class="marketing-section-grid-quote-title">All Things Open &mdash; Creator and Chair</p>
+          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
+        </div>
+      </div>
+      <div class="marketing-section-grid-item">
+        <div class="marketing-section-grid-quote">
+          <img src='<%= static_url(@conn, "/images/content/about/heather.jpg") %>' alt="Elaine Greenberg">
+          <h3>Elaine Greenberg</h3>
+          <p class="marketing-section-grid-quote-title">Fastly &mdash; Communications</p>
+          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+        </div>
+      </div>
+    </div>
+  </section> -->
 </article>

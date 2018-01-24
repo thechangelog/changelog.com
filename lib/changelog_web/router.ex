@@ -96,40 +96,56 @@ defmodule ChangelogWeb.Router do
     pipe_through [:browser, :public]
 
     #feeds
-    get "/feed", FeedController, :all
-    get "/feed/titles", FeedController, :all_titles
+    get "/feed", FeedController, :news
+    get "/feed/titles", FeedController, :news_titles
     get "/posts/feed", FeedController, :posts
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
 
     # people and auth
-    resources "/people", PersonController, only: [:new, :create]
-    resources "/~", HomeController, only: [:show, :edit, :update], singleton: true
+    get "/join", PersonController, :join, as: :person
+    post "/join", PersonController, :join, as: :person
+    get "/subscribe", PersonController, :subscribe, as: :person
+    post "/subscribe", PersonController, :subscribe, as: :person
+
+    resources "/~", HomeController, only: [:show, :update], singleton: true
+    get "/~/profile", HomeController, :profile
+    get "/~/account", HomeController, :account
+
     post "/~/slack", HomeController, :slack
     post "/~/subscribe/:id", HomeController, :subscribe
     post "/~/unsubscribe/:id", HomeController, :unsubscribe
 
     get "/community", PageController, :community
-    get "/join", PageController, :join
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
     get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
-    resources "/benefits", BenefitController, only: [:index]
-    resources "/posts", PostController, only: [:index, :show]
-    get "/posts/:id/preview", PostController, :preview, as: :post
+    get "/", NewsItemController, :index, as: :root
     resources "/news", NewsItemController, only: [:show], as: :news_item
+    get "/news/:id/visit", NewsItemController, :visit, as: :news_item
+    post "/news/impress", NewsItemController, :impress, as: :news_item
+    resources "/ads", NewsAdController, only: [:show], as: :news_ad
+    post "/ad/impress", NewsAdController, :impress, as: :news_ad
+    get "/ad/:id/visit", NewsAdController, :visit, as: :news_ad
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
+
+    resources "/benefits", BenefitController, only: [:index]
+    resources "/posts", PostController, only: [:index, :show]
+    get "/posts/:id/preview", PostController, :preview, as: :post
+
+    get "/source/:slug", NewsSourceController, :show, as: :news_source
+    get "/topics", TopicController, :index, as: :topic
+    get "/topic/:slug", TopicController, :show, as: :topic
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status
     get "/search", SearchController, :search
 
     # static pages
-    get "/", PageController, :home
     get "/about", PageController, :about
     get "/coc", PageController, :coc
     get "/contact", PageController, :contact
@@ -139,10 +155,8 @@ defmodule ChangelogWeb.Router do
     get "/guest", PageController, :guest
     get "/guest/:slug", PageController, :guest
     get "/styleguide", PageController, :styleguide
-    get "/subscribe", PageController, :subscribe
-    get "/partnership", PageController, :partnership
     get "/sponsor", PageController, :sponsor
-    get "/store", PageController, :store
+    get "/sponsor/pricing", PageController, :sponsor_pricing
     get "/team", PageController, :team
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms
@@ -161,9 +175,9 @@ defmodule ChangelogWeb.Router do
 
     get "/confirmation-pending", PageController, :confirmation_pending
 
+
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast
-    get "/:slug/archive", PodcastController, :archive, as: :podcast
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
     get "/:podcast/:slug/embed", EpisodeController, :embed, as: :episode

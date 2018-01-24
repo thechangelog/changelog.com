@@ -1,0 +1,3 @@
+<header class="page_heading">
+  <h1><%= @title |> raw %></h1>
+</header>

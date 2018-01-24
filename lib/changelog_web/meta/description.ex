@@ -1,13 +1,17 @@
 defmodule ChangelogWeb.Meta.Description do
 
-  import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_text: 1]
+  import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_text: 1, truncate: 2]
 
-  alias ChangelogWeb.{EpisodeView, PageView, PodcastView, PostView}
+  alias ChangelogWeb.{EpisodeView, NewsItemView, PageView, PodcastView, PostView}
 
   def description(assigns), do: assigns |> get
 
   defp get(%{view_module: EpisodeView, episode: episode}) do
-    md_to_text(episode.summary)
+    episode.summary |> md_to_text |> truncate(320)
+  end
+
+  defp get(%{view_module: NewsItemView, item: item}) do
+    item.story |> md_to_text |> truncate(320)
   end
 
   defp get(%{view_module: PodcastView, podcast: podcast}) do
@@ -16,23 +20,23 @@ defmodule ChangelogWeb.Meta.Description do
 
   defp get(%{view_module: PostView, post: post}) do
     if post.tldr do
-      md_to_text(post.tldr)
+      post.tldr |> md_to_text |> truncate(320)
     else
       post.title
     end
   end
 
   defp get(%{view_module: PageView, view_template: "community.html"}) do
-    "Join community members all over the world with a backstage pass to everything we do."
+    "Join developers from all over the world with a backstage pass to everything we do."
   end
 
   defp get(%{view_module: PageView, view_template: "weekly.html"}) do
-    "Our editorialized take on this week in open source and software development. It's the email you need to read to not miss out."
+    "Our editorialized take on this week in open source and software development. It's the email you should read so you're not missing out."
   end
 
   defp get(%{view_module: PageView, view_template: "nightly.html"}) do
-    "Get the hottest new and top repos in your inbox every night. No fluff, just repos."
+    "Get the hottest new and top GitHub repos in your inbox every night. No fluff, just repos."
   end
 
-  defp get(_), do: "Podcasts, News, and Films for && by developers. Hacker to the heart."
+  defp get(_), do: "News and podcasts for developers"
 end

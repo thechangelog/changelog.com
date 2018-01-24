@@ -1,32 +1,28 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Subscription Confirmed</h2>
-    </header>
-    <div class="content_body">
-      <p>Thank you for verifying your email address. Your subscription to Request For Commits is confirmed.</p>
+<article class="article">
+  <div class="richtext">
+    <h1>Subscription Confirmed</h1>
+    <p>Thank you for verifying your email address. Your subscription to Request For Commits is confirmed.</p>
 
-      <p>Help spread the word by letting your followers know you've subscribed to Request For Commits.</p>
+    <p>Help spread the word by letting your followers know you've subscribed to Request For Commits.</p>
 
-      <p>Click the button below &mdash; Twitter will let you edit the tweet before you send it.</p>
+    <p>Click the button below &mdash; Twitter will let you edit the tweet before you send it.</p>
 
-      <p><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just subscribed to get updates on Request For Commits from @Changelog. You should too." data-url="https://changelog.com/rfc" data-related="adamstac,jerodsanto,mikeal,nayafia" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+    <p><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just subscribed to get updates on Request For Commits from @Changelog. You should too." data-url="https://changelog.com/rfc" data-related="adamstac,jerodsanto,mikeal,nayafia" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
-      <hr>
+    <hr>
 
-      <p>You should follow us on Twitter too, if you don't already.</p>
+    <p>You should follow us on Twitter too, if you don't already.</p>
 
-      <p><a href="https://twitter.com/Changelog" class="twitter-follow-button" data-size="large" data-dnt="true" data-show-count="false">Follow @Changelog</a></p>
+    <p><a href="https://twitter.com/Changelog" class="twitter-follow-button" data-size="large" data-dnt="true" data-show-count="false">Follow @Changelog</a></p>
 
-      <hr />
+    <hr />
 
-      <h3>Join the Changelog Community</h3>
+    <h3>Join the Changelog Community</h3>
 
-      <p><%= link "Join the community", to: page_path(@conn, :community) %> to get access to our members-only Slack room, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
+    <p><%= link "Join the community", to: page_path(@conn, :community) %> to get access to our members-only Slack room, exclusive offers and discounts from our partners like Fastly, Linode, DigitalOcean, Codeship, and more.</p>
 
-      <h3>Become a Sponsor</h3>
+    <h3>Become a Sponsor</h3>
 
-      <p><%= link "Become a sponsor", to: page_path(@conn, :sponsor) %> and we'll help you get the right exposure for your content, product or service.</p>
-    </div>
+    <p><%= link "Become a sponsor", to: page_path(@conn, :sponsor) %> and we'll help you get the right exposure for your content, product or service.</p>
   </div>
 </article>

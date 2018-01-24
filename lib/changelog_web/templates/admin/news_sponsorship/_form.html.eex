@@ -107,5 +107,5 @@
     <div class="ui basic icon button js-add-ad"><i class="add icon"></i></div>
   </div>
 
-  <%= form_actions() %>
+  <%= form_actions(@conn) %>
 <% end %>

@@ -1,10 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsAdView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Files}
+  alias ChangelogWeb.NewsItemView
 
-  def image_url(ad, version) do
-    Files.Image.url({ad.image, ad}, version)
-    |> String.replace_leading("/priv", "")
-  end
+  def image_url(ad, version), do: NewsItemView.image_url(ad, version)
 end

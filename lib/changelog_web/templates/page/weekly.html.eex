@@ -1,35 +1,21 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Subscribe to Changelog Weekly</h2>
+<article class="article article--marketing_header">
+  <section class="marketing-section marketing-section--intro">
+    <header class="marketing-section-header">
+      <h1>Subscribe to Changelog Weekly</h1>
+
+      <%= if @current_user do %>
+        <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "marketing-button button_large" %>
+      <% else %>
+        <%= link "Subscribe", to: person_path(@conn, :subscribe), class: "marketing-button button_large" %>
+      <% end %>
     </header>
-    <div class="content_body">
+  </section>
+
+  <div class="marketing-section">
+    <div class="richtext">
       <p>Every weekend we ship our editorialized take on this week in open source and software development. It's the email <em>you need to read</em> to not miss out. No spam!</p>
 
       <hr>
-
-      <form action="https://changelog.createsend.com/t/t/s/zjykt/" method="post" class="form js-cm">
-        <div class="form_element_wrap">
-          <label>Name</label>
-          <div class="form_element">
-            <input name="cm-name" type="text" placeholder="Full name..."/>
-          </div>
-        </div>
-
-        <div class="form_element_wrap">
-          <label>Email<span>*</span></label>
-          <div class="form_element">
-            <input name="cm-zjykt-zjykt" type="email" placeholder="Email address..." required />
-          </div>
-        </div>
-
-        <div class="form_submit">
-          <input type="submit" value="Start my Subscription">
-          <div class="form_submit_responses"></div>
-        </div>
-      </form>
-
-      <hr />
 
       <p>
         Need a sneak peek?
@@ -41,9 +27,13 @@
 
         or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
 
-      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
+    </div>
 
-      <hr />
+    <div class="image">
+      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
+    </div>
+
+    <div class="richtext">
 
       <h4>Is my email address safe?</h4>
 
@@ -53,11 +43,11 @@
 
       <h4>Is there an archive of past issues?</h4>
 
-      Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %>
+      <p>Yes. <%= link "View the archive.", to: page_path(@conn, :weekly_archive) %></p>
 
       <h4>Can I sponsor a Headline, Link, Repo, or Video?</h4>
 
-      Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsor) %>
+      <p>Yes. <%= link "Learn more here.", to: page_path(@conn, :sponsor) %></p>
 
       <h4>Why do we require you to verify your email address?</h4>
 
@@ -65,4 +55,3 @@
     </div>
   </div>
 </article>
-

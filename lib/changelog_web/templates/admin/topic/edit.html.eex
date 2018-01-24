@@ -4,5 +4,5 @@
     &raquo; Edit
   </h1>
 
-  <%= render("_form.html", changeset: @changeset, action: admin_topic_path(@conn, :update, @topic.slug)) %>
+  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_topic_path(@conn, :update, @topic.slug)) %>
 </div>

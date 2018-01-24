@@ -1,0 +1,31 @@
+<%= if !@current_user && !@conn.cookies["hide_subscribe_cta"] do %>
+  <%= render(SharedView, "_signup.html", assigns) %>
+<% end %>
+
+<div class="feed">
+<%= if @page.page_number == 1 do %>
+  <%= for item <- @pinned do %>
+    <%= render_item_summary_or_ad(item, assigns) %>
+  <% end %>
+<% end %>
+<%= for item_or_ad <- items_with_ads(@items, @ads) do %>
+  <%= render_item_summary_or_ad(item_or_ad, assigns) %>
+<% end %>
+<%= render(SharedView, "_more_button.html", assigns) %>
+</div>
+
+<%= if @page.page_number == 1 do %>
+<div class="main-podcasts">
+  <section class="show_list" id="podcasts">
+    <header class="show_list-header">
+      <h2>Our Shows</h2>
+    </header>
+    <div class="show_list-shows">
+      <%= for podcast <- @podcasts do %>
+        <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast) %>
+      <% end %>
+      <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: Changelog.Podcast.master) %>
+    </div>
+  </section>
+</div>
+<% end %>

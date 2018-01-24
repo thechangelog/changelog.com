@@ -73,7 +73,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   end
 
   @tag :as_admin
-  test "updates news item and smart redirects", %{conn: conn} do
+  test "updates news item and redirects", %{conn: conn} do
     logger = insert(:person)
     news_item = insert(:news_item, logger: logger)
 
@@ -84,13 +84,13 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   end
 
   @tag :as_admin
-  test "updates draft news item, queues it, and smart redirects", %{conn: conn} do
+  test "updates draft news item, queues it, and redirects", %{conn: conn} do
     logger = insert(:person)
     news_item = insert(:news_item, logger: logger)
 
-    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, stay: true, queue: "append")
+    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "append")
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :edit, news_item)
+    assert redirected_to(conn) == admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
     assert count(NewsItem.published) == 0
     assert count(NewsItem.drafted) == 0

@@ -1,0 +1,19 @@
+<div class="page_topics">
+  <section class="topic_list" id="topics">
+    <header class="topic_list-header">
+      <h2>Topics</h2>
+    </header>
+    <div class="topic_list-topics">
+      <%= for topic <- @topics do %>
+        <%= link to: topic_path(@conn, :show, topic.slug), title: "View Topic", class: "topic_list-topics-item" do %>
+          <div class="topic_list-topics-item-name">
+            <!-- <img src="http://via.placeholder.com/60x60" alt=""> -->
+            <h3><%= topic.name %></h3>
+          </div>
+          <p class="topic_list-topics-item-description"><%= topic.description %></p>
+          <p class="topic_list-topics-item-count"><%= news_count(topic) %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,91 @@
+.topic_list {
+  &-header {
+    margin-bottom: $base-spacing;
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    p {
+      color: $medium-grey;
+      font-size: 1.25em;
+      margin: 1em 0;
+    }
+  }
+
+  //
+  //
+  // Topics
+  &-topics {
+    &-item {
+      border-bottom: 1px solid $light-grey;
+      display: grid;
+      grid-template-columns: auto 80px;
+      grid-template-rows: auto;
+
+      @media (min-width: 560px) {
+        grid-template-columns: 200px auto 80px;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      // Consistent type sizes
+      h3,
+      p {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.25em;
+        margin: 0;
+      }
+      p {
+        color: $black;
+      }
+
+      &-name,
+      &-description,
+      &-count {
+        padding: 1.25em 1.5em 1.125em;
+      }
+
+      &-name {
+        height: 100%;
+        padding: 0;
+
+        img {
+          $size: 30px;
+          background-color: $black;
+          display: block;
+          height: $size;
+          width: $size;
+        }
+
+        h3 {
+          padding: 1.25em 1em 1.125em;
+          color: $green;
+        }
+      }
+
+      &-description {
+        border-left: 1px solid $light-grey;
+        border-right: 1px solid $light-grey;
+        display: none;
+
+        @media (min-width: 560px) {
+          display: block;
+        }
+      }
+
+      &-count {
+        border-left: 1px solid $light-grey;
+        border-right: 0;
+        text-align: center;
+
+        @media (min-width: 560px) {
+          border-left: 0;
+        }
+      }
+    }
+  }
+}

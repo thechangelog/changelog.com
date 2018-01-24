@@ -19,15 +19,17 @@ var common = {
         loader: "handlebars-loader"
       },
       {
-        test: [/\.sass$/, /\.css$/],
+        test: [/\.scss$/, /\.css$/],
         loader: ExtractTextPlugin.extract({use: "css-loader!sass-loader", fallback: "style-loader"})
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
+        exclude: /fonts/,
         loader: "file-loader?name=/images/[name].[ext]"
       },
       {
         test: /\.(ttf|eot|svg|woff2?)$/,
+        exclude: /images/,
         loader: "file-loader?name=/fonts/[name].[ext]",
       }
     ]
@@ -36,7 +38,7 @@ var common = {
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false},
       output: {comments: false}
-    })
+    }),
   ]
 };
 
@@ -44,7 +46,7 @@ module.exports = [
   merge(common, {
     entry: [
       "normalize.css",
-      __dirname + "/app/app.sass",
+      __dirname + "/app/app.scss",
       __dirname + "/app/app.js"
     ],
     output: {
@@ -65,7 +67,7 @@ module.exports = [
   merge(common, {
     entry: [
       "normalize.css",
-      __dirname + "/app/embed.sass",
+      __dirname + "/app/embed.scss",
       __dirname + "/app/embed.js"
     ],
     output: {

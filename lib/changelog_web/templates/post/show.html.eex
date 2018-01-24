@@ -1,54 +1,40 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <nav class="breadcrumbs breadcrumbs--slashes">
-        <a class="breadcrumbs_crumb" href="/">Home</a>
-        /
-        <a class="breadcrumbs_crumb" href="/posts/">Posts</a>
-        /
-        <span class="breadcrumbs_crumb breadcrumbs_crumb--active"><%= TimeView.pretty_date(@post.published_at) %></span>
-    </nav>
-    <header class="content_header">
-      <h1><%= @post.title %></h1>
-      <div class="content_byline">
-        <address rel="author">by <%= link @post.author.name, to: PersonView.external_url(@post.author) %></address> on <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
-        <%= if @current_user && @current_user.admin do %>&nbsp;<%= link "[Edit]", to: admin_post_path(@conn, :edit, @post), data: [turbolinks: false] %><% end %>
-      </div>
-    </header>
-    <div class="content_body">
-      <%= @post.body |> md_to_html |> raw %>
-    </div>
+<article class="article">
+  <header class="post_header">
+    <div class="post_header-wrap">
+      <p class="post_header-date">
+        <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
+        <%= admin_edit_link(@conn, @current_user, @post) %>
+      </p>
+      <h1 class="post_header-title"><%= @post.title %></h1>
 
-    <footer>
-      <div class="toolbar toolbar--dark">
-        <ul class="toolbar_item toolbar_item--list" style="background-image: url(/images/icon-tag-white.svg);">
-          <%= if Enum.any?(@post.topics) do %>
-            <%= for topic <- @post.topics do %>
-              <li><%= topic.name %></li>
-            <% end %>
-          <% end %>
-        </ul>
-        <ul class="toolbar_item toolbar_item--icon_list toolbar_item--right" style="background-image: url(/images/icon-share-white.svg);">
-          <li>
-            <%= link "Twitter",
-                title: "Share on Twitter",
-                to: tweet_url(@post.title, post_url(@conn, :show, @post.slug), @post.author.twitter_handle),
-                class: "toolbar_item_link js-share-popup",
-                style: "background-image: url('#{static_url(@conn, "/images/icon-twitter.svg")}')" %>
-          </li>
-        </ul>
+      <div class="post_header-author">
+        <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
+          <img src="<%= PersonView.avatar_url(@post.author) %>" width=30 height=30 alt="<%= @post.author.name %>"/>
+        <% end %>
+        <span><%= link @post.author.name, to: PersonView.external_url(@post.author) %> &ndash; Todo: Add author title</span>
       </div>
+    </div>
+  </header>
+
+  <div class="richtext">
+    <%= @post.body |> md_to_html |> raw %>
+  </div>
+
+  <footer class="post_footer">
+    <div class="post_footer-tags">
+      <ul class="tags">
+        <%= if Enum.any?(@post.topics) do %>
+          <%= for topic <- @post.topics do %>
+            <li class="tags-item">
+              <%= link topic.name, to: topic_path(@conn, :show, topic.slug), title: "View Topic" %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
 
     <%= if @post.author.bio do %>
       <%= render("_author_bio.html", person: @post.author) %>
     <% end %>
-    </footer>
-  </div>
+  </footer>
 </article>
-
-<div class="wrapper wrapper--half-gray">
-  <%= render SharedView, "_community_cta_2.html", assigns %>
-</div>
-
-<div class="wrapper wrapper--gray">
-  <%= render SharedView, "_films_cta_1.html", assigns %>
-</div>

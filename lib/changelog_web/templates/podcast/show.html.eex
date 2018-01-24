@@ -1,78 +1,57 @@
-<section>
-  <div class="mosaic mosaic--<%= @podcast.slug %>">
-    <header class="flex-column podcast-header">
-      <h2><img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/></h2>
+<section class="show show--<%= @podcast.slug %>">
+  <header class="show-header">
+    <h2 class="show-header-art"><%= @podcast.name %></h2>
+
+    <div class="show-header-description">
       <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
+      <%= @podcast.schedule_note |> md_to_html |> raw %>
+    </div>
 
-    <%= if Enum.any?(@episodes) do %>
-      <%= render(EpisodeView, "_play_bar.html", conn: @conn, episode: List.first(@episodes), podcast: @podcast) %>
-    <% end %>
+    <div class="show-header-subscribe">
+      <div class="show-header-subscribe-buttons">
+      <%= if @podcast.itunes_url do %>
+        <%= link "Apple", to: @podcast.itunes_url, class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple", title: "Subscribe on Apple" %>
+        <%= link "Overcast", to: subscribe_on_overcast_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--overcast", title: "Subscribe on Overcast" %>
+      <% end %>
+        <%= link "Android", to: subscribe_on_android_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android", title: "Subscribe on Android" %>
+        <%= link "RSS", to: feed_path(@conn, :podcast, @podcast.slug), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--rss", title: "Subscribe via RSS", data: [turbolinks: false] %>
+      </div>
 
-      <div class="podcast-header_hosts">
-      <%= if !is_master(@podcast) do %>
-        <p class="podcast-header_hosts_heading">
-          <i>
-            <%= @podcast.schedule_note |> md_to_html |> sans_p_tags |> raw %>
-            <%= if @podcast.ping_url do %>
-              <%= link "Ping Us!", to: @podcast.ping_url %>
+      <button class="show-header-subscribe-mobile has-tooltip">Subscribe</button>
+      <div class="tooltip">
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-wrap">
+          <ul class="tooltip-list tooltip-list--centered">
+          <%= if @podcast.itunes_url do %>
+            <li class="tooltip-list-item"><%= link "Apple", to: @podcast.itunes_url, title: "Subscribe on Apple" %></li>
+            <li class="tooltip-list-item"><%= link "Overcast", to: subscribe_on_overcast_url(@podcast), title: "Subscribe on Overcast" %></li>
+          <% end %>
+            <li class="tooltip-list-item"><%= link "Android", to: subscribe_on_android_url(@podcast), title: "Subscribe on Android" %></li>
+            <li class="tooltip-list-item"><%= link "RSS", to: feed_path(@conn, :podcast, @podcast.slug), title: "Subscribe via RSS", data: [turbolinks: false] %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="show-header-hosts">
+      <div class="avatar_list">
+        <%= if !is_master(@podcast) do %>
+          <%= for person <- @podcast.hosts do %>
+            <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
+              <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
+              <p><%= person.name %></p>
             <% end %>
-            Your <%= plural_form(@podcast.hosts, "host", "hosts") %>:
-          </i>
-        </p>
-        <div class="hosts-list">
-        <%= for person <- @podcast.hosts do %>
-          <%= link to: PersonView.external_url(person), class: "hosts-list_item", title: person.name, rel: "external" do %>
-            <img src="<%= PersonView.avatar_url(person) %>" width=42 height=42 alt="<%= person.name %>"/><%= person.name %>
           <% end %>
         <% end %>
-        </div>
-      <% end %>
       </div>
-    </header>
-  </div>
-
-  <% pre_cta_episodes = Enum.slice(@episodes, 0, 2) %>
-  <div class="container container--skinny container--has-padding">
-  <%= if latest = List.first(pre_cta_episodes) do %>
-    <article class="flex-column latest-episode latest-episode--<%= @podcast.slug %> section">
-      <h3>The Latest</h3>
-    <%= if latest.highlight do %>
-      <q><%= EpisodeView.classy_highlight(latest) %></q>
-    <% end %>
-      <button href="<%= EpisodeView.audio_url(latest) %>" data-play="<%= episode_path(@conn, :play, latest.podcast.slug, latest.slug) %>">
-          <img src="<%= static_url(@conn, "/images/play-large.svg") %>" alt="Play episode"/>
-          <span class="accessibility-hidden">Play</span>
-      </button>
-      <cite>
-        <%= (latest.headline || latest.title) |> no_widowed_words |> raw %>
-      <%= if number = EpisodeView.number(latest) do %>
-        <%= if is_master(@podcast) do %>
-          <span><%= latest.podcast.name %> #<%= number %></span>
-        <% else %>
-          <span>#<%= number %></span>
-        <% end %>
-      <% end %>
-      </cite>
-    </article>
-  <% end %>
-
-  <%= for episode <- pre_cta_episodes do %>
-    <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
-  <% end %>
-  </div>
-
-  <%= render(SharedView, "_community_cta_1.html", assigns) %>
-
-  <% post_cta_episodes = Enum.slice(@episodes, 2, length(@episodes)) %>
-  <div class="container container--skinny">
-  <%= for episode <- post_cta_episodes do %>
-    <%= render("_episode_summary.html", conn: @conn, episode: episode) %>
-  <% end %>
-
-    <div class="btn-container">
-      <%= link to: podcast_path(@conn, :archive, @podcast.slug), class: "btn btn--show-all" do %>
-        <img src="<%= static_url(@conn, "/images/arrow-down.svg") %>" alt="Show all episodes"/>Show All Episodes
-      <% end %>
     </div>
+  </header>
+
+  <div class="feed">
+  <%= for item <- @items do %>
+    <%= render(NewsItemView, "_item_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
+  <% end %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
   </div>
+
 </section>

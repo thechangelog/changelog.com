@@ -19,7 +19,7 @@
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <figure class="episode-player episode-player--<%= @podcast.slug %> js-player">
-      <%= link "Changelog", to: page_url(@conn, :home), class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" %>
+      <%= link "Changelog", to: root_url(@conn, :index), class: "episode-player_site-link", title: "Visit Changelog.com", target: "_blank" %>
 
       <div class="episode-player_details">
         <%= link to: audio_url(@episode), role: "button", class: "episode-player_details-button js-player-play-button",
@@ -30,7 +30,7 @@
 
         <div class="episode-player_details_vwrap">
           <h2 class="episode-player_details_podcast">
-            <%= link @podcast.name, to: podcast_path(@conn, :archive, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
+            <%= link @podcast.name, to: podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
             <%= if number = number(@episode) do %>
               <%= link "##{number}", to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank" %>
             <% end %>
@@ -69,13 +69,13 @@
                 to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
                 class: "js-share-popup",
                 target: "_blank",
-                style: "background-image: url('#{static_url(@conn, "/images/icon-share.svg")}')" %>
+                style: "background-image: url('#{static_url(@conn, "/images/icons/icon-share.svg")}')" %>
           </li>
           <li class="episode-player_nav_list_item">
             <a
               href="<%= audio_url(@episode) %>"
               title="Download Episode"
-              style="background-image: url('<%= static_url(@conn, "/images/icon-download.svg") %>')"
+              style="background-image: url('<%= static_url(@conn, "/images/icons/icon-download.svg") %>')"
               download>
               Download
             </a>
@@ -83,15 +83,15 @@
           <li class="episode-player_nav_list_item">
             <%= link "Subscribe",
                 title: "Subscribe to #{@podcast.name}",
-                to: PodcastView.subscribe_link(@episode.podcast),
+                to: podcast_url(@conn, :index),
                 target: "_blank",
-                style: "background-image: url('#{static_url(@conn, "/images/icon-subscribe.svg")}')" %>
+                style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
           </li>
           <li class="episode-player_nav_list_item episode-player_nav_list_item--listen-on">
             <%= link "Listen on Changelog.com",
                 to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug),
                 target: "_blank",
-                style: "background-image: url('#{static_url(@conn, "/images/podcasts.svg")}')" %>
+                style: "background-image: url('#{static_url(@conn, "/images/brand/podcasts.svg")}')" %>
           </li>
         </ul>
       </nav>

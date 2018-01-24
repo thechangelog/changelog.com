@@ -1,74 +1,70 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Be Our Guest</h2>
-    </header>
-    <div class="content_body">
-      <p>First off, <mark>thank you</mark> for joining us on <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
-        <option value="podcast" <%= if @podcast.slug == "podcast", do: "selected" %>>The Changelog</option>
-        <option value="gotime" <%= if @podcast.slug == "gotime", do: "selected" %>>Go Time</option>
-        <option value="rfc" <%= if @podcast.slug == "rfc", do: "selected" %>>Request For Commits</option>
-        <option value="jsparty" <%= if @podcast.slug == "jsparty", do: "selected" %>>JS Party</option>
-      </select>! Here's what you can expect:</p>
+<article class="article">
+  <div class="richtext">
+    <h1>Be Our Guest</h1>
+    <p>First off, <mark>thank you</mark> for joining us on <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
+      <option value="podcast" <%= if @podcast.slug == "podcast", do: "selected" %>>The Changelog</option>
+      <option value="gotime" <%= if @podcast.slug == "gotime", do: "selected" %>>Go Time</option>
+      <option value="rfc" <%= if @podcast.slug == "rfc", do: "selected" %>>Request For Commits</option>
+      <option value="jsparty" <%= if @podcast.slug == "jsparty", do: "selected" %>>JS Party</option>
+    </select>! Here's what you can expect:</p>
 
-      <h3 id="before">Before Recording</h3>
+    <h3 id="before">Before Recording</h3>
 
-      <p>We strive for the best audio quality possible (within reason). Things you'll need to achieve this:</p>
+    <p>We strive for the best audio quality possible (within reason). Things you'll need to achieve this:</p>
 
-      <ul>
-        <li>A good external microphone or USB headset (Impossible? We can make earbuds sound <em>OK</em>)</li>
-        <li>Headphones (Over-the-ear preferred)</li>
-        <li>A quiet place to record</li>
-        <li>A reliable internet connection</li>
-        <li>A <a href="https://www.skype.com/">Skype</a> account</li>
-      </ul>
+    <ul>
+      <li>A good external microphone or USB headset (Impossible? We can make earbuds sound <em>OK</em>)</li>
+      <li>Headphones (Over-the-ear preferred)</li>
+      <li>A quiet place to record</li>
+      <li>A reliable internet connection</li>
+      <li>A <a href="https://www.skype.com/">Skype</a> account</li>
+    </ul>
 
-      <p>Send us your Skype username via email and add <code><%= skype_account(@podcast) %></code> as a contact. <mark>Need help?</mark> Contact <a href="https://twitter.com/adamstac">Adam</a> or <a href="https://twitter.com/jerodsanto">Jerod</a>. We're here for you.</p>
+    <p>Send us your Skype username via email and add <code><%= skype_account(@podcast) %></code> as a contact. <mark>Need help?</mark> Contact <a href="https://twitter.com/adamstac">Adam</a> or <a href="https://twitter.com/jerodsanto">Jerod</a>. We're here for you.</p>
 
-      <h3 id="during">During Recording</h3>
+    <h3 id="during">During Recording</h3>
 
-      <p>Be ready on Skype approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>. Please do not call us since we'll be preparing. Here's some <em>tips and tricks</em> for a great show:</p>
+    <p>Be ready on Skype approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>. Please do not call us since we'll be preparing. Here's some <em>tips and tricks</em> for a great show:</p>
 
-      <ul>
-      <%= if @podcast.recorded_live do %>
-        <li><mark>This show records live</mark>.</li>
-        <li>You can interact with listeners in our <%= link "Community Slack", to: page_path(@conn, :community) %>.</li>
-      <% end %>
-        <li>Put your mobile device(s) on Silence and Airplane Mode.</li>
-        <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome.</li>
-        <li>Relax. Have fun. Bring your opinions.</li>
-      </ul>
-
-      <h3 id="after">After Recording</h3>
-
-      <p>The <strike>hard</strike> <strike>intimidating</strike> talking part is over! Your episode will be professionially edited, produced, and transcribed. Then:</p>
-
-      <ul>
-        <li>We'll email you when your show is published.</li>
-        <li>You'll get an awesome t-shirt as a thanks from us.</li>
-        <li>We'll all share and promote the episode!</li>
-      </ul>
-
-      <p>Please do <mark>share your episode</mark>. You put a lot of effort in to what you do and we want to see its impact maximized. Our guests' favorite places to share their show:</p>
-
-      <ul>
-        <li>Project Website and/or README</li>
-        <li>Personal Website, Blog, and/or Medium</li>
-        <li>Twitter, Reddit, Hacker News, etc.</li>
-      </ul>
-
-    <%= if @episode do %>
-      <p>The email you receive will also include a <mark>snippet you can use so people can listen to your show without leaving your site</mark>. Here's a preview of what it looks like:</p>
-
-      <h4>Night Theme</h4>
-      <%= EpisodeView.embed_iframe(@episode, "night") |> raw %>
-      <h4>Day Theme</h4>
-      <%= EpisodeView.embed_iframe(@episode, "day") |> raw %>
+    <ul>
+    <%= if @podcast.recorded_live do %>
+      <li><mark>This show records live</mark>.</li>
+      <li>You can interact with listeners in our <%= link "Community Slack", to: page_path(@conn, :community) %>.</li>
     <% end %>
+      <li>Put your mobile device(s) on Silence and Airplane Mode.</li>
+      <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome.</li>
+      <li>Relax. Have fun. Bring your opinions.</li>
+    </ul>
 
-      <h3>That's All!</h3>
+    <h3 id="after">After Recording</h3>
 
-      <p>Thanks again, we truly appreciate it! 💚💚💚</p>
-    </div>
+    <p>The <strike>hard</strike> <strike>intimidating</strike> talking part is over! Your episode will be professionially edited, produced, and transcribed. Then:</p>
+
+    <ul>
+      <li>We'll email you when your show is published.</li>
+      <li>You'll get an awesome t-shirt as a thanks from us.</li>
+      <li>We'll all share and promote the episode!</li>
+    </ul>
+
+    <p>Please do <mark>share your episode</mark>. You put a lot of effort in to what you do and we want to see its impact maximized. Our guests' favorite places to share their show:</p>
+
+    <ul>
+      <li>Project Website and/or README</li>
+      <li>Personal Website, Blog, and/or Medium</li>
+      <li>Twitter, Reddit, Hacker News, etc.</li>
+    </ul>
+
+  <%= if @episode do %>
+    <p>The email you receive will also include a <mark>snippet you can use so people can listen to your show without leaving your site</mark>. Here's a preview of what it looks like:</p>
+
+    <h4>Night Theme</h4>
+    <%= EpisodeView.embed_iframe(@episode, "night") |> raw %>
+    <h4>Day Theme</h4>
+    <%= EpisodeView.embed_iframe(@episode, "day") |> raw %>
+  <% end %>
+
+    <h3>That's All!</h3>
+
+    <p>Thanks again, we truly appreciate it! 💚💚💚</p>
   </div>
 </article>

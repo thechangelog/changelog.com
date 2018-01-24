@@ -19,10 +19,10 @@ defmodule ChangelogWeb.Admin.PodcastController do
     changeset = Podcast.admin_changeset(%Podcast{}, podcast_params)
 
     case Repo.insert(changeset) do
-      {:ok, podcast} ->
+      {:ok, _podcast} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(podcast, params)
+        |> redirect_next(params, admin_podcast_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -45,19 +45,12 @@ defmodule ChangelogWeb.Admin.PodcastController do
     changeset = Podcast.admin_changeset(podcast, podcast_params)
 
     case Repo.update(changeset) do
-      {:ok, podcast} ->
+      {:ok, _podcast} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(podcast, params)
+        |> redirect_next(params, admin_podcast_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", podcast: podcast, changeset: changeset)
     end
-  end
-
-  defp smart_redirect(conn, _podcast, %{"close" => _true}) do
-    redirect(conn, to: admin_podcast_path(conn, :index))
-  end
-  defp smart_redirect(conn, podcast, _params) do
-    redirect(conn, to: admin_podcast_path(conn, :edit, podcast.slug))
   end
 end

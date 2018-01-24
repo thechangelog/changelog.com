@@ -72,7 +72,6 @@ defmodule Changelog.Person do
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
     |> validate_length(:handle, max: 40, message: "max 40 chars")
-    |> unique_constraint(:name)
     |> unique_constraint(:email)
     |> unique_constraint(:handle)
     |> unique_constraint(:github_handle)

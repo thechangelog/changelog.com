@@ -1,0 +1,28 @@
+.post_footer {
+  @include wrap;
+
+  &-author {
+    align-items: center;
+    border-top: 1px solid $light-grey;
+    display: flex;
+    margin: 20px 0 $base-spacing;
+    padding-top: $base-spacing;
+
+    &-image {
+      border-radius: $base-border-radius;
+      margin-right: $base-spacing/2;
+    }
+
+    &-bio {
+      p {
+        line-height: 1.25em;
+        margin: 0;
+      }
+      &-name { font-weight: bold; }
+      &-title {
+        font-size: 0.875em;
+        font-style: italic;
+      }
+    }
+  }
+}

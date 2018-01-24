@@ -1,0 +1,27 @@
+// Usage
+
+// Mixin
+// @include breakpoint(tablet)
+// @include breakpoint(huge, max)
+// $size = huge, desktop, tablet, mobile, tiny, or custom (500px)
+// $direction = min (default), or max
+
+// Manual
+// @media screen and (min-width: 521px)
+// @media screen and (max-width: 520px)
+
+@mixin breakpoint($size, $direction: min) {
+  // Set breakpoints
+  @if $size == huge { $size: 1200px; }
+  @else if $size == desktop { $size: 880px; }
+  @else if $size == tablet { $size: 768px; }
+  @else if $size == mobile { $size: 620px; }
+  @else if $size == tiny { $size: 401px; }
+
+  // Offset max-width
+  @if $direction == max { $size: $size - 1; }
+
+  @if $size {
+    @media screen and ( #{$direction}-width: #{$size}) { @content; }
+  }
+}

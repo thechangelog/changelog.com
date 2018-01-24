@@ -1,0 +1,73 @@
+@import 'account';
+@import 'article';
+@import 'episode';
+@import 'live';
+@import 'live-upcoming';
+@import 'marketing';
+@import 'podcasts';
+@import 'search';
+@import 'show';
+@import 'topic';
+@import 'topics';
+
+// Sticky Footer
+body {
+  display: flex;
+  flex-direction: column;
+  padding-top: $header-height--mobile;
+  min-height: 100vh;
+
+  @include breakpoint(tablet) {
+    padding-top: $header-height;
+  }
+}
+.main {
+  flex: 1;
+  min-height: calc(100vh - #{($header-height + $footer-height)});
+
+  // Pages that should have black backgrounds
+  .page-podcast-index &,
+  .page-person-subscribe & {
+    background-color: $black;
+  }
+
+  // Pages that should have their content vertically centered
+  .page-auth-new &,
+  .page-person-join & {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  // TODO: Decide where this should go. Lives on the news index (homepage)
+  &-podcasts {
+    background: $black;
+    border-top: 1px solid rgba($border-color, 0.1);
+    padding: $base-spacing*2 0;
+  }
+}
+
+// Full width wrap
+.wrapper {
+  width: 100%;
+
+  &--gray {
+    background-color: rgba($black, 0.1);
+  }
+
+  &--half-gray {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      top: 50%;
+      height: 50%;
+      width: 100%;
+      left: 0;
+      right: 0;
+      content: '';
+      z-index: -1;
+      background-color: rgba($black, 0.1);
+    }
+  }
+}

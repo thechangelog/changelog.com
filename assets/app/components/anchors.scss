@@ -1,0 +1,10 @@
+.anchor {
+  display: block;
+  position: relative;
+  // Account for the sticky navigation
+  top: -$header-height;
+
+  @include breakpoint(tablet, max) {
+    top: -$header-height--mobile;
+  }
+}

@@ -1,22 +1,18 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>IMPORTANT! Verify your email.</h2>
-    </header>
-    <div class="content_body">
-      <p>There's one more step! We require subscribers to verify their email address.</p>
+<article class="article">
+  <div class="richtext">
+    <h1>IMPORTANT! Verify your email.</h1>
+    <p>There's one more step! We require subscribers to verify their email address.</p>
 
-      <p>Please check your email now to confirm and verify your email address to complete your subscription. Click the link in the email we just sent you and you're done.</p>
+    <p>Please check your email now to confirm and verify your email address to complete your subscription. Click the link in the email we just sent you and you're done.</p>
 
-      <p>If you don't complete this step we will not be able to email you.</p>
+    <p>If you don't complete this step we will not be able to email you.</p>
 
-      <p><%= link "Email us", to: page_path(@conn, :contact) %> if for some reason you haven't received your confirmation email.</p>
+    <p><%= link "Email us", to: page_path(@conn, :contact) %> if for some reason you haven't received your confirmation email.</p>
 
-      <hr>
+    <hr>
 
-      <h3>Why do we require you to verify your email address?</h3>
+    <h3>Why do we require you to verify your email address?</h3>
 
-      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
-    </div>
+    <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
   </div>
 </article>

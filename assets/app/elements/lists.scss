@@ -1,0 +1,120 @@
+// Usage
+// @include list;
+// @include list(ol);
+@mixin list($type: ul) {
+  list-style-type: none;
+  margin: 1em 0 2em 0;
+  padding: 0 0 0 20px;
+
+  li {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin-bottom: .375em;
+    @include breakpoint(mobile) { font-size: 1.125em; }
+
+    p {
+      font-size: 1em !important;
+    }
+  }
+
+  > ul, ol {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  @if $type == ul {
+    list-style-type: none;
+    margin-left: 0;
+
+    @include breakpoint(mobile) {
+      margin-left: 10px;
+    }
+
+    li {
+      position: relative;
+    }
+
+    li:before {
+      $size: 6px;
+      @include position(absolute, 8px null null -20px);
+      content: " ";
+      background: $black;
+      border-radius: $size;
+      display: block;
+      height: $size;
+      margin-right: $size;
+      width: $size;
+    }
+  }
+  @if $type == ol {
+    list-style-type: decimal;
+    margin-left: -8px;
+
+    @include breakpoint(mobile) {
+      margin-left: 2px;
+    }
+
+    li {
+      padding-left: 8px;
+    }
+  }
+}
+
+// Set default styles
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+// Button List
+.button_list {
+  font-size: 16px;
+  padding: 0;
+
+  &--center {
+    text-align: center;
+  }
+
+  &-item {
+    display: inline-block;
+    margin: 5px !important;
+    a {
+      background-color: #000;
+      background-repeat: no-repeat;
+      background-position: 1em center;
+      border-radius: 2em;
+      color: $green;
+      display: block;
+      font-size: 1em;
+      padding: 0.6em 1em 0.5em 3em;
+      transition: opacity 0.2s ease-in-out;
+
+      &:hover { opacity: 0.8; }
+
+      &.twitter    { background-image: url("/images/icons/icon-twitter.svg"); }
+      &.hackernews { background-image: url("/images/icons/icon-hackernews.svg"); }
+      &.reddit     { background-image: url("/images/icons/icon-reddit.svg"); }
+      &.facebook   { background-image: url("/images/icons/icon-facebook.svg"); }
+      &.github     { background-image: url("/images/icons/icon-github.svg"); }
+      &.email      { background-image: url("/images/icons/icon-email.svg"); }
+
+      .button_list--green & {
+        background-color: $green;
+
+        &,
+        &:hover {
+          color: $black;
+          text-decoration: none;
+        }
+
+        &.twitter    { background-image: url("/images/icons/icon-twitter-black.svg"); }
+        &.hackernews { background-image: url("/images/icons/icon-hackernews-black.svg"); }
+        &.reddit     { background-image: url("/images/icons/icon-reddit-black.svg"); }
+        &.facebook   { background-image: url("/images/icons/icon-facebook-black.svg"); }
+        &.github     { background-image: url("/images/icons/icon-github-black.svg"); }
+        &.email      { background-image: url("/images/icons/icon-email-black.svg"); }
+      }
+    }
+  }
+}

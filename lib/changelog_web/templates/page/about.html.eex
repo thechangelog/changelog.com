@@ -1,45 +1,40 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>About</h2>
-    </header>
-    <div class="content_body">
+<article class="article">
+  <div class="richtext">
+    <h1>About</h1>
 
-      <p>Changelog is a digital media company focused on telling developer-centric stories that get to the heart. We exist to enrich the lives of developers.</p>
+    <p>Changelog is a digital media company focused on telling developer-focused stories that gets to the heart. We exist to enrich the lives of developers.</p>
 
-      <hr>
+    <hr>
 
-      <p>
-        <img src="<%= static_url(@conn, "/images/about/adam.jpg") %>" class="float float--left" style="margin-top: 5px;width:75px;">
-        <strong>Adam Stacoviak</strong> &mdash; Adam is the host of Founders Talk, and Founder &amp; Editor-in-chief of Changelog Media. Prior to Changelog (and during, depending on the year) he lead product development for a non-profit called Pure Charity. &mdash; <a href="https://twitter.com/adamstac">@adamstac</a>
-      </p>
+    <p>
+      <strong>Adam Stacoviak</strong> &mdash; Adam is the host of Founders Talk, and Founder &amp; Editor-in-chief of Changelog Media. Prior to Changelog (and during, depending on the year) he lead product development for a non-profit called Pure Charity. &mdash; <a href="https://twitter.com/adamstac">@adamstac</a>
+    </p>
 
-      <hr>
+    <hr>
 
-      <p>
-        <img src="<%= static_url(@conn, "/images/about/jerod.jpg") %>" class="float float--left" style="margin-top: 5px;width:75px;">
-        <strong>Jerod Santo</strong> &mdash; Jerod is Managing Editor &amp; Partner of Changelog Media. Jerod helps lead and co-host our flagship podcast, The Changelog, and all the cool stuff we get to build to make Changelog awesome. He also runs his custom software company, Object Lateral. &mdash; <a href="https://twitter.com/jerodsanto">@jerodsanto</a>
-      </p>
+    <p>
+      <strong>Jerod Santo</strong> &mdash; Jerod is Managing Editor &amp; Partner of Changelog Media. he helps lead and co-host our flagship podcast, The Changelog, and builds all the cool stuff that makes Changelog awesome. He also runs his custom software company, Object Lateral. &mdash; <a href="https://twitter.com/jerodsanto">@jerodsanto</a>
+    </p>
 
-      <hr>
+    <hr>
 
-      <p>
-        <img src="<%= static_url(@conn, "/images/about/heather.jpg") %>" class="float float--left" style="margin-top: 5px;width:75px;">
-        <strong>Heather Stacoviak</strong> &mdash; Heather is our Creative Director, taking care of design, marketing, user experience, and more. Heather brings joy to our community members, listeners, readers, sponsors, partners &mdash; everyone we work with. Before Changelog, Heather worked for MediaFire as a UI/UX Designer. &mdash; <a href="https://twitter.com/heatherstac">@heatherstac</a>
-      </p>
+    <p>
+      <strong>Heather Stacoviak</strong> &mdash; Heather ships all things merch. She brings joy to everyone we work with by getting them our physical goods in a way that makes them smile. &mdash; <a href="https://twitter.com/heatherstac">@heatherstac</a>
+    </p>
 
-      <hr>
+    <hr>
 
-      <h3>Special thanks to...</h3>
+    <h3>Special thanks to...</h3>
 
-      <p><a href="https://www.fastly.com/?utm_source=changelog&amp;utm_campaign=changelog-partner">Fastly</a> for providing our real-time CDN and worldwide bandwidth.</p>
+    <p><a href="https://www.fastly.com/?utm_source=changelog&amp;utm_campaign=changelog-partner">Fastly</a> for providing our real-time CDN and worldwide bandwidth.</p>
 
-      <p><a href="http://linode.com/changelog">Linode</a> for providing our high performance SSD Linux cloud servers.</p>
+    <p><a href="https://linode.com/changelog">Linode</a> for providing our high performance SSD Linux cloud servers.</p>
+    
+    <p><a href="https://rollbar.com/">Rollbar</a> for providing our high performance SSD Linux cloud servers.</p>
 
-      <p><a href="https://soundcloud.com/breakmaster-cylinder">Breakmaster Cylinder</a> for working with us to create our awesome beets.</p>
+    <p><a href="https://soundcloud.com/breakmaster-cylinder">Breakmaster Cylinder</a> for working with us to create our awesome beets.</p>
 
-      <p><a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a> for working with us on OSCON and other content projects.</p>
+    <p><a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a> for colaborating with us on OSCON and other content projects.</p>
 
-    </div>
   </div>
 </article>

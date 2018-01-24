@@ -35,5 +35,5 @@
     <%= file_input f, :icon %>
   </div>
 
-  <%= form_actions() %>
+  <%= form_actions(@conn) %>
 <% end %>

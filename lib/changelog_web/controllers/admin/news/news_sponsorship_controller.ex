@@ -43,10 +43,10 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     changeset = NewsSponsorship.admin_changeset(%NewsSponsorship{}, sponsorship_params)
 
     case Repo.insert(changeset) do
-      {:ok, sponsorship} ->
+      {:ok, _sponsorship} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(sponsorship, params)
+        |> redirect_next(params, admin_news_sponsorship_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -65,10 +65,10 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     changeset = NewsSponsorship.admin_changeset(sponsorship, sponsorship_params)
 
     case Repo.update(changeset) do
-      {:ok, sponsorship} ->
+      {:ok, _sponsorship} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(sponsorship, params)
+        |> redirect_next(params, admin_news_sponsorship_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -83,12 +83,5 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_sponsorship_path(conn, :index))
-  end
-
-  defp smart_redirect(conn, _sponsorship, %{"close" => _true}) do
-    redirect(conn, to: admin_news_sponsorship_path(conn, :index))
-  end
-  defp smart_redirect(conn, sponsorship, _params) do
-    redirect(conn, to: admin_news_sponsorship_path(conn, :edit, sponsorship))
   end
 end

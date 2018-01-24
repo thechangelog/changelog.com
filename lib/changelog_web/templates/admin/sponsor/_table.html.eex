@@ -16,7 +16,11 @@
     <tr>
       <td>
         <h4 class="ui image header">
+        <%= if sponsor.avatar do %>
+          <img src="<%= avatar_url(sponsor, :small) %>" class="ui image"/>
+        <% else %>
           <img src="<%= logo_url(sponsor, :color_logo, :small) %>" class="ui image"/>
+        <% end %>
         </h4>
         <%= sponsor.name %>
       </td>

@@ -1,3 +1,0 @@
-<%= for {type, message} <- get_flash(@conn) do %>
-  <div class="flash flash--<%= type %>"><%= message %></div>
-<% end %>

@@ -2,23 +2,23 @@ defmodule ChangelogWeb.FeedController do
   use ChangelogWeb, :controller
   use PlugEtsCache.Phoenix
 
-  alias Changelog.{Episode, Podcast, Post}
+  alias Changelog.{Episode, NewsItem, NewsSource, Podcast, Post, Topic}
 
   require Logger
 
-  def all(conn, _params) do
+  def news(conn, _params) do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("all.xml", items: get_all_items())
+    |> render("news.xml", items: get_news_items())
     |> cache_response
   end
 
-  def all_titles(conn, _params) do
+  def news_titles(conn, _params) do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("all_titles.xml", items: get_all_items())
+    |> render("news_titles.xml", items: get_news_items())
     |> cache_response
   end
 
@@ -55,6 +55,15 @@ defmodule ChangelogWeb.FeedController do
   end
 
   def sitemap(conn, _params) do
+    news_items =
+      NewsItem.published
+      |> NewsItem.newest_first
+      |> Repo.all
+
+    news_sources =
+      NewsSource
+      |> Repo.all
+
     episodes =
       Episode.published
       |> Episode.newest_first
@@ -66,27 +75,23 @@ defmodule ChangelogWeb.FeedController do
       |> Post.newest_first
       |> Repo.all
 
+    topics =
+      Topic.with_news_items
+      |> Repo.all
+
     conn
     |> put_layout(false)
-    |> render("sitemap.xml", episodes: episodes, posts: posts)
+    |> render("sitemap.xml", news_items: news_items, news_sources: news_sources, episodes: episodes, posts: posts, topics: topics)
     |> cache_response
   end
 
-  defp get_all_items do
-    episodes =
-      Episode.published
-      |> Episode.newest_first
-      |> Repo.all
-      |> Episode.preload_all
-
-    posts =
-      Post.published
-      |> Post.newest_first
-      |> Repo.all
-      |> Post.preload_author
-
-    (episodes ++ posts)
-      |> Enum.sort(&(Timex.to_erl(&1.published_at) > Timex.to_erl(&2.published_at)))
-      |> Enum.take(50)
+  defp get_news_items do
+    NewsItem
+    |> NewsItem.published
+    |> NewsItem.newest_first
+    |> NewsItem.preload_all
+    |> NewsItem.limit(50)
+    |> Repo.all
+    |> Enum.map(&NewsItem.load_object/1)
   end
 end

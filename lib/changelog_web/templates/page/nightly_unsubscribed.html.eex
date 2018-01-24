@@ -1,17 +1,13 @@
-<article class="section content">
-  <div class="container container--has-padding container--skinny">
-    <header class="content_header">
-      <h2>Whoa!? You've unsubscribed?</h2>
-    </header>
-    <div class="content_body">
-      <p>We're sorry to see you go. <%= link "Please get in touch", to: page_path(@conn, :contact) %> if you have feedback to help us improve this email.</p>
+<article class="article">
+  <div class="richtext">
+    <h1>Whoa!? You've unsubscribed?</h1>
+    <p>We're sorry to see you go. <%= link "Please get in touch", to: page_path(@conn, :contact) %> if you have feedback to help us improve this email.</p>
 
-      <p>If you simply couldn't keep up with Nightly's frequency, check out <%= link "Changelog Weekly", to: page_path(@conn, :weekly) %> &mdash; our hand written, editorialized, take on what happened this week in open source and software development.</p>
+    <p>If you simply couldn't keep up with Nightly's frequency, check out <%= link "Changelog Weekly", to: page_path(@conn, :weekly) %> &mdash; our hand written, editorialized, take on what happened this week in open source and software development.</p>
 
-      <p>Thank you for your support,</p>
+    <p>Thank you for your support,</p>
 
-      <p><strong>Adam Stacoviak</strong><br />
-      <i>Founder &amp; Editor-in-Chief</i></p>
-    </div>
+    <p><strong>Adam Stacoviak</strong><br />
+    <i>Founder &amp; Editor-in-Chief</i></p>
   </div>
 </article>

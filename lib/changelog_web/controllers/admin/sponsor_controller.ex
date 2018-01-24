@@ -26,7 +26,7 @@ defmodule ChangelogWeb.Admin.SponsorController do
         Repo.update(Sponsor.file_changeset(sponsor, sponsor_params))
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(sponsor, params)
+        |> redirect_next(params, admin_sponsor_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -45,10 +45,10 @@ defmodule ChangelogWeb.Admin.SponsorController do
     changeset = Sponsor.update_changeset(sponsor, sponsor_params)
 
     case Repo.update(changeset) do
-      {:ok, sponsor} ->
+      {:ok, _sponsor} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(sponsor, params)
+        |> redirect_next(params, admin_sponsor_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -63,12 +63,5 @@ defmodule ChangelogWeb.Admin.SponsorController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_sponsor_path(conn, :index))
-  end
-
-  defp smart_redirect(conn, _sponsor, %{"close" => _true}) do
-    redirect(conn, to: admin_sponsor_path(conn, :index))
-  end
-  defp smart_redirect(conn, sponsor, _params) do
-    redirect(conn, to: admin_sponsor_path(conn, :edit, sponsor))
   end
 end

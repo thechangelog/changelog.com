@@ -21,7 +21,7 @@ defmodule ChangelogWeb.NewsIssueView do
   def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
   def render_item_or_ad(item = %NewsItem{}) do
     case item.type do
-      :audio -> render("_item_audio.html", item: item)
+      :audio -> render("_item_audio.html", item: NewsItem.load_object(item))
         _else -> render("_item.html", item: item)
     end
   end

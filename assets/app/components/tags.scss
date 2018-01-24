@@ -1,0 +1,21 @@
+.tags {
+  font-size: 0.825em;
+
+  &-item {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+
+    a {
+      background: #F3F3F3;
+      border-radius: $base-border-radius;
+      color: $black;
+      display: block;
+      padding: 0.5em 1em 0.45em;
+      transition: background 0.1s $base-easing;
+
+      &:hover {
+        background: darken($light-grey, 5%);
+      }
+    }
+  }
+}

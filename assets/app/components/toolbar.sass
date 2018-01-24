@@ -1,0 +1,119 @@
+.toolbar
+    background: $white
+    border-top: 2px solid $green
+    color: $green
+    display: flex
+    flex-wrap: wrap
+    font-size: 14px
+    padding: 0.625em 1em
+    text-align: left
+
+    &--dark
+      background: $black
+
+    // 1. By default items will be spread apart
+    @media (min-width: ($smartphone + 50))
+        justify-content: space-between
+
+    // 2. But you can left align them if you want NOTE: Only happens on large devices
+    &--left
+        justify-content: space-between
+
+        .toolbar_item
+            margin: 0.625em 0 0.625em
+
+        @media (min-width: ($smartphone + 50))
+            justify-content: flex-start
+
+            .toolbar_item
+                margin: 0.625em 2em 0.625em 0
+
+    // 3. Left and right padding can be removed
+    &--no-padding
+        padding-left: 0
+        padding-right: 0
+
+    // 3. If you want the items split (some on the left, some on the right)
+       align the items center, and then wrap the left and right side in divs (no classes)
+       Works with the "space-between" method above
+    &--split
+        @media (min-width: ($smartphone + 50))
+            justify-content: space-between
+            align-items: center
+
+
+    // Some toolbars scroll horizontally on mobile (like a quick swipe scroll)
+    &_scroll-wrap
+        $width: 540px
+
+        @media (min-width: ($smartphone + 50))
+            max-width: 100%
+            width: $width
+            @media (min-width: $tablet)
+                overflow: hidden
+
+        .toolbar
+            flex-wrap: nowrap
+            justify-content: space-between
+
+            @media (min-width: ($smartphone + 50))
+                width: $width !important
+
+    a
+        @extend %hover-fade
+
+    // Toolbars have a few different types of items
+    &_item
+        @extend %display-font
+        background-size: 20px
+        background-position: top center
+        background-repeat: no-repeat
+        font-size: 0.9em
+        flex: 0 1 auto
+        margin: 0.625em 1em
+        padding: 30px 0 0
+        // At least as tall as icons
+        min-height: 20px
+        line-height: 1em
+
+        @media (min-width: ($smartphone + 50))
+            background-position: left 3px
+            font-size: 1.125em
+            // Should be 20px but we have to account for no descendars (all uppercase)
+            line-height: 26px
+            padding: 0 0 0 35px
+
+
+        // 1. A button is a word with a clickable icon
+        &--button
+            color: $half-black
+            display: block
+
+            .toolbar--dark &
+                color: $half-white
+
+        // 2. Lists have an icon on the left that isn't clickable
+        &--list,
+        &--icon_list
+            color: $half-black
+            list-style-type: none
+
+            .toolbar--dark &
+                color: $green
+
+            li
+                display: inline-block
+                margin-right: 1em
+
+        // 3. I list that just has icons, no text
+        &--icon_list
+            li
+                margin-right: 0
+
+            .toolbar_item_link
+                background-position: center
+                background-repeat: no-repeat
+                display: block
+                height: 26px
+                width: 26px
+                text-indent: -9999px

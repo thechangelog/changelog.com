@@ -3,11 +3,13 @@
   "dependencies": {
     "autosize": "^4.0.0",
     "clipboard": "^1.5.15",
+    "cookies-js": "^1.2.3",
     "handlebars": "^4.0.5",
     "jquery": "^3.1.1",
     "normalize.css": "^7.0.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
+    "popper.js": "^1.12.5",
     "sortablejs": "^1.4.2",
     "turbolinks": "^5.0.0",
     "umbrellajs": "^2.8.0"

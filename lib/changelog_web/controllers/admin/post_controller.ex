@@ -36,10 +36,10 @@ defmodule ChangelogWeb.Admin.PostController do
     changeset = Post.admin_changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
-      {:ok, post} ->
+      {:ok, _post} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(post, params)
+        |> redirect_next(params, admin_post_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -59,10 +59,10 @@ defmodule ChangelogWeb.Admin.PostController do
     changeset = Post.admin_changeset(post, post_params)
 
     case Repo.update(changeset) do
-      {:ok, post} ->
+      {:ok, _post} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(post, params)
+        |> redirect_next(params, admin_post_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -77,12 +77,5 @@ defmodule ChangelogWeb.Admin.PostController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_post_path(conn, :index))
-  end
-
-  defp smart_redirect(conn, _post, %{"close" => _true}) do
-    redirect(conn, to: admin_post_path(conn, :index))
-  end
-  defp smart_redirect(conn, post, _params) do
-    redirect(conn, to: admin_post_path(conn, :edit, post))
   end
 end

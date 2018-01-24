@@ -41,5 +41,5 @@
     <%= error_message(f, :notes) %>
   </div>
 
-  <%= form_actions() %>
+  <%= form_actions(@conn) %>
 <% end %>

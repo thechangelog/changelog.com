@@ -31,7 +31,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(person, params)
+        |> redirect_next(params, admin_person_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -50,10 +50,10 @@ defmodule ChangelogWeb.Admin.PersonController do
     changeset = Person.admin_changeset(person, person_params)
 
     case Repo.update(changeset) do
-      {:ok, person} ->
+      {:ok, _person} ->
         conn
         |> put_flash(:result, "success")
-        |> smart_redirect(person, params)
+        |> redirect_next(params, admin_person_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -79,17 +79,10 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
   defp handle_generic_welcome_email(person) do
     person = Person.refresh_auth_token(person, 60 * 24)
-    Email.welcome(person) |> Mailer.deliver_later
+    Email.community_welcome(person) |> Mailer.deliver_later
   end
   defp handle_guest_welcome_email(person) do
     person = Person.refresh_auth_token(person, 60 * 24)
     Email.guest_welcome(person) |> Mailer.deliver_later
-  end
-
-  defp smart_redirect(conn, _person, %{"close" => _true}) do
-    redirect(conn, to: admin_person_path(conn, :index))
-  end
-  defp smart_redirect(conn, person, _params) do
-    redirect(conn, to: admin_person_path(conn, :edit, person))
   end
 end

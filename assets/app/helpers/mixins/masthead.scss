@@ -1,0 +1,39 @@
+@mixin masthead() {
+  background: $black;
+  color: $white;
+  margin-bottom: 40px;
+  padding: 40px $base-spacing;
+  text-align: center;
+
+  @include breakpoint(mobile) {
+    margin-bottom: 50px;
+    padding: 50px 30px;
+  }
+  @include breakpoint(tablet) {
+    margin-bottom: 60px;
+    padding: 60px 30px;
+  }
+}
+
+@mixin masthead-back() {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: #222C36 url("/images/icons/masthead-back.svg") 10px center no-repeat;
+  border-radius: $base-border-radius;
+  color: rgba($white, 0.5);
+  display: none;
+  font-size: 0.875em;
+  font-weight: bold;
+  padding: 0.6em 0.825em 0.5em 2em;
+  transition: all 0.1s $base-easing;
+
+  @include breakpoint(desktop) {
+    display: block;
+  }
+
+  &:hover {
+    background-color: lighten(#222C36, 5%);
+    color: $white;
+  }
+}

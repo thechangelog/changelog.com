@@ -1,0 +1,141 @@
+// NOTE: Update $footer-height in variables.scss when any changes affect height of the primary footer element
+.footer {
+  $width: 1160px;
+  background: $white;
+  border-top: 2px solid $border-color;
+  font-family: $code;
+  font-size: 14px;
+
+  body.player-open & {
+    padding-bottom: 60px;
+  }
+
+  &-primary {
+    border-bottom: 1px solid $border-color;
+
+    &_wrap {
+      max-width: $width;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0 auto;
+      padding: 20px $base-spacing;
+    }
+
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px 0;
+
+      &--company {
+        margin-right: 0;
+
+        @include breakpoint(mobile) {
+          margin-right: 1em;
+        }
+
+        li {
+          margin: 2px 1.5em 0 0;
+
+          @include breakpoint(mobile) {
+            margin-right: 2em;
+          }
+
+          a {
+            color: $black;
+            &:hover { color: $medium-grey; }
+          }
+        }
+      }
+
+      &--social {
+        li {
+          margin: 2px 20px 0 0;
+
+          &:last-child { margin-right: 0; }
+        }
+      }
+    }
+  }
+
+  &-nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin: $base-spacing auto;
+    max-width: $width;
+    padding: 0 $base-spacing;
+    width: 100%;
+
+    @media (min-width: $smartphone) {
+      margin: $padding-extra-large auto $padding-large;
+    }
+
+    &-list {
+      padding: 0 0 $padding-large 0;
+      flex: 0 100%;
+
+      @media (min-width: $smartphone) {
+        flex: 0 50%;
+      }
+      @media (min-width: $tablet) {
+        flex: 1 1 25%;
+        padding: 0 2em $padding-large 0;
+      }
+
+      &.is-toggled ul { display: block; }
+
+      h4 { margin-top: 0; }
+
+      ul {
+        list-style-type: none;
+        margin: 1em 0;
+        padding: 0;
+
+        li { margin-bottom: 1em; }
+      }
+
+      a {
+        color: $black;
+
+        &:hover { color: $medium-grey; }
+      }
+    }
+  }
+
+  &-sponsors {
+    border-top: 1px solid $border-color;
+    margin: $padding-large auto 0;
+    padding: $base-spacing 0 0;
+
+    &_wrap {
+      justify-content: space-around;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      max-width: 810px;
+    }
+
+    &-item {
+      flex: 0 200px;
+      font-family: $code;
+      margin-bottom: 20px;
+      text-align: center;
+
+      a { color: $black; }
+
+      p {
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        margin: 0 5%;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      img {
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+}

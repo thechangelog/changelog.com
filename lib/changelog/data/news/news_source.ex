@@ -34,6 +34,9 @@ defmodule Changelog.NewsSource do
     |> file_changeset(attrs)
   end
 
+  def preload_news_items(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :news_items)
+  def preload_news_items(source), do: Repo.preload(source, :news_items)
+
   def get_by_url(url) do
     try do
       matching(url)
@@ -45,4 +48,6 @@ defmodule Changelog.NewsSource do
   end
 
   def matching(url), do: from(s in __MODULE__, where: fragment("? ~* regex", ^url))
+
+  def news_count(source), do: Repo.count(from(q in NewsItem, where: q.source_id == ^source.id))
 end

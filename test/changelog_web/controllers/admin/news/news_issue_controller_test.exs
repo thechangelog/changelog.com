@@ -23,8 +23,8 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
   end
 
   @tag :as_admin
-  test "creates news issue and smart redirects", %{conn: conn} do
-    conn = post(conn, admin_news_issue_path(conn, :create), news_issue: @valid_attrs, close: true)
+  test "creates news issue and redirects", %{conn: conn} do
+    conn = post(conn, admin_news_issue_path(conn, :create), news_issue: @valid_attrs)
 
     assert redirected_to(conn) == admin_news_issue_path(conn, :index)
     assert count(NewsIssue) == 1
@@ -48,11 +48,11 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
   end
 
   @tag :as_admin
-  test "updates news issue and smart redirects", %{conn: conn} do
+  test "updates news issue and redirects", %{conn: conn} do
     news_issue = insert(:news_issue)
     conn = put(conn, admin_news_issue_path(conn, :update, news_issue.id), news_issue: @valid_attrs)
 
-    assert redirected_to(conn) == admin_news_issue_path(conn, :edit, news_issue)
+    assert redirected_to(conn) == admin_news_issue_path(conn, :index)
     assert count(NewsIssue) == 1
   end
 

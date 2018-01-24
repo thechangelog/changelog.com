@@ -33,9 +33,9 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
   end
 
   @tag :as_admin
-  test "creates news sponsorship and smart redirects", %{conn: conn} do
+  test "creates news sponsorship and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
-    conn = post(conn, admin_news_sponsorship_path(conn, :create), news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id}, close: true)
+    conn = post(conn, admin_news_sponsorship_path(conn, :create), news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id})
 
     assert redirected_to(conn) == admin_news_sponsorship_path(conn, :index)
     assert count(NewsSponsorship) == 1
@@ -59,12 +59,12 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
   end
 
   @tag :as_admin
-  test "updates news sponsorship and smart redirects", %{conn: conn} do
+  test "updates news sponsorship and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
     news_sponsorship = insert(:news_sponsorship)
     conn = put(conn, admin_news_sponsorship_path(conn, :update, news_sponsorship.id), news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id})
 
-    assert redirected_to(conn) == admin_news_sponsorship_path(conn, :edit, news_sponsorship)
+    assert redirected_to(conn) == admin_news_sponsorship_path(conn, :index)
     assert count(NewsSponsorship) == 1
   end
 

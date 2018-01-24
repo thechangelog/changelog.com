@@ -1,0 +1,442 @@
+.marketing {
+  font-size: 16px;
+  overflow-x: hidden;
+
+  hr {
+    border: 1px solid $border-color;
+    clear: both;
+    margin: 0 auto;
+    max-width: 860px;
+    padding: 0 30px;
+    width: 100%;
+  }
+
+  &-button {
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    @media (min-width: $tablet) { margin-top: 40px; }
+
+    .marketing-section--intro & {
+      margin-top: 20px;
+      @media (min-width: $tablet) { margin-top: 50px; }
+    }
+
+    .page-page-weekly &,
+    .page-page-nightly & {
+      margin: 0;
+    }
+  }
+  p.button_note {
+    color: $medium-grey;
+    font-size: 13px !important;
+
+    a {
+      color: $medium-grey;
+    }
+  }
+
+  &-section {
+    padding: 40px 0;
+
+    @include breakpoint(mobile) {
+      padding: 50px 0;
+    }
+    @include breakpoint(tablet) {
+      padding: 60px 0;
+    }
+
+    &> *:first-child { margin-top: 0; }
+    &> *:last-child { margin-bottom: 0; }
+
+    &--no_top_padding {
+      padding-top: 0;
+    }
+
+    &--map,
+    &--intro {
+      background: $black;
+      color: $white;
+
+      p {
+        color: $half-white;
+      }
+    }
+
+    &--intro {
+
+      .marketing--community & {
+        background: $black url('/images/content/community/grid.jpg') top center;
+        background-size: 1300px;
+      }
+    }
+
+    &-header {
+      margin: $padding-large auto;
+      max-width: 880px;
+      padding: 0 $padding-large;
+      text-align: center;
+
+      i {
+        img { margin: 0 auto; }
+      }
+
+      &-leadin {
+        font-family: $code;
+        font-size: 13px !important;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+        line-height: 1.25em;
+        margin: 0 0 1.125em;
+        @include breakpoint(tiny) { font-size: 1.75em; }
+        @include breakpoint(tablet) { font-size: 2em; }
+
+        @include breakpoint(tablet, max) {
+          br { display: none; }
+        }
+
+        .marketing-section--map & {
+          color: $half-white;
+          font-size: 1.25em;
+          line-height: 1.5em;
+          @media (min-width: $tablet) { font-size: 1.5em; }
+        }
+      }
+
+      h2,
+      h3 {
+        margin: 1em 0;
+      }
+
+      h2 {
+        font-size: 1.5em;
+        @media (min-width: $tablet) { font-size: 1.75em; }
+      }
+
+      h3 {
+        font-size: 1.25em;
+        font-weight: normal;
+        line-height: 1.5em;
+        @media (min-width: $tablet) { font-size: 1.5625em; }
+
+        .marketing-section--map & {
+          color: $half-white;
+        }
+      }
+
+      p {
+        color: $medium-grey;
+        font-size: 1.125em;
+        @media (min-width: $tablet) { font-size: 1.25em; }
+      }
+
+      .marketing-section--intro & p {
+        font-size: 1em;
+        @media (min-width: $tablet) { font-size: 1.125em; }
+      }
+
+      p.button_note a { color: $half-white; }
+    }
+
+    &-centered {
+      text-align: center;
+    }
+
+    // Community Features
+    &-features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: $padding-large*2 auto $padding-large;
+      max-width: 1080px;
+      text-align: center;
+      padding: 0 $padding-large;
+      text-align: center;
+
+      &-item {
+        flex: 0 0 50%;
+        padding: 0.5rem;
+
+        @media (min-width: $tablet) {
+          flex: 0 0 20%;
+        }
+
+        img {
+          transition: all 0.2s ease-in-out;
+          display: block;
+          margin: 0 auto 1em;
+        }
+
+        span {
+          color: $white;
+          font-size: 12px;
+          display: block;
+          line-height: 1.25em;
+
+          @media (min-width: $tablet) {
+            font-size: 14px;
+          }
+        }
+
+        a {
+          display: block;
+
+          &:hover img {
+            transform: translateY(-5px);
+          }
+        }
+      }
+    }
+
+    // Content (Two Columns)
+    &-content {
+      $breakpoint: 900px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0 auto;
+      max-width: 1680px;
+
+      @media (min-width: $breakpoint) {
+        display: flex;
+      }
+
+      &--slack {
+        margin-top: 80px;
+      }
+
+      &-image {
+        display: none;
+        padding: $padding-large;
+
+        @media (min-width: $smartphone) {
+          display: block;
+        }
+        @media (min-width: $breakpoint) {
+          flex: 1 1 400px;
+          height: 630px;
+          order: 2;
+          padding: 0;
+          position: relative;
+        }
+
+        img {
+          border: 1px solid $light-grey;
+          // box-shadow: 0 30px 40px 20px rgba($black, 0.2);
+          box-shadow: -20px 20px 50px 0 rgba($black, 0.2), -60px 60px 30px 0 rgba($black, 0.03);
+          width: 100%;
+
+          @media (min-width: $breakpoint) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            margin: 0;
+            width: auto;
+          }
+        }
+      }
+
+      &-info {
+        justify-content: space-between;
+        display: flex;
+        flex: 0 1 500px;
+        flex-direction: column;
+        padding: 0 $padding-large;
+        text-align: center;
+
+        @media (min-width: $tablet) {
+          padding: 0 $padding-extra-large;
+          text-align: left;
+        }
+
+        &-bottom {
+          align-self: flex-end;
+        }
+
+        h3 {
+          font-size: 1.625em;
+          font-weight: normal;
+        }
+      }
+    }
+
+    // Sponsor Logos
+    &-logos {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 10px;
+      margin: 20px auto 0;
+      max-width: 980px;
+
+      @media (min-width: $tablet) {
+        margin-top: 50px;
+
+        a { margin: 10px 0; }
+      }
+
+      @include breakpoint(mobile, max) {
+        a { flex: 1 1 33.33%; }
+      }
+
+      img {
+        filter: grayscale(100%);
+        padding: 0 22px;
+        margin: 0 auto;
+        max-height: 100px;
+        max-width: 100%;
+        transition: filter 0.2s ease-in-out;
+
+        &:hover {
+          filter: grayscale(0%);
+        }
+      }
+    }
+
+    // Two Column Grid
+    &-grid {
+      margin: 40px auto 0;
+      max-width: 1020px;
+      padding: 0 30px;
+      width: 100%;
+
+      @include breakpoint(mobile) { margin-top: 50px; }
+      @include breakpoint(tablet) {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 60px;
+        padding: 0 5px;
+      }
+
+      &-item {
+        padding: 10px 0;
+
+        @include breakpoint(tablet) {
+          flex: 1 1 50%;
+          padding: 25px;
+        }
+
+        h3 {
+          font-size: 1.25em;
+          margin-bottom: .5em;
+        }
+
+        p {
+          color: $medium-grey;
+        }
+      }
+
+      &-quote {
+        text-align: center;
+        margin: 0 auto;
+        max-width: 420px;
+
+        img {
+          border-radius: $base-border-radius;
+          display: inline-block;
+          margin-bottom: 10px;
+          width: 100px;
+        }
+
+        h3 {
+          margin-bottom: 2px;
+        }
+
+        &-title {
+          font-style: italic;
+        }
+
+        p {
+          font-size: 1em;
+          line-height: 1.25em;
+        }
+      }
+    }
+  }
+
+  // Community specific bloquote styles
+  &-quote {
+    font-size: 1.125em;
+    margin: 0;
+    padding: 0;
+
+    &-body {
+      font-style: italic;
+    }
+
+    &:before {
+      color: $half-black;
+      content: '“';
+      display: block;
+      font-size: 4em;
+      height: 20px;
+      margin-bottom: $padding-large;
+      text-align: center;
+    }
+
+    footer {
+      font-size: 14px;
+      margin-top: $padding-large;
+      text-align: center;
+
+      img {
+        box-shadow: 0 0 30px 0 rgba($black, 0.2);
+        border-radius: 2px;
+        display: block;
+        margin: 0 auto 1em;
+      }
+
+      strong {
+        display: inline-block;
+        padding-bottom: 2px;
+      }
+
+      span {
+        clear: left;
+        font-style: italic;
+
+        &:before {
+          content: "\A";
+          white-space: pre;
+        }
+
+      }
+
+      a {
+        color: black;
+        display: block;
+      }
+    }
+  }
+
+  // Map
+  &-map {
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    max-width: 1200px;
+    overflow: hidden;
+    width: 100%;
+
+    img {
+      display: block;
+      margin: 0 auto;
+      width: 97%;
+    }
+
+    @media (min-width: $tablet) {
+      padding: 0 $padding-large;
+
+      img {
+        margin: 0;
+        width: 100%;
+      }
+    }
+  }
+}

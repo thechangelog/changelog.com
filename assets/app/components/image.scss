@@ -1,0 +1,11 @@
+.image {
+  margin: $base-spacing*2 auto;
+  max-width: 1000px;
+  padding: 0 30px;
+  width: 100%;
+
+  img {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}

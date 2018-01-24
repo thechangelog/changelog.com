@@ -1,7 +1,3 @@
-<section class="container" id="podcasts">
-  <h2 class="accessibility-hidden">Podcast Shows</h2>
-  <%= for podcast <- @podcasts do %>
-    <%= render "_podcast_summary.html", conn: @conn, podcast: podcast %>
-  <% end %>
-  <%= render "_podcast_summary.html", conn: @conn, podcast: Changelog.Podcast.master %>
-</section>
+<div class="page_podcasts">
+  <%= render("_show_list.html", conn: @conn, podcasts: @podcasts) %>
+</div>

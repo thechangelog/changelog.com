@@ -153,9 +153,9 @@ defmodule Changelog.Episode do
   def preload_podcast(episode), do: Repo.preload(episode, :podcast)
 
   def preload_sponsors(query = %Ecto.Query{}) do
-   query
-   |> Ecto.Query.preload(episode_sponsors: ^EpisodeSponsor.by_position)
-   |> Ecto.Query.preload(:sponsors)
+    query
+    |> Ecto.Query.preload(episode_sponsors: ^EpisodeSponsor.by_position)
+    |> Ecto.Query.preload(:sponsors)
   end
   def preload_sponsors(episode) do
     episode

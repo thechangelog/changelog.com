@@ -1,0 +1,18 @@
+.reactions {
+  &-item {
+    // @include toolbar_button();
+    cursor: pointer;
+    margin-right: 0.25em;
+    padding-right: 0.5em;
+
+    &:last-child { margin-right: 0; }
+
+    @include breakpoint(tiny) {
+      padding-right: 0.8em;
+    }
+
+    span {
+      margin-right: 0.25em;
+    }
+  }
+}

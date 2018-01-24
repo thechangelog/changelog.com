@@ -1,7 +1,7 @@
 defmodule Changelog.Podcast do
   use Changelog.Data
 
-  alias Changelog.{Episode, EpisodeStat, PodcastTopic, PodcastHost, Regexp}
+  alias Changelog.{Episode, EpisodeStat, NewsItem, PodcastTopic, PodcastHost, Regexp}
 
   defenum Status, draft: 0, soon: 1, published: 2, retired: 3
 
@@ -35,7 +35,7 @@ defmodule Changelog.Podcast do
   %__MODULE__{
     name: "Changelog Master Feed",
     slug: "master",
-    description: "The master feed of all Changelog podcasts.<br><code>git pull changelog master</code>",
+    description: "Master feed of all Changelog podcasts.",
     keywords: "changelog, open source, oss, software, development, developer, hacker",
     itunes_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
     hosts: []
@@ -78,6 +78,14 @@ defmodule Changelog.Podcast do
       from(e in Episode)
     else
       assoc(podcast, :episodes)
+    end
+  end
+
+  def get_news_items(podcast) do
+    if is_master(podcast) do
+      NewsItem.with_object(NewsItem.audio)
+    else
+      NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
     end
   end
 

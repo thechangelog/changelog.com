@@ -1,0 +1,30 @@
+.search {
+  @include wrap;
+  padding: 0;
+
+  &-form {
+    border-bottom: 1px solid $green;
+    display: flex;
+    font-family: $code;
+    font-size: 0.875em;
+    padding: 0;
+
+    &:before {
+      content: "~ $ ";
+      padding: 1em 0;
+    }
+
+    input {
+      border: none;
+      font-family: $code;
+      flex: 1 auto;
+      padding: 1em 0.5em;
+    }
+  }
+
+  &-results_sentence {
+    font-family: $code;
+    font-size: 0.875em;
+    padding: 1em $base-spacing;
+  }
+}
