@@ -5,7 +5,7 @@
     <copyright>All rights reserved</copyright>
     <link><%= root_url(@conn, :index) %></link>
     <language>en-us</language>
-    <description>News and Podcasts for Developers</description>
+    <description>News and podcasts for developers</description>
   <%= for item <- @items do %>
     <item>
       <%= render_item(item, assigns) %>

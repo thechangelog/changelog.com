@@ -4,7 +4,7 @@
       <div class="signup-icons-item signup-icons-item--news"></div>
       <div class="signup-icons-item signup-icons-item--podcasts"></div>
     </div>
-    <h1 class="signup-heading">News and Podcasts for Developers</h1>
+    <h1 class="signup-heading">News and podcasts for developers</h1>
     <p class="signup-text">Subscribe to get the latest news and podcasts for developers in your inbox, <em>every&nbsp;week</em>.<br />
     We make it <em>super easy</em> to keep up with developer news that&nbsp;matters.</p>
     <%= form_tag person_path(@conn, :subscribe), class: "signup-form" do %>

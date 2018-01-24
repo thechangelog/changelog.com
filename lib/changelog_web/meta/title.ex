@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Meta.Title do
   alias ChangelogWeb.{AuthView, EpisodeView, LiveView, NewsItemView, NewsSourceView,
                       PageView, PersonView, PodcastView, PostView, TopicView, SearchView}
 
-  @suffix "Changelog | News and Podcasts for Developers"
+  @suffix "News and podcasts for developers | Changelog"
 
   def page_title(assigns), do: assigns |> get |> put_suffix
 
@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Meta.Title do
 
   # Sign up - subscribe
   defp get(%{view_module: PersonView, view_template: "subscribe.html"}) do
-    "Subscribe to Changelog News and Podcasts for Developers"
+    "Subscribe to Changelog"
   end
 
   # Sign up - join community
@@ -47,7 +47,7 @@ defmodule ChangelogWeb.Meta.Title do
 
   # Source show page
   defp get(%{view_module: NewsSourceView, view_template: "show.html", source: source}) do
-    "Developer News From #{source.name}"
+    "Developer News from #{source.name}"
   end
 
   # Topic index
@@ -57,7 +57,7 @@ defmodule ChangelogWeb.Meta.Title do
 
   # Topic show page
   defp get(%{view_module: TopicView, view_template: "show.html", topic: topic}) do
-    "Developer News About #{topic.name}"
+    "Developer News about #{topic.name}"
   end
 
   # Pages
