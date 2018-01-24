@@ -13,30 +13,57 @@ defmodule ChangelogWeb.Meta.Title do
   defp put_suffix(nil), do: @suffix
   defp put_suffix(title), do: title <> " | " <> @suffix
 
-  defp get(%{view_module: AuthView}), do: "Sign In"
-
-  defp get(%{view_module: SearchView, view_template: "search.html", query: query}), do: query
+  # Search views
+  defp get(%{view_module: SearchView, view_template: "search.html", query: query}), do: "Search results for #{query}"
   defp get(%{view_module: SearchView, view_template: "search.html"}), do: "Search"
 
-  defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
-    "#{podcast.name} #{EpisodeView.numbered_title(episode, "#")}"
-  end
-
+  # Live page
   defp get(%{view_module: LiveView}) do
     "Live and Upcoming Shows"
   end
 
+  # News item - show
   defp get(%{view_module: NewsItemView, view_template: "show.html", item: item}) do
     item.headline
   end
 
-  defp get(%{view_module: NewsSourceView, view_template: "show.html", source: source}) do
-    "Developer news from #{source.name}"
+  # Sign up - subscribe
+  defp get(%{view_module: PersonView, view_template: "subscribe.html"}) do
+    "Subscribe to Changelog News and Podcasts for Developers"
   end
 
+  # Sign up - join community
+  defp get(%{view_module: PersonView, view_template: "join.html"}) do
+    "Join the Community"
+  end
+
+  # Sign in
+  defp get(%{view_module: AuthView}), do: "Sign In"
+
+  # Source index
+  defp get(%{view_module: NewSourceView, view_template: "index.html"}) do
+    "All News Sources"
+  end
+
+  # Source show page
+  defp get(%{view_module: NewsSourceView, view_template: "show.html", source: source}) do
+    "Developer News From #{source.name}"
+  end
+
+  # Topic index
+  defp get(%{view_module: TopicView, view_template: "index.html"}) do
+    "All News Topics"
+  end
+
+  # Topic show page
+  defp get(%{view_module: TopicView, view_template: "show.html", topic: topic}) do
+    "Developer News About #{topic.name}"
+  end
+
+  # Pages
   defp get(%{view_module: PageView, view_template: template}) do
     case template do
-      "community.html" -> "Join Changelog's Global Hacker Community"
+      "community.html" -> "Changelog Developer Community"
       "coc.html"       -> "Code of Conduct"
       "home.html"      -> nil
       "weekly.html"    -> "Subscribe to Changelog Weekly"
@@ -50,10 +77,12 @@ defmodule ChangelogWeb.Meta.Title do
     end
   end
 
+  # Podcasts index
   defp get(%{view_module: PodcastView, view_template: "index.html"}) do
-    "All Changelog Podcasts"
+    "Changelog Podcasts"
   end
 
+  # Podcast homepage
   defp get(%{view_module: PodcastView, podcast: podcast}) do
     if Enum.any?(podcast.hosts) do
       "#{podcast.name} with #{PersonView.comma_separated_names(podcast.hosts)}"
@@ -62,12 +91,19 @@ defmodule ChangelogWeb.Meta.Title do
     end
   end
 
-  defp get(%{view_module: PostView, post: post}) do
-    post.title
+  # Podcast show page
+  defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
+    "#{podcast.name} #{EpisodeView.numbered_title(episode, "#")}"
   end
 
-  defp get(%{view_module: TopicView, view_template: "show.html", topic: topic}) do
-    "Developer news about #{topic.name}"
+  # Posts index (blog)
+  defp get(%{view_module: PostView, view_template: "index.html"}) do
+    "Blog"
+  end
+
+  # Post show page
+  defp get(%{view_module: PostView, post: post}) do
+    post.title
   end
 
   defp get(_), do: nil
