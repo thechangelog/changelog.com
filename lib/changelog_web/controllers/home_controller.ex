@@ -6,9 +6,9 @@ defmodule ChangelogWeb.HomeController do
 
   plug RequireUser
 
-  def show(conn, _params) do
-    render(conn, :show)
-  end
+  def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil)
+  def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id)
+  def show(conn, _params), do: render(conn, :show, subscribed: nil, unsubscribed: nil)
 
   def account(conn = %{assigns: %{current_user: me}}, _params) do
     render(conn, :account, changeset: Person.changeset(me))
@@ -38,7 +38,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're subscribed! You'll get the next issue in your inbox 📥")
-    |> redirect(to: home_path(conn, :show))
+    |> redirect(to: home_path(conn, :show, subscribed: newsletter_id))
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
@@ -46,7 +46,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
-    |> redirect(to: home_path(conn, :show))
+    |> redirect(to: home_path(conn, :show, unsubscribed: newsletter_id))
   end
 
   def slack(conn = %{assigns: %{current_user: me}}, _params) do

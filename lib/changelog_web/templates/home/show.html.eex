@@ -9,12 +9,7 @@
         <p class="account_subscriptions-item-info-meta">1 Email Per Week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
       </div>
       <div class="account_subscriptions-item-button">
-        <% weekly = Changelog.Newsletters.weekly() %>
-        <%= if PersonView.is_subscribed(@current_user, weekly) do %>
-          <%= link "Subscribed", to: home_path(@conn, :unsubscribe, weekly.list_id), method: :post, class: "is-subscribed" %>
-        <% else %>
-          <%= link "Subscribe", to: home_path(@conn, :subscribe, weekly.list_id), method: :post %>
-        <% end %>
+        <%= newsletter_link(Changelog.Newsletters.weekly(), assigns) %>
       </div>
     </div>
     <div class="account_subscriptions-item">
@@ -24,12 +19,7 @@
         <p class="account_subscriptions-item-info-meta">7 Emails Per Week — Delivered Daily at 10pm US Central</p>
       </div>
       <div class="account_subscriptions-item-button">
-        <% nightly = Changelog.Newsletters.nightly() %>
-        <%= if PersonView.is_subscribed(@current_user, nightly) do %>
-          <%= link "Subscribed", to: home_path(@conn, :unsubscribe, nightly.list_id), method: :post, class: "is-subscribed" %>
-        <% else %>
-          <%= link "Subscribe", to: home_path(@conn, :subscribe, nightly.list_id), method: :post %>
-        <% end %>
+        <%= newsletter_link(Changelog.Newsletters.nightly(), assigns) %>
       </div>
     </div>
   </div>
