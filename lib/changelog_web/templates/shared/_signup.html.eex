@@ -5,11 +5,11 @@
       <div class="signup-icons-item signup-icons-item--podcasts"></div>
     </div>
     <h1 class="signup-heading">News and Podcasts for Developers</h1>
-    <p class="signup-text">Subscribe now and get the latest news and podcasts for developers in your email inbox, <em>every&nbsp;week</em>.<br />
-    We&rsquo;ve made it <em>super easy</em> to keep up with developer news that&nbsp;matters.</p>
+    <p class="signup-text">Subscribe to get the latest news and podcasts for developers in your inbox, <em>every&nbsp;week</em>.<br />
+    We make it <em>super easy</em> to keep up with developer news that&nbsp;matters.</p>
     <%= form_tag person_path(@conn, :subscribe), class: "signup-form" do %>
-      <label class="visually_hidden">Email address...</label>
-      <input name="email" class="signup-form-input" placeholder="Email address..." required autofocus/>
+      <label class="visually_hidden">you@example.com</label>
+      <input name="email" class="signup-form-input" placeholder="you@example.com" required autofocus/>
       <div class="signup-form-submit">
         <input class="signup-form-submit-button" type="submit" value="Subscribe">
       </div>
