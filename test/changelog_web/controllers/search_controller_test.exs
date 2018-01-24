@@ -17,7 +17,7 @@ defmodule ChangelogWeb.SearchControllerTest do
       conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
 
       assert conn.status == 200
-      assert conn.resp_body =~ "1 item"
+      assert conn.resp_body =~ "1 result"
       assert conn.resp_body =~ item1.story
       refute conn.resp_body =~ item2.story
     end
@@ -29,7 +29,7 @@ defmodule ChangelogWeb.SearchControllerTest do
       conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
 
       assert conn.status == 200
-      assert conn.resp_body =~ "2 items"
+      assert conn.resp_body =~ "2 results"
       assert conn.resp_body =~ item1.story
       assert conn.resp_body =~ item2.story
     end
