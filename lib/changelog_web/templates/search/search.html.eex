@@ -6,7 +6,7 @@
 
   <%= if Enum.any?(@items) do %>
     <%= if @page.total_entries > 0 do %>
-      <p class="search-results_sentence">We found <%= link pluralize(@page.total_entries, "item", "items"), to: "#results" %>.</p>
+      <p class="search-results_sentence">We found <%= pluralize(@page.total_entries, "result", "results") %>.</p>
 
       <div class="feed">
         <%= for item <- @items do %>
