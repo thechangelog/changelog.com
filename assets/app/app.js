@@ -50,17 +50,6 @@ u(document).on("click", "[data-play]", function(event) {
   }
 });
 
-// track outbound clicks
-u(document).on("click", "[rel=external]", function(event) {
-  let type = u(this).closest("[data-news-type]").data("news-type");
-  let id = u(this).closest("[data-news-id]").data("news-id");
-
-  if (id) {
-    event.preventDefault();
-    window.location = `${type}/${id}/visit`;
-  }
-});
-
 u(document).handle("click", "[data-image]", function(event) {
   new ImageButton(this);
 });
@@ -80,6 +69,24 @@ u(document).handle("click", ".js-share-popup", function(event) {
   top = (screen.height / 2) - (h / 2);
   shareWindow = window.open(href, "Changelog", `location=1,status=1,scrollbars=1,width=${w},height=${h},top=${top},left=${left}`);
   shareWindow.opener = null;
+});
+
+// track outbound clicks
+u(document).on("click", "[rel=external]", function(event) {
+  let type = u(this).closest("[data-news-type]").data("news-type");
+  let id = u(this).closest("[data-news-id]").data("news-id");
+
+  if (id) {
+    event.preventDefault();
+    let href = `/${type}/${id}/visit`;
+
+    if (player.isActive()) {
+      let newWindow = window.open(href, "_blank");
+      newWindow.opener = null;
+    } else {
+      window.location = href;
+    }
+  }
 });
 
 // open external links in new window when player is doing its thing
