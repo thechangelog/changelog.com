@@ -14,6 +14,10 @@ defmodule ChangelogWeb.NewsAdView do
     |> String.downcase
     |> String.replace(~r/[^a-z0-9\s]/, "")
     |> String.replace(~r/\s+/, "-")
-    |> Kernel.<>("-#{Hashid.encode(ad.id)}")
+    |> Kernel.<>("-#{hashid(ad)}")
+  end
+
+  def hashid(ad) do
+    Hashid.encode(ad.id)
   end
 end

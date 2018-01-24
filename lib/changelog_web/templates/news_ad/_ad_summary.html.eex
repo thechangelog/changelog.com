@@ -1,4 +1,4 @@
-<article class="news_item news_item--sponsor" data-ad="<%= news_ad_path(@conn, :show, slug(@ad)) %>">
+<article class="news_item news_item--sponsor" data-news-type="ad" data-news-id="<%= hashid(@ad) %>">
   <%= render("_ad_header.html", assigns) %>
 <%= if @ad.story do %>
   <div class="news_item-description">

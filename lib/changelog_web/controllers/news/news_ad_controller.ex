@@ -4,41 +4,36 @@ defmodule ChangelogWeb.NewsAdController do
   alias Changelog.{Hashid, NewsAd}
   alias ChangelogWeb.NewsAdView
 
-  plug :assign_ad
+  def show(conn, %{"id" => slug}) do
+    hashid = slug |> String.split("-") |> List.last
+    ad = ad_from_hashid(hashid)
 
-  def action(conn, _) do
-    arg_list = [conn, conn.params, conn.assigns.ad]
-    apply(__MODULE__, action_name(conn), arg_list)
+    if slug == hashid do
+      redirect(conn, to: news_ad_path(conn, :show, NewsAdView.slug(ad)))
+    else
+      render(conn, :show, ad: ad, sponsor: ad.sponsorship.sponsor)
+    end
   end
 
-  def show(conn, _params, ad) do
-    render(conn, :show, ad: ad, sponsor: ad.sponsorship.sponsor)
-  end
+  def impress(conn, %{"ads" => hashids}) do
+    hashids
+    |> String.split(",")
+    |> Enum.each(fn(hashid) ->
+      hashid |> ad_from_hashid |> NewsAd.track_impression
+    end)
 
-  def impress(conn, _params, ad) do
-    NewsAd.track_impression(ad)
     send_resp(conn, 200, "")
   end
 
-  def visit(conn, _params, ad) do
+  def visit(conn, %{"id" => hashid}) do
+    ad = ad_from_hashid(hashid)
     NewsAd.track_click(ad)
     redirect(conn, external: ad.url)
   end
 
-  defp assign_ad(conn, _) do
-    slug = conn.params["id"]
-    hashid = slug |> String.split("-") |> List.last
-
-    ad = NewsAd
+  defp ad_from_hashid(hashid) do
+    NewsAd
     |> Repo.get_by!(id: Hashid.decode(hashid))
     |> NewsAd.preload_sponsorship
-
-    if slug == hashid do
-      conn
-      |> redirect(to: news_ad_path(conn, :show, NewsAdView.slug(ad)))
-      |> halt()
-    else
-      assign(conn, :ad, ad)
-    end
   end
 end

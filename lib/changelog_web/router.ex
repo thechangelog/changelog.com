@@ -122,12 +122,13 @@ defmodule ChangelogWeb.Router do
     get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
-
     get "/", NewsItemController, :index, as: :root
     resources "/news", NewsItemController, only: [:show], as: :news_item
+    get "/news/:id/visit", NewsItemController, :visit, as: :news_item
+    post "/news/impress", NewsItemController, :impress, as: :news_item
     resources "/ads", NewsAdController, only: [:show], as: :news_ad
-    get "/ads/:id/impress", NewsAdController, :impress, as: :news_ad
-    get "/ads/:id/visit", NewsAdController, :visit, as: :news_ad
+    post "/ad/impress", NewsAdController, :impress, as: :news_ad
+    get "/ad/:id/visit", NewsAdController, :visit, as: :news_ad
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue

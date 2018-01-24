@@ -20,6 +20,9 @@ defmodule Changelog.NewsItem do
     field :pinned, :boolean, default: false
     field :published_at, Timex.Ecto.DateTime
 
+    field :impression_count, :integer, default: 0
+    field :click_count, :integer, default: 0
+
     belongs_to :author, Person
     belongs_to :logger, Person
     belongs_to :source, NewsSource
@@ -131,4 +134,16 @@ defmodule Changelog.NewsItem do
   def is_audio(item), do: item.type == :audio
   def is_draft(item), do: item.status == :draft
   def is_published(item), do: item.status == :published
+
+  def track_click(item) do
+    item
+    |> change(%{click_count: item.click_count + 1})
+    |> Repo.update!
+  end
+
+  def track_impression(item) do
+    item
+    |> change(%{impression_count: item.impression_count + 1})
+    |> Repo.update!
+  end
 end

@@ -36,6 +36,8 @@
   <%= if Mix.env == :prod do %>
     <%= render("_head_scripts.html", assigns) %>
   <% end %>
+
+   <meta property="csrf" content="<%= get_csrf_token() %>">
   </head>
   <body class="page-<%= controller_action_combo(@conn) %>">
     <!--[if lt IE 8]>

@@ -50,13 +50,14 @@ u(document).on("click", "[data-play]", function(event) {
   }
 });
 
-// track ad visits
+// track outbound clicks
 u(document).on("click", "[rel=external]", function(event) {
-  let adUrl = u(this).closest("[data-ad]").data("ad");
+  let type = u(this).closest("[data-news-type]").data("news-type");
+  let id = u(this).closest("[data-news-id]").data("news-id");
 
-  if (adUrl) {
+  if (id) {
     event.preventDefault();
-    window.location = `${adUrl}/visit`;
+    window.location = `${type}/${id}/visit`;
   }
 });
 
@@ -174,10 +175,28 @@ function formatTimes() {
 }
 
 function impress() {
-  u("[data-ad]").each(function(el) {
-    let ad = u(el).data("ad");
-    ajax(`${ad}/impress`);
-  });
+  let ads = Array.from(document.querySelectorAll("[data-news-type=ad]"));
+  let items = Array.from(document.querySelectorAll("[data-news-type=news]"));
+
+  if (ads.length) {
+    let adIds = ads.map(function(x) { return u(x).data("news-id"); });
+    let options = {
+      method: "POST",
+      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
+      body: {"ads": adIds}
+    };
+    ajax("/ad/impress", options);
+  }
+
+  if (items.length) {
+    let itemIds = items.map(function(x) { return u(x).data("news-id"); });
+    let options = {
+      method: "POST",
+      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
+      body: {"items": itemIds}
+    };
+    ajax("/news/impress", options);
+  }
 }
 
 function deepLink(href) {

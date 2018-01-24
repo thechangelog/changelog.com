@@ -73,10 +73,10 @@ defmodule ChangelogWeb.NewsItemView do
     |> String.downcase
     |> String.replace(~r/[^a-z0-9\s]/, "")
     |> String.replace(~r/\s+/, "-")
-    |> Kernel.<>("-#{slug_id(item)}")
+    |> Kernel.<>("-#{hashid(item)}")
   end
 
-  def slug_id(item) do
+  def hashid(item) do
     Hashid.encode(item.id)
   end
 

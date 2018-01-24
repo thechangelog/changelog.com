@@ -1,5 +1,5 @@
 <div class="feed">
-  <article class="news_item" data-ad="<%= news_ad_path(@conn, :show, slug(@ad)) %>">
+  <article class="news_item" data-news-type="ad" data-news-id="<%= hashid(@ad) %>">
     <%= render("_ad_header.html", assigns) %>
     <%= render("_ad_toolbar.html", assigns) %>
     <%= if @ad.story do %>
