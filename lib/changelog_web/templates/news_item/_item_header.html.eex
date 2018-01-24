@@ -1,7 +1,7 @@
 <header class="news_item-header">
   <p class="news_item-source">
     <%= render_item_source(@conn, @item) %>
-    <%= if @item.pinned do %>
+    <%= if controller_action_combo(@conn) == "news_item-index" && @item.pinned do %>
     &nbsp;–&nbsp;Pinned
     <% end %>
   </p>
