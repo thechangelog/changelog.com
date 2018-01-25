@@ -17,6 +17,16 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
   end
 
   @tag :as_admin
+  test "shows a specific sponsorship", %{conn: conn} do
+    news_sponsorship = insert(:news_sponsorship)
+
+    conn = get(conn, admin_news_sponsorship_path(conn, :show, news_sponsorship))
+
+    assert html_response(conn, 200) =~ news_sponsorship.name
+    assert String.contains?(conn.resp_body, news_sponsorship.sponsor.name)
+  end
+
+  @tag :as_admin
   test "lists the sponsorships on a schedule", %{conn: conn} do
     news_sponsorship = insert(:news_sponsorship, weeks: [Timex.beginning_of_week(Timex.today)])
 

@@ -7,12 +7,18 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   plug :scrub_params, "news_sponsorship" when action in [:create, :update]
 
   def index(conn, params) do
-    page = NewsSponsorship
-    |> order_by([s], desc: s.id)
-    |> NewsSponsorship.preload_all
-    |> Repo.paginate(params)
+    page =
+      NewsSponsorship
+      |> order_by([s], desc: s.id)
+      |> NewsSponsorship.preload_all
+      |> Repo.paginate(params)
 
     render(conn, :index, sponsorships: page.entries, page: page)
+  end
+
+  def show(conn, %{"id" => id}) do
+    sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_all()
+    render(conn, :show, sponsorship: sponsorship)
   end
 
   def schedule(conn, params) do

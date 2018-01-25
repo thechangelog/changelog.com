@@ -1,0 +1,67 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link @sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor) %>
+    &raquo;
+    <%= link @sponsorship.name, to: admin_news_sponsorship_path(@conn, :edit, @sponsorship) %>
+    <div class="sub header"><%= pluralize(@sponsorship.ads, "ad", "ads") %> for <%= pluralize(@sponsorship.weeks, "week", "weeks") %></div>
+  </h1>
+</div>
+
+<div class="ui basic segment">
+  <h2 class="ui header">Stats</h2>
+
+  <table class="ui celled striped unstackable table">
+    <thead>
+      <tr>
+        <th>Clicks</th>
+        <th>Impressions</th>
+        <th>CTR</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><%= @sponsorship.click_count %></td>
+        <td><%= @sponsorship.impression_count %></td>
+        <td><%= ctr(@sponsorship) %>%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="ui basic segment">
+  <h2 class="ui header">Ads</h2>
+
+  <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th>Headline</th>
+          <th>Link</th>
+          <th>Active</th>
+          <th><i class="mouse pointer icon"></i> / <i class="eye icon"></i></th>
+          <th>CTR</th>
+          <th>Create Time</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <%= for ad <- @sponsorship.ads do %>
+        <tr>
+          <td><%= ad.headline %></td>
+          <td><%= link domain_name(ad.url), to: ad.url %></td>
+          <td><%= ad.active %></td>
+          <td><%= ad.click_count %> / <%= ad.impression_count %></td>
+          <td><%= ctr(ad) %>%</td>
+          <td><%= ts(ad.inserted_at) %></td>
+          <td class="center aligned">
+            <div class="ui small basic buttons">
+              <%= icon_link "eye", to: news_ad_path(@conn, :show, NewsAdView.slug(ad)) %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+</div>

@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Admin.NewsAdView do
   use ChangelogWeb, :admin_view
 
-  alias ChangelogWeb.NewsItemView
+  alias ChangelogWeb.NewsAdView
 
-  def image_url(ad, version), do: NewsItemView.image_url(ad, version)
+  def image_url(ad, version), do: NewsAdView.image_url(ad, version)
+  def slug(ad), do: NewsAdView.slug(ad)
 end

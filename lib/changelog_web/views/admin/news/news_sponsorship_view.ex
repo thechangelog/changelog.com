@@ -23,7 +23,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
     end
   end
   def schedule_cell_content(_focus_week, _week, sponsorship) do
-    link(sponsorship.sponsor.name, to: admin_news_sponsorship_path(Endpoint, :edit, sponsorship))
+    link(sponsorship.sponsor.name, to: admin_news_sponsorship_path(Endpoint, :show, sponsorship))
   end
 
   def schedule_row_class(focus_week, week) do
