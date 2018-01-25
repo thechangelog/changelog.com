@@ -72,7 +72,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
-  def sans_new_lines(string), do: String.replace(string, "\n", "")
+  def sans_new_lines(string), do: String.replace(string, "\n", " ")
 
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do
