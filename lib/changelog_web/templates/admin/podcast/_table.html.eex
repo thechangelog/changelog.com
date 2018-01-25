@@ -17,8 +17,8 @@
     <tr>
       <td class="center aligned">
         <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug) do %>
-        <h2 class="ui circular image header">
-          <img src="<%= static_url(@conn, ChangelogWeb.PodcastView.cover_art_path(podcast)) %>" class="ui image"/>
+        <h2 class="ui image header">
+          <img src="<%= static_url(@conn, ChangelogWeb.PodcastView.cover_art_path(podcast)) %>" class="ui image" style="background: black"/>
         </h2>
         <% end %>
       </td>
