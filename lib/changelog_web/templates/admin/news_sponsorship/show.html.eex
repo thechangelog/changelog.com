@@ -8,21 +8,28 @@
 </div>
 
 <div class="ui basic segment">
-  <h2 class="ui header">Stats</h2>
+  <h2 class="ui header">Sponsorship</h2>
 
   <table class="ui celled striped unstackable table">
     <thead>
       <tr>
-        <th>Clicks</th>
-        <th>Impressions</th>
+        <th>Weeks</th>
+        <th>Ads</th>
+        <th>Start Week</th>
+        <th>End Week</th>
+        <th><i class="mouse pointer icon"></i> / <i class="eye icon"></i></th>
         <th>CTR</th>
       </tr>
     </thead>
 
     <tbody>
       <tr>
-        <td><%= @sponsorship.click_count %></td>
-        <td><%= @sponsorship.impression_count %></td>
+        <td><%= length(@sponsorship.weeks) %></td>
+        <td><%= length(@sponsorship.ads) %></td>
+        <td><%= @sponsorship.weeks |> List.first |> TimeView.pretty_date %></td>
+        <td><%= @sponsorship.weeks |> List.last |> TimeView.pretty_date %></td>
+        <td><%= @sponsorship.click_count %> / <%= @sponsorship.impression_count %></td>
+
         <td><%= ctr(@sponsorship) %>%</td>
       </tr>
     </tbody>
