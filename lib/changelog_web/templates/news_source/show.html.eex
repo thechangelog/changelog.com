@@ -8,6 +8,7 @@
       <h2 class="topic-header-title"><%= @source.name %></h2>
 
       <div class="topic-header-description">
+        <%= @source.description %>
         <%= admin_edit_link(@conn, @current_user, @source) %>
       </div>
 

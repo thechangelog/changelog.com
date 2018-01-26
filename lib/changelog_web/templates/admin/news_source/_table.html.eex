@@ -25,6 +25,7 @@
         <td><%= ts(source.updated_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
+            <%= icon_link "eye", to: news_source_path(@conn, :show, source.slug) %>
             <%= icon_link "edit", to: admin_news_source_path(@conn, :edit, source) %>
             <%= icon_link "trash", to: admin_news_source_path(@conn, :delete, source), method: :delete, data: [confirm: "Are you sure?"] %>
           </div>

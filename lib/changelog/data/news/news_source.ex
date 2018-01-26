@@ -7,6 +7,7 @@ defmodule Changelog.NewsSource do
     field :name, :string
     field :slug, :string
     field :website, :string
+    field :description, :string
     field :feed, :string
     field :regex, :string
 
@@ -21,7 +22,7 @@ defmodule Changelog.NewsSource do
 
   def insert_changeset(source, attrs \\ %{}) do
     source
-    |> cast(attrs, ~w(name slug website regex feed))
+    |> cast(attrs, ~w(name slug website description regex feed))
     |> validate_required([:name, :slug, :website])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:feed, Regexp.http, message: Regexp.http_message)

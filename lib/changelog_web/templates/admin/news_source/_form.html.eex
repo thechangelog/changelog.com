@@ -26,6 +26,16 @@
     </div>
   </div>
 
+  <div class="field <%= error_class(f, :description) %>">
+    <label for="description">
+      Description
+      <%= help_icon("140 characters or less.") %>
+    </label>
+    <%= textarea(f, :description, placeholder: "WIRED is where tomorrow is realized. It is the essential source of information and ideas that make sense of a world in constant transformation.", rows: 2) %>
+    <%= error_message(f, :description) %>
+  </div>
+
+
   <div class="field <%= error_class(f, :feed) %>">
     <label for="feed">
       RSS Feed
