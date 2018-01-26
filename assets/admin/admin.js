@@ -37,6 +37,7 @@ $("span.time").each(function() {
   let date = new Date($span.text());
   let style = $span.data("style");
   $span.text(ts(date, style));
+  $span.attr("title", ts(date, "timeFirst"));
 });
 
 $(".ui.navigation.search").search({

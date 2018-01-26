@@ -24,10 +24,12 @@ class Time {
   }
 
   hours12() {
-   if (this.hours > 12) {
-    return this.hours - 12;
+    if (this.hours == 0) {
+      return 12;
+    } else if (this.hours > 12) {
+      return this.hours - 12;
    } else {
-    return this.hours;
+      return this.hours;
    }
   }
 
@@ -82,7 +84,7 @@ class Time {
   }
 
   adminStyle() {
-    return `${this.month()}/${this.day()}/${this.year()} – ${this.hours12()}${this.minutes("")}${this.amPm()} (${this.tz()})`;
+    return `${this.month()}/${this.day()}/${this.year()} – ${this.hours12()}${this.minutes("")}${this.amPm()}`;
   }
 
   dateStyle() {
