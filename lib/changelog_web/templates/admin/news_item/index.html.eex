@@ -78,7 +78,7 @@
       <div class="content">
         <div class="summary">
         <%= if object.__struct__ == Topic do %>
-          The <%= link object.name, to: admin_topic_path(@conn, :edit, object) %> topic
+          The <%= link object.name, to: admin_topic_path(@conn, :edit, object.slug) %> topic
         <% else %>
           The <%= link object.name, to: admin_news_source_path(@conn, :edit, object) %> news source
         <% end %>
