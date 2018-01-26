@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, EpisodeTopic, EpisodeHost, EpisodeStat, Mailer,
-                   Podcast, Transcripts}
+                   NewsItem, Podcast, Transcripts}
   alias ChangelogWeb.Email
 
   plug :assign_podcast
@@ -45,13 +45,19 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
+    news_item =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.with_episode(episode)
+      |> Repo.one
+
     stats =
       episode
       |> assoc(:episode_stats)
       |> EpisodeStat.newest_first
       |> Repo.all
 
-    render(conn, :show, episode: episode, stats: stats)
+    render(conn, :show, episode: episode, item: news_item, stats: stats)
   end
 
   def new(conn, _params, podcast) do

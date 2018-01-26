@@ -3,17 +3,24 @@
     <%= link @episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, @episode.podcast.slug) %>
     &raquo;
     <%= link @episode.slug, to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug) %>
-    <%= if @episode.published do %>
-      <%= link "(View)",
-        to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
-        class: "view",
-        rel: "external" %>
-    <% else %>
-      <%= link "(Preview)",
-        to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
-        class: "view",
-        rel: "external" %>
-    <% end %>
+
+    <div class="ui basic right floated buttons">
+      <%= if @episode.published do %>
+        <%= link "View Public",
+          to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
+          class: "ui button",
+          rel: "external" %>
+      <% else %>
+        <%= link "Preview",
+          to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
+          class: "ui button",
+          rel: "external" %>
+      <% end %>
+      <%= if @item do %>
+        <%= link("News Item", to: admin_news_item_path(@conn, :edit, @item), class: "ui button") %>
+      <% end %>
+    </div>
+
     <div class="sub header"><%= @episode.title %></div>
   </h1>
 </div>
