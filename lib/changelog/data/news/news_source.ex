@@ -49,5 +49,5 @@ defmodule Changelog.NewsSource do
 
   def matching(url), do: from(s in __MODULE__, where: fragment("? ~* regex", ^url))
 
-  def news_count(source), do: Repo.count(from(q in NewsItem, where: q.source_id == ^source.id))
+  def news_count(source), do: Repo.count(from(q in NewsItem, where: q.source_id == ^source.id, where: q.status == ^:published))
 end

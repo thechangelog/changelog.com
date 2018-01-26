@@ -54,9 +54,7 @@ defmodule Changelog.Topic do
     |> Repo.preload(:news_items)
   end
 
-  def episode_count(topic), do: count(topic, EpisodeTopic)
-  def news_count(topic), do: count(topic, NewsItemTopic)
-  def post_count(topic), do: count(topic, PostTopic)
-
-  defp count(topic, module), do: Repo.count(from(q in module, where: q.topic_id == ^topic.id))
+  def episode_count(topic), do: Repo.count(from(q in EpisodeTopic, where: q.topic_id == ^topic.id))
+  def news_count(topic), do: Repo.count(from(q in NewsItemTopic, where: q.topic_id == ^topic.id,  join: i in assoc(q, :news_item), where: i.status == ^:published))
+  def post_count(topic), do: Repo.count(from(q in PostTopic, where: q.topic_id == ^topic.id))
 end
