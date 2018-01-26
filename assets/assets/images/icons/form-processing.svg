@@ -23,8 +23,8 @@
 			attributeName="transform"
 			attributeType="XML"
 			type="rotate"
-			from="0 10 10"
-			to="360 10 10"
+			from="360 10 10"
+			to="0 10 10"
 			dur="1s"
 			repeatCount="indefinite" />
 	</g>
