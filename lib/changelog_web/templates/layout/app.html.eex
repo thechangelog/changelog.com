@@ -15,14 +15,18 @@
     <meta name="twitter:url" content="<%= canonical_url(@conn) %>">
     <meta name="twitter:title" content="<%= share_title(assigns) || page_title(assigns) %>">
     <meta name="twitter:description" content="<%= description(assigns) %>">
-    <meta name="twitter:image" content="<%= static_url(@conn, twitter_image(assigns)) %>">
+  <%= if twitter_image = twitter_image(assigns) do %>
+    <meta name="twitter:image" content="<%= static_url(@conn, twitter_image) %>">
+  <% end %>
 
     <meta property="og:url" content="<%= canonical_url(@conn) %>">
     <meta property="og:type" content="website">
     <meta property="og:title" content="<%= share_title(assigns) || page_title(assigns) %>">
-    <meta property="og:image" content="<%= static_url(@conn, fb_image(assigns)) %>">
+  <%= if fbimg = fb_image(assigns) do %>
+    <meta property="og:image" content="<%= static_url(@conn, fbimg) %>">
     <meta property="og:image:width" content="<%= fb_image_width(assigns) %>">
     <meta property="og:image:height" content="<%= fb_image_height(assigns) %>">
+  <% end %>
     <meta property="og:description" content="<%= description(assigns) %>">
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
