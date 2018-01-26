@@ -23,6 +23,7 @@
       <td><%= post_count(topic) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
+          <%= icon_link("eye", to: topic_path(@conn, :show, topic.slug)) %>
           <%= icon_link("edit", to: admin_topic_path(@conn, :edit, topic.slug)) %>
           <%= icon_link("trash", to: admin_topic_path(@conn, :delete, topic.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
