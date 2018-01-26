@@ -4,5 +4,5 @@
     &raquo; New Episode
   </h1>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_podcast_episode_path(@conn, :create, @podcast.slug)) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: admin_podcast_episode_path(@conn, :create, @podcast.slug)})) %>
 </div>
