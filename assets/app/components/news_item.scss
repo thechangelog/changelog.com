@@ -27,7 +27,8 @@
     color: $black;
 
     &:hover {
-      color: lighten($black, 20%);
+      color: #000;
+      text-decoration: underline;
       transition: color 0.1s $base-easing;
     }
   }
