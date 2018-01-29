@@ -64,7 +64,7 @@
         <li><%= admin_edit_link(@conn, @current_user, @episode) %></li>
       </ul>
 
-      <% if Enum.any?(@episode.topics) do %>
+      <%= if Enum.any?(@episode.topics) do %>
         <div class="episode-body-summary-tags">
           <ul class="tags">
           <%= for topic <- @episode.topics do %>
