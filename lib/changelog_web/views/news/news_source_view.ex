@@ -13,8 +13,12 @@ defmodule ChangelogWeb.NewsSourceView do
 
   def icon_url(news_source), do: icon_url(news_source, :small)
   def icon_url(news_source, version) do
-    Icon.url({news_source.icon, news_source}, version)
-    |> String.replace_leading("/priv", "")
+    if (news_source.icon) do
+      Icon.url({news_source.icon, news_source}, version)
+      |> String.replace_leading("/priv", "")
+    else
+      "/images/icons/type-topic.svg"
+    end
   end
 
   def news_count(topic), do: NewsSource.news_count(topic)
