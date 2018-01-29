@@ -11,6 +11,7 @@ defmodule ChangelogWeb.Router do
   pipeline :browser do
     plug :accepts, ["html", "xml"]
     plug :fetch_session
+    plug Plug.Turbolinks
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
@@ -30,7 +31,6 @@ defmodule ChangelogWeb.Router do
 
   pipeline :public do
     plug Plug.LoadPodcasts
-    plug Plug.Turbolinks
   end
 
   scope "/auth", ChangelogWeb do

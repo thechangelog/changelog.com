@@ -229,6 +229,10 @@ window.onhashchange = function() {
   deepLink();
 }
 
+u(document).on("turbolinks:before-cache", function() {
+  u("body > .flash").remove();
+});
+
 // on page load
 u(document).on("turbolinks:load", function() {
   autosize(document.querySelectorAll("textarea"));
