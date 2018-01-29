@@ -43,7 +43,11 @@
 
           a {
             color: $black;
-            &:hover { color: $medium-grey; }
+            
+            &:hover {
+              color: #000000;
+              text-decoration: underline;
+            }
           }
         }
       }
@@ -97,7 +101,10 @@
       a {
         color: $black;
 
-        &:hover { color: $medium-grey; }
+        &:hover {
+          color: #000000;
+          text-decoration: underline;
+        }
       }
     }
   }
