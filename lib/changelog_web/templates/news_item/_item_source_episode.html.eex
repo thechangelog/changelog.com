@@ -1,13 +1,13 @@
 <%= if Enum.any?(@episode.guests) do %>
-  <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) <> "#featuring", title: @episode.title, class: "news_item-source-image news_item-source-image--#{ length(@episode.guests) }" do %>
+  <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) <> "#featuring", title: @episode.title, class: "news_item-source-image news_item-source-image--#{ length(@episode.guests) }", data: [news: true] do %>
     <%= for guest <- Enum.reverse(@episode.guests) do %>
       <img src="<%= PersonView.avatar_url(guest) %>" alt="<%= guest.name %> Avatar" />
     <% end %>
   <% end %>
 <% else %>
-  <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: @episode.title, class: "news_item-source-image news_item-source-image--1" do %>
+  <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: @episode.title, class: "news_item-source-image news_item-source-image--1", data: [news: true] do %>
     <img style="background-color: #121921" src="<%= static_url(@conn, "/images/podcasts/#{@episode.podcast.slug}-cover-art.svg") %>" alt="<%= @episode.podcast.name %>" />
   <% end %>
 <% end %>
 
-<%= link EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @episode.podcast.slug), title: @episode.podcast.name %>
+<%= link(EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @episode.podcast.slug), title: @episode.podcast.name) %>

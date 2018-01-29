@@ -71,20 +71,26 @@ u(document).handle("click", ".js-share-popup", function(event) {
   shareWindow.opener = null;
 });
 
-// track outbound clicks
-u(document).on("click", "[rel=external]", function(event) {
-  let type = u(this).closest("[data-news-type]").data("news-type");
-  let id = u(this).closest("[data-news-id]").data("news-id");
+// track news clicks
+u(document).on("click", "[data-news]", function(event) {
+  let clicked = u(this);
+  let type = clicked.closest("[data-news-type]").data("news-type");
+  let id = clicked.closest("[data-news-id]").data("news-id");
 
   if (id) {
     event.preventDefault();
-    let href = `/${type}/${id}/visit`;
+    let clickedHref = clicked.attr("href");
+    let trackedHref = `/${type}/${id}/visit`;
 
-    if (player.isActive()) {
-      let newWindow = window.open(href, "_blank");
+    if (isSelfHosted(clickedHref)) {
+      ajax(trackedHref, {method: "GET"}, function() {
+        Turbolinks.visit(clickedHref);
+      });
+    } else if (player.isActive()) {
+      let newWindow = window.open(trackedHref, "_blank");
       newWindow.opener = null;
     } else {
-      window.location = href;
+      window.location = trackedHref;
     }
   }
 });
@@ -93,7 +99,7 @@ u(document).on("click", "[rel=external]", function(event) {
 u(document).on("click", "a[href^=http]", function(event) {
   if (player.isActive()) {
     let href = u(this).attr("href");
-    if (!href.match(location.hostname)) {
+    if (!isSelfHosted(href)) {
       event.preventDefault();
       let newWindow = window.open(href, "_blank");
       newWindow.opener = null;
@@ -179,6 +185,10 @@ function formatTimes() {
     span.attr("title", ts(date, "timeFirst"));
     span.removeClass("time");
   });
+}
+
+function isSelfHosted(href) {
+  return href.match(location.hostname) || href[0] == "/";
 }
 
 function impress() {

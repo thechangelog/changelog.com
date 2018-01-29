@@ -31,13 +31,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def current_path(conn), do: Controller.current_path(conn)
   def current_path(conn, params), do: Controller.current_path(conn, params)
 
-  def dev_relative(url) do
-    if Mix.env == :dev do
-      URI.parse(url).path
-    else
-      url
-    end
-  end
+  def dev_relative(url), do: if Mix.env == :dev, do: URI.parse(url).path, else: url
 
   def domain_name(url) do
     uri = URI.parse(url)
