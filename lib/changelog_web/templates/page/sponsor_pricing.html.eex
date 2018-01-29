@@ -1,7 +1,7 @@
 <article class="article">
   <div class="richtext">
     <h1>Sponsorship Pricing</h1>
-    <p><strong><mark class="grey-background">Do you want to tell 100,000+ developers about your product or service?</mark></strong></p>
+    <p>Do you need help reaching hundreds of thousands of developers about your product?</p>
 
     <p><a href="mailto:adam@changelog.com">Email adam@changelog.com</a> or call <a href="tel:1-888-974-2454">888-974-CHLG (2454)</a> to get started.</p>
 
@@ -15,9 +15,7 @@
 
     <p>If you want to reach developers, <em>we can help you</em>.</p>
 
-    <hr>
-
-    <h3><a href="/podcast">The Changelog (Podcast)</a></h3>
+    <h2>The Changelog (Podcast)</h2>
 
     <ul>
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
@@ -32,20 +30,138 @@
       <li>Your link will be included in the show notes delivered to podcast clients and the RSS feed</li>
     </ul>
 
-    <h3><%= link "Changelog News (Web + Newsletter)", to: "/", title: "Go $home" %></h3>
+    <h5>Availability</h5>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Pre-roll</th>
+          <th>Mid-roll</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Feb 2</td>
+        <td>sold out</td>
+        <td>sold out</td>
+      </tr>
+      <tr>
+        <td>Feb 9</td>
+        <td>sold out</td>
+        <td>sold out</td>
+      </tr>
+      <tr>
+        <td>Feb 16</td>
+        <td>sold out</td>
+        <td>sold out</td>
+      </tr>
+        <tr>
+          <td>Feb 23</td>
+          <td>sold out</td>
+          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog, February 23&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
+        </tr>
+        <tr>
+          <td>Mar 2</td>
+          <td>sold out</td>
+          <td>sold out</td>
+        </tr>
+        <tr>
+          <td>Mar 9</td>
+          <td>sold out</td>
+          <td>sold out</td>
+        </tr>
+        <tr>
+          <td>Mar 16</td>
+          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog,  March 16&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
+          <td>sold out</td>
+        </tr>
+        <tr>
+          <td>Mar 23</td>
+          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog,  March 23&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
+          <td>sold out</td>
+        </tr>
+        <tr>
+          <td>Mar 30</td>
+          <td>sold out</td>
+          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog,  March 30&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">2 available</a></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">
+            <p>To schedule further into the future <a href="mailto:adam@changelog.com">email adam@changelog.com</a> or call <a href="tel:1-888-974-2454">888-974-CHLG (2454)</a>.</p>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <h2>Changelog News (Web + Newsletter)</h2>
 
     <ul>
       <li><mark>$500 per week with a four (4) week minimum</mark></li>
       <li>Sponsored stories are promoted on the web and in our weekly newsletter, and run the week of to the weekend (Monday-Sunday)</li>
-      <li>Web - Estimated 20,000 impressions, with an average of 400-800 clicks</li>
-      <li>Newsletter - Estimated 6,800 impressions, with an average of 70-400 clicks</li>
+      <li>Web - Estimated 1,500 impressions, with an average of 10-20 clicks</li>
+      <li>Newsletter - Estimated 7,500 impressions, with an average of 80-300 clicks</li>
       <li>Very high engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
       <li>Sponsored stories include a linked heading, 2-3 lines of supporting text with links, pullquotes, etc.</li>
       <li>We take a native content approach to sponsored stories. Most organizations treat their blog, courses, ebooks, webinars, and other related content as their inbound funnel. We leverage that to share your content with our community and let your marketing funnel do what it was designed to do &mdash; build trust and convert!</li>
       <li>We handle all the writing for you. We will work closely with you to determine what content to promote and we take it from there.</li>
     </ul>
 
-    <h3><a href="/gotime">Go Time</a></h3>
+    <h5>Availability</h5>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Sponsored Story</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Feb 5 - Feb 11</td>
+        <td>sold out</td>
+      </tr>
+      <tr>
+        <td>Feb 12 - Feb 18</td>
+        <td>sold out</td>
+      </tr>
+      <tr>
+        <td>Feb 19 - Feb 25</td>
+        <td>sold out</td>
+      </tr>
+        <tr>
+          <td>Feb 26 - Mar 4</td>
+          <td>sold out</td>
+        </tr>
+        <tr>
+          <td>Mar 5 - Mar 11</td>
+          <td>sold out</td>
+        </tr>
+        <tr>
+          <td>Mar 12 - Mar 18</td>
+          <td>sold out</td>
+        </tr>
+        <tr>
+          <td>Mar 19 - Mar 25</td>
+          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: Changelog News, March 19 - March 25&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
+        </tr>
+        <tr>
+          <td>Mar 26 - Apr 1</td>
+          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: Changelog News, March 26 - April 1&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">
+            <p>To schedule further into the future <a href="mailto:adam@changelog.com">email adam@changelog.com</a> or call <a href="tel:1-888-974-2454">888-974-CHLG (2454)</a>.</p>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <h2>Go Time</h2>
 
     <ul>
       <li>Each episode includes two (2) live read mid-roll sponsorships</li>
@@ -60,7 +176,7 @@
       <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
     </ul>
 
-    <h3><a href="/rfc">Request For Commits</a></h3>
+    <h2>Request For Commits</h2>
 
     <ul>
       <li>Each episode includes two (2) mid-roll sponsorships</li>
@@ -72,7 +188,7 @@
       <li>Link will be included in the show notes delivered to podcast clients and the RSS feed</li>
     </ul>
 
-    <h3><a href="/jsparty">JS Party</a></h3>
+    <h2>JS Party</h3>
 
     <ul>
       <li>Each episode includes two (2) mid-roll sponsorships</li>
@@ -88,7 +204,7 @@
 
     <hr>
 
-    <h3>Conference Sponsorship</h3>
+    <h2>Conference Sponsorship</h2>
 
     <p>We love working with conferences! We have several options on how we support and partner with conference organizers.</p>
 

@@ -5,7 +5,7 @@
       <h1>Your partner in reaching developers</h1>
       <p>100,000 monthly pageviews&nbsp;&nbsp;•&nbsp;&nbsp;225,000 monthly podcast listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> email subscribers</p>
 
-      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), title: "", class: "marketing-button button_large" %>
+      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), class: "marketing-button button_large" %>
       <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
     </header>
   </section>
@@ -19,7 +19,7 @@
     <div class="marketing-section-grid">
       <div class="marketing-section-grid-item">
         <h3>Large engaged audience</h3>
-        <p>Our news and podcasts reach a global audience of more than 100,000 developers each month. Trust us to help you put your brand in front of your target audience. We're built by developers for&nbsp;developers.</p>
+        <p>Our news and podcasts reach a global audience of hundreds of thousands developers each month. Trust us to help you put your brand in front of your target audience. We're built by developers for&nbsp;developers.</p>
       </div>
       <div class="marketing-section-grid-item">
         <h3>Invested partnership</h3>
@@ -31,7 +31,7 @@
       </div>
       <div class="marketing-section-grid-item">
         <h3>Loyal trusted community</h3>
-        <p>We're not just a podcast, or news site, we're a community. Everything we do is catered to developers to create an environment they love and trust. We have strict guidelines for the ads we accept on our site. Our ads are tasteful, non-intrusive, and meet the needs of our community members. Developers trust&nbsp;us.</p>
+        <p>We're not just a podcast or a news site &mdash; we're a community. Everything we do is focused on creating an environment developers love and trust. We have strict guidelines for the ads we accept on our site. Our ads are tasteful, non-intrusive, and meet the needs of our community members. Developers trust&nbsp;us.</p>
       </div>
     </div>
 

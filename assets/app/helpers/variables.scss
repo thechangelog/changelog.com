@@ -57,6 +57,14 @@ $display-fallback: 'Arial Narrow', sans-serif;
 $display: 'DIN 2014 Narrow', $display-fallback;
 $code: 'Roboto Mono', Courier, monospace;
 
+// Roboto Mono - Weight Key
+// --
+// thin > 100
+// light > 300
+// regular > 400
+// medium > 500
+// bold > 700
+
 // Links
 $base-link-color: $green;
 $base-hover-color: darken($green, 10%);
