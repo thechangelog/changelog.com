@@ -65,8 +65,8 @@ defmodule ChangelogWeb.NewsItemController do
     item = item_from_hashid(hashid)
     NewsItem.track_click(item)
 
-    if item.object_id do
-      redirect(conn, to: dev_relative(item.url))
+    if Mix.env == :dev && item.object_id do
+      redirect(conn, to: URI.parse(item.url).path)
     else
       redirect(conn, external: item.url)
     end
@@ -81,11 +81,6 @@ defmodule ChangelogWeb.NewsItemController do
 
     render(conn, :show, item: item)
   end
-
-  defp dev_relative(url) do
-    if Mix.env == :dev, do: URI.parse(url).path, else: url
-  end
-
 
   defp item_from_hashid(hashid) do
     NewsItem.published
