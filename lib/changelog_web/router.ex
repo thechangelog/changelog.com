@@ -9,13 +9,18 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :browser do
-    plug :accepts, ["html", "xml"]
+    plug :accepts, ["html"]
     plug :fetch_session
     plug Plug.Turbolinks
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Plug.Auth, repo: Changelog.Repo
+    plug PlugEtsCache.Plug
+  end
+
+  pipeline :feed do
+    plug :accepts, ["xml"]
     plug PlugEtsCache.Plug
   end
 
@@ -93,14 +98,17 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/", ChangelogWeb do
-    pipe_through [:browser, :public]
+    pipe_through [:feed]
 
-    #feeds
     get "/feed", FeedController, :news
     get "/feed/titles", FeedController, :news_titles
     get "/posts/feed", FeedController, :posts
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
+  end
+
+  scope "/", ChangelogWeb do
+    pipe_through [:browser, :public]
 
     # people and auth
     get "/join", PersonController, :join, as: :person
