@@ -38,9 +38,8 @@ defmodule ChangelogWeb.AuthController do
 
   def delete(conn, _params) do
     conn
-      |> configure_session(drop: true)
-      |> delete_resp_cookie("_changelog_user")
-      |> redirect(to: root_path(conn, :index))
+    |> delete_resp_cookie("_changelog_user")
+    |> redirect(to: root_path(conn, :index))
   end
 
   def callback(conn = %{assigns: %{ueberauth_auth: auth}}, _params) do
