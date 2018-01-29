@@ -26,6 +26,12 @@ defmodule ChangelogWeb.HomeControllerTest do
     assert redirected_to(conn) == home_path(conn, :show)
   end
 
+  @tag :as_inserted_user
+  test "does not update with invalid attributes", %{conn: conn} do
+    conn = put(conn, home_path(conn, :update), from: "profile", person: %{name: ""})
+    assert html_response(conn, 200) =~ ~r/problem/
+  end
+
   test "requires user on all actions", %{conn: conn} do
     Enum.each([
       get(conn, home_path(conn, :show)),
