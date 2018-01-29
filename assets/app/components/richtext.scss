@@ -25,7 +25,7 @@
   }
   h2 {
     font-size: 1.625em;
-    margin-top: 3em;
+    margin-top:  2em;
     @include breakpoint(tiny) { font-size: 1.75em; }
     @include breakpoint(tablet) { font-size: 2em; }
   }
