@@ -22,7 +22,7 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.unpinned
       |> NewsItem.newest_first
       |> NewsItem.preload_all
-      |> Repo.paginate(Map.put(params, :page_size, 15))
+      |> Repo.paginate(Map.put(params, :page_size, 20))
 
     ads =
       Timex.today

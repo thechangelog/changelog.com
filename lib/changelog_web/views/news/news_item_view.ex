@@ -18,15 +18,9 @@ defmodule ChangelogWeb.NewsItemView do
   def items_with_ads(items, []), do: items
   def items_with_ads(items, ads) do
     items
-    |> Enum.chunk_every(4)
-    |> Enum.with_index
-    |> Enum.map(fn{items, index} ->
-      case Enum.at(ads, index) do
-        nil -> items
-        ad -> items ++ [ad]
-      end
-    end)
-    |> List.flatten
+    |> List.insert_at(3, Enum.at(ads, 0))
+    |> List.insert_at(9, Enum.at(ads, 1))
+    |> Enum.reject(&is_nil/1)
   end
 
   def permalink_path(conn, item) do
