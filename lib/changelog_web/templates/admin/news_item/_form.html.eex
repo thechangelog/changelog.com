@@ -10,15 +10,15 @@
     </div>
 
     <div class="field <%= error_class(f, :source_id) %>">
-      <%= label(f, :source_id, "Source") %>
+      <%= label_with_clear(:source_id, "Source") %>
       <div class="ui fluid remote source search selection dropdown">
-        <%= hidden_input(f, :source_id) %>
-        <i class="remove icon"></i>
         <i class="dropdown icon"></i>
         <% source = load_from_form(f, NewsSource, :source) %>
         <%= if source do %>
+          <%= hidden_input(f, :source_id, value: source.id) %>
           <div class="selected text"><%= source.name %></div>
         <% else %>
+          <%= hidden_input(f, :source_id) %>
           <div class="default text">Select Source</div>
         <% end %>
       </div>
@@ -26,15 +26,15 @@
     </div>
 
     <div class="field <%= error_class(f, :author_id) %>">
-      <%= label(f, :author_id, "Author") %>
+      <%= label_with_clear(:author_id, "Author") %>
       <div class="ui fluid remote author search selection dropdown">
-        <%= hidden_input(f, :author_id) %>
-        <i class="remove icon"></i>
         <i class="dropdown icon"></i>
         <% author = load_from_form(f, Person, :author) %>
         <%= if author do %>
+          <%= hidden_input(f, :author_id, value: author.id) %>
           <div class="selected text"><%= author.name %></div>
         <% else %>
+          <%= hidden_input(f, :author_id) %>
           <div class="default text">Select Author</div>
         <% end %>
       </div>
@@ -106,12 +106,13 @@
   <div class="field required <%= error_class(f, :logger_id) %>">
     <%= label(f, :logger_id, "Logged By") %>
     <div class="ui fluid remote logger search selection dropdown">
-      <%= hidden_input(f, :logger_id) %>
       <i class="dropdown icon"></i>
       <% logger = load_from_form(f, Person, :logger) %>
       <%= if logger do %>
+        <%= hidden_input(f, :logger_id, value: logger.id) %>
         <div class="selected text"><%= logger.name %></div>
       <% else %>
+        <%= hidden_input(f, :logger_id) %>
         <div class="default text">Select Changelogger</div>
       <% end %>
     </div>

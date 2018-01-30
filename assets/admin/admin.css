@@ -6,21 +6,8 @@
   margin-bottom: 1em;
 }
 
-.ui.dropdown .remove.icon {
-  font-size: 0.857143em;
-  margin:0;
-  padding:0;
-  right: 2em;
-  top: auto;
-  position: absolute;
-  opacity: 0.5;
-  z-index: 3;
-}
-
-.ui.dropdown input[value=''] ~ .remove.icon,
-.ui.dropdown input:not([value]) ~ .remove.icon,
-.ui.dropdown.loading .remove.icon {
-  display: none;
+.field .clear {
+  float: right;
 }
 
 .emphasis {

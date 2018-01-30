@@ -15,6 +15,7 @@ export default class BelongsToWidget {
     }
 
     let $container = $(`.remote.search.dropdown.${relationType}`);
+    let $field = $container.closest(".field");
 
     $container.dropdown({
       fields: {name: "title", value: "id"},
@@ -28,9 +29,10 @@ export default class BelongsToWidget {
       }
     });
 
-    $container.on("click", ".remove.icon", function(e) {
+    $field.on("click", ".clear", function(event) {
+      event.preventDefault();
       $container.dropdown("clear");
-      e.stopPropagation();
+      $container.dropdown("hide");
     });
   }
 }

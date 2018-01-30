@@ -53,6 +53,12 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   def is_loaded(%Ecto.Association.NotLoaded{}), do: false
   def is_loaded(_association), do: true
 
+  def label_with_clear(attr, text) do
+    content_tag :label, for: attr do
+      [content_tag(:span, text),
+       content_tag(:a, "(clear)", href: "javascript:void(0);", class: "clear")]
+    end
+  end
   # Attempts to load an associated record on a form. Starts with direct
   # relationship on form data, then tries querying Repo.
   def load_from_form(form, module, relationship) do
