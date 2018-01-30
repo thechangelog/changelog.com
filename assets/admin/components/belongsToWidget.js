@@ -7,7 +7,10 @@ export default class BelongsToWidget {
           break;
         case "news_source":
           return "<a href='/admin/news/sources/new' target='_blank'>Add a Source</a>";
-          break
+          break;
+        case "sponsor":
+          return "<a href='/admin/sponsors/new' target='_blank'>Add a Sponsor</a>";
+          break;
       }
     }
 
