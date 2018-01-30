@@ -33,7 +33,7 @@
     <div class="ui basic icon button js-add-weeks"><i class="add icon"></i></div>
   </div>
 
-  <div class="field js-week-picker"></div>
+  <div class="field js-week-picker ui calendar"></div>
 
   <div class="field required">
     <%= label(f, :ads, "Ads") %>
