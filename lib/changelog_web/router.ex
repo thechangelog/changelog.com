@@ -9,12 +9,18 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :browser do
-    plug :accepts, ["html", "xml"]
+    plug :accepts, ["html"]
     plug :fetch_session
+    plug Plug.Turbolinks
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Plug.Auth, repo: Changelog.Repo
+    plug PlugEtsCache.Plug
+  end
+
+  pipeline :feed do
+    plug :accepts, ["xml"]
     plug PlugEtsCache.Plug
   end
 
@@ -30,7 +36,6 @@ defmodule ChangelogWeb.Router do
 
   pipeline :public do
     plug Plug.LoadPodcasts
-    plug Plug.Turbolinks
   end
 
   scope "/auth", ChangelogWeb do
@@ -93,14 +98,17 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/", ChangelogWeb do
-    pipe_through [:browser, :public]
+    pipe_through [:feed]
 
-    #feeds
     get "/feed", FeedController, :news
     get "/feed/titles", FeedController, :news_titles
     get "/posts/feed", FeedController, :posts
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
+  end
+
+  scope "/", ChangelogWeb do
+    pipe_through [:browser, :public]
 
     # people and auth
     get "/join", PersonController, :join, as: :person
@@ -190,6 +198,7 @@ defmodule ChangelogWeb.Router do
   defp handle_errors(_conn, %{reason: %Phoenix.Router.NoRouteError{}}), do: true
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
     headers = Enum.into(conn.req_headers, %{})
+    reason = Map.delete(reason, :assigns)
 
     Rollbax.report(kind, reason, stacktrace, %{}, %{
       "request" => %{

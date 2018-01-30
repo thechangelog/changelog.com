@@ -1,0 +1,5 @@
+<%= link(sponsor_and_campaign_name(@sponsorship), to: admin_news_sponsorship_path(Endpoint, :show, @sponsorship)) %>
+&nbsp;
+<%= link to: admin_news_sponsorship_path(Endpoint, :edit, @sponsorship) do %>
+  <i class="edit icon"></i>
+<% end %>

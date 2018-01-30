@@ -80,18 +80,22 @@ export default class newsSponsorshipView {
       });
     }
 
+    let isDateDisabled = function(date, mode) {
+      return (mode == "day") && (date.getDay() != 1);
+    }
+
     $picker.calendar({
       type: "date",
       inline: true,
       firstDayOfWeek: 1,
-      isDisabled: function(date, mode) {
-        return (mode == "day") && (date.getDay() != 1);
-      },
-      onChange: function(date, text) {
-        let value = dateAsValue(date);
-        weeks.push(value);
-        weeks = [...new Set(weeks)]; // uniquify
-        renderLabels();
+      isDisabled: isDateDisabled,
+      onChange: function(date, text, mode) {
+        if (!isDateDisabled(date, mode)) {
+          let value = dateAsValue(date);
+          weeks.push(value);
+          weeks = [...new Set(weeks)]; // uniquify
+          renderLabels();
+        }
       }
     });
 

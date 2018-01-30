@@ -7,11 +7,15 @@ export default class BelongsToWidget {
           break;
         case "news_source":
           return "<a href='/admin/news/sources/new' target='_blank'>Add a Source</a>";
-          break
+          break;
+        case "sponsor":
+          return "<a href='/admin/sponsors/new' target='_blank'>Add a Sponsor</a>";
+          break;
       }
     }
 
     let $container = $(`.remote.search.dropdown.${relationType}`);
+    let $field = $container.closest(".field");
 
     $container.dropdown({
       fields: {name: "title", value: "id"},
@@ -25,9 +29,10 @@ export default class BelongsToWidget {
       }
     });
 
-    $container.on("click", ".remove.icon", function(e) {
+    $field.on("click", ".clear", function(event) {
+      event.preventDefault();
       $container.dropdown("clear");
-      e.stopPropagation();
+      $container.dropdown("hide");
     });
   }
 }

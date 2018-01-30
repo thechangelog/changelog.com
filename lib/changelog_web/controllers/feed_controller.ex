@@ -70,6 +70,12 @@ defmodule ChangelogWeb.FeedController do
       |> Repo.all
       |> Episode.preload_podcast
 
+    podcasts =
+      Podcast.public
+      |> Podcast.oldest_first
+      |> Repo.all
+      |> Podcast.preload_hosts
+
     posts =
       Post.published
       |> Post.newest_first
@@ -81,7 +87,7 @@ defmodule ChangelogWeb.FeedController do
 
     conn
     |> put_layout(false)
-    |> render("sitemap.xml", news_items: news_items, news_sources: news_sources, episodes: episodes, posts: posts, topics: topics)
+    |> render("sitemap.xml", news_items: news_items, news_sources: news_sources, episodes: episodes, podcasts: podcasts, posts: posts, topics: topics)
     |> cache_response
   end
 

@@ -18,19 +18,17 @@ defmodule ChangelogWeb.NewsItemView do
   def items_with_ads(items, []), do: items
   def items_with_ads(items, ads) do
     items
-    |> Enum.chunk_every(4)
-    |> Enum.with_index
-    |> Enum.map(fn{items, index} ->
-      case Enum.at(ads, index) do
-        nil -> items
-        ad -> items ++ [ad]
-      end
-    end)
-    |> List.flatten
+    |> List.insert_at(3, Enum.at(ads, 0))
+    |> List.insert_at(9, Enum.at(ads, 1))
+    |> Enum.reject(&is_nil/1)
   end
 
   def permalink_path(conn, item) do
     if item.object_id, do: dev_relative(item.url), else: news_item_path(conn, :show, slug(item))
+  end
+
+  def permalink_data(item) do
+    if item.object_id, do: [news: true], else: []
   end
 
   def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_item_summary.html", Map.merge(assigns, %{item: item, style: "relative"}))

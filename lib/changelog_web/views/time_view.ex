@@ -83,6 +83,14 @@ defmodule ChangelogWeb.TimeView do
     Timex.Interval.new(from: Timex.beginning_of_week(start_date), until: [weeks: count], step: [weeks: 1])
   end
 
+  def week_start_end(date) do
+    start_date = Timex.beginning_of_week(date)
+    end_date = Timex.end_of_week(date)
+    {:ok, pretty_start} = Timex.format(start_date, "{Mshort} {D}")
+    {:ok, pretty_end} = Timex.format(end_date, "{Mshort} {D}")
+    "#{pretty_start} - #{pretty_end}"
+  end
+
   defp to_seconds(:hours, str), do: string_to_rounded_integer(str) * 3600
   defp to_seconds(:minutes, str), do: string_to_rounded_integer(str) * 60
   defp to_seconds(str), do: string_to_rounded_integer(str)

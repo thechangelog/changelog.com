@@ -25,6 +25,7 @@ defmodule Changelog.NewsSponsorship do
     |> cast(attrs, ~w(name weeks sponsor_id))
     |> validate_required([:weeks, :sponsor_id])
     |> validate_length(:weeks, min: 1)
+    |> validate_beginning_of_weeks
     |> foreign_key_constraint(:sponsor_id)
     |> cast_assoc(:ads)
   end
@@ -69,4 +70,15 @@ defmodule Changelog.NewsSponsorship do
 
   defp ad_with_sponsor_loaded(nil, _sponsorship), do: nil
   defp ad_with_sponsor_loaded(ad, sponsorship), do: Map.put(ad, :sponsor, sponsorship.sponsor)
+
+  defp validate_beginning_of_weeks(changeset) do
+    weeks = get_field(changeset, :weeks) || []
+    invalid = Enum.find(weeks, fn(week) -> Timex.beginning_of_week(week) != week end)
+
+    if invalid do
+      add_error(changeset, :weeks, "#{invalid} is not a Monday")
+    else
+      changeset
+    end
+  end
 end

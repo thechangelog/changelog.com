@@ -15,7 +15,7 @@
   <%= for week <- @weeks do %>
     <% sponsorships = sponsorships_for_week(week) %>
     <tr class="<%= schedule_row_class(this_week, week) %>">
-      <td><%= TimeView.pretty_date(week) %></td>
+      <td><%= TimeView.week_start_end(week) %></td>
 
       <% sponsorship = Enum.at(sponsorships, 0, nil) %>
       <td class="<%= schedule_cell_class(this_week, week, sponsorship) %>">

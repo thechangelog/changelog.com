@@ -13,8 +13,12 @@ defmodule ChangelogWeb.TopicView do
 
   def icon_url(topic), do: icon_url(topic, :small)
   def icon_url(topic, version) do
-    Icon.url({topic.icon, topic}, version)
-    |> String.replace_leading("/priv", "")
+    if (topic.icon) do
+      Icon.url({topic.icon, topic}, version)
+      |> String.replace_leading("/priv", "")
+    else
+      "/images/icons/avatar-topic.svg"
+    end
   end
 
   def news_count(topic), do: Topic.news_count(topic)

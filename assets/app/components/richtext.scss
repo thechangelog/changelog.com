@@ -70,14 +70,16 @@
     font-size: 1em;
     @include breakpoint(tiny) { font-size: 1.125em; }
     @include breakpoint(tablet) { font-size: 1.25em; }
+  }
 
-    // If a <code> tag is within a <p> tag show it as a snippet
+  p, li {
+    // If a <code> tag is within a <p> or <li> tag show it as a snippet
     code {
       background: rgba($black, .06);
-      // border: 1px solid rgba($black, .1);
       color: $black;
       display: inline-block;
-      font-size: 14px;
+      font-family: $code;
+      font-size: 13px;
       line-height: 1;
       padding: .35em .5em;
     }
