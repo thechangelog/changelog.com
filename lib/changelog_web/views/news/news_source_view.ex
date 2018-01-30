@@ -17,7 +17,7 @@ defmodule ChangelogWeb.NewsSourceView do
       Icon.url({news_source.icon, news_source}, version)
       |> String.replace_leading("/priv", "")
     else
-      "/images/icons/type-topic.svg"
+      "/images/icons/avatar-source.svg"
     end
   end
 

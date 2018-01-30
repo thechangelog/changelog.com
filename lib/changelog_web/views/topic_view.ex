@@ -17,7 +17,7 @@ defmodule ChangelogWeb.TopicView do
       Icon.url({topic.icon, topic}, version)
       |> String.replace_leading("/priv", "")
     else
-      "/images/icons/type-topic.svg"
+      "/images/icons/avatar-topic.svg"
     end
   end
 
