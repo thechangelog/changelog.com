@@ -51,19 +51,21 @@ defmodule ChangelogWeb.NewsItemController do
     end
   end
 
-  def impress(conn, %{"items" => hashids}) do
-    hashids
-    |> String.split(",")
-    |> Enum.each(fn(hashid) ->
-      hashid |> item_from_hashid |> NewsItem.track_impression
-    end)
+  def impress(conn = %{assigns: %{current_user: user}}, %{"items" => hashids}) do
+    unless is_admin?(user) do
+      hashids
+      |> String.split(",")
+      |> Enum.each(fn(hashid) ->
+        hashid |> item_from_hashid |> NewsItem.track_impression
+      end)
+    end
 
     send_resp(conn, 200, "")
   end
 
-  def visit(conn, %{"id" => hashid}) do
+  def visit(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
     item = item_from_hashid(hashid)
-    NewsItem.track_click(item)
+    unless is_admin?(user), do: NewsItem.track_click(item)
 
     if Mix.env == :dev && item.object_id do
       redirect(conn, to: URI.parse(item.url).path)

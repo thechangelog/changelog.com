@@ -15,19 +15,21 @@ defmodule ChangelogWeb.NewsAdController do
     end
   end
 
-  def impress(conn, %{"ads" => hashids}) do
-    hashids
-    |> String.split(",")
-    |> Enum.each(fn(hashid) ->
-      hashid |> ad_from_hashid |> NewsAd.track_impression
-    end)
+  def impress(conn = %{assigns: %{current_user: user}}, %{"ads" => hashids}) do
+    unless is_admin?(user) do
+      hashids
+      |> String.split(",")
+      |> Enum.each(fn(hashid) ->
+        hashid |> ad_from_hashid |> NewsAd.track_impression
+      end)
+    end
 
     send_resp(conn, 200, "")
   end
 
-  def visit(conn, %{"id" => hashid}) do
+  def visit(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
     ad = ad_from_hashid(hashid)
-    NewsAd.track_click(ad)
+    unless is_admin?(user), do: NewsAd.track_click(ad)
     redirect(conn, external: ad.url)
   end
 

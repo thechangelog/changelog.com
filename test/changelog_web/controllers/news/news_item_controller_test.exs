@@ -66,6 +66,15 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert item.click_count == 1
   end
 
+  @tag :as_admin
+  test "hitting the visit endpoint as admin does not visit", %{conn: conn} do
+    item = insert(:published_news_item, headline: "You gonna like this")
+    conn = get(conn, news_item_path(conn, :visit, hashid(item)))
+    assert redirected_to(conn) == item.url
+    item = Repo.get(NewsItem, item.id)
+    assert item.click_count == 0
+  end
+
   test "hitting the impress endpoint", %{conn: conn} do
     item1 = insert(:published_news_item, headline: "You gonna like this")
     item2 = insert(:published_news_item, headline: "You gonna like this too")
@@ -75,5 +84,14 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     item2 = Repo.get(NewsItem, item2.id)
     assert item1.impression_count == 1
     assert item2.impression_count == 1
+  end
+
+  @tag :as_admin
+  test "hitting the impress endpoint as admin does not impress", %{conn: conn} do
+    item = insert(:published_news_item, headline: "You gonna like this")
+    conn = post(conn, news_item_path(conn, :impress), items: "#{hashid(item)}")
+    assert conn.status == 200
+    item = Repo.get(NewsItem, item.id)
+    assert item.impression_count == 0
   end
 end
