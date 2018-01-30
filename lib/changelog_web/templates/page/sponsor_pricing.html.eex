@@ -30,72 +30,6 @@
       <li>Your link will be included in the show notes delivered to podcast clients and the RSS feed</li>
     </ul>
 
-    <h5>Availability</h5>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Pre-roll</th>
-          <th>Mid-roll</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Feb 2</td>
-        <td>sold out</td>
-        <td>sold out</td>
-      </tr>
-      <tr>
-        <td>Feb 9</td>
-        <td>sold out</td>
-        <td>sold out</td>
-      </tr>
-      <tr>
-        <td>Feb 16</td>
-        <td>sold out</td>
-        <td>sold out</td>
-      </tr>
-        <tr>
-          <td>Feb 23</td>
-          <td>sold out</td>
-          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog, February 23&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
-        </tr>
-        <tr>
-          <td>Mar 2</td>
-          <td>sold out</td>
-          <td>sold out</td>
-        </tr>
-        <tr>
-          <td>Mar 9</td>
-          <td>sold out</td>
-          <td>sold out</td>
-        </tr>
-        <tr>
-          <td>Mar 16</td>
-          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog,  March 16&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
-          <td>sold out</td>
-        </tr>
-        <tr>
-          <td>Mar 23</td>
-          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog,  March 23&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
-          <td>sold out</td>
-        </tr>
-        <tr>
-          <td>Mar 30</td>
-          <td>sold out</td>
-          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: The Changelog,  March 30&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">2 available</a></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="3">
-            <p>To schedule further into the future email <a href="mailto:adam@changelog.com">adam@changelog.com</a> or call <a href="tel:1-888-974-2454">888-974-CHLG (2454)</a>.</p>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-
     <h2>Changelog News (Web + Newsletter)</h2>
 
     <ul>
@@ -119,38 +53,17 @@
         </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Feb 5 - Feb 11</td>
-        <td>sold out</td>
-      </tr>
-      <tr>
-        <td>Feb 12 - Feb 18</td>
-        <td>sold out</td>
-      </tr>
-      <tr>
-        <td>Feb 19 - Feb 25</td>
-        <td>sold out</td>
-      </tr>
+      <%= for week <- @weeks do %>
         <tr>
-          <td>Feb 26 - Mar 4</td>
-          <td>sold out</td>
+          <td><%= TimeView.week_start_end(week) %></td>
+          <% slots = NewsSponsorship.available_count(week) %>
+          <%= if slots > 0 do %>
+            <td><a href="mailto:adam@changelog.com?subject=Sponsorship: Changelog News, <%= TimeView.week_start_end(week) %>&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum."><%= slots %> available</a></td>
+          <% else %>
+            <td>sold out</td>
+          <% end %>
         </tr>
-        <tr>
-          <td>Mar 5 - Mar 11</td>
-          <td>sold out</td>
-        </tr>
-        <tr>
-          <td>Mar 12 - Mar 18</td>
-          <td>sold out</td>
-        </tr>
-        <tr>
-          <td>Mar 19 - Mar 25</td>
-          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: Changelog News, March 19 - March 25&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
-        </tr>
-        <tr>
-          <td>Mar 26 - Apr 1</td>
-          <td><a href="mailto:adam@changelog.com?subject=Sponsorship: Changelog News, March 26 - April 1&body=Please include your business name, website, and a short description of how we can help you in this email. Thank you! All sponsorships require a four (4) week minimum.">1 available</a></td>
-        </tr>
+      <% end %>
       </tbody>
       <tfoot>
         <tr>

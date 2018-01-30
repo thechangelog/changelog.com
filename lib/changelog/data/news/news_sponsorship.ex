@@ -20,6 +20,9 @@ defmodule Changelog.NewsSponsorship do
     from(s in __MODULE__, where: ^date in s.weeks)
   end
 
+  def available_count(date), do: 4 - booked_count(date)
+  def booked_count(date), do: date |> week_of() |> Repo.count()
+
   def admin_changeset(sponsorship, attrs \\ %{}) do
     sponsorship
     |> cast(attrs, ~w(name weeks sponsor_id))

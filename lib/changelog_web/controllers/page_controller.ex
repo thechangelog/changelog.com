@@ -2,6 +2,7 @@ defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, Newsletters, Podcast}
+  alias ChangelogWeb.TimeView
 
   plug RequireGuest, "before joining" when action in [:join]
 
@@ -9,13 +10,13 @@ defmodule ChangelogWeb.PageController do
   # all others simply render the template of the same name
   def action(conn, _) do
     case action_name(conn) do
-      :guest          -> guest(conn, Map.get(conn.params, "slug"))
-      :home           -> home(conn, conn.params)
-      :sponsor        -> sponsor(conn, conn.params)
+      :guest           -> guest(conn, Map.get(conn.params, "slug"))
+      :home            -> home(conn, conn.params)
+      :sponsor         -> sponsor(conn, conn.params)
       :sponsor_pricing -> sponsor_pricing(conn, conn.params)
-      :weekly         -> weekly(conn, conn.params)
-      :weekly_archive -> weekly_archive(conn, conn.params)
-      name            -> render(conn, name)
+      :weekly          -> weekly(conn, conn.params)
+      :weekly_archive  -> weekly_archive(conn, conn.params)
+      name             -> render(conn, name)
     end
   end
 
@@ -54,8 +55,8 @@ defmodule ChangelogWeb.PageController do
 
   def sponsor_pricing(conn, _params) do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
-
-    render(conn, :sponsor_pricing, weekly: weekly)
+    weeks = Timex.today |> TimeView.closest_monday_to() |> TimeView.weeks(12)
+    render(conn, :sponsor_pricing, weekly: weekly, weeks: weeks)
   end
 
   def weekly(conn, _params) do
