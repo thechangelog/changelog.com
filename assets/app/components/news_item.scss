@@ -272,8 +272,7 @@
     margin-top: 30px;
 
     &.richtext {
-      blockquote,
-      p {
+      blockquote, p, li {
         font-size: 1em;
       }
     }
