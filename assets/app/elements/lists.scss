@@ -9,7 +9,7 @@
   li {
     font-size: 1em;
     line-height: 1.5em;
-    margin-bottom: .375em;
+    margin-bottom: .75em;
     @include breakpoint(mobile) { font-size: 1.125em; }
 
     p {

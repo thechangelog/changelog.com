@@ -124,8 +124,7 @@
     ul,
     ol {
       li {
-        font-size: .9375em;
-        @include breakpoint(mobile) { font-size: 1; }
+        font-size: 1em;
       }
     }
   }
