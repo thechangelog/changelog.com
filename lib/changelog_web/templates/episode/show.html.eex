@@ -128,7 +128,7 @@
                 <p class="transcript-item-speaker-name">Changelog</p>
               </div>
               <div class="transcript-item-text">
-                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
+                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome. 💚</p>
               </div>
             </div>
             <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
@@ -156,7 +156,7 @@
                 <p class="transcript-item-speaker-name">Changelog</p>
               </div>
               <div class="transcript-item-text">
-                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome.</p>
+                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome. 💚</p>
               </div>
             </div>
           </div>
