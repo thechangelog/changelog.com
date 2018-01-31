@@ -104,10 +104,10 @@
         }
 
         h3 {
-          font-size: 0.75em;
+          font-family: $code;
+          font-size: 13px;
           font-weight: normal;
-          letter-spacing: 0.0625em;
-          margin: 0 0 2em;
+          margin: 0 0 2.5em;
           text-transform: uppercase;
         }
 
@@ -146,6 +146,8 @@
           justify-content: center;
           text-align: center;
 
+          a:hover { text-decoration: underline; }
+
           li {
             padding: 0 4px;
 
@@ -161,6 +163,9 @@
             }
 
             &:last-child { padding-right: 0; }
+
+            // hide last li if empty, which means and admin isn't logged in
+            &:last-child:empty { display: none; }
           }
         }
 

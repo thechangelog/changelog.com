@@ -58,7 +58,7 @@
       </div>
 
       <ul class="episode-body-summary-meta">
-        <li>Runtime <%= TimeView.rounded_minutes(@episode.duration) %> Min</li>
+        <li>Runtime <%= TimeView.rounded_minutes(@episode.duration) %> minutes</li>
         <li><time datetime="<%= @episode.published_at %>">Published <%= TimeView.pretty_date(@episode.published_at) %></time></li>
         <li><a href="<%= audio_url(@episode) %>" download>Download MP3 (<%= megabytes(@episode) %>MB)</a></li>
         <li><%= admin_edit_link(@conn, @current_user, @episode) %></li>
