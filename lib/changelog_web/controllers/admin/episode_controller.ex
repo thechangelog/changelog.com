@@ -138,6 +138,19 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     end
   end
 
+  def delete(conn, %{"id" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.unpublished
+      |> Repo.get_by!(slug: slug)
+
+    Repo.delete!(episode)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
+  end
+
   def publish(conn, params = %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)

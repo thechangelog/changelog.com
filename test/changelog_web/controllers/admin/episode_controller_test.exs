@@ -96,6 +96,27 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
+  test "deletes a draft episode and redirects", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:episode, podcast: p)
+
+    conn = delete conn, admin_podcast_episode_path(conn, :delete, p.slug, e.slug)
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode) == 0
+  end
+
+  @tag :as_admin
+  test "doesn't delete a published episode", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:published_episode, podcast: p)
+
+    assert_raise Ecto.NoResultsError, fn ->
+      delete(conn, admin_podcast_episode_path(conn, :delete, p.slug, e.slug))
+    end
+  end
+
+  @tag :as_admin
   test "publishes an episode", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p)
