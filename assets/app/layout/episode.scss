@@ -188,11 +188,11 @@
       &-heading {
         font-family: $code;
         font-size: 0.9375em;
-        font-weight: 400;
+        font-weight: 700;
         margin-bottom: 2em;
 
         span {
-          border-bottom: 1px solid $black;
+          border-bottom: 3px solid $light-grey;
           padding: 0 0 0.25em;
         }
       }
