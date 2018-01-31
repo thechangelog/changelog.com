@@ -1,6 +1,6 @@
-<div class="list-item">
-  <h5 class="list-item__sponsored">Sponsored</h5>
-  <h2 class="list-item__title"><%= link(@ad.headline, to: @ad.url) %></h2>
+<div class="list_item">
+  <p class="list_item-source">Sponsored</p>
+  <h2 class="list_item-title"><%= link(@ad.headline, to: @ad.url) %></h2>
   <%= @ad.story |> md_to_html |> raw %>
 <%= if @ad.image do %>
   <p>

@@ -1,11 +1,14 @@
-<div class="list-item">
-  <h2 class="list-item__title"><%= link(@item.headline, to: @item.url) %></h2>
+<div class="list_item">
+  <%# TODO: Add ability to use render_item_source(@conn, @item) %>
+  <p class="list_item-source">Item Source</p>
+  <h2 class="list_item-title"><%= link(@item.headline, to: @item.url) %></h2>
   <%= @item.story |> md_to_html |> raw %>
-<%= if @item.image do %>
-  <p>
-    <%= link to: @item.url do %>
-      <img src="<%= NewsItemView.image_url(@item, :large) %>" alt="<%= @item.headline %>">
-    <% end %>
-  </p>
-<% end %>
+  <p class="list_item-meta">logged by @adam • #linux #dotnet #ios</p>
+  <%= if @item.image do %>
+    <p>
+      <%= link to: @item.url do %>
+        <img src="<%= NewsItemView.image_url(@item, :large) %>" alt="<%= @item.headline %>">
+      <% end %>
+    </p>
+  <% end %>
 </div>

@@ -1,9 +1,9 @@
-<div class="list-item">
+<div class="list_item">
 <%= if @item.object do %>
-  <h5 class="list-item__sponsored"><%= EpisodeView.podcast_name_and_number(@item.object) %></h5>
+  <h5 class="list_item-source"><%= EpisodeView.podcast_name_and_number(@item.object) %></h5>
 <% end %>
 
-  <h2 class="list-item__title"><%= link(@item.headline, to: @item.url) %></h2>
+  <h2 class="list_item-title"><%= link(@item.headline, to: @item.url) %></h2>
   <%= @item.story |> md_to_html |> raw %>
 
 <%= if @item.image do %>
