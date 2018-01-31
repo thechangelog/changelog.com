@@ -29,7 +29,8 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
     author = insert(:person)
     conn = post(conn, admin_post_path(conn, :create), post: %{@valid_attrs | author_id: author.id})
 
-    assert redirected_to(conn) == admin_post_path(conn, :index)
+    created = Repo.one(Post.limit(1))
+    assert redirected_to(conn) == admin_post_path(conn, :edit, created)
     assert count(Post) == 1
   end
 

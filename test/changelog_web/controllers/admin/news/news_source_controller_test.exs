@@ -26,7 +26,8 @@ defmodule ChangelogWeb.Admin.NewsSourceControllerTest do
   test "creates news source and redirects", %{conn: conn} do
     conn = post(conn, admin_news_source_path(conn, :create), news_source: @valid_attrs)
 
-    assert redirected_to(conn) == admin_news_source_path(conn, :index)
+    created = Repo.one(NewsSource.limit(1))
+    assert redirected_to(conn) == admin_news_source_path(conn, :edit, created)
     assert count(NewsSource) == 1
   end
 

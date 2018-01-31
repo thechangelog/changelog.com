@@ -69,13 +69,9 @@ defmodule ChangelogWeb.Admin.NewsItemController do
         Repo.update(NewsItem.file_changeset(item, item_params))
         handle_status_changes(item, params)
 
-        if conn.assigns.quick do
-          render(conn, :create, layout: false)
-        else
-          conn
-          |> put_flash(:result, "success")
-          |> redirect(to: admin_news_item_path(conn, :index))
-        end
+        conn
+        |> put_flash(:result, "success")
+        |> redirect(to: determine_redirect(conn, item, params))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -100,7 +96,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_item_path(conn, :index))
+        |> redirect_next(params, determine_redirect(conn, item, params))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -131,6 +127,13 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     Map.put_new(item_params, "object_id", UrlKit.get_object_id(type, url))
   end
   defp detect_object_id(item_params), do: item_params
+
+  defp determine_redirect(conn, item, params) do
+    case Map.get(params, "queue", "draft") do
+      "draft" -> admin_news_item_path(conn, :edit, item)
+      _else   -> admin_news_item_path(conn, :index)
+    end
+  end
 
   defp handle_status_changes(item, params) do
     case Map.get(params, "queue", "draft") do

@@ -28,7 +28,7 @@ defmodule ChangelogWeb.Admin.TopicController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_topic_path(conn, :index))
+        |> redirect_next(params, admin_topic_path(conn, :edit, topic))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

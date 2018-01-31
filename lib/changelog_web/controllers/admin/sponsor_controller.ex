@@ -24,9 +24,10 @@ defmodule ChangelogWeb.Admin.SponsorController do
     case Repo.insert(changeset) do
       {:ok, sponsor} ->
         Repo.update(Sponsor.file_changeset(sponsor, sponsor_params))
+
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_sponsor_path(conn, :index))
+        |> redirect_next(params, admin_sponsor_path(conn, :edit, sponsor))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

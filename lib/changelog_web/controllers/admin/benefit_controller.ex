@@ -23,10 +23,10 @@ defmodule ChangelogWeb.Admin.BenefitController do
     changeset = Benefit.admin_changeset(%Benefit{}, benefit_params)
 
     case Repo.insert(changeset) do
-      {:ok, _benefit} ->
+      {:ok, benefit} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_benefit_path(conn, :index))
+        |> redirect_next(params, admin_benefit_path(conn, :edit, benefit))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

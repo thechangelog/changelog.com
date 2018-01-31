@@ -26,7 +26,7 @@ defmodule ChangelogWeb.Admin.PodcastControllerTest do
 
   @tag :as_admin
   test "creates podcast and redirects", %{conn: conn} do
-    conn = post(conn, admin_podcast_path(conn, :create), podcast: @valid_attrs)
+    conn = post(conn, admin_podcast_path(conn, :create), podcast: @valid_attrs, next: admin_podcast_path(conn, :index))
 
     assert redirected_to(conn) == admin_podcast_path(conn, :index)
     assert count(Podcast) == 1

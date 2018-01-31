@@ -49,10 +49,10 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     changeset = NewsSponsorship.admin_changeset(%NewsSponsorship{}, sponsorship_params)
 
     case Repo.insert(changeset) do
-      {:ok, _sponsorship} ->
+      {:ok, sponsorship} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_sponsorship_path(conn, :index))
+        |> redirect_next(params, admin_news_sponsorship_path(conn, :edit, sponsorship))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

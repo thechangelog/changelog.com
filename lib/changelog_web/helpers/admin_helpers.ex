@@ -2,9 +2,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   use Phoenix.HTML
 
   alias Changelog.Repo
-  alias ChangelogWeb.{TimeView}
-  alias ChangelogWeb.Helpers.SharedHelpers
-  alias Phoenix.Controller
+  alias ChangelogWeb.TimeView
 
   def ctr(%{impression_count: 0}), do: 0
   def ctr(%{click_count: 0}), do: 0
@@ -24,16 +22,6 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
         end
       nil -> ""
     end
-  end
-
-  def form_actions(conn) do
-    ~e"""
-    <div class="ui hidden divider"></div>
-    <div class="ui equal width stackable grid">
-    <div class="column"><button class="ui primary fluid basic button" type="submit" name="next" value="<%= SharedHelpers.current_path(conn) %>">Save</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="next" value="<%= next_param(conn) %>">Save and Close</button></div>
-    <div class="column"></div>
-    """
   end
 
   def help_icon(help_text) do
@@ -73,9 +61,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     end
   end
 
-  def next_param(conn), do: Map.get(conn.params, "next")
-  def next_path(%{next: next}), do: next
-  def next_path(%{conn: conn}), do: Controller.current_path(conn)
+  def next_param(conn, default \\ nil), do: Map.get(conn.params, "next", default)
 
   def semantic_calendar_field(form, field) do
     ~e"""
@@ -87,6 +73,10 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
       </div>
     </div>
     """
+  end
+
+  def submit_button(type, text, next \\ "") do
+    content_tag(:button, text, class: "ui #{type} fluid basic button", type: "submit", name: "next", value: next)
   end
 
   def ts(ts), do: TimeView.ts(ts)

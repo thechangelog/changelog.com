@@ -36,10 +36,10 @@ defmodule ChangelogWeb.Admin.PostController do
     changeset = Post.admin_changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
-      {:ok, _post} ->
+      {:ok, post} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_post_path(conn, :index))
+        |> redirect_next(params, admin_post_path(conn, :edit, post))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

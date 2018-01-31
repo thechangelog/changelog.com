@@ -28,7 +28,7 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
   test "creates benefit and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
 
-    conn = post(conn, admin_benefit_path(conn, :create), benefit: %{@valid_attrs | sponsor_id: sponsor.id}, next: "")
+    conn = post(conn, admin_benefit_path(conn, :create), benefit: %{@valid_attrs | sponsor_id: sponsor.id}, next: admin_benefit_path(conn, :index))
 
     assert redirected_to(conn) == admin_benefit_path(conn, :index)
     assert count(Benefit) == 1

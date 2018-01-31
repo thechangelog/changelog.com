@@ -29,7 +29,8 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     logger = insert(:person)
     conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "draft")
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    drafted = Repo.one(NewsItem.limit(1))
+    assert redirected_to(conn) == admin_news_item_path(conn, :edit, drafted)
     assert count(NewsItem.drafted) == 1
     assert count(NewsItem.published) == 0
     assert count(NewsQueue) == 0
@@ -77,7 +78,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     logger = insert(:person)
     news_item = insert(:news_item, logger: logger)
 
-    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id})
+    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, next: admin_news_item_path(conn, :index))
 
     assert redirected_to(conn) == admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1

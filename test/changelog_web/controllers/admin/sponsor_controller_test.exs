@@ -26,7 +26,7 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
 
   @tag :as_admin
   test "creates sponsor and redirects", %{conn: conn} do
-    conn = post(conn, admin_sponsor_path(conn, :create), sponsor: @valid_attrs)
+    conn = post(conn, admin_sponsor_path(conn, :create), sponsor: @valid_attrs, next: admin_sponsor_path(conn, :index))
 
     assert redirected_to(conn) == admin_sponsor_path(conn, :index)
     assert count(Sponsor) == 1

@@ -28,7 +28,8 @@ defmodule ChangelogWeb.Admin.TopicControllerTest do
   test "creates topic and redirects", %{conn: conn} do
     conn = post(conn, admin_topic_path(conn, :create), topic: @valid_attrs)
 
-    assert redirected_to(conn) == admin_topic_path(conn, :index)
+    created = Repo.one(Topic.limit(1))
+    assert redirected_to(conn) == admin_topic_path(conn, :edit, created)
     assert count(Topic) == 1
   end
 

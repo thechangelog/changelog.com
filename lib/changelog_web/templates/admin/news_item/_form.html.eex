@@ -130,8 +130,8 @@
 
   <div class="ui equal width stackable grid">
   <%= if is_persisted(f.data) && !NewsItem.is_draft(f.data) do %>
-    <div class="column"><button class="ui primary fluid basic button" type="submit" name="next" value="<%= current_path(@conn) %>">Save</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="next" value="<%= next_param(@conn) %>">Save and Close</button></div>
+    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
+    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn, admin_news_item_path(@conn, :index))) %></div>
     <div class="column">
     <%= if !NewsItem.is_published(f.data) do %>
       <button class="ui green fluid basic button" type="submit" name="queue" value="publish">Publish</button>

@@ -31,7 +31,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_person_path(conn, :index))
+        |> redirect_next(params, admin_person_path(conn, :edit, person))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

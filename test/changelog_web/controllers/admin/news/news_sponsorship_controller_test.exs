@@ -47,7 +47,8 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
     sponsor = insert(:sponsor)
     conn = post(conn, admin_news_sponsorship_path(conn, :create), news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id})
 
-    assert redirected_to(conn) == admin_news_sponsorship_path(conn, :index)
+    created = Repo.one(NewsSponsorship.limit(1))
+    assert redirected_to(conn) == admin_news_sponsorship_path(conn, :edit, created)
     assert count(NewsSponsorship) == 1
   end
 

@@ -27,7 +27,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_source_path(conn, :index))
+        |> redirect_next(params, admin_news_source_path(conn, :edit, source))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

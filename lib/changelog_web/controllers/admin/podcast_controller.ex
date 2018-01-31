@@ -19,10 +19,10 @@ defmodule ChangelogWeb.Admin.PodcastController do
     changeset = Podcast.admin_changeset(%Podcast{}, podcast_params)
 
     case Repo.insert(changeset) do
-      {:ok, _podcast} ->
+      {:ok, podcast} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_podcast_path(conn, :index))
+        |> redirect_next(params, admin_podcast_path(conn, :edit, podcast))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

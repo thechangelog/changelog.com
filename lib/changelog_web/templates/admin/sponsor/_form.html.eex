@@ -92,5 +92,15 @@
     <%= error_message(f, :description) %>
   </div>
 
-  <%= form_actions(@conn) %>
+  <div class="ui hidden divider"></div>
+  <div class="ui equal width stackable grid">
+  <%= if !is_persisted(f.data) do %>
+    <div class="column"><%= submit_button(:primary, "Create") %></div>
+    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, admin_sponsor_path(@conn, :index))) %></div>
+  <% else %>
+    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
+    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
+  <% end %>
+    <div class="column"></div>
+  </div>
 <% end %>
