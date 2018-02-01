@@ -18,8 +18,8 @@
     </div>
 
     <div class="field <%= error_class(f, :twitter) %>">
-      <%= label(f, :twitter, "Twitter Handle") %>
-      <%= text_input(f, :twitter, placeholder: "wired") %>
+      <%= label(f, :twitter_handle, "Twitter Handle") %>
+      <%= text_input(f, :twitter_handle, placeholder: "wired") %>
     </div>
   </div>
 
