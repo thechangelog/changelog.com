@@ -3,7 +3,10 @@
   <p class="list_item-source">Item Source</p>
   <h2 class="list_item-title"><%= link(@item.headline, to: @item.url) %></h2>
   <%= @item.story |> md_to_html |> raw %>
-  <p class="list_item-meta">logged by @adam • #linux #dotnet #ios</p>
+  <p class="list_item-meta">
+    <%# TODO: How do I loop through topics? %>
+    logged by @adam • #linux #dotnet #ios
+  </p>
   <%= if @item.image do %>
     <p>
       <%= link to: @item.url do %>
