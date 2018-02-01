@@ -49,8 +49,8 @@ defmodule Changelog.UrlKitTest do
   end
 
   describe "get_title" do
-    test "defaults to nil" do
-      assert UrlKit.get_title(nil) == nil
+    test "defaults to empty string" do
+      assert UrlKit.get_title(nil) == ""
     end
 
     test "extracts the page title" do

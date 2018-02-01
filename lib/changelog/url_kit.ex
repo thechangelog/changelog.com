@@ -29,7 +29,7 @@ defmodule Changelog.UrlKit do
     NewsSource.get_by_url(url)
   end
 
-  def get_title(url) when is_nil(url), do: nil
+  def get_title(url) when is_nil(url), do: ""
   def get_title(url) do
     url |> get_html |> extract_title
   end

@@ -52,7 +52,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       conn.assigns.current_user
       |> build_assoc(:logged_news_items,
         url: url,
-        headline: UrlKit.get_title(url),
+        headline: String.capitalize(UrlKit.get_title(url)),
         source: UrlKit.get_source(url),
         type: UrlKit.get_type(url))
       |> NewsItem.insert_changeset()
