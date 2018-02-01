@@ -1,18 +1,15 @@
-<div class="list_item">
-  <%= NewsItemView.render_item_source(@conn, @item) %>
-  <h2 class="list_item-title"><%= link(@item.headline, to: @item.url) %></h2>
-  <%= @item.story |> md_to_html |> raw %>
-  <p class="list_item-meta">
-    logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger) %>
-  <%= if Enum.any?(@item.topics) do %>
-    • <span class="news_item-toolbar-meta-item"><%= NewsItemView.topic_link_list(@conn, @item) |> raw %></span>
-  <% end %>
-  </p>
-  <%= if @item.image do %>
-    <p>
-      <%= link to: @item.url do %>
-        <img src="<%= NewsItemView.image_url(@item, :large) %>" alt="<%= @item.headline %>">
-      <% end %>
-    </p>
-  <% end %>
+<div class="news_item">
+  <p class="news_item-source"><%= NewsItemView.render_item_source(@conn, @item) %></p>
+  <h2 class="news_item-title"><%= link(@item.headline, to: @item.url) %></h2>
+  <div class="news_item-content">
+    <%= @item.story |> md_to_html |> raw %>
+    <%= if @item.image do %>
+      <p>
+        <%= link to: @item.url do %>
+          <img src="<%= NewsItemView.image_url(@item, :large) %>" alt="<%= @item.headline %>">
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+  <%= render("_item_meta.html", assigns) %>
 </div>

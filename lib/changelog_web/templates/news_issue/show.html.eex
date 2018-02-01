@@ -35,7 +35,7 @@
                                           <a href="https://changelog.com/">
                                             <img class="header-logo" width="300" alt="Changelog" src="https://changelog-assets.s3.amazonaws.com/weekly/changelog-logo.png">
                                           </a>
-                                          <p>Issue #<%= @issue.slug %> • <currentmonthname></currentmonthname> <currentday></currentday>, <currentyear></currentyear></p>
+                                          <p>Issue #<%= @issue.slug %> • <%= TimeView.pretty_date(@issue.published_at) %></p>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -64,7 +64,7 @@
                     </table>
                   <% end %>
 
-                  <img class="divider-25" src="<%= spacer_url() %>">
+                  <img class="divider-20" src="<%= spacer_url() %>">
 
                   <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff">
                     <tbody>
@@ -91,7 +91,7 @@
                       <tr>
                         <td class="content-block content-block-footer" bgcolor="#ffffff" align="center">
                           <img class="divider-20" src="<%= spacer_url() %>">
-                          <p><unsubscribe>Unsubscribe</unsubscribe>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<preferences>Manage Subscription</preferences>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<a href="https://changelog.com/weekly/archive">View Archive</a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<webversion>View in Browser</webversion></p>
+                          <p><unsubscribe>Unsubscribe</unsubscribe> &bull; <preferences>Manage Subscription</preferences> &bull; <a href="https://changelog.com/weekly/archive">View Archive</a> &bull; <webversion>View in Browser</webversion></p>
 
                           <p>You received this email because you are a subscriber of Changelog.com emails with the email address: [email]</p>
 

@@ -1,12 +1,14 @@
-<div class="list_item">
-  <p class="list_item-source">Sponsored</p>
-  <h2 class="list_item-title"><%= link(@ad.headline, to: @ad.url) %></h2>
-  <%= @ad.story |> md_to_html |> raw %>
-<%= if @ad.image do %>
-  <p>
-    <%= link to: @ad.url do %>
-      <img src="<%= NewsItemView.image_url(@ad, :large) %>" alt="<%= @ad.headline %>">
-    <% end %>
-  </p>
-<% end %>
+<div class="news_item">
+  <p class="news_item-source">Sponsored</p>
+  <h2 class="news_item-title"><%= link(@ad.headline, to: @ad.url) %></h2>
+  <div class="news_item-content">
+    <%= @ad.story |> md_to_html |> raw %>
+  </div>
+  <%= if @ad.image do %>
+    <p>
+      <%= link to: @ad.url do %>
+        <img src="<%= NewsItemView.image_url(@ad, :large) %>" alt="<%= @ad.headline %>">
+      <% end %>
+    </p>
+  <% end %>
 </div>

@@ -1,0 +1,9 @@
+<p class="news_item-meta news_item-meta--<%= @item.type %>">
+  <%= if @item.type == :audio do %>
+    <%= link "", to: @item.url, class: "news_item-meta-play" %>
+  <% end %>
+  logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger) %></strong>
+  <%= if Enum.any?(@item.topics) do %>
+    • <span class="news_item-toolbar-meta-item"><%= NewsItemView.topic_link_list(@conn, @item) |> raw %></span>
+  <% end %>
+</p>

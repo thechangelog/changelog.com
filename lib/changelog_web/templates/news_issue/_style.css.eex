@@ -5,6 +5,10 @@ body {
   margin: 0;
   padding: 0
 }
+a {
+  color: #000000;
+  text-decoration: none;
+}
 .header {
   text-align: center;
   padding-top: 30px;
@@ -68,13 +72,14 @@ body {
   padding-bottom: 5px;
   text-transform: uppercase
 }
-.list_item {
+.news_item {
   margin-bottom: 50px;
 }
-.list_item: last-of-type,.list_item.last-of-type {
+.news_item: last-of-type,
+.news_item.last-of-type {
   margin-bottom: 0 !important
 }
-.list_item-sponsored {
+.news_item-sponsored {
   color: #aaa;
   font-size: 11px;
   font-weight: normal;
@@ -85,11 +90,28 @@ body {
   letter-spacing: 1px;
   text-transform: uppercase
 }
-.list_item .list_item-source {
+.news_item .news_item-source {
   font-size: 13px;
+  line-height: 1em;
   letter-spacing: 0.05em;
 }
-.list_item .list_item-title {
+.news_item-source-image {
+  display: inline-block;
+  font-size: 0;
+  margin-right: 5px;
+  overflow: hidden;
+  width: 15px;
+  height: 15px;
+  position: relative;
+  top: 3px;
+}
+.news_item-source-image img {
+  background: #FFFFFF;
+  box-shadow: 0 0 24px rgba(18,25,33,.2);
+  height: 15px;
+  width: 15px;
+}
+.news_item-title {
   color: #000000;
   font-size: 16px;
   font-weight: bold;
@@ -99,106 +121,128 @@ body {
   padding-top: 0;
   padding-bottom: 0
 }
-.list_item .list_item-title a {
-  color: #000000
+.news_item-title a {
+  text-decoration: underline;
 }
-.list_item .list_item-meta {
+.news_item-meta {
   font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
   font-size: 11px;
   margin-top: 20px;
 }
-.list_item a {
+/* Account for play button */
+.news_item-meta--audio {
+  margin-top: 12px;
+}
+.news_item-meta-play {
+  background: #FFFFFF url('/images/email/toolbar-play.png') center no-repeat;
+  background-size: 10px auto;
+  border: 1px solid #EEEEEE;
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 5px;
+  padding: 0.5em 0.3em 0.3em;
+  height: 15px;
+  width: 25px;
+  position: relative;
+  top: 8px;
+}
+.news_item-content a {
   color: #59b287
 }
-.list_item a: hover {
+.news_item-content a:hover {
   color: #44946d;
   text-decoration: underline
 }
-.list_item p,.list_item li {
+.news_item-content p,
+.news_item-content li {
   color: #555
 }
-.list_item p,.list_item li {
+.news_item-content p,
+.news_item-content li {
   font-size: 14px;
   line-height: 1.75
 }
-.list_item p {
+.news_item-content p {
   margin-top: 0;
   margin-bottom: 10px;
   padding-top: 0;
   padding-bottom: 0
 }
-.list_item blockquote {
+.news_item-content blockquote {
   border-left: 4px solid #59b287;
   margin: 10px 0;
   padding-left: 12px
 }
-.list_item p img {
+.news_item-content p img {
   width: 110%;
   margin: 10px -5%
 }
 @media (max-width:  600px) {
-  .list_item p img {
+  .news_item-content p img {
      width: 100%;
      margin: 10px 0
   }
 }
-.list_item ul,.list_item ol {
+.news_item-content ul,
+.news_item-content ol {
   margin-top: 5px;
   margin-bottom: 22px;
   padding-left: 18px
 }
-.list_item li {
+.news_item-content li {
   margin-top: 0;
   margin-bottom: 4px
 }
-.list_item code,.list_item pre {
+.news_item-content code,.news_item-content pre {
   margin: 0;
   padding: 0
 }
-.list_item pre {
+.news_item-content pre {
   display: block;
   width: 110%;
   margin: 15px -5%
 }
 @media (max-width:  600px) {
-  .list_item pre {
+  .news_item-content pre {
      width: 100%;
      margin: 10px 0
   }
 }
-.list_item code {
+.news_ite-contentm code {
   display: inline-block
 }
-.list_item pre code {
+.news_item-content pre code {
   display: block
 }
-.list_item code {
+.news_item-content code {
   border-top: 2px solid #59b287;
   background-color: #121921;
   color: #59b287;
-  font-family: "DejaVu Sans Mono",Menlo,Monaco,Consolas,Courier,monospace;
+  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
   font-size: 14px;
   padding: 15px
 }
-.list_item p code {
+.news_item-content p code {
   background-color: #f8f8f8;
   border: 1px solid #eaeaea;
   border-radius: 3px;
   color: inherit;
-  font-family: "DejaVu Sans Mono",Menlo,Monaco,Consolas,Courier,monospace;
+  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
   font-size: 12px;
   margin: 0 2px;
   padding: 2px 5px
 }
-.list_item em {
+.news_item-content em {
   font-style: italic
 }
-.list_item mark,.list_item .highlight {
+.news_item-content mark,
+.news_item-content .highlight {
   font-style: normal;
   padding: 3px 5px;
   background-color: #fffedb
 }
-.list_item .highlight-gray,.list_item .highlight-grey {
+.news_item-content .highlight-gray,
+.news_item-content .highlight-grey {
   font-style: normal;
   padding: 3px 5px;
   background-color: #f5f5f5
@@ -217,7 +261,8 @@ body {
   }
 }
 .content-block-footer p {
-  font-size: 13px;
+  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
+  font-size: 11px;
   line-height: 1.5;
   margin: 0 0 20px 0;
   padding: 0 40px
