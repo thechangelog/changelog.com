@@ -3,8 +3,10 @@
   <h2 class="list_item-title"><%= link(@item.headline, to: @item.url) %></h2>
   <%= @item.story |> md_to_html |> raw %>
   <p class="list_item-meta">
-    <%# TODO: How do I loop through topics? %>
-    logged by @adam • #linux #dotnet #ios
+    logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger) %>
+  <%= if Enum.any?(@item.topics) do %>
+    • <span class="news_item-toolbar-meta-item"><%= NewsItemView.topic_link_list(@conn, @item) |> raw %></span>
+  <% end %>
   </p>
   <%= if @item.image do %>
     <p>
