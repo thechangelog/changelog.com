@@ -3,10 +3,9 @@
       <tr>
         <th>Source</th>
         <th>Slug</th>
-        <th>Website</th>
+        <th>On Twitter</th>
         <th>Regex</th>
-        <th>Create Time</th>
-        <th>Update Time</th>
+        <th>Edit Time</th>
         <th></th>
       </tr>
     </thead>
@@ -16,12 +15,11 @@
       <tr>
         <td>
           <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(source) %>">
-          <%= link source.name, to: admin_news_source_path(@conn, :edit, source) %>
+          <%= link(source.name, to: source.website, rel: "external") %>
         </td>
-        <td><%= source.slug %></td>
-        <td><%= link source.website, to: source.website, rel: "external" %></td>
+        <td><%= link(source.slug, to: news_source_path(@conn, :show, source.slug)) %></td>
+        <td><%= twitter_link(source) %></td>
         <td><%= source.regex %></td>
-        <td><%= ts(source.inserted_at) %></td>
         <td><%= ts(source.updated_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
