@@ -71,7 +71,7 @@
                       <tr>
                         <td class="content-block content-block-white" bgcolor="#ffffff">
                         <%= for item_or_ad <- items_with_ads(@issue.items, @issue.ads) do %>
-                          <%= render_item_or_ad(item_or_ad) %>
+                          <%= render_item_or_ad(item_or_ad, assigns) %>
                         <% end %>
                         </td>
                       </tr>

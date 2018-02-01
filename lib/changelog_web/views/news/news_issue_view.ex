@@ -18,11 +18,11 @@ defmodule ChangelogWeb.NewsIssueView do
     |> List.flatten
   end
 
-  def render_item_or_ad(ad = %NewsAd{}), do: render("_ad.html", ad: ad)
-  def render_item_or_ad(item = %NewsItem{}) do
+  def render_item_or_ad(ad = %NewsAd{}, assigns), do: render("_ad.html", Map.merge(assigns, %{ad: ad}))
+  def render_item_or_ad(item = %NewsItem{}, assigns) do
     case item.type do
-      :audio -> render("_item_audio.html", item: NewsItem.load_object(item))
-        _else -> render("_item.html", item: item)
+      :audio -> render("_item_audio.html", Map.merge(assigns, %{item: NewsItem.load_object(item)}))
+      _else -> render("_item.html", Map.merge(assigns, %{item: item}))
     end
   end
 

@@ -1,6 +1,5 @@
 <div class="list_item">
-  <%# TODO: Add ability to use render_item_source(@conn, @item) %>
-  <p class="list_item-source">Item Source</p>
+  <%= NewsItemView.render_item_source(@conn, @item) %>
   <h2 class="list_item-title"><%= link(@item.headline, to: @item.url) %></h2>
   <%= @item.story |> md_to_html |> raw %>
   <p class="list_item-meta">
