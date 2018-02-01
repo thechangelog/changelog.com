@@ -26,21 +26,24 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> NewsItem.preload_all
       |> Repo.paginate(params)
 
+    activity_count = 5
+
     topic_activity =
       Topic
       |> Topic.newest_first(:updated_at)
-      |> Topic.limit(3)
+      |> Topic.limit(activity_count)
       |> Repo.all
 
     source_activity =
       NewsSource
       |> NewsSource.newest_first(:updated_at)
-      |> NewsSource.limit(3)
+      |> NewsSource.limit(activity_count)
       |> Repo.all
 
     activity =
       (topic_activity ++ source_activity)
-      |> Enum.sort(&(&1.updated_at >= &2.updated_at))
+      |> Enum.sort(&(Timex.after?(&1.updated_at, &2.updated_at)))
+      |> Enum.chunk(activity_count)
 
     render(conn, :index, drafts: drafts, queued: queued, activity: activity, published: page.entries, page: page)
   end

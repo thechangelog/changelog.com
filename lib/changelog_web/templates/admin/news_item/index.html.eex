@@ -69,24 +69,27 @@
 <div class="basic segment">
   <h2 class="ui header">Recently</h2>
 
-  <div class="ui feed">
-  <%= for object <- @activity do %>
-    <div class="event">
-      <div class="label">
-        <i class="<%= if is_edited(object), do: "pencil", else: "plus" %> icon"></i>
-      </div>
-      <div class="content">
-        <div class="summary">
-        <%= if object.__struct__ == Topic do %>
-          The <%= link object.name, to: admin_topic_path(@conn, :edit, object.slug) %> topic
-        <% else %>
-          The <%= link object.name, to: admin_news_source_path(@conn, :edit, object) %> news source
-        <% end %>
-          was <%= if is_edited(object), do: "edited", else: "added" %>
-          <div class="date"><%= TimeView.ts(object.updated_at, "admin") %></div>
+  <div class="ui equal width grid">
+  <%= for feed <- @activity do %>
+    <div class="ui column feed">
+    <%= for object <- feed do %>
+      <div class="event">
+        <div class="label">
+          <i class="<%= if is_edited(object), do: "pencil", else: "plus" %> icon"></i>
         </div>
-
+        <div class="content">
+          <div class="summary">
+          <%= if object.__struct__ == Topic do %>
+            The <%= link object.name, to: admin_topic_path(@conn, :edit, object.slug) %> topic
+          <% else %>
+            The <%= link object.name, to: admin_news_source_path(@conn, :edit, object) %> news source
+          <% end %>
+            was <%= if is_edited(object), do: "edited", else: "added" %>
+            <div class="date"><%= TimeView.ts(object.updated_at, "admin") %></div>
+          </div>
+        </div>
       </div>
+    <% end %>
     </div>
   <% end %>
   </div>
