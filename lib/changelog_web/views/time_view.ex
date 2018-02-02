@@ -28,6 +28,16 @@ defmodule ChangelogWeb.TimeView do
     "#{hours}:#{duration(remaining)}"
   end
 
+  def hacker_date(ts) when is_nil(ts), do: ""
+  def hacker_date(ts) when is_binary(ts) do
+    {:ok, result} = Timex.parse(ts, "{YYYY}-{0M}-{0D} {h24}:{m}:{s}")
+    hacker_date(result)
+  end
+  def hacker_date(ts) do
+    {:ok, result} = Timex.format(ts, "{YYYY}-{0M}-{0D}")
+    result
+  end
+
   def hours_ago(hours) do
     Timex.subtract(Timex.now, Duration.from_hours(hours))
   end
@@ -39,13 +49,10 @@ defmodule ChangelogWeb.TimeView do
   def pretty_date(ts) when is_nil(ts), do: ""
   def pretty_date(ts) when is_binary(ts) do
     {:ok, result} = Timex.parse(ts, "{YYYY}-{0M}-{0D} {h24}:{m}:{s}")
-    {:ok, result} = Timex.format(result, "{Mshort} {D}, {YYYY}")
-    result
+    pretty_date(result)
   end
   def pretty_date(ts) do
-    {:ok, result} =
-      ts
-      |> Timex.format("{Mshort} {D}, {YYYY}")
+    {:ok, result} = Timex.format(ts, "{Mshort} {D}, {YYYY}")
     result
   end
 
