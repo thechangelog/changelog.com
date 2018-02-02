@@ -1,5 +1,5 @@
-<div class="news_item">
   <p class="news_item-source">Sponsored</p>
+<div class="news_item news_item--sponsored">
   <h2 class="news_item-title"><%= link(@ad.headline, to: @ad.url) %></h2>
   <div class="news_item-content">
     <%= @ad.story |> md_to_html |> raw %>
