@@ -1,5 +1,11 @@
-  <p class="news_item-source">Sponsored</p>
 <div class="news_item news_item--sponsored">
+  <p class="news_item-source">
+    <%= link to: @ad.url, title: @sponsor.name do %>
+      <img class="news_item-source-image" src="<%= SponsorView.avatar_url(@sponsor, :small) %>" alt="<%= @sponsor.name %> Icon" />
+    <% end %>
+
+    <%= link("#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name) %>
+  </p>
   <h2 class="news_item-title"><%= link(@ad.headline, to: @ad.url) %></h2>
   <div class="news_item-content">
     <%= @ad.story |> md_to_html |> raw %>

@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsIssueView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{NewsItem, NewsAd}
-  alias ChangelogWeb.{EpisodeView, NewsItemView}
+  alias ChangelogWeb.{EpisodeView, NewsItemView, SponsorView}
 
   def items_with_ads(items, []), do: items
   def items_with_ads(items, ads) do
@@ -18,7 +18,7 @@ defmodule ChangelogWeb.NewsIssueView do
     |> List.flatten
   end
 
-  def render_item_or_ad(ad = %NewsAd{}, assigns), do: render("_ad.html", Map.merge(assigns, %{ad: ad}))
+  def render_item_or_ad(ad = %NewsAd{}, assigns), do: render("_ad.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsorship.sponsor}))
   def render_item_or_ad(item = %NewsItem{}, assigns) do
     case item.type do
       :audio -> render("_item_audio.html", Map.merge(assigns, %{item: NewsItem.load_object(item)}))
