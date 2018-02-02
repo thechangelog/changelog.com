@@ -49,6 +49,7 @@ defmodule Changelog.NewsSponsorship do
     sponsorship
     |> preload_ads
     |> Map.get(:ads, [])
+    |> Enum.filter(&(&1.active))
     |> select_ad_for_index
     |> ad_with_sponsor_loaded(sponsorship)
   end
@@ -57,6 +58,7 @@ defmodule Changelog.NewsSponsorship do
     sponsorship
     |> preload_ads
     |> Map.get(:ads, [])
+    |> Enum.filter(&(&1.active))
     |> select_ad_for_issue
     |> ad_with_sponsor_loaded(sponsorship)
   end
