@@ -1,142 +1,206 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(https://fonts.gstatic.com/s/opensans/v15/xjAJXh38I15wypJXxuGMBogp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v15/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(https://fonts.gstatic.com/s/opensans/v15/PRmiXeptR36kaC0GEAetxv79_ZuUxCigM2DespTnFaw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans ExtraBold'), local('OpenSans-ExtraBold'), url(https://fonts.gstatic.com/s/opensans/v15/EInbV5DfGHOiMmvb1Xr-hhampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Mono'), local('RobotoMono-Regular'), url(https://fonts.gstatic.com/s/robotomono/v5/hMqPNLsu_dywMa4C_DEpY4gp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Roboto Mono Italic'), local('RobotoMono-Italic'), url(https://fonts.gstatic.com/s/robotomono/v5/mE0EPT_93c7f86_WQexR3AeOulFbQKHxPa89BaxZzA0.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Mono Bold'), local('RobotoMono-Bold'), url(https://fonts.gstatic.com/s/robotomono/v5/N4duVc9C58uwPiY8_59Fz_79_ZuUxCigM2DespTnFaw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Roboto Mono Bold Italic'), local('RobotoMono-BoldItalic'), url(https://fonts.gstatic.com/s/robotomono/v5/1OsMuiiO6FCF2x67vzDKA8yRwA4nzNmLFN68bwzDkMk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+
+/* --- --- --- --- --- */
+/* Global */
+/* --- --- --- --- --- */
+
 body {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
   width: 100%;
   background-color: #fff;
   margin: 0;
   padding: 0
 }
 a {
-  color: #000000;
+  color: #121921;
   text-decoration: none;
 }
+@media (max-width:  600px) {
+  table {
+     width: 100%
+  }
+}
+
+/* --- --- --- --- --- */
+/* Header */
+/* --- --- --- --- --- */
+
 .header {
   text-align: center;
-  padding-top: 30px;
+  padding: 25px 0;
 }
 .header p {
-  color: #66696E;
-  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
+  color: #121921;
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
   font-size: 12px;
+  margin: 12px 0 0 0;
 }
 .header-logo {
-  width: 175px
+  width: 145px
 }
-@media (max-width:  600px) {
-  .header-logo {
-     width: 150px
-  }
+.header p a {
+  text-decoration: none;
 }
-.hide-on-desktop {
-  display: none !important
-}
-.show-on-desktop {
-  display: block !important
-}
-@media (max-width:  600px) {
-  .hide-on-mobile {
-     display: none !important
-  }
-  .show-on-mobile {
-     display: block !important
-  }
-  .last-of-type-on-mobile {
-     margin-bottom: 0 !important
-  }
-}
+
+/* --- --- --- --- --- */
+/* Helper classes */
+/* --- --- --- --- --- */
+
 .last-of-type {
-  margin-bottom: 0 !important
+  margin-bottom: 0 !important;
 }
-.preamble {
-  color: #fff;
-  background: #121921;
-  font-weight: 300;
-  padding: 5px 20px;
+
+/* --- --- --- --- --- */
+/* Editor note */
+/* --- --- --- --- --- */
+
+.editor_note {
+  margin-bottom: 0;
+  padding: 25px 20px;
+  border-bottom: 1px solid #e6e5e6;
 }
-.preamble-text {
+.editor_note p {
+  color: #121921;
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
+  font-size: 12px;
+  line-height: 20px;
   margin: 0;
 }
-.preamble p {
-  font-size: 14px;
-  line-height: 1.75
+.editor_note a {
+  color: #59b287;
+  text-decoration: underline;
 }
-.preamble a {
-  color: #59b287
+.editor_note a:hover {
+  color: #44946d;
+  text-decoration: underline;
 }
-.content-block__title {
-  border-bottom: 2px solid #f5f5f5;
-  color: #aaa;
-  font-size: 14px;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 18px;
-  padding-bottom: 5px;
-  text-transform: uppercase
-}
+
+/* --- --- --- --- --- */
+/* News Item */
+/* --- --- --- --- --- */
+
 .news_item {
-  margin-bottom: 50px;
+  padding: 30px 20px;
+  border-bottom: 1px solid #e6e5e6;
 }
-.news_item: last-of-type,
-.news_item.last-of-type {
-  margin-bottom: 0 !important
-}
-.news_item-sponsored {
-  color: #aaa;
-  font-size: 11px;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 4px;
-  padding-top: 0;
-  padding-bottom: 0;
-  letter-spacing: 1px;
-  text-transform: uppercase
+.news_item--sponsored {
+  background-color: #fafafa;
 }
 .news_item .news_item-source {
-  font-size: 13px;
+  color: #121921;
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
+  font-size: 12px;
   line-height: 1em;
-  letter-spacing: 0.05em;
+  margin: 0 0 20px 0;
 }
 .news_item-source-image {
   display: inline-block;
   font-size: 0;
   margin-right: 5px;
-  overflow: hidden;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   position: relative;
-  top: 3px;
+  top: 6px;
 }
 .news_item-source-image img {
-  background: #FFFFFF;
-  box-shadow: 0 0 24px rgba(18,25,33,.2);
-  height: 15px;
-  width: 15px;
+  background: #ffffff;
+  border: 1px solid #e6e5e6;
+  height: 20px;
+  width: 20px;
 }
 .news_item-title {
-  color: #000000;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1.4;
+  color: #121921;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 26px;
   margin-top: 0;
-  margin-bottom: 1em;
-  padding-top: 0;
-  padding-bottom: 0
+  margin-bottom: 10px;
 }
-.news_item-title a {
+.news_item-title a:hover {
+  color: #000000;
   text-decoration: underline;
 }
 .news_item-meta {
-  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
-  font-size: 11px;
-  margin-top: 20px;
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
+  font-size: 12px;
+  margin: 20px 0 0 0;
+}
+.news_item-toolbar-meta-item a {
+  display: inline-block;
+  margin-right: 5px;
+  text-decoration: underline;
 }
 /* Account for play button */
 .news_item-meta--audio {
   margin-top: 12px;
 }
 .news_item-meta-play {
-  background: #FFFFFF url('/images/email/toolbar-play.png') center no-repeat;
+  background: #ffffff url('/images/email/toolbar-play.png') center no-repeat;
   background-size: 10px auto;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #eeeeee;
   border-radius: 3px;
   display: inline-block;
   margin-right: 5px;
@@ -147,31 +211,30 @@ a {
   top: 8px;
 }
 .news_item-content a {
-  color: #59b287
+  color: #59b287;
+  text-decoration: underline;
 }
 .news_item-content a:hover {
   color: #44946d;
-  text-decoration: underline
+  text-decoration: underline;
 }
 .news_item-content p,
 .news_item-content li {
-  color: #555
-}
-.news_item-content p,
-.news_item-content li {
+  color: #121921;
   font-size: 14px;
-  line-height: 1.75
+  font-weight: 400;
+  line-height: 22px;
 }
 .news_item-content p {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   padding-top: 0;
   padding-bottom: 0
 }
 .news_item-content blockquote {
   border-left: 4px solid #59b287;
   margin: 10px 0;
-  padding-left: 12px
+  padding-left: 15px
 }
 .news_item-content p img {
   width: 110%;
@@ -208,7 +271,7 @@ a {
      margin: 10px 0
   }
 }
-.news_ite-contentm code {
+.news_item-content code {
   display: inline-block
 }
 .news_item-content pre code {
@@ -218,16 +281,16 @@ a {
   border-top: 2px solid #59b287;
   background-color: #121921;
   color: #59b287;
-  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
   font-size: 14px;
   padding: 15px
 }
 .news_item-content p code {
-  background-color: #f8f8f8;
+  background-color: #f5f5f5;
   border: 1px solid #eaeaea;
   border-radius: 3px;
   color: inherit;
-  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
   font-size: 12px;
   margin: 0 2px;
   padding: 2px 5px
@@ -237,64 +300,39 @@ a {
 }
 .news_item-content mark,
 .news_item-content .highlight {
+  color: #121921;
   font-style: normal;
-  padding: 3px 5px;
+  padding: 0px 4px 2px 4px;
   background-color: #fffedb
 }
 .news_item-content .highlight-gray,
 .news_item-content .highlight-grey {
   font-style: normal;
-  padding: 3px 5px;
-  background-color: #f5f5f5
+  padding: 0px 4px 2px 4px;
+  background-color: #f5f5f5;
+}
+
+/* --- --- --- --- --- */
+/* Footer */
+/* --- --- --- --- --- */
+
+.footer {
+  color: #333333;
+  padding: 40px 0;
 }
 @media (max-width:  600px) {
-  table {
-     width: 100%
+  .footer {
+     background-color: #f5f5f5;
   }
 }
-.content-block-footer {
-  color: #777
-}
-@media (max-width:  600px) {
-  .content-block-footer {
-     background-color: #f5f5f5
-  }
-}
-.content-block-footer p {
-  font-family: "Roboto Mono","Courier New",Courier, "Lucida Sans Typewriter", "Lucida Typerwriter", monospace;
-  font-size: 11px;
+.footer p {
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
+  font-size: 12px;
   line-height: 1.5;
   margin: 0 0 20px 0;
-  padding: 0 40px
+  padding: 0 40px;
 }
-.content-block-footer a {
-  color: #121921
-}
-.image-bleed img {
-  width: 600px
-}
-.divider,.divider-10,.divider-15,.divider-20,.divider-25,.divider-30,.divider-35,.divider-40 {
-  display: block;
-  width: 1px
-}
-.divider-10 { height: 10px }
-.divider-15 { height: 15px }
-.divider-20 { height: 20px }
-.divider-25 { height: 25px }
-.divider-30 { height: 30px }
-.divider-35 { height: 35px }
-.divider-40 { height: 40px }
-
-.align-center { text-align: center !important }
-.align-right { text-align: right !important }
-.align-left { text-align: left !important }
-.align-justify { text-align: justify !important }
-.margin-top-negative-10 {
-  margin-top: -10px
-}
-.margin-top-10,.bq-solo {
-  margin-top: 10px !important
-}
-.margin-bottom-10,.bq-below {
-  margin-bottom: 10px !important
+.footer a {
+  color: #121921;
+  text-decoration: underline;
 }

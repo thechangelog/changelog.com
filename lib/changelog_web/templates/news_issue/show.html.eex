@@ -28,20 +28,20 @@
                             <tbody>
                               <tr>
                                 <td width="600">
-                                  <table width="600" cellpadding="20" cellspacing="0" border="0">
+                                  <table width="600" cellpadding="0" cellspacing="0" border="0">
                                     <tbody>
                                       <tr>
-                                        <td class="header">
-                                          <a href="https://changelog.com/">
-                                            <img class="header-logo" width="300" alt="Changelog" src="https://changelog-assets.s3.amazonaws.com/weekly/changelog-logo.png">
-                                          </a>
-                                          <p>Issue #<%= @issue.slug %> • <%= TimeView.pretty_date(@issue.published_at) %></p>
+                                        <td>
+                                          <div class="header">
+                                            <a href="https://changelog.com/">
+                                              <img class="header-logo" width="300" alt="Changelog" src="https://changelog-assets.s3.amazonaws.com/weekly/changelog-logo.png">
+                                            </a>
+                                            <p><webversion>Issue #<%= @issue.slug %> • <%= TimeView.pretty_date(@issue.published_at) %></webversion></p>
+                                          </div>
                                         </td>
                                       </tr>
                                     </tbody>
                                   </table>
-
-                                  <img class="divider-10 hide-on-desktop show-on-mobile" src="<%= spacer_url() %>">
                                 </td>
                               </tr>
                             </tbody>
@@ -51,25 +51,30 @@
                     </tbody>
                   </table>
 
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e6e5e6">
+                    <tbody>
+                      <tr><td bgcolor="#e6e5e6" height="1" width="100%"></td></tr>
+                    </tbody>
+                  </table>
 
                   <%= if @issue.note do %>
-                    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#121921">
+                    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
                       <tbody>
                         <tr>
-                          <td class="content-block preamble content-block-dark" bgcolor="#121921">
-                            <div class="preamble-text"><%= @issue.note |> md_to_html |> raw %></div>
+                          <td bgcolor="#ffffff">
+                            <div class="editor_note">
+                              <%= @issue.note |> md_to_html |> raw %>
+                            </div>
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   <% end %>
 
-                  <img class="divider-20" src="<%= spacer_url() %>">
-
-                  <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff">
+                  <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
                     <tbody>
                       <tr>
-                        <td class="content-block content-block-white" bgcolor="#ffffff">
+                        <tdbgcolor="#ffffff">
                         <%= for item_or_ad <- items_with_ads(@issue.items, @issue.ads) do %>
                           <%= render_item_or_ad(item_or_ad, assigns) %>
                         <% end %>
@@ -78,26 +83,15 @@
                     </tbody>
                   </table>
 
-                  <img class="divider-20" src="<%= spacer_url() %>">
-
-                  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e5e5e5">
-                    <tbody>
-                      <tr><td bgcolor="#e5e5e5" height="1" width="100%"></td></tr>
-                    </tbody>
-                  </table>
-
-                  <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff">
+                  <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
                     <tbody>
                       <tr>
-                        <td class="content-block content-block-footer" bgcolor="#ffffff" align="center">
-                          <img class="divider-20" src="<%= spacer_url() %>">
-                          <p><unsubscribe>Unsubscribe</unsubscribe> &bull; <preferences>Manage Subscription</preferences> &bull; <a href="https://changelog.com/weekly/archive">View Archive</a> &bull; <webversion>View in Browser</webversion></p>
-
-                          <p>You received this email because you are a subscriber of Changelog.com emails with the email address: [email]</p>
-
-                          <p class="last-of-type">© 2013-<%= Timex.today.year %> Changelog Media</p>
-
-                          <img class="divider-20" src="<%= spacer_url() %>">
+                        <td bgcolor="#ffffff" align="center">
+                          <div class="footer">
+                            <p><unsubscribe>Unsubscribe</unsubscribe> &bull; <preferences>Manage Subscription</preferences> &bull; <a href="https://changelog.com/weekly/archive">View Archive</a> &bull; <webversion>View in Browser</webversion></p>
+                            <p>You received this email because you are a subscriber of Changelog.com emails with the email address: [email]</p>
+                            <p class="last-of-type">© 2013-<%= Timex.today.year %> Changelog Media</p>
+                          </div>
                         </td>
                       </tr>
                     </tbody>

@@ -11,4 +11,5 @@
       <% end %>
     </p>
   <% end %>
+  <p class="news_item-meta">logged by <a href="https://twitter.com/changelog" rel="external" title="Logbot">@logbot</a></p>
 </div>

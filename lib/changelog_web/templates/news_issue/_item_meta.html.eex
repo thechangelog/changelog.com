@@ -2,7 +2,7 @@
   <%= if @item.type == :audio do %>
     <%= link "", to: @item.url, class: "news_item-meta-play" %>
   <% end %>
-  logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger) %></strong>
+  logged by <%= "@#{@item.logger.handle}" %>
   <%= if Enum.any?(@item.topics) do %>
     • <span class="news_item-toolbar-meta-item"><%= NewsItemView.topic_link_list(@conn, @item) |> raw %></span>
   <% end %>
