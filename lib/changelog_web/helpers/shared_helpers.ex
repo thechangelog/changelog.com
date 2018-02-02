@@ -93,6 +93,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def word_count(nil), do: 0
+  def word_count(text) when is_binary(text) do
+    text |> md_to_text |> String.split |> length
+  end
+
   def pluralize(list, singular, plural) when is_list(list), do: pluralize(length(list), singular, plural)
   def pluralize(1, singular, _plural), do: "1 #{singular}"
   def pluralize(count, _singular, plural), do: "#{count} #{plural}"

@@ -93,14 +93,18 @@ defmodule ChangelogWeb.NewsItemView do
     Hashid.encode(item.id)
   end
 
-  def teaser(story, max_words \\ 20) do
-    word_count = story |> md_to_text |> String.split |> length
-
-    story
+  def teaser(item, max_words \\ 20) do
+    item.story
     |> md_to_html
     |> prepare_html
     |> String.split
-    |> truncate(word_count, max_words)
+    |> truncate(word_count(item.story), max_words)
+    |> Enum.join(" ")
+  end
+
+  def topic_list(item) do
+    item.topics
+    |> Enum.map(&("##{&1.slug}"))
     |> Enum.join(" ")
   end
 

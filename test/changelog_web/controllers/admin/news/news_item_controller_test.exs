@@ -1,7 +1,9 @@
 defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.{NewsItem, NewsQueue}
+  import Mock
+
+  alias Changelog.{Buffer, NewsItem, NewsQueue}
 
   @valid_attrs %{type: :project, headline: "Ruby on Rails", url: "https://rubyonrails.org", logger_id: 1}
   @invalid_attrs %{type: :project, headline: "Ruby on Rails", url: ""}
@@ -39,10 +41,12 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   @tag :as_admin
   test "creates news item and publishes immediately", %{conn: conn} do
     logger = insert(:person)
-    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "publish")
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
-    assert count(NewsItem.published) == 1
+    with_mock(Buffer, [queue: fn(_) -> true end]) do
+      conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "publish")
+      assert redirected_to(conn) == admin_news_item_path(conn, :index)
+      assert count(NewsItem.published) == 1
+    end
   end
 
   @tag :as_admin

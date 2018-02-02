@@ -3,7 +3,7 @@ defmodule Changelog.NewsQueue do
 
   require Logger
 
-  alias Changelog.{NewsItem, NewsQueue}
+  alias Changelog.{Buffer, NewsItem, NewsQueue}
 
   schema "news_queue" do
     field :position, :float
@@ -111,15 +111,16 @@ defmodule Changelog.NewsQueue do
   def publish(item = %NewsItem{}) do
     case Repo.get_by(NewsQueue, item_id: item.id) do
       entry = %NewsQueue{} -> publish(entry)
-      nil -> NewsItem.publish!(item)
+      nil -> Buffer.queue(NewsItem.publish!(item))
     end
   end
 
   def publish(entry = %NewsQueue{}) do
     entry = Repo.preload(entry, :item)
-    NewsItem.publish!(entry.item)
+    item = NewsItem.publish!(entry.item)
     Repo.delete!(entry)
-    Logger.info("News: Published ##{entry.item.id}")
+    Buffer.queue(item)
+    Logger.info("News: Published ##{item.id}")
   end
 
   def publish(nil) do

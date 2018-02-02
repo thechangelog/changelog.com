@@ -1,7 +1,9 @@
 defmodule Changelog.NewsQueueTest do
   use Changelog.DataCase
 
-  alias Changelog.{NewsItem, NewsQueue}
+  import Mock
+
+  alias Changelog.{Buffer, NewsItem, NewsQueue}
 
   describe "append" do
     test "when queue is empty" do
@@ -120,25 +122,31 @@ defmodule Changelog.NewsQueueTest do
       insert(:news_queue, item: i1, position: 1.0)
       insert(:news_queue, item: i2, position: 2.0)
 
-      NewsQueue.publish_next()
+      with_mock(Buffer, [queue: fn(_) -> true end]) do
+        NewsQueue.publish_next()
 
-      published = Repo.all(NewsItem.published)
-      assert Enum.map(published, &(&1.id)) == [i1.id]
-      assert Repo.count(NewsQueue) == 1
+        published = Repo.all(NewsItem.published)
+        assert Enum.map(published, &(&1.id)) == [i1.id]
+        assert Repo.count(NewsQueue) == 1
 
-      NewsQueue.publish_next()
+        NewsQueue.publish_next()
 
-      published = NewsItem.published |> NewsItem.newest_first |> Repo.all
-      assert Enum.map(published, &(&1.id)) == [i2.id, i1.id]
-      assert Repo.count(NewsQueue) == 0
+        published = NewsItem.published |> NewsItem.newest_first |> Repo.all
+        assert Enum.map(published, &(&1.id)) == [i2.id, i1.id]
+        assert Repo.count(NewsQueue) == 0
+      end
     end
   end
 
   describe "publish" do
-    test "it publishes the given item even if it's not in the queue" do
+    test "it publishes the given item and buffers it even if it's not in the queue" do
       item = insert(:news_item)
-      NewsQueue.publish(item)
-      assert Repo.count(NewsItem.published) == 1
+
+      with_mock(Buffer, [queue: fn(_) -> true end]) do
+        NewsQueue.publish(item)
+        assert Repo.count(NewsItem.published) == 1
+        assert called(Buffer.queue(:_))
+      end
     end
 
     test "it publishes the given item, removing it from the queue" do
@@ -152,11 +160,14 @@ defmodule Changelog.NewsQueueTest do
       insert(:news_queue, item: i2, position: 2.0)
       insert(:news_queue, item: i3, position: 3.0)
 
-      NewsQueue.publish(i2)
+      with_mock(Buffer, [queue: fn(_) -> true end]) do
+        NewsQueue.publish(i2)
+        assert called(Buffer.queue(:_))
+        published = Repo.all(NewsItem.published)
+        assert Enum.map(published, &(&1.id)) == [i2.id]
+        assert Repo.count(NewsQueue) == 2
+      end
 
-      published = Repo.all(NewsItem.published)
-      assert Enum.map(published, &(&1.id)) == [i2.id]
-      assert Repo.count(NewsQueue) == 2
     end
   end
 end
