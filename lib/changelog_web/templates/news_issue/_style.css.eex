@@ -168,6 +168,7 @@ a {
 .news_item-source-image img {
   background: #ffffff;
   border: 1px solid #e6e5e6;
+  border-radius: 2px;
   height: 20px;
   width: 20px;
 }
