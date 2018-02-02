@@ -19,8 +19,28 @@ class Time {
     return this.date.getMonth() + 1;
   }
 
+  monthAbbrev() {
+    return this.monthName().substr(0, 3);
+  }
+
+  monthName() {
+    return months[this.date.getMonth()];
+  }
+
+  monthString() {
+    return this.month() < 10 ? `0${this.month()}` : this.month();
+  }
+
   day() {
     return this.date.getDate();
+  }
+
+  dayString() {
+    return this.day() < 10 ? `0${this.day()}` : this.day();
+  }
+
+  weekday() {
+    return days[this.date.getDay()];
   }
 
   hours12() {
@@ -63,22 +83,6 @@ class Time {
     return this.date.toString().match(/\(([\w\s]+)\)/)[1];
   }
 
-  weekday() {
-    return days[this.date.getDay()];
-  }
-
-  month() {
-    return this.date.getMonth() + 1;
-  }
-
-  monthAbbrev() {
-    return this.monthName().substr(0, 3);
-  }
-
-  monthName() {
-    return months[this.date.getMonth()];
-  }
-
   amPmStyle() {
     return `${this.hours12()}${this.minutes(":00")} ${this.amPm()} ${this.tz()}`;
   }
@@ -88,7 +92,7 @@ class Time {
   }
 
   dateStyle() {
-    return `${this.monthAbbrev()} ${this.day()}, ${this.fullYear()}`;
+    return `${this.fullYear()}-${this.monthString()}-${this.dayString()}`;
   }
 
   dayAndDateStyle() {
