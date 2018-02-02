@@ -50,23 +50,23 @@ defmodule Changelog.NewsIssue do
   def preload_ads(query = %Ecto.Query{}) do
     query
     |> Ecto.Query.preload(news_issue_ads: ^NewsIssueAd.by_position)
-    |> Ecto.Query.preload(:ads)
+    |> Ecto.Query.preload(ads: [sponsorship: [:sponsor]])
   end
   def preload_ads(issue) do
     issue
     |> Repo.preload(news_issue_ads: {NewsIssueAd.by_position, :ad})
-    |> Repo.preload(:ads)
+    |> Repo.preload(ads: [sponsorship: [:sponsor]])
   end
 
   def preload_items(query = %Ecto.Query{}) do
     query
     |> Ecto.Query.preload(news_issue_items: ^NewsIssueItem.by_position)
-    |> Ecto.Query.preload(:items)
+    |> Ecto.Query.preload(items: [:author, :logger, :source, :topics])
   end
   def preload_items(issue) do
     issue
     |> Repo.preload(news_issue_items: {NewsIssueItem.by_position, :item})
-    |> Repo.preload(:items)
+    |> Repo.preload(items: [:author, :logger, :source, :topics])
   end
 
   def ad_count(issue) do
