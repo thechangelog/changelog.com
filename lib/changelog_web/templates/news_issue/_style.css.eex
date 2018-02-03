@@ -72,7 +72,7 @@ body {
   width: 100%;
   background-color: #fff;
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 a {
   color: #121921;
@@ -80,7 +80,7 @@ a {
 }
 @media (max-width:  600px) {
   table {
-     width: 100%
+     width: 100%;
   }
 }
 
@@ -226,53 +226,54 @@ a {
   margin-top: 0;
   margin-bottom: 16px;
   padding-top: 0;
-  padding-bottom: 0
+  padding-bottom: 0;
 }
 .news_item-content blockquote {
   border-left: 4px solid #59b287;
   margin: 10px 0;
-  padding-left: 15px
+  padding-left: 15px;
 }
 .news_item-content p img {
+  display: inline-block;
   width: 110%;
-  margin: 10px -5%
+  margin: 10px -5%;
 }
 @media (max-width:  600px) {
   .news_item-content p img {
      width: 100%;
-     margin: 10px 0
+     margin: 10px 0;
   }
 }
 .news_item-content ul,
 .news_item-content ol {
   margin-top: 5px;
   margin-bottom: 22px;
-  padding-left: 18px
+  padding-left: 18px;
 }
 .news_item-content li {
   margin-top: 0;
-  margin-bottom: 4px
+  margin-bottom: 4px;
 }
 .news_item-content code,.news_item-content pre {
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 .news_item-content pre {
   display: block;
   width: 110%;
-  margin: 15px -5%
+  margin: 15px -5%;
 }
 @media (max-width:  600px) {
   .news_item-content pre {
      width: 100%;
-     margin: 10px 0
+     margin: 10px 0;
   }
 }
 .news_item-content code {
-  display: inline-block
+  display: inline-block;
 }
 .news_item-content pre code {
-  display: block
+  display: block;
 }
 .news_item-content code {
   border-top: 2px solid #59b287;
@@ -280,7 +281,7 @@ a {
   color: #59b287;
   font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
   font-size: 14px;
-  padding: 15px
+  padding: 15px;
 }
 .news_item-content p code {
   background-color: #f5f5f5;
@@ -290,17 +291,17 @@ a {
   font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
   font-size: 12px;
   margin: 0 2px;
-  padding: 2px 5px
+  padding: 2px 5px;
 }
 .news_item-content em {
-  font-style: italic
+  font-style: italic;
 }
 .news_item-content mark,
 .news_item-content .highlight {
   color: #121921;
   font-style: normal;
   padding: 0px 4px 2px 4px;
-  background-color: #fffedb
+  background-color: #fffedb;
 }
 .news_item-content .highlight-gray,
 .news_item-content .highlight-grey {
