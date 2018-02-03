@@ -203,9 +203,9 @@ a {
 .news_item-meta-play {
   display: inline-block;
   margin-right: 5px;
-  height: 25px;
+  height: 26px;
   vertical-align: middle;
-  width: 34px;
+  width: 32px;
 }
 .news_item-content a {
   color: #59b287;

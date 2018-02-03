@@ -1,7 +1,7 @@
 <p class="news_item-meta news_item-meta--<%= @item.type %>">
   <%= if @item.type == :audio do %>
     <%= link to: @item.url do %>
-      <img class="news_item-meta-play" width="34" alt="Play" src="/images/email/toolbar-play.png">
+      <img class="news_item-meta-play" width="32" alt="Play" src="/images/email/toolbar-play.png">
     <% end %>
   <% end %>
   <span class="news_item-meta-text">
