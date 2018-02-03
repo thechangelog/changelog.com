@@ -33,7 +33,6 @@
   src: local('Open Sans ExtraBold'), local('OpenSans-ExtraBold'), url(https://fonts.gstatic.com/s/opensans/v15/EInbV5DfGHOiMmvb1Xr-hhampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
 }
-
 @font-face {
   font-family: 'Roboto Mono';
   font-style: normal;
@@ -68,7 +67,6 @@
 /* --- --- --- --- --- */
 
 body {
-  font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
   width: 100%;
   background-color: #fff;
   margin: 0;
@@ -174,6 +172,10 @@ a {
   height: 20px;
   width: 20px;
 }
+h2.news_item-title {
+  font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
+  font-weight: 800;
+}
 .news_item-title {
   color: #121921;
   font-size: 18px;
@@ -215,11 +217,18 @@ a {
   color: #44946d;
   text-decoration: underline;
 }
+.news_item-content p {
+  font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
+  font-weight: 400;
+}
+.news_item-content li {
+  font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
+  font-weight: 400;
+}
 .news_item-content p,
 .news_item-content li {
   color: #121921;
   font-size: 14px;
-  font-weight: 400;
   line-height: 22px;
 }
 .news_item-content p {
