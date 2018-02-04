@@ -88,9 +88,10 @@
                       <tr>
                         <td bgcolor="#ffffff" align="center">
                           <div class="footer">
-                            <p><unsubscribe>Unsubscribe</unsubscribe> &bull; <preferences>Manage Subscription</preferences> &bull; <a href="https://changelog.com/weekly/archive">View Archive</a> &bull; <webversion>View in Browser</webversion></p>
-                            <p>You received this email because you are a subscriber of Changelog.com emails with the email address: [email]</p>
-                            <p class="last-of-type">© 2013-<%= Timex.today.year %> Changelog Media</p>
+                            <p><webversion>View in Browser</webversion> &bull; <preferences>Manage Subscription</preferences> &bull; <unsubscribe>Unsubscribe</unsubscribe></p>
+                            <p>You received this email because you're a subscriber of Changelog.com emails with this email address: [email]</p>
+                            <p><a href="https://changelog.com/">Changelog</a> - News and podcasts for developers</p>
+                            <p class="last-of-type hacker-heart">💚</p>
                           </div>
                         </td>
                       </tr>

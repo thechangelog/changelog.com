@@ -167,7 +167,7 @@ a {
 }
 .news_item-source-image img {
   background: #ffffff;
-  border: 1px solid #e6e5e6;
+  box-shadow: 0 0 24px rgba(18,25,33,0.2);
   border-radius: 2px;
   height: 20px;
   width: 20px;
@@ -325,7 +325,7 @@ h2.news_item-title {
 
 .footer {
   color: #333333;
-  padding: 40px 0;
+  padding: 40px 0 80px 0;
 }
 @media (max-width:  600px) {
   .footer {
@@ -337,7 +337,10 @@ h2.news_item-title {
   font-size: 12px;
   line-height: 1.5;
   margin: 0 0 20px 0;
-  padding: 0 40px;
+  padding: 0 20px;
+}
+.footer p.hacker-heart {
+  font-size: 22px;
 }
 .footer a {
   color: #121921;
