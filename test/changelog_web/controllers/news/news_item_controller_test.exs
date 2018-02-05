@@ -79,7 +79,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     item1 = insert(:published_news_item, headline: "You gonna like this")
     item2 = insert(:published_news_item, headline: "You gonna like this too")
     conn = post(conn, news_item_path(conn, :impress), items: "#{hashid(item1)},#{hashid(item2)}")
-    assert conn.status == 200
+    assert conn.status == 204
     item1 = Repo.get(NewsItem, item1.id)
     item2 = Repo.get(NewsItem, item2.id)
     assert item1.impression_count == 1
@@ -90,7 +90,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   test "hitting the impress endpoint as admin does not impress", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
     conn = post(conn, news_item_path(conn, :impress), items: "#{hashid(item)}")
-    assert conn.status == 200
+    assert conn.status == 204
     item = Repo.get(NewsItem, item.id)
     assert item.impression_count == 0
   end

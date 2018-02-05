@@ -60,7 +60,7 @@ defmodule ChangelogWeb.NewsItemController do
       end)
     end
 
-    send_resp(conn, 200, "")
+    send_resp(conn, 204, "")
   end
 
   def visit(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
