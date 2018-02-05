@@ -43,7 +43,7 @@
           <%= hidden_input(i, :delete) %>
         </div>
         <div class="content" style="margin-left: 6px;">
-          <%= link(item.headline, to: item.url, class: "header") %>
+          <%= link("#{item.headline} (#{ctr(item)}%)", to: item.url, class: "header") %>
           <div class="description" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             <%= if item.image do %>
               <i class="image icon"></i>
@@ -72,7 +72,7 @@
           <div class="ui tiny basic icon button js-move"><i class="move icon"></i></div>
         </div>
         <div class="content" style="margin-left: 6px;">
-          <%= link(ad.headline, to: ad.url, class: "header") %>
+          <%= link("#{ad.headline} (#{ctr(ad)}%)", to: ad.url, class: "header") %>
           <div class="description"><%= ad.story |> NewsItemView.teaser |> raw %></div>
         </div>
       </div>
