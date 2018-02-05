@@ -54,6 +54,7 @@
         <li><%= link "Search", to: search_path(@conn, :search) %></li>
         <li><%= link "Blog", to: post_path(@conn, :index) %></li>
         <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
+        <li><a href="https://github.com/thechangelog/changelog.com/issues">Report Issues</a></li>
         <li><a href="/terms">Terms &amp; Conditions</a></li>
         <li><a href="/privacy">Privacy Policy</a></li>
       </ul>
