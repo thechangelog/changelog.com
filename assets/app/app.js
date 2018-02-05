@@ -72,36 +72,24 @@ u(document).handle("click", ".js-share-popup", function(event) {
 });
 
 // track news clicks
-u(document).on("click", "[data-news]", function(event) {
+u(document).on("mousedown", "[data-news]", function(event) {
   let clicked = u(this);
   let type = clicked.closest("[data-news-type]").data("news-type");
   let id = clicked.closest("[data-news-id]").data("news-id");
 
   if (id) {
-    event.preventDefault();
-    let clickedHref = clicked.attr("href");
-    let trackedHref = `/${type}/${id}/visit`;
-
-    if (isSelfHosted(clickedHref)) {
-      ajax(trackedHref, {method: "GET"}, function() {
-        Turbolinks.visit(clickedHref);
-      });
-    } else if (player.isActive()) {
-      let newWindow = window.open(trackedHref, "_blank");
-      newWindow.opener = null;
-    } else {
-      window.location = trackedHref;
-    }
+    event.currentTarget.href = `${location.origin}/${type}/${id}/visit`;
   }
 });
 
 // open external links in new window when player is doing its thing
 u(document).on("click", "a[href^=http]", function(event) {
   if (player.isActive()) {
-    let href = u(this).attr("href");
-    if (!isSelfHosted(href)) {
+    let clicked = u(this);
+
+    if (isExternalLink(clicked)) {
       event.preventDefault();
-      let newWindow = window.open(href, "_blank");
+      let newWindow = window.open(clicked.attr("href"), "_blank");
       newWindow.opener = null;
     }
   }
@@ -187,8 +175,9 @@ function formatTimes() {
   });
 }
 
-function isSelfHosted(href) {
-  return href.match(location.hostname) || href[0] == "/";
+function isExternalLink(a) {
+  let href = a.attr("href");
+  return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
 }
 
 function impress() {

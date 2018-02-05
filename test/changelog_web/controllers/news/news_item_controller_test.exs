@@ -61,7 +61,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   test "hitting the visit endpoint", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
     conn = get(conn, news_item_path(conn, :visit, hashid(item)))
-    assert redirected_to(conn) == item.url
+    assert html_response(conn, 200) =~ item.url
     item = Repo.get(NewsItem, item.id)
     assert item.click_count == 1
   end
@@ -70,7 +70,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   test "hitting the visit endpoint as admin does not visit", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
     conn = get(conn, news_item_path(conn, :visit, hashid(item)))
-    assert redirected_to(conn) == item.url
+    assert html_response(conn, 200) =~ item.url
     item = Repo.get(NewsItem, item.id)
     assert item.click_count == 0
   end

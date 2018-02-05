@@ -1,0 +1,10 @@
+<script>
+var c = function(l,o,g) {
+  if (l != o) {
+    l.location.href = g;
+    o.location.replace("about:blank");
+  } else { o.location.replace(g) ;}
+}
+c(window.parent, window, "<%= @to %>");
+</script>
+<noscript><META http-equiv="refresh" content="0;URL='<%= @to %>'"></noscript>

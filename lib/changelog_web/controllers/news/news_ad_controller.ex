@@ -30,7 +30,10 @@ defmodule ChangelogWeb.NewsAdController do
   def visit(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
     ad = ad_from_hashid(hashid)
     unless is_admin?(user), do: NewsAd.track_click(ad)
-    redirect(conn, external: ad.url)
+
+    conn
+    |> put_layout(false)
+    |> render(:visit, to: ad.url)
   end
 
   defp ad_from_hashid(hashid) do
