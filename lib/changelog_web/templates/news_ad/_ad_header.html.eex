@@ -1,7 +1,7 @@
 <header class="news_item-header">
   <p class="news_item-source">
-    <%= link to: @ad.url, title: @sponsor.name, rel: "external", data: [news: true] do %>
-      <img class="news_item-source-image" src="<%= SponsorView.avatar_url(@sponsor, :small) %>" alt="<%= @sponsor.name %> Icon" />
+    <%= link to: @ad.url, title: @sponsor.name, rel: "external", data: [news: true], class: "news_item-source-image" do %>
+      <img src="<%= SponsorView.avatar_url(@sponsor, :small) %>" alt="<%= @sponsor.name %> Icon" />
     <% end %>
 
     <%= link("#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name, rel: "external", data: [news: true]) %>
