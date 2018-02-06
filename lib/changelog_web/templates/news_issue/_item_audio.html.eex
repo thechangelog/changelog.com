@@ -1,6 +1,6 @@
 <div class="news_item">
   <%= if @item.object do %>
-    <p class="news_item-source"><%= EpisodeView.podcast_name_and_number(@item.object) %></p>
+    <p class="news_item-source"><%= NewsItemView.render_item_source(@conn, @item) %></p>
   <% end %>
   <h2 class="news_item-title"><%= link(@item.headline, to: @item.url) %></h2>
   <div class="news_item-content">
