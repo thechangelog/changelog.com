@@ -1,0 +1,19 @@
+<div class="page_topics">
+  <section class="topic_list" id="topics">
+    <header class="topic_list-header">
+      <h2>Sources</h2>
+    </header>
+    <div class="topic_list-topics">
+      <%= for source <- @sources do %>
+        <%= link to: topic_path(@conn, :show, source.slug), title: "View Source", class: "topic_list-topics-item" do %>
+          <div class="topic_list-topics-item-name">
+            <!-- <img src="http://via.placeholder.com/60x60" alt=""> -->
+            <h3><%= source.name %></h3>
+          </div>
+          <p class="topic_list-topics-item-description"><%= source.description %></p>
+          <p class="topic_list-topics-item-count"><%= news_count(source) %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+</div>
