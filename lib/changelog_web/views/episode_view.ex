@@ -18,7 +18,8 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def audio_local_path(episode) do
-    Files.Audio.url({episode.audio_file.file_name, episode}, :original)
+    {episode.audio_file.file_name, episode}
+    |> Files.Audio.url(:original)
     |> String.replace_leading("/priv", "priv") # remove Arc's "/" when storage is priv
   end
 

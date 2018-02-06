@@ -2,11 +2,16 @@ defmodule ChangelogWeb.NewsAdView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, Hashid}
-  alias ChangelogWeb.SponsorView
+  alias ChangelogWeb.{Endpoint, SponsorView}
+
+  def image_path(ad, version) do
+    {ad.image, ad}
+    |> Files.Image.url(version)
+    |> String.replace_leading("/priv", "")
+  end
 
   def image_url(ad, version) do
-    Files.Image.url({ad.image, ad}, version)
-    |> String.replace_leading("/priv", "")
+    static_url(Endpoint, image_path(ad, version))
   end
 
   def slug(ad) do

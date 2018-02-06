@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
-  alias ChangelogWeb.{NewsAdView, NewsSourceView, EpisodeView, PersonView, TopicView, PodcastView}
+  alias ChangelogWeb.{Endpoint, NewsAdView, NewsSourceView, EpisodeView, PersonView, TopicView, PodcastView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
@@ -10,9 +10,14 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def image_url(item, version) do
-    Files.Image.url({item.image, item}, version)
+  def image_path(item, version) do
+    {item.image, item}
+    |> Files.Image.url(version)
     |> String.replace_leading("/priv", "")
+  end
+
+  def image_url(item, version) do
+    static_url(Endpoint, image_path(item, version))
   end
 
   def items_with_ads(items, []), do: items

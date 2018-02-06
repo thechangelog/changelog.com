@@ -3,7 +3,7 @@ defmodule ChangelogWeb.NewsSourceView do
 
   alias Changelog.Files.Icon
   alias Changelog.NewsSource
-  alias ChangelogWeb.NewsItemView
+  alias ChangelogWeb.{Endpoint, NewsItemView}
 
   def admin_edit_link(conn, user, source) do
     if user && user.admin do
@@ -11,11 +11,16 @@ defmodule ChangelogWeb.NewsSourceView do
     end
   end
 
+  def icon_path(news_source, version) do
+    {news_source.icon, news_source}
+    |> Icon.url(version)
+    |> String.replace_leading("/priv", "")
+  end
+
   def icon_url(news_source), do: icon_url(news_source, :small)
   def icon_url(news_source, version) do
     if (news_source.icon) do
-      Icon.url({news_source.icon, news_source}, version)
-      |> String.replace_leading("/priv", "")
+      static_url(Endpoint, icon_path(news_source, version))
     else
       "/images/defaults/avatar-source.png"
     end

@@ -2,11 +2,17 @@ defmodule ChangelogWeb.SponsorView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Files.{Avatar, ColorLogo, DarkLogo, LightLogo}
+  alias ChangelogWeb.Endpoint
+
+  def avatar_path(sponsor, version) do
+    {sponsor.avatar, sponsor}
+    |> Avatar.url(version)
+    |> String.replace_leading("/priv", "")
+  end
 
   def avatar_url(sponsor), do: avatar_url(sponsor, :small)
   def avatar_url(sponsor, version) do
-    Avatar.url({sponsor.avatar, sponsor}, version)
-    |> String.replace_leading("/priv", "")
+    static_url(Endpoint, avatar_path(sponsor, version))
   end
 
   def logo_url(sponsor, type, version) do

@@ -2,13 +2,18 @@ defmodule ChangelogWeb.PersonView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Files
-  alias ChangelogWeb.{SharedView, PodcastView}
+  alias ChangelogWeb.{Endpoint, SharedView, PodcastView}
+
+  def avatar_path(person, version) do
+    {person.avatar, person}
+    |> Files.Avatar.url(version)
+    |> String.replace_leading("/priv", "")
+  end
 
   def avatar_url(person), do: avatar_url(person, :small)
   def avatar_url(person, version) do
     if person.avatar do
-      Files.Avatar.url({person.avatar, person}, version)
-      |> String.replace_leading("/priv", "")
+      static_url(Endpoint, avatar_path(person, version))
     else
       gravatar_url(person.email, version)
     end
