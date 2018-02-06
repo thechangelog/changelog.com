@@ -1,7 +1,4 @@
 defmodule ChangelogWeb.Meta.Image do
-
-  alias ChangelogWeb.{PageView}
-
   def fb_image(assigns), do: assigns |> get_fb
   def fb_image_width(assigns), do: assigns |> get_fb_width
   def fb_image_height(assigns), do: assigns |> get_fb_height
@@ -15,5 +12,5 @@ defmodule ChangelogWeb.Meta.Image do
   defp get_fb_height(_), do: nil
 
   defp get_twitter(%{podcast: podcast}), do: "/images/podcasts/#{podcast.slug}-cover-art.png"
-  defp get_twitter(_), do: nil
+  defp get_twitter(_), do: "/images/share/sitewide-twitter-summary.png"
 end
