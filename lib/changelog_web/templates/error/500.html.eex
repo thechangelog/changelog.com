@@ -14,14 +14,14 @@
     <%= render(ChangelogWeb.LayoutView, "_head_scripts.html", assigns) %>
   <% end %>
   </head>
-  <body><!--[if lt IE 8]>
+  <body class="error"><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <main class="main">
       <article class="article">
-        <%= render(SharedView, "_page_heading.html", title: "Server Error", conn: @conn) %>
         <div class="richtext">
-          <h2>Oops! Looks like the server had a hiccup.</h2>
+          <h1>Server Error</h1>
+          <h3>Oops! Looks like the server had a hiccup.</h3>
           <p>You may want to try to reload the page to see if the issue has cleared up.</p>
           <%= link "Take Me Home", to: root_path(@conn, :index), class: "btn btn--padded-bottom" %>
         </div>

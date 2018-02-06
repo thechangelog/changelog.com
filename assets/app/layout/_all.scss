@@ -20,6 +20,10 @@ body {
   @include breakpoint(tablet) {
     padding-top: $header-height;
   }
+
+  &.error {
+    padding-top: 0 !important;
+  }
 }
 .main {
   flex: 1;
