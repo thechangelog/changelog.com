@@ -4,6 +4,5 @@
     <%= render("_item_toolbar.html", Map.put(assigns, :style, "date")) %>
     <div class="news_item-content richtext"><%= @item.story |> md_to_html |> raw %></div>
     <%= image_link(@item) %>
-    <ul class="news_item-meta"></ul>
   </article>
 </div>
