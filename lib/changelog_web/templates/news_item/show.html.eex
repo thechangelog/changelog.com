@@ -4,7 +4,7 @@
     <%= render("_item_toolbar.html", Map.put(assigns, :style, "date")) %>
     <%= if @item.story do %>
       <div class="news_item-content richtext">
-        <p><%= @item.story |> md_to_html |> raw %></p>
+        <%= @item.story |> md_to_html |> raw %>
       </div>
     <% end %>
     <%= if @item.image do %>
