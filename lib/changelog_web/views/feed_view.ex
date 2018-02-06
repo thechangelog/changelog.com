@@ -1,9 +1,13 @@
 defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Podcast, Post}
+  alias Changelog.{Episode, NewsItem, Podcast, Post}
   alias ChangelogWeb.{EpisodeView, NewsItemView, PersonView, PodcastView,
                       PostView, TimeView}
+
+  def image_link(item = %NewsItem{}) do
+    if link = NewsItemView.image_link(item), do: safe_to_string(link)
+  end
 
   def render_item(_item = %{object: episode = %Episode{}}, assigns), do: render("_episode.xml", Map.put(assigns, :episode, Episode.preload_all(episode)))
   def render_item(_item = %{object: post = %Post{}}, assigns), do: render("_post.xml", Map.put(assigns, :post, post))

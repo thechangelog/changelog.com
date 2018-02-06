@@ -10,6 +10,16 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
+  def image_link(item, version \\ :large) do
+    if item.image do
+      content_tag :p do
+        link to: item.url do
+          tag :img, src: image_url(item, version), alt: item.headline
+        end
+      end
+    end
+  end
+
   def image_path(item, version) do
     {item.image, item}
     |> Files.Image.url(version)
