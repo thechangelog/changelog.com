@@ -1,14 +1,23 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link(@sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor)) %>
+    <%= link("News", to: admin_news_item_path(@conn, :index)) %>
     &raquo;
-    <%= link((@sponsorship.name || "Unnamed Campaign"), to: admin_news_sponsorship_path(@conn, :edit, @sponsorship)) %>
+    <%= link("Sponsorships", to: admin_news_sponsorship_path(@conn, :schedule)) %>
+    &raquo;
+    <%= link(@sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor)) %>
+
+    <div class="ui basic right floated buttons">
+      <button class="ui basic icon clipboard button" title="Copy Schedule Text" data-clipboard-text="<%= schedule_text(@sponsorship) %>"><i class="calendar icon"></i></button>
+      <%= link("Edit Sponsorship", to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor), class: "ui button") %>
+      <%= link("Edit Sponsor", to: admin_news_sponsorship_path(@conn, :edit, @sponsorship), class: "ui button") %>
+    </div>
+
     <div class="sub header"><%= pluralize(@sponsorship.ads, "ad", "ads") %> for <%= pluralize(@sponsorship.weeks, "week", "weeks") %></div>
   </h1>
 </div>
 
 <div class="ui basic segment">
-  <h2 class="ui header">Sponsorship</h2>
+  <h2 class="ui header"><%= @sponsorship.name || "Unnamed" %> Campaign</h2>
 
   <table class="ui celled unstackable table">
     <thead>
@@ -19,7 +28,6 @@
         <th>End Week</th>
         <th><i class="mouse pointer icon"></i> / <i class="eye icon"></i></th>
         <th>CTR</th>
-        <th></th>
       </tr>
     </thead>
 
@@ -31,11 +39,6 @@
         <td><%= @sponsorship.weeks |> List.last |> TimeView.pretty_date %></td>
         <td><%= @sponsorship.click_count %> / <%= @sponsorship.impression_count %></td>
         <td><%= ctr(@sponsorship) %>%</td>
-        <td class="center aligned">
-          <div class="ui small basic buttons">
-            <%= icon_link("edit", to: admin_news_sponsorship_path(@conn, :edit, @sponsorship)) %>
-          </div>
-        </td>
       </tr>
     </tbody>
   </table>

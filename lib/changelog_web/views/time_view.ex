@@ -93,8 +93,8 @@ defmodule ChangelogWeb.TimeView do
   def week_start_end(date) do
     start_date = Timex.beginning_of_week(date)
     end_date = Timex.end_of_week(date)
-    {:ok, pretty_start} = Timex.format(start_date, "{Mshort} {D}")
-    {:ok, pretty_end} = Timex.format(end_date, "{Mshort} {D}")
+    {:ok, pretty_start} = Timex.format(start_date, "{Mshort} {0D}")
+    {:ok, pretty_end} = Timex.format(end_date, "{Mshort} {0D}")
     "#{pretty_start} - #{pretty_end}"
   end
 

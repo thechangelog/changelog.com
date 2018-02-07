@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.{NewsSponsorship, Sponsor}
-  alias ChangelogWeb.Endpoint
+  alias ChangelogWeb.{Endpoint, TimeView}
   alias ChangelogWeb.Admin.{NewsAdView}
 
   def schedule_cell_class(focus_week, week, sponsorship) when is_nil(sponsorship) do
@@ -32,6 +32,15 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
       Timex.equal?(week, focus_week) -> "active"
       true -> ""
     end
+  end
+
+  def schedule_text(sponsorship) do
+    weeks_text =
+      sponsorship.weeks
+      |> Enum.map(fn(week) -> TimeView.week_start_end(week) end)
+      |> Enum.join("\n")
+
+    "News:\n\n#{weeks_text}"
   end
 
   def sponsorships_for_week(monday) do
