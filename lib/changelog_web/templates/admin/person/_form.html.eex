@@ -31,31 +31,31 @@
     </div>
   </div>
 
-  <div class="field">
-    <label for="avatar">
-      Avatar
-      <%= help_icon("Ideal size is 600px by 600px") %>
-    </label>
-    <%= if is_persisted(f.data) do %>
-      <img
-        src="<%= ChangelogWeb.PersonView.avatar_url(f.data, :small) %>"
-        data-popup=true
-        <%= if !f.data.avatar do %>
-          data-content="This is the fallback gravatar."
-        <% else %>
-          data-content="This is the uploaded file.."
-        <% end %>
-        width=75
-        height=75
-      >
-      <br/>
-    <% end %>
-    <%= error_message(f, :avatar) %>
-    <div class="field">
-      <%= text_input f, :avatar, placeholder: "Avatar image URL", value: "" %>
+  <div class="two fields">
+    <div class="fourteen wide field">
+      <label for="avatar">
+        Avatar
+        <%= help_icon("Ideal size is 600px by 600px") %>
+        <%= file_toggle_buttons() %>
+      </label>
+      <%= file_input(f, :avatar) %>
+      <%= error_message(f, :avatar) %>
     </div>
-    <div class="field">
-      <%= file_input f, :avatar %>
+
+    <div class="two wide field">
+      <%= if is_persisted(f.data) do %>
+        <img
+          src="<%= ChangelogWeb.PersonView.avatar_url(f.data, :small) %>"
+          data-popup=true
+          <%= if !f.data.avatar do %>
+            data-content="This is the fallback gravatar."
+          <% else %>
+            data-content="This is the uploaded file.."
+          <% end %>
+          width=66
+          height=66
+        >
+      <% end %>
     </div>
   </div>
 

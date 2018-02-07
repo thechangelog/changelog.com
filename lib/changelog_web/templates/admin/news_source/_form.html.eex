@@ -49,17 +49,20 @@
     <%= text_input(f, :feed, placeholder: "https://www.wired.com/feed/rss") %>
   </div>
 
-  <div class="field">
-    <label for="icon">
-      Icon
-      <%= help_icon("Ideal size is 600px by 600px") %>
-    </label>
-    <%= if f.data.icon do %>
-      <img src="<%= ChangelogWeb.NewsSourceView.icon_url(f.data, :small) %>" height=75>
-      <br/>
-    <% end %>
-    <%= error_message(f, :icon) %>
-    <%= file_input f, :icon %>
+  <div class="two fields">
+    <div class="fourteen wide field">
+      <label for="icon">
+        Icon
+        <%= help_icon("Ideal size is 600px by 600px") %>
+        <%= file_toggle_buttons() %>
+      </label>
+      <%= file_input(f, :icon) %>
+      <%= error_message(f, :icon) %>
+    </div>
+
+    <div class="two wide field">
+      <img src="<%= ChangelogWeb.NewsSourceView.icon_url(f.data, :small) %>" height=66>
+    </div>
   </div>
 
   <div class="ui hidden divider"></div>

@@ -95,10 +95,6 @@ defmodule ChangelogWeb.EpisodeView do
     "#{episode.podcast.name} #{number_with_pound(episode)}"
   end
 
-  def sponsorships_with_light_logo(episode) do
-    Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.light_logo) end)
-  end
-
   def sponsorships_with_dark_logo(episode) do
     Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.dark_logo) end)
   end

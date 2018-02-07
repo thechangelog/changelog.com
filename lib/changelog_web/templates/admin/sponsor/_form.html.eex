@@ -6,63 +6,34 @@
   </div>
 
   <div class="two fields">
-    <div class="field">
+    <div class="fourteen wide field">
       <label for="avatar">
         Avatar
         <%= help_icon "Ideal size is 600px by 600px." %>
+        <%= file_toggle_buttons() %>
       </label>
-
-      <%= if f.data.avatar do %>
-        <img src="<%= avatar_url(f.data, :small) %>" height=100>
-        <br/>
-      <% end %>
-      <%= error_message(f, :avatar) %>
       <%= file_input(f, :avatar) %>
+      <%= error_message(f, :avatar) %>
     </div>
 
-
-    <div class="field">
-      <label for="color_logo">
-        Color Logo
-        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
-      </label>
-
-      <%= if f.data.color_logo do %>
-        <img src="<%= logo_url(f.data, :color_logo, :small) %>" height=100>
-        <br/>
-      <% end %>
-      <%= error_message(f, :color_logo) %>
-      <%= file_input(f, :color_logo) %>
+    <div class="two wide field">
+      <img src="<%= avatar_url(f.data, :small) %>" height=66>
     </div>
   </div>
 
   <div class="two fields">
-    <div class="field">
-      <label for="color_logo">
+    <div class="fourteen wide field">
+      <label for="dark_logo">
         Dark Logo
         <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+        <%= file_toggle_buttons() %>
       </label>
-
-      <%= if f.data.dark_logo do %>
-        <img src="<%= logo_url(f.data, :dark_logo, :small) %>" height=100>
-        <br/>
-      <% end %>
-      <%= error_message(f, :dark_logo) %>
       <%= file_input(f, :dark_logo) %>
+      <%= error_message(f, :dark_logo) %>
     </div>
 
-    <div class="field">
-      <label for="light_logo">
-        Light Logo
-        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
-      </label>
-
-      <%= if f.data.light_logo do %>
-        <img src="<%= logo_url(f.data, :light_logo, :small) %>" height=100 style="background: black;">
-        <br/>
-      <% end %>
-      <%= error_message(f, :light_logo) %>
-      <%= file_input(f, :light_logo) %>
+    <div class="two wide field">
+      <img src="<%= logo_url(f.data, :dark_logo, :small) %>" height=66>
     </div>
   </div>
 

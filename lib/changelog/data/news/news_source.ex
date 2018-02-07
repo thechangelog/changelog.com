@@ -19,7 +19,7 @@ defmodule Changelog.NewsSource do
     timestamps()
   end
 
-  def file_changeset(source, attrs \\ %{}), do: cast_attachments(source, attrs, ~w(icon))
+  def file_changeset(source, attrs \\ %{}), do: cast_attachments(source, attrs, ~w(icon), allow_urls: true)
 
   def insert_changeset(source, attrs \\ %{}) do
     source

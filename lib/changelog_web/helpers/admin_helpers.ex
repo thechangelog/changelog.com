@@ -24,6 +24,15 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     end
   end
 
+  def file_toggle_buttons() do
+    content_tag(:span) do
+      [
+        content_tag(:a, "(use url)", href: "javascript:void(0);", class: "field-action use-url"),
+        content_tag(:a, "(use file)", href: "javascript:void(0);", class: "field-action use-file", style: "display: none;"),
+      ]
+    end
+  end
+
   def help_icon(help_text) do
     ~e"""
     <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>
@@ -42,9 +51,9 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   def is_loaded(_association), do: true
 
   def label_with_clear(attr, text) do
-    content_tag :label, for: attr do
+    content_tag(:label, for: attr) do
       [content_tag(:span, text),
-       content_tag(:a, "(clear)", href: "javascript:void(0);", class: "clear")]
+       content_tag(:a, "(clear)", href: "javascript:void(0);", class: "field-action")]
     end
   end
   # Attempts to load an associated record on a form. Starts with direct

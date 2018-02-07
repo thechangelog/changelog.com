@@ -54,7 +54,7 @@ defmodule Changelog.NewsItem do
   def published_since(query, _),                  do: published(query)
 
   def file_changeset(item, attrs \\ %{}) do
-    cast_attachments(item, attrs, ~w(image))
+    cast_attachments(item, attrs, ~w(image), allow_urls: true)
   end
 
   def insert_changeset(item, attrs \\ %{}) do

@@ -27,7 +27,7 @@ defmodule Changelog.Topic do
       where: not(is_nil(i.id)))
   end
 
-  def file_changeset(topic, attrs \\ %{}), do: cast_attachments(topic, attrs, ~w(icon))
+  def file_changeset(topic, attrs \\ %{}), do: cast_attachments(topic, attrs, ~w(icon), allow_urls: true)
 
   def insert_changeset(topic, attrs \\ %{}) do
     topic

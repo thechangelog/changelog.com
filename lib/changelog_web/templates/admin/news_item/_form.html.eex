@@ -64,14 +64,14 @@
     <label for="image">
       Image
       <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
+      <%= file_toggle_buttons() %>
     </label>
+    <%= file_input(f, :image) %>
+    <%= error_message(f, :image) %>
 
     <%= if f.data.image do %>
       <img src="<%= image_url(f.data, :large) %>" style="width: 100%; background: black;">
     <% end %>
-    <br/>
-    <%= error_message(f, :image) %>
-    <%= file_input(f, :image) %>
   </div>
 
   <div class="field">

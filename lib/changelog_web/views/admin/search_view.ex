@@ -110,8 +110,7 @@ defmodule ChangelogWeb.Admin.SearchView do
 
     %{id: sponsor.id,
       title: sponsor.name,
-      description: sponsor.description,
-      image: SponsorView.logo_url(sponsor, :color_logo, :small),
+      image: SponsorView.avatar_url(sponsor, :small),
       url: admin_sponsor_path(Endpoint, :edit, sponsor),
       extras: extras}
   end
