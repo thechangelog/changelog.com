@@ -19,6 +19,13 @@ defmodule Changelog.NewsSource do
     timestamps()
   end
 
+  def with_news_items(query \\ __MODULE__) do
+    from(q in query,
+      distinct: true,
+      left_join: i in assoc(q, :news_items),
+      where: not(is_nil(i.id)))
+  end
+
   def file_changeset(source, attrs \\ %{}), do: cast_attachments(source, attrs, ~w(icon))
 
   def insert_changeset(source, attrs \\ %{}) do

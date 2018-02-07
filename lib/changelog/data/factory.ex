@@ -146,9 +146,9 @@ defmodule Changelog.Factory do
 
   def news_source_factory do
     %Changelog.NewsSource{
-      name: "Wired",
-      slug: "wired",
-      website: "https://wired.com"
+      name: sequence(:name, &"News Source #{&1}"),
+      slug: sequence(:name, &"news-source-#{&1}"),
+      website: "https://newssource.com"
     }
   end
 
