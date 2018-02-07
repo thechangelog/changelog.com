@@ -78,6 +78,9 @@
       }
 
       &-count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-left: 1px solid $light-grey;
         border-right: 0;
         text-align: center;
