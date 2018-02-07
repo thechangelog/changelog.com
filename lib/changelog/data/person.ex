@@ -66,7 +66,7 @@ defmodule Changelog.Person do
 
   defp changeset_with_allowed_params(struct, params, allowed) do
     struct
-    |> cast_attachments(params, ~w(avatar))
+    |> cast_attachments(params, ~w(avatar), allow_urls: true)
     |> cast(params, allowed)
     |> validate_required([:name, :email, :handle])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
