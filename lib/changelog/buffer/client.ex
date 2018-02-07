@@ -21,26 +21,37 @@ defmodule Changelog.Buffer.Client do
   end
 
   def handle({:ok, %{status_code: 200, body: body}}), do: body
-  def handle({:ok, %{status_code: 400, body: %{"code" => code, "message" => message}}}) do
-    log("error #{code}: #{message}")
-  end
-  def handle({:error, %{reason: reason}}) do
-    log(reason)
-  end
+  def handle({:ok, %{status_code: 400, body: %{"code" => code, "message" => message}}}), do: log("error #{code}: #{message}")
+  def handle({:error, %{reason: reason}}), do: log(reason)
 
   def create(profiles, text, media \\ [])
   def create(profiles, text, media) when is_binary(profiles), do: create([profiles], text, media)
   def create(profiles, text, media) when is_list(profiles) do
-    required_params = [{"profile_ids[]", profiles}, {"text", text}]
-    media_params =  Enum.map(media, fn({k, v}) -> {"media[#{k}]", v} end)
-    post("updates/create", {:form, required_params ++ media_params}) |> handle
+    params = [
+      {"text", text},
+      profile_list_to_params(profiles),
+      media_list_to_params(media)
+    ] |> List.flatten
+
+    post("updates/create", {:form, params}) |> handle
   end
 
   def profiles do
     get("profiles") |> handle
   end
 
+  defp media_list_to_params(media) do
+    media
+    |> Enum.reject(fn({_k, v}) -> is_nil(v) end)
+    |> Enum.map(fn({k, v}) -> {"media[#{k}]", v} end)
+  end
+
+  defp profile_list_to_params(profiles) do
+    profiles |> Enum.map(&({"profile_ids[]", &1}))
+  end
+
   defp log(message) do
     Logger.debug("Buffer: #{message}")
+    message
   end
 end
