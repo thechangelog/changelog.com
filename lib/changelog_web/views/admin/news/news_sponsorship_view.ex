@@ -37,6 +37,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   def sponsorships_for_week(monday) do
     monday
     |> NewsSponsorship.week_of
+    |> NewsSponsorship.newest_last
     |> Changelog.Repo.all
     |> NewsSponsorship.preload_sponsor
   end
