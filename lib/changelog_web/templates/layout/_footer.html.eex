@@ -21,6 +21,7 @@
       <ul>
         <li><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
         <li><%= link "Topics", to: topic_path(@conn, :index), title: "View All Topics" %></li>
+        <li><%= link "Sources", to: news_source_path(@conn, :index), title: "View All Sources" %></li>
         <li>---</li>
         <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
         <li><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></li>

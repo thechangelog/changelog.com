@@ -20,6 +20,8 @@
         <%= pluralize(news_count(@source), "Story", "Stories") %>
       </div>
     </div>
+
+    <%= link "All Sources", to: news_source_path(@conn, :index), title: "View All Sources", class: "topic-header-back" %>
   </header>
 
   <div class="feed">

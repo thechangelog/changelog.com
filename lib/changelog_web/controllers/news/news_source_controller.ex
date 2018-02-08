@@ -3,6 +3,17 @@ defmodule ChangelogWeb.NewsSourceController do
 
   alias Changelog.{NewsItem, NewsSource}
 
+  def index(conn, params) do
+    page =
+      NewsSource
+      |> NewsSource.with_news_items
+      |> order_by([q], asc: q.name)
+      |> NewsSource.preload_news_items
+      |> Repo.paginate(Map.put(params, :page_size, 1000))
+
+    render(conn, :index, sources: page.entries, page: page)
+  end
+
   def show(conn, params = %{"slug" => slug}) do
     source = Repo.get_by!(NewsSource, slug: slug)
 
