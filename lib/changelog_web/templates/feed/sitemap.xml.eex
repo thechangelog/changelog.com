@@ -19,6 +19,7 @@
     <url><loc><%= news_item_url(@conn, :show, NewsItemView.slug(item)) %></loc></url>
   <% end %>
 
+  <url><loc><%= news_source_url(@conn, :index) %></loc></url>
   <%= for source <- @news_sources do %>
     <url><loc><%= news_source_url(@conn, :show, source.slug) %></loc></url>
   <% end %>
