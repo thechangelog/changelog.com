@@ -58,7 +58,7 @@ defmodule Changelog.Mixfile do
       {:plug_ets_cache, github: "gnufede/plug_ets_cache"},
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
       {:ex_aws, "~> 1.1"},
-      {:nimble_csv, "~> 0.2.0"},
+      {:nimble_csv, "~> 0.4"},
       {:sweet_xml, "~> 0.5"},
       {:briefly, "~> 0.3"},
       {:cowboy, "~> 1.0"},
