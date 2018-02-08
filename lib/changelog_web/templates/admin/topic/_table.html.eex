@@ -2,6 +2,8 @@
   <thead>
     <tr>
       <th>Topic</th>
+      <th>Twitter</th>
+      <th>Website</th>
       <th>Description</th>
       <th>News</th>
       <th>Episodes</th>
@@ -17,7 +19,9 @@
         <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(topic) %>">
         <%= topic.name %> (<%= topic.slug %>)
       </td>
-      <td><%= truncate(topic.description, 100) %></td>
+      <td><%= twitter_link(topic) %></td>
+      <td><%= website_link(topic) %></td>
+      <td><%= truncate(topic.description, 50) %></td>
       <td><%= news_count(topic) %></td>
       <td><%= episode_count(topic) %></td>
       <td><%= post_count(topic) %></td>

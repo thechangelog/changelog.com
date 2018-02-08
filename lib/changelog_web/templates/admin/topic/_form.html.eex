@@ -13,6 +13,20 @@
     </div>
   </div>
 
+  <div class="two fields">
+    <div class="field <%= error_class(f, :twitter_handle) %>">
+      <%= label(f, :twitter_handle, "Twitter Handle") %>
+      <%= text_input(f, :twitter_handle, placeholder: "RubyOnRails") %>
+      <%= error_message(f, :twitter_handle) %>
+    </div>
+
+    <div class="field <%= error_class(f, :website) %>">
+      <%= label(f, :website, "Website") %>
+      <%= text_input(f, :website, placeholder: "https://www.rubyonrails.org") %>
+      <%= error_message(f, :website) %>
+    </div>
+  </div>
+
   <div class="field <%= error_class(f, :description) %>">
     <label for="description">
       Description

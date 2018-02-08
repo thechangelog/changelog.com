@@ -7,6 +7,8 @@ defmodule Changelog.Topic do
     field :name, :string
     field :slug, :string
     field :description, :string
+    field :website, :string
+    field :twitter_handle, :string
 
     field :icon, Files.Icon.Type
 
@@ -31,10 +33,12 @@ defmodule Changelog.Topic do
 
   def insert_changeset(topic, attrs \\ %{}) do
     topic
-    |> cast(attrs, ~w(name slug description))
+    |> cast(attrs, ~w(name slug description twitter_handle website))
     |> validate_required([:name, :slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
+    |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:slug)
+    |> unique_constraint(:twitter_handle)
   end
 
   def update_changeset(topic, attrs \\ %{}) do
