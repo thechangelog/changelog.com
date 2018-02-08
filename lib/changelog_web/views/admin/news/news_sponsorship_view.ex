@@ -37,7 +37,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   def schedule_text(sponsorship) do
     weeks_text =
       sponsorship.weeks
-      |> Enum.map(fn(week) -> TimeView.week_start_end(week) end)
+      |> Enum.map(fn(week) -> "- " <> TimeView.week_start_end(week) end)
       |> Enum.join("\n")
 
     "News:\n\n#{weeks_text}"
