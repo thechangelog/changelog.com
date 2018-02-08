@@ -27,8 +27,8 @@
       <td><%= website_link(sponsor) %></td>
       <td><%= github_link(sponsor) %></td>
       <td><%= twitter_link(sponsor) %></td>
-      <td><%= sponsorship_count(sponsor) %></td>
-      <td>Soon</td>
+      <td><%= sponsorship_count(sponsor, :episode) %></td>
+      <td><%= sponsorship_count(sponsor, :news) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= icon_link "eye", to: admin_sponsor_path(@conn, :show, sponsor) %>

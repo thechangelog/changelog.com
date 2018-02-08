@@ -1,7 +1,7 @@
 defmodule Changelog.Sponsor do
   use Changelog.Data
 
-  alias Changelog.{Benefit, Files, EpisodeSponsor, Regexp}
+  alias Changelog.{Benefit, EpisodeSponsor, Files, NewsSponsorship, Regexp}
 
   schema "sponsors" do
     field :name, :string
@@ -39,7 +39,6 @@ defmodule Changelog.Sponsor do
     |> file_changeset(attrs)
   end
 
-  def sponsorship_count(sponsor) do
-    Repo.count(from(e in EpisodeSponsor, where: e.sponsor_id == ^sponsor.id))
-  end
+  def sponsorship_count(sponsor, :episode), do: Repo.count(from(q in EpisodeSponsor, where: q.sponsor_id == ^sponsor.id))
+  def sponsorship_count(sponsor, :news), do: Repo.count(from(q in NewsSponsorship, where: q.sponsor_id == ^sponsor.id))
 end
