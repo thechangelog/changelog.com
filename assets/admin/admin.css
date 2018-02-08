@@ -30,6 +30,22 @@
   font-size: 1.5rem;
 }
 
+.js-image-options {
+  overflow-y: auto;
+  white-space: nowrap;
+  img {
+    margin: 10px !important;
+    cursor: pointer;
+  }
+  .selected {
+    border: 3px solid blue;
+  }
+}
+
+input[type=file] {
+  height: 38px;
+}
+
 @-webkit-keyframes success {
   0% { background-color: #E5F9E7; }
   100% { background-color: white; }

@@ -29,18 +29,6 @@ defmodule Changelog.UrlKit do
     NewsSource.get_by_url(url)
   end
 
-  def get_title(url) when is_nil(url), do: ""
-  def get_title(url) do
-    url |> get_html |> extract_title |> HtmlEntities.decode()
-  end
-
-  def extract_title(html) do
-    case Regex.named_captures(~r/<title.*?>(?<title>.*?)<\/title>/s, html) do
-      %{"title" => title} -> title |> String.trim() |> String.split("\n") |> List.first
-      _else -> "Couldn't parse title. Report to Jerod!"
-    end
-  end
-
   def get_type(url) when is_nil(url), do: :link
   def get_type(url) do
     cond do

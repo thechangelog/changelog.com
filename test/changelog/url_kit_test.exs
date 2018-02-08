@@ -1,8 +1,6 @@
 defmodule Changelog.UrlKitTest do
   use Changelog.DataCase
 
-  import Mock
-
   alias Changelog.UrlKit
 
   describe "get_object_id" do
@@ -45,47 +43,6 @@ defmodule Changelog.UrlKitTest do
       assert UrlKit.get_source(url) == wired
       url = "https://twitter.com/wired/status/8675309"
       assert UrlKit.get_source(url) == wired
-    end
-  end
-
-  describe "get_title" do
-    test "defaults to empty string" do
-      assert UrlKit.get_title(nil) == ""
-    end
-
-    test "extracts the page title" do
-      url = "https://www.wired.com/2017/10/things-we-loved-in-october/"
-
-      for body <- [~s{<title itemprop='name'>October's Best Gear</title>}, ~s{<title>October's Best Gear</title>}] do
-        response = %{status_code: 200, headers: [], body: body}
-
-        with_mock HTTPoison, [get!: fn(_, _, _) -> response end] do
-          assert UrlKit.get_title(url) == "October's Best Gear"
-          assert called HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5])
-        end
-      end
-    end
-  end
-
-  describe "extract_title" do
-    test "when newlines are a thing" do
-      html = """
-      <head>
-      <meta charset="utf-8">
-      <title>
-      GraphQL + Relay Modern + Rails //
-      Collective Idea
-      | Crafting web and mobile software based in Holland, Michigan
-      </title>
-      """
-
-      assert UrlKit.extract_title(html) == "GraphQL + Relay Modern + Rails //"
-    end
-
-    test "when there are multiple title tags" do
-      html = "<title>Are holograms the future of how we capture memories?</title><title>Part Deux</title."
-
-      assert UrlKit.extract_title(html) == "Are holograms the future of how we capture memories?"
     end
   end
 

@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, NewsSource, NewsQueue, Topic, UrlKit}
+  alias Changelog.{HtmlKit, NewsItem, NewsSource, NewsQueue, Topic, UrlKit}
 
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
@@ -50,17 +50,20 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   def new(conn, params) do
     url = UrlKit.normalize_url(params["url"])
+    html = UrlKit.get_html(url)
 
     changeset =
       conn.assigns.current_user
       |> build_assoc(:logged_news_items,
         url: url,
-        headline: String.capitalize(UrlKit.get_title(url)),
+        headline: String.capitalize(HtmlKit.get_title(html)),
         source: UrlKit.get_source(url),
         type: UrlKit.get_type(url))
       |> NewsItem.insert_changeset()
 
-    render(conn, :new, changeset: changeset)
+    images = HtmlKit.get_images(html)
+
+    render(conn, :new, changeset: changeset, images: images)
   end
 
   def create(conn, params = %{"news_item" => item_params}) do

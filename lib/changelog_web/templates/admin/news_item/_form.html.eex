@@ -69,9 +69,13 @@
     <%= file_input(f, :image) %>
     <%= error_message(f, :image) %>
 
-    <%= if f.data.image do %>
-      <img src="<%= image_url(f.data, :large) %>" style="width: 100%; background: black;">
-    <% end %>
+  <%= if f.data.image do %>
+    <img src="<%= image_url(f.data, :large) %>" style="width: 100%;">
+  <% end %>
+
+  <%= if assigns[:images] do %>
+    <div class="ui small images js-image-options" data-options="<%= Poison.encode!(@images) %>"></div>
+  <% end %>
   </div>
 
   <div class="field">

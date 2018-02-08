@@ -42,6 +42,36 @@ export default class newsItemView {
       $("h1").remove();
       $(".ui.very.padded.segment").removeClass("very padded");
     }
+
+    let $images = $(".js-image-options");
+
+    $images.data("options").forEach(function(url) {
+      let img = new Image();
+      img.setAttribute("style", "display: none");
+      img.setAttribute("class", "ui image");
+      img.src = url;
+      img.onload = function() {
+        if (this.naturalWidth >= 200 && this.naturalHeight > 200) {
+          this.setAttribute("title", `${this.naturalWidth} x ${this.naturalHeight}`);
+          this.setAttribute("style", "display: inline-block;");
+        } else {
+          this.remove();
+        }
+      };
+      $images.append(img);
+    });
+
+    $images.on("click", "img", function() {
+      let $clicked = $(this);
+      $(".use-url")
+        .trigger("click")
+        .closest(".field")
+        .find("input[type=text]")
+        .val($clicked.attr("src"));
+
+      $clicked.addClass("selected");
+      $clicked.siblings("img").removeClass("selected");
+    });
   }
 
   edit() {
