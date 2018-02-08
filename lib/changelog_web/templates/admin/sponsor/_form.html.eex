@@ -37,6 +37,22 @@
     </div>
   </div>
 
+  <div class="two fields">
+    <div class="fourteen wide field">
+      <label for="color_logo">
+        Color Logo
+        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+        <%= file_toggle_buttons() %>
+      </label>
+      <%= file_input(f, :color_logo) %>
+      <%= error_message(f, :color_logo) %>
+    </div>
+
+    <div class="two wide field">
+      <img src="<%= logo_url(f.data, :color_logo, :small) %>" height=66>
+    </div>
+  </div>
+
   <div class="three fields">
     <div class="field <%= error_class(f, :website) %>">
       <%= label f, :website %>
