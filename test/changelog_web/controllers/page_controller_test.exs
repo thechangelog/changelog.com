@@ -8,17 +8,11 @@ defmodule ChangelogWeb.PageControllerTest do
       "/films",
       "/community",
       "/nightly",
-      "/nightly/confirmed",
-      "/nightly/unsubscribed",
       "/sponsor",
+      "/sponsor/pricing",
       "/team",
       "/weekly",
-      "/weekly/archive",
-      "/weekly/confirmed",
-      "/weekly/unsubscribed",
-      "/confirmation-pending",
-      "/gotime/confirmed",
-      "/rfc/confirmed"
+      "/weekly/archive"
     ], fn route ->
       conn = get(conn, route)
       assert conn.status == 200

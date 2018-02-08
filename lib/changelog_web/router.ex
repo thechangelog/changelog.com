@@ -170,19 +170,11 @@ defmodule ChangelogWeb.Router do
     get "/terms", PageController, :terms
 
     get "/nightly", PageController, :nightly
-    get "/nightly/confirmed", PageController, :nightly_confirmed
     get "/nightly/unsubscribed", PageController, :nightly_unsubscribed
 
     get "/weekly", PageController, :weekly
     get "/weekly/archive", PageController, :weekly_archive
-    get "/weekly/confirmed", PageController, :weekly_confirmed
     get "/weekly/unsubscribed", PageController, :weekly_unsubscribed
-
-    get "/gotime/confirmed", PageController, :gotime_confirmed
-    get "/rfc/confirmed", PageController, :rfc_confirmed
-
-    get "/confirmation-pending", PageController, :confirmation_pending
-
 
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc><%= root_url(@conn, :index) %></loc></url>
+  <url><loc><%= root_url(@conn, :index) %><changefreq>hourly</changefreq></loc></url>
   <url><loc><%= page_url(@conn, :about) %></loc></url>
   <url><loc><%= page_url(@conn, :coc) %></loc></url>
   <url><loc><%= page_url(@conn, :contact) %></loc></url>
   <url><loc><%= page_url(@conn, :films) %></loc></url>
   <url><loc><%= page_url(@conn, :community) %></loc></url>
   <url><loc><%= page_url(@conn, :sponsor) %></loc></url>
+  <url><loc><%= page_url(@conn, :sponsor_pricing) %></loc></url>
   <url><loc><%= page_url(@conn, :team) %></loc></url>
   <url><loc><%= page_url(@conn, :weekly) %></loc></url>
   <url><loc><%= page_url(@conn, :nightly) %></loc></url>
