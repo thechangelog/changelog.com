@@ -47,6 +47,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     link text, (opts ++ [rel: "external"])
   end
 
+  def get_param(conn, param, default \\ nil), do: Map.get(conn.params, param, default)
+
   def github_url(handle), do: "https://github.com/#{handle}"
 
   def github_link(model) do

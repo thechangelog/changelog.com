@@ -4,7 +4,7 @@ defmodule ChangelogWeb.PersonControllerTest do
 
   import Mock
 
-  alias Changelog.Person
+  alias Changelog.{Newsletters, Person}
 
   describe "joining" do
     test "getting the form", %{conn: conn} do
@@ -72,32 +72,35 @@ defmodule ChangelogWeb.PersonControllerTest do
       assert conn.halted
     end
 
-    test "submission with required data creates person, sends email, and redirects", %{conn: conn} do
-      count_before = count(Person)
+    test "with required data creates person, subscribes, sends email, redirects", %{conn: conn} do
+      with_mock(Craisin.Subscriber, [subscribe: fn(_, _) -> nil end]) do
+        count_before = count(Person)
 
-      conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _) -> nil end] do
-        post(conn, person_path(conn, :subscribe), email: "joe@blow.com")
+        conn = post(conn, person_path(conn, :subscribe), email: "joe@blow.com")
+
+        person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
+
+        assert called(Craisin.Subscriber.subscribe(Newsletters.weekly().list_id, :_))
+        assert_delivered_email ChangelogWeb.Email.subscriber_welcome(person)
+        assert redirected_to(conn) == root_path(conn, :index)
+        assert count(Person) == count_before + 1
       end
-
-      person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
-      assert_delivered_email ChangelogWeb.Email.subscriber_welcome(person)
-      assert redirected_to(conn) == root_path(conn, :index)
-      assert count(Person) == count_before + 1
     end
 
-    test "submission with existing email sends email, redirects, but doesn't create person", %{conn: conn} do
-      existing = insert(:person)
-      count_before = count(Person)
+    test "with existing email subscribes, sends email, redirects, but doesn't create person", %{conn: conn} do
+      with_mock(Craisin.Subscriber, [subscribe: fn(_, _) -> nil end]) do
+        existing = insert(:person)
+        count_before = count(Person)
 
-      conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _) -> nil end] do
-        post(conn, person_path(conn, :subscribe), email: existing.email)
+        conn = post(conn, person_path(conn, :subscribe), email: existing.email, list: "nightly")
+
+        existing = Repo.one(from p in Person, where: p.email == ^existing.email)
+
+        assert called(Craisin.Subscriber.subscribe(Newsletters.nightly().list_id, :_))
+        assert_delivered_email ChangelogWeb.Email.subscriber_welcome(existing)
+        assert redirected_to(conn) == root_path(conn, :index)
+        assert count(Person) == count_before
       end
-
-      existing = Repo.one(from p in Person, where: p.email == ^existing.email)
-
-      assert_delivered_email ChangelogWeb.Email.subscriber_welcome(existing)
-      assert redirected_to(conn) == root_path(conn, :index)
-      assert count(Person) == count_before
     end
   end
 end

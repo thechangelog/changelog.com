@@ -6,7 +6,7 @@
       <%= if @current_user do %>
         <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "marketing-button button_large" %>
       <% else %>
-        <%= link "Subscribe", to: person_path(@conn, :subscribe), class: "marketing-button button_large" %>
+        <%= link "Subscribe", to: person_path(@conn, :subscribe, list: "weekly"), class: "marketing-button button_large" %>
       <% end %>
     </header>
   </section>
