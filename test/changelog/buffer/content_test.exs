@@ -41,26 +41,29 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(nil) == ""
     end
 
-    test "includes topic tags when available" do
-      item = insert(:news_item)
-      t1 = insert(:news_item_topic, news_item: item)
-      t2 = insert(:news_item_topic, news_item: item)
-      t3 = insert(:news_item_topic, news_item: item)
-      assert Content.news_item_text(item) == "#{item.headline}\n\n##{t1.topic.slug} ##{t2.topic.slug} ##{t3.topic.slug}"
+    test "intersperses topic tags and twitter handles" do
+      item = insert(:news_item, headline: "News of iOS 9 doing Machine Learning things.")
+      t1 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
+      t2 = insert(:topic, name: "Machine Learning", slug: "machine-learning")
+      t3 = insert(:topic, name: "Security", slug: "security")
+      insert(:news_item_topic, news_item: item, topic: t1)
+      insert(:news_item_topic, news_item: item, topic: t2)
+      insert(:news_item_topic, news_item: item, topic: t3)
+      assert Content.news_item_text(item) == "News of @OfficialiOS 9 doing #MachineLearning things. #security"
     end
 
     test "includes 'via' when news source has twitter handle" do
       source = insert(:news_source, twitter_handle: "wired")
       item = insert(:news_item, source: source)
-      t1 = insert(:news_item_topic, news_item: item)
-      assert Content.news_item_text(item) == "#{item.headline}\n\nvia @wired ##{t1.topic.slug}"
+      t1 = insert(:topic, name: "iOS", slug: "ios")
+      insert(:news_item_topic, news_item: item, topic: t1)
+      assert Content.news_item_text(item) == "#{item.headline} #ios (via @wired)"
     end
 
     test "doesn't include 'via' when news source has no twitter handle" do
       source = insert(:news_source)
       item = insert(:news_item, source: source)
-      t1 = insert(:news_item_topic, news_item: item)
-      assert Content.news_item_text(item) == "#{item.headline}\n\n##{t1.topic.slug}"
+      assert Content.news_item_text(item) == item.headline
     end
   end
 end

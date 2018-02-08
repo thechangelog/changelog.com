@@ -19,20 +19,34 @@ defmodule Changelog.Buffer.Content do
   def news_item_text(item) do
     item = NewsItem.preload_all(item)
 
-    [
-      item.headline,
-      news_item_source_and_topics(item)
-    ]
-    |> Enum.reject(&(&1 == ""))
-    |> Enum.reject(&is_nil/1)
-    |> Enum.join("\n\n")
+    text = if Enum.any?(item.topics) do
+      Enum.reduce(item.topics, item.headline, &(insert_topic_reference(&2, &1)))
+    else
+      item.headline
+    end
+
+    text = if item.source && item.source.twitter_handle do
+      "#{text} (via @#{item.source.twitter_handle})"
+    else
+      text
+    end
+
+    text
   end
 
-  defp news_item_source_and_topics(item) do
-    if item.source && item.source.twitter_handle do
-      "via @#{item.source.twitter_handle} #{NewsItemView.topic_list(item)}"
+  defp insert_topic_reference(text, topic) do
+    if String.match?(text, ~r/#{topic.name}/) do
+      String.replace(text, topic.name, twitterized(topic, :name))
     else
-      NewsItemView.topic_list(item)
+      text <> " #{twitterized(topic, :slug)}"
+    end
+  end
+
+  defp twitterized(topic, attr) do
+    if topic.twitter_handle do
+      "@" <> topic.twitter_handle
+    else
+      "#" <> String.replace(Map.get(topic, attr), ~r/[\s-]/, "")
     end
   end
 end
