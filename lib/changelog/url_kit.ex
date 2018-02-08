@@ -31,7 +31,7 @@ defmodule Changelog.UrlKit do
 
   def get_title(url) when is_nil(url), do: ""
   def get_title(url) do
-    url |> get_html |> extract_title
+    url |> get_html |> extract_title |> HtmlEntities.decode()
   end
 
   def extract_title(html) do

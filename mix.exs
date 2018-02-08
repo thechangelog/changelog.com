@@ -69,6 +69,7 @@ defmodule Changelog.Mixfile do
       {:ueberauth_twitter, "~> 0.2"},
       {:ex_machina, "~> 2.0"},
       {:rollbax, "~> 0.6"},
+      {:html_entities, "~> 0.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.4", only: [:dev, :test]},
       {:excoveralls, "~> 0.6", only: :test},

@@ -5,6 +5,6 @@ var c = function(l,o,g) {
     o.location.replace("about:blank");
   } else { o.location.replace(g) ;}
 }
-c(window.parent, window, "<%= @to %>");
+c(window.parent, window, "<%= raw(@to) %>");
 </script>
-<noscript><META http-equiv="refresh" content="0;URL='<%= @to %>'"></noscript>
+<noscript><META http-equiv="refresh" content="0;URL='<%= raw(@to) %>'"></noscript>
