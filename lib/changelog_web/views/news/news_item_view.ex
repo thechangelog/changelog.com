@@ -46,37 +46,45 @@ defmodule ChangelogWeb.NewsItemView do
     if item.object_id, do: [news: true], else: []
   end
 
-  def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_item_summary.html", Map.merge(assigns, %{item: item, style: "relative"}))
-  def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_ad_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
+  def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_summary.html", Map.merge(assigns, %{item: item, style: "relative"}))
+  def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
 
-  def render_item_source(conn, item = %{type: :audio}) do
-    if item.object do
-      render("_item_source_episode.html", conn: conn, item: item, episode: item.object)
-    else
-      render_item_source(conn, Map.put(item, :type, :link))
+  def render_item_source_image(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+    render("source/_image_episode.html", conn: conn, item: item, episode: episode)
+  end
+  def render_item_source_image(conn, item) do
+    cond do
+      item.author -> render("source/_image_author.html", conn: conn, item: item, author: item.author)
+      item.source && item.source.icon -> render("source/_image_source.html", conn: conn, item: item, source: item.source)
+      topic = Enum.find(item.topics, &(&1.icon)) -> render("source/_image_topic.html", conn: conn, item: item, topic: topic)
+      true -> render("source/_image_fallback.html", conn: conn, item: item)
     end
   end
-  def render_item_source(conn, item) do
+
+  # same as `render_item_source_image` except the cascade is re-ordered
+  def render_item_source_name(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+    render("source/_name_episode.html", conn: conn, item: item, episode: episode)
+  end
+  def render_item_source_name(conn, item) do
     cond do
-      item.source && item.source.icon -> render("_item_source_source.html", conn: conn, item: item, source: item.source)
-      item.author -> render("_item_source_author.html", conn: conn, item: item, author: item.author)
-      topic = Enum.find(item.topics, &(&1.icon)) -> render("_item_source_topic.html", conn: conn, item: item, topic: topic)
-      true -> render("_item_source_fallback.html", conn: conn, item: item)
+      item.source && item.source.icon -> render("source/_name_source.html", conn: conn, item: item, source: item.source)
+      item.author -> render("source/_name_author.html", conn: conn, item: item, author: item.author)
+      true -> render("source/_name_fallback.html", conn: conn, item: item)
     end
   end
 
   def render_item_title(conn, item) do
     if item.object_id do
-      render("_item_title_internal.html", conn: conn, item: item)
+      render("title/_internal.html", conn: conn, item: item)
     else
-      render("_item_title_external.html", conn: conn, item: item)
+      render("title/_external.html", conn: conn, item: item)
     end
   end
 
   def render_item_toolbar_button(conn, item) do
     cond do
-      NewsItem.is_audio(item) && item.object -> render("_item_toolbar_button_episode.html", conn: conn, item: item, episode: item.object)
-      item.image -> render("_item_toolbar_button_image.html", conn: conn, item: item)
+      NewsItem.is_audio(item) && item.object -> render("toolbar/_button_episode.html", conn: conn, item: item, episode: item.object)
+      item.image -> render("toolbar/_button_image.html", conn: conn, item: item)
       true -> ""
     end
   end

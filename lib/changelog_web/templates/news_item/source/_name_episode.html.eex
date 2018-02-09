@@ -1,0 +1,1 @@
+<%= link(EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @episode.podcast.slug), title: @episode.podcast.name) %>

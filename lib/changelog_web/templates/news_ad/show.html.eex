@@ -1,7 +1,7 @@
 <div class="feed">
   <article class="news_item" data-news-type="ad" data-news-id="<%= hashid(@ad) %>">
-    <%= render("_ad_header.html", assigns) %>
-    <%= render("_ad_toolbar.html", assigns) %>
+    <%= render("_header.html", assigns) %>
+    <%= render("_toolbar.html", assigns) %>
     <%= if @ad.story do %>
       <div class="news_item-content richtext">
         <p><%= @ad.story |> md_to_html |> raw %></p>

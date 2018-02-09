@@ -1,7 +1,7 @@
 <div class="page_news_item">
   <article class="news_item" data-news-type="news" data-news-id="<%= hashid(@item) %>">
-    <%= render("_item_header.html", assigns) %>
-    <%= render("_item_toolbar.html", Map.put(assigns, :style, "date")) %>
+    <%= render("_header.html", assigns) %>
+    <%= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
     <div class="news_item-content richtext"><%= @item.story |> md_to_html |> raw %></div>
     <%= image_link(@item) %>
   </article>
