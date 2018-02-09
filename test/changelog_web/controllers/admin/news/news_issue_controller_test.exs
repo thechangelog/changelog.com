@@ -18,8 +18,13 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
 
   @tag :as_admin
   test "renders form to create new issue", %{conn: conn} do
+    item = insert(:published_news_item)
+    sponsorship = insert(:active_news_sponsorship)
+    ad = insert(:news_ad, sponsorship: sponsorship)
     conn = get(conn, admin_news_issue_path(conn, :new))
     assert html_response(conn, 200) =~ ~r/new/
+    assert String.contains?(conn.resp_body, item.headline)
+    assert String.contains?(conn.resp_body, ad.headline)
   end
 
   @tag :as_admin

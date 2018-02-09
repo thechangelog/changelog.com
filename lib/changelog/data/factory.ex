@@ -160,6 +160,11 @@ defmodule Changelog.Factory do
     }
   end
 
+  def active_news_sponsorship_factory do
+    week = Timex.beginning_of_week(Timex.today)
+    %Changelog.NewsSponsorship{news_sponsorship_factory() | weeks: [week]}
+  end
+
   def person_factory do
     %Changelog.Person{
       name: sequence(:name, &"Joe Blow #{&1}"),

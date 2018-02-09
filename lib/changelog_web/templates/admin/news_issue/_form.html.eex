@@ -73,7 +73,7 @@
         </div>
         <div class="content" style="margin-left: 6px;">
           <%= link("#{ad.headline} (#{ctr(ad)}%)", to: ad.url, class: "header") %>
-          <div class="description"><%= ad.story |> NewsItemView.teaser |> raw %></div>
+          <div class="description"><%= ad |> NewsItemView.teaser |> raw %></div>
         </div>
       </div>
     <% end %>
