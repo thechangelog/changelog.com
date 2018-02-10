@@ -32,7 +32,7 @@ defmodule Changelog.Buffer.ContentTest do
 
     test "returns news item url when story is 20 words or more" do
       item = insert(:news_item, story: "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty")
-      assert Content.news_item_link(item) == Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.slug(item))
+      assert Content.news_item_link(item) == Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
     end
   end
 

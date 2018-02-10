@@ -11,7 +11,7 @@ defmodule Changelog.Buffer.Content do
     if Helpers.SharedHelpers.word_count(item.story) < 20 do
       item.url
     else
-      Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.slug(item))
+      Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
     end
   end
 
