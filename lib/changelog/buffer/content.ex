@@ -25,6 +25,12 @@ defmodule Changelog.Buffer.Content do
       item.headline
     end
 
+    text = if item.author && item.author.twitter_handle do
+      "#{text} by @#{item.author.twitter_handle}"
+    else
+      text
+    end
+
     text = if item.source && item.source.twitter_handle do
       "#{text} (via @#{item.source.twitter_handle})"
     else

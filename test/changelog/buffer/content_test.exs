@@ -60,9 +60,21 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(item) == "#{item.headline} #ios (via @wired)"
     end
 
-    test "doesn't include 'via' when news source has no twitter handle" do
+    test "excludes 'via' when news source has no twitter handle" do
       source = insert(:news_source)
       item = insert(:news_item, source: source)
+      assert Content.news_item_text(item) == item.headline
+    end
+
+    test "includes 'by' when item has author and handle" do
+      author = insert(:person, twitter_handle: "BigDaddy")
+      item = insert(:news_item, author: author)
+      assert Content.news_item_text(item) == "#{item.headline} by @BigDaddy"
+    end
+
+    test "excludes 'by' when item author has no twitter handle" do
+      author = insert(:person)
+      item = insert(:news_item, author: author)
       assert Content.news_item_text(item) == item.headline
     end
   end
