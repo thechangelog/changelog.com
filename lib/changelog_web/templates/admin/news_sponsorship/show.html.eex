@@ -8,8 +8,8 @@
 
     <div class="ui basic right floated buttons">
       <button class="ui basic icon clipboard button" title="Copy Schedule Text" data-clipboard-text="<%= schedule_text(@sponsorship) %>"><i class="calendar icon"></i></button>
-      <%= link("Edit Sponsorship", to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor), class: "ui button") %>
-      <%= link("Edit Sponsor", to: admin_news_sponsorship_path(@conn, :edit, @sponsorship), class: "ui button") %>
+      <%= link("Edit Sponsorship", to: admin_news_sponsorship_path(@conn, :edit, @sponsorship), class: "ui button") %>
+      <%= link("Edit Sponsor", to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor), class: "ui button") %>
     </div>
 
     <div class="sub header"><%= pluralize(@sponsorship.ads, "ad", "ads") %> for <%= pluralize(@sponsorship.weeks, "week", "weeks") %></div>
