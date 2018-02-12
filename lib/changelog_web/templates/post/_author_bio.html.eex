@@ -5,6 +5,6 @@
 
   <div class="post_footer-author-bio">
     <p class="post_footer-author-bio-name"><%= link @person.name, to: PersonView.external_url(@person) %></p>
-    <p class="post_footer-author-bio-title">Todo: Add author title</p>
+    <!-- <p class="post_footer-author-bio-title">Todo: Add author title</p> -->
   </div>
 </div>
