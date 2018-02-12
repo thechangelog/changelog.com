@@ -1,3 +1,5 @@
+<%= render(SharedView, "_drift_js.html") %>
+
 <article class="article">
   <div class="richtext">
     <h1>Sponsorship Pricing</h1>
