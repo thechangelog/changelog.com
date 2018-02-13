@@ -18,12 +18,7 @@ defmodule Changelog.Buffer.Content do
   def news_item_text(nil), do: ""
   def news_item_text(item) do
     item = NewsItem.preload_all(item)
-
-    text = if Enum.any?(item.topics) do
-      Enum.reduce(item.topics, item.headline, &(insert_topic_reference(&2, &1)))
-    else
-      item.headline
-    end
+    text = item.headline
 
     text = if item.author && item.author.twitter_handle do
       "#{text} by @#{item.author.twitter_handle}"
@@ -37,14 +32,20 @@ defmodule Changelog.Buffer.Content do
       text
     end
 
+    text = if Enum.any?(item.topics) do
+      Enum.reduce(item.topics, text, &(insert_topic_reference(&2, &1)))
+    else
+      text
+    end
+
     text
   end
 
   defp insert_topic_reference(text, topic) do
-    if String.match?(text, ~r/#{topic.name}/) do
-      String.replace(text, topic.name, twitterized(topic, :name))
-    else
-      text <> " #{twitterized(topic, :slug)}"
+    cond do
+      String.match?(text, ~r/#{topic.name}/) -> String.replace(text, topic.name, twitterized(topic, :name))
+      String.match?(text, ~r/#{topic.slug}/) -> String.replace(text, topic.slug, twitterized(topic, :slug))
+      true -> text <> " #{twitterized(topic, :slug)}"
     end
   end
 

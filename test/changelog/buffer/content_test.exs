@@ -57,7 +57,7 @@ defmodule Changelog.Buffer.ContentTest do
       item = insert(:news_item, source: source)
       t1 = insert(:topic, name: "iOS", slug: "ios")
       insert(:news_item_topic, news_item: item, topic: t1)
-      assert Content.news_item_text(item) == "#{item.headline} #ios (via @wired)"
+      assert Content.news_item_text(item) == "#{item.headline} (via @wired) #ios"
     end
 
     test "excludes 'via' when news source has no twitter handle" do
