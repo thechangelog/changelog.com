@@ -38,6 +38,9 @@ defmodule ChangelogWeb.NewsItemView do
     |> Enum.reject(&is_nil/1)
   end
 
+  def object_path(%{object_id: nil}), do: nil
+  def object_path(%{object_id: object_id}), do: "/" <> String.replace(object_id, ":", "/")
+
   def permalink_path(conn, item) do
     if item.object_id, do: dev_relative(item.url), else: news_item_path(conn, :show, slug(item))
   end

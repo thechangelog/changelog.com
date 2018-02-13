@@ -58,10 +58,18 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert html_response(conn, 200) =~ item.headline
   end
 
-  test "hitting the visit endpoint", %{conn: conn} do
+  test "hitting the visit endpoint sans internal object uses html redirect", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
     conn = get(conn, news_item_path(conn, :visit, hashid(item)))
     assert html_response(conn, 200) =~ item.url
+    item = Repo.get(NewsItem, item.id)
+    assert item.click_count == 1
+  end
+
+  test "hitting the visit endpoint with internal object uses http redirect", %{conn: conn} do
+    item = insert(:published_news_item, object_id: "rfc:20")
+    conn = get(conn, news_item_path(conn, :visit, hashid(item)))
+    assert redirected_to(conn) == "/rfc/20"
     item = Repo.get(NewsItem, item.id)
     assert item.click_count == 1
   end

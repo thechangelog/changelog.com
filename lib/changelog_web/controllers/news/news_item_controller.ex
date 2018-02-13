@@ -67,15 +67,13 @@ defmodule ChangelogWeb.NewsItemController do
     item = item_from_hashid(hashid)
     unless is_admin?(user), do: NewsItem.track_click(item)
 
-    to = if Mix.env == :dev && item.object_id do
-      URI.parse(item.url).path
+    if item.object_id do
+      redirect(conn, to: NewsItemView.object_path(item))
     else
-      item.url
+      conn
+      |> put_layout(false)
+      |> render(:visit, to: item.url)
     end
-
-    conn
-    |> put_layout(false)
-    |> render(:visit, to: to)
   end
 
   def preview(conn, %{"id" => id}) do

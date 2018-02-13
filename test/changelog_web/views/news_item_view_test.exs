@@ -5,6 +5,23 @@ defmodule ChangelogWeb.NewstemViewTest do
 
   alias Changelog.NewsItem
 
+  describe "object_path" do
+    test "defaults to nil when object is nil" do
+      item = build(:news_item, object_id: nil)
+      assert is_nil(object_path(item))
+    end
+
+    test "reconstructs audio urls" do
+      item = build(:news_item, type: :audio, object_id: "gotime:45")
+      assert object_path(item) == "/gotime/45"
+    end
+
+    test "reconstructs post urls" do
+      item = build(:news_item, object_id: "posts:oscon-2017-free-pass")
+      assert object_path(item) == "/posts/oscon-2017-free-pass"
+    end
+  end
+
   describe "teaser" do
     test "leaves stories alone that are shorter than given words length" do
       item = %{story: ~s{A fun read, but does it fall pray to [Betteridge's Law of Headlines](https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines)? 😏}}

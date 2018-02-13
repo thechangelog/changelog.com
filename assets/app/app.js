@@ -78,15 +78,7 @@ u(document).on("mousedown", "[data-news]", function(event) {
   let id = clicked.closest("[data-news-id]").data("news-id");
   if (!id) return false;
   let trackedHref = `${location.origin}/${type}/${id}/visit`;
-
-  if (isExternalLink(clicked)) {
-    event.currentTarget.href = trackedHref;
-  } else {
-    event.preventDefault();
-    ajax(trackedHref, {method: "GET"}, function() {
-      Turbolinks.visit(clicked.attr("href"));
-    });
-  }
+  event.currentTarget.href = trackedHref;
 });
 
 // open external links in new window when player is doing its thing
