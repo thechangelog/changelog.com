@@ -2,7 +2,10 @@
   <article class="news_item" data-news-type="news" data-news-id="<%= hashid(@item) %>">
     <%= render("_header.html", assigns) %>
     <%= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
-    <div class="news_item-content richtext"><%= @item.story |> md_to_html |> raw %></div>
+    <div class="news_item-content richtext">
+      <%= @item.story |> md_to_html |> raw %>
+      <%= video_embed(@item) %>
+    </div>
     <%= image_link(@item) %>
   </article>
 </div>

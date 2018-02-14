@@ -3,6 +3,18 @@ defmodule Changelog.UrlKitTest do
 
   alias Changelog.UrlKit
 
+  describe "is_youtube" do
+    test "is true for youtube URLS" do
+      assert UrlKit.is_youtube("https://youtu.be/7msERxu7ivg")
+      assert UrlKit.is_youtube("https://www.youtube.com/watch?v=7msERxu7ivg")
+    end
+
+    test "is false for non-youtube URLS" do
+      refute UrlKit.is_youtube("https://vimeo.com/239702317")
+      refute UrlKit.is_youtube("https://www.twitch.tv/skacle")
+    end
+  end
+
   describe "get_object_id" do
     test "defaults to nil" do
       assert is_nil(UrlKit.get_object_id(:link, nil))
@@ -77,6 +89,22 @@ defmodule Changelog.UrlKitTest do
       for url <- ~w(https://www.youtube.com/watch?v=dQw4w9WgXcQ https://vimeo.com/226379658 https://go.twitch.tv/videos/92287997) do
         assert UrlKit.get_type(url) == :video
       end
+    end
+  end
+
+  describe "get_youtube_id" do
+    test "defaults to nil" do
+      assert is_nil(UrlKit.get_youtube_id("https://vimeo.com/239702317"))
+    end
+
+    test "works with query param style" do
+      id = UrlKit.get_youtube_id("https://www.youtube.com/watch?v=7msERxu7ivg")
+      assert id == "7msERxu7ivg"
+    end
+
+    test "works with url-style" do
+      id = UrlKit.get_youtube_id("https://youtu.be/7msERxu7ivg")
+      assert id == "7msERxu7ivg"
     end
   end
 

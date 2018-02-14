@@ -133,6 +133,7 @@ defmodule Changelog.NewsItem do
   def publish!(item), do: item |> change(%{status: :published, published_at: Timex.now}) |> Repo.update!
 
   def is_audio(item), do: item.type == :audio
+  def is_video(item), do: item.type == :video
   def is_draft(item), do: item.status == :draft
   def is_published(item), do: item.status == :published
 

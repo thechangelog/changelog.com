@@ -1,0 +1,7 @@
+<%= link title: "Play Video",
+    to: @item.url,
+    data: [youtube: @id],
+    role: "button",
+    class: "news_item-toolbar-video_button" do %>
+    <span>Play</span>
+<% end %>

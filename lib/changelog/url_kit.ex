@@ -38,6 +38,26 @@ defmodule Changelog.UrlKit do
     end
   end
 
+  def get_youtube_id(url) do
+    cond do
+      String.match?(url, List.first(youtube_regexes())) ->
+        URI.parse(url)
+        |> Map.get(:query)
+        |> URI.decode_query()
+        |> Map.get("v")
+      String.match?(url, List.last(youtube_regexes())) ->
+        url
+        |> String.split("/")
+        |> List.last
+      true -> nil
+    end
+  end
+
+  def is_youtube(url) when is_nil(url), do: false
+  def is_youtube(url) do
+    Enum.any?(youtube_regexes(), &(String.match?(url, &1)))
+  end
+
   def normalize_url(url) when is_nil(url), do: nil
   def normalize_url(url) do
     parsed = URI.parse(url)
@@ -73,10 +93,10 @@ defmodule Changelog.UrlKit do
   end
 
   defp video_regexes do
-    [
-      ~r/youtube\.com\/watch/,
-      ~r/vimeo\.com\/\d+/,
-      ~r/go\.twitch\.tv\/videos/
-    ]
+    youtube_regexes() ++ [~r/vimeo\.com\/\d+/, ~r/go\.twitch\.tv\/videos/]
+  end
+
+  defp youtube_regexes do
+    [~r/youtube\.com\/watch/, ~r/youtu\.be/]
   end
 end

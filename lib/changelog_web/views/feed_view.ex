@@ -26,4 +26,8 @@ defmodule ChangelogWeb.FeedView do
       title
     end
   end
+
+  def video_embed(item = %NewsItem{}) do
+    if embed = NewsItemView.video_embed(item), do: safe_to_string(embed)
+  end
 end

@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp}
+  alias Changelog.{Files, Hashid, NewsAd, NewsItem, Regexp, UrlKit}
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsSourceView, EpisodeView, PersonView, TopicView, PodcastView}
 
   def admin_edit_link(conn, user, item) do
@@ -84,12 +84,22 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def render_item_toolbar_button(conn, item) do
-    cond do
-      NewsItem.is_audio(item) && item.object -> render("toolbar/_button_episode.html", conn: conn, item: item, episode: item.object)
-      item.image -> render("toolbar/_button_image.html", conn: conn, item: item)
-      true -> ""
+  def render_item_toolbar_button(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+    render("toolbar/_button_episode.html", conn: conn, item: item, episode: episode)
+  end
+  def render_item_toolbar_button(conn, item = %{type: :video}) do
+    if id = UrlKit.get_youtube_id(item.url) do
+      render("toolbar/_button_video.html", conn: conn, item: item, id: id)
     end
+  end
+  def render_item_toolbar_button(conn, item = %{image: image}) when not is_nil(image) do
+    render("toolbar/_button_image.html", conn: conn, item: item)
+  end
+  def render_item_toolbar_button(_conn, _item), do: nil
+
+  def render_youtube_embed(nil), do: nil
+  def render_youtube_embed(id) do
+    render("_youtube_embed.html", id: id)
   end
 
   def slug(item) do
@@ -127,6 +137,11 @@ defmodule ChangelogWeb.NewsItemView do
       end)
     |> Enum.join(" ")
   end
+
+  def video_embed(item = %{type: :video}) do
+    item.url |> UrlKit.get_youtube_id() |> render_youtube_embed()
+  end
+  def video_embed(_), do: nil
 
   defp prepare_html(html) do
     html
