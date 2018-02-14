@@ -41,7 +41,7 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(nil) == ""
     end
 
-    test "intersperses topic tags and twitter handles" do
+    test "includes topic tags and twitter handles" do
       item = insert(:news_item, headline: "News of iOS 9 doing Machine Learning things.")
       t1 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
       t2 = insert(:topic, name: "Machine Learning", slug: "machine-learning")
@@ -49,7 +49,7 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
       insert(:news_item_topic, news_item: item, topic: t3)
-      assert Content.news_item_text(item) == "News of @OfficialiOS 9 doing #MachineLearning things. #security"
+      assert Content.news_item_text(item) =~ "on @OfficialiOS #machinelearning #security"
     end
 
     test "includes 'via' when news source has twitter handle" do
@@ -57,25 +57,25 @@ defmodule Changelog.Buffer.ContentTest do
       item = insert(:news_item, source: source)
       t1 = insert(:topic, name: "iOS", slug: "ios")
       insert(:news_item_topic, news_item: item, topic: t1)
-      assert Content.news_item_text(item) == "#{item.headline} (via @wired) #ios"
+      assert Content.news_item_text(item) =~ "via @wired"
     end
 
     test "excludes 'via' when news source has no twitter handle" do
       source = insert(:news_source)
       item = insert(:news_item, source: source)
-      assert Content.news_item_text(item) == item.headline
+      refute Content.news_item_text(item) =~ " via "
     end
 
     test "includes 'by' when item has author and handle" do
       author = insert(:person, twitter_handle: "BigDaddy")
       item = insert(:news_item, author: author)
-      assert Content.news_item_text(item) == "#{item.headline} by @BigDaddy"
+      assert Content.news_item_text(item) =~ "by @BigDaddy"
     end
 
     test "excludes 'by' when item author has no twitter handle" do
       author = insert(:person)
       item = insert(:news_item, author: author)
-      assert Content.news_item_text(item) == item.headline
+      refute Content.news_item_text(item) =~ " by "
     end
   end
 end

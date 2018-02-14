@@ -18,42 +18,52 @@ defmodule Changelog.Buffer.Content do
   def news_item_text(nil), do: ""
   def news_item_text(item) do
     item = NewsItem.preload_all(item)
-    text = item.headline
 
-    text = if item.author && item.author.twitter_handle do
-      "#{text} by @#{item.author.twitter_handle}"
+    meta = [
+      author_meta(item),
+      source_meta(item),
+      topic_meta(item.topics),
+    ] |> Enum.reject(&is_nil/1)
+
+    if Enum.any?(meta) do
+      """
+      #{item.headline}
+
+      #{Enum.join(meta, "\n")}
+
+      #{news_item_link(item)}
+      """
     else
-      text
-    end
+      """
+      #{item.headline}
 
-    text = if item.source && item.source.twitter_handle do
-      "#{text} (via @#{item.source.twitter_handle})"
-    else
-      text
-    end
-
-    text = if Enum.any?(item.topics) do
-      Enum.reduce(item.topics, text, &(insert_topic_reference(&2, &1)))
-    else
-      text
-    end
-
-    text
-  end
-
-  defp insert_topic_reference(text, topic) do
-    cond do
-      String.match?(text, ~r/#{topic.name}/) -> String.replace(text, topic.name, twitterized(topic, :name))
-      String.match?(text, ~r/#{topic.slug}/) -> String.replace(text, topic.slug, twitterized(topic, :slug))
-      true -> text <> " #{twitterized(topic, :slug)}"
+      #{news_item_link(item)}
+      """
     end
   end
 
-  defp twitterized(topic, attr) do
-    if topic.twitter_handle do
-      "@" <> topic.twitter_handle
-    else
-      "#" <> String.replace(Map.get(topic, attr), ~r/[\s-]/, "")
-    end
+  defp author_emoji, do: Enum.random(~w(✍ 🖋 📝))
+  defp source_emoji, do: Enum.random(~w(📨 📡 📯))
+  defp topic_emoji, do: Enum.random(~w(🏷 🔎))
+
+  defp author_meta(%{author: nil}), do: nil
+  defp author_meta(%{author: %{twitter_handle: nil}}), do: nil
+  defp author_meta(%{author: %{twitter_handle: handle}}), do: "#{author_emoji()} by @#{handle}"
+
+  defp source_meta(%{source: nil}), do: nil
+  defp source_meta(%{source: %{twitter_handle: nil}}), do: nil
+  defp source_meta(%{source: %{twitter_handle: handle}}), do: "#{source_emoji()} via @#{handle}"
+
+  defp topic_meta([]), do: nil
+  defp topic_meta(topics) do
+    list =
+      topics
+      |> Enum.map(&twitterized/1)
+      |> Enum.join(" ")
+
+    "#{topic_emoji()} on #{list}"
   end
+
+  defp twitterized(%{twitter_handle: nil, slug: slug}), do: "#" <> String.replace(slug, "-", "")
+  defp twitterized(%{twitter_handle: handle}), do: "@" <> handle
 end
