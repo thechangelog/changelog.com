@@ -49,7 +49,7 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
       insert(:news_item_topic, news_item: item, topic: t3)
-      assert Content.news_item_text(item) =~ "on @OfficialiOS #machinelearning #security"
+      assert Content.news_item_text(item) =~ "@OfficialiOS #machinelearning #security"
     end
 
     test "includes 'via' when news source has twitter handle" do

@@ -43,7 +43,7 @@ defmodule Changelog.Buffer.Content do
   end
 
   defp author_emoji, do: Enum.random(~w(✍ 🖋 📝))
-  defp source_emoji, do: Enum.random(~w(📨 📡 📯))
+  defp source_emoji, do: Enum.random(~w(📨 📡 📢))
   defp topic_emoji, do: Enum.random(~w(🏷 🔎))
 
   defp author_meta(%{author: nil}), do: nil
@@ -61,7 +61,7 @@ defmodule Changelog.Buffer.Content do
       |> Enum.map(&twitterized/1)
       |> Enum.join(" ")
 
-    "#{topic_emoji()} on #{list}"
+    "#{topic_emoji()} #{list}"
   end
 
   defp twitterized(%{twitter_handle: nil, slug: slug}), do: "#" <> String.replace(slug, "-", "")
