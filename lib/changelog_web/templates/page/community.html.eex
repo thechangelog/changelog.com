@@ -35,7 +35,7 @@
   <section class="marketing-section">
     <header class="marketing-section-header">
       <i><img src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
-      <h2>Slack Everyday with&nbsp;Friends</h2>
+      <h2>Slack everyday with&nbsp;friends</h2>
       <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
     </header>
 
@@ -73,7 +73,7 @@
   <a id="deals" class="anchor"></a>
   <section class="marketing-section">
     <header class="marketing-section-header">
-      <h2>Discounts and Special Offers From Our&nbsp;Partners</h2>
+      <h2>Special offers and discounts from our trusted&nbsp;partners</h2>
       <p>We work hard to develop relationships with the most trusted brands, products, and services — we give the rewards of those efforts to you, the developer&nbsp;community.</p>
     </header>
 
