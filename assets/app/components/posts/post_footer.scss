@@ -1,5 +1,8 @@
 .post_footer {
   @include wrap;
+  max-width: 860px;
+  padding: 0 30px;
+  width: 100%;
 
   &-author {
     align-items: center;
@@ -22,6 +25,9 @@
       &-title {
         font-size: 0.875em;
         font-style: italic;
+      }
+      a:hover {
+        text-decoration: underline;
       }
     }
   }
