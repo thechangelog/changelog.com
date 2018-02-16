@@ -1,6 +1,42 @@
 defmodule Changelog.Buffer.Content do
-  alias Changelog.NewsItem
+  alias Changelog.{Episode, NewsItem}
   alias ChangelogWeb.{Endpoint, Helpers, NewsItemView, Router}
+
+  def episode_text(nil), do: ""
+  def episode_text(item) do
+    item =
+      item
+      |> NewsItem.preload_all()
+      |> NewsItem.load_object()
+
+    episode = item.object
+    people = Episode.participants(episode)
+
+    meta = [
+      title_meta(episode),
+      featuring_meta(people),
+      topic_meta(item.topics)
+    ]
+
+    if Enum.any?(meta) do
+      """
+      #{episode_emoji()} New episode of #{episode.podcast.name}!
+
+      #{Enum.join(meta, "\n")}
+
+      💚 #{episode_link(item)}
+      """
+    else
+      """
+      #{episode_emoji()} New episode of #{episode.podcast.name}!
+
+      💚 #{episode_link(item)}
+      """
+    end
+  end
+
+  def episode_link(nil), do: ""
+  def episode_link(item), do: item.url
 
   def news_item_image(nil), do: nil
   def news_item_image(%{image: nil}), do: nil
@@ -42,28 +78,40 @@ defmodule Changelog.Buffer.Content do
     end
   end
 
-  defp author_emoji, do: Enum.random(~w(✍ 🖋 📝))
-  defp source_emoji, do: Enum.random(~w(📨 📡 📢))
-  defp topic_emoji, do: Enum.random(~w(🏷 🔎))
+  defp author_emoji, do: ~w(✍ 🖋 📝) |> Enum.random
+  defp episode_emoji, do: ~w(🙌 🎉 📢 🔥 🎧) |> Enum.random
+  defp featuring_emoji, do: ~w(🌟 🎙 ✨ ⚡️) |> Enum.random
+  defp source_emoji, do: ~w(📨 📡 📢) |> Enum.random
+  defp title_emoji, do: ~w(🗣 💬) |> Enum.random
+  defp topic_emoji, do: ~w(🏷) |> Enum.random
 
   defp author_meta(%{author: nil}), do: nil
   defp author_meta(%{author: %{twitter_handle: nil}}), do: nil
   defp author_meta(%{author: %{twitter_handle: handle}}), do: "#{author_emoji()} by @#{handle}"
 
+  defp featuring_meta([]), do: nil
+  defp featuring_meta(people) do
+    "#{featuring_emoji()} Featuring #{twitterized(people)}"
+  end
+
   defp source_meta(%{source: nil}), do: nil
   defp source_meta(%{source: %{twitter_handle: nil}}), do: nil
   defp source_meta(%{source: %{twitter_handle: handle}}), do: "#{source_emoji()} via @#{handle}"
 
+  defp title_meta(episode), do: "#{title_emoji()} #{episode.title}"
+
   defp topic_meta([]), do: nil
   defp topic_meta(topics) do
-    list =
-      topics
-      |> Enum.map(&twitterized/1)
-      |> Enum.join(" ")
-
-    "#{topic_emoji()} #{list}"
+    "#{topic_emoji()} #{twitterized(topics)}"
   end
 
-  defp twitterized(%{twitter_handle: nil, slug: slug}), do: "#" <> String.replace(slug, "-", "")
-  defp twitterized(%{twitter_handle: handle}), do: "@" <> handle
+  defp twitterized(list) when is_list(list) do
+    list
+    |> Enum.map(&twitterized/1)
+    |> Enum.join(", ")
+  end
+  defp twitterized(%{slug: "go"}), do: "#golang"
+  defp twitterized(%{twitter_handle: nil, slug: slug}) when is_binary(slug), do: "#" <> String.replace(slug, "-", "")
+  defp twitterized(%{twitter_handle: handle}) when is_binary(handle), do: "@" <> handle
+  defp twitterized(%{name: name}), do: name
 end

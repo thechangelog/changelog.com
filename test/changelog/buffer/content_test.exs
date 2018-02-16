@@ -6,6 +6,41 @@ defmodule Changelog.Buffer.ContentTest do
   alias Changelog.Buffer.Content
   alias ChangelogWeb.{Endpoint, NewsItemView, Router}
 
+  describe "episode_link" do
+    test "defaults to empty string" do
+      assert Content.episode_link(nil) == ""
+    end
+
+    test "returns the item's url" do
+      item = build(:news_item)
+      assert Content.episode_link(item) == item.url
+    end
+  end
+
+  describe "episode_text" do
+    test "includes participant twitter handles and falls back to names" do
+      g1 = insert(:person, twitter_handle: "janedoe")
+      g2 = insert(:person, name: "John Doe")
+      h1 = insert(:person, twitter_handle: "v_cool")
+      ep = insert(:published_episode)
+      insert(:episode_guest, episode: ep, person: g1, position: 1)
+      insert(:episode_guest, episode: ep, person: g2, position: 2)
+      insert(:episode_host, episode: ep, person: h1)
+      item = ep |> episode_news_item() |> insert
+      assert Content.episode_text(item) =~ "@janedoe, John Doe, @v_cool"
+    end
+
+    test "includes topic tags and twitter handles" do
+      ep = insert(:published_episode)
+      item = ep |> episode_news_item() |> insert
+      t1 = insert(:topic, name: "Security", slug: "security")
+      t2 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
+      insert(:news_item_topic, news_item: item, topic: t1)
+      insert(:news_item_topic, news_item: item, topic: t2)
+      assert Content.episode_text(item) =~ "#security, @OfficialiOS"
+    end
+  end
+
   describe "news_item_image" do
     test "defaults to nil" do
       assert is_nil(Content.news_item_image(nil))
@@ -26,7 +61,7 @@ defmodule Changelog.Buffer.ContentTest do
 
   describe "news_item_link" do
     test "returns item url when story is less than 20 words" do
-      item = insert(:news_item, story: "This is too short")
+      item = build(:news_item, story: "This is too short")
       assert Content.news_item_link(item) == item.url
     end
 
@@ -49,7 +84,7 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
       insert(:news_item_topic, news_item: item, topic: t3)
-      assert Content.news_item_text(item) =~ "@OfficialiOS #machinelearning #security"
+      assert Content.news_item_text(item) =~ "@OfficialiOS, #machinelearning, #security"
     end
 
     test "includes 'via' when news source has twitter handle" do

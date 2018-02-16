@@ -1,4 +1,4 @@
-alias Changelog.{Repo, Person, Episode, EpisodeHost, EpisodeGuest, NewsAd,
+alias Changelog.{Buffer, Repo, Person, Episode, EpisodeHost, EpisodeGuest, NewsAd,
                  NewsItem, NewsSource, NewsSponsorship, NewsQueue, Podcast,
                  Topic, Sponsor, Post}
 

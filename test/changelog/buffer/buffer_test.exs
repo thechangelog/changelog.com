@@ -6,7 +6,21 @@ defmodule Changelog.Buffer.BufferTest do
   alias Changelog.{Buffer, NewsItem}
 
   describe "queue" do
-    test "is a no-op when sent an audio news item" do
+    test "calls episode functions and Client.create when gotime audio news item" do
+      item = %NewsItem{type: :audio, object_id: "gotime:45"}
+
+      with_mocks([
+        {Buffer.Content, [], [episode_text: fn(_) -> "text" end]},
+        {Buffer.Content, [], [episode_link: fn(_) -> "url1" end]},
+        {Buffer.Client, [], [create: fn(_, _, _) -> true end]}
+      ]) do
+        Buffer.queue(item)
+        assert called(Buffer.Client.create(:_, "text", [link: "url1"]))
+      end
+
+    end
+
+    test "is a no-op when sent other audio news item" do
       item = %NewsItem{type: :audio}
 
       with_mock Buffer.Client, [create: fn(_, _, _) -> true end] do
@@ -15,7 +29,7 @@ defmodule Changelog.Buffer.BufferTest do
       end
     end
 
-    test "calls Client.create when sent a non-audio news item" do
+    test "calls news_item functions and Client.create when sent a non-audio news item" do
       item = %NewsItem{type: :link}
 
       with_mocks([
