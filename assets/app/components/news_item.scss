@@ -23,13 +23,14 @@
     padding-right: $horizontal-padding;
   }
 
-  a {
-    color: $black;
-
-    &:hover {
-      color: #000;
-      text-decoration: underline;
-      transition: color 0.1s $base-easing;
+  &-header, &-toolbar {
+    a {
+      color: $black;
+  
+      &:hover {
+        color: #000;
+        text-decoration: underline;
+      }
     }
   }
 
@@ -164,6 +165,7 @@
 
       &:hover {
         color: darken($green, 10%) !important;
+        text-decoration: underline;
       }
 
       @include breakpoint(mobile) {
