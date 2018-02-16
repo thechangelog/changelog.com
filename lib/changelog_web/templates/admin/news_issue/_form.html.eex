@@ -45,9 +45,7 @@
         <div class="content" style="margin-left: 6px;">
           <%= link("#{item.headline} (#{ctr(item)}%)", to: item.url, class: "header") %>
           <div class="description" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            <%= if item.image do %>
-              <i class="image icon"></i>
-            <% end %>
+            <%= item_icon(item) %>
             <%= item.story |> md_to_text %>
           </div>
         </div>

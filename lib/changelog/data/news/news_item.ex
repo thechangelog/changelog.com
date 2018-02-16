@@ -35,6 +35,7 @@ defmodule Changelog.NewsItem do
 
   def audio(query \\ __MODULE__),                      do: from(q in query, where: q.type == ^:audio)
   def drafted(query \\ __MODULE__),                    do: from(q in query, where: q.status == ^:draft)
+  def highest_ctr_first(query \\ __MODULE__),          do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
   def logged_by(query \\ __MODULE__, person),          do: from(q in query, where: q.logger_id == ^person.id)
   def published(query \\ __MODULE__),                  do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
   def pinned(query \\ __MODULE__),                     do: from(q in query, where: q.pinned)
