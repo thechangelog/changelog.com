@@ -71,6 +71,21 @@
       }
     }
 
+    &--body {
+
+      p > a, li > a {
+        color: $black;
+        font-weight: 500;
+        border-bottom: 3px solid $light-grey;
+        padding: 1px 2px;
+        &:hover {
+          background-color: $lightest-grey;
+          border-color: $lightest-grey;
+        }
+      }
+
+    }
+
     &-header {
       margin: $padding-large auto;
       max-width: 880px;

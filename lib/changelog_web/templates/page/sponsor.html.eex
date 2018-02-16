@@ -12,16 +12,16 @@
     </header>
   </section>
 
-  <section class="marketing-section">
+  <section class="marketing-section marketing-section--body">
     <header class="marketing-section-header">
       <h2>Why partner with us?</h2>
-      <p>Developers have trusted Changelog since 2009 to share the latest news and podcasts for software professionals. Whether you want to increase exposure, generate awareness, build your company's brand, or test an idea with a large developer audience, we're here to help you develop the right strategy to achieve the results you're looking for.</p>
+      <p>Developers have trusted Changelog since 2009 to share the latest <%= link "news", to: root_path(@conn, :index) %> and <%= link "podcasts", to: podcast_path(@conn, :index) %> for software professionals. Whether you want to increase exposure, generate awareness, build your company's brand, or test an idea with a large developer audience, we're here to help you develop the right strategy to achieve the results you're looking for.</p>
     </header>
 
     <div class="marketing-section-grid">
       <div class="marketing-section-grid-item">
         <h3>Large engaged audience</h3>
-        <p>Our news and podcasts reach a global audience of hundreds of thousands developers each month. Trust us to help you put your brand in front of your target audience. We're built by developers for&nbsp;developers.</p>
+        <p>Our <%= link "news", to: root_path(@conn, :index) %> and <%= link "podcasts", to: podcast_path(@conn, :index) %> reach a global audience of hundreds of thousands developers each month. Trust us to help you put your brand in front of your target audience. We're built by developers for&nbsp;developers.</p>
       </div>
       <div class="marketing-section-grid-item">
         <h3>Invested partnership</h3>
@@ -47,7 +47,8 @@
 
   <section class="marketing-section">
     <header class="marketing-section-header">
-      <h3>Brands who care about developers advertise with&nbsp;Changelog</h3>
+      <h2>Brands who want to reach developers advertise with&nbsp;Changelog</h2>
+      <p>Join businesses around the world who are using Changelog Ads to increase awareness and get real business results. Their success is our success. We're partners.</p>
     </header>
 
     <div class="marketing-section-logos">
