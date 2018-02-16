@@ -8,8 +8,8 @@
 
   &-date {
     line-height: 1em;
-    font-size: 1em;
-    font-weight: normal;
+    font-size: .8em;
+    font-family: $code;
     margin-bottom: 2em;
 
     &,
@@ -18,10 +18,6 @@
     }
     a:hover {
       color: $light-grey;
-    }
-
-    @include breakpoint(mobile) {
-      font-size: 1.25em;
     }
   }
 
@@ -39,6 +35,7 @@
     color: $medium-grey;
     display: flex;
     justify-content: center;
+    font-size: 1.1em;
 
     & > * {
       margin: 0 5px;
@@ -47,10 +44,13 @@
 
     a {
       font-weight: bold;
+      
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     img {
-      background: #000;
       border-radius: $base-border-radius;
       display: inline-block;
       font-size: 8px;
