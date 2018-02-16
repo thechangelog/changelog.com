@@ -45,7 +45,7 @@ $jsparty: #FFCD00;
 $jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
 
 // Borders
-$border-color: #F2F3F3;
+$border-color: $lightest-grey;
 $base-border-radius: 3px;
 
 // Typography
