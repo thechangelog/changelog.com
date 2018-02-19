@@ -39,12 +39,14 @@ defmodule ChangelogWeb.TimeView do
   end
 
   def hours_ago(hours) do
-    Timex.subtract(Timex.now, Duration.from_hours(hours))
+    Timex.subtract(Timex.now, Duration.from_hours(hours)) |> without_microseconds
   end
 
   def hours_from_now(hours) do
-    Timex.add(Timex.now, Duration.from_hours(hours))
+    Timex.add(Timex.now, Duration.from_hours(hours)) |> without_microseconds
   end
+
+  defp without_microseconds(datetime), do: %{datetime | microsecond: {0,0}}
 
   def pretty_date(ts) when is_nil(ts), do: ""
   def pretty_date(ts) when is_binary(ts) do
@@ -62,10 +64,13 @@ defmodule ChangelogWeb.TimeView do
   end
 
   def rss(ts) when is_nil(ts), do: ""
-  def rss(ts) do
-    {:ok, result} =
-      ts
-      |> Timex.format("{RFC1123}")
+  def rss(ts), do: ts |> format_to("{RFC1123}")
+
+  def to_rfc3339(ts) when is_nil(ts), do: ""
+  def to_rfc3339(ts), do: ts |> format_to("{RFC3339}")
+
+  defp format_to(ts, format) do
+    {:ok, result} = Timex.format(ts, format)
     result
   end
 

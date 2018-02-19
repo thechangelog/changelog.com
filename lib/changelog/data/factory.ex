@@ -22,6 +22,7 @@ defmodule Changelog.Factory do
     %Changelog.Episode{
       title: sequence(:title, &"Best Show Evar! #{&1}"),
       slug: sequence(:slug, &"best-show-evar-#{&1}"),
+      bytes: 42,
       podcast: build(:podcast)
     }
   end
@@ -125,9 +126,17 @@ defmodule Changelog.Factory do
     %{published_news_item_factory() | type: :audio, headline: episode.title, url: "https://changelog.com/episodes/#{episode.slug}", object_id: object_id}
   end
 
+  def episode_news_item_with_story(episode, story) do
+    %{episode_news_item(episode) | story: story}
+  end
+
   def post_news_item(post) do
     object_id = "posts:#{post.slug}"
     %{published_news_item_factory() | headline: post.title, url: "https://changelog.com/posts/#{post.slug}", object_id: object_id}
+  end
+
+  def post_news_item_with_story(post, story) do
+    %{post_news_item(post) | story: story}
   end
 
   def news_item_topic_factory do

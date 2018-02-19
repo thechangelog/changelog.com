@@ -101,4 +101,28 @@ defmodule ChangelogWeb.TimeViewTest do
       assert html == "<span class='time' data-style='fancy'>2017-07-19T00:29:57Z</span>"
     end
   end
+
+  describe "to_rfc3339" do
+    test "when passed nil" do
+      assert to_rfc3339(nil) == ""
+    end
+
+    test "when passed a valid date time" do
+      datetime = Timex.to_datetime({{2018, 2, 26}, {19, 40, 00}}, "America/Chicago")
+
+      assert to_rfc3339(datetime) == "2018-02-26T19:40:00-06:00"
+    end
+  end
+
+  describe "rss" do
+    test "when passed nil" do
+      assert rss(nil) == ""
+    end
+
+    test "when passed a valid date time" do
+      datetime = Timex.to_datetime({{2018, 2, 26}, {19, 40, 00}}, "America/Chicago")
+
+      assert rss(datetime) == "Mon, 26 Feb 2018 19:40:00 -0600"
+    end
+  end
 end
