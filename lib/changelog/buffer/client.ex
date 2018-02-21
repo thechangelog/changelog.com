@@ -21,7 +21,7 @@ defmodule Changelog.Buffer.Client do
   end
 
   def handle({:ok, %{status_code: 200, body: body}}), do: body
-  def handle({:ok, %{status_code: 400..401, body: %{"code" => code, "message" => message}}}), do: log("error #{code}: #{message}")
+  def handle({:ok, %{status_code: 400..401, body: %{"message" => message}}}), do: log("error: #{message}")
   def handle({:error, %{reason: reason}}), do: log(reason)
 
   def create(profiles, text, media \\ [])
