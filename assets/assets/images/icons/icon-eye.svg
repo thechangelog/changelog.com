@@ -1,11 +1,1 @@
-<svg width="41" height="30" viewBox="0 0 41 30" xmlns="http://www.w3.org/2000/svg">
-  <title>
-    Viewers
-  </title>
-  <g fill="none" fill-rule="evenodd">
-    <path d="M2 15S9.4 2 20.5 2 39 15 39 15s-7.4 13-18.5 13S2 15 2 15z" fill="none"/>
-    <path d="M2 15S9.4 2 20.5 2 39 15 39 15s-7.4 13-18.5 13S2 15 2 15z" stroke="#FFF" stroke-width="3" stroke-linecap="square"/>
-    <path d="M24.424 11.06c2.168 2.176 2.168 5.704 0 7.88-2.167 2.175-5.68 2.175-7.848 0-2.168-2.176-2.168-5.704 0-7.88 2.167-2.175 5.68-2.175 7.848 0" fill="none"/>
-    <path d="M24.424 11.06c2.168 2.176 2.168 5.704 0 7.88-2.167 2.175-5.68 2.175-7.848 0-2.168-2.176-2.168-5.704 0-7.88 2.167-2.175 5.68-2.175 7.848 0" stroke="#FFF" stroke-width="3" stroke-linecap="square"/>
-  </g>
-</svg>
+<svg width="41" height="30" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M2 15S9.4 2 20.5 2 39 15 39 15s-7.4 13-18.5 13S2 15 2 15z"/><path d="M2 15S9.4 2 20.5 2 39 15 39 15s-7.4 13-18.5 13S2 15 2 15z" stroke="#FFF" stroke-width="3" stroke-linecap="square"/><path d="M24.424 11.06c2.168 2.176 2.168 5.704 0 7.88-2.167 2.175-5.68 2.175-7.848 0-2.168-2.176-2.168-5.704 0-7.88 2.167-2.175 5.68-2.175 7.848 0"/><path d="M24.424 11.06c2.168 2.176 2.168 5.704 0 7.88-2.167 2.175-5.68 2.175-7.848 0-2.168-2.176-2.168-5.704 0-7.88 2.167-2.175 5.68-2.175 7.848 0" stroke="#FFF" stroke-width="3" stroke-linecap="square"/></g></svg>

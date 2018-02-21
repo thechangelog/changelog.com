@@ -6,6 +6,25 @@
     padding: 1em 0;
     position: relative;
 
+    .anchor:target + & {
+      font-size: 1.125em;
+
+      &:after {
+        background-color: $highlight;
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -20px;
+        bottom: 0;
+        left: -20px;
+        z-index: -1;
+      }
+
+      .transcript-item-speaker-image {
+        transform: scale(1.25);
+      }
+    }
+
     //
     //
     // Green Line
@@ -61,14 +80,14 @@
 
       &-name {
         font-family: $code;
-        font-size: 13px;
+        font-size: 0.8125em;
         font-weight: 700;
         margin: 0;
         text-transform: uppercase;
 
         a {
           color: $black;
-          
+
           &:hover { text-decoration: underline; }
         }
       }

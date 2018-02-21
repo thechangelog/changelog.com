@@ -133,7 +133,8 @@
             </div>
             <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
               <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
-              <div id="transcript-<%= index %>" class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
+              <a id="transcript-<%= index %>" class="anchor"></a>
+              <div class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
                 <%= if speaker do %>
                   <div class="transcript-item-speaker">
                     <%= link to: PersonView.external_url(speaker), title: speaker.name, rel: "external" do %>
