@@ -55,27 +55,18 @@ defmodule Changelog.Buffer.Content do
   def news_item_text(item) do
     item = NewsItem.preload_all(item)
 
-    meta = [
-      author_meta(item),
-      source_meta(item),
-      topic_meta(item.topics),
-    ] |> Enum.reject(&is_nil/1)
+    [news_item_headline(item), news_item_meta(item), news_item_link(item)]
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.join("\n\n")
+  end
 
-    if Enum.any?(meta) do
-      """
-      #{item.headline}
+  defp news_item_headline(item = %{type: :video}), do: "#{video_emoji()} #{item.headline}"
+  defp news_item_headline(item), do: item.headline
 
-      #{Enum.join(meta, "\n")}
-
-      #{news_item_link(item)}
-      """
-    else
-      """
-      #{item.headline}
-
-      #{news_item_link(item)}
-      """
-    end
+  defp news_item_meta(item) do
+    [author_meta(item), source_meta(item), topic_meta(item.topics)]
+    |> Enum.reject(&is_nil/1)
+    |> Enum.join("\n")
   end
 
   defp author_emoji, do: ~w(✍ 🖋 📝) |> Enum.random
@@ -84,6 +75,7 @@ defmodule Changelog.Buffer.Content do
   defp source_emoji, do: ~w(📨 📡 📢) |> Enum.random
   defp title_emoji, do: ~w(🗣 💬) |> Enum.random
   defp topic_emoji, do: ~w(🏷) |> Enum.random
+  defp video_emoji, do: ~w(🎞 📽 🎬 🍿) |> Enum.random
 
   defp author_meta(%{author: nil}), do: nil
   defp author_meta(%{author: %{twitter_handle: nil}}), do: nil
