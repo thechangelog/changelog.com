@@ -14,6 +14,10 @@
         </ul>
 
         <div class="header-nav-secondary">
+          <ul class="header-nav-list">
+            <li class="header-nav-list-item"><%= link "Submit News", to: "#", class: "header-button" %></li>
+          </ul>
+
           <%= if @current_user do %>
             <button class="has-tooltip">
               <img class="header-nav-secondary-user" src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
