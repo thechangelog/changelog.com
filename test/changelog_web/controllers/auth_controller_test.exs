@@ -132,4 +132,12 @@ defmodule ChangelogWeb.AuthControllerTest do
       assert get_encrypted_cookie(conn, "_changelog_user") == nil
     end
   end
+
+  describe "unsupported provider auth" do
+    test "raises a typical 404", %{conn: conn} do
+      assert_raise Ecto.NoResultsError, fn ->
+        get(conn, "/auth/login")
+      end
+    end
+  end
 end
