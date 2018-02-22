@@ -15,7 +15,7 @@
 
         <div class="header-nav-secondary">
           <ul class="header-nav-list">
-            <li class="header-nav-list-item"><%= link "Submit News", to: "#", class: "header-button" %></li>
+            <li class="header-nav-list-item is-desktop_only"><%= link "Submit News", to: "#", class: "header-button" %></li>
           </ul>
 
           <%= if @current_user do %>
@@ -43,16 +43,16 @@
               <li class="header-nav-list-item"><%= link "Sign In", to: sign_in_path(@conn, :new), class: "header-button" %></li>
             </ul>
           <% end %>
+
+          <form action="<%= search_path(@conn, :search) %>" method="get" class="header-search">
+            <label class="visually_hidden" for="name">Search</label>
+            <input name="q" type="text" placeholder="Search Changelog" value="" />
+          </form>
+
+          <button class="header-menu js-toggle-nav" title="Toggle Menu">
+            <span class="header-menu-box"><span class="header-menu-inner"></span></span>
+          </button>
         </div>
-
-        <form action="<%= search_path(@conn, :search) %>" method="get" class="header-search">
-          <label class="visually_hidden" for="name">Search</label>
-          <input name="q" type="text" placeholder="Search Changelog" value="" />
-        </form>
-
-        <button class="header-menu js-toggle-nav" title="Toggle Menu">
-          <span class="header-menu-box"><span class="header-menu-inner"></span></span>
-        </button>
       </div>
     </nav>
   </div>
@@ -71,6 +71,7 @@
           <%= if !@current_user do %>
             <li class="mobile_nav-list-item"><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
           <% end %>
+          <li class="mobile_nav-list-item"><%= link "Submit News", to: "#" %></li>
         </ul>
       </div>
     </div>

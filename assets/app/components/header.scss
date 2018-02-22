@@ -223,7 +223,7 @@
         font-size: 15px;
         font-weight: 500;
         line-height: 1.125em;
-        margin: 0 16px;
+        margin: 0 0.75em;
 
         a {
           color: $medium-grey;
@@ -244,6 +244,11 @@
             width: 100%;
           }
         }
+
+        &.is-desktop_only {
+          display: none;
+          @include breakpoint(mobile) { display: block; }
+        }
       }
     }
 
@@ -260,19 +265,10 @@
       align-items: center;
       display: flex;
       margin-top: 0;
-      margin-right: 10px;
-
-      @include breakpoint(tablet) {
-        margin-right: 20px;
-      }
-
-      .header-nav-list-item:last-child {
-        margin-right: 0;
-      }
 
       &-user {
         $size: 25px;
-        margin: 0;
+        margin: 0 10px;
         text-align: center;
 
         &,
@@ -286,12 +282,18 @@
           border-radius: $base-border-radius;
         }
       }
+
+      .tooltip {
+        margin-right: 13px;
+      }
     }
   }
 
   &-search {
     display: none;
-    @include breakpoint(tablet) { display: block; }
+    margin-left: 10px;
+
+    @include breakpoint(desktop) { display: block; }
 
     input {
       background: rgba($black, .05);
