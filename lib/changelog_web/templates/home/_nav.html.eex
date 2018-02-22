@@ -12,11 +12,4 @@
       <%= link "Account", to: home_path(@conn, :account) %>
     </li>
   </ul>
-
-  <!-- TODO: Finish mobile nav functionality -->
-  <select class="subnav-select" name="select">
-    <option value="" selected>Subscriptions</option>
-    <option value="">Public Profile</option>
-    <option value="">Account</option>
-  </select>
 </nav>

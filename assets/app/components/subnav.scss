@@ -1,11 +1,21 @@
 .subnav {
-  border-bottom: 1px solid $light-grey;
   margin-bottom: $base-spacing*1.5;
+  position: relative;
+
+  &:before {
+    border-bottom: 1px solid $light-grey;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    @include breakpoint(tablet) {
+      bottom: 1px;
+    }
+  }
 
   &-list {
-    display: none;
-    @media (min-width: 901px) { display: block; }
-
     &-item {
       display: inline-block;
 
@@ -13,10 +23,15 @@
         border-bottom: 1px solid transparent;
         color: $black;
         display: block;
-        height: 58px;
-        padding: 1em;
+        font-size: 0.825em;
+        padding: 0.5em 0.5em 0.5em 0;
         transform: translateY(1px);
         transition: border 0.2s $base-easing;
+
+        @include breakpoint(tablet) {
+          font-size: 1em;
+          padding: 1em;
+        }
 
         small {
           margin: 0;
@@ -30,13 +45,5 @@
         border-bottom-color: $green;
       }
     }
-  }
-
-  &-select {
-    display: block;
-    @media (min-width: 901px) { display: none; }
-    margin-bottom: $base-spacing/2;
-    padding: 0.5em;
-    width: 100%;
   }
 }
