@@ -9,6 +9,7 @@ defmodule Changelog.HtmlKit do
   end
 
   def get_title(html) when is_nil(html), do: ""
+  def get_title(""), do: ""
   def get_title(html) do
     case Regex.named_captures(~r/<title.*?>(?<title>.*?)<\/title>/s, html) do
       %{"title" => title} ->
