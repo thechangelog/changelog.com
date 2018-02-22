@@ -53,7 +53,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   def label_with_clear(attr, text) do
     content_tag(:label, for: attr) do
       [content_tag(:span, text),
-       content_tag(:a, "(clear)", href: "javascript:void(0);", class: "field-action")]
+       content_tag(:a, "(clear)", href: "javascript:void(0);", class: "field-action js-clear")]
     end
   end
   # Attempts to load an associated record on a form. Starts with direct

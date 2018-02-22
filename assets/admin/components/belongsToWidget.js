@@ -29,7 +29,7 @@ export default class BelongsToWidget {
       }
     });
 
-    $field.on("click", ".clear", function(event) {
+    $field.on("click", ".js-clear", function(event) {
       event.preventDefault();
       $container.dropdown("clear");
       $container.dropdown("hide");
