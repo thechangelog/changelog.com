@@ -1,4 +1,4 @@
-<div class="page_account">
+<div class="page_basic">
   <%= render("_nav.html", conn: @conn) %>
 
   <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>

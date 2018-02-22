@@ -131,6 +131,7 @@ defmodule ChangelogWeb.Router do
     get "/out", AuthController, :delete, as: :sign_out
 
     get "/", NewsItemController, :index, as: :root
+    get "/news/submit", NewsItemController, :new
     resources "/news", NewsItemController, only: [:show], as: :news_item
     get "/news/:id/visit", NewsItemController, :visit, as: :news_item
     post "/news/impress", NewsItemController, :impress, as: :news_item

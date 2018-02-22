@@ -40,6 +40,10 @@ defmodule ChangelogWeb.NewsItemController do
     render(conn, :index, ads: ads, pinned: pinned, items: items, page: page)
   end
 
+  def new(conn, params) do
+    render(conn, :new)
+  end
+
   def show(conn, %{"id" => slug}) do
     hashid = slug |> String.split("-") |> List.last
     item = hashid |> item_from_hashid |> NewsItem.preload_all |> NewsItem.load_object

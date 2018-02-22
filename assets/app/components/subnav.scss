@@ -24,13 +24,13 @@
         color: $black;
         display: block;
         font-size: 0.825em;
-        padding: 0.5em 0.5em 0.5em 0;
+        padding: 0 0.5em 0.5em 0;
         transform: translateY(1px);
         transition: border 0.2s $base-easing;
 
         @include breakpoint(tablet) {
           font-size: 1em;
-          padding: 1em;
+          padding: 0 1em 1em;
         }
 
         small {

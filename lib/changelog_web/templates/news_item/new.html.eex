@@ -1,0 +1,43 @@
+<div class="page_basic">
+  <h1>Submit News</h1>
+
+  <form class="form">
+    <div class="form-element_wrap">
+      <div class="form-element">
+        <label>URL<span>*</span></label>
+        <input id="person_name" name="person[name]" placeholder="https://example.com" type="url">
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element">
+        <label>What is it?<span>*</span></label>
+        <input id="person_name" name="person[name]" placeholder="Article or project title..." value="" type="text">
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element ">
+        <label>Why is it interesting?</label>
+        <textarea placeholder="What do you think?"></textarea>
+        <p class="form-element-note">Try some Markdown. It *may* work.</p>
+      </div>
+    </div>
+
+    <div class="form-submit">
+      <p class="form-submit-toc"><a href="/coc">View submission guidelines.</a></p>
+      <div>
+        <input value="Submit" type="submit">
+        <div class="form_submit_responses"></div>
+      </div>
+    </div>
+  </form>
+
+  <div class="richtext richtext--small">
+    <hr>
+    <h3>Submission Guidelines</h3>
+    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+    <p>Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec ullamcorper nulla non metus auctor fringilla.</p>
+    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+  </div>
+</div>
