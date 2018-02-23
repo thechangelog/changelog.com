@@ -29,6 +29,11 @@ u(document).handle("click", ".js-toggle-nav", function(event) {
   }, 50);
 });
 
+u(document).handle("click", ".js-toggle_element", function(event) {
+  const href = u(event.target).attr("href");
+  u(href).toggleClass("is-hidden");
+});
+
 u(document).handle("click", ".js-account-nav", function(event) {
   const content = u(".js-account-nav-content").html();
   overlay.html(content).show();

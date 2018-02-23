@@ -45,6 +45,11 @@
         color: $medium-grey;
       }
     }
+
+    textarea {
+      resize: vertical !important;
+      height: 50px;
+    }
   }
 
   &-submit {

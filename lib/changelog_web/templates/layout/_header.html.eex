@@ -15,7 +15,7 @@
 
         <div class="header-nav-secondary">
           <ul class="header-nav-list">
-            <li class="header-nav-list-item is-desktop_only"><%= link "Submit News", to: "#", class: "header-button" %></li>
+            <li class="header-nav-list-item is-desktop_only"><%= link "Submit News", to: news_item_path(@conn, :new), class: "header-button" %></li>
           </ul>
 
           <%= if @current_user do %>
@@ -71,7 +71,7 @@
           <%= if !@current_user do %>
             <li class="mobile_nav-list-item"><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
           <% end %>
-          <li class="mobile_nav-list-item"><%= link "Submit News", to: "#" %></li>
+          <li class="mobile_nav-list-item"><%= link "Submit News", to: news_item_path(@conn, :new) %></li>
         </ul>
       </div>
     </div>

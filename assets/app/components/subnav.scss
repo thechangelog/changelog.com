@@ -6,24 +6,24 @@
     border-bottom: 1px solid $light-grey;
     content: "";
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     right: 0;
-
-    @include breakpoint(tablet) {
-      bottom: 1px;
-    }
   }
 
   &-list {
+    display: flex;
+    justify-content: flex-start;
+
     &-item {
-      display: inline-block;
+      flex: 0 auto;
 
       a {
         border-bottom: 1px solid transparent;
         color: $black;
         display: block;
         font-size: 0.825em;
+        height: 42px;
         padding: 0 0.5em 0.5em 0;
         transform: translateY(1px);
         transition: border 0.2s $base-easing;

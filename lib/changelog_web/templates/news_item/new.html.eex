@@ -5,14 +5,14 @@
     <div class="form-element_wrap">
       <div class="form-element">
         <label>URL<span>*</span></label>
-        <input id="person_name" name="person[name]" placeholder="https://example.com" type="url">
+        <input id="url" name="url" placeholder="https://example.com" type="url">
       </div>
     </div>
 
     <div class="form-element_wrap">
       <div class="form-element">
         <label>What is it?<span>*</span></label>
-        <input id="person_name" name="person[name]" placeholder="Article or project title..." value="" type="text">
+        <input id="title" name="title" placeholder="Article or project title..." value="" type="text">
       </div>
     </div>
 
@@ -25,7 +25,7 @@
     </div>
 
     <div class="form-submit">
-      <p class="form-submit-toc"><a href="/coc">View submission guidelines.</a></p>
+      <p class="form-submit-toc"><a href="#guidelines" class="js-toggle_element">View submission guidelines</a></p>
       <div>
         <input value="Submit" type="submit">
         <div class="form_submit_responses"></div>
@@ -33,7 +33,7 @@
     </div>
   </form>
 
-  <div class="richtext richtext--small">
+  <div id="guidelines" class="richtext richtext--small is-hidden">
     <hr>
     <h3>Submission Guidelines</h3>
     <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
