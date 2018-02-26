@@ -3,7 +3,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   import ChangelogWeb.NewsItemView, only: [hashid: 1, slug: 1]
 
-  alias Changelog.NewsItem
+  alias Changelog.{NewsItem, NewsQueue}
 
   test "getting the index", %{conn: conn} do
     i1 = insert(:news_item)
@@ -101,5 +101,35 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert conn.status == 204
     item = Repo.get(NewsItem, item.id)
     assert item.impression_count == 0
+  end
+
+  test "getting the form to submit news", %{conn: conn} do
+    conn = get(conn, news_item_path(conn, :new))
+    assert redirected_to(conn) == sign_in_path(conn, :new)
+  end
+
+  @tag :as_user
+  test "renders the form to submit news", %{conn: conn} do
+    conn = get(conn, news_item_path(conn, :new))
+    assert html_response(conn, 200) =~ ~r/submit/
+  end
+
+  @tag :as_inserted_user
+  test "creates news item and sets it as submitted", %{conn: conn} do
+    conn = post(conn, news_item_path(conn, :create), news_item: %{url: "https://ohai.me/x", headline: "dig it?"})
+
+    assert redirected_to(conn) == root_path(conn, :index)
+    assert count(NewsItem.submitted) == 1
+    assert count(NewsItem.published) == 0
+    assert count(NewsQueue) == 0
+  end
+
+  @tag :as_inserted_user
+  test "does not create with invalid attributes", %{conn: conn} do
+    count_before = count(NewsItem)
+    conn = post(conn, news_item_path(conn, :create), news_item: %{url: "https://just.this"})
+
+    assert html_response(conn, 200) =~ ~r/error/
+    assert count(NewsItem) == count_before
   end
 end

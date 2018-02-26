@@ -5,6 +5,7 @@ defmodule ChangelogWeb.NewsItemController do
   alias ChangelogWeb.NewsItemView
 
   plug RequireAdmin, "before preview" when action in [:preview]
+  plug RequireUser, "before submitting" when action in [:new, :create]
 
   def index(conn, params) do
     pinned =
@@ -40,8 +41,25 @@ defmodule ChangelogWeb.NewsItemController do
     render(conn, :index, ads: ads, pinned: pinned, items: items, page: page)
   end
 
-  def new(conn, params) do
-    render(conn, :new)
+  def new(conn, _params) do
+    changeset = NewsItem.submission_changeset(%NewsItem{})
+    render(conn, :new, changeset: changeset)
+  end
+
+  def create(conn = %{assigns: %{current_user: user}}, %{"news_item" => item_params}) do
+    item = %NewsItem{type: :link, author_id: user.id, status: :submitted}
+    changeset = NewsItem.submission_changeset(item, item_params)
+
+    case Repo.insert(changeset) do
+      {:ok, _item} ->
+        conn
+        |> put_flash(:success, "We received your submission! Stay awesome 💚")
+        |> redirect(to: root_path(conn, :index))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:error, "Something went wrong. 😭")
+        |> render(:new, changeset: changeset)
+    end
   end
 
   def show(conn, %{"id" => slug}) do

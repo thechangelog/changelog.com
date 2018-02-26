@@ -1,25 +1,28 @@
 <div class="page_basic">
   <h1>Submit News</h1>
 
-  <form class="form">
+  <%= form_for @changeset, news_item_path(@conn, :create), fn f -> %>
     <div class="form-element_wrap">
-      <div class="form-element">
+      <div class="form-element <%= error_class(f, :url) %>">
         <label>URL<span>*</span></label>
-        <input id="url" name="url" placeholder="https://example.com" type="url">
+        <%= text_input(f, :url, placeholder: "https://example.com", type: "url", required: true) %>
+        <%= error_message(f, :url) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element">
+      <div class="form-element <%= error_class(f, :headline) %>">
         <label>What is it?<span>*</span></label>
-        <input id="title" name="title" placeholder="Article or project title..." value="" type="text">
+        <%= text_input(f, :headline, placeholder: "Article or project title...", required: true) %>
+        <%= error_message(f, :headline) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element ">
+      <div class="form-element <%= error_class(f, :story) %>">
         <label>Why is it interesting?</label>
-        <textarea placeholder="What do you think?"></textarea>
+        <%= textarea(f, :story, placeholder: "What do you think?") %>
+        <%= error_message(f, :story) %>
         <p class="form-element-note">Try some Markdown. It *may* work.</p>
       </div>
     </div>
@@ -31,7 +34,7 @@
         <div class="form_submit_responses"></div>
       </div>
     </div>
-  </form>
+  <% end %>
 
   <div id="guidelines" class="richtext richtext--small is-hidden">
     <hr>

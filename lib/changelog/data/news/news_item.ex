@@ -41,6 +41,7 @@ defmodule Changelog.NewsItem do
   def pinned(query \\ __MODULE__),                     do: from(q in query, where: q.pinned)
   def unpinned(query \\ __MODULE__),                   do: from(q in query, where: not(q.pinned))
   def search(query, term),                             do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
+  def submitted(query \\ __MODULE__),                  do: from(q in query, where: q.status == ^:submitted)
   def with_episode(query \\ __MODULE__, episode),      do: from(q in query, where: q.object_id == ^"#{episode.podcast.slug}:#{episode.slug}")
   def with_object(query \\ __MODULE__),                do: from(q in query, where: not(is_nil(q.object_id)))
   def with_object_prefix(query \\ __MODULE__, prefix), do: from(q in query, where: like(q.object_id, ^"#{prefix}%"))
@@ -67,6 +68,13 @@ defmodule Changelog.NewsItem do
     |> foreign_key_constraint(:logger_id)
     |> foreign_key_constraint(:source_id)
     |> cast_assoc(:news_item_topics)
+  end
+
+  def submission_changeset(item, attrs \\ %{}) do
+    item
+    |> cast(attrs, ~w(url headline story author_id))
+    |> validate_required([:type, :url, :headline, :author_id])
+    |> validate_format(:url, Regexp.http, message: Regexp.http_message)
   end
 
   def update_changeset(item, attrs \\ %{}) do
