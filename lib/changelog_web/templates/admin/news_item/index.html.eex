@@ -36,6 +36,11 @@
     <%= render("_table.html", conn: @conn, status: "draft", items: @drafts) %>
   <% end %>
 
+  <%= if Enum.any?(@submitted) do %>
+    <h2 class="ui header">Submitted</h2>
+    <%= render("_table.html", conn: @conn, status: "submitted", items: @submitted) %>
+  <% end %>
+
   <h2 class="ui header">Queued</h2>
   <%= if Enum.any?(@queued) do %>
     <%= render("_table.html", conn: @conn, status: "queued", items: @queued) %>

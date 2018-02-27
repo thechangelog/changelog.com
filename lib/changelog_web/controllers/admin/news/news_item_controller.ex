@@ -20,6 +20,12 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> Repo.all
       |> Enum.map(&(&1.item))
 
+    submitted =
+      NewsItem.submitted
+      |> NewsItem.newest_first(:inserted_at)
+      |> NewsItem.preload_all
+      |> Repo.all
+
     page =
       NewsItem.published
       |> NewsItem.newest_first
@@ -45,7 +51,8 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> Enum.sort(&(Timex.after?(&1.updated_at, &2.updated_at)))
       |> Enum.chunk(activity_count)
 
-    render(conn, :index, drafts: drafts, queued: queued, activity: activity, published: page.entries, page: page)
+    render(conn, :index, drafts: drafts, submitted: submitted, queued: queued,
+                         activity: activity, published: page.entries, page: page)
   end
 
   def new(conn, params) do
