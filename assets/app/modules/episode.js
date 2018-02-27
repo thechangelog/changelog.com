@@ -31,6 +31,11 @@ export default class Episode {
     return this.ep.audio_url;
   }
 
+  audioFile() {
+    let parts = this.audio().split("/");
+    return parts[parts.length - 1];
+  }
+
   duration() {
     return this.ep.duration;
   }

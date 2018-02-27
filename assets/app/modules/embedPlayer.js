@@ -42,16 +42,9 @@ export default class EmbedPlayer {
   }
 
   loadAudio() {
-    const audioUrl = this.playButton.attr("href");
-    this.audio.load(audioUrl, () => {
+    this.audio.load(this.episode.audio(), () => {
       this.audioLoaded = true;
-
-      Log.track("Embed Play", {
-        podcast: this.episode.podcastName(),
-        episode: this.episode.title(),
-        referrer: (gup("referrer") || "None")
-      });
-
+      Log.track("Embed Player", "play", `${this.episode.audioFile()} (via ${(gup("referrer") || "Unknown")})`);
       this.play();
     });
   }
@@ -60,7 +53,8 @@ export default class EmbedPlayer {
     this.episode = new Episode({
       podcast: this.playButton.data("podcast"),
       title: this.playButton.data("title"),
-      duration: this.playButton.data("duration")
+      duration: this.playButton.data("duration"),
+      audio_url: this.playButton.attr("href")
     });
   }
 
