@@ -1,4 +1,4 @@
-<%= if Mix.env == :prod do %>
+<%= if false do %>
 <script>
 !function() {
  var t;
