@@ -1,24 +1,66 @@
 .flash {
   background: $light-blue;
-  color: $blue;
+  font-size: 0.875em;
   font-weight: bold;
-  padding: $padding-small;
+  padding: 0.5em 1em;
   text-align: center;
+
+  &,
+  &-close {
+    color: $blue;
+  }
 
   &--inline {
     margin-bottom: $base-spacing;
   }
 
-  &--success, &--result {
+  &--success,
+  &--result, {
     background: $light-green;
-    color: $green;
+
+    &,
+    .flash-close {
+      color: darken($green, 10%);
+    }
   }
   &--error {
     background: $red;
-    color: $white;
+
+    &,
+    .flash-close {
+      color: $white;
+    }
+  }
+
+  &-message {
+    padding-top: 1px;
   }
 
   p:last-child {
     margin-bottom: 0;
+  }
+
+  // NOTE: Flashes inside the container work differently than flashes throughout a document
+  &_container {
+    text-align: center;
+    transition: all 0.05s ease-in-out;
+
+    &.is-closing {
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.95);
+      transform-origin: top;
+    }
+
+    .flash {
+      border-radius: 0 0 3px 3px;
+      display: inline-flex;
+
+      &-close {
+        padding-left: 0.75em;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
   }
 }

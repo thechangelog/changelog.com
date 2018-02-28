@@ -68,6 +68,24 @@ u(document).handle("click", "[data-share]", function(event) {
   new Share(overlay).load(u(this).data("share"));
 });
 
+// flash messages
+u(document).handle("click", ".js-close_flash", function(event) {
+  closeFlash(u(event.target).closest('.flash_container'));
+});
+
+if (u('.flash_container').length > 0) {
+  setTimeout(() => {
+    closeFlash(u('.flash_container'));
+  }, 10000);
+}
+
+function closeFlash(element) {
+  element.addClass('is-closing');
+  setTimeout(() => {
+    element.remove();
+  }, 1000);
+}
+
 // open share dialogs in their own window (order matters or next rule will apply)
 u(document).handle("click", ".js-share-popup", function(event) {
   Log.track("Share");

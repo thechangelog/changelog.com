@@ -13,8 +13,10 @@
 .page-page-weekly,
 .page-page-nightly {
   .header {
-    background: $black;
-    border-bottom: 1px solid rgba($border-color, 0.1);
+    &-container {
+      background: $black;
+      border-bottom: 1px solid rgba($border-color, 0.1);
+    }
 
     &-logo a {
       background-image: url('/images/brand/changelog-logomark-white.svg');
@@ -51,13 +53,16 @@
 // NOTE: Update $header-height and $header-height--mobile in variables.scss when any changes affect height
 .header {
   @include position(fixed, 0 0 null);
-  background-color: rgba($white, .98);
-  border-bottom: 1px solid $light-grey;
-  padding: 7px $mobile-spacing;
   width: 100%;
   z-index: 999;
 
-  @include breakpoint(tablet) { padding: 13px $base-spacing; }
+  &-container {
+    background-color: rgba($white, .98);
+    border-bottom: 1px solid $light-grey;
+    padding: 7px $mobile-spacing;
+
+    @include breakpoint(tablet) { padding: 13px $base-spacing; }
+  }
 
   @include breakpoint(tablet, max) {
     .nav-open & {
