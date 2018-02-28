@@ -44,6 +44,7 @@
   &_container {
     text-align: center;
     transition: all 0.05s ease-in-out;
+    padding: 0 $mobile-spacing;
 
     &.is-closing {
       pointer-events: none;
@@ -54,7 +55,14 @@
 
     .flash {
       border-radius: 0 0 3px 3px;
+      max-width: 100%;
+      width: 440px;
       display: inline-flex;
+
+      &-message {
+        flex: 1 0 auto;
+        text-align: left;
+      }
 
       &-close {
         padding-left: 0.75em;
