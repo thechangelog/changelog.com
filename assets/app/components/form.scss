@@ -1,4 +1,14 @@
 .form {
+  $border: 1px solid $black;
+
+  label {
+    display: block;
+    font-family: $code;
+    font-weight: 700;
+    font-size: 0.75em;
+    margin-bottom: 0.5em;
+  }
+
   &-element {
     margin-bottom: $base-spacing;
     width: 100%;
@@ -16,18 +26,10 @@
       }
     }
 
-    label {
-      display: block;
-      font-family: $code;
-      font-weight: 700;
-      font-size: 0.75em;
-      margin-bottom: 0.5em;
-    }
-
     textarea,
     input {
       border: none;
-      border-bottom: 1px solid $black;
+      border-bottom: $border;
       color: $black;
       line-height: 1.5em;
       padding: 0.75em 0;
@@ -95,6 +97,52 @@
       transition: background 0.1s $base-easing;
 
       &:hover { background: darken($green, 10%); }
+    }
+  }
+
+  &-checklist {
+    margin: 0 0 $base-spacing;
+
+    & > label {
+      margin-bottom: $base-spacing / 2;
+    }
+
+    &-item {
+      border-top: 1px solid $light-grey;
+      padding: 15px 0 13px;
+
+      &:last-child {
+        border-bottom: $border;
+      }
+
+      label {
+        align-items: center;
+        font-family: $content;
+        font-size: 0.875em;
+        font-weight: normal;
+        display: flex;
+        margin: 0;
+
+        .form-checklist-item-text {
+          flex: 1 100%;
+          user-select: none;
+        }
+
+        input[type=checkbox] { display: none; }
+        input[type=checkbox] + .form-checklist-item-box {
+          flex: 0 0 21px;
+          border: 1px solid $black;
+          display: block;
+          margin: 0 1em;
+          width: 21px;
+          height: 21px;
+          position: relative;
+          top: -1px;
+        }
+        input[type=checkbox]:checked + .form-checklist-item-box {
+          background: url('/images/icons/form-checkmark.svg') center no-repeat;
+        }
+      }
     }
   }
 }
