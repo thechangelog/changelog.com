@@ -10,7 +10,7 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
   def error_message(form, field) do
     case form.errors[field] do
       {message, _} ->
-        content_tag :p, class: "form_element_note" do
+        content_tag :p, class: "form-element-error" do
           message
         end
       nil -> ""

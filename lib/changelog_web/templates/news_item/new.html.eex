@@ -6,7 +6,6 @@
       <div class="form-element <%= error_class(f, :url) %>">
         <label>URL<span>*</span></label>
         <%= text_input(f, :url, placeholder: "https://example.com", type: "url", required: true) %>
-        <%= error_message(f, :url) %>
       </div>
     </div>
 

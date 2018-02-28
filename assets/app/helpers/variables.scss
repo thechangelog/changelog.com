@@ -12,6 +12,7 @@ $blue: #2D3589;
 $lightest-grey: #f5f5f5;
 $light-grey: #e6e5e6;
 $medium-grey: #878b8f;
+$dark-grey: darken($medium-grey, 30%);
 $red: #ef5125;
 $light-red: lighten($red, 20%);
 $blue-grey: #222C36;

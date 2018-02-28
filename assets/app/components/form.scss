@@ -16,14 +16,6 @@
       }
     }
 
-    &-note {
-      font-family: $code;
-      font-size: 0.6875em;
-      font-style: italic;
-      text-align: right;
-      margin-top: 5px;
-    }
-
     label {
       display: block;
       font-family: $code;
@@ -50,6 +42,16 @@
       resize: vertical !important;
       height: 50px;
     }
+
+    &-error,
+    &-note {
+      color: $medium-grey;
+      font-family: $code;
+      font-size: 0.6875em;
+      font-style: italic;
+      margin: 5px 0;
+    }
+    &-error { color: $red; }
   }
 
   &-submit {
