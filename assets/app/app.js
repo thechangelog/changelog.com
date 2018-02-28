@@ -73,11 +73,11 @@ u(document).handle("click", ".js-close_flash", function(event) {
   closeFlash(u(event.target).closest('.flash_container'));
 });
 
-if (u('.flash_container').length > 0) {
-  setTimeout(() => {
-    closeFlash(u('.flash_container'));
-  }, 10000);
-}
+// if (u('.flash_container').length > 0) {
+//   setTimeout(() => {
+//     closeFlash(u('.flash_container'));
+//   }, 10000);
+// }
 
 function closeFlash(element) {
   element.addClass('is-closing');

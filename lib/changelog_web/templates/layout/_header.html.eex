@@ -69,6 +69,15 @@
       <% end %>
     </div>
   <% end %>
+
+  <div class="flash_container">
+    <div class="flash flash--success">
+      <div class="flash-message" role="alert"><p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p></div>
+      <button class="flash-close js-close_flash" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M1 9L9 1M1 1l8 8" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+      </button>
+    </div>
+  </div>
 </header>
 
 <nav class="mobile_nav">
