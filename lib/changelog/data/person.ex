@@ -5,6 +5,17 @@ defmodule Changelog.Person do
                    Post, Regexp}
   alias Timex.Duration
 
+  defmodule Settings do
+    use Changelog.Data
+
+    @primary_key false
+    embedded_schema do
+      field :email_on_authored_news, :boolean, default: true
+    end
+
+    def changeset(struct, attrs), do: cast(struct, attrs, [:email_on_authored_news])
+  end
+
   schema "people" do
     field :name, :string
     field :email, :string
@@ -21,6 +32,8 @@ defmodule Changelog.Person do
     field :signed_in_at, Timex.Ecto.DateTime
     field :admin, :boolean
     field :avatar, Files.Avatar.Type
+
+    embeds_one :settings, Settings, on_replace: :update
 
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
@@ -66,8 +79,9 @@ defmodule Changelog.Person do
 
   defp changeset_with_allowed_params(struct, params, allowed) do
     struct
-    |> cast_attachments(params, ~w(avatar), allow_urls: true)
     |> cast(params, allowed)
+    |> cast_embed(:settings)
+    |> cast_attachments(params, ~w(avatar), allow_urls: true)
     |> validate_required([:name, :email, :handle])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)

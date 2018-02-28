@@ -26,6 +26,14 @@
       </div>
     </div>
 
+  <%= inputs_for f, :settings, fn i -> %>
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :email) %>">
+        <label><%= checkbox(i, :email_on_authored_news) %> Email me when I'm featured on Changelog News</label>
+      </div>
+    </div>
+  <% end %>
+
     <div class="form-submit">
       <p class="form-submit-toc"></p>
       <div>
