@@ -69,22 +69,14 @@ u(document).handle("click", "[data-share]", function(event) {
 });
 
 // flash messages
+function closeFlash(element) {
+  element.addClass("is-closing");
+  setTimeout(() => { element.remove(); }, 1000);
+}
+
 u(document).handle("click", ".js-close_flash", function(event) {
   closeFlash(u(event.target).closest('.flash_container'));
 });
-
-if (u('.flash_container').length > 0) {
-  setTimeout(() => {
-    closeFlash(u('.flash_container'));
-  }, 10000);
-}
-
-function closeFlash(element) {
-  element.addClass('is-closing');
-  setTimeout(() => {
-    element.remove();
-  }, 1000);
-}
 
 // open share dialogs in their own window (order matters or next rule will apply)
 u(document).handle("click", ".js-share-popup", function(event) {
@@ -270,6 +262,7 @@ u(document).on("turbolinks:load", function() {
   formatTimes();
   deepLink();
   impress();
+  setTimeout(() => { closeFlash(u(".flash_container")); }, 10*1000);
 });
 
 Turbolinks.start();
