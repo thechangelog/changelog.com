@@ -10,6 +10,7 @@ defmodule ChangelogWeb.JsonFeedView do
       "version": "https://jsonfeed.org/version/1",
       "title": "Changelog",
       "home_page_url": root_url(conn, :index),
+      "feed_url": json_feed_url(conn, :news),
       "description": "News and podcasts for developers",
       "items": render_many(items, __MODULE__, "news_item.json", %{conn: conn})
     }
