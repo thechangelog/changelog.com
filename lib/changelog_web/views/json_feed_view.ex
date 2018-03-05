@@ -19,7 +19,7 @@ defmodule ChangelogWeb.JsonFeedView do
     %{
       "title": item.headline |> html_escape |> safe_to_string,
       "url": news_item_url(conn, :show, NewsItemView.slug(item)),
-      "date_published": TimeView.to_rfc3339(item.published_at),
+      "date_published": TimeView.rfc3339(item.published_at),
       "author": %{
         "name": item.logger.name
       },
@@ -32,7 +32,7 @@ defmodule ChangelogWeb.JsonFeedView do
     %{
       "title": episode.podcast.name <> " " <> EpisodeView.numbered_title(episode, "") |> html_escape |> safe_to_string,
       "url": episode_url(conn, :show, episode.podcast.slug, episode.slug),
-      "date_published": TimeView.to_rfc3339(episode.published_at),
+      "date_published": TimeView.rfc3339(episode.published_at),
       "content_html": SharedHelpers.md_to_html(item.story),
       "content_text": SharedHelpers.md_to_text(item.story),
       "attachments": [
@@ -52,7 +52,7 @@ defmodule ChangelogWeb.JsonFeedView do
         "name": post.author.name
       },
       "url": post_url(conn, :show, post.slug),
-      "date_published": TimeView.to_rfc3339(post.published_at),
+      "date_published": TimeView.rfc3339(post.published_at),
       "content_html": SharedHelpers.md_to_html(item.story),
       "content_text": SharedHelpers.md_to_text(item.story)
     }

@@ -102,15 +102,15 @@ defmodule ChangelogWeb.TimeViewTest do
     end
   end
 
-  describe "to_rfc3339" do
+  describe "rfc3339" do
     test "when passed nil" do
-      assert to_rfc3339(nil) == ""
+      assert rfc3339(nil) == ""
     end
 
     test "when passed a valid date time" do
       datetime = Timex.to_datetime({{2018, 2, 26}, {19, 40, 00}}, "America/Chicago")
 
-      assert to_rfc3339(datetime) == "2018-02-26T19:40:00-06:00"
+      assert rfc3339(datetime) == "2018-02-26T19:40:00-06:00"
     end
   end
 

@@ -33,7 +33,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       assert json == %{
         :title => news_item.headline,
         :url => news_item_url(endpoint, :show, NewsItemView.slug(news_item)),
-        :date_published => TimeView.to_rfc3339(news_item.published_at),
+        :date_published => TimeView.rfc3339(news_item.published_at),
         :author => %{
           :name => news_item.logger.name
         },
@@ -55,7 +55,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       assert json == %{
         :title => "#{episode.podcast.name} #{episode.title}",
         :url => episode_url(endpoint, :show, episode.podcast.slug, episode.slug),
-        :date_published => TimeView.to_rfc3339(episode.published_at),
+        :date_published => TimeView.rfc3339(episode.published_at),
         :content_html => SharedHelpers.md_to_html(news_item.story),
         :content_text => SharedHelpers.md_to_text(news_item.story),
         :attachments => [
@@ -83,7 +83,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
           :name => post.author.name
         },
         :url => post_url(endpoint, :show, post.slug),
-        :date_published => TimeView.to_rfc3339(post.published_at),
+        :date_published => TimeView.rfc3339(post.published_at),
         :content_html => SharedHelpers.md_to_html(news_item.story),
         :content_text => SharedHelpers.md_to_text(news_item.story)
       }

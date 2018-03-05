@@ -66,8 +66,8 @@ defmodule ChangelogWeb.TimeView do
   def rss(ts) when is_nil(ts), do: ""
   def rss(ts), do: ts |> format_to("{RFC1123}")
 
-  def to_rfc3339(ts) when is_nil(ts), do: ""
-  def to_rfc3339(ts), do: ts |> format_to("{RFC3339}")
+  def rfc3339(ts) when is_nil(ts), do: ""
+  def rfc3339(ts), do: ts |> format_to("{RFC3339}")
 
   defp format_to(ts, format) do
     {:ok, result} = Timex.format(ts, format)
