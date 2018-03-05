@@ -36,6 +36,7 @@ export default class newsItemView {
     new BelongsToWidget("logger", "person");
     new BelongsToWidget("author", "person");
     new BelongsToWidget("source", "news_source");
+    new BelongsToWidget("submitter", "person");
 
     if ($(".js-quick-form").length) {
       $(".ui.menu").remove();

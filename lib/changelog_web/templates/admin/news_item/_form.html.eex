@@ -125,7 +125,7 @@
     </div>
 
     <div class="field <%= error_class(f, :submitter_id) %>">
-      <%= label(f, :submitter_id, "Submitted By") %>
+      <%= label_with_clear(:submitter_id, "Submitted By") %>
       <div class="ui fluid remote logger search selection dropdown">
         <i class="dropdown icon"></i>
         <% submitter = load_from_form(f, Person, :submitter) %>
@@ -151,11 +151,11 @@
   <div class="ui hidden divider"></div>
 
   <div class="ui equal width stackable grid">
-  <%= if is_persisted(f.data) && !NewsItem.is_draft(f.data) do %>
+  <%= if NewsItem.is_published(f.data) || NewsItem.is_queued(f.data) do %>
     <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
     <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn, admin_news_item_path(@conn, :index))) %></div>
     <div class="column">
-    <%= if !NewsItem.is_published(f.data) do %>
+    <%= if NewsItem.is_queued(f.data) do %>
       <button class="ui green fluid basic button" type="submit" name="queue" value="publish">Publish</button>
     <% end %>
     </div>

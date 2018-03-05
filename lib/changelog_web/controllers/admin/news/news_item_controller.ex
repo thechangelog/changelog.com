@@ -55,12 +55,12 @@ defmodule ChangelogWeb.Admin.NewsItemController do
                          activity: activity, published: page.entries, page: page)
   end
 
-  def new(conn, params) do
+  def new(conn = %{assigns: %{current_user: me}}, params) do
     url = UrlKit.normalize_url(params["url"])
     html = UrlKit.get_html(url)
 
     changeset =
-      conn.assigns.current_user
+      me
       |> build_assoc(:logged_news_items,
         url: url,
         headline: String.capitalize(HtmlKit.get_title(html)),
@@ -92,9 +92,9 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
     item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
-    changeset = NewsItem.update_changeset(item)
+    changeset = NewsItem.update_changeset(item, %{logger_id: item.logger_id || me.id})
     render(conn, :edit, item: item, changeset: changeset)
   end
 
