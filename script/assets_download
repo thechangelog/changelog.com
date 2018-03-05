@@ -2,7 +2,7 @@
 
 # swap lines 4 and 5 if you want to download the episodes
 # for type in founderstalk  gotime  jsparty  podcast  rfc  spotlight; do
-for type in icons avatars logos news_items; do
+for type in icons avatars logos news_ads news_items; do
   rsync --recursive \
         --partial \
         --progress \
