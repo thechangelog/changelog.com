@@ -107,20 +107,38 @@
     </div>
   </div>
 
-  <div class="field required <%= error_class(f, :logger_id) %>">
-    <%= label(f, :logger_id, "Logged By") %>
-    <div class="ui fluid remote logger search selection dropdown">
-      <i class="dropdown icon"></i>
-      <% logger = load_from_form(f, Person, :logger) %>
-      <%= if logger do %>
-        <%= hidden_input(f, :logger_id, value: logger.id) %>
-        <div class="selected text"><%= logger.name %></div>
-      <% else %>
-        <%= hidden_input(f, :logger_id) %>
-        <div class="default text">Select Changelogger</div>
-      <% end %>
+  <div class="two fields">
+    <div class="field required <%= error_class(f, :logger_id) %>">
+      <%= label(f, :logger_id, "Logged By") %>
+      <div class="ui fluid remote logger search selection dropdown">
+        <i class="dropdown icon"></i>
+        <% logger = load_from_form(f, Person, :logger) %>
+        <%= if logger do %>
+          <%= hidden_input(f, :logger_id, value: logger.id) %>
+          <div class="selected text"><%= logger.name %></div>
+        <% else %>
+          <%= hidden_input(f, :logger_id) %>
+          <div class="default text">Select Changelogger</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :logger_id) %>
     </div>
-    <%= error_message(f, :logger_id) %>
+
+    <div class="field <%= error_class(f, :submitter_id) %>">
+      <%= label(f, :submitter_id, "Submitted By") %>
+      <div class="ui fluid remote logger search selection dropdown">
+        <i class="dropdown icon"></i>
+        <% submitter = load_from_form(f, Person, :submitter) %>
+        <%= if submitter do %>
+          <%= hidden_input(f, :submitter_id, value: submitter.id) %>
+          <div class="selected text"><%= submitter.name %></div>
+        <% else %>
+          <%= hidden_input(f, :submitter_id) %>
+          <div class="default text">Select Submitter</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :submitter_id) %>
+    </div>
   </div>
 
   <div class="inline field">

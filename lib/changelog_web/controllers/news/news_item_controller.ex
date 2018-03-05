@@ -47,7 +47,7 @@ defmodule ChangelogWeb.NewsItemController do
   end
 
   def create(conn = %{assigns: %{current_user: user}}, %{"news_item" => item_params}) do
-    item = %NewsItem{type: :link, author_id: user.id, status: :submitted}
+    item = %NewsItem{type: :link, author_id: user.id, submitter_id: user.id, status: :submitted}
     changeset = NewsItem.submission_changeset(item, item_params)
 
     case Repo.insert(changeset) do

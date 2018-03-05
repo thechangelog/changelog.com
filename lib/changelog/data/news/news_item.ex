@@ -25,6 +25,7 @@ defmodule Changelog.NewsItem do
 
     belongs_to :author, Person
     belongs_to :logger, Person
+    belongs_to :submitter, Person
     belongs_to :source, NewsSource
     has_one :news_queue, NewsQueue, foreign_key: :item_id, on_delete: :delete_all
     has_many :news_item_topics, NewsItemTopic, foreign_key: :item_id, on_delete: :delete_all
@@ -61,7 +62,7 @@ defmodule Changelog.NewsItem do
 
   def insert_changeset(item, attrs \\ %{}) do
     item
-    |> cast(attrs, ~w(status type url headline story pinned published_at author_id logger_id object_id source_id))
+    |> cast(attrs, ~w(status type url headline story pinned published_at author_id logger_id submitter_id object_id source_id))
     |> validate_required([:type, :url, :headline, :logger_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:author_id)
@@ -72,8 +73,8 @@ defmodule Changelog.NewsItem do
 
   def submission_changeset(item, attrs \\ %{}) do
     item
-    |> cast(attrs, ~w(url headline story author_id))
-    |> validate_required([:type, :url, :headline, :author_id])
+    |> cast(attrs, ~w(url headline story author_id submitter_id))
+    |> validate_required([:type, :url, :headline, :submitter_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
   end
 
@@ -116,6 +117,7 @@ defmodule Changelog.NewsItem do
     |> Ecto.Query.preload(:author)
     |> Ecto.Query.preload(:logger)
     |> Ecto.Query.preload(:source)
+    |> Ecto.Query.preload(:submitter)
     |> preload_topics()
   end
 
@@ -124,6 +126,7 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:author)
     |> Repo.preload(:logger)
     |> Repo.preload(:source)
+    |> Repo.preload(:submitter)
     |> preload_topics()
   end
 

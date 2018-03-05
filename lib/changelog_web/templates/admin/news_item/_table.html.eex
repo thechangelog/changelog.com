@@ -24,15 +24,20 @@
     <%= for item <- @items do %>
       <tr data-id="<%= item.id %>">
         <td class="center aligned">
+        <%= if is_loaded(item.submitter) do %>
+          <%= link to: admin_person_path(@conn, :edit, item.submitter), title: "Submitter" do %>
+            <img class="ui avatar image" src="<%= PersonView.avatar_url(item.submitter) %>">
+          <% end %>
+        <% end %>
         <%= if is_loaded(item.logger) do %>
           <%= link to: admin_person_path(@conn, :edit, item.logger), title: "Logger" do %>
             <img class="ui avatar image" src="<%= PersonView.avatar_url(item.logger) %>">
           <% end %>
         <% end %>
-        <%= if is_loaded(item.author) do %>
-            <%= link to: admin_person_path(@conn, :edit, item.author), title: "Author" do %>
-              <img class="ui avatar image" src="<%= PersonView.avatar_url(item.author) %>">
-            <% end %>
+        <%= if is_loaded(item.author) && @status != "submitted" do %>
+          <%= link to: admin_person_path(@conn, :edit, item.author), title: "Author" do %>
+            <img class="ui avatar image" src="<%= PersonView.avatar_url(item.author) %>">
+          <% end %>
         <% end %>
         </td>
         <td><%= item.type %></td>
