@@ -149,4 +149,14 @@ defmodule Changelog.NewsItem do
     |> change(%{impression_count: item.impression_count + 1})
     |> Repo.update!
   end
+
+  def latest_news_items do
+    __MODULE__
+    |> published
+    |> newest_first
+    |> preload_all
+    |> limit(50)
+    |> Repo.all
+    |> Enum.map(&load_object/1)
+  end
 end

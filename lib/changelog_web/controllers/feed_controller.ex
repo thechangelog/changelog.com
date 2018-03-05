@@ -10,7 +10,7 @@ defmodule ChangelogWeb.FeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("news.xml", items: get_news_items())
+    |> render("news.xml", items: NewsItem.latest_news_items)
     |> cache_response
   end
 
@@ -18,7 +18,7 @@ defmodule ChangelogWeb.FeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("news_titles.xml", items: get_news_items())
+    |> render("news_titles.xml", items: NewsItem.latest_news_items)
     |> cache_response
   end
 
@@ -89,15 +89,5 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> render("sitemap.xml", news_items: news_items, news_sources: news_sources, episodes: episodes, podcasts: podcasts, posts: posts, topics: topics)
     |> cache_response
-  end
-
-  defp get_news_items do
-    NewsItem
-    |> NewsItem.published
-    |> NewsItem.newest_first
-    |> NewsItem.preload_all
-    |> NewsItem.limit(50)
-    |> Repo.all
-    |> Enum.map(&NewsItem.load_object/1)
   end
 end

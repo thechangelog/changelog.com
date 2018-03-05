@@ -24,6 +24,11 @@ defmodule ChangelogWeb.Router do
     plug PlugEtsCache.Plug
   end
 
+  pipeline :json_feed do
+    plug :accepts, ["json"]
+    plug PlugEtsCache.Plug
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
     plug PlugEtsCache.Plug
@@ -107,6 +112,12 @@ defmodule ChangelogWeb.Router do
     get "/posts/feed", FeedController, :posts
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
+  end
+
+  scope "/", ChangelogWeb do
+    pipe_through [:json_feed]
+
+    get "/feed.json", JsonFeedController, :news
   end
 
   scope "/", ChangelogWeb do
