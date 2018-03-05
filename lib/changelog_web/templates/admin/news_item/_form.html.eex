@@ -126,7 +126,7 @@
 
     <div class="field <%= error_class(f, :submitter_id) %>">
       <%= label_with_clear(:submitter_id, "Submitted By") %>
-      <div class="ui fluid remote logger search selection dropdown">
+      <div class="ui fluid remote submitter search selection dropdown">
         <i class="dropdown icon"></i>
         <% submitter = load_from_form(f, Person, :submitter) %>
         <%= if submitter do %>
