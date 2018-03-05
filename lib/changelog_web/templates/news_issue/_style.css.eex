@@ -247,6 +247,10 @@ h2.news_item-title {
   width: 110%;
   margin: 10px -5%;
 }
+.news_item--sponsored .news_item-content p img {
+  width: 100%;
+  margin: 10px 0;
+}
 @media (max-width:  600px) {
   .news_item-content p img {
      width: 100%;

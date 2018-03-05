@@ -9,13 +9,13 @@
   <h2 class="news_item-title"><%= link(@ad.headline, to: @ad.url) %></h2>
   <div class="news_item-content">
     <%= @ad.story |> md_to_html |> raw %>
+    <%= if @ad.image do %>
+      <p>
+        <%= link to: @ad.url do %>
+          <img src="<%= NewsItemView.image_url(@ad, :large) %>" alt="<%= @ad.headline %>">
+        <% end %>
+      </p>
+    <% end %>
   </div>
-  <%= if @ad.image do %>
-    <p>
-      <%= link to: @ad.url do %>
-        <img src="<%= NewsItemView.image_url(@ad, :large) %>" alt="<%= @ad.headline %>">
-      <% end %>
-    </p>
-  <% end %>
   <p class="news_item-meta">logged by <a href="https://twitter.com/changelog" rel="external" title="Logbot">@logbot</a></p>
 </div>
