@@ -31,6 +31,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       json = render("news_item.json", %{conn: endpoint, json_feed: news_item})
 
       assert json == %{
+        :id => news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
         :title => news_item.headline,
         :url => news_item_url(endpoint, :show, NewsItemView.slug(news_item)),
         :date_published => TimeView.rfc3339(news_item.published_at),
@@ -53,6 +54,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       json = render("news_item.json", %{conn: endpoint, json_feed: news_item})
 
       assert json == %{
+        :id => news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
         :title => "#{episode.podcast.name} #{episode.title}",
         :url => episode_url(endpoint, :show, episode.podcast.slug, episode.slug),
         :date_published => TimeView.rfc3339(episode.published_at),
@@ -62,7 +64,8 @@ defmodule ChangelogWeb.JsonFeedViewTest do
           %{
             :url => EpisodeView.audio_url(episode),
             :mime_type => "audio/mpeg",
-            :length => episode.bytes
+            :size_in_bytes => episode.bytes,
+            :duration_in_seconds => episode.duration
           }
         ]
       }
@@ -73,11 +76,13 @@ defmodule ChangelogWeb.JsonFeedViewTest do
 
       news_item = post
         |> post_news_item_with_story("**a story**")
+        |> insert
         |> NewsItem.load_object
 
       json = render("news_item.json", %{conn: endpoint, json_feed: news_item})
 
       assert json == %{
+        :id => news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
         :title => post.title,
         :author => %{
           :name => post.author.name

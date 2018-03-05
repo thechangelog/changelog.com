@@ -17,6 +17,7 @@ defmodule ChangelogWeb.JsonFeedView do
 
   def render("news_item.json", %{conn: conn, json_feed: item = %{object: nil}}) do
     %{
+      "id": news_item_url(conn, :show, NewsItemView.hashid(item)),
       "title": item.headline |> html_escape |> safe_to_string,
       "url": news_item_url(conn, :show, NewsItemView.slug(item)),
       "date_published": TimeView.rfc3339(item.published_at),
@@ -30,6 +31,7 @@ defmodule ChangelogWeb.JsonFeedView do
 
   def render("news_item.json", %{conn: conn, json_feed: item = %{object: episode = %Episode{}}}) do
     %{
+      "id": news_item_url(conn, :show, NewsItemView.hashid(item)),
       "title": episode.podcast.name <> " " <> EpisodeView.numbered_title(episode, "") |> html_escape |> safe_to_string,
       "url": episode_url(conn, :show, episode.podcast.slug, episode.slug),
       "date_published": TimeView.rfc3339(episode.published_at),
@@ -39,7 +41,8 @@ defmodule ChangelogWeb.JsonFeedView do
         %{
           "url": EpisodeView.audio_url(episode),
           "mime_type": "audio/mpeg",
-          "length": episode.bytes
+          "size_in_bytes": episode.bytes,
+          "duration_in_seconds": episode.duration
         }
       ]
     }
@@ -47,6 +50,7 @@ defmodule ChangelogWeb.JsonFeedView do
 
   def render("news_item.json", %{conn: conn, json_feed: item = %{object: post = %Post{}}}) do
     %{
+      "id": news_item_url(conn, :show, NewsItemView.hashid(item)),
       "title": post.title |> html_escape |> safe_to_string,
       "author": %{
         "name": post.author.name
