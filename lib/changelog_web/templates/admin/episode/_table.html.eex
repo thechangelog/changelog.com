@@ -3,7 +3,7 @@
     <tr>
       <th>Slug</th>
       <th>Name</th>
-    <%= if @status == "draft" do %>
+    <%= if @status == :draft do %>
       <th>Record Time</th>
     <% else %>
       <th>Duration</th>
