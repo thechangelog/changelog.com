@@ -18,6 +18,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
         :version => "https://jsonfeed.org/version/1",
         :title => "Changelog",
         :home_page_url => "http://localhost:4001/",
+        :feed_url => "http://localhost:4001/feed.json",
         :description => "News and podcasts for developers",
         :items => []
       }
