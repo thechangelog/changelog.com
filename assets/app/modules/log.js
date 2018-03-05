@@ -1,13 +1,10 @@
 export default class Log {
-  static track(eventName, eventData) {
-    if (typeof _gs == "undefined") {
-      console.log("[TRACK]", eventName, eventData);
+  static track(category, action, label) {
+    if (typeof ga == "undefined") {
+      console.log("[TRACK]", {category: category, action: action, label: label});
     } else {
-      if (eventData) {
-        _gs("event", eventName, eventData);
-      } else {
-        _gs("event", eventName);
-      }
+      ga("send", "event", category, action, label);
+      _gs("event", action, {category: category, label: label});
     }
   }
 }

@@ -76,11 +76,11 @@
       p > a, li > a {
         color: $black;
         font-weight: 500;
-        border-bottom: 3px solid $light-grey;
-        padding: 1px 2px;
+        border-bottom: 2px solid $light-grey;
+        
         &:hover {
-          background-color: $lightest-grey;
-          border-color: $lightest-grey;
+          border-color: rgba($green, .3);
+          color: $green;
         }
       }
 

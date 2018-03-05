@@ -27,6 +27,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def controller_name(conn), do: Controller.controller_module(conn) |> Naming.resource_name("Controller")
   def controller_action_combo(conn), do: [controller_name(conn), action_name(conn)] |> Enum.join("-")
+  def controller_action_combo_matches?(conn, list) when is_list(list) do
+    combo = controller_action_combo(conn)
+    Enum.any?(list, &(&1 == combo))
+  end
 
   def current_path(conn), do: Controller.current_path(conn)
   def current_path(conn, params), do: Controller.current_path(conn, params)

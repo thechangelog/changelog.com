@@ -6,6 +6,7 @@ defmodule Changelog.HtmlKitTest do
   describe "get_title" do
     test "defaults to empty string" do
       assert HtmlKit.get_title(nil) == ""
+      assert HtmlKit.get_title("") == ""
     end
 
     test "when title tag has attrs" do

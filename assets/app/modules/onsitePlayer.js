@@ -146,10 +146,7 @@ export default class OnsitePlayer {
       this.loadUI();
       this.detailsLoaded = true;
       this.show();
-      Log.track("Play", {
-        podcast: this.episode.podcastName(),
-        episode: this.episode.title()
-      });
+      Log.track("Onsite Player", "play", `${this.episode.audioFile()}`);
     });
   }
 

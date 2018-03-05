@@ -44,7 +44,7 @@ defmodule Changelog.Episode do
     has_many :topics, through: [:episode_topics, :topic]
     has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
     has_many :sponsors, through: [:episode_sponsors, :sponsor]
-    has_many :episode_stats, EpisodeStat
+    has_many :episode_stats, EpisodeStat, on_delete: :delete_all
 
     timestamps()
   end

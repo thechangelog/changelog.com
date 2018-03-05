@@ -17,7 +17,8 @@ defmodule Changelog.Slack.Client do
     [{"content-type", "application/x-www-form-urlencoded"} | headers]
   end
 
-  def handle({:ok, %HTTPoison.Response{status_code: 200, body: body}}), do: body
+  def handle({:ok, %{status_code: 200, body: body}}), do: body
+  def handle({:error, %{reason: reason}}), do: %{"ok" => false, "error" => "#{reason}"}
 
   def invite(email) do
     token = Application.get_env(:changelog, :slack_invite_api_token)

@@ -2,10 +2,9 @@
   <article class="news_item" data-news-type="ad" data-news-id="<%= hashid(@ad) %>">
     <%= render("_header.html", assigns) %>
     <%= render("_toolbar.html", assigns) %>
-    <%= if @ad.story do %>
-      <div class="news_item-content richtext">
-        <p><%= @ad.story |> md_to_html |> raw %></p>
-      </div>
-    <% end %>
+    <div class="news_item-content richtext">
+      <%= @ad.story |> md_to_html |> raw %>
+    </div>
+    <%= image_link(@ad) %>
   </article>
 </div>

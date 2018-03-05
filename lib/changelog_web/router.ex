@@ -41,9 +41,11 @@ defmodule ChangelogWeb.Router do
   scope "/auth", ChangelogWeb do
     pipe_through [:browser, :public]
 
-    get "/:provider", AuthController, :request
-    get "/:provider/callback", AuthController, :callback
-    post "/:provider/callback", AuthController, :callback
+    for provider <- ~w(github twitter) do
+      get "/#{provider}", AuthController, :request, as: "#{provider}_auth"
+      get "/#{provider}/callback", AuthController, :callback, as: "#{provider}_auth"
+      post "/#{provider}/callback", AuthController, :callback, as: "#{provider}_auth"
+    end
   end
 
   scope "/admin", ChangelogWeb.Admin, as: :admin do

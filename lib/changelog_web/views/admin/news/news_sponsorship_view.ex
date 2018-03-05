@@ -5,6 +5,9 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   alias ChangelogWeb.{Endpoint, TimeView}
   alias ChangelogWeb.Admin.{NewsAdView}
 
+  def active_ads(sponsorship), do: Enum.filter(sponsorship.ads, &(&1.active))
+  def inactive_ads(sponsorship), do: Enum.reject(sponsorship.ads, &(&1.active))
+
   def schedule_cell_class(focus_week, week, sponsorship) when is_nil(sponsorship) do
     focus_week_with_buffer = Timex.shift(focus_week, weeks: 1)
     cond do
