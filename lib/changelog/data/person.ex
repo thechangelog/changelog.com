@@ -11,9 +11,12 @@ defmodule Changelog.Person do
     @primary_key false
     embedded_schema do
       field :email_on_authored_news, :boolean, default: true
+      field :email_on_submitted_news, :boolean, default: true
     end
 
-    def changeset(struct, attrs), do: cast(struct, attrs, [:email_on_authored_news])
+    def changeset(struct, attrs) do
+      cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news])
+    end
   end
 
   schema "people" do
