@@ -111,20 +111,25 @@ defmodule Changelog.NewsQueue do
   def publish(item = %NewsItem{}) do
     case Repo.get_by(NewsQueue, item_id: item.id) do
       entry = %NewsQueue{} -> publish(entry)
-      nil -> Buffer.queue(NewsItem.publish!(item))
+      nil -> publish_item(item)
     end
   end
 
   def publish(entry = %NewsQueue{}) do
     entry = Repo.preload(entry, :item)
-    item = NewsItem.publish!(entry.item)
+    publish_item(entry.item)
     Repo.delete!(entry)
-    Buffer.queue(item)
-    Logger.info("News: Published ##{item.id}")
   end
 
   def publish(nil) do
     Logger.info("News: Published bupkis")
     false
+  end
+
+  defp publish_item(item = %NewsItem{}) do
+    item = NewsItem.publish!(item)
+    Task.start_link(fn -> Buffer.queue(item) end)
+    Logger.info("News: Published ##{item.id}")
+    true
   end
 end
