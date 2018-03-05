@@ -35,6 +35,7 @@ defmodule Changelog.NewsItem do
   end
 
   def audio(query \\ __MODULE__),                      do: from(q in query, where: q.type == ^:audio)
+  def declined(query \\ __MODULE__),                   do: from(q in query, where: q.status == ^:declined)
   def drafted(query \\ __MODULE__),                    do: from(q in query, where: q.status == ^:draft)
   def highest_ctr_first(query \\ __MODULE__),          do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
   def logged_by(query \\ __MODULE__, person),          do: from(q in query, where: q.logger_id == ^person.id)
@@ -141,6 +142,7 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:topics)
   end
 
+  def decline!(item), do: item |> change(%{status: :declined}) |> Repo.update!
   def queue!(item), do: item |> change(%{status: :queued}) |> Repo.update!
   def publish!(item), do: item |> change(%{status: :published, published_at: Timex.now}) |> Repo.update!
 

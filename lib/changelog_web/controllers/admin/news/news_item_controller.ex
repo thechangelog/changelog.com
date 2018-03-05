@@ -117,6 +117,15 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     end
   end
 
+  def decline(conn, %{"id" => id}) do
+    item = Repo.get!(NewsItem, id)
+    NewsItem.decline!(item)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: admin_news_item_path(conn, :index))
+  end
+
   def delete(conn, %{"id" => id}) do
     item = Repo.get!(NewsItem, id)
     Repo.delete!(item)
