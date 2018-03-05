@@ -38,7 +38,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
           :name => news_item.logger.name
         },
         :content_html => SharedHelpers.md_to_html(news_item.story),
-        :content_text => news_item.story,
+        :content_text => SharedHelpers.md_to_text(news_item.story),
       }
     end
 
@@ -57,7 +57,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
         :url => episode_url(endpoint, :show, episode.podcast.slug, episode.slug),
         :date_published => TimeView.to_rfc3339(episode.published_at),
         :content_html => SharedHelpers.md_to_html(news_item.story),
-        :content_text => news_item.story,
+        :content_text => SharedHelpers.md_to_text(news_item.story),
         :attachments => [
           %{
             :url => EpisodeView.audio_url(episode),
@@ -85,7 +85,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
         :url => post_url(endpoint, :show, post.slug),
         :date_published => TimeView.to_rfc3339(post.published_at),
         :content_html => SharedHelpers.md_to_html(news_item.story),
-        :content_text => news_item.story
+        :content_text => SharedHelpers.md_to_text(news_item.story)
       }
     end
   end

@@ -24,7 +24,7 @@ defmodule ChangelogWeb.JsonFeedView do
         "name": item.logger.name
       },
       "content_html": SharedHelpers.md_to_html(item.story),
-      "content_text": item.story,
+      "content_text": SharedHelpers.md_to_text(item.story),
     }
   end
 
@@ -34,7 +34,7 @@ defmodule ChangelogWeb.JsonFeedView do
       "url": episode_url(conn, :show, episode.podcast.slug, episode.slug),
       "date_published": TimeView.to_rfc3339(episode.published_at),
       "content_html": SharedHelpers.md_to_html(item.story),
-      "content_text": item.story,
+      "content_text": SharedHelpers.md_to_text(item.story),
       "attachments": [
         %{
           "url": EpisodeView.audio_url(episode),
@@ -54,7 +54,7 @@ defmodule ChangelogWeb.JsonFeedView do
       "url": post_url(conn, :show, post.slug),
       "date_published": TimeView.to_rfc3339(post.published_at),
       "content_html": SharedHelpers.md_to_html(item.story),
-      "content_text": item.story
+      "content_text": SharedHelpers.md_to_text(item.story)
     }
   end
 end

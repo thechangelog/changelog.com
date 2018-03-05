@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.JsonFeedControllerTest do
   use ChangelogWeb.ConnCase
 
+  alias ChangelogWeb.Helpers.SharedHelpers
+
   test "the news feed", %{conn: conn} do
     post = insert(:published_post, body: "zomg")
     post_news_item = post |> post_news_item_with_story("**a story**") |> insert
@@ -16,8 +18,8 @@ defmodule ChangelogWeb.JsonFeedControllerTest do
     assert conn.resp_body =~ post.title
     assert conn.resp_body =~ episode.title
     assert conn.resp_body =~ news_item.headline
-    assert conn.resp_body =~ post_news_item.story
-    assert conn.resp_body =~ episode_news_item.story
-    assert conn.resp_body =~ news_item.story
+    assert conn.resp_body =~ SharedHelpers.md_to_text(post_news_item.story)
+    assert conn.resp_body =~ SharedHelpers.md_to_text(episode_news_item.story)
+    assert conn.resp_body =~ SharedHelpers.md_to_text(news_item.story)
   end
 end
