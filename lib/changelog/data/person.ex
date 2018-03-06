@@ -60,6 +60,11 @@ defmodule Changelog.Person do
     from(p in query, where: p.joined_at > ^today)
   end
 
+  def get_by_encoded_id(token) do
+    [id, email] = __MODULE__.decoded_id(token)
+    Repo.get_by(__MODULE__, id: id, email: email)
+  end
+
   def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
     Repo.get_by(__MODULE__, twitter_handle: handle)
   end
@@ -121,6 +126,15 @@ defmodule Changelog.Person do
   end
 
   def decoded_auth(encoded) do
+    {:ok, decoded} = Base.decode16(encoded)
+    String.split(decoded, "|")
+  end
+
+  def encoded_id(person) do
+    {:ok, Base.encode16("#{person.id}|#{person.email}")}
+  end
+
+  def decoded_id(encoded) do
     {:ok, decoded} = Base.decode16(encoded)
     String.split(decoded, "|")
   end

@@ -113,7 +113,6 @@ defmodule ChangelogWeb.Router do
   scope "/", ChangelogWeb do
     pipe_through [:browser, :public]
 
-    # people and auth
     get "/join", PersonController, :join, as: :person
     post "/join", PersonController, :join, as: :person
     get "/subscribe", PersonController, :subscribe, as: :person
@@ -122,12 +121,12 @@ defmodule ChangelogWeb.Router do
     resources "/~", HomeController, only: [:show, :update], singleton: true
     get "/~/profile", HomeController, :profile
     get "/~/account", HomeController, :account
+    get "/~/nope/:token/:notification", HomeController, :opt_out
 
     post "/~/slack", HomeController, :slack
     post "/~/subscribe/:id", HomeController, :subscribe
     post "/~/unsubscribe/:id", HomeController, :unsubscribe
 
-    get "/community", PageController, :community
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
     get "/in/:token", AuthController, :create, as: :sign_in
@@ -161,6 +160,7 @@ defmodule ChangelogWeb.Router do
     # static pages
     get "/about", PageController, :about
     get "/coc", PageController, :coc
+    get "/community", PageController, :community
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015
