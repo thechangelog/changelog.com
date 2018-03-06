@@ -20,6 +20,10 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
+  def image_mime_type(item) do
+    Files.Image.mime_type(item.image)
+  end
+
   def image_path(item, version) do
     {item.image, item}
     |> Files.Image.url(version)

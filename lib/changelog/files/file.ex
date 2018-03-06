@@ -18,6 +18,16 @@ defmodule Changelog.File do
         Enum.member?(unquote(types), file_type(file))
       end
 
+      def mime_type(file) do
+        case file_type(file) do
+          :jpg  -> "image/jpg"
+          :jpeg -> "image/jpg"
+          :png  -> "image/png"
+          :gif  -> "image/gif"
+          :mp3  -> "audio/mpeg"
+        end
+      end
+
       defp file_type(file) do
         file.file_name
         |> Path.extname
