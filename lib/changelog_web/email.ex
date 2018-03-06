@@ -54,6 +54,26 @@ defmodule ChangelogWeb.Email do
     |> render(:subscriber_welcome)
   end
 
+  def authored_news_published(person, item) do
+    logbot_email()
+    |> put_header("X-CMail-GroupName", "Authored News")
+    |> to(person)
+    |> subject("You're on Changelog News!")
+    |> assign(:person, person)
+    |> assign(:item, item)
+    |> render(:authored_news_published)
+  end
+
+  def submitted_news_published(person, item) do
+    logbot_email()
+    |> put_header("X-CMail-GroupName", "Submitted News")
+    |> to(person)
+    |> subject("Your submission is on Changelog News!")
+    |> assign(:person, person)
+    |> assign(:item, item)
+    |> render(:submitted_news_published)
+  end
+
   defp logbot_email do
     new_email()
     |> from("logbot@changelog.com")

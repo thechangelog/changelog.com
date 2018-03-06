@@ -1,4 +1,5 @@
-Hey <%= PersonView.first_name(@person) %>,
+<%= greeting(@person) %>
+
 
 We're prepping for your show and just plugged your info in to our system. For the best outcome, please read through our Guest Setup Guide:
 

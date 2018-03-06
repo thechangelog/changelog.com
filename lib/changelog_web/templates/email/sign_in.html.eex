@@ -1,6 +1,6 @@
 <tr>
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-    <h1>Hey <%= PersonView.first_name(@person) %>,</h1>
+    <p><%= greeting(@person) %></p>
 
     <p>You requested a fancy, passwordless sign in link. <em>Here you go:</em></p>
 

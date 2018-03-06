@@ -3,7 +3,7 @@ defmodule Changelog.NewsQueue do
 
   require Logger
 
-  alias Changelog.{Buffer, NewsItem, NewsQueue}
+  alias Changelog.{Buffer, NewsItem, NewsQueue, Notifier}
 
   schema "news_queue" do
     field :position, :float
@@ -129,6 +129,7 @@ defmodule Changelog.NewsQueue do
   defp publish_item(item = %NewsItem{}) do
     item = NewsItem.publish!(item)
     Task.start_link(fn -> Buffer.queue(item) end)
+    Task.start_link(fn -> Notifier.notify(item) end)
     Logger.info("News: Published ##{item.id}")
     true
   end
