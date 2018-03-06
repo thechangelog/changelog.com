@@ -38,7 +38,7 @@ defmodule ChangelogWeb.Admin.SearchController do
   defp person_query(q),      do: Repo.all(from q in Person, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.handle, ^"%#{q}%"))
   defp post_query(q),        do: Repo.all(from q in Post, where: ilike(q.title, ^"%#{q}%")) |> Repo.preload(:author)
   defp sponsor_query(q),     do: Repo.all(from q in Sponsor, where: ilike(q.name, ^"%#{q}%"))
-  defp topic_query(q),       do: Repo.all(from q in Topic, where: ilike(q.name, ^"%#{q}%"))
+  defp topic_query(q),       do: Repo.all(from q in Topic, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.slug, ^"%#{q}%"))
 
   defp with_format(view_name, "json"), do: "#{view_name}.json"
   defp with_format(view_name, _other), do: "#{view_name}.html"
