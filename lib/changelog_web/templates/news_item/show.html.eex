@@ -8,4 +8,6 @@
     </div>
     <%= image_link(@item) %>
   </article>
+
+  <%= render(SharedView, "_signup_banner.html", conn: @conn) %>
 </div>
