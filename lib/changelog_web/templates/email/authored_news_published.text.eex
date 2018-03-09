@@ -1,0 +1,14 @@
+<%= greeting(@person) %>
+
+
+Something you created just got featured[1] on Changelog News!
+
+Each week's most popular news items are also featured in our newsletter[2]. Share this link with your friends to increase your odds and keep your 👀 peeled.
+
+Don't want these notifications? Disable 'em[3]
+
+[1]: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@item)) %>
+[2]: <%= page_url(Endpoint, :weekly) %>
+[3]: <%= PersonView.opt_out_url(Endpoint, @person, "email_on_authored_news") %>
+
+💚, Logbot

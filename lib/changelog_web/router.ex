@@ -65,6 +65,7 @@ defmodule ChangelogWeb.Router do
 
     get "/news", NewsItemController, :index
     resources "/news/items", NewsItemController, except: [:show]
+    delete "/news/items/:id/decline", NewsItemController, :decline, as: :news_item
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
     resources "/news/sources", NewsSourceController, except: [:show]
     get "/news/sponsorships/schedule", NewsSponsorshipController, :schedule
@@ -123,7 +124,6 @@ defmodule ChangelogWeb.Router do
   scope "/", ChangelogWeb do
     pipe_through [:browser, :public]
 
-    # people and auth
     get "/join", PersonController, :join, as: :person
     post "/join", PersonController, :join, as: :person
     get "/subscribe", PersonController, :subscribe, as: :person
@@ -132,19 +132,20 @@ defmodule ChangelogWeb.Router do
     resources "/~", HomeController, only: [:show, :update], singleton: true
     get "/~/profile", HomeController, :profile
     get "/~/account", HomeController, :account
+    get "/~/nope/:token/:notification", HomeController, :opt_out
 
     post "/~/slack", HomeController, :slack
     post "/~/subscribe/:id", HomeController, :subscribe
     post "/~/unsubscribe/:id", HomeController, :unsubscribe
 
-    get "/community", PageController, :community
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
     get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
     get "/", NewsItemController, :index, as: :root
-    resources "/news", NewsItemController, only: [:show], as: :news_item
+    get "/news/submit", NewsItemController, :new
+    resources "/news", NewsItemController, only: [:show, :create], as: :news_item
     get "/news/:id/visit", NewsItemController, :visit, as: :news_item
     post "/news/impress", NewsItemController, :impress, as: :news_item
     resources "/ads", NewsAdController, only: [:show], as: :news_ad
@@ -170,6 +171,7 @@ defmodule ChangelogWeb.Router do
     # static pages
     get "/about", PageController, :about
     get "/coc", PageController, :coc
+    get "/community", PageController, :community
     get "/contact", PageController, :contact
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015

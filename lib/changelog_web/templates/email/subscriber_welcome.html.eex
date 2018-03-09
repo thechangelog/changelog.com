@@ -1,6 +1,6 @@
 <tr>
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-    <h1>Hey there,</h1>
+    <p><%= greeting(@person) %></p>
 
     <p>You subscribed to Changelog News!</p>
 

@@ -5,6 +5,20 @@ defmodule Changelog.Person do
                    Post, Regexp}
   alias Timex.Duration
 
+  defmodule Settings do
+    use Changelog.Data
+
+    @primary_key false
+    embedded_schema do
+      field :email_on_authored_news, :boolean, default: true
+      field :email_on_submitted_news, :boolean, default: true
+    end
+
+    def changeset(struct, attrs) do
+      cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news])
+    end
+  end
+
   schema "people" do
     field :name, :string
     field :email, :string
@@ -21,6 +35,8 @@ defmodule Changelog.Person do
     field :signed_in_at, Timex.Ecto.DateTime
     field :admin, :boolean
     field :avatar, Files.Avatar.Type
+
+    embeds_one :settings, Settings, on_replace: :update
 
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
@@ -42,6 +58,11 @@ defmodule Changelog.Person do
   def joined_today(query \\ __MODULE__) do
     today = Timex.subtract(Timex.now, Duration.from_days(1))
     from(p in query, where: p.joined_at > ^today)
+  end
+
+  def get_by_encoded_id(token) do
+    [id, email] = __MODULE__.decoded_id(token)
+    Repo.get_by(__MODULE__, id: id, email: email)
   end
 
   def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
@@ -66,8 +87,9 @@ defmodule Changelog.Person do
 
   defp changeset_with_allowed_params(struct, params, allowed) do
     struct
-    |> cast_attachments(params, ~w(avatar), allow_urls: true)
     |> cast(params, allowed)
+    |> cast_embed(:settings)
+    |> cast_attachments(params, ~w(avatar), allow_urls: true)
     |> validate_required([:name, :email, :handle])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
@@ -104,6 +126,15 @@ defmodule Changelog.Person do
   end
 
   def decoded_auth(encoded) do
+    {:ok, decoded} = Base.decode16(encoded)
+    String.split(decoded, "|")
+  end
+
+  def encoded_id(person) do
+    {:ok, Base.encode16("#{person.id}|#{person.email}")}
+  end
+
+  def decoded_id(encoded) do
     {:ok, decoded} = Base.decode16(encoded)
     String.split(decoded, "|")
   end

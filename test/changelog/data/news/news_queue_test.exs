@@ -3,7 +3,7 @@ defmodule Changelog.NewsQueueTest do
 
   import Mock
 
-  alias Changelog.{Buffer, NewsItem, NewsQueue}
+  alias Changelog.{Buffer, NewsItem, NewsQueue, Notifier}
 
   describe "append" do
     test "when queue is empty" do
@@ -142,10 +142,14 @@ defmodule Changelog.NewsQueueTest do
     test "it publishes the given item and buffers it even if it's not in the queue" do
       item = insert(:news_item)
 
-      with_mock(Buffer, [queue: fn(_) -> true end]) do
+      with_mocks([
+        {Buffer, [], [queue: fn(_) -> true end]},
+        {Notifier, [], [notify: fn(_) -> true end]}
+      ]) do
         NewsQueue.publish(item)
         assert Repo.count(NewsItem.published) == 1
         assert called(Buffer.queue(:_))
+        assert called(Notifier.notify(:_))
       end
     end
 

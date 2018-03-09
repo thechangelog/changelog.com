@@ -36,6 +36,7 @@ export default class newsItemView {
     new BelongsToWidget("logger", "person");
     new BelongsToWidget("author", "person");
     new BelongsToWidget("source", "news_source");
+    new BelongsToWidget("submitter", "person");
 
     if ($(".js-quick-form").length) {
       $(".ui.menu").remove();
@@ -45,7 +46,7 @@ export default class newsItemView {
 
     let $images = $(".js-image-options");
 
-    $images.data("options").forEach(function(url) {
+    ($images.data("options") || []).forEach(function(url) {
       let img = new Image();
       img.setAttribute("style", "display: none");
       img.setAttribute("class", "ui image");

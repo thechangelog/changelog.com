@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.HomeControllerTest do
   use ChangelogWeb.ConnCase
 
+  alias Changelog.Person
+
   @tag :as_user
   test "renders the home page", %{conn: conn} do
     conn = get(conn, home_path(conn, :show))
@@ -32,7 +34,24 @@ defmodule ChangelogWeb.HomeControllerTest do
     assert html_response(conn, 200) =~ ~r/problem/
   end
 
-  test "requires user on all actions", %{conn: conn} do
+  test "opting out of notifications", %{conn: conn} do
+    person = insert(:person)
+    {:ok, token} = Person.encoded_id(person)
+    conn = get(conn, home_path(conn, :opt_out, token, "email_on_authored_news"))
+    assert conn.status == 200
+    refute Repo.get(Person, person.id).settings.email_on_authored_news
+  end
+
+  @tag :as_inserted_user
+  test "signeed in and opting out of notifications", %{conn: conn} do
+    person = conn.assigns.current_user
+    {:ok, token} = Person.encoded_id(person)
+    conn = get(conn, home_path(conn, :opt_out, token, "email_on_submitted_news"))
+    assert conn.status == 200
+    refute Repo.get(Person, person.id).settings.email_on_submitted_news
+  end
+
+  test "requires user on all actions except email links", %{conn: conn} do
     Enum.each([
       get(conn, home_path(conn, :show)),
       get(conn, home_path(conn, :profile)),

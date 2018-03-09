@@ -29,6 +29,11 @@ u(document).handle("click", ".js-toggle-nav", function(event) {
   }, 50);
 });
 
+u(document).handle("click", ".js-toggle_element", function(event) {
+  const href = u(event.target).attr("href");
+  u(href).toggleClass("is-hidden");
+});
+
 u(document).handle("click", ".js-account-nav", function(event) {
   const content = u(".js-account-nav-content").html();
   overlay.html(content).show();
@@ -61,6 +66,16 @@ u(document).handle("click", "[data-youtube]", function(event) {
 
 u(document).handle("click", "[data-share]", function(event) {
   new Share(overlay).load(u(this).data("share"));
+});
+
+// flash messages
+function closeFlash(element) {
+  element.addClass("is-closing");
+  setTimeout(() => { element.remove(); }, 1000);
+}
+
+u(document).handle("click", ".js-close_flash", function(event) {
+  closeFlash(u(event.target).closest('.flash_container'));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -247,6 +262,7 @@ u(document).on("turbolinks:load", function() {
   formatTimes();
   deepLink();
   impress();
+  setTimeout(() => { closeFlash(u(".flash_container")); }, 10*1000);
 });
 
 Turbolinks.start();

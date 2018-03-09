@@ -1,4 +1,5 @@
-Hey there,
+<%= greeting(@person) %>
+
 
 You subscribed to Changelog News!
 

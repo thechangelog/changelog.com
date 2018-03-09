@@ -113,6 +113,27 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     assert count(NewsItem) == count_before
   end
 
+  @tag :as_admin
+  test "deletes a news item and redirects", %{conn: conn} do
+    news_item = insert(:news_item)
+
+    conn = delete(conn, admin_news_item_path(conn, :delete, news_item.id))
+
+    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert count(NewsItem) == 0
+  end
+
+  @tag :as_admin
+  test "declines a news item and redirects", %{conn: conn} do
+    news_item = insert(:news_item)
+
+    conn = delete(conn, admin_news_item_path(conn, :decline, news_item.id))
+
+    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert count(NewsItem) == 1
+    assert count(NewsItem.declined) == 1
+  end
+
   test "requires user auth on all actions", %{conn: conn} do
     Enum.each([
       get(conn, admin_news_item_path(conn, :index)),
@@ -121,6 +142,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
       get(conn, admin_news_item_path(conn, :edit, "123")),
       put(conn, admin_news_item_path(conn, :update, "123"), news_item: @valid_attrs),
       delete(conn, admin_news_item_path(conn, :delete, "123")),
+      delete(conn, admin_news_item_path(conn, :decline, "123"))
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

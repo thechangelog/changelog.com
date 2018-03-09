@@ -1,4 +1,5 @@
-Hey <%= PersonView.first_name(@person) %>,
+<%= greeting(@person) %>
+
 
 Welcome to the Changelog Community!
 

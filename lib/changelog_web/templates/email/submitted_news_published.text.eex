@@ -1,0 +1,14 @@
+<%= greeting(@person) %>
+
+
+Your submission[1] got published!
+
+If this post resonates with our readers, it'll also be featured in Changelog Weekly[2]. Keep your 👀 peeled for that!
+
+Don't want these notifications? Disable 'em[3]
+
+[1]: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@item)) %>
+[2]: <%= page_url(Endpoint, :weekly) %>
+[3]: <%= PersonView.opt_out_url(Endpoint, @person, "email_on_submitted_news") %>
+
+💚, Logbot
