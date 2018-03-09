@@ -5,6 +5,7 @@
   flex-wrap: wrap;
   margin-top: 20px;
   padding: 15px 20px;
+  position: relative;
 
   &-content {
     flex: 1 500px;
@@ -22,21 +23,19 @@
   }
 
   &-close {
-    @include position(absolute, 20px 15px null null);
-    color: $green;
-    cursor: pointer;
-    font-size: 25px;
-    line-height: 20px;
-    padding: 5px;
-    opacity: .3;
+    $size: 10px;
+    @include position(absolute, $size $size null null);
 
-    @include breakpoint(mobile) {
-      @include position(absolute, 20px 20px null null);
+    &,
+    svg {
+      height: $size;
+      width: $size;
     }
 
-    &:hover {
-      opacity: 1;
-      transition: opacity 0.3s $base-easing;
+    svg {
+      display: block;
+
+      path { stroke: $medium-grey; }
     }
   }
 }
