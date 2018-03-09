@@ -11,6 +11,9 @@
 <%= for item_or_ad <- items_with_ads(@items, @ads) do %>
   <%= render_item_summary_or_ad(item_or_ad, assigns) %>
 <% end %>
+<%= if @page.page_number == 1 && !@current_user && !@conn.cookies["hide_subscribe_cta"] do %>
+  <%= render(SharedView, "_signup_banner.html", assigns) %>
+<% end %>
 <%= render(SharedView, "_more_button.html", assigns) %>
 </div>
 
