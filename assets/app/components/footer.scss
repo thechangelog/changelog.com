@@ -1,6 +1,6 @@
 // NOTE: Update $footer-height in variables.scss when any changes affect height of the primary footer element
 .footer {
-  $width: 1160px;
+  $width: 1280px;
   background: $white;
   border-top: 2px solid $border-color;
   font-family: $code;
@@ -43,7 +43,7 @@
 
           a {
             color: $black;
-            
+
             &:hover {
               color: #000000;
               text-decoration: underline;

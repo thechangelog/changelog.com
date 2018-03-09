@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PersonView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.Files
+  alias Changelog.{Files, Person}
   alias ChangelogWeb.{Endpoint, SharedView, PodcastView}
 
   def avatar_path(person, version) do
@@ -80,5 +80,15 @@ defmodule ChangelogWeb.PersonView do
     |> Enum.reject(fn(x) -> x.value == nil end)
     |> Enum.map(fn(x) -> ~s{<a href="#{x.url}">#{x.text}</a>} end)
     |> Enum.join(", ")
+  end
+
+  def opt_out_path(conn, person, notification) do
+    {:ok, encoded} = Person.encoded_id(person)
+    home_path(conn, :opt_out, encoded, notification)
+  end
+
+  def opt_out_url(conn, person, notification) do
+    {:ok, encoded} = Person.encoded_id(person)
+    home_url(conn, :opt_out, encoded, notification)
   end
 end

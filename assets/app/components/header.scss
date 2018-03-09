@@ -13,8 +13,10 @@
 .page-page-weekly,
 .page-page-nightly {
   .header {
-    background: $black;
-    border-bottom: 1px solid rgba($border-color, 0.1);
+    &-container {
+      background: $black;
+      border-bottom: 1px solid rgba($border-color, 0.1);
+    }
 
     &-logo a {
       background-image: url('/images/brand/changelog-logomark-white.svg');
@@ -51,13 +53,16 @@
 // NOTE: Update $header-height and $header-height--mobile in variables.scss when any changes affect height
 .header {
   @include position(fixed, 0 0 null);
-  background-color: rgba($white, .98);
-  border-bottom: 1px solid $light-grey;
-  padding: 7px $mobile-spacing;
   width: 100%;
   z-index: 999;
 
-  @include breakpoint(tablet) { padding: 13px $base-spacing; }
+  &-container {
+    background-color: rgba($white, .98);
+    border-bottom: 1px solid $light-grey;
+    padding: 7px $mobile-spacing;
+
+    @include breakpoint(tablet) { padding: 13px $base-spacing; }
+  }
 
   @include breakpoint(tablet, max) {
     .nav-open & {
@@ -223,7 +228,7 @@
         font-size: 15px;
         font-weight: 500;
         line-height: 1.125em;
-        margin: 0 16px;
+        margin: 0 0.75em;
 
         a {
           color: $medium-grey;
@@ -244,6 +249,11 @@
             width: 100%;
           }
         }
+
+        &.is-desktop_only {
+          display: none;
+          @include breakpoint(mobile) { display: block; }
+        }
       }
     }
 
@@ -260,19 +270,10 @@
       align-items: center;
       display: flex;
       margin-top: 0;
-      margin-right: 10px;
-
-      @include breakpoint(tablet) {
-        margin-right: 20px;
-      }
-
-      .header-nav-list-item:last-child {
-        margin-right: 0;
-      }
 
       &-user {
         $size: 25px;
-        margin: 0;
+        margin: 0 10px;
         text-align: center;
 
         &,
@@ -286,12 +287,18 @@
           border-radius: $base-border-radius;
         }
       }
+
+      .tooltip {
+        margin-right: 13px;
+      }
     }
   }
 
   &-search {
     display: none;
-    @include breakpoint(tablet) { display: block; }
+    margin-left: 10px;
+
+    @include breakpoint(desktop) { display: block; }
 
     input {
       background: rgba($black, .05);

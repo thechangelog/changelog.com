@@ -49,9 +49,7 @@
       <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <%= render("_header.html", assigns) %>
-    <%= for {type, message} <- get_flash(@conn) do %>
-      <div class="flash flash--<%= type %>"><%= message %></div>
-    <% end %>
+
     <main class="main">
       <%= render(@view_module, @view_template, assigns) %>
     </main>

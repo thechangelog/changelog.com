@@ -20,6 +20,12 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> Repo.all
       |> Enum.map(&(&1.item))
 
+    submitted =
+      NewsItem.submitted
+      |> NewsItem.newest_first(:inserted_at)
+      |> NewsItem.preload_all
+      |> Repo.all
+
     page =
       NewsItem.published
       |> NewsItem.newest_first
@@ -45,15 +51,16 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> Enum.sort(&(Timex.after?(&1.updated_at, &2.updated_at)))
       |> Enum.chunk(activity_count)
 
-    render(conn, :index, drafts: drafts, queued: queued, activity: activity, published: page.entries, page: page)
+    render(conn, :index, drafts: drafts, submitted: submitted, queued: queued,
+                         activity: activity, published: page.entries, page: page)
   end
 
-  def new(conn, params) do
+  def new(conn = %{assigns: %{current_user: me}}, params) do
     url = UrlKit.normalize_url(params["url"])
     html = UrlKit.get_html(url)
 
     changeset =
-      conn.assigns.current_user
+      me
       |> build_assoc(:logged_news_items,
         url: url,
         headline: String.capitalize(HtmlKit.get_title(html)),
@@ -85,9 +92,9 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
     item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
-    changeset = NewsItem.update_changeset(item)
+    changeset = NewsItem.update_changeset(item, %{logger_id: item.logger_id || me.id})
     render(conn, :edit, item: item, changeset: changeset)
   end
 
@@ -108,6 +115,15 @@ defmodule ChangelogWeb.Admin.NewsItemController do
         |> put_flash(:result, "failure")
         |> render(:edit, item: item, changeset: changeset)
     end
+  end
+
+  def decline(conn, %{"id" => id}) do
+    item = Repo.get!(NewsItem, id)
+    NewsItem.decline!(item)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: admin_news_item_path(conn, :index))
   end
 
   def delete(conn, %{"id" => id}) do

@@ -1,7 +1,9 @@
 defmodule Changelog.Faker do
   alias Changelog.Hashid
 
-  def name do
+  def name, do: Enum.random(names())
+
+  def names do
     [
       "Place Holder",
       "Temp Orary",
@@ -16,7 +18,7 @@ defmodule Changelog.Faker do
       "Crypt Ography",
       "Ima Dev",
       "Wemade Oneup"
-    ] |> Enum.random
+    ]
   end
 
   def handle(name) do

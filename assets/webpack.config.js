@@ -20,7 +20,7 @@ var common = {
       },
       {
         test: [/\.scss$/, /\.css$/],
-        loader: ExtractTextPlugin.extract({use: "css-loader!sass-loader", fallback: "style-loader"})
+        loader: ExtractTextPlugin.extract({use: "css-loader!postcss-loader!sass-loader", fallback: "style-loader"})
       },
       {
         test: /\.(png|jpg|gif|svg)$/,

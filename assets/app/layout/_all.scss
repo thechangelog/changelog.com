@@ -1,4 +1,4 @@
-@import 'account';
+@import 'basic';
 @import 'article';
 @import 'episode';
 @import 'live';
@@ -33,14 +33,6 @@ body {
   .page-podcast-index &,
   .page-person-subscribe & {
     background-color: $black;
-  }
-
-  // Pages that should have their content vertically centered
-  .page-auth-new &,
-  .page-person-join & {
-    align-items: center;
-    display: flex;
-    justify-content: center;
   }
 
   // TODO: Decide where this should go. Lives on the news index (homepage)

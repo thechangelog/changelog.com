@@ -1,4 +1,4 @@
-<div class="page_account">
+<div class="page_basic">
   <%= render("_nav.html", conn: @conn) %>
 
   <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
@@ -24,6 +24,27 @@
         <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
         <%= error_message(f, :twitter_handle) %>
       </div>
+    </div>
+
+    <div class="form-checklist">
+      <label>Notification Settings</label>
+      <%= inputs_for f, :settings, fn i -> %>
+        <div class="form-checklist-item <%= error_class(f, :email_on_submitted_news) %>">
+          <label>
+            <%= checkbox(i, :email_on_submitted_news) %>
+            <span class="form-checklist-item-box"></span>
+            <span class="form-checklist-item-text">Email me when something I submit gets featured in Changelog News</span>
+          </label>
+        </div>
+
+        <div class="form-checklist-item <%= error_class(f, :email_on_authored_news) %>">
+          <label>
+            <%= checkbox(i, :email_on_authored_news) %>
+            <span class="form-checklist-item-box"></span>
+            <span class="form-checklist-item-text">Email me when something I authored gets featured in Changelog News</span>
+          </label>
+        </div>
+      <% end %>
     </div>
 
     <div class="form-submit">

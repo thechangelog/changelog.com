@@ -1,0 +1,15 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p><%= greeting(@person) %></p>
+
+    <p>Your submission got published! Here's the link to share with your network of friends:</p>
+
+    <p><%= link(@item.headline, to: news_item_url(Endpoint, :show, NewsItemView.slug(@item)), itemprop: "url") %></p>
+
+    <p>If this post resonates with our readers, it'll also be featured in <%= link "Changelog Weekly", to: page_url(Endpoint, :weekly) %>. Keep your 👀 peeled for that!</p>
+
+    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "email_on_submitted_news")) %></em></p>
+
+    <p>💚, Logbot</p>
+  </td>
+</tr>

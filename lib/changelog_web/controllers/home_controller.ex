@@ -4,7 +4,7 @@ defmodule ChangelogWeb.HomeController do
   alias Changelog.{Person, Slack}
   alias Craisin.Subscriber
 
-  plug RequireUser
+  plug RequireUser, "except from email links" when action not in [:opt_out]
 
   def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil)
   def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id)
@@ -63,6 +63,16 @@ defmodule ChangelogWeb.HomeController do
     |> assign(:current_user, updated_user)
     |> put_flash(:success, flash)
     |> redirect(to: home_path(conn, :show))
+  end
+
+  def opt_out(conn, %{"token" => token, "notification" => notification}) do
+    if person = Person.get_by_encoded_id(token) do
+      person
+      |> Person.changeset(%{settings: %{notification => false}})
+      |> Repo.update()
+    end
+
+    render(conn, :opt_out)
   end
 
   defp set_slack_id(person) do

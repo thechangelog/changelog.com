@@ -33,12 +33,17 @@
 <div class="ui basic segment">
   <%= if Enum.any?(@drafts) do %>
     <h2 class="ui header">My Drafts</h2>
-    <%= render("_table.html", conn: @conn, status: "draft", items: @drafts) %>
+    <%= render("_table.html", conn: @conn, status: :draft, items: @drafts) %>
+  <% end %>
+
+  <%= if Enum.any?(@submitted) do %>
+    <h2 class="ui header">Submitted</h2>
+    <%= render("_table.html", conn: @conn, status: :submitted, items: @submitted) %>
   <% end %>
 
   <h2 class="ui header">Queued</h2>
   <%= if Enum.any?(@queued) do %>
-    <%= render("_table.html", conn: @conn, status: "queued", items: @queued) %>
+    <%= render("_table.html", conn: @conn, status: :queued, items: @queued) %>
   <% else %>
     <div class="ui basic segment icon message">
       <i class="meh face icon"></i>
@@ -97,7 +102,7 @@
 
 <%= if Enum.any?(@published) do %>
   <h2 class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
-  <%= render("_table.html", conn: @conn, status: "published", items: @published) %>
+  <%= render("_table.html", conn: @conn, status: :published, items: @published) %>
   <%= pagination_links(@conn, @page, path: &admin_news_item_path/3) %>
 <% end %>
 </div>
