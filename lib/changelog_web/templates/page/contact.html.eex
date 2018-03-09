@@ -4,9 +4,15 @@
   <div class="richtext">
     <h1>Get in touch. Say hello.</h1>
 
-    <p><a href="https://github.com/thechangelog/ping/issues">Submit an issue</a> to our open inbox on GitHub. Share your projects, news, feedback, or tips.</p>
+    <p><a href="https://github.com/thechangelog/ping/issues">Ping us on GitHub</a> with show ideas, feedback, or general questions.</p>
 
-    <p>Email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a> if you'd like to get in touch privately.</p>
+    <p><%= link("Submit news", to: news_item_path(@conn, :new)) %> for publishing consideration.</p>
+
+    <p><%= link("Start here", to: page_path(@conn, :sponsor)) %> for sponsorship opportunities.</p>
+
+    <p><a href="https://changelog.com/thechangelog/changelog.com/issues">Open an issue</a> with bug reports and feature requests.</p>
+
+    <p>Or email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a> if you prefer to get in touch privately.</p>
 
   </div>
 </article>
