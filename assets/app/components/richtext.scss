@@ -123,7 +123,7 @@
       color: $black;
       font-weight: 500;
       border-bottom: 2px solid $light-grey;
-      
+
       &:hover {
         border-color: rgba($green, .3);
         color: $green;
@@ -266,21 +266,7 @@
   }
   // Responsive iframes and videos
   .video-container {
-    height: 0;
-    margin: 1rem 0;
-    overflow: hidden;
-    padding-bottom: 56.25%;
-    position: relative;
-
-    iframe {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+    @include video_container();
   }
 
   .wide-gutter-wrap {
@@ -318,7 +304,7 @@
       background: #000;
       color: $white;
     }
-    
+
     td, th {
       padding: 8px 14px;
 
@@ -326,15 +312,15 @@
         @include breakpoint(tiny) { width: 50%; }
       }
     }
-    
+
     tr {
       background-color: $white;
-      
+
       &.footer {
         font-weight: 700;
         background: lighten($green,43%);
         border-top: 1px solid $green;
-        
+
         a { font-weight: inherit; }
       }
 
