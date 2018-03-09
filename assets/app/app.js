@@ -117,7 +117,7 @@ u(document).on("click", "a[href^=http]", function(event) {
 // hide subscribe CTA
 u(document).handle("click", ".js-hide-subscribe", function(event) {
   Cookies.set("hide_subscribe_cta", "true");
-  u(this).closest("section").remove();
+  u(".js-subscribe_cta").remove();
 });
 
 // hijack audio deep links

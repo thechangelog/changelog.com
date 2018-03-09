@@ -58,14 +58,16 @@ $flash_types: (success #d4ffd4) (error #ffd5d1);
       }
 
       &-close {
+        $size: 10px;
         padding-left: 0.75em;
-        font-size: 20px;
-        font-weight: bold;
 
+        &,
         svg {
-          width: 10px;
-          height: 10px;
+          height: $size;
+          width: $size;
         }
+
+        svg { display: block; }
       }
     }
   }
