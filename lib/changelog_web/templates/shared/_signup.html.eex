@@ -7,14 +7,9 @@
     <h1 class="signup-heading">News and podcasts for developers</h1>
     <p class="signup-text">Subscribe to get the latest news and podcasts for developers in your inbox, <em>every&nbsp;week</em>.<br />
     We make it <em>super easy</em> to keep up with developer news that&nbsp;matters.</p>
-    <%= form_tag person_path(@conn, :subscribe), class: "signup-form" do %>
-      <label class="visually_hidden">you@example.com</label>
-      <input name="list" type="hidden" value="<%= get_param(@conn, "list", "weekly") %>">
-      <input name="email" class="signup-form-input" placeholder="you@example.com" required autofocus/>
-      <div class="signup-form-submit">
-        <input class="signup-form-submit-button" type="submit" value="Subscribe">
-      </div>
-    <% end %>
+
+    <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
+
     <p class="signup-sign_in">Already a member? <em><%= link "Sign in", to: sign_in_path(@conn, :new) %></em></p>
   </div>
   <%= if controller_action_combo(@conn) == "news_item-index" do %>

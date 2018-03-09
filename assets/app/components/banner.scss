@@ -1,0 +1,42 @@
+.banner {
+  background: $lightest-grey;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 15px 20px;
+
+  &-content {
+    flex: 1 500px;
+    margin: 10px;
+
+    p:last-child {
+      margin: 0;
+    }
+  }
+
+  .signup-form {
+    flex: 1 0 260px;
+    margin: 10px;
+    max-width: none;
+  }
+
+  &-close {
+    @include position(absolute, 20px 15px null null);
+    color: $green;
+    cursor: pointer;
+    font-size: 25px;
+    line-height: 20px;
+    padding: 5px;
+    opacity: .3;
+
+    @include breakpoint(mobile) {
+      @include position(absolute, 20px 20px null null);
+    }
+
+    &:hover {
+      opacity: 1;
+      transition: opacity 0.3s $base-easing;
+    }
+  }
+}

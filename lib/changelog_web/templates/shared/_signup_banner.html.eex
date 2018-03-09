@@ -1,0 +1,7 @@
+<section class="banner">
+  <div class="banner-content">
+    <p>Get the latest news and podcasts for developers in your inbox, <em>every week</em>. We&nbsp;make&nbsp;it&nbsp;super easy to keep up with developer news that matters.</p>
+  </div>
+  <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
+  <button class="banner-close">✕</button>
+</section>
