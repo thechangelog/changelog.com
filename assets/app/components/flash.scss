@@ -61,13 +61,11 @@ $flash_types: (success #d4ffd4) (error #ffd5d1);
         $size: 10px;
         padding-left: 0.75em;
 
-        &,
         svg {
+          display: block;
           height: $size;
           width: $size;
         }
-
-        svg { display: block; }
       }
     }
   }
