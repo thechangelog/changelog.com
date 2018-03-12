@@ -5,8 +5,25 @@
   </header>
   <div class="show_list-shows">
     <%= for podcast <- @podcasts do %>
-      <%= render("_podcast_summary.html", conn: @conn, podcast: podcast) %>
+      <%= if podcast.status != :retired do %>
+        <%= render("_podcast_summary.html", conn: @conn, podcast: podcast) %>
+      <% end %>
     <% end %>
     <%= render("_podcast_summary.html", conn: @conn, podcast: Changelog.Podcast.master) %>
+  </div>
+</section>
+
+<section class="show_list" id="retired">
+  <!-- TODO: Only show if we have retired podcasts -->
+  <header class="show_list-header">
+    <h2>Retired Shows</h2>
+  </header>
+  <div class="show_list-shows">
+    <%= for podcast <- @podcasts do %>
+      <!-- TODO: Change this to show retired shows -->
+      <%= if podcast.status == :soon do %>
+        <%= render("_podcast_summary.html", conn: @conn, podcast: podcast) %>
+      <% end %>
+    <% end %>
   </div>
 </section>

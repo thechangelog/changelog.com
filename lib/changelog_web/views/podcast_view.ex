@@ -43,4 +43,12 @@ defmodule ChangelogWeb.PodcastView do
       podcast_url(Endpoint, :show, podcast.slug)
     end
   end
+
+  def status_text(podcast) do
+    if podcast.status == :soon do
+      "coming soon"
+    else
+      podcast.status
+    end
+  end
 end

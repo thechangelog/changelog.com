@@ -1,4 +1,15 @@
 .show {
+  &--soon {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+    .show-header {
+      flex: 1 0 auto;
+      margin-bottom: 0;
+    }
+  }
   // Header
   &-header {
     @include masthead();
@@ -9,8 +20,12 @@
       background-size: $size $size;
       height: $size;
       margin: 0 auto $base-spacing;
-      text-indent: -9999px;
+      position: relative;
       width: $size;
+
+      &-status {
+        @include status_label();
+      }
 
       @include breakpoint(mobile) {
         $size: 220px;
@@ -36,6 +51,11 @@
       p {
         margin-bottom: 0.5em;
       }
+    }
+
+    // Sign-up Form (Coming Soon only)
+    .signup-form {
+      margin-bottom: $base-spacing;
     }
 
     // Subscribe

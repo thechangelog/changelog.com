@@ -1,11 +1,18 @@
 <article class="show_list-shows-item show_list-shows-item--<%= @podcast.slug %>">
   <div class="show_list-shows-item-wrap">
-    <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show_list-shows-item-art"></a>
+    <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show_list-shows-item-art">
+
+      <%= if @podcast.status && (@podcast.status != :published) do %>
+        <div class="show_list-shows-item-art-status show_list-shows-item-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
+      <% end %>
+    </a>
     <div class="show_list-shows-item-content">
       <div class="show_list-shows-item-content-heading">
         <h2><a href="<%= podcast_path(@conn, :show, @podcast.slug) %>"><%= @podcast.name %></a></h2>
-        <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Subscribe</button>
-        <%= render("_podcast_subscribe.html", conn: @conn, podcast: @podcast) %>
+        <%= if (@podcast.status != :soon) do %>
+          <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Subscribe</button>
+          <%= render("_podcast_subscribe.html", conn: @conn, podcast: @podcast) %>
+        <% end %>
       </div>
       <%= @podcast.description |> md_to_html |> raw %>
       <%= if Enum.any?(@podcast.hosts) do %>

@@ -4,7 +4,6 @@
 @import 'live';
 @import 'live-upcoming';
 @import 'marketing';
-@import 'podcasts';
 @import 'search';
 @import 'show';
 @import 'topic';
@@ -39,7 +38,6 @@ body {
   &-podcasts {
     background: $black;
     border-top: 1px solid rgba($border-color, 0.1);
-    padding: $base-spacing*2 0;
   }
 }
 

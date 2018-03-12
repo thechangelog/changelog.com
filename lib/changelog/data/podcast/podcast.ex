@@ -56,7 +56,7 @@ defmodule Changelog.Podcast do
   end
 
   def public(query \\ __MODULE__) do
-    from(p in query, where: p.status in [^:soon, ^:published])
+    from(p in query, where: p.status in [^:soon, ^:published, ^:retired])
   end
 
   def oldest_first(query \\ __MODULE__) do

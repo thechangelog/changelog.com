@@ -1,5 +1,18 @@
 .show_list {
+  background: $black;
   color: $white;
+  padding: 40px 0;
+
+  @include breakpoint(mobile) {
+    padding: 50px 0;
+  }
+  @include breakpoint(tablet) {
+    padding: 60px 0;
+  }
+
+  & + & {
+    padding-top: 0;
+  }
 
   &-header {
     margin: 0 auto;
@@ -53,11 +66,16 @@
         margin-bottom: 10px;
         width: 100%;
         height: 0;
+        position: relative;
         padding-bottom: 100%;
         transition: all 0.2s $base-easing;
 
         &:hover {
           border-color: rgba($border-color, 0.2);
+        }
+
+        &-status {
+          @include status_label();
         }
 
         @each $podcast in $podcasts {
