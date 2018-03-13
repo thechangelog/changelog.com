@@ -25,7 +25,7 @@
   <% end %>
 
   <url><loc><%= podcast_url(@conn, :index) %></loc></url>
-  <%= for podcast <- @podcasts ++ [Podcast.master] do %>
+  <%= for podcast <- @podcasts do %>
     <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
   <% end %>
 

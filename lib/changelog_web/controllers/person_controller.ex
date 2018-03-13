@@ -1,14 +1,21 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Faker, Mailer, Newsletters, Person}
+  alias Changelog.{Faker, Mailer, Newsletters, Person, Podcast, Repo}
   alias ChangelogWeb.Email
   alias Craisin.Subscriber
 
   plug RequireGuest, "before joining" when action in [:subscribe, :join]
 
   def subscribe(conn = %{method: "GET"}, _params) do
-    render(conn, :subscribe)
+    active =
+      Podcast.active
+      |> Podcast.oldest_first
+      |> Podcast.preload_hosts
+      |> Repo.all
+      |> Kernel.++([Podcast.master])
+
+    render(conn, :subscribe, podcasts: active)
   end
 
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do

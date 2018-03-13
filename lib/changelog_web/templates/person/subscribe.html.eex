@@ -3,10 +3,7 @@
 <div class="main-podcasts">
   <section class="show_list" id="podcasts">
     <div class="show_list-shows">
-      <%= for podcast <- @podcasts do %>
-        <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast) %>
-      <% end %>
-      <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: Changelog.Podcast.master) %>
+      <%= render_many(@podcasts, PodcastView, "_podcast_summary.html", assigns) %>
     </div>
   </section>
 </div>

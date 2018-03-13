@@ -1,9 +1,7 @@
 defmodule ChangelogWeb.Admin.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Newsletters, Person, Post}
-
-  plug ChangelogWeb.Plug.LoadPodcasts, "index" when action in [:index]
+  alias Changelog.{Episode, Newsletters, Person, Podcast, Post}
 
   def index(conn, _params) do
     newsletters =
@@ -18,7 +16,8 @@ defmodule ChangelogWeb.Admin.PageController do
       newsletters: newsletters,
       draft_episodes: draft_episodes(),
       draft_posts: draft_posts(),
-      members: members())
+      members: members(),
+      podcasts: podcasts())
   end
 
   defp draft_episodes do
@@ -40,5 +39,11 @@ defmodule ChangelogWeb.Admin.PageController do
     %{today: Repo.count(Person.joined_today()),
       slack: Repo.count(Person.in_slack()),
       total: Repo.count(Person.joined())}
+  end
+
+  defp podcasts do
+    Podcast.public
+    |> Podcast.oldest_first
+    |> Repo.all
   end
 end

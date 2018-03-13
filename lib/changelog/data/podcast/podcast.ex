@@ -55,13 +55,10 @@ defmodule Changelog.Podcast do
     |> cast_assoc(:podcast_hosts)
   end
 
-  def public(query \\ __MODULE__) do
-    from(p in query, where: p.status in [^:soon, ^:published, ^:retired])
-  end
-
-  def oldest_first(query \\ __MODULE__) do
-    from p in query, order_by: [asc: p.id]
-  end
+  def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published])
+  def public(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published, ^:retired])
+  def retired(query \\ __MODULE__), do: from(q in query, where: q.status == ^:retired)
+  def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
 
   def get_by_slug(slug) do
     if slug == "master" do
@@ -132,12 +129,22 @@ defmodule Changelog.Podcast do
     |> Repo.one
   end
 
+  def preload_topics(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(podcast_topics: ^PodcastTopic.by_position)
+    |> Ecto.Query.preload(:topics)
+  end
   def preload_topics(podcast) do
     podcast
     |> Repo.preload(podcast_topics: {PodcastTopic.by_position, :topic})
     |> Repo.preload(:topics)
   end
 
+  def preload_hosts(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(podcast_hosts: ^PodcastHost.by_position)
+    |> Ecto.Query.preload(:hosts)
+  end
   def preload_hosts(podcast) do
     podcast
     |> Repo.preload(podcast_hosts: {PodcastHost.by_position, :person})

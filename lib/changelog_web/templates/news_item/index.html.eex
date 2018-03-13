@@ -25,10 +25,7 @@
       <p>No matter where you are on your hacker path, we have a podcast for you. This community cares about the past, present, and future hacker generation. We're about lifting people up, not putting people down.</p>
     </header>
     <div class="show_list-shows">
-      <%= for podcast <- @podcasts do %>
-        <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: podcast) %>
-      <% end %>
-      <%= render(PodcastView, "_podcast_summary.html", conn: @conn, podcast: Changelog.Podcast.master) %>
+      <%= render_many(@podcasts, PodcastView, "_podcast_summary.html", assigns) %>
     </div>
   </section>
 </div>
