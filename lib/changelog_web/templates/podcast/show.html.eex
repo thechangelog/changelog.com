@@ -3,7 +3,7 @@
     <div class="show-header-art">
       <h2 class="visually_hidden"><%= @podcast.name %></h2>
 
-      <%= if @podcast.status && (@podcast.status != :published) do %>
+      <%= if @podcast.status != :published do %>
         <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
       <% end %>
     </div>
@@ -47,14 +47,12 @@
 
     <div class="show-header-hosts">
       <div class="avatar_list">
-        <%= if !is_master(@podcast) do %>
-          <%= for person <- @podcast.hosts do %>
-            <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
-              <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
-              <p><%= person.name %></p>
-            <% end %>
-          <% end %>
+      <%= for person <- @podcast.hosts do %>
+        <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
+          <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
+          <p><%= person.name %></p>
         <% end %>
+      <% end %>
       </div>
     </div>
   </header>

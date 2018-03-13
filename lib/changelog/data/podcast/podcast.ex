@@ -35,7 +35,8 @@ defmodule Changelog.Podcast do
   %__MODULE__{
     name: "Changelog Master Feed",
     slug: "master",
-    description: "Master feed of all Changelog podcasts.",
+    status: :published,
+    description: "Master feed of all Changelog podcasts",
     keywords: "changelog, open source, oss, software, development, developer, hacker",
     itunes_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
     hosts: []
