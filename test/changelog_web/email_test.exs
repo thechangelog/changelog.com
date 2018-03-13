@@ -4,6 +4,7 @@ defmodule ChangelogWeb.EmailTest do
 
   import Changelog.Factory
 
+  alias Changelog.Newsletters
   alias ChangelogWeb.Email
 
   describe "guest thanks" do
@@ -54,10 +55,11 @@ defmodule ChangelogWeb.EmailTest do
 
   test "subscriber welcome" do
     person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now)
-    email = Email.subscriber_welcome(person)
+    email = Email.subscriber_welcome(person, Newsletters.weekly())
 
     assert email.to == person
     assert email.subject =~ ~r/welcome/i
     assert email.html_body =~ ~r/subscribed/i
+    assert email.html_body =~ ~r/Changelog Weekly/
   end
 end

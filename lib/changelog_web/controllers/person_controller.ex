@@ -1,14 +1,21 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Faker, Mailer, Newsletters, Person}
+  alias Changelog.{Faker, Mailer, Newsletters, Person, Podcast, Repo}
   alias ChangelogWeb.Email
   alias Craisin.Subscriber
 
-  plug RequireGuest, "before joining" when action in [:subscribe, :join]
+  plug RequireGuest, "before joining" when action in [:join]
 
   def subscribe(conn = %{method: "GET"}, _params) do
-    render(conn, :subscribe)
+    active =
+      Podcast.active
+      |> Podcast.oldest_first
+      |> Podcast.preload_hosts
+      |> Repo.all
+      |> Kernel.++([Podcast.master])
+
+    render(conn, :subscribe, podcasts: active)
   end
 
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
@@ -32,23 +39,15 @@ defmodule ChangelogWeb.PersonController do
     end
   end
 
-  defp welcome_subscriber(conn, person, "nightly") do
-    Subscriber.subscribe(Newsletters.nightly().list_id, person)
-    welcome_subscriber(conn, person)
-  end
-  defp welcome_subscriber(conn, person, "weekly") do
-    Subscriber.subscribe(Newsletters.weekly().list_id, person)
-    welcome_subscriber(conn, person)
-  end
-  defp welcome_subscriber(conn, person, nil) do
-    welcome_subscriber(conn, person)
-  end
-  defp welcome_subscriber(conn, person) do
+  defp welcome_subscriber(conn, person, list) do
     person = Person.refresh_auth_token(person)
+    newsletter = Newsletters.get_by_slug(list)
     community = Newsletters.community()
 
-    Email.subscriber_welcome(person) |> Mailer.deliver_later
+    Subscriber.subscribe(newsletter.list_id, person)
     Subscriber.subscribe(community.list_id, person)
+
+    Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later
 
     conn
     |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)

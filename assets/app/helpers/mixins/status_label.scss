@@ -1,0 +1,19 @@
+@mixin status_label() {
+  @include position(absolute, null 0 -1px);
+  text-align: center;
+
+  span {
+    background: $green;
+    border-radius: 1px 1px 0 0;
+    display: inline-block;
+    color: $white;
+    font-family: $code;
+    font-size: 0.75em;
+    padding: 0.25em 0.75em 0.35em;
+    text-transform: uppercase;
+  }
+
+  &--retired span {
+    background: $medium-grey;
+  }
+}

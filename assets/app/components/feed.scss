@@ -11,6 +11,14 @@
 .search {
   margin-bottom: 30px !important;
 
+  &-note {
+    font-family: $code;
+    font-size: 0.825em;
+    font-style: italic;
+    padding-bottom: $base-spacing;
+    text-align: center;
+  }
+
   @include breakpoint(mobile, max) {
     .pagination { padding: $base-spacing $base-spacing 0; }
   }

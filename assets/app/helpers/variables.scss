@@ -21,7 +21,7 @@ $blue-grey: #222C36;
 $highlight: #fafafa;
 
 // Podcasts - Sometimes we wanna loop through 'em
-$podcasts: backstage, founderstalk, gotime, master, podcast, rfc, spotlight, jsparty;
+$podcasts: backstage, founderstalk, gotime, master, podcast, rfc, spotlight, jsparty, practicalai;
 
 // Podcast Colors
 $changelog: #9E978E;
@@ -44,6 +44,9 @@ $spotlight-transparent: rgba(darken($spotlight, 30%), 0.4);
 
 $jsparty: #FFCD00;
 $jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
+
+$practicalai: #4C5FAA;
+$gotime-transparent: rgba(darken($gotime, 50%), 0.3);
 
 // Borders
 $border-color: $lightest-grey;

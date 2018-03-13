@@ -52,6 +52,9 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
 
   def get_param(conn, param, default \\ nil), do: Map.get(conn.params, param, default)
+  def get_assigns_or_param(conn, param, default \\ nil) do
+    Map.get(conn.assigns, String.to_atom(param)) || get_param(conn, param, default)
+  end
 
   def github_url(handle), do: "https://github.com/#{handle}"
 

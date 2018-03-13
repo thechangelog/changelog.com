@@ -19,7 +19,7 @@ defmodule ChangelogWeb.Admin.PodcastView do
       :draft -> content_tag(:span, "Draft", class: "ui tiny yellow basic label")
       :soon -> content_tag(:span, "Coming Soon", class: "ui tiny yellow basic label")
       :published -> content_tag(:span, "Published", class: "ui tiny green basic label")
-      :retired -> content_tag(:span, "Published", class: "ui tiny basic label")
+      :retired -> content_tag(:span, "Retired", class: "ui tiny basic label")
     end
   end
 

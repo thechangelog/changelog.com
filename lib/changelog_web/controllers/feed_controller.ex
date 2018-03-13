@@ -73,8 +73,9 @@ defmodule ChangelogWeb.FeedController do
     podcasts =
       Podcast.public
       |> Podcast.oldest_first
-      |> Repo.all
       |> Podcast.preload_hosts
+      |> Repo.all
+      |> Kernel.++([Podcast.master])
 
     posts =
       Post.published
