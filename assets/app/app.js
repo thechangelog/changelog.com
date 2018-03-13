@@ -130,33 +130,8 @@ u(document).on("click", "a[href^=\\#t]", function(event) {
   };
 });
 
-// submit Campain Monitor forms via jsonp
-u(document).on("submit", "form.js-cm", function(event) {
-  event.preventDefault();
-
-  const form = u(this);
-  const status = form.find(".form_submit_responses");
-  const scriptSrc = form.attr("action") + "?callback=afterSubscribe&" + form.serialize();
-
-  status.html("<div class='form_submit_response'>Sending...</div>");
-
-  window.afterSubscribe = function(data) {
-    if (data.Status == 200) {
-      Turbolinks.visit(data.RedirectUrl);
-    } else {
-      status.html(`<div class="form_submit_response form_submit_response--error">${data.Message}</div>`);
-    }
-  }
-
-  if (u(`script[src='${scriptSrc}']`).length == 0) {
-    const script = document.createElement("script");
-    script.src = scriptSrc;
-    document.body.appendChild(script);
-  }
-});
-
-// submit all other forms with Turbolinks
-u(document).on("submit", "form:not(.js-cm)", function(event) {
+// submit forms with Turbolinks
+u(document).on("submit", "form", function(event) {
   event.preventDefault();
 
   const form = u(this);

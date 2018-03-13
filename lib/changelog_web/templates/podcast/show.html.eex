@@ -15,8 +15,7 @@
 
     <%= if (@podcast.status == :soon) do %>
       <p class="signup-text"><em>Sign-up to get notified of launch and new episodes.</em></p>
-      <!-- TODO: Point to a specific list? -->
-      <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
+      <%= render(SharedView, "_subscribe_form.html", assigns) %>
     <% else %>
       <div class="show-header-subscribe">
         <div class="show-header-subscribe-buttons">

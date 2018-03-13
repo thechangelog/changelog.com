@@ -1,7 +1,7 @@
 <%= greeting(@person) %>
 
 
-You subscribed to Changelog News!
+You subscribed to <%= @newsletter.name %>!
 
 Sign in to your account to access our Slack, manage your email subscriptions, and complete your profile.
 
