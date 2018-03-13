@@ -1,3 +1,4 @@
+<%= if !@current_user && !@conn.cookies["hide_subscribe_cta"] do %>
 <section class="signup js-subscribe_cta">
   <div class="signup-content">
     <div class="signup-icons">
@@ -16,3 +17,4 @@
     <button class="signup-close js-hide-subscribe"  aria-label="Close">✕</button>
   <% end %>
 </section>
+<% end %>

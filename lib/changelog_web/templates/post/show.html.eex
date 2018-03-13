@@ -18,6 +18,10 @@
     </div>
   </header>
 
+  <div class="feed">
+    <%= render(SharedView, "_signup_banner.html", assigns) %>
+  </div>
+
   <div class="richtext">
     <%= @post.body |> md_to_html |> raw %>
   </div>

@@ -1,20 +1,19 @@
-<%= if @page.page_number == 1 && !@current_user && !@conn.cookies["hide_subscribe_cta"] do %>
+<%= if @page.page_number == 1 do %>
   <%= render(SharedView, "_signup.html", assigns) %>
 <% end %>
 
 <div class="feed">
 <%= if @page.page_number == 1 do %>
-  <%= for item <- @pinned do %>
-    <%= render_item_summary_or_ad(item, assigns) %>
-  <% end %>
+  <%= for item <- @pinned, do: render_item_summary_or_ad(item, assigns) %>
 <% end %>
-<%= for item_or_ad <- items_with_ads(@items, @ads) do %>
-  <%= render_item_summary_or_ad(item_or_ad, assigns) %>
-<% end %>
-<%= if @page.page_number == 1 && !@current_user && !@conn.cookies["hide_subscribe_cta"] do %>
+
+<%= for item_or_ad <- items_with_ads(@items, @ads), do: render_item_summary_or_ad(item_or_ad, assigns) %>
+
+<%= if @page.page_number == 1 do %>
   <%= render(SharedView, "_signup_banner.html", assigns) %>
 <% end %>
-<%= render(SharedView, "_more_button.html", assigns) %>
+
+  <%= render(SharedView, "_more_button.html", assigns) %>
 </div>
 
 <%= if @page.page_number == 1 do %>

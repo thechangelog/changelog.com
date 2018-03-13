@@ -9,8 +9,5 @@
     <%= image_link(@item) %>
   </article>
 
-
-  <%= if !@current_user && !@conn.cookies["hide_subscribe_cta"] do %>
-    <%= render(SharedView, "_signup_banner.html", assigns) %>
-  <% end %>
+  <%= render(SharedView, "_signup_banner.html", assigns) %>
 </div>
