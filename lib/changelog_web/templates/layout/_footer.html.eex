@@ -44,7 +44,8 @@
       <ul>
         <li><%= link "Join the Community", to: page_path(@conn, :community) %></li>
         <li><%= link "Code of Conduct", to: page_path(@conn, :coc) %></li>
-        <li><%= link "Sign in to Slack", to: "https://changelog.slack.com/" %></li>
+        <li><%= link "Sign in to Slack", to: "https://changelog.slack.com" %></li>
+        <li><%= link "Ping Us", to: "https://github.com/thechanglog/ping" %></li>
         <li><%= link "Perks", to: page_path(@conn, :community) %></li>
       </ul>
     </div>
