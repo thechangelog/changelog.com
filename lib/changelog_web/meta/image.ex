@@ -18,9 +18,9 @@ defmodule ChangelogWeb.Meta.Image do
   defp get_twitter(%{podcast: podcast}), do: static_url(Endpoint, "/images/podcasts/#{podcast.slug}-cover-art.png")
   defp get_twitter(%{view_module: NewsItemView, item: item}) do
     cond do
-      item.author -> PersonView.avatar_url(item.author)
-      item.source && item.source.icon -> NewsSourceView.icon_url(item.source)
-      topic = Enum.find(item.topics, &(&1.icon)) -> TopicView.icon_url(topic)
+      item.author -> PersonView.avatar_url(item.author, :large)
+      item.source && item.source.icon -> NewsSourceView.icon_url(item.source, :large)
+      topic = Enum.find(item.topics, &(&1.icon)) -> TopicView.icon_url(topic, :large)
       true -> static_url(Endpoint, "/images/defaults/type-#{item.type}.png")
     end
   end
