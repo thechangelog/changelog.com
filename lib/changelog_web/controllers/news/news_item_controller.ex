@@ -5,7 +5,7 @@ defmodule ChangelogWeb.NewsItemController do
   alias ChangelogWeb.NewsItemView
 
   plug RequireAdmin, "before preview" when action in [:preview]
-  plug RequireUser, "before submitting" when action in [:new, :create]
+  plug RequireUser, "before submitting" when action in [:create]
 
   def index(conn, params) do
     pinned =

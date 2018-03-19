@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Helpers.PublicHelpers do
   use Phoenix.HTML
 
-  alias Changelog.Regexp
+  alias Changelog.{Person, Regexp}
 
   def error_class(form, field) do
     if form.errors[field], do: "error", else: ""
@@ -56,6 +56,9 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
   def facebook_url(url) do
     "https://www.facebook.com/sharer/sharer.php?u=#{url}"
   end
+
+  def user_required_options(%Person{}, options), do: options
+  def user_required_options(_else, options), do: options ++ [disabled: true]
 
   def with_smart_quotes(string) do
     string

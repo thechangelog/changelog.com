@@ -103,15 +103,17 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert item.impression_count == 0
   end
 
-  test "getting the form to submit news", %{conn: conn} do
-    conn = get(conn, news_item_path(conn, :new))
-    assert redirected_to(conn) == sign_in_path(conn, :new)
-  end
-
-  @tag :as_user
   test "renders the form to submit news", %{conn: conn} do
     conn = get(conn, news_item_path(conn, :new))
     assert html_response(conn, 200) =~ ~r/submit/
+  end
+
+  test "does not create with no user", %{conn: conn} do
+    count_before = count(NewsItem)
+    conn = post(conn, news_item_path(conn, :create), news_item: %{url: "https://ohai.me/x", headline: "dig it?"})
+
+    assert redirected_to(conn) == sign_in_path(conn, :new)
+    assert count(NewsItem) == count_before
   end
 
   @tag :as_inserted_user

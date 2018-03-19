@@ -23,6 +23,10 @@ $flash_types: (success #d4ffd4) (error #ffd5d1);
     &--#{$type} {
       background: $bg;
       color: $text;
+      a {
+        color: $text;
+        text-decoration: underline;
+      }
       .flash-close {
         path { stroke: $text; }
       }

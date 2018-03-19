@@ -99,6 +99,10 @@
 
       &:hover { background: darken($green, 10%); }
     }
+
+    input[disabled] {
+      background: $light-grey;
+    }
   }
 
   &-checklist {
