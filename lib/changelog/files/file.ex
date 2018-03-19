@@ -33,7 +33,7 @@ defmodule Changelog.File do
         |> Path.extname
         |> String.replace(".", "")
         |> String.downcase
-        |> String.to_atom
+        |> String.to_existing_atom
       end
 
       defp hashed(id), do: Changelog.Hashid.encode(id)

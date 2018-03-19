@@ -29,7 +29,7 @@ defmodule ChangelogWeb.HomeController do
       {:error, changeset} ->
         conn
         |> put_flash(:error, "The was a problem updating your #{from}. 😢")
-        |> render(String.to_atom(from), person: me, changeset: changeset)
+        |> render(String.to_existing_atom(from), person: me, changeset: changeset)
     end
   end
 
