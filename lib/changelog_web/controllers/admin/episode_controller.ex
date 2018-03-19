@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, EpisodeTopic, EpisodeHost, EpisodeStat, Mailer,
-                   NewsItem, NewsQueue, Podcast, Transcripts}
+  alias Changelog.{Episodes, Episode, EpisodeTopic, EpisodeHost, EpisodeStat,
+                   Mailer, NewsItem, NewsQueue, Podcast, Transcripts}
   alias ChangelogWeb.Email
 
   plug :assign_podcast
@@ -91,12 +91,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   def create(conn, params = %{"episode" => episode_params}, podcast) do
-    changeset =
-      build_assoc(podcast, :episodes)
-      |> Episode.preload_all
-      |> Episode.admin_changeset(episode_params)
-
-    case Repo.insert(changeset) do
+    case Episodes.create(episode_params, podcast) do
       {:ok, episode} ->
         conn
         |> put_flash(:result, "success")
@@ -119,19 +114,12 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   def update(conn, params = %{"id" => slug, "episode" => episode_params}, podcast) do
-    episode =
-      assoc(podcast, :episodes)
-      |> Repo.get_by!(slug: slug)
-      |> Episode.preload_all
-
-    changeset = Episode.admin_changeset(episode, episode_params)
-
-    case Repo.update(changeset) do
+    case Episodes.update(episode_params, podcast, slug) do
       {:ok, _episode} ->
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
-      {:error, changeset} ->
+      {:error, changeset, episode} ->
         conn
         |> put_flash(:result, "failure")
         |> render(:edit, episode: episode, changeset: changeset)
@@ -139,12 +127,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   def delete(conn, %{"id" => slug}, podcast) do
-    episode =
-      assoc(podcast, :episodes)
-      |> Episode.unpublished
-      |> Repo.get_by!(slug: slug)
-
-    Repo.delete!(episode)
+    Episodes.delete(slug, podcast)
 
     conn
     |> put_flash(:result, "success")

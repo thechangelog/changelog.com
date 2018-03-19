@@ -13,6 +13,11 @@ config :logger, level: :warn
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.TestAdapter
 
+# Configure CalendarService
+config :changelog, Changelog.CalendarService,
+  adapter: Changelog.CalendarService,
+  google_calendar_id: "GOOGLE_CALENDAR_ID"
+
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,

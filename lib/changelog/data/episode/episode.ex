@@ -24,6 +24,7 @@ defmodule Changelog.Episode do
     field :published_at, Timex.Ecto.DateTime
     field :recorded_at, Timex.Ecto.DateTime
     field :recorded_live, :boolean, default: false
+    field :calendar_event_id, :string
 
     field :audio_file, Files.Audio.Type
     field :bytes, :integer
@@ -81,9 +82,13 @@ defmodule Changelog.Episode do
     validated.valid? && !is_published(episode)
   end
 
+  def is_calendar_event_scheduled(episode) do
+    episode.recorded_at > Timex.now && episode.calendar_event_id != nil
+  end
+
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(slug title published featured headline subheadline highlight subhighlight summary notes published_at recorded_at recorded_live guid))
+    |> cast(params, ~w(slug title published featured headline subheadline highlight subhighlight summary notes published_at recorded_at recorded_live calendar_event_id guid))
     |> cast_attachments(params, ~w(audio_file))
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
@@ -190,6 +195,16 @@ defmodule Changelog.Episode do
     episode
     |> change(transcript: parsed)
     |> Repo.update!
+  end
+
+  def update_calendar_event_id(episode, event_id) do
+    change(episode, calendar_event_id: event_id)
+    |> Repo.update
+  end
+
+  def remove_calendar_event_id(episode) do
+    change(episode, calendar_event_id: nil)
+    |> Repo.update
   end
 
   defp derive_bytes_and_duration(changeset) do

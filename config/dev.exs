@@ -32,6 +32,10 @@ config :logger, :console, format: "[$level] $message\n"
 # and calculating stacktraces is usually expensive.
 config :phoenix, :stacktrace_depth, 20
 
+# Configure CalendarService
+config :changelog, Changelog.CalendarService,
+  adapter: Changelog.CalendarService
+
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,

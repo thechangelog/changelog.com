@@ -24,7 +24,10 @@
       <td><%= TimeView.duration(episode.duration) %></td>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <% else %>
-      <td><%= ts(episode.recorded_at) %></td>
+      <td>
+        <%= ts(episode.recorded_at) %>
+        <%= calendar_event_label(episode) %>
+      </td>
       <% end %>
       <td><%= download_count(episode) %></td>
       <td><%= reach_count(episode) %></td>
