@@ -6,13 +6,29 @@ defmodule ChangelogWeb.Admin.PodcastController do
   plug :scrub_params, "podcast" when action in [:create, :update]
 
   def index(conn, _params) do
-    podcasts = Repo.all from p in Podcast, order_by: p.id
-    render(conn, "index.html", podcasts: podcasts)
+    ours =
+      Podcast.ours
+      |> Podcast.not_retired
+      |> Podcast.oldest_first
+      |> Repo.all
+
+    partners =
+      Podcast.partners
+      |> Podcast.not_retired
+      |> Podcast.oldest_first
+      |> Repo.all
+
+    retired =
+      Podcast.retired
+      |> Podcast.oldest_first
+      |> Repo.all
+
+    render(conn, :index, ours: ours, partners: partners, retired: retired)
   end
 
   def new(conn, _params) do
     changeset = Podcast.insert_changeset(%Podcast{podcast_hosts: []})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"podcast" => podcast_params}) do
@@ -28,7 +44,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("new.html", changeset: changeset)
+        |> render(:new, changeset: changeset)
     end
   end
 
@@ -37,7 +53,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
       |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
       |> Repo.preload([podcast_topics: {Changelog.PodcastTopic.by_position, :topic}])
     changeset = Podcast.update_changeset(podcast)
-    render(conn, "edit.html", podcast: podcast, changeset: changeset)
+    render(conn, :edit, podcast: podcast, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => slug, "podcast" => podcast_params}) do
@@ -52,7 +68,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "edit.html", podcast: podcast, changeset: changeset)
+        render(conn, :edit, podcast: podcast, changeset: changeset)
     end
   end
 end
