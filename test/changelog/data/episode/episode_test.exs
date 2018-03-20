@@ -1,8 +1,10 @@
 defmodule Changelog.EpisodeTest do
   use Changelog.DataCase
 
-  alias Changelog.Episode
-  alias ChangelogWeb.EpisodeView
+  import Mock
+
+  alias Changelog.{Episode}
+  alias ChangelogWeb.{EpisodeView, PodcastView}
 
   describe "admin_changeset" do
     test "with valid attributes" do
@@ -17,20 +19,27 @@ defmodule Changelog.EpisodeTest do
 
     test "with audio file" do
       podcast = insert(:podcast, slug: "gotime")
-      episode = insert(:published_episode, title: "ohai", podcast: podcast)
-      audio_file = %Plug.Upload{
-        filename: "california.mp3",
-        path: "#{fixtures_path()}/california.mp3"
-      }
 
-      changeset = Episode.admin_changeset(episode, %{audio_file: audio_file})
-      assert changeset.valid?
+      with_mocks([
+        {PodcastView, [], [cover_local_path: fn(_) -> "#{fixtures_path()}/avatar600x600.png" end]},
+        {PodcastView, [], [dasherized_name: fn(_) -> "ohai" end]}
+      ]) do
+        episode = insert(:published_episode, title: "ohai", podcast: podcast)
 
-      {:ok, episode} = Repo.update(changeset)
-      audio_path = EpisodeView.audio_local_path(episode)
-      {result, 0} = System.cmd "ffprobe", [audio_path], stderr_to_stdout: true
-      assert result =~ ~r/title\s+:\s+ohai/
-      assert result =~ ~r/artist\s+:\s+Changelog\sMedia/
+        audio_file = %Plug.Upload{
+          filename: "california.mp3",
+          path: "#{fixtures_path()}/california.mp3"
+        }
+
+        changeset = Episode.admin_changeset(episode, %{audio_file: audio_file})
+        assert changeset.valid?
+
+        {:ok, episode} = Repo.update(changeset)
+        audio_path = EpisodeView.audio_local_path(episode)
+        {result, 0} = System.cmd "ffprobe", [audio_path], stderr_to_stdout: true
+        assert result =~ ~r/title\s+:\s+ohai/
+        assert result =~ ~r/artist\s+:\s+Changelog\sMedia/
+      end
     end
   end
 
