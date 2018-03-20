@@ -64,15 +64,15 @@
         height: 0;
         position: relative;
         padding-bottom: 100%;
-        transition: all 0.2s $base-easing;
 
         img {
           border: 1px solid rgba($border-color, 0.1);
           height: auto;
           width: 100%;
+          transition: all 0.2s $base-easing;
         }
 
-        &:hover {
+        &:hover img {
           border-color: rgba($border-color, 0.2);
         }
 

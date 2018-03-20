@@ -16,17 +16,23 @@
 
     // Artwork
     &-art {
+      $size: 160px;
       margin: 0 auto $base-spacing;
       position: relative;
 
-      img {
-        $size: 160px;
-        height: $size;
-        margin: 0 auto;
-        width: $size;
+      // &:after { @include c-hider(); }
 
-        @include breakpoint(mobile) {
-          $size: 220px;
+      &,
+      img {
+        height: $size;
+        width: $size;
+      }
+
+      @include breakpoint(mobile) {
+        $size: 220px;
+
+        &,
+        img {
           height: $size;
           width: $size;
         }

@@ -1,0 +1,9 @@
+// Hilarious "C" hider for non-partner show images (WIP)
+@include c-hider() {
+  @include position(absolute, 5% 5% null null);
+  content: "";
+  background: $black;
+  display: block;
+  width: 12%;
+  height: 12%;
+}
