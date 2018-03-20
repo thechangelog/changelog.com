@@ -12,6 +12,16 @@ defmodule ChangelogWeb.PodcastView do
     |> String.replace_leading("/priv", "")
   end
 
+  def cover_local_path(podcast) do
+    path =
+      podcast
+      |> cover_path(:original)
+      |> String.split("?")
+      |> List.first
+
+    Application.app_dir(:changelog, "priv#{path}")
+  end
+
   def cover_url(podcast), do: cover_url(podcast, :original)
   def cover_url(podcast, version) do
     if (podcast.cover) do
@@ -19,15 +29,6 @@ defmodule ChangelogWeb.PodcastView do
     else
       "/images/defaults/black.png"
     end
-  end
-
-  def cover_art_path(podcast, extension \\ "svg") do
-    "/images/podcasts/#{podcast.slug}-cover-art.#{extension}"
-  end
-
-  def cover_art_local_path(podcast, extension \\ "svg") do
-    url = cover_art_path(podcast, extension)
-    Application.app_dir(:changelog, "priv/static#{url}")
   end
 
   def dasherized_name(podcast) do
