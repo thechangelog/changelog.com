@@ -6,8 +6,11 @@
     border-bottom: 1px solid $green;
     display: flex;
     font-family: $code;
-    font-size: 0.875em;
     padding: 0;
+
+    .main & {
+      margin: 0 $base-spacing;
+    }
 
     &:before {
       content: "~ $ ";
