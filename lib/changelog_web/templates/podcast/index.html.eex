@@ -1,15 +1,26 @@
 <div class="page_podcasts">
-  <section class="show_list" id="podcasts">
+  <section class="show_list">
     <header class="show_list-header">
       <h2>Our podcasts</h2>
       <p>No matter where you are on your hacker path, we have a podcast for you. This community cares about the past, present, and future hacker generation. We're about lifting people up, not putting people down.</p>
     </header>
     <div class="show_list-shows">
-      <%= render_many(@active, __MODULE__, "_podcast_summary.html", assigns) %>
+      <%= render_many(@ours, __MODULE__, "_podcast_summary.html", assigns) %>
     </div>
   </section>
 
-  <section class="show_list" id="retired">
+  <section class="show_list">
+  <%= if Enum.any?(@partners) do %>
+    <header class="show_list-header">
+      <h2>Partner podcasts</h2>
+    </header>
+    <div class="show_list-shows">
+      <%= render_many(@partners, __MODULE__, "_podcast_summary.html", assigns) %>
+    </div>
+  <% end %>
+  </section>
+
+  <section class="show_list">
   <%= if Enum.any?(@retired) do %>
     <header class="show_list-header">
       <h2>Retired podcasts</h2>

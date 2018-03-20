@@ -40,6 +40,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     podcasts =
       Podcast.active
+      |> Podcast.ours
       |> Podcast.oldest_first
       |> Podcast.preload_hosts
       |> Repo.all

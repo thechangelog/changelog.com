@@ -4,20 +4,29 @@ defmodule ChangelogWeb.PodcastController do
   alias Changelog.{Podcast, NewsItem}
 
   def index(conn, _params) do
-    active =
+    ours =
       Podcast.active
+      |> Podcast.ours
       |> Podcast.oldest_first
       |> Podcast.preload_hosts
       |> Repo.all
       |> Kernel.++([Podcast.master])
 
-    retired =
-      Podcast.retired
+    partners =
+      Podcast.active
+      |> Podcast.partners
       |> Podcast.oldest_first
       |> Podcast.preload_hosts
       |> Repo.all
 
-    render(conn, :index, active: active, retired: retired)
+    retired =
+      Podcast.retired
+      |> Podcast.ours_first
+      |> Podcast.oldest_first
+      |> Podcast.preload_hosts
+      |> Repo.all
+
+    render(conn, :index, ours: ours, partners: partners, retired: retired)
   end
 
   def show(conn, params = %{"slug" => slug}) do
