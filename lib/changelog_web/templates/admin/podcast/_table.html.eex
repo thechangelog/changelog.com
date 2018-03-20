@@ -18,7 +18,7 @@
       <td class="center aligned">
         <%= link to: admin_podcast_episode_path(@conn, :index, podcast.slug) do %>
         <h2 class="ui image header">
-          <img src="<%= static_url(@conn, ChangelogWeb.PodcastView.cover_art_path(podcast)) %>" class="ui image" style="background: black"/>
+          <img src="<%= PodcastView.cover_url(podcast, :small) %>" class="ui image" />
         </h2>
         <% end %>
       </td>
@@ -30,10 +30,10 @@
       <td><%= reach_count(podcast) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= icon_link "eye", to: podcast_path(@conn, :show, podcast.slug) %>
-          <%= icon_link "edit", to: admin_podcast_path(@conn, :edit, podcast.slug) %>
-          <%= icon_link "list", to: admin_podcast_episode_path(@conn, :index, podcast.slug) %>
-          <%= icon_link "add", to: admin_podcast_episode_path(@conn, :new, podcast.slug) %>
+          <%= icon_link("eye", to: podcast_path(@conn, :show, podcast.slug)) %>
+          <%= icon_link("edit", to: admin_podcast_path(@conn, :edit, podcast.slug)) %>
+          <%= icon_link("list", to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
+          <%= icon_link("add", to: admin_podcast_episode_path(@conn, :new, podcast.slug)) %>
         </div>
       </td>
     </tr>

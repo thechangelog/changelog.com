@@ -3,14 +3,14 @@ defmodule Changelog.PodcastTest do
 
   alias Changelog.Podcast
 
-  describe "admin_changeset" do
+  describe "insert_changeset" do
     test "with valid attributes" do
-      changeset = Podcast.admin_changeset(%Podcast{}, %{slug: "the-bomb-show", name: "The Bomb Show", status: :draft})
+      changeset = Podcast.insert_changeset(%Podcast{}, %{slug: "the-bomb-show", name: "The Bomb Show", status: :draft})
       assert changeset.valid?
     end
 
     test "with invalid attributes" do
-      changeset = Podcast.admin_changeset(%Podcast{}, %{})
+      changeset = Podcast.insert_changeset(%Podcast{}, %{})
       refute changeset.valid?
     end
   end

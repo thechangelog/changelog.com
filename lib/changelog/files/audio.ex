@@ -1,18 +1,18 @@
 defmodule Changelog.Files.Audio do
   use Changelog.File, [:mp3]
 
-  alias ChangelogWeb.{PodcastView}
+  import ChangelogWeb.PodcastView, only: [dasherized_name: 1, cover_art_local_path: 2]
 
   @versions [:original]
 
   def storage_dir(_, {_, scope}), do: expanded_dir("/#{scope.podcast.slug}/#{scope.slug}")
-  def filename(_, {_, scope}), do: "#{PodcastView.dasherized_name(scope.podcast)}-#{scope.slug}"
+  def filename(_, {_, scope}), do: "#{dasherized_name(scope.podcast)}-#{scope.slug}"
 
   def transform(:original, {_file, scope}) do
     podcast = scope.podcast
 
     # get podcast's cover art location and insert list of art options
-    art_file = PodcastView.cover_art_local_path(podcast, "png")
+    art_file = cover_art_local_path(podcast, "png")
 
     {:ffmpeg,
      fn(input, output) ->

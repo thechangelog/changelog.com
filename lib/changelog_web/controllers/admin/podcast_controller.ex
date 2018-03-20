@@ -11,15 +11,17 @@ defmodule ChangelogWeb.Admin.PodcastController do
   end
 
   def new(conn, _params) do
-    changeset = Podcast.admin_changeset(%Podcast{podcast_hosts: []})
+    changeset = Podcast.insert_changeset(%Podcast{podcast_hosts: []})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, params = %{"podcast" => podcast_params}) do
-    changeset = Podcast.admin_changeset(%Podcast{}, podcast_params)
+    changeset = Podcast.insert_changeset(%Podcast{}, podcast_params)
 
     case Repo.insert(changeset) do
       {:ok, podcast} ->
+        Repo.update(Podcast.file_changeset(podcast, podcast_params))
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_path(conn, :edit, podcast))
@@ -34,7 +36,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     podcast = Repo.get_by!(Podcast, slug: slug)
       |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
       |> Repo.preload([podcast_topics: {Changelog.PodcastTopic.by_position, :topic}])
-    changeset = Podcast.admin_changeset(podcast)
+    changeset = Podcast.update_changeset(podcast)
     render(conn, "edit.html", podcast: podcast, changeset: changeset)
   end
 
@@ -42,7 +44,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     podcast = Repo.get_by!(Podcast, slug: slug)
       |> Repo.preload(:podcast_topics)
       |> Repo.preload(:podcast_hosts)
-    changeset = Podcast.admin_changeset(podcast, podcast_params)
+    changeset = Podcast.update_changeset(podcast, podcast_params)
 
     case Repo.update(changeset) do
       {:ok, _podcast} ->

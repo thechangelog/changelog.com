@@ -1,39 +1,54 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
   <div class="two fields">
     <div class="field required <%= error_class(f, :name) %>">
-      <%= label f, :name, "Name" %>
-      <%= text_input f, :name, placeholder: "The Changelog" %>
+      <%= label(f, :name, "Name") %>
+      <%= text_input(f, :name, placeholder: "The Changelog") %>
       <%= error_message(f, :name) %>
     </div>
 
     <div class="field required <%= error_class(f, :status) %>">
-      <%= label f, :status %>
-      <%= select f, :status, status_options(), class: "ui fluid dropdown" %>
+      <%= label(f, :status) %>
+      <%= select(f, :status, status_options(), class: "ui fluid dropdown") %>
     </div>
   </div>
 
   <div class="three fields">
     <div class="field required <%= error_class(f, :slug) %>">
-      <%= label f, :slug %>
-      <%= text_input f, :slug, placeholder: "tcl", readonly: is_persisted(f.data) %>
+      <%= label(f, :slug) %>
+      <%= text_input(f, :slug, placeholder: "tcl", readonly: is_persisted(f.data)) %>
       <%= error_message(f, :slug) %>
     </div>
 
     <div class="field <%= error_class(f, :vanity_domain) %>">
-      <%= label f, :vanity_domain, "Vanity Domain" %>
-      <%= text_input f, :vanity_domain, placeholder: "http://changelog.fm" %>
+      <%= label(f, :vanity_domain, "Vanity Domain") %>
+      <%= text_input(f, :vanity_domain, placeholder: "http://changelog.fm") %>
       <%= error_message(f, :vanity_domain) %>
     </div>
 
     <div class="field <%= error_class(f, :twitter_handle) %>">
-      <%= label f, :twitter_handle, "On Twitter" %>
-      <%= text_input f, :twitter_handle, placeholder: "gracehopper" %>
+      <%= label(f, :twitter_handle, "On Twitter") %>
+      <%= text_input(f, :twitter_handle, placeholder: "gracehopper") %>
       <%= error_message(f, :twitter_handle) %>
     </div>
   </div>
 
+  <div class="two fields">
+    <div class="fourteen wide field">
+      <label for="cover">
+        Cover
+        <%= help_icon("Ideal size is 3000px by 3000px") %>
+      </label>
+      <%= error_message(f, :cover) %>
+      <%= file_input(f, :cover) %>
+    </div>
+
+    <div class="two wide field">
+      <img src="<%= PodcastView.cover_url(f.data, :small) %>" height=66>
+    </div>
+  </div>
+
   <div class="required field">
-    <%= label f, :hosts %>
+    <%= label(f, :hosts) %>
 
     <div class="ui middle aligned selection list js-hosts">
       <%= inputs_for f, :podcast_hosts, fn i -> %>
@@ -63,7 +78,7 @@
   </div>
 
   <div class="field">
-    <%= label f, :topics %>
+    <%= label(f, :topics) %>
 
     <div class="ui horizontal selection list js-topics">
       <%= inputs_for f, :podcast_topics, fn i -> %>
@@ -95,7 +110,7 @@
     <%= label(f, :schedule_note) do %>
       Schedule Note <%= help_icon("Markdown supported.") %>
     <% end %>
-    <%= text_input f, :schedule_note, placeholder: "New show every Friday!" %>
+    <%= text_input(f, :schedule_note, placeholder: "New show every Friday!") %>
     <%= error_message(f, :schedule_note) %>
   </div>
 
@@ -107,7 +122,7 @@
   </div>
 
   <div class="field <%= error_class(f, :description) %>">
-    <%= label f, :description %>
+    <%= label(f, :description) %>
     <%= textarea f, :description, placeholder: "Markdown enabled." %>
     <%= error_message(f, :description) %>
   </div>
@@ -121,20 +136,20 @@
   </div>
 
   <div class="field <%= error_class(f, :keywords) %>">
-    <%= label f, :keywords %>
-    <%= text_input f, :keywords, placeholder: "changelog, open source, software, development" %>
+    <%= label(f, :keywords) %>
+    <%= text_input(f, :keywords, placeholder: "changelog, open source, software, development") %>
     <%= error_message(f, :keywords) %>
   </div>
 
   <div class="field <%= error_class(f, :itunes_url) %>">
-    <%= label f, :itunes_url, "iTunes URL" %>
-    <%= text_input f, :itunes_url %>
+    <%= label(f, :itunes_url, "iTunes URL") %>
+    <%= text_input(f, :itunes_url) %>
     <%= error_message(f, :itunes_url) %>
   </div>
 
   <div class="field <%= error_class(f, :ping_url) %>">
-    <%= label f, :ping_url, "Ping URL" %>
-    <%= text_input f, :ping_url %>
+    <%= label(f, :ping_url, "Ping URL") %>
+    <%= text_input(f, :ping_url) %>
     <%= error_message(f, :ping_url) %>
   </div>
 

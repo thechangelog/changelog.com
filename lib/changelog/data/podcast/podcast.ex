@@ -1,7 +1,8 @@
 defmodule Changelog.Podcast do
   use Changelog.Data
 
-  alias Changelog.{Episode, EpisodeStat, NewsItem, PodcastTopic, PodcastHost, Regexp}
+  alias Changelog.{Episode, EpisodeStat, Files, NewsItem, PodcastTopic,
+                   PodcastHost, Regexp}
 
   defenum Status, draft: 0, soon: 1, published: 2, retired: 3
 
@@ -20,6 +21,8 @@ defmodule Changelog.Podcast do
     field :download_count, :float
     field :reach_count, :integer
     field :recorded_live, :boolean, default: false
+
+    field :cover, Files.Cover.Type
 
     has_many :episodes, Episode, on_delete: :delete_all
     has_many :podcast_topics, PodcastTopic, on_delete: :delete_all
@@ -43,9 +46,11 @@ defmodule Changelog.Podcast do
   }
   end
 
-  def admin_changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live))
+  def file_changeset(podcast, attrs \\ %{}), do: cast_attachments(podcast, attrs, ~w(cover))
+
+  def insert_changeset(podcast, attrs \\ %{}) do
+    podcast
+    |> cast(attrs, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live))
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)
@@ -54,6 +59,12 @@ defmodule Changelog.Podcast do
     |> unique_constraint(:slug)
     |> cast_assoc(:podcast_topics)
     |> cast_assoc(:podcast_hosts)
+  end
+
+  def update_changeset(podcast, attrs \\ %{}) do
+    podcast
+    |> insert_changeset(attrs)
+    |> file_changeset(attrs)
   end
 
   def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published])

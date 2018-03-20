@@ -3,6 +3,22 @@ defmodule ChangelogWeb.PodcastView do
 
   alias Changelog.Podcast
   alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, TimeView, SharedView}
+  alias Changelog.Files.Cover
+
+  def cover_path(podcast, version) do
+    {podcast.cover, podcast}
+    |> Cover.url(version)
+    |> String.replace_leading("/priv", "")
+  end
+
+  def cover_url(podcast), do: cover_url(podcast, :original)
+  def cover_url(podcast, version) do
+    if (podcast.cover) do
+      static_url(Endpoint, cover_path(podcast, version))
+    else
+      "/images/defaults/black.png"
+    end
+  end
 
   def cover_art_path(podcast, extension \\ "svg") do
     "/images/podcasts/#{podcast.slug}-cover-art.#{extension}"
