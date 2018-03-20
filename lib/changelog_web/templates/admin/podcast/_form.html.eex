@@ -1,5 +1,5 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
-  <div class="two fields">
+  <div class="three fields">
     <div class="field required <%= error_class(f, :name) %>">
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "The Changelog") %>
@@ -9,6 +9,11 @@
     <div class="field required <%= error_class(f, :status) %>">
       <%= label(f, :status) %>
       <%= select(f, :status, status_options(), class: "ui fluid dropdown") %>
+    </div>
+
+    <div class="field required <%= error_class(f, :partner) %>">
+      <%= label(f, :partner) %>
+      <%= select(f, :partner, yes_no_options(), class: "ui fluid dropdown") %>
     </div>
   </div>
 

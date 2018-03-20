@@ -89,4 +89,8 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   end
 
   def ts(ts), do: TimeView.ts(ts)
+
+  def yes_no_options do
+    [{"Yes", true}, {"No", false}]
+  end
 end
