@@ -2,7 +2,7 @@
   <header class="show-header">
     <div class="show-header-art">
       <h2 class="visually_hidden"><%= @podcast.name %></h2>
-
+      <img src="<%= cover_path(@podcast, :medium) %>" width="220" height="220" alt="">
       <%= if @podcast.status != :published do %>
         <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
       <% end %>

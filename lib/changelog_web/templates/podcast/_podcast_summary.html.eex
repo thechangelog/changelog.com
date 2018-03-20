@@ -1,10 +1,10 @@
-<article class="show_list-shows-item show_list-shows-item--<%= @podcast.slug %>">
+<article class="show_list-shows-item">
   <div class="show_list-shows-item-wrap">
     <a href="<%= podcast_path(@conn, :show, @podcast.slug) %>" class="show_list-shows-item-art">
-
-    <%= if @podcast.status == :soon do %>
-      <div class="show_list-shows-item-art-status show_list-shows-item-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
-    <% end %>
+      <img src="<%= cover_path(@podcast, :medium) %>" width="220" height="220" alt="">
+      <%= if @podcast.status == :soon do %>
+        <div class="show_list-shows-item-art-status show_list-shows-item-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
+      <% end %>
     </a>
     <div class="show_list-shows-item-content">
       <div class="show_list-shows-item-content-heading">
