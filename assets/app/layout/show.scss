@@ -16,28 +16,24 @@
 
     // Artwork
     &-art {
-      $size: 160px;
-      background-size: $size $size;
-      height: $size;
       margin: 0 auto $base-spacing;
       position: relative;
-      width: $size;
+
+      img {
+        $size: 160px;
+        height: $size;
+        margin: 0 auto;
+        width: $size;
+
+        @include breakpoint(mobile) {
+          $size: 220px;
+          height: $size;
+          width: $size;
+        }
+      }
 
       &-status {
         @include status_label();
-      }
-
-      @include breakpoint(mobile) {
-        $size: 220px;
-        background-size: $size $size;
-        height: $size;
-        width: $size;
-      }
-
-      @each $podcast in $podcasts {
-        .show--#{$podcast} & {
-          background-image: url('/images/podcasts/#{$podcast}-cover-art.svg');
-        }
       }
     }
 

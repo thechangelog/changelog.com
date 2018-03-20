@@ -59,16 +59,18 @@
 
       &-art {
         $border-color: #ffffff;
-        background-size: 100%;
-        background-color: $black;
-        border: 1px solid rgba($border-color, 0.1);
         display: block;
         margin-bottom: 10px;
-        width: 100%;
         height: 0;
         position: relative;
         padding-bottom: 100%;
         transition: all 0.2s $base-easing;
+
+        img {
+          border: 1px solid rgba($border-color, 0.1);
+          height: auto;
+          width: 100%;
+        }
 
         &:hover {
           border-color: rgba($border-color, 0.2);
