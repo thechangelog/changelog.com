@@ -61,7 +61,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   def load_from_form(form, module, relationship) do
     form_data = Map.get(form.data, relationship)
     foreign_key = "#{relationship}_id"
-    record_id = Map.get(form.data, String.to_atom(foreign_key)) || form.params[foreign_key]
+    record_id = Map.get(form.data, String.to_existing_atom(foreign_key)) || form.params[foreign_key]
 
     cond do
       is_loaded(form_data) -> form_data

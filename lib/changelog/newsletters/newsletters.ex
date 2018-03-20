@@ -5,7 +5,7 @@ defmodule Changelog.Newsletters do
   alias Craisin.List
 
   def get_by_slug(slug) do
-    apply(__MODULE__, String.to_atom(slug), [])
+    apply(__MODULE__, String.to_existing_atom(slug), [])
   end
 
   def community do
