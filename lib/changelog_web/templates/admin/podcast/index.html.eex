@@ -13,7 +13,22 @@
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@podcasts) do %>
-  <%= render "_table.html", conn: @conn, podcasts: @podcasts %>
+<%= if Enum.any?(@ours) do %>
+  <h2 class="ui header">Our podcasts</h2>
+  <%= render("_table.html", conn: @conn, podcasts: @ours) %>
+<% end %>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@partners) do %>
+  <h2 class="ui header">Partner podcasts</h2>
+  <%= render("_table.html", conn: @conn, podcasts: @partners) %>
+<% end %>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@retired) do %>
+  <h2 class="ui header">Retired podcasts</h2>
+  <%= render("_table.html", conn: @conn, podcasts: @retired) %>
 <% end %>
 </div>
