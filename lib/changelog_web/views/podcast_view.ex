@@ -19,7 +19,13 @@ defmodule ChangelogWeb.PodcastView do
       |> String.split("?")
       |> List.first
 
-    Application.app_dir(:changelog, "priv#{path}")
+    arc_dir = Application.get_env(:arc, :storage_dir)
+
+    if String.starts_with?(path, arc_dir) do
+      path
+    else
+      Application.app_dir(:changelog, "priv#{path}")
+    end
   end
 
   def cover_url(podcast), do: cover_url(podcast, :original)
