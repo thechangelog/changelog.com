@@ -107,40 +107,48 @@ export default class Time {
     return `${this.amPmStyle()} – ${this.dayAndDateStyle()}`;
   }
 
-  relativeStyle() {
+  relativeLongStyle() {
+    return this._relativeStyle(true);
+  }
+
+  relativeShortStyle() {
+    return this._relativeStyle(false);
+  }
+
+  _relativeStyle(long) {
     let minutes = Math.ceil(Math.abs(new Date() - this.date) / 1000 / 60);
 
     if (minutes < 60) {
-      return `${this._pluralize(minutes, "minute")} ago`;
+      return long ? `${this._pluralize(minutes, "minute")} ago` : `${minutes}m`;
     }
 
     let hours = Math.round(minutes / 60);
 
     if (hours < 24) {
-      return `${this._pluralize(hours, "hour")} ago`;
+      return long ? `${this._pluralize(hours, "hour")} ago` : `${hours}h`;
     }
 
     let days = Math.round(hours / 24);
 
     if (days < 7) {
-      return `${this._pluralize(days, "day")} ago`;
+      return long ? `${this._pluralize(days, "day")} ago` : `${days}d`;
     }
 
     let weeks = Math.round(days / 7);
 
     if (weeks < 4) {
-      return `${this._pluralize(weeks, "week")} ago`;
+      return long ? `${this._pluralize(weeks, "week")} ago` : `${weeks}w`;
     }
 
     let months = Math.round(weeks / 4);
 
     if (months < 12) {
-      return `${this._pluralize(months, "month")} ago`;
+      return long ? `${this._pluralize(months, "month")} ago` : `${months}m`;
     }
 
     let years = Math.round(months / 12);
 
-    return `${this._pluralize(years, "year")} ago`;
+    return long ? `${this._pluralize(years, "year")} ago` : `${years}y`;
   }
 
   _pluralize(number, string) {

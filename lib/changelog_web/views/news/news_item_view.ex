@@ -53,7 +53,7 @@ defmodule ChangelogWeb.NewsItemView do
     if item.object_id, do: [news: true], else: []
   end
 
-  def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_summary.html", Map.merge(assigns, %{item: item, style: "relative"}))
+  def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_summary.html", Map.merge(assigns, %{item: item, style: "relativeShort"}))
   def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
 
   def render_item_source_image(conn, item = %{type: :audio, object: episode}) when is_map(episode) do

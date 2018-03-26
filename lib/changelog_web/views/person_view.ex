@@ -46,12 +46,9 @@ defmodule ChangelogWeb.PersonView do
 
   def external_url(person) do
     cond do
-      person.website ->
-        person.website
-      person.twitter_handle ->
-        twitter_url(person.twitter_handle)
-      person.github_handle ->
-        github_url(person.github_handle)
+      person.website -> person.website
+      person.twitter_handle -> twitter_url(person.twitter_handle)
+      person.github_handle -> github_url(person.github_handle)
       true -> "#"
     end
   end
