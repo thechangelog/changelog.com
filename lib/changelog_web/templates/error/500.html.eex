@@ -5,14 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Server Error | Changelog</title>
-
     <meta name="copyright" content="Changelog Media LLC">
-
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
     <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
-  <%= if Mix.env == :prod do %>
     <%= render(ChangelogWeb.LayoutView, "_head_scripts.html", assigns) %>
-  <% end %>
   </head>
   <body class="error"><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
