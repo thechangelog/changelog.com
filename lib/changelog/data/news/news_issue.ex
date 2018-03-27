@@ -61,12 +61,12 @@ defmodule Changelog.NewsIssue do
   def preload_items(query = %Ecto.Query{}) do
     query
     |> Ecto.Query.preload(news_issue_items: ^NewsIssueItem.by_position)
-    |> Ecto.Query.preload(items: [:author, :logger, :source, :topics])
+    |> Ecto.Query.preload(items: [:author, :logger, :source, :submitter, :topics])
   end
   def preload_items(issue) do
     issue
     |> Repo.preload(news_issue_items: {NewsIssueItem.by_position, :item})
-    |> Repo.preload(items: [:author, :logger, :source, :topics])
+    |> Repo.preload(items: [:author, :logger, :source, :submitter, :topics])
   end
 
   def ad_count(issue) do

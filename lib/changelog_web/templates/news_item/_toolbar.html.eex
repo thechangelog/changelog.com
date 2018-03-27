@@ -3,9 +3,9 @@
 
   <div class="news_item-toolbar-item news_item-toolbar-meta">
     <span class="news_item-toolbar-meta-item">
-      logged by <strong><%= link "@#{@item.logger.handle}", to: twitter_url(@item.logger), rel: "external" %></strong>
+      logged by <strong><%= link(PersonView.handle(@item.logger), to: twitter_url(@item.logger), rel: "external") %></strong>
     <%= if @item.submitter && @item.submitter != @item.author do %>
-      via <strong><%= link "@#{@item.submitter.handle}", to: PersonView.external_url(@item.submitter), rel: "external" %></strong>
+      via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter), rel: "external") %></strong>
     <% end %>
     </span>
     <span class="news_item-toolbar-meta-item">

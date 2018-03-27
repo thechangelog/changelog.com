@@ -59,6 +59,10 @@ defmodule ChangelogWeb.PersonView do
     |> List.first
   end
 
+  def handle(person) do
+    "@" <> person.handle
+  end
+
   def is_profile_complete(person) do
     !!(person.bio && person.website && person.location)
   end

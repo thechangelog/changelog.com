@@ -1,13 +1,16 @@
 <p class="news_item-meta news_item-meta--<%= @item.type %>">
-  <%= if @item.type == :audio do %>
-    <%= link to: @item.url do %>
-      <img class="news_item-meta-play" width="32" alt="Play" src="/images/email/toolbar-play.png">
-    <% end %>
+<%= if @item.type == :audio do %>
+  <%= link to: @item.url do %>
+    <img class="news_item-meta-play" width="32" alt="Play" src="/images/email/toolbar-play.png">
   <% end %>
+<% end %>
   <span class="news_item-meta-text">
-    logged by <%= "@#{@item.logger.handle}" %>
-    <%= if Enum.any?(@item.topics) do %>
-      • <span class="news_item-toolbar-meta-item"><%= NewsItemView.topic_link_list(@conn, @item) |> raw %></span>
-    <% end %>
+    logged by <strong><%= link(PersonView.handle(@item.logger), to: twitter_url(@item.logger)) %></strong>
+  <%= if @item.submitter && @item.submitter != @item.author do %>
+    via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter)) %></strong>
+  <% end %>
+  <%= if Enum.any?(@item.topics) do %>
+    • <span class="news_item-toolbar-meta-item"><%= NewsItemView.topic_link_list(@conn, @item) |> raw %></span>
+  <% end %>
   </span>
 </p>
