@@ -1,7 +1,7 @@
 <%= form_tag person_path(@conn, :subscribe), class: "signup-form" do %>
   <label class="visually_hidden">you@example.com</label>
   <input name="list" type="hidden" value="<%= get_assigns_or_param(@conn, "list", "weekly") %>">
-  <input name="email" class="signup-form-input" placeholder="you@example.com" required autofocus/>
+  <input name="email" class="signup-form-input" placeholder="you@example.com" required/>
   <div class="signup-form-submit">
     <input class="signup-form-submit-button" type="submit" value="Subscribe">
   </div>
