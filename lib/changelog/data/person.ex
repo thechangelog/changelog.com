@@ -73,23 +73,30 @@ defmodule Changelog.Person do
   end
   def get_by_ueberauth(_), do: nil
 
-  def auth_changeset(struct, attrs \\ %{}), do: cast(struct, attrs, ~w(auth_token auth_token_expires_at))
+  def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at))
 
-  def admin_changeset(struct, params \\ %{}) do
+  def admin_insert_changeset(person, attrs \\ %{}) do
     allowed = ~w(name email handle github_handle twitter_handle bio website location admin)
-    changeset_with_allowed_params(struct, params, allowed)
+    changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
-  def changeset(struct, params \\ %{}) do
+  def admin_update_changeset(person, attrs \\ %{}) do
+    person
+    |> admin_insert_changeset(attrs)
+    |> file_changeset(attrs)
+  end
+
+  def file_changeset(person, attrs \\ %{}), do: cast_attachments(person, attrs, ~w(avatar), allow_urls: true)
+
+  def changeset(person, attrs \\ %{}) do
     allowed = ~w(name email handle github_handle twitter_handle bio website location)
-    changeset_with_allowed_params(struct, params, allowed)
+    changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
-  defp changeset_with_allowed_params(struct, params, allowed) do
-    struct
-    |> cast(params, allowed)
+  defp changeset_with_allowed_attrs(person, attrs, allowed) do
+    person
+    |> cast(attrs, allowed)
     |> cast_embed(:settings)
-    |> cast_attachments(params, ~w(avatar), allow_urls: true)
     |> validate_required([:name, :email, :handle])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)

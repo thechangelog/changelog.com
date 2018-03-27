@@ -16,15 +16,17 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   def new(conn, _params) do
-    changeset = Person.admin_changeset(%Person{})
-    render conn, "new.html", changeset: changeset
+    changeset = Person.admin_insert_changeset(%Person{})
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"person" => person_params}) do
-    changeset = Person.admin_changeset(%Person{}, person_params)
+    changeset = Person.admin_insert_changeset(%Person{}, person_params)
 
     case Repo.insert(changeset) do
       {:ok, person} ->
+        Repo.update(Person.file_changeset(person, person_params))
+
         community = Newsletters.community()
         Subscriber.subscribe(community.list_id, person, handle: person.handle)
         handle_welcome_email(person, params)
@@ -35,19 +37,19 @@ defmodule ChangelogWeb.Admin.PersonController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("new.html", changeset: changeset)
+        |> render(:new, changeset: changeset)
     end
   end
 
   def edit(conn, %{"id" => id}) do
     person = Repo.get!(Person, id)
-    changeset = Person.admin_changeset(person)
-    render(conn, "edit.html", person: person, changeset: changeset)
+    changeset = Person.admin_update_changeset(person)
+    render(conn, :edit, person: person, changeset: changeset)
   end
 
   def update(conn, params = %{"id" => id, "person" => person_params}) do
     person = Repo.get!(Person, id)
-    changeset = Person.admin_changeset(person, person_params)
+    changeset = Person.admin_update_changeset(person, person_params)
 
     case Repo.update(changeset) do
       {:ok, _person} ->
@@ -57,7 +59,7 @@ defmodule ChangelogWeb.Admin.PersonController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", person: person, changeset: changeset)
+        |> render(:edit, person: person, changeset: changeset)
     end
   end
 
