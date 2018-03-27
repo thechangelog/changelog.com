@@ -26,7 +26,7 @@ defmodule ChangelogWeb.PersonController do
     else
       fake_name = Faker.name
       fake_handle = Faker.handle(fake_name)
-      changeset = Person.changeset(%Person{name: fake_name, handle: fake_handle}, params)
+      changeset = Person.insert_changeset(%Person{name: fake_name, handle: fake_handle}, params)
 
       case Repo.insert(changeset) do
         {:ok, person} ->
@@ -63,14 +63,14 @@ defmodule ChangelogWeb.PersonController do
       github_handle: Map.get(params, "github_handle"),
       twitter_handle: Map.get(params, "twitter_handle")}
 
-    render(conn, :join, changeset: Person.changeset(person), person: nil)
+    render(conn, :join, changeset: Person.insert_changeset(person), person: nil)
   end
 
   def join(conn = %{method: "POST"}, %{"person" => person_params = %{"email" => email}}) do
     if person = Repo.one(from p in Person, where: p.email == ^email) do
       welcome_community(conn, person)
     else
-      changeset = Person.changeset(%Person{}, person_params)
+      changeset = Person.insert_changeset(%Person{}, person_params)
 
       case Repo.insert(changeset) do
         {:ok, person} ->

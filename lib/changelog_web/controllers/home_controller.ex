@@ -5,21 +5,22 @@ defmodule ChangelogWeb.HomeController do
   alias Craisin.Subscriber
 
   plug RequireUser, "except from email links" when action not in [:opt_out]
+  plug :scrub_params, "person" when action in [:update]
 
   def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil)
   def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id)
   def show(conn, _params), do: render(conn, :show, subscribed: nil, unsubscribed: nil)
 
   def account(conn = %{assigns: %{current_user: me}}, _params) do
-    render(conn, :account, changeset: Person.changeset(me))
+    render(conn, :account, changeset: Person.update_changeset(me))
   end
 
   def profile(conn = %{assigns: %{current_user: me}}, _params) do
-    render(conn, :profile, changeset: Person.changeset(me))
+    render(conn, :profile, changeset: Person.update_changeset(me))
   end
 
   def update(conn = %{assigns: %{current_user: me}}, %{"person" => person_params, "from" => from}) do
-    changeset = Person.changeset(me, person_params)
+    changeset = Person.update_changeset(me, person_params)
 
     case Repo.update(changeset) do
       {:ok, _person} ->
@@ -68,7 +69,7 @@ defmodule ChangelogWeb.HomeController do
   def opt_out(conn, %{"token" => token, "notification" => notification}) do
     if person = Person.get_by_encoded_id(token) do
       person
-      |> Person.changeset(%{settings: %{notification => false}})
+      |> Person.update_changeset(%{settings: %{notification => false}})
       |> Repo.update()
     end
 

@@ -6,13 +6,13 @@ defmodule Changelog.PersonTest do
   @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
   @invalid_attrs %{}
 
-  test "changeset with valid attributes" do
-    changeset = Person.changeset(%Person{}, @valid_attrs)
+  test "insert_changeset with valid attributes" do
+    changeset = Person.insert_changeset(%Person{}, @valid_attrs)
     assert changeset.valid?
   end
 
-  test "changeset with invalid attributes" do
-    changeset = Person.changeset(%Person{}, @invalid_attrs)
+  test "insert_changeset with invalid attributes" do
+    changeset = Person.insert_changeset(%Person{}, @invalid_attrs)
     refute changeset.valid?
   end
 

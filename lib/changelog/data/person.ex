@@ -88,9 +88,15 @@ defmodule Changelog.Person do
 
   def file_changeset(person, attrs \\ %{}), do: cast_attachments(person, attrs, ~w(avatar), allow_urls: true)
 
-  def changeset(person, attrs \\ %{}) do
+  def insert_changeset(person, attrs \\ %{}) do
     allowed = ~w(name email handle github_handle twitter_handle bio website location)
     changeset_with_allowed_attrs(person, attrs, allowed)
+  end
+
+  def update_changeset(person, attrs \\ %{}) do
+    person
+    |> insert_changeset(attrs)
+    |> file_changeset(attrs)
   end
 
   defp changeset_with_allowed_attrs(person, attrs, allowed) do
