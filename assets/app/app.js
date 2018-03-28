@@ -1,7 +1,7 @@
 import "phoenix_html";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
-import "ext/serialize";
+import "ext/u.toFormData";
 import autosize from "autosize";
 import Cookies from "cookies-js";
 import OnsitePlayer from "modules/onsitePlayer";
@@ -138,14 +138,13 @@ u(document).on("submit", "form", function(event) {
   const form = u(this);
   const action = form.attr("action");
   const method = form.attr("method");
-  const data = form.serialize();
   const referrer = location.href;
 
   if (method == "get") {
-    return Turbolinks.visit(`${action}?${data}`);
+    return Turbolinks.visit(`${action}?${form.serialize()}`);
   }
 
-  const options = {method: method, body: data, headers: {"Turbolinks-Referrer": referrer}};
+  const options = {method: method, body: form.toFormData(), headers: {"Turbolinks-Referrer": referrer}};
   const andThen = function(err, resp, req) {
     if (req.getResponseHeader("content-type").match(/javascript/)) {
       eval(resp);

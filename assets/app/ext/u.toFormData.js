@@ -1,7 +1,7 @@
 import { u } from "umbrellajs";
 
-// Override umbrella's `serialize` to support file uploads
-u.prototype.serialize = function() {
+// Just like umbrella's `serialize`, but with file upload support
+u.prototype.toFormData = function() {
   let data = new FormData();
 
   Array.from(this.first().elements).forEach((el) => {
