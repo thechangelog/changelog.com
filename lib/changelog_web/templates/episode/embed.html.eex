@@ -52,10 +52,8 @@
       <nav class="episode-player_nav js-nav">
         <ul class="episode-player_nav_list">
           <li class="episode-player_nav_list_item episode-player_nav_list_item--show">
-            <%= link to: podcast_url(@conn, :show, @podcast.slug),
-              title: "#{@podcast.name} on Changelog.com",
-              alt: "#{@podcast.name} Podcast" do %>
-              <img src="<%= static_url(@conn, "/images/podcasts/#{@podcast.slug}-cover-art.svg") %>" alt="<%= @podcast.name %> Podcast"/ width="75" height="75">
+            <%= link to: podcast_url(@conn, :show, @podcast.slug), title: "#{@podcast.name} on Changelog.com", alt: "#{@podcast.name} Podcast" do %>
+              <img src="<%= PodcastView.cover_path(@podcast, :small) %>" alt="<%= @podcast.name %>" width="75" height="75">
             <% end %>
           </li>
           <li class="episode-player_nav_list_item">

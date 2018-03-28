@@ -96,6 +96,8 @@
       transform: rotate(360deg) translate3d(0, 0, 0);
     }
 
+    background-image: url(/images/podcasts/podcast-abstract-art.svg);
+
     @each $podcast in $podcasts {
       #{$parent}--#{$podcast} & {
         background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg);

@@ -79,12 +79,6 @@
         &-status {
           @include status_label();
         }
-
-        @each $podcast in $podcasts {
-          .show_list-shows-item--#{$podcast} & {
-            background-image: url('/images/podcasts/#{$podcast}-cover-art.svg');
-          }
-        }
       }
 
       &-content {

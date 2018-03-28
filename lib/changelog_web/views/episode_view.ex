@@ -109,7 +109,7 @@ defmodule ChangelogWeb.EpisodeView do
       title: episode.title,
       number: number(episode),
       duration: episode.duration,
-      art_url: static_url(Endpoint, "/images/podcasts/#{podcast.slug}-cover-art.svg"),
+      art_url: PodcastView.cover_url(podcast, :small),
       audio_url: audio_url(episode),
       share_url: "#{PodcastView.vanity_domain_with_fallback_url(podcast)}/#{episode.slug}"
     }
