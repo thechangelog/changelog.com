@@ -22,6 +22,15 @@
       </div>
     </div>
 
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :avatar) %>">
+        <label>Avatar</label>
+        <%= file_input(f, :avatar) %>
+        <%= error_message(f, :avatar) %>
+        <p class="form-element-note">Ideally 600px by 600px. We'll crop it square.</p>
+      </div>
+    </div>
+
     <div class="form-element_wrap form-element_wrap--2">
       <div class="form-element <%= error_class(f, :location) %>">
         <label>Location</label>

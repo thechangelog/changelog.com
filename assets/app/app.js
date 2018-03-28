@@ -1,6 +1,7 @@
 import "phoenix_html";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
+import "ext/serialize";
 import autosize from "autosize";
 import Cookies from "cookies-js";
 import OnsitePlayer from "modules/onsitePlayer";
