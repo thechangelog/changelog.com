@@ -7,8 +7,8 @@ defmodule Changelog.Buffer.ContentTest do
   alias ChangelogWeb.{Endpoint, NewsItemView, Router}
 
   describe "episode_link" do
-    test "defaults to empty string" do
-      assert Content.episode_link(nil) == ""
+    test "defaults to nil" do
+      assert is_nil(Content.episode_link(nil))
     end
 
     test "returns the item's url" do
@@ -60,12 +60,16 @@ defmodule Changelog.Buffer.ContentTest do
   end
 
   describe "news_item_link" do
+    test "defaults to nil" do
+      assert is_nil(Content.news_item_link(nil))
+    end
+
     test "returns item url when story is less than 20 words" do
       item = build(:news_item, story: "This is too short")
       assert Content.news_item_link(item) == item.url
     end
 
-    test "returns news item url when story is 20 words or more" do
+    test "returns news item permalink when story is 20 words or more" do
       item = insert(:news_item, story: "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty")
       assert Content.news_item_link(item) == Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
     end
@@ -112,5 +116,26 @@ defmodule Changelog.Buffer.ContentTest do
       item = insert(:news_item, author: author)
       refute Content.news_item_text(item) =~ " by "
     end
+  end
+
+  describe "post_link" do
+    test "defaults to nil" do
+      assert is_nil(Content.post_link(nil))
+    end
+
+    test "returns the item's url" do
+      item = build(:news_item)
+      assert Content.post_link(item) == item.url
+    end
+  end
+
+  describe "post_text" do
+    # test "calls news_item_text" do
+    #   item = build(:news_item)
+    #   with_mock(Content, [news_item_text: fn() -> "text" end]) do
+    #     Content.post_text(item)
+    #     assert called(Content.news_item_text(item))
+    #   end
+    # end
   end
 end

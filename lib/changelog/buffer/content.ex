@@ -2,6 +2,9 @@ defmodule Changelog.Buffer.Content do
   alias Changelog.{Episode, NewsItem}
   alias ChangelogWeb.{Endpoint, Helpers, NewsItemView, Router}
 
+  def episode_link(nil), do: nil
+  def episode_link(item), do: item.url
+
   def episode_text(nil), do: ""
   def episode_text(item) do
     item =
@@ -35,9 +38,6 @@ defmodule Changelog.Buffer.Content do
     end
   end
 
-  def episode_link(nil), do: ""
-  def episode_link(item), do: item.url
-
   def news_item_image(nil), do: nil
   def news_item_image(%{image: nil}), do: nil
   def news_item_image(item), do: NewsItemView.image_url(item, :original)
@@ -59,6 +59,12 @@ defmodule Changelog.Buffer.Content do
     |> Enum.reject(&(&1 == ""))
     |> Enum.join("\n\n")
   end
+
+  def post_link(nil), do: nil
+  def post_link(item), do: item.url
+
+  def post_text(nil), do: ""
+  def post_text(item), do: news_item_text(item)
 
   defp news_item_headline(item = %{type: :video}), do: "#{video_emoji()} #{item.headline}"
   defp news_item_headline(item), do: item.headline

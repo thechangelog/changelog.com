@@ -17,7 +17,6 @@ defmodule Changelog.Buffer.BufferTest do
         Buffer.queue(item)
         assert called(Buffer.Client.create(:_, "text", [link: "url1"]))
       end
-
     end
 
     test "is a no-op when sent other audio news item" do
@@ -26,6 +25,19 @@ defmodule Changelog.Buffer.BufferTest do
       with_mock Buffer.Client, [create: fn(_, _, _) -> true end] do
         Buffer.queue(item)
         refute called(Buffer.Client.create())
+      end
+    end
+
+    test "calls post functions and Client.create when news item with post object" do
+      item = %NewsItem{type: :link, object_id: "posts:this-is-one"}
+
+      with_mocks([
+        {Buffer.Content, [], [post_text: fn(_) -> "text" end]},
+        {Buffer.Content, [], [post_link: fn(_) -> "url1" end]},
+        {Buffer.Client, [], [create: fn(_, _, _) -> true end]}
+      ]) do
+        Buffer.queue(item)
+        assert called(Buffer.Client.create(:_, "text", [link: "url1"]))
       end
     end
 
