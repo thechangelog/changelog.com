@@ -15,10 +15,6 @@
       <span class="news_item-toolbar-meta-item"><%= topic_link_list(@conn, @item) |> raw %> </span>
     <% end %>
 
-    <%= if @current_user.admin do %>
-      <span class="news_item-toolbar-meta-item">
-        <%= admin_edit_link(@conn, @current_user, @item) %>
-      </span>
-    <% end %>
+    <%= admin_edit_link(@conn, @current_user, @item) %>
   </div>
 </div>
