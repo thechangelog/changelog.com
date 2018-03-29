@@ -12,6 +12,7 @@
         <li><a href="https://github.com/thechangelog"><img src='<%= static_url(@conn, "/images/icons/icon-github-black.svg") %>' title="Github"></a></li>
         <li><a href="https://www.youtube.com/c/thechangelog"><img src='<%= static_url(@conn, "/images/icons/icon-youtube-black.svg") %>' title="YouTube"></a></li>
         <li><a href="https://www.instagram.com/changelog_"><img src='<%= static_url(@conn, "/images/icons/icon-instagram-black.svg") %>' title="Instagram"></a></li>
+        <li><a href="https://www.twitch.tv/changelog_"><img src='<%= static_url(@conn, "/images/icons/icon-twitch-black.svg") %>' title="Twitch"></a></li>
       </ul>
     </div>
   </nav>
