@@ -12,8 +12,13 @@
       <%= link(TimeView.ts(@item.published_at, @style), to: permalink_path(@conn, @item), data: permalink_data(@item)) %>
     </span>
     <%= if Enum.any?(@item.topics) do %>
-      <span class="news_item-toolbar-meta-item"><%= topic_link_list(@conn, @item) |> raw %></span>
+      <span class="news_item-toolbar-meta-item"><%= topic_link_list(@conn, @item) |> raw %> </span>
     <% end %>
-    <%= admin_edit_link(@conn, @current_user, @item) %>
+
+    <%= if @current_user.admin do %>
+      <span class="news_item-toolbar-meta-item">
+        <%= admin_edit_link(@conn, @current_user, @item) %>
+      </span>
+    <% end %>
   </div>
 </div>
