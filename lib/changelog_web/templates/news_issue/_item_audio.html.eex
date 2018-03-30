@@ -1,8 +1,8 @@
 <div class="news_item">
   <%= if @item.object do %>
     <p class="news_item-source">
-      <%= NewsItemView.render_item_source_image(@conn, @item) %>
-      <%= NewsItemView.render_item_source_name(@conn, @item) %>
+      <%= NewsItemView.render_source_image(@conn, @item) %>
+      <%= NewsItemView.render_source_name(@conn, @item) %>
     </p>
   <% end %>
   <h2 class="news_item-title"><%= link(@item.headline, to: @item.url) %></h2>

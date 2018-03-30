@@ -1,10 +1,10 @@
 <header class="news_item-header">
   <p class="news_item-source">
-    <%= render_item_source_image(@conn, @item) %>
-    <%= render_item_source_name(@conn, @item) %>
+    <%= render_source_image(@conn, @item) %>
+    <%= render_source_name(@conn, @item) %>
     <%= if controller_action_combo(@conn) == "news_item-index" && @item.pinned do %>
     &nbsp;–&nbsp;Pinned
     <% end %>
   </p>
-  <h2 class="news_item-title"><%= render_item_title(@conn, @item) %></h2>
+  <h2 class="news_item-title"><%= render_title(@conn, @item) %></h2>
 </header>

@@ -58,10 +58,10 @@ defmodule ChangelogWeb.NewsItemView do
   def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_summary.html", Map.merge(assigns, %{item: item, style: "relativeShort"}))
   def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
 
-  def render_item_source_image(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+  def render_source_image(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("source/_image_episode.html", conn: conn, item: item, episode: episode)
   end
-  def render_item_source_image(conn, item) do
+  def render_source_image(conn, item) do
     cond do
       item.author -> render("source/_image_author.html", conn: conn, item: item, author: item.author)
       item.source && item.source.icon -> render("source/_image_source.html", conn: conn, item: item, source: item.source)
@@ -70,11 +70,11 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  # same as `render_item_source_image` except the cascade is re-ordered
-  def render_item_source_name(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+  # same as `render_source_image` except the cascade is re-ordered
+  def render_source_name(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("source/_name_episode.html", conn: conn, item: item, episode: episode)
   end
-  def render_item_source_name(conn, item) do
+  def render_source_name(conn, item) do
     cond do
       item.source && item.source.icon -> render("source/_name_source.html", conn: conn, item: item, source: item.source)
       item.author -> render("source/_name_author.html", conn: conn, item: item, author: item.author)
@@ -82,7 +82,7 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def render_item_title(conn, item) do
+  def render_title(conn, item) do
     if item.object_id do
       render("title/_internal.html", conn: conn, item: item)
     else
@@ -90,18 +90,18 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def render_item_toolbar_button(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+  def render_toolbar_button(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("toolbar/_button_episode.html", conn: conn, item: item, episode: episode)
   end
-  def render_item_toolbar_button(conn, item = %{type: :video}) do
+  def render_toolbar_button(conn, item = %{type: :video}) do
     if id = UrlKit.get_youtube_id(item.url) do
       render("toolbar/_button_video.html", conn: conn, item: item, id: id)
     end
   end
-  def render_item_toolbar_button(conn, item = %{image: image}) when not is_nil(image) do
+  def render_toolbar_button(conn, item = %{image: image}) when not is_nil(image) do
     render("toolbar/_button_image.html", conn: conn, item: item)
   end
-  def render_item_toolbar_button(_conn, _item), do: nil
+  def render_toolbar_button(_conn, _item), do: nil
 
   def render_youtube_embed(nil), do: nil
   def render_youtube_embed(id) do

@@ -4,6 +4,14 @@ defmodule ChangelogWeb.NewsAdView do
   alias Changelog.{Files, Hashid}
   alias ChangelogWeb.{Endpoint, SponsorView}
 
+  def admin_edit_link(conn, user, ad) do
+    if user && user.admin do
+      content_tag(:span, class: "news_item-toolbar-meta-item") do
+        link("[Edit]", to: admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: current_path(conn)), data: [turbolinks: false])
+      end
+    end
+  end
+
   def hashid(ad), do: Hashid.encode(ad.id)
 
   def image_link(ad, version \\ :large) do
@@ -23,6 +31,11 @@ defmodule ChangelogWeb.NewsAdView do
   end
 
   def image_url(ad, version), do: static_url(Endpoint, image_path(ad, version))
+
+  def render_toolbar_button(conn, ad = %{image: image}) when not is_nil(image) do
+    render("toolbar/_button_image.html", conn: conn, ad: ad)
+  end
+  def render_toolbar_button(_conn, _ad), do: nil
 
   def slug(ad) do
     ad.headline

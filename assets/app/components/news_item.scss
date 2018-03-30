@@ -217,7 +217,7 @@
       height: 33px;
       width: 40px;
       text-indent: -9999px;
-      .page-news_item-show & { display: none; }
+      .page-news_item-show &, .page-news_ad-show & { display: none; }
     }
 
     &-play_button {

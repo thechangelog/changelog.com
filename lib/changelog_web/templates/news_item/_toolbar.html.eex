@@ -1,5 +1,5 @@
 <div class="news_item-toolbar">
-  <%= render_item_toolbar_button(@conn, @item) %>
+  <%= render_toolbar_button(@conn, @item) %>
 
   <div class="news_item-toolbar-item news_item-toolbar-meta">
     <span class="news_item-toolbar-meta-item">
