@@ -143,7 +143,7 @@ u(document).on("submit", "form", function(event) {
     return Turbolinks.visit(`${action}?${form.serialize()}`);
   }
 
-  const options = {method: method, body: new FormData(form), headers: {"Turbolinks-Referrer": referrer}};
+  const options = {method: method, body: new FormData(form.first()), headers: {"Turbolinks-Referrer": referrer}};
   const andThen = function(err, resp, req) {
     if (req.getResponseHeader("content-type").match(/javascript/)) {
       eval(resp);
