@@ -27,21 +27,6 @@
     <%= text_input(f, :subheadline, placeholder: "with [Richard Hipp](http://www.hwaci.com/drh/), creator of [SQLite](http://sqlite.org)") %>
   </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(f, :featured, class: "hidden") %>
-      <label>Featured</label>
-    </div>
-  </div>
-
-  <div class="field <%= error_class(f, :highlight) %>">
-    <%= label(:f, :highlight) do %>
-      Highlight <%= help_icon("Used on home page when episode is featured.") %>
-    <% end %>
-    <%= textarea(f, :highlight, placeholder: "\"I train a computer like I train a dog.\" - Matz (Creator of Ruby)", rows: 1) %>
-    <%= error_message(f, :highlight) %>
-  </div>
-
   <div class="required field">
     <%= label(f, :hosts) %>
 
