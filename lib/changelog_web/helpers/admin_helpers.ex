@@ -4,12 +4,6 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   alias Changelog.Repo
   alias ChangelogWeb.TimeView
 
-  def ctr(%{impression_count: 0}), do: 0
-  def ctr(%{click_count: 0}), do: 0
-  def ctr(trackable) do
-    Float.round(trackable.click_count / trackable.impression_count * 100, 2)
-  end
-
   def error_class(form, field) do
     if form.errors[field], do: "error", else: ""
   end

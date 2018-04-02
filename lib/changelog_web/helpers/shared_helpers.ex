@@ -32,6 +32,12 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     Enum.any?(list, &(&1 == combo))
   end
 
+  def ctr(%{impression_count: 0}), do: 0
+  def ctr(%{click_count: 0}), do: 0
+  def ctr(trackable) do
+    Float.round(trackable.click_count / trackable.impression_count * 100, 1)
+  end
+
   def current_path(conn), do: Controller.current_path(conn)
   def current_path(conn, params), do: Controller.current_path(conn, params)
 

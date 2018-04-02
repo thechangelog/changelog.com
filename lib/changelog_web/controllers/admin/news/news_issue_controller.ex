@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
 
     items =
       NewsItem.published_since(last_issue)
-      |> NewsItem.highest_ctr_first
+      |> NewsItem.top_ctr_first
       |> Repo.all
       |> Enum.with_index(1)
       |> Enum.map(&NewsIssueItem.build_and_preload/1)

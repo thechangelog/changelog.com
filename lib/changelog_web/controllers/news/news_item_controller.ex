@@ -25,15 +25,6 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.preload_all
       |> Repo.paginate(Map.put(params, :page_size, 20))
 
-    ads =
-      Timex.today
-      |> NewsSponsorship.week_of
-      |> NewsSponsorship.preload_all
-      |> Repo.all
-      |> Enum.take_random(2)
-      |> Enum.map(&NewsSponsorship.ad_for_index/1)
-      |> Enum.reject(&is_nil/1)
-
     items =
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
@@ -46,7 +37,23 @@ defmodule ChangelogWeb.NewsItemController do
       |> Repo.all
       |> Kernel.++([Podcast.master])
 
-    render(conn, :index, ads: ads, pinned: pinned, items: items, page: page, podcasts: podcasts)
+    render(conn, :index, ads: get_ads(), pinned: pinned, items: items, page: page, podcasts: podcasts)
+  end
+
+  def top(conn, params) do
+    page =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.sans_object
+      |> NewsItem.top_clicked_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    render(conn, :top, ads: get_ads(), items: items, page: page)
   end
 
   def new(conn, _params) do
@@ -121,6 +128,16 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.load_object
 
     render(conn, :show, item: item)
+  end
+
+  defp get_ads do
+    Timex.today
+    |> NewsSponsorship.week_of
+    |> NewsSponsorship.preload_all
+    |> Repo.all
+    |> Enum.take_random(2)
+    |> Enum.map(&NewsSponsorship.ad_for_index/1)
+    |> Enum.reject(&is_nil/1)
   end
 
   defp item_from_hashid(hashid, query \\ NewsItem) do

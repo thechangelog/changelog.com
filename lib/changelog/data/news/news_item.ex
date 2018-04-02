@@ -37,7 +37,6 @@ defmodule Changelog.NewsItem do
   def audio(query \\ __MODULE__),                      do: from(q in query, where: q.type == ^:audio)
   def declined(query \\ __MODULE__),                   do: from(q in query, where: q.status == ^:declined)
   def drafted(query \\ __MODULE__),                    do: from(q in query, where: q.status == ^:draft)
-  def highest_ctr_first(query \\ __MODULE__),          do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
   def logged_by(query \\ __MODULE__, person),          do: from(q in query, where: q.logger_id == ^person.id)
   def published(query \\ __MODULE__),                  do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now)
   def pinned(query \\ __MODULE__),                     do: from(q in query, where: q.pinned)
@@ -47,6 +46,7 @@ defmodule Changelog.NewsItem do
   def with_episode(query \\ __MODULE__, episode),      do: from(q in query, where: q.object_id == ^"#{episode.podcast.slug}:#{episode.slug}")
   def with_post(query \\ __MODULE__, post),            do: from(q in query, where: q.object_id == ^"posts:#{post.slug}")
   def with_object(query \\ __MODULE__),                do: from(q in query, where: not(is_nil(q.object_id)))
+  def sans_object(query \\ __MODULE__),                do: from(q in query, where: is_nil(q.object_id))
   def with_object_prefix(query \\ __MODULE__, prefix), do: from(q in query, where: like(q.object_id, ^"#{prefix}%"))
   def with_image(query \\ __MODULE__),                 do: from(q in query, where: not(is_nil(q.image)))
   def with_source(query \\ __MODULE__, source),        do: from(q in query, where: q.source_id == ^source.id)
@@ -57,6 +57,10 @@ defmodule Changelog.NewsItem do
   def published_since(query, i = %NewsIssue{}),   do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^i.published_at)
   def published_since(query, time = %DateTime{}), do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^time)
   def published_since(query, _),                  do: published(query)
+
+  def top_clicked_first(query \\ __MODULE__),      do: from(q in query, order_by: [desc: :click_count])
+  def top_ctr_first(query \\ __MODULE__),         do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
+  def top_impressed_first(query \\ __MODULE__), do: from(q in query, order_by: [desc: :impression_count])
 
   def file_changeset(item, attrs \\ %{}) do
     cast_attachments(item, attrs, ~w(image), allow_urls: true)
