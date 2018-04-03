@@ -1,0 +1,26 @@
+<article class="article">
+  <div class="richtext">
+    <h1>GopherCon 2017 / Changelog Films</h1>
+    <p>Like what you see here? <%= link "Hire us", to: page_path(@conn, :contact) %> to get creative for your conference.</p>
+
+    <hr>
+
+    <h3>GopherCon 2017 - Recap</h3>
+
+    <p>Here's the recap video we shot for our friends at GopherCon.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/hnle9fk14i.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_hnle9fk14i videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>GopherCon 2017 - Day One Recap</h3>
+
+    <p>Every year we wow GopherCon with a day one recap the morning of day two.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/fnhkh0t55q.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_fnhkh0t55q videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+  </div>
+</article>

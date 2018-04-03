@@ -3,9 +3,29 @@
     <h1>Changelog Films</h1>
     <p><%= link "Hire us", to: page_path(@conn, :contact) %> to cover your conference or work on your next big idea.</p>
 
-    <h3>GopherCon 2016 - Recap Video</h3>
+    <h3>GopherCon 2017 - Recap</h3>
 
-    <p>This is the promo video we shot for our friends at GopherCon 2016 &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2016) %>.</p>
+    <p>Here's the recap video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2017) %>.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/hnle9fk14i.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_hnle9fk14i videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>GopherCon 2017 - Day One Recap</h3>
+
+    <p>Every year we wow GopherCon with a day one recap the morning of day two.</p>
+
+    <div class="wide-gutter-wrap">
+      <script src="https://fast.wistia.com/embed/medias/fnhkh0t55q.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_fnhkh0t55q videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
+    </div>
+
+    <hr>
+
+    <h3>GopherCon 2016 - Recap</h3>
+
+    <p>Here's the recap video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2016) %>.</p>
 
     <div class="wide-gutter-wrap">
       <script src="https://fast.wistia.com/embed/medias/wmee2ytxqe.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wmee2ytxqe videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
