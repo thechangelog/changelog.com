@@ -1,4 +1,4 @@
-<%= if @page.page_number == 1 do %>
+<%= if (@page.page_number == 1) && !@current_user && !@conn.cookies["hide_subscribe_cta"] do %>
   <%= render(SharedView, "_signup.html", assigns) %>
 <% end %>
 
