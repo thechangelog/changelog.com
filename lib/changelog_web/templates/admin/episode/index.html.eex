@@ -1,5 +1,10 @@
 <div class="ui basic segment">
-  <h1 class="ui dividing header"><%= @podcast.name %> &raquo; Episodes</h1>
+  <h1 class="ui dividing header">
+    <%= link("Podcasts", to: admin_podcast_path(@conn, :index)) %>
+    &raquo;
+    <%= @podcast.name %>
+    <%= link("(View)", to: podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+  </h1>
 
   <div class="actions right">
     <span class="ui calendar" data-scheduled="<%= Poison.encode!(Enum.map(@drafts, &(&1.recorded_at))) %>" >
