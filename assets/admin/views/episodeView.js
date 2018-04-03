@@ -4,6 +4,26 @@ import Modal from "components/modal";
 import Clipboard from "clipboard";
 
 export default class EpisodeView {
+  index() {
+    let scheduled = $(".ui.calendar").data("scheduled").map((string) => {
+      let date = new Date(string);
+      return date.toDateString();
+    });
+
+    $(".ui.calendar").calendar({
+      type: "date",
+      isDisabled: function (date, mode) {
+        for (var i = scheduled.length - 1; i >= 0; i--) {
+          if (scheduled[i] == date.toDateString()) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+    });
+  }
+
   show() {
     let clipboard = new Clipboard(".clipboard.button", {
       target: function(trigger) {

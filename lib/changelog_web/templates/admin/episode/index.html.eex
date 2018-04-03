@@ -1,7 +1,10 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header"><%= @podcast.name %> &raquo; Episodes</h1>
 
-  <div class="actions">
+  <div class="actions right">
+    <span class="ui calendar" data-scheduled="<%= Poison.encode!(Enum.map(@drafts, &(&1.recorded_at))) %>" >
+      <button class="ui basic icon button" title="View Schedule"><i class="calendar icon"></i></button>
+    </span>
     <%= link to: admin_podcast_episode_path(@conn, :new, @podcast.slug), class: "ui right floated primary basic button" do %>
       <i class="icon unmute"></i>
       Add Episode
