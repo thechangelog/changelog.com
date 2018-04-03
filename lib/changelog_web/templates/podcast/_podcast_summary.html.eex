@@ -18,9 +18,16 @@
     <%= if Enum.any?(@podcast.hosts) do %>
       <h3>Hosted by:</h3>
       <ul class="show_list-shows-item-content-hosts">
-        <%= for person <- @podcast.hosts do %>
-          <li><%= link person.name, to: ChangelogWeb.PersonView.external_url(person) %></li>
+      <%= if length(@podcast.hosts) > 3 do %>
+        <%= for person <- Enum.take_random(@podcast.hosts, 3) do %>
+          <li><%= link(person.name, to: PersonView.external_url(person)) %></li>
         <% end %>
+          <li><%= link("and more...", to: podcast_path(@conn, :show, @podcast.slug)) %></li>
+      <% else %>
+        <%= for person <- @podcast.hosts do %>
+          <li><%= link(person.name, to: PersonView.external_url(person)) %></li>
+        <% end %>
+      <% end %>
       </ul>
     <% end %>
     </div>

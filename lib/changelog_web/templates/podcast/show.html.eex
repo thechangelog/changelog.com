@@ -45,7 +45,7 @@
     <% end %>
 
     <div class="show-header-hosts">
-      <div class="avatar_list<%= if Enum.count(@podcast.hosts) > 6 do %> avatar_list--large<% end %>">
+      <div class="avatar_list <%= if length(@podcast.hosts) > 6, do: "avatar_list--large" %>">
       <%= for person <- @podcast.hosts do %>
         <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
           <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
