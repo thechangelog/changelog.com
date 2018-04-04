@@ -28,7 +28,7 @@
   }
 
   &-icon {
-    background: url("/images/icon-play-white.svg") center no-repeat;
+    background: url("/images/icons/icon-play-white.svg") center no-repeat;
     background-size: auto 40%;
     overflow: hidden;
     position: absolute;
@@ -41,10 +41,10 @@
     transition: opacity 0.2s $ease-in-out-quint;
 
     #{$parent}.is-paused & {
-      background-image: url("/images/icon-play-white.svg");
+      background-image: url("/images/icons/icon-play-white.svg");
     }
     #{$parent}.is-playing & {
-      background-image: url("/images/icon-pause-white.svg");
+      background-image: url("/images/icons/icon-pause-white.svg");
     }
     #{$parent}.is-upcoming & {
       opacity: 0.2;
