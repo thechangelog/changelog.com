@@ -28,10 +28,13 @@ defmodule ChangelogWeb.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all
 
+    theme = Map.get(params, "theme", "night")
+    ratio = Map.get(params, "ratio", "none")
+
     conn
     |> put_layout(false)
     |> delete_resp_header("x-frame-options")
-    |> render(:embed, podcast: podcast, episode: episode, theme: params["theme"] || "night", ratio: params["ratio"] || "none")
+    |> render(:embed, podcast: podcast, episode: episode, theme: theme, ratio: ratio)
   end
 
   def preview(conn, %{"slug" => slug}, podcast) do
