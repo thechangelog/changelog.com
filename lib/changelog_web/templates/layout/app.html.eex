@@ -8,11 +8,20 @@
     <link rel="canonical" content="<%= canonical_url(@conn) %>">
     <meta name="description" content="<%= description(assigns) %>">
     <meta name="copyright" content="Changelog Media LLC">
-    <meta name="twitter:card" content="<%= twitter_card_type(assigns) %>">
+  <% twitter_card_type = twitter_card_type(assigns) %>
+    <meta name="twitter:card" content="<%= twitter_card_type %>">
     <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:url" content="<%= canonical_url(@conn) %>">
     <meta name="twitter:title" content="<%= share_title(assigns) || page_title(assigns) %>">
     <meta name="twitter:description" content="<%= description(assigns) %>">
+  <%= if twitter_card_type == "player" do %>
+    <meta name="twitter:player" content="<%= twitter_player_url(assigns) %>">
+    <meta name="twitter:player:width" content="300">
+    <meta name="twitter:player:height" content="150">
+    <meta name="twitter:player:stream" content="<%= twitter_audio_url(assigns) %>">
+    <meta name="twitter:player:stream:content_type" content="audio/mpeg">
+  <% else %>
+    <meta name="twitter:url" content="<%= canonical_url(@conn) %>">
+  <% end %>
   <%= if twitter_image = twitter_image(assigns) do %>
     <meta name="twitter:image" content="<%= twitter_image %>">
   <% end %>
