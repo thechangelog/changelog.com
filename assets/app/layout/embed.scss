@@ -174,11 +174,15 @@ body.embed {
     $button_size: 4rem;
     $button_spacing: $button_size + $gutter * 2;
     display: table;
-    font-size: 10px;
+    font-size: 8px;
     height: 130px;
     margin-top: 1.5rem;
     padding: 0 50px 0 2rem + $gutter * 2;
     position: relative;
+
+    @media (min-width: 360px) {
+      font-size: 10px;
+    }
 
     @media (min-width: $smartphone) {
       font-size: 12px;
