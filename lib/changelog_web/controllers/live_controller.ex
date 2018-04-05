@@ -5,7 +5,7 @@ defmodule ChangelogWeb.LiveController do
   alias ChangelogWeb.TimeView
 
   def index(conn, _params) do
-    live_window_start = TimeView.hours_ago(2)
+    live_window_start = TimeView.hours_ago(1.5)
     live_window_end = TimeView.hours_from_now(12)
 
     episodes =

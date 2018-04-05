@@ -36,7 +36,7 @@ defmodule ChangelogWeb.SlackControllerTest do
         get(conn, slack_path(conn, :countdown, podcast.slug))
       end
       assert conn.status == 200
-      assert conn.resp_body =~ "It's noOOoOow GO TIME!"
+      assert conn.resp_body =~ "It's Go Time!"
     end
 
     test "it doesn't use episodes from other podcasts", %{conn: conn, podcast: podcast} do

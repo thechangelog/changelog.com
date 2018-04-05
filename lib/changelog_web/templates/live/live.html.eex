@@ -23,7 +23,7 @@
           <article class="live-info-guests-item">
             <%= link to: PersonView.external_url(person), title: "More Info", target: "_blank" do %>
               <img class="live-info-guests-item-image" src="<%= PersonView.avatar_url(person) %>" alt="<%= String.at(person.name,0) %>" width="150" height="150">
-              <h2 class="live-info-guests-item-title"><%= host_or_guest(@episode, person) %></h2>
+              <h2 class="live-info-guests-item-title"><%= if Enum.any?(@episode.guests), do: host_or_guest(@episode, person) %></h2>
               <h1 class="live-info-guests-item-name"><%= person.name %></h1>
             <% end %>
           </article>
