@@ -91,7 +91,7 @@ defmodule ChangelogWeb.Meta.Title do
     end
   end
 
-  # Podcast show page
+  # Episode page
   defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
     "#{podcast.name} #{EpisodeView.numbered_title(episode, "#")}"
   end
