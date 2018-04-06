@@ -59,7 +59,7 @@
   <%= if Enum.any?(@items) do %>
     <div class="feed">
       <%= if (@podcast.status == :retired) do %>
-        <p class="feed-note">This podcast has been retired. Feel free to browse the archive below.</p>
+        <p class="feed-note">This podcast has been retired. Please browse and enjoy the archive below.</p>
       <% end %>
       <%= for item <- @items do %>
         <%= render(NewsItemView, "_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>
