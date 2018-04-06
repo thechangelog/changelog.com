@@ -6,7 +6,7 @@ defmodule ChangelogWeb.Meta.Twitter do
   def twitter_card_type(_), do: "summary"
 
   def twitter_player_url(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
-    Helpers.episode_url(Endpoint, :embed, podcast.slug, episode.slug, ratio: "scale")
+    Helpers.episode_url(Endpoint, :embed, podcast.slug, episode.slug, source: "twitter")
   end
   def twitter_player_url(_), do: ""
 
