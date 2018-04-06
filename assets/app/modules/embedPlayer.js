@@ -26,11 +26,14 @@ export default class EmbedPlayer {
     this.current = this.container.find(".js-player-current");
     this.playButton = this.container.find(".js-player-play-button");
     this.navButton = this.container.find(".js-nav-toggle-button");
+    this.listenLinks = this.container.find(".js-listen-link");
+    this.listenHref = this.listenLinks.attr("href");
   }
 
   attachEvents() {
     this.playButton.handle("click", () => { this.isLoaded() ? this.togglePlayPause() : this.load(); });
     this.navButton.handle("click", ()  => { this.toggleNav(); });
+    this.listenLinks.on("click", () => { this.pause(); });
     this.scrubber.on("input",  (event) => { if (this.isLoaded()) this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { if (this.isLoaded()) this.scrubEnd(event.target.value); });
     this.audio.onEnd((event) => { this.embedly.emit("ended"); });
@@ -100,6 +103,7 @@ export default class EmbedPlayer {
 
   trackTime() {
     this.embedly.emit("timeupdate", {seconds: this.currentTime(), duration: this.episodeDuration()});
+    this.listenLinks.attr("href", `${this.listenHref}#t=${this.currentTime()}`);
     let complete = this.percentComplete();
 
     for (var percent in this.tracked) {
