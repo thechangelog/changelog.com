@@ -13,6 +13,7 @@ export default class EmbedPlayer {
     this.attachEvents();
     this.loadDetails();
     this.embedly = new Embedly(this);
+    this.tracked = {25: false, 50: false, 75: false, 100: false};
   }
 
   attachUI(selector) {
@@ -33,7 +34,7 @@ export default class EmbedPlayer {
     this.scrubber.on("input",  (event) => { if (this.isLoaded()) this.scrub(event.target.value); });
     this.scrubber.on("change", (event) => { if (this.isLoaded()) this.scrubEnd(event.target.value); });
     this.audio.onEnd((event) => { this.embedly.emit("ended"); });
-    this.audio.onTimeUpdate((event) => { this.embedly.emit("timeupdate", {seconds: this.currentTime(), duration: this.episodeDuration()}); });
+    this.audio.onTimeUpdate((event) => { this.trackTime(); });
   }
 
   load() {
@@ -44,7 +45,8 @@ export default class EmbedPlayer {
   loadAudio() {
     this.audio.load(this.episode.audio(), () => {
       this.audioLoaded = true;
-      Log.track("Embed Player", "play", `${this.episode.audioFile()} (via ${(gup("referrer") || "Unknown")})`);
+      this.log("Play");
+
       this.play();
     });
   }
@@ -56,6 +58,11 @@ export default class EmbedPlayer {
       duration: this.playButton.data("duration"),
       audio_url: this.playButton.attr("href")
     });
+  }
+
+  log(action) {
+    let source = (gup("source") == "twitter") ? "Twitter" : "Embed";
+    Log.track(`${source} Player`, action, `${this.episode.title()} (via ${(gup("referrer") || "unknown")})`);
   }
 
   isPlaying() {
@@ -91,6 +98,18 @@ export default class EmbedPlayer {
     this.player.toggleClass("nav-open");
   }
 
+  trackTime() {
+    this.embedly.emit("timeupdate", {seconds: this.currentTime(), duration: this.episodeDuration()});
+    let complete = this.percentComplete();
+
+    for (var percent in this.tracked) {
+      if (complete >= percent && !this.tracked[percent]) {
+        this.log(`${percent}% Played`);
+        this.tracked[percent] = true;
+      }
+    }
+  }
+
   loop(bool) {
     this.audio.loop(bool);
   }
@@ -119,14 +138,15 @@ export default class EmbedPlayer {
     return Math.round(this.audio.currentSeek() || 0);
   }
 
-  step() {
-    const seek = this.currentTime();
-    const percentComplete = seek / this.episodeDuration() * 100;
+  percentComplete() {
+    return this.currentTime() / this.episodeDuration() * 100;
+  }
 
+  step() {
     if (!this.isScrubbing) {
-      this.current.text(Episode.formatTime(seek));
-      this.scrubber.first().value = seek;
-      this.track.first().style.width = `${percentComplete}%`;
+      this.current.text(Episode.formatTime(this.currentTime()));
+      this.scrubber.first().value = this.currentTime();
+      this.track.first().style.width = `${this.percentComplete()}%`;
     }
 
     if (this.isPlaying()) {
@@ -136,9 +156,8 @@ export default class EmbedPlayer {
 
   scrub(to) {
     this.isScrubbing = true;
-    const percentComplete = to / this.episodeDuration() * 100;
     this.current.text(Episode.formatTime(to));
-    this.track.first().style.width = `${percentComplete}%`;
+    this.track.first().style.width = `${this.percentComplete()}%`;
   }
 
   scrubEnd(to) {

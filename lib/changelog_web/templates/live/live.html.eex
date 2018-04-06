@@ -11,7 +11,7 @@
         <h2 class="live-info-header-show">
           <%= link EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
         </h2>
-        <h1 class="live-info-header-title"><%= @episode.title %></h1>
+        <h1 class="live-info-header-title js-title"><%= @episode.title %></h1>
       </header>
 
       <div class="live-info-more">

@@ -37,7 +37,7 @@ export default class Episode {
   }
 
   duration() {
-    return this.ep.duration;
+    return parseInt(this.ep.duration, 10);
   }
 
   hasPrev() {

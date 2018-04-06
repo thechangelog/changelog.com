@@ -30,6 +30,7 @@ export default class LivePlayer {
     this.liveViewers = this.container.find(".js-live-viewers");
     this.status = this.container.find(".js-live-status");
     this.streamSrc = this.playButton.attr("href");
+    this.title = this.container.find(".js-title");
     // events
     this.playButton.handle("click", () => { this.togglePlayPause(); });
     this.monitorStatus();
@@ -96,6 +97,7 @@ export default class LivePlayer {
     this.audio.src = this.streamSrc;
     this.audio.load();
     this.play();
+    Log.track("Live Player", "Play", this.title.text());
   }
 
   loadFailed(event) {

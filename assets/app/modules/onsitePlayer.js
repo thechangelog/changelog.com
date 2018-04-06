@@ -8,6 +8,7 @@ export default class OnsitePlayer {
   constructor(selector) {
     this.selector = selector;
     this.isAttached = false;
+    this.tracked = {25: false, 50: false, 75: false, 100: false};
   }
 
   attach() {
@@ -54,6 +55,7 @@ export default class OnsitePlayer {
     this.scrubber.on("change", (event) => { this.scrubEnd(event.target.value); });
     this.closeButton.handle("click", () => { this.close(); });
     this.hideButton.handle("click", () => { this.hide(); });
+    this.audio.onTimeUpdate((event) => { this.trackTime(); });
   }
 
   attachKeyboardShortcuts() {
@@ -146,7 +148,7 @@ export default class OnsitePlayer {
       this.loadUI();
       this.detailsLoaded = true;
       this.show();
-      Log.track("Onsite Player", "play", `${this.episode.audioFile()}`);
+      this.log("Play");
     });
   }
 
@@ -176,6 +178,10 @@ export default class OnsitePlayer {
     }
   }
 
+  log(action) {
+    Log.track("Onsite Player", action, `${this.episode.title()}`);
+  }
+
   resetUI() {
     this.nowPlaying.text("Loading...");
     this.title.text("");
@@ -200,6 +206,15 @@ export default class OnsitePlayer {
     this.nextButton.first().removeAttribute("data-play");
   }
 
+  currentTime() {
+    return Math.round(this.audio.currentSeek() || 0);
+  }
+
+  percentComplete() {
+    if (!this.detailsLoaded) return 0;
+    return this.currentTime() / this.episode.duration() * 100;
+  }
+
   step() {
     if (!this.detailsLoaded) {
       // wait for it...
@@ -207,13 +222,10 @@ export default class OnsitePlayer {
       return;
     }
 
-    const seek = Math.round(this.audio.currentSeek() || 0);
-    const percentComplete = seek / this.episode.duration() * 100;
-
     if (!this.isScrubbing) {
-      this.current.text(Episode.formatTime(seek));
-      this.scrubber.first().value = seek;
-      this.track.first().style.width = `${percentComplete}%`;
+      this.current.text(Episode.formatTime(this.currentTime()));
+      this.scrubber.first().value = this.currentTime();
+      this.track.first().style.width = `${this.percentComplete()}%`;
     }
 
     if (this.isPlaying()) {
@@ -223,9 +235,8 @@ export default class OnsitePlayer {
 
   scrub(to) {
     this.isScrubbing = true;
-    const percentComplete = to / this.episode.duration() * 100;
     this.current.text(Episode.formatTime(to));
-    this.track.first().style.width = `${percentComplete}%`;
+    this.track.first().style.width = `${this.percentComplete()}%`;
   }
 
   scrubEnd(to) {
@@ -251,5 +262,16 @@ export default class OnsitePlayer {
     this.pause();
     u('body').removeClass('player-open');
     this.player.removeClass("podcast-player--is-active");
+  }
+
+  trackTime() {
+    let complete = this.percentComplete();
+
+    for (var percent in this.tracked) {
+      if (complete >= percent && !this.tracked[percent]) {
+        this.log(`${percent}% Played`);
+        this.tracked[percent] = true;
+      }
+    }
   }
 }
