@@ -161,6 +161,7 @@ body.embed {
       }
 
       & > a {
+        color: $green;
         font-family: $code;
         font-size: 0.75em;
         text-transform: uppercase;
@@ -172,7 +173,7 @@ body.embed {
     }
 
     .embed--twitter & {
-      @include position(absolute, null 0 10px);
+      @include position(absolute, null 0 14px);
     }
   }
 
