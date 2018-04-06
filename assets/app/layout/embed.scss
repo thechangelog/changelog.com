@@ -20,7 +20,7 @@ body.embed {
   overflow: hidden;
   position: relative;
 
-  .embed--scale & {
+  .embed--twitter & {
     height: 0;
     padding-bottom: $aspect_ratio;
   }
@@ -160,12 +160,18 @@ body.embed {
         margin-left: 0;
       }
 
+      & > a {
+        font-family: $code;
+        font-size: 0.75em;
+        text-transform: uppercase;
+      }
+
       @media (max-width: 400px) {
-        display: none;
+        font-size: 0.875em;
       }
     }
 
-    .embed--scale & {
+    .embed--twitter & {
       @include position(absolute, null 0 10px);
     }
   }
@@ -193,7 +199,7 @@ body.embed {
     }
 
     &_container {
-      .embed--scale & {
+      .embed--twitter & {
         @include position(absolute, 0 0 60px);
         align-items: center;
         display: flex;
