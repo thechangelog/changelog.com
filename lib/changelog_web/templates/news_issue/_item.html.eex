@@ -9,7 +9,7 @@
     <%= if @item.image do %>
       <p>
         <%= link to: @item.url do %>
-          <img src="<%= NewsItemView.image_url(@item, :large) %>" alt="<%= @item.headline %>">
+          <img src="<%= NewsItemView.image_url(@item, :large) %>" alt="<%= @item.headline %>" class="news_item-image">
         <% end %>
       </p>
     <% end %>

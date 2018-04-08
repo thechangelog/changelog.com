@@ -242,12 +242,12 @@ h2.news_item-title {
   margin: 10px 0;
   padding-left: 15px;
 }
-.news_item-content p img {
+.news_item-image {
   display: inline-block;
   width: 110%;
   margin: 10px -5%;
 }
-.news_item--sponsored .news_item-content p img {
+.news_item-sponsored-image {
   width: 100%;
   margin: 10px 0;
 }
