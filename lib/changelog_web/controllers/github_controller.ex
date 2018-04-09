@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.GithubController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Transcripts.{Source, Updater}
+  alias Changelog.{ShowNotes, Transcripts}
 
   require Logger
 
@@ -13,21 +13,32 @@ defmodule ChangelogWeb.GithubController do
   end
 
   defp push_event(conn, params = %{"repository" => %{"full_name" => repo}, "commits" => commits}) do
-    if repo == Source.repo_name() do
-      commits
-      |> Enum.map(&(Map.take(&1, ["added", "modified"])))
-      |> Enum.map(&Map.values/1)
-      |> List.flatten
-      |> Updater.update
+    case repo do
+      "thechangelog/show-notes" ->
+        commits
+        |> added_or_modified_files
+        |> ShowNotes.Updater.update
 
-      json(conn, %{})
-    else
-      unsupported_event(conn, params, "push #{repo}")
+        json(conn, %{})
+      "thechangelog/transcripts" ->
+        commits
+        |> added_or_modified_files
+        |> Transcripts.Updater.update
+
+        json(conn, %{})
+      _else ->
+        unsupported_event(conn, params, "push #{repo}")
     end
   end
-
   defp push_event(conn, params) do
     unsupported_event(conn, params, "push fail")
+  end
+
+  defp added_or_modified_files(commits) do
+    commits
+    |> Enum.map(&(Map.take(&1, ["added", "modified"])))
+    |> Enum.map(&Map.values/1)
+    |> List.flatten
   end
 
   defp unsupported_event(conn, params, event) do
