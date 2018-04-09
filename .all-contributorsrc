@@ -218,6 +218,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "r-frederick",
+      "name": "Ridge Frederick",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13277581?v=4",
+      "profile": "https://github.com/r-frederick",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ]
 }
