@@ -39,9 +39,9 @@ defmodule Changelog.Mixfile do
     [
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.0"},
-      {:phoenix_html, "~> 2.3"},
-      {:postgrex, "~> 0.13"},
+      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix_html, "~> 2.10"},
+      {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:timex_ecto, "~> 3.0"},
       {:scrivener_ecto, "~> 1.0"},
@@ -57,7 +57,7 @@ defmodule Changelog.Mixfile do
       {:con_cache, "~> 0.12.0"},
       {:plug_ets_cache, github: "gnufede/plug_ets_cache"},
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
-      {:ex_aws, "~> 1.1"},
+      {:ex_aws, "~> 1.1"}, # can't upgrade to 2.0 until arc supports it
       {:nimble_csv, "~> 0.4"},
       {:sweet_xml, "~> 0.5"},
       {:briefly, "~> 0.3"},
@@ -70,7 +70,6 @@ defmodule Changelog.Mixfile do
       {:ex_machina, "~> 2.0"},
       {:rollbax, "~> 0.6"},
       {:html_entities, "~> 0.3"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.4", only: [:dev, :test]},
       {:excoveralls, "~> 0.6", only: :test},
       {:mock, "~> 0.3.0", only: :test}
