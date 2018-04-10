@@ -214,7 +214,7 @@
   <div class="two fields">
     <div class="field <%= error_class(f, :published_at) %>">
       <%= label(f, :published_at) do %>
-        Publish Time <%= help_icon("To schedule: set this in the future and toggle 'Published'") %>
+        Publish Time <%= help_icon("Select a future time and click 'Publish' to schedule") %>
       <% end %>
       <%= semantic_calendar_field(f, :published_at) %>
       <%= error_message(f, :published_at) %>

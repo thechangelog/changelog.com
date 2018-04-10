@@ -1,6 +1,7 @@
 import Sortable from "sortablejs";
 import BelongsToWidget from "components/belongsToWidget";
 import SearchWidget from "components/searchWidget";
+import CalendarField from "components/calendarField";
 import Clipboard from "clipboard";
 
 export default class newsItemView {
@@ -37,6 +38,24 @@ export default class newsItemView {
     new BelongsToWidget("author", "person");
     new BelongsToWidget("source", "news_source");
     new BelongsToWidget("submitter", "person");
+    new CalendarField(".ui.calendar");
+
+    $("form").on("click", ".js-schedule", function(event) {
+      event.preventDefault();
+
+      $(this)
+        .removeClass("js-schedule")
+        .removeClass("secondary")
+        .addClass("primary")
+        .closest(".column")
+        .siblings()
+        .hide();
+
+      $(".js-published-at")
+        .removeClass("hidden")
+        .find("input[type=text]")
+        .trigger("click");
+    });
 
     if ($(".js-quick-form").length) {
       $(".ui.menu").remove();

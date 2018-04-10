@@ -148,10 +148,16 @@
     </div>
   </div>
 
+  <div class="<%= if is_nil(f.data.published_at), do: "hidden" %> js-published-at field <%= error_class(f, :published_at) %>">
+    <%= label(f, :published_at, "Publish Time") %>
+    <%= semantic_calendar_field(f, :published_at) %>
+    <%= error_message(f, :published_at) %>
+  </div>
+
   <div class="ui hidden divider"></div>
 
+<%= if NewsItem.is_published(f.data) || NewsItem.is_queued(f.data) do %>
   <div class="ui equal width stackable grid">
-  <%= if NewsItem.is_published(f.data) || NewsItem.is_queued(f.data) do %>
     <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
     <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn, admin_news_item_path(@conn, :index))) %></div>
     <div class="column">
@@ -162,11 +168,15 @@
       <%= link("Unpublish", to: admin_news_item_path(@conn, :unpublish, f.data), class: "ui red fluid basic button", method: :post, data: [confirm: "Are you sure?"]) %>
     <% end %>
     </div>
-  <% else %>
-    <div class="column"><button class="ui primary   fluid basic button" type="submit" name="queue" value="draft">Save Draft</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="append">Pub Whenevs</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="publish">Pub Now</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="prepend">Pub Next</button></div>
-  <% end %>
+  </div>
+<% else %>
+  <div class="ui two column stackable grid">
+    <div class="column"><button class="ui primary   fluid basic button" type="submit" name="queue" value="draft">Save as draft</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="append">Queue for publishing (bottom)</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="publish">Publish right now (skips queue)</button></div>
+    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="prepend">Queue for publishing (top)</button></div>
+    <div class="column"><button class="ui secondary fluid basic button js-schedule" type="submit" name="queue" value="append">Schedule to be published</button></div>
+  </div>
+<% end %>
   </div>
 <% end %>
