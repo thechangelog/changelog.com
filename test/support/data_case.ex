@@ -22,6 +22,7 @@ defmodule Changelog.DataCase do
       import Changelog.TestCase
       import Changelog.DataCase
       import Changelog.Factory
+      import ChangelogWeb.TimeView, only: [hours_from_now: 1, hours_ago: 1]
     end
   end
 

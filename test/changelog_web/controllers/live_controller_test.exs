@@ -1,8 +1,6 @@
 defmodule ChangelogWeb.LiveControllerTest do
   use ChangelogWeb.ConnCase
 
-  import ChangelogWeb.TimeView, only: [hours_from_now: 1, hours_ago: 1]
-
   describe "with episodes inside the live window" do
     test "it renders live data when episode is 12 hours from now", %{conn: conn} do
       episode = insert(:episode, recorded_live: true, recorded_at: hours_from_now(12))

@@ -10,12 +10,24 @@ defmodule Changelog.NewsQueue do
     belongs_to :item, NewsItem
   end
 
-  def ordered(query \\ NewsQueue), do: from(q in query, order_by: [asc: :position])
+  def queued(query \\ NewsQueue) do
+    from(q in query,
+      left_join: i in assoc(q, :item),
+      where: is_nil(i.published_at),
+      order_by: q.position)
+  end
+
+  def scheduled(query \\ NewsQueue) do
+    from(q in query,
+      left_join: i in assoc(q, :item),
+      where: not(is_nil(i.published_at)),
+      order_by: i.published_at)
+  end
 
   def append(item) do
     entry = change(%NewsQueue{}, %{item_id: item.id})
 
-    entries = Repo.all(NewsQueue.ordered)
+    entries = Repo.all(NewsQueue.queued)
 
     entry = if length(entries) > 0 do
       last_position = List.last(entries).position
@@ -34,7 +46,7 @@ defmodule Changelog.NewsQueue do
   end
 
   def move(entry = %NewsQueue{}, to_index) do
-    entries = Repo.all(NewsQueue.ordered)
+    entries = Repo.all(NewsQueue.queued)
     current_index = Enum.find_index(entries, &(&1 == entry))
 
     entry = cond do
@@ -64,7 +76,7 @@ defmodule Changelog.NewsQueue do
   def prepend(item) do
     entry = change(%NewsQueue{}, %{item_id: item.id})
 
-    entries = NewsQueue.ordered |> Repo.all
+    entries = NewsQueue.queued |> Repo.all
 
     entry = if length(entries) > 0 do
       first_position = List.first(entries).position
@@ -78,7 +90,7 @@ defmodule Changelog.NewsQueue do
   end
 
   def publish_next do
-    case Repo.all(NewsQueue.ordered) do
+    case Repo.all(NewsQueue.queued) do
       [entry | _rest] -> publish(entry)
       [] -> publish(nil)
     end

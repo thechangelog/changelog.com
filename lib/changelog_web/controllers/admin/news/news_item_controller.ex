@@ -15,7 +15,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> Repo.all
 
     queued =
-      NewsQueue.ordered
+      NewsQueue.queued
       |> NewsQueue.preload_all
       |> Repo.all
       |> Enum.map(&(&1.item))
