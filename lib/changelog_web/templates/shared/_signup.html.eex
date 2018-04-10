@@ -13,6 +13,6 @@
     <p class="signup-sign_in">Already a member? <em><%= link "Sign in", to: sign_in_path(@conn, :new) %></em></p>
   </div>
   <%= if controller_action_combo(@conn) == "news_item-index" do %>
-    <button class="signup-close js-hide-subscribe"  aria-label="Close">✕</button>
+    <button class="signup-close js-hide-subscribe-cta"  aria-label="Close">✕</button>
   <% end %>
 </section>

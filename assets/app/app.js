@@ -115,9 +115,15 @@ u(document).on("click", "a[href^=http]", function(event) {
 });
 
 // hide subscribe CTA
-u(document).handle("click", ".js-hide-subscribe", function(event) {
+u(document).handle("click", ".js-hide-subscribe-cta", function(event) {
   Cookies.set("hide_subscribe_cta", "true");
   u(".js-subscribe_cta").remove();
+});
+
+// hide subscribe banner
+u(document).handle("click", ".js-hide-subscribe-banner", function(event) {
+  Cookies.set("hide_subscribe_banner", "true");
+  u(".js-subscribe_banner").remove();
 });
 
 // hijack audio deep links

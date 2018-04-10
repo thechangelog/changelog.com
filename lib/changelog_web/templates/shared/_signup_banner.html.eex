@@ -1,9 +1,9 @@
 <%= if !@current_user && !@conn.cookies["hide_subscribe_banner"] do %>
-<section class="banner js-subscribe_cta">
+<section class="banner js-subscribe_banner">
   <div class="banner-content">
     <p>Get the latest news and podcasts for developers in your inbox, <em>every week</em>. We&nbsp;make&nbsp;it&nbsp;super easy to keep up with developer news that matters.</p>
   </div>
   <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
-  <button class="banner-close js-hide-subscribe" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M1 9L9 1M1 1l8 8" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></button>
+  <button class="banner-close js-hide-subscribe-banner" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M1 9L9 1M1 1l8 8" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></button>
 </section>
 <% end %>

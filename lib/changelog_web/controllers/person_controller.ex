@@ -51,6 +51,7 @@ defmodule ChangelogWeb.PersonController do
 
     conn
     |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)
+    |> put_resp_cookie("hide_subscribe_banner", "true", http_only: false)
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
     |> redirect(to: root_path(conn, :index))
   end
@@ -92,6 +93,7 @@ defmodule ChangelogWeb.PersonController do
 
     conn
     |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)
+    |> put_resp_cookie("hide_subscribe_banner", "true", http_only: false)
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
     |> redirect(to: root_path(conn, :index))
   end
