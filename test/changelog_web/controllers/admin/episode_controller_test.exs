@@ -50,8 +50,9 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   test "creates episode and redirects", %{conn: conn} do
     p = insert(:podcast)
     conn = post(conn, admin_podcast_episode_path(conn, :create, p.slug), episode: @valid_attrs)
+    e = Repo.one(Episode)
 
-    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :edit, p.slug, e.slug)
     assert count(Episode) == 1
   end
 

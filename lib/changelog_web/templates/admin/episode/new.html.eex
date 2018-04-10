@@ -1,6 +1,6 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link @podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
+    <%= link(@podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
     &raquo; New Episode
   </h1>
 

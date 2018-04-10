@@ -97,10 +97,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.admin_changeset(episode_params)
 
     case Repo.insert(changeset) do
-      {:ok, _episode} ->
+      {:ok, episode} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
+        |> redirect_next(params, admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
