@@ -8,9 +8,11 @@
       <%= if @status == :published do %>
         <th><i class="mouse pointer icon"></i> / <i class="eye icon"></i></th>
         <th>CTR</th>
-        <th>Publish Time</th>
       <% else %>
         <th>Create Time</th>
+      <% end %>
+      <%= if Enum.member?([:published, :scheduled], @status) do %>
+        <th>Publish Time</th>
       <% end %>
         <th></th>
       </tr>
@@ -53,9 +55,11 @@
       <%= if @status == :published do %>
         <td><%= item.click_count %> / <%= item.impression_count %></td>
         <td><%= ctr(item) %>%</td>
-        <td><%= ts(item.published_at) %></td>
       <% else %>
         <td><%= ts(item.inserted_at) %></td>
+      <% end %>
+      <%= if Enum.member?([:published, :scheduled], @status) do %>
+        <td><%= ts(item.published_at) %></td>
       <% end %>
         <td class="center aligned">
           <div class="ui small basic buttons">

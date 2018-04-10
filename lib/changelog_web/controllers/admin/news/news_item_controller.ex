@@ -20,6 +20,12 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> Repo.all
       |> Enum.map(&(&1.item))
 
+    scheduled =
+      NewsQueue.scheduled
+      |> NewsQueue.preload_all
+      |> Repo.all
+      |> Enum.map(&(&1.item))
+
     submitted =
       NewsItem.submitted
       |> NewsItem.newest_first(:inserted_at)
@@ -52,7 +58,8 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       |> Enum.chunk(activity_count)
 
     render(conn, :index, drafts: drafts, submitted: submitted, queued: queued,
-                         activity: activity, published: page.entries, page: page)
+                         scheduled: scheduled, activity: activity,
+                         published: page.entries, page: page)
   end
 
   def new(conn = %{assigns: %{current_user: me}}, params) do

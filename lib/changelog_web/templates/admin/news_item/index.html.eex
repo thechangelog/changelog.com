@@ -32,16 +32,21 @@
 
 <div class="ui basic segment">
   <%= if Enum.any?(@drafts) do %>
-    <h2 class="ui header">My Drafts</h2>
+    <h2 id="drafts" class="ui header">My Drafts</h2>
     <%= render("_table.html", conn: @conn, status: :draft, items: @drafts) %>
   <% end %>
 
   <%= if Enum.any?(@submitted) do %>
-    <h2 class="ui header">Submitted</h2>
+    <h2 id="submitted" class="ui header">Submitted</h2>
     <%= render("_table.html", conn: @conn, status: :submitted, items: @submitted) %>
   <% end %>
 
-  <h2 class="ui header">Queued</h2>
+  <%= if Enum.any?(@scheduled) do %>
+    <h2 id="scheduled" class="ui header">Scheduled</h2>
+    <%= render("_table.html", conn: @conn, status: :scheduled, items: @scheduled) %>
+  <% end %>
+
+  <h2 id="queued" class="ui header">Queued</h2>
   <%= if Enum.any?(@queued) do %>
     <%= render("_table.html", conn: @conn, status: :queued, items: @queued) %>
   <% else %>
@@ -54,7 +59,7 @@
     </div>
   <% end %>
 
-  <h2 class="ui header">
+  <h2 id="sponsorships" class="ui header">
     <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
 
     <div class="ui right floated basic buttons">
@@ -72,7 +77,7 @@
   <%= render(NewsSponsorshipView, "_schedule.html", conn: @conn, weeks: TimeView.weeks()) %>
 
 <div class="basic segment">
-  <h2 class="ui header">Recently</h2>
+  <h2 id="recently" class="ui header">Recently</h2>
 
   <div class="ui equal width grid">
   <%= for feed <- @activity do %>
@@ -101,7 +106,7 @@
 </div>
 
 <%= if Enum.any?(@published) do %>
-  <h2 class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
+  <h2 id="published" class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
   <%= render("_table.html", conn: @conn, status: :published, items: @published) %>
   <%= pagination_links(@conn, @page, path: &admin_news_item_path/3) %>
 <% end %>
