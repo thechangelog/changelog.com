@@ -138,6 +138,36 @@ defmodule Changelog.NewsQueueTest do
     end
   end
 
+  describe "publish_scheduled" do
+    test "it is a no-op when scheduled is empty" do
+      assert NewsQueue.publish_scheduled() == false
+    end
+
+    test "it publishes the scheduled item, removing it from the queue" do
+      assert Repo.count(NewsItem.published) == 0
+
+      i1 = insert(:news_item, published_at: hours_ago(1))
+      i2 = insert(:news_item)
+
+      insert(:news_queue, item: i1, position: 1.0)
+      insert(:news_queue, item: i2, position: 2.0)
+
+      with_mock(Buffer, [queue: fn(_) -> true end]) do
+        NewsQueue.publish_scheduled()
+
+        published = Repo.all(NewsItem.published)
+        assert Enum.map(published, &(&1.id)) == [i1.id]
+        assert Repo.count(NewsQueue) == 1
+
+        NewsQueue.publish_scheduled()
+
+        published = NewsItem.published |> NewsItem.newest_first |> Repo.all
+        assert Enum.map(published, &(&1.id)) == [i1.id]
+        assert Repo.count(NewsQueue) == 1
+      end
+    end
+  end
+
   describe "publish" do
     test "it publishes the given item and buffers it even if it's not in the queue" do
       item = insert(:news_item)

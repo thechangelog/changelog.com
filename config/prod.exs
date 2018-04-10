@@ -31,7 +31,7 @@ config :changelog, Changelog.Scheduler,
   jobs: [
     {"0 4 * * *", {Changelog.Stats, :process, []}},
     {"0 3 * * *", {Changelog.Slack.Tasks, :import_member_ids, []}},
-    {"* * * * *", {Changelog.NewsQueue, :publish_next_maybe, [10, 60]}}
+    {"* * * * *", {Changelog.NewsQueue, :publish, []}}
   ]
 
 config :rollbax,

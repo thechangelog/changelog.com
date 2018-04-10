@@ -24,6 +24,8 @@ defmodule Changelog.NewsQueue do
       order_by: i.published_at)
   end
 
+  def past(query), do: from([_q, i] in query, where: i.published_at <= ^Timex.now)
+
   def append(item) do
     entry = change(%NewsQueue{}, %{item_id: item.id})
 
@@ -90,13 +92,49 @@ defmodule Changelog.NewsQueue do
   end
 
   def publish_next do
-    case Repo.all(NewsQueue.queued) do
-      [entry | _rest] -> publish(entry)
-      [] -> publish(nil)
-    end
+    NewsQueue.queued
+    |> NewsQueue.limit(1)
+    |> Repo.one
+    |> publish
   end
 
-  def publish_next_maybe(per_day, interval) do
+  def publish_scheduled do
+    NewsQueue.scheduled
+    |> NewsQueue.past
+    |> NewsQueue.limit(1)
+    |> Repo.one
+    |> publish
+  end
+
+  def publish do
+    publish_scheduled() || publish_next_maybe(10 , 60)
+  end
+  def publish(item = %NewsItem{}) do
+    case Repo.get_by(NewsQueue, item_id: item.id) do
+      entry = %NewsQueue{} -> publish(entry)
+      nil -> publish_item(item)
+    end
+  end
+  def publish(entry = %NewsQueue{}) do
+    entry = Repo.preload(entry, :item)
+    publish_item(entry.item)
+    Repo.delete!(entry)
+    true
+  end
+  def publish(nil) do
+    Logger.info("News: Published bupkis")
+    false
+  end
+
+  defp publish_item(item = %NewsItem{}) do
+    item = NewsItem.publish!(item)
+    Task.start_link(fn -> Buffer.queue(item) end)
+    Task.start_link(fn -> Notifier.notify(item) end)
+    Logger.info("News: Published ##{item.id}")
+    true
+  end
+
+  defp publish_next_maybe(per_day, interval) do
     if one_chance_in(5) && nothing_recent(interval) && no_max(per_day) do
       publish_next()
     end
@@ -118,31 +156,5 @@ defmodule Changelog.NewsQueue do
     |> NewsItem.published_since()
     |> Repo.count
     |> Kernel.<(per_day)
-  end
-
-  def publish(item = %NewsItem{}) do
-    case Repo.get_by(NewsQueue, item_id: item.id) do
-      entry = %NewsQueue{} -> publish(entry)
-      nil -> publish_item(item)
-    end
-  end
-
-  def publish(entry = %NewsQueue{}) do
-    entry = Repo.preload(entry, :item)
-    publish_item(entry.item)
-    Repo.delete!(entry)
-  end
-
-  def publish(nil) do
-    Logger.info("News: Published bupkis")
-    false
-  end
-
-  defp publish_item(item = %NewsItem{}) do
-    item = NewsItem.publish!(item)
-    Task.start_link(fn -> Buffer.queue(item) end)
-    Task.start_link(fn -> Notifier.notify(item) end)
-    Logger.info("News: Published ##{item.id}")
-    true
   end
 end
