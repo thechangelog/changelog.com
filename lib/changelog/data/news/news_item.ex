@@ -150,6 +150,7 @@ defmodule Changelog.NewsItem do
   def decline!(item), do: item |> change(%{status: :declined}) |> Repo.update!
   def queue!(item), do: item |> change(%{status: :queued}) |> Repo.update!
   def publish!(item), do: item |> change(%{status: :published, published_at: Timex.now}) |> Repo.update!
+  def unpublish!(item), do: item |> change(%{status: :draft, published_at: nil}) |> Repo.update!
 
   def is_audio(item), do: item.type == :audio
   def is_video(item), do: item.type == :video

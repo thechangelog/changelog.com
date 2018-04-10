@@ -142,6 +142,15 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     |> redirect(to: admin_news_item_path(conn, :index))
   end
 
+  def unpublish(conn, %{"id" => id}) do
+    item = Repo.get!(NewsItem, id)
+    NewsItem.unpublish!(item)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: admin_news_item_path(conn, :index))
+  end
+
   def move(conn, %{"id" => id, "position" => position}) do
     item = Repo.get!(NewsItem, id)
     NewsQueue.move(item, String.to_integer(position))

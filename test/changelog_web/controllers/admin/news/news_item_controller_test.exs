@@ -124,6 +124,18 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   end
 
   @tag :as_admin
+  test "unpublishes a news item", %{conn: conn} do
+    news_item = insert(:published_news_item)
+    assert count(NewsItem.published) == 1
+
+    conn = post(conn, admin_news_item_path(conn, :unpublish, news_item))
+
+    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert count(NewsItem.published) == 0
+    assert count(NewsItem.drafted) == 1
+  end
+
+  @tag :as_admin
   test "declines a news item and redirects", %{conn: conn} do
     news_item = insert(:news_item)
 

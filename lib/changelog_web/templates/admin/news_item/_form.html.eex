@@ -158,6 +158,9 @@
     <%= if NewsItem.is_queued(f.data) do %>
       <button class="ui green fluid basic button" type="submit" name="queue" value="publish">Publish</button>
     <% end %>
+    <%= if NewsItem.is_published(f.data) do %>
+      <%= link("Unpublish", to: admin_news_item_path(@conn, :unpublish, f.data), class: "ui red fluid basic button", method: :post, data: [confirm: "Are you sure?"]) %>
+    <% end %>
     </div>
   <% else %>
     <div class="column"><button class="ui primary   fluid basic button" type="submit" name="queue" value="draft">Save Draft</button></div>
