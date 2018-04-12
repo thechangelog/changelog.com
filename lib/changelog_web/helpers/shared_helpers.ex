@@ -83,6 +83,9 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def sans_new_lines(string), do: String.replace(string, "\n", " ")
 
+  def is_future?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == 1
+  def is_past?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == -1
+
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do
       String.slice(string, 0, length) <> "..."

@@ -11,6 +11,30 @@ defmodule ChangelogWeb.SharedHelpersTest do
     end
   end
 
+  describe "is_future?" do
+    test "tests as of current time when given future DateTime" do
+      assert is_future?(hours_from_now(1))
+      refute is_future?(hours_ago(1))
+    end
+
+    test "tests as of given time when given future DateTIme" do
+      assert is_future?(hours_from_now(2), hours_from_now(1))
+      refute is_future?(hours_from_now(1), hours_from_now(2))
+    end
+  end
+
+  describe "is_past?" do
+    test "tests as of current time when given past DateTime" do
+      refute is_past?(hours_from_now(1))
+      assert is_past?(hours_ago(1))
+    end
+
+    test "tests as of given time when given past DateTIme" do
+      refute is_past?(hours_from_now(2), hours_from_now(1))
+      assert is_past?(hours_from_now(1), hours_from_now(2))
+    end
+  end
+
   describe "pluralize" do
     test "when it is sent a count" do
       assert pluralize(1, "person", "people") == "1 person"
