@@ -1,7 +1,6 @@
 <section class="live live--<%= @episode.podcast.slug %> is-upcoming js-live">
   <div class="live-content">
-    <%= link to: Wavestreamer.live_url(), role: "button", class: "live-button js-live-play-button",
-      data: [] do %>
+    <%= link(to: Wavestreamer.live_url(), role: "button", class: "live-button js-live-play-button", data: []) do %>
       <div class="live-button-bg"></div>
       <div class="live-button-icon">Play</div>
     <% end %>
@@ -9,7 +8,7 @@
     <div class="live-info">
       <header class="live-info-header">
         <h2 class="live-info-header-show">
-          <%= link EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
+          <%= link(EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank") %>
         </h2>
         <h1 class="live-info-header-title js-title"><%= @episode.title %></h1>
       </header>
@@ -21,7 +20,7 @@
         <div class="live-info-guests live-info-guests--<%= length(participants) %>">
         <%= for person <- participants do %>
           <article class="live-info-guests-item">
-            <%= link to: PersonView.external_url(person), title: "More Info", target: "_blank" do %>
+            <%= link(to: PersonView.external_url(person), title: "More Info", target: "_blank") do %>
               <img class="live-info-guests-item-image" src="<%= PersonView.avatar_url(person) %>" alt="<%= String.at(person.name,0) %>" width="150" height="150">
               <h2 class="live-info-guests-item-title"><%= if Enum.any?(@episode.guests), do: host_or_guest(@episode, person) %></h2>
               <h1 class="live-info-guests-item-name"><%= person.name %></h1>
@@ -33,9 +32,9 @@
         <div class="live-info-cta">
           <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
         <%= if @current_user do %>
-          <p>Join the discussion in our <%= link raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{@podcast.slug}" %>.</p>
+          <p>Join the discussion in our <%= link(raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{@podcast.slug}") %>.</p>
         <% else %>
-          <p>Join the discussion in our <%= link raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community) %>.</p>
+          <p>Join the discussion in our <%= link(raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %>.</p>
           <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a>.</small></p>
         <% end %>
         </div>
@@ -51,19 +50,7 @@
 
     <ul class="live-footer-stats">
       <li><strong>Start Time</strong> <%= TimeView.ts(@episode.recorded_at, "live") %></li>
-      <!--<li><strong>Elapsed</strong> 00:00:00</li>-->
     </ul>
-
-    <!--<p class="live-footer-share">
-      <img src="/images/icon/icon-share-white.svg" alt="Share" width="29" height="26">
-      <%= link "Share",
-          title: "Share",
-          to: "javascript:void(0);",
-          class: "js-share-popup",
-          data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
-          target: "_blank" %>
-    </p>-->
-
     <div class="live-footer-status js-live-status">Upcoming</div>
   </footer>
 </section>

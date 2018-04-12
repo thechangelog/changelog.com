@@ -11,7 +11,7 @@
 
     <%= link "Subscribe",
         title: "",
-        to: "javascript:void(0);",
+        to: {:javascript, "javascript:void(0);"},
         class: "toolbar_item toolbar_item--button has-tooltip",
         style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
     <%= render(PodcastView, "_podcast_subscribe.html", conn: @conn, podcast: @episode.podcast) %>
@@ -24,7 +24,7 @@
 
     <%= link "Share",
         title: "Share",
-        to: "javascript:void(0);",
+        to: {:javascript, "javascript:void(0);"},
         class: "toolbar_item toolbar_item--button",
         data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
         style: "background-image: url('#{static_url(@conn, "/images/icons/icon-share.svg")}')" %>

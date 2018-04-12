@@ -37,7 +37,7 @@ defmodule Changelog.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.0"},
+      {:phoenix, "~> 1.3.0", override: true},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
       {:phoenix_html, "~> 2.10"},
@@ -53,9 +53,9 @@ defmodule Changelog.Mixfile do
       {:hashids, "~> 2.0"},
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.3"},
-      {:httpoison, "~> 0.13.0"},
+      {:httpoison, "~> 1.0", override: true},
       {:con_cache, "~> 0.12.0"},
-      {:plug_ets_cache, github: "gnufede/plug_ets_cache"},
+      {:plug_ets_cache, "~> 0.2.0"},
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
       {:ex_aws, "~> 1.1"}, # can't upgrade to 2.0 until arc supports it
       {:nimble_csv, "~> 0.4"},
@@ -66,7 +66,7 @@ defmodule Changelog.Mixfile do
       {:quantum, ">= 2.1.0"},
       {:oauth, github: "tim/erlang-oauth"},
       {:ueberauth_github, "~> 0.4"},
-      {:ueberauth_twitter, "~> 0.2"},
+      {:ueberauth_twitter, github: "jerodsanto/ueberauth_twitter"},
       {:ex_machina, "~> 2.0"},
       {:rollbax, "~> 0.8.2"},
       {:html_entities, "~> 0.3"},

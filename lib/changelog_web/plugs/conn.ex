@@ -7,7 +7,7 @@ defmodule ChangelogWeb.Plug.Conn do
   def put_encrypted_cookie(conn, key, value, opts \\ []) do
     opts = Keyword.put_new(opts, :max_age, 31_536_000) # one year
 
-    encrypted = Plug.Crypto.MessageEncryptor.encrypt_and_sign(
+    encrypted = Plug.Crypto.MessageEncryptor.encrypt(
       :erlang.term_to_binary(value),
       generate(conn, @signing_salt, key_opts()),
       generate(conn, @encryption_salt, key_opts()))
@@ -20,7 +20,7 @@ defmodule ChangelogWeb.Plug.Conn do
       nil ->
         nil
       encrypted ->
-        {:ok, decrypted} = Plug.Crypto.MessageEncryptor.verify_and_decrypt(
+        {:ok, decrypted} = Plug.Crypto.MessageEncryptor.decrypt(
           encrypted,
           generate(conn, @signing_salt, key_opts()),
           generate(conn, @encryption_salt, key_opts()))
