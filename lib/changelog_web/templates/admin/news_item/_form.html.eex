@@ -170,12 +170,21 @@
     </div>
   </div>
 <% else %>
-  <div class="ui two column stackable grid">
-    <div class="column"><button class="ui primary   fluid basic button" type="submit" name="queue" value="draft">Save as draft</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="append">Queue for publishing (bottom)</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="publish">Publish right now (skips queue)</button></div>
-    <div class="column"><button class="ui secondary fluid basic button" type="submit" name="queue" value="prepend">Queue for publishing (top)</button></div>
-    <div class="column"><button class="ui secondary fluid basic button js-schedule" type="submit" name="queue" value="append">Schedule to be published</button></div>
+  <div class="ui equal width stackable grid">
+    <div class="column"><button class="ui primary   fluid basic button" type="submit" name="queue" value="draft">Save</button></div>
+    <div class="column">
+      <div class="ui fluid secondary basic buttons">
+        <button class="ui button" type="submit" name="queue" value="append" style="padding-left: 60px; padding-right: 40px;">Publish</button>
+        <div class="ui icon dropdown button">
+          <i class="angle down icon"></i>
+          <div class="menu">
+            <button class="link item" type="submit" name="queue" value="publish">Publish Now</button>
+            <button class="link item" type="submit" name="queue" value="prepend">Publish Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column"><button class="ui secondary fluid basic button js-schedule" type="submit" name="queue" value="append">Schedule</button></div>
   </div>
 <% end %>
   </div>
