@@ -7,6 +7,13 @@
     <%= form_tag "#{@action}/publish", method: "POST", id: "publish", class: "ui small form" do %>
       <div class="inline field">
         <div class="ui toggle checkbox">
+          <input type="checkbox" name="news" class="hidden" value="1" checked>
+          <label>Post to Changelog News <%= help_icon("The item's publish time will match the episode's.") %></label>
+        </div>
+      </div>
+
+      <div class="inline field">
+        <div class="ui toggle checkbox">
         <%= if Enum.any?(@changeset.data.guests) do %>
           <input type="checkbox" name="thanks" class="hidden" value="1" checked>
         <% else %>

@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, EpisodeTopic, EpisodeHost, EpisodeStat, Mailer,
-                   NewsItem, Podcast, Transcripts}
+                   NewsItem, NewsQueue, Podcast, Transcripts}
   alias ChangelogWeb.Email
 
   plug :assign_podcast
@@ -151,7 +151,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
 
-  def publish(conn, params = %{"id" => slug}, podcast) do
+  def publish(conn, %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
@@ -160,7 +160,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
-        handle_thanks_email(episode, params)
+        handle_thanks_email(conn, episode)
+        handle_news_item(conn, episode)
 
         conn
         |> put_flash(:result, "success")
@@ -208,14 +209,36 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     assign(conn, :podcast, podcast)
   end
 
-  defp handle_thanks_email(episode, params) do
-    if Map.has_key?(params, "thanks") do
-      episode = Episode.preload_guests(episode)
-      email_opts = Map.take(params, ["from", "reply", "subject", "message"])
+  defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do
+    episode =
+      episode
+      |> Episode.preload_podcast
+      |> Episode.preload_topics
 
-      for guest <- episode.guests do
-        Email.guest_thanks(guest, email_opts) |> Mailer.deliver_later
-      end
+    topics = Enum.map(episode.episode_topics, fn(t) -> Map.take(t, [:topic_id, :position]) end)
+
+    %NewsItem{
+      type: :audio,
+      object_id: "#{episode.podcast.slug}:#{episode.slug}",
+      url: episode_url(conn, :show, episode.podcast.slug, episode.slug),
+      headline: (episode.headline || episode.title),
+      story: episode.summary,
+      published_at: episode.published_at,
+      logger_id: conn.assigns.current_user.id,
+      news_item_topics: topics}
+    |> NewsItem.insert_changeset
+    |> Repo.insert!
+    |> NewsQueue.append
+  end
+  defp handle_news_item(_, _), do: false
+
+  defp handle_thanks_email(conn = %{params: %{"thanks" => _}}, episode) do
+    episode = Episode.preload_guests(episode)
+    email_opts = Map.take(conn.params, ["from", "reply", "subject", "message"])
+
+    for guest <- episode.guests do
+      Email.guest_thanks(guest, email_opts) |> Mailer.deliver_later
     end
   end
+  defp handle_thanks_email(_, _), do: false
 end

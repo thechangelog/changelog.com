@@ -62,9 +62,7 @@ defmodule Changelog.NewsItem do
   def top_ctr_first(query \\ __MODULE__),         do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
   def top_impressed_first(query \\ __MODULE__), do: from(q in query, order_by: [desc: :impression_count])
 
-  def file_changeset(item, attrs \\ %{}) do
-    cast_attachments(item, attrs, ~w(image), allow_urls: true)
-  end
+  def file_changeset(item, attrs \\ %{}), do: cast_attachments(item, attrs, ~w(image), allow_urls: true)
 
   def insert_changeset(item, attrs \\ %{}) do
     item

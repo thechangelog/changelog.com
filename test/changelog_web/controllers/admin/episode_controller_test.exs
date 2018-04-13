@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
   import Mock
 
-  alias Changelog.{Episode, Transcripts}
+  alias Changelog.{Episode, NewsItem, NewsQueue, Transcripts}
 
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
@@ -144,6 +144,34 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert count(Episode.published) == 1
     assert_delivered_email ChangelogWeb.Email.guest_thanks(g1, email_opts)
     assert_delivered_email ChangelogWeb.Email.guest_thanks(g2, email_opts)
+  end
+
+  @tag :as_inserted_admin
+  test "publishes an episode, optionally creating an associated news item", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{"news" => "1"})
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 1
+    assert count(NewsQueue) == 1
+    item = NewsItem |> NewsItem.with_episode(e) |> Repo.one
+    assert item.headline == e.title
+    assert item.published_at == e.published_at
+  end
+
+  @tag :as_inserted_admin
+  test "publishes an episode, optionally not creating an associated news item", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 1
+    assert count(NewsItem) == 0
+    assert count(NewsQueue) == 0
   end
 
   @tag :as_admin
