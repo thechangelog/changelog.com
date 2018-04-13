@@ -4,7 +4,7 @@ defmodule Changelog.Buffer do
 
   @errbody     ~w(506b005149bbd8223400006b 5226807fe2965a1f3100001c)
   @changelog   ~w(4f3ad7c8512f7ef962000004)
-  @jsparty     ~w(5734d7fc1b14578733224a70)
+  @jsparty     ~w(58b47fd78d23761f5f19ca89)
   @gotime      ~w(5734d7fc1b14578733224a70)
   @practicalai ~w(5ac3c64b3fda312b116ca788)
 
