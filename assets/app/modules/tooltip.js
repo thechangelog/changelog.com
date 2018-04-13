@@ -28,7 +28,7 @@ export default class Tooltip {
         const siblingTooltip = u(el).siblings(".tooltip");
         u(".tooltip").not(siblingTooltip).removeClass("is-visible");
         u(el).siblings(".tooltip").toggleClass("is-visible");
-        tooltip.scheduleUpdate();
+        tooltip.update();
       });
     });
   }

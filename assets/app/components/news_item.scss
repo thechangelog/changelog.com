@@ -211,6 +211,9 @@
     &-play_button,
     &-video_button,
     &-image_button {
+      background-color: $white;
+      background-position: center;
+      background-repeat: no-repeat;
       border: 1px solid $light-grey;
       border-radius: $base-border-radius;
       padding: 0.5em 0.3em 0.3em;
@@ -221,17 +224,17 @@
     }
 
     &-play_button {
-      background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
+      background-image: url('/images/icons/toolbar-play.svg');
       &.is-active { background-image: url('/images/icons/toolbar-pause.svg'); }
     }
 
     &-video_button {
-      background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
+      background-image: url('/images/icons/toolbar-play.svg');
       &.is-active { background-image: url('/images/icons/toolbar-close.svg'); }
     }
 
     &-image_button {
-      background: $white url('/images/icons/toolbar-image.svg') center no-repeat;
+      background-image: url('/images/icons/toolbar-image.svg');
       background-size: auto 22px;
       &.is-active { background-image: url('/images/icons/toolbar-close.svg'); }
     }
@@ -248,14 +251,12 @@
       &-item {
         padding: 0 4px;
 
-        &:after {
-          content: "\2022";
+        .has-tooltip {
+          cursor: pointer;
         }
 
-        &:last-child {
-
-          &:after { display: none; }
-        }
+        &:after { content: "\2022"; }
+        &:last-child:after { display: none; }
       }
 
       @include breakpoint(mobile, max) {
@@ -265,7 +266,6 @@
         &-item {
           &:first-child {
             flex: 0 0 100%;
-
             &:after { display: none; }
           }
         }

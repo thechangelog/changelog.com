@@ -138,8 +138,8 @@ defmodule ChangelogWeb.NewsItemView do
     |> Enum.join(" ")
   end
 
-  def topic_link_list(conn, item) do
-    item.topics
+  def topic_link_list(conn, item, limit \\ 0) do
+    visible = Enum.slice(item.topics, 0..(limit-1))
     |> Enum.map(fn(topic) ->
       {:safe, el} = link("\##{topic.slug}", to: topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
       el

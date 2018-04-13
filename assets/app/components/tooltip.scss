@@ -2,14 +2,18 @@
   $arrowSize: 10px;
   $background: #252B32;
   $padding: 10px 20px;
+  font-family: $content;
   display: none;
   margin: $arrowSize 0;
   text-align: left;
+  z-index: 9999;
 
   &.is-visible { display: block; }
 
-  a {
+  a,
+  li a {
     color: $white;
+    text-decoration: none !important;
     &:hover { color: rgba($white, 0.8); }
   }
 
@@ -27,6 +31,7 @@
       color: $white;
       font-size: 16px;
       font-style: normal;
+      line-height: 1.5em;
       padding-right: 1em;
 
       &.tooltip-list-heading {
