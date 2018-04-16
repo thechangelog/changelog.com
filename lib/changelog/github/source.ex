@@ -1,13 +1,15 @@
 defmodule Changelog.Github.Source do
   alias ChangelogWeb.PodcastView
 
+  @org "thechangelog"
   @html_host "https://github.com"
   @raw_host "https://raw.githubusercontent.com"
+  @repos ~w(show-notes transcripts)
 
-  def repo_name(repo), do: "thechangelog/#{repo}"
-  def repo_url(repo), do: "#{@html_host}/#{repo_name(repo)}"
-  def html_url(repo, episode), do: "#{@html_host}/#{repo_name(repo)}/blob/master/#{path(episode)}"
-  def raw_url(repo, episode), do: "#{@raw_host}/#{repo_name(repo)}/master/#{path(episode)}"
+  def repo_regex, do: ~r/\A(?<org>#{@org})\/(?<repo>#{Enum.join(@repos, "|")})\z/
+  def repo_url(repo), do: [@html_host, @org, repo] |> Enum.join("/")
+  def html_url(repo, episode), do: [repo_url(repo), "blob", "master", path(episode)] |> Enum.join("/")
+  def raw_url(repo, episode), do: [@raw_host, @org, repo, "master", path(episode)] |> Enum.join("/")
 
   defp path(episode) do
     podcast_name = PodcastView.dasherized_name(episode.podcast)

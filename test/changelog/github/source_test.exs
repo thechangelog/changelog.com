@@ -3,8 +3,10 @@ defmodule Changelog.Github.SourceTest do
 
   alias Changelog.Github.Source
 
-  test "repo_name/1" do
-    assert Source.repo_name("transcripts") == "thechangelog/transcripts"
+  test "repo_regex" do
+    assert Regex.match?(Source.repo_regex(), "thechangelog/transcripts")
+    refute Regex.match?(Source.repo_regex(), "thechangelog/nightly")
+    refute Regex.match?(Source.repo_regex(), "jerodsanto/changelog.com")
   end
 
   test "repo_url/1" do
