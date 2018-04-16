@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.GithubController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{ShowNotes, Transcripts}
+  alias Changelog.{Github}
 
   require Logger
 
@@ -17,13 +17,13 @@ defmodule ChangelogWeb.GithubController do
       "thechangelog/show-notes" ->
         commits
         |> added_or_modified_files
-        |> ShowNotes.Updater.update
+        |> Github.Updater.update("show-notes")
 
         json(conn, %{})
       "thechangelog/transcripts" ->
         commits
         |> added_or_modified_files
-        |> Transcripts.Updater.update
+        |> Github.Updater.update("transcripts")
 
         json(conn, %{})
       _else ->
