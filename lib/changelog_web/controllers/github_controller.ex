@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.GithubController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Github}
+  alias Changelog.Github
 
   require Logger
 
@@ -12,22 +12,15 @@ defmodule ChangelogWeb.GithubController do
     end
   end
 
-  defp push_event(conn, params = %{"repository" => %{"full_name" => repo}, "commits" => commits}) do
-    case repo do
-      "thechangelog/show-notes" ->
+  defp push_event(conn, params = %{"repository" => %{"full_name" => full_name}, "commits" => commits}) do
+    case Regex.named_captures(Github.Source.repo_regex(), full_name) do
+      %{"repo" => repo} ->
         commits
         |> added_or_modified_files
-        |> Github.Updater.update("show-notes")
+        |> Github.Updater.update(repo)
 
         json(conn, %{})
-      "thechangelog/transcripts" ->
-        commits
-        |> added_or_modified_files
-        |> Github.Updater.update("transcripts")
-
-        json(conn, %{})
-      _else ->
-        unsupported_event(conn, params, "push #{repo}")
+      nil -> unsupported_event(conn, params, "push #{full_name}")
     end
   end
   defp push_event(conn, params) do
