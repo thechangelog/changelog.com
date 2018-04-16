@@ -22,6 +22,11 @@ defmodule ChangelogWeb.PageController do
 
   def guest(conn, slug) when is_nil(slug), do: guest(conn, "podcast")
   def guest(conn, slug) do
+    active =
+      Podcast.active
+      |> Podcast.oldest_first
+      |> Repo.all
+
     podcast = Podcast.get_by_slug(slug)
     episode =
       Podcast.get_episodes(podcast)
@@ -31,7 +36,7 @@ defmodule ChangelogWeb.PageController do
       |> Repo.one
       |> Episode.preload_podcast
 
-    render(conn, :guest, podcast: podcast, episode: episode)
+    render(conn, :guest, active: active, podcast: podcast, episode: episode)
   end
 
   def home(conn, _params) do

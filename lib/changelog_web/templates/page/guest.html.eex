@@ -1,11 +1,12 @@
 <article class="article">
   <div class="richtext">
     <h1>Be Our Guest</h1>
-    <p>First off, <mark>thank you</mark> for joining us on <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
-      <option value="podcast" <%= if @podcast.slug == "podcast", do: "selected" %>>The Changelog</option>
-      <option value="gotime" <%= if @podcast.slug == "gotime", do: "selected" %>>Go Time</option>
-      <option value="rfc" <%= if @podcast.slug == "rfc", do: "selected" %>>Request For Commits</option>
-      <option value="jsparty" <%= if @podcast.slug == "jsparty", do: "selected" %>>JS Party</option>
+    <p>First off, <mark>thank you</mark> for joining us on
+
+    <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
+    <%= for podcast <- @active do %>
+      <option value="<%= podcast.slug %>" <%= if @podcast.slug == podcast.slug, do: "selected" %>><%= podcast.name %></option>
+    <% end %>
     </select>! Here's what you can expect:</p>
 
     <h3 id="before">Before Recording</h3>
