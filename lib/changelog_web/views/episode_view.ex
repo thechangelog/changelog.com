@@ -3,7 +3,7 @@ defmodule ChangelogWeb.EpisodeView do
 
   import ChangelogWeb.Meta.{Title, Description}
 
-  alias Changelog.{Episode, Files, Transcripts}
+  alias Changelog.{Episode, Files, Github}
   alias ChangelogWeb.{Endpoint, LayoutView, PersonView, PodcastView, SponsorView, TimeView}
 
   def admin_edit_link(conn, user, episode) do
@@ -104,8 +104,12 @@ defmodule ChangelogWeb.EpisodeView do
     Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.dark_logo) end)
   end
 
+  def show_notes_source_url(episode) do
+    Github.Source.html_url("show-notes", episode)
+  end
+
   def transcript_source_url(episode) do
-    Transcripts.Source.html_url(episode)
+    Github.Source.html_url("transcripts", episode)
   end
 
   def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do

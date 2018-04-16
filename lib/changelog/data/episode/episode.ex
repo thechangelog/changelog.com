@@ -184,6 +184,12 @@ defmodule Changelog.Episode do
     |> Repo.update!
   end
 
+  def update_notes(episode, text) do
+    episode
+    |> change(notes: text)
+    |> Repo.update!
+  end
+
   def update_transcript(episode, text) do
     parsed = Transcripts.Parser.parse_text(text, participants(episode))
 
