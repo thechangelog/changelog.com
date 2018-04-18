@@ -88,15 +88,13 @@ defmodule Changelog.Buffer.Content do
   defp author_meta(%{author: %{twitter_handle: handle}}), do: "#{author_emoji()} by @#{handle}"
 
   defp featuring_meta([]), do: nil
-  defp featuring_meta(people) do
-    "#{featuring_emoji()} Featuring #{twitterized(people)}"
-  end
+  defp featuring_meta(people), do: "#{featuring_emoji()} #{twitterized(people)}"
 
   defp source_meta(%{source: nil}), do: nil
   defp source_meta(%{source: %{twitter_handle: nil}}), do: nil
   defp source_meta(%{source: %{twitter_handle: handle}}), do: "#{source_emoji()} via @#{handle}"
 
-  defp title_meta(episode), do: "#{title_emoji()} #{episode.title}"
+  defp title_meta(episode), do: "#{title_emoji()} #{episode.headline || episode.title}"
 
   defp topic_meta([]), do: nil
   defp topic_meta(topics) do

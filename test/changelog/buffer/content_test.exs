@@ -18,6 +18,16 @@ defmodule Changelog.Buffer.ContentTest do
   end
 
   describe "episode_text" do
+    test "it uses episode headline if exists and falls back to title" do
+      ep1 = insert(:published_episode, title: "The Best", headline: "Evar!")
+      item1 = ep1 |> episode_news_item() |> insert
+      assert Content.episode_text(item1) =~ "Evar!"
+
+      ep2 = insert(:published_episode, title: "The Best")
+      item2 = ep2 |> episode_news_item() |> insert
+      assert Content.episode_text(item2) =~ "The Best"
+    end
+
     test "includes participant twitter handles and falls back to names" do
       g1 = insert(:person, twitter_handle: "janedoe")
       g2 = insert(:person, name: "John Doe")
