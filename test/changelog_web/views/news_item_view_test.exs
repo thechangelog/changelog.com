@@ -3,8 +3,6 @@ defmodule ChangelogWeb.NewstemViewTest do
 
   import ChangelogWeb.NewsItemView
 
-  alias Changelog.NewsItem
-
   describe "object_path" do
     test "defaults to nil when object is nil" do
       item = build(:news_item, object_id: nil)
@@ -53,9 +51,10 @@ defmodule ChangelogWeb.NewstemViewTest do
 
   describe "slug" do
     test "downcases, removes non-alpha-numeric, converts spaces to dashes, appends hashid" do
-      assert slug(%NewsItem{id: 1, headline: "Oh! Wow?"}) == "oh-wow-z4"
-      assert slug(%NewsItem{id: 1, headline: "ZOMG 🙌 an ^emoJI@"}) == "zomg-an-emoji-z4"
-      assert slug(%NewsItem{id: 1, headline: "The 4 best things EVAR"}) == "the-4-best-things-evar-z4"
+      assert slug(%{id: 1, headline: "Oh! Wow?"}) == "oh-wow-z4"
+      assert slug(%{id: 1, headline: "ZOMG 🙌 an ^emoJI@"}) == "zomg-an-emoji-z4"
+      assert slug(%{id: 1, headline: "The 4 best things EVAR"}) == "the-4-best-things-evar-z4"
+      assert slug(%{id: 1, headline: "🎮 An NES emulator written in Go 🎮"}) == "an-nes-emulator-written-in-go-z4"
     end
   end
 end

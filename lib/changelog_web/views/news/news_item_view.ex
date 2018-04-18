@@ -115,6 +115,7 @@ defmodule ChangelogWeb.NewsItemView do
     item.headline
     |> String.downcase
     |> String.replace(~r/[^a-z0-9\s]/, "")
+    |> String.trim
     |> String.replace(~r/\s+/, "-")
     |> Kernel.<>("-#{hashid(item)}")
   end
