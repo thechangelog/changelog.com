@@ -16,6 +16,7 @@
 
           <div class="header-nav-secondary">
             <ul class="header-nav-list">
+              <li class="header-nav-list-item header-nav-list-item--live <%= active_class(@conn, ["live"]) %>"><%= link "Live", to: live_path(@conn, :index) %></li>
               <li class="header-nav-list-item is-desktop_only"><%= link "Submit News", to: news_item_path(@conn, :new), class: "header-button" %></li>
             </ul>
 
