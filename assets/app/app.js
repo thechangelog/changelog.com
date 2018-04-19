@@ -21,6 +21,13 @@ const overlay = new Overlay("#overlay");
 
 window.u = u;
 
+u(document).on("click", function(event) {
+  const target = u(event.target);
+  if ((!target.closest('.tooltip').length) && (!target.hasClass('has-tooltip'))) {
+    u(".tooltip").removeClass("is-visible");
+  }
+});
+
 u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
 
