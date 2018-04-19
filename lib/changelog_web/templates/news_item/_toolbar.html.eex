@@ -21,7 +21,7 @@
 
     <%= if Enum.any?(additional_topics) do %>
       <span class="has-tooltip">+<%= length(additional_topics) %></span>
-      <div class="tooltip tooltip--white">
+      <div class="tooltip tooltip--topics">
         <div class="tooltip-arrow"></div>
         <div class="tooltip-wrap">
           <ul class="tooltip-list">

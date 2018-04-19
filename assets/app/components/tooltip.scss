@@ -20,6 +20,11 @@
   &-wrap {
     background: $background;
     padding: 5px 0;
+
+    .tooltip--topics & {
+      font-family: $code;
+      background: $lightest-grey;
+    }
   }
 
   &-list {
@@ -33,6 +38,17 @@
       font-style: normal;
       line-height: 1.25em;
       padding: 0.25em 1em 0.25em 0;
+
+      .tooltip--topics & {
+        font-size: 13px;
+
+        a {
+          color: $black;
+          &:hover {
+            color: $medium-grey;
+          }
+        }
+      }
 
       &.tooltip-list-heading {
         color: $half-white;
@@ -61,6 +77,10 @@
     position: absolute;
     margin: $arrowSize;
     border-color: $background;
+
+    .tooltip--topics & {
+      border-color: $lightest-grey;
+    }
   }
 
   &[x-placement^="top"] {
