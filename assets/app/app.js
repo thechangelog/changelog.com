@@ -21,9 +21,10 @@ const overlay = new Overlay("#overlay");
 
 window.u = u;
 
+// Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
   const target = u(event.target);
-  if ((!target.closest('.tooltip').length) && (!target.hasClass('has-tooltip'))) {
+  if ((!target.closest('.has-tooltip').length) && (!target.closest('.tooltip').length) && (!target.hasClass('has-tooltip'))) {
     u(".tooltip").removeClass("is-visible");
   }
 });
