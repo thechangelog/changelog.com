@@ -9,7 +9,8 @@ defmodule ChangelogWeb.Admin.PageController do
        Newsletters.weekly(),
        Newsletters.nightly(),
        Newsletters.gotime(),
-       Newsletters.jsparty()]
+       Newsletters.jsparty(),
+       Newsletters.practicalai()]
       |> Enum.map(&Newsletters.get_stats/1)
 
     render(conn, :index,
@@ -42,7 +43,7 @@ defmodule ChangelogWeb.Admin.PageController do
   end
 
   defp podcasts do
-    Podcast.public
+    Podcast.active
     |> Podcast.oldest_first
     |> Repo.all
   end

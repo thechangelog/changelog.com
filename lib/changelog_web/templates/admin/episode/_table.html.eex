@@ -9,7 +9,6 @@
       <th>Duration</th>
       <th>Publish Date</th>
     <% end %>
-      <th>Downloads</th>
       <th>Reach</th>
       <th></th>
     </tr>
@@ -26,7 +25,6 @@
       <% else %>
       <td><%= ts(episode.recorded_at) %></td>
       <% end %>
-      <td><%= download_count(episode) %></td>
       <td><%= reach_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">

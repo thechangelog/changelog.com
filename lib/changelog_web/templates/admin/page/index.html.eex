@@ -77,14 +77,14 @@
 </div>
 
 <div class="ui basic segment">
-  <div class="ui stackable centered grid">
+  <div class="ui stackable centered three column grid">
   <%= for podcast <- @podcasts do %>
-    <div class="ui eight wide column">
+    <div class="column">
       <div class="ui segment">
         <h3 class="ui center aligned header">
           <div class="content">
             <i class="sound icon"></i>
-            <%= link podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug) %>
+            <%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
           </div>
         </h3>
 
