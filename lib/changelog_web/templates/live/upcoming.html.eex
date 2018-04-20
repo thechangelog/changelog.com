@@ -6,7 +6,7 @@
         <div class="live_upcoming-grid-item">
           <div class="live_upcoming-grid-item-image">
             <%= link to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" do %>
-              <img alt="<%= episode.podcast.name %> Show Artwork" src="<%= PodcastView.cover_path(episode.podcast, :medium) %>" alt="<%= episode.podcast.name %> Podcast" width="120" height="120"/>
+              <img alt="<%= episode.podcast.name %> Show Artwork" src="<%= PodcastView.cover_url(episode.podcast, :medium) %>" alt="<%= episode.podcast.name %> Podcast" width="120" height="120"/>
             <% end %>
           </div>
 
