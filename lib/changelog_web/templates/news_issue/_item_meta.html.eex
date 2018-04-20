@@ -10,7 +10,11 @@
     via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter)) %></strong>
   <% end %>
   <%= if Enum.any?(@item.topics) do %>
-    • <span class="news_item-toolbar-meta-item"><%= NewsItemView.topic_link_list(@conn, @item) |> raw %></span>
+    • <span class="news_item-toolbar-meta-item">
+        <%= for topic <- @item.topics do %>
+          <%= NewsItemView.topic_link(@conn, topic) %>
+        <% end %>
+      </span>
   <% end %>
   </span>
 </p>

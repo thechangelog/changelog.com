@@ -2,20 +2,29 @@
   $arrowSize: 10px;
   $background: #252B32;
   $padding: 10px 20px;
+  font-family: $content;
   display: none;
   margin: $arrowSize 0;
   text-align: left;
+  z-index: 9999;
 
   &.is-visible { display: block; }
 
-  a {
+  a,
+  li a {
     color: $white;
+    text-decoration: none !important;
     &:hover { color: rgba($white, 0.8); }
   }
 
   &-wrap {
     background: $background;
     padding: 5px 0;
+
+    .tooltip--topics & {
+      font-family: $code;
+      background: $lightest-grey;
+    }
   }
 
   &-list {
@@ -27,7 +36,19 @@
       color: $white;
       font-size: 16px;
       font-style: normal;
-      padding-right: 1em;
+      line-height: 1.25em;
+      padding: 0.25em 1em 0.25em 0;
+
+      .tooltip--topics & {
+        font-size: 13px;
+
+        a {
+          color: $black;
+          &:hover {
+            color: $medium-grey;
+          }
+        }
+      }
 
       &.tooltip-list-heading {
         color: $half-white;
@@ -56,6 +77,10 @@
     position: absolute;
     margin: $arrowSize;
     border-color: $background;
+
+    .tooltip--topics & {
+      border-color: $lightest-grey;
+    }
   }
 
   &[x-placement^="top"] {

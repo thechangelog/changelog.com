@@ -139,13 +139,8 @@ defmodule ChangelogWeb.NewsItemView do
     |> Enum.join(" ")
   end
 
-  def topic_link_list(conn, item) do
-    item.topics
-    |> Enum.map(fn(topic) ->
-      {:safe, el} = link("\##{topic.slug}", to: topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
-      el
-      end)
-    |> Enum.join(" ")
+  def topic_link(conn, topic) do
+    link("##{topic.slug}", to: topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
   end
 
   def video_embed(item = %{type: :video}) do
