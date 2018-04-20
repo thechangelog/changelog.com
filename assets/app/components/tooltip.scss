@@ -23,12 +23,15 @@
 
     .tooltip--topics & {
       font-family: $code;
-      background: $lightest-grey;
     }
   }
 
   &-list {
     padding: $padding;
+
+    .tooltip--topics & {
+      padding: 3px 15px 6px;
+    }
 
     &--centered { text-align: center; }
 
@@ -41,13 +44,6 @@
 
       .tooltip--topics & {
         font-size: 13px;
-
-        a {
-          color: $black;
-          &:hover {
-            color: $medium-grey;
-          }
-        }
       }
 
       &.tooltip-list-heading {
@@ -77,10 +73,6 @@
     position: absolute;
     margin: $arrowSize;
     border-color: $background;
-
-    .tooltip--topics & {
-      border-color: $lightest-grey;
-    }
   }
 
   &[x-placement^="top"] {
