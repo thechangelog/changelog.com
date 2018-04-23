@@ -1,5 +1,5 @@
 <%= if @page.total_pages > 1 do %>
   <nav class="pagination pagination--more" role="menubar" aria-label="Pagination">
-    <%= link "more", to: pagination_path(+1, assigns), class: "pagination-more_button" %>
+    <%= link("more", to: pagination_path(+1, assigns), rel: "next", title: "Next Page", class: "pagination-more_button") %>
   </nav>
 <% end %>

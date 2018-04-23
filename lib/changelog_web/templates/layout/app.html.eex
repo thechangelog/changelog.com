@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= page_title(assigns) %></title>
-    <link rel="canonical" content="<%= canonical_url(@conn) %>">
+    <link rel="canonical" href="<%= canonical_url(@conn) %>">
     <meta name="description" content="<%= description(assigns) %>">
     <meta name="copyright" content="Changelog Media LLC">
   <% twitter_card_type = twitter_card_type(assigns) %>
