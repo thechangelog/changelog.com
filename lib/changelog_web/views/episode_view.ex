@@ -9,7 +9,12 @@ defmodule ChangelogWeb.EpisodeView do
   def admin_edit_link(conn, user, episode) do
     if user && user.admin do
       path = admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))
-      link("[Edit]", to: path, data: [turbolinks: false])
+      content_tag(:span) do
+        [
+          link("[Edit]", to: path, data: [turbolinks: false]),
+          content_tag(:span, " (#{episode.reach_count})")
+        ]
+      end
     end
   end
 
