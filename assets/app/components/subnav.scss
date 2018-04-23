@@ -1,5 +1,6 @@
 .subnav {
   margin-bottom: $base-spacing*1.5;
+  padding-top: 20px;
   position: relative;
 
   &:before {
@@ -24,7 +25,7 @@
         display: block;
         font-size: 0.825em;
         height: 42px;
-        padding: 0 0.5em 0.5em 0;
+        padding: 0 0.5em 0.5em;
         transform: translateY(1px);
         transition: border 0.2s $base-easing;
 
@@ -37,6 +38,10 @@
           margin: 0;
           position: relative;
           top: -1px;
+
+          @include breakpoint(tablet, max) {
+            display: none;
+          }
         }
       }
 

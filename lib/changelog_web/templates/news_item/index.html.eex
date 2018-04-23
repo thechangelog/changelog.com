@@ -2,6 +2,7 @@
   <%= render(SharedView, "_signup.html", assigns) %>
 <% end %>
 
+<a id="feed" class="anchor"></a>
 <div class="feed">
 <%= if @page.page_number == 1 do %>
   <%= for item <- @pinned, do: render_item_summary_or_ad(item, assigns) %>

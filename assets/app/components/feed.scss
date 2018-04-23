@@ -11,6 +11,12 @@
 .search {
   margin-bottom: 30px !important;
 
+  .subnav {
+    @include breakpoint(mobile, max) {
+      margin: 0 $base-spacing;
+    }
+  }
+
   &-note {
     font-family: $code;
     font-size: 0.825em;
