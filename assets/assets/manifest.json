@@ -1,5 +1,9 @@
 {
     "name": "Changelog",
+    "short_name": "Changelog",
+    "start_url": ".",
+    "display": "standalone",
+    "description": "News and podcasts for developers",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,6 +17,5 @@
         }
     ],
     "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    "background_color": "#ffffff"
 }

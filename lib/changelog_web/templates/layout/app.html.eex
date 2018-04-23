@@ -41,6 +41,7 @@
   <% end %>
     <link href="<%= json_feed_url(@conn, :news) %>" rel="alternate" title="JSON News Feed" type="application/json">
     <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
+    <link rel="manifest" href="<%= static_url(@conn, "/manifest.json") %>">
     <script defer src="<%= static_url(@conn, "/js/app.js") %>"></script>
     <%= render("_head_scripts.html", assigns) %>
    <meta property="csrf" content="<%= get_csrf_token() %>">
