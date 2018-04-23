@@ -13,7 +13,7 @@ defmodule ChangelogWeb.GithubController do
   end
 
   defp push_event(conn, params = %{"repository" => %{"full_name" => full_name}, "commits" => commits}) do
-    case Regex.named_captures(Github.Source.repo_regex(), full_name) do
+    case extract_supported_repository_from(full_name) do
       %{"repo" => repo} ->
         commits
         |> added_or_modified_files
@@ -32,6 +32,10 @@ defmodule ChangelogWeb.GithubController do
     |> Enum.map(&(Map.take(&1, ["added", "modified"])))
     |> Enum.map(&Map.values/1)
     |> List.flatten
+  end
+
+  defp extract_supported_repository_from(full_name) do
+    Regex.named_captures(Github.Source.repo_regex(), full_name)
   end
 
   defp unsupported_event(conn, params, event) do
