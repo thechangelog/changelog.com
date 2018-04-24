@@ -34,6 +34,8 @@
       <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
     </ul>
 
+    <hr>
+
     <h2>Changelog News (Web + Newsletter)</h2>
 
     <p>A realtime editorialized feed and email covering this week in open source and software development. It's what developers read to keep up.</p>
@@ -80,6 +82,27 @@
       </tfoot>
     </table>
 
+    <hr>
+
+    <h2>JS Party</h3>
+
+    <p>A panel of web development experts and special guests discuss the latest in JavaScript and the web platform.</p>
+
+    <ul>
+      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li><mark>$500 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$450 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 5,500 to 7,000 listens per episode</li>
+      <li>Reaches an average 30,000 listens per month, podcast-wide</li>
+      <li>Records live and published weekly</li>
+      <li>Each sponsor gets mentioned in the post-roll of the show</li>
+      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+    </ul>
+
+    <hr>
+
     <h2>Go Time</h2>
 
     <p>A panel of Go experts and special guests discuss the Go programming language, the community, and everything in between.</p>
@@ -97,18 +120,35 @@
       <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
     </ul>
 
-    <h2>JS Party</h3>
+    <hr>
 
-    <p>A panel of web development experts and special guests discuss the latest in JavaScript and the web platform.</p>
+    <h2>Practical AI</h3>
+
+    <p>A podcast focused on making artificial intelligence practical, productive, and accessible to every developer.</p>
 
     <ul>
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
       <li><mark>$500 for the featured pre-roll spot at the top of the show</mark></li>
       <li><mark>$450 for mid-roll spots</mark></li>
       <li>Four (4) week minimum</li>
-      <li>Reaches an average 5,500 to 7,000 listens per episode</li>
-      <li>Reaches an average 30,000 listens per month, podcast-wide</li>
-      <li>Records live and published weekly</li>
+      <li>Each sponsor gets mentioned in the post-roll of the show</li>
+      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+    </ul>
+
+    <hr>
+
+    <h2>Founders Talk</h3>
+
+    <p>In-depth, one-on-one, conversations with Founders. The journey, successes, failures, do-overs, lessons learned.</p>
+
+    <ul>
+      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li><mark>$500 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$450 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 9,000 to 15,000 listens per episode</li>
+      <li>Reaches an average 50,000 listens per month, podcast-wide</li>
       <li>Each sponsor gets mentioned in the post-roll of the show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
       <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
