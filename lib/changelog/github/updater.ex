@@ -32,11 +32,11 @@ defmodule Changelog.Github.Updater do
   defp update_episode(episode, _type) when is_nil(episode), do: nil
   defp update_episode(episode, type) do
     episode = Episode.preload_podcast(episode)
-    raw_url = Github.Source.raw_url(type, episode)
+    source = Github.Source.new(type, episode)
 
-    case HTTPoison.get!(raw_url) do
+    case HTTPoison.get!(source.raw_url) do
       %{status_code: 200, body: text} -> update_function(type, episode, text)
-      _else -> Logger.info("#{String.capitalize(type)}: Failed to fetch #{raw_url}")
+      _else -> Logger.info("#{String.capitalize(type)}: Failed to fetch #{source.raw_url}")
     end
   end
 
