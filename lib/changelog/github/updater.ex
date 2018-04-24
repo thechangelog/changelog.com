@@ -13,9 +13,9 @@ defmodule Changelog.Github.Updater do
   end
   def update(item, type), do: update([item], type)
 
-  defp get_episode(item = %Episode{}), do: item
-  defp get_episode(item) do
-    case Regex.named_captures(Regexp.transcript_slugs, item) do
+  defp get_episode(episode = %Episode{}), do: episode
+  defp get_episode(filename) do
+    case extract_podcast_and_episode_slugs_from(filename) do
       %{"podcast" => p, "episode" => e} ->
         Episode.published
         |> Episode.with_podcast_slug(p)
@@ -23,6 +23,10 @@ defmodule Changelog.Github.Updater do
         |> Repo.one
       nil -> nil
     end
+  end
+
+  defp extract_podcast_and_episode_slugs_from(filename) do
+    Regex.named_captures(Regexp.github_filename_slugs, filename)
   end
 
   defp update_episode(episode, _type) when is_nil(episode), do: nil
