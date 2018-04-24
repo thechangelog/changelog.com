@@ -5,7 +5,7 @@ defmodule ChangelogWeb.EmailView do
   alias ChangelogWeb.{AuthView, Endpoint, NewsItemView, PersonView}
 
   def greeting(person) do
-    label = if Enum.member?(Faker.names, person.name) do
+    label = if Faker.name_fake?(person.name) do
       "there"
     else
       PersonView.first_name(person)

@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Faker, Mailer, Newsletters, Person, Podcast, Repo}
+  alias Changelog.{Mailer, Newsletters, Person, Podcast, Repo}
   alias ChangelogWeb.Email
   alias Craisin.Subscriber
 
@@ -24,9 +24,9 @@ defmodule ChangelogWeb.PersonController do
     if person = Repo.one(from q in Person, where: q.email == ^email) do
       welcome_subscriber(conn, person, list)
     else
-      fake_name = Faker.name
-      fake_handle = Faker.handle(fake_name)
-      changeset = Person.insert_changeset(%Person{name: fake_name, handle: fake_handle}, params)
+      changeset =
+        Person.with_fake_data()
+        |> Person.insert_changeset(params)
 
       case Repo.insert(changeset) do
         {:ok, person} ->
@@ -44,8 +44,8 @@ defmodule ChangelogWeb.PersonController do
     newsletter = Newsletters.get_by_slug(list)
     community = Newsletters.community()
 
-    Subscriber.subscribe(newsletter.list_id, person)
-    Subscriber.subscribe(community.list_id, person)
+    Subscriber.subscribe(newsletter.list_id, Person.sans_fake_data(person))
+    Subscriber.subscribe(community.list_id, Person.sans_fake_data(person))
 
     Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later
 

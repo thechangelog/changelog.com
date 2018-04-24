@@ -1,7 +1,7 @@
 defmodule Changelog.Person do
   use Changelog.Data
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, Files, NewsItem, PodcastHost,
+  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, PodcastHost,
                    Post, Regexp}
   alias Timex.Duration
 
@@ -47,13 +47,8 @@ defmodule Changelog.Person do
     timestamps()
   end
 
-  def in_slack(query \\ __MODULE__) do
-    from(p in query, where: not(is_nil(p.slack_id)))
-  end
-
-  def joined(query \\ __MODULE__) do
-    from(p in query, where: not(is_nil(p.joined_at)))
-  end
+  def in_slack(query \\ __MODULE__), do: from(p in query, where: not(is_nil(p.slack_id)))
+  def joined(query \\ __MODULE__), do: from(p in query, where: not(is_nil(p.joined_at)))
 
   def joined_today(query \\ __MODULE__) do
     today = Timex.subtract(Timex.now, Duration.from_days(1))
@@ -160,5 +155,19 @@ defmodule Changelog.Person do
 
   def post_count(person) do
     Repo.count(from(p in Post, where: p.author_id == ^person.id))
+  end
+
+  def with_fake_data(person \\ %__MODULE__{}) do
+    fake_name = Faker.name()
+    fake_handle = Faker.handle(fake_name)
+    %{person | name: fake_name, handle: fake_handle}
+  end
+
+  def sans_fake_data(person) do
+    if Faker.name_fake?(person.name) do
+     %{person | name: nil, handle: nil}
+    else
+      person
+    end
   end
 end

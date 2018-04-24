@@ -35,7 +35,7 @@ defmodule ChangelogWeb.HomeController do
   end
 
   def subscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
-    Subscriber.subscribe(newsletter_id, me)
+    Subscriber.subscribe(newsletter_id, Person.sans_fake_data(me))
 
     conn
     |> put_flash(:success, "You're subscribed! You'll get the next issue in your inbox 📥")

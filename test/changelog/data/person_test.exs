@@ -61,4 +61,13 @@ defmodule Changelog.PersonTest do
       assert Person.get_by_ueberauth(%{}) == nil
     end
   end
+
+  describe "sans_fake_data" do
+    test "scrubs name and handle if name came from Faker" do
+      person = Person.with_fake_data(build(:person))
+      sans = Person.sans_fake_data(person)
+      assert is_nil(sans.name)
+      assert is_nil(sans.handle)
+    end
+  end
 end
