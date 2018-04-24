@@ -105,11 +105,11 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def show_notes_source_url(episode) do
-    Github.Source.html_url("show-notes", episode)
+    Github.Source.new("show-notes", episode).html_url
   end
 
   def transcript_source_url(episode) do
-    Github.Source.html_url("transcripts", episode)
+    Github.Source.new("transcripts", episode).html_url
   end
 
   def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do
