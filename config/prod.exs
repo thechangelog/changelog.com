@@ -25,6 +25,10 @@ config :changelog, Changelog.Mailer,
   username: {:system, "CM_SMTP_TOKEN"},
   password: {:system, "CM_SMTP_TOKEN"}
 
+config :changelog, Changelog.CalendarService,
+  adapter: Changelog.Services.GoogleCalendarService,
+  google_calendar_id: {:system, "GOOGLE_CALENDAR_ID"}
+
 config :changelog, Changelog.Scheduler,
   global: true,
   timezone: "US/Central",

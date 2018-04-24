@@ -1,6 +1,7 @@
 defmodule Changelog.EpisodeTest do
   use Changelog.DataCase
 
+  import ChangelogWeb.TimeView, only: [hours_from_now: 1]
   import Mock
 
   alias Changelog.{Episode}
@@ -143,6 +144,16 @@ defmodule Changelog.EpisodeTest do
 
     test "is true when episode has all fields and isn't published" do
       assert Episode.is_publishable(stub_audio_file(build(:publishable_episode)))
+    end
+  end
+
+  describe "is_calendar_event_scheduled" do
+    test "is false when episode does not have a recorded_at" do
+      refute Episode.is_calendar_event_scheduled(build(:episode, recorded_at: nil, calendar_event_id: nil))      
+    end
+
+    test "is false when episode have a future recorded_at and no calendar event attached" do
+      refute Episode.is_calendar_event_scheduled(build(:episode, recorded_at: hours_from_now(1), calendar_event_id: nil))
     end
   end
 end

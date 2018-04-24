@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
   alias Changelog.{Topic, Episode, EpisodeStat, Person, Sponsor}
   alias ChangelogWeb.{EpisodeView, PersonView, TimeView}
+  alias ChangelogWeb.Admin.GoogleCalendarView
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
   def audio_url(episode), do: EpisodeView.audio_url(episode)
@@ -25,6 +26,14 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def featured_label(episode) do
     if episode.featured do
       content_tag :span, "Featured", class: "ui tiny blue basic label"
+    end
+  end
+
+  def calendar_event_label(episode) do
+    if Episode.is_calendar_event_scheduled(episode) do
+      link content_tag(:i, "", class: "calendar icon"), to: GoogleCalendarView.event_url(episode.calendar_event_id), target: "_blank"
+    else
+      content_tag :i, "", class: "red exclamation icon"
     end
   end
 

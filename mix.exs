@@ -24,7 +24,7 @@ defmodule Changelog.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Changelog.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: extra_applications()
     ]
   end
 
@@ -70,10 +70,20 @@ defmodule Changelog.Mixfile do
       {:ex_machina, "~> 2.0"},
       {:rollbax, "~> 0.8.2"},
       {:html_entities, "~> 0.3"},
+      {:goth, "~> 0.6.0", optional: true},
+      {:google_api_calendar, "~> 0.0.1"},
+      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.4", only: [:dev, :test]},
       {:excoveralls, "~> 0.6", only: :test},
       {:mock, "~> 0.3.0", only: :test}
    ]
+  end
+
+  defp extra_applications do
+    case System.get_env("GOOGLE_APPLICATION_CREDENTIALS") do
+      nil -> [:logger, :runtime_tools]
+      _ -> [:logger, :runtime_tools, :goth]
+    end
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
