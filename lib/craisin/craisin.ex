@@ -5,8 +5,8 @@ defmodule Craisin do
 
   def process_url(url) do
     case String.split(url, "?") do
-      [path, params] -> "https://api.createsend.com/api/v3.1/#{path}.json?#{params}"
-      [path] -> "https://api.createsend.com/api/v3.1/#{path}.json"
+      [path, params] -> "https://api.createsend.com/api/v3.1#{path}.json?#{params}"
+      [path] -> "https://api.createsend.com/api/v3.1#{path}.json"
     end
   end
 

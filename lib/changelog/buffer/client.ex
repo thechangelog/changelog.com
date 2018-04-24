@@ -5,7 +5,7 @@ defmodule Changelog.Buffer.Client do
 
   def process_url(url) do
     auth = Application.get_env(:changelog, :buffer_token)
-    "https://api.bufferapp.com/1/#{url}.json?access_token=#{auth}"
+    "https://api.bufferapp.com/1#{url}.json?access_token=#{auth}"
   end
 
   def process_request_headers(headers) do
@@ -33,12 +33,10 @@ defmodule Changelog.Buffer.Client do
       media_list_to_params(media)
     ] |> List.flatten
 
-    post("updates/create", {:form, params}) |> handle
+    "/updates/create" |> post({:form, params}) |> handle
   end
 
-  def profiles do
-    get("profiles") |> handle
-  end
+  def profiles, do: "/profiles" |> get |> handle
 
   defp media_list_to_params(media) do
     media

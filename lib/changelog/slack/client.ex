@@ -1,9 +1,7 @@
 defmodule Changelog.Slack.Client do
   use HTTPoison.Base
 
-  def process_url(url) do
-    "https://changelog.slack.com/api/" <> url
-  end
+  def process_url(url), do: "https://changelog.slack.com/api#{url}"
 
   def process_response_body(body) do
     try do
@@ -23,12 +21,12 @@ defmodule Changelog.Slack.Client do
   def invite(email) do
     token = Application.get_env(:changelog, :slack_invite_api_token)
     form = ~s(email=#{email}&token=#{token}&resend=true)
-    post("/users.admin.invite", form) |> handle
+    "/users.admin.invite" |> post(form) |> handle
   end
 
   def list do
     token = Application.get_env(:changelog, :slack_app_api_token)
-    get("/users.list?token=#{token}") |> handle
+    "/users.list?token=#{token}" |> get |> handle
   end
 
   def im(user, message) do
@@ -43,12 +41,12 @@ defmodule Changelog.Slack.Client do
   def message(channel, message) do
     token = Application.get_env(:changelog, :slack_app_api_token)
     form = ~s(token=#{token}&channel=#{channel}&as_user=true&text=#{message})
-    post("/chat.postMessage", form) |> handle
+    "/chat.postMessage" |> post(form) |> handle
   end
 
   defp open_im(user_id) do
     token = Application.get_env(:changelog, :slack_app_api_token)
     form = ~s(token=#{token}&user=#{user_id})
-    post("/im.open", form) |> handle
+    "/im.open" |> post(form) |> handle
   end
 end
