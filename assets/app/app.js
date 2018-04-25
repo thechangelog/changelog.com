@@ -246,7 +246,7 @@ u(document).on("turbolinks:load", function() {
   u("body").removeClass("nav-open");
   player.attach();
   overlay.hide();
-  live.check();
+  // live.check();
   formatTimes();
   deepLink();
   impress();
