@@ -250,6 +250,31 @@
           }
         }
 
+        &--live {
+          a {
+            color: $red !important;
+            padding-left: 18px;
+
+            &:before {
+              content: none !important;
+            }
+
+            &:after {
+              @include position(absolute, 50% null null 0);
+              $size: 11px;
+              content: "";
+              animation: pulse 4s infinite 1s;
+              background: $red;
+              border-radius: $size;
+              box-shadow: 0 0 0 0 rgba($red, .5);
+              display: block;
+              height: $size;
+              width: $size;
+              margin-top: -6px;
+            }
+          }
+        }
+
         &.is-desktop_only {
           display: none;
           @include breakpoint(mobile) { display: block; }

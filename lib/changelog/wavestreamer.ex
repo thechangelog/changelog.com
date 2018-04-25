@@ -1,24 +1,18 @@
 defmodule Changelog.Wavestreamer do
   defmodule Stats do
-    defstruct streaming: false, listeners: 0
+    defstruct type: :wavestreamer, streaming: false, listeners: 0
   end
 
-  def host do
-    "http://knight.wavestreamer.com:1882"
-  end
+  def host, do: "http://knight.wavestreamer.com:1882"
 
-  def live_url do
-    host() <> "/Live"
-  end
+  def live_url, do: "#{host()}/Live"
 
   def is_streaming do
     stats = get_stats()
     stats.streaming
   end
 
-  def stats_url do
-    host() <> "/stats?sid=1&json=1"
-  end
+  def stats_url, do: "#{host()}/stats?sid=1&json=1"
 
   def get_stats do
     try do
