@@ -8,6 +8,7 @@ export default class LivePlayer {
     this.streaming = false;
     this.failed = false;
     this.listeners = 0;
+    this.liveIndicator = u(".js-live-indicator");
     this.audio = new Audio();
     this.audio.type = "audio/mpeg";
     this.audio.autoplay = true;
@@ -17,10 +18,12 @@ export default class LivePlayer {
   check() {
     this.container = u(this.selector);
 
+    // are we on /live?
     if (this.container.length) {
       this.attach();
     } else {
       this.detach();
+      this.checkStatusOnce();
     }
   }
 
@@ -40,17 +43,10 @@ export default class LivePlayer {
   }
 
   detach() {
-    if (!this.isAttached) {
-      return false;
-    }
-
+    if (!this.isAttached) return false;
     // events
     this.playButton.off("click");
     clearInterval(this.monitorId);
-    // ui
-    this.liveViewers.destroy();
-    this.status.destroy();
-    this.streamSrc.destroy();
   }
 
   loadUI() {
@@ -63,6 +59,16 @@ export default class LivePlayer {
       this.status.text("Upcoming");
       this.container.addClass("is-upcoming");
     }
+  }
+
+  checkStatusOnce() {
+    ajax("/live/status", {}, (error, data) => {
+      if (data.streaming) {
+        this.showLiveIndicator();
+      } else {
+        this.hideLiveIndicator();
+      }
+    });
   }
 
   monitorStatus() {
@@ -116,5 +122,13 @@ export default class LivePlayer {
   pause() {
     this.audio.pause();
     this.container.addClass("is-paused").removeClass("is-playing is-upcoming");
+  }
+
+  showLiveIndicator() {
+    this.liveIndicator.removeClass("is-hidden");
+  }
+
+  hideLiveIndicator() {
+   this.liveIndicator.addClass("is-hidden");
   }
 }
