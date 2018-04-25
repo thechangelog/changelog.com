@@ -23,7 +23,7 @@
       <td><%= TimeView.duration(episode.duration) %></td>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <% else %>
-      <td><%= ts(episode.recorded_at) %></td>
+      <td><%= link(ts(episode.recorded_at), to: TimeView.time_is_url(episode.recorded_at), rel: "external") %></td>
       <% end %>
       <td><%= reach_count(episode) %></td>
       <td class="center aligned">

@@ -10,9 +10,9 @@
   <tbody>
   <%= for episode <- @draft_episodes do %>
     <tr>
-      <td><%= link episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, episode.podcast.slug) %></td>
+      <td><%= link(episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, episode.podcast.slug)) %></td>
       <td><%= episode.slug %></td>
-      <td><%= ts(episode.recorded_at) %></td>
+      <td><%= link(ts(episode.recorded_at), to: TimeView.time_is_url(episode.recorded_at), rel: "external") %></td>
       <td class="center aligned">
         <div class="ui small basic icon buttons">
           <%= link to: episode_path(@conn, :preview, episode.podcast.slug, episode.slug), class: "ui button" do %>
