@@ -84,6 +84,7 @@ defmodule ChangelogWeb.TimeView do
     end
   end
 
+  def time_is_url(nil), do: ""
   def time_is_url(ts), do: "https://time.is/#{DateTime.to_unix(ts)}"
 
   def ts(ts, style \\ "admin")
