@@ -58,6 +58,7 @@ defmodule ChangelogWeb.PageController do
     render(conn, :sponsor, weekly: weekly)
   end
 
+
   def sponsor_pricing(conn, _params) do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
     weeks = Timex.today |> TimeView.closest_monday_to() |> TimeView.weeks(12)

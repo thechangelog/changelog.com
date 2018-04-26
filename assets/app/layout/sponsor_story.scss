@@ -1,0 +1,86 @@
+.sponsor_story {
+  @include wrap(1200px);
+
+  hr {
+    background-color: $light-grey;
+    border: none;
+    height: 3px;
+    margin: $base-spacing*2 auto;
+    max-width: 880px;
+  }
+
+  &-header,
+  &-content {
+    margin: 0 auto;
+    max-width: 880px;
+  }
+
+  &-header {
+    &-breadcrumbs {
+      font-family: $code;
+      font-size: 0.8em;
+      text-align: center;
+    }
+
+    &-logo {
+      height: auto;
+      margin: $base-spacing auto;
+      padding: 0 $base-spacing;
+      max-width: 100%;
+    }
+  }
+
+  &-quote {
+    margin: 0;
+
+    &-body {
+      margin: 2.5em 0;
+      text-align: center;
+
+      p {
+        line-height: 1.75em;
+      }
+
+      @media (min-width: $tablet) {
+        font-size: 1.25em;
+      }
+    }
+  }
+
+  &-examples {
+    margin: $base-spacing*3 auto $base-spacing*2;
+  }
+
+  &-sponsors {
+    margin: $base-spacing*3 auto $base-spacing*3;
+    text-align: center;
+
+    h2 {
+      font-size: 1.75em;
+    }
+
+    .marketing-section-logos {
+      margin-bottom: $base-spacing*2;
+      max-width: 100%;
+    }
+
+    p {
+      a {
+        color: $black;
+
+        .link_arrow {
+          display: inline-block;
+          font-size: 2em;
+          margin-left: 0.25em;
+          position: relative;
+          top: 4px;
+          transition: all 0.2s ease-in-out;
+        }
+
+        &:hover .link_arrow {
+          transform: translateX(2px);
+        }
+      }
+    }
+  }
+}

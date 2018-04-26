@@ -155,14 +155,18 @@
 
   blockquote {
     border-left: 3px solid $green;
-    // font-size: 1.25em;
     // line-height: 1em;
     margin: 1.25rem 0 1.5rem 0;
-    padding: 0 0 0 15px;
+    padding: 0.75em 0 1em 2em;
     color: $black;
+
+    @include breakpoint(desktop) {
+      font-size: 1.25em;
+    }
 
     p {
       color: $black;
+      max-width: 680px;
     }
   }
 

@@ -1,0 +1,91 @@
+<article class="sponsor_story">
+  <header class="sponsor_story-header">
+    <div class="sponsor_story-header-breadcrumbs">Partner Story</div>
+
+    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/rollbar.png") %>' alt="Rollbar" width="320">
+
+    <blockquote class="sponsor_story-quote">
+      <div class="sponsor_story-quote-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+      </div>
+      <footer class="marketing-quote-footer">
+          <img src='<%= static_url(@conn, "/images/content/community/justin-dorfman.jpg") %>' alt="" width="50" height="50">
+          <strong>Justin Dorfman</strong>
+          <span class="quote-title">Developer Relations at Sticker Mule</span>
+      </footer>
+    </blockquote>
+  </header>
+
+  <hr>
+
+  <div class="sponsor_story-content richtext">
+    <h3>What seemed like a risk, really paid off.</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+    <h3>Who is Rollbar?</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+    <blockquote>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <footer>
+        <strong>Mike Smith</strong> — Head of Growth at Rollbar.
+      </footer>
+    </blockquote>
+  </div>
+
+
+  <div class="sponsor_story-examples">
+    <h3>Endorsement — Sponsorship examples</h3>
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Campaign name</p></div>
+        <div class="grid_table-header-column"><p>Campaign style</p></div>
+        <div class="grid_table-header-column"><p>Ad production</p></div>
+      </div>
+      <div class="grid_table-row">
+        <div class="grid_table-row-column"><p>CircleCI — Paul Biggar 1</p></div>
+        <div class="grid_table-row-column"><p>Customer endorsement</p></div>
+        <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", assigns) %></div>
+      </div>
+      <div class="grid_table-row">
+        <div class="grid_table-row-column"><p>CircleCI — Paul Biggar 1</p></div>
+        <div class="grid_table-row-column"><p>Customer endorsement</p></div>
+        <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", assigns) %></div>
+      </div>
+      <div class="grid_table-row">
+        <div class="grid_table-row-column"><p>CircleCI — Paul Biggar 1</p></div>
+        <div class="grid_table-row-column"><p>Customer endorsement</p></div>
+        <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", assigns) %></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="sponsor_story-sponsors">
+    <h2>Loved by brands, trusted by developers</h2>
+    <div class="marketing-section-logos">
+      <%= render("_sponsors.html", assigns) %>
+    </div>
+
+    <p>Want to work with us to share your brand’s story with the developer community?</p>
+    <p>
+      <%= link to: page_path(@conn, :sponsor) do %>
+        Learn more about sponsoring our news and podcasts&nbsp;<span class="link_arrow">›</span>
+      <% end %>
+    </p>
+  </div>
+</article>
+
+<section class="marketing-section marketing-section--map">
+  <header class="marketing-section-header">
+    <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
+    <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
+
+    <%= link "Get in Touch", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
+  </header>
+
+  <div class="marketing-map">
+    <img src='<%= static_url(@conn, "/images/content/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+  </div>
+</section>
