@@ -70,12 +70,4 @@ defmodule Changelog.NewsAd do
     |> change(%{impression_count: ad.sponsorship.impression_count + 1})
     |> Repo.update!
   end
-
-  defp mark_for_deletion(changeset) do
-    if get_change(changeset, :delete) do
-      %{changeset | action: :delete}
-    else
-      changeset
-    end
-  end
 end

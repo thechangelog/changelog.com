@@ -23,14 +23,4 @@ defmodule Changelog.NewsIssueItem do
   def build_and_preload({item, position}) do
     %__MODULE__{position: position, item_id: item.id} |> Repo.preload(:item)
   end
-
-  def by_position, do: from(q in __MODULE__, order_by: q.position)
-
-  defp mark_for_deletion(changeset) do
-    if get_change(changeset, :delete) do
-      %{changeset | action: :delete}
-    else
-      changeset
-    end
-  end
 end
