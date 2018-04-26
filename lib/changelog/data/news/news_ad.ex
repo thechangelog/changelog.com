@@ -34,6 +34,8 @@ defmodule Changelog.NewsAd do
     |> mark_for_deletion()
   end
 
+  def active_first(query \\ __MODULE__), do: from(q in query, order_by: [desc: :newsletter, desc: :active])
+
   def preload_all(ad) do
     ad
     |> preload_issues

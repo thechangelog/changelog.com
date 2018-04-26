@@ -39,8 +39,8 @@ defmodule Changelog.NewsSponsorship do
     |> preload_sponsor
   end
 
-  def preload_ads(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :ads)
-  def preload_ads(sponsorship), do: Repo.preload(sponsorship, :ads)
+  def preload_ads(query = %Ecto.Query{}), do: Ecto.Query.preload(query, ads: ^NewsAd.active_first)
+  def preload_ads(sponsorship), do: Repo.preload(sponsorship, ads: NewsAd.active_first)
 
   def preload_sponsor(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :sponsor)
   def preload_sponsor(sponsorship), do: Repo.preload(sponsorship, :sponsor)
