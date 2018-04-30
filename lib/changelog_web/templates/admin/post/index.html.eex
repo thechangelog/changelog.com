@@ -24,7 +24,7 @@
 <% end %>
 
 <%= if Enum.any?(@posts) do %>
-  <h2 class="ui header">Published</h2>
+  <h2 class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
   <%= render("_table.html", conn: @conn, status: :published, posts: @posts) %>
   <%= pagination_links(@conn, @page, path: &admin_post_path/3) %>
 <% end %>

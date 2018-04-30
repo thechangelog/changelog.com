@@ -1,7 +1,7 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
     Sponsors
-    <div class="sub header">Putting their money where their mouths are.</div>
+    <div class="sub header">Putting their money where their mouths are (<%= @page.total_entries |> comma_separated %>)</div>
   </h1>
 
   <div class="actions">

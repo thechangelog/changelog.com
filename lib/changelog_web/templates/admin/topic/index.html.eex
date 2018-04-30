@@ -1,7 +1,7 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
     Topics
-    <div class="sub header">Create with care. (Currently <%= length(@topics) %>)</div>
+    <div class="sub header">Create with care (<%= @topics |> length |> comma_separated %>)</div>
   </h1>
 
   <div class="actions">
