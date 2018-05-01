@@ -2,6 +2,7 @@ var webpack = require("webpack");
 var merge = require("webpack-merge");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const {GenerateSW} = require('workbox-webpack-plugin');
 
 var common = {
   module: {
@@ -61,7 +62,10 @@ module.exports = [
     },
     plugins: [
       new CopyWebpackPlugin([{ from: __dirname + "/assets"}]),
-      new ExtractTextPlugin("css/app.css")
+      new ExtractTextPlugin("css/app.css"),
+      new GenerateSW({
+        precacheManifestFilename: 'js/precache-manifest.[manifestHash].js'
+      })
     ]
   }),
   merge(common, {

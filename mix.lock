@@ -31,7 +31,7 @@
   "gettext": {:hex, :gettext, "0.15.0", "40a2b8ce33a80ced7727e36768499fc9286881c43ebafccae6bab731e2b2b8ce", [:mix], [], "hexpm"},
   "hackney": {:hex, :hackney, "1.12.1", "8bf2d0e11e722e533903fe126e14d6e7e94d9b7983ced595b75f532e04b7fdc7", [:rebar3], [{:certifi, "2.3.1", [hex: :certifi, repo: "hexpm", optional: false]}, {:idna, "5.1.1", [hex: :idna, repo: "hexpm", optional: false]}, {:metrics, "1.0.1", [hex: :metrics, repo: "hexpm", optional: false]}, {:mimerl, "1.0.2", [hex: :mimerl, repo: "hexpm", optional: false]}, {:ssl_verify_fun, "1.1.1", [hex: :ssl_verify_fun, repo: "hexpm", optional: false]}], "hexpm"},
   "hashids": {:hex, :hashids, "2.0.4", "ea47a2c2018b7ffb4f5ac9b0f8ea0af6d6159b9e190c5ed09f0ea83276968e0f", [:mix], [], "hexpm"},
-  "html_entities": {:hex, :html_entities, "0.4.0", "f2fee876858cf6aaa9db608820a3209e45a087c5177332799592142b50e89a6b", [], [], "hexpm"},
+  "html_entities": {:hex, :html_entities, "0.4.0", "f2fee876858cf6aaa9db608820a3209e45a087c5177332799592142b50e89a6b", [:mix], [], "hexpm"},
   "html_sanitize_ex": {:hex, :html_sanitize_ex, "1.3.0", "f005ad692b717691203f940c686208aa3d8ffd9dd4bb3699240096a51fa9564e", [:mix], [{:mochiweb, "~> 2.15", [hex: :mochiweb, repo: "hexpm", optional: false]}], "hexpm"},
   "httpoison": {:hex, :httpoison, "1.1.0", "497949fb62924432f64a45269d20e6f61ecf35084ffa270917afcdb7cd4d8061", [:mix], [{:hackney, "~> 1.8", [hex: :hackney, repo: "hexpm", optional: false]}], "hexpm"},
   "idna": {:hex, :idna, "5.1.1", "cbc3b2fa1645113267cc59c760bafa64b2ea0334635ef06dbac8801e42f7279c", [:rebar3], [{:unicode_util_compat, "0.3.1", [hex: :unicode_util_compat, repo: "hexpm", optional: false]}], "hexpm"},
