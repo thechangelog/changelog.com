@@ -1,9 +1,7 @@
 defmodule Changelog.Github.Client do
   use HTTPoison.Base
 
-  def process_url(url) do
-    "https://api.github.com" <> url
-  end
+  def process_url(url), do: "https://api.github.com#{url}"
 
   def process_response_body(body) do
     try do
@@ -20,9 +18,7 @@ defmodule Changelog.Github.Client do
      {"Authorization", "token #{auth}"} | headers]
   end
 
-  def get_user_repos(username) do
-    get("/users/#{username}/repos")
-  end
+  def get_user_repos(username), do: get("/users/#{username}/repos")
 
   def create_file(source, content, message) do
     params = %{"content" => Base.encode64(content), "message" => message}
@@ -41,9 +37,7 @@ defmodule Changelog.Github.Client do
     put("/repos/#{source.org}/#{source.repo}/contents/#{source.path}", Poison.encode!(params))
   end
 
-  def get_file(source) do
-    get("/repos/#{source.org}/#{source.repo}/contents/#{source.path}")
-  end
+  def get_file(source), do: get("/repos/#{source.org}/#{source.repo}/contents/#{source.path}")
 
   def file_exists?(source) do
     {:ok, response} = get_file(source)
