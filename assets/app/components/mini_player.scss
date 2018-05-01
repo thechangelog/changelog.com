@@ -8,11 +8,11 @@
     background-size: auto 14px;
     border: 1px solid $light-grey;
     border-radius: $base-border-radius;
-    flex: 0 0 50px;
+    flex: 0 0 42px;
     margin-right: 1em;
     padding: 0.5em 0.3em 0.3em;
     height: 30px;
-    width: 50px;
+    width: 42px;
     text-indent: -9999px;
 
     &.is-active { background-image: url('/images/icons/toolbar-pause.svg'); }

@@ -24,21 +24,23 @@ $range-label-width: 60px !default;
 
   &:hover { background: $range-handle-color-hover; }
   &:active { background: $range-handle-color-hover; }
+  .mini_player & { opacity: 0; }
 }
 
-@mixin range-track() {
+@mixin range-track($height, $bgcolor) {
   -webkit-appearance: none;
   width: $range-width;
-  height: $range-track-height;
+  height: $height;
   cursor: pointer;
   animate: 0.2s;
-  background: $range-track-color;
+  background: $bgcolor;
   border-radius: 1px;
   border: none;
   margin: 8px 0;
 
   body.embed--day & { background: $light-grey; }
   .episode-player & { height: 6px; }
+  .mini_player & { height: 6px; background: $light-grey; }
 }
 
 .range_slider {
@@ -62,19 +64,13 @@ $range-label-width: 60px !default;
 
     // These have to be done one-by-one because the
     // browsers don't like this on to be comma-seperated
-    &::-moz-range-track { @include range-track(); }
-    &::-ms-track { @include range-track(); }
-    &::-webkit-slider-runnable-track { @include range-track(); }
+    &::-moz-range-track { @include range-track($range-track-height, $range-track-color); }
+    &::-ms-track { @include range-track($range-track-height, $range-track-color); }
+    &::-webkit-slider-runnable-track { @include range-track($range-track-height, $range-track-color); }
 
     &::-moz-range-thumb { @include range-handle($range-handle-size); }
     &::-ms-thumb { @include range-handle($range-handle-size); }
     &::-webkit-slider-thumb { @include range-handle($range-handle-size); }
-
-    .mini_player & {
-      &::-moz-range-thumb { @include range-handle(12px); }
-      &::-ms-thumb { @include range-handle(12px); }
-      &::-webkit-slider-thumb { @include range-handle(12px); }
-    }
 
     // Parent
     &_wrap {
@@ -91,6 +87,11 @@ $range-label-width: 60px !default;
         border-radius: 1px;
         width: 0%;
         margin-top: -1px;
+
+        .mini_player & {
+          height: 6px !important;
+          margin-top: -3px;
+        }
 
         .episode-player & {
           height: 6px;

@@ -8,5 +8,5 @@
       </div>
     </div>
   </form>
-  <output class="mini_player-time"><b class="js-player-current">0:00</b> / <span class="js-player-duration">0:00</span></output>
+  <output class="mini_player-time"><span class="js-player-current">0:00</span> / <span class="js-player-duration">0:00</span></output>
 </figure>
