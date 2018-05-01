@@ -66,7 +66,8 @@ defmodule ChangelogWeb.Admin.PersonController do
   def delete(conn, %{"id" => id}) do
     person = Repo.get!(Person, id)
     Repo.delete!(person)
-
+    community = Newsletters.community()
+    Subscriber.unsubscribe(community.list_id, person.email)
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_person_path(conn, :index))

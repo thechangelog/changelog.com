@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person, sends no welcome, and redirects", %{conn: conn} do
-    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+    conn = with_mock(Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end]) do
       post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
     end
 
@@ -41,7 +41,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person, sends generic welcome, and redirects", %{conn: conn} do
-    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+    conn = with_mock(Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end]) do
       post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "generic", next: admin_person_path(conn, :index))
     end
 
@@ -53,7 +53,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person, sends guest welcome, and redirects", %{conn: conn} do
-    conn = with_mock Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end] do
+    conn = with_mock(Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end]) do
       post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "guest")
     end
 
@@ -84,7 +84,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   test "updates person and redirects", %{conn: conn} do
     person = insert(:person)
 
-    conn = put conn, admin_person_path(conn, :update, person.id), person: @valid_attrs
+    conn = put(conn, admin_person_path(conn, :update, person.id), person: @valid_attrs)
 
     assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 1
@@ -95,7 +95,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
     person = insert(:person)
     count_before = count(Person)
 
-    conn = put conn, admin_person_path(conn, :update, person.id), person: @invalid_attrs
+    conn = put(conn, admin_person_path(conn, :update, person.id), person: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Person) == count_before
@@ -105,10 +105,12 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   test "deletes a person and redirects", %{conn: conn} do
     person = insert(:person)
 
-    conn = delete conn, admin_person_path(conn, :delete, person.id)
-
-    assert redirected_to(conn) == admin_person_path(conn, :index)
-    assert count(Person) == 0
+    with_mock(Craisin.Subscriber, [unsubscribe: fn(_, _) -> nil end]) do
+      conn = delete(conn, admin_person_path(conn, :delete, person.id))
+      assert called(Craisin.Subscriber.unsubscribe(:_, person.email))
+      assert redirected_to(conn) == admin_person_path(conn, :index)
+      assert count(Person) == 0
+    end
   end
 
   test "requires user auth on all actions", %{conn: conn} do
