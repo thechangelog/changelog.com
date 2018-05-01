@@ -1,7 +1,7 @@
 defmodule Changelog.Github.Source do
-  alias ChangelogWeb.PodcastView
+  alias Changelog.StringKit
 
-  defstruct org: "thechangelog", repo: "", path: "", repo_url: "", html_url: "", raw_url: ""
+  defstruct [:org, :repo, :path, :name, :repo_url, :html_url, :raw_url]
 
   @org "thechangelog"
   @html_host "https://github.com"
@@ -14,15 +14,20 @@ defmodule Changelog.Github.Source do
     %__MODULE__{
       org: @org,
       repo: repo,
+      name: name(episode),
       path: path(episode),
-      repo_url: [@html_host, @org, repo] |> Enum.join("/"),
-      html_url: [@html_host, @org, repo, "blob", "master", path(episode)] |> Enum.join("/"),
-      raw_url: [@raw_host, @org, repo, "master", path(episode)] |> Enum.join("/")
+      repo_url: joined([@html_host, @org, repo]),
+      html_url: joined([@html_host, @org, repo, "blob", "master", path(episode)]),
+      raw_url: joined([@raw_host, @org, repo, "master", path(episode)])
     }
   end
 
+  defp joined(list), do: Enum.join(list, "/")
+
+  defp name(episode), do: "#{episode.podcast.name} ##{episode.slug}"
+
   defp path(episode) do
-    podcast_name = PodcastView.dasherized_name(episode.podcast)
+    podcast_name = StringKit.dasherize(episode.podcast.name)
     podcast_slug = episode.podcast.slug
     episode_slug = episode.slug
 
