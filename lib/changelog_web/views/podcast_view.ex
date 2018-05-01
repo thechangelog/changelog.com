@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.PodcastView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.Podcast
-  alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, TimeView, SharedView}
+  alias Changelog.{Podcast, StringKit}
+  alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, SharedView, TimeView}
   alias Changelog.Files.Cover
 
   def cover_path(%{slug: "master"}, version), do: "/images/podcasts/master-#{version}.png"
@@ -37,12 +37,7 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
-  def dasherized_name(podcast) do
-    podcast.name
-    |> String.downcase
-    |> String.replace(~r/[^\w\s]/, "")
-    |> String.replace(" ", "-")
-  end
+  def dasherized_name(podcast), do: StringKit.dasherize(podcast.name)
 
   def is_master(podcast), do: Podcast.is_master(podcast)
   def episode_count(podcast), do: Podcast.episode_count(podcast)
