@@ -6,8 +6,8 @@
 use Mix.Config
 
 config :changelog, ChangelogWeb.Endpoint,
-  url: [host: "192.168.33.99"],
-  static_url: [host: "192.168.33.99"],
+  url: [host: "localhost"],
+  static_url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi",
   render_errors: [accepts: ~w(html json)],
