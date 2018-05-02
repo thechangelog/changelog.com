@@ -2,7 +2,7 @@ defmodule Changelog.Episode do
   use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeTopic, EpisodeStat,
-                   EpisodeSponsor, Files, Podcast, Regexp, Transcripts}
+                   EpisodeSponsor, Files, NewsItem, Podcast, Regexp, Transcripts}
   alias ChangelogWeb.{EpisodeView, TimeView}
 
   schema "episodes" do
@@ -96,6 +96,10 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_topics)
     |> derive_bytes_and_duration
   end
+
+  def get_news_item(episode), do: NewsItem.with_episode(episode)
+
+  def object_id(episode), do: "#{episode.podcast.slug}:#{episode.slug}"
 
   def participants(episode) do
     episode =
