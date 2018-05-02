@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.HomeView do
   use ChangelogWeb, :public_view
 
-  alias ChangelogWeb.PersonView
+  alias ChangelogWeb.{Endpoint, PersonView, PodcastView}
 
   def newsletter_link(newsletter, assigns) do
     list = newsletter.list_id

@@ -1,15 +1,15 @@
 defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Person, Slack}
+  alias Changelog.{Person, Slack, Podcast}
   alias Craisin.Subscriber
 
   plug RequireUser, "except from email links" when action not in [:opt_out]
   plug :scrub_params, "person" when action in [:update]
 
-  def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil)
-  def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id)
-  def show(conn, _params), do: render(conn, :show, subscribed: nil, unsubscribed: nil)
+  def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil, podcasts: podcasts())
+  def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id, podcasts: podcasts())
+  def show(conn, _params), do: render(conn, :show, subscribed: nil, unsubscribed: nil, podcasts: podcasts())
 
   def account(conn = %{assigns: %{current_user: me}}, _params) do
     render(conn, :account, changeset: Person.update_changeset(me))
@@ -74,6 +74,12 @@ defmodule ChangelogWeb.HomeController do
     end
 
     render(conn, :opt_out)
+  end
+
+  defp podcasts do
+    Podcast.active
+    |> Podcast.oldest_first
+    |> Repo.all
   end
 
   defp set_slack_id(person) do

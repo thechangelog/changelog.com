@@ -21,6 +21,11 @@ const overlay = new Overlay("#overlay");
 
 window.u = u;
 
+// TODO: Delete this, it’s just for mocking the interaction
+u(document).handle("click", ".account_subscriptions-shows-item", function(event) {
+  u(event.target).toggleClass("is-subscribed");
+});
+
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
   const target = u(event.target);

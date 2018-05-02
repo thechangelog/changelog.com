@@ -6,7 +6,7 @@
       <div class="account_subscriptions-item-info">
         <h3>Changelog Weekly</h3>
         <p>Our editorialized take covering this week in open source and software development.</p>
-        <p class="account_subscriptions-item-info-meta">1 Email Per Week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
+        <p class="account_subscriptions-item-info-meta">1 email per week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
       </div>
       <div class="account_subscriptions-item-button">
         <%= newsletter_link(Changelog.Newsletters.weekly(), assigns) %>
@@ -16,10 +16,32 @@
       <div class="account_subscriptions-item-info">
         <h3>Changelog Nightly</h3>
         <p>Our automated, nightly email unearths the hottest new repos on GitHub before they blow up.</p>
-        <p class="account_subscriptions-item-info-meta">7 Emails Per Week — Delivered Daily at 10pm US Central</p>
+        <p class="account_subscriptions-item-info-meta">7 emails per week — Delivered daily at 10pm US Central</p>
       </div>
       <div class="account_subscriptions-item-button">
         <%= newsletter_link(Changelog.Newsletters.nightly(), assigns) %>
+      </div>
+    </div>
+    <div class="account_subscriptions-item">
+      <div class="account_subscriptions-item-info">
+        <h3>Podcast emails</h3>
+        <p>Get notified as soon as an episode is published. Subscribe to as many as you’d like.</p>
+        <p class="account_subscriptions-item-info-meta">Delivered whenever an episode is published</p>
+      </div>
+      <div class="account_subscriptions-item-button">
+        <%= link "Subscribe to All", to: home_path(@conn, :profile) %>
+      </div>
+      <div class="account_subscriptions-shows">
+        <%= for podcast <- @podcasts do %>
+          <button class="account_subscriptions-shows-item">
+            <img src="<%= PodcastView.cover_url(podcast, :medium) %>" width="220" height="220" alt="<%= podcast.name %>">
+            <p class="account_subscriptions-shows-item-label"><span>Subscribe</span></p>
+          </button>
+        <% end %>
+        <button class="account_subscriptions-shows-item">
+          <img src="https://cdn.changelog.com/uploads/covers/the-react-podcast-medium.png?v=63690914134" alt="Mock" width="220" height="220">
+          <p class="account_subscriptions-shows-item-label"><span>Subscribe</span></p>
+        </button>
       </div>
     </div>
   </div>
@@ -29,23 +51,11 @@
       <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/changelog-logomark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
 
       <div class="account_ctas-item-info">
-        <h3>Changelog.com Profiles</h3>
+        <h3>Changelog.com profiles</h3>
         <p>Public profiles are launching soon. Add your info today to reserve your username.</p>
 
         <div class="account_ctas-item-info-buttons">
           <%= link "Manage Profile", to: home_path(@conn, :profile) %>
-        </div>
-      </div>
-    </div>
-    <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/podcasts.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
-
-      <div class="account_ctas-item-info">
-        <h3>Changelog Podcasts</h3>
-        <p>Prefer not to listen on the web? Subscribe to Changelog podcasts from your app of choice.</p>
-
-        <div class="account_ctas-item-info-buttons">
-          <%= link "Subscribe to Podcasts", to: podcast_path(@conn, :index) %>
         </div>
       </div>
     </div>
