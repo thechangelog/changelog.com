@@ -53,72 +53,35 @@
     }
   }
 
-  &-shows {
-    display: flex;
-    flex: 1 0 100%;
-    flex-wrap: wrap;
-    margin: 20px -2% 0;
+  &-list {
+    margin: 1em 0 0;
+    width: 100%;
 
     &-item {
-      flex: 0 48%;
-      margin: 1%;
-      position: relative;
-      text-align: center;
+      border-bottom: 1px solid $border-color;
+      align-items: center;
+      display: flex;
+      padding: 0.5em 0;
+      width: 100%;
 
-      @include breakpoint(300px) { flex: 0 31.333%; }
-      @include breakpoint(mobile) {
-        flex: 0 14.666%;
-      }
-      @include breakpoint(tablet) {
-        margin: 2%;
-        flex: 0 12.666%;
+      &:last-child {
+        border-bottom: 0;
       }
 
-      &.is-subscribed,
-      &:hover {
-        img {
-          filter: grayscale(0);
-          opacity: 1;
-        }
-      }
-
-      img {
-        border-radius: 3px;
-        height: auto;
-        width: 100%;
-
-        transition: all 0.2s $base-easing;
-
-        filter: grayscale(100%);
-        opacity: 0.6;
-      }
-
-      &-label {
-        @include status_label();
-        font-size: 12px;
-        bottom: 0;
-        line-height: 1em;
+      p {
         margin: 0;
-        opacity: 0;
-        transition: all 0.2s $base-easing;
+      }
 
-        span {
-          text-transform: none;
-        }
+      &-icon {
+        border-radius: 2px;
+        margin-right: 1em;
+      }
 
-        .account_subscriptions-shows-item.is-subscribed &,
-        .account_subscriptions-shows-item:hover & {
-          opacity: 1;
-        }
-
-        .account_subscriptions-shows-item.is-subscribed & span {
-          background: $light-grey;
-          color: $medium-grey;
-
-          &:after {
-            content: "d";
-          }
-        }
+      &-title {
+        color: $dark-grey;
+        font-size: 0.875em;
+        flex: 1 0 auto;
+        font-weight: bold;
       }
     }
   }

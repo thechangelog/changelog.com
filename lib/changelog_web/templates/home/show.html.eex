@@ -31,34 +31,22 @@
       <div class="account_subscriptions-item-button">
         <%= link "Subscribe to All", to: home_path(@conn, :profile) %>
       </div>
-      <div class="account_subscriptions-shows">
+      <div class="account_subscriptions-list">
         <%= for podcast <- @podcasts do %>
-          <button class="account_subscriptions-shows-item">
-            <img src="<%= PodcastView.cover_url(podcast, :medium) %>" width="220" height="220" alt="<%= podcast.name %>">
-            <p class="account_subscriptions-shows-item-label"><span>Subscribe</span></p>
-          </button>
+          <div class="account_subscriptions-list-item">
+            <img class="account_subscriptions-list-item-icon" src="<%= PodcastView.cover_url(podcast, :medium) %>" width="30" height="30" alt="<%= podcast.name %>">
+            <p class="account_subscriptions-list-item-title"><%= podcast.name %></p>
+            <div class="account_subscriptions-list-item-toggle toggle toggle--light">
+              <input type="checkbox" class="check">
+              <div class="switch"></div>
+            </div>
+          </div>
         <% end %>
-        <button class="account_subscriptions-shows-item">
-          <img src="https://cdn.changelog.com/uploads/covers/the-react-podcast-medium.png?v=63690914134" alt="Mock" width="220" height="220">
-          <p class="account_subscriptions-shows-item-label"><span>Subscribe</span></p>
-        </button>
       </div>
     </div>
   </div>
 
   <div class="account_ctas">
-    <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/changelog-logomark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
-
-      <div class="account_ctas-item-info">
-        <h3>Changelog.com profiles</h3>
-        <p>Public profiles are launching soon. Add your info today to reserve your username.</p>
-
-        <div class="account_ctas-item-info-buttons">
-          <%= link "Manage Profile", to: home_path(@conn, :profile) %>
-        </div>
-      </div>
-    </div>
     <div class="account_ctas-item">
       <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
 
