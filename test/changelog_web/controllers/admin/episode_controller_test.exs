@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
   import Mock
 
-  alias Changelog.{Episode, NewsItem, NewsQueue, Transcripts}
+  alias Changelog.{Episode, Github, NewsItem, NewsQueue}
 
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
@@ -208,10 +208,10 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast, name: "Happy Cast", slug: "happy")
     e = insert(:published_episode, podcast: p, slug: "12")
 
-    with_mock Transcripts.Updater, [update: fn(_) -> true end] do
+    with_mock Github.Updater, [update: fn(_, _) -> true end] do
       conn = post(conn, admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
 
-      assert called Transcripts.Updater.update(:_)
+      assert called Github.Updater.update(:_, :_)
       assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     end
   end

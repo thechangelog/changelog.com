@@ -3,12 +3,6 @@ defmodule ChangelogWeb.PodcastViewTest do
 
   import ChangelogWeb.PodcastView
 
-  test "dasherized_name" do
-    assert dasherized_name(build(:podcast, name: "The Changelog")) == "the-changelog"
-    assert dasherized_name(build(:podcast, name: "Go Time")) == "go-time"
-    assert dasherized_name(build(:podcast, name: "Hell's Kitchen!")) == "hells-kitchen"
-  end
-
   describe "subscribe_on_overcast_url" do
     test "reformats the iTunes URL as necessary" do
       p = build(:podcast, itunes_url: "https://itunes.apple.com/us/podcast/the-changelog/id341623264")

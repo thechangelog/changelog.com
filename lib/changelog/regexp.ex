@@ -27,7 +27,7 @@ defmodule Changelog.Regexp do
     ~r/(\d\d:)?(\d\d?:)(\d\d)(\.\d\d?)?/
   end
 
-  def transcript_slugs do
+  def github_filename_slugs do
     ~r/(?<podcast>.*)\/.*-(?<episode>\w+).md/
   end
 end

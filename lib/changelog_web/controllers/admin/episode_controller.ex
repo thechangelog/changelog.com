@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, EpisodeTopic, EpisodeHost, EpisodeStat, Mailer,
-                   NewsItem, NewsQueue, Podcast, Transcripts}
+  alias Changelog.{Episode, EpisodeTopic, EpisodeHost, EpisodeStat, Github,
+                   Mailer, NewsItem, NewsQueue, Podcast}
   alias ChangelogWeb.Email
 
   plug :assign_podcast
@@ -197,7 +197,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
 
-    Transcripts.Updater.update(episode)
+    Github.Updater.update(episode, "transcripts")
+    # TODO Github.Updater.update(episode, "show-notes")
 
     conn
     |> put_flash(:result, "success")
