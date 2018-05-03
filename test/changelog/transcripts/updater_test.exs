@@ -10,7 +10,7 @@ defmodule Changelog.Transcripts.UpdaterTest do
       p = insert(:podcast, slug: "jsparty")
       e = insert(:published_episode, slug: "12", podcast: p)
 
-      with_mock HTTPoison, [get!: fn(_) -> "markdown" end] do
+      with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
         Updater.update(e)
         assert called HTTPoison.get!(Source.raw_url(e))
       end
@@ -21,7 +21,7 @@ defmodule Changelog.Transcripts.UpdaterTest do
       e1 = insert(:published_episode, slug: "292", podcast: p)
       e2 = insert(:published_episode, slug: "300", podcast: p)
 
-      with_mock HTTPoison, [get!: fn(_) -> "markdown" end] do
+      with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
         Updater.update([e1, e2])
         assert called HTTPoison.get!(Source.raw_url(e1))
         assert called HTTPoison.get!(Source.raw_url(e2))
@@ -29,29 +29,36 @@ defmodule Changelog.Transcripts.UpdaterTest do
     end
 
     test "fetches transcript for valid path" do
-      p = insert(:podcast, slug: "rfc")
+      p = insert(:podcast, slug: "rfc", name: "Request For Commits")
       e = insert(:published_episode, slug: "test", podcast: p)
 
-      with_mock HTTPoison, [get!: fn(_) -> "markdown" end] do
+      with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
         Updater.update("rfc/request-for-commits-test.md")
         assert called HTTPoison.get!(Source.raw_url(e))
       end
     end
 
     test "fetches multiple transcript for valid paths" do
-      p = insert(:podcast, slug: "podcast")
-      e1 = insert(:published_episode, slug: "292", podcast: p)
-      e2 = insert(:published_episode, slug: "300", podcast: p)
+      p1 = insert(:podcast, slug: "podcast", name: "The Changelog")
+      p2 = insert(:podcast, slug: "gotime", name: "Go Time")
+      e1 = insert(:published_episode, slug: "292", podcast: p1)
+      e2 = insert(:published_episode, slug: "300", podcast: p1)
+      e3 = insert(:published_episode, slug: "bonus-77", podcast: p2)
 
-      with_mock HTTPoison, [get!: fn(_) -> "markdown" end] do
-        Updater.update(["podcast/the-changelog-292.md", "podcast/the-changelog-300.md"])
+      with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
+        Updater.update([
+          "podcast/the-changelog-292.md",
+          "podcast/the-changelog-300.md",
+          "gotime/go-time-bonus-77.md"])
+
         assert called HTTPoison.get!(Source.raw_url(e1))
         assert called HTTPoison.get!(Source.raw_url(e2))
+        assert called HTTPoison.get!(Source.raw_url(e3))
       end
     end
 
     test "no-ops when items are not valid episodes" do
-      with_mock HTTPoison, [get!: fn(_) -> "markdown" end] do
+      with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
         Updater.update([".gitignore", "README.md"])
         refute called HTTPoison.get!()
       end
