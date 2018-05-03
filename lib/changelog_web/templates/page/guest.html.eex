@@ -18,14 +18,24 @@
       <li>Headphones (Over-the-ear preferred)</li>
       <li>A quiet place to record</li>
       <li>A reliable internet connection</li>
-      <li>A <a href="https://www.skype.com/">Skype</a> account</li>
+      <%= unless @podcast.slug == "reactpodcast" do %><li>A <a href="https://www.skype.com/">Skype</a> account</li><% end %>
     </ul>
 
-    <p>Send us your Skype username via email and add <code><%= skype_account(@podcast) %></code> as a contact. <mark>Need help?</mark> Contact <a href="https://twitter.com/adamstac">Adam</a> or <a href="https://twitter.com/jerodsanto">Jerod</a>. We're here for you.</p>
+    <%= unless @podcast.slug == "reactpodcast" do %>
+      <p>Send us your Skype username via email and add <code><%= skype_account(@podcast) %></code> as a contact. <mark>Need help?</mark> Contact <a href="https://twitter.com/adamstac">Adam</a> or <a href="https://twitter.com/jerodsanto">Jerod</a>. We're here for you.</p>
+    <% end %>
+
+    <%= if @podcast.slug == "reactpodcast" do %>
+      <h3 id="local-recording">Creating a Local Recording</h3>
+
+      <p>To get the best quality, we ask that you please create a local recording. Here's a video on how to do that:</p>
+
+      <script src="https://fast.wistia.com/embed/medias/7in6285tx0.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_7in6285tx0 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/7in6285tx0/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
+    <% end %>
 
     <h3 id="during">During Recording</h3>
 
-    <p>Be ready on Skype approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>. Please do not call us since we'll be preparing. Here's some <em>tips and tricks</em> for a great show:</p>
+    <p>Be ready <%= unless @podcast.slug == "reactpodcast" do %>on Skype<% end %> approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>.<%= unless @podcast.slug == "reactpodcast" do %> Please do not call us since we'll be preparing.<% end %> Here's some <em>tips and tricks</em> for a great show:</p>
 
     <ul>
     <%= if @podcast.recorded_live do %>
