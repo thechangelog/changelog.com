@@ -30,7 +30,7 @@ defmodule ChangelogWeb.PodcastController do
   end
 
   def show(conn, params = %{"slug" => slug}) do
-    podcast = Podcast.get_by_slug(slug)
+    podcast = Podcast.get_by_slug!(slug)
 
     page =
       Podcast.get_news_items(podcast)
