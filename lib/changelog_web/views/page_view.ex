@@ -4,6 +4,13 @@ defmodule ChangelogWeb.PageView do
   alias Changelog.NewsSponsorship
   alias ChangelogWeb.{EpisodeView, NewsletterView, TimeView}
 
+  def uses_skype?(podcast) do
+    case podcast.slug do
+      "reactpodcast" -> false
+      _else          -> true
+    end
+  end
+
   def skype_account(podcast) do
     case podcast.slug do
       "gotime"  -> "changelog-4"
