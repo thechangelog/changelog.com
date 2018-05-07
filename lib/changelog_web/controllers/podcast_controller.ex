@@ -47,7 +47,7 @@ defmodule ChangelogWeb.PodcastController do
   end
 
   def recommended(conn, params = %{"slug" => slug}) do
-    podcast = Podcast.get_by_slug(slug)
+    podcast = Podcast.get_by_slug!(slug)
 
     page =
       Podcast.get_episodes(podcast)
@@ -69,7 +69,7 @@ defmodule ChangelogWeb.PodcastController do
   end
 
   def upcoming(conn, params = %{"slug" => slug}) do
-    podcast = Podcast.get_by_slug(slug)
+    podcast = Podcast.get_by_slug!(slug)
 
     page =
       Podcast.get_episodes(podcast)
