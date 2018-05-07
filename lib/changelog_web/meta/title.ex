@@ -82,7 +82,10 @@ defmodule ChangelogWeb.Meta.Title do
     "Changelog Podcasts"
   end
 
-  # Podcast homepage
+  # Podcast homepages
+  defp get(%{view_module: PodcastView, podcast: podcast, tab: "recommended"}) do
+    "Recommended episodes of #{podcast.name}"
+  end
   defp get(%{view_module: PodcastView, podcast: podcast}) do
     if Enum.any?(podcast.hosts) do
       "#{podcast.name} with #{PersonView.comma_separated_names(podcast.hosts)}"

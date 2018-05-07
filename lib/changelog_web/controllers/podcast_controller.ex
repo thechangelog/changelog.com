@@ -65,7 +65,7 @@ defmodule ChangelogWeb.PodcastController do
       |> Repo.all
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :show, podcast: podcast, items: items, page: page)
+    render(conn, :show, podcast: podcast, items: items, page: page, tab: "recommended")
   end
 
   def upcoming(conn, params = %{"slug" => slug}) do
@@ -88,6 +88,6 @@ defmodule ChangelogWeb.PodcastController do
         Map.put(item, :object, episode)
       end)
 
-    render(conn, :show, podcast: podcast, items: items, page: page)
+    render(conn, :show, podcast: podcast, items: items, page: page, tab: "upcoming")
   end
 end
