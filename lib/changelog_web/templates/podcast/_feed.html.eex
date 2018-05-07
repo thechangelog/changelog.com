@@ -4,14 +4,14 @@
 
   <nav class="subnav">
     <ul class="subnav-list">
-      <li class="subnav-list-item">
+      <li class="subnav-list-item <%= active_class(@conn, "show") %>">
         <%= link "Recent", to: podcast_path(@conn, :show, @podcast.slug) <> "#feed" %>
       </li>
-      <li class="subnav-list-item <%= active_class(@conn, ["recommended"]) %>">
+      <li class="subnav-list-item <%= active_class(@conn, "recommended") %>">
         <%= link "Recommended", to: podcast_path(@conn, :recommended, @podcast.slug) <> "#feed" %>
       </li>
     <%= if @podcast.status != :retired do %>
-      <!--<li class="subnav-list-item <%= active_class(@conn, ["upcoming"]) %>">
+      <!--<li class="subnav-list-item <%= active_class(@conn, "upcoming") %>">
         <%= link "Upcoming", to: podcast_path(@conn, :upcoming, @podcast.slug) <> "#feed" %>
       </li>-->
     <% end %>
