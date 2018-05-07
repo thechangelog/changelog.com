@@ -24,7 +24,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
   def featured_label(episode) do
     if episode.featured do
-      content_tag :span, "Featured", class: "ui tiny blue basic label"
+      content_tag :span, "Recommended", class: "ui tiny blue basic label"
     end
   end
 
