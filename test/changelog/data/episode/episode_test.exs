@@ -43,18 +43,6 @@ defmodule Changelog.EpisodeTest do
     end
   end
 
-  describe "validating featured episodes" do
-    test "featured changeset that is missing a highlight" do
-      changeset = Episode.admin_changeset(build(:episode), %{featured: true})
-      refute changeset.valid?
-    end
-
-    test "featured changeset that includes a highlight" do
-      changeset = Episode.admin_changeset(build(:episode), %{featured: true, highlight: "Much wow"})
-      assert changeset.valid?
-    end
-  end
-
   test "with_numbered_slug" do
     insert :episode, slug: "bonus-episode-dont-find-me"
 

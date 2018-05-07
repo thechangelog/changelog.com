@@ -20,6 +20,7 @@
     <%= link "All Topics", to: topic_path(@conn, :index), title: "View All Topics", class: "topic-header-back" %>
   </header>
 
+  <a id="feed" class="anchor"></a>
   <div class="feed">
   <%= for item <- @items do %>
     <%= render(NewsItemView, "_summary.html", Map.merge(assigns, %{item: item, style: "date"})) %>

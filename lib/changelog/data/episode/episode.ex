@@ -2,7 +2,7 @@ defmodule Changelog.Episode do
   use Changelog.Data, default_sort: :published_at
 
   alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeTopic, EpisodeStat,
-                   EpisodeSponsor, Files, Podcast, Regexp, Transcripts}
+                   EpisodeSponsor, Files, NewsItem, Podcast, Regexp, Transcripts}
   alias ChangelogWeb.{EpisodeView, TimeView}
 
   schema "episodes" do
@@ -87,7 +87,6 @@ defmodule Changelog.Episode do
     |> cast_attachments(params, ~w(audio_file))
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
-    |> validate_featured_has_highlight
     |> validate_published_has_published_at
     |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)
@@ -96,6 +95,10 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_topics)
     |> derive_bytes_and_duration
   end
+
+  def get_news_item(episode), do: NewsItem.with_episode(episode)
+
+  def object_id(episode), do: "#{episode.podcast.slug}:#{episode.slug}"
 
   def participants(episode) do
     episode =
@@ -214,17 +217,6 @@ defmodule Changelog.Episode do
       TimeView.seconds(duration)
     catch
       _all -> 0
-    end
-  end
-
-  defp validate_featured_has_highlight(changeset) do
-    featured = get_field(changeset, :featured)
-    highlight = get_field(changeset, :highlight)
-
-    if featured && is_nil(highlight) do
-      add_error(changeset, :highlight, "can't be blank when featured")
-    else
-      changeset
     end
   end
 

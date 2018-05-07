@@ -18,6 +18,7 @@
     </div>
   </header>
 
+  <a id="feed" class="anchor"></a>
   <div class="feed">
     <%= render(SharedView, "_signup_banner.html", assigns) %>
   </div>
