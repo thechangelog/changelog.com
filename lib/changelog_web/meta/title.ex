@@ -55,9 +55,15 @@ defmodule ChangelogWeb.Meta.Title do
     "All News Topics"
   end
 
-  # Topic show page
-  defp get(%{view_module: TopicView, view_template: "show.html", topic: topic}) do
+  # Topic show pages
+  defp get(%{view_module: TopicView, topic: topic, tab: "news"}) do
     "Developer News about #{topic.name}"
+  end
+  defp get(%{view_module: TopicView, topic: topic, tab: "podcasts"}) do
+    "Developer Podcasts about #{topic.name}"
+  end
+  defp get(%{view_module: TopicView, topic: topic}) do
+    "Developer News and Podcasts about #{topic.name}"
   end
 
   # Pages

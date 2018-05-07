@@ -35,6 +35,7 @@ defmodule Changelog.NewsItem do
   end
 
   def audio(query \\ __MODULE__),                      do: from(q in query, where: q.type == ^:audio)
+  def non_audio(query \\ __MODULE__),                  do: from(q in query, where: q.type != ^:audio)
   def declined(query \\ __MODULE__),                   do: from(q in query, where: q.status == ^:declined)
   def drafted(query \\ __MODULE__),                    do: from(q in query, where: q.status == ^:draft)
   def logged_by(query \\ __MODULE__, person),          do: from(q in query, where: q.logger_id == ^person.id)

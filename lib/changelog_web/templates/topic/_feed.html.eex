@@ -1,0 +1,20 @@
+<nav class="subnav">
+  <ul class="subnav-list">
+    <li class="subnav-list-item <%= active_class(@conn, "show") %>">
+      <%= link("All", to: topic_path(@conn, :show, @topic.slug) <> "#feed", title: "News and Podcasts about #{@topic.name}") %>
+    </li>
+    <li class="subnav-list-item <%= active_class(@conn, "news") %>">
+      <%= link("News", to: topic_path(@conn, :news, @topic.slug) <> "#feed", title: "#{@topic.name} News") %>
+    </li>
+    <li class="subnav-list-item <%= active_class(@conn, "podcasts") %>">
+      <%= link("Podcasts", to: topic_path(@conn, :podcasts, @topic.slug) <> "#feed", title: "Podcasts about #{@topic.name}") %>
+    </li>
+  </ul>
+</nav>
+
+<%= if Enum.any?(@items) do %>
+  <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
+  <%= render(SharedView, "_more_button.html", assigns) %>
+<% else %>
+  <p class="feed-note">Nothing to see here. <%= link("Submit some news", to: news_item_path(@conn, :new)) %> or <%= link("ping us", to: "https://github.com/thechangelog/ping/issues") %>.</p>
+<% end %>

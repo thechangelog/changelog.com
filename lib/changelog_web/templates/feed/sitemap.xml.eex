@@ -42,5 +42,7 @@
   <url><loc><%= topic_url(@conn, :index) %></loc></url>
   <%= for topic <- @topics do %>
     <url><loc><%= topic_url(@conn, :show, topic.slug) %></loc></url>
+    <url><loc><%= topic_url(@conn, :news, topic.slug) %></loc></url>
+    <url><loc><%= topic_url(@conn, :podcasts, topic.slug) %></loc></url>
   <% end %>
 </urlset>
