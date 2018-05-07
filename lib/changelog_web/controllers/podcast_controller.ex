@@ -60,7 +60,7 @@ defmodule ChangelogWeb.PodcastController do
       page.entries
       |> NewsItem.with_episodes
       |> NewsItem.published
-      |> NewsItem.newest_last
+      |> NewsItem.newest_first
       |> NewsItem.preload_all
       |> Repo.all
       |> Enum.map(&NewsItem.load_object/1)
