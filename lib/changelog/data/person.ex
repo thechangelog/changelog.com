@@ -41,6 +41,7 @@ defmodule Changelog.Person do
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
+    has_many :authored_posts, Post, foreign_key: :author_id, on_delete: :delete_all
     has_many :authored_news_items, NewsItem, foreign_key: :author_id
     has_many :logged_news_items, NewsItem, foreign_key: :logger_id
 
