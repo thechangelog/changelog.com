@@ -1,8 +1,10 @@
 defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Podcast
+  alias Changelog.{Podcast, PodcastPolicy}
 
+  plug :assign_podcast when action in [:show, :edit, :update]
+  plug Authorize, [PodcastPolicy, :podcast]
   plug :scrub_params, "podcast" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -49,18 +51,23 @@ defmodule ChangelogWeb.Admin.PodcastController do
     end
   end
 
-  def edit(conn, %{"id" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: slug)
-      |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
-      |> Repo.preload([podcast_topics: {Changelog.PodcastTopic.by_position, :topic}])
+  def edit(conn = %{assigns: %{podcast: podcast}}, _params) do
+    podcast =
+      podcast
+      |> Podcast.preload_hosts
+      |> Podcast.preload_topics
+
     changeset = Podcast.update_changeset(podcast)
+
     render(conn, :edit, podcast: podcast, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => slug, "podcast" => podcast_params}) do
-    podcast = Repo.get_by!(Podcast, slug: slug)
+  def update(conn = %{assigns: %{podcast: podcast}}, params = %{"podcast" => podcast_params}) do
+    podcast =
+      podcast
       |> Repo.preload(:podcast_topics)
       |> Repo.preload(:podcast_hosts)
+
     changeset = Podcast.update_changeset(podcast, podcast_params)
 
     case Repo.update(changeset) do
@@ -73,6 +80,11 @@ defmodule ChangelogWeb.Admin.PodcastController do
       {:error, changeset} ->
         render(conn, :edit, podcast: podcast, changeset: changeset)
     end
+  end
+
+  defp assign_podcast(conn = %{params: %{"id" => id}}, _) do
+    podcast = Repo.get_by!(Podcast, slug: id)
+    assign(conn, :podcast, podcast)
   end
 
   defp clear_podcasts_cache, do: ConCache.delete(:app_cache, "podcasts")

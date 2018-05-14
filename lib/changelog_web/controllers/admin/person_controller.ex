@@ -5,14 +5,17 @@ defmodule ChangelogWeb.Admin.PersonController do
   alias ChangelogWeb.Email
   alias Craisin.Subscriber
 
+  plug :assign_person when action in [:edit, :update, :delete]
+  plug Authorize, [Changelog.PersonPolicy, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
   def index(conn, params) do
-    page = Person
-    |> order_by([p], desc: p.id)
-    |> Repo.paginate(params)
+    page =
+      Person
+      |> order_by([p], desc: p.id)
+      |> Repo.paginate(params)
 
-    render conn, :index, people: page.entries, page: page
+    render(conn, :index, people: page.entries, page: page)
   end
 
   def new(conn, _params) do
@@ -41,14 +44,12 @@ defmodule ChangelogWeb.Admin.PersonController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    person = Repo.get!(Person, id)
+  def edit(conn = %{assigns: %{person: person}}, _params) do
     changeset = Person.admin_update_changeset(person)
     render(conn, :edit, person: person, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "person" => person_params}) do
-    person = Repo.get!(Person, id)
+  def update(conn = %{assigns: %{person: person}}, params = %{"person" => person_params}) do
     changeset = Person.admin_update_changeset(person, person_params)
 
     case Repo.update(changeset) do
@@ -63,14 +64,19 @@ defmodule ChangelogWeb.Admin.PersonController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    person = Repo.get!(Person, id)
+  def delete(conn = %{assigns: %{person: person}}, _params) do
     Repo.delete!(person)
     community = Newsletters.community()
     Subscriber.unsubscribe(community.list_id, person.email)
+
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_person_path(conn, :index))
+  end
+
+  defp assign_person(conn = %{params: %{"id" => id}}, _) do
+    person = Repo.get!(Person, id)
+    assign(conn, :person, person)
   end
 
   defp handle_welcome_email(person, params) do

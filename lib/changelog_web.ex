@@ -4,7 +4,7 @@ defmodule ChangelogWeb do
       use Phoenix.Controller, namespace: ChangelogWeb
 
       alias Changelog.Repo
-      alias ChangelogWeb.Plug.{RequireAdmin, RequireUser, RequireGuest}
+      alias ChangelogWeb.Plug.{Authorize, RequireAdmin, RequireUser, RequireGuest}
       import Ecto
       import Ecto.Query
 

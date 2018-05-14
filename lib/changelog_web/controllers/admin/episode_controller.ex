@@ -5,6 +5,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
                    Github, NewsItem, NewsQueue, Podcast}
 
   plug :assign_podcast
+  plug Authorize, [Changelog.EpisodePolicy, :podcast]
   plug :scrub_params, "episode" when action in [:create, :update]
 
   # pass assigned podcast as a function arg
@@ -206,8 +207,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
 
-  defp assign_podcast(conn, _) do
-    podcast = Repo.get_by!(Podcast, slug: conn.params["podcast_id"])
+  defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
+    podcast = Repo.get_by!(Podcast, slug: slug)
     assign(conn, :podcast, podcast)
   end
 

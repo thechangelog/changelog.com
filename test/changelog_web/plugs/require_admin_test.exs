@@ -4,7 +4,7 @@ defmodule ChangelogWeb.RequireAdminTest do
   alias Changelog.Person
   alias ChangelogWeb.{Plug, Router}
 
-  setup _config do
+  setup(_config) do
     conn =
       build_conn()
       |> bypass_through(Router, :browser)

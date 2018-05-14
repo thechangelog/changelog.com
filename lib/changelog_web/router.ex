@@ -15,7 +15,7 @@ defmodule ChangelogWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Plug.Auth, repo: Changelog.Repo
+    plug Plug.Authenticate, repo: Changelog.Repo
     plug PlugEtsCache.Plug
   end
 

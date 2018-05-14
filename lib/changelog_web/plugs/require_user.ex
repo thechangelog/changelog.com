@@ -4,9 +4,7 @@ defmodule ChangelogWeb.Plug.RequireUser do
 
   alias ChangelogWeb.Router.Helpers
 
-  def init(opts) do
-    opts
-  end
+  def init(opts), do: opts
 
   def call(conn, _opts) do
     if conn.assigns[:current_user] do
