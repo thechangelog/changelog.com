@@ -6,58 +6,63 @@
 
     <blockquote class="sponsor_story-quote">
       <div class="sponsor_story-quote-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+        <p>"Partnering with Changelog on their news and podcasts have helped me to build brand awareness for Rollbar in a space where developers have heard the 'you need error tracking' message before. Adam and his team do an amazing job at finding the stories about our brand and service that developers want to hear. They're so good at getting the attention (and the trust) of their listeners."</p>
       </div>
       <footer class="marketing-quote-footer">
-          <img src='<%= static_url(@conn, "/images/content/community/justin-dorfman.jpg") %>' alt="" width="50" height="50">
-          <strong>Justin Dorfman</strong>
-          <span class="quote-title">Developer Relations at Sticker Mule</span>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/mike-smith.jpg") %>' alt="" width="50" height="50">
+          <strong>Mike Smith</strong>
+          <span class="quote-title">Head of Growth at Rollbar</span>
       </footer>
     </blockquote>
   </header>
 
   <hr>
 
-  <div class="sponsor_story-content richtext">
-    <h3>What seemed like a risk, really paid off.</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-    <h3>Who is Rollbar?</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-    <blockquote>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <footer>
-        <strong>Mike Smith</strong> — Head of Growth at Rollbar.
-      </footer>
-    </blockquote>
-  </div>
-
-
   <div class="sponsor_story-examples">
-    <h3>Endorsement — Sponsorship examples</h3>
+    <h3>Rollbar &ndash; Ad Campaign Examples</h3>
     <div class="grid_table">
       <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Campaign type</p></div>
         <div class="grid_table-header-column"><p>Campaign name</p></div>
-        <div class="grid_table-header-column"><p>Campaign style</p></div>
-        <div class="grid_table-header-column"><p>Ad production</p></div>
+        <div class="grid_table-header-column"><p>Campaign production</p></div>
       </div>
       <div class="grid_table-row">
-        <div class="grid_table-row-column"><p>CircleCI — Paul Biggar 1</p></div>
-        <div class="grid_table-row-column"><p>Customer endorsement</p></div>
+        <div class="grid_table-row-column"><p>Partner pre-roll</p></div>
+        <div class="grid_table-row-column"><p>Move fast and fix things</p></div>
         <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", assigns) %></div>
+        <!-- https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-partner-preroll-move-fast-and-fix-things.mp3  -->
       </div>
       <div class="grid_table-row">
-        <div class="grid_table-row-column"><p>CircleCI — Paul Biggar 1</p></div>
-        <div class="grid_table-row-column"><p>Customer endorsement</p></div>
+        <div class="grid_table-row-column"><p>Customer story</p></div>
+        <div class="grid_table-row-column"><p>CircleCI: Paul Biggar</p></div>
         <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", assigns) %></div>
+        <!-- https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-circleci-1.mp3 -->
       </div>
       <div class="grid_table-row">
-        <div class="grid_table-row-column"><p>CircleCI — Paul Biggar 1</p></div>
-        <div class="grid_table-row-column"><p>Customer endorsement</p></div>
+        <div class="grid_table-row-column"><p>Endorsement</p></div>
+        <div class="grid_table-row-column"><p>Move fast and fix things</p></div>
         <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", assigns) %></div>
+        <!-- https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3 -->
       </div>
     </div>
+  </div>
+
+  <hr>
+
+  <div class="sponsor_story-content richtext">
+    <h3>Who is Rollbar?</h3>
+    <p>Rollbar is an error monitoring platform that helps developer teams move fast and fix things. Catch errors before your users do. Resolve errors in minutes, and deploy your code with confidence.</p>
+
+    <blockquote>
+      <p>Rollbar is our early warning system for errors. The worst thing that can happen is a customer writes in to the support team to say something is broken. Rollbar allows us to be ahead of our customers and to fix issues before they ever know something is wrong.</p>
+      <footer>
+        <strong>Tyler Wells</strong> — Twilio, Director of Engineering - <a href="https://rollbar.com/customers/twilio/">source</a>
+      </footer>
+    </blockquote>
+    <h3>We helped Rollbar build brand awareness</h3>
+    <p>A few years back Rollbar started to focus on sponsoring conferences and communities. They'd go and setup an awesome booth, talk to the community, and do demos. At the time, not many people knew who Rollbar was or what they were about.</p>
+    <p>Several months later at another conference, the same thing — great experience, great meeting with the community, but not many people knew about Rollbar. The next conference was different. The community was aware of Rollbar and what they offered developers. They were told by several members of the community who visited their booth that they heard about Rollbar because they sponsored some of their favorite podcasts. These folks weren't Rollbar users either. However, they did mention that they've recommended Rollbar to their developer friends. That was huge news! Because they sponsored many podcasts from Changelog's network; including The Changelog, JS Party, The React Podcast, and Go Time, Rollbar was able to gain clear brand awareness in the developer community.</p>
+    <p>Don't underestimate the power of awareness for your brand! The brand awareness we've helped to develop for Rollbar is the foundation they've been able to build they developer marketing strategy upon.</p>
   </div>
 
   <hr>
