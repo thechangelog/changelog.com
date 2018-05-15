@@ -50,7 +50,7 @@ defmodule Changelog.Episode do
   end
 
   def distinct_podcast(query),                       do: from(q in query, distinct: q.podcast_id)
-  def featured(query \\ __MODULE__),                 do: from(q in query, where: q.featured == true, where: not(is_nil(q.highlight)))
+  def featured(query \\ __MODULE__),                 do: from(q in query, where: q.featured == true)
   def next_after(query \\ __MODULE__, episode),      do: from(q in query, where: q.published_at > ^episode.published_at)
   def previous_to(query \\ __MODULE__, episode),     do: from(q in query, where: q.published_at < ^episode.published_at)
   def published(query \\ __MODULE__),                do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now)
