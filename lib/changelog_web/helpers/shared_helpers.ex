@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.Helpers.SharedHelpers do
   use Phoenix.HTML
 
+  alias HtmlSanitizeEx.Scrubber
   alias Changelog.Regexp
   alias Phoenix.{Controller, Naming}
 
@@ -79,9 +80,24 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def md_to_text(md) when is_binary(md), do: md |> md_to_html |> HtmlSanitizeEx.strip_tags |> sans_new_lines
   def md_to_text(md) when is_nil(md), do: ""
 
+  def md_to_oneline(md) when is_binary(md) do
+    md
+    |> md_to_html
+    |> Scrubber.scrub(ChangelogWeb.Helpers.StripBlockTags)
+    |> blockquote_to_em
+    |> sans_new_lines
+  end
+  def md_to_oneline(md) when is_nil(md), do: ""
+
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
   def sans_new_lines(string), do: String.replace(string, "\n", " ")
+
+  def blockquote_to_em(string) do
+    string
+    |> String.replace("<blockquote>", "<em>")
+    |> String.replace("</blockquote>", "</em>")
+  end
 
   def is_future?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == 1
   def is_past?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == -1

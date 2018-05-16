@@ -2,7 +2,7 @@
   <%= render("_header.html", assigns) %>
 <%= if @item.story do %>
   <div class="news_item-description">
-    <p><%= @item.story |> md_to_text %></p>
+    <p><%= @item.story |> md_to_oneline |> raw %></p>
     <%= link to: permalink_path(@conn, @item), class: "news_item-description-continue", data: permalink_data(@item) do %>
       <span>read more...</span>
     <% end %>
