@@ -17,7 +17,7 @@
   <tbody>
   <%= for episode <- @episodes do %>
     <tr>
-      <td><%= episode.slug %></td>
+      <td title="<%= episode.id %>"><%= episode.slug %></td>
       <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
       <%= if episode.published do %>
       <td><%= TimeView.duration(episode.duration) %></td>
