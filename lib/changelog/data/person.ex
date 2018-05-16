@@ -100,6 +100,7 @@ defmodule Changelog.Person do
     |> cast(attrs, allowed)
     |> cast_embed(:settings)
     |> validate_required([:name, :email, :handle])
+    |> validate_format(:email, Regexp.email)
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
     |> validate_length(:handle, max: 40, message: "max 40 chars")

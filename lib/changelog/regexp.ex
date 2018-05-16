@@ -1,4 +1,9 @@
 defmodule Changelog.Regexp do
+  # via https://gist.github.com/mgamini/4f3a8bc55bdcc96be2c6
+  def email do
+    ~r/^[A-Za-z0-9._%+-+']+@[A-Za-z0-9.-]+\.[A-Za-z]+$/
+  end
+
   def http do
     ~r/^https?:\/\//
   end
