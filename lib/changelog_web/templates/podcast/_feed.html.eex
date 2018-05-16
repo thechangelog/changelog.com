@@ -25,7 +25,7 @@
     <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
   <% end %>
 
-  <%= render(SharedView, "_pagination.html", assigns) %>
+  <%= render(SharedView, "_more_button.html", assigns) %>
 <% else %>
   <p class="feed-note">Nothing to see here. Move along.</p>
 <% end %>
