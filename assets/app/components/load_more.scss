@@ -1,0 +1,23 @@
+.load_more {
+  @include wrap;
+  display: block;
+  margin: $base-spacing/2 auto $base-spacing*2 !important;
+  padding: 0;
+  text-align: center;
+
+  .load_more-button {
+    background: $lightest-grey;
+    border-radius: $base-border-radius;
+    color: $black;
+    display: block;
+    font-family: $code;
+    font-size: 0.875em;
+    margin: 0;
+    padding: 0.75em 1.5em 0.875em;
+    transition: background 0.1s $base-easing;
+
+    &:hover {
+      background: darken($lightest-grey, 2.5%);
+    }
+  }
+}

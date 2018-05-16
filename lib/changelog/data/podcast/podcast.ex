@@ -79,31 +79,18 @@ defmodule Changelog.Podcast do
   def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
   def retired_last(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.status])
 
-  def get_by_slug(slug) do
-    if slug == "master" do
-      master()
-    else
-      public()
-      |> Repo.get_by!(slug: slug)
-      |> preload_hosts
-    end
+  def get_by_slug!("master"), do: master()
+  def get_by_slug!(slug) do
+    public()
+    |> Repo.get_by!(slug: slug)
+    |> preload_hosts
   end
 
-  def get_episodes(podcast) do
-    if is_master(podcast) do
-      from(e in Episode)
-    else
-      assoc(podcast, :episodes)
-    end
-  end
+  def get_episodes(%{slug: "master"}), do: from(e in Episode)
+  def get_episodes(podcast), do: assoc(podcast, :episodes)
 
-  def get_news_items(podcast) do
-    if is_master(podcast) do
-      NewsItem.with_object(NewsItem.audio)
-    else
-      NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
-    end
-  end
+  def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio)
+  def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
 
   def episode_count(podcast) do
     podcast
@@ -111,20 +98,14 @@ defmodule Changelog.Podcast do
     |> Repo.count
   end
 
-  def is_master(podcast) do
-    podcast.slug == "master"
-  end
+  def is_master(podcast), do: podcast.slug == "master"
 
+  def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published)
   def published_episode_count(podcast) do
-    query = if is_master(podcast) do
-      Episode.published
-    else
-      podcast
-      |> assoc(:episodes)
-      |> Episode.published
-    end
-
-    Repo.count(query)
+    podcast
+    |> assoc(:episodes)
+    |> Episode.published
+    |> Repo.count
   end
 
   def last_numbered_slug(podcast) do

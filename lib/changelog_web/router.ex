@@ -164,6 +164,8 @@ defmodule ChangelogWeb.Router do
     get "/source/:slug", NewsSourceController, :show, as: :news_source
     get "/topics", TopicController, :index, as: :topic
     get "/topic/:slug", TopicController, :show, as: :topic
+    get "/topic/:slug/news", TopicController, :news, as: :topic
+    get "/topic/:slug/podcasts", TopicController, :podcasts, as: :topic
 
     get "/live", LiveController, :index
     get "/live/status", LiveController, :status
@@ -196,6 +198,8 @@ defmodule ChangelogWeb.Router do
 
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast
+    get "/:slug/upcoming", PodcastController, :upcoming, as: :podcast
+    get "/:slug/recommended", PodcastController, :recommended, as: :podcast
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
     get "/:podcast/:slug/embed", EpisodeController, :embed, as: :episode

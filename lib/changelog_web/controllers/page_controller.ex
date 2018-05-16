@@ -27,7 +27,7 @@ defmodule ChangelogWeb.PageController do
       |> Podcast.oldest_first
       |> Repo.all
 
-    podcast = Podcast.get_by_slug(slug)
+    podcast = Podcast.get_by_slug!(slug)
     episode =
       Podcast.get_episodes(podcast)
       |> Episode.published

@@ -51,6 +51,7 @@ defmodule Changelog.NewsSponsorship do
     |> Map.get(:ads, [])
     |> Enum.filter(&(&1.active))
     |> select_ad_for_index
+    |> ad_with_sponsorship_loaded(sponsorship)
     |> ad_with_sponsor_loaded(sponsorship)
   end
 
@@ -72,6 +73,9 @@ defmodule Changelog.NewsSponsorship do
     Enum.find(ads, fn(x) -> NewsAd.has_no_issues(x) end) ||
     Enum.random(ads)
   end
+
+  defp ad_with_sponsorship_loaded(nil, _sponsorship), do: nil
+  defp ad_with_sponsorship_loaded(ad, sponsorship), do: Map.put(ad, :sponsorship, sponsorship)
 
   defp ad_with_sponsor_loaded(nil, _sponsorship), do: nil
   defp ad_with_sponsor_loaded(ad, sponsorship), do: Map.put(ad, :sponsor, sponsorship.sponsor)

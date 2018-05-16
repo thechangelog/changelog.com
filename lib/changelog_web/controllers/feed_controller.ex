@@ -23,7 +23,7 @@ defmodule ChangelogWeb.FeedController do
   end
 
   def podcast(conn, %{"slug" => slug}) do
-    podcast = Podcast.get_by_slug(slug)
+    podcast = Podcast.get_by_slug!(slug)
 
     episodes =
       Podcast.get_episodes(podcast)

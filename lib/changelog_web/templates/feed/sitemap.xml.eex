@@ -27,6 +27,7 @@
   <url><loc><%= podcast_url(@conn, :index) %></loc></url>
   <%= for podcast <- @podcasts do %>
     <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
+    <url><loc><%= podcast_url(@conn, :recommended, podcast.slug) %></loc></url>
   <% end %>
 
   <%= for episode <- @episodes do %>
@@ -41,5 +42,7 @@
   <url><loc><%= topic_url(@conn, :index) %></loc></url>
   <%= for topic <- @topics do %>
     <url><loc><%= topic_url(@conn, :show, topic.slug) %></loc></url>
+    <url><loc><%= topic_url(@conn, :news, topic.slug) %></loc></url>
+    <url><loc><%= topic_url(@conn, :podcasts, topic.slug) %></loc></url>
   <% end %>
 </urlset>

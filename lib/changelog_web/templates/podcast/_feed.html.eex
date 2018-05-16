@@ -1,0 +1,31 @@
+<%= if @podcast.status == :retired do %>
+  <p class="feed-note">This podcast has been retired. Please browse and enjoy the archive below.</p>
+<% end %>
+
+<nav class="subnav">
+  <ul class="subnav-list">
+    <li class="subnav-list-item <%= active_class(@conn, "show") %>">
+      <%= link "Recent", to: podcast_path(@conn, :show, @podcast.slug) <> "#feed", title: "Recent episodes of #{@podcast.name}" %>
+    </li>
+    <li class="subnav-list-item <%= active_class(@conn, "recommended") %>">
+      <%= link "Recommended", to: podcast_path(@conn, :recommended, @podcast.slug) <> "#feed", title: "Recommended episodes of #{@podcast.name}" %>
+    </li>
+  <%= if @podcast.status != :retired do %>
+    <!--<li class="subnav-list-item <%= active_class(@conn, "upcoming") %>">
+      <%= link "Upcoming", to: podcast_path(@conn, :upcoming, @podcast.slug) <> "#feed" %>
+    </li>-->
+  <% end %>
+  </ul>
+</nav>
+
+<%= if Enum.any?(@items) do %>
+  <%= if controller_action_combo(@conn) == "podcast-upcoming" do %>
+    <%= render_many(@items, NewsItemView, "_summary_upcoming.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
+  <% else %>
+    <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
+  <% end %>
+
+  <%= render(SharedView, "_more_button.html", assigns) %>
+<% else %>
+  <p class="feed-note">Nothing to see here. Move along.</p>
+<% end %>

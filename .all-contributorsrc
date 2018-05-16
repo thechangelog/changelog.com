@@ -228,6 +228,25 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "hhrutter",
+      "name": "Horst Rutter",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/11322155?v=4",
+      "profile": "https://keybase.io/hhrutter",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "nickjj",
+      "name": "Nick Janetakis",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/813219?v=4",
+      "profile": "https://nickjanetakis.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }

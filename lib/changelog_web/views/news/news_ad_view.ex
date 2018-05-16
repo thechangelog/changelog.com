@@ -7,7 +7,10 @@ defmodule ChangelogWeb.NewsAdView do
   def admin_edit_link(conn, user, ad) do
     if user && user.admin do
       content_tag(:span, class: "news_item-toolbar-meta-item") do
-        link("[Edit]", to: admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: current_path(conn)), data: [turbolinks: false])
+        [
+          link("[Edit]", to: admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: current_path(conn)), data: [turbolinks: false]),
+          content_tag(:span, " (#{ad.click_count}/#{ad.impression_count})")
+        ]
       end
     end
   end

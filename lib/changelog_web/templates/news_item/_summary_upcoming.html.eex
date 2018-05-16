@@ -1,0 +1,14 @@
+<article class="news_item">
+  <header class="news_item-header">
+    <p class="news_item-source">
+      <%= render_source_image(@conn, @item) %>
+      <%= render_source_name(@conn, @item) %>
+    </p>
+    <h2 class="news_item-title"><%= @item.headline %></h2>
+  </header>
+
+  <div class="news_item-toolbar">
+    <div class="news_item-toolbar-item news_item-toolbar-meta">
+    </div>
+  </div>
+</article>

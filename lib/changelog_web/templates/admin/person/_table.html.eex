@@ -3,6 +3,7 @@
     <tr>
       <th>Person</th>
       <th>Links</th>
+      <th>Create Time</th>
       <th>Posts</th>
       <th>Episodes</th>
       <th></th>
@@ -24,6 +25,7 @@
         <%= link "Email", to: "mailto:#{person.email}" %>,
         <%= person |> list_of_links |> raw %>
       </td>
+      <td><%= ts(person.inserted_at) %></td>
       <td><%= post_count(person) %></td>
       <td><%= episode_count(person) %></td>
       <td class="center aligned">

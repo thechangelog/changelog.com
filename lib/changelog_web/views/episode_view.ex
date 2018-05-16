@@ -12,7 +12,7 @@ defmodule ChangelogWeb.EpisodeView do
       content_tag(:span) do
         [
           link("[Edit]", to: path, data: [turbolinks: false]),
-          content_tag(:span, " (#{episode.reach_count})")
+          content_tag(:span, " (#{comma_separated(episode.reach_count)})")
         ]
       end
     end

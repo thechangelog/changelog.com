@@ -1,3 +1,10 @@
 input {
   outline: none;
 }
+
+button,
+input[type=submit] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+}

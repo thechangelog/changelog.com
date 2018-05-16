@@ -68,14 +68,19 @@
     &-submit-button {
       border: none;
       font-family: $code;
-      font-size: 13px;
       height: 44px;
       outline: none;
     }
 
     &-input {
+      font-size: 16px;
       padding: 5px 100px 5px 18px;
       width: 100%;
+
+      // NOTE: We'd prefer 13px always, but iOS zooms if input text is less than 16px.
+      @include breakpoint(tablet) {
+        font-size: 13px;
+      }
 
       &::placeholder {
         transition: opacity .1s ease-in-out
@@ -93,6 +98,7 @@
         background-color: $green;
         color: $white;
         cursor: pointer;
+        font-size: 13px;
         padding: 5px 18px;
         transition: background-color .1s ease-in-out;
 

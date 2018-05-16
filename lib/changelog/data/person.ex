@@ -41,6 +41,7 @@ defmodule Changelog.Person do
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
+    has_many :authored_posts, Post, foreign_key: :author_id, on_delete: :delete_all
     has_many :authored_news_items, NewsItem, foreign_key: :author_id
     has_many :logged_news_items, NewsItem, foreign_key: :logger_id
 
@@ -99,6 +100,7 @@ defmodule Changelog.Person do
     |> cast(attrs, allowed)
     |> cast_embed(:settings)
     |> validate_required([:name, :email, :handle])
+    |> validate_format(:email, Regexp.email)
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:handle, Regexp.slug, message: Regexp.slug_message)
     |> validate_length(:handle, max: 40, message: "max 40 chars")

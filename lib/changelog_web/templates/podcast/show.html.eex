@@ -1,4 +1,5 @@
 <section class="show show--<%= @podcast.slug %> show--<%= @podcast.status %>">
+<<<<<<< HEAD
   <header class="show-header">
     <div class="show-header-art">
       <h2 class="visually_hidden"><%= @podcast.name %></h2>
@@ -67,5 +68,12 @@
       <%= render(SharedView, "_pagination.html", assigns) %>
     </div>
   <% end %>
+=======
+  <%= render("_podcast_header.html", assigns) %>
+>>>>>>> master
 
+  <a id="feed" class="anchor"></a>
+  <div class="feed">
+    <%= if @podcast.status != :soon, do: render("_feed.html", assigns) %>
+  </div>
 </section>

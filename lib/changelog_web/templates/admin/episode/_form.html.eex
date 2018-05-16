@@ -27,6 +27,14 @@
     <%= text_input(f, :subheadline, placeholder: "with [Richard Hipp](http://www.hwaci.com/drh/), creator of [SQLite](http://sqlite.org)") %>
   </div>
 
+  <div class="inline field <%= error_class(f, :featured) %>">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :featured, class: "hidden") %>
+      <label>Recommended <%= help_icon("Episode will appear in recommended list. Limit to 10% of show's total episodes, max.") %></label>
+      <%= error_message(f, :featured) %>
+    </div>
+  </div>
+
   <div class="required field">
     <%= label(f, :hosts) %>
 

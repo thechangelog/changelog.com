@@ -4,5 +4,7 @@
   <div class="news_item-toolbar-item news_item-toolbar-meta">
     <span class="news_item-toolbar-meta-item">logged by <strong><a href="https://twitter.com/Changelog" rel="external" title="Logbot">@logbot</a></strong> </span>
     <span class="news_item-toolbar-meta-item"><%= link "permalink", to: news_ad_path(@conn, :show, slug(@ad)) %> </span>
+
+    <%= admin_edit_link(@conn, @current_user, @ad) %>
   </div>
 </div>
