@@ -3,9 +3,8 @@
     border-bottom: 1px solid $border-color;
     padding: $base-spacing 0;
 
-    &:first-child {
-      padding-top: 0;
-    }
+    &:first-child { padding-top: 0; }
+    &:last-child { border-bottom: 0; }
 
     @include breakpoint(mobile) {
       display: flex;
