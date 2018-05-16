@@ -66,15 +66,23 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def github_link(model) do
     if model.github_handle do
-      external_link model.github_handle, to: github_url(model.github_handle)
+      external_link(model.github_handle, to: github_url(model.github_handle))
     end
   end
 
   def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
   def md_to_safe_html(md) when is_nil(md), do: ""
 
-  def md_to_html(md) when is_binary(md), do: Cmark.to_html(md)
   def md_to_html(md) when is_nil(md), do: ""
+  def md_to_html(md) when is_binary(md) do
+    # special case for years stated on their own, which are technically parsed as ordered list items
+    # but we don't want them to be. eg - "1997." or "98."
+    if String.match?md, (~r/^\d{2,4}\.$/) do
+      "<p>#{md}</p>"
+    else
+      Cmark.to_html(md)
+    end
+  end
 
   def md_to_text(md) when is_binary(md), do: md |> md_to_html |> HtmlSanitizeEx.strip_tags |> sans_new_lines
   def md_to_text(md) when is_nil(md), do: ""
