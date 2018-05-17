@@ -1,0 +1,72 @@
+<article class="sponsor_story">
+  <header class="sponsor_story-header">
+    <div class="sponsor_story-header-breadcrumbs">Partner Story</div>
+
+    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>' alt="Rollbar" width="320">
+
+    <blockquote class="sponsor_story-quote">
+      <div class="sponsor_story-quote-body">
+        <p>"<%= @story.quote.content %>"</p>
+      </div>
+      <footer class="marketing-quote-footer">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/#{@story.quote.image}") %>' alt="" width="50" height="50">
+          <strong><%= @story.quote.name %></strong>
+          <span class="quote-title"><%= @story.quote.title %></span>
+      </footer>
+    </blockquote>
+  </header>
+
+  <hr>
+
+  <div class="sponsor_story-examples">
+    <h3>Rollbar &ndash; Ad Campaign Examples</h3>
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Campaign type</p></div>
+        <div class="grid_table-header-column"><p>Campaign name</p></div>
+        <div class="grid_table-header-column"><p>Campaign production</p></div>
+      </div>
+    <%= for example <- @story.examples do %>
+      <div class="grid_table-row">
+        <div class="grid_table-row-column"><p><%= example.type %></p></div>
+        <div class="grid_table-row-column"><p><%= example.type %></p></div>
+        <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", audio: example.audio, duration: example.duration) %></div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr>
+
+  <div class="sponsor_story-content richtext">
+    <%= @story.content_md |> md_to_html |> raw %>
+  </div>
+
+  <hr>
+
+  <div class="sponsor_story-sponsors">
+    <h2>Loved by brands, trusted by developers</h2>
+    <div class="marketing-section-logos">
+      <%= render("_sponsors.html", assigns) %>
+    </div>
+
+    <p>Want to work with us to share your brand’s story with the developer community?</p>
+    <p>
+      <%= link to: page_path(@conn, :sponsor) do %>
+        Learn more about sponsoring our news and podcasts&nbsp;<span class="link_arrow">›</span>
+      <% end %>
+    </p>
+  </div>
+</article>
+
+<section class="marketing-section marketing-section--map">
+  <header class="marketing-section-header">
+    <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
+    <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
+
+    <%= link "Get in Touch", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
+  </header>
+
+  <div class="marketing-map">
+    <img src='<%= static_url(@conn, "/images/content/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+  </div>
+</section>
