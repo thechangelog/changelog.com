@@ -40,7 +40,7 @@ defmodule ChangelogWeb.PersonController do
   end
 
   defp welcome_subscriber(conn, person, list) do
-    person = Person.refresh_auth_token(person, Phoenix.Token.sign(conn, Changelog.get_env(:changelog, :auth_token_salt), person.id))
+    person = Person.refresh_auth_token(person, Phoenix.Token.sign(conn, Application.get_env(:changelog, :auth_token_salt), person.id))
     newsletter = Newsletters.get_by_slug(list)
     community = Newsletters.community()
 
@@ -85,7 +85,7 @@ defmodule ChangelogWeb.PersonController do
   end
 
   defp welcome_community(conn, person) do
-    person = Person.refresh_auth_token(person, Phoenix.Token.sign(conn, Changelog.get_env(:changelog, :auth_token_salt), person.id))
+    person = Person.refresh_auth_token(person, Phoenix.Token.sign(conn, Application.get_env(:changelog, :auth_token_salt), person.id))
     community = Newsletters.community()
 
     Email.community_welcome(person) |> Mailer.deliver_later

@@ -10,7 +10,7 @@ defmodule ChangelogWeb.AuthController do
   def new(conn, %{"auth" =>  %{"email" => email}}) do
 
     if person = Repo.get_by(Person, email: email) do
-      person = Person.refresh_auth_token(person, Phoenix.Token.sign(conn, Changelog.get_env(:changelog, :auth_token_salt), person.id))
+      person = Person.refresh_auth_token(person, Phoenix.Token.sign(conn, Application.get_env(:changelog, :auth_token_salt), person.id))
       Email.sign_in(person) |> Mailer.deliver_later
       render(conn, "new.html", person: person)
     else
@@ -25,7 +25,7 @@ defmodule ChangelogWeb.AuthController do
   end
 
   def create(conn, %{"token" => token}) do
-    case Phoenix.Token.verify(conn, Changelog.get_env(:changelog, :auth_token_salt), token, max_age: 1800) do
+    case Phoenix.Token.verify(conn, Application.get_env(:changelog, :auth_token_salt), token, max_age: 1800) do
       {:ok, id} ->
         user = Repo.get_by(User, id: id, auth_token: token)
         sign_in_and_redirect(conn, person, home_path(conn, :show))
