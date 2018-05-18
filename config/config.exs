@@ -19,7 +19,8 @@ config :changelog,
   buffer_token: System.get_env("BUFFER_TOKEN"),
   cm_api_token: Base.encode64("#{System.get_env("CM_API_TOKEN")}:x"),
   slack_invite_api_token: System.get_env("SLACK_INVITE_API_TOKEN"),
-  slack_app_api_token: System.get_env("SLACK_APP_API_TOKEN")
+  slack_app_api_token: System.get_env("SLACK_APP_API_TOKEN"),
+  auth_token_salt: "saltisgoodinmoderation"
 
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.LocalAdapter

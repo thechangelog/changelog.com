@@ -30,7 +30,6 @@ defmodule Changelog.Person do
     field :bio, :string
     field :location, :string
     field :auth_token, :string
-    field :auth_token_expires_at, Timex.Ecto.DateTime
     field :joined_at, Timex.Ecto.DateTime
     field :signed_in_at, Timex.Ecto.DateTime
     field :admin, :boolean
@@ -69,7 +68,7 @@ defmodule Changelog.Person do
   end
   def get_by_ueberauth(_), do: nil
 
-  def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at))
+  def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token))
 
   def admin_insert_changeset(person, attrs \\ %{}) do
     allowed = ~w(name email handle github_handle twitter_handle bio website location admin)
@@ -113,7 +112,6 @@ defmodule Changelog.Person do
   def sign_in_changeset(person) do
     change(person, %{
       auth_token: nil,
-      auth_token_expires_at: nil,
       signed_in_at: Timex.now,
       joined_at: (person.joined_at || Timex.now)
     })
@@ -123,30 +121,14 @@ defmodule Changelog.Person do
     change(person, %{slack_id: slack_id})
   end
 
-  def refresh_auth_token(person, expires_in \\ 30) do
-    auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
-    expires_at = Timex.add(Timex.now, Duration.from_minutes(expires_in))
-    changeset = auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})
+  def refresh_auth_token(person, auth_token) do
+    changeset =
+      Person.auth_changeset(person, %{
+        auth_token: auth_token
+      })
+
     {:ok, person} = Repo.update(changeset)
     person
-  end
-
-  def encoded_auth(person) do
-    {:ok, Base.encode16("#{person.email}|#{person.auth_token}")}
-  end
-
-  def decoded_auth(encoded) do
-    {:ok, decoded} = Base.decode16(encoded)
-    String.split(decoded, "|")
-  end
-
-  def encoded_id(person) do
-    {:ok, Base.encode16("#{person.id}|#{person.email}")}
-  end
-
-  def decoded_id(encoded) do
-    {:ok, decoded} = Base.decode16(encoded)
-    String.split(decoded, "|")
   end
 
   def episode_count(person) do

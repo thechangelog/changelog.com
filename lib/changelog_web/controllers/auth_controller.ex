@@ -10,7 +10,7 @@ defmodule ChangelogWeb.AuthController do
   def new(conn, %{"auth" =>  %{"email" => email}}) do
 
     if person = Repo.get_by(Person, email: email) do
-      person = Person.refresh_auth_token(person)
+      person = Person.refresh_auth_token(person, Phoenix.Token.sign(conn, Changelog.get_env(:changelog, :auth_token_salt), person.id))
       Email.sign_in(person) |> Mailer.deliver_later
       render(conn, "new.html", person: person)
     else
@@ -25,15 +25,20 @@ defmodule ChangelogWeb.AuthController do
   end
 
   def create(conn, %{"token" => token}) do
-    [email, auth_token] = Person.decoded_auth(token)
-    person = Repo.get_by(Person, email: email, auth_token: auth_token)
+    case Phoenix.Token.verify(conn, Changelog.get_env(:changelog, :auth_token_salt), token, max_age: 1800) do
+      {:ok, id} ->
+        user = Repo.get_by(User, id: id, auth_token: token)
+        sign_in_and_redirect(conn, person, home_path(conn, :show))
 
-    if person && Timex.before?(Timex.now, person.auth_token_expires_at) do
-      sign_in_and_redirect(conn, person, home_path(conn, :show))
-    else
-      conn
-      |> put_flash(:error, "Whoops!")
-      |> render("new.html", person: nil)
+      {:error, :expired} ->
+        conn
+        |> put_flash(:error, "Token expired.")
+        |> render("new.html",  person: nil)
+
+      {:error, :invalid} ->
+        conn
+        |> put_flash(:error, "Token invalid.")
+        |> render("new.html",  person: nil)
     end
   end
 
