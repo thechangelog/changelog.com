@@ -4,6 +4,7 @@ import { u, ajax } from "umbrellajs";
 import autosize from "autosize";
 import Cookies from "cookies-js";
 import OnsitePlayer from "modules/onsitePlayer";
+import MiniPlayer from "modules/miniPlayer";
 import LivePlayer from "modules/livePlayer";
 import Overlay from "modules/overlay";
 import ImageButton from "modules/imageButton";
@@ -33,7 +34,7 @@ u(document).handle("click", ".js-toggle-nav", function(event) {
   u("body").toggleClass("nav-open");
 
   setTimeout(() => {
-    u("body").toggleClass('nav-animate', "");
+    u("body").toggleClass("nav-animate", "");
   }, 50);
 });
 
@@ -244,6 +245,7 @@ u(document).on("turbolinks:load", function() {
   autosize(document.querySelectorAll("textarea"));
   new Tooltip(".has-tooltip");
   u("body").removeClass("nav-open");
+  u(".js-mini-player").each(function(container) { new MiniPlayer(container); });
   player.attach();
   overlay.hide();
   live.check();

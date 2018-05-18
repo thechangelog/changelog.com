@@ -25,13 +25,13 @@
       </button>
     </div>
     <form class="podcast-player_slider">
-      <div class="range-slider">
-        <span class="range-slider_above"><span class="js-player-now-playing"></span></span>
-        <div class="range-slider_range_wrap">
-          <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="500"/>
-          <div class="range-slider_range_track js-player-track"></div>
+      <div class="range_slider">
+        <span class="range_slider-above"><span class="js-player-now-playing"></span></span>
+        <div class="range_slider-range_wrap">
+          <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="500"/>
+          <div class="range_slider-range-track js-player-track"></div>
         </div>
-        <span class="range-slider_below"> <span class="js-player-title"></span>
+        <span class="range_slider-below"> <span class="js-player-title"></span>
           <output><b class="js-player-current">0:00</b> / <span class="js-player-duration">0:00</span></output></span>
       </div>
     </form>

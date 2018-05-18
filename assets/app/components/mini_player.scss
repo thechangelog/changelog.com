@@ -1,0 +1,32 @@
+.mini_player {
+  align-items: center;
+  display: flex;
+  margin: 0;
+
+  &-button {
+    background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
+    background-size: auto 14px;
+    border: 1px solid $light-grey;
+    border-radius: $base-border-radius;
+    flex: 0 0 42px;
+    margin-right: 1em;
+    padding: 0.5em 0.3em 0.3em;
+    height: 30px;
+    width: 42px;
+    text-indent: -9999px;
+
+    &.is-playing { background-image: url('/images/icons/toolbar-pause.svg'); }
+  }
+  &-slider {
+    flex: 1 100%;
+  }
+  &-time {
+    display: none;
+    flex: 1 0 auto;
+    margin: 0 1em;
+
+    @include breakpoint(tiny) {
+      display: block;
+    }
+  }
+}

@@ -14,6 +14,7 @@ defmodule ChangelogWeb.PageController do
       :home            -> home(conn, conn.params)
       :sponsor         -> sponsor(conn, conn.params)
       :sponsor_pricing -> sponsor_pricing(conn, conn.params)
+      :sponsor_story   -> sponsor_story(conn, Map.get(conn.params, "slug"))
       :weekly          -> weekly(conn, conn.params)
       :weekly_archive  -> weekly_archive(conn, conn.params)
       name             -> render(conn, name)
@@ -62,6 +63,11 @@ defmodule ChangelogWeb.PageController do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
     weeks = Timex.today |> TimeView.closest_monday_to() |> TimeView.weeks(12)
     render(conn, :sponsor_pricing, weekly: weekly, weeks: weeks)
+  end
+
+  def sponsor_story(conn, slug) do
+    story = Changelog.SponsorStory.get_by_slug(slug)
+    render(conn, :sponsor_story, story: story)
   end
 
   def weekly(conn, _params) do
