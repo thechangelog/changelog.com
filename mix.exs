@@ -72,7 +72,6 @@ defmodule Changelog.Mixfile do
       {:html_entities, "~> 0.3"},
       {:goth, "~> 0.6.0", optional: true},
       {:google_api_calendar, "~> 0.0.1"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.4", only: [:dev, :test]},
       {:excoveralls, "~> 0.6", only: :test},
       {:mock, "~> 0.3.0", only: :test}
