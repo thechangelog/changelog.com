@@ -15,7 +15,7 @@ config :changelog, Changelog.Mailer,
 
 # Configure CalendarService
 config :changelog, Changelog.CalendarService,
-  adapter: Changelog.CalendarService,
+  adapter: Changelog.Services.MockCalendarService,
   google_calendar_id: "GOOGLE_CALENDAR_ID"
 
 # Configure your database
