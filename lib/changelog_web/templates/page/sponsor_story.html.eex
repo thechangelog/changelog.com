@@ -2,7 +2,7 @@
   <header class="sponsor_story-header">
     <div class="sponsor_story-header-breadcrumbs">Partner Story</div>
 
-    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>' alt="Rollbar" width="320">
+    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>' alt="<%= @story.sponsor %>" width="320">
 
     <blockquote class="sponsor_story-quote">
       <div class="sponsor_story-quote-body">
@@ -19,7 +19,7 @@
   <hr>
 
   <div class="sponsor_story-examples">
-    <h3>Rollbar &ndash; Ad Campaign Examples</h3>
+    <h3><%= @story.sponsor %> &ndash; Ad Campaign Examples</h3>
     <div class="grid_table">
       <div class="grid_table-header">
         <div class="grid_table-header-column"><p>Campaign type</p></div>
@@ -29,8 +29,10 @@
     <%= for example <- @story.examples do %>
       <div class="grid_table-row">
         <div class="grid_table-row-column"><p><%= example.type %></p></div>
-        <div class="grid_table-row-column"><p><%= example.type %></p></div>
-        <div class="grid_table-row-column"><%= render(SharedView, "_mini_player.html", audio: example.audio, duration: example.duration) %></div>
+        <div class="grid_table-row-column"><p><%= example.name %></p></div>
+        <div class="grid_table-row-column">
+          <%= render(SharedView, "_mini_player.html", title: "#{@story.sponsor} #{example.type}", audio: example.audio, duration: example.duration) %>
+        </div>
       </div>
     <% end %>
   </div>

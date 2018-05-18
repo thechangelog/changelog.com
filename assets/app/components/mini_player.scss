@@ -15,7 +15,7 @@
     width: 42px;
     text-indent: -9999px;
 
-    &.is-active { background-image: url('/images/icons/toolbar-pause.svg'); }
+    &.is-playing { background-image: url('/images/icons/toolbar-pause.svg'); }
   }
   &-slider {
     flex: 1 100%;
