@@ -34,7 +34,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure CalendarService
 config :changelog, Changelog.CalendarService,
-  adapter: Changelog.CalendarService
+  adapter: Changelog.Services.DummyCalendarService
 
 # Configure your database
 config :changelog, Changelog.Repo,
