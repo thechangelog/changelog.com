@@ -56,9 +56,18 @@ defmodule Changelog.Person do
     from(p in query, where: p.joined_at > ^today)
   end
 
+  def get_by_encoded_auth(token) do
+    case __MODULE__.decoded_data(token) do
+      [email, auth_token] -> Repo.get_by(__MODULE__, email: email, auth_token: auth_token)
+      _else -> nil
+    end
+  end
+
   def get_by_encoded_id(token) do
-    [id, email] = __MODULE__.decoded_id(token)
-    Repo.get_by(__MODULE__, id: id, email: email)
+    case __MODULE__.decoded_data(token) do
+      [id, email] -> Repo.get_by(__MODULE__, id: id, email: email)
+      _else -> nil
+    end
   end
 
   def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
@@ -131,22 +140,14 @@ defmodule Changelog.Person do
     person
   end
 
-  def encoded_auth(person) do
-    {:ok, Base.encode16("#{person.email}|#{person.auth_token}")}
-  end
+  def encoded_auth(person), do: {:ok, Base.encode16("#{person.email}|#{person.auth_token}")}
+  def encoded_id(person), do: {:ok, Base.encode16("#{person.id}|#{person.email}")}
 
-  def decoded_auth(encoded) do
-    {:ok, decoded} = Base.decode16(encoded)
-    String.split(decoded, "|")
-  end
-
-  def encoded_id(person) do
-    {:ok, Base.encode16("#{person.id}|#{person.email}")}
-  end
-
-  def decoded_id(encoded) do
-    {:ok, decoded} = Base.decode16(encoded)
-    String.split(decoded, "|")
+  def decoded_data(encoded) do
+    case Base.decode16(encoded) do
+      {:ok, decoded} -> String.split(decoded, "|")
+      :error -> ["", ""]
+    end
   end
 
   def episode_count(person) do
