@@ -34,7 +34,7 @@ defmodule ChangelogWeb.PersonController do
         {:error, _changeset} ->
           conn
           |> put_flash(:error, "Something went wrong. 😭")
-          |> render(:subscribe)
+          |> redirect(to: person_path(conn, :subscribe))
       end
     end
   end
