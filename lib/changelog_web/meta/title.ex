@@ -69,11 +69,12 @@ defmodule ChangelogWeb.Meta.Title do
   # Pages
   defp get(%{view_module: PageView, view_template: template}) do
     case template do
-      "community.html" -> "Changelog Developer Community"
-      "coc.html"       -> "Code of Conduct"
-      "home.html"      -> nil
-      "weekly.html"    -> "Subscribe to Changelog Weekly"
-      "nightly.html"   -> "Subscribe to Changelog Nightly"
+      "community.html"     -> "Changelog Developer Community"
+      "coc.html"           -> "Code of Conduct"
+      "home.html"          -> nil
+      "weekly.html"        -> "Subscribe to Changelog Weekly"
+      "nightly.html"       -> "Subscribe to Changelog Nightly"
+      "sponsor_story.html" -> "Partner Story"
       _else ->
         template
         |> String.replace(".html", "")
