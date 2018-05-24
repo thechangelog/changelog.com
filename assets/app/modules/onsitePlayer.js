@@ -93,9 +93,15 @@ export default class OnsitePlayer {
 
   play() {
     requestAnimationFrame(this.step.bind(this));
-    this.audio.play();
-    this.playButtons.play();
-    this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
+
+    this.audio.play().then(_ => {
+      this.playButtons.play();
+      this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
+    }).catch(error => {
+      this.playButtons.pause();
+      this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
+      console.log("failed to play", error);
+    });
   }
 
   pause() {
