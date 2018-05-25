@@ -18,6 +18,11 @@ defmodule ChangelogWeb.PersonController do
     render(conn, :subscribe, podcasts: active)
   end
 
+  def subscribe(conn = %{method: "POST"}, %{"gotcha" => robo}) when byte_size(robo) > 0 do
+    conn
+    |> put_flash(:error, "Something smells fishy. 🤖")
+    |> redirect(to: person_path(conn, :subscribe))
+  end
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
     list = Map.get(params, "list", "weekly")
 
@@ -67,6 +72,13 @@ defmodule ChangelogWeb.PersonController do
     render(conn, :join, changeset: Person.insert_changeset(person), person: nil)
   end
 
+  def join(conn = %{method: "POST"}, %{"person" => person_params, "gotcha" => robo}) when byte_size(robo) > 0 do
+    changeset = Person.insert_changeset(%Person{}, person_params)
+
+    conn
+    |> put_flash(:error, "Something smells fishy. 🤖")
+    |> render(:join, changeset: changeset, person: nil)
+  end
   def join(conn = %{method: "POST"}, %{"person" => person_params = %{"email" => email}}) do
     if person = Repo.get_by(Person, email: email) do
       welcome_community(conn, person)

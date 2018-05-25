@@ -37,6 +37,7 @@
       <div class="form-element">
         <label>On Twitter</label>
         <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <input name="gotcha" class="signup-form-input" placeholder="Skip this field" style="display: none;"/>
         <%= error_message(f, :twitter_handle) %>
       </div>
     </div>
