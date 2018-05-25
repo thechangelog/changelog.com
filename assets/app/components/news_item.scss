@@ -285,7 +285,7 @@
       blockquote {
         padding: 0.5em 0 0.5em 1.5em;
 
-        p:last-child {
+        *:last-child {
           margin-bottom: 0;
         }
       }
