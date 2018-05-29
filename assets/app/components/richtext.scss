@@ -168,6 +168,10 @@
       color: $black;
       max-width: 680px;
     }
+
+    ol, ul {
+      margin-top: 0;
+    }
   }
 
   &--small blockquote { font-size: 1.125em; }
