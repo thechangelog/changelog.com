@@ -21,7 +21,7 @@ defmodule ChangelogWeb.JsonFeedView do
     json = %{
       id: news_item_url(conn, :show, NewsItemView.hashid(item)),
       title: item.headline |> html_escape |> safe_to_string,
-      url: news_item_url(conn, :show, NewsItemView.slug(item)),
+      url: item.url,
       date_published: TimeView.rfc3339(item.published_at),
       author: %{name: item.logger.name},
       content_html: md_to_html(item.story),
