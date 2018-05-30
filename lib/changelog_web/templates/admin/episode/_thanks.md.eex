@@ -25,6 +25,10 @@ We'd also love to send you a Changelog tee as a thanks for your time and all you
 
 Finally, people love keeping up by following [Changelog News](https://changelog.com) (check it out if you haven't yet). Use [this form](https://changelog.com/submit) to let us know when you have future news/announcements. We'd be happy to help you spread the word. ✊
 
-Thanks again, you were great!
+Thanks again!
 
+<%= if PersonView.is_staff(@current_user) do %>
 <%= PersonView.first_name(@current_user) %>
+<% else %>
+💚, Logbot
+<% end %>

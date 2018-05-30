@@ -74,6 +74,8 @@ defmodule ChangelogWeb.PersonView do
     end
   end
 
+  def is_staff(person), do: String.match?(person.email, ~r/@changelog.com/)
+
   def list_of_links(person) do
     [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
      %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},

@@ -27,8 +27,13 @@
       <div class="ui thanks segment">
         <div class="two fields">
           <div class="field">
-            <label>From</label>
+          <%= if PersonView.is_staff(@current_user) do %>
+            <label>From <%= help_icon("Must be a changelog.com address.") %></label>
             <input type="text" name="from" value="<%= @current_user.email %>">
+          <% else %>
+            <label>From <%= help_icon("Readonly because must be a changelog.com address.") %></label>
+            <input type="text" name="from" value="logbot@changelog.com" readonly>
+          <% end %>
           </div>
           <div class="field">
             <label>Reply To</label>
