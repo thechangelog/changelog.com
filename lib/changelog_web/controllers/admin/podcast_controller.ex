@@ -40,7 +40,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_podcast_path(conn, :edit, podcast))
+        |> redirect_next(params, admin_podcast_path(conn, :edit, podcast.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
