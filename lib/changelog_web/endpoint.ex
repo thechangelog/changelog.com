@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :changelog, gzip: true,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon.ico robots.txt manifest.json service-worker.js)
 
   # In dev environment, serve uploaded files from "priv/uploads".
   #
