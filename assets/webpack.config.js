@@ -1,7 +1,9 @@
 var webpack = require("webpack");
 var merge = require("webpack-merge");
+var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 var common = {
   module: {
@@ -20,7 +22,12 @@ var common = {
       },
       {
         test: [/\.scss$/, /\.css$/],
-        loader: ExtractTextPlugin.extract({use: "css-loader!postcss-loader!sass-loader", fallback: "style-loader"})
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader"
+        ]
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -34,12 +41,12 @@ var common = {
       }
     ]
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      output: {comments: false}
-    }),
-  ]
+  optimization: {
+    minimizer: [
+    new UglifyJsPlugin({cache: true, parallel: true}),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  }
 };
 
 module.exports = [
@@ -61,7 +68,7 @@ module.exports = [
     },
     plugins: [
       new CopyWebpackPlugin([{ from: __dirname + "/assets"}]),
-      new ExtractTextPlugin("css/app.css")
+      new MiniCssExtractPlugin({filename: "css/app.css"})
     ]
   }),
   merge(common, {
@@ -81,7 +88,7 @@ module.exports = [
       ]
     },
     plugins: [
-      new ExtractTextPlugin("css/embed.css")
+      new MiniCssExtractPlugin({filename: "css/embed.css"})
     ]
   }),
   merge(common, {
@@ -105,7 +112,7 @@ module.exports = [
     },
     plugins: [
       new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
-      new ExtractTextPlugin("css/admin.css")
+      new MiniCssExtractPlugin({filename: "css/admin.css"})
     ]
   })
 ];
