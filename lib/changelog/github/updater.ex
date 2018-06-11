@@ -2,7 +2,8 @@ defmodule Changelog.Github.Updater do
 
   require Logger
 
-  alias Changelog.{Episode, Github, Regexp, Repo}
+  alias Changelog.{Episode, Github, Podcast, Repo}
+  alias ChangelogWeb.PodcastView
 
   def update(items, type) when is_list(items) do
     for item <- items do
@@ -15,18 +16,28 @@ defmodule Changelog.Github.Updater do
 
   defp get_episode(episode = %Episode{}), do: episode
   defp get_episode(filename) do
-    case extract_podcast_and_episode_slugs_from(filename) do
-      %{"podcast" => p, "episode" => e} ->
-        Episode.published
-        |> Episode.with_podcast_slug(p)
-        |> Episode.with_slug(e)
-        |> Repo.one
-      nil -> nil
+    case String.split(filename, "/") do
+      [podcast_slug, episode_section] ->
+        podcast_slug
+        |> get_podcast_from_repo
+        |> get_episode_from_repo(episode_section)
+      _else -> nil
     end
   end
 
-  defp extract_podcast_and_episode_slugs_from(filename) do
-    Regex.named_captures(Regexp.github_filename_slugs, filename)
+  defp get_podcast_from_repo(slug), do: Repo.get_by(Podcast, slug: slug)
+
+  defp get_episode_from_repo(nil, _filename), do: nil
+  defp get_episode_from_repo(podcast, filename) do
+    podcast_name = PodcastView.dasherized_name(podcast)
+    case Regex.named_captures(~r/#{podcast_name}-(?<episode>.*?)\.md/, filename) do
+      %{"episode" => episode_slug} ->
+        Episode.published
+        |> Episode.with_podcast_slug(podcast.slug)
+        |> Episode.with_slug(episode_slug)
+        |> Repo.one
+      nil -> nil
+    end
   end
 
   defp update_episode(episode, _type) when is_nil(episode), do: nil

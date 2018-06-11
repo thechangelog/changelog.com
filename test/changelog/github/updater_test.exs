@@ -51,14 +51,14 @@ defmodule Changelog.Github.UpdaterTest do
           "podcast/the-changelog-300.md",
           "gotime/go-time-bonus-77.md"], "transcripts")
 
-        assert called HTTPoison.get!(Source.raw_url("transcripts", e1))
-        assert called HTTPoison.get!(Source.raw_url("transcripts", e2))
-        assert called HTTPoison.get!(Source.raw_url("transcripts", e3))
+        assert called HTTPoison.get!(Source.new("transcripts", e1).raw_url)
+        assert called HTTPoison.get!(Source.new("transcripts", e2).raw_url)
+        assert called HTTPoison.get!(Source.new("transcripts", e3).raw_url)
       end
     end
 
     test "fetches multiple show notes for valid paths" do
-      p = insert(:podcast, slug: "podcast")
+      p = insert(:podcast, slug: "podcast", name: "The Changelog")
       e1 = insert(:published_episode, slug: "292", podcast: p)
       e2 = insert(:published_episode, slug: "300", podcast: p)
 
