@@ -211,6 +211,7 @@ defmodule ChangelogWeb.Router do
 
   defp handle_errors(_conn, %{reason: %Ecto.NoResultsError{}}), do: true
   defp handle_errors(_conn, %{reason: %Phoenix.Router.NoRouteError{}}), do: true
+  defp handle_errors(_conn, %{reason: %Phoenix.NotAcceptableError{}}), do: true
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
     headers = Enum.into(conn.req_headers, %{})
     reason = Map.delete(reason, :assigns)
