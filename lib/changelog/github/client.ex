@@ -22,25 +22,41 @@ defmodule Changelog.Github.Client do
 
   def create_file(source, content, message) do
     params = %{"content" => Base.encode64(content), "message" => message}
-    put("/repos/#{source.org}/#{source.repo}/contents/#{source.path}", Poison.encode!(params))
+
+    source
+    |> file_content_path
+    |> put(Poison.encode!(params))
   end
 
   def edit_file(source, content, message) do
     {:ok, response} = get_file(source)
 
-    params = %{
-      "content" => Base.encode64(content),
-      "message" => message,
-      "sha" => response.body["sha"]
-    }
+    encoded_content = Base.encode64(content)
+    response_content = String.replace(response.body["content"], "\n", "")
 
-    put("/repos/#{source.org}/#{source.repo}/contents/#{source.path}", Poison.encode!(params))
+    if encoded_content == response_content do
+      {:ok, %{status_code: 200}}
+    else
+      params = %{
+        "content" => encoded_content,
+        "message" => message,
+        "sha" => response.body["sha"]
+      }
+
+      source
+      |> file_content_path
+      |> put(Poison.encode!(params))
+    end
   end
 
-  def get_file(source), do: get("/repos/#{source.org}/#{source.repo}/contents/#{source.path}")
+  def get_file(source), do: source |> file_content_path |> get
 
   def file_exists?(source) do
     {:ok, response} = get_file(source)
     response.status_code == 200
+  end
+
+  defp file_content_path(source) do
+    "/repos/#{source.org}/#{source.repo}/contents/#{source.path}"
   end
 end
