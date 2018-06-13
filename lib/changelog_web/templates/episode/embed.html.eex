@@ -38,12 +38,12 @@
       </div>
 
       <form class="episode_player-slider">
-        <div class="range-slider">
-          <div class="range-slider_range_wrap">
-            <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="<%= @episode.duration %>"/>
-            <div class="range-slider_range_track js-player-track"></div>
+        <div class="range_slider">
+          <div class="range_slider-range_wrap">
+            <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="<%= @episode.duration %>"/>
+            <div class="range_slider-range-track js-player-track"></div>
           </div>
-          <span class="range-slider_below">
+          <span class="range_slider-below">
             <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= TimeView.duration(@episode.duration) %></span></output>
 
             <%= if @source == "twitter" do %>

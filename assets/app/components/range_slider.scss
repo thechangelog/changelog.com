@@ -39,7 +39,7 @@ $range-label-width: 60px !default;
   margin: 8px 0;
 
   body.embed--day & { background: $light-grey; }
-  .episode-player & { height: 6px; }
+  .episode_player & { height: 6px; }
   .mini_player & { height: 6px; background: $light-grey; }
 }
 
@@ -94,7 +94,7 @@ $range-label-width: 60px !default;
           margin-top: -3px;
         }
 
-        .episode-player & {
+        .episode_player & {
           height: 6px;
           margin-top: -3px;
         }
@@ -119,7 +119,7 @@ $range-label-width: 60px !default;
     justify-content: space-between;
     align-items: center;
 
-    .episode-player & { padding: 0; }
+    .episode_player & { padding: 0; }
 
     & > span {
       display: none;
@@ -143,7 +143,7 @@ $range-label-width: 60px !default;
         color: $half-black;
       }
 
-      .episode-player & {
+      .episode_player & {
         margin-left: 0;
         text-align: left;
       }
