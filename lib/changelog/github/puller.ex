@@ -1,4 +1,4 @@
-defmodule Changelog.Github.Updater do
+defmodule Changelog.Github.Puller do
 
   require Logger
 

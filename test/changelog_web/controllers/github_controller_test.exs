@@ -12,7 +12,7 @@ defmodule ChangelogWeb.GithubControllerTest do
     end
 
     test "it responds to the push event, calling the Transcript updater when repo is 'transcripts'", %{conn: conn} do
-      with_mock Github.Updater, [update: fn(_, _) -> true end] do
+      with_mock(Github.Puller, [update: fn(_, _) -> true end]) do
         conn =
           conn
           |> put_req_header("x-github-event", "push")
@@ -25,13 +25,13 @@ defmodule ChangelogWeb.GithubControllerTest do
               ]
             })
 
-        assert called Github.Updater.update(["jsparty/js-party-14.md", "rfc/rfc-1.md", "rfc/rfc-3.md", "podcast/podcast-1.md", "gotime/gotime-50.md"], "transcripts")
+        assert called Github.Puller.update(["jsparty/js-party-14.md", "rfc/rfc-1.md", "rfc/rfc-3.md", "podcast/podcast-1.md", "gotime/gotime-50.md"], "transcripts")
         assert conn.status == 200
       end
     end
 
     test "it responds to the push event, calling the ShowNotes updater when repo is 'show-notes'", %{conn: conn} do
-      with_mock Github.Updater, [update: fn(_, _) -> true end] do
+      with_mock(Github.Puller, [update: fn(_, _) -> true end]) do
         conn =
           conn
           |> put_req_header("x-github-event", "push")
@@ -44,7 +44,7 @@ defmodule ChangelogWeb.GithubControllerTest do
               ]
             })
 
-        assert called Github.Updater.update(["jsparty/js-party-14.md", "rfc/rfc-1.md", "rfc/rfc-3.md", "podcast/podcast-1.md", "gotime/gotime-50.md"], "show-notes")
+        assert called Github.Puller.update(["jsparty/js-party-14.md", "rfc/rfc-1.md", "rfc/rfc-3.md", "podcast/podcast-1.md", "gotime/gotime-50.md"], "show-notes")
         assert conn.status == 200
       end
     end

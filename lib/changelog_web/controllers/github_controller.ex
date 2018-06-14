@@ -17,7 +17,7 @@ defmodule ChangelogWeb.GithubController do
       %{"repo" => repo} ->
         commits
         |> added_or_modified_files
-        |> Github.Updater.update(repo)
+        |> Github.Puller.update(repo)
 
         json(conn, %{})
       nil -> unsupported_event(conn, params, "push #{full_name}")

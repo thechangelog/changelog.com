@@ -197,8 +197,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
 
-    Github.Updater.update(episode, "transcripts")
-    # TODO Github.Updater.update(episode, "show-notes")
+    Github.Puller.update(episode, "transcripts")
 
     conn
     |> put_flash(:result, "success")

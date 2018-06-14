@@ -208,10 +208,10 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast, name: "Happy Cast", slug: "happy")
     e = insert(:published_episode, podcast: p, slug: "12")
 
-    with_mock Github.Updater, [update: fn(_, _) -> true end] do
+    with_mock(Github.Puller, [update: fn(_, _) -> true end]) do
       conn = post(conn, admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
 
-      assert called Github.Updater.update(:_, :_)
+      assert called Github.Puller.update(:_, :_)
       assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     end
   end
