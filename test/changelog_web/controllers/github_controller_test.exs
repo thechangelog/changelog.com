@@ -25,7 +25,7 @@ defmodule ChangelogWeb.GithubControllerTest do
               ]
             })
 
-        assert called Github.Puller.update(["jsparty/js-party-14.md", "rfc/rfc-1.md", "rfc/rfc-3.md", "podcast/podcast-1.md", "gotime/gotime-50.md"], "transcripts")
+        assert called Github.Puller.update("transcripts", ~w(jsparty/js-party-14.md rfc/rfc-1.md rfc/rfc-3.md podcast/podcast-1.md gotime/gotime-50.md))
         assert conn.status == 200
       end
     end
@@ -44,7 +44,7 @@ defmodule ChangelogWeb.GithubControllerTest do
               ]
             })
 
-        assert called Github.Puller.update(["jsparty/js-party-14.md", "rfc/rfc-1.md", "rfc/rfc-3.md", "podcast/podcast-1.md", "gotime/gotime-50.md"], "show-notes")
+        assert called Github.Puller.update("show-notes", ~w(jsparty/js-party-14.md rfc/rfc-1.md rfc/rfc-3.md podcast/podcast-1.md gotime/gotime-50.md))
         assert conn.status == 200
       end
     end

@@ -5,14 +5,14 @@ defmodule Changelog.Github.Puller do
   alias Changelog.{Episode, Github, Podcast, Repo}
   alias ChangelogWeb.PodcastView
 
-  def update(items, type) when is_list(items) do
+  def update(type, items) when is_list(items) do
     for item <- items do
       item
       |> get_episode
       |> update_episode(type)
     end
   end
-  def update(item, type), do: update([item], type)
+  def update(type, item), do: update(type, [item])
 
   defp get_episode(episode = %Episode{}), do: episode
   defp get_episode(filename) do

@@ -11,7 +11,7 @@ defmodule Changelog.Github.PullerTest do
       e = insert(:published_episode, slug: "12", podcast: p)
 
       with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
-        Puller.update(e, "show-notes")
+        Puller.update("show-notes", e)
         assert called HTTPoison.get!(Source.new("show-notes", e).raw_url)
       end
     end
@@ -22,7 +22,7 @@ defmodule Changelog.Github.PullerTest do
       e2 = insert(:published_episode, slug: "300", podcast: p)
 
       with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
-        Puller.update([e1, e2], "transcripts")
+        Puller.update("transcripts", [e1, e2])
         assert called HTTPoison.get!(Source.new("transcripts", e1).raw_url)
         assert called HTTPoison.get!(Source.new("transcripts", e2).raw_url)
       end
@@ -33,7 +33,7 @@ defmodule Changelog.Github.PullerTest do
       e = insert(:published_episode, slug: "test", podcast: p)
 
       with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
-        Puller.update("rfc/request-for-commits-test.md", "transcripts")
+        Puller.update("transcripts", "rfc/request-for-commits-test.md")
         assert called HTTPoison.get!(Source.new("transcripts", e).raw_url)
       end
     end
@@ -46,11 +46,7 @@ defmodule Changelog.Github.PullerTest do
       e3 = insert(:published_episode, slug: "bonus-77", podcast: p2)
 
       with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
-        Puller.update([
-          "podcast/the-changelog-292.md",
-          "podcast/the-changelog-300.md",
-          "gotime/go-time-bonus-77.md"], "transcripts")
-
+        Puller.update("transcripts", ~w(podcast/the-changelog-292.md podcast/the-changelog-300.md gotime/go-time-bonus-77.md))
         assert called HTTPoison.get!(Source.new("transcripts", e1).raw_url)
         assert called HTTPoison.get!(Source.new("transcripts", e2).raw_url)
         assert called HTTPoison.get!(Source.new("transcripts", e3).raw_url)
@@ -63,7 +59,7 @@ defmodule Changelog.Github.PullerTest do
       e2 = insert(:published_episode, slug: "300", podcast: p)
 
       with_mock HTTPoison, [get!: fn(_) -> "markdown" end] do
-        Puller.update(["podcast/the-changelog-292.md", "podcast/the-changelog-300.md"], "show-notes")
+        Puller.update("show-notes", ~w(podcast/the-changelog-292.md podcast/the-changelog-300.md))
         assert called HTTPoison.get!(Source.new("show-notes", e1).raw_url)
         assert called HTTPoison.get!(Source.new("show-notes", e2).raw_url)
       end
@@ -71,7 +67,7 @@ defmodule Changelog.Github.PullerTest do
 
     test "no-ops when items are not valid episodes" do
       with_mock(HTTPoison, [get!: fn(_) -> "markdown" end]) do
-        Puller.update([".gitignore", "README.md"], "transcripts")
+        Puller.update("transcripts", ~w(.gitignore README.md))
         refute called HTTPoison.get!()
       end
     end
