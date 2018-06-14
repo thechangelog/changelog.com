@@ -127,7 +127,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     changeset = Episode.admin_changeset(episode, episode_params)
 
     case Repo.update(changeset) do
-      {:ok, _episode} ->
+      {:ok, episode} ->
+        handle_notes_push_to_github(episode)
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
@@ -162,6 +164,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:ok, episode} ->
         handle_thanks_email(conn, episode)
         handle_news_item(conn, episode)
+        handle_notes_push_to_github(episode)
 
         conn
         |> put_flash(:result, "success")
@@ -231,6 +234,14 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> NewsQueue.append
   end
   defp handle_news_item(_, _), do: false
+
+  defp handle_notes_push_to_github(episode) do
+    if Episode.is_public(episode) do
+      episode = Episode.preload_podcast(episode)
+      source = Github.Source.new("show-notes", episode)
+      Github.Pusher.push(source, episode.notes)
+    end
+  end
 
   defp handle_thanks_email(conn = %{params: %{"thanks" => _}}, episode) do
     episode = Episode.preload_guests(episode)

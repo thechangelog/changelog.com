@@ -16,9 +16,7 @@ defmodule Mix.Tasks.Changelog.ShowNotes do
     for episode <- episodes do
       source = Github.Source.new("show-notes", episode)
       case Github.Pusher.push(source, episode.notes) do
-        {:ok, %{status_code: 200}} -> IO.puts("updated #{episode.title}")
-        {:ok, %{status_code: 201}} -> IO.puts("created #{episode.title}")
-        {:ok, %{status_code: code, body: %{"message" => message}}} -> IO.puts("error: #{code} - #{message}")
+        {:ok, message} -> IO.puts("success: #{message}")
         {:error, message} -> IO.puts("error: #{message}")
       end
     end

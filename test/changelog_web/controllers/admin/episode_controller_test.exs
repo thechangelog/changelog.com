@@ -9,6 +9,13 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
 
+  setup_with_mocks([
+    {Github.Pusher, [], [push: fn(_, _) -> {:ok, "success"} end]},
+    {Github.Puller, [], [update: fn(_, _) -> true end]}
+  ], assigns) do
+    assigns
+  end
+
   @tag :as_admin
   test "lists all podcast episodes on index", %{conn: conn} do
     p = insert(:podcast)
@@ -82,8 +89,20 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @valid_attrs)
 
+    refute called Github.Pusher.push()
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode) == 1
+  end
+
+  @tag :as_admin
+  test "updates a public episode, pushing notes to GitHub", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:published_episode, podcast: p)
+
+    conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @valid_attrs)
+
+    assert called Github.Pusher.push(:_, e.notes)
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
   end
 
   @tag :as_admin
@@ -93,6 +112,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @invalid_attrs)
 
+    refute called Github.Pusher.push()
     assert html_response(conn, 200) =~ ~r/error/
   end
 
@@ -126,6 +146,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
+    assert called Github.Pusher.push(:_, e.notes)
   end
 
   @tag :as_admin
@@ -144,6 +165,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert count(Episode.published) == 1
     assert_delivered_email ChangelogWeb.Email.guest_thanks(g1, email_opts)
     assert_delivered_email ChangelogWeb.Email.guest_thanks(g2, email_opts)
+    assert called Github.Pusher.push(:_, e.notes)
   end
 
   @tag :as_inserted_admin
@@ -208,12 +230,10 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast, name: "Happy Cast", slug: "happy")
     e = insert(:published_episode, podcast: p, slug: "12")
 
-    with_mock(Github.Puller, [update: fn(_, _) -> true end]) do
-      conn = post(conn, admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
+    conn = post(conn, admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
 
-      assert called Github.Puller.update(:_, :_)
-      assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    end
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert called Github.Puller.update(:_, :_)
   end
 
   test "requires user auth on all actions", %{conn: conn} do
