@@ -9,7 +9,7 @@ jobs:
           MIX_ENV: test
       - image: circleci/postgres:9.6
         environment:
-          POSTGRES_USER: postgres
+          POSTGRES_USER:
           POSTGRES_DB: changelog_test
           POSTGRES_PASSWORD:
 
