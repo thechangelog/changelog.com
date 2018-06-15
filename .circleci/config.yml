@@ -17,10 +17,18 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
-      - run: mix do deps.get, compile
+      - run:
+          name: Install hex locally
+          command: mix local.hex --force
+      - run:
+          name: Install rebar locally
+          command:  mix local.rebar --force
+      - run:
+          name: Get all dependencies & compile
+          command: mix do deps.get, compile
       - run:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run: mix test
+      - run:
+          name: Run tests
+          command: mix test
