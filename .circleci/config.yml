@@ -17,41 +17,10 @@ jobs:
 
     steps:
       - checkout
-
       - run: mix local.hex --force
       - run: mix local.rebar --force
-
-      - restore_cache:
-          keys:
-            - v1-mix-cache-{{ checksum "mix.lock" }}
-            - v1-mix-cache-{{ .Branch }}
-            - v1-mix-cache
-      - restore_cache:
-        keys:
-          - v1-build-cache-{{ .Branch }}
-          - v1-build-cache
       - run: mix do deps.get, compile
-      - save_cache:
-          key: v1-mix-cache-{{ checksum "mix.lock" }}
-          paths: "deps"
-      - save_cache:
-          key: v1-mix-cache-{{ .Branch }}
-          paths: "deps"
-      - save_cache:
-          key: v1-mix-cache
-          paths: "deps"
-      - save_cache:
-          key: v1-mix-cache-{{ checksum "mix.lock" }}
-          paths: "_build"
-      - save_cache:
-          key: v1-build-cache-{{ .Branch }}
-          paths: "_build"
-      - save_cache:
-          key: v1-build-cache
-          paths: "_build"
-
       - run:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
       - run: mix test
