@@ -1,16 +1,54 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/elixir:1.6
-      - image: circleci/postgres:9.6
-        environment:
+version: 2  # use CircleCI 2.0 instead of CircleCI Classic
+jobs:  # basic units of work in a run
+  build:  # runs not using Workflows must have a `build` job as entry point
+    parallelism: 1  # run only one instance of this job in parallel
+    docker:  # run the steps with Docker
+      - image: circleci/elixir:1.6 # ...with this image as the primary container; this is where all `steps` will run
+        environment: # environment variables for primary container
+          MIX_ENV: test
+      - image: circleci/postgres:9.6 # database image
+        environment: # environment variables for database
           POSTGRES_USER: postgres
           POSTGRES_DB: changelog_test
-    working_directory: ~/repo
+          POSTGRES_PASSWORD:
+    working_directory: ~/workspace
     steps:
-      - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
-      - run: mix deps.get
-      - run: mix test
+      - checkout  # check out source code to the working directory
+
+      - run: mix local.hex --force  # install Hex locally (without prompt)
+      - run: mix local.rebar --force  # fetch a copy of rebar (without prompt)
+
+      - restore_cache:  # restores saved mix cache
+          keys:  # list of cache keys, in decreasing specificity
+            - v1-mix-cache-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
+      - restore_cache:  # restores saved build cache
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
+       - run: mix do deps.get, compile  # get updated dependencies & compile them
+       - save_cache:  # generate and store cache so `restore_cache` works
+          key: v1-mix-cache-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:  # make another less specific cache
+          key: v1-mix-cache-{{ .Branch }}
+          paths: "deps"
+      - save_cache:  # you should really save one more cache just in case
+          key: v1-mix-cache
+          paths: "deps"
+      - save_cache: # don't forget to save a *build* cache, too
+          key: v1-mix-cache-{{ checksum "mix.lock" }}
+          paths: "_build"
+      - save_cache: # don't forget to save a *build* cache, too
+          key: v1-build-cache-{{ .Branch }}
+          paths: "_build"
+      - save_cache: # and one more build cache for good measure
+          key: v1-build-cache
+          paths: "_build"
+
+      - run:  # special utility that stalls main process until DB is ready
+          name: Wait for PostgreSQL
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run: mix test  # run all tests in project
