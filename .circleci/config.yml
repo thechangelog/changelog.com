@@ -1,3 +1,4 @@
+---
 version: 2  # use CircleCI 2.0 instead of CircleCI Classic
 jobs:  # basic units of work in a run
   build:  # runs not using Workflows must have a `build` job as entry point
