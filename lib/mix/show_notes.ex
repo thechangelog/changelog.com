@@ -10,6 +10,7 @@ defmodule Mix.Tasks.Changelog.ShowNotes do
 
     episodes =
       Episode.published
+      |> Episode.newest_first
       |> Episode.preload_podcast
       |> Repo.all
 
