@@ -141,6 +141,8 @@ defmodule ChangelogWeb.Router do
     get "/subscribe", PersonController, :subscribe, as: :person
     get "/subscribe/:to", PersonController, :subscribe, as: :person
     post "/subscribe", PersonController, :subscribe, as: :person
+    # TODO: Make this dynamic based on user name
+    get "/person/johndoe", PersonController, :show
 
     resources "/~", HomeController, only: [:show, :update], singleton: true
     get "/~/profile", HomeController, :profile

@@ -1,17 +1,54 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Mailer, Newsletters, Person, Podcast, Subscription}
+  alias Changelog.{Cache, Mailer, NewsItem, Newsletters, Person, Podcast, Repo,
+                   Subscription}
   alias ChangelogWeb.Email
 
   plug RequireGuest, "before joining" when action in [:join]
 
-  def subscribe(conn = %{method: "GET"}, %{"to" => to}) when to in ["weekly", "nightly"] do
-    newsletter = Newsletters.get_by_slug(to)
+  def show(conn, params) do
+    pinned =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.pinned
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.all
+      |> Enum.map(&NewsItem.load_object/1)
 
-    conn
-    |> assign(:newsletter, newsletter)
-    |> render(:subscribe_newsletter)
+    page =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.unpinned
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    podcasts =
+      Podcast.active
+      |> Podcast.ours
+      |> Podcast.oldest_first
+      |> Podcast.preload_hosts
+      |> Repo.all
+      |> Kernel.++([Podcast.master])
+
+    render(conn, :show, pinned: pinned, items: items, page: page, podcasts: podcasts)
+  end
+
+  def subscribe(conn = %{method: "GET"}, _params) do
+    active =
+      Podcast.active
+      |> Podcast.oldest_first
+      |> Podcast.preload_hosts
+      |> Repo.all
+      |> Kernel.++([Podcast.master])
+
+    render(conn, :subscribe, podcasts: active)
   end
   def subscribe(conn = %{method: "GET"}, %{"to" => to}) when is_binary(to) do
     podcast = Podcast.get_by_slug!(to)

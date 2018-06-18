@@ -1,0 +1,25 @@
+<div class="topic">
+  <header class="topic-header">
+    <div class="topic-header-wrap">
+      <div class="topic-header-avatar">
+        <img src="https://secure.gravatar.com/avatar/d63705fb0197936da304756dd7fea127.jpg?s=150&d=mm" width="80" height="80" alt="John Doe Avatar">
+      </div>
+
+      <h2 class="topic-header-title">Person Name</h2>
+
+      <div class="topic-header-description">UI/UX Designer and Developer. Future private detective. I now have a dog.</div>
+
+      <div class="topic-header-meta">
+        Omaha, NE ·
+        <a href="#" title="">example.com</a> ·
+        <a href="#" title="">Twitter</a> ·
+        <a href="#" title="">Github</a>
+      </div>
+    </div>
+  </header>
+
+  <a id="feed" class="anchor"></a>
+  <div class="feed">
+    <%= render("_feed.html", assigns) %>
+  </div>
+</div>
