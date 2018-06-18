@@ -1,11 +1,44 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Newsletters, Person, Podcast, Repo}
+  alias Changelog.{Mailer, Newsletters, Person, Podcast, Repo, NewsItem}
   alias ChangelogWeb.Email
   alias Craisin.Subscriber
 
   plug RequireGuest, "before joining" when action in [:join]
+
+  def show(conn, params) do
+    pinned =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.pinned
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.all
+      |> Enum.map(&NewsItem.load_object/1)
+
+    page =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.unpinned
+      |> NewsItem.newest_first
+      |> NewsItem.preload_all
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    podcasts =
+      Podcast.active
+      |> Podcast.ours
+      |> Podcast.oldest_first
+      |> Podcast.preload_hosts
+      |> Repo.all
+      |> Kernel.++([Podcast.master])
+
+    render(conn, :show, pinned: pinned, items: items, page: page, podcasts: podcasts)
+  end
 
   def subscribe(conn = %{method: "GET"}, _params) do
     active =
