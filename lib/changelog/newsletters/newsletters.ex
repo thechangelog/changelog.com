@@ -8,6 +8,14 @@ defmodule Changelog.Newsletters do
     apply(__MODULE__, String.to_existing_atom(slug), [])
   end
 
+  def afk do
+    %Newsletter{
+      name: "Away From Keyboard",
+      list_id: "8c8c5f024909b9627f26ec8fc9fd7f65",
+      web_id: "41EF5A7A3399E7C1"
+    }
+  end
+
   def community do
     %Newsletter{
       name: "Changelog Community",
