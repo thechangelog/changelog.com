@@ -28,7 +28,7 @@ jobs:
           command: mix do deps.get, compile
       - run:
           name: Wait for PostgreSQL
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+          command: timeout 60 bash -c "while sleep 1; do nc -zv 127.0.0.1 5432 && break; done"
       - run:
           name: Run tests
           command: mix test
