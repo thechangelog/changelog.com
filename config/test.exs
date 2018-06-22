@@ -16,8 +16,10 @@ config :changelog, Changelog.Mailer,
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
+  pool: Ecto.Adapters.SQL.Sandbox,
   database: "changelog_test",
-  pool: Ecto.Adapters.SQL.Sandbox
+  username: "postgres",
+  password: "postgres"
 
 config :arc,
   storage_dir: "priv/uploads"
