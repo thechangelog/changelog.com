@@ -80,7 +80,9 @@
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">
           <a id="featuring" class="anchor"></a>
-          <h3 class="episode-body-section-heading"><span>Featuring</span></h3>
+          <header class="episode-body-section-heading">
+            <h3 class="episode-body-section-heading-title">Featuring</h3>
+          </header>
           <div class="richtext richtext--small">
             <ul>
             <%= for person <- participants do %>
@@ -94,7 +96,9 @@
       <%= if Enum.any?(@episode.episode_sponsors) do %>
         <section class="episode-body-section">
           <a id="sponsors" class="anchor"></a>
-          <h3 class="episode-body-section-heading"><span>Sponsors</span></h3>
+          <header class="episode-body-section-heading">
+            <h3 class="episode-body-section-heading-title">Sponsors</h3>
+          </header>
           <div class="richtext richtext--small">
             <%= for sponsor <- @episode.episode_sponsors do %>
               <p>
@@ -108,7 +112,10 @@
       <%= if @episode.notes do %>
         <section class="episode-body-section">
           <a id="notes" class="anchor"></a>
-          <h3 class="episode-body-section-heading"><span>Notes &amp; Links</span></h3>
+          <header class="episode-body-section-heading">
+            <h3 class="episode-body-section-heading-title">Notes &amp; Links</h3>
+            <p class="episode-body-section-heading-note"><%= link "Edit on Github", to: show_notes_source_url(@episode), title: "View notes source on GitHub", rel: "external" %></p>
+          </header>
           <div class="richtext richtext--small">
             <%= @episode.notes |> md_to_html |> raw %>
           </div>
@@ -118,19 +125,12 @@
       <%= if Enum.any?(@episode.transcript) do %>
         <section class="episode-body-section">
           <a id="transcript" class="anchor"></a>
-          <h3 class="episode-body-section-heading"><span>Transcript</span></h3>
+          <header class="episode-body-section-heading">
+            <h3 class="episode-body-section-heading-title">Transcript</h3>
+            <p class="episode-body-section-heading-note"><%= link "Edit on Github", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %></p>
+          </header>
+
           <div class="transcript">
-            <div  class="transcript-item transcript-item--break">
-              <div class="transcript-item-speaker">
-                <%= link to: page_path(@conn, :about), title: "Changelog Media" do %>
-                  <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
-                <% end %>
-                <p class="transcript-item-speaker-name">Changelog</p>
-              </div>
-              <div class="transcript-item-text">
-                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome. 💚</p>
-              </div>
-            </div>
             <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
               <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
               <a id="transcript-<%= index %>" class="anchor"></a>
