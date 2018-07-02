@@ -16,4 +16,4 @@ mix deps.get
 
 cd assets && yarn install
 
-createuser --create-db --superuser --no-password postgres
+createuser --superuser --no-password postgres
