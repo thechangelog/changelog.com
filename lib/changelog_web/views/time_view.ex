@@ -84,6 +84,11 @@ defmodule ChangelogWeb.TimeView do
     end
   end
 
+  def terse_date(ts) do
+    {:ok, result} = Timex.format(ts, "{0M}/{0D}/{YY}")
+    result
+  end
+
   def time_is_url(nil), do: ""
   def time_is_url(ts), do: "https://time.is/#{DateTime.to_unix(ts)}"
 
