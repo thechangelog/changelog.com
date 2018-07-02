@@ -38,15 +38,7 @@ defmodule ChangelogWeb.PostControllerTest do
     end
   end
 
-  test "previewing a post when not an admin", %{conn: conn} do
-    p = insert(:post)
-
-    conn = get(conn, post_path(conn, :preview, p.slug))
-    assert conn.halted
-  end
-
-  @tag :as_admin
-  test "previewing a post when signed in as admin", %{conn: conn} do
+  test "previewing a post", %{conn: conn} do
     p = insert(:post)
 
     conn = get(conn, post_path(conn, :preview, p.slug))

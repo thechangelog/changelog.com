@@ -3,7 +3,6 @@ defmodule ChangelogWeb.EpisodeController do
 
   alias Changelog.{Podcast, Episode}
 
-  plug RequireAdmin, "before preview" when action in [:preview]
   plug :assign_podcast
 
   def action(conn, _) do
