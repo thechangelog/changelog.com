@@ -32,11 +32,21 @@ defmodule ChangelogWeb.FeedController do
       |> Repo.all
       |> Episode.preload_all
 
+    log_overcast(conn, podcast)
+
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("podcast.xml", podcast: podcast, episodes: episodes)
     |> cache_response
+  end
+
+  defp log_overcast(conn, podcast) do
+    agent = conn |> get_req_header("user-agent") |> List.first
+
+    if String.match?((agent || ""), ~r/Overcast/i) do
+      Logger.info("#{podcast.name}: #{agent}")
+    end
   end
 
   def posts(conn, _params) do
