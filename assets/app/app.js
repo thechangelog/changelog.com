@@ -55,12 +55,16 @@ u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
 u(document).on("click", "[data-play]", function(event) {
   if (player.canPlay()) {
     event.preventDefault();
-    const clicked = u(event.target).closest("a, button");
 
-    if (player.currentlyLoaded == clicked.data("play")) {
+    let clicked = u(event.target).closest("a, button");
+    let audioUrl = clicked.attr("href");
+    let detailsUrl = clicked.data("play");
+
+    if (player.currentlyLoaded == detailsUrl) {
       player.togglePlayPause();
     } else {
-      player.load(clicked.attr("href"), clicked.data("play"));
+      player.pause();
+      player.load(audioUrl, detailsUrl);
     }
   }
 });
