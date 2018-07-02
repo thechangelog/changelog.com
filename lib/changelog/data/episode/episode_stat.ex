@@ -92,6 +92,7 @@ defmodule Changelog.EpisodeStat do
   defp downloads_list_merged_and_sorted(list) do
     list
     |> Enum.reduce(fn(x, acc) -> Map.merge(acc, x, fn(_k, v1, v2) -> v1 + v2 end) end)
+    |> Enum.map(fn({k, v}) -> {k, Float.round(v, 2)} end)
     |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
   end
 
