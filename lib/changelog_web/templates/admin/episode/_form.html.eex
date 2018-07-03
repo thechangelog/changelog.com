@@ -2,7 +2,7 @@
   <div class="two fields">
     <div class="twelve wide field required <%= error_class(f, :title) %>">
       <%= label(f, :title) %>
-      <%= text_input(f, :title, placeholder: "SQLite with Richard Hipp") %>
+      <%= text_input(f, :title, placeholder: "Why SQLite succeeded as a database") %>
       <%= error_message(f, :title) %>
     </div>
 
@@ -13,18 +13,11 @@
     </div>
   </div>
 
-  <div class="field <%= error_class(f, :headline) %>">
-    <%= label(:f, :headline) do %>
-      Headline <%= help_icon("Used as primary title on episode page and iTunes subtitle.") %>
+  <div class="field <%= error_class(f, :subtitle) %>">
+    <%= label(:f, :subtitle) do %>
+      Subtitle <%= help_icon("Used underneath title on episode page and combined with title for html <title>") %>
     <% end %>
-    <%= text_input(f, :headline, placeholder: "Why SQLite Succeeded as a Database") %>
-  </div>
-
-  <div class="field <%= error_class(f, :headline) %>">
-    <%= label(:f, :subheadline) do %>
-      Sub Headline <%= help_icon("Used underneath headline on episode page. Markdown supported.") %>
-    <% end %>
-    <%= text_input(f, :subheadline, placeholder: "with [Richard Hipp](http://www.hwaci.com/drh/), creator of [SQLite](http://sqlite.org)") %>
+    <%= text_input(f, :subtitle, placeholder: "with Richard Hipp, creator of SQlite") %>
   </div>
 
   <div class="inline field <%= error_class(f, :featured) %>">

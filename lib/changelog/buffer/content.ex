@@ -94,7 +94,7 @@ defmodule Changelog.Buffer.Content do
   defp source_meta(%{source: %{twitter_handle: nil}}), do: nil
   defp source_meta(%{source: %{twitter_handle: handle}}), do: "#{source_emoji()} via @#{handle}"
 
-  defp title_meta(episode), do: "#{title_emoji()} #{episode.headline || episode.title}"
+  defp title_meta(episode), do: "#{title_emoji()} #{episode.title}"
 
   defp topic_meta([]), do: nil
   defp topic_meta(topics) do

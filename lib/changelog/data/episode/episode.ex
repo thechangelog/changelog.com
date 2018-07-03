@@ -10,8 +10,7 @@ defmodule Changelog.Episode do
     field :guid, :string
 
     field :title, :string
-    field :headline, :string
-    field :subheadline, :string
+    field :subtitle, :string
 
     field :featured, :boolean, default: false
     field :highlight, :string
@@ -83,7 +82,7 @@ defmodule Changelog.Episode do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(slug title published featured headline subheadline highlight subhighlight summary notes published_at recorded_at recorded_live guid))
+    |> cast(params, ~w(slug title subtitle published featured highlight subhighlight summary notes published_at recorded_at recorded_live guid))
     |> cast_attachments(params, ~w(audio_file))
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)

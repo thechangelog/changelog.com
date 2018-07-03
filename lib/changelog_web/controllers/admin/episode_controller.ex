@@ -224,7 +224,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       type: :audio,
       object_id: "#{episode.podcast.slug}:#{episode.slug}",
       url: episode_url(conn, :show, episode.podcast.slug, episode.slug),
-      headline: (episode.headline || episode.title),
+      headline: episode.title,
       story: episode.summary,
       published_at: episode.published_at,
       logger_id: conn.assigns.current_user.id,
