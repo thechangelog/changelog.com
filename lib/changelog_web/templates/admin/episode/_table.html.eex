@@ -2,14 +2,15 @@
   <thead>
     <tr>
       <th>Slug</th>
-      <th>Name</th>
+      <th>Title</th>
+      <th>Featuring</th>
     <%= if @status == :draft do %>
       <th>Record Time</th>
     <% else %>
-      <th>Duration</th>
       <th>Publish Date</th>
-    <% end %>
+      <th>Duration</th>
       <th>Reach</th>
+    <% end %>
       <th></th>
     </tr>
   </thead>
@@ -18,14 +19,23 @@
   <%= for episode <- @episodes do %>
     <tr>
       <td title="<%= episode.id %>"><%= episode.slug %></td>
-      <td><%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %></td>
-      <%= if episode.published do %>
-      <td><%= TimeView.duration(episode.duration) %></td>
-      <td><%= TimeView.pretty_date(episode.published_at) %></td>
-      <% else %>
-      <td><%= link(ts(episode.recorded_at), to: TimeView.time_is_url(episode.recorded_at), rel: "external") %></td>
+      <td>
+        <%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %>
+      </td>
+      <td>
+      <%= for person <- Episode.participants(episode) do %>
+        <%= link to: admin_person_path(@conn, :edit, person), title: person.name, data: [popup: true] do %>
+          <img class="ui avatar image" src="<%= PersonView.avatar_url(person) %>">&nbsp;
+        <% end %>
       <% end %>
+      </td>
+    <%= if episode.published do %>
+      <td><%= TimeView.pretty_date(episode.published_at) %></td>
+      <td><%= TimeView.duration(episode.duration) %></td>
       <td><%= reach_count(episode) %></td>
+    <% else %>
+      <td><%= link(ts(episode.recorded_at), to: TimeView.time_is_url(episode.recorded_at), rel: "external") %></td>
+    <% end %>
       <td class="center aligned">
         <div class="ui small basic buttons">
         <%= if Episode.is_published(episode) do %>
