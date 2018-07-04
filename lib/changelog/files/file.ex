@@ -25,6 +25,7 @@ defmodule Changelog.File do
           :png  -> "image/png"
           :gif  -> "image/gif"
           :mp3  -> "audio/mpeg"
+          :svg  -> "image/svg+xml"
         end
       end
 
