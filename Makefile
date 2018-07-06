@@ -42,11 +42,11 @@ up: upgrade
 #
 .DEFAULT_GOAL := help
 
-images: compose ## Build changelog.com Docker images (i)
+build: compose ## Build changelog.com Docker images (b)
 	@$(COMPOSE) build
-i: images
+b: build
 
-code: images run ## Code for changelog.com - builds all Docker images and runs them locally (c)
+code: build run ## Code for changelog.com - builds all Docker images and runs them locally (c)
 c: code
 
 help:
