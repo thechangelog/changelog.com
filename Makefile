@@ -42,14 +42,16 @@ up: upgrade
 #
 .DEFAULT_GOAL := help
 
+images: compose ## Build changelog.com Docker images (i)
+	@$(COMPOSE) build
+i: images
+
+dev: images run ## Develop changelog.com - builds all Docker images and runs them locally (d)
+d: dev
+
 help:
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-10s\033[0m %s\n", $$1, $$4 }' | sort
 
-build: compose
-	@$(COMPOSE) build
-
-run: compose
+run: compose ## Run changelog.com locally (r)
 	@$(COMPOSE) up
-
-dev: build compose run ## Run changelog.com locally and make it better (d)
-d: dev
+r: run
