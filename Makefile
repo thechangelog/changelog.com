@@ -46,8 +46,8 @@ images: compose ## Build changelog.com Docker images (i)
 	@$(COMPOSE) build
 i: images
 
-dev: images run ## Develop changelog.com - builds all Docker images and runs them locally (d)
-d: dev
+code: images run ## Code for changelog.com - builds all Docker images and runs them locally (c)
+c: code
 
 help:
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-10s\033[0m %s\n", $$1, $$4 }' | sort
