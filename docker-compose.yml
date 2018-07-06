@@ -18,7 +18,22 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - uploads:/uploads
+      - ./assets/admin/:/app/assets/admin/
+      - ./assets/app/:/app/assets/app/
+      - ./assets/assets/:/app/assets/assets/
+      - ./assets/email/:/app/assets/email/
+      - ./assets/semantic/:/app/assets/semantic/
+      - ./assets/shared/:/app/assets/shared/
+      - ./assets/test/:/app/assets/test/
+      - ./assets/.babelrc:/app/assets/.babelrc
+      - ./assets/embedder.js:/app/assets/embedder.js
+      - ./assets/postcss.config.js:/app/assets/postcss.config.js
+      - ./assets/webpack.config.js:/app/assets/webpack.config.js
+      - ./config:/app/config
+      - ./lib:/app/lib
+      - ./priv:/app/priv
+      - ./test:/app/test
+      - ./.iex.exs:/app/.iex.exs
     depends_on:
       - db
   # proxy:
