@@ -1,8 +1,18 @@
 defmodule ChangelogWeb.Plug.Conn do
+  @moduledoc """
+  General-purpose, connection-related functions available to controllers.
+  """
+
   import Plug.Conn
 
   @encryption_salt "8675309"
   @signing_salt "9035768"
+
+  def get_agent(conn) do
+    conn
+    |> get_req_header("user-agent")
+    |> List.first
+  end
 
   def put_encrypted_cookie(conn, key, value, opts \\ []) do
     opts = Keyword.put_new(opts, :max_age, 31_536_000) # one year

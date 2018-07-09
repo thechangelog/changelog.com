@@ -4,6 +4,8 @@ defmodule Changelog.Podcast do
   alias Changelog.{Episode, EpisodeStat, Files, NewsItem, PodcastTopic,
                    PodcastHost, Regexp}
 
+  require Logger
+
   defenum Status, draft: 0, soon: 1, published: 2, retired: 3
 
   schema "podcasts" do
@@ -170,6 +172,22 @@ defmodule Changelog.Podcast do
 
     podcast
     |> change(%{download_count: new_downloads, reach_count: new_reach})
+    |> Repo.update!
+  end
+
+  def update_subscribers(%{slug: "master"}, client, count) do
+    Logger.info "Master feed: #{client} = #{count} subscribers"
+  end
+  def update_subscribers(podcast = %{subscribers: nil}, client, count) do
+    podcast
+    |> Map.put(:subscribers, %{})
+    |> update_subscribers(client, count)
+  end
+  def update_subscribers(podcast, client, count) do
+    new_subscribers = Map.put(podcast.subscribers, client, count)
+
+    podcast
+    |> change(%{subscribers: new_subscribers})
     |> Repo.update!
   end
 end
