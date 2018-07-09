@@ -33,7 +33,7 @@
     <div class="footer-nav-list">
       <h4><%= link "Podcasts", to: podcast_path(@conn, :index) %></h4>
       <ul>
-      <%= for podcast <- footer_podcasts() do %>
+      <%= for podcast <- @podcasts do %>
         <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
       <% end %>
         <li>---</li>

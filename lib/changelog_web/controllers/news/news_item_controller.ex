@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsItem, NewsSponsorship, Podcast}
+  alias Changelog.{Hashid, NewsItem, NewsSponsorship}
   alias ChangelogWeb.NewsItemView
 
   plug RequireAdmin, "before preview" when action in [:preview]
@@ -29,15 +29,7 @@ defmodule ChangelogWeb.NewsItemController do
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    podcasts =
-      Podcast.active
-      |> Podcast.ours
-      |> Podcast.oldest_first
-      |> Podcast.preload_hosts
-      |> Repo.all
-      |> Kernel.++([Podcast.master])
-
-    render(conn, :index, ads: get_ads(), pinned: pinned, items: items, page: page, podcasts: podcasts)
+    render(conn, :index, ads: get_ads(), pinned: pinned, items: items, page: page)
   end
 
   def top(conn, params) do

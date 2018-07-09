@@ -37,6 +37,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     case Repo.insert(changeset) do
       {:ok, podcast} ->
         Repo.update(Podcast.file_changeset(podcast, podcast_params))
+        clear_podcasts_cache()
 
         conn
         |> put_flash(:result, "success")
@@ -64,6 +65,8 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
     case Repo.update(changeset) do
       {:ok, _podcast} ->
+        clear_podcasts_cache()
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_path(conn, :index))
@@ -71,4 +74,6 @@ defmodule ChangelogWeb.Admin.PodcastController do
         render(conn, :edit, podcast: podcast, changeset: changeset)
     end
   end
+
+  defp clear_podcasts_cache, do: ConCache.delete(:app_cache, "podcasts")
 end

@@ -40,6 +40,7 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :public do
+    plug Plug.LoadPodcasts
   end
 
   scope "/auth", ChangelogWeb do
