@@ -5,7 +5,7 @@
       <th>Position</th>
       <th>Status</th>
       <th>Twitter</th>
-      <th>Vanity Domain</th>
+      <th>Subscribers</th>
       <th>Episodes</th>
       <th>Downloads</th>
       <th>Reach</th>
@@ -26,7 +26,11 @@
       <td><%= podcast.position %></td>
       <td><%= status_label(podcast) %></td>
       <td><%= twitter_link(podcast) %></td>
-      <td><%= vanity_link(podcast) %></td>
+      <td>
+      <%= for {client, count} <- (podcast.subscribers || %{}) do %>
+        <strong><%= String.capitalize(client) %>:</strong> <%= comma_separated(count) %>
+      <% end %>
+      </td>
       <td><%= episode_count(podcast) %></td>
       <td><%= download_count(podcast) %></td>
       <td><%= reach_count(podcast) %></td>
