@@ -70,6 +70,7 @@ defmodule Changelog.Mixfile do
       {:ex_machina, "~> 2.0"},
       {:rollbax, "~> 0.8.2"},
       {:html_entities, "~> 0.3"},
+      {:algolia, "~> 0.6.5"},
       {:credo, "~> 0.4", only: [:dev, :test]},
       {:excoveralls, "~> 0.6", only: :test},
       {:mock, "~> 0.3.0", only: :test}

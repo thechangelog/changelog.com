@@ -1,4 +1,5 @@
 %{
+  "algolia": {:hex, :algolia, "0.6.5", "daa90ce2e3c6a3569ef97b451c617c53bc71bf4a4c6e52027fdc9d36f426b4ec", [:mix], [{:hackney, "~> 1.9 or ~> 1.10", [hex: :hackney, repo: "hexpm", optional: false]}, {:poison, "~> 2.2 or ~> 3.0", [hex: :poison, repo: "hexpm", optional: false]}], "hexpm"},
   "arc": {:hex, :arc, "0.8.0", "bb7cf8ea50f30f9c2bb357270c074def42a7ec6a3b4605be731cc5faf8fde6fd", [:mix], [{:ex_aws, "~> 1.1", [hex: :ex_aws, optional: true]}, {:httpoison, "~> 0.11", [hex: :httpoison, optional: false]}, {:poison, "~> 2.2 or ~> 3.1", [hex: :poison, optional: true]}, {:sweet_xml, "~> 0.6", [hex: :sweet_xml, optional: true]}]},
   "arc_ecto": {:hex, :arc_ecto, "0.7.0", "428ed7ea4ed0be8996d8fc6e9f651d3e26fe9c9063f26cbf6731c865369845d3", [:mix], [{:arc, "~> 0.8.0", [hex: :arc, optional: false]}, {:ecto, "~> 2.0", [hex: :ecto, optional: false]}]},
   "bamboo": {:hex, :bamboo, "0.8.0", "573889a3efcb906bb9d25a1c4caa4ca22f479235e1b8cc3260d8b88dabeb4b14", [:mix], [{:hackney, "~> 1.6", [hex: :hackney, optional: false]}, {:plug, "~> 1.0", [hex: :plug, optional: false]}, {:poison, ">= 1.5.0", [hex: :poison, optional: false]}]},
