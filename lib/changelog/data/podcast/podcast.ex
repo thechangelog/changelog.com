@@ -36,16 +36,16 @@ defmodule Changelog.Podcast do
   end
 
   def master do
-  %__MODULE__{
-    name: "Changelog Master Feed",
-    slug: "master",
-    status: :published,
-    description: "Master feed of all Changelog podcasts",
-    keywords: "changelog, open source, oss, software, development, developer, hacker",
-    itunes_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
-    cover: true,
-    hosts: []
-  }
+    %__MODULE__{
+      name: "Changelog Master Feed",
+      slug: "master",
+      status: :published,
+      description: "Master feed of all Changelog podcasts",
+      keywords: "changelog, open source, oss, software, development, developer, hacker",
+      itunes_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
+      cover: true,
+      hosts: []
+    }
   end
 
   def file_changeset(podcast, attrs \\ %{}), do: cast_attachments(podcast, attrs, ~w(cover))
