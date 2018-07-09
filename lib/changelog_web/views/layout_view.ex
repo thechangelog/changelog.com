@@ -12,7 +12,7 @@ defmodule ChangelogWeb.LayoutView do
       %{name: "The Changelog", slug: "podcast"},
       %{name: "JS Party", slug: "jsparty"},
       %{name: "Founders Talk", slug: "founderstalk"},
-      %{name: "Away From Keyboard", slug: "afk"},
+      %{name: "Away from Keyboard", slug: "afk"},
       %{name: "Practical AI", slug: "practicalai"},
       %{name: "Go Time", slug: "gotime"},
       %{name: "Spotlight", slug: "spotlight"}
