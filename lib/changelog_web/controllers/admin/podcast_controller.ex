@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     ours =
       Podcast.ours
       |> Podcast.not_retired
-      |> Podcast.oldest_first
+      |> Podcast.by_position
       |> Repo.all
 
     partners =

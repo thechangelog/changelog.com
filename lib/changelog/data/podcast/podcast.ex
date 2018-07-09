@@ -22,6 +22,8 @@ defmodule Changelog.Podcast do
     field :reach_count, :integer
     field :recorded_live, :boolean, default: false
     field :partner, :boolean, default: false
+    field :position, :integer
+    field :subscribers, :map
 
     field :cover, Files.Cover.Type
 
@@ -52,7 +54,7 @@ defmodule Changelog.Podcast do
 
   def insert_changeset(podcast, attrs \\ %{}) do
     podcast
-    |> cast(attrs, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live partner))
+    |> cast(attrs, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live partner position))
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)

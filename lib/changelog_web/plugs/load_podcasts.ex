@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Plug.LoadPodcasts do
       podcasts =
         Podcast.active
         |> Podcast.ours
-        |> Podcast.oldest_first
+        |> Podcast.by_position
         |> Podcast.preload_hosts
         |> Repo.all
 

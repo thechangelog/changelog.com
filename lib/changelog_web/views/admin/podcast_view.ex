@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PodcastView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Topic, Podcast}
+  alias Changelog.{Topic, Repo, Podcast}
   alias ChangelogWeb.PodcastView
 
   def episode_count(podcast), do: PodcastView.episode_count(podcast)
@@ -21,6 +21,11 @@ defmodule ChangelogWeb.Admin.PodcastView do
       :published -> content_tag(:span, "Published", class: "ui tiny green basic label")
       :retired -> content_tag(:span, "Retired", class: "ui tiny basic label")
     end
+  end
+
+  def position_options do
+    count = Podcast.ours |> Podcast.not_retired |> Repo.count
+    1..count
   end
 
   def status_options do

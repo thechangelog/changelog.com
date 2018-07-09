@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th></th>
+      <th>Position</th>
       <th>Status</th>
       <th>Twitter</th>
       <th>Vanity Domain</th>
@@ -22,6 +23,7 @@
         </h2>
         <% end %>
       </td>
+      <td><%= podcast.position %></td>
       <td><%= status_label(podcast) %></td>
       <td><%= twitter_link(podcast) %></td>
       <td><%= vanity_link(podcast) %></td>
