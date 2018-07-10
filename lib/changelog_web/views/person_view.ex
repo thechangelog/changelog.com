@@ -60,7 +60,7 @@ defmodule ChangelogWeb.PersonView do
   end
 
   def handle(person) do
-    "@" <> person.handle
+    person.handle
   end
 
   def is_profile_complete(person) do
