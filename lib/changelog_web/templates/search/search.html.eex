@@ -1,13 +1,27 @@
 <section class="search">
   <form action="<%= search_path(@conn, :search) %>" method="get" class="search-form">
     <label class="visually_hidden" for="name">Search</label>
-    <input name="q" type="text" placeholder="Search Changelog" value="<%= @query %>" autofocus />
+    <input name="q" type="text" placeholder="Search Changelog..." value="<%= @query %>" autofocus />
+
+    <div class="search-form-footer">
+      <a href="https://www.algolia.com/" class="search-form-footer-algolia">
+        Search by <img src="/images/icons/algolia.svg" alt="Algolia" width="75" height="20">
+      </a>
+
+      <%= if @page.total_entries > 0 do %>
+        <p class="search-form-footer-results">We found <%= pluralize(@page.total_entries, "result", "results") %>.</p>
+      <% else %>
+        <%= if String.length(@query) != 0 do %>
+          <p class="search-form-footer-results">
+            There are no results for “<%= @query %>”.
+          </p>
+        <% end %>
+      <% end %>
+    </div>
   </form>
 
   <%= if Enum.any?(@items) do %>
     <%= if @page.total_entries > 0 do %>
-      <p class="search-results_sentence">We found <%= pluralize(@page.total_entries, "result", "results") %>.</p>
-
       <a id="feed" class="anchor"></a>
       <div class="feed">
         <%= for item <- @items do %>
@@ -15,13 +29,6 @@
         <% end %>
         <%= render(SharedView, "_more_button.html", assigns) %>
       </div>
-
-    <% else %>
-      <%= if String.length(@query) != 0 do %>
-        <p class="search-results_sentence">
-          There are no results for “<%= @query %>”.
-        </p>
-      <% end %>
     <% end %>
   <% end %>
 </section>
