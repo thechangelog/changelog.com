@@ -30,7 +30,7 @@
         </div>
 
         <div class="live-info-cta">
-          <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
+          <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icons/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
         <%= if @current_user do %>
           <p>Join the discussion in our <%= link(raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{@podcast.slug}") %>.</p>
         <% else %>
