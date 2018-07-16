@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.TopicController do
   alias Changelog.Topic
 
   plug :assign_topic when action in [:edit, :update, :delete]
-  plug Authorize, [Changelog.AdminOnlyPolicy, :topic]
+  plug Authorize, [Changelog.AdminsOnlyPolicy, :topic]
   plug :scrub_params, "topic" when action in [:create, :update]
 
   def index(conn, _params) do

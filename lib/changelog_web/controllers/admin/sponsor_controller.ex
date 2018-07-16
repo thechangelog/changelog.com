@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.SponsorController do
   alias Changelog.Sponsor
 
   plug :assign_sponsor when action in [:edit, :update, :delete]
-  plug Authorize, [Changelog.AdminOnlyPolicy, :sponsor]
+  plug Authorize, [Changelog.AdminsOnlyPolicy, :sponsor]
   plug :scrub_params, "sponsor" when action in [:create, :update]
 
   def index(conn, params) do

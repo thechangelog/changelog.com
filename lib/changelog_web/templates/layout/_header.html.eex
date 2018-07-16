@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header-container">
     <div class="header-wrap">
-      <h1 class="header-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
+      <h1 class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></h1>
 
       <nav class="header-nav">
         <div class="header-nav-wrap">

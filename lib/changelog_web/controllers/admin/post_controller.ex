@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.PostController do
   alias Changelog.Post
 
   plug :assign_post when action in [:edit, :update, :delete]
-  plug Authorize, [Changelog.AdminOnlyPolicy, :post]
+  plug Authorize, [Changelog.AdminsOnlyPolicy, :post]
   plug :scrub_params, "post" when action in [:create, :update]
 
   def index(conn, params) do

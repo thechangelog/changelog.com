@@ -1,4 +1,4 @@
-defmodule Changelog.AdminOnlyPolicy do
+defmodule Changelog.AdminsOnlyPolicy do
   use Changelog.DefaultPolicy
 
   def create(actor), do: is_admin(actor)

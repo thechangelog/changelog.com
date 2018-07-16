@@ -15,6 +15,9 @@ defmodule Changelog.DefaultPolicy do
       defp is_admin(nil), do: false
       defp is_admin(actor), do: Map.get(actor, :admin, false)
 
+      defp is_editor(nil), do: false
+      defp is_editor(actor), do: Map.get(actor, :editor, false)
+
       defp is_host(nil), do: false
       defp is_host(actor), do: Map.get(actor, :host, false)
 
