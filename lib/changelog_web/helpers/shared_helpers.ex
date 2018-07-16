@@ -44,8 +44,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def dev_relative(url), do: if Mix.env == :dev, do: URI.parse(url).path, else: url
 
   def domain_name(url) do
-    uri = URI.parse(url)
-    uri.host
+    url
+    |> URI.parse
+    |> Map.get(:host)
+    |> String.replace(~r/\Awww\./, "")
   end
 
   def domain_url(url) do
@@ -115,7 +117,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def website_link(model) do
     if model.website do
-      external_link domain_name(model.website), to: model.website
+      external_link(domain_name(model.website), to: model.website)
     end
   end
 

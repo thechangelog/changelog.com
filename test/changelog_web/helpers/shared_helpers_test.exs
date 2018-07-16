@@ -11,6 +11,16 @@ defmodule ChangelogWeb.SharedHelpersTest do
     end
   end
 
+  describe "domain_name" do
+    test "includes subdomain by default" do
+      assert domain_name("https://blog.jerodsanto.net/2018") == "blog.jerodsanto.net"
+    end
+
+    test "excludes www subdomains" do
+      assert domain_name("http://www.theverge.com") == "theverge.com"
+    end
+  end
+
   describe "is_future?" do
     test "tests as of current time when given future DateTime" do
       assert is_future?(hours_from_now(1))

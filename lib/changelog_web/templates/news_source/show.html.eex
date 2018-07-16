@@ -14,7 +14,7 @@
 
       <div class="topic-header-meta">
         <%= if @source.website do %>
-          <%= link domain_name(@source.website), to: @source.website %>
+          <%= link(domain_name(@source.website), to: @source.website) %>
         <% end %>
         &bull;
         <%= pluralize(news_count(@source), "Story", "Stories") %>
