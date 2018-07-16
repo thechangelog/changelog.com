@@ -1,24 +1,16 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="two fields">
-    <div class="fourteen wide field required <%= error_class(f, :name) %>">
+    <div class="field required <%= error_class(f, :name) %>">
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "Grace Hopper") %>
       <%= error_message(f, :name) %>
     </div>
 
-    <div class="two wide field">
-      <%= label(f, :admin) %>
-      <div class="ui fitted toggle checkbox">
-        <%= checkbox(f, :admin, class: "hidden") %>
-        <label></label>
-      </div>
+    <div class="field required <%= error_class(f, :email) %>">
+      <%= label(f, :email, "Email") %>
+      <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
+      <%= error_message(f, :email) %>
     </div>
-  </div>
-
-  <div class="field required <%= error_class(f, :email) %>">
-    <%= label(f, :email, "Email") %>
-    <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
-    <%= error_message(f, :email) %>
   </div>
 
   <div class="three fields">
@@ -88,6 +80,34 @@
     <%= textarea f, :bio %>
     <%= error_message(f, :bio) %>
   </div>
+
+  <div class="fields">
+    <div class="field">
+      <%= label(f, :admin) %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :admin, class: "hidden") %>
+        <label></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label(f, :host) %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :host, class: "hidden") %>
+        <label></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label(f, :editor) %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :editor, class: "hidden") %>
+        <label></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui horizontal divider">Settings</div>
 
 <%= inputs_for f, :settings, fn(i) -> %>
   <div class="inline field">
