@@ -33,8 +33,11 @@ defmodule Changelog.Person do
     field :auth_token_expires_at, Timex.Ecto.DateTime
     field :joined_at, Timex.Ecto.DateTime
     field :signed_in_at, Timex.Ecto.DateTime
-    field :admin, :boolean
     field :avatar, Files.Avatar.Type
+
+    field :admin, :boolean, default: false
+    field :host, :boolean, default: false
+    field :editor, :boolean, default: false
 
     embeds_one :settings, Settings, on_replace: :update
 
@@ -81,7 +84,7 @@ defmodule Changelog.Person do
   def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at))
 
   def admin_insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle twitter_handle bio website location admin)
+    allowed = ~w(name email handle github_handle twitter_handle bio website location admin host editor)
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
