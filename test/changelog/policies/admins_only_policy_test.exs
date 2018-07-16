@@ -1,12 +1,7 @@
 defmodule Changelog.AdminsOnlyPolicyTest do
-  use ExUnit.Case
+  use Changelog.PolicyCase
 
   alias Changelog.AdminsOnlyPolicy
-
-  @guest nil
-  @user %{id: 1, admin: false}
-  @admin %{id: 2, admin: true}
-  @host %{id: 3, host: true}
 
   test "only admins can new/create" do
     refute AdminsOnlyPolicy.create(@guest)

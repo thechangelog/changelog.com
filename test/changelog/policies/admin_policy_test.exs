@@ -1,13 +1,7 @@
 defmodule Changelog.AdminPolicyTest do
-  use ExUnit.Case
+  use Changelog.PolicyCase
 
   alias Changelog.AdminPolicy
-
-  @guest nil
-  @user %{id: 1, admin: false}
-  @admin %{id: 2, admin: true}
-  @editor %{id: 3, editor: true}
-  @host %{id: 4, host: true}
 
   test "only admins, editors, and hosts can index" do
     refute AdminPolicy.index(@guest)

@@ -1,13 +1,7 @@
 defmodule Changelog.DefaultPolicyTest do
-  use ExUnit.Case
+  use Changelog.PolicyCase
 
   defmodule TestPolicy, do: use Changelog.DefaultPolicy
-
-  @guest nil
-  @user %{id: 1, admin: false}
-  @admin %{id: 2, admin: true}
-  @host %{id: 3, host: true}
-  @all [@guest, @user, @admin, @host]
 
   test "nobody can new/create" do
     for actor <- @all do

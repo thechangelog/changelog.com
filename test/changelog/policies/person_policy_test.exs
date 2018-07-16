@@ -1,16 +1,12 @@
 defmodule Changelog.PersonPolicyTest do
-  use ExUnit.Case
+  use Changelog.PolicyCase
 
   alias Changelog.PersonPolicy
-
-  @guest nil
-  @user %{id: 1, admin: false}
-  @admin %{id: 2, admin: true}
-  @host %{id: 3, admin: false, host: true}
 
   test "admins and hosts can new/create" do
     refute PersonPolicy.create(@guest)
     refute PersonPolicy.new(@user)
+    refute PersonPolicy.new(@editor)
     assert PersonPolicy.create(@admin)
     assert PersonPolicy.create(@host)
   end
@@ -18,6 +14,7 @@ defmodule Changelog.PersonPolicyTest do
   test "only admins can index" do
     refute PersonPolicy.index(@guest)
     refute PersonPolicy.index(@user)
+    refute PersonPolicy.index(@editor)
     refute PersonPolicy.index(@host)
     assert PersonPolicy.index(@admin)
   end
@@ -25,6 +22,7 @@ defmodule Changelog.PersonPolicyTest do
   test "nobody can show" do
     refute PersonPolicy.show(@guest, %{})
     refute PersonPolicy.show(@user, %{})
+    refute PersonPolicy.show(@editor, %{})
     refute PersonPolicy.show(@host, %{})
     refute PersonPolicy.show(@admin, %{})
   end
@@ -39,6 +37,7 @@ defmodule Changelog.PersonPolicyTest do
   test "only admins can delete" do
     refute PersonPolicy.delete(@guest, %{})
     refute PersonPolicy.delete(@user, %{})
+    refute PersonPolicy.delete(@editor, %{})
     refute PersonPolicy.delete(@host, %{})
     assert PersonPolicy.delete(@admin, %{})
   end
