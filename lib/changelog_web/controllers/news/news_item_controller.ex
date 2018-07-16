@@ -4,7 +4,6 @@ defmodule ChangelogWeb.NewsItemController do
   alias Changelog.{Hashid, NewsItem, NewsSponsorship}
   alias ChangelogWeb.NewsItemView
 
-  plug RequireAdmin, "before preview" when action in [:preview]
   plug RequireUser, "before submitting" when action in [:create]
 
   def index(conn, params) do

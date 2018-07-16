@@ -74,13 +74,15 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
   end
 
   test "requires user auth on all actions", %{conn: conn} do
+    post = insert(:post)
+
     Enum.each([
       get(conn, admin_post_path(conn, :index)),
       get(conn, admin_post_path(conn, :new)),
       post(conn, admin_post_path(conn, :create), post: @valid_attrs),
-      get(conn, admin_post_path(conn, :edit, "123")),
-      put(conn, admin_post_path(conn, :update, "123"), post: @valid_attrs),
-      delete(conn, admin_post_path(conn, :delete, "123")),
+      get(conn, admin_post_path(conn, :edit, post.id)),
+      put(conn, admin_post_path(conn, :update, post.id), post: @valid_attrs),
+      delete(conn, admin_post_path(conn, :delete, post.id)),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

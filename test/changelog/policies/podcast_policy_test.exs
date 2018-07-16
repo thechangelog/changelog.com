@@ -19,7 +19,7 @@ defmodule Changelog.PodcastPolicyTest do
     assert PodcastPolicy.index(@admin)
   end
 
-  test "only admins can and podcast hosts can show" do
+  test "only admins and podcast hosts can show" do
     refute PodcastPolicy.show(@guest, %{})
     refute PodcastPolicy.show(@user, %{})
     refute PodcastPolicy.show(@editor, %{})

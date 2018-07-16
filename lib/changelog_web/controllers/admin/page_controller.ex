@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Admin.PageController do
 
   alias Changelog.{Episode, Newsletters, Person, Podcast, Post}
 
+  plug Authorize, Changelog.AdminPolicy
+
   def index(conn, _params) do
     newsletters =
       [Newsletters.community(),

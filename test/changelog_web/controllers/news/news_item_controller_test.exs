@@ -43,15 +43,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     end
   end
 
-  test "previewing a news item when not an admin", %{conn: conn} do
-    item = insert(:news_item)
-
-    conn = get(conn, news_item_path(conn, :preview, item))
-    assert conn.halted
-  end
-
-  @tag :as_admin
-  test "previewing a news item when signed in as admin", %{conn: conn} do
+  test "previewing a news item", %{conn: conn} do
     item = insert(:news_item)
 
     conn = get(conn, news_item_path(conn, :preview, item))

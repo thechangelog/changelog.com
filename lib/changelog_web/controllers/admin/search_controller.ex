@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Admin.SearchController do
 
   alias Changelog.{Topic, Episode, NewsItem, NewsSource, Person, Sponsor, Post}
 
+  plug Authorize, Changelog.SearchPolicy
+
   def all(conn, params = %{"q" => query}) do
     render(conn, with_format("all", params["f"]), %{
       results: %{

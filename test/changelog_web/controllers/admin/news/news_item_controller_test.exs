@@ -147,14 +147,16 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   end
 
   test "requires user auth on all actions", %{conn: conn} do
+    news_item = insert(:news_item)
+
     Enum.each([
       get(conn, admin_news_item_path(conn, :index)),
       get(conn, admin_news_item_path(conn, :new)),
       post(conn, admin_news_item_path(conn, :create), news_item: @valid_attrs),
-      get(conn, admin_news_item_path(conn, :edit, "123")),
-      put(conn, admin_news_item_path(conn, :update, "123"), news_item: @valid_attrs),
-      delete(conn, admin_news_item_path(conn, :delete, "123")),
-      delete(conn, admin_news_item_path(conn, :decline, "123"))
+      get(conn, admin_news_item_path(conn, :edit, news_item.id)),
+      put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: @valid_attrs),
+      delete(conn, admin_news_item_path(conn, :delete, news_item.id)),
+      delete(conn, admin_news_item_path(conn, :decline, news_item.id))
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

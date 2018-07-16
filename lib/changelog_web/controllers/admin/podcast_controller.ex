@@ -1,10 +1,10 @@
 defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Podcast, PodcastPolicy}
+  alias Changelog.{Podcast}
 
   plug :assign_podcast when action in [:show, :edit, :update]
-  plug Authorize, [PodcastPolicy, :podcast]
+  plug Authorize, [Changelog.PodcastPolicy, :podcast]
   plug :scrub_params, "podcast" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -83,7 +83,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
   end
 
   defp assign_podcast(conn = %{params: %{"id" => id}}, _) do
-    podcast = Repo.get_by!(Podcast, slug: id)
+    podcast = Repo.get_by!(Podcast, slug: id) |> Podcast.preload_hosts
     assign(conn, :podcast, podcast)
   end
 
