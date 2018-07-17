@@ -1,0 +1,75 @@
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #000;
+  color: #f8f8f8;
+
+  &-comment,
+  &-quote {
+    color: #aeaeae;
+    font-style: italic;
+  }
+
+  &-keyword,
+  &-selector-tag,
+  &-type {
+    color: $red;
+  }
+
+  &-string { color: $green; }
+  &-subst { color: $light-green; }
+
+  &-regexp,
+  &-link {
+    color: $yellow;
+  }
+
+  &-title,
+  &-section,
+  &-tag,
+  &-name {
+    color: $blue;
+  }
+
+  &-class &-title,
+  &-doctag {
+    text-decoration: underline;
+  }
+
+  &-symbol,
+  &-bullet,
+  &-number {
+    color: #3387cc;
+  }
+
+  &-params,
+  &-variable,
+  &-template-variable {
+    color: #3e87e3;
+  }
+
+  &-attribute { color: #cda869; }
+  &-meta { color: #8996a8; }
+
+  &-formula {
+    background-color: #0e2231;
+    color: #f8f8f8;
+    font-style: italic;
+  }
+
+  &-addition {
+    background-color: #253b22;
+    color: #f8f8f8;
+  }
+
+  &-deletion {
+    background-color: #420e09;
+    color: #f8f8f8;
+  }
+
+  &-selector-class { color: #9b703f; }
+  &-selector-id { color: #8b98ab; }
+  &-emphasis { font-style: italic; }
+  &-strong { font-weight: bold; }
+}

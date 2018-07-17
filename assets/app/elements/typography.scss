@@ -35,9 +35,10 @@ h6 {
 }
 
 .section_heading {
+  align-items: top;
   display: flex;
-  justify-content: space-between;
   font-family: $code;
+  justify-content: space-between;
   margin-bottom: $base-spacing;
   width: 100%;
 
@@ -46,11 +47,12 @@ h6 {
     font-size: 0.9375em;
     font-weight: 700;
     margin: 0 1em 0 0;
-    padding: 0 0 0.25em;
+    padding: 1px 0 0.25em;
   }
 
   &-note {
     font-size: 0.75em;
+    margin-bottom: 0;
 
     a {
       color: $black;
