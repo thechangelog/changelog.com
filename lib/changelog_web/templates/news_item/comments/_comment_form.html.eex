@@ -1,10 +1,12 @@
-<form class="comment_form" action="" method="post">
+<form class="comment_form js-comment_form" action="" method="post">
   <textarea class="comment_form-write" name="message" rows="1" placeholder="Your comment..."></textarea>
-  <div class="comment_form-preview"></div>
+  <div class="comment_form-preview">
+    <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Etiam porta sem malesuada magna mollis euismod. <strong>Donec ullamcorper nulla non metus auctor fringilla. Nullam quis risus eget urna mollis ornare vel eu leo</strong>.</p>
+  </div>
   <div class="comment_form-toolbar">
     <div class="comment_form-toolbar-toggle">
-      <button class="js-toggle_write is-active">[MD] Write</button> |
-      <button class="js-toggle_preview">Preview</button>
+      <button class="comment_form-toolbar-toggle-write js-toggle_write is-active">Write</button> |
+      <button class="comment_form-toolbar-toggle-preview js-toggle_preview">Preview</button>
     </div>
     <input class="comment_form-toolbar-submit" type="submit" name="" value="Comment">
   </div>

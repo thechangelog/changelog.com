@@ -25,6 +25,23 @@
     padding: 1.5em 1em;
     resize: none !important;
     width: 100%;
+
+    .comment_form--preview & {
+      display: none;
+    }
+  }
+
+  &-preview {
+    display: none;
+    padding: 1em;
+
+    & > *:last-child {
+      margin-bottom: 0;
+    }
+
+    .comment_form--preview & {
+      display: block;
+    }
   }
 
   &-toolbar {
@@ -45,6 +62,18 @@
         color: $medium-grey;
         padding: 0 0.5em;
       }
+
+      &-write {
+        background: url("/images/icons/markdown.svg") left center no-repeat;
+        background-size: 20px 12px;
+        margin-left: 0.75em;
+        padding-left: 28px !important;
+        font-weight: bold;
+        .comment_form--preview & { font-weight: normal; }
+      }
+      &-preview {
+        .comment_form--preview & { font-weight: bold; }
+      }
     }
 
     &-submit {
@@ -59,12 +88,12 @@
 }
 
 .comment {
-  margin: $base-spacing/2 0 $base-spacing;
+  margin: 0 0 $base-spacing;
   position: relative;
 
   // Child comments
   .comment {
-    margin-bottom: $base-spacing;
+    margin-bottom: $base-spacing/2;
   }
 
   &.is-collapsed {
@@ -78,14 +107,26 @@
     .comment-toggle:before { content: "[+]"; }
   }
 
-  &.comment--has_replies:before {
-    @include position(absolute, 40px null 0 -15px);
-    background: $light-grey;
-    content: "";
-    width: 2px;
+  &-connector {
+    @include position(absolute, 0 null 0 -15px);
+    cursor: n-resize;
+    opacity: 0;
+    width: 18px;
+
+    &:before {
+      @include position(absolute, 40px null 0 8px);
+      content: "";
+      border-radius: 2px;
+      background: $light-grey;
+      width: 2px;
+    }
 
     @include breakpoint(mobile) {
-      left: -19px;
+      left: -28px;
+    }
+
+    .comment--has_replies > & {
+      opacity: 1;
     }
   }
 
@@ -98,9 +139,11 @@
   &-toggle {
     @include position(absolute, 2px null null -26px);
     &:before { content: "[-]"; }
+    cursor: n-resize;
+    z-index: 2;
+
     color: $medium-grey;
     &:hover { color: $black; }
-    z-index: 2;
 
     @include breakpoint(mobile) {
       left: -($base-spacing);
@@ -132,7 +175,6 @@
   &-author {
     align-items: center;
     display: flex;
-    flex: 1 0 auto;
 
     &-image {
       $size: 20px;

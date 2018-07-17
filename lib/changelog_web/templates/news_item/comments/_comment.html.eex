@@ -1,6 +1,7 @@
 <a id="comment-hashgoeshere" class="anchor"></a>
 <article class="comment<%= if assigns[:mocked_replies] > 0 do %> comment--has_replies<% end %>"><%# Adjustor classes: is-permalink is-collapsed is-author %>
   <button class="comment-toggle js-toggle_comment"></button>
+  <div class="comment-connector js-toggle_comment"></div>
   <header class="comment-header">
     <%= link to: "PersonView.external_url(@author)", title: "@author.name", rel: "external", class: "comment-author" do %>
       <img class="comment-author-image" src="https://secure.gravatar.com/avatar/1f5d2683a927c02bdbdb5d6f489347a5.jpg?s=150&d=mm" alt="Avatar" />
@@ -14,9 +15,6 @@
   </header>
   <div class="comment-body">
     <p>Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-    <blockquote cite="">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-    </blockquote>
   </div>
   <section class="comment-replies">
     <%= if assigns[:mocked_replies] > 0 do %>
