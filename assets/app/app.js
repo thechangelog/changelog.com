@@ -32,7 +32,7 @@ const comment = new Comment();
 window.u = u;
 
 // Syntax Highlighting
-['javascript', 'python', 'bash', 'ruby', 'go', 'css'].forEach((langName) => {
+['css', 'http', 'javascript', 'bash', 'ini', 'makefile', 'php', 'sql', 'diff', 'json', 'markdown', 'perl', 'python', 'ruby'].forEach((langName) => {
   // Using require() here because import() support hasn't landed in Webpack yet
   const langModule = require(`highlight.js/lib/languages/${langName}`);
   hljs.registerLanguage(langName, langModule);

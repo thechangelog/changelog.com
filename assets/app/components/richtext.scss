@@ -92,15 +92,21 @@
 
   pre {
     background: $black;
-    border-left: 6px solid $green;
-    border-top-right-radius: $base-border-radius;
-    border-bottom-right-radius: $base-border-radius;
+    border-radius: 3px;
     hyphens: none;
     min-width: 100%;
     overflow-x: auto;
     white-space: pre;
     word-break: normal;
     margin-bottom: 1.75em;
+    position: relative;
+
+    &:before {
+      @include position(absolute, 0 null 0 0);
+      background: lighten($black, 10%);
+      content: "";
+      width: 1em;
+    }
 
     code {
       color: $white;
@@ -109,7 +115,7 @@
       white-space: pre;
       display: block;
       overflow-x: scroll;
-      padding: 1em;
+      padding: 0.75em 1em 1em 2em;
     }
   }
 
