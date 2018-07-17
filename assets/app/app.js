@@ -3,6 +3,7 @@ import "intersection-observer";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import autosize from "autosize";
+import Comment from "modules/comment";
 import Cookies from "cookies-js";
 import OnsitePlayer from "modules/onsitePlayer";
 import MiniPlayer from "modules/miniPlayer";
@@ -23,6 +24,9 @@ const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
 const lazy = lozad(".lazy");
 const csrf = u("[property=csrf]").attr("content");
+
+// TODO: Re-work this
+const comment = new Comment();
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {

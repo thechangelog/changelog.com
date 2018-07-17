@@ -1,0 +1,137 @@
+.comments {
+  // Don't show indent border on first-level comments
+  & > .comment:before { content: none; }
+
+  margin: 0 auto;
+  padding: 0 $base-spacing;
+  max-width: 760px;
+}
+
+.comment {
+  margin: $base-spacing/2 0 $base-spacing;
+  position: relative;
+
+  .comment {
+    margin-bottom: $base-spacing/2;
+  }
+
+  &.is-collapsed {
+    .comment-header { opacity: 0.4; }
+
+    .comment-replies,
+    .comment-body {
+      display: none;
+    }
+
+    .comment-toggle:before { content: "[+]"; }
+  }
+
+  &:before {
+    @include position(absolute, 30px null 0 -15px);
+    background: $light-grey;
+    content: "";
+    width: 2px;
+
+    @include breakpoint(mobile) {
+      left: -19px;
+    }
+  }
+
+  &-toggle,
+  &-header {
+    font-family: $code;
+    font-size: 0.8125em;
+  }
+
+  &-toggle {
+    @include position(absolute, 2px null null -26px);
+    &:before { content: "[-]"; }
+    color: $medium-grey;
+    &:hover { color: $black; }
+
+    @include breakpoint(mobile) {
+      left: -($base-spacing);
+    }
+  }
+
+  &-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+
+    // Highlight the permalink comment
+    .comment--permalink & {
+      &:before {
+        @include position(absolute, -4px -10px -4px -37px);
+        background: $light-green;
+        border-radius: 2px;
+        content: "";
+        z-index: 0;
+      }
+    }
+
+    & > * { z-index: 1; }
+    p { margin-bottom: 0; }
+  }
+
+  &-author {
+    align-items: center;
+    display: flex;
+    flex: 1 0 auto;
+
+    &-image {
+      $size: 20px;
+      background: #000;
+      box-shadow: 0 0 $size rgba($black, 0.2);
+      font-size: 8px;
+      border-radius: $base-border-radius;
+      width: $size;
+      height: $size;
+      margin-right: 15px;
+    }
+
+    &-name {
+      color: $black;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+
+  &-actions {
+    margin-left: 35px;
+
+    a {
+      color: $medium-grey;
+      &:hover { color: $black; }
+
+      // Highlight the permalink comment
+      .comment--permalink & { color: $black; }
+
+      &:after { content: " \2022"; }
+      &:last-child:after { display: none; }
+    }
+  }
+
+  &-body {
+    margin: 1em 0;
+
+    blockquote {
+      background: $lightest-grey;
+      border-left: 2px solid $light-grey;
+      color: $medium-grey;
+      line-height: 1.5em;
+      margin: 0;
+      padding: 1em 1.5em;
+    }
+  }
+
+  &-replies {
+    margin-left: 26px;
+
+    @include breakpoint(mobile) {
+      margin-left: $base-spacing;
+    }
+  }
+}
