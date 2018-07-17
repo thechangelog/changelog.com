@@ -13,6 +13,18 @@ defmodule Changelog.Search do
     end
   end
 
+  def save_item(item) do
+    Algolia.save_object(namespace(), indexed_attributes(item), item.id)
+  end
+
+  def update_item(item) do
+    Algolia.partial_update_object(namespace(), indexed_attributes(item), item.id)
+  end
+
+  def delete_item(item) do
+    Algolia.delete_object(namespace(), item.id)
+  end
+
   defp results_from(response) do
     item_ids =
       response
@@ -35,4 +47,12 @@ defmodule Changelog.Search do
   end
 
   defp namespace, do: "#{Mix.env}_news_items"
+
+  defp indexed_attributes(item) do
+    %{
+      headline: item.headline,
+      story: item.story,
+      published_at: item.published_at
+    }
+  end
 end

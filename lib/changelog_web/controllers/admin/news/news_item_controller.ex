@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{HtmlKit, NewsItem, NewsSource, NewsQueue, Topic, UrlKit}
+  alias Changelog.{HtmlKit, NewsItem, NewsSource, NewsQueue, Search, Topic, UrlKit}
 
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
@@ -113,6 +113,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     case Repo.update(changeset) do
       {:ok, item} ->
         handle_status_changes(item, params)
+        handle_search_update(item)
 
         conn
         |> put_flash(:result, "success")
@@ -136,6 +137,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   def delete(conn, %{"id" => id}) do
     item = Repo.get!(NewsItem, id)
     Repo.delete!(item)
+    Task.start_link(fn -> Search.delete_item(item) end)
 
     conn
     |> put_flash(:result, "success")
@@ -145,6 +147,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   def unpublish(conn, %{"id" => id}) do
     item = Repo.get!(NewsItem, id)
     NewsItem.unpublish!(item)
+    Task.start_link(fn -> Search.delete_item(item) end)
 
     conn
     |> put_flash(:result, "success")
@@ -179,6 +182,12 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       "prepend" -> NewsQueue.prepend(item)
       "append"  -> NewsQueue.append(item)
       "draft"   -> true
+    end
+  end
+
+  defp handle_search_update(item) do
+    if NewsItem.is_published(item) do
+      Task.start_link(fn -> Search.update_item(item) end)
     end
   end
 end
