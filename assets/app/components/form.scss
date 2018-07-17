@@ -35,6 +35,12 @@
       padding: 0.75em 0;
       width: 100%;
 
+      &:disabled {
+        background: none;
+        cursor: not-allowed;
+        opacity: 0.3;
+      }
+
       &::placeholder {
         color: $medium-grey;
       }

@@ -108,7 +108,7 @@
   }
 
   &-connector {
-    @include position(absolute, 0 null 0 -15px);
+    @include position(absolute, 0 null 0 -23px);
     cursor: n-resize;
     opacity: 0;
     width: 18px;
