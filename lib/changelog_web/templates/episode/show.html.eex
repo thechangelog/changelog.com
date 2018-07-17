@@ -76,8 +76,8 @@
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">
           <a id="featuring" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Featuring</h3>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Featuring</h3>
           </header>
           <div class="richtext richtext--small">
             <ul>
@@ -92,8 +92,8 @@
       <%= if Enum.any?(@episode.episode_sponsors) do %>
         <section class="episode-body-section">
           <a id="sponsors" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Sponsors</h3>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Sponsors</h3>
           </header>
           <div class="richtext richtext--small">
             <%= for sponsor <- @episode.episode_sponsors do %>
@@ -108,9 +108,9 @@
       <%= if @episode.notes do %>
         <section class="episode-body-section">
           <a id="notes" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Notes &amp; Links</h3>
-            <p class="episode-body-section-heading-note"><%= link "Edit on GitHub", to: show_notes_source_url(@episode), title: "View notes source on GitHub", rel: "external" %></p>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Notes &amp; Links</h3>
+            <p class="section_heading-note"><%= link "Edit on GitHub", to: show_notes_source_url(@episode), title: "View notes source on GitHub", rel: "external" %></p>
           </header>
           <div class="richtext richtext--small">
             <%= @episode.notes |> md_to_html |> raw %>
@@ -121,9 +121,9 @@
       <%= if Enum.any?(@episode.transcript) do %>
         <section class="episode-body-section">
           <a id="transcript" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Transcript</h3>
-            <p class="episode-body-section-heading-note"><%= link "Edit on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %></p>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Transcript</h3>
+            <p class="section_heading-note"><%= link "Edit on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %></p>
           </header>
 
           <div class="transcript">

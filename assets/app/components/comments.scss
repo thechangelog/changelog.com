@@ -1,18 +1,70 @@
 .comments {
-  // Don't show indent border on first-level comments
-  & > .comment:before { content: none; }
-
-  margin: 0 auto;
-  padding: 0 $base-spacing;
+  border-top: 2px solid $light-grey;
+  margin: $base-spacing auto 0;
+  padding: $base-spacing*2 $base-spacing 0;
   max-width: 760px;
+
+  // Don't show indent border on first-level comments
+  // & > .comment:before { content: none; }
+}
+
+.comment_form {
+  $border: 1px solid $light-grey;
+  border: $border;
+  border-radius: 3px;
+  margin-bottom: $base-spacing*1.5;
+
+  &-write {
+    background: transparent;
+    border: none;
+    border-bottom: $border;
+    font-family: $code;
+    font-size: 0.8125em;
+    line-height: 1.5em;
+    min-height: 59px;
+    padding: 1.5em 1em;
+    resize: none !important;
+    width: 100%;
+  }
+
+  &-toolbar {
+    background: $lightest-grey;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.25em;
+
+    &-toggle {
+      align-items: center;
+      color: $medium-grey;
+      display: flex;
+      font-family: $code;
+      font-size: 0.8125em;
+
+      button {
+        color: $medium-grey;
+        padding: 0 0.5em;
+      }
+    }
+
+    &-submit {
+      border: none;
+      background: $green;
+      color: $white;
+      font-family: $code;
+      font-size: 0.8125em;
+      padding: 0.5em 1em;
+    }
+  }
 }
 
 .comment {
   margin: $base-spacing/2 0 $base-spacing;
   position: relative;
 
+  // Child comments
   .comment {
-    margin-bottom: $base-spacing/2;
+    margin-bottom: $base-spacing;
   }
 
   &.is-collapsed {
@@ -26,8 +78,8 @@
     .comment-toggle:before { content: "[+]"; }
   }
 
-  &:before {
-    @include position(absolute, 30px null 0 -15px);
+  &.comment--has_replies:before {
+    @include position(absolute, 40px null 0 -15px);
     background: $light-grey;
     content: "";
     width: 2px;

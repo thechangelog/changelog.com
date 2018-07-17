@@ -1,5 +1,8 @@
 <section id="comments" class="comments">
-  <h4>Comments</h4>
+  <header class="section_heading">
+    <h3 class="section_heading-text">Comments</h3>
+  </header>
+  <%= render("comments/_comment_form.html", conn: @conn) %>
   <%= for reply <- 0..2 do %>
     <%= render("comments/_comment.html", conn: @conn, mocked_replies: Enum.random(0..3)) %>
   <% end %>

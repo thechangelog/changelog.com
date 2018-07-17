@@ -1,5 +1,5 @@
 <a id="comment-hashgoeshere" class="anchor"></a>
-<article class="comment"><%# Adjustor classes: is-permalink is-collapsed is-author %>
+<article class="comment<%= if assigns[:mocked_replies] > 0 do %> comment--has_replies<% end %>"><%# Adjustor classes: is-permalink is-collapsed is-author %>
   <button class="comment-toggle js-toggle_comment"></button>
   <header class="comment-header">
     <%= link to: "PersonView.external_url(@author)", title: "@author.name", rel: "external", class: "comment-author" do %>

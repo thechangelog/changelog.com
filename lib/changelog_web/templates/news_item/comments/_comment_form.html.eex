@@ -1,0 +1,11 @@
+<form class="comment_form" action="" method="post">
+  <textarea class="comment_form-write" name="message" rows="1" placeholder="Your comment..."></textarea>
+  <div class="comment_form-preview"></div>
+  <div class="comment_form-toolbar">
+    <div class="comment_form-toolbar-toggle">
+      <button class="js-toggle_write is-active">[MD] Write</button> |
+      <button class="js-toggle_preview">Preview</button>
+    </div>
+    <input class="comment_form-toolbar-submit" type="submit" name="" value="Comment">
+  </div>
+</form>
