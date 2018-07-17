@@ -51,6 +51,15 @@ h6 {
 
   &-note {
     font-size: 0.75em;
+
+    a {
+      color: $black;
+      font-weight: bold;
+
+      &:hover {
+        color: $medium-grey;
+      }
+    }
   }
 }
 
