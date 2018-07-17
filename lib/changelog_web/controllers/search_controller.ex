@@ -11,6 +11,6 @@ defmodule ChangelogWeb.SearchController do
   end
 
   def search(conn, _params) do
-    render(conn, :search, items: [], query: "")
+    render(conn, :search, items: [], page: %{total_entries: 0}, query: "")
   end
 end
