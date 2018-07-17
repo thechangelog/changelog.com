@@ -1,5 +1,6 @@
 <div class="ui basic segment">
   <div class="ui stackable grid">
+  <%= if PodcastPolicy.index(@current_user) do %>
     <div class="ui eight wide column">
       <h1 class="ui header">Episode Drafts (Next Up)</h1>
     <%= if Enum.any?(@draft_episodes) do %>
@@ -8,7 +9,9 @@
       <p>There are no draft episodes at this time.</p>
     <% end %>
     </div>
+  <% end %>
 
+  <%= if PostPolicy.index(@current_user) do %>
     <div class="ui eight wide column">
       <h1 class="ui header">Post Drafts</h1>
     <%= if Enum.any?(@draft_posts) do %>
@@ -17,9 +20,11 @@
       <p>There are no draft posts at this time.</p>
     <% end %>
     </div>
+  <% end %>
   </div>
 </div>
 
+<%= if AdminsOnlyPolicy.index(@current_user) do %>
 <div class="ui basic segment">
   <div class="ui centered stackable grid">
     <div class="ui twelve wide column">
@@ -75,22 +80,13 @@
     </div>
   </div>
 </div>
+<% end %>
 
 <div class="ui basic segment">
-  <div class="ui stackable centered three column grid">
-  <%= for podcast <- @podcasts do %>
-    <div class="column">
-      <div class="ui segment">
-        <h3 class="ui center aligned header">
-          <div class="content">
-            <i class="sound icon"></i>
-            <%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
-          </div>
-        </h3>
-
-        <%= render("_podcast_episodes_table.html", conn: @conn, podcast: podcast) %>
-      </div>
-    </div>
+<%= for podcast <- @podcasts do %>
+  <%= if PodcastPolicy.show(@current_user, podcast) do %>
+  <h2 class="ui header"><%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %></h2>
+  <%= render(EpisodeView, "_table.html", conn: @conn, status: :published, podcast: podcast, episodes: recent_episodes(podcast)) %>
   <% end %>
-  </div>
+<% end %>
 </div>

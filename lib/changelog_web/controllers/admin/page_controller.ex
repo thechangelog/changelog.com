@@ -46,7 +46,8 @@ defmodule ChangelogWeb.Admin.PageController do
 
   defp podcasts do
     Podcast.active
-    |> Podcast.oldest_first
+    |> Podcast.by_position
+    |> Podcast.preload_hosts
     |> Repo.all
   end
 end
