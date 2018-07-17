@@ -48,6 +48,7 @@
     &:before { content: "[-]"; }
     color: $medium-grey;
     &:hover { color: $black; }
+    z-index: 2;
 
     @include breakpoint(mobile) {
       left: -($base-spacing);
@@ -62,7 +63,7 @@
     width: 100%;
 
     // Highlight the permalink comment
-    .comment--permalink & {
+    .comment.is-permalink > & {
       &:before {
         @include position(absolute, -4px -10px -4px -37px);
         background: $light-green;
@@ -102,13 +103,12 @@
   &-actions {
     margin-left: 35px;
 
+    // Highlight the permalink comment
+    .comment.is-permalink > & a { color: $black; }
+
     a {
       color: $medium-grey;
       &:hover { color: $black; }
-
-      // Highlight the permalink comment
-      .comment--permalink & { color: $black; }
-
       &:after { content: " \2022"; }
       &:last-child:after { display: none; }
     }

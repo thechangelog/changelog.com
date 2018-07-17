@@ -1,4 +1,5 @@
-<article class="comment"><%# Adjustor classes: comment--permalink comment--hidden comment--author %>
+<a id="comment-hashgoeshere" class="anchor"></a>
+<article class="comment"><%# Adjustor classes: is-permalink is-collapsed is-author %>
   <button class="comment-toggle js-toggle_comment"></button>
   <header class="comment-header">
     <%= link to: "PersonView.external_url(@author)", title: "@author.name", rel: "external", class: "comment-author" do %>
@@ -6,7 +7,7 @@
       <p class="comment-author-name">ngoldbaum37</p>
     <% end %>
     <p class="comment-actions">
-      <a href="#TODO-view-permalink" title="Permalink">4h ago</a>
+      <a href="#comment-hashgoeshere" title="Permalink" class="js-permalink">4h ago</a>
       <a href="#TODO-edit" title="">edit</a>
       <a href="#TODO-reply" title="">reply</a>
     </p>
