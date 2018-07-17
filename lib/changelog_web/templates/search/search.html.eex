@@ -4,7 +4,7 @@
     <input name="q" type="text" placeholder="Search Changelog..." value="<%= @query %>" autofocus />
 
     <div class="search-form-footer">
-      <a href="https://www.algolia.com/" class="search-form-footer-algolia">
+      <a href="https://www.algolia.com/?utm_source=changelog&utm_campaign=changelog-search" class="search-form-footer-algolia">
         Search by <img src="/images/icons/algolia.svg" alt="Algolia" width="75" height="20">
       </a>
 
