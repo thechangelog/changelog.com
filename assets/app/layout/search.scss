@@ -3,31 +3,66 @@
   padding: 0;
 
   &-form {
-    border-bottom: 1px solid $green;
-    display: flex;
     font-family: $code;
     padding: 0;
+    position: relative;
+
+    &:before {
+      @include position(absolute, 0 null 0 1em);
+      content: "~ $ ";
+      color: $green;
+      padding: 1em 0;
+    }
 
     .main & {
       margin: 0 $base-spacing;
     }
 
-    &:before {
-      content: "~ $ ";
-      padding: 1em 0;
-    }
-
     input {
+      background: $black;
+      border-radius: $base-border-radius;
       border: none;
+      color: $green;
       font-family: $code;
-      flex: 1 auto;
-      padding: 1em 0.5em;
-    }
-  }
+      padding: 1em 0.5em 1em 3.5em;
+      width: 100%;
 
-  &-results_sentence {
-    font-family: $code;
-    font-size: 0.875em;
-    padding: 1em $base-spacing;
+      &:focus {
+        box-shadow: 0 0 24px rgba($black, 0.2);
+      }
+    }
+
+    &-footer {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row-reverse;
+      font-family: $code;
+      justify-content: space-between;
+      padding: 1em;
+      width: 100%;
+
+      &-results {
+        font-size: 0.875em;
+        flex: 1 auto;
+        margin: 0 0 1em;
+      }
+
+      &-algolia {
+        align-items: center;
+        color: $black;
+        display: flex;
+        flex: 1 auto;
+        font-size: 0.75em;
+        justify-content: flex-end;
+        margin: 0 0 1em 1em;
+        text-align: right;
+
+        img {
+          display: inline;
+          margin-left: 1em;
+        }
+      }
+    }
   }
 }
