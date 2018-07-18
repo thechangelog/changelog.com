@@ -103,7 +103,7 @@
 
     &:before {
       @include position(absolute, 0 null 0 0);
-      background: lighten($black, 10%);
+      background: lighten($black, 2%);
       content: "";
       width: 1em;
     }
