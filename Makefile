@@ -8,7 +8,7 @@ NORMAL := $(shell tput sgr0)
 
 PLATFORM := $(shell uname)
 ifneq ($(PLATFORM),Darwin)
-  $(error $(BOLD)$(RED)Only OS X is currently supported$(NORMAL), please contribute support for your OS)
+  $(error $(BOLD)$(RED)Only macOS is currently supported$(NORMAL), please contribute support for your OS)
 endif
 
 ifneq (4,$(firstword $(sort $(MAKE_VERSION) 4)))
