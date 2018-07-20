@@ -6,6 +6,7 @@ deps
 import
 priv/uploads
 script/
+nginx/
 .all-contributorsrc
 .credo.exs
 .dockerignore

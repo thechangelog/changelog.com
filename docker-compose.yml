@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:9.6
     # https://docs.docker.com/compose/compose-file/#ports
-    ports:
+    expose:
       - "5432"
     # https://docs.docker.com/compose/compose-file/#volumes
     volumes:
@@ -15,8 +15,9 @@ services:
     command: mix do ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
-    ports:
-      - "4000:4000"
+      VIRTUAL_HOST: "localhost"
+    expose:
+      - "4000"
     volumes:
       - ./assets/admin/:/app/assets/admin/
       - ./assets/app/:/app/assets/app/
@@ -36,14 +37,18 @@ services:
       - ./.iex.exs:/app/.iex.exs
     depends_on:
       - db
-  # proxy:
-  #   image: nginx
-  #   volumes:
-  #   - /data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  #   - /data/nginx/conf.d:/etc/nginx/conf.d:ro
-  #   - /data/nginx/sites:/etc/nginx/sites:ro
-  #   - /data/nginx/:/var/www:ro
+  proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    environment:
+      ENABLE_IPV6: "true"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/vhost.d:/etc/nginx/vhost.d:ro
+      - ./nginx/conf.d/changelog.conf:/etc/nginx/conf.d/changelog.conf:ro
+      - ./priv/static/:/var/www/static:ro
+      - ./priv/uploads/:/var/www/uploads:ro
 
 volumes:
   postgres:
-  uploads:
