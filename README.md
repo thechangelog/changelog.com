@@ -24,24 +24,49 @@ If you're building a web application with Phoenix (or aspire to), this is a grea
 
 If you have questions about any of the code, holler [@Changelog](https://twitter.com/changelog). Better yet, [join the community](https://changelog.com/community) where we have in-depth discussions about software development, industry trends, and everything else under the sun.
 
-## Can I contribute?
+## How can I contribute?
 
-Absolutely! Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
+Assuming that you have Docker running locally and docker-compose available, all you have to do is run `docker-compose up` in your terminal.
+When you run this command for the first time, it will take around 7 minutes to pull all Docker images, build the app image and start all containers.
+Depending on your internet connection and CPUs used for compiling various artefacts, this can easily take 30 minutes or more.
+Next time you run this command, since all Docker images will be cached, you can expect all containers to be up and running within 30 seconds.
+
+When all containers are up and running, you should see the following output in your terminal session:
+
+```
+Creating changelogcom_db_1    ... done
+Creating changelogcom_proxy_1 ... done
+Creating changelogcom_app_1   ... done
+Attaching to changelogcom_db_1, changelogcom_proxy_1, changelogcom_app_1
+...
+db_1     | LOG:  autovacuum launcher started
+db_1     | LOG:  database system is ready to accept connections
+...
+proxy_1  | dockergen.1 | 2018/07/20 16:01:05 Generated '/etc/nginx/conf.d/default.conf' from 3 containers
+...
+app_1    | [info] Running ChangelogWeb.Endpoint with Cowboy using http://0.0.0.0:4000
+app_1    | yarn run v1.6.0
+app_1    | warning package.json: No license field
+app_1    | $ webpack --mode=development --watch-stdin --color
+app_1    |
+app_1    | Webpack is watching the files…
+...
+```
+
+You can access a dev copy of changelog.com locally, at http://localhost
+
+Since the app database will be completely empty, you might want to seed it by running the following command: `docker-compose run app mix run priv/repo/seeds.exs`.
+This command resets the app database, please only run it if you are OK losing all data in the app database.
+
+When you want to stop all Docker containers required to run a dev copy of changelog.com locally, press `CTRL` key and `c` at the same time (`Ctrl+C`).
+
+If you are running on macOS, all the above commands are available as make targets. Learn about all available commands by running `make` in your terminal.
+
+Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
 
 ## Code of Conduct
 
 [Contributor Code of Conduct](https://changelog.com/coc). By participating in this project you agree to abide by its terms.
-
-## How do I run the code?
-
-Assuming you're on macOS:
-
-  1. `./script/setup`
-  2. `mix ecto.setup`
-  3. `mix phx.server`
-
-Now visit [`localhost:4000`](http://localhost:4000) in your browser.
-The database contains some seed data you can start with.
 
 ## Contributors
 
