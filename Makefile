@@ -26,36 +26,49 @@ export LANG := en_US.UTF-8
 CASK := brew cask
 
 DOCKER := /usr/local/bin/docker
+.PHONY: docker
 docker: deps
 
 COMPOSE := $(DOCKER)-compose
+.PHONY: compose
 compose: $(DOCKER)
 
+.PHONY: deps
 deps:
 	@$(CASK) install docker
 
+.PHONY: upgrade
 upgrade: ## Upgrade all dependencies (up)
 	@($(CASK) outdated docker || $(CASK) upgrade docker)
+.PHONY: up
 up: upgrade
 
 ### TARGETS ###
 #
 .DEFAULT_GOAL := help
 
+.PHONY: build
 build: compose ## Build changelog.com Docker images (b)
 	@$(COMPOSE) build
+.PHONY: b
 b: build
 
+.PHONY: code
 code: build run ## Code for changelog.com - builds all Docker images and runs them locally (c)
+.PHONY: c
 c: code
 
+.PHONY: help
 help:
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-10s\033[0m %s\n", $$1, $$4 }' | sort
 
+.PHONY: run
 run: compose ## Run changelog.com locally (r)
 	@$(COMPOSE) up
+.PHONY: r
 r: run
 
+.PHONY: db
 db: compose ## Resets database with seed data
 	@read -rp "The database will be re-created with seed data, $(RED)$(BOLD)all existing data will be lost$(NORMAL). Do you want to continue? (y|n) " -n 1 SEED_DB; echo; \
 	if [[ $$SEED_DB =~ ^[Yy] ]]; \
@@ -65,6 +78,7 @@ db: compose ## Resets database with seed data
 	  echo "Database was not re-created with seed data"; \
 	fi
 
+.PHONY: proxy
 proxy: docker ## Builds & publishes thechangelog/proxy image
 	@cd nginx && export BUILD_VERSION=$$(date +'%Y-%m-%d') ; \
 	$(DOCKER) build -t thechangelog/proxy:$$BUILD_VERSION . && \
