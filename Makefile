@@ -55,3 +55,12 @@ help:
 run: compose ## Run changelog.com locally (r)
 	@$(COMPOSE) up
 r: run
+
+db: compose ## Resets database with seed data
+	@read -rp "The database will be re-created with seed data, $(RED)$(BOLD)all existing data will be lost$(NORMAL). Do you want to continue? (y|n) " -n 1 SEED_DB; echo; \
+	if [[ $$SEED_DB =~ ^[Yy] ]]; \
+	then \
+	  $(COMPOSE) run app mix run priv/repo/seeds.exs; \
+	else \
+	  echo "Database was not re-created with seed data"; \
+	fi
