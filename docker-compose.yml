@@ -38,7 +38,7 @@ services:
     depends_on:
       - db
   proxy:
-    image: jwilder/nginx-proxy
+    image: thechangelog/proxy
     ports:
       - "80:80"
     environment:

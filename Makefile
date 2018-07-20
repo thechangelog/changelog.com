@@ -64,3 +64,10 @@ db: compose ## Resets database with seed data
 	else \
 	  echo "Database was not re-created with seed data"; \
 	fi
+
+proxy: docker ## Builds & publishes thechangelog/proxy image
+	@cd nginx && export BUILD_VERSION=$$(date +'%Y-%m-%d') ; \
+	$(DOCKER) build -t thechangelog/proxy:$$BUILD_VERSION . && \
+	$(DOCKER) push thechangelog/proxy:$$BUILD_VERSION && \
+	$(DOCKER) tag thechangelog/proxy:$$BUILD_VERSION thechangelog/proxy:latest && \
+	$(DOCKER) push thechangelog/proxy:latest
