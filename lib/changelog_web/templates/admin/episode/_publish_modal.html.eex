@@ -8,7 +8,7 @@
       <div class="inline field">
         <div class="ui toggle checkbox">
           <input type="checkbox" name="news" class="hidden" value="1" checked>
-          <label>Post to Changelog News <%= help_icon("The item's publish time will match the episode's.") %></label>
+          <label>Post to Changelog News <%= help_icon("Disable to publish to audio feed only.") %></label>
         </div>
       </div>
 
