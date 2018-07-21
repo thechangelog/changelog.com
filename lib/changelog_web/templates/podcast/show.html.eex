@@ -1,5 +1,5 @@
 <section class="show show--<%= @podcast.slug %> show--<%= @podcast.status %>">
-  <%= render("_podcast_header.html", assigns) %>
+  <%= render("_header.html", assigns) %>
 
   <a id="feed" class="anchor"></a>
   <div class="feed">

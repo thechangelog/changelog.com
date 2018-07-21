@@ -14,7 +14,7 @@
         to: {:javascript, "javascript:void(0);"},
         class: "toolbar_item toolbar_item--button has-tooltip",
         style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
-    <%= render(PodcastView, "_podcast_subscribe.html", conn: @conn, podcast: @episode.podcast) %>
+    <%= render(PodcastView, "_subscribe_tooltip.html", conn: @conn, podcast: @episode.podcast) %>
 
     <%= link "Sponsor",
         title: "",

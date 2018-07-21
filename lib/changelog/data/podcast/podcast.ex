@@ -79,7 +79,6 @@ defmodule Changelog.Podcast do
   def not_retired(query \\ __MODULE__), do: from(q in query, where: q.status != ^:retired)
   def ours(query \\ __MODULE__), do: from(q in query, where: not(q.partner))
   def partners(query \\ __MODULE__), do: from(q in query, where: q.partner)
-  def ours_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.partner])
   def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
   def retired_last(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.status])
 
@@ -101,6 +100,8 @@ defmodule Changelog.Podcast do
     |> assoc(:episodes)
     |> Repo.count
   end
+
+  def has_feed(podcast), do: podcast.slug != "backstage"
 
   def is_master(podcast), do: podcast.slug == "master"
 

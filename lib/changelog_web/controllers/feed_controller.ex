@@ -20,6 +20,9 @@ defmodule ChangelogWeb.FeedController do
     |> cache_response
   end
 
+  def podcast(conn, %{"slug" => "backstage"}) do
+    send_resp(conn, :not_found, "")
+  end
   def podcast(conn, %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
 

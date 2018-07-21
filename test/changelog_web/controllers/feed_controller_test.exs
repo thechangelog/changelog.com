@@ -63,6 +63,14 @@ defmodule ChangelogWeb.FeedControllerTest do
     assert conn.resp_body =~ e.title
   end
 
+  test "the backstage podcast feed doesn't exist", %{conn: conn} do
+    insert(:podcast, slug: "backstage")
+
+    conn = get(conn, feed_path(conn, :podcast, "backstage"))
+
+    assert conn.status == 404
+  end
+
   test "the master podcast feed", %{conn: conn} do
     p1 = insert(:podcast)
     e1 = insert(:published_episode, podcast: p1)

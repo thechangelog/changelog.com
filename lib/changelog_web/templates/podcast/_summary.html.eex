@@ -11,7 +11,7 @@
         <h2><a href="<%= podcast_path(@conn, :show, @podcast.slug) %>"><%= @podcast.name %></a></h2>
         <%= if @podcast.status != :soon do %>
           <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Subscribe</button>
-          <%= render("_podcast_subscribe.html", conn: @conn, podcast: @podcast) %>
+          <%= render("_subscribe_tooltip.html", conn: @conn, podcast: @podcast) %>
         <% end %>
       </div>
       <%= @podcast.description |> md_to_html |> raw %>
