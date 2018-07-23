@@ -48,18 +48,20 @@ export default class OnsitePlayer {
   }
 
   attachEvents() {
-    this.playButton.handle("click", () => { this.togglePlayPause(); });
-    this.backButton.handle("click", () => { this.seekBy(-15); });
-    this.forwardButton.handle("click", () => { this.seekBy(15); });
-    this.scrubber.on("input", (event) => { this.scrub(event.target.value); });
-    this.scrubber.on("change", (event) => { this.scrubEnd(event.target.value); });
-    this.closeButton.handle("click", () => { this.close(); });
-    this.hideButton.handle("click", () => { this.hide(); });
-    this.audio.onTimeUpdate((event) => { this.trackTime(); });
+    this.playButton.handle("click", _ => { this.togglePlayPause(); });
+    this.backButton.handle("click", _ => { this.seekBy(-15); });
+    this.forwardButton.handle("click", _ => { this.seekBy(15); });
+    this.scrubber.on("input", event => { this.scrub(event.target.value); });
+    this.scrubber.on("change", event => { this.scrubEnd(event.target.value); });
+    this.closeButton.handle("click", _ => { this.close(); });
+    this.hideButton.handle("click", _ => { this.hide(); });
+    this.audio.onTimeUpdate(event => { this.trackTime(); });
+    this.audio.onPlay(event => { this.playUI(); });
+    this.audio.onPause(event => { this.pauseUI(); });
   }
 
   attachKeyboardShortcuts() {
-    u(document).on("keydown", (event) => {
+    u(document).on("keydown", event => {
       if (!this.isActive()) return;
       if (u(event.target).is("input, textarea")) return;
 
@@ -95,17 +97,24 @@ export default class OnsitePlayer {
     requestAnimationFrame(this.step.bind(this));
 
     this.audio.play().then(_ => {
-      this.playButtons.play();
-      this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
+      this.playUI();
     }).catch(error => {
-      this.playButtons.pause();
-      this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
+      this.pauseUI();
       console.log("failed to play", error);
     });
   }
 
+  playUI() {
+    this.playButtons.play();
+    this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
+  }
+
   pause() {
     this.audio.pause();
+    this.pauseUI();
+  }
+
+  pauseUI() {
     this.playButtons.pause();
     this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
   }
@@ -140,7 +149,7 @@ export default class OnsitePlayer {
 
   loadAudio(audioUrl, andThen) {
     this.audioLoaded = false;
-    this.audio.load(audioUrl, () => {
+    this.audio.load(audioUrl, _ => {
       this.audioLoaded = true;
       this.play();
       if (andThen) andThen();
@@ -247,9 +256,9 @@ export default class OnsitePlayer {
 
   scrubEnd(to) {
     this.isScrubbing = false;
-    this.audio.seek(to, () => {
+    this.audio.seek(to, _ => {
       this.playButton.addClass("is-loading");
-    }, () => {
+    }, _ => {
       this.playButton.removeClass("is-loading");
     });
   }
