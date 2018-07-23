@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
   import Mock
 
-  alias Changelog.{Episode, Github, NewsItem, NewsQueue}
+  alias Changelog.{Episode, EpisodeGuest, Github, NewsItem, NewsQueue}
 
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
@@ -150,22 +150,38 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
-  test "publishes an episode, optionally sending thanks email to guests", %{conn: conn} do
+  test "publishes an episode, optionally setting guest 'thanks' to true", %{conn: conn} do
     g1 = insert(:person)
     g2 = insert(:person)
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p)
-    insert(:episode_guest, episode: e, person: g1)
-    insert(:episode_guest, episode: e, person: g2)
+    eg1 = insert(:episode_guest, episode: e, person: g1, thanks: false)
+    eg2 = insert(:episode_guest, episode: e, person: g2, thanks: false)
 
-    email_opts = %{"from" => "john@doe.com", "reply" => "john@doe.com", "message" => "ohai!"}
-    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), Map.merge(email_opts, %{"thanks" => "true"}))
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{"thanks" => "true"})
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
-    assert_delivered_email ChangelogWeb.Email.guest_thanks(g1, email_opts)
-    assert_delivered_email ChangelogWeb.Email.guest_thanks(g2, email_opts)
+    assert Repo.get(EpisodeGuest, eg1.id).thanks
+    assert Repo.get(EpisodeGuest, eg2.id).thanks
     assert called Github.Pusher.push(:_, e.notes)
+  end
+
+  @tag :as_admin
+  test "publishes an episode, optionally not setting guest thanks to 'true'", %{conn: conn} do
+    g1 = insert(:person)
+    g2 = insert(:person)
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+    eg1 = insert(:episode_guest, episode: e, person: g1)
+    eg2 = insert(:episode_guest, episode: e, person: g2)
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 1
+    refute Repo.get(EpisodeGuest, eg1.id).thanks
+    refute Repo.get(EpisodeGuest, eg2.id).thanks
   end
 
   @tag :as_inserted_admin
@@ -194,24 +210,6 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert count(Episode.published) == 1
     assert count(NewsItem) == 0
     assert count(NewsQueue) == 0
-  end
-
-  @tag :as_admin
-  test "publishes an episode, optionally not sending thanks email to guests", %{conn: conn} do
-    g1 = insert(:person)
-    g2 = insert(:person)
-    p = insert(:podcast)
-    e = insert(:publishable_episode, podcast: p)
-    insert(:episode_guest, episode: e, person: g1)
-    insert(:episode_guest, episode: e, person: g2)
-
-    email_opts = %{"from" => "john@doe.com", "reply" => "john@doe.com", "message" => "ohai!"}
-    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), email_opts)
-
-    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 1
-    refute_delivered_email ChangelogWeb.Email.guest_thanks(g1, email_opts)
-    refute_delivered_email ChangelogWeb.Email.guest_thanks(g2, email_opts)
   end
 
   @tag :as_admin

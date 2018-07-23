@@ -53,11 +53,15 @@ export default class EpisodeView {
     this.new();
 
     new Modal(".js-publish-modal", ".publish.modal");
-    $("input[name=thanks]").on("change", function() {
-      if ($(this).is(":checked")) {
-        $(".thanks.segment").show();
+
+    let newsInput = $("input[name=news]");
+    let thanksInput = $("input[name=thanks]");
+
+    newsInput.on("change", function() {
+      if (newsInput.is(":checked")) {
+        thanksInput.closest(".checkbox").checkbox("set enabled");
       } else {
-        $(".thanks.segment").hide();
+        thanksInput.closest(".checkbox").checkbox("set disabled").checkbox("uncheck");
       }
     });
   }

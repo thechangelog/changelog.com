@@ -1,4 +1,4 @@
-<div class="ui publish modal">
+<div class="ui small publish modal">
   <i class="close icon"></i>
   <div class="header">
     Publishing: <em><%= @changeset.data.title %></em>
@@ -19,37 +19,9 @@
         <% else %>
           <input type="checkbox" class="hidden" value="0" disabled>
         <% end %>
-          <label>Send "Thank You" email</label>
+          <label>Send "Thank You" email <%= help_icon("Each guest will receive one (requires news item).") %></label>
         </div>
       </div>
-
-    <%= if Enum.any?(@changeset.data.guests) do %>
-      <div class="ui thanks segment">
-        <div class="two fields">
-          <div class="field">
-          <%= if PersonView.is_staff(@current_user) do %>
-            <label>From <%= help_icon("Must be a changelog.com address.") %></label>
-            <input type="text" name="from" value="<%= @current_user.email %>">
-          <% else %>
-            <label>From <%= help_icon("Readonly because must be a changelog.com address.") %></label>
-            <input type="text" name="from" value="logbot@changelog.com" readonly>
-          <% end %>
-          </div>
-          <div class="field">
-            <label>Reply To</label>
-            <input type="text" name="reply" value="editors@changelog.com">
-          </div>
-        </div>
-        <div class="field">
-          <label>Subject</label>
-          <input type="text" name="subject" value="You're on <%= @podcast.name %>!">
-        </div>
-        <div class="field">
-          <label>Message <%= help_icon("The guest's name will be added automatically.") %></label>
-          <textarea name="message" class="scroll"><%= render("_thanks.md", assigns) %></textarea>
-        </div>
-      </div>
-    <% end %>
     <% end %>
   </div>
   <div class="actions">
