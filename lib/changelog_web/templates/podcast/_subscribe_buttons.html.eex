@@ -24,6 +24,4 @@
     </div>
   </div>
 </div>
-<% else %>
-  <p><em>You can subscribe to this podcast via the <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></em></p>
 <% end %>
