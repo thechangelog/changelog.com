@@ -49,4 +49,76 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+  def intel do
+    %__MODULE__{
+      sponsor: "Intel",
+      slug: "intel",
+      logo: "intel.png",
+      quote: %{
+        name: "Karl Fezer",
+        content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If you listen to Practical AI, that's a great start to being a fit here at Intel AI.",
+        image: "karl-fezer.jpg",
+        title: "AI Developer Community Manager at Intel AI"
+      },
+      examples: [
+        %{type: "Endorsement", name: "Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3", duration: 33}
+      ],
+      content_md: """
+      """
+    }
+  end
+  def linode do
+    %__MODULE__{
+      sponsor: "Linode",
+      slug: "linode",
+      logo: "linode.png",
+      quote: %{
+        name: "Karl Fezer",
+        content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
+        image: "karl-fezer.jpg",
+        title: "AI Developer Community Manager at Intel AI"
+      },
+      examples: [
+        %{type: "Endorsement", name: "Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3", duration: 33}
+      ],
+      content_md: """
+      """
+    }
+  end
+  def fastly do
+    %__MODULE__{
+      sponsor: "Fastly",
+      slug: "fastly",
+      logo: "fastly.png",
+      quote: %{
+        name: "Karl Fezer",
+        content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
+        image: "karl-fezer.jpg",
+        title: "AI Developer Community Manager at Intel AI"
+      },
+      examples: [
+        %{type: "Endorsement", name: "Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3", duration: 33}
+      ],
+      content_md: """
+      """
+    }
+  end
+  def datadog do
+    %__MODULE__{
+      sponsor: "Datadog",
+      slug: "datadog",
+      logo: "datadog.png",
+      quote: %{
+        name: "Leo Schramm",
+        content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
+        image: "karl-fezer.jpg",
+        title: "Marketing Manager & Demand Gen at Datadog"
+      },
+      examples: [
+        %{type: "Endorsement", name: "Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3", duration: 33}
+      ],
+      content_md: """
+      """
+    }
+  end
 end
