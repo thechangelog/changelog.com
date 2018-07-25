@@ -209,15 +209,50 @@
   }
 
   &-body {
-    margin: 1em 0;
+    margin: 1em 0 1.5em;
+
+    pre {
+      @include code_snippet();
+    }
+
+    p {
+      b,
+      strong, {
+        font-weight: 500;
+      }
+      code {
+        @include inline_code();
+      }
+    }
+
+    a {
+      color: $black;
+      font-weight: 500;
+      border-bottom: 2px solid $light-grey;
+
+      &:hover {
+        border-color: rgba($green, .3);
+        color: $green;
+      }
+
+      &[rel~="footnote"] {
+        border-bottom: none;
+        padding: 0 3px;
+      }
+    }
 
     blockquote {
       background: $lightest-grey;
-      border-left: 2px solid $light-grey;
-      color: $medium-grey;
+      border-left: 2px solid darken($lightest-grey, 2%);
+      border-radius: 3px;
+      color: $dark-grey;
       line-height: 1.5em;
       margin: 0;
-      padding: 1em 1.5em;
+      padding: 1em 1.25em;
+
+      & > *:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 

@@ -14,7 +14,14 @@
     </p>
   </header>
   <div class="comment-body">
-    <p>Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+    <p>I make heavy use of assertions in <a href="#">many languages</a>. A really easy way to get more context <code>$ nix repl</code> is to just dump out a <strong>map/dictionary</strong> of values. <em>For example, in Python</em>:</p>
+    <pre><code>assert foo == bar, repr({
+  "error": "Foo and bar should not be equal",
+  "foo": foo,
+  "bar": bar,
+})</code></pre>
+    <blockquote>
+    <p>I do a similar thing in other languages by dumping out the context information as JSON. One thing to be careful about is whether that info itself will cause problems: huge values are annoying, but <a href="#">infinite/cyclic values may break</a> the error message itself!</p></blockquote>
   </div>
   <section class="comment-replies">
     <%= if assigns[:mocked_replies] > 0 do %>
