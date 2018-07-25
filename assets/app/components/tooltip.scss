@@ -144,7 +144,7 @@
 //
 // Profile Tooltip
 .profile_tooltip {
-  max-width: 200px;
+  max-width: 220px;
 
   &-header {
     display: flex;
@@ -189,13 +189,13 @@
 
     p {
       color: $white;
-      font-size: 12px;
+      font-size: 13px;
     }
 
     &-links {
       li {
         display: inline-block;
-        font-size: 12px;
+        font-size: 13px;
         margin-right: 0.5em;
         a {
           border-bottom: 1px solid transparent;
