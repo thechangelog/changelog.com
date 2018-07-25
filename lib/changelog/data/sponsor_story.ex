@@ -92,7 +92,7 @@ defmodule Changelog.SponsorStory do
       logo: "fastly.png",
       quote: %{
         name: "Elaine Greenburg",
-        content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
+        content: "Wow! Fastly gets to be the content delivery backbone Changelog builds everything upon. Plus, the Fastly brand and core value add can be heard in the pre-roll of every podcast episode. We couldn't have asked for a better partner to help us reach the developer community.",
         image: "elaine-greenburg.jpg",
         title: "Senior Communications Manager at Fastly"
       },
