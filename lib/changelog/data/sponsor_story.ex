@@ -110,7 +110,7 @@ defmodule Changelog.SponsorStory do
       logo: "datadog.png",
       quote: %{
         name: "Leo Schramm",
-        content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
+        content: "Huge thanks to Adam and team at Changelog for helping me share Datadog's high value content, our story and mission, as well as promote our engineering teams and culture to attract the right talent. If they listen to a Changelog podcast, they'll likely be a great fit at Datadog.",
         image: "leo-schramm.jpg",
         title: "Marketing Manager & Demand Gen at Datadog"
       },
