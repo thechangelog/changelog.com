@@ -115,7 +115,8 @@ defmodule Changelog.SponsorStory do
         title: "Marketing Manager & Demand Gen at Datadog"
       },
       examples: [
-        %{type: "Endorsement", name: "Datadog overview (Go edition)", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-datadog-gotime-001.mp3", duration: 44}
+        %{type: "Endorsement", name: "Datadog overview (The Changelog)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3", duration: 55},
+        %{type: "Endorsement", name: "Datadog overview (Go Time)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-gotime-001.mp3", duration: 44}
       ],
       content_md: """
       #### Who is Datadog?
