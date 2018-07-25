@@ -1,3 +1,4 @@
+// General Tooltip Styles
 .tooltip {
   $arrowSize: 10px;
   $background: #252B32;
@@ -19,7 +20,6 @@
 
   &-wrap {
     background: $background;
-    padding: 5px 0;
 
     .tooltip--topics & {
       font-family: $code;
@@ -106,6 +106,11 @@
     right: 0;
     margin-right: 0;
   }
+  &[x-placement^="bottom-start"] .tooltip-arrow {
+    right: auto;
+    left: 0;
+    margin-left: 0;
+  }
   &[x-placement^="right"] {
     margin-left: $arrowSize + 5px;
   }
@@ -131,5 +136,74 @@
     top: calc(50% - #{$arrowSize*2});
     margin-left: 0;
     margin-right: 0;
+  }
+}
+
+
+//
+//
+// Profile Tooltip
+.profile_tooltip {
+  max-width: 250px;
+
+  &-header {
+    display: flex;
+    padding: $base-spacing/2;
+    width: 100%;
+
+    &:hover {
+      background: $black;
+    }
+
+    &-avatar {
+      $size: 40px;
+      background: #000;
+      box-shadow: 0 0 $size rgba($black, 0.2);
+      font-size: 8px;
+      border-radius: $base-border-radius;
+      width: $size;
+      height: $size;
+      margin-right: 15px;
+    }
+    &-info {
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      &-name {
+        color: $white;
+        font-size: 1.385em;
+        line-height: 1em;
+        margin: 0 0 3px;
+      }
+      &-location {
+        color: $medium-grey;
+        line-height: 1em;
+        margin: 0;
+      }
+    }
+  }
+
+  &-info {
+    border-top: 2px solid #333A42;
+    padding: $base-spacing/2;
+
+    p {
+      color: $white;
+      font-size: 14px;
+    }
+
+    &-links {
+      li {
+        display: inline-block;
+        font-size: 14px;
+        margin-right: 0.5em;
+        a {
+          color: $green;
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+    }
   }
 }

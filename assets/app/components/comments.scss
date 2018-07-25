@@ -169,7 +169,6 @@
     }
 
     & > * { z-index: 1; }
-    p { margin-bottom: 0; }
   }
 
   &-author {
@@ -195,7 +194,7 @@
   }
 
   &-actions {
-    margin-left: 35px;
+    margin: 0 0 0 35px;
 
     // Highlight the permalink comment
     .comment.is-permalink > & a { color: $black; }
