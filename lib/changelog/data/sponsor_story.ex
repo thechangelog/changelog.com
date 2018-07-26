@@ -131,6 +131,8 @@ defmodule Changelog.SponsorStory do
 
       Hello, I'm Leo Schramm. I'm part of the team that leads marketing and demand gen here at Datadog. Day to day I define and deploy growth and marketing strategies, meet with partners, review campaign results, and generally try to learn as much as I can about our customer.
 
+      When you bring the observability of servers, clouds, metrics, apps, and teams together all in one place, interesting things happen. We're obsessed with learning everything we can from our customers to deliver the best user experience for modern monitoring and analytics.
+
       #### What do you value most about your partnership with Changelog?
 
       For me, I really enjoy the ideas and strategy they bring to the table. The production value they deliver is really top notch too.
