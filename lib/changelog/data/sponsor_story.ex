@@ -110,7 +110,7 @@ defmodule Changelog.SponsorStory do
       logo: "datadog.png",
       quote: %{
         name: "Leo Schramm",
-        content: "Huge thanks to Adam and team at Changelog for helping me share Datadog's high value content, our story and mission, as well as promote our engineering teams and culture to attract the right talent. If they listen to a Changelog podcast, they'll likely be a great fit at Datadog.",
+        content: "Huge thanks to Adam and team at Changelog for helping me share Datadog's high value content, our story and mission, as well as promote our engineering teams and culture to attract the right talent. If you listen to a Changelog podcast, you'll likely be a great fit at Datadog.",
         image: "leo-schramm.jpg",
         title: "Marketing Manager & Demand Gen at Datadog"
       },
