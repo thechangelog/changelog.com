@@ -97,7 +97,7 @@ defmodule Changelog.SponsorStory do
         title: "Senior Communications Manager at Fastly"
       },
       examples: [
-        %{type: "Endorsement", name: "Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3", duration: 33}
+        %{type: "Partner Pre-roll", name: "Networkwide pre-roll sponsorship", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/fastly-preroll.mp3", duration: 06}
       ],
       content_md: """
       """
