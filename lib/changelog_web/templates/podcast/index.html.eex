@@ -2,10 +2,11 @@
   <section class="show_list">
     <header class="show_list-header">
       <h2>Our podcasts</h2>
-      <p>No matter where you are on your hacker path, we have a podcast for you. This community cares about the past, present, and future hacker generation. We're about lifting people up, not putting people down.</p>
+      <p>Conversations about developer culture, open source and software development, creative work, building startups, and the people involved.</p>
+      <p class="show_list-header-master_cta"><a href="/master">Subscribe to Master</a> to get all of our shows (~5&nbsp;episodes/week).</p>
     </header>
     <div class="show_list-shows">
-      <%= render_many(@podcasts ++ [Podcast.master], __MODULE__, "_summary.html", assigns) %>
+      <%= render_many(@podcasts ++ [Podcast.master], __MODULE__, "_podcast_summary.html", assigns) %>
     </div>
   </section>
 </div>
