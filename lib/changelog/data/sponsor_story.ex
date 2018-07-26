@@ -41,7 +41,7 @@ defmodule Changelog.SponsorStory do
 
       #### Who are you and what do you do at Rollbar?
 
-      Hello, I'm Mike Smith. I'm part of the team that leads marketing and demand gen here at Rollbar. Day to day I define and deploy growth and marketing strategies, meet with partners, review campaign results, and generally try to learn as much as I can about our customer.
+      Hello, I'm Mike Smith. I leads growth and marketing here at Rollbar. Day to day I define and deploy growth and marketing strategies, meet with partners, review campaign results, and generally try to learn as much as I can about our customer.
 
       #### What do you value most about your partnership with Changelog?
 
