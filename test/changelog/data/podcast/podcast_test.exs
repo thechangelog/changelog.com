@@ -52,4 +52,25 @@ defmodule Changelog.PodcastTest do
       assert podcast.reach_count == 265
     end
   end
+
+  describe "update_subscribers" do
+    test "it initializes the subscribers map on first run" do
+      podcast = insert(:podcast, slug: "afk")
+      podcast = Podcast.update_subscribers(podcast, "overcast", 12)
+      assert podcast.subscribers["overcast"] == 12
+    end
+
+    test "it won't overwrite other client subscribers" do
+      podcast = insert(:podcast, slug: "afk", subscribers: %{"overcast" => 12, "itunes" => 4})
+      podcast = Podcast.update_subscribers(podcast, "itunes", 24)
+      assert podcast.subscribers["overcast"] == 12
+      assert podcast.subscribers["itunes"] == 24
+    end
+
+    test "it stores Master's subscribers on Backstage instead" do
+      insert(:podcast, slug: "backstage")
+      backstage = Podcast.update_subscribers(Podcast.master(), "overcast", 1200)
+      assert backstage.subscribers["overcast"] == 1200
+    end
+  end
 end

@@ -177,7 +177,8 @@ defmodule Changelog.Podcast do
   end
 
   def update_subscribers(%{slug: "master"}, client, count) do
-    Logger.info "Master feed: #{client} = #{count} subscribers"
+    podcast = get_by_slug!("backstage")
+    update_subscribers(podcast, client, count)
   end
   def update_subscribers(podcast = %{subscribers: nil}, client, count) do
     podcast
