@@ -28,7 +28,7 @@ defmodule Changelog.SponsorStory do
         %{type: "Endorsement", name: "Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-move-fast-and-fix-things.mp3", duration: 33}
       ],
       content_md: """
-      ### Who is Rollbar?
+      ##### Who is Rollbar?
 
       Rollbar is an error monitoring platform that helps developer teams move fast and fix things. Catch errors before your users do. Resolve errors in minutes, and deploy your code with confidence.
 
@@ -39,13 +39,17 @@ defmodule Changelog.SponsorStory do
         </footer>
       </blockquote>
 
-      ### We helped Rollbar build brand awareness
+      #### Who are you and what do you do at Rollbar?
 
-      A few years back Rollbar started to focus on sponsoring conferences and communities. They'd go and setup an awesome booth, talk to the community, and do demos. At the time, not many people knew who Rollbar was or what they were about.
+      Hello, I'm Mike Smith. I'm part of the team that leads marketing and demand gen here at Rollbar. Day to day I define and deploy growth and marketing strategies, meet with partners, review campaign results, and generally try to learn as much as I can about our customer.
 
-      Several months later at another conference, the same thing — great experience, great meeting with the community, but not many people knew about Rollbar. The next conference was different. The community was aware of Rollbar and what they offered developers. They were told by several members of the community who visited their booth that they heard about Rollbar because they sponsored some of their favorite podcasts. These folks weren't Rollbar users either. However, they did mention that they've recommended Rollbar to their developer friends. That was huge news! Because they sponsored many podcasts from Changelog's network; including The Changelog, JS Party, The React Podcast, and Go Time, Rollbar was able to gain clear brand awareness in the developer community.
+      #### What do you value most about your partnership with Changelog?
 
-      Don't underestimate the power of awareness for your brand! The brand awareness we've helped to develop for Rollbar is the foundation they've been able to build they developer marketing strategy upon.
+      Changelog has been a huge factor in helping Rollbar build brand awareness in the developer community. A few years back we focused our efforts on sponsoring a few developer conferences and communities. We'd go and setup an awesome booth, talk to the community, do demos — at the time, not many people knew who we were or what our service was about.
+
+      Several months later at another conference, the same thing — great experience, great meeting with the community, but not many people knew about us. To our suprise, the next conference was different. The community knew who we were and what value we offered developers. Several members of the community mentioned they heard about us because we sponsored some of their favorite podcasts. These folks weren't Rollbar users either. However, a few mentioned they have recommended Rollbar to their friends. That was great news and significant validation. Because we sponsored many Changelog podcasts; including The Changelog, JS Party, Founders Talk, and Go Time, Rollbar was able to gain clear and mesurable brand awareness in the developer community.
+
+      Don't underestimate the power of awareness for your brand! The awareness we've gained (thanks to Changelog) has been the foundation we've built our developer marketing strategy on.
       """
     }
   end
