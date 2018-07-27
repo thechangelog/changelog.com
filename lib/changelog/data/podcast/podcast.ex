@@ -4,6 +4,8 @@ defmodule Changelog.Podcast do
   alias Changelog.{Episode, EpisodeStat, Files, NewsItem, PodcastTopic,
                    PodcastHost, Regexp}
 
+  require Logger
+
   defenum Status, draft: 0, soon: 1, published: 2, retired: 3
 
   schema "podcasts" do
