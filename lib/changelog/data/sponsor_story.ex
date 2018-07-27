@@ -15,7 +15,7 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Rollbar",
       slug: "rollbar",
-      logo: "rollbar-dark",
+      logo: "rollbar",
       quote: %{
         name: "Mike Smith",
         content: "Partnering with Changelog on their news and podcasts have helped me to build brand awareness for Rollbar in a space where developers have heard the 'you need error tracking' message before. Adam and his team do an amazing job at finding the stories about our brand and service that developers want to hear. They're so good at getting the attention (and the trust) of their listeners.",
@@ -75,7 +75,7 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Linode",
       slug: "linode",
-      logo: "linode.png",
+      logo: "linode",
       quote: %{
         name: "Karl Fezer",
         content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
@@ -144,6 +144,11 @@ defmodule Changelog.SponsorStory do
       #### Describe a hidden or unclear benefit that you get from Changelog
       
       Influence at integration! Changelog.com is open source, which means they attract alot of attention to their codebase. Some are there to learn, some are there to contrubute, in either case they see that Changelog choose Datadog as their monitoring partner. Our brand and service are naturally promoted as a preferred choice because they trust Changelog's judgement.
+
+      Partner: Datadog  
+      Website: [datadoghq.com](https://www.datadoghq.com/)  
+      Employees: 750+  
+      Annual Revenue: $50,000,000
       """
     }
   end
