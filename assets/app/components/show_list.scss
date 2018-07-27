@@ -31,10 +31,16 @@
 
       &.show_list-header-master_cta {
         font-family: $code;
-        font-size: 0.875em;
+        font-size: 13px;
         line-height: 1.625em;
         color: $green;
-        // max-width: none;
+        margin-bottom: 30px;
+        max-width: 80%;
+
+        strong {
+          font-weight: bold;
+          text-decoration: underline;
+        }
 
         span {
           background: $green;
@@ -47,7 +53,14 @@
         }
 
         a {
-          border-bottom: 1px solid $green;
+          background-color: #162b21;
+          display: inline-block;
+          padding: 4px 8px;
+          &:hover {
+            background-color: #1c362a;
+            font-weight: bold;
+            // text-decoration: underline;
+          }
         }
       }
     }
