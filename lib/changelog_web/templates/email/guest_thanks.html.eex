@@ -1,6 +1,25 @@
 <tr>
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
-    <%= md_to_html(@message) |> raw %>
+
+    <p>Your episode of <%= @podcast.name %> is now live! Here is the official link to share with your network of friends:</p>
+
+    <p><%= link(episode_url(Endpoint, :show, @podcast.slug, @episode.slug), to: episode_url(Endpoint, :show, @podcast.slug, @episode.slug)) %></p>
+
+    <p>And here’s an embed snippet to use on your website and/or blog post:</p>
+
+    <pre><%= EpisodeView.embed_code(@episode) %></pre>
+
+    <p><em>(You can see it in action on the <a href="https://www.hashicorp.com/blog/vault-on-the-changelog-podcast.html">HashiCorp blog)</a></em></p>
+
+    <p>You’re part of the Changelog family now. If there is <em>any way</em> that we can help you in the future, don’t hesitate to contact us.</p>
+
+    <p>We'd also love to send you a Changelog tee as a thanks for your time and all you do for the community. Please reply with your t-shirt size and mailing address so we can get it sent out. Visit <a href="http://www.sizecharter.com/brands/americapparel">this page</a> to see the sizing info for our shirts so we can send you one that fits well.</p>
+
+    <p>Finally, people love keeping up by following <a href="https://changelog.com">Changelog News</a> (check it out if you haven't yet). Use <a href="https://changelog.com/submit">this form</a> to let us know when you have future news/announcements. We'd be happy to help you spread the word. ✊</p>
+
+    <p>Thanks again!</p>
+
+    <p>💚, Logbot</p>
   </td>
 </tr>
