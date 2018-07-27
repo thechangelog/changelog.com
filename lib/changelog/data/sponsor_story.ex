@@ -49,7 +49,16 @@ defmodule Changelog.SponsorStory do
 
       Several months later at another conference, the same thing — great experience, great meeting with the community, but not many people knew about us. To our suprise, the next conference was different. The community knew who we were and what value we offered developers. Several members of the community mentioned they heard about us because we sponsored some of their favorite podcasts. These folks weren't Rollbar users either. However, a few mentioned they have recommended Rollbar to their friends. That was great news and significant validation. Because we sponsored many Changelog podcasts; including The Changelog, JS Party, Founders Talk, and Go Time, Rollbar was able to gain clear and mesurable brand awareness in the developer community.
 
-      Don't underestimate the power of awareness for your brand! The awareness we've gained (thanks to Changelog) has been the foundation we've built our developer marketing strategy on.
+      #### Can you share some advice for future Changelog partners?
+
+      Don't underestimate the power of brand awareness. We've gained so much brand awareness in the developer community (thanks to Changelog). That awareness has been the foundation we've built Rollbar's developer marketing strategy on.
+
+      `---`
+
+      Partner: Rollbar  
+      Website: [rollbar.com](https://rollbar.com/)  
+      Employees: 50  
+      Annual Revenue: $1,000,000
       """
     }
   end
