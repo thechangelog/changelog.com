@@ -145,6 +145,8 @@ defmodule Changelog.SponsorStory do
       
       Influence at integration! Changelog.com is open source, which means they attract alot of attention to their codebase. Some are there to learn, some are there to contrubute, in either case they see that Changelog choose Datadog as their monitoring partner. Our brand and service are naturally promoted as a preferred choice because they trust Changelog's judgement.
 
+      `---`
+
       Partner: Datadog  
       Website: [datadoghq.com](https://www.datadoghq.com/)  
       Employees: 750+  
