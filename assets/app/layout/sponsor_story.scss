@@ -26,6 +26,13 @@
       margin: 0 auto;
       max-width: 100%;
     }
+
+    a {
+      color: $black;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &-quote {
