@@ -31,7 +31,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
 
   def schedule_row_class(focus_week, week) do
     cond do
-      Timex.before?(week, focus_week) -> "disabled"
+      Timex.before?(week, focus_week) -> "past disabled"
       Timex.equal?(week, focus_week) -> "active"
       true -> ""
     end

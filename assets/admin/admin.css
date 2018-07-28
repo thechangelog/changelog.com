@@ -75,6 +75,6 @@ input[type=file] {
   text-align: right;
 }
 
-.hidden.field {
+.hidden.field, tr.hidden {
   display: none;
 }

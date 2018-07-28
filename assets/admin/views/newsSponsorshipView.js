@@ -18,6 +18,23 @@ export default class newsSponsorshipView {
     clipboard.on("error", function(e) { console.log(e); });
   }
 
+  schedule() {
+    let past = $("tr.past");
+    let pastButton = $(".js-toggle-past");
+
+    pastButton.on("click", function() {
+      if (past.hasClass("hidden")) {
+        past.removeClass("hidden");
+        pastButton.text("Hide Past");
+      } else {
+        past.addClass("hidden");
+        pastButton.text("Show Past");
+      }
+    });
+
+    pastButton.trigger("click");
+  }
+
   new() {
     new BelongsToWidget("sponsor", "sponsor");
     this._handleAds();
