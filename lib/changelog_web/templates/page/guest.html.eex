@@ -35,7 +35,7 @@
 
     <h3 id="during">During Recording</h3>
 
-    <p>Be ready <%= unless @podcast.slug == "reactpodcast" do %>on Skype<% end %> approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>.<%= unless @podcast.slug == "reactpodcast" do %> Please do not call us since we'll be preparing.<% end %> Here's some <em>tips and tricks</em> for a great show:</p>
+    <p>Be ready <%= if uses_skype?(@podcast), do: "on Skype" %> approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>. Here's some <em>tips and tricks</em> for a great show:</p>
 
     <ul>
     <%= if @podcast.recorded_live do %>
