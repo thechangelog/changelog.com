@@ -9,8 +9,8 @@ defmodule Changelog.EpisodePolicy do
   def update(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def delete(actor, _), do: is_admin(actor)
 
-  def publish(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
-  def unpublish(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
+  def publish(actor, _), do: is_admin(actor)
+  def unpublish(actor, podcast), do: publish(actor, podcast)
   def transcript(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
 
   defp is_host(actor, podcast) do

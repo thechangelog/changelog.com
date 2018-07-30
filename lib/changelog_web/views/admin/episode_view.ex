@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.EpisodeView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Topic, Episode, EpisodeStat, Person, Sponsor}
+  alias Changelog.{Episode, EpisodePolicy, EpisodeStat, Person, Sponsor, Topic}
   alias ChangelogWeb.{EpisodeView, PersonView, TimeView}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)

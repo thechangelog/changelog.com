@@ -39,11 +39,13 @@ defmodule Changelog.EpisodePolicyTest do
     assert EpisodePolicy.edit(@host, %{hosts: [@host]})
   end
 
-  test "only admins can delete" do
-    refute EpisodePolicy.delete(@guest, %{})
-    refute EpisodePolicy.delete(@user, %{})
-    refute EpisodePolicy.delete(@editor, %{})
-    refute EpisodePolicy.delete(@host, %{})
-    assert EpisodePolicy.delete(@admin, %{})
+  test "only admins can delete/publish/unpublish" do
+    for policy <- [:delete, :publish, :unpublish] do
+      refute apply(EpisodePolicy, policy, [@guest, %{}])
+      refute apply(EpisodePolicy, policy, [@user, %{}])
+      refute apply(EpisodePolicy, policy, [@editor, %{}])
+      refute apply(EpisodePolicy, policy, [@host, %{}])
+      assert apply(EpisodePolicy, policy, [@admin, %{}])
+    end
   end
 end
