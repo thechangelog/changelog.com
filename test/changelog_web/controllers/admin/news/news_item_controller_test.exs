@@ -128,11 +128,14 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     news_item = insert(:published_news_item)
     assert count(NewsItem.published) == 1
 
-    conn = post(conn, admin_news_item_path(conn, :unpublish, news_item))
+    with_mock(Algolia, [delete_object: fn(_, _) -> true end]) do
+      conn = post(conn, admin_news_item_path(conn, :unpublish, news_item))
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
-    assert count(NewsItem.published) == 0
-    assert count(NewsItem.drafted) == 1
+      assert redirected_to(conn) == admin_news_item_path(conn, :index)
+      assert count(NewsItem.published) == 0
+      assert count(NewsItem.drafted) == 1
+      assert called(Algolia.delete_object(:_, news_item.id))
+    end
   end
 
   @tag :as_admin
