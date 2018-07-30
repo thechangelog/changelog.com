@@ -3,12 +3,12 @@ defmodule Changelog.PersonPolicyTest do
 
   alias Changelog.PersonPolicy
 
-  test "admins and hosts can new/create" do
+  test "only admins can new/create" do
     refute PersonPolicy.create(@guest)
     refute PersonPolicy.new(@user)
     refute PersonPolicy.new(@editor)
     assert PersonPolicy.create(@admin)
-    assert PersonPolicy.create(@host)
+    refute PersonPolicy.create(@host)
   end
 
   test "only admins can index" do
@@ -27,11 +27,11 @@ defmodule Changelog.PersonPolicyTest do
     refute PersonPolicy.show(@admin, %{})
   end
 
-  describe "only hosts and admins can edit/update" do
+  describe "only admins can edit/update" do
     refute PersonPolicy.edit(@guest, %{})
     refute PersonPolicy.update(@user, %{})
     assert PersonPolicy.update(@admin, %{})
-    assert PersonPolicy.edit(@host, %{})
+    refute PersonPolicy.edit(@host, %{})
   end
 
   test "only admins can delete" do

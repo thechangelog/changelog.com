@@ -86,7 +86,7 @@
 <%= for podcast <- @podcasts do %>
   <%= if PodcastPolicy.show(@current_user, podcast) do %>
   <h2 class="ui header"><%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %></h2>
-  <%= render(EpisodeView, "_table.html", conn: @conn, status: :published, podcast: podcast, episodes: recent_episodes(podcast)) %>
+  <%= render(EpisodeView, "_table.html", conn: @conn, status: :published, podcast: podcast, episodes: recent_episodes(podcast), actions: true) %>
   <% end %>
 <% end %>
 </div>

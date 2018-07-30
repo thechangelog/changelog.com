@@ -22,9 +22,11 @@
       <% end %>
     <% end %>
 
+    <%= if NewsItemPolicy.index(@current_user) do %>
       <%= link(to: admin_news_item_path(@conn, :index), class: "item #{active_class(@conn, ["news_item", "news_source"], "active")}") do %>
         <i class="newspaper icon"></i>News</a>
       <% end %>
+    <% end %>
 
     <%= if PostPolicy.index(@current_user) do %>
       <%= link(to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, "post", "active")}") do %>

@@ -15,12 +15,19 @@ defmodule ChangelogWeb.Plug.Authorize do
       conn
     else
       conn
-      |> put_flash(:error, "Unauthorized action!")
-      |> redirect(to: Helpers.root_path(conn, :index))
+      |> put_flash(:result, "failure")
+      |> redirect(to: referer_or_root_path(conn))
       |> halt()
     end
   end
 
   defp apply_policy(module, action, user, nil), do: apply(module, action, [user])
   defp apply_policy(module, action, user, resource), do: apply(module, action, [user, resource])
+
+  defp referer_or_root_path(conn) do
+    case conn |> get_req_header("referer") |> List.last do
+      nil -> Helpers.root_path(conn, :index)
+      referer ->  referer |> URI.parse |> Map.get(:path)
+    end
+  end
 end
