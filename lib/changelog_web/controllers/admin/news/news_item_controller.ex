@@ -157,7 +157,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   end
 
   defp assign_item(conn = %{params: %{"id" => id}}, _) do
-    item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
+    item = Repo.get!(NewsItem, id) |> NewsItem.preload_all()
     assign(conn, :item, item)
   end
 

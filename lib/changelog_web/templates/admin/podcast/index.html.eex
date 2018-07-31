@@ -5,30 +5,25 @@
   </h1>
 
   <div class="actions">
+  <%= if PodcastPolicy.create(@current_user) do %>
     <%= link to: admin_podcast_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="icon unmute"></i>
       Add Podcast
     <% end %>
+  <% end %>
   </div>
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@ours) do %>
-  <h2 class="ui header">Our podcasts</h2>
-  <%= render("_table.html", conn: @conn, podcasts: @ours) %>
-<% end %>
-</div>
-
-<div class="ui basic segment">
-<%= if Enum.any?(@partners) do %>
-  <h2 class="ui header">Partner podcasts</h2>
-  <%= render("_table.html", conn: @conn, podcasts: @partners) %>
+<%= if Enum.any?(@active) do %>
+  <h2 class="ui header">Active podcasts</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcasts: @active})) %>
 <% end %>
 </div>
 
 <div class="ui basic segment">
 <%= if Enum.any?(@retired) do %>
   <h2 class="ui header">Retired podcasts</h2>
-  <%= render("_table.html", conn: @conn, podcasts: @retired) %>
+  <%= render("_table.html", Map.merge(assigns, %{podcasts: @retired})) %>
 <% end %>
 </div>

@@ -1,21 +1,22 @@
 <table class="ui striped small unstackable table">
   <thead>
     <tr>
-      <th>Ep</th>
+      <th>Episode</th>
       <th>Published</th>
       <th>Reach</th>
       <th class="center aligned">
-        <%= link to: admin_podcast_episode_path(@conn, :new, @podcast.slug), class: "ui basic button" do %>
-          <i class="add icon"></i>
-          Episode
-        <% end %>
+        <div class="ui basic buttons">
+          <%= icon_link("eye", to: podcast_path(@conn, :show, @podcast.slug), title: "View Public") %>
+          <%= icon_link("list", to: admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
+          <%= icon_link("add", to: admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
+        </div>
       </th>
     </tr>
   </thead>
   <tbody>
   <%= for episode <- recent_episodes(@podcast) do %>
     <tr>
-      <td data-popup="true" data-title="<%= episode.title %>"><%= episode.slug %></td>
+      <td><%= EpisodeView.numbered_title(episode) %></td>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <td><%= EpisodeView.reach_count(episode) %></td>
       <td class="center aligned">

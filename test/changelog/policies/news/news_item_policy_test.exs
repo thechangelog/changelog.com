@@ -28,27 +28,20 @@ defmodule Changelog.NewsItemPolicyTest do
     assert NewsItemPolicy.edit(@editor, %{logger: @editor})
   end
 
-  test "only admins can decline" do
-    refute NewsItemPolicy.decline(@guest, %{})
-    refute NewsItemPolicy.decline(@user, %{})
-    refute NewsItemPolicy.decline(@editor, %{})
-    refute NewsItemPolicy.decline(@host, %{})
-    assert NewsItemPolicy.decline(@admin, %{})
+  test "only admins can move/decline/unpublish/delete" do
+    for policy <- [:move, :decline, :unpublish, :delete] do
+      refute apply(NewsItemPolicy, policy, [@guest, %{}])
+      refute apply(NewsItemPolicy, policy, [@user, %{}])
+      refute apply(NewsItemPolicy, policy, [@editor, %{}])
+      refute apply(NewsItemPolicy, policy, [@host, %{}])
+      assert apply(NewsItemPolicy, policy, [@admin, %{}])
+    end
   end
 
-  test "only admins can unpublish" do
-    refute NewsItemPolicy.unpublish(@guest, %{})
-    refute NewsItemPolicy.unpublish(@user, %{})
-    refute NewsItemPolicy.unpublish(@editor, %{})
-    refute NewsItemPolicy.unpublish(@host, %{})
-    assert NewsItemPolicy.unpublish(@admin, %{})
-  end
-
-  test "only admins can delete" do
-    refute NewsItemPolicy.delete(@guest, %{})
-    refute NewsItemPolicy.delete(@user, %{})
-    refute NewsItemPolicy.delete(@editor, %{})
-    refute NewsItemPolicy.delete(@host, %{})
-    assert NewsItemPolicy.delete(@admin, %{})
+  test "item logger can delete if it's not published" do
+    refute NewsItemPolicy.delete(@editor, %{logger: @editor, status: :published})
+    refute NewsItemPolicy.delete(@editor, %{logger: @admin, status: :draft})
+    assert NewsItemPolicy.delete(@editor, %{logger: @editor, status: :draft})
+    assert NewsItemPolicy.delete(@editor, %{logger: @editor, status: :queued})
   end
 end

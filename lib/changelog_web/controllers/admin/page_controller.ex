@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Admin.PageController do
 
   plug Authorize, Changelog.AdminPolicy
 
-  def index(conn, _params) do
+  def index(conn = %{assigns: %{current_user: %{admin: true}}}, _params) do
     newsletters =
       [Newsletters.community(),
        Newsletters.weekly(),
@@ -21,6 +21,12 @@ defmodule ChangelogWeb.Admin.PageController do
       draft_posts: draft_posts(),
       members: members(),
       podcasts: podcasts())
+  end
+  def index(conn = %{assigns: %{current_user: %{editor: true}}}, _params) do
+    redirect(conn, to: admin_news_item_path(conn, :index))
+  end
+  def index(conn = %{assigns: %{current_user: %{host: true}}}, _params) do
+    redirect(conn, to: admin_podcast_path(conn, :index))
   end
 
   defp draft_episodes do

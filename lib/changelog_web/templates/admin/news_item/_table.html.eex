@@ -64,14 +64,14 @@
         <td class="center aligned">
           <div class="ui small basic buttons">
           <%= if @status == :queued do %>
-            <%= icon_link "move", to: admin_news_item_path(@conn, :edit, item) %>
+            <%= icon_link("move", to: admin_news_item_path(@conn, :edit, item)) %>
           <% end %>
-            <%= icon_link "eye", to: show_or_preview_path(@conn, item) %>
-            <%= icon_link "edit", to: admin_news_item_path(@conn, :edit, item) %>
+            <%= icon_link("eye", to: show_or_preview_path(@conn, item)) %>
+            <%= if NewsItemPolicy.edit(@current_user, item), do: icon_link("edit", to: admin_news_item_path(@conn, :edit, item)) %>
           <%= if @status == :submitted do %>
-            <%= icon_link "thumbs down", to: admin_news_item_path(@conn, :decline, item), method: :delete, data: [confirm: "Decline this item?"] %>
+            <%= icon_link("thumbs down", to: admin_news_item_path(@conn, :decline, item), method: :delete, data: [confirm: "Decline this item?"]) %>
           <% else %>
-            <%= icon_link "trash", to: admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"] %>
+            <%= if NewsItemPolicy.delete(@current_user, item), do: icon_link("trash", to: admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
           <% end %>
           </div>
         </td>

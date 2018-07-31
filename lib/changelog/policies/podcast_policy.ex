@@ -2,9 +2,9 @@ defmodule Changelog.PodcastPolicy do
   use Changelog.DefaultPolicy
 
   def create(actor), do: is_admin(actor)
-  def index(actor), do: is_admin(actor)
+  def index(actor), do: is_admin_or_host(actor)
   def show(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
-  def update(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
+  def update(actor, _), do: is_admin(actor)
   def delete(actor, _), do: is_admin(actor)
 
   defp is_host(actor, podcast) do

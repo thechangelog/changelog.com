@@ -3,7 +3,8 @@ defmodule ChangelogWeb.Admin.SearchController do
 
   alias Changelog.{Topic, Episode, NewsItem, NewsSource, Person, Sponsor, Post}
 
-  plug Authorize, Changelog.SearchPolicy
+  plug :assign_type when action in [:one]
+  plug Authorize, [Changelog.SearchPolicy, :type]
 
   def all(conn, params = %{"q" => query}) do
     render(conn, with_format("all", params["f"]), %{
@@ -20,7 +21,7 @@ defmodule ChangelogWeb.Admin.SearchController do
     })
   end
 
-  def one(conn, params = %{"q" => query, "type" => type}) do
+  def one(conn = %{assigns: %{type: type}}, params = %{"q" => query}) do
     results = case(type) do
       "topic" -> topic_query(query)
       "episode" -> episode_query(query)
@@ -32,6 +33,10 @@ defmodule ChangelogWeb.Admin.SearchController do
     end
 
     render(conn, with_format(type, params["f"]), %{results: results, query: query})
+  end
+
+  defp assign_type(conn = %{params: %{"type" => type}}, _) do
+    assign(conn, :type, type)
   end
 
   defp episode_query(q),     do: Repo.all(Episode.published(from q in Episode, where: ilike(q.title, ^"%#{q}%"))) |> Repo.preload(:podcast)

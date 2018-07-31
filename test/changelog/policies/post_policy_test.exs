@@ -3,38 +3,25 @@ defmodule Changelog.PostPolicyTest do
 
   alias Changelog.PostPolicy
 
-  test "only admins and editors can new/create" do
-    refute PostPolicy.create(@guest)
-    refute PostPolicy.new(@user)
-    refute PostPolicy.new(@host)
-    assert PostPolicy.create(@admin)
-    assert PostPolicy.new(@editor)
+  test "only admins and editors can new/create/index" do
+    for policy <- [:new, :create, :index] do
+      refute apply(PostPolicy, policy, [@guest])
+      refute apply(PostPolicy, policy, [@user])
+      refute apply(PostPolicy, policy, [@host])
+      assert apply(PostPolicy, policy, [@admin])
+      assert apply(PostPolicy, policy, [@editor])
+    end
   end
 
-  test "only admins and editors can get the index" do
-    refute PostPolicy.index(@guest)
-    refute PostPolicy.index(@user)
-    refute PostPolicy.index(@host)
-    assert PostPolicy.index(@admin)
-    assert PostPolicy.index(@editor)
-  end
-
-  test "only admins and post author can show" do
-    refute PostPolicy.show(@guest, %{})
-    refute PostPolicy.show(@user, %{})
-    refute PostPolicy.show(@editor, %{})
-    refute PostPolicy.show(@host, %{})
-    assert PostPolicy.show(@admin, %{})
-    assert PostPolicy.show(@editor, %{author: @editor})
-  end
-
-  test "only admins and post author can edit/update" do
-    refute PostPolicy.edit(@guest, %{})
-    refute PostPolicy.update(@user, %{})
-    refute PostPolicy.update(@editor, %{})
-    refute PostPolicy.edit(@host, %{})
-    assert PostPolicy.update(@admin, %{})
-    assert PostPolicy.edit(@editor, %{author: @editor})
+  test "only admins and post author can show/edit/update" do
+    for policy <- [:show, :edit, :update] do
+      refute apply(PostPolicy, policy, [@guest, %{}])
+      refute apply(PostPolicy, policy, [@user, %{}])
+      refute apply(PostPolicy, policy, [@editor, %{}])
+      refute apply(PostPolicy, policy, [@host, %{}])
+      assert apply(PostPolicy, policy, [@admin, %{}])
+      assert apply(PostPolicy, policy, [@editor, %{author: @editor}])
+    end
   end
 
   test "only admins can delete" do
@@ -43,5 +30,11 @@ defmodule Changelog.PostPolicyTest do
     refute PostPolicy.delete(@editor, %{})
     refute PostPolicy.delete(@host, %{})
     assert PostPolicy.delete(@admin, %{})
+  end
+
+  test "post author can delete if it's not published" do
+    refute PostPolicy.delete(@editor, %{author: @editor, published: true})
+    refute PostPolicy.delete(@editor, %{author: @user, published: false})
+    assert PostPolicy.delete(@editor, %{author: @editor, published: false})
   end
 end

@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsItemView do
   use ChangelogWeb, :admin_view
 
+  alias Changelog.{AdminsOnlyPolicy, NewsItemPolicy}
   alias Changelog.{NewsItem, NewsSource, Person, Topic}
   alias ChangelogWeb.{Endpoint, PersonView, NewsItemView}
   alias ChangelogWeb.Admin.NewsSponsorshipView

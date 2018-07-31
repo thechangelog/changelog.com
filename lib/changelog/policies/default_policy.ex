@@ -21,6 +21,15 @@ defmodule Changelog.DefaultPolicy do
       defp is_host(nil), do: false
       defp is_host(actor), do: Map.get(actor, :host, false)
 
+      defp is_admin_or_editor(nil), do: false
+      defp is_admin_or_editor(actor), do: is_admin(actor) || is_editor(actor)
+
+      defp is_admin_or_host(nil), do: false
+      defp is_admin_or_host(actor), do: is_admin(actor) || is_host(actor)
+
+      defp is_admin_editor_or_host(nil), do: false
+      defp is_admin_editor_or_host(actor), do: is_admin_or_host(actor) || is_editor(actor)
+
       defoverridable [new: 1, create: 1, index: 1, show: 2, edit: 2, update: 2, delete: 2]
     end
   end

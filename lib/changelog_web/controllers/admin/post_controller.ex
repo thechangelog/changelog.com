@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.PostController do
   alias Changelog.Post
 
   plug :assign_post when action in [:edit, :update, :delete]
-  plug Authorize, [Changelog.AdminsOnlyPolicy, :post]
+  plug Authorize, [Changelog.PostPolicy, :post]
   plug :scrub_params, "post" when action in [:create, :update]
 
   def index(conn, params) do
@@ -80,7 +80,7 @@ defmodule ChangelogWeb.Admin.PostController do
   end
 
   defp assign_post(conn = %{params: %{"id" => id}}, _) do
-    post = Repo.get!(Post, id)
+    post = Repo.get!(Post, id) |> Post.preload_all
     assign(conn, :post, post)
   end
 end
