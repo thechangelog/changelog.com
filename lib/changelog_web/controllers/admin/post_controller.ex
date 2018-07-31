@@ -7,7 +7,7 @@ defmodule ChangelogWeb.Admin.PostController do
   plug Authorize, [Changelog.PostPolicy, :post]
   plug :scrub_params, "post" when action in [:create, :update]
 
-  def index(conn, params) do
+  def index(conn = %{assigns: %{current_user: me}}, params) do
     page =
       Post.published
       |> Post.newest_first
@@ -22,6 +22,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
     drafts =
       Post.unpublished
+      |> Post.authored_by(me)
       |> Post.newest_first(:inserted_at)
       |> preload(:author)
       |> Repo.all
