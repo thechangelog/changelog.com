@@ -9,7 +9,9 @@
     <% else %>
       <th>Publish Date</th>
       <th>Duration</th>
-      <th>Reach</th>
+    <%= if @status == :published do %>
+      <th>Reach <%= info_icon("last updated #{TimeView.pretty_date(PodcastView.last_stat(@podcast).date)}") %></th>
+    <% end %>
     <% end %>
       <th class="center aligned">
       <%= if @actions do %>
@@ -40,7 +42,9 @@
     <%= if episode.published do %>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <td><%= TimeView.duration(episode.duration) %></td>
+    <%= if @status == :published do %>
       <td><%= reach_count(episode) %></td>
+    <% end %>
     <% else %>
       <td><%= link(ts(episode.recorded_at), to: TimeView.time_is_url(episode.recorded_at), rel: "external") %></td>
     <% end %>

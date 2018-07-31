@@ -134,16 +134,8 @@ defmodule Changelog.Podcast do
     |> Repo.one
   end
 
-  def preload_topics(query = %Ecto.Query{}) do
-    query
-    |> Ecto.Query.preload(podcast_topics: ^PodcastTopic.by_position)
-    |> Ecto.Query.preload(:topics)
-  end
-  def preload_topics(podcast) do
-    podcast
-    |> Repo.preload(podcast_topics: {PodcastTopic.by_position, :topic})
-    |> Repo.preload(:topics)
-  end
+  def preload_episode_stats(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :episode_stats)
+  def preload_episode_stats(podcast), do: Repo.preload(podcast, :episode_stats)
 
   def preload_hosts(query = %Ecto.Query{}) do
     query
@@ -154,6 +146,17 @@ defmodule Changelog.Podcast do
     podcast
     |> Repo.preload(podcast_hosts: {PodcastHost.by_position, :person})
     |> Repo.preload(:hosts)
+  end
+
+  def preload_topics(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(podcast_topics: ^PodcastTopic.by_position)
+    |> Ecto.Query.preload(:topics)
+  end
+  def preload_topics(podcast) do
+    podcast
+    |> Repo.preload(podcast_topics: {PodcastTopic.by_position, :topic})
+    |> Repo.preload(:topics)
   end
 
   def update_stat_counts(podcast) do

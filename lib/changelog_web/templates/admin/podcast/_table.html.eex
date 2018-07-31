@@ -9,8 +9,8 @@
       <th>Twitter</th>
       <th>Subscribers</th>
       <th>Episodes</th>
-      <th>Downloads</th>
-      <th>Reach</th>
+      <th>Downloads <%= help_icon("Bytes downloaded / bytes per episode") %></th>
+      <th>Reach <%= help_icon("Unique IPs per day") %></th>
       <th></th>
     </tr>
   </thead>

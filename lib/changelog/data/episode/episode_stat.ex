@@ -18,15 +18,14 @@ defmodule Changelog.EpisodeStat do
   end
 
   def on_date(date, query \\ __MODULE__), do: from(q in query, where: q.date == ^date)
+  def with_podcast(query \\ __MODULE__, podcast), do: from(q in query, where: q.podcast_id == ^podcast.id)
 
   def oldest_date do
     Repo.one(from s in __MODULE__, select: [min(s.date)], limit: 1)
     |> List.first
   end
 
-  def any_on_date?(date) do
-    Repo.count(on_date(date)) > 0
-  end
+  def any_on_date?(date), do: Repo.count(on_date(date)) > 0
 
   def changeset(struct, params \\ %{}) do
     struct

@@ -1,22 +1,18 @@
 <div class="ui basic segment">
-  <div class="ui stackable grid">
-    <div class="ui eight wide column">
-      <h1 class="ui header">Episode Drafts (Next Up)</h1>
-    <%= if Enum.any?(@draft_episodes) do %>
+  <div class="ui stackable equal width grid">
+  <%= if Enum.any?(@draft_episodes) do %>
+    <div class="ui column">
+      <h1 class="ui header">All episode drafts (next up)</h1>
       <%= render("_draft_episodes_table.html", assigns) %>
-    <% else %>
-      <p>There are no draft episodes at this time.</p>
-    <% end %>
     </div>
+  <% end %>
 
-    <div class="ui eight wide column">
-      <h1 class="ui header">Post Drafts</h1>
-    <%= if Enum.any?(@draft_posts) do %>
-      <%= render("_draft_posts_table.html", assigns) %>
-    <% else %>
-      <p>There are no draft posts at this time.</p>
-    <% end %>
+  <%= if Enum.any?(@draft_items) do %>
+    <div class="ui column">
+      <h1 class="ui header">My news drafts</h1>
+      <%= render("_draft_items_table.html", assigns) %>
     </div>
+  <% end %>
   </div>
 </div>
 
@@ -49,26 +45,34 @@
     </div>
 
     <div class="ui four wide column">
-      <h1 class="ui header">Members</h1>
+      <h1 class="ui header">People</h1>
       <table class="ui celled table">
         <thead>
           <tr>
             <th>Metric</th>
-            <th></th>
+            <th class="center aligned">
+              <div class="ui basic buttons">
+                <%= icon_link("plus", to: admin_person_path(@conn, :new), title: "New Person") %>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>New Today</td>
-            <td><%= @members[:today] %></td>
+            <td>Members today</td>
+            <td><%= @members[:today] |> comma_separated %></td>
           </tr>
           <tr>
-            <td>In Slack</td>
-            <td><%= @members[:slack] %></td>
+            <td>Members in Slack</td>
+            <td><%= @members[:slack] |> comma_separated %></td>
           </tr>
           <tr>
-            <td>Total</td>
-            <td><%= @members[:total] %></td>
+            <td>Members in total</td>
+            <td><%= @members[:total] |> comma_separated %></td>
+          </tr>
+          <tr>
+            <td>People in total</td>
+            <td><%= Repo.count(Changelog.Person) |> comma_separated %></td>
           </tr>
         </tbody>
       </table>

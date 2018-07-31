@@ -21,17 +21,9 @@
       <td><%= EpisodeView.reach_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic icon buttons">
-          <%= link to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button" do %>
-            <i class="line chart icon"></i>
-          <% end %>
-
-          <%= link to: episode_path(@conn, :show, @podcast.slug, episode.slug), class: "ui button" do %>
-            <i class="eye icon"></i>
-          <% end %>
-
-          <%= link to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug), class: "ui button" do %>
-            <i class="edit icon"></i>
-          <% end %>
+          <%= icon_link("line chart", to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug)) %>
+          <%= icon_link("eye", to: episode_path(@conn, :show, @podcast.slug, episode.slug)) %>
+          <%= icon_link("edit", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug)) %>
         </div>
       </td>
     </tr>

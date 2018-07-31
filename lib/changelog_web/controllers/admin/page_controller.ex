@@ -1,11 +1,11 @@
 defmodule ChangelogWeb.Admin.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Newsletters, Person, Podcast, Post}
+  alias Changelog.{Episode, NewsItem, Newsletters, Person, Podcast}
 
   plug Authorize, Changelog.AdminPolicy
 
-  def index(conn = %{assigns: %{current_user: %{admin: true}}}, _params) do
+  def index(conn = %{assigns: %{current_user: me = %{admin: true}}}, _params) do
     newsletters =
       [Newsletters.community(),
        Newsletters.weekly(),
@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Admin.PageController do
     render(conn, :index,
       newsletters: newsletters,
       draft_episodes: draft_episodes(),
-      draft_posts: draft_posts(),
+      draft_items: draft_items(me),
       members: members(),
       podcasts: podcasts())
   end
@@ -37,11 +37,12 @@ defmodule ChangelogWeb.Admin.PageController do
     |> Episode.preload_podcast
   end
 
-  defp draft_posts do
-    Post.unpublished
-    |> Post.newest_last(:inserted_at)
+  defp draft_items(user) do
+    NewsItem.drafted
+    |> NewsItem.newest_first(:inserted_at)
+    |> NewsItem.logged_by(user)
+    |> NewsItem.preload_all
     |> Repo.all
-    |> Post.preload_author
   end
 
   defp members do

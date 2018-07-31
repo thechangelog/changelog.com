@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Admin.PodcastView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{AdminsOnlyPolicy, EpisodePolicy, Podcast, PodcastPolicy, Repo, Topic}
+  alias Changelog.{EpisodePolicy, PodcastPolicy}
+  alias Changelog.{EpisodeStat, Podcast, Repo, Topic}
   alias ChangelogWeb.PodcastView
 
   def episode_count(podcast), do: PodcastView.episode_count(podcast)
@@ -14,6 +15,19 @@ defmodule ChangelogWeb.Admin.PodcastView do
     end
   end
 
+  def last_stat(podcast) do
+    podcast
+      |> EpisodeStat.with_podcast
+      |> EpisodeStat.newest_first
+      |> EpisodeStat.limit(1)
+      |> Repo.one
+  end
+
+  def position_options do
+    count = Podcast.ours |> Podcast.not_retired |> Repo.count
+    1..count
+  end
+
   def status_label(podcast) do
     case podcast.status do
       :draft -> content_tag(:span, "Draft", class: "ui tiny yellow basic label")
@@ -21,11 +35,6 @@ defmodule ChangelogWeb.Admin.PodcastView do
       :published -> content_tag(:span, "Published", class: "ui tiny green basic label")
       :retired -> content_tag(:span, "Retired", class: "ui tiny basic label")
     end
-  end
-
-  def position_options do
-    count = Podcast.ours |> Podcast.not_retired |> Repo.count
-    1..count
   end
 
   def status_options do

@@ -32,6 +32,11 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>
     """
   end
+  def info_icon(info_text) do
+    ~e"""
+    <i class="info circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= info_text %>"></i>
+    """
+  end
 
   def icon_link(icon_name, options) do
     options = Keyword.put(options, :class, "ui icon button")

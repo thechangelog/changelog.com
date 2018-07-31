@@ -6,16 +6,18 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
   @valid_attrs %{title: "Ruby on Rails", slug: "ruby-on-rails", author_id: 42}
   @invalid_attrs %{title: "Ruby on Rails", slug: "", author_id: 42}
 
-  @tag :as_admin
-  test "lists all posts", %{conn: conn} do
+  @tag :as_inserted_admin
+  test "lists published posts and my draft posts", %{conn: conn} do
     t1 = insert(:published_post)
-    t2 = insert(:post)
+    t2 = insert(:post, author: conn.assigns.current_user)
+    t3 = insert(:post)
 
     conn = get(conn, admin_post_path(conn, :index))
 
     assert html_response(conn, 200) =~ ~r/Posts/
     assert String.contains?(conn.resp_body, t1.title)
     assert String.contains?(conn.resp_body, t2.title)
+    refute String.contains?(conn.resp_body, t3.title)
   end
 
   @tag :as_admin

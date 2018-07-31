@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
   alias Changelog.{Episode, EpisodePolicy, EpisodeStat, Person, Sponsor, Topic}
   alias ChangelogWeb.{EpisodeView, PersonView, TimeView}
+  alias ChangelogWeb.Admin.PodcastView
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
   def audio_url(episode), do: EpisodeView.audio_url(episode)
@@ -25,6 +26,15 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def featured_label(episode) do
     if episode.featured do
       content_tag :span, "Recommended", class: "ui tiny blue basic label"
+    end
+  end
+
+  def last_stat_date(podcast) do
+    case PodcastView.last_stat(podcast) do
+      stat = %{} ->
+        {:ok, result} = Timex.format(stat.date, "{Mshort} {D}")
+        result
+      nil -> ""
     end
   end
 
@@ -56,6 +66,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     end
   end
 
+  def stat_date(nil), do: "never"
   def stat_date(stat) do
     {:ok, result} = Timex.format(stat.date, "{WDshort}, {M}/{D}")
     result
