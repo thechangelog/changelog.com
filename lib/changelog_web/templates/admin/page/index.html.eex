@@ -1,20 +1,16 @@
+<%= if Enum.any?(@draft_items) do %>
 <div class="ui basic segment">
-  <div class="ui stackable equal width grid">
-  <%= if Enum.any?(@draft_episodes) do %>
-    <div class="ui column">
-      <h1 class="ui header">All episode drafts (next up)</h1>
-      <%= render("_draft_episodes_table.html", assigns) %>
-    </div>
-  <% end %>
-
-  <%= if Enum.any?(@draft_items) do %>
-    <div class="ui column">
-      <h1 class="ui header">My news drafts</h1>
-      <%= render("_draft_items_table.html", assigns) %>
-    </div>
-  <% end %>
-  </div>
+  <h1 class="ui header">News drafts</h1>
+  <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{items: @draft_items, status: :draft})) %>
 </div>
+<% end %>
+
+<%= if Enum.any?(@draft_episodes) do %>
+<div class="ui basic segment">
+  <h1 class="ui header">Episode drafts (next up)</h1>
+  <%= render("_draft_episodes_table.html", assigns) %>
+</div>
+<% end %>
 
 <div class="ui basic segment">
   <div class="ui centered stackable grid">

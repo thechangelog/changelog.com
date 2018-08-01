@@ -14,7 +14,15 @@
       <%= if Enum.member?([:published, :scheduled], @status) do %>
         <th>Publish Time</th>
       <% end %>
-        <th></th>
+        <th class="center aligned">
+        <%= if @status == :draft do %>
+          <div class="ui basic buttons">
+            <%= if NewsItemPolicy.new(@current_user), do: icon_link("add", to: admin_news_item_path(@conn, :new), title: "New Item") %>
+            <%= if AdminsOnlyPolicy.new(@current_user), do: icon_link("rss", to: admin_news_source_path(@conn, :new), title: "New Source") %>
+            <%= if AdminsOnlyPolicy.new(@current_user), do: icon_link("newspaper", to: admin_news_issue_path(@conn, :new), title: "New Issue") %>
+          </div>
+        <% end %>
+        </th>
       </tr>
     </thead>
 

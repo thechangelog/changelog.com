@@ -12,7 +12,7 @@
   <%= for episode <- @draft_episodes do %>
     <tr>
       <td><%= link(episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, episode.podcast.slug)) %></td>
-      <td><%= episode.slug %></td>
+      <td><%= episode.title %></td>
       <td>
       <%= for person <- Episode.participants(episode) do %>
         <%= link to: admin_person_path(@conn, :edit, person), title: person.name, data: [popup: true] do %>
@@ -25,6 +25,7 @@
         <div class="ui small basic icon buttons">
           <%= icon_link("eye", to: episode_path(@conn, :preview, episode.podcast.slug, episode.slug)) %>
           <%= icon_link("edit", to: admin_podcast_episode_path(@conn, :edit, episode.podcast.slug, episode.slug)) %>
+          <%= icon_link("trash", to: admin_podcast_episode_path(@conn, :show, episode.podcast.slug, episode.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>
     </tr>
