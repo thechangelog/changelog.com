@@ -14,7 +14,7 @@
       <% end %>
     </div>
 
-  <%= if AdminsOnlyPolicy.index(@current_user) do %>
+  <%= if Policies.AdminsOnly.index(@current_user) do %>
     <div class="ui basic buttons">
       <%= link "Sources", to: admin_news_source_path(@conn, :index), class: "ui button" %>
       <%= link to: admin_news_source_path(@conn, :new), class: "ui icon button" do %>
@@ -38,7 +38,7 @@
     <%= render("_table.html", Map.merge(assigns, %{status: :draft, items: @drafts})) %>
   <% end %>
 
-<%= if AdminsOnlyPolicy.index(@current_user) do %>
+<%= if Policies.AdminsOnly.index(@current_user) do %>
   <%= if Enum.any?(@submitted) do %>
     <h2 id="submitted" class="ui header">Submitted</h2>
     <%= render("_table.html", Map.merge(assigns, %{status: :submitted, items: @submitted})) %>
@@ -62,7 +62,7 @@
     </div>
   <% end %>
 
-<%= if AdminsOnlyPolicy.index(@current_user) do %>
+<%= if Policies.AdminsOnly.index(@current_user) do %>
   <h2 id="sponsorships" class="ui header">
     <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
 

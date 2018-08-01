@@ -3,6 +3,8 @@ defmodule Changelog.PolicyCase do
 
   using do
     quote do
+      alias Changelog.Policies
+
       @guest nil
       @user %{id: 1, admin: false}
       @admin %{id: 2, admin: true}

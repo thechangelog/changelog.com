@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Admin.PageController do
 
   alias Changelog.{Episode, NewsItem, Newsletters, Person, Podcast}
 
-  plug Authorize, Changelog.AdminPolicy
+  plug Authorize, Policies.Admin
 
   def index(conn = %{assigns: %{current_user: me = %{admin: true}}}, _params) do
     newsletters =

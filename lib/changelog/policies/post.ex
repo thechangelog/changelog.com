@@ -1,5 +1,5 @@
-defmodule Changelog.PostPolicy do
-  use Changelog.DefaultPolicy
+defmodule Changelog.Policies.Post do
+  use Changelog.Policies.Default
 
   def create(actor), do: is_admin_or_editor(actor)
   def index(actor), do: is_admin_or_editor(actor)

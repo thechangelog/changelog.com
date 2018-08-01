@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.BenefitController do
   alias Changelog.Benefit
 
   plug :assign_benefit when action in [:edit, :update, :delete]
-  plug Authorize, [Changelog.AdminsOnlyPolicy, :benefit]
+  plug Authorize, [Policies.AdminsOnly, :benefit]
   plug :scrub_params, "benefit" when action in [:create, :update]
 
   def index(conn, params) do

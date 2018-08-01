@@ -1,4 +1,4 @@
-defmodule Changelog.DefaultPolicy do
+defmodule Changelog.Policies.Default do
   defmacro __using__(_opts) do
     quote do
       def new(actor), do: create(actor)

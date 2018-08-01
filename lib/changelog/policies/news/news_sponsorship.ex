@@ -1,5 +1,5 @@
-defmodule Changelog.NewsSponsorshipPolicy do
-  use Changelog.DefaultPolicy
+defmodule Changelog.Policies.NewsSponsorship do
+  use Changelog.Policies.Default
 
   def create(actor), do: is_admin(actor)
   def index(actor), do: is_admin(actor)

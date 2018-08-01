@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   alias Changelog.{HtmlKit, NewsItem, NewsSource, NewsQueue, Search, Topic, UrlKit}
 
   plug :assign_item when action in [:edit, :update, :move, :decline, :move, :unpublish, :delete]
-  plug Authorize, [Changelog.NewsItemPolicy, :item]
+  plug Authorize, [Policies.NewsItem, :item]
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
 

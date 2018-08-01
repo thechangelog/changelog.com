@@ -1,5 +1,5 @@
-defmodule Changelog.EpisodePolicy do
-  use Changelog.DefaultPolicy
+defmodule Changelog.Policies.Episode do
+  use Changelog.Policies.Default
 
   # Episode policy is based on owner podcast, which is always available
   def new(actor, podcast), do: create(actor, podcast)

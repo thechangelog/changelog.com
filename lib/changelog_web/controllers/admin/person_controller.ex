@@ -6,7 +6,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   alias Craisin.Subscriber
 
   plug :assign_person when action in [:edit, :update, :delete]
-  plug Authorize, [Changelog.PersonPolicy, :person]
+  plug Authorize, [Policies.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
   def index(conn, params) do

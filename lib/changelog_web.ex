@@ -3,7 +3,7 @@ defmodule ChangelogWeb do
     quote do
       use Phoenix.Controller, namespace: ChangelogWeb
 
-      alias Changelog.Repo
+      alias Changelog.{Policies, Repo}
       alias ChangelogWeb.Plug.{Authorize, RequireUser, RequireGuest}
       import Ecto
       import Ecto.Query
@@ -28,6 +28,7 @@ defmodule ChangelogWeb do
       import Scrivener.HTML
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
+      alias Changelog.Policies
       alias ChangelogWeb.TimeView
     end
   end
@@ -39,6 +40,7 @@ defmodule ChangelogWeb do
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1,get_flash: 2, view_module: 1]
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
+      alias Changelog.Policies
       alias ChangelogWeb.{SharedView, TimeView}
     end
   end

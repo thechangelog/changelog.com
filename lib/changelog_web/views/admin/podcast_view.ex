@@ -1,7 +1,6 @@
 defmodule ChangelogWeb.Admin.PodcastView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{EpisodePolicy, PodcastPolicy}
   alias Changelog.{EpisodeStat, Podcast, Repo, Topic}
   alias ChangelogWeb.PodcastView
 

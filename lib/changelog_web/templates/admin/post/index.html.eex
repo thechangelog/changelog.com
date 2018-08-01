@@ -5,7 +5,7 @@
   </h1>
 
   <div class="actions">
-  <%= if PostPolicy.new(@current_user) do %>
+  <%= if Policies.Post.new(@current_user) do %>
     <%= link to: admin_post_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="add write icon"></i>
       Add Post

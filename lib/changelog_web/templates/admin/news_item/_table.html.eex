@@ -17,9 +17,9 @@
         <th class="center aligned">
         <%= if @status == :draft do %>
           <div class="ui basic buttons">
-            <%= if NewsItemPolicy.new(@current_user), do: icon_link("add", to: admin_news_item_path(@conn, :new), title: "New Item") %>
-            <%= if AdminsOnlyPolicy.new(@current_user), do: icon_link("rss", to: admin_news_source_path(@conn, :new), title: "New Source") %>
-            <%= if AdminsOnlyPolicy.new(@current_user), do: icon_link("newspaper", to: admin_news_issue_path(@conn, :new), title: "New Issue") %>
+            <%= if Policies.NewsItem.new(@current_user), do: icon_link("add", to: admin_news_item_path(@conn, :new), title: "New Item") %>
+            <%= if Policies.AdminsOnly.new(@current_user), do: icon_link("rss", to: admin_news_source_path(@conn, :new), title: "New Source") %>
+            <%= if Policies.AdminsOnly.new(@current_user), do: icon_link("newspaper", to: admin_news_issue_path(@conn, :new), title: "New Issue") %>
           </div>
         <% end %>
         </th>
@@ -75,11 +75,11 @@
             <%= icon_link("move", to: admin_news_item_path(@conn, :edit, item)) %>
           <% end %>
             <%= icon_link("eye", to: show_or_preview_path(@conn, item)) %>
-            <%= if NewsItemPolicy.edit(@current_user, item), do: icon_link("edit", to: admin_news_item_path(@conn, :edit, item)) %>
+            <%= if Policies.NewsItem.edit(@current_user, item), do: icon_link("edit", to: admin_news_item_path(@conn, :edit, item)) %>
           <%= if @status == :submitted do %>
             <%= icon_link("thumbs down", to: admin_news_item_path(@conn, :decline, item), method: :delete, data: [confirm: "Decline this item?"]) %>
           <% else %>
-            <%= if NewsItemPolicy.delete(@current_user, item), do: icon_link("trash", to: admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
+            <%= if Policies.NewsItem.delete(@current_user, item), do: icon_link("trash", to: admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
           <% end %>
           </div>
         </td>

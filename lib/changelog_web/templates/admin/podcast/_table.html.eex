@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th></th>
-    <%= if PodcastPolicy.create(@current_user) do %>
+    <%= if Policies.Podcast.create(@current_user) do %>
       <th>Position</th>
     <% end %>
       <th>Status</th>
@@ -25,7 +25,7 @@
         </h2>
         <% end %>
       </td>
-    <%= if PodcastPolicy.create(@current_user) do %>
+    <%= if Policies.Podcast.create(@current_user) do %>
       <td><%= podcast.position %></td>
     <% end %>
       <td><%= status_label(podcast) %></td>
@@ -41,11 +41,11 @@
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= icon_link("eye", to: podcast_path(@conn, :show, podcast.slug)) %>
-        <%= if PodcastPolicy.edit(@current_user, podcast) do %>
+        <%= if Policies.Podcast.edit(@current_user, podcast) do %>
           <%= icon_link("edit", to: admin_podcast_path(@conn, :edit, podcast.slug)) %>
         <% end %>
           <%= icon_link("list", to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
-        <%= if EpisodePolicy.new(@current_user, podcast) do %>
+        <%= if Policies.Episode.new(@current_user, podcast) do %>
           <%= icon_link("add", to: admin_podcast_episode_path(@conn, :new, podcast.slug)) %>
         <% end %>
         </div>

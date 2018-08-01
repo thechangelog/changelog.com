@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
                    Github, NewsItem, NewsQueue, Podcast}
 
   plug :assign_podcast
-  plug Authorize, [Changelog.EpisodePolicy, :podcast]
+  plug Authorize, [Policies.Episode, :podcast]
   plug :scrub_params, "episode" when action in [:create, :update]
 
   # pass assigned podcast as a function arg

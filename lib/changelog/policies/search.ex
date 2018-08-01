@@ -1,5 +1,5 @@
-defmodule Changelog.SearchPolicy do
-  use Changelog.DefaultPolicy
+defmodule Changelog.Policies.Search do
+  use Changelog.Policies.Default
 
   def all(actor), do: is_admin(actor)
   def all(actor, _), do: is_admin(actor)

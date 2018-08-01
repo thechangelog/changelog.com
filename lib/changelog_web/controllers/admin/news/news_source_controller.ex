@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
   alias Changelog.NewsSource
 
   plug :assign_source when action in [:edit, :update, :delete]
-  plug Authorize, [Changelog.AdminsOnlyPolicy, :source]
+  plug Authorize, [Policies.AdminsOnly, :source]
   plug :scrub_params, "news_source" when action in [:create, :update]
 
   def index(conn, params) do

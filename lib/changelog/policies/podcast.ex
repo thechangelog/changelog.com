@@ -1,5 +1,5 @@
-defmodule Changelog.PodcastPolicy do
-  use Changelog.DefaultPolicy
+defmodule Changelog.Policies.Podcast do
+  use Changelog.Policies.Default
 
   def create(actor), do: is_admin(actor)
   def index(actor), do: is_admin_or_host(actor)

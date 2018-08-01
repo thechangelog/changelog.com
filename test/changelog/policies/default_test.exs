@@ -1,7 +1,7 @@
-defmodule Changelog.DefaultPolicyTest do
+defmodule Changelog.Policies.DefaultTest do
   use Changelog.PolicyCase
 
-  defmodule TestPolicy, do: use Changelog.DefaultPolicy
+  defmodule TestPolicy, do: use Changelog.Policies.Default
 
   test "nobody can new/create" do
     for actor <- @all do
