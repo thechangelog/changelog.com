@@ -57,7 +57,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     activity =
       (topic_activity ++ source_activity)
       |> Enum.sort(&(Timex.after?(&1.updated_at, &2.updated_at)))
-      |> Enum.chunk(activity_count)
+      |> Enum.chunk_every(activity_count)
 
     render(conn, :index, drafts: drafts, submitted: submitted, queued: queued,
                          scheduled: scheduled, activity: activity,

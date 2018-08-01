@@ -12,7 +12,7 @@ defmodule Changelog.Mixfile do
       aliases: aliases(),
       deps: deps(),
       preferred_cli_env: [
-         "coveralls": :test,
+         coveralls: :test,
          "coveralls.html": :test,
          "coveralls.json": :test],
       test_coverage: [tool: ExCoveralls],
@@ -87,7 +87,7 @@ defmodule Changelog.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

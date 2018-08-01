@@ -42,10 +42,15 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   test "creates news item and publishes immediately", %{conn: conn} do
     logger = insert(:person)
 
-    with_mock(Buffer, [queue: fn(_) -> true end]) do
+    with_mocks([
+      {Buffer, [], [queue: fn(_) -> true end]},
+      {Algolia, [], [save_object: fn(_, _, _) -> true end]}
+    ]) do
       conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "publish")
       assert redirected_to(conn) == admin_news_item_path(conn, :index)
       assert count(NewsItem.published) == 1
+      assert called(Buffer.queue(:_))
+      assert called(Algolia.save_object(:_, :_, :_))
     end
   end
 
