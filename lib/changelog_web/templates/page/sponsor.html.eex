@@ -4,12 +4,35 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
-      <h1>Your partner in reaching developers</h1>
+      <h1>We reach 100,000+ creative professionals every&nbsp;week</h1>
       <p>100,000 monthly pageviews&nbsp;&nbsp;•&nbsp;&nbsp;225,000 monthly podcast listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> email subscribers</p>
 
-      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), class: "marketing-button button_large" %>
-      <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
+      <div class="marketing-button_group">
+        <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+      </div>
     </header>
+
+    <div class="marketing-slider">
+      <%= for story <- @stories do %>
+        <div class="marketing-slider-item">
+          <%= link to: "#todo-sponsor-story-path", class: "marketing-slider-item-inner", title: "View Story" do %>
+            <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>@2x.png 2x' alt="<%= story.sponsor %>" width="400">
+
+            <blockquote class="sponsor_story-quote">
+              <div class="sponsor_story-quote-body">
+                <p>"<%= story.quote.content %>"</p>
+              </div>
+              <footer class="marketing-quote-footer">
+                <img src='<%= static_url(@conn, "/images/content/sponsors/#{story.quote.image}") %>' alt="" width="50" height="50">
+                <strong><%= story.quote.name %></strong>
+                <span class="quote-title"><%= story.quote.title %></span>
+              </footer>
+            </blockquote>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </section>
 
   <section class="marketing-section marketing-section--body">
@@ -38,8 +61,10 @@
     </div>
 
     <div class="marketing-section-centered">
-      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), title: "", class: "marketing-button button_large" %>
-      <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
+      <div class="marketing-button_group">
+        <%= link "Get started", to: page_path(@conn, :sponsor_pricing), title: "", class: "button_large" %>
+        <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
+      </div>
     </div>
   </section>
 

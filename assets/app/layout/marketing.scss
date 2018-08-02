@@ -11,20 +11,19 @@
     width: 100%;
   }
 
-  &-button {
-    margin-top: 20px;
+  // Button Group
+  &-button_group {
+    margin-top: 30px;
     padding-left: 30px;
     padding-right: 30px;
-    @media (min-width: $tablet) { margin-top: 40px; }
-
-    .marketing-section--intro & {
-      margin-top: 20px;
-      @media (min-width: $tablet) { margin-top: 50px; }
-    }
 
     .page-page-weekly &,
     .page-page-nightly & {
       margin: 0;
+    }
+
+    .button_large {
+      margin: 10px;
     }
   }
   p.button_note {
@@ -36,6 +35,43 @@
     }
   }
 
+  // Slider
+  &-slider {
+    margin: $base-spacing*2 0;
+
+    &-item {
+      margin: 0 20px;
+
+      @include breakpoint(tablet) {
+        margin: 0 30px;
+      }
+
+      &-inner {
+        background: $white;
+        border-radius: 3px;
+        display: block;
+        margin: 0 auto;
+        max-width: 1217px;
+        padding: 1em 1em $base-spacing*2;
+        transition: box-shadow 0.3s ease-in-out;
+
+        &:hover {
+          box-shadow: 0 0 40px 2px #000;
+        }
+
+        &,
+        p {
+          color: $black !important;
+        }
+
+        @include breakpoint(tablet) {
+          padding: $base-spacing $base-spacing $base-spacing*2;
+        }
+      }
+    }
+  }
+
+  // Section
   &-section {
     padding: 40px 0;
 
@@ -98,7 +134,7 @@
 
       &-leadin {
         font-family: $code;
-        font-size: 13px !important;
+        font-size: 14px !important;
         margin-bottom: 30px;
       }
 
