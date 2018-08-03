@@ -19,13 +19,18 @@ defmodule Changelog.AgentKitTest do
     end
 
     test "returns :error and :unknown_agent when agent isn't known" do
-      agent = "Castro 2 Episode Download (1000 subscribers; feed-id=554901; +http://overcast.fm/)"
+      agent = "Castro 2 Episode Download (1000 subscribers)"
       assert {:error, :unknown_agent} = AgentKit.get_subscribers(agent)
     end
 
     test "returns :ok and tuple with agent/subs when count is there and agent is known" do
       agent = "PlayerFM/1.0 Podcast Sync (5033 subscribers; url=https://player.fm/series/the-changelog-1282967)"
       assert {:ok, {"PlayerFM", 5033}} = AgentKit.get_subscribers(agent)
+    end
+
+    test "returns :ok and tuple with agent/subs with case insensitive match" do
+      agent = "Mozilla/5.0 (compatible; inoreader.com; 25 subscribers)"
+      assert {:ok, {"Inoreader", 25}} = AgentKit.get_subscribers(agent)
     end
   end
 end

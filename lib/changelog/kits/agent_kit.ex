@@ -1,5 +1,5 @@
 defmodule Changelog.AgentKit do
-  @known_agents ~w(Overcast PlayerFM)
+  @known_agents ["Overcast", "PlayerFM", "Feedbin", "Feed Wrangler", "Inoreader"]
 
   def get_subscribers(nil), do: {:error, :no_ua_string}
   def get_subscribers(ua) do
@@ -9,7 +9,7 @@ defmodule Changelog.AgentKit do
   end
 
   defp extract_known_agent(ua) do
-    Enum.find(@known_agents, fn(x) -> String.match?(ua, ~r/#{x}/) end)
+    Enum.find(@known_agents, fn(x) -> String.match?(ua, ~r/#{x}/i) end)
   end
 
   defp extract_subscribers(ua) do
