@@ -10,6 +10,7 @@ import Overlay from "modules/overlay";
 import ImageButton from "modules/imageButton";
 import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
+import Slider from "modules/slider";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
 import ts from "../shared/ts";
@@ -19,6 +20,7 @@ import parseTime from "../shared/parseTime";
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
+const slider = new Slider(".js-slider");
 
 window.u = u;
 

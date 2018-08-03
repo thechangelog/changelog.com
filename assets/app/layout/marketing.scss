@@ -38,6 +38,7 @@
   // Slider
   &-slider {
     margin: $base-spacing*2 0;
+    transition: max-height 1s linear;
 
     &-item {
       margin: 0 20px;
@@ -66,6 +67,37 @@
 
         @include breakpoint(tablet) {
           padding: $base-spacing $base-spacing $base-spacing*2;
+        }
+      }
+    }
+
+    .slider_pagination {
+      display: flex;
+      justify-content: space-between;
+      margin: $base-spacing auto 0;
+      padding: 0 $base-spacing;
+      max-width: 600px;
+
+      &-item {
+        $size: 30px;
+        background: $green;
+        border: 10px solid $black;
+        border-radius: $size;
+        display: inline-block;
+        opacity: 0.5;
+        height: $size;
+        width: $size;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+
+        &.is-active {
+          background: $green;
+          opacity: 1;
+          transform: scale(1.4);
         }
       }
     }

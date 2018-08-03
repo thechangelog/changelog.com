@@ -1,7 +1,7 @@
 defmodule Changelog.SponsorStory do
   defstruct [:sponsor, :slug, :logo, :quote, :examples, :content_md]
 
-  def all, do: [rollbar()]
+  def all, do: [rollbar(), intel(), fastly(), linode(), datadog()]
 
   def get_by_slug(slug) do
     try do
@@ -55,9 +55,9 @@ defmodule Changelog.SponsorStory do
 
       `---`
 
-      Partner: Rollbar  
-      Website: [rollbar.com](https://rollbar.com/)  
-      Employees: 50  
+      Partner: Rollbar
+      Website: [rollbar.com](https://rollbar.com/)
+      Employees: 50
       Annual Revenue: $1,000,000
       """
     }
@@ -135,7 +135,7 @@ defmodule Changelog.SponsorStory do
       #### Who is Datadog?
 
       Datadog is a monitoring service for hybrid cloud applications, assisting organizations in improving agility, increasing efficiency, and providing end-to-end visibility across the application and organization. These capabilities are provided on a SaaS-based data analytics platform that enables developers, operations, and other teams to accelerate go-to-market efforts, ensure application uptime, and successfully complete digital transformation initiatives. Since launching in 2010, Datadog has been adopted more than 6,000 enterprises including companies like Asana, eBay, PagerDuty, Samsung, The Washington Post, and Zendesk.
-      
+
       #### Who are you and what do you do at Datadog?
 
       Hello, I'm Leo Schramm. I'm part of the team that leads marketing and demand gen here at Datadog. Day to day I define and deploy growth and marketing strategies, meet with partners, review campaign results, and generally try to learn as much as I can about our customer.
@@ -149,16 +149,16 @@ defmodule Changelog.SponsorStory do
       What's interesting about Changelog is how they take the time to learn who we are, what we have to offer. They're also good at letting us know what we're doing that IS and IS NOT working. Changelog not only helps us to define our goals, but they also develop a campaign focused iterating towards those goals. I've learned the importance of understanding what you're trying to say and the action(s) you desire the listener to take as result. Adam and team do a phenominal job of helping us shape and focus Datadog's message.
 
       In many ways, Changelog operates much like a creative agency would. The difference is they focus on the Changelog network.
-      
+
       #### Describe a hidden or unclear benefit that you get from Changelog
-      
+
       Influence at integration! Changelog.com is open source, which means they attract alot of attention to their codebase. Some are there to learn, some are there to contrubute, in either case they see that Changelog choose Datadog as their monitoring partner. Our brand and service are naturally promoted as a preferred choice because they trust Changelog's judgement.
 
       `---`
 
-      Partner: Datadog  
-      Website: [datadoghq.com](https://www.datadoghq.com/)  
-      Employees: 750+  
+      Partner: Datadog
+      Website: [datadoghq.com](https://www.datadoghq.com/)
+      Employees: 750+
       Annual Revenue: $50,000,000
       """
     }
