@@ -32,7 +32,7 @@
       <td><%= twitter_link(podcast) %></td>
       <td>
       <%= for {client, count} <- (podcast.subscribers || %{}) do %>
-        <strong><%= String.capitalize(client) %>:</strong> <%= comma_separated(count) %>
+        <strong><%= client %>:</strong> <%= comma_separated(count) %><br/>
       <% end %>
       </td>
       <td><%= episode_count(podcast) %></td>

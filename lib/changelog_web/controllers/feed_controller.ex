@@ -2,6 +2,8 @@ defmodule ChangelogWeb.FeedController do
   use ChangelogWeb, :controller
   use PlugEtsCache.Phoenix
 
+  require Logger
+
   alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Podcast, Post, Topic}
 
   def news(conn, _params) do
@@ -33,7 +35,7 @@ defmodule ChangelogWeb.FeedController do
       |> Repo.all
       |> Episode.preload_all
 
-    log_overcast(conn, podcast)
+    log_subscribers(conn, podcast)
 
     conn
     |> put_layout(false)
@@ -42,11 +44,12 @@ defmodule ChangelogWeb.FeedController do
     |> cache_response
   end
 
-  defp log_overcast(conn, podcast) do
-    agent = get_agent(conn)
+  defp log_subscribers(conn, podcast) do
+    ua = get_agent(conn)
 
-    case AgentKit.get_overcast_subs(agent) do
-      {:ok, subs} -> Podcast.update_subscribers(podcast, "overcast", subs)
+    case AgentKit.get_subscribers(ua) do
+      {:ok, {agent, subs}} -> Podcast.update_subscribers(podcast, agent, subs)
+      {:error, :unknown_agent} -> Logger.info("Unknown agent reporting: #{ua}")
       {:error, _message} -> false
     end
   end
