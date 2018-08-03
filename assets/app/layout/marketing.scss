@@ -7,15 +7,15 @@
     clear: both;
     margin: 0 auto;
     max-width: 860px;
-    padding: 0 30px;
+    padding: 0 $base-spacing;
     width: 100%;
   }
 
   // Button Group
   &-button_group {
-    margin-top: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
+    margin-top: $base-spacing;
+    padding-left: $base-spacing;
+    padding-right: $base-spacing;
 
     .page-page-weekly &,
     .page-page-nightly & {
@@ -41,10 +41,15 @@
     transition: max-height 1s linear;
 
     &-item {
+      display: none;
       margin: 0 20px;
 
+      &:first-child {
+        display: block;
+      }
+
       @include breakpoint(tablet) {
-        margin: 0 30px;
+        margin: 0 $base-spacing;
       }
 
       &-inner {
@@ -167,7 +172,7 @@
       &-leadin {
         font-family: $code;
         font-size: 14px !important;
-        margin-bottom: 30px;
+        margin-bottom: $base-spacing;
       }
 
       h1 {
@@ -299,7 +304,7 @@
         }
         @media (min-width: $breakpoint) {
           flex: 1 1 400px;
-          height: 630px;
+          height: 6$base-spacing;
           order: 2;
           padding: 0;
           position: relative;
@@ -307,8 +312,8 @@
 
         img {
           border: 1px solid $light-grey;
-          // box-shadow: 0 30px 40px 20px rgba($black, 0.2);
-          box-shadow: -20px 20px 50px 0 rgba($black, 0.2), -60px 60px 30px 0 rgba($black, 0.03);
+          // box-shadow: 0 $base-spacing 40px 20px rgba($black, 0.2);
+          box-shadow: -20px 20px 50px 0 rgba($black, 0.2), -60px 60px $base-spacing 0 rgba($black, 0.03);
           width: 100%;
 
           @media (min-width: $breakpoint) {
@@ -385,7 +390,7 @@
     &-grid {
       margin: 40px auto 0;
       max-width: 1020px;
-      padding: 0 30px;
+      padding: 0 $base-spacing;
       width: 100%;
 
       @include breakpoint(mobile) { margin-top: 50px; }
@@ -469,7 +474,7 @@
 
       img {
         $size: 50px;
-        box-shadow: 0 0 30px 0 rgba($black, 0.2);
+        box-shadow: 0 0 $base-spacing 0 rgba($black, 0.2);
         border-radius: 2px;
         display: block;
         height: $size;

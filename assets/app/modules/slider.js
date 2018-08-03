@@ -18,7 +18,7 @@ export default class slider {
     // Variables
     const options = {
       selector,
-      duration: 400,
+      duration: 600,
       easing: 'cubic-bezier(0.1,0.6,0.3,1.1)',
       perPage: 1,
       draggable: true,
