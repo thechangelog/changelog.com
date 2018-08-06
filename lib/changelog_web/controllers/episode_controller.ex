@@ -48,7 +48,6 @@ defmodule ChangelogWeb.EpisodeController do
   def play(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_podcast
 
