@@ -1,6 +1,5 @@
 defmodule ChangelogWeb.FeedController do
   use ChangelogWeb, :controller
-  use PlugEtsCache.Phoenix
 
   require Logger
 

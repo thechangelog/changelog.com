@@ -17,7 +17,11 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.preload_all
       |> Repo.get_by!(slug: slug)
 
-    render(conn, :show, podcast: podcast, episode: episode)
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> render(:show)
+    |> cache_response
   end
 
   def embed(conn, params = %{"slug" => slug}, podcast) do

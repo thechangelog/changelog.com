@@ -132,6 +132,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
         conn
         |> put_flash(:result, "success")
+        |> clear_caches(podcast, episode)
         |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
         conn
@@ -149,6 +150,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Repo.delete!(episode)
 
     conn
+    |> clear_caches(podcast, episode)
     |> put_flash(:result, "success")
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
@@ -167,6 +169,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         handle_notes_push_to_github(episode)
 
         conn
+        |> clear_caches(podcast, episode)
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
@@ -184,8 +187,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     changeset = Ecto.Changeset.change(episode, %{published: false})
 
     case Repo.update(changeset) do
-      {:ok, _episode} ->
+      {:ok, episode} ->
         conn
+        |> clear_caches(podcast, episode)
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
@@ -203,6 +207,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Github.Puller.update("transcripts", episode)
 
     conn
+    |> clear_caches(podcast, episode)
     |> put_flash(:result, "success")
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
@@ -210,6 +215,11 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
     podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts
     assign(conn, :podcast, podcast)
+  end
+
+  defp clear_caches(conn, podcast, episode) do
+    ConCache.delete(:response_cache, episode_path(conn, :show, podcast.slug, episode.slug))
+    conn
   end
 
   defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do

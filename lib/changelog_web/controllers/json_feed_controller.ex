@@ -1,6 +1,5 @@
 defmodule ChangelogWeb.JsonFeedController do
   use ChangelogWeb, :controller
-  use PlugEtsCache.Phoenix
 
   alias Changelog.NewsItem
 

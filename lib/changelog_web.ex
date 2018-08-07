@@ -2,6 +2,7 @@ defmodule ChangelogWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: ChangelogWeb
+      use PlugEtsCache.Phoenix
 
       alias Changelog.{Policies, Repo}
       alias ChangelogWeb.Plug.{Authorize, RequireUser, RequireGuest}
