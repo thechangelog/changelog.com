@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Plug.LoadPodcasts do
         |> Podcast.preload_hosts
         |> Repo.all
 
-      %ConCache.Item{value: podcasts, ttl: :infinity}
+      %ConCache.Item{value: podcasts}
     end)
   end
 end

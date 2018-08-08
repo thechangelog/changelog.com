@@ -22,7 +22,7 @@ defmodule ChangelogWeb.PostController do
 
     conn
     |> render(:show, post: post)
-    |> cache_response
+    |> cache_response(:timer.hours(24 * 365))
   end
 
   def preview(conn, %{"id" => slug}) do
