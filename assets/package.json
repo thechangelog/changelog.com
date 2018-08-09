@@ -2,6 +2,7 @@
   "repository": {},
   "dependencies": {
     "autosize": "^4.0.0",
+    "clamp-js": "^0.7.0",
     "clipboard": "^2.0.1",
     "cookies-js": "^1.2.3",
     "handlebars": "^4.0.5",

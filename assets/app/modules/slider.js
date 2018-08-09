@@ -19,7 +19,7 @@ export default class slider {
     const options = {
       selector,
       duration: 600,
-      easing: 'cubic-bezier(0.1,0.6,0.3,1.1)',
+      easing: 'cubic-bezier(0.19, 1, 0.22, 1)',
       perPage: 1,
       draggable: true,
       threshold: 20,
@@ -41,6 +41,8 @@ export default class slider {
     window.setTimeout(function() {
       slider.updateActive(0);
     }, 1000);
+
+    window.addEventListener("resize", (event) => { slider.resizeSlider(siemaSlider.currentSlide); })
   }
 
   static updateActive(currentSlide) {

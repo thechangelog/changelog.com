@@ -1,0 +1,58 @@
+.sponsor_grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 1217px;
+  padding: 1em $mobile-spacing $base-spacing*2;
+  width: 100%;
+
+  &-item { // <a>
+    display: flex;
+    flex: 0 0 100%;
+    padding: $mobile-spacing;
+    width: 100%;
+
+    @include breakpoint(tablet) {
+      flex: 0 0 50%;
+      padding: $base-spacing;
+    }
+
+    @include breakpoint(desktop) {
+      flex: 0 0 33.33333%;
+    }
+
+    &:hover {
+      background: $dark-grey;
+    }
+
+    &-logo {
+      --size: 40px;
+      height: var(--size);
+      width: var(--size);
+
+      @include breakpoint(tablet) {
+        --size: 60px;
+      }
+    }
+
+    &-logo {
+      background: $white;
+      border-radius: $base-border-radius;
+      margin-right: $base-spacing/2;
+    }
+
+    &-content {
+      width: 100%;
+
+      h4 {
+        color: $white;
+        font-size: 1.125em;
+        margin-bottom: 0.25em;
+      }
+      p {
+        margin-bottom: 0;
+        // height: 4.25em;
+      }
+    }
+  }
+}
