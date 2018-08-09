@@ -48,7 +48,7 @@
 
           <div class="sponsor_grid-item-content">
             <h4><%= story.sponsor %></h4>
-            <p class="js-line_clamp" data-lines="3"><%= truncate(story.quote.content, 200) %></p>
+            <p class="js-line_clamp" data-lines="3"><%= truncate(story.quote.content, 90) %></p>
           </div>
         <% end %>
       <% end %>

@@ -1,7 +1,7 @@
 import "phoenix_html";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
-import clamp from "clamp-js";
+// import clamp from "clamp-js";
 import autosize from "autosize";
 import Cookies from "cookies-js";
 import OnsitePlayer from "modules/onsitePlayer";
@@ -25,13 +25,13 @@ const slider = new Slider(".js-slider");
 
 window.u = u;
 
-// Line Clamp
-u(".js-line_clamp").each(function(el) {
-  let element = u(el);
-  let lines = element.data("lines");
-  let clamped = clamp(el, {clamp: lines});
-  console.log(clamped);
-});
+// // Line Clamp
+// u(".js-line_clamp").each(function(el) {
+//   let element = u(el);
+//   let lines = element.data("lines");
+//   let clamped = clamp(el, {clamp: lines});
+//   console.log(clamped);
+// });
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
