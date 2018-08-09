@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   margin: 0 auto;
   max-width: 1217px;
-  padding: 1em $mobile-spacing $base-spacing*2;
+  padding: 1em $mobile-spacing;
   width: 100%;
 
   &-item { // <a>
@@ -27,18 +27,16 @@
 
     &-logo {
       --size: 40px;
+      background: $white;
+      border-radius: $base-border-radius;
+      box-shadow: 0 0 20px #000;
       height: var(--size);
       width: var(--size);
+      margin-right: $base-spacing/2;
 
       @include breakpoint(tablet) {
         --size: 60px;
       }
-    }
-
-    &-logo {
-      background: $white;
-      border-radius: $base-border-radius;
-      margin-right: $base-spacing/2;
     }
 
     &-content {

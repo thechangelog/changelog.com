@@ -53,11 +53,11 @@
         </div>
 
         <div class="marketing-section-content-info-bottom">
-          <blockquote class="marketing-quote">
-            <div class="marketing-quote-body">
+          <blockquote class="marketing_quote">
+            <div class="marketing_quote-body">
               <p>There's no way to truely say how much value I get from being a part of Changelog's developer community. I'm there everyday, and there's always something interesting being discussed. It's&nbsp;awesome.</p>
             </div>
-            <footer class="marketing-quote-footer">
+            <footer class="marketing_quote-footer">
               <a href="https://twitter.com/jdorfman" title="Justin Dorfman on Twitter">
                 <img src='<%= static_url(@conn, "/images/content/community/justin-dorfman.jpg") %>' alt="A smiling man in a ballcap and glasses." width="65" height="65">
                 <strong>Justin Dorfman</strong>
@@ -77,7 +77,7 @@
       <p>We work hard to develop relationships with the most trusted brands, products, and services — we give the rewards of those efforts to you, the developer&nbsp;community.</p>
     </header>
 
-    <div class="marketing-section-logos">
+    <div class="logo_grid">
       <%= render("_sponsors.html", assigns) %>
     </div>
   </section>

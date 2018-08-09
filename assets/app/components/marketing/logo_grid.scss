@@ -1,0 +1,32 @@
+.logo_grid {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 10px;
+  margin: 20px auto 0;
+  max-width: 980px;
+
+  @media (min-width: $tablet) {
+    margin-top: 50px;
+
+    a { margin: 10px 0; }
+  }
+
+  @include breakpoint(mobile, max) {
+    a { flex: 1 1 33.33%; }
+  }
+
+  img {
+    filter: grayscale(100%);
+    padding: 0 22px;
+    margin: 0 auto;
+    max-height: 100px;
+    max-width: 100%;
+    transition: filter 0.2s ease-in-out;
+
+    &:hover {
+      filter: grayscale(0%);
+    }
+  }
+}
