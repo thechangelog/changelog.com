@@ -14,7 +14,13 @@ defmodule Changelog.Application do
       # Here you could define other workers and supervisors as children
       worker(UA.Parser, []),
       # worker(Changelog.Worker, [arg1, arg2, arg3]),
-      worker(ConCache, [[ttl_check: :timer.seconds(1)], [name: :app_cache]]),
+      worker(ConCache, [
+        [
+          name: :app_cache,
+          ttl_check_interval: :timer.seconds(1),
+          global_ttl: :timer.seconds(60)
+        ]
+      ]),
       worker(Changelog.Scheduler, [])
     ]
 
