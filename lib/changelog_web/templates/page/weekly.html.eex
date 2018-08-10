@@ -30,7 +30,9 @@
     </div>
 
     <div class="image">
-      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8"><img src="<%= static_url(@conn, "/images/content/changelog-weekly.jpg") %>" alt="Changelog Weekly - Preview" /></a>
+      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8" title="Preview Changelog Weekly">
+        <%= lazy_image(static_url(@conn, "/images/content/changelog-weekly.jpg"), "Changelog Weekly Preview") %>
+      </a>
     </div>
 
     <div class="richtext">

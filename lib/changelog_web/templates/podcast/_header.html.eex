@@ -1,7 +1,7 @@
 <header class="show-header">
   <div class="show-header-art">
     <h2 class="visually_hidden"><%= @podcast.name %></h2>
-    <img src="<%= cover_url(@podcast, :medium) %>" width="220" height="220" alt="">
+    <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 220, height: 220) %>
     <%= if @podcast.status != :published do %>
       <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
     <% end %>
@@ -26,7 +26,7 @@
     <div class="avatar_list <%= if length(@podcast.hosts) > 6, do: "avatar_list--large" %>">
     <%= for person <- @podcast.hosts do %>
       <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
-        <img src="<%= PersonView.avatar_url(person) %>" width="50" height="50" alt="Host Avatar" />
+        <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 50, height: 50) %>
         <p><%= person.name %></p>
       <% end %>
     <% end %>

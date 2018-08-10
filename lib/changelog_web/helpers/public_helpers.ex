@@ -3,6 +3,11 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
 
   alias Changelog.{Person, Regexp}
 
+  def auth_link_expires_in(person) do
+    diff = Timex.diff(person.auth_token_expires_at, Timex.now, :duration)
+    Timex.format_duration(diff, :humanized)
+  end
+
   def error_class(form, field) do
     if form.errors[field], do: "error", else: ""
   end
@@ -15,6 +20,12 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
         end
       nil -> ""
     end
+  end
+
+  def lazy_image(src, alt, attrs \\ []) do
+    attrs = Keyword.merge(attrs, [data: [src: src], src: transparent_gif()])
+    attrs = Keyword.update(attrs, :class, "lozad", &("#{&1} lozad"))
+    tag(:img, attrs)
   end
 
   def no_widowed_words(string) when is_nil(string), do: no_widowed_words("")
@@ -57,6 +68,8 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
     "https://www.facebook.com/sharer/sharer.php?u=#{url}"
   end
 
+  def transparent_gif, do: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+
   def user_required_options(%Person{}, options), do: options
   def user_required_options(_else, options), do: options ++ [disabled: true]
 
@@ -68,10 +81,5 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
 
   def with_timestamp_links(string) do
     String.replace(string, Regexp.timestamp, ~S{<a class="timestamp" href="#t=\0">\0</a>})
-  end
-
-  def auth_link_expires_in(person) do
-    diff = Timex.diff(person.auth_token_expires_at, Timex.now, :duration)
-    Timex.format_duration(diff, :humanized)
   end
 end

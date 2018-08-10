@@ -26,7 +26,7 @@
 
   <div class="account_ctas">
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/changelog-logomark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <%= lazy_image(static_url(@conn, "/images/brand/changelog-logomark.svg"), "Changelog Logo", class: "account_ctas-item-icon", width: 50, height: 50) %>
 
       <div class="account_ctas-item-info">
         <h3>Changelog.com Profiles</h3>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/podcasts.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <%= lazy_image(static_url(@conn, "/images/brand/podcasts.svg"), "Podcasts Logo", class: "account_ctas-item-icon", width: 50, height: 50) %>
 
       <div class="account_ctas-item-info">
         <h3>Changelog Podcasts</h3>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <%= lazy_image(static_url(@conn, "/images/content/community/slack-mark.svg"), "Slack Logo", class: "account_ctas-item-icon", width: 50, height: 50) %>
 
       <div class="account_ctas-item-info">
         <h3>Changelog Slack</h3>
