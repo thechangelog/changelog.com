@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Plug.LoadPodcasts do
   import Plug.Conn
 
-  alias Changelog.{Repo, Podcast}
+  alias Changelog.{Cache, Repo, Podcast}
 
   def init(opts), do: opts
 
@@ -10,15 +10,12 @@ defmodule ChangelogWeb.Plug.LoadPodcasts do
   end
 
   defp cached_podcasts do
-    ConCache.get_or_store(:app_cache, "podcasts", fn() ->
-      podcasts =
-        Podcast.active
-        |> Podcast.ours
-        |> Podcast.by_position
-        |> Podcast.preload_hosts
-        |> Repo.all
-
-      %ConCache.Item{value: podcasts, ttl: :infinity}
+    Cache.get_or_store("podcasts", :infinity, fn ->
+      Podcast.active
+      |> Podcast.ours
+      |> Podcast.by_position
+      |> Podcast.preload_hosts
+      |> Repo.all
     end)
   end
 end

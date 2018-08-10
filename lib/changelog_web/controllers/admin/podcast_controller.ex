@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Podcast
+  alias Changelog.{Cache, Podcast}
 
   plug :assign_podcast when action in [:show, :edit, :update]
   plug Authorize, [Policies.Podcast, :podcast]
@@ -37,9 +37,9 @@ defmodule ChangelogWeb.Admin.PodcastController do
     case Repo.insert(changeset) do
       {:ok, podcast} ->
         Repo.update(Podcast.file_changeset(podcast, podcast_params))
+        Cache.delete(podcast)
 
         conn
-        |> clear_caches(podcast)
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_path(conn, :edit, podcast.slug))
       {:error, changeset} ->
@@ -70,8 +70,9 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
     case Repo.update(changeset) do
       {:ok, podcast} ->
+        Cache.delete(podcast)
+
         conn
-        |> clear_caches(podcast)
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_path(conn, :index))
       {:error, changeset} ->
@@ -82,11 +83,5 @@ defmodule ChangelogWeb.Admin.PodcastController do
   defp assign_podcast(conn = %{params: %{"id" => id}}, _) do
     podcast = Repo.get_by!(Podcast, slug: id) |> Podcast.preload_hosts
     assign(conn, :podcast, podcast)
-  end
-
-  defp clear_caches(conn, podcast) do
-    ConCache.delete(:app_cache, "podcasts")
-    ConCache.delete(:response_cache, podcast_path(conn, :show, podcast.slug))
-    conn
   end
 end

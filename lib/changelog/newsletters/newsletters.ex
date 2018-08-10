@@ -1,7 +1,7 @@
 defmodule Changelog.Newsletters do
 
+  alias Changelog.Cache
   alias Changelog.Newsletters.Newsletter
-  alias ConCache.Item
   alias Craisin.List
 
   def get_by_slug(slug) do
@@ -65,8 +65,9 @@ defmodule Changelog.Newsletters do
   end
 
   def get_stats(newsletter) do
-    stats = ConCache.get_or_store(:app_cache, "newsletter_#{newsletter.list_id}_stats", fn() ->
-      %Item{value: List.stats(newsletter.list_id), ttl: :timer.hours(1)}
+    cache_key = "newsletter_#{newsletter.list_id}_stats"
+    stats = Cache.get_or_store(cache_key, :timer.hours(1), fn ->
+      List.stats(newsletter.list_id)
     end)
 
     %Newsletter{newsletter | stats: stats}

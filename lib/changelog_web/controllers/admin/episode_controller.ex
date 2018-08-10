@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, EpisodeTopic, EpisodeGuest, EpisodeHost, EpisodeStat,
-                   Github, NewsItem, NewsQueue, Podcast}
+  alias Changelog.{Cache, Episode, EpisodeTopic, EpisodeGuest, EpisodeHost,
+                   EpisodeStat, Github, NewsItem, NewsQueue, Podcast}
 
   plug :assign_podcast
   plug Authorize, [Policies.Episode, :podcast]
@@ -129,10 +129,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     case Repo.update(changeset) do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
+        Cache.delete(episode)
 
         conn
         |> put_flash(:result, "success")
-        |> clear_caches(podcast, episode)
         |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
         conn
@@ -148,9 +148,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     Repo.delete!(episode)
+    Cache.delete(episode)
 
     conn
-    |> clear_caches(podcast, episode)
     |> put_flash(:result, "success")
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
@@ -167,9 +167,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         handle_guest_thanks(params, episode)
         handle_news_item(conn, episode)
         handle_notes_push_to_github(episode)
+        Cache.delete(episode)
 
         conn
-        |> clear_caches(podcast, episode)
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
@@ -188,8 +188,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
+        Cache.delete(episode)
+
         conn
-        |> clear_caches(podcast, episode)
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
@@ -207,7 +208,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Github.Puller.update("transcripts", episode)
 
     conn
-    |> clear_caches(podcast, episode)
     |> put_flash(:result, "success")
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
@@ -215,11 +215,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
     podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts
     assign(conn, :podcast, podcast)
-  end
-
-  defp clear_caches(conn, podcast, episode) do
-    ConCache.delete(:response_cache, episode_path(conn, :show, podcast.slug, episode.slug))
-    conn
   end
 
   defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do

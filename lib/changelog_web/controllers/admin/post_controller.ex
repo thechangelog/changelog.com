@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PostController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Post
+  alias Changelog.{Cache, Post}
 
   plug :assign_post when action in [:edit, :update, :delete]
   plug Authorize, [Policies.Post, :post]
@@ -62,8 +62,9 @@ defmodule ChangelogWeb.Admin.PostController do
 
     case Repo.update(changeset) do
       {:ok, post} ->
+        Cache.delete(post)
+
         conn
-        |> clear_caches(post)
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_post_path(conn, :index))
       {:error, changeset} ->
@@ -75,9 +76,9 @@ defmodule ChangelogWeb.Admin.PostController do
 
   def delete(conn = %{assigns: %{post: post}}, _params) do
     Repo.delete!(post)
+    Cache.delete(post)
 
     conn
-    |> clear_caches(post)
     |> put_flash(:result, "success")
     |> redirect(to: admin_post_path(conn, :index))
   end
@@ -85,10 +86,5 @@ defmodule ChangelogWeb.Admin.PostController do
   defp assign_post(conn = %{params: %{"id" => id}}, _) do
     post = Repo.get!(Post, id) |> Post.preload_all
     assign(conn, :post, post)
-  end
-
-  defp clear_caches(conn, post) do
-    ConCache.delete(:response_cache, post_path(conn, :show, post.slug))
-    conn
   end
 end
