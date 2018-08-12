@@ -1,3 +1,4 @@
 <%= link to: news_source_path(@conn, :show, @source.slug), title: @source.name, class: "news_item-source-image" do %>
-  <%= lazy_image(NewsSourceView.icon_url(@source), "#{@source.name} Icon") %>
+  <%#= lazy_image(NewsSourceView.icon_url(@source), "#{@source.name} Icon") %>
+  <img src="<%= NewsSourceView.icon_url(@source) %>" alt="<%= @source.name %> Icon">
 <% end %>

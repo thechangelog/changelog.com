@@ -1,3 +1,4 @@
 <%= link to: PersonView.external_url(@author), title: @author.name, rel: "external", class: "news_item-source-image" do %>
-  <%= lazy_image(PersonView.avatar_url(@author), @author.name) %>
+  <%#= lazy_image(PersonView.avatar_url(@author), @author.name) %>
+  <img src="<%= PersonView.avatar_url(@author) %>" alt="<%= @author.name %>">
 <% end %>
