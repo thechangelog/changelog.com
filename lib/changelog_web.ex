@@ -12,6 +12,15 @@ defmodule ChangelogWeb do
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Plug.Conn
 
+      @doc """
+      A small wrapper around PlugEtsCache.Phoenix.cache_response to short-circuit
+      the caching if connection has a user
+      """
+      def cache_public_response(conn = %{assigns: %{current_user: user}}) when not is_nil(user), do: conn
+      def cache_public_response(conn), do: cache_response(conn)
+      def cache_public_response(conn = %{assigns: %{current_user: user}}, _ttl) when not is_nil(user), do: conn
+      def cache_public_response(conn, ttl), do: cache_response(conn, ttl)
+
       defp is_admin?(user = %Changelog.Person{}), do: user.admin
       defp is_admin?(_), do: false
 

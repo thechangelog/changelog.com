@@ -22,7 +22,7 @@ defmodule ChangelogWeb.PostController do
 
     conn
     |> render(:show, post: post)
-    |> cache_response(:infinity)
+    |> cache_public_response(:infinity)
   end
 
   def preview(conn, %{"id" => slug}) do

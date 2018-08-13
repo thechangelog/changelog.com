@@ -21,7 +21,7 @@ defmodule ChangelogWeb.EpisodeController do
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
     |> render(:show)
-    |> cache_response(:infinity)
+    |> cache_public_response(:infinity)
   end
 
   def embed(conn, params = %{"slug" => slug}, podcast) do
