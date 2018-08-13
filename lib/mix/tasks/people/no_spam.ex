@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Changelog.NoSpam do
     fakers = Person.faked |> Person.never_signed_in
 
     for person <- Repo.all(fakers) do
-      IO.puts "Purging #{person.name} (#{person.email})"
+      IO.puts "Purging #{person.id} #{person.name} (#{person.email})"
       Subscriber.delete(Newsletters.weekly().list_id, person.email)
       Subscriber.delete(Newsletters.nightly().list_id, person.email)
       Repo.delete!(person)
