@@ -2,6 +2,7 @@ defmodule Craisin.Subscriber do
   import Craisin
 
   def details(list_id, email), do: "/subscribers/#{list_id}?email=#{email}" |> get |> local_handle
+  def delete(list_id, email), do: "/subscribers/#{list_id}?email=#{email}" |> delete |> local_handle
 
   def subscribe(list_id, person, custom_fields \\ %{}) do
     fields = %{"EmailAddress" => person.email,
