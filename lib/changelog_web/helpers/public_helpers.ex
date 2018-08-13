@@ -22,12 +22,6 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
     end
   end
 
-  def lazy_image(src, alt, attrs \\ []) do
-    attrs = Keyword.merge(attrs, [data: [src: src], src: transparent_gif()])
-    attrs = Keyword.update(attrs, :class, "lozad", &("#{&1} lozad"))
-    tag(:img, attrs)
-  end
-
   def no_widowed_words(string) when is_nil(string), do: no_widowed_words("")
   def no_widowed_words(string) do
     words = String.split(string, " ")
@@ -67,8 +61,6 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
   def facebook_url(url) do
     "https://www.facebook.com/sharer/sharer.php?u=#{url}"
   end
-
-  def transparent_gif, do: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 
   def user_required_options(%Person{}, options), do: options
   def user_required_options(_else, options), do: options ++ [disabled: true]

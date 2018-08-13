@@ -19,7 +19,7 @@
         <div class="avatar_list <%= if length(@episode.guests) > 6, do: "avatar_list--large" %>">
           <%= for person <- @episode.guests do %>
             <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
-              <%= lazy_image(PersonView.avatar_url(person), width: 50, height: 50) %>
+              <%= lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
             <% end %>
           <% end %>
         </div>

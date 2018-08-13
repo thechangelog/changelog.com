@@ -21,7 +21,7 @@ import lozad from "lozad";
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
-const observer = lozad();
+const observer = lozad(".lazy");
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
