@@ -47,10 +47,8 @@ defmodule ChangelogWeb.PersonController do
   defp welcome_subscriber(conn, person, list) do
     person = Person.refresh_auth_token(person)
     newsletter = Newsletters.get_by_slug(list)
-    community = Newsletters.community()
 
     Subscriber.subscribe(newsletter.list_id, Person.sans_fake_data(person))
-    Subscriber.subscribe(community.list_id, Person.sans_fake_data(person))
 
     Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later
 
@@ -98,10 +96,8 @@ defmodule ChangelogWeb.PersonController do
 
   defp welcome_community(conn, person) do
     person = Person.refresh_auth_token(person)
-    community = Newsletters.community()
 
     Email.community_welcome(person) |> Mailer.deliver_later
-    Subscriber.subscribe(community.list_id, person, handle: person.handle)
 
     conn
     |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)

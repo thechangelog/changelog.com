@@ -7,8 +7,7 @@ defmodule ChangelogWeb.Admin.PageController do
 
   def index(conn = %{assigns: %{current_user: me = %{admin: true}}}, _params) do
     newsletters =
-      [Newsletters.community(),
-       Newsletters.weekly(),
+      [Newsletters.weekly(),
        Newsletters.nightly(),
        Newsletters.gotime(),
        Newsletters.jsparty(),

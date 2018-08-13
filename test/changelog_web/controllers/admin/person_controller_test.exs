@@ -2,8 +2,6 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   use ChangelogWeb.ConnCase
   use Bamboo.Test
 
-  import Mock
-
   alias Changelog.Person
 
   @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
@@ -29,9 +27,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person, sends no welcome, and redirects", %{conn: conn} do
-    conn = with_mock(Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end]) do
-      post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
-    end
+    conn = post(conn, admin_person_path(conn, :create), person: @valid_attrs, close: true)
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
     assert_no_emails_delivered()
@@ -41,9 +37,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person, sends generic welcome, and redirects", %{conn: conn} do
-    conn = with_mock(Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end]) do
-      post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "generic", next: admin_person_path(conn, :index))
-    end
+    conn = post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "generic", next: admin_person_path(conn, :index))
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
     assert_delivered_email ChangelogWeb.Email.community_welcome(person)
@@ -53,9 +47,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person, sends guest welcome, and redirects", %{conn: conn} do
-    conn = with_mock(Craisin.Subscriber, [subscribe: fn(_, _, _) -> nil end]) do
-      post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "guest")
-    end
+    conn = post(conn, admin_person_path(conn, :create), person: @valid_attrs, welcome: "guest")
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
     assert_delivered_email ChangelogWeb.Email.guest_welcome(person)
@@ -105,12 +97,9 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   test "deletes a person and redirects", %{conn: conn} do
     person = insert(:person)
 
-    with_mock(Craisin.Subscriber, [unsubscribe: fn(_, _) -> nil end]) do
-      conn = delete(conn, admin_person_path(conn, :delete, person.id))
-      assert called(Craisin.Subscriber.unsubscribe(:_, person.email))
-      assert redirected_to(conn) == admin_person_path(conn, :index)
-      assert count(Person) == 0
-    end
+    conn = delete(conn, admin_person_path(conn, :delete, person.id))
+    assert redirected_to(conn) == admin_person_path(conn, :index)
+    assert count(Person) == 0
   end
 
   test "requires user auth on all actions", %{conn: conn} do

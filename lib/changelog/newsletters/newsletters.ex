@@ -16,14 +16,6 @@ defmodule Changelog.Newsletters do
     }
   end
 
-  def community do
-    %Newsletter{
-      name: "Changelog Community",
-      list_id: "08773ce58bee33c04899904bc699a7e8",
-      web_id: "C7D35AA52CE2DAF7"
-    }
-  end
-
   def gotime do
     %Newsletter{
       name: "Go Time",
