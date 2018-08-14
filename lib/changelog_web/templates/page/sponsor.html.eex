@@ -64,7 +64,7 @@
     </footer>
   </section>
 
-  <section class="marketing-section marketing-section--body">
+  <section class="marketing-section">
     <header class="marketing-section-header">
       <img src='<%= static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
       <h2>How sponsorship works</h2>
@@ -125,17 +125,72 @@
           <div class="mock_browser-header-address_bar">changelog.com</div>
         </div>
         <div class="mock_browser-body">
-          hello
+            <div class="feed">
+              <!-- TODO: Jerod, make these dynamic please -->
+<article class="news_item news_item--sponsor" data-news-type="ad" data-news-id="m1j">
+<header class="news_item-header">
+  <p class="news_item-source">
+<a class="news_item-source-image" data-news="true" href="https://www.datadoghq.com/resources/datadog-ec2-cheatsheet/?utm_source=Advertisement&amp;utm_medium=Advertisement&amp;utm_campaign=Changelog-EC2Cheatsheet" rel="external" title="Datadog">      <img alt="Datadog Icon" class="lazy" data-src="https://cdn.changelog.com/uploads/avatars/sponsors/yWk/avatar_small.png?v=63684084345" src="https://cdn.changelog.com/uploads/avatars/sponsors/yWk/avatar_small.png?v=63684084345" data-loaded="true">
+</a>
+<a data-news="true" href="https://www.datadoghq.com/resources/datadog-ec2-cheatsheet/?utm_source=Advertisement&amp;utm_medium=Advertisement&amp;utm_campaign=Changelog-EC2Cheatsheet" rel="external" title="Datadog">Datadog – Sponsored</a>  </p>
+  <h2 class="news_item-title"><a data-news="true" href="https://www.datadoghq.com/resources/datadog-ec2-cheatsheet/?utm_source=Advertisement&amp;utm_medium=Advertisement&amp;utm_campaign=Changelog-EC2Cheatsheet" rel="external">EC2 monitoring cheatsheet</a></h2>
+</header>
+
+  <div class="news_item-description">
+    <p>Discover all the commands and metrics you need to monitor your EC2 instances in one place with this awesome cheatsheet from our friends at Datadog. Keep track of important resource metrics and status checks for your EC2 instances. This cheatsheet provides:  Commands to run status checks and collect metrics vital to understanding overall EC2 instance performance and health Parameters and dimensions used to query EC2 statistics and filter instances by status A quick-start guide to using Datadog to collect metrics and status information to monitor AWS EC2 instances  Also checkout this 3 part deep dive into the key metrics for EC2 monitoring from Maxim Brown on the Datadog engineering blog. </p>
+<a class="news_item-description-continue" href="/ads/ec2-monitoring-cheatsheet-m1j">      <span>read more...</span>
+</a>  </div>
+  <div class="news_item-toolbar">
+<button class="news_item-toolbar-image_button" data-image="https://cdn.changelog.com/uploads/news_ads/m1j/large.png?v=63697635037">
+  View Image
+</button>
+
+  <div class="news_item-toolbar-item news_item-toolbar-meta">
+    <span class="news_item-toolbar-meta-item">logged by <strong><a href="https://twitter.com/Changelog" rel="external" title="Logbot">@logbot</a></strong> </span>
+    <span class="news_item-toolbar-meta-item"><a href="/ads/ec2-monitoring-cheatsheet-m1j">permalink</a> </span>
+
+<span class="news_item-toolbar-meta-item"><a data-turbolinks="false" href="/admin/news/sponsorships/27/edit?next=%2F">[Edit]</a><span> (39/5978)</span></span>  </div>
+</div>
+
+</article>
+
+<article class="news_item news_item--sponsor" data-news-type="ad" data-news-id="1ml">
+<header class="news_item-header">
+  <p class="news_item-source">
+<a class="news_item-source-image" data-news="true" href="https://www.gocd.org/tags/cd-for-microservices.html" rel="external" title="GoCD">      <img alt="GoCD Icon" class="lazy" data-src="https://cdn.changelog.com/uploads/avatars/sponsors/aN/avatar_small.png?v=63685081512" src="https://cdn.changelog.com/uploads/avatars/sponsors/aN/avatar_small.png?v=63685081512" data-loaded="true">
+</a>
+<a data-news="true" href="https://www.gocd.org/tags/cd-for-microservices.html" rel="external" title="GoCD">GoCD – Sponsored</a>  </p>
+  <h2 class="news_item-title"><a data-news="true" href="https://www.gocd.org/tags/cd-for-microservices.html" rel="external">Continuous delivery for microservices blog series</a></h2>
+</header>
+
+  <div class="news_item-description">
+    <p>If you run and deploy microservices, this blog series from the GoCD will be a great guide for you and your team as you navigate testing, feature toggles, and more.  5 considerations for continuous delivery of microservices Test strategy for microservices Trunk based development and feature toggles Environment strategy for continuous delivery of microservices Configuration strategy for continuous delivery of microservices  </p>
+<a class="news_item-description-continue" href="/ads/continuous-delivery-for-microservices-blog-series-1ml">      <span>read more...</span>
+</a>  </div>
+  <div class="news_item-toolbar">
+
+  <div class="news_item-toolbar-item news_item-toolbar-meta">
+    <span class="news_item-toolbar-meta-item">logged by <strong><a href="https://twitter.com/Changelog" rel="external" title="Logbot">@logbot</a></strong> </span>
+    <span class="news_item-toolbar-meta-item"><a href="/ads/continuous-delivery-for-microservices-blog-series-1ml">permalink</a> </span>
+
+<span class="news_item-toolbar-meta-item"><a data-turbolinks="false" href="/admin/news/sponsorships/30/edit?next=%2F">[Edit]</a><span> (15/1241)</span></span>  </div>
+</div>
+
+</article>
+
+          </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <section class="marketing-section">
-    <header class="marketing-section-header">
-      <h2>Brands who want to reach developers advertise with&nbsp;Changelog</h2>
-      <p>Join businesses around the world who are using Changelog Ads to increase awareness and get real business results. Their success is our success. We're partners.</p>
-    </header>
+    <footer class="marketing-section-footer">
+      <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
+      <div class="marketing-button_group">
+        <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
   </section>
 
   <!-- TODO

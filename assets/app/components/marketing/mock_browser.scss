@@ -1,7 +1,8 @@
 .mock_browser {
-  border: 1px solid $lightest-grey;
+  border: 1px solid $light-grey;
   border-radius: 5px 5px 0 0;
-  box-shadow: 0 0 50px 0 rgba($medium-grey, 0.3);
+  box-shadow: 0 0 30px 0 rgba($medium-grey, 0.15);
+  margin: $base-spacing 0 $base-spacing*2;
 
   &-header {
     background: $black;
@@ -11,7 +12,7 @@
 
     @include breakpoint(mobile) {
       display: grid;
-      grid-template-columns: 25% 50% 25%;
+      grid-template-columns: 28% 44% 28%;
     }
 
     &-buttons {
@@ -24,7 +25,7 @@
         border-radius: $size;
         display: inline-block;
         height: $size;
-        margin-right: $size/2;
+        margin-right: 10px;
         width: $size;
 
         &:nth-child(1) { background: #FF2639; }
@@ -38,9 +39,29 @@
       border-radius: 3px;
       flex: 1 0 auto;
       font-family: $code;
-      font-size: 0.8125em;
-      padding: 0.5em;
+      font-size: 12px;
+      padding: 0.4em;
+      pointer-events: none;
       text-align: center;
+    }
+  }
+
+  &-body {
+    .feed {
+      margin: 0 auto !important;
+
+      @include breakpoint(mobile) {
+        margin: $base-spacing auto !important;
+
+        .news_item {
+          border-bottom: 1px solid $light-grey;
+          border-top: 1px solid $light-grey;
+
+          &:first-child() {
+            margin-bottom: $base-spacing/2;
+          }
+        }
+      }
     }
   }
 }
