@@ -95,19 +95,47 @@
         <p>Developers follow our podcasts and news to explore new ideas and discover new tools. Sponsorship is the best way to make sure your product is part of their journey — and we’re here to help you develop the right strategy to achieve the results you're looking for.</p>
       </div>
     </div>
-  </section>
 
-  <hr />
+    <div class="marketing-section-wrap">
+      <h3>Podcast sponsorship examples</h3>
+      <div class="grid_table">
+        <div class="grid_table-header">
+          <div class="grid_table-header-column"><p>Campaign type</p></div>
+          <div class="grid_table-header-column"><p>Campaign name</p></div>
+          <div class="grid_table-header-column"><p>Campaign production</p></div>
+        </div>
+        <% story = hd(@stories) %>
+        <%= for example <- story.examples do %>
+          <div class="grid_table-row">
+            <div class="grid_table-row-column"><p><%= example.type %></p></div>
+            <div class="grid_table-row-column"><p><%= example.name %></p></div>
+            <div class="grid_table-row-column">
+              <%= render(SharedView, "_mini_player.html", title: "#{story.sponsor} #{example.type}", audio: example.audio, duration: example.duration) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="marketing-section-wrap">
+      <h3>News sponsorship examples</h3>
+      <div class="mock_browser">
+        <div class="mock_browser-header">
+          <div class="mock_browser-header-buttons"><span></span><span></span><span></span></div>
+          <div class="mock_browser-header-address_bar">changelog.com</div>
+        </div>
+        <div class="mock_browser-body">
+          hello
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="marketing-section">
     <header class="marketing-section-header">
       <h2>Brands who want to reach developers advertise with&nbsp;Changelog</h2>
       <p>Join businesses around the world who are using Changelog Ads to increase awareness and get real business results. Their success is our success. We're partners.</p>
     </header>
-
-    <div class="logo_grid">
-      <%= render("_sponsors.html", assigns) %>
-    </div>
   </section>
 
   <!-- TODO

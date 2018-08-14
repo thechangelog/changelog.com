@@ -1,0 +1,46 @@
+.mock_browser {
+  border: 1px solid $lightest-grey;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 0 50px 0 rgba($medium-grey, 0.3);
+
+  &-header {
+    background: $black;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    padding: 0.5em;
+
+    @include breakpoint(mobile) {
+      display: grid;
+      grid-template-columns: 25% 50% 25%;
+    }
+
+    &-buttons {
+      align-items: center;
+      display: flex;
+      margin: 0 8px;
+      span {
+        $size: 12px;
+        background: #FF2639;
+        border-radius: $size;
+        display: inline-block;
+        height: $size;
+        margin-right: $size/2;
+        width: $size;
+
+        &:nth-child(1) { background: #FF2639; }
+        &:nth-child(2) { background: #FFAF00; }
+        &:nth-child(3) { background: #00CE00; }
+      }
+    }
+
+    &-address_bar {
+      background: $light-grey;
+      border-radius: 3px;
+      flex: 1 0 auto;
+      font-family: $code;
+      font-size: 0.8125em;
+      padding: 0.5em;
+      text-align: center;
+    }
+  }
+}

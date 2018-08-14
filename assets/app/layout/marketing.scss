@@ -74,6 +74,12 @@
 
     }
 
+    &-wrap {
+      margin: $base-spacing auto 0;
+      max-width: 1140px;
+      padding: 0 $base-spacing;
+    }
+
     &-header,
     &-footer {
       margin: $padding-large auto;
@@ -291,7 +297,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-top: 60px;
-        padding: 0 5px;
+        padding: 0;
       }
 
       &-item {
@@ -300,14 +306,14 @@
         .marketing-section-grid & {
           @include breakpoint(tablet) {
             flex: 1 1 50%;
-            padding: 25px;
+            padding: $base-spacing;
           }
         }
 
         .marketing-section-grid--3 & {
           @include breakpoint(tablet) {
             flex: 1 1 33.333%;
-            padding: 25px;
+            padding: $base-spacing;
           }
         }
 
