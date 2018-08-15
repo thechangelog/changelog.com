@@ -2,12 +2,8 @@
   <%= render_toolbar_button(@conn, @item) %>
 
   <div class="news_item-toolbar-item news_item-toolbar-meta">
-    <span class="news_item-toolbar-meta-item">
-      logged by <strong><%= link(PersonView.handle(@item.logger), to: twitter_url(@item.logger), rel: "external") %></strong>
-    <%= if @item.submitter do %>
-      via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter), rel: "external") %></strong>
-    <% end %>
-    </span>
+    <%= render_meta_people(@conn, @item) %>
+
     <span class="news_item-toolbar-meta-item">
       <%= link(TimeView.ts(@item.published_at, @style), to: permalink_path(@conn, @item), data: permalink_data(@item)) %>
     </span>
