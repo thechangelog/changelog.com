@@ -46,7 +46,7 @@ defmodule Changelog.Stats.Parser do
     rescue
       exception ->
         Logger.info("Stats: Parse Error '#{exception.message}'\n#{line}")
-        Rollbax.report(:error, exception, __STACKTRACE__, %{line: line})
+        Rollbax.report(:error, exception, System.stacktrace(), %{line: line})
         %Entry{bytes: 0}
     end
   end

@@ -27,4 +27,4 @@ config :arc,
 config :rollbax,
   access_token: "",
   environment: "test",
-  enabled: false
+  enabled: :log
