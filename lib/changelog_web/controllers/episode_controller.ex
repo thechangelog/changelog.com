@@ -37,7 +37,12 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> put_layout(false)
     |> delete_resp_header("x-frame-options")
-    |> render(:embed, podcast: podcast, episode: episode, theme: theme, source: source)
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> assign(:theme, theme)
+    |> assign(:source, source)
+    |> render(:embed)
+    |> cache_public_response(:infinity)
   end
 
   def preview(conn, %{"slug" => slug}, podcast) do
