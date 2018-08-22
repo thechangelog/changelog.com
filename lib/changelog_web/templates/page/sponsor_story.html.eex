@@ -47,7 +47,7 @@
 
   <div class="sponsor_story-sponsors">
     <h2>Loved by brands, trusted by developers</h2>
-    <div class="marketing-section-logos">
+    <div class="logo_grid">
       <%= render("_sponsors.html", assigns) %>
     </div>
 

@@ -13,9 +13,21 @@
 
   // Button Group
   &-button_group {
-    margin-top: $base-spacing;
-    padding-left: $base-spacing;
-    padding-right: $base-spacing;
+    $max-width-group: 540px;
+    $min-width-button: 160px;
+    --max-width-group: $max-width-group;
+    --min-width-button: $min-width-button;
+    display: flex;
+    flex-wrap: wrap;
+    margin: $base-spacing auto 0;
+    max-width: $max-width-group;
+    max-width: var(--max-width-group);
+
+    .button_large {
+      min-width: $min-width-button;
+      min-width: var(--min-width-button);
+      flex: 1 0 0;
+    }
 
     .page-page-weekly &,
     .page-page-nightly & {
@@ -45,6 +57,7 @@
 
     &--no_top_padding { padding-top: 0; }
 
+    &--dark,
     &--map,
     &--intro {
       background: $black;

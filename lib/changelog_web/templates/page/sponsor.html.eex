@@ -4,10 +4,10 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
-      <h1>We reach 75,000 developers weekly</h1>
+      <h1>We reach 75,000 developers&nbsp;weekly</h1>
       <p>100,000 monthly pageviews&nbsp;&nbsp;•&nbsp;&nbsp;225,000 monthly podcast listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> email subscribers</p>
 
-      <div class="marketing-button_group">
+      <div class="marketing-button_group" style="--max-width-group: 400px;">
         <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
         <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
@@ -56,7 +56,7 @@
 
     <footer class="marketing-section-footer">
       <p>Get in touch so we can help share your brand story with our developer community.</p>
-      <div class="marketing-button_group">
+      <div class="marketing-button_group" style="--max-width-group: 400px;">
         <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
         <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
@@ -126,7 +126,7 @@
         </div>
         <div class="mock_browser-body">
             <div class="feed">
-              <!-- TODO: Jerod, make these dynamic please -->
+<!-- TODO: Jerod, make these dynamic please -->
 <article class="news_item news_item--sponsor" data-news-type="ad" data-news-id="m1j">
 <header class="news_item-header">
   <p class="news_item-source">
@@ -185,7 +185,7 @@
 
     <footer class="marketing-section-footer">
       <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
-      <div class="marketing-button_group">
+      <div class="marketing-button_group" style="--max-width-group: 400px;">
         <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
         <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
@@ -193,45 +193,82 @@
     </footer>
   </section>
 
-  <!-- TODO
-  <section class="marketing-section marketing-section--no_top_padding">
+  <section class="marketing-section marketing-section--dark">
     <header class="marketing-section-header">
-      <h3>What our sponsors are saying</h3>
+      <h2>Who you’ll reach</h2>
+      <p>Our focus is on the builders, planners, and leaders defining the future of software.</p>
     </header>
 
-    <div class="marketing-section-grid">
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Breanden Boneschott">
-          <h3>Breanden Beneschott</h3>
-          <p class="marketing-section-grid-quote-title">Toptal &mdash; Co-Founder / COO</p>
-          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+    <div class="marketing-section-wrap">
+      <div class="marketing-bar_graph">
+        <div class="marketing-bar_graph-item">
+          <div class="marketing-bar_graph-item-percentage" style="height: 22%; width: 22%;">10%</div>
+          <div class="marketing-bar_graph-item-label">Founder / CEO</div>
+        </div>
+        <div class="marketing-bar_graph-item">
+          <div class="marketing-bar_graph-item-percentage" style="height: 40%; width: 40%;">22%</div>
+          <div class="marketing-bar_graph-item-label">Frontend / UI</div>
+        </div>
+        <div class="marketing-bar_graph-item">
+          <div class="marketing-bar_graph-item-percentage" style="height: 100%; width: 90%;">48%</div>
+          <div class="marketing-bar_graph-item-label">Developer / Engineer</div>
+        </div>
+        <div class="marketing-bar_graph-item">
+          <div class="marketing-bar_graph-item-percentage" style="height: 27%; width: 27%;">13%</div>
+          <div class="marketing-bar_graph-item-label">CTO / Leadership</div>
+        </div>
+        <div class="marketing-bar_graph-item">
+          <div class="marketing-bar_graph-item-percentage" style="height: 18%; width: 18%">7%</div>
+          <div class="marketing-bar_graph-item-label">Product / Design</div>
         </div>
       </div>
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/adam.jpg") %>' alt="David Roesch">
-          <h3>David Roesch</h3>
-          <p class="marketing-section-grid-quote-title">Linode &mdash; Director of Marketing</p>
-          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
-        </div>
-      </div>
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Todd Lewis">
-          <h3>Todd Lewis</h3>
-          <p class="marketing-section-grid-quote-title">All Things Open &mdash; Creator and Chair</p>
-          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
-        </div>
-      </div>
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/heather.jpg") %>' alt="Elaine Greenberg">
-          <h3>Elaine Greenberg</h3>
-          <p class="marketing-section-grid-quote-title">Fastly &mdash; Communications</p>
-          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+
+      <p>Every day we influence developers at some of the most innovative tech companies in the world.</p>
+
+      <div class="marketing-logo_label_grid">
+        <div class="logo_grid">
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
+          <div class="logo_grid-item">
+            <p>Data Scientist</p>
+            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          </div>
         </div>
       </div>
     </div>
-  </section> -->
+  </section>
 </article>

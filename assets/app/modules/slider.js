@@ -51,7 +51,7 @@ export default class slider {
   }
 
   static resizeSlider(currentSlide) {
-    const height = u('.marketing-slider-item-inner').nodes[currentSlide].offsetHeight;
+    const height = u('.marketing_slider-item-inner').nodes[currentSlide].offsetHeight;
     u('.js-slider').nodes[0].style.maxHeight = `${height}px`;
   }
 }
