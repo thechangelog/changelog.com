@@ -225,48 +225,46 @@
 
       <p>Every day we influence developers at some of the most innovative tech companies in the world.</p>
 
-      <div class="marketing-logo_label_grid">
-        <div class="logo_grid">
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
-          <div class="logo_grid-item">
-            <p>Data Scientist</p>
-            <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
-          </div>
+      <div class="logo_grid logo_grid--dark">
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
         </div>
       </div>
     </div>
