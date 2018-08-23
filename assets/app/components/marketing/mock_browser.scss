@@ -21,22 +21,20 @@
       margin: 0 8px;
       span {
         $size: 12px;
-        background: #FF2639;
+        background: lighten($dark-grey, 8%);
         border-radius: $size;
         display: inline-block;
         height: $size;
         margin-right: 10px;
         width: $size;
-
-        &:nth-child(1) { background: #FF2639; }
-        &:nth-child(2) { background: #FFAF00; }
-        &:nth-child(3) { background: #00CE00; }
       }
     }
 
     &-address_bar {
-      background: $light-grey;
+      background: #1A232C;
+      border: 1px solid #474F56;
       border-radius: 3px;
+      color: #C2C2C2;
       flex: 1 0 auto;
       font-family: $code;
       font-size: 12px;

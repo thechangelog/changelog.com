@@ -201,26 +201,26 @@
     </header>
 
     <div class="marketing-section-wrap">
-      <div class="marketing-bar_graph">
-        <div class="marketing-bar_graph-item">
-          <div class="marketing-bar_graph-item-percentage" style="height: 22%; width: 22%;">10%</div>
-          <div class="marketing-bar_graph-item-label">Founder / CEO</div>
+      <div class="bar_graph">
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 22%; width: 22%;">10%</div>
+          <div class="bar_graph-item-label">Founder / CEO</div>
         </div>
-        <div class="marketing-bar_graph-item">
-          <div class="marketing-bar_graph-item-percentage" style="height: 40%; width: 40%;">22%</div>
-          <div class="marketing-bar_graph-item-label">Frontend / UI</div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 40%; width: 40%;">22%</div>
+          <div class="bar_graph-item-label">Frontend / UI</div>
         </div>
-        <div class="marketing-bar_graph-item">
-          <div class="marketing-bar_graph-item-percentage" style="height: 100%; width: 90%;">48%</div>
-          <div class="marketing-bar_graph-item-label">Developer / Engineer</div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">48%</div>
+          <div class="bar_graph-item-label">Developer / Engineer</div>
         </div>
-        <div class="marketing-bar_graph-item">
-          <div class="marketing-bar_graph-item-percentage" style="height: 27%; width: 27%;">13%</div>
-          <div class="marketing-bar_graph-item-label">CTO / Leadership</div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 27%; width: 27%;">13%</div>
+          <div class="bar_graph-item-label">CTO / Leadership</div>
         </div>
-        <div class="marketing-bar_graph-item">
-          <div class="marketing-bar_graph-item-percentage" style="height: 18%; width: 18%">7%</div>
-          <div class="marketing-bar_graph-item-label">Product / Design</div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 18%; width: 18%">7%</div>
+          <div class="bar_graph-item-label">Product / Design</div>
         </div>
       </div>
 
@@ -229,43 +229,43 @@
       <div class="logo_grid logo_grid--dark margin-vertical_large">
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
       </div>
     </div>

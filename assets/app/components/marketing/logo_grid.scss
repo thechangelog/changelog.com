@@ -1,10 +1,9 @@
 .logo_grid {
-  $gap: 10px;
   align-items: center;
   display: grid;
   grid-template-columns: repeat(3, calc(33.333% - 10px));
-  grid-column-gap: $gap;
-  grid-row-gap: $gap;
+  grid-column-gap: 10px;
+  grid-row-gap: 20px;
   margin: $base-spacing auto;
   max-width: 1080px;
 
@@ -20,7 +19,8 @@
   &-item {
     p {
       font-family: $code;
-      font-size: 0.825em;
+      font-size: 0.75em;
+      margin: 0;
       text-align: center;
 
       .logo_grid--dark & { color: $white; }

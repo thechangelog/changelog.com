@@ -1,4 +1,6 @@
-.marketing-bar_graph {
+.bar_graph {
+  margin: $base-spacing 0;
+
   @include breakpoint(tablet) {
     display: flex;
     margin: $base-spacing*2.5 0;
