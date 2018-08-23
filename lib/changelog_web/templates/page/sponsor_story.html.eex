@@ -37,11 +37,13 @@
     <% end %>
   </div>
 
-  <hr>
+  <% if @story.content_md do %>
+    <hr>
 
-  <div class="sponsor_story-content richtext">
-    <%= @story.content_md |> md_to_html |> raw %>
-  </div>
+    <div class="sponsor_story-content richtext">
+      <%= @story.content_md |> md_to_html |> raw %>
+    </div>
+  <% end %>
 
   <hr>
 
