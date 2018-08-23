@@ -15,8 +15,8 @@
   &-button_group {
     $max-width-group: 540px;
     $min-width-button: 160px;
-    --max-width-group: $max-width-group;
-    --min-width-button: $min-width-button;
+    --max-width-group: 540px;
+    --min-width-button: 160px;
     display: flex;
     flex-wrap: wrap;
     margin: $base-spacing auto 0;

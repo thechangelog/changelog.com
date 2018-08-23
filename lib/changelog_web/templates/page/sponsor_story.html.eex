@@ -2,7 +2,7 @@
   <header class="sponsor_story-header">
     <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: page_path(@conn, :sponsor) %> / Partner Story</div>
 
-    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
+    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
 
     <blockquote class="sponsor_story-quote">
       <div class="sponsor_story-quote-body">

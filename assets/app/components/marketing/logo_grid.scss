@@ -1,16 +1,19 @@
 .logo_grid {
+  $gap: 10px;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(3, 33.333%);
-  margin: 20px auto 0;
+  grid-template-columns: repeat(3, calc(33.333% - 10px));
+  grid-column-gap: $gap;
+  grid-row-gap: $gap;
+  margin: $base-spacing auto;
   max-width: 1080px;
 
   @include breakpoint(tiny) {
-    grid-template-columns: repeat(4, 25%);
+    grid-template-columns: repeat(4, calc(25% - 10px));
   }
 
   @include breakpoint(tablet) {
-    grid-template-columns: repeat(5, 20%);
+    grid-template-columns: repeat(5, calc(20% - 10px));
     margin-top: 50px;
   }
 

@@ -26,16 +26,20 @@
     }
 
     &-logo {
-      --size: 40px;
+      $size: 40px;
       background: $white;
       border-radius: $base-border-radius;
       box-shadow: 0 0 20px #000;
-      height: var(--size);
-      width: var(--size);
+      flex: 0 0 $size;
+      height: $size;
       margin-right: $base-spacing/2;
+      width: $size;
 
       @include breakpoint(tablet) {
-        --size: 60px;
+        $size: 56px;
+        flex: 0 0 $size;
+        height: $size;
+        width: $size;
       }
     }
 

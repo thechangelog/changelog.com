@@ -1,5 +1,5 @@
 defmodule Changelog.SponsorStory do
-  defstruct [:sponsor, :slug, :logo, :quote, :examples, :content_md]
+  defstruct [:sponsor, :slug, :quote, :examples, :content_md]
 
   def all, do: [rollbar(), intel(), fastly(), linode(), datadog()]
 
@@ -15,7 +15,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Rollbar",
       slug: "rollbar",
-      logo: "rollbar",
       quote: %{
         name: "Mike Smith",
         content: "Partnering with Changelog on their news and podcasts have helped me to build brand awareness for Rollbar in a space where developers have heard the 'you need error tracking' message before. Adam and his team do an amazing job at finding the stories about our brand and service that developers want to hear. They're so good at getting the attention (and the trust) of their listeners.",
@@ -66,7 +65,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Intel",
       slug: "intel",
-      logo: "intel",
       quote: %{
         name: "Karl Fezer",
         content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If you listen to Practical AI, that's a great start to being a fit here at Intel AI.",
@@ -84,7 +82,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Linode",
       slug: "linode",
-      logo: "linode",
       quote: %{
         name: "Karl Fezer",
         content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
@@ -102,7 +99,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Fastly",
       slug: "fastly",
-      logo: "fastly",
       quote: %{
         name: "Elaine Greenburg",
         content: "Wow! Fastly gets to be the content delivery backbone Changelog builds everything upon. Plus, the Fastly brand and core value add can be heard in the pre-roll of every podcast episode. We couldn't have asked for a better partner to help us reach the developer community.",
@@ -120,7 +116,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Datadog",
       slug: "datadog",
-      logo: "datadog",
       quote: %{
         name: "Leo Schramm",
         content: "Huge thanks to Adam and team at Changelog for helping me share Datadog's high value content, our story and mission, as well as promote our engineering teams and culture to attract the right talent. If you listen to Changelog podcasts, you'll likely be a great fit at Datadog.",

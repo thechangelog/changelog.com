@@ -9,7 +9,7 @@
 
       <div class="marketing-button_group" style="--max-width-group: 400px;">
         <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
-        <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
       </div>
     </header>
 
@@ -18,7 +18,7 @@
         <%= for story <- @stories do %>
           <div class="marketing_slider-item">
             <%= link to: "/sponsor/stories/" <> story.slug, class: "marketing_slider-item-inner", title: "View Story" do %>
-              <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>@2x.png 2x' alt="<%= story.sponsor %> Logo" width="400">
+              <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>@2x.png 2x' alt="<%= story.sponsor %> Logo" width="400">
 
               <blockquote class="sponsor_story-quote">
                 <div class="sponsor_story-quote-body">
@@ -44,7 +44,7 @@
     <div class="sponsor_grid">
       <%= for story <- @stories do %>
         <%= link to: "/sponsor/stories/" <> story.slug, class: "sponsor_grid-item", title: "View Story" do %>
-          <img class="sponsor_grid-item-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{story.logo}") %>@2x.png 2x' alt="<%= story.sponsor %> Logo" width="60">
+          <img class="sponsor_grid-item-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>-favicon.png' alt="<%= story.sponsor %> Logo" width="56">
 
           <div class="sponsor_grid-item-content">
             <h4><%= story.sponsor %></h4>
@@ -58,13 +58,14 @@
       <p>Get in touch so we can help share your brand story with our developer community.</p>
       <div class="marketing-button_group" style="--max-width-group: 400px;">
         <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
-        <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>
   </section>
 
   <section class="marketing-section">
+    <a id="how-it-works" class="anchor"></a>
     <header class="marketing-section-header">
       <img src='<%= static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
       <h2>How sponsorship works</h2>
@@ -187,7 +188,7 @@
       <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
       <div class="marketing-button_group" style="--max-width-group: 400px;">
         <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
-        <%= link "View rates", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>
@@ -223,9 +224,9 @@
         </div>
       </div>
 
-      <p>Every day we influence developers at some of the most innovative tech companies in the world.</p>
+      <p class="text-center">Every day we influence developers at some of the most innovative tech companies in the world.</p>
 
-      <div class="logo_grid logo_grid--dark">
+      <div class="logo_grid logo_grid--dark margin-vertical_large">
         <div class="logo_grid-item">
           <p>Data Scientist</p>
           <img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal">
@@ -268,5 +269,14 @@
         </div>
       </div>
     </div>
+
+    <footer class="marketing-section-footer">
+      <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
+      <div class="marketing-button_group" style="--max-width-group: 400px;">
+        <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
   </section>
 </article>
