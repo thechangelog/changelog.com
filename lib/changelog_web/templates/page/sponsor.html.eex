@@ -212,7 +212,7 @@
         </div>
         <div class="bar_graph-item">
           <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">48%</div>
-          <div class="bar_graph-item-label">Developer / Engineer</div>
+          <div class="bar_graph-item-label">Backend / Engineer</div>
         </div>
         <div class="bar_graph-item">
           <div class="bar_graph-item-percentage" style="height: 27%; width: 27%;">13%</div>
