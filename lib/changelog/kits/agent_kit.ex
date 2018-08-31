@@ -1,6 +1,6 @@
 defmodule Changelog.AgentKit do
   @known_agents ["Overcast", "PlayerFM", "Feedbin", "Feed Wrangler", "Inoreader",
-                 "NewsBlur"]
+                 "NewsBlur", "Bloglovin", "NewsGator", "TheOldReader", "G2Reader"]
 
   def get_subscribers(nil), do: {:error, :no_ua_string}
   def get_subscribers(ua) do
