@@ -52,7 +52,7 @@ defmodule Changelog.Buffer.Content do
     item = NewsItem.preload_all(item)
 
     [news_item_headline(item), news_item_meta(item), news_item_link(item)]
-    |> Enum.reject(&(&1 == ""))
+    |> Enum.reject(&is_nil/1)
     |> Enum.join("\n\n")
   end
 
@@ -61,7 +61,7 @@ defmodule Changelog.Buffer.Content do
     item = NewsItem.preload_all(item)
 
     [news_item_headline(item), news_item_byline(item), news_item_link(item)]
-    |> Enum.reject(&(&1 == ""))
+    |> Enum.reject(&is_nil/1)
     |> Enum.join("\n\n")
   end
 
@@ -83,9 +83,17 @@ defmodule Changelog.Buffer.Content do
   defp news_item_byline(_item), do: nil
 
   defp news_item_meta(item) do
-    [author_meta(item), source_meta(item), topic_meta(item.topics)]
-    |> Enum.reject(&is_nil/1)
-    |> Enum.join("\n")
+    meta = [
+      author_meta(item),
+      source_meta(item),
+      topic_meta(item.topics)
+    ] |> Enum.reject(&is_nil/1)
+
+    if Enum.any?(meta) do
+      Enum.join(meta, "\n")
+    else
+      nil
+    end
   end
 
   defp author_emoji, do: ~w(✍ 🖋 📝) |> Enum.random
