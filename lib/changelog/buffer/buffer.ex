@@ -35,7 +35,7 @@ defmodule Changelog.Buffer do
   def queue(item = %NewsItem{}) do
     image = Content.news_item_image(item)
     link = Content.news_item_link(item)
-    text = Content.news_item_text(item)
+    text = Content.news_item_terse_text(item)
     Client.create(@changelog, text, [link: link, photo: image])
   end
 end

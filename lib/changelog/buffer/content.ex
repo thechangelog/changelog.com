@@ -1,6 +1,6 @@
 defmodule Changelog.Buffer.Content do
   alias Changelog.{Episode, NewsItem}
-  alias ChangelogWeb.{Endpoint, Helpers, NewsItemView, Router}
+  alias ChangelogWeb.{Endpoint, NewsItemView, Router}
 
   def episode_link(nil), do: nil
   def episode_link(item), do: item.url
@@ -19,7 +19,7 @@ defmodule Changelog.Buffer.Content do
       title_meta(episode),
       featuring_meta(people),
       topic_meta(item.topics)
-    ]
+    ] |> Enum.reject(&is_nil/1)
 
     if Enum.any?(meta) do
       """
@@ -44,11 +44,7 @@ defmodule Changelog.Buffer.Content do
 
   def news_item_link(nil), do: nil
   def news_item_link(item) do
-    if Helpers.SharedHelpers.word_count(item.story) < 20 do
-      item.url
-    else
-      Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
-    end
+    Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
   end
 
   def news_item_text(nil), do: ""
@@ -56,6 +52,15 @@ defmodule Changelog.Buffer.Content do
     item = NewsItem.preload_all(item)
 
     [news_item_headline(item), news_item_meta(item), news_item_link(item)]
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.join("\n\n")
+  end
+
+  def news_item_terse_text(nil), do: ""
+  def news_item_terse_text(item) do
+    item = NewsItem.preload_all(item)
+
+    [news_item_headline(item), news_item_byline(item), news_item_link(item)]
     |> Enum.reject(&(&1 == ""))
     |> Enum.join("\n\n")
   end
@@ -68,6 +73,14 @@ defmodule Changelog.Buffer.Content do
 
   defp news_item_headline(item = %{type: :video}), do: "#{video_emoji()} #{item.headline}"
   defp news_item_headline(item), do: item.headline
+
+  defp news_item_byline(%{author: author, source: source}) when is_map(author) and is_map(source) do
+    "✍ by #{twitterized(author)} on #{twitterized(source)}"
+  end
+  defp news_item_byline(%{author: author}) when is_map(author) do
+    "✍ by #{twitterized(author)}"
+  end
+  defp news_item_byline(_item), do: nil
 
   defp news_item_meta(item) do
     [author_meta(item), source_meta(item), topic_meta(item.topics)]
@@ -88,7 +101,7 @@ defmodule Changelog.Buffer.Content do
   defp author_meta(%{author: %{twitter_handle: handle}}), do: "#{author_emoji()} by @#{handle}"
 
   defp featuring_meta([]), do: nil
-  defp featuring_meta(people), do: "#{featuring_emoji()} #{twitterized(people)}"
+  defp featuring_meta(people), do: "#{featuring_emoji()} #{twitter_list(people, ", ")}"
 
   defp source_meta(%{source: nil}), do: nil
   defp source_meta(%{source: %{twitter_handle: nil}}), do: nil
@@ -98,14 +111,15 @@ defmodule Changelog.Buffer.Content do
 
   defp topic_meta([]), do: nil
   defp topic_meta(topics) do
-    "#{topic_emoji()} #{twitterized(topics)}"
+    "#{topic_emoji()} #{twitter_list(topics)}"
   end
 
-  defp twitterized(list) when is_list(list) do
+  defp twitter_list(list, delimiter \\ " ") when is_list(list) do
     list
     |> Enum.map(&twitterized/1)
-    |> Enum.join(", ")
+    |> Enum.join(delimiter)
   end
+
   defp twitterized(%{slug: "go"}), do: "#golang"
   defp twitterized(%{twitter_handle: nil, slug: slug}) when is_binary(slug), do: "#" <> String.replace(slug, "-", "")
   defp twitterized(%{twitter_handle: handle}) when is_binary(handle), do: "@" <> handle
