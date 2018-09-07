@@ -22,11 +22,11 @@ defmodule ChangelogWeb.Meta.Description do
     "Join developers from all over the world with a backstage pass to everything we do."
   end
   defp get(%{view_module: PageView, view_template: "weekly.html"}) do
-    "Our editorialized take on this week in open source and software development. It's the email you should read so you're not missing out."
+    "Our editorialized take on this week in dev culture, software development, open source, building startups, creative work, and the people involved.  It's the email developers read so they're not missing out."
   end
   defp get(%{view_module: PageView, view_template: "nightly.html"}) do
-    "Get the hottest new and top GitHub repos in your inbox every night. No fluff, just repos."
+    "Get the hottest new repos trending on GitHub in your inbox every night. No fluff, just repos."
   end
   defp get(%{view_module: TopicView, topic: topic}), do: topic.description
-  defp get(_), do: "News and podcasts for developers"
+  defp get(_), do: "News and podcasts for developers."
 end
