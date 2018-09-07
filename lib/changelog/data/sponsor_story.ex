@@ -68,10 +68,10 @@ defmodule Changelog.SponsorStory do
       slug: "datadog",
       logo: "datadog",
       quote: %{
-        name: "Leo Schramh",
-        content: "",
-        image: "leo-schram.jpg",
-        title: "Marketing Manager & Demand Gen at Datadog"
+        name: "",
+        content: "Datadog is a monitoring service for hybrid cloud applications, assisting organizations in improving agility, increasing efficiency, and providing end-to-end visibility across the application and organization. These capabilities are provided on a SaaS-based data analytics platform that enables developers, operations, and other teams to ensure application uptime and accelerate the process of delivering high quality software.",
+        image: "",
+        title: ""
       },
       examples: [
         %{type: "Endorsment", name: "Datadog overview (The Changelog)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3", duration: 55},
