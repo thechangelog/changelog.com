@@ -4,6 +4,7 @@
 
     <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
 
+    <%= if @story.quote.content != "" do %>
     <blockquote class="sponsor_story-quote">
       <div class="sponsor_story-quote-body">
         <p>"<%= @story.quote.content %>"</p>
@@ -14,6 +15,7 @@
           <span class="quote-title"><%= @story.quote.title %></span>
       </footer>
     </blockquote>
+    <% end %>
   </header>
 
   <hr>
@@ -37,11 +39,15 @@
     <% end %>
   </div>
 
+  <%= if @story.content_md != "" do %>
+
   <hr>
 
   <div class="sponsor_story-content richtext">
     <%= @story.content_md |> md_to_html |> raw %>
   </div>
+
+  <% end %>
 
   <hr>
 

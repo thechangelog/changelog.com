@@ -62,6 +62,25 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+  def datadog do
+    %__MODULE__{
+      sponsor: "Datadog",
+      slug: "datadog",
+      logo: "datadog",
+      quote: %{
+        name: "Leo Schramh",
+        content: "",
+        image: "leo-schram.jpg",
+        title: "Marketing Manager & Demand Gen at Datadog"
+      },
+      examples: [
+        %{type: "Endorsment", name: "Datadog overview (The Changelog)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3", duration: 55},
+        %{type: "Endorsement", name: "Datadog overview (Go Time)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-gotime-001.mp3", duration: 44}
+      ],
+      content_md: """
+      """
+    }
+  end
   def intel do
     %__MODULE__{
       sponsor: "Intel",
