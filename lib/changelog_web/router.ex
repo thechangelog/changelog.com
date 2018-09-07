@@ -186,6 +186,7 @@ defmodule ChangelogWeb.Router do
     get "/sponsor", PageController, :sponsor
     get "/sponsor/pricing", PageController, :sponsor_pricing
     get "/sponsor/styles", PageController, :sponsor_styles
+    get "/sponsor/details", PageController, :sponsor_details
     get "/sponsor/stories/:slug", PageController, :sponsor_story
     get "/team", PageController, :team
     get "/privacy", PageController, :privacy

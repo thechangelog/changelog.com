@@ -1,3 +1,5 @@
+<%= render(SharedView, "_drift_js.html") %>
+
 <article class="sponsor_story">
   <header class="sponsor_story-header">
     <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: page_path(@conn, :sponsor) %> / Partner Story</div>
