@@ -44,7 +44,7 @@
     <div class="sponsor_grid">
       <%= for story <- @stories do %>
         <%= link to: "/sponsor/stories/" <> story.slug, class: "sponsor_grid-item", title: "View Story" do %>
-          <img class="sponsor_grid-item-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>-favicon.png' alt="<%= story.sponsor %> Logo" width="56">
+          <img class="sponsor_grid-item-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>-favicon.png' alt="<%= story.sponsor %> Logo" width="60">
 
           <div class="sponsor_grid-item-content">
             <h4><%= story.sponsor %></h4>
