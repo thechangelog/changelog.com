@@ -1,3 +1,3 @@
 <%= link to: topic_path(@conn, :show, @topic.slug), title: @topic.name, class: "news_item-source-image" do %>
-  <img src="<%= TopicView.icon_url(@topic) %>" alt="<%= @topic.name %> Icon" />
+  <%= maybe_lazy_image(@conn, TopicView.icon_url(@topic), @topic.name) %>
 <% end %>

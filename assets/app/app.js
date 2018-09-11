@@ -1,4 +1,5 @@
 import "phoenix_html";
+import "intersection-observer";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 // import clamp from "clamp-js";
@@ -17,11 +18,13 @@ import Tooltip from "modules/tooltip";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
+import lozad from "lozad";
 
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
 const slider = new Slider(".js-slider");
+const observer = lozad(".lazy");
 
 window.u = u;
 
@@ -257,6 +260,7 @@ u(document).on("turbolinks:before-cache", function() {
 
 // on page load
 u(document).on("turbolinks:load", function() {
+  observer.observe();
   autosize(document.querySelectorAll("textarea"));
   new Tooltip(".has-tooltip");
   u("body").removeClass("nav-open");

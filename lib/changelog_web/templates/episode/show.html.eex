@@ -19,7 +19,7 @@
         <div class="avatar_list <%= if length(@episode.guests) > 6, do: "avatar_list--large" %>">
           <%= for person <- @episode.guests do %>
             <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
-              <img src="<%= PersonView.avatar_url(person) %>" width=50 height=50 alt="<%= person.name %>"/>
+              <%= lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
             <% end %>
           <% end %>
         </div>
@@ -42,7 +42,7 @@
           <div class="episode-body-summary-sponsors-list">
           <%= for episode_sponsor <- dark_logo_sponsorships do %>
             <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
-              <img src="<%= SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small) %>" alt="<%= episode_sponsor.sponsor.name %> logo">
+              <%= lazy_image(SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small), "#{episode_sponsor.sponsor.name} Logo") %>
             <% end %>
           <% end %>
           </div>
@@ -134,7 +134,7 @@
                 <%= if speaker do %>
                   <div class="transcript-item-speaker">
                     <%= link to: PersonView.external_url(speaker), title: speaker.name, rel: "external" do %>
-                      <img class="transcript-item-speaker-image" src="<%= PersonView.avatar_url(speaker) %>" width=36 height=36 alt=""/>
+                      <%= lazy_image(PersonView.avatar_url(speaker), "#{speaker.name} Says", class: "transcript-item-speaker-image", width: 36, height: 36) %>
                     <% end %>
                     <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>
                   </div>

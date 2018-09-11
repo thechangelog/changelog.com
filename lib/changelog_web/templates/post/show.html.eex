@@ -9,7 +9,7 @@
 
       <div class="post_header-author">
         <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
-          <img src="<%= PersonView.avatar_url(@post.author) %>" width=30 height=30 alt="<%= @post.author.name %>"/>
+          <%= lazy_image(PersonView.avatar_url(@post.author), @post.author.name, width: 30, height: 30) %>
         <% end %>
         <span><%= link @post.author.name, to: PersonView.external_url(@post.author) %>
           <!-- &ndash; Todo: Add author title -->

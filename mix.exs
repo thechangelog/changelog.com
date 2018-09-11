@@ -54,8 +54,8 @@ defmodule Changelog.Mixfile do
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.3"},
       {:httpoison, "~> 1.0", override: true},
-      {:con_cache, "~> 0.12.0"},
-      {:plug_ets_cache, "~> 0.2.0"},
+      {:con_cache, "~> 0.13.0"},
+      {:plug_ets_cache, "~> 0.3.0"},
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
       {:ex_aws, "~> 1.1"}, # can't upgrade to 2.0 until arc supports it
       {:nimble_csv, "~> 0.4"},

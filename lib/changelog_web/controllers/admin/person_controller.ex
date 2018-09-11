@@ -1,9 +1,8 @@
 defmodule ChangelogWeb.Admin.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Newsletters, Person}
+  alias Changelog.{Mailer, Person}
   alias ChangelogWeb.Email
-  alias Craisin.Subscriber
 
   plug :assign_person when action in [:edit, :update, :delete]
   plug Authorize, [Policies.Person, :person]
@@ -30,8 +29,6 @@ defmodule ChangelogWeb.Admin.PersonController do
       {:ok, person} ->
         Repo.update(Person.file_changeset(person, person_params))
 
-        community = Newsletters.community()
-        Subscriber.subscribe(community.list_id, person, handle: person.handle)
         handle_welcome_email(person, params)
 
         conn
@@ -66,8 +63,6 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   def delete(conn = %{assigns: %{person: person}}, _params) do
     Repo.delete!(person)
-    community = Newsletters.community()
-    Subscriber.unsubscribe(community.list_id, person.email)
 
     conn
     |> put_flash(:result, "success")

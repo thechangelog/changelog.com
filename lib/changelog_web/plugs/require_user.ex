@@ -6,14 +6,11 @@ defmodule ChangelogWeb.Plug.RequireUser do
 
   def init(opts), do: opts
 
+  def call(conn = %{assigns: %{current_user: user}}, _opts) when not is_nil(user), do: conn
   def call(conn, _opts) do
-    if conn.assigns[:current_user] do
-      conn
-    else
-      conn
-      |> put_flash(:error, "Please sign in first. ✊")
-      |> redirect(to: Helpers.sign_in_path(conn, :new))
-      |> halt()
-    end
+    conn
+    |> put_flash(:error, "Please sign in first. ✊")
+    |> redirect(to: Helpers.sign_in_path(conn, :new))
+    |> halt()
   end
 end

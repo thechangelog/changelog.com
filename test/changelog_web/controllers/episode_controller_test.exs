@@ -72,15 +72,6 @@ defmodule ChangelogWeb.EpisodeControllerTest do
   end
 
   describe "play" do
-    test "for unpublished episode", %{conn: conn} do
-      p = insert(:podcast)
-      e = insert(:episode, podcast: p)
-
-      assert_raise Ecto.NoResultsError, fn ->
-        get(conn, episode_path(conn, :play, p.slug, e.slug))
-      end
-    end
-
     test "for published episode", %{conn: conn} do
       p = insert(:podcast)
       e = insert(:published_episode, podcast: p)

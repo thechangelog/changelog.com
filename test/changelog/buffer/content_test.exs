@@ -44,7 +44,7 @@ defmodule Changelog.Buffer.ContentTest do
       t2 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
-      assert Content.episode_text(item) =~ "#security, @OfficialiOS"
+      assert Content.episode_text(item) =~ "#security @OfficialiOS"
     end
   end
 
@@ -71,13 +71,8 @@ defmodule Changelog.Buffer.ContentTest do
       assert is_nil(Content.news_item_link(nil))
     end
 
-    test "returns item url when story is less than 20 words" do
-      item = build(:news_item, story: "This is too short")
-      assert Content.news_item_link(item) == item.url
-    end
-
-    test "returns news item permalink when story is 20 words or more" do
-      item = insert(:news_item, story: "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty")
+    test "returns news item permalink" do
+      item = insert(:news_item, story: "ohai here is a story")
       assert Content.news_item_link(item) == Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
     end
   end
@@ -95,7 +90,7 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
       insert(:news_item_topic, news_item: item, topic: t3)
-      assert Content.news_item_text(item) =~ "@OfficialiOS, #machinelearning, #security"
+      assert Content.news_item_text(item) =~ "@OfficialiOS #machinelearning #security"
     end
 
     test "includes 'via' when news source has twitter handle" do
@@ -125,6 +120,34 @@ defmodule Changelog.Buffer.ContentTest do
     end
   end
 
+  describe "news_item_terse_text" do
+    test "defaults to empty string" do
+      assert Content.news_item_terse_text(nil) == ""
+    end
+
+    test "it includes author and source if both are provided and have handles" do
+      author = insert(:person, twitter_handle: "BigDaddy")
+      source = insert(:news_source, twitter_handle: "wired")
+      item = insert(:news_item, author: author, source: source)
+      assert Content.news_item_terse_text(item) =~ "✍ by @BigDaddy on @wired"
+    end
+
+    test "it includes author alone if it has a handle" do
+      author = insert(:person, twitter_handle: "BigDaddy")
+      source = insert(:news_source)
+      item = insert(:news_item, author: author, source: source)
+      text = Content.news_item_terse_text(item)
+      assert text =~ "✍ by @BigDaddy"
+      refute text =~ "on @wired"
+    end
+
+    test "it excludes source if there is no author" do
+      source = insert(:news_source, twitter_handle: "wired")
+      item = insert(:news_item, source: source)
+      refute Content.news_item_terse_text(item) =~ "on @wired"
+    end
+  end
+
   describe "post_link" do
     test "defaults to nil" do
       assert is_nil(Content.post_link(nil))
@@ -134,15 +157,5 @@ defmodule Changelog.Buffer.ContentTest do
       item = build(:news_item)
       assert Content.post_link(item) == item.url
     end
-  end
-
-  describe "post_text" do
-    # test "calls news_item_text" do
-    #   item = build(:news_item)
-    #   with_mock(Content, [news_item_text: fn() -> "text" end]) do
-    #     Content.post_text(item)
-    #     assert called(Content.news_item_text(item))
-    #   end
-    # end
   end
 end

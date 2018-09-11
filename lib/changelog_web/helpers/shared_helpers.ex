@@ -72,6 +72,19 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def lazy_image(src, alt, attrs \\ []) do
+    attrs = Keyword.merge(attrs, [data: [src: src], alt: alt, src: transparent_gif()])
+    attrs = Keyword.update(attrs, :class, "lazy", &("#{&1} lazy"))
+    tag(:img, attrs)
+  end
+
+  def maybe_lazy_image(conn, src, alt, attrs \\ []) do
+    case controller_name(conn) do
+      "news_issue" -> tag(:img, Keyword.merge([src: src, alt: alt], attrs))
+      _else -> lazy_image(src, alt, attrs)
+    end
+  end
+
   def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
   def md_to_safe_html(md) when is_nil(md), do: ""
 
@@ -95,6 +108,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def is_future?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == 1
   def is_past?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == -1
+
+  def transparent_gif, do: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do

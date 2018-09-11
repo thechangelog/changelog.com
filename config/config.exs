@@ -57,8 +57,8 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
 
 config :plug_ets_cache,
   db_name: :response_cache,
-  ttl_check: 30,
-  ttl: 90
+  ttl_check: 1,
+  ttl: 60
 
 config :mime, :types, %{"application/xml" => ["xml"]}
 

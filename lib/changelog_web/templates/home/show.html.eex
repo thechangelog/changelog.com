@@ -5,7 +5,7 @@
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">
         <h3>Changelog Weekly</h3>
-        <p>Our editorialized take covering this week in open source and software development.</p>
+        <p>Our editorialized take covering this week in dev culture, software development, open source, building startups, creative work, and the people involved.</p>
         <p class="account_subscriptions-item-info-meta">1 Email Per Week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
       </div>
       <div class="account_subscriptions-item-button">
@@ -15,7 +15,7 @@
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">
         <h3>Changelog Nightly</h3>
-        <p>Our automated, nightly email unearths the hottest new repos on GitHub before they blow up.</p>
+        <p>Our automated nightly email powered by GitHub Archive that unearths the hottest new repos trending on GitHub before they blow up.</p>
         <p class="account_subscriptions-item-info-meta">7 Emails Per Week — Delivered Daily at 10pm US Central</p>
       </div>
       <div class="account_subscriptions-item-button">
@@ -26,7 +26,7 @@
 
   <div class="account_ctas">
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/changelog-logomark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <%= lazy_image(static_url(@conn, "/images/brand/changelog-logomark.svg"), "Changelog Logo", class: "account_ctas-item-icon", width: 50, height: 50) %>
 
       <div class="account_ctas-item-info">
         <h3>Changelog.com Profiles</h3>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/brand/podcasts.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <%= lazy_image(static_url(@conn, "/images/brand/podcasts.svg"), "Podcasts Logo", class: "account_ctas-item-icon", width: 50, height: 50) %>
 
       <div class="account_ctas-item-info">
         <h3>Changelog Podcasts</h3>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <%= lazy_image(static_url(@conn, "/images/content/community/slack-mark.svg"), "Slack Logo", class: "account_ctas-item-icon", width: 50, height: 50) %>
 
       <div class="account_ctas-item-info">
         <h3>Changelog Slack</h3>

@@ -12,7 +12,7 @@
     <%= if @ad.image do %>
       <p>
         <%= link to: @ad.url do %>
-          <img src="<%= NewsItemView.image_url(@ad, :large) %>" alt="<%= @ad.headline %>" class="news_item-sponsored-image">
+          <%= lazy_image(NewsItemView.image_url(@ad, :large), @ad.headline, class: "news_item-sponsored-image") %>
         <% end %>
       </p>
     <% end %>

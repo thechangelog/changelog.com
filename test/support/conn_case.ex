@@ -41,10 +41,7 @@ defmodule ChangelogWeb.ConnCase do
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Changelog.Repo)
 
-    :app_cache
-    |> ConCache.ets
-    |> :ets.tab2list
-    |> Enum.each(fn({key, _}) -> ConCache.delete(:app_cache, key) end)
+    Changelog.Cache.delete_all()
 
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Changelog.Repo, {:shared, self()})

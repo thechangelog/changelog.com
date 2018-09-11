@@ -1,0 +1,16 @@
+<div class="grid_table">
+  <div class="grid_table-header">
+    <div class="grid_table-header-column"><p>Campaign type</p></div>
+    <div class="grid_table-header-column"><p>Campaign name</p></div>
+    <div class="grid_table-header-column"><p>Campaign production</p></div>
+  </div>
+<%= for example <- Changelog.SponsorStyle.all() do %>
+  <div class="grid_table-row">
+    <div class="grid_table-row-column"><p><%= example.type %></p></div>
+    <div class="grid_table-row-column"><p><%= example.name %></p></div>
+    <div class="grid_table-row-column">
+      <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+    </div>
+  </div>
+<% end %>
+</div>

@@ -1,7 +1,7 @@
 <article class="show_list-shows-item">
   <div class="show_list-shows-item-wrap">
     <%= link(to: podcast_path(@conn, :show, @podcast.slug), class: "show_list-shows-item-art", title: "View #{@podcast.name}") do %>
-      <img src="<%= cover_url(@podcast, :medium) %>" width="220" height="220" alt="<%= @podcast.name %> Artwork">
+      <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 220, height: 220) %>
       <%= if @podcast.status == :soon do %>
         <div class="show_list-shows-item-art-status show_list-shows-item-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
       <% end %>

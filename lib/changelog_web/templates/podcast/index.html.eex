@@ -2,7 +2,7 @@
   <section class="show_list">
     <header class="show_list-header">
       <h2>Our podcasts</h2>
-      <p>Conversations about developer culture, open source and software development, creative work, building startups, and the people involved.</p>
+      <p>Conversations about developer culture, software development, open source, building startups, creative work, and the people involved.</p>
       <p class="show_list-header-master_cta"><a href="/master"><strong>Subscribe to Master</strong> to get all of our shows (~5 episodes/wk + exclusive master only content)</a></p>
     </header>
     <div class="show_list-shows">

@@ -3,35 +3,34 @@ defmodule Changelog.AgentKitTest do
 
   alias Changelog.AgentKit
 
-  describe "is_overcast/1" do
-    test "is false when nil or empty agent" do
-      refute AgentKit.is_overcast(nil)
-      refute AgentKit.is_overcast("")
+  describe "get_subscribers/1" do
+    test "returns :error and :no_ua_string when sent nil" do
+      assert {:error, :no_ua_string} = AgentKit.get_subscribers(nil)
     end
 
-    test "is true when Overcast user agent matches" do
-      agent = "Overcast/1.0 Podcast Sync (1190 subscribers; feed-id=554901; +http://overcast.fm/)"
-      assert AgentKit.is_overcast(agent)
-    end
-  end
-
-  describe "get_overcast_subs/1" do
-    test "returns :error and message when agent isn't Overcast" do
-      agent = "Mozilla whatever whatever 11 subscribers"
-      {result, _message} = AgentKit.get_overcast_subs(agent)
-      assert result == :error
+    test "returns :error and :no_subscribers when subscibers aren't detected" do
+      agent = "Overcast/1.0 Podcast Sync (feed-id=554901; +http://overcast.fm/)"
+      assert {:error, :no_subscribers} = AgentKit.get_subscribers(agent)
     end
 
-    test "returns :error and message when sub count is 1 or less" do
+    test "returns :error and :no_subscribers when sub count is 1 or less" do
       agent = "Overcast/1.0 Podcast Sync (1 subscribers; feed-id=554901; +http://overcast.fm/)"
-      {result, _message} = AgentKit.get_overcast_subs(agent)
-      assert result == :error
+      assert {:error, :no_subscribers} = AgentKit.get_subscribers(agent)
     end
 
-    test "returns :ok and subscriber count" do
-      agent = "Overcast/1.0 Podcast Sync (1190 subscribers; feed-id=554901; +http://overcast.fm/)"
-      {:ok, count} = AgentKit.get_overcast_subs(agent)
-      assert count == 1190
+    test "returns :error and :unknown_agent when agent isn't known" do
+      agent = "Castro 2 Episode Download (1000 subscribers)"
+      assert {:error, :unknown_agent} = AgentKit.get_subscribers(agent)
+    end
+
+    test "returns :ok and tuple with agent/subs when count is there and agent is known" do
+      agent = "PlayerFM/1.0 Podcast Sync (5033 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+      assert {:ok, {"PlayerFM", 5033}} = AgentKit.get_subscribers(agent)
+    end
+
+    test "returns :ok and tuple with agent/subs with case insensitive match" do
+      agent = "Mozilla/5.0 (compatible; inoreader.com; 25 subscribers)"
+      assert {:ok, {"Inoreader", 25}} = AgentKit.get_subscribers(agent)
     end
   end
 end

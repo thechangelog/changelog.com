@@ -61,6 +61,24 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+  def datadog do
+    %__MODULE__{
+      sponsor: "Datadog",
+      slug: "datadog",
+      quote: %{
+        name: "",
+        content: "Datadog is a monitoring service for hybrid cloud applications, assisting organizations in improving agility, increasing efficiency, and providing end-to-end visibility across the application and organization. These capabilities are provided on a SaaS-based data analytics platform that enables developers, operations, and other teams to ensure application uptime and accelerate the process of delivering high quality software.",
+        image: "",
+        title: ""
+      },
+      examples: [
+        %{type: "Endorsment", name: "Datadog overview (The Changelog)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3", duration: 55},
+        %{type: "Endorsement", name: "Datadog overview (Go Time)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-gotime-001.mp3", duration: 44}
+      ],
+      content_md: """
+      """
+    }
+  end
   def intel do
     %__MODULE__{
       sponsor: "Intel",
@@ -109,52 +127,6 @@ defmodule Changelog.SponsorStory do
         %{type: "Partner Pre-roll", name: "Networkwide pre-roll sponsorship", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/fastly-preroll.mp3", duration: 06}
       ],
       content_md: """
-      """
-    }
-  end
-  def datadog do
-    %__MODULE__{
-      sponsor: "Datadog",
-      slug: "datadog",
-      quote: %{
-        name: "Leo Schramm",
-        content: "Huge thanks to Adam and team at Changelog for helping me share Datadog's high value content, our story and mission, as well as promote our engineering teams and culture to attract the right talent. If you listen to Changelog podcasts, you'll likely be a great fit at Datadog.",
-        image: "leo-schramm.jpg",
-        title: "Marketing Manager & Demand Gen at Datadog"
-      },
-      examples: [
-        %{type: "Endorsement", name: "Datadog overview (The Changelog)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3", duration: 55},
-        %{type: "Endorsement", name: "Datadog overview (Go Time)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-gotime-001.mp3", duration: 44}
-      ],
-      content_md: """
-      #### Who is Datadog?
-
-      Datadog is a monitoring service for hybrid cloud applications, assisting organizations in improving agility, increasing efficiency, and providing end-to-end visibility across the application and organization. These capabilities are provided on a SaaS-based data analytics platform that enables developers, operations, and other teams to accelerate go-to-market efforts, ensure application uptime, and successfully complete digital transformation initiatives. Since launching in 2010, Datadog has been adopted more than 6,000 enterprises including companies like Asana, eBay, PagerDuty, Samsung, The Washington Post, and Zendesk.
-
-      #### Who are you and what do you do at Datadog?
-
-      Hello, I'm Leo Schramm. I'm part of the team that leads marketing and demand gen here at Datadog. Day to day I define and deploy growth and marketing strategies, meet with partners, review campaign results, and generally try to learn as much as I can about our customer.
-
-      When you bring the observability of servers, clouds, metrics, apps, and teams together all in one place, interesting things happen. We're obsessed with learning everything we can from our customers to deliver the best user experience for modern monitoring and analytics.
-
-      #### What do you value most about your partnership with Changelog?
-
-      For me, I really enjoy the ideas and strategy they bring to the table. The production value they deliver is really top notch too.
-
-      What's interesting about Changelog is how they take the time to learn who we are, what we have to offer. They're also good at letting us know what we're doing that IS and IS NOT working. Changelog not only helps us to define our goals, but they also develop a campaign focused iterating towards those goals. I've learned the importance of understanding what you're trying to say and the action(s) you desire the listener to take as result. Adam and team do a phenominal job of helping us shape and focus Datadog's message.
-
-      In many ways, Changelog operates much like a creative agency would. The difference is they focus on the Changelog network.
-
-      #### Describe a hidden or unclear benefit that you get from Changelog
-
-      Influence at integration! Changelog.com is open source, which means they attract alot of attention to their codebase. Some are there to learn, some are there to contrubute, in either case they see that Changelog choose Datadog as their monitoring partner. Our brand and service are naturally promoted as a preferred choice because they trust Changelog's judgement.
-
-      `---`
-
-      Partner: Datadog
-      Website: [datadoghq.com](https://www.datadoghq.com/)
-      Employees: 750+
-      Annual Revenue: $50,000,000
       """
     }
   end

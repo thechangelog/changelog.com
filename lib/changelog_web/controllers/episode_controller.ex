@@ -17,7 +17,11 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.preload_all
       |> Repo.get_by!(slug: slug)
 
-    render(conn, :show, podcast: podcast, episode: episode)
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> render(:show)
+    |> cache_public_response(:infinity)
   end
 
   def embed(conn, params = %{"slug" => slug}, podcast) do
@@ -33,7 +37,12 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> put_layout(false)
     |> delete_resp_header("x-frame-options")
-    |> render(:embed, podcast: podcast, episode: episode, theme: theme, source: source)
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> assign(:theme, theme)
+    |> assign(:source, source)
+    |> render(:embed)
+    |> cache_public_response(:infinity)
   end
 
   def preview(conn, %{"slug" => slug}, podcast) do
@@ -48,7 +57,6 @@ defmodule ChangelogWeb.EpisodeController do
   def play(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_podcast
 

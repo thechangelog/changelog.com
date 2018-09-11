@@ -20,7 +20,9 @@ defmodule ChangelogWeb.PostController do
       |> Repo.get_by!(slug: slug)
       |> Post.preload_all
 
-    render(conn, :show, post: post)
+    conn
+    |> render(:show, post: post)
+    |> cache_public_response(:infinity)
   end
 
   def preview(conn, %{"id" => slug}) do

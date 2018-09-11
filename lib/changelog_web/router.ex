@@ -16,22 +16,22 @@ defmodule ChangelogWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Plug.Authenticate, repo: Changelog.Repo
-    plug PlugEtsCache.Plug
+    plug Plug.PlugEtsCache
   end
 
   pipeline :feed do
     plug :accepts, ["xml"]
-    plug PlugEtsCache.Plug
+    plug Plug.PlugEtsCache
   end
 
   pipeline :json_feed do
     plug :accepts, ["json"]
-    plug PlugEtsCache.Plug
+    plug Plug.PlugEtsCache
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug PlugEtsCache.Plug
+    plug Plug.PlugEtsCache
   end
 
   pipeline :admin do
@@ -185,6 +185,7 @@ defmodule ChangelogWeb.Router do
     get "/styleguide", PageController, :styleguide
     get "/sponsor", PageController, :sponsor
     get "/sponsor/pricing", PageController, :sponsor_pricing
+    get "/sponsor/styles", PageController, :sponsor_styles
     get "/sponsor/stories/:slug", PageController, :sponsor_story
     get "/team", PageController, :team
     get "/privacy", PageController, :privacy

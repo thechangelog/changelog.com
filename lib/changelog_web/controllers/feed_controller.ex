@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.FeedController do
   use ChangelogWeb, :controller
-  use PlugEtsCache.Phoenix
+
+  require Logger
 
   alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Podcast, Post, Topic}
 
@@ -9,7 +10,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("news.xml", items: NewsItem.latest_news_items)
-    |> cache_response
+    |> cache_public_response
   end
 
   def news_titles(conn, _params) do
@@ -17,7 +18,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("news_titles.xml", items: NewsItem.latest_news_items)
-    |> cache_response
+    |> cache_public_response
   end
 
   def podcast(conn, %{"slug" => "backstage"}) do
@@ -33,20 +34,21 @@ defmodule ChangelogWeb.FeedController do
       |> Repo.all
       |> Episode.preload_all
 
-    log_overcast(conn, podcast)
+    log_subscribers(conn, podcast)
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("podcast.xml", podcast: podcast, episodes: episodes)
-    |> cache_response
+    |> cache_public_response
   end
 
-  defp log_overcast(conn, podcast) do
-    agent = get_agent(conn)
+  defp log_subscribers(conn, podcast) do
+    ua = get_agent(conn)
 
-    case AgentKit.get_overcast_subs(agent) do
-      {:ok, subs} -> Podcast.update_subscribers(podcast, "overcast", subs)
+    case AgentKit.get_subscribers(ua) do
+      {:ok, {agent, subs}} -> Podcast.update_subscribers(podcast, agent, subs)
+      {:error, :unknown_agent} -> Logger.info("Unknown agent reporting: #{ua}")
       {:error, _message} -> false
     end
   end
@@ -63,7 +65,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("posts.xml", posts: posts)
-    |> cache_response
+    |> cache_public_response
   end
 
   def sitemap(conn, _params) do
@@ -101,6 +103,6 @@ defmodule ChangelogWeb.FeedController do
     conn
     |> put_layout(false)
     |> render("sitemap.xml", news_items: news_items, news_sources: news_sources, episodes: episodes, podcasts: podcasts, posts: posts, topics: topics)
-    |> cache_response
+    |> cache_public_response
   end
 end

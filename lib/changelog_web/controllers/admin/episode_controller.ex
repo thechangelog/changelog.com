@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, EpisodeTopic, EpisodeGuest, EpisodeHost, EpisodeStat,
-                   Github, NewsItem, NewsQueue, Podcast}
+  alias Changelog.{Cache, Episode, EpisodeTopic, EpisodeGuest, EpisodeHost,
+                   EpisodeStat, Github, NewsItem, NewsQueue, Podcast}
 
   plug :assign_podcast
   plug Authorize, [Policies.Episode, :podcast]
@@ -129,6 +129,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     case Repo.update(changeset) do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
+        Cache.delete(episode)
 
         conn
         |> put_flash(:result, "success")
@@ -147,6 +148,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     Repo.delete!(episode)
+    Cache.delete(episode)
 
     conn
     |> put_flash(:result, "success")
@@ -165,6 +167,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         handle_guest_thanks(params, episode)
         handle_news_item(conn, episode)
         handle_notes_push_to_github(episode)
+        Cache.delete(episode)
 
         conn
         |> put_flash(:result, "success")
@@ -184,7 +187,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     changeset = Ecto.Changeset.change(episode, %{published: false})
 
     case Repo.update(changeset) do
-      {:ok, _episode} ->
+      {:ok, episode} ->
+        Cache.delete(episode)
+
         conn
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))

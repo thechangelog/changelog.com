@@ -44,8 +44,9 @@ defmodule Changelog.Stats.Parser do
              country_code: get_country_code(values),
              country_name: get_country_name(values)}
     rescue
-      e in NimbleCSV.ParseError ->
-        Logger.info("Stats: Parse Error '#{e.message}'\n#{line}")
+      exception ->
+        Logger.info("Stats: Parse Error '#{exception.message}'\n#{line}")
+        Rollbax.report(:error, exception, System.stacktrace(), %{line: line})
         %Entry{bytes: 0}
     end
   end

@@ -8,11 +8,31 @@
       </ul>
 
       <ul class="footer-primary-list footer-primary-list--social">
-        <li><a href="https://twitter.com/changelog"><img src='<%= static_url(@conn, "/images/icons/icon-twitter-black.svg") %>' title="Twitter"></a></li>
-        <li><a href="https://github.com/thechangelog"><img src='<%= static_url(@conn, "/images/icons/icon-github-black.svg") %>' title="Github"></a></li>
-        <li><a href="https://www.youtube.com/c/thechangelog"><img src='<%= static_url(@conn, "/images/icons/icon-youtube-black.svg") %>' title="YouTube"></a></li>
-        <li><a href="https://www.instagram.com/changelog_"><img src='<%= static_url(@conn, "/images/icons/icon-instagram-black.svg") %>' title="Instagram"></a></li>
-        <li><a href="https://www.twitch.tv/changelog_"><img src='<%= static_url(@conn, "/images/icons/icon-twitch-black.svg") %>' title="Twitch"></a></li>
+        <li>
+          <a href="https://twitter.com/changelog" title="Changelog on Twitter">
+            <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter-black.svg"), "Twitter Icon") %>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/thechangelog" title="Changelog on GitHub">
+            <%= lazy_image(static_url(@conn, "/images/icons/icon-github-black.svg"), "GitHub Icon") %>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.youtube.com/c/thechangelog" title="Changelog on YouTube">
+            <%= lazy_image(static_url(@conn, "/images/icons/icon-youtube-black.svg"), "YouTube Icon") %>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/changelog_" title="Changelog on Instagram">
+            <%= lazy_image(static_url(@conn, "/images/icons/icon-instagram-black.svg"), "Instagram Icon") %>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.twitch.tv/changelog_" title="Changelog on Twitch">
+            <%= lazy_image(static_url(@conn, "/images/icons/icon-twitch-black.svg"), "Twitch Icon") %>
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -69,19 +89,19 @@
       <div class="footer-sponsors-item">
         <a href="https://www.fastly.com/?utm_source=changelog" title="Visit Fastly.com">
           <p>Bandwidth provided by</p>
-          <img src='<%= static_url(@conn, "/images/content/footer/sponsor-fastly.png") %>' alt="Fastly">
+          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-fastly.png"), "Fastly") %>
         </a>
       </div>
       <div class="footer-sponsors-item">
         <a href="https://www.linode.com/changelog" title="Visit Linode.com">
           <p>Hosting provided by</p>
-          <img src='<%= static_url(@conn, "/images/content/footer/sponsor-linode.png") %>' alt="Linode">
+          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-linode.png"), "Linode") %>
         </a>
       </div>
       <div class="footer-sponsors-item">
         <a href="https://rollbar.com/" title="Visit Rollbar.com">
           <p>Error monitoring by</p>
-          <img src='<%= static_url(@conn, "/images/content/footer/sponsor-rollbar.png") %>' alt="Rollbar">
+          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-rollbar.png"), "Rollbar") %>
         </a>
       </div>
     </div>

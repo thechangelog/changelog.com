@@ -3,7 +3,9 @@
     <tr>
       <th>Person</th>
       <th>Links</th>
-      <th>Create Time</th>
+      <th>Created</th>
+      <th>Joined</th>
+      <th>Last Seen</th>
       <th>Posts</th>
       <th>Episodes</th>
       <th></th>
@@ -21,11 +23,10 @@
           <div class="ui tiny blue basic label">Admin</div>
         <% end %>
       </td>
-      <td>
-        <%= link "Email", to: "mailto:#{person.email}" %>,
-        <%= person |> list_of_links |> raw %>
-      </td>
+      <td><div class="ui basic icon buttons"><%= person |> list_of_links |> raw %></div></td>
       <td><%= ts(person.inserted_at) %></td>
+      <td><%= ts(person.joined_at) %></td>
+      <td><%= ts(person.signed_in_at) %></td>
       <td><%= post_count(person) %></td>
       <td><%= episode_count(person) %></td>
       <td class="center aligned">

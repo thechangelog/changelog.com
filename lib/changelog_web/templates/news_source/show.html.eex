@@ -2,7 +2,7 @@
   <header class="topic-header">
     <div class="topic-header-wrap">
       <div class="topic-header-avatar">
-        <img src="<%= icon_url(@source) %>" width="80" height="80" alt="<%= @source.name %> Icon">
+        <%= lazy_image(icon_url(@source), "#{@source.name} Icon", width: 80, height: 80) %>
       </div>
 
       <h2 class="topic-header-title"><%= @source.name %></h2>
