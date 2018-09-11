@@ -44,6 +44,7 @@
     <div class="sponsor_grid">
       <%= for story <- @stories do %>
         <%= link to: "/sponsor/stories/" <> story.slug, class: "sponsor_grid-item", title: "View Story" do %>
+          <!-- TODO: Find related "Sponsor" in database, find by name, get the avatar. -->
           <img class="sponsor_grid-item-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>-favicon.png' alt="<%= story.sponsor %> Logo" width="60">
 
           <div class="sponsor_grid-item-content">
