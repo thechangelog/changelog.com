@@ -52,8 +52,18 @@
         margin-bottom: 0.25em;
       }
       p {
+        /* autoprefixer: autoprefixer: off */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
         margin-bottom: 0;
-        // height: 4.25em;
+        max-height: 4.5em; // Max-height for when line-clamp isn't supported
+        /* autoprefixer: autoprefixer: on */
+
+        @include breakpoint(tablet) {
+          -webkit-line-clamp: 3;
+        }
       }
     }
   }
