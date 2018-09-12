@@ -81,6 +81,25 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+  def indeed do
+    %__MODULE__{
+      sponsor: "Indeed",
+      slug: "indeed",
+      logo: "indeed",
+      quote: %{
+        name: "",
+        content: "Indeed is the #1 job site in the world with over 200 million unique visitors every month. Indeed strives to put job seekers first, giving them free access to search for jobs, post resumes, and research companies. Every day, they connect millions of people to new opportunities.",
+        image: "",
+        title: ""
+      },
+      examples: [
+        %{type: "Team Culture", name: "Indeed Assesments, Darren Nix", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3", duration: 141},
+        %{type: "Team Culture", name: "Indeed Assesments, Bryan Chaney", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-bryan-001.mp3", duration: 126}
+      ],
+      content_md: """
+      """
+    }
+  end
   def intel do
     %__MODULE__{
       sponsor: "Intel",
