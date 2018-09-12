@@ -87,10 +87,10 @@ defmodule Changelog.SponsorStory do
       slug: "indeed",
       logo: "indeed",
       quote: %{
-        name: "",
+        name: "Travis Triggs",
         content: "Indeed is the #1 job site in the world with over 200 million unique visitors every month. Indeed strives to put job seekers first, giving them free access to search for jobs, post resumes, and research companies. Every day, they connect millions of people to new opportunities.",
-        image: "",
-        title: ""
+        image: "travis-triggs.png",
+        title: "Employer Brand Program Manager at Indeed.com"
       },
       examples: [
         %{type: "Team Culture", name: "Indeed Assesments, Darren Nix", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3", duration: 141},
