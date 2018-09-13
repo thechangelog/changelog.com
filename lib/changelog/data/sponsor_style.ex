@@ -5,7 +5,7 @@ defmodule Changelog.SponsorStyle do
       %{type: "Endorsement", name: "Datadog, overview (Go Time)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-gotime-001.mp3", duration: 44},
       %{type: "Team Culture / Hiring", name: "Indeed, Darren Nix", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3", duration: 141},
       %{type: "Team Culture / Hiring", name: "Indeed, Bryan Chaney", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-bryan-001.mp3", duration: 126},
-      %{type: "Endorsement", name: "Rollbar, Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3", duration: 33},
+      %{type: "Endorsement", name: "Rollbar, Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/rollbar-move-fast-and-fix-things.mp3", duration: 33},
       %{type: "Partner pre-roll", name: "Rollbar, Network-wide pre-roll", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-partner-preroll-move-fast-and-fix-things.mp3", duration: 5},
       %{type: "Customer story", name: "Rollbar, CircleCI - Paul Biggar", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-circleci-1.mp3", duration: 63},
       %{type: "Endorsement", name: "Rollbar, Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-move-fast-and-fix-things.mp3", duration: 33},
