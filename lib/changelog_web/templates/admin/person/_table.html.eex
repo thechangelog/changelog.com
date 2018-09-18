@@ -33,6 +33,7 @@
         <div class="ui small basic buttons">
           <%= icon_link("eye", to: admin_person_path(@conn, :show, person)) %>
           <%= icon_link("edit", to: admin_person_path(@conn, :edit, person)) %>
+          <%= icon_link("slack", to: admin_person_path(@conn, :slack, person), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
           <%= icon_link("trash", to: admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>
