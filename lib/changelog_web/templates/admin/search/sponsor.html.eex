@@ -4,7 +4,7 @@
   </h1>
 
 <%= if Enum.any?(@results) do %>
-  <%= render(SponsorView, "_table.html", conn: @conn, sponsors: @results) %>
+  <%= render(SponsorView, "_table.html", Map.merge(assigns, %{sponsors: @results})) %>
 <% end %>
 </div>
 

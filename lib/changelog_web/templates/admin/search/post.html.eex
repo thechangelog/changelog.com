@@ -4,7 +4,7 @@
   </h1>
 
 <%= if Enum.any?(@results) do %>
-  <%= render(PostView, "_table.html", conn: @conn, posts: @results) %>
+  <%= render(PostView, "_table.html", Map.merge(assigns, %{posts: @results})) %>
 <% end %>
 </div>
 
