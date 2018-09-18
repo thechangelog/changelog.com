@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Person}
+  alias Changelog.{Mailer, Episode, NewsItem, Person}
   alias ChangelogWeb.Email
 
   plug :assign_person when action in [:edit, :update, :delete]
@@ -15,6 +15,27 @@ defmodule ChangelogWeb.Admin.PersonController do
       |> Repo.paginate(params)
 
     render(conn, :index, people: page.entries, page: page)
+  end
+
+  def show(conn, %{"id" => id}) do
+    person = Repo.get!(Person, id)
+
+    episodes =
+      assoc(person, :guest_episodes)
+      |> Episode.published
+      |> Episode.newest_first
+      |> Episode.preload_all
+      |> Repo.all
+
+    items =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.newest_first
+      |> NewsItem.with_person(person)
+      |> NewsItem.preload_all
+      |> Repo.all
+
+    render(conn, :show, person: person, episodes: episodes, items: items)
   end
 
   def new(conn, _params) do

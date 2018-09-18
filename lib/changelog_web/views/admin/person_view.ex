@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.PersonView do
 
   alias Changelog.Person
   alias ChangelogWeb.PersonView
+  alias ChangelogWeb.Admin.{EpisodeView, NewsItemView}
 
   def avatar_url(person), do: PersonView.avatar_url(person)
   def episode_count(person), do: Person.episode_count(person)
@@ -13,7 +14,7 @@ defmodule ChangelogWeb.Admin.PersonView do
      %{value: person.github_handle, icon: "github", url: github_url(person.github_handle)},
      %{value: person.website, icon: "share", url: person.website}]
     |> Enum.reject(fn(x) -> x.value == nil end)
-    |> Enum.map(fn(x) -> ~s{<a href="#{x.url}" class="ui button" target="_blank"><i class="#{x.icon} icon"></i></a>} end)
+    |> Enum.map(fn(x) -> ~s{<a href="#{x.url}" class="ui icon button" target="_blank"><i class="#{x.icon} icon"></i></a>} end)
     |> Enum.join("")
   end
 

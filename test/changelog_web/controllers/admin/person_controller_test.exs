@@ -20,6 +20,15 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   end
 
   @tag :as_admin
+  test "shows a specific person", %{conn: conn} do
+    p1 = insert(:person)
+
+    conn = get(conn, admin_person_path(conn, :show, p1))
+
+    assert html_response(conn, 200) =~ p1.name
+  end
+
+  @tag :as_admin
   test "renders form to create new person", %{conn: conn} do
     conn = get(conn, admin_person_path(conn, :new))
     assert html_response(conn, 200) =~ ~r/new/

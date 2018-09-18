@@ -74,7 +74,7 @@ defmodule ChangelogWeb.Router do
     post "/news/issues/:id/publish", NewsIssueController, :publish, as: :news_issue
     post "/news/issues/:id/unpublish", NewsIssueController, :unpublish, as: :news_issue
 
-    resources "/people", PersonController, except: [:show]
+    resources "/people", PersonController
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode

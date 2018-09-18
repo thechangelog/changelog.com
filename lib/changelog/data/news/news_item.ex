@@ -47,6 +47,7 @@ defmodule Changelog.NewsItem do
   def submitted(query \\ __MODULE__),                  do: from(q in query, where: q.status == ^:submitted)
   def with_episode(query \\ __MODULE__, episode),      do: from(q in query, where: q.object_id == ^Episode.object_id(episode))
   def with_episodes(query \\ __MODULE__, episodes),    do: from(q in query, where: q.object_id in ^Enum.map(episodes, &Episode.object_id/1))
+  def with_person(query \\ __MODULE__, person),        do: from(q in query, where: q.submitter_id == ^person.id, or_where: q.author_id == ^person.id)
   def with_post(query \\ __MODULE__, post),            do: from(q in query, where: q.object_id == ^"posts:#{post.slug}")
   def with_object(query \\ __MODULE__),                do: from(q in query, where: not(is_nil(q.object_id)))
   def sans_object(query \\ __MODULE__),                do: from(q in query, where: is_nil(q.object_id))
