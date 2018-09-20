@@ -14,7 +14,7 @@ defmodule ChangelogWeb.PageView do
   def skype_account(podcast) do
     case podcast.slug do
       "gotime"  -> "changelog-4"
-      "jsparty" -> "changelog-3"
+      "jsparty" -> "changelog-4"
       _else     -> "changelog-2"
     end
   end
