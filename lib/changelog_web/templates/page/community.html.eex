@@ -35,8 +35,9 @@
   <section class="marketing-section">
     <header class="marketing-section-header">
       <i><%= lazy_image(static_url(@conn, "/images/content/community/slack-mark.svg"), "Slack Logo", width: 60, height: 60) %></i>
-      <h2>Slack everyday with&nbsp;friends</h2>
-      <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
+      <h2>There are no imposters&nbsp;here.</h2>
+      <p>Everyone is welcome. You are not an imposter. No matter who you are or where you are on your path of being a developer &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
+      
     </header>
 
     <div class="marketing-section-content marketing-section-content--slack">
@@ -45,8 +46,8 @@
       </div>
       <div class="marketing-section-content-info">
         <div class="marketing-section-content-info-top">
-          <h3>There are no imposters&nbsp;here.</h3>
-          <p>Everyone is welcome. You are not an imposter. No matter where you are on your hacker path &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
+          <h3>Slack everyday with&nbsp;friends</h3>
+          <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
         <%= if !@current_user do %>
           <p><%= link "Join the community", to: person_path(@conn, :join), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
         <% end %>
