@@ -16,8 +16,8 @@ services:
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
       VIRTUAL_HOST: "localhost"
-    expose:
-      - "4000"
+    ports:
+      - "4000:4000"
     volumes:
       - ./assets/admin/:/app/assets/admin/
       - ./assets/app/:/app/assets/app/
@@ -47,7 +47,6 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx/vhost.d:/etc/nginx/vhost.d:ro
       - ./nginx/conf.d/changelog.conf:/etc/nginx/conf.d/changelog.conf:ro
-      - ./priv/static/:/var/www/static:ro
       - ./priv/uploads/:/var/www/uploads:ro
 
 volumes:
