@@ -21,7 +21,8 @@ import lozad from "lozad";
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
-const observer = lozad(".lazy");
+const lazy = lozad(".lazy");
+const csrf = u("[property=csrf]").attr("content");
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
@@ -103,6 +104,18 @@ u(document).handle("click", ".js-share-popup", function(event) {
   Log.track("Social", "share", href);
   shareWindow = window.open(href, "Changelog", `location=1,status=1,scrollbars=1,width=${w},height=${h},top=${top},left=${left}`);
   shareWindow.opener = null;
+});
+
+// track news impressions
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    let el = u(entry.target);
+    let type = el.data("news-type");
+    let id = el.data("news-id");
+    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": csrf}, body: {"ids": id}});
+    observer.unobserve(entry.target);
+  });
 });
 
 // track news clicks
@@ -193,31 +206,6 @@ function isExternalLink(a) {
   return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
 }
 
-function impress() {
-  let ads = Array.from(document.querySelectorAll("[data-news-type=ad]"));
-  let items = Array.from(document.querySelectorAll("[data-news-type=news]"));
-
-  if (ads.length) {
-    let adIds = ads.map(function(x) { return u(x).data("news-id"); });
-    let options = {
-      method: "POST",
-      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
-      body: {"ads": adIds}
-    };
-    ajax("/ad/impress", options);
-  }
-
-  if (items.length) {
-    let itemIds = items.map(function(x) { return u(x).data("news-id"); });
-    let options = {
-      method: "POST",
-      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
-      body: {"items": itemIds}
-    };
-    ajax("/news/impress", options);
-  }
-}
-
 function deepLink(href) {
   let linkTime = parseTime(gup("t", (href || location.href), "#"));
   if (!linkTime) return false;
@@ -247,7 +235,8 @@ u(document).on("turbolinks:before-cache", function() {
 
 // on page load
 u(document).on("turbolinks:load", function() {
-  observer.observe();
+  lazy.observe();
+  u(".news_item").each(function(el) { observer.observe(el) });
   autosize(document.querySelectorAll("textarea"));
   new Tooltip(".has-tooltip");
   u("body").removeClass("nav-open");
@@ -257,7 +246,6 @@ u(document).on("turbolinks:load", function() {
   live.check();
   formatTimes();
   deepLink();
-  impress();
   setTimeout(() => { closeFlash(u(".flash_container")); }, 10*1000);
 });
 
