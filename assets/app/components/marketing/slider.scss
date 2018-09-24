@@ -1,6 +1,12 @@
 .marketing_slider {
   margin: $base-spacing*2 0;
+  padding-top: 60px;
+  position: relative;
   transition: max-height 1s linear;
+
+  @include breakpoint(tablet) {
+    padding-top: 0;
+  }
 
   &-item {
     display: none;
@@ -41,7 +47,13 @@
     justify-content: space-between;
     margin: $base-spacing auto 0;
     padding: 0 $base-spacing;
-    max-width: 600px;
+    max-width: 400px;
+
+    @include breakpoint(tablet, max) {
+      @include position(absolute, 0 0 null 0);
+      margin-top: 0;
+      max-width: 80%;
+    }
 
     &-item {
       $size: 30px;
