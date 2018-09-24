@@ -107,6 +107,7 @@ export default class OnsitePlayer {
   playUI() {
     this.playButtons.play();
     this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
+    if (!this.isActive()) this.show();
   }
 
   pause() {
