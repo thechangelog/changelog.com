@@ -13,7 +13,7 @@ var common = {
         exclude: [/node_modules/, /semantic/, /uploads/],
         loader: "babel-loader",
         options: {
-          presets: ["env"]
+          presets: ['@babel/preset-env']
         }
       },
       {
