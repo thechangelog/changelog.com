@@ -28,7 +28,9 @@ defmodule ChangelogWeb.NewsItemController do
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :index, ads: get_ads(), pinned: pinned, items: items, page: page)
+    ads = NewsSponsorship.get_ads_for_index()
+
+    render(conn, :index, ads: ads, pinned: pinned, items: items, page: page)
   end
 
   def top(conn, params) do
@@ -44,7 +46,9 @@ defmodule ChangelogWeb.NewsItemController do
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :top, ads: get_ads(), items: items, page: page)
+    ads = NewsSponsorship.get_ads_for_index()
+
+    render(conn, :top, ads: ads, items: items, page: page)
   end
 
   def new(conn, _params) do
@@ -119,16 +123,6 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.load_object
 
     render(conn, :show, item: item)
-  end
-
-  defp get_ads do
-    Timex.today
-    |> NewsSponsorship.week_of
-    |> NewsSponsorship.preload_all
-    |> Repo.all
-    |> Enum.take_random(2)
-    |> Enum.map(&NewsSponsorship.ad_for_index/1)
-    |> Enum.reject(&is_nil/1)
   end
 
   defp item_from_hashid(hashid, query \\ NewsItem) do

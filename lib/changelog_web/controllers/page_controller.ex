@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, Newsletters, Podcast}
+  alias Changelog.{Cache, Episode, Newsletters, NewsSponsorship, Podcast}
   alias ChangelogWeb.TimeView
 
   plug RequireGuest, "before joining" when action in [:join]
@@ -56,8 +56,8 @@ defmodule ChangelogWeb.PageController do
   def sponsor(conn, _params) do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
     stories = Changelog.SponsorStory.all
-
-    render(conn, :sponsor, weekly: weekly, stories: stories)
+    ads = NewsSponsorship.get_ads_for_index()
+    render(conn, :sponsor, weekly: weekly, stories: stories, ads: ads)
   end
 
   def sponsor_pricing(conn, _params) do

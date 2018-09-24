@@ -1,7 +1,7 @@
 defmodule Changelog.SponsorStory do
   defstruct [:sponsor, :slug, :quote, :examples, :content_md]
 
-  def all, do: [rollbar(), intel(), fastly(), linode(), datadog()]
+  def all, do: [rollbar(), fastly(), linode(), datadog()]
 
   def get_by_slug(slug) do
     try do
@@ -61,6 +61,7 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def datadog do
     %__MODULE__{
       sponsor: "Datadog",
@@ -79,6 +80,7 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def intel do
     %__MODULE__{
       sponsor: "Intel",
@@ -96,6 +98,7 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def linode do
     %__MODULE__{
       sponsor: "Linode",
@@ -113,6 +116,7 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def fastly do
     %__MODULE__{
       sponsor: "Fastly",
