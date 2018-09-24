@@ -42,7 +42,7 @@ defmodule ChangelogWeb.Admin.SearchController do
   defp episode_query(q),     do: Repo.all(Episode.published(from q in Episode, where: ilike(q.title, ^"%#{q}%"))) |> Repo.preload(:podcast)
   defp news_item_query(q),   do: Repo.all(NewsItem.published(from q in NewsItem, where: ilike(q.headline, ^"%#{q}%")))
   defp news_source_query(q), do: Repo.all(from q in NewsSource, where: ilike(q.name, ^"%#{q}%"))
-  defp person_query(q),      do: Repo.all(from q in Person, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.handle, ^"%#{q}%"))
+  defp person_query(q),      do: Repo.all(from q in Person, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.handle, ^"%#{q}%"), or_where: ilike(q.email, ^"%#{q}%"))
   defp post_query(q),        do: Repo.all(from q in Post, where: ilike(q.title, ^"%#{q}%")) |> Repo.preload(:author)
   defp sponsor_query(q),     do: Repo.all(from q in Sponsor, where: ilike(q.name, ^"%#{q}%"))
   defp topic_query(q),       do: Repo.all(from q in Topic, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.slug, ^"%#{q}%"))

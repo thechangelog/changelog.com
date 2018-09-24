@@ -8,7 +8,7 @@
 <%= if Enum.any?(@draft_episodes) do %>
 <div class="ui basic segment">
   <h1 class="ui header">Episode drafts (next up)</h1>
-  <%= render("_draft_episodes_table.html", assigns) %>
+  <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @draft_episodes, status: :draft})) %>
 </div>
 <% end %>
 

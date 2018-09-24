@@ -1,10 +1,10 @@
 defmodule ChangelogWeb.Admin.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Person}
+  alias Changelog.{Mailer, Episode, NewsItem, Person, Slack}
   alias ChangelogWeb.Email
 
-  plug :assign_person when action in [:edit, :update, :delete]
+  plug :assign_person when action in [:edit, :update, :delete, :slack]
   plug Authorize, [Policies.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
@@ -15,6 +15,27 @@ defmodule ChangelogWeb.Admin.PersonController do
       |> Repo.paginate(params)
 
     render(conn, :index, people: page.entries, page: page)
+  end
+
+  def show(conn, %{"id" => id}) do
+    person = Repo.get!(Person, id)
+
+    episodes =
+      assoc(person, :guest_episodes)
+      |> Episode.published
+      |> Episode.newest_first
+      |> Episode.preload_all
+      |> Repo.all
+
+    items =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.newest_first
+      |> NewsItem.with_person(person)
+      |> NewsItem.preload_all
+      |> Repo.all
+
+    render(conn, :show, person: person, episodes: episodes, items: items)
   end
 
   def new(conn, _params) do
@@ -69,9 +90,31 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> redirect(to: admin_person_path(conn, :index))
   end
 
+  def slack(conn = %{assigns: %{person: person}}, params) do
+    flash = case Slack.Client.invite(person.email) do
+      %{"ok" => true} ->
+        set_slack_id_to_pending(person)
+        "success"
+      %{"ok" => false, "error" => "already_in_team"} ->
+        set_slack_id_to_pending(person)
+        "success"
+      _else -> "failure"
+    end
+
+    conn
+    |> put_flash(:result, flash)
+    |> redirect_next(params, admin_person_path(conn, :index))
+  end
+
   defp assign_person(conn = %{params: %{"id" => id}}, _) do
     person = Repo.get!(Person, id)
     assign(conn, :person, person)
+  end
+
+  defp set_slack_id_to_pending(person = %{slack_id: id}) when not is_nil(id), do: person
+  defp set_slack_id_to_pending(person) do
+    {:ok, person} = Repo.update(Person.slack_changeset(person, "pending"))
+    person
   end
 
   defp handle_welcome_email(person, params) do

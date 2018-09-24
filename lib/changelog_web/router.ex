@@ -74,7 +74,9 @@ defmodule ChangelogWeb.Router do
     post "/news/issues/:id/publish", NewsIssueController, :publish, as: :news_issue
     post "/news/issues/:id/unpublish", NewsIssueController, :unpublish, as: :news_issue
 
-    resources "/people", PersonController, except: [:show]
+    resources "/people", PersonController
+    post "/people/:id/slack", PersonController, :slack, as: :person
+
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
@@ -186,6 +188,7 @@ defmodule ChangelogWeb.Router do
     get "/sponsor", PageController, :sponsor
     get "/sponsor/pricing", PageController, :sponsor_pricing
     get "/sponsor/styles", PageController, :sponsor_styles
+    get "/sponsor/details", PageController, :sponsor_details
     get "/sponsor/stories/:slug", PageController, :sponsor_story
     get "/team", PageController, :team
     get "/privacy", PageController, :privacy

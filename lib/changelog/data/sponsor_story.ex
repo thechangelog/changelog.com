@@ -80,7 +80,24 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
-
+  def indeed do
+    %__MODULE__{
+      sponsor: "Indeed",
+      slug: "indeed",
+      quote: %{
+        name: "Travis Triggs",
+        content: "Indeed is the #1 job site in the world with over 200 million unique visitors every month. Indeed strives to put job seekers first, giving them free access to search for jobs, post resumes, and research companies. Every day, they connect millions of people to new opportunities.",
+        image: "travis-triggs.png",
+        title: "Employer Brand Program Manager at Indeed.com"
+      },
+      examples: [
+        %{type: "Team Culture", name: "Indeed Assesments, Darren Nix", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3", duration: 141},
+        %{type: "Team Culture", name: "Indeed Assesments, Bryan Chaney", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-bryan-001.mp3", duration: 126}
+      ],
+      content_md: """
+      """
+    }
+  end
   def intel do
     %__MODULE__{
       sponsor: "Intel",
@@ -104,10 +121,10 @@ defmodule Changelog.SponsorStory do
       sponsor: "Linode",
       slug: "linode",
       quote: %{
-        name: "Karl Fezer",
-        content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If they listen to Practical AI, that's a great start to being the right person for Intel AI.",
+        name: "Tyler Van Fossen",
+        content: "We're huge fans of Changelog here at Linode. The focus on developer news and podcasts is the right fit to help us share the Linode story.",
         image: "karl-fezer.jpg",
-        title: "AI Developer Community Manager at Intel AI"
+        title: "Marketing Analytics Manager at Linode"
       },
       examples: [
         %{type: "Endorsement", name: "Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3", duration: 33}

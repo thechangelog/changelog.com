@@ -2,7 +2,9 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   use ChangelogWeb.ConnCase
   use Bamboo.Test
 
-  alias Changelog.Person
+  import Mock
+
+  alias Changelog.{Person, Slack}
 
   @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
   @invalid_attrs %{name: "", email: "noname@nope.com"}
@@ -17,6 +19,15 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
     assert html_response(conn, 200) =~ ~r/People/
     assert String.contains?(conn.resp_body, p1.name)
     assert String.contains?(conn.resp_body, p2.name)
+  end
+
+  @tag :as_admin
+  test "shows a specific person", %{conn: conn} do
+    p1 = insert(:person)
+
+    conn = get(conn, admin_person_path(conn, :show, p1))
+
+    assert html_response(conn, 200) =~ p1.name
   end
 
   @tag :as_admin
@@ -100,6 +111,18 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
     conn = delete(conn, admin_person_path(conn, :delete, person.id))
     assert redirected_to(conn) == admin_person_path(conn, :index)
     assert count(Person) == 0
+  end
+
+  @tag :as_admin
+  test "invites to slack", %{conn: conn} do
+    person = insert(:person)
+
+    with_mock(Slack.Client, [invite: fn(_) -> %{"ok" => true} end]) do
+      conn = post(conn, admin_person_path(conn, :slack, person))
+
+      assert redirected_to(conn) == admin_person_path(conn, :index)
+      assert called Slack.Client.invite(person.email)
+    end
   end
 
   test "requires user auth on all actions", %{conn: conn} do

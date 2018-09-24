@@ -4,7 +4,7 @@
   </h1>
 
 <%= if Enum.any?(@results) do %>
-  <%= render(EpisodeView, "_table.html", conn: @conn, podcast: List.first(@results).podcast, episodes: @results, status: :published) %>
+  <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @results, status: :published})) %>
 <% end %>
 </div>
 

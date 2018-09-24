@@ -1,0 +1,38 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("People", to: admin_person_path(@conn, :index)) %>
+    &raquo;
+    <%= @person.name %> (<%= @person.handle %>)
+    <div class="sub header">
+      created <%= TimeView.terse_date(@person.inserted_at) %>
+    <%= if @person.joined_at do %>
+      &bull; joined <%= TimeView.terse_date(@person.joined_at) %>
+    <% end %>
+    <%= if @person.signed_in_at do %>
+      &bull; last seen <%= TimeView.terse_date(@person.signed_in_at) %>
+    <% end %>
+    </div>
+  </h1>
+</div>
+
+<div class="actions right">
+  <div class="ui basic buttons">
+    <%= @person |> list_of_links |> raw %>
+    <%= icon_link("slack", to: admin_person_path(@conn, :slack, @person, next: admin_person_path(@conn, :show, @person)), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+    <%= link("Edit", to: admin_person_path(@conn, :edit, @person), class: "ui button") %>
+  </div>
+</div>
+
+<%= if Enum.any?(@items) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">News Items</h2>
+  <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{status: :published, items: @items})) %>
+</div>
+<% end %>
+
+<%= if Enum.any?(@episodes) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Guest Episodes</h2>
+  <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @episodes, status: :published})) %>
+</div>
+<% end %>

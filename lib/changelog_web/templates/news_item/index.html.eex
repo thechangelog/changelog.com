@@ -22,7 +22,7 @@
   <section class="show_list" id="podcasts">
     <header class="show_list-header">
       <h2>Our podcasts</h2>
-      <p>No matter where you are on your hacker path, we have a podcast for you. This community cares about the past, present, and future hacker generation. We're about lifting people up, not putting people down.</p>
+      <p>No matter who you are or where you are on your path of being a developer, we have a podcast for you. This community cares about the past, present, and future generation of developers. We're about lifting people up, not putting people down.</p>
     </header>
     <div class="show_list-shows">
       <%= render_many(@podcasts ++ [Podcast.master], PodcastView, "_summary.html", assigns) %>
