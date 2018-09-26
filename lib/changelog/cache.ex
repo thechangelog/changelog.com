@@ -9,7 +9,7 @@ defmodule Changelog.Cache do
     episode = Episode.preload_podcast(episode)
     delete_prefix(:response_cache, "/#{episode.podcast.slug}/#{episode.slug}")
   end
-  def delete(%Podcast{} = podcast) do
+  def delete(%Podcast{} = _podcast) do
     delete(:app_cache, "podcasts")
   end
   def delete(%Post{} = post) do

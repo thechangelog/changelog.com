@@ -7,7 +7,7 @@ defmodule ChangelogWeb.PageView do
   def uses_skype?(podcast) do
     case podcast.slug do
       "afk" -> false
-      _else          -> true
+      _else -> true
     end
   end
 
