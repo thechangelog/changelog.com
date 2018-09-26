@@ -11,4 +11,8 @@ defmodule Changelog.HashidTest do
   test "decode an invalid id returns -1" do
     assert Hashid.decode("not_a_valid_thing") == -1
   end
+
+  test "decode an id that is too big returns -1" do
+    assert Hashid.decode("commandeer2") == -1
+  end
 end
