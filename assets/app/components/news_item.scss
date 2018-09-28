@@ -202,11 +202,11 @@
   }
 
   &-toolbar {
-    @include breakpoint(mobile) {
-      align-items: flex-end;
-    }
-    align-items: flex-start;
+    align-items: center;
     display: flex;
+    @include breakpoint(mobile, max) {
+      align-items: flex-start;
+    }
 
     &-play_button,
     &-video_button,
@@ -248,6 +248,7 @@
 
     &-meta {
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
       font-family: $code;
       font-size: 0.8125em;
@@ -279,10 +280,7 @@
       }
 
       &-item__featuring {
-        @include breakpoint(mobile, max) {
-          margin-top: 5px;
-        }
-
+        margin-top: 5px;
         margin-right: 10px;
 
         a:hover {
