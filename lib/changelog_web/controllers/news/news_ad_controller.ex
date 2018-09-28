@@ -15,6 +15,7 @@ defmodule ChangelogWeb.NewsAdController do
     end
   end
 
+  def impress(conn, %{"ads" => hashids}), do: impress(conn, %{"ids" => hashids})
   def impress(conn = %{assigns: %{current_user: user}}, %{"ids" => hashids}) do
     unless is_admin?(user) do
       hashids

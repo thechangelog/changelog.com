@@ -84,6 +84,7 @@ defmodule ChangelogWeb.NewsItemController do
     end
   end
 
+  def impress(conn, %{"items" => hashids}), do: impress(conn, %{"ids" => hashids})
   def impress(conn = %{assigns: %{current_user: user}}, %{"ids" => hashids}) do
     hashids
     |> String.split(",")
