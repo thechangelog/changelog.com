@@ -1,8 +1,8 @@
 defmodule Changelog.NewsItem do
   use Changelog.Data, default_sort: :published_at
 
-  alias Changelog.{Episode, Files, NewsItemTopic, NewsIssue, NewsQueue, NewsSource,
-                   Person, Post, Regexp}
+  alias Changelog.{Episode, Files, NewsItemComment, NewsItemTopic, NewsIssue,
+                   NewsQueue, NewsSource, Person, Post, Regexp}
 
   defenum Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3
   defenum Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4
@@ -30,6 +30,7 @@ defmodule Changelog.NewsItem do
     has_one :news_queue, NewsQueue, foreign_key: :item_id, on_delete: :delete_all
     has_many :news_item_topics, NewsItemTopic, foreign_key: :item_id, on_delete: :delete_all
     has_many :topics, through: [:news_item_topics, :topic]
+    has_many :comments, NewsItemComment, foreign_key: :item_id, on_delete: :delete_all
 
     timestamps()
   end

@@ -1,8 +1,8 @@
 defmodule Changelog.Person do
   use Changelog.Data
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, PodcastHost,
-                   Post, Regexp}
+  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, NewsItemComment,
+                   PodcastHost, Post, Regexp}
   alias Timex.Duration
 
   defmodule Settings do
@@ -50,6 +50,7 @@ defmodule Changelog.Person do
     has_many :authored_news_items, NewsItem, foreign_key: :author_id
     has_many :logged_news_items, NewsItem, foreign_key: :logger_id
     has_many :submitted_news_items, NewsItem, foreign_key: :submitter_id
+    has_many :comments, NewsItemComment, foreign_key: :author_id
 
     timestamps()
   end
