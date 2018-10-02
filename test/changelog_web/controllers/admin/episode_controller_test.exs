@@ -150,6 +150,19 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
+  test "schedules an episode for publishing", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p, published_at: Timex.end_of_week(Timex.now))
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 0
+    assert count(Episode.scheduled) == 1
+    assert called Github.Pusher.push(:_, e.notes)
+  end
+
+  @tag :as_admin
   test "publishes an episode, optionally setting guest 'thanks' to true", %{conn: conn} do
     g1 = insert(:person)
     g2 = insert(:person)

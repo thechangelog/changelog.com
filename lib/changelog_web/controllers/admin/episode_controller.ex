@@ -241,7 +241,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp handle_news_item(_, _), do: false
 
   defp handle_notes_push_to_github(episode) do
-    if Episode.is_public(episode) do
+    if Episode.is_published(episode) do
       episode = Episode.preload_podcast(episode)
       source = Github.Source.new("show-notes", episode)
       Github.Pusher.push(source, episode.notes)
