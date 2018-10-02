@@ -11,6 +11,7 @@ import Overlay from "modules/overlay";
 import ImageButton from "modules/imageButton";
 import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
+import Slider from "modules/slider";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
 import ts from "../shared/ts";
@@ -21,8 +22,11 @@ import lozad from "lozad";
 const player = new OnsitePlayer("#player");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
+const slider = new Slider(".js-slider");
 const lazy = lozad(".lazy");
 const csrf = u("[property=csrf]").attr("content");
+
+window.u = u;
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {

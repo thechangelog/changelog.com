@@ -4,7 +4,7 @@
   <header class="sponsor_story-header">
     <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: page_path(@conn, :sponsor) %> / Partner Story</div>
 
-    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
+    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
 
     <blockquote class="sponsor_story-quote">
       <div class="sponsor_story-quote-body">
@@ -42,20 +42,18 @@
   </div>
 
   <%= if @story.content_md != "" do %>
+    <hr>
 
-  <hr>
-
-  <div class="sponsor_story-content richtext">
-    <%= @story.content_md |> md_to_html |> raw %>
-  </div>
-
+    <div class="sponsor_story-content richtext">
+      <%= @story.content_md |> md_to_html |> raw %>
+    </div>
   <% end %>
 
   <hr>
 
   <div class="sponsor_story-sponsors">
     <h2>Loved by brands, trusted by developers</h2>
-    <div class="marketing-section-logos">
+    <div class="logo_grid">
       <%= render("_sponsors.html", assigns) %>
     </div>
 
@@ -73,7 +71,9 @@
     <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
     <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
 
-    <%= link "Get in Touch", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
+    <div class="marketing-button_group">
+      <%= link "Get in Touch", to: "mailto:adam@changelog.com", title: "", class: "button_large" %>
+    </div>
   </header>
 
   <div class="marketing-map">

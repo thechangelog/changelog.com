@@ -3,11 +3,13 @@
     <header class="marketing-section-header">
       <h1>Subscribe to Changelog Nightly</h1>
 
-      <%= if @current_user do %>
-        <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "marketing-button button_large" %>
-      <% else %>
-        <%= link "Subscribe", to: person_path(@conn, :subscribe, list: "nightly"), class: "marketing-button button_large" %>
-      <% end %>
+      <div class="marketing-button_group">
+        <%= if @current_user do %>
+          <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "button_large" %>
+        <% else %>
+          <%= link "Subscribe", to: person_path(@conn, :subscribe, list: "nightly"), class: "button_large" %>
+        <% end %>
+      </div>
     </header>
   </section>
 
