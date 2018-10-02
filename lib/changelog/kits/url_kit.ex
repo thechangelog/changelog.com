@@ -1,16 +1,20 @@
 defmodule Changelog.UrlKit do
   alias Changelog.NewsSource
 
-  def get_html(url) when is_nil(url), do: ""
+  def get_html(nil), do: ""
   def get_html(url) do
-    case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
-      %{status_code: 200, headers: headers, body: body} ->
-        case List.keyfind(headers, "Content-Encoding", 0) do
-          {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
-          {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
-          _else -> body
-        end
-      _else -> ""
+    try do
+      case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
+        %{status_code: 200, headers: headers, body: body} ->
+          case List.keyfind(headers, "Content-Encoding", 0) do
+            {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
+            {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
+            _else -> body
+          end
+        _else -> ""
+      end
+    rescue
+      HTTPoison.Error -> ""
     end
   end
 
