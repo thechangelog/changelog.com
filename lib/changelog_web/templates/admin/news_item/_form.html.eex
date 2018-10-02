@@ -48,6 +48,20 @@
     <%= error_message(f, :url) %>
   </div>
 
+<%= if Enum.any?(@similar) do %>
+  <div class="field">
+    <label>Similar Items</label>
+    <div class="ui ordered list">
+    <%= for item <- @similar do %>
+      <div class="item">
+        <%= link item.headline, to: show_or_preview_path(@conn, item) %> (<%= item.status %>)
+      <%= if item.logger, do: "logged by #{item.logger.handle}" %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+<% end %>
+
   <div class="field required <%= error_class(f, :headline) %>">
     <label for="headline">
       Headline
