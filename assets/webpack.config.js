@@ -4,6 +4,7 @@ var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+var babelenv = require('babel-preset-env');
 
 var common = {
   module: {
@@ -13,7 +14,7 @@ var common = {
         exclude: [/node_modules/, /semantic/, /uploads/],
         loader: "babel-loader",
         options: {
-          presets: ['@babel/preset-env']
+          presets: [babelenv]
         }
       },
       {
