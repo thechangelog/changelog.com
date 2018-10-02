@@ -11,7 +11,7 @@
         <p>"<%= @story.quote.content %>"</p>
       </div>
       <%= if @story.quote.name != "" do %>
-      <footer class="marketing-quote-footer">
+      <footer class="marketing_quote-footer">
         <img src='<%= static_url(@conn, "/images/content/sponsors/#{@story.quote.image}") %>' alt="" width="50" height="50">
         <strong><%= @story.quote.name %></strong>
         <span class="quote-title"><%= @story.quote.title %></span>
@@ -71,7 +71,7 @@
     <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
     <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
 
-    <div class="marketing-button_group">
+    <div class="marketing-button_group" style="--max-width-group: 200px;">
       <%= link "Get in Touch", to: "mailto:adam@changelog.com", title: "", class: "button_large" %>
     </div>
   </header>

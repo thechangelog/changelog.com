@@ -37,7 +37,7 @@
       <i><%= lazy_image(static_url(@conn, "/images/content/community/slack-mark.svg"), "Slack Logo", width: 60, height: 60) %></i>
       <h2>There are no imposters&nbsp;here.</h2>
       <p>Everyone is welcome. You are not an imposter. No matter who you are or where you are on your path of being a developer &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
-      
+
     </header>
 
     <div class="marketing-section-content marketing-section-content--slack">

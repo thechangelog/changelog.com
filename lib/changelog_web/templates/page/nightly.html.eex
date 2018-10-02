@@ -3,7 +3,7 @@
     <header class="marketing-section-header">
       <h1>Subscribe to Changelog Nightly</h1>
 
-      <div class="marketing-button_group">
+      <div class="marketing-button_group" style="--max-width-group: 260px;">
         <%= if @current_user do %>
           <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "button_large" %>
         <% else %>
