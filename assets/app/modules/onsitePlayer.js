@@ -135,6 +135,7 @@ export default class OnsitePlayer {
   seekBy(to) {
     const currentSeek = this.audio.currentSeek() || 0;
     this.audio.seek(currentSeek + to);
+    this.step();
   }
 
   // begins the process of playing the audio, fetching the details
