@@ -29,12 +29,18 @@ DOCKER := /usr/local/bin/docker
 $(DOCKER):
 	@$(CASK) install docker
 
-COMPOSE := $(DOCKER)-compose
-$(COMPOSE): $(DOCKER)
+docker: $(DOCKER)
 	@ps aux | grep --silent "[M]acOS/Docker" || \
 	( echo "$(RED)Please ensure Docker is running$(NORMAL)" && \
 	  open -a Docker.app && \
 	  exit 1)
+
+COMPOSE := $(DOCKER)-compose
+$(COMPOSE): docker
+	@[ -f $(COMPOSE) ] || (\
+	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
+	  exit 1 \
+	)
 
 .PHONY: upgrade
 upgrade: ## Upgrade all dependencies (up)
@@ -78,7 +84,7 @@ db: $(COMPOSE) ## Resets database with seed data
 	fi
 
 .PHONY: proxy
-proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
+proxy: docker ## Builds & publishes thechangelog/proxy image
 	@cd nginx && export BUILD_VERSION=$$(date +'%Y-%m-%d') ; \
 	$(DOCKER) build -t thechangelog/proxy:$$BUILD_VERSION . && \
 	$(DOCKER) push thechangelog/proxy:$$BUILD_VERSION && \
