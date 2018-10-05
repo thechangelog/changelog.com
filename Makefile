@@ -15,11 +15,11 @@ ifneq (4,$(firstword $(sort $(MAKE_VERSION) 4)))
   $(error $(BOLD)$(RED)GNU Make v4 or above is required$(NORMAL), please install with $(BOLD)brew install gmake$(NORMAL) and use $(BOLD)gmake$(NORMAL) instead of make)
 endif
 
+### VARS ###
+#
 export LC_ALL := en_US.UTF-8
 export LANG := en_US.UTF-8
 
-### VARS ###
-#
 
 ### DEPS ###
 #
@@ -35,12 +35,6 @@ $(COMPOSE):
 	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
 	  exit 1 \
 	)
-
-.PHONY: upgrade
-upgrade: ## Upgrade all dependencies (up)
-	@($(CASK) outdated docker || $(CASK) upgrade docker)
-.PHONY: up
-up: upgrade
 
 ### TARGETS ###
 #
