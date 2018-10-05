@@ -29,14 +29,8 @@ DOCKER := /usr/local/bin/docker
 $(DOCKER):
 	@$(CASK) install docker
 
-docker: $(DOCKER)
-	@ps aux | grep --silent "[M]acOS/Docker" || \
-	( echo "$(RED)Please ensure Docker is running$(NORMAL)" && \
-	  open -a Docker.app && \
-	  exit 1)
-
 COMPOSE := $(DOCKER)-compose
-$(COMPOSE): docker
+$(COMPOSE):
 	@[ -f $(COMPOSE) ] || (\
 	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
 	  exit 1 \
@@ -84,7 +78,7 @@ db: $(COMPOSE) ## Resets database with seed data
 	fi
 
 .PHONY: proxy
-proxy: docker ## Builds & publishes thechangelog/proxy image
+proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
 	@cd nginx && export BUILD_VERSION=$$(date +'%Y-%m-%d') ; \
 	$(DOCKER) build -t thechangelog/proxy:$$BUILD_VERSION . && \
 	$(DOCKER) push thechangelog/proxy:$$BUILD_VERSION && \
@@ -92,7 +86,7 @@ proxy: docker ## Builds & publishes thechangelog/proxy image
 	$(DOCKER) push thechangelog/proxy:latest
 
 .PHONY: md
-md: docker ## Preview Markdown locally, as it will appear on GitHub (m)
+md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub (m)
 	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
 	  --volume $(CURDIR):/data \
 	  --volume $(HOME)/.grip:/.grip \
