@@ -64,6 +64,38 @@ If you are running on macOS, all the above commands are available as make target
 
 Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
 
+### Why is Docker for Mac slow?
+
+If you are running changelog.com locally via `docker-compose up` on a Mac, you might notice that pages take ~1.5s to load:
+
+```
+while true
+do
+  curl --silent --output /dev/null \
+  --write-out '%{http_code} connect:%{time_connect} prepare:%{time_pretransfer} transfer:%{time_starttransfer} total:%{time_total}\n' \
+  http://localhost:4000/
+done
+200 connect:0.004815 prepare:0.004849 transfer:1.488685 total:1.488921
+200 connect:0.005061 prepare:0.005089 transfer:1.627873 total:1.628171
+200 connect:0.005176 prepare:0.005211 transfer:1.566022 total:1.566123
+^C
+```
+
+This is down to [Docker for Mac networking integration with the OS](https://github.com/docker/for-mac/issues/2814), which is still the case in [18.09.0-ce-beta1](https://github.com/docker/docker-ce/releases/tag/v18.09.0-ce-beta1).
+
+The same test on Arch Linux 2018.10.1 running Docker 18.06.1-ce results in ~0.08s response times (20x faster):
+
+```
+200 connect:0.000569 prepare:0.000602 transfer:0.080425 total:0.080501
+200 connect:0.000614 prepare:0.000650 transfer:0.083291 total:0.083407
+200 connect:0.000611 prepare:0.000643 transfer:0.081731 total:0.081853
+^C
+```
+
+Our thinking is: [make it work first, make it right next &amp; make it fast last](http://wiki.c2.com/?MakeItWorkMakeItRightMakeItFast).
+Contributions to make changelog.com dev on Docker for Mac fast are welcome!
+It would be especially interesting to know if [ipvlan on macOS](https://github.com/docker/cli/blob/master/experimental/vlan-networks.md) makes things better.
+
 ## Code of Conduct
 
 [Contributor Code of Conduct](https://changelog.com/coc). By participating in this project you agree to abide by its terms.
