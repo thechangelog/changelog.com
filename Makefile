@@ -8,11 +8,18 @@ NORMAL := $(shell tput sgr0)
 
 PLATFORM := $(shell uname)
 ifneq ($(PLATFORM),Darwin)
-  $(error $(BOLD)$(RED)Only macOS is currently supported$(NORMAL), please contribute support for your OS)
+ifneq ($(PLATFORM),Linux)
+  $(warning $(RED)$(PLATFORM) is not supported$(NORMAL), only macOS and Linux are supported.)
+  $(error $(BOLD)Please contribute support for your platform.$(NORMAL))
+endif
 endif
 
 ifneq (4,$(firstword $(sort $(MAKE_VERSION) 4)))
-  $(error $(BOLD)$(RED)GNU Make v4 or above is required$(NORMAL), please install with $(BOLD)brew install gmake$(NORMAL) and use $(BOLD)gmake$(NORMAL) instead of make)
+  $(warning $(BOLD)$(RED)GNU Make v4 or newer is required$(NORMAL))
+ifeq ($(PLATFORM),Darwin)
+  $(info On macOS it can be installed with $(BOLD)brew install make$(NORMAL) and run as $(BOLD)gmake$(NORMAL))
+endif
+  $(error Please run with GNU Make v4 or newer)
 endif
 
 ### VARS ###
@@ -23,6 +30,7 @@ export LANG := en_US.UTF-8
 
 ### DEPS ###
 #
+ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
 
 DOCKER := /usr/local/bin/docker
@@ -35,6 +43,17 @@ $(COMPOSE):
 	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
 	  exit 1 \
 	)
+endif
+
+ifeq ($(PLATFORM),Linux)
+DOCKER := /usr/bin/docker
+$(DOCKER):
+	$(error $(RED)Please install $(BOLD)docker$(NORMAL))
+
+COMPOSE := $(DOCKER)-compose
+$(COMPOSE):
+	$(error $(RED)Please install $(BOLD)docker-compose$(NORMAL))
+endif
 
 ### TARGETS ###
 #
