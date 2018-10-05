@@ -34,9 +34,9 @@ Next time you run this command, since all Docker images will be cached, you can 
 When all containers are up and running, you should see the following output in your terminal session:
 
 ```
-Creating changelogcom_db_1    ... done
-Creating changelogcom_proxy_1 ... done
-Creating changelogcom_app_1   ... done
+Starting changelogcom_db_1    ... done
+Starting changelogcom_proxy_1 ... done
+Recreating changelogcom_app_1 ... done
 Attaching to changelogcom_db_1, changelogcom_proxy_1, changelogcom_app_1
 ...
 db_1     | LOG:  autovacuum launcher started
