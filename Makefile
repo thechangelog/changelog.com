@@ -60,25 +60,18 @@ endif
 .DEFAULT_GOAL := help
 
 .PHONY: build
-build: $(COMPOSE) ## Build changelog.com Docker images (b)
+build: $(COMPOSE) ## Re-build changelog.com app container
 	@$(COMPOSE) build
-.PHONY: b
-b: build
-
-.PHONY: code
-code: build run ## Code for changelog.com - builds all Docker images and runs them locally (c)
-.PHONY: c
-c: code
 
 .PHONY: help
 help:
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-10s\033[0m %s\n", $$1, $$4 }' | sort
 
-.PHONY: run
-run: $(COMPOSE) ## Run changelog.com locally (r)
+.PHONY: contrib
+contrib: $(COMPOSE) ## Contribute to changelog.com by running a local copy (c)
 	@$(COMPOSE) up
-.PHONY: r
-r: run
+.PHONY: c
+c: contrib
 
 .PHONY: proxy
 proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
@@ -89,11 +82,9 @@ proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
 	$(DOCKER) push thechangelog/proxy:latest
 
 .PHONY: md
-md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub (m)
+md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
 	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
 	  --volume $(CURDIR):/data \
 	  --volume $(HOME)/.grip:/.grip \
 	  --expose 5000 --publish 5000:5000 \
 	  mbentley/grip --context=. 0.0.0.0:5000
-.PHONY: m
-m: md
