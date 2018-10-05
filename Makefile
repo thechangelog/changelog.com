@@ -90,3 +90,13 @@ proxy: docker ## Builds & publishes thechangelog/proxy image
 	$(DOCKER) push thechangelog/proxy:$$BUILD_VERSION && \
 	$(DOCKER) tag thechangelog/proxy:$$BUILD_VERSION thechangelog/proxy:latest && \
 	$(DOCKER) push thechangelog/proxy:latest
+
+.PHONY: md
+md: docker ## Preview Markdown locally, as it will appear on GitHub (m)
+	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
+	  --volume $(CURDIR):/data \
+	  --volume $(HOME)/.grip:/.grip \
+	  --expose 5000 --publish 5000:5000 \
+	  mbentley/grip --context=. 0.0.0.0:5000
+.PHONY: m
+m: md
