@@ -8,7 +8,7 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: 4000],
-  static_url: [host: "localhost", port: 4000],
+  static_url: [host: (System.get_env("HOST") || "localhost"), port: 4000],
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,

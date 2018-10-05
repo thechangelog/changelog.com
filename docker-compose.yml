@@ -15,7 +15,8 @@ services:
     command: mix do ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
-      VIRTUAL_HOST: "localhost"
+      VIRTUAL_HOST: "${HOST:-localhost}"
+      HOST: "${HOST:-localhost}"
     ports:
       - "4000:4000"
     volumes:
