@@ -55,9 +55,6 @@ app_1    | Webpack is watching the files…
 
 You can access a dev copy of changelog.com locally, at http://localhost:4000
 
-Since the app database will be completely empty, you might want to seed it by running the following command: `docker-compose run app mix run priv/repo/seeds.exs`.
-This command resets the app database, please only run it if you are OK losing all data in the app database.
-
 When you want to stop all Docker containers required to run a dev copy of changelog.com locally, press `CTRL` key and `c` at the same time (`Ctrl+C`).
 
 If you are running on macOS, all the above commands are available as make targets. Learn about all available commands by running `make` in your terminal.
