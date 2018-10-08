@@ -64,7 +64,7 @@ defmodule Changelog.Episode do
   def with_podcast_slug(query \\ __MODULE__, slug),  do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
   def is_public(episode, as_of \\ Timex.now) do
-    is_published(episode) && episode.published_at <= as_of
+    is_published(episode) && Timex.before?(episode.published_at, as_of)
   end
 
   def is_published(episode), do: episode.published
