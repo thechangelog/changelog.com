@@ -227,9 +227,9 @@ export default class OnsitePlayer {
     return Math.round(this.audio.currentSeek() || 0);
   }
 
-  percentComplete() {
+  percentComplete(asOfTime) {
     if (!this.detailsLoaded) return 0;
-    return this.currentTime() / this.episode.duration() * 100;
+    return asOfTime / this.episode.duration() * 100;
   }
 
   step() {
@@ -240,9 +240,10 @@ export default class OnsitePlayer {
     }
 
     if (!this.isScrubbing) {
-      this.current.text(Episode.formatTime(this.currentTime()));
-      this.scrubber.first().value = this.currentTime();
-      this.track.first().style.width = `${this.percentComplete()}%`;
+      let time = this.currentTime();
+      this.current.text(Episode.formatTime(time));
+      this.scrubber.first().value = time;
+      this.track.first().style.width = `${this.percentComplete(time)}%`;
     }
 
     if (this.isPlaying()) {
@@ -253,7 +254,7 @@ export default class OnsitePlayer {
   scrub(to) {
     this.isScrubbing = true;
     this.current.text(Episode.formatTime(to));
-    this.track.first().style.width = `${this.percentComplete()}%`;
+    this.track.first().style.width = `${this.percentComplete(to)}%`;
   }
 
   scrubEnd(to) {
@@ -282,7 +283,7 @@ export default class OnsitePlayer {
   }
 
   trackTime() {
-    let complete = this.percentComplete();
+    let complete = this.percentComplete(this.currentTime());
 
     for (var percent in this.tracked) {
       if (complete >= percent && !this.tracked[percent]) {
