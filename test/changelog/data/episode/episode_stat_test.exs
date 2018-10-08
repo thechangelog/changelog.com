@@ -44,7 +44,7 @@ defmodule Changelog.EpisodeStatTest do
       by_country = EpisodeStat.downloads_by_country(stat)
 
       assert Enum.take(by_country, 3) == [{"US", 2580.03}, {"GB", 390.35}, {"DE", 288.95}]
-      assert List.last(by_country) == {"AW", 0.0}
+      assert Enum.take(by_country, -2) == [{"AW", 0.0}, {"NP", 0.0}]
     end
 
     test "when passed multiple stats, it returns downloads sorted by country" do
@@ -55,7 +55,7 @@ defmodule Changelog.EpisodeStatTest do
       by_country = EpisodeStat.downloads_by_country([stat1, stat2, stat3])
 
       assert Enum.take(by_country, 4) == [{"JS", 6666.6}, {"US", 5160.06}, {"GB", 780.7}, {"DE", 577.9}]
-      assert List.last(by_country) == {"AW", 0.0}
+      assert Enum.take(by_country, -2) == [{"AW", 0.0}, {"NP", 0.0}]
     end
   end
 

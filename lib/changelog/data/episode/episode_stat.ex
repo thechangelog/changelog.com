@@ -92,7 +92,8 @@ defmodule Changelog.EpisodeStat do
     list
     |> Enum.reduce(fn(x, acc) -> Map.merge(acc, x, fn(_k, v1, v2) -> v1 + v2 end) end)
     |> Enum.map(fn({k, v}) -> {k, Float.round(v, 2)} end)
-    |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
+    # sort by highest value, then alpha by name
+    |> Enum.sort(fn({ak, av}, {bk, bv}) -> if av == bv, do: ak < bk, else: av > bv end)
   end
 
   defp browsers_agents_only(agents) do
