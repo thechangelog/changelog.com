@@ -1,4 +1,4 @@
-# changelog.com [[![CircleCI](https://circleci.com/gh/thechangelog/changelog.com.svg?style=svg)](https://circleci.com/gh/thechangelog/changelog.com) [![codecov](https://codecov.io/gh/thechangelog/changelog.com/branch/master/graph/badge.svg)](https://codecov.io/gh/thechangelog/changelog.com) [![All Contributors](https://img.shields.io/badge/all_contributors-27-orange.svg?style=flat-square)](#contributors)
+# changelog.com [![CircleCI](https://circleci.com/gh/thechangelog/changelog.com.svg?style=svg)](https://circleci.com/gh/thechangelog/changelog.com) [![codecov](https://codecov.io/gh/thechangelog/changelog.com/branch/master/graph/badge.svg)](https://codecov.io/gh/thechangelog/changelog.com) [![All Contributors](https://img.shields.io/badge/all_contributors-27-orange.svg?style=flat-square)](#contributors)
 
 [Read the announcement post!](https://changelog.com/posts/changelog-is-open-source)
 
