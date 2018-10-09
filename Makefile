@@ -69,7 +69,10 @@ help:
 
 .PHONY: contrib
 contrib: $(COMPOSE) ## Contribute to changelog.com by running a local copy (c)
-	@$(COMPOSE) up
+	@bash -c "trap '$(COMPOSE) down' INT; \
+	  $(COMPOSE) up; \
+	  [[ $$? =~ 0|2 ]] || \
+	    ( echo 'You might want to run $(BOLD)make build contrib$(NORMAL) if app dependencies have changed' && exit 1 )"
 .PHONY: c
 c: contrib
 
