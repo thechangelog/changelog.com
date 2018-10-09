@@ -11,10 +11,7 @@ defmodule Changelog.Mixfile do
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps(),
-      preferred_cli_env: [
-         coveralls: :test,
-         "coveralls.html": :test,
-         "coveralls.json": :test],
+      preferred_cli_env: [coveralls: :test, "coveralls.html": :test, "coveralls.json": :test],
       test_coverage: [tool: ExCoveralls],
     ]
   end
