@@ -5,14 +5,14 @@ defmodule Changelog.Cache do
   alias Changelog.{Episode, Podcast, Post}
 
   def delete(nil), do: :ok
-  def delete(%Episode{} = episode) do
+  def delete(episode = %Episode{}) do
     episode = Episode.preload_podcast(episode)
     delete_prefix(:response_cache, "/#{episode.podcast.slug}/#{episode.slug}")
   end
-  def delete(%Podcast{} = _podcast) do
+  def delete(_podcast = %Podcast{}) do
     delete(:app_cache, "podcasts")
   end
-  def delete(%Post{} = post) do
+  def delete(post = %Post{}) do
     delete(:response_cache, "/posts/#{post.slug}")
   end
 

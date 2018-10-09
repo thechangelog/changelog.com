@@ -78,8 +78,8 @@ defmodule Changelog.EpisodeTest do
       insert(:episode_stat, date: ~D[2016-01-03], episode: episode, downloads: 53.4)
       insert(:episode_stat, downloads: 100.0)
       episode = Episode.update_stat_counts(episode)
-      assert episode.download_count == 98.5+100.75+84+53.4
-      assert episode.reach_count == 4+45
+      assert episode.download_count == 98.5 + 100.75 + 84 + 53.4
+      assert episode.reach_count == 4 + 45
     end
   end
 

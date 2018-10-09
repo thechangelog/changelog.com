@@ -30,7 +30,7 @@ defmodule ChangelogWeb.PodcastView do
 
   def cover_url(podcast), do: cover_url(podcast, :original)
   def cover_url(podcast, version) do
-    if (podcast.cover) do
+    if podcast.cover do
       static_url(Endpoint, cover_path(podcast, version))
     else
       "/images/defaults/black.png"

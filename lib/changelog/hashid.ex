@@ -12,6 +12,6 @@ defmodule Changelog.Hashid do
   defp hashid, do: Hashids.new(salt: "long live the developer")
 
   defp range_check(number) do
-    if Enum.member?(-2147483648..2147483648, number), do: number, else: -1
+    if Enum.member?(-2_147_483_648..2_147_483_648, number), do: number, else: -1
   end
 end

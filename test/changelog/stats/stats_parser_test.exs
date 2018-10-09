@@ -53,7 +53,7 @@ defmodule ChangelogStatsParserTest do
       assert Parser.parse_line(@log2) == %Entry{
         ip: "78.35.187.78",
         episode: "219",
-        bytes: 262144,
+        bytes: 262_144,
         status: 200,
         agent: "Mozilla/5.0 (Linux; Android 6.0.1; HUAWEI RIO-L01 Build/HuaweiRIO-L01) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36",
         latitude: 50.933,
@@ -68,7 +68,7 @@ defmodule ChangelogStatsParserTest do
       assert Parser.parse_line(@log3) == %Entry{
         ip: "122.163.200.110",
         episode: "204",
-        bytes: 13132042,
+        bytes: 13_132_042,
         status: 206,
         agent: "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0",
         latitude: 26.850,
@@ -83,7 +83,7 @@ defmodule ChangelogStatsParserTest do
       assert Parser.parse_line(@log5) == %Entry{
         ip: "178.189.150.213",
         episode: "19",
-        bytes: 328417,
+        bytes: 328_417,
         status: 200,
         agent: "",
         latitude: 47.100,

@@ -164,7 +164,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   defp truncate(html_list, total_words, max_words) when total_words <= max_words, do: html_list
   defp truncate(html_list, _total_words, max_words) do
-    sliced = Enum.slice(html_list, 0..(max_words-1))
+    sliced = Enum.slice(html_list, 0..(max_words - 1))
     tags = Regex.scan(Regexp.tag, Enum.join(sliced, " "), capture: ["tag"]) |> List.flatten
 
     sliced ++ case Integer.mod(length(tags), 2) do

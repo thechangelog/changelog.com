@@ -30,7 +30,7 @@ defmodule ChangelogWeb.EmailTest do
 
     assert email.to == person
     assert email.subject =~ ~r/welcome/i
-    assert email.html_body =~~r/welcome/i
+    assert email.html_body =~ ~r/welcome/i
   end
 
   test "guest welcome" do
