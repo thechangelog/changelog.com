@@ -34,6 +34,3 @@ jobs:
           command: mix test
       - store_test_results:
           path: _build/test/lib/changelog
-  test:
-    override:
-      - mix coveralls.circle
