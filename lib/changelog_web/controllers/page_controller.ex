@@ -37,7 +37,12 @@ defmodule ChangelogWeb.PageController do
       |> Repo.one
       |> Episode.preload_podcast
 
-    render(conn, :guest, active: active, podcast: podcast, episode: episode)
+    conn
+    |> assign(:active, active)
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> render(:guest)
+    |> cache_public_response()
   end
 
   def home(conn, _params) do
