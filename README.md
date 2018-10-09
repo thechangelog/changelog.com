@@ -57,7 +57,10 @@ You can access a dev copy of changelog.com locally, at http://localhost:4000
 
 When you want to stop all Docker containers required to run a dev copy of changelog.com locally, press `CTRL` key and `c` at the same time (`Ctrl+C`).
 
-If you are running on macOS, all the above commands are available as make targets. Learn about all available commands by running `make` in your terminal.
+If any app dependencies have changed, or the cached Docker app image has diverged from the source code, you will need to re-build it by running `docker-compose build` before you can run `docker-compose up`.
+
+If you are running on macOS or Linux, all the above commands are available as make targets (e.g. `build` &amp; `contrib`).
+Learn about all available commands by running `make` in your terminal.
 
 Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
 
