@@ -62,6 +62,9 @@ If any app dependencies have changed, or the cached Docker app image has diverge
 If you are running on macOS or Linux, all the above commands are available as make targets (e.g. `build` &amp; `contrib`).
 Learn about all available commands by running `make` in your terminal.
 
+By default, macOS ships with GNU Make v3.81. Our Makefile requires GNU Make >= 4 which can be installed via `brew install make`.
+By default, the make version that brew installs is invoked via `gmake`. For more info, see `brew info make`.
+
 Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
 
 ### Why is Docker for Mac slow?
