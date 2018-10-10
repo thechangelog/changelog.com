@@ -46,7 +46,7 @@ defmodule ChangelogWeb.TimeView do
     Timex.add(Timex.now, Duration.from_hours(hours)) |> without_microseconds
   end
 
-  defp without_microseconds(datetime), do: %{datetime | microsecond: {0,0}}
+  defp without_microseconds(datetime), do: %{datetime | microsecond: {0, 0}}
 
   def pretty_date(ts) when is_nil(ts), do: ""
   def pretty_date(ts) when is_binary(ts) do

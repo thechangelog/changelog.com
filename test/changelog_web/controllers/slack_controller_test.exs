@@ -24,7 +24,7 @@ defmodule ChangelogWeb.SlackControllerTest do
 
     test "it uses the closest upcoming episode", %{conn: conn, podcast: podcast} do
       insert(:live_episode, podcast: podcast, recorded_at: hours_from_now(3))
-      insert(:live_episode, podcast: podcast, recorded_at: hours_from_now(24*3))
+      insert(:live_episode, podcast: podcast, recorded_at: hours_from_now(24 * 3))
       conn = get(conn, slack_path(conn, :countdown, podcast.slug))
       assert conn.status == 200
       assert conn.resp_body =~ "There's only"
@@ -40,7 +40,7 @@ defmodule ChangelogWeb.SlackControllerTest do
     end
 
     test "it doesn't use episodes from other podcasts", %{conn: conn, podcast: podcast} do
-      insert(:live_episode, recorded_at: hours_from_now(24*9))
+      insert(:live_episode, recorded_at: hours_from_now(24 * 9))
       conn = get(conn, slack_path(conn, :countdown, podcast.slug))
       assert conn.status == 200
       assert conn.resp_body =~ "There aren't any"

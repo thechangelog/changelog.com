@@ -2,15 +2,25 @@ defmodule Changelog.NotifierTest do
   use Changelog.DataCase
   use Bamboo.Test
 
-  alias Changelog.Notifier
+  import Mock
+
+  alias Changelog.{Notifier, Slack}
   alias ChangelogWeb.Email
 
   describe "notify with episode item" do
+    setup_with_mocks([
+      {Slack.Client, [], [message: fn(_, _) -> true end]}
+    ]) do
+      :ok
+    end
+
     test "when episode has no guests" do
       episode = insert(:published_episode)
       item = episode |> episode_news_item |> insert
+
       Notifier.notify(item)
       assert_no_emails_delivered()
+      assert called Slack.Client.message("#main", :_)
     end
 
     test "when episode has guests but none of them have 'thanks' set" do
@@ -20,8 +30,10 @@ defmodule Changelog.NotifierTest do
       insert(:episode_guest, episode: episode, person: g1, thanks: false)
       insert(:episode_guest, episode: episode, person: g2, thanks: false)
       item = episode |> episode_news_item |> insert
+
       Notifier.notify(item)
       assert_no_emails_delivered()
+      assert called Slack.Client.message("#main", :_)
     end
 
     test "when episode has guests and some of them have 'thanks' set" do
@@ -33,9 +45,11 @@ defmodule Changelog.NotifierTest do
       insert(:episode_guest, episode: episode, person: g2, thanks: true)
       insert(:episode_guest, episode: episode, person: g3, thanks: true)
       item = episode |> episode_news_item |> insert
+
       Notifier.notify(item)
       assert_delivered_email Email.guest_thanks(g2, episode)
       assert_delivered_email Email.guest_thanks(g3, episode)
+      assert called Slack.Client.message("#main", :_)
     end
   end
 

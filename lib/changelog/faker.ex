@@ -29,5 +29,5 @@ defmodule Changelog.Faker do
     "#{name}-#{salt}"
   end
 
-  defp random_number(between \\ 1..10000), do: Enum.random(between)
+  defp random_number(between \\ 1..10_000), do: Enum.random(between)
 end

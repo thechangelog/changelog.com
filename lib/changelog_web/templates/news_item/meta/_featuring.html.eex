@@ -1,0 +1,7 @@
+<span class="news_item-toolbar-meta-item news_item-toolbar-meta-item__featuring">
+<%= for person <- Episode.participants(@episode) do %>
+  <%= link(to: PersonView.external_url(person), title: person.name) do %>
+    <%= maybe_lazy_image(@conn, PersonView.avatar_url(person), "Featuring #{person.name}") %>
+  <% end %>
+<% end %>
+</span>

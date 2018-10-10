@@ -14,7 +14,7 @@ defmodule Changelog.Slack.CountdownTest do
     end
 
     test "when the upcoming recording is far away" do
-      response = Countdown.live(%{recorded_at: hours_from_now(24*9), podcast: %{name: "Go Time"}, title: ""})
+      response = Countdown.live(%{recorded_at: hours_from_now(24 * 9), podcast: %{name: "Go Time"}, title: ""})
       assert response.text =~ "There's still"
     end
 

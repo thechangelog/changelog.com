@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, Hashid, NewsAd, NewsItem, Podcast, Regexp, UrlKit}
+  alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Podcast, Regexp, UrlKit}
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsSourceView, EpisodeView, PersonView, TopicView, PodcastView}
 
   def admin_edit_link(conn, user, item) do
@@ -61,6 +61,13 @@ defmodule ChangelogWeb.NewsItemView do
   def render_item_summary_or_ad(item = %NewsItem{}, assigns), do: render("_summary.html", Map.merge(assigns, %{item: item, style: "relativeShort"}))
   def render_item_summary_or_ad(ad = %NewsAd{}, assigns), do: render(NewsAdView, "_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
 
+  def render_meta_people(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+    render("meta/_featuring.html", conn: conn, item: item, episode: episode)
+  end
+  def render_meta_people(conn, item) do
+    render("meta/_logged_by.html", conn: conn, item: item)
+  end
+
   def render_source_image(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("source/_image_episode.html", conn: conn, item: item, episode: episode)
   end
@@ -107,9 +114,7 @@ defmodule ChangelogWeb.NewsItemView do
   def render_toolbar_button(_conn, _item), do: nil
 
   def render_youtube_embed(nil), do: nil
-  def render_youtube_embed(id) do
-    render("_youtube_embed.html", id: id)
-  end
+  def render_youtube_embed(id), do: render("_youtube_embed.html", id: id)
 
   def slug(item) do
     item.headline
@@ -159,7 +164,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   defp truncate(html_list, total_words, max_words) when total_words <= max_words, do: html_list
   defp truncate(html_list, _total_words, max_words) do
-    sliced = Enum.slice(html_list, 0..(max_words-1))
+    sliced = Enum.slice(html_list, 0..(max_words - 1))
     tags = Regex.scan(Regexp.tag, Enum.join(sliced, " "), capture: ["tag"]) |> List.flatten
 
     sliced ++ case Integer.mod(length(tags), 2) do

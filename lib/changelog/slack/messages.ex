@@ -1,4 +1,10 @@
 defmodule Changelog.Slack.Messages do
+  def new_episode(podcast, url) do
+    ~s"""
+    New episode of #{podcast.name}! #{celebrate_emoji()} #{url}
+    """
+  end
+
   def welcome do
     ~s"""
     Welcome to Changelog's Community Slack team! :clap:
@@ -16,4 +22,6 @@ defmodule Changelog.Slack.Messages do
     :green_heart:
     """
   end
+
+  defp celebrate_emoji, do: ~w(:tada: :gift: :muscle: :raised_hands: :parrot: :dancer:) |> Enum.random
 end

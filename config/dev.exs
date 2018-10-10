@@ -8,6 +8,7 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: 4000],
+  static_url: [host: (System.get_env("HOST") || "localhost"), port: 4000],
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,
@@ -35,8 +36,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "changelog_dev",
-  pool_size: 10
+  pool_size: 10,
+  url: (System.get_env("DB_URL") || "ecto://postgres@localhost:5432/changelog_dev")
 
 config :arc,
   storage_dir: "priv/uploads"

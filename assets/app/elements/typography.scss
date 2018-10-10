@@ -116,4 +116,16 @@ q {
     line-height: 1.5;
     vertical-align: baseline;
   }
+    @media (min-width: $tablet) {
+      margin-top: 0;
+    }
+    & > sup {
+      font-style: italic;
+      display: block;
+      top: 0;
+      font-size: 0.85em;
+      line-height: 1.5;
+      vertical-align: baseline;
+    }
+  }
 }

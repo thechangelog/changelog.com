@@ -82,7 +82,7 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(nil) == ""
     end
 
-    test "includes topic tags and twitter handles" do
+    test "uses verbose syntax with 3 or more topics" do
       item = insert(:news_item, headline: "News of iOS 9 doing Machine Learning things.")
       t1 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
       t2 = insert(:topic, name: "Machine Learning", slug: "machine-learning")
@@ -93,58 +93,35 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(item) =~ "@OfficialiOS #machinelearning #security"
     end
 
-    test "includes 'via' when news source has twitter handle" do
-      source = insert(:news_source, twitter_handle: "wired")
-      item = insert(:news_item, source: source)
-      t1 = insert(:topic, name: "iOS", slug: "ios")
-      insert(:news_item_topic, news_item: item, topic: t1)
-      assert Content.news_item_text(item) =~ "via @wired"
-    end
-
-    test "excludes 'via' when news source has no twitter handle" do
-      source = insert(:news_source)
-      item = insert(:news_item, source: source)
-      refute Content.news_item_text(item) =~ " via "
-    end
-
-    test "includes 'by' when item has author and handle" do
+    test "uses terse syntax with no topics, includes 'by' with author handle" do
       author = insert(:person, twitter_handle: "BigDaddy")
       item = insert(:news_item, author: author)
       assert Content.news_item_text(item) =~ "by @BigDaddy"
     end
 
-    test "excludes 'by' when item author has no twitter handle" do
+    test "uses terse syntax with two topics, includes 'by' with author name" do
       author = insert(:person)
       item = insert(:news_item, author: author)
-      refute Content.news_item_text(item) =~ " by "
-    end
-  end
-
-  describe "news_item_terse_text" do
-    test "defaults to empty string" do
-      assert Content.news_item_terse_text(nil) == ""
+      insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
+      insert(:topic, name: "Machine Learning", slug: "machine-learning")
+      text = Content.news_item_text(item)
+      assert text =~ " by #{author.name}"
+      refute text =~ "@OfficialiOS #machinelearning #security"
     end
 
-    test "it includes author and source if both are provided and have handles" do
-      author = insert(:person, twitter_handle: "BigDaddy")
-      source = insert(:news_source, twitter_handle: "wired")
-      item = insert(:news_item, author: author, source: source)
-      assert Content.news_item_terse_text(item) =~ "✍ by @BigDaddy on @wired"
-    end
-
-    test "it includes author alone if it has a handle" do
+    test "uses terse syntax with no topics, it includes author alone if source has no handle" do
       author = insert(:person, twitter_handle: "BigDaddy")
       source = insert(:news_source)
       item = insert(:news_item, author: author, source: source)
-      text = Content.news_item_terse_text(item)
-      assert text =~ "✍ by @BigDaddy"
-      refute text =~ "on @wired"
+      text = Content.news_item_text(item)
+      assert text =~ " by @BigDaddy"
+      refute text =~ "via @wired"
     end
 
     test "it excludes source if there is no author" do
       source = insert(:news_source, twitter_handle: "wired")
       item = insert(:news_item, source: source)
-      refute Content.news_item_terse_text(item) =~ "on @wired"
+      refute Content.news_item_text(item) =~ "via @wired"
     end
   end
 
