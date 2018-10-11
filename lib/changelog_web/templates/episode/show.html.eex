@@ -110,7 +110,7 @@
           <a id="notes" class="anchor"></a>
           <header class="section_heading">
             <h3 class="section_heading-text">Notes &amp; Links</h3>
-            <p class="section_heading-note"><%= link "Edit on GitHub", to: show_notes_source_url(@episode), title: "View notes source on GitHub", rel: "external" %></p>
+            <p class="section_heading-note"><%= external_link("Edit on GitHub", to: show_notes_source_url(@episode), title: "View notes source on GitHub") %></p>
           </header>
           <div class="richtext richtext--small">
             <%= @episode.notes |> md_to_html |> raw %>
@@ -123,7 +123,7 @@
           <a id="transcript" class="anchor"></a>
           <header class="section_heading">
             <h3 class="section_heading-text">Transcript</h3>
-            <p class="section_heading-note"><%= link "Edit on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %></p>
+            <p class="section_heading-note"><%= external_link("Edit on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub") %></p>
           </header>
 
           <div class="transcript">

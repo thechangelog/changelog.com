@@ -5,10 +5,8 @@
       <p class="section_heading-note"><%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("up", to: person_path(@conn, :join)) %> to comment</p>
     <% end %>
   </header>
-  <%= if @current_user do %>
-    <%= render("comments/_comment_form.html", conn: @conn) %>
-  <% end %>
-  <%= for reply <- 0..2 do %>
-    <%= render("comments/_comment.html", conn: @conn, mocked_replies: Enum.random(0..3)) %>
-  <% end %>
+
+  <%= if @current_user, do: render(NewsItemCommentView, "_form.html", conn: @conn) %>
+
+  <%= render_many(@comments, NewsItemCommentView, "show.html", Map.merge(assigns, %{as: :comment})) %>
 </section>

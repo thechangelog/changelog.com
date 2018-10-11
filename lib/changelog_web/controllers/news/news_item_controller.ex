@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsItem, NewsSponsorship}
+  alias Changelog.{Hashid, NewsItem, NewsItemComment, NewsSponsorship}
   alias ChangelogWeb.NewsItemView
 
   plug RequireUser, "before submitting" when action in [:create]
@@ -70,17 +70,20 @@ defmodule ChangelogWeb.NewsItemController do
 
   def show(conn, %{"id" => slug}) do
     hashid = slug |> String.split("-") |> List.last
-
-    item =
-      hashid
-      |> item_from_hashid(NewsItem.published)
-      |> NewsItem.preload_all
-      |> NewsItem.load_object
+    item = item_from_hashid(hashid, NewsItem.published)
 
     if slug == hashid do
       redirect(conn, to: news_item_path(conn, :show, NewsItemView.slug(item)))
     else
-      render(conn, :show, item: item)
+      item =
+        item
+        |> NewsItem.preload_all()
+        |> NewsItem.preload_comments()
+        |> NewsItem.load_object()
+
+      comments = NewsItemComment.nested(item.comments)
+
+      render(conn, :show, item: item, comments: comments)
     end
   end
 
@@ -116,10 +119,10 @@ defmodule ChangelogWeb.NewsItemController do
     item =
       NewsItem
       |> Repo.get_by!(id: id)
-      |> NewsItem.preload_all
-      |> NewsItem.load_object
+      |> NewsItem.preload_all()
+      |> NewsItem.load_object()
 
-    render(conn, :show, item: item)
+    render(conn, :show, item: item, comments: [])
   end
 
   defp get_ads do

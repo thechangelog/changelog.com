@@ -1,0 +1,23 @@
+<a id="comment-<%= hashid(@comment) %>" class="anchor"></a>
+<article class="comment <%= if Enum.any?(@comment.children), do: "comment--has_replies" %>"><%# Adjustor classes: is-permalink is-collapsed is-author %>
+  <button class="comment-toggle js-toggle_comment"></button>
+  <div class="comment-connector js-toggle_comment"></div>
+  <header class="comment-header">
+    <button class="comment-author has-tooltip">
+      <%= lazy_image(PersonView.avatar_url(@comment.author), @comment.author.name, class: "comment-author-image") %>
+      <p class="comment-author-name"><%= @comment.author.handle %></p>
+    </button>
+    <%= render(PersonView, "_tooltip.html", Map.merge(assigns, %{person: @comment.author})) %>
+    <p class="comment-actions">
+      <a href="#comment-<%= hashid(@comment) %>" title="Permalink" class="js-permalink">4h ago</a>
+      <a href="#TODO-edit" title="">edit</a>
+      <a href="#TODO-reply" title="">reply</a>
+    </p>
+  </header>
+  <div class="comment-body">
+    <%= @comment.content %>
+  </div>
+  <section class="comment-replies">
+    <%= render_many(@comment.children, __MODULE__, "show.html", Map.merge(assigns, %{as: :comment})) %>
+  </section>
+</article>

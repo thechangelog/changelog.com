@@ -8,7 +8,7 @@
       <%= link(TimeView.ts(@item.published_at, @style), to: permalink_path(@conn, @item), data: permalink_data(@item)) %>
     </span>
     <span class="news_item-toolbar-meta-item">
-      <%= link("3 comments", to: permalink_path(@conn, @item) <> "#comments", data: permalink_data(@item)) %>
+      <%= link(comment_count(@item), to: permalink_path(@conn, @item) <> "#comments", data: permalink_data(@item)) %>
     </span>
   <%= if Enum.any?(@item.topics) do %>
     <% {main_topics, additional_topics} = Enum.split(@item.topics, 1) %>

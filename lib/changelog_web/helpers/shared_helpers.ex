@@ -55,15 +55,16 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     "#{uri.scheme}://#{uri.host}"
   end
 
-  def external_link(text, opts) do
-    link text, (opts ++ [rel: "external"])
-  end
+  def external_link(text, opts), do: link(text, (opts ++ [rel: "external"]))
 
   def get_param(conn, param, default \\ nil), do: Map.get(conn.params, param, default)
   def get_assigns_or_param(conn, param, default \\ nil) do
     Map.get(conn.assigns, String.to_atom(param)) || get_param(conn, param, default)
   end
 
+  def github_url(nil), do: ""
+  def github_url(%{github_handle: nil}), do: ""
+  def github_url(%{github_handle: handle}), do: github_url(handle)
   def github_url(handle), do: "https://github.com/#{handle}"
 
   def github_link(model) do
@@ -120,9 +121,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
   def truncate(_string, _length), do: ""
 
-  def twitter_url(nil), do: nil
+  def twitter_url(nil), do: ""
+  def twitter_url(%{twitter_handle: nil}), do: ""
+  def twitter_url(%{twitter_handle: handle}), do: twitter_url(handle)
   def twitter_url(handle) when is_binary(handle), do: "https://twitter.com/#{handle}"
-  def twitter_url(person), do: "https://twitter.com/#{person.twitter_handle}"
 
   def twitter_link(model, string \\ nil) do
     if model.twitter_handle do

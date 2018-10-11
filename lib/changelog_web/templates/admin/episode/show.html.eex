@@ -6,15 +6,13 @@
 
     <div class="ui basic right floated buttons">
       <%= if @episode.published do %>
-        <%= link "View Public",
+        <%= external_link "View Public",
           to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
-          class: "ui button",
-          rel: "external" %>
+          class: "ui button" %>
       <% else %>
-        <%= link "Preview",
+        <%= external_link "Preview",
           to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
-          class: "ui button",
-          rel: "external" %>
+          class: "ui button" %>
       <% end %>
       <%= if @item do %>
         <%= link("News Item", to: admin_news_item_path(@conn, :edit, @item), class: "ui button") %>

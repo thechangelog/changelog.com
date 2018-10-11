@@ -15,7 +15,7 @@
       <tr>
         <td>
           <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(source) %>">
-          <%= link(source.name, to: source.website, rel: "external") %>
+          <%= external_link(source.name, to: source.website) %>
         </td>
         <td><%= link(source.slug, to: news_source_path(@conn, :show, source.slug)) %></td>
         <td><%= twitter_link(source) %></td>

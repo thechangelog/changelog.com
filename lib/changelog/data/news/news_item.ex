@@ -123,6 +123,8 @@ defmodule Changelog.NewsItem do
     |> Repo.get_by!(slug: slug)
   end
 
+  def comment_count(item), do: Repo.count(from(q in NewsItemComment, where: q.item_id == ^item.id))
+
   def preload_all(query = %Ecto.Query{}) do
     query
     |> Ecto.Query.preload(:author)
@@ -131,7 +133,6 @@ defmodule Changelog.NewsItem do
     |> Ecto.Query.preload(:submitter)
     |> preload_topics()
   end
-
   def preload_all(item) do
     item
     |> Repo.preload(:author)
@@ -140,6 +141,9 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:submitter)
     |> preload_topics()
   end
+
+  def preload_comments(query = %Ecto.Query{}), do: Ecto.Query.preload(query, comments: :author)
+  def preload_comments(item), do: Repo.preload(item, comments: :author)
 
   def preload_topics(query = %Ecto.Query{}) do
     query

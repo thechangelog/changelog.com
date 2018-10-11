@@ -22,4 +22,27 @@ defmodule Changelog.NewsItemComment do
     |> cast(attrs, ~w(content))
     |> validate_required([:content])
   end
+
+  def nested(nil), do: []
+  def nested([]), do: []
+  def nested(comments) do
+    comments
+    |> Enum.map(&(Map.put(&1, :children, [])))
+    |> Enum.reverse()
+    |> Enum.reduce(%{}, fn(comment, map) ->
+      comment = %{comment | children: Map.get(map, comment.id, [])}
+      Map.update(map, comment.parent_id, [comment], fn(comments) -> [comment | comments] end)
+    end)
+    |> Map.get(nil)
+  end
+
+  def preload_all(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(:author)
+  end
+
+  def preload_all(comment) do
+    comment
+    |> Repo.preload(:author)
+  end
 end
