@@ -80,6 +80,7 @@
       border: none;
       background: $green;
       color: $white;
+      cursor: pointer;
       font-family: $code;
       font-size: 0.8125em;
       padding: 0.5em 1em;
@@ -104,6 +105,7 @@
       display: none;
     }
 
+    .comment-toggle { cursor: s-resize; }
     .comment-toggle:before { content: "[+]"; }
   }
 
