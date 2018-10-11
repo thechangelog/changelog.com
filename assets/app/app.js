@@ -208,10 +208,11 @@ u(document).on("submit", "form", function(event) {
 function formatTimes() {
   u("span.time").each(function(el) {
     let span = u(el);
+    let anchor = span.parent("a");
     let date = new Date(span.text());
     let style = span.data("style");
     span.text(ts(date, style));
-    span.attr("title", ts(date, "timeFirst"));
+    (anchor || span).attr("title", ts(date, "timeFirst"));
     span.removeClass("time");
   });
 }

@@ -9,8 +9,10 @@
     </button>
     <%= render(PersonView, "_tooltip.html", Map.merge(assigns, %{person: @comment.author})) %>
     <p class="comment-actions">
-      <a href="#comment-<%= hashid(@comment) %>" title="Permalink" class="js-permalink">4h ago</a>
-      <a href="#TODO-edit" title="">edit</a>
+      <%= link(to: "#comment-#{hashid(@comment)}", class: "js-permalink") do %>
+        <%= TimeView.ts(@comment.inserted_at, "relativeShort") %> ago
+      <% end %>
+      <!--<a href="#TODO-edit" title="">edit</a>-->
       <a href="#TODO-reply" title="">reply</a>
     </p>
   </header>
