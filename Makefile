@@ -27,9 +27,10 @@ endif
 export LC_ALL := en_US.UTF-8
 export LANG := en_US.UTF-8
 
-
 ### DEPS ###
 #
+CURL := /usr/bin/curl
+
 ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
 
@@ -43,6 +44,10 @@ $(COMPOSE):
 	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
 	  exit 1 \
 	)
+
+JQ := /usr/local/bin/jq
+$(JQ):
+	@brew install jq
 endif
 
 ifeq ($(PLATFORM),Linux)
@@ -53,6 +58,13 @@ $(DOCKER):
 COMPOSE := $(DOCKER)-compose
 $(COMPOSE):
 	$(error $(RED)Please install $(BOLD)docker-compose$(NORMAL))
+
+$(CURL):
+	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
+
+JQ := /usr/bin/jq
+$(JQ):
+	$(error $(RED)Please install $(BOLD)jq$(NORMAL))
 endif
 
 ### TARGETS ###
@@ -65,7 +77,7 @@ build: $(COMPOSE) ## Re-build changelog.com app container
 
 .PHONY: help
 help:
-	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-10s\033[0m %s\n", $$1, $$4 }' | sort
+	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-12s\033[0m %s\n", $$1, $$4 }' | sort
 
 .PHONY: contrib
 contrib: $(COMPOSE) ## Contribute to changelog.com by running a local copy (c)
@@ -91,3 +103,16 @@ md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
 	  --volume $(HOME)/.grip:/.grip \
 	  --expose 5000 --publish 5000:5000 \
 	  mbentley/grip --context=. 0.0.0.0:5000
+
+.PHONY: list-secrets
+list-secrets: $(CURL)  ## List secrets stored in CircleCI (lss)
+ifndef CIRCLE_TOKEN
+	@echo "$(RED)CIRCLE_TOKEN$(NORMAL) environment variable must be set" && \
+	echo "Learn more about CircleCI API tokens $(BOLD)https://circleci.com/docs/2.0/managing-api-tokens/$(NORMAL) " && \
+	echo "We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables, but you do what works for you" && \
+	echo "A good place to store personal environment variables for Changelog is $(BOLD)../.envrc$(NORMAL)" && \
+	exit 1
+endif
+	@$(CURL) --silent --fail "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" | $(JQ) "."
+.PHONY: lss
+lss: list-secrets
