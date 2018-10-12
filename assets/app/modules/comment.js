@@ -5,6 +5,7 @@ export default class Commment {
     // ui
     this.commentForms = u(".js-comment_form");
     this.toggleButton = u(".js-toggle_comment");
+    this.toggleReply = u(".js-toggle-reply");
     this.toggleWrite = u(".js-toggle_write");
     this.togglePreview = u(".js-toggle_preview");
     this.permalink = u(".js-permalink");
@@ -20,6 +21,13 @@ export default class Commment {
       event.preventDefault();
       this.showWrite(event.currentTarget);
     });
+
+    this.toggleReply.handle("click", (event) => {
+      u(event.target)
+      .closest(".comment")
+      .children("form")
+      .toggleClass("is-hidden");
+    })
 
     this.permalink.on("click", (event) => {
       event.preventDefault();

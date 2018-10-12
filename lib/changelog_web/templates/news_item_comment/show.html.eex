@@ -13,12 +13,15 @@
         <%= TimeView.ts(@comment.inserted_at, "relativeShort") %> ago
       <% end %>
       <!--<a href="#TODO-edit" title="">edit</a>-->
-      <a href="#TODO-reply" title="">reply</a>
+      <a href="javascript:void(0)" title="Reply to this comment" class="js-toggle-reply">reply</a>
     </p>
   </header>
   <div class="comment-body">
-    <%= @comment.content %>
+    <%= @comment.content |> md_to_html() |> raw() %>
   </div>
+
+  <%= if @current_user, do: render("_reply_form.html", Map.merge(assigns, %{parent: @comment})) %>
+
   <section class="comment-replies">
     <%= render_many(@comment.children, __MODULE__, "show.html", Map.merge(assigns, %{as: :comment})) %>
   </section>

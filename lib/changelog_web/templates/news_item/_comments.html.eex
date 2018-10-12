@@ -6,7 +6,7 @@
     <% end %>
   </header>
 
-  <%= if @current_user, do: render(NewsItemCommentView, "_form.html", conn: @conn) %>
+  <%= if @current_user, do: render(NewsItemCommentView, "_form.html", assigns) %>
 
   <%= render_many(@comments, NewsItemCommentView, "show.html", Map.merge(assigns, %{as: :comment})) %>
 </section>

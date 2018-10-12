@@ -82,8 +82,13 @@ defmodule ChangelogWeb.NewsItemController do
         |> NewsItem.load_object()
 
       comments = NewsItemComment.nested(item.comments)
+      changeset = item |> build_assoc(:comments) |> NewsItemComment.insert_changeset()
 
-      render(conn, :show, item: item, comments: comments)
+      conn
+      |> assign(:item, item)
+      |> assign(:comments, comments)
+      |> assign(:changeset, changeset)
+      |> render(:show)
     end
   end
 

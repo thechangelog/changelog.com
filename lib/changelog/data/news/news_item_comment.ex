@@ -19,8 +19,8 @@ defmodule Changelog.NewsItemComment do
 
   def insert_changeset(struct, attrs \\ %{}) do
     struct
-    |> cast(attrs, ~w(content))
-    |> validate_required([:content])
+    |> cast(attrs, ~w(content author_id item_id parent_id))
+    |> validate_required([:content, :item_id])
   end
 
   def nested(nil), do: []
