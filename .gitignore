@@ -33,3 +33,7 @@ npm-debug.log*
 /priv/uploads
 /import/cookies.yml
 /cover
+
+# Do not version control .envrc,
+# it's likely to contain user-specific secrets, such as CIRCLE_TOKEN
+.envrc
