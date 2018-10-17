@@ -27,9 +27,10 @@ endif
 export LC_ALL := en_US.UTF-8
 export LANG := en_US.UTF-8
 
-
 ### DEPS ###
 #
+CURL := /usr/bin/curl
+
 ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
 
@@ -43,6 +44,14 @@ $(COMPOSE):
 	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
 	  exit 1 \
 	)
+
+JQ := /usr/local/bin/jq
+$(JQ):
+	@brew install jq
+
+LPASS := /usr/local/bin/lpass
+$(LPASS):
+	@brew install lastpass-cli
 endif
 
 ifeq ($(PLATFORM),Linux)
@@ -53,6 +62,13 @@ $(DOCKER):
 COMPOSE := $(DOCKER)-compose
 $(COMPOSE):
 	$(error $(RED)Please install $(BOLD)docker-compose$(NORMAL))
+
+$(CURL):
+	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
+
+JQ := /usr/bin/jq
+$(JQ):
+	$(error $(RED)Please install $(BOLD)jq$(NORMAL))
 endif
 
 ### TARGETS ###
@@ -65,7 +81,7 @@ build: $(COMPOSE) ## Re-build changelog.com app container
 
 .PHONY: help
 help:
-	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-10s\033[0m %s\n", $$1, $$4 }' | sort
+	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-16s\033[0m %s\n", $$1, $$4 }' | sort
 
 .PHONY: contrib
 contrib: $(COMPOSE) ## Contribute to changelog.com by running a local copy (c)
@@ -91,3 +107,75 @@ md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
 	  --volume $(HOME)/.grip:/.grip \
 	  --expose 5000 --publish 5000:5000 \
 	  mbentley/grip --context=. 0.0.0.0:5000
+
+define ENVRC
+
+PATH_add script
+
+export CIRCLE_TOKEN=
+
+endef
+export ENVRC
+.PHONY: list-ci-secrets
+list-ci-secrets: $(CURL)  ## List secrets stored in CircleCI (cis)
+ifndef CIRCLE_TOKEN
+	@echo "$(RED)CIRCLE_TOKEN$(NORMAL) environment variable must be set" && \
+	echo "Learn more about CircleCI API tokens $(BOLD)https://circleci.com/docs/2.0/managing-api-tokens/$(NORMAL) " && \
+	echo "We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables, but you do what works for you." && \
+	echo "This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point for this repo:" && \
+	echo "$$ENVRC" && \
+	exit 1
+endif
+	@$(CURL) --silent --fail "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" | $(JQ) "."
+.PHONY: cis
+cis: list-ci-secrets
+
+.PHONY: postgres
+postgres: $(LPASS)
+	@echo "export PG_DOTCOM_PASS=$$($(LPASS) show --password 1394836924033726964)"
+.PHONY: campaignmonitor
+campaignmonitor: $(LPASS)
+	@echo "export CM_SMTP_TOKEN=$$($(LPASS) show --notes 4518157498237793892)" && \
+	echo "export CM_API_TOKEN=$$($(LPASS) show --notes 2172742429466797248)"
+.PHONY: github
+github: $(LPASS)
+	@echo "export GITHUB_CLIENT_ID=$$($(LPASS) show --notes 6311620502443842879)" && \
+	echo "export GITHUB_CLIENT_SECRET=$$($(LPASS) show --notes 6962532309857955032)" && \
+	echo "export GITHUB_API_TOKEN=$$($(LPASS) show --notes 5059892376198418454)"
+.PHONY: aws
+aws: $(LPASS)
+	@echo "export AWS_ACCESS_KEY_ID=$$($(LPASS) show --field=AWS_ACCESS_KEY_ID 3110853933093316817)" && \
+	echo "export AWS_SECRET_ACCESS_KEY=$$($(LPASS) show --field=AWS_SECRET_ACCESS_KEY 3110853933093316817)"
+.PHONY: twitter
+twitter: $(LPASS)
+	@echo "export TWITTER_CONSUMER_KEY=$$($(LPASS) show --notes 1932439368993537002)" && \
+	echo "export TWITTER_CONSUMER_SECRET=$$($(LPASS) show --notes 5671723614506961548)"
+.PHONY: app
+app: $(LPASS)
+	@echo "export SECRET_KEY_BASE=$$($(LPASS) show --notes 7272253808960291967)" && \
+	echo "export SIGNING_SALT=$$($(LPASS) show --notes 8954230056631744101)"
+.PHONY: dns
+dns: $(LPASS)
+	@echo "export DNSIMPLE_EMAIL=$$($(LPASS) show --user 1393964598298257404)" && \
+	echo "export DNSIMPLE_API_TOKEN=$$($(LPASS) show --notes 1393964598298257404)"
+.PHONY: slack
+slack: $(LPASS)
+	@echo "export SLACK_INVITE_API_TOKEN=$$($(LPASS) show --notes 3107315517561229870)" && \
+	echo "export SLACK_APP_API_TOKEN=$$($(LPASS) show --notes 1152178239154303913)"
+.PHONY: rollbar
+rollbar: $(LPASS)
+	@echo "export ROLLBAR_ACCESS_TOKEN=$$($(LPASS) show --notes 5433360937426957091)"
+.PHONY: buffer
+buffer: $(LPASS)
+	@echo "export BUFFER_TOKEN=$$($(LPASS) show --notes 4791620911166920938)"
+.PHONY: codecov
+codecov: $(LPASS)
+	@echo "export CODECOV_TOKEN=$$($(LPASS) show --notes 2203313003035524967)"
+.PHONY: algolia
+algolia: $(LPASS)
+	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
+	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes 1668162557359149736)"
+.PHONY: list-lp-secrets
+list-lp-secrets: postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov algolia ## List secrets stored in LastPass (lps)
+.PHONY: lps
+lps: list-lp-secrets
