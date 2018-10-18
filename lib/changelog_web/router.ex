@@ -16,22 +16,18 @@ defmodule ChangelogWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Plug.Authenticate, repo: Changelog.Repo
-    plug Plug.PlugEtsCache
   end
 
   pipeline :feed do
     plug :accepts, ["xml"]
-    plug Plug.PlugEtsCache
   end
 
   pipeline :json_feed do
     plug :accepts, ["json"]
-    plug Plug.PlugEtsCache
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Plug.PlugEtsCache
   end
 
   pipeline :admin do

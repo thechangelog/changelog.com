@@ -5,6 +5,8 @@ defmodule ChangelogWeb.FeedController do
 
   alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Podcast, Post, Topic}
 
+  plug PublicEtsCache
+
   def news(conn, _params) do
     conn
     |> put_layout(false)

@@ -3,6 +3,8 @@ defmodule ChangelogWeb.PostController do
 
   alias Changelog.{Post, NewsItem}
 
+  plug PublicEtsCache
+
   def index(conn, params) do
     page =
       NewsItem.published

@@ -5,6 +5,8 @@ defmodule ChangelogWeb.JsonFeedController do
 
   require Logger
 
+  plug PublicEtsCache
+
   def news(conn, _params) do
     conn
     |> put_layout(false)

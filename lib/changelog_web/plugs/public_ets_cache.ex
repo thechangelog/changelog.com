@@ -1,4 +1,4 @@
-defmodule ChangelogWeb.Plug.PlugEtsCache do
+defmodule ChangelogWeb.Plug.PublicEtsCache do
   @moduledoc """
   This is identical to PlugEtsCache.Plug except we bypass the lookup for signed
   in users

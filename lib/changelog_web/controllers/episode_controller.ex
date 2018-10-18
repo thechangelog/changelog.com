@@ -3,6 +3,8 @@ defmodule ChangelogWeb.EpisodeController do
 
   alias Changelog.{Podcast, Episode}
 
+  plug :allow_framing, "embeds are frameable" when action in [:embed]
+  plug PublicEtsCache
   plug :assign_podcast
 
   def action(conn, _) do
@@ -36,7 +38,6 @@ defmodule ChangelogWeb.EpisodeController do
 
     conn
     |> put_layout(false)
-    |> delete_resp_header("x-frame-options")
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
     |> assign(:theme, theme)
@@ -90,6 +91,8 @@ defmodule ChangelogWeb.EpisodeController do
 
     render(conn, "share.json", podcast: podcast, episode: episode)
   end
+
+  defp allow_framing(conn, _), do: delete_resp_header(conn, "x-frame-options")
 
   defp assign_podcast(conn, _) do
     podcast = Repo.get_by!(Podcast, slug: conn.params["podcast"])
