@@ -1,9 +1,11 @@
 defmodule ChangelogWeb.NewsItemCommentController do
   use ChangelogWeb, :controller
 
+  import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_safe_html: 1]
+
   alias Changelog.NewsItemComment
 
-  plug RequireUser, "before creating" when action in [:create]
+  plug RequireUser, "before creating or previewing" when action in [:create, :preview]
 
   def create(conn = %{assigns: %{current_user: user}}, %{"news_item_comment" => comment_params}) do
     comment = %NewsItemComment{author_id: user.id}
@@ -21,7 +23,8 @@ defmodule ChangelogWeb.NewsItemCommentController do
     end
   end
 
-  def preview(_conn, _params) do
+  def preview(conn, %{"md" => markdown}) do
+    html(conn, md_to_safe_html(markdown))
   end
 
   defp referer_or_root_path(conn) do
@@ -30,5 +33,4 @@ defmodule ChangelogWeb.NewsItemCommentController do
       referer ->  referer |> URI.parse |> Map.get(:path)
     end
   end
-
 end

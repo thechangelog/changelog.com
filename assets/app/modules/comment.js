@@ -1,56 +1,56 @@
 import { u, ajax } from "umbrellajs";
 
-export default class Commment {
-  constructor() {
-    // ui
-    this.commentForms = u(".js-comment_form");
-    this.toggleButton = u(".js-toggle_comment");
-    this.toggleReply = u(".js-toggle-reply");
-    this.toggleWrite = u(".js-toggle_write");
-    this.togglePreview = u(".js-toggle_preview");
-    this.permalink = u(".js-permalink");
-    // events
-    this.toggleButton.on("click", (event) => {
-      u(event.currentTarget).closest(".comment").toggleClass("is-collapsed");
-    });
-    this.togglePreview.on("click", (event) => {
-      event.preventDefault();
-      this.showPreview(event.currentTarget);
-    });
-    this.toggleWrite.on("click", (event) => {
-      event.preventDefault();
-      this.showWrite(event.currentTarget);
-    });
+export default class Comment {
+  constructor(container) {
+    this.container = u(container);
+    this.attachUI();
+    this.attachEvents();
+  }
 
-    this.toggleReply.handle("click", (event) => {
-      u(event.target)
-      .closest(".comment")
-      .children("form")
-      .toggleClass("is-hidden");
-    })
+  attachUI() {
+    this.replyForm = this.container.children("form");
+    this.replyTextArea = this.replyForm.find("textarea").first();
+    this.previewArea = this.replyForm.find(".js-comment-preview-area");
+    this.csrf = this.replyForm.find("input[name=_csrf_token").attr("value");
+    this.collapseButton = this.container.children(".js-comment-collapse");
+    this.replyButton = this.container.children("header").find(".js-comment-reply");
+    this.previewButton = this.replyForm.find(".js-comment-preview");
+    this.writeButton = this.replyForm.find(".js-comment-write");
+  }
 
-    this.permalink.on("click", (event) => {
-      event.preventDefault();
-      const target = u(event.target);
-      const comment = target.closest(".comment");
-      const href = target.attr("href");
-      location.hash = href;
-      this.togglePermalink(comment);
+  attachEvents() {
+    this.collapseButton.handle("click", _ => { this.container.toggleClass("is-collapsed") });
+    this.replyButton.handle("click", _ => { this.toggleReplyForm() });
+    this.previewButton.handle("click", _ => { this.showPreview() });
+    this.writeButton.handle("click", _ => { this.showWrite() });
+  }
+
+  showPreview() {
+    let options = {
+      method: "POST",
+      headers: {"x-csrf-token": this.csrf},
+      body: {"md": this.replyTextArea.value}
+    }
+
+    ajax("/news/comments/preview", options, (_err, resp) => {
+      this.previewArea.html(resp);
+      this.replyForm.addClass("comment_form--preview");
     });
   }
 
-  showPreview(button) {
-    const commentForm = u(button).closest(".comment_form");
-    commentForm.addClass('comment_form--preview');
+  showWrite() {
+    this.replyForm.removeClass("comment_form--preview");
   }
 
-  showWrite(button) {
-    const commentForm = u(button).closest(".comment_form");
-    commentForm.removeClass('comment_form--preview');
-  }
-
-  togglePermalink(comment) {
-    u(".comment").removeClass("is-permalink");
-    comment.toggleClass("is-permalink").removeClass("is-collapsed");
+  toggleReplyForm() {
+    if (!this.replyForm.length) {
+      Turbolinks.visit("/in");
+    } else if (this.replyForm.hasClass("is-hidden")) {
+      this.replyForm.removeClass("is-hidden");
+      this.replyButton.text("cancel");
+    } else {
+      this.replyForm.addClass("is-hidden");
+      this.replyButton.text("reply");
+    }
   }
 }

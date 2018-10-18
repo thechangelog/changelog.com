@@ -3,9 +3,9 @@ import "intersection-observer";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import autosize from "autosize";
-import Comment from "modules/comment";
 import Cookies from "cookies-js";
 import hljs from 'highlight.js';
+import Comment from "modules/comment";
 import OnsitePlayer from "modules/onsitePlayer";
 import MiniPlayer from "modules/miniPlayer";
 import LivePlayer from "modules/livePlayer";
@@ -25,9 +25,6 @@ const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
 const lazy = lozad(".lazy");
 const csrf = u("[property=csrf]").attr("content");
-
-// TODO: Re-work this
-const comment = new Comment();
 
 window.u = u;
 
@@ -238,27 +235,26 @@ function deepLink(href) {
   return true;
 }
 
-window.onresize = function() {
-}
-
 window.onhashchange = function() {
   deepLink();
 }
 
 u(document).on("turbolinks:before-cache", function() {
   u("body > .flash").remove();
+  u("body").removeClass("nav-open");
+  overlay.hide();
 });
 
 // on page load
 u(document).on("turbolinks:load", function() {
   lazy.observe();
-  u(".news_item").each(function(el) { observer.observe(el) });
+  u(".news_item").each(el => { observer.observe(el) });
+  u(".js-mini-player").each(el => { new MiniPlayer(el) });
+  u(".js-comment").each(el => { new Comment(el) });
+
   autosize(document.querySelectorAll("textarea"));
   new Tooltip(".has-tooltip");
-  u("body").removeClass("nav-open");
-  u(".js-mini-player").each(function(container) { new MiniPlayer(container); });
   player.attach();
-  overlay.hide();
   live.check();
   formatTimes();
   deepLink();

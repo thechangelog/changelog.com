@@ -1,15 +1,17 @@
-<%= form_for @changeset, news_item_comment_path(@conn, :create), [class: "comment_form js-comment_form"], fn(f) -> %>
-  <%= hidden_input(f, :item_id, id: false) %>
-  <%= textarea(f, :content, id: false, class: "comment_form-write", rows: 1, placeholder: "Your comment...") %>
+<%#= invisible wrapper div so JS handles this like the reply forms %>
+<div class="js-comment">
+  <%= form_for @changeset, news_item_comment_path(@conn, :create), [class: "comment_form js-comment-form"], fn(f) -> %>
+    <%= hidden_input(f, :item_id, id: false) %>
+    <%= textarea(f, :content, id: false, class: "comment_form-write", rows: 1, placeholder: "Your comment...") %>
 
-  <div class="comment_form-preview">
-  </div>
+    <div class="comment_form-preview js-comment-preview-area"></div>
 
-  <div class="comment_form-toolbar">
-    <div class="comment_form-toolbar-toggle">
-      <button class="comment_form-toolbar-toggle-write js-toggle_write is-active">Write</button> |
-      <button class="comment_form-toolbar-toggle-preview js-toggle_preview">Preview</button>
+    <div class="comment_form-toolbar">
+      <div class="comment_form-toolbar-toggle">
+        <button class="comment_form-toolbar-toggle-write js-comment-write is-active">Write</button> |
+        <button class="comment_form-toolbar-toggle-preview js-comment-preview">Preview</button>
+      </div>
+      <input type="submit" class="comment_form-toolbar-submit" value="Comment">
     </div>
-    <input type="submit" class="comment_form-toolbar-submit" value="Comment">
-  </div>
-<% end %>
+  <% end %>
+</div>

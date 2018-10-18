@@ -3,8 +3,11 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
 
   alias Changelog.{NewsItemComment}
 
-  # test "previewing a comment", %{conn: conn} do
-  # end
+  @tag :as_user
+  test "previewing a comment", %{conn: conn} do
+    conn = post(conn, news_item_comment_path(conn, :preview), md: "## Ohai!")
+    assert html_response(conn, 200) =~ "<h2>Ohai!</h2>"
+  end
 
   test "does not create with no user", %{conn: conn} do
     item = insert(:published_news_item)

@@ -86,10 +86,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def md_to_safe_html(nil), do: ""
   def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
-  def md_to_safe_html(md) when is_nil(md), do: ""
 
-  def md_to_html(md) when is_nil(md), do: ""
+  def md_to_html(nil), do: ""
   def md_to_html(md) when is_binary(md) do
     # special case for years stated on their own, which are technically parsed as ordered list items
     # but we don't want them to be. eg - "1997." or "98."
@@ -100,8 +100,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def md_to_text(nil), do: ""
   def md_to_text(md) when is_binary(md), do: md |> md_to_html |> HtmlSanitizeEx.strip_tags |> sans_new_lines
-  def md_to_text(md) when is_nil(md), do: ""
 
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
