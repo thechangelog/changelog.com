@@ -71,6 +71,8 @@ $(JQ):
 	$(error $(RED)Please install $(BOLD)jq$(NORMAL))
 endif
 
+SECRETS := $(LPASS) ls "Shared-changelog/secrets"
+
 ### TARGETS ###
 #
 .DEFAULT_GOAL := help
@@ -116,8 +118,8 @@ export CIRCLE_TOKEN=
 
 endef
 export ENVRC
-.PHONY: list-ci-secrets
-list-ci-secrets: $(CURL)  ## List secrets stored in CircleCI (cis)
+.PHONY: circle_token
+circle_token:
 ifndef CIRCLE_TOKEN
 	@echo "$(RED)CIRCLE_TOKEN$(NORMAL) environment variable must be set" && \
 	echo "Learn more about CircleCI API tokens $(BOLD)https://circleci.com/docs/2.0/managing-api-tokens/$(NORMAL) " && \
@@ -126,13 +128,20 @@ ifndef CIRCLE_TOKEN
 	echo "$$ENVRC" && \
 	exit 1
 endif
+
+.PHONY: list-ci-secrets
+list-ci-secrets: circle_token $(CURL) ## List secrets stored in CircleCI (cis)
 	@$(CURL) --silent --fail "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" | $(JQ) "."
 .PHONY: cis
 cis: list-ci-secrets
 
+.PHONY: sync-secrets
+sync-secrets: $(LPASS)
+	@$(LPASS) sync
+
 .PHONY: postgres
 postgres: $(LPASS)
-	@echo "export PG_DOTCOM_PASS=$$($(LPASS) show --password 1394836924033726964)"
+	@echo "export PG_DOTCOM_PASS=$$($(LPASS) show --notes 7298637973371173308)"
 .PHONY: campaignmonitor
 campaignmonitor: $(LPASS)
 	@echo "export CM_SMTP_TOKEN=$$($(LPASS) show --notes 4518157498237793892)" && \
@@ -144,8 +153,8 @@ github: $(LPASS)
 	echo "export GITHUB_API_TOKEN=$$($(LPASS) show --notes 5059892376198418454)"
 .PHONY: aws
 aws: $(LPASS)
-	@echo "export AWS_ACCESS_KEY_ID=$$($(LPASS) show --field=AWS_ACCESS_KEY_ID 3110853933093316817)" && \
-	echo "export AWS_SECRET_ACCESS_KEY=$$($(LPASS) show --field=AWS_SECRET_ACCESS_KEY 3110853933093316817)"
+	@echo "export AWS_ACCESS_KEY_ID=$$($(LPASS) show --notes 5523519094417729320)" && \
+	echo "export AWS_SECRET_ACCESS_KEY=$$($(LPASS) show --notes 1520570655547620905)"
 .PHONY: twitter
 twitter: $(LPASS)
 	@echo "export TWITTER_CONSUMER_KEY=$$($(LPASS) show --notes 1932439368993537002)" && \
@@ -156,8 +165,8 @@ app: $(LPASS)
 	echo "export SIGNING_SALT=$$($(LPASS) show --notes 8954230056631744101)"
 .PHONY: dns
 dns: $(LPASS)
-	@echo "export DNSIMPLE_EMAIL=$$($(LPASS) show --user 1393964598298257404)" && \
-	echo "export DNSIMPLE_API_TOKEN=$$($(LPASS) show --notes 1393964598298257404)"
+	@echo "export DNSIMPLE_EMAIL=$$($(LPASS) show --notes 4657841044703321334)" && \
+	echo "export DNSIMPLE_API_TOKEN=$$($(LPASS) show --notes 8003458400976532679)"
 .PHONY: slack
 slack: $(LPASS)
 	@echo "export SLACK_INVITE_API_TOKEN=$$($(LPASS) show --notes 3107315517561229870)" && \
@@ -171,11 +180,44 @@ buffer: $(LPASS)
 .PHONY: codecov
 codecov: $(LPASS)
 	@echo "export CODECOV_TOKEN=$$($(LPASS) show --notes 2203313003035524967)"
+.PHONY: coveralls
+coveralls: $(LPASS)
+	@echo "export COVERALLS_REPO_TOKEN=$$($(LPASS) show --notes 8654919576068551356)"
 .PHONY: algolia
 algolia: $(LPASS)
 	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
 	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes 1668162557359149736)"
 .PHONY: list-lp-secrets
-list-lp-secrets: postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov algolia ## List secrets stored in LastPass (lps)
+list-lp-secrets: sync-secrets postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (lps)
 .PHONY: lps
 lps: list-lp-secrets
+
+.PHONY: mirror-secrets
+mirror-secrets: $(LPASS) $(JQ) $(CURL) circle_token sync-secrets  ## Mirror all LastPass secrets into CircleCI (mis)
+	@$(SECRETS) | \
+	  awk '! /secrets\/ / { system("$(LPASS) show --json " $$1) }' | \
+	  $(JQ) --compact-output '.[] | {name: .name, value: .note}' | while read -r envvar; \
+	  do \
+	  $(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d $$envvar "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)"; \
+	  done
+.PHONY: mis
+mis: mirror-secrets
+
+.PHONY: add-secret
+add-secret: $(LPASS) ## Add secret to origin (as)
+ifndef SECRET
+	@echo "$(RED)SECRET$(NORMAL) environment variable must be set to the name of the secret that will be added" && \
+	echo "This value must be in upper-case, e.g. $(BOLD)SOME_SECRET$(NORMAL)" && \
+	echo "This value must not match any of the existing secrets:" && \
+	$(SECRETS) && \
+	exit 1
+endif
+	@$(LPASS) add --sync=now --notes "Shared-changelog/secrets/$(SECRET)"
+.PHONY: as
+as: add-secret
+
+.PHONY: secrets
+secrets: $(LPASS) sync-secrets ## List secrets at origin (s)
+	@$(SECRETS)
+.PHONY: s
+s: secrets
