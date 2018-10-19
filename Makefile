@@ -188,12 +188,12 @@ algolia: $(LPASS)
 	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
 	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes 1668162557359149736)"
 .PHONY: list-lp-secrets
-list-lp-secrets: sync-secrets postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (lps)
+list-lp-secrets: postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (lps)
 .PHONY: lps
 lps: list-lp-secrets
 
 .PHONY: mirror-secrets
-mirror-secrets: $(LPASS) $(JQ) $(CURL) circle_token sync-secrets  ## Mirror all LastPass secrets into CircleCI (mis)
+mirror-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## Mirror all LastPass secrets into CircleCI (mis)
 	@$(SECRETS) | \
 	  awk '! /secrets\/ / { system("$(LPASS) show --json " $$1) }' | \
 	  $(JQ) --compact-output '.[] | {name: .name, value: .note}' | while read -r envvar; \
@@ -212,12 +212,12 @@ ifndef SECRET
 	$(SECRETS) && \
 	exit 1
 endif
-	@$(LPASS) add --sync=now --notes "Shared-changelog/secrets/$(SECRET)"
+	@$(LPASS) add --notes "Shared-changelog/secrets/$(SECRET)"
 .PHONY: as
 as: add-secret
 
 .PHONY: secrets
-secrets: $(LPASS) sync-secrets ## List secrets at origin (s)
+secrets: $(LPASS) ## List secrets at origin (s)
 	@$(SECRETS)
 .PHONY: s
 s: secrets
