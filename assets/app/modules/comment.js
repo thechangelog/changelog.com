@@ -5,6 +5,7 @@ export default class Comment {
     this.container = u(container);
     this.attachUI();
     this.attachEvents();
+    this.attachKeyboardShortcuts();
   }
 
   attachUI() {
@@ -23,6 +24,16 @@ export default class Comment {
     this.replyButton.handle("click", _ => { this.toggleReplyForm() });
     this.previewButton.handle("click", _ => { this.showPreview() });
     this.writeButton.handle("click", _ => { this.showWrite() });
+  }
+
+  attachKeyboardShortcuts() {
+    this.replyForm.on("keydown", event => {
+      // ctrl+enter or cmd+enter submits form
+      if ((event.metaKey || event.ctrlKey) && event.key == "Enter") {
+        event.preventDefault();
+        this.replyForm.first().submit();
+      }
+    });
   }
 
   showPreview() {

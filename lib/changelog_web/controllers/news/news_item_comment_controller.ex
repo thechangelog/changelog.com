@@ -14,7 +14,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
     case Repo.insert(changeset) do
       {:ok, _comment} ->
         conn
-        |> put_flash(:success, "Nice comment!")
+        |> put_flash(:success, random_success_message())
         |> redirect(to: referer_or_root_path(conn))
       {:error, _changeset} ->
         conn
@@ -32,5 +32,15 @@ defmodule ChangelogWeb.NewsItemCommentController do
       nil -> root_path(conn, :index)
       referer ->  referer |> URI.parse |> Map.get(:path)
     end
+  end
+
+  defp random_success_message do
+    [
+      "Now that's a solid take! ✊",
+      "You tell 'em 💥",
+      "That comment is fresh to death 🕺",
+      "The hottest of hot takes 🔥",
+      "Where do you get all those wonderful words? 🤔"
+    ] |> Enum.random()
   end
 end
