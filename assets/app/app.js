@@ -15,16 +15,18 @@ import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
+import Flash from "modules/flash";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
 import lozad from "lozad";
 
-const player = new OnsitePlayer("#player");
+const csrf = u("[property=csrf]").attr("content");
+const flash = new Flash(".js-flash");
+const lazy = lozad(".lazy");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
-const lazy = lozad(".lazy");
-const csrf = u("[property=csrf]").attr("content");
+const player = new OnsitePlayer("#player");
 
 window.u = u;
 
@@ -93,16 +95,6 @@ u(document).handle("click", "[data-youtube]", function(event) {
 
 u(document).handle("click", "[data-share]", function(event) {
   new Share(overlay).load(u(this).data("share"));
-});
-
-// flash messages
-function closeFlash(element) {
-  element.addClass("is-closing");
-  setTimeout(() => { element.remove(); }, 1000);
-}
-
-u(document).handle("click", ".js-close_flash", function(event) {
-  closeFlash(u(event.target).closest('.flash_container'));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -240,9 +232,9 @@ window.onhashchange = function() {
 }
 
 u(document).on("turbolinks:before-cache", function() {
-  u("body > .flash").remove();
   u("body").removeClass("nav-open");
   overlay.hide();
+  flash.detach();
 });
 
 // on page load
@@ -255,10 +247,10 @@ u(document).on("turbolinks:load", function() {
   autosize(document.querySelectorAll("textarea"));
   new Tooltip(".has-tooltip");
   player.attach();
+  flash.attach();
   live.check();
   formatTimes();
   deepLink();
-  setTimeout(() => { closeFlash(u(".flash_container")); }, 10*1000);
 });
 
 Turbolinks.start();
