@@ -42,6 +42,6 @@
     "compile": "webpack --mode=production -p",
     "add": "all-contributors add",
     "generate": "all-contributors generate",
-    "test": "mocha --require @babel/register test/**/*.js"
+    "test": "mocha --require @babel/register \"test/**/*.js\""
   }
 }
