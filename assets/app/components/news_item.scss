@@ -227,6 +227,10 @@
       height: 33px;
       min-width: 40px;
       text-indent: -9999px;
+    }
+
+    &-video_button,
+    &-image_button {
       .page-news_item-show &, .page-news_ad-show & { display: none; }
     }
 
