@@ -69,7 +69,7 @@ defmodule ChangelogWeb.NewsItemController do
   end
 
   def show(conn, %{"id" => slug}) do
-    hashid = slug |> String.split("-") |> List.last
+    hashid = slug |> String.split("-") |> List.last()
     item = item_from_hashid(hashid, NewsItem.published)
 
     if slug == hashid do
@@ -127,7 +127,13 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.preload_all()
       |> NewsItem.load_object()
 
-    render(conn, :show, item: item, comments: [])
+    changeset = item |> build_assoc(:comments) |> NewsItemComment.insert_changeset()
+
+    conn
+    |> assign(:item, item)
+    |> assign(:comments, [])
+    |> assign(:changeset, changeset)
+    |> render(:show)
   end
 
   defp get_ads do
