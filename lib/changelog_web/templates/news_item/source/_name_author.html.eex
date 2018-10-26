@@ -1,1 +1,1 @@
-<%= link(domain_name(@item.url), to: domain_url(@item.url), title: @author.name, rel: "external") %>
+<%= external_link(domain_name(@item.url), to: domain_url(@item.url), title: @author.name) %>

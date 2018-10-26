@@ -55,15 +55,16 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     "#{uri.scheme}://#{uri.host}"
   end
 
-  def external_link(text, opts) do
-    link text, (opts ++ [rel: "external"])
-  end
+  def external_link(text, opts), do: link(text, (opts ++ [rel: "external"]))
 
   def get_param(conn, param, default \\ nil), do: Map.get(conn.params, param, default)
   def get_assigns_or_param(conn, param, default \\ nil) do
     Map.get(conn.assigns, String.to_atom(param)) || get_param(conn, param, default)
   end
 
+  def github_url(nil), do: ""
+  def github_url(%{github_handle: nil}), do: ""
+  def github_url(%{github_handle: handle}), do: github_url(handle)
   def github_url(handle), do: "https://github.com/#{handle}"
 
   def github_link(model) do
@@ -85,10 +86,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def md_to_safe_html(nil), do: ""
   def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
-  def md_to_safe_html(md) when is_nil(md), do: ""
 
-  def md_to_html(md) when is_nil(md), do: ""
+  def md_to_html(nil), do: ""
   def md_to_html(md) when is_binary(md) do
     # special case for years stated on their own, which are technically parsed as ordered list items
     # but we don't want them to be. eg - "1997." or "98."
@@ -99,8 +100,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def md_to_text(nil), do: ""
   def md_to_text(md) when is_binary(md), do: md |> md_to_html |> HtmlSanitizeEx.strip_tags |> sans_new_lines
-  def md_to_text(md) when is_nil(md), do: ""
 
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
@@ -120,9 +121,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
   def truncate(_string, _length), do: ""
 
-  def twitter_url(nil), do: nil
+  def twitter_url(nil), do: ""
+  def twitter_url(%{twitter_handle: nil}), do: ""
+  def twitter_url(%{twitter_handle: handle}), do: twitter_url(handle)
   def twitter_url(handle) when is_binary(handle), do: "https://twitter.com/#{handle}"
-  def twitter_url(person), do: "https://twitter.com/#{person.twitter_handle}"
 
   def twitter_link(model, string \\ nil) do
     if model.twitter_handle do

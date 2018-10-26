@@ -1,0 +1,26 @@
+<a id="comment-<%= hashid(@comment) %>" class="anchor"></a>
+<article class="comment js-comment <%= modifier_classes(@item, @comment) %>">
+  <button class="comment-toggle js-comment-collapse"></button>
+  <div class="comment-connector js-comment-collapse"></div>
+  <header class="comment-header">
+    <button class="comment-author has-tooltip">
+      <%= lazy_image(PersonView.avatar_url(@comment.author), @comment.author.name, class: "comment-author-image") %>
+      <p class="comment-author-name"><%= @comment.author.handle %></p>
+    </button>
+    <%= render(PersonView, "_tooltip.html", Map.merge(assigns, %{person: @comment.author})) %>
+    <p class="comment-actions">
+      <%= link(to: "#comment-#{hashid(@comment)}", class: "js-permalink") do %>
+        <%= TimeView.ts(@comment.inserted_at, "relativeShort") %> ago
+      <% end %>
+      <!--<a href="#TODO-edit" title="">edit</a>-->
+      <a href="javascript:void(0)" title="Reply to this comment" class="js-comment-reply">reply</a>
+    </p>
+  </header>
+  <div class="comment-body"><%= @comment.content |> md_to_safe_html() |> raw() %></div>
+
+  <%= if @current_user, do: render("_reply_form.html", Map.merge(assigns, %{parent: @comment})) %>
+
+  <section class="comment-replies">
+    <%= render_many(@comment.children, __MODULE__, "show.html", Map.merge(assigns, %{as: :comment})) %>
+  </section>
+</article>

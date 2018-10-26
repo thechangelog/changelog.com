@@ -3,15 +3,13 @@
     <%= link @podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
     &raquo; Edit
   <%= if @episode.published do %>
-    <%= link "(View)",
+    <%= external_link "(View)",
       to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
-      class: "view",
-      rel: "external" %>
+      class: "view" %>
   <% else %>
-    <%= link "(Preview)",
+    <%= external_link "(Preview)",
       to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
-      class: "view",
-      rel: "external" %>
+      class: "view" %>
   <% end %>
   </h1>
 

@@ -1,1 +1,1 @@
-<%= link @item.headline, to: @item.url, rel: "external", data: [news: true] %>
+<%= external_link(@item.headline, to: @item.url, data: [news: true]) %>

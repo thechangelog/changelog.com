@@ -2,7 +2,8 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Podcast, Regexp, UrlKit}
-  alias ChangelogWeb.{Endpoint, NewsAdView, NewsSourceView, EpisodeView, PersonView, TopicView, PodcastView}
+  alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
+                      EpisodeView, PersonView, TopicView, PodcastView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
@@ -14,6 +15,16 @@ defmodule ChangelogWeb.NewsItemView do
       end
     end
   end
+
+  def comment_count(item) do
+    case NewsItem.comment_count(item) do
+      0 -> "comment"
+      1 -> "1 comment"
+      x -> "#{x} comments"
+    end
+  end
+
+  def hashid(item), do: Hashid.encode(item.id)
 
   def image_link(item, version \\ :large) do
     if item.image do
@@ -123,10 +134,6 @@ defmodule ChangelogWeb.NewsItemView do
     |> String.trim
     |> String.replace(~r/\s+/, "-")
     |> Kernel.<>("-#{hashid(item)}")
-  end
-
-  def hashid(item) do
-    Hashid.encode(item.id)
   end
 
   def teaser(item, max_words \\ 20) do

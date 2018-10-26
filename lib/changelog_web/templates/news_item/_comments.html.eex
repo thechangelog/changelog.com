@@ -1,0 +1,12 @@
+<section id="comments" class="comments">
+  <header class="section_heading">
+    <h3 class="section_heading-text">Comments</h3>
+    <%= if !@current_user do %>
+      <p class="section_heading-note"><%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("up", to: person_path(@conn, :join)) %> to comment</p>
+    <% end %>
+  </header>
+
+  <%= if @current_user, do: render(NewsItemCommentView, "_form.html", assigns) %>
+
+  <%= render_many(@comments, NewsItemCommentView, "show.html", Map.merge(assigns, %{as: :comment})) %>
+</section>

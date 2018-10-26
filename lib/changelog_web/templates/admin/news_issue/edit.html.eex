@@ -9,10 +9,9 @@
       to: news_issue_path(@conn, :show, @issue.slug),
       class: "view" %>
   <% else %>
-    <%= link "(Preview)",
+    <%= external_link "(Preview)",
       to: news_issue_path(@conn, :preview, @issue.slug),
-      class: "view",
-      rel: "external" %>
+      class: "view" %>
   <% end %>
   </h1>
 

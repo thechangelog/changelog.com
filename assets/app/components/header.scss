@@ -57,7 +57,7 @@
 .header {
   @include position(fixed, 0 0 null);
   width: 100%;
-  z-index: 999;
+  z-index: 99999;
 
   &-container {
     background-color: rgba($white, .98);

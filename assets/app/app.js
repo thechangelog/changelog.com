@@ -4,6 +4,8 @@ import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import autosize from "autosize";
 import Cookies from "cookies-js";
+import hljs from 'highlight.js';
+import Comment from "modules/comment";
 import OnsitePlayer from "modules/onsitePlayer";
 import MiniPlayer from "modules/miniPlayer";
 import LivePlayer from "modules/livePlayer";
@@ -13,16 +15,28 @@ import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
+import Flash from "modules/flash";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
 import lozad from "lozad";
 
-const player = new OnsitePlayer("#player");
+const csrf = u("[property=csrf]").attr("content");
+const flash = new Flash(".js-flash");
+const lazy = lozad(".lazy");
 const live = new LivePlayer(".js-live");
 const overlay = new Overlay("#overlay");
-const lazy = lozad(".lazy");
-const csrf = u("[property=csrf]").attr("content");
+const player = new OnsitePlayer("#player");
+
+window.u = u;
+
+// Syntax Highlighting
+['css', 'http', 'javascript', 'bash', 'ini', 'makefile', 'php', 'sql', 'diff', 'json', 'markdown', 'perl', 'python', 'ruby'].forEach((langName) => {
+  // Using require() here because import() support hasn't landed in Webpack yet
+  const langModule = require(`highlight.js/lib/languages/${langName}`);
+  hljs.registerLanguage(langName, langModule);
+});
+hljs.initHighlightingOnLoad();
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
@@ -81,16 +95,6 @@ u(document).handle("click", "[data-youtube]", function(event) {
 
 u(document).handle("click", "[data-share]", function(event) {
   new Share(overlay).load(u(this).data("share"));
-});
-
-// flash messages
-function closeFlash(element) {
-  element.addClass("is-closing");
-  setTimeout(() => { element.remove(); }, 1000);
-}
-
-u(document).handle("click", ".js-close_flash", function(event) {
-  closeFlash(u(event.target).closest('.flash_container'));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -193,10 +197,11 @@ u(document).on("submit", "form", function(event) {
 function formatTimes() {
   u("span.time").each(function(el) {
     let span = u(el);
+    let anchor = span.parent("a");
     let date = new Date(span.text());
     let style = span.data("style");
     span.text(ts(date, style));
-    span.attr("title", ts(date, "timeFirst"));
+    (anchor || span).attr("title", ts(date, "timeFirst"));
     span.removeClass("time");
   });
 }
@@ -222,31 +227,30 @@ function deepLink(href) {
   return true;
 }
 
-window.onresize = function() {
-}
-
 window.onhashchange = function() {
   deepLink();
 }
 
 u(document).on("turbolinks:before-cache", function() {
-  u("body > .flash").remove();
+  u("body").removeClass("nav-open");
+  overlay.hide();
+  flash.detach();
 });
 
 // on page load
 u(document).on("turbolinks:load", function() {
   lazy.observe();
-  u(".news_item").each(function(el) { observer.observe(el) });
+  u(".news_item").each(el => { observer.observe(el) });
+  u(".js-mini-player").each(el => { new MiniPlayer(el) });
+  u(".js-comment").each(el => { new Comment(el) });
+
   autosize(document.querySelectorAll("textarea"));
   new Tooltip(".has-tooltip");
-  u("body").removeClass("nav-open");
-  u(".js-mini-player").each(function(container) { new MiniPlayer(container); });
   player.attach();
-  overlay.hide();
+  flash.attach();
   live.check();
   formatTimes();
   deepLink();
-  setTimeout(() => { closeFlash(u(".flash_container")); }, 10*1000);
 });
 
 Turbolinks.start();
