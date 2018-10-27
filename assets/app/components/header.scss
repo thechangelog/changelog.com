@@ -1,20 +1,4 @@
-// Dark Headers
-.page-podcast-index,
-.page-podcast-show,
-.page-podcast-upcoming,
-.page-podcast-recommended,
-.page-podcast-show,
-.page-episode-show,
-.page-episode-preview,
-.page-post-show,
-.page-page-community,
-.page-page-sponsor,
-.page-topic-show,
-.page-news_source-show,
-.page-person-subscribe,
-.page-live-index,
-.page-page-weekly,
-.page-page-nightly {
+@mixin darkMode {
   .header {
     &-container {
       background: $black;
@@ -346,4 +330,28 @@
       &:focus::placeholder { opacity: .7; }
     }
   }
+}
+
+// Dark Headers
+.page-podcast-index,
+.page-podcast-show,
+.page-podcast-upcoming,
+.page-podcast-recommended,
+.page-podcast-show,
+.page-episode-show,
+.page-episode-preview,
+.page-post-show,
+.page-page-community,
+.page-page-sponsor,
+.page-topic-show,
+.page-news_source-show,
+.page-person-subscribe,
+.page-live-index,
+.page-page-weekly,
+.page-page-nightly {
+  @include darkMode;
+}
+
+@media (prefers-color-scheme: dark) {
+  @include darkMode;
 }

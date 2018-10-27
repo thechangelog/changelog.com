@@ -1,5 +1,7 @@
 // Colors
 $black: #101820;
+$dark-black: darken($black, 50%);
+//$dark-black: #070a0e;
 $half-black: rgba($black, 0.5);
 $white: #ffffff;
 $half-white: rgba($white, 0.5);
@@ -13,6 +15,7 @@ $lightest-grey: #f5f5f5;
 $light-grey: #e6e5e6;
 $medium-grey: #878b8f;
 $dark-grey: darken($medium-grey, 30%);
+$darker-grey: darken($medium-grey, 40%);
 $red: #FC4C02;
 $light-red: lighten($red, 20%);
 $blue-grey: #222C36;
