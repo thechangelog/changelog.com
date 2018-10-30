@@ -32,9 +32,9 @@
         <div class="live-info-cta">
           <%= lazy_image(static_url(@conn, "/images/icons/icon-slack-white.svg"), "Slack Logo", class: "live-info-cta-icon", width: 25, height: 25) %>
         <%= if @current_user do %>
-          <p>Join the discussion in our <%= link(raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{@podcast.slug}") %>.</p>
+          <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{slack_channel(@podcast)}") %>.</p>
         <% else %>
-          <p>Join the discussion in our <%= link(raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %>.</p>
+          <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %>.</p>
           <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a>.</small></p>
         <% end %>
         </div>
