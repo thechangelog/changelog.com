@@ -2,6 +2,8 @@
   <h1 class="ui dividing header">
     <%= link "Topics", to: admin_topic_path(@conn, :index) %>
     &raquo; Edit
+
+    <%= external_link("(View)", to: topic_path(@conn, :show, @topic.slug), class: "view") %>
   </h1>
 
   <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_topic_path(@conn, :update, @topic.slug)) %>

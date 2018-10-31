@@ -4,6 +4,8 @@
     &raquo;
     <%= link "Sources", to: admin_news_source_path(@conn, :index) %>
     &raquo; Edit
+
+    <%= external_link("(View)", to: news_source_path(@conn, :show, @source.slug), class: "view") %>
   </h1>
 
   <%= render "_form.html", conn: @conn, changeset: @changeset, action: admin_news_source_path(@conn, :update, @source) %>
