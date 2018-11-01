@@ -20,6 +20,13 @@ defmodule Changelog.StringKitTest do
       assert StringKit.md_linkify(raw) == raw
     end
 
+    test "no-ops with a markdown-style link in there" do
+      raw = """
+      [When Donald Fischer said](https://changelog.com/founderstalk/58#transcript-73)...
+      """
+      assert StringKit.md_linkify(raw) == raw
+    end
+
     test "no-ops with a url inside other elements" do
       raw = ~s{<p>http://test.com</p>}
       assert StringKit.md_linkify(raw) == raw

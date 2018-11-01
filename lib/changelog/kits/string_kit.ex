@@ -11,9 +11,10 @@ defmodule Changelog.StringKit do
   """
   def md_linkify(string) do
     regex = ~r/
-      (?<=^|\s|\()     # look behind for start of string, space, or left paren
-      (https?:\/\/.*?) # capture http url
-      (?=$|\s|\))      # look ahead for end of string, space, or right paren
+      (?<=^|\s|\()     # positive look behind: start of string | space | left paren
+      (?<!]\()         # negative look behind: '[(' (existing md link)
+      (https?:\/\/.*?) # capture http(s) url
+      (?=$|\s|\))      # positive look ahead: end of string | space | right paren
     /x
 
     Regex.replace(regex, string, ~s{[\\1](\\1)})
