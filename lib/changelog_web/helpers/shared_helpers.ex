@@ -87,16 +87,16 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
 
   def md_to_safe_html(nil), do: ""
-  def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe])
+  def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe, :smart, :hardbreaks])
 
   def md_to_html(nil), do: ""
   def md_to_html(md) when is_binary(md) do
     # special case for years stated on their own, which are technically parsed as ordered list items
     # but we don't want them to be. eg - "1997." or "98."
-    if String.match?md, (~r/^\d{2,4}\.$/) do
+    if String.match?(md, (~r/^\d{2,4}\.$/)) do
       "<p>#{md}</p>"
     else
-      Cmark.to_html(md)
+      Cmark.to_html(md, [:smart, :hardbreaks])
     end
   end
 
