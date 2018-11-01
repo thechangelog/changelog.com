@@ -1,8 +1,10 @@
 defmodule ChangelogWeb.NewsItemCommentView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.Hashid
+  alias Changelog.{Hashid, StringKit}
   alias ChangelogWeb.{PersonView, TimeView}
+
+  def hashid(comment), do: Hashid.encode(comment.id)
 
   def modifier_classes(item, comment) do
     [(if Enum.any?(comment.children), do: "comment--has_replies"),
@@ -11,5 +13,7 @@ defmodule ChangelogWeb.NewsItemCommentView do
     |> Enum.join(" ")
   end
 
-  def hashid(comment), do: Hashid.encode(comment.id)
+  def transformed_content(content) do
+    content |> StringKit.md_linkify() |> md_to_safe_html()
+  end
 end

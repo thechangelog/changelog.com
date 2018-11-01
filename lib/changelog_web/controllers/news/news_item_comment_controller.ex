@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemCommentController do
   use ChangelogWeb, :controller
 
-  import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_safe_html: 1]
+  import ChangelogWeb.NewsItemCommentView, only: [transformed_content: 1]
 
   alias Changelog.NewsItemComment
 
@@ -24,7 +24,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
   end
 
   def preview(conn, %{"md" => markdown}) do
-    html(conn, md_to_safe_html(markdown))
+    html(conn, transformed_content(markdown))
   end
 
   defp referer_or_root_path(conn) do

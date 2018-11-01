@@ -16,7 +16,7 @@
       <a href="javascript:void(0)" title="Reply to this comment" class="js-comment-reply">reply</a>
     </p>
   </header>
-  <div class="comment-body"><%= @comment.content |> md_to_safe_html() |> raw() %></div>
+  <div class="comment-body"><%= @comment.content |> transformed_content() |> raw() %></div>
 
   <%= if @current_user, do: render("_reply_form.html", Map.merge(assigns, %{parent: @comment})) %>
 
