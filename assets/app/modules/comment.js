@@ -14,7 +14,7 @@ export default class Comment {
     this.previewArea = this.replyForm.find(".js-comment-preview-area");
     this.csrf = this.replyForm.find("input[name=_csrf_token]").attr("value");
     this.collapseButton = this.container.children(".js-comment-collapse");
-    this.replyButton = this.container.children("header").find(".js-comment-reply");
+    this.replyButton = this.container.children("footer").find(".js-comment-reply");
     this.previewButton = this.replyForm.find(".js-comment-preview");
     this.writeButton = this.replyForm.find(".js-comment-write");
   }

@@ -334,12 +334,13 @@
       color: $black;
       font-size: 13px;
       font-weight: 500;
-      line-height: 1.125em;
-      padding: 9px 10px;
+      line-height: 1em;
+      padding: 10px;
       width: 160px;
 
       &::placeholder {
         color: $medium-grey;
+        line-height: 1.5em;
         transition: opacity .1s ease-in-out;
       }
 

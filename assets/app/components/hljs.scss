@@ -2,7 +2,7 @@
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #000;
+  background: $black;
   color: #f8f8f8;
 
   &-comment,
@@ -29,7 +29,7 @@
   &-section,
   &-tag,
   &-name {
-    color: $blue;
+    color: $light-blue;
   }
 
   &-class &-title,

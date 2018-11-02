@@ -17,11 +17,10 @@
   &-write {
     background: transparent;
     border: none;
-    border-bottom: $border;
     font-family: $code;
     font-size: 0.8125em;
     line-height: 1.5em;
-    min-height: 59px;
+    min-height: 60px;
     padding: 1.5em;
     resize: none !important;
     width: 100%;
@@ -34,6 +33,7 @@
   &-preview {
     display: none;
     padding: 1em;
+    min-height: 65px;
 
     & > *:last-child {
       margin-bottom: 0;
@@ -46,6 +46,7 @@
 
   &-toolbar {
     background: $lightest-grey;
+    border-top: $border;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -89,7 +90,7 @@
 }
 
 .comment {
-  margin: 0 0 $base-spacing;
+  margin: 0 0 ($base-spacing * 2);
   position: relative;
 
   // Child comments
@@ -133,7 +134,8 @@
   }
 
   &-toggle,
-  &-header {
+  &-header,
+  &-footer {
     font-family: $code;
     font-size: 0.8125em;
   }
@@ -152,7 +154,8 @@
     }
   }
 
-  &-header {
+  &-header,
+  &-footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -173,6 +176,14 @@
     & > * { z-index: 1; }
   }
 
+  &-footer {
+    margin-bottom: $base-spacing;
+
+    .comment-actions {
+      margin-left: 0;
+    }
+  }
+
   &-author {
     align-items: center;
     display: flex;
@@ -180,7 +191,7 @@
     &-image {
       $size: 20px;
       background: #000;
-      box-shadow: 0 0 $size rgba($black, 0.2);
+      // box-shadow: 0 0 $size rgba($black, 0.2);
       font-size: 8px;
       border-radius: $base-border-radius;
       width: $size;
@@ -211,48 +222,24 @@
 
   &-body {
     margin: 1em 0 1.5em;
+  }
 
-    pre {
-      @include code_snippet();
-    }
+  // Pulled this block in from .news_item-content (news_item.scss)
+  .richtext,
+  .richtext--comment {
+    margin-top: $base-spacing;
 
-    p {
-      b,
-      strong, {
-        font-weight: 500;
-      }
-      code {
-        @include inline_code();
-      }
-    }
-
-    a {
-      color: $black;
-      font-weight: 500;
-      border-bottom: 2px solid $light-grey;
-
-      &:hover {
-        border-color: rgba($green, .3);
-        color: $green;
+    &.richtext {
+      blockquote, p, li {
+        font-size: 1em;
       }
 
-      &[rel~="footnote"] {
-        border-bottom: none;
-        padding: 0 3px;
-      }
-    }
+      blockquote {
+        padding: 0.5em 0 0.5em 1.5em;
 
-    blockquote {
-      background: $lightest-grey;
-      border-left: 2px solid darken($lightest-grey, 2%);
-      border-radius: 3px;
-      color: $dark-grey;
-      line-height: 1.5em;
-      margin: 0;
-      padding: 1em 1.25em;
-
-      & > *:last-child {
-        margin-bottom: 0;
+        *:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }
@@ -262,6 +249,37 @@
 
     @include breakpoint(mobile) {
       margin-left: $base-spacing;
+    }
+  }
+}
+
+// Defining new styles specific to .richtext--comment
+.comment-body.richtext--comment,
+.comment_form-preview.richtext--comment,
+.comment_form-preview {
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  img {
+    width: auto;
+    margin: 0;
+  }
+
+  pre {
+    // background: $black;
+    // color: $white;
+    margin-top: 0;
+
+    &:before {
+      display: none;
+    }
+
+    code {
+      overflow-x: auto;
+      padding: 1em;
     }
   }
 }
