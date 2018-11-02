@@ -9,12 +9,11 @@
           class: "toolbar_item toolbar_item--button playbar playbar_play" %>
     <% end %>
 
-    <%= link "Subscribe",
+    <%= link "Discuss",
         title: "",
         to: {:javascript, "javascript:void(0);"},
-        class: "toolbar_item toolbar_item--button has-tooltip",
-        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
-    <%= render(PodcastView, "_subscribe_tooltip.html", conn: @conn, podcast: @episode.podcast) %>
+        class: "toolbar_item toolbar_item--button",
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-chat.svg")}')" %>
 
     <%= link "Sponsor",
         title: "",
@@ -22,11 +21,11 @@
         class: "toolbar_item toolbar_item--button",
         style: "background-image: url('#{static_url(@conn, "/images/icons/icon-sponsor.svg")}')" %>
 
-    <%= link "Share",
-        title: "Share",
+    <%= link "Subscribe",
+        title: "",
         to: {:javascript, "javascript:void(0);"},
-        class: "toolbar_item toolbar_item--button",
-        data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
-        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-share.svg")}')" %>
+        class: "toolbar_item toolbar_item--button has-tooltip",
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
+    <%= render(PodcastView, "_subscribe_tooltip.html", conn: @conn, podcast: @episode.podcast) %>
   </div>
 </div>

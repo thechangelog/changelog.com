@@ -54,9 +54,11 @@
       </div>
 
       <ul class="episode-body-summary-meta">
-        <li>Runtime <%= TimeView.rounded_minutes(@episode.duration) %> minutes</li>
-        <li><time datetime="<%= @episode.published_at %>">Published <%= TimeView.pretty_date(@episode.published_at) %></time></li>
-        <li><a href="<%= audio_url(@episode) %>" download>Download MP3 (<%= megabytes(@episode) %>MB)</a></li>
+        <li><%= TimeView.rounded_minutes(@episode.duration) %> minutes</li>
+        <li><time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time></li>
+        <li><a href="<%= audio_url(@episode) %>" download title="Download MP3">Download (<%= megabytes(@episode) %>MB)</a></li>
+        <li><a href="" title="Discuss this Episode">Comments (12)</a></li>
+        <li><%= link "Share", to: {:javascript, "javascript:void(0);"}, data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)]%></li>
         <li><%= admin_edit_link(@conn, @current_user, @episode) %></li>
       </ul>
 

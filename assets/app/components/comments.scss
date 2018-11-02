@@ -1,7 +1,7 @@
 .comments {
   border-top: 2px solid $light-grey;
   margin: $base-spacing auto 15vmax;
-  padding: ($base-spacing * 3) $base-spacing 0;
+  padding: ($base-spacing * 2) $base-spacing 0;
   max-width: 760px;
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
@@ -104,6 +104,8 @@
   &.is-collapsed {
     .comment-header { opacity: 0.4; }
 
+    .comment_form,
+    .comment-footer,
     .comment-replies,
     .comment-body {
       display: none;
@@ -188,7 +190,7 @@
     }
   }
 
-  .is-author {
+  &.is-author {
     .comment-author-name {
       color: $base-hover-color;
     }
