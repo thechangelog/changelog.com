@@ -9,7 +9,6 @@ services:
     # https://docs.docker.com/compose/compose-file/#volumes
     volumes:
       - postgres:/var/lib/postgresql/data
-    # https://docs.docker.com/compose/compose-file/#restart_policy
   app:
     build: .
     command: mix do ecto.create, ecto.migrate, phx.server
