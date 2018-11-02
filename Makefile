@@ -96,8 +96,8 @@ c: contrib
 
 .PHONY: proxy
 proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
-	@cd nginx && export BUILD_VERSION=$$(date +'%Y-%m-%d') ; \
-	$(DOCKER) build -t thechangelog/proxy:$$BUILD_VERSION . && \
+	@cd nginx && export BUILD_VERSION=$$(date -u +'%Y-%m-%d') ; \
+	$(DOCKER) build --tag thechangelog/proxy:$$BUILD_VERSION . && \
 	$(DOCKER) push thechangelog/proxy:$$BUILD_VERSION && \
 	$(DOCKER) tag thechangelog/proxy:$$BUILD_VERSION thechangelog/proxy:latest && \
 	$(DOCKER) push thechangelog/proxy:latest
