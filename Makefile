@@ -102,6 +102,14 @@ proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
 	$(DOCKER) tag thechangelog/proxy:$$BUILD_VERSION thechangelog/proxy:latest && \
 	$(DOCKER) push thechangelog/proxy:latest
 
+.PHONY: runtime
+runtime: $(DOCKER) ## Builds & publishes changelog.com runtime as a Docker image
+	@BUILD_VERSION=$$(date -u +'%Y-%m-%d.%H%M%S') ; \
+	$(DOCKER) build --tag thechangelog/runtime:$$BUILD_VERSION --file Dockerfile.runtime . && \
+	$(DOCKER) push thechangelog/runtime:$$BUILD_VERSION && \
+	$(DOCKER) tag thechangelog/runtime:$$BUILD_VERSION thechangelog/runtime:latest && \
+	$(DOCKER) push thechangelog/runtime:latest
+
 .PHONY: md
 md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
 	@$(DOCKER) run --interactive --tty --rm --name changelog_md \

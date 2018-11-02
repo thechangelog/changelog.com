@@ -4,7 +4,7 @@ jobs:
   build:
     parallelism: 1
     docker:
-      - image: thechangelog/runtime:elixir1.6.5-ffmpeg
+      - image: thechangelog/runtime
         environment:
           MIX_ENV: test
       - image: circleci/postgres:9.6
