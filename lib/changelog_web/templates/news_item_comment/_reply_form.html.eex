@@ -3,7 +3,7 @@
   <%= hidden_input(f, :parent_id, id: false, value: @parent.id) %>
   <%= textarea(f, :content, id: false, class: "comment_form-write", rows: 1, placeholder: "Your reply...") %>
 
-  <div class="comment_form-preview js-comment-preview-area"></div>
+  <div class="comment_form-preview richtext richtext--comment js-comment-preview-area"></div>
 
   <div class="comment_form-toolbar">
     <div class="comment_form-toolbar-toggle">

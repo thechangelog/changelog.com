@@ -1,9 +1,8 @@
 .comments {
   border-top: 2px solid $light-grey;
-  margin: $base-spacing auto 0;
-  padding: $base-spacing*2 $base-spacing 0;
+  margin: $base-spacing auto 15vmax;
+  padding: ($base-spacing * 3) $base-spacing 0;
   max-width: 760px;
-
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
 }
@@ -24,6 +23,10 @@
     padding: 1.5em;
     resize: none !important;
     width: 100%;
+
+    &:focus {
+      outline: none;
+    }
 
     .comment_form--preview & {
       display: none;
@@ -90,7 +93,7 @@
 }
 
 .comment {
-  margin: 0 0 ($base-spacing * 2);
+  margin: 0 0 $base-spacing;
   position: relative;
 
   // Child comments
@@ -177,10 +180,17 @@
   }
 
   &-footer {
-    margin-bottom: $base-spacing;
+    margin-bottom: 1em;
+    // margin-bottom: $base-spacing;
 
     .comment-actions {
       margin-left: 0;
+    }
+  }
+
+  .is-author {
+    .comment-author-name {
+      color: $base-hover-color;
     }
   }
 
@@ -221,31 +231,12 @@
   }
 
   &-body {
-    margin: 1em 0 1.5em;
-  }
-
-  // Pulled this block in from .news_item-content (news_item.scss)
-  .richtext,
-  .richtext--comment {
-    margin-top: $base-spacing;
-
-    &.richtext {
-      blockquote, p, li {
-        font-size: 1em;
-      }
-
-      blockquote {
-        padding: 0.5em 0 0.5em 1.5em;
-
-        *:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
+    margin: 1em 0;
   }
 
   &-replies {
     margin-left: 26px;
+    margin-top: $base-spacing;
 
     @include breakpoint(mobile) {
       margin-left: $base-spacing;
@@ -263,18 +254,34 @@
     margin: 0;
   }
 
+  blockquote, p, li {
+    font-size: 1em;
+  }
+
+  blockquote {
+    padding: 0.5em 0 0.5em 1.5em;
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  hr {
+    margin: 1em 0;
+  }
+
   img {
-    width: auto;
+    height: auto;
+    max-width: 100%;
     margin: 0;
+    width: auto;
   }
 
   pre {
-    // background: $black;
-    // color: $white;
     margin-top: 0;
 
     &:before {
-      display: none;
+      display: none; // hide left line number (?) element
     }
 
     code {
