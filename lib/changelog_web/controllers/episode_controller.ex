@@ -22,7 +22,6 @@ defmodule ChangelogWeb.EpisodeController do
     item =
       episode
       |> Episode.get_news_item()
-      |> NewsItem.preload_comments()
       |> Repo.one()
 
     conn

@@ -24,6 +24,13 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
+  def comment_count_trailing(item) do
+    case NewsItem.comment_count(item) do
+      0 -> "Comment"
+      x -> "Comments (#{x})"
+    end
+  end
+
   def hashid(item), do: Hashid.encode(item.id)
 
   def image_link(item, version \\ :large) do
