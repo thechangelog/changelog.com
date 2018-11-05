@@ -30,7 +30,7 @@
       <%= render("_play_bar.html", assigns) %>
     </div>
 
-    <%= link "All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button" %>
+    <%= link("All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button") %>
   </header>
 
   <div class="episode-body">
@@ -50,7 +50,7 @@
       <% end %>
 
       <div class="episode-body-summary-description">
-        <%= @episode.summary |> md_to_html |> raw %>
+        <%= @episode.summary |> md_to_html() |> raw() %>
       </div>
 
       <ul class="episode-body-summary-meta">

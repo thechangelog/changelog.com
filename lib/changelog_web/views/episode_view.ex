@@ -4,7 +4,8 @@ defmodule ChangelogWeb.EpisodeView do
   import ChangelogWeb.Meta.{Title, Description}
 
   alias Changelog.{Episode, Files, Github}
-  alias ChangelogWeb.{Endpoint, LayoutView, PersonView, PodcastView, SponsorView, TimeView}
+  alias ChangelogWeb.{Endpoint, LayoutView, NewsItemView, PersonView,
+                      PodcastView, SponsorView, TimeView}
 
   def admin_edit_link(conn, user, episode) do
     if user && user.admin do
