@@ -110,6 +110,10 @@ runtime: $(DOCKER) ## Builds & publishes changelog.com runtime as a Docker image
 	$(DOCKER) tag thechangelog/runtime:$$BUILD_VERSION thechangelog/runtime:latest && \
 	$(DOCKER) push thechangelog/runtime:latest
 
+.PHONY: test
+test: $(COMPOSE) ## Runs tests as they run on CircleCI
+	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
+
 .PHONY: md
 md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
 	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
