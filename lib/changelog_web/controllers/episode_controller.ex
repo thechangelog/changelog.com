@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, Podcast}
+  alias Changelog.{Episode, Podcast}
 
   plug :allow_framing, "embeds are frameable" when action in [:embed]
   plug PublicEtsCache
