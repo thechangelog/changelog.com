@@ -36,13 +36,24 @@ defmodule Changelog.NewsItemComment do
     |> Map.get(nil)
   end
 
-  def preload_all(query = %Ecto.Query{}) do
-    query
-    |> Ecto.Query.preload(:author)
+  def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
+  def preload_author(comment), do: Repo.preload(comment, :author)
+
+  def preload_news_item(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :news_item)
+  def preload_news_item(comment), do: Repo.preload(comment, :news_item)
+
+
+  def preload_all(query_or_comment) do
+    query_or_comment
+    |> preload_author()
+    |> preload_news_item()
   end
 
-  def preload_all(comment) do
+  def touch_news_item(comment) do
     comment
-    |> Repo.preload(:author)
+    |> preload_news_item()
+    |> Map.get(:news_item)
+    |> change(updated_at: Timex.now)
+    |> Repo.update()
   end
 end
