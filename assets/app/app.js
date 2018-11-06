@@ -4,7 +4,7 @@ import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import autosize from "autosize";
 import Cookies from "cookies-js";
-import hljs from 'highlight.js';
+import Prism from "prismjs";
 import Comment from "modules/comment";
 import OnsitePlayer from "modules/onsitePlayer";
 import MiniPlayer from "modules/miniPlayer";
@@ -29,14 +29,6 @@ const overlay = new Overlay("#overlay");
 const player = new OnsitePlayer("#player");
 
 window.u = u;
-
-// Syntax Highlighting
-['css', 'http', 'javascript', 'bash', 'ini', 'makefile', 'php', 'sql', 'diff', 'json', 'markdown', 'perl', 'python', 'ruby'].forEach((langName) => {
-  // Using require() here because import() support hasn't landed in Webpack yet
-  const langModule = require(`highlight.js/lib/languages/${langName}`);
-  hljs.registerLanguage(langName, langModule);
-});
-hljs.initHighlightingOnLoad();
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
@@ -239,11 +231,11 @@ u(document).on("turbolinks:before-cache", function() {
 
 // on page load
 u(document).on("turbolinks:load", function() {
+  Prism.highlightAll();
   lazy.observe();
   u(".news_item").each(el => { observer.observe(el) });
   u(".js-mini-player").each(el => { new MiniPlayer(el) });
   u(".js-comment").each(el => { new Comment(el) });
-
   autosize(document.querySelectorAll("textarea"));
   new Tooltip(".has-tooltip");
   player.attach();

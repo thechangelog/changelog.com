@@ -12,7 +12,9 @@ defmodule ChangelogWeb.NewsItemCommentController do
     changeset = NewsItemComment.insert_changeset(comment, comment_params)
 
     case Repo.insert(changeset) do
-      {:ok, _comment} ->
+      {:ok, comment} ->
+        NewsItemComment.touch_news_item(comment)
+
         conn
         |> put_flash(:success, random_success_message())
         |> redirect(to: referer_or_root_path(conn))

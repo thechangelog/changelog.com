@@ -1,9 +1,8 @@
 .comments {
   border-top: 2px solid $light-grey;
-  margin: $base-spacing auto 0;
-  padding: $base-spacing*2 $base-spacing 0;
+  margin: $base-spacing auto 15vmax;
+  padding: ($base-spacing * 2) $base-spacing 0;
   max-width: 760px;
-
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
 }
@@ -17,14 +16,17 @@
   &-write {
     background: transparent;
     border: none;
-    border-bottom: $border;
     font-family: $code;
     font-size: 0.8125em;
     line-height: 1.5em;
-    min-height: 59px;
+    min-height: 60px;
     padding: 1.5em;
     resize: none !important;
     width: 100%;
+
+    &:focus {
+      outline: none;
+    }
 
     .comment_form--preview & {
       display: none;
@@ -34,6 +36,7 @@
   &-preview {
     display: none;
     padding: 1em;
+    min-height: 65px;
 
     & > *:last-child {
       margin-bottom: 0;
@@ -46,6 +49,7 @@
 
   &-toolbar {
     background: $lightest-grey;
+    border-top: $border;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -100,6 +104,8 @@
   &.is-collapsed {
     .comment-header { opacity: 0.4; }
 
+    .comment_form,
+    .comment-footer,
     .comment-replies,
     .comment-body {
       display: none;
@@ -133,7 +139,8 @@
   }
 
   &-toggle,
-  &-header {
+  &-header,
+  &-footer {
     font-family: $code;
     font-size: 0.8125em;
   }
@@ -152,7 +159,8 @@
     }
   }
 
-  &-header {
+  &-header,
+  &-footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -173,6 +181,21 @@
     & > * { z-index: 1; }
   }
 
+  &-footer {
+    margin-bottom: 1em;
+    // margin-bottom: $base-spacing;
+
+    .comment-actions {
+      margin-left: 0;
+    }
+  }
+
+  &.is-author {
+    .comment-author-name {
+      color: $base-hover-color;
+    }
+  }
+
   &-author {
     align-items: center;
     display: flex;
@@ -180,7 +203,7 @@
     &-image {
       $size: 20px;
       background: #000;
-      box-shadow: 0 0 $size rgba($black, 0.2);
+      // box-shadow: 0 0 $size rgba($black, 0.2);
       font-size: 8px;
       border-radius: $base-border-radius;
       width: $size;
@@ -210,58 +233,62 @@
   }
 
   &-body {
-    margin: 1em 0 1.5em;
-
-    pre {
-      @include code_snippet();
-    }
-
-    p {
-      b,
-      strong, {
-        font-weight: 500;
-      }
-      code {
-        @include inline_code();
-      }
-    }
-
-    a {
-      color: $black;
-      font-weight: 500;
-      border-bottom: 2px solid $light-grey;
-
-      &:hover {
-        border-color: rgba($green, .3);
-        color: $green;
-      }
-
-      &[rel~="footnote"] {
-        border-bottom: none;
-        padding: 0 3px;
-      }
-    }
-
-    blockquote {
-      background: $lightest-grey;
-      border-left: 2px solid darken($lightest-grey, 2%);
-      border-radius: 3px;
-      color: $dark-grey;
-      line-height: 1.5em;
-      margin: 0;
-      padding: 1em 1.25em;
-
-      & > *:last-child {
-        margin-bottom: 0;
-      }
-    }
+    margin: 1em 0;
   }
 
   &-replies {
     margin-left: 26px;
+    margin-top: $base-spacing;
 
     @include breakpoint(mobile) {
       margin-left: $base-spacing;
+    }
+  }
+}
+
+// Defining new styles specific to .richtext--comment
+.comment-body.richtext--comment,
+.comment_form-preview.richtext--comment,
+.comment_form-preview {
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  blockquote, p, li {
+    font-size: 1em;
+  }
+
+  blockquote {
+    padding: 0.5em 0 0.5em 1.5em;
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  hr {
+    margin: 1em 0;
+  }
+
+  img {
+    height: auto;
+    max-width: 100%;
+    margin: 0;
+    width: auto;
+  }
+
+  pre {
+    margin-top: 0;
+
+    &:before {
+      display: none; // hide left line number (?) element
+    }
+
+    code {
+      overflow-x: auto;
+      padding: 1em;
     }
   }
 }

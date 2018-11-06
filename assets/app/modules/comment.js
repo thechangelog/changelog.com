@@ -1,4 +1,5 @@
 import { u, ajax } from "umbrellajs";
+import Prism from "prismjs";
 
 export default class Comment {
   constructor(container) {
@@ -14,7 +15,7 @@ export default class Comment {
     this.previewArea = this.replyForm.find(".js-comment-preview-area");
     this.csrf = this.replyForm.find("input[name=_csrf_token]").attr("value");
     this.collapseButton = this.container.children(".js-comment-collapse");
-    this.replyButton = this.container.children("header").find(".js-comment-reply");
+    this.replyButton = this.container.children("footer").find(".js-comment-reply");
     this.previewButton = this.replyForm.find(".js-comment-preview");
     this.writeButton = this.replyForm.find(".js-comment-write");
   }
@@ -45,6 +46,7 @@ export default class Comment {
 
     ajax("/news/comments/preview", options, (_err, resp) => {
       this.previewArea.html(resp);
+      Prism.highlightAllUnder(this.previewArea.first());
       this.replyForm.addClass("comment_form--preview");
     });
   }

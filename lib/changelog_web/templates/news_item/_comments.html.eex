@@ -1,8 +1,9 @@
-<section id="comments" class="comments">
+<section class="comments">
+  <a id="comments" class="anchor"></a>
   <header class="section_heading">
     <h3 class="section_heading-text">Comments</h3>
     <%= if !@current_user do %>
-      <p class="section_heading-note"><%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("up", to: person_path(@conn, :join)) %> to comment</p>
+      <p class="section_heading-note"><%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("join", to: person_path(@conn, :join)) %> to comment</p>
     <% end %>
   </header>
 

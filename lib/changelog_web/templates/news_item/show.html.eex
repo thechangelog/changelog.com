@@ -9,6 +9,6 @@
     <%= image_link(@item) %>
   </article>
 
-  <%= if @current_user, do: render("_comments.html", assigns) %>
+  <%= render("_comments.html", assigns) %>
   <%= render(SharedView, "_signup_banner.html", assigns) %>
 </div>

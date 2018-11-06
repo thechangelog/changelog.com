@@ -143,6 +143,7 @@ defmodule ChangelogWeb.Router do
 
     get "/", NewsItemController, :index, as: :root
     get "/news/submit", NewsItemController, :new
+    get "/news/fresh", NewsItemController, :fresh
     get "/news/top", NewsItemController, :top
     resources "/news", NewsItemController, only: [:show, :create], as: :news_item
     get "/news/:id/visit", NewsItemController, :visit, as: :news_item
