@@ -25,6 +25,17 @@ defmodule ChangelogWeb.Meta.Title do
     item.headline
   end
 
+  # News item - top
+  defp get(%{view_module: NewsItemView, view_template: "top.html", filter: filter}) do
+    suffix = case filter do
+      "week" -> "this week"
+      "month" -> "this month"
+      "all" -> "of all time"
+    end
+
+    "Top developer news #{suffix}"
+  end
+
   # News - submit
   defp get(%{view_module: NewsItemView, view_template: "new.html"}), do: "Submit news"
 

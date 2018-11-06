@@ -4,12 +4,20 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   alias Changelog.Regexp
   alias Phoenix.{Controller, Naming}
 
-  def active_class(conn, controllers, class_name \\ "is-active")
-  def active_class(conn, controllers, class_name) when is_binary(controllers), do: active_class(conn, [controllers], class_name)
-  def active_class(conn, controllers, class_name) when is_list(controllers) do
+  @doc """
+  Returns `class_name` for a given connection if it matches any of the provided
+  'matchers'. A 'matcher' could be a string representation of a controller/
+  action combo, or it could be a regular expression.
+  """
+  def active_class(conn, matchers, class_name \\ "is-active")
+  def active_class(conn, matchers, class_name) when is_binary(matchers), do: active_class(conn, [matchers], class_name)
+  def active_class(conn, matchers, class_name) when is_list(matchers) do
     active_id = controller_action_combo(conn)
 
-    if Enum.any?(controllers, fn(x) -> String.match?(active_id, ~r/#{x}/) end) do
+    if Enum.any?(matchers, fn(x) ->
+      matcher = if Regex.regex?(x), do: x, else: ~r/#{x}/
+      String.match?(active_id, matcher)
+    end) do
       class_name
     end
   end
@@ -18,11 +26,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def comma_separated(number) do
     number
-    |> Integer.to_charlist
-    |> Enum.reverse
+    |> Integer.to_charlist()
+    |> Enum.reverse()
     |> Enum.chunk_every(3, 3, [])
     |> Enum.join(",")
-    |> String.reverse
+    |> String.reverse()
   end
 
   def controller_name(conn), do: Controller.controller_module(conn) |> Naming.resource_name("Controller")

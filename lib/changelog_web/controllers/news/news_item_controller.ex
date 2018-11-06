@@ -24,11 +24,14 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
 
-    items =
-      page.entries
-      |> Enum.map(&NewsItem.load_object/1)
+    items = Enum.map(page.entries, &NewsItem.load_object/1)
 
-    render(conn, :index, ads: get_ads(), pinned: pinned, items: items, page: page)
+    conn
+    |> assign(:ads, get_ads())
+    |> assign(:pinned, pinned)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> render(:index)
   end
 
   def fresh(conn, params) do
@@ -39,28 +42,40 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
 
-    items =
-      page.entries
-      |> Enum.map(&NewsItem.load_object/1)
+    items = Enum.map(page.entries, &NewsItem.load_object/1)
 
     render(conn, :fresh, ads: get_ads(), items: items, page: page)
   end
 
-  def top(conn, params) do
-    page =
+  def top_week(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))
+  def top_month(conn, params), do: top(conn, Map.merge(params, %{"filter" => "month"}))
+  def top_all(conn, params), do: top(conn, Map.merge(params, %{"filter" => "all"}))
+
+  def top(conn, params = %{"filter" => filter}) do
+    query =
       NewsItem
       |> NewsItem.published()
       |> NewsItem.sans_object()
       |> NewsItem.top_clicked_first()
       |> NewsItem.preload_all()
-      |> Repo.paginate(Map.put(params, :page_size, 20))
 
-    items =
-      page.entries
-      |> Enum.map(&NewsItem.load_object/1)
+    query = case filter do
+      "week" -> NewsItem.published_since(query, Timex.shift(Timex.now, weeks: -1))
+      "month" -> NewsItem.published_since(query, Timex.shift(Timex.now, months: -1))
+      _else -> query
+    end
 
-    render(conn, :top, ads: get_ads(), items: items, page: page)
+    page = Repo.paginate(query, Map.put(params, :page_size, 20))
+    items = Enum.map(page.entries, &NewsItem.load_object/1)
+
+    conn
+    |> assign(:filter, filter)
+    |> assign(:items, items)
+    |> assign(:ads, get_ads())
+    |> assign(:page, page)
+    |> render(:top)
   end
+  def top(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))
 
   def new(conn, _params) do
     changeset = NewsItem.submission_changeset(%NewsItem{})
