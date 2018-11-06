@@ -49,11 +49,11 @@ defmodule Changelog.NewsItemComment do
     |> preload_news_item()
   end
 
-  def touch_news_item(comment) do
+  def refresh_news_item(comment) do
     comment
     |> preload_news_item()
     |> Map.get(:news_item)
-    |> change(updated_at: Timex.now)
+    |> change(refreshed_at: Timex.now)
     |> Repo.update()
   end
 end

@@ -19,6 +19,7 @@ defmodule Changelog.NewsItem do
 
     field :pinned, :boolean, default: false
     field :published_at, Timex.Ecto.DateTime
+    field :refreshed_at, Timex.Ecto.DateTime
 
     field :impression_count, :integer, default: 0
     field :click_count, :integer, default: 0
@@ -65,8 +66,9 @@ defmodule Changelog.NewsItem do
   def published_since(query, time = %DateTime{}), do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^time)
   def published_since(query, _),                  do: published(query)
 
-  def top_clicked_first(query \\ __MODULE__),      do: from(q in query, order_by: [desc: :click_count])
-  def top_ctr_first(query \\ __MODULE__),         do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
+  def freshest_first(query \\ __MODULE__),      do: from(q in query, order_by: [desc: :refreshed_at])
+  def top_clicked_first(query \\ __MODULE__),   do: from(q in query, order_by: [desc: :click_count])
+  def top_ctr_first(query \\ __MODULE__),       do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
   def top_impressed_first(query \\ __MODULE__), do: from(q in query, order_by: [desc: :impression_count])
 
   def file_changeset(item, attrs \\ %{}), do: cast_attachments(item, attrs, ~w(image), allow_urls: true)
@@ -107,19 +109,19 @@ defmodule Changelog.NewsItem do
   defp load_episode_object(object_id) when is_nil(object_id), do: nil
   defp load_episode_object(object_id) do
     [p, e] = String.split(object_id, ":")
-    Episode.published
+    Episode.published()
     |> Episode.with_podcast_slug(p)
     |> Episode.with_slug(e)
-    |> Episode.preload_podcast
-    |> Episode.preload_guests
-    |> Repo.one
+    |> Episode.preload_podcast()
+    |> Episode.preload_guests()
+    |> Repo.one()
   end
 
   defp load_post_object(object_id) when is_nil(object_id), do: nil
   defp load_post_object(object_id) do
     [_, slug] = String.split(object_id, ":")
-    Post.published
-    |> Post.preload_all
+    Post.published()
+    |> Post.preload_all()
     |> Repo.get_by!(slug: slug)
   end
 
@@ -156,10 +158,10 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:topics)
   end
 
-  def decline!(item), do: item |> change(%{status: :declined}) |> Repo.update!
-  def queue!(item), do: item |> change(%{status: :queued}) |> Repo.update!
-  def publish!(item), do: item |> change(%{status: :published, published_at: Timex.now}) |> Repo.update!
-  def unpublish!(item), do: item |> change(%{status: :draft, published_at: nil}) |> Repo.update!
+  def decline!(item),   do: item |> change(%{status: :declined}) |> Repo.update!()
+  def queue!(item),     do: item |> change(%{status: :queued}) |> Repo.update!()
+  def publish!(item),   do: item |> change(%{status: :published, published_at: Timex.now, refreshed_at: Timex.now}) |> Repo.update!()
+  def unpublish!(item), do: item |> change(%{status: :draft, published_at: nil, refreshed_at: nil}) |> Repo.update!()
 
   def is_audio(item), do: item.type == :audio
   def is_video(item), do: item.type == :video
@@ -171,22 +173,22 @@ defmodule Changelog.NewsItem do
   def track_click(item) do
     item
     |> change(%{click_count: item.click_count + 1})
-    |> Repo.update!
+    |> Repo.update!()
   end
 
   def track_impression(item) do
     item
     |> change(%{impression_count: item.impression_count + 1})
-    |> Repo.update!
+    |> Repo.update!()
   end
 
   def latest_news_items do
     __MODULE__
-    |> published
-    |> newest_first
-    |> preload_all
+    |> published()
+    |> newest_first()
+    |> preload_all()
     |> limit(50)
-    |> Repo.all
+    |> Repo.all()
     |> Enum.map(&load_object/1)
   end
 end

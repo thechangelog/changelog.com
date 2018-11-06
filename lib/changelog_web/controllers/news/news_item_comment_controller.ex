@@ -13,7 +13,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
 
     case Repo.insert(changeset) do
       {:ok, comment} ->
-        NewsItemComment.touch_news_item(comment)
+        NewsItemComment.refresh_news_item(comment)
 
         conn
         |> put_flash(:success, random_success_message())

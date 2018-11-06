@@ -35,7 +35,7 @@ defmodule ChangelogWeb.NewsItemController do
     page =
       NewsItem
       |> NewsItem.published()
-      |> NewsItem.newest_first(:updated_at)
+      |> NewsItem.freshest_first()
       |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
 
