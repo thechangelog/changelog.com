@@ -60,6 +60,7 @@ export default class Comment {
       Turbolinks.visit("/in");
     } else if (this.replyForm.hasClass("is-hidden")) {
       this.replyForm.removeClass("is-hidden");
+      this.replyTextArea.focus();
       this.replyButton.text("cancel");
     } else {
       this.replyForm.addClass("is-hidden");
