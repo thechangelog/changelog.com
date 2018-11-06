@@ -1,75 +1,156 @@
-.hljs {
+/* prism.js Changelog theme */
+ code[class*="language-"],
+ pre[class*="language-"] {
   display: block;
   overflow-x: auto;
   padding: 0.5em;
   background: $black;
   color: #f8f8f8;
-
-  &-comment,
-  &-quote {
-    color: #aeaeae;
-    font-style: italic;
-  }
-
-  &-keyword,
-  &-selector-tag,
-  &-type {
-    color: $red;
-  }
-
-  &-string { color: $green; }
-  &-subst { color: $light-green; }
-
-  &-regexp,
-  &-link {
-    color: $yellow;
-  }
-
-  &-title,
-  &-section,
-  &-tag,
-  &-name {
-    color: $light-blue;
-  }
-
-  &-class &-title,
-  &-doctag {
-    text-decoration: underline;
-  }
-
-  &-symbol,
-  &-bullet,
-  &-number {
-    color: #3387cc;
-  }
-
-  &-params,
-  &-variable,
-  &-template-variable {
-    color: #3e87e3;
-  }
-
-  &-attribute { color: #cda869; }
-  &-meta { color: #8996a8; }
-
-  &-formula {
-    background-color: #0e2231;
-    color: #f8f8f8;
-    font-style: italic;
-  }
-
-  &-addition {
-    background-color: #253b22;
-    color: #f8f8f8;
-  }
-
-  &-deletion {
-    background-color: #420e09;
-    color: #f8f8f8;
-  }
-
-  &-selector-class { color: #9b703f; }
-  &-selector-id { color: #8b98ab; }
-  &-emphasis { font-style: italic; }
-  &-strong { font-weight: bold; }
 }
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #aeaeae;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #999;
+}
+
+.namespace {
+  opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: $light-blue;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: $green;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.token.variable,
+.token.inserted {
+  color: $yellow;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: $light-red;
+}
+
+.token.regex,
+.token.important {
+  color: $light-blue;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.deleted {
+  background-color: #420e09;
+  color: #f8f8f8;
+}
+
+
+// .hljs {
+//   display: block;
+//   overflow-x: auto;
+//   padding: 0.5em;
+//   background: $black;
+//   color: #f8f8f8;
+
+//   &-comment,
+//   &-quote {
+//     color: #aeaeae;
+//     font-style: italic;
+//   }
+
+//   &-keyword,
+//   &-selector-tag,
+//   &-type {
+//     color: $red;
+//   }
+
+//   &-string { color: $green; }
+//   &-subst { color: $light-green; }
+
+//   &-regexp,
+//   &-link {
+//     color: $yellow;
+//   }
+
+//   &-title,
+//   &-section,
+//   &-tag,
+//   &-name {
+//     color: $light-blue;
+//   }
+
+//   &-class &-title,
+//   &-doctag {
+//     text-decoration: underline;
+//   }
+
+//   &-symbol,
+//   &-bullet,
+//   &-number {
+//     color: #3387cc;
+//   }
+
+//   &-params,
+//   &-variable,
+//   &-template-variable {
+//     color: #3e87e3;
+//   }
+
+//   &-attribute { color: #cda869; }
+//   &-meta { color: #8996a8; }
+
+//   &-formula {
+//     background-color: #0e2231;
+//     color: #f8f8f8;
+//     font-style: italic;
+//   }
+
+//   &-addition {
+//     background-color: #253b22;
+//     color: #f8f8f8;
+//   }
+
+//   &-deletion {
+//     background-color: #420e09;
+//     color: #f8f8f8;
+//   }
+
+//   &-selector-class { color: #9b703f; }
+//   &-selector-id { color: #8b98ab; }
+//   &-emphasis { font-style: italic; }
+//   &-strong { font-weight: bold; }
+// }

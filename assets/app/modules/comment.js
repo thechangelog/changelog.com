@@ -1,4 +1,5 @@
 import { u, ajax } from "umbrellajs";
+import Prism from "prismjs";
 
 export default class Comment {
   constructor(container) {
@@ -45,6 +46,7 @@ export default class Comment {
 
     ajax("/news/comments/preview", options, (_err, resp) => {
       this.previewArea.html(resp);
+      Prism.highlightAllUnder(this.previewArea.first());
       this.replyForm.addClass("comment_form--preview");
     });
   }
