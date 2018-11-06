@@ -9,19 +9,19 @@ defmodule ChangelogWeb.NewsItemController do
   def index(conn, params) do
     pinned =
       NewsItem
-      |> NewsItem.published
-      |> NewsItem.pinned
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
-      |> Repo.all
+      |> NewsItem.published()
+      |> NewsItem.pinned()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.all()
       |> Enum.map(&NewsItem.load_object/1)
 
     page =
       NewsItem
-      |> NewsItem.published
-      |> NewsItem.unpinned
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      |> NewsItem.published()
+      |> NewsItem.unpinned()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
 
     items =
@@ -31,13 +31,28 @@ defmodule ChangelogWeb.NewsItemController do
     render(conn, :index, ads: get_ads(), pinned: pinned, items: items, page: page)
   end
 
+  def fresh(conn, params) do
+    page =
+      NewsItem
+      |> NewsItem.published()
+      |> NewsItem.newest_first(:updated_at)
+      |> NewsItem.preload_all()
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    render(conn, :fresh, ads: get_ads(), items: items, page: page)
+  end
+
   def top(conn, params) do
     page =
       NewsItem
-      |> NewsItem.published
-      |> NewsItem.sans_object
-      |> NewsItem.top_clicked_first
-      |> NewsItem.preload_all
+      |> NewsItem.published()
+      |> NewsItem.sans_object()
+      |> NewsItem.top_clicked_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
 
     items =
