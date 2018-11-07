@@ -42,11 +42,14 @@ defmodule Changelog.NewsItemComment do
   def preload_news_item(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :news_item)
   def preload_news_item(comment), do: Repo.preload(comment, :news_item)
 
+  def preload_parent(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :parent)
+  def preload_parent(comment), do: Repo.preload(comment, :parent)
 
   def preload_all(query_or_comment) do
     query_or_comment
     |> preload_author()
     |> preload_news_item()
+    |> preload_parent()
   end
 
   def refresh_news_item(comment) do

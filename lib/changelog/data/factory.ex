@@ -139,6 +139,14 @@ defmodule Changelog.Factory do
     %{post_news_item(post) | story: story}
   end
 
+  def news_item_comment_factory do
+    %Changelog.NewsItemComment{
+      news_item: build(:news_item),
+      author: build(:person),
+      content: "Oh noes you di'int!"
+    }
+  end
+
   def news_item_topic_factory do
     %Changelog.NewsItemTopic{
       news_item: build(:news_item),

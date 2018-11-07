@@ -7,6 +7,37 @@ defmodule Changelog.NotifierTest do
   alias Changelog.{Notifier, Slack}
   alias ChangelogWeb.Email
 
+  describe "notify with news item comment" do
+    test "when comment has no parent" do
+      comment = insert(:news_item_comment)
+      Notifier.notify(comment)
+      assert_no_emails_delivered()
+    end
+
+    test "when comment is a reply and parent author has notifications enabled" do
+      comment = insert(:news_item_comment)
+      reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
+      Notifier.notify(reply)
+      assert_delivered_email Email.comment_reply(reply.parent.author, reply)
+    end
+
+    test "when comment is a reply to own comment" do
+      person = insert(:person)
+      comment = insert(:news_item_comment, author: person)
+      reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment, author: person)
+      Notifier.notify(reply)
+      assert_no_emails_delivered()
+    end
+
+    test "when comment is a reply and parent author has notifications disabled" do
+      person = insert(:person, settings: %{email_on_comment_replies: false})
+      comment = insert(:news_item_comment, author: person)
+      reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
+      Notifier.notify(reply)
+      assert_no_emails_delivered()
+    end
+  end
+
   describe "notify with episode item" do
     setup_with_mocks([
       {Slack.Client, [], [message: fn(_, _) -> true end]}
@@ -16,8 +47,7 @@ defmodule Changelog.NotifierTest do
 
     test "when episode has no guests" do
       episode = insert(:published_episode)
-      item = episode |> episode_news_item |> insert
-
+      item = episode |> episode_news_item() |> insert()
       Notifier.notify(item)
       assert_no_emails_delivered()
       assert called Slack.Client.message("#main", :_)
@@ -29,7 +59,7 @@ defmodule Changelog.NotifierTest do
       episode = insert(:published_episode)
       insert(:episode_guest, episode: episode, person: g1, thanks: false)
       insert(:episode_guest, episode: episode, person: g2, thanks: false)
-      item = episode |> episode_news_item |> insert
+      item = episode |> episode_news_item() |> insert()
 
       Notifier.notify(item)
       assert_no_emails_delivered()
@@ -44,7 +74,7 @@ defmodule Changelog.NotifierTest do
       insert(:episode_guest, episode: episode, person: g1, thanks: false)
       insert(:episode_guest, episode: episode, person: g2, thanks: true)
       insert(:episode_guest, episode: episode, person: g3, thanks: true)
-      item = episode |> episode_news_item |> insert
+      item = episode |> episode_news_item() |> insert()
 
       Notifier.notify(item)
       assert_delivered_email Email.guest_thanks(g2, episode)

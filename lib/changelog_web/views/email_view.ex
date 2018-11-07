@@ -2,7 +2,8 @@ defmodule ChangelogWeb.EmailView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Faker
-  alias ChangelogWeb.{AuthView, Endpoint, EpisodeView, NewsItemView, PersonView}
+  alias ChangelogWeb.{AuthView, Endpoint, EpisodeView, NewsItemView,
+                      NewsItemCommentView, PersonView}
 
   def greeting(person) do
     label = if Faker.name_fake?(person.name) do
