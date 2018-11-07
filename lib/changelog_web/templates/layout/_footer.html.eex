@@ -40,42 +40,44 @@
     <div class="footer-nav-list">
       <h4><a href="/" title="">News</a></h4>
       <ul>
-        <li><%= link "Subscribe", to: person_path(@conn, :subscribe) %></li>
-        <li><%= link "Topics", to: topic_path(@conn, :index), title: "View All Topics" %></li>
-        <li><%= link "Sources", to: news_source_path(@conn, :index), title: "View All Sources" %></li>
+        <li><%= link("Subscribe", to: person_path(@conn, :subscribe), title: "Subscribe to Changelog News") %></li>
+        <li><%= link("Topics", to: topic_path(@conn, :index), title: "View all topics") %></li>
+        <li><%= link("Sources", to: news_source_path(@conn, :index), title: "View all sources") %></li>
         <li>---</li>
-        <li><%= link "Changelog Weekly", to: page_path(@conn, :weekly) %></li>
-        <li><%= link "Changelog Nightly", to: page_path(@conn, :nightly) %></li>
+        <li><%= link("Changelog Weekly", to: page_path(@conn, :weekly), title: "Changelog Weekly") %></li>
+        <li><%= link("Changelog Nightly", to: page_path(@conn, :nightly), title: "Changelog Nightly") %></li>
         <li>---</li>
-        <li><%= link "Submit News", to: news_item_path(@conn, :new) %></li>
+        <li><%= link("Fresh", to: news_item_path(@conn, :fresh), title: "Freshest news") %></li>
+        <li><%= link("Top", to: news_item_path(@conn, :top), title: "Top news") %></li>
+        <li><%= link("Submit", to: news_item_path(@conn, :new), title: "Submit news") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
-      <h4><%= link "Podcasts", to: podcast_path(@conn, :index) %></h4>
+      <h4><%= link("Podcasts", to: podcast_path(@conn, :index), title: "View all podcasts") %></h4>
       <ul>
       <%= for podcast <- @podcasts do %>
-        <li><%= link podcast.name, to: podcast_path(@conn, :show, podcast.slug) %></li>
+        <li><%= link(podcast.name, to: podcast_path(@conn, :show, podcast.slug), title: podcast.name) %></li>
       <% end %>
         <li>---</li>
-        <li><%= link "Master", to: podcast_path(@conn, :show, :master) %></li>
+        <li><%= link("Master", to: podcast_path(@conn, :show, :master), title: "Master feed") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
       <h4><a href="/community" title="">Community</a></h4>
       <ul>
-        <li><%= link "Join the Community", to: page_path(@conn, :community) %></li>
-        <li><%= link "Code of Conduct", to: page_path(@conn, :coc) %></li>
-        <li><%= link "Sign in to Slack", to: "https://changelog.slack.com" %></li>
-        <li><%= link "Ping Us", to: "https://github.com/thechangelog/ping" %></li>
-        <li><%= link "Perks", to: page_path(@conn, :community) %></li>
+        <li><%= link("Join the Community", to: page_path(@conn, :community), title: "Join the community") %></li>
+        <li><%= link("Code of Conduct", to: page_path(@conn, :coc), title: "Read the code of conduct") %></li>
+        <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
+        <li><%= link("Ping Us", to: "https://github.com/thechangelog/ping", title: "Ping us on GitHub") %></li>
+        <li><%= link("Perks", to: page_path(@conn, :community), title: "Community perks") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
       <h4>Etc.</h4>
       <ul>
-        <li><%= link "Sponsor", to: page_path(@conn, :sponsor) %></li>
-        <li><%= link "Search", to: search_path(@conn, :search) %></li>
-        <li><%= link "Blog", to: post_path(@conn, :index) %></li>
+        <li><%= link("Sponsor", to: page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
+        <li><%= link("Search", to: search_path(@conn, :search), title: "Search Changelog") %></li>
+        <li><%= link("Blog", to: post_path(@conn, :index), title: "Changelog's blog") %></li>
         <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
         <li><a href="https://github.com/thechangelog/changelog.com/issues">Report Issues</a></li>
         <li><a href="/terms">Terms &amp; Conditions</a></li>
