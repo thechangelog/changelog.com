@@ -1,6 +1,7 @@
 .page_news_item,
 .feed {
   @include wrap;
+  max-width: 800px;
 
   @include breakpoint(mobile, max) {
     padding: 0;

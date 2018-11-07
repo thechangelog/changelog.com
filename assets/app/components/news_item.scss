@@ -1,9 +1,8 @@
 .news_item {
   $horizontal-padding: 20px;
-
   border-bottom: 1px solid $light-grey;
   margin-top: $base-spacing;
-  padding: 0 $base-spacing $base-spacing;
+  padding: 0 $base-spacing ($base-spacing * 2);
   position: relative;
 
   &--sponsor {
@@ -19,7 +18,7 @@
   }
 
   @include breakpoint(mobile) {
-    padding-left: 70px + $horizontal-padding;
+    padding-left: $horizontal-padding;
     padding-right: $horizontal-padding;
   }
 
@@ -106,10 +105,10 @@
         }
       }
 
-      @include breakpoint(mobile) {
+      @include breakpoint(desktop) {
         $size: 50px;
         height: $size;
-        left: $horizontal-padding;
+        left: -50px;
         line-height: $size;
         position: absolute;
         width: $size;

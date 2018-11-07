@@ -1,7 +1,12 @@
 <section class="comments">
   <a id="comments" class="anchor"></a>
   <header class="section_heading">
-    <h3 class="section_heading-text">Comments</h3>
+    <%= if (length @comments) > 0 do %>
+      <h3 class="section_heading-text">Comments</h3>
+    <%= else %>
+      <h3 class="section_heading-text">No comments yet</h3>
+    <% end %>
+
     <%= if !@current_user do %>
       <p class="section_heading-note"><%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("join", to: person_path(@conn, :join)) %> to comment</p>
     <% end %>

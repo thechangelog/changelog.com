@@ -1,8 +1,8 @@
 .comments {
   border-top: 2px solid $light-grey;
-  margin: $base-spacing auto 15vmax;
-  padding: ($base-spacing * 2) $base-spacing 0;
-  max-width: 760px;
+  margin: 0 auto 15vmax;
+  padding: ($base-spacing * 2) 0 0;
+  max-width: 700px;
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
 }
