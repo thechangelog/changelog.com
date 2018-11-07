@@ -2,13 +2,13 @@
   $horizontal-padding: 20px;
   border-bottom: 1px solid $light-grey;
   margin-top: $base-spacing;
-  padding: 0 $base-spacing ($base-spacing * 2);
+  padding: 0 $horizontal-padding $base-spacing;
   position: relative;
 
   &--sponsor {
     background-color: $highlight;
     margin-top: 0;
-    padding-top: $base-spacing;
+    padding-top: $base-spacing !important;
   }
 
   &:last-of-type { border: none; }
@@ -17,9 +17,8 @@
     border-bottom: 0;
   }
 
-  @include breakpoint(mobile) {
-    padding-left: $horizontal-padding;
-    padding-right: $horizontal-padding;
+  @include breakpoint(desktop) {
+    padding: 0 $base-spacing $base-spacing;
   }
 
   &-header, &-toolbar {

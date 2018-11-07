@@ -1,10 +1,11 @@
 <section class="comments">
+  <hr class="comments-rule">
   <a id="comments" class="anchor"></a>
   <header class="section_heading">
     <%= if (length @comments) > 0 do %>
       <h3 class="section_heading-text">Comments</h3>
     <%= else %>
-      <h3 class="section_heading-text">No comments yet</h3>
+      <h3 class="section_heading-text">No comments</h3>
     <% end %>
 
     <%= if !@current_user do %>
