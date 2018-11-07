@@ -3,7 +3,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
 
   import ChangelogWeb.NewsItemCommentView, only: [transformed_content: 1]
 
-  alias Changelog.NewsItemComment
+  alias Changelog.{NewsItemComment, Notifier}
 
   plug RequireUser, "before creating or previewing" when action in [:create, :preview]
 
@@ -13,7 +13,8 @@ defmodule ChangelogWeb.NewsItemCommentController do
 
     case Repo.insert(changeset) do
       {:ok, comment} ->
-        NewsItemComment.refresh_news_item(comment)
+        Task.start_link(fn -> NewsItemComment.refresh_news_item(comment) end)
+        Task.start_link(fn -> Notifier.notify(comment) end)
 
         conn
         |> put_flash(:success, random_success_message())
@@ -42,7 +43,8 @@ defmodule ChangelogWeb.NewsItemCommentController do
       "You tell 'em 💥",
       "That comment is fresh to death 🕺",
       "The hottest of hot takes 🔥",
-      "Where do you get all those wonderful words? 🤔"
+      "Where do you get all those wonderful words? 🤔",
+      "👏👏👏👏👏"
     ] |> Enum.random()
   end
 end

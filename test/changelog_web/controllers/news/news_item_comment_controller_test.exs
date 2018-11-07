@@ -1,7 +1,9 @@
 defmodule ChangelogWeb.NewsItemCommentControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.{NewsItemComment}
+  import Mock
+
+  alias Changelog.{NewsItemComment, Notifier}
 
   @tag :as_user
   test "previewing a comment", %{conn: conn} do
@@ -27,5 +29,18 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
 
     assert redirected_to(conn) == root_path(conn, :index)
     assert count(NewsItemComment) == count_before
+  end
+
+  @tag :as_inserted_user
+  test "creates comment and notifies", %{conn: conn} do
+    item = insert(:published_news_item)
+
+    with_mock(Notifier, [notify: fn(_) -> true end]) do
+      conn = post(conn, news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id})
+
+      assert redirected_to(conn) == root_path(conn, :index)
+      assert count(NewsItemComment) == 1
+      assert called(Notifier.notify(:_))
+    end
   end
 end

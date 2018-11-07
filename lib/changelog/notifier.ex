@@ -60,7 +60,7 @@ defmodule Changelog.Notifier do
   defp deliver_submitter_email(nil, _item), do: false
   defp deliver_submitter_email(person, item) do
     if person.settings.email_on_submitted_news do
-      Email.submitted_news_published(person, item) |> Mailer.deliver_later
+      Email.submitted_news_published(person, item) |> Mailer.deliver_later()
     end
   end
 end
