@@ -43,7 +43,7 @@ defmodule ChangelogWeb.HomeControllerTest do
   end
 
   @tag :as_inserted_user
-  test "signeed in and opting out of notifications", %{conn: conn} do
+  test "signed in and opting out of notifications", %{conn: conn} do
     person = conn.assigns.current_user
     {:ok, token} = Person.encoded_id(person)
     conn = get(conn, home_path(conn, :opt_out, token, "email_on_submitted_news"))

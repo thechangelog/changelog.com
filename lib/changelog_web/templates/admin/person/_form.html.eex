@@ -122,6 +122,13 @@
       <%= label(f, :email_on_submitted_news, "Email on submitted news") %>
     </div>
   </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(i, :email_on_comment_replies, class: "hidden") %>
+      <%= label(f, :email_on_comment_replies, "Email on comment replies") %>
+    </div>
+  </div>
 <% end %>
 
 <%= if !is_persisted(f.data) do %>
