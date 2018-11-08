@@ -8,10 +8,17 @@ defmodule Changelog.NotifierTest do
   alias ChangelogWeb.Email
 
   describe "notify with news item comment" do
+    setup_with_mocks([
+      {Slack.Client, [], [message: fn(_, _) -> true end]}
+    ]) do
+      :ok
+    end
+
     test "when comment has no parent" do
       comment = insert(:news_item_comment)
       Notifier.notify(comment)
       assert_no_emails_delivered()
+      assert called Slack.Client.message("#news-comments", :_)
     end
 
     test "when comment is a reply and parent author has notifications enabled" do
@@ -19,6 +26,7 @@ defmodule Changelog.NotifierTest do
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
       Notifier.notify(reply)
       assert_delivered_email Email.comment_reply(reply.parent.author, reply)
+      assert called Slack.Client.message("#news-comments", :_)
     end
 
     test "when comment is a reply to own comment" do
@@ -27,6 +35,7 @@ defmodule Changelog.NotifierTest do
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment, author: person)
       Notifier.notify(reply)
       assert_no_emails_delivered()
+      assert called Slack.Client.message("#news-comments", :_)
     end
 
     test "when comment is a reply and parent author has notifications disabled" do
@@ -35,6 +44,7 @@ defmodule Changelog.NotifierTest do
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
       Notifier.notify(reply)
       assert_no_emails_delivered()
+      assert called Slack.Client.message("#news-comments", :_)
     end
   end
 

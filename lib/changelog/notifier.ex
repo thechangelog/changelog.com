@@ -26,6 +26,8 @@ defmodule Changelog.Notifier do
     comment = NewsItemComment.preload_all(comment)
     parent  = NewsItemComment.preload_all(comment.parent)
 
+    deliver_slack_new_comment_message(comment)
+
     if parent && parent.author != comment.author do
       deliver_comment_reply_email(parent.author, comment)
     end
@@ -50,6 +52,11 @@ defmodule Changelog.Notifier do
     for eg <- Enum.filter(episode.episode_guests, &(&1.thanks)) do
       Email.guest_thanks(eg.person, episode) |> Mailer.deliver_later()
     end
+  end
+
+  defp deliver_slack_new_comment_message(comment) do
+    message = Slack.Messages.new_comment(comment)
+    Slack.Client.message("#news-comments", message)
   end
 
   defp deliver_slack_new_episode_message(podcast, url) do
