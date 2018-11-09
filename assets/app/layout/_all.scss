@@ -17,6 +17,10 @@ body {
   padding-top: $header-height--mobile;
   min-height: 100vh;
 
+  @media (prefers-color-scheme: dark) {
+    background-color: $dark-black;
+  }
+
   @include breakpoint(tablet) {
     padding-top: $header-height;
   }

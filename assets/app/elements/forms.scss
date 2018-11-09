@@ -1,5 +1,9 @@
 input {
   outline: none;
+
+  @media (prefers-color-scheme: dark) {
+    background: $light-grey;
+  }
 }
 
 button,

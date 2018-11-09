@@ -7,6 +7,11 @@
   padding: 15px 20px;
   position: relative;
 
+  @media (prefers-color-scheme: dark) {
+    background: $darker-grey;
+    color: $white;
+  }
+
   &-content {
     flex: 1 500px;
     margin: 10px;

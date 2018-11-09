@@ -5,6 +5,11 @@
   border-top: 2px solid $border-color;
   font-family: $code;
   font-size: 14px;
+  @media (prefers-color-scheme: dark) {
+    background: $black;
+    color: $white;
+    border-top: 2px solid rgba($border-color, 0.1);
+  }
 
   body.player-open & {
     padding-bottom: 60px;
@@ -12,6 +17,10 @@
 
   &-primary {
     border-bottom: 1px solid $border-color;
+
+    @media (prefers-color-scheme: dark) {
+      border-bottom: 1px solid rgba($border-color, 0.1);
+    }
 
     &_wrap {
       max-width: $width;
@@ -47,6 +56,13 @@
             &:hover {
               color: #000000;
               text-decoration: underline;
+            }
+
+            @media (prefers-color-scheme: dark) {
+              color: $white;
+              &:hover {
+                color: #FFFFFF;
+              }
             }
           }
         }
@@ -105,6 +121,13 @@
           color: #000000;
           text-decoration: underline;
         }
+
+        @media (prefers-color-scheme: dark) {
+          color: $white;
+          &:hover {
+            color: #FFFFFF;
+          }
+        }
       }
     }
   }
@@ -113,6 +136,10 @@
     border-top: 1px solid $border-color;
     margin: $padding-large auto 0;
     padding: $base-spacing 0 0;
+
+    @media (prefers-color-scheme: dark) {
+      border-top: 1px solid rgba($border-color, 0.1);
+    }
 
     &_wrap {
       justify-content: space-around;
@@ -128,7 +155,13 @@
       margin-bottom: 20px;
       text-align: center;
 
-      a { color: $black; }
+      a {
+        color: $black;
+
+        @media (prefers-color-scheme: dark) {
+          color: $white;
+        }
+      }
 
       p {
         font-size: 12px;
