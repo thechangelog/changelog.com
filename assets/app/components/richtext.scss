@@ -85,7 +85,7 @@
   &--small p { font-size: 1em; }
 
   pre {
-    @include code_snippet();
+    // @include code_snippet();
   }
 
   strong {

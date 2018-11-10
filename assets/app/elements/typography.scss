@@ -37,6 +37,7 @@ h6 {
 .section_heading {
   align-items: top;
   display: flex;
+  flex-wrap: wrap;
   font-family: $code;
   justify-content: space-between;
   margin-bottom: $base-spacing;

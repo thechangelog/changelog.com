@@ -1,10 +1,20 @@
 .comments {
-  border-top: 2px solid $light-grey;
-  margin: $base-spacing auto 15vmax;
-  padding: ($base-spacing * 2) $base-spacing 0;
-  max-width: 760px;
+  $condensedBreakpoint: 1000px;
+  $horizontal-padding: 20px;
+  margin: 0 auto 15vmax;
+  padding: 0 $horizontal-padding;
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
+
+  @include breakpoint($condensedBreakpoint) {
+    padding: 0 30px;
+  }
+
+  &-rule {
+    border: none;
+    border-top: 2px solid $light-grey;
+    margin: 10px 0 40px;
+  }
 }
 
 .comment_form {
@@ -183,7 +193,6 @@
 
   &-footer {
     margin-bottom: 1em;
-    // margin-bottom: $base-spacing;
 
     .comment-actions {
       margin-left: 0;
@@ -281,13 +290,13 @@
 
   pre {
     margin-top: 0;
+    max-height: 30em;
 
     &:before {
       display: none; // hide left line number (?) element
     }
 
     code {
-      overflow-x: auto;
       padding: 1em;
     }
   }

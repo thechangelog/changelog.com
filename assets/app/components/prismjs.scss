@@ -1,0 +1,86 @@
+// prism.js Changelog theme
+
+ code[class*="language-"],
+ pre[class*="language-"] {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: $blue-grey;
+  color: darken($light-grey, 20%);
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: $half-white;
+  opacity: 0.5;
+}
+
+.token.punctuation {
+  color: darken($light-grey, 20%);
+}
+
+.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: $light-grey;
+}
+
+.token.tag,
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: $light-red;
+  opacity: 0.9;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.token.variable,
+.token.inserted {
+  color: $light-blue;
+}
+
+.token.function {
+  color: lighten($yellow, 10%);
+  opacity: 0.9;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: $green;
+}
+
+.token.regex,
+.token.important {
+  color: $light-blue;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.deleted {
+  background-color: #420e09;
+  color: #f8f8f8;
+}
