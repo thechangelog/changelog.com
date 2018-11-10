@@ -1,12 +1,13 @@
 .comments {
+  $condensedBreakpoint: 1000px;
   $horizontal-padding: 20px;
   margin: 0 auto 15vmax;
-  padding: 0 $base-spacing;
+  padding: 0 $horizontal-padding;
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
 
-  @include breakpoint(mobile) {
-    padding: 0 $horizontal-padding;
+  @include breakpoint($condensedBreakpoint) {
+    padding: 0 30px;
   }
 
   &-rule {

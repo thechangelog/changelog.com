@@ -9,7 +9,8 @@
 }
 
 .feed {
-  @include breakpoint(desktop) {
+  $condensedBreakpoint: 1000px;
+  @include breakpoint($condensedBreakpoint) {
     .news_item {
       padding-left: 90px;
       padding-right: 30px;
