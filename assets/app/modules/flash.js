@@ -1,24 +1,27 @@
 import { u } from "umbrellajs";
 
 export default class Flash {
-  constructor(selector) {
-    this.selector = selector;
+  constructor(container) {
+    this.container = u(container);
+    this.attachUI();
+    this.attachEvents();
+    container.flash = this;
   }
 
-  attach() {
-    this.container = u(this.selector);
+  attachUI() {
+    // no-op
+  }
+
+  attachEvents() {
     this.container.handle("click", ".js-flash-close", _ => { this.close(); });
-    this.tid = setTimeout(_ => { this.close(); }, 10*1000);
-  }
-
-  detach() {
-    clearTimeout(this.tid);
-    this.container.children().remove();
-    this.container = null;
   }
 
   close() {
     this.container.addClass("is-closing");
-    setTimeout(_ => { this.container.remove(); }, 1000);
+    setTimeout(_ => { this.remove(); }, 1000);
+  }
+
+  remove() {
+    this.container.remove();
   }
 }

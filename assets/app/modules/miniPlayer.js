@@ -13,6 +13,7 @@ export default class MiniPlayer {
     this.resetAudio();
     this.attachUI();
     this.attachEvents();
+    container.player = this;
   }
 
   attachUI() {

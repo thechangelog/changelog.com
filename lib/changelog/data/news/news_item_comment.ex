@@ -20,7 +20,7 @@ defmodule Changelog.NewsItemComment do
   def insert_changeset(struct, attrs \\ %{}) do
     struct
     |> cast(attrs, ~w(content author_id item_id parent_id))
-    |> validate_required([:content, :item_id])
+    |> validate_required([:content, :author_id, :item_id])
   end
 
   def nested(nil), do: []
@@ -39,6 +39,9 @@ defmodule Changelog.NewsItemComment do
   def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
   def preload_author(comment), do: Repo.preload(comment, :author)
 
+  def preload_children(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :children)
+  def preload_children(comment), do: Repo.preload(comment, :children)
+
   def preload_news_item(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :news_item)
   def preload_news_item(comment), do: Repo.preload(comment, :news_item)
 
@@ -50,6 +53,7 @@ defmodule Changelog.NewsItemComment do
     |> preload_author()
     |> preload_news_item()
     |> preload_parent()
+    |> preload_children()
   end
 
   def refresh_news_item(comment) do

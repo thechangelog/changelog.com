@@ -21,14 +21,73 @@ import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
 import lozad from "lozad";
 
-const csrf = u("[property=csrf]").attr("content");
-const flash = new Flash(".js-flash");
-const lazy = lozad(".lazy");
-const live = new LivePlayer(".js-live");
-const overlay = new Overlay("#overlay");
-const player = new OnsitePlayer("#player");
-
 window.u = u;
+window.App = {
+  csrf: u("[property=csrf]").attr("content"),
+  lazy: lozad(".lazy"),
+  live: new LivePlayer(".js-live"),
+  overlay: new Overlay("#overlay"),
+  player: new OnsitePlayer("#player"),
+
+  attachComments() {
+    u(".js-comment").each(el => {
+      if (el.comment === undefined) new Comment(el);
+    });
+  },
+
+  attachFlash() {
+    u(".js-flash").each(el => {
+      if (el.flash === undefined) new Flash(el);
+    });
+  },
+
+  attachMiniPlayers() {
+    u(".js-mini-player").each(el => {
+      if (el.player === undefined) new MiniPlayer(el);
+    });
+  },
+
+  attachTooltips() {
+    new Tooltip(".has-tooltip");
+  },
+
+  detachFlash() {
+    u(".js-flash").each(el => { el.flash.remove(); });
+  },
+
+  formatTimes() {
+    u("span.time").each(el => {
+      let span = u(el);
+      let anchor = span.parent("a");
+      let date = new Date(span.text());
+      let style = span.data("style");
+      span.text(ts(date, style));
+      (anchor || span).attr("title", ts(date, "timeFirst"));
+      span.removeClass("time");
+    });
+  },
+
+  isExternalLink(a) {
+    let href = a.attr("href");
+    return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
+  },
+
+  deepLink(href) {
+    let linkTime = parseTime(gup("t", (href || location.href), "#"));
+    if (!linkTime) return false;
+
+    if (player.isPlaying()) {
+      player.scrubEnd(linkTime);
+    } else {
+      let playable = u("[data-play]");
+      player.load(playable.attr("href"), playable.data("play"), function() {
+        player.scrubEnd(linkTime);
+      });
+    }
+
+    return true;
+  }
+}
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
@@ -53,7 +112,7 @@ u(document).handle("click", ".js-toggle_element", function(event) {
 
 u(document).handle("click", ".js-account-nav", function(event) {
   const content = u(".js-account-nav-content").html();
-  overlay.html(content).show();
+  App.overlay.html(content).show();
 });
 
 u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
@@ -61,18 +120,18 @@ u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
 });
 
 u(document).on("click", "[data-play]", function(event) {
-  if (player.canPlay()) {
+  if (App.player.canPlay()) {
     event.preventDefault();
 
     let clicked = u(event.target).closest("a, button");
     let audioUrl = clicked.attr("href");
     let detailsUrl = clicked.data("play");
 
-    if (player.currentlyLoaded == detailsUrl) {
-      player.togglePlayPause();
+    if (App.player.currentlyLoaded == detailsUrl) {
+      App.player.togglePlayPause();
     } else {
-      player.pause();
-      player.load(audioUrl, detailsUrl);
+      App.player.pause();
+      App.player.load(audioUrl, detailsUrl);
     }
   }
 });
@@ -109,7 +168,7 @@ const observer = new IntersectionObserver(function(entries) {
     let el = u(entry.target);
     let type = el.data("news-type");
     let id = el.data("news-id");
-    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": csrf}, body: {"ids": id}});
+    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": App.csrf}, body: {"ids": id}});
     observer.unobserve(entry.target);
   });
 });
@@ -126,7 +185,7 @@ u(document).on("mousedown", "[data-news]", function(event) {
 
 // open external links in new window when player is doing its thing
 u(document).on("click", "a[href^=http]", function(event) {
-  if (player.isActive()) {
+  if (App.player.isActive()) {
     let clicked = u(this);
 
     if (isExternalLink(clicked)) {
@@ -163,21 +222,36 @@ u(document).on("click", "a[href^=\\#t]", function(event) {
 u(document).on("submit", "form", function(event) {
   event.preventDefault();
 
-  const form = u(this);
-  const action = form.attr("action");
-  const method = form.attr("method");
-  const referrer = location.href;
+  let form = u(this);
+  let submits = form.find("input[type=submit]");
+  let action = form.attr("action");
+  let method = form.attr("method");
+  let referrer = location.href;
 
   if (method == "get") {
     return Turbolinks.visit(`${action}?${form.serialize()}`);
   }
 
-  const options = {method: method, body: new FormData(form.first()), headers: {"Turbolinks-Referrer": referrer}};
-  const andThen = function(err, resp, req) {
+  let options = {
+    method: method,
+    body: new FormData(form.first()),
+    headers: {"Turbolinks-Referrer": referrer}
+  };
+
+  if (form.data("ajax")) {
+    options.headers["Accept"] = "application/javascript";
+  }
+
+  submits.each(el => { el.setAttribute("disabled", true); });
+
+  let andThen = function(err, resp, req) {
+    submits.each(el => { el.removeAttribute("disabled"); });
+
     if (req.getResponseHeader("content-type").match(/javascript/)) {
       eval(resp);
+      u(document).trigger("ajax:load");
     } else {
-      const snapshot = Turbolinks.Snapshot.wrap(resp);
+      let snapshot = Turbolinks.Snapshot.wrap(resp);
       Turbolinks.controller.cache.put(referrer, snapshot);
       Turbolinks.visit(referrer, {action: "restore"});
     }
@@ -186,63 +260,39 @@ u(document).on("submit", "form", function(event) {
   ajax(action, options, andThen);
 });
 
-function formatTimes() {
-  u("span.time").each(function(el) {
-    let span = u(el);
-    let anchor = span.parent("a");
-    let date = new Date(span.text());
-    let style = span.data("style");
-    span.text(ts(date, style));
-    (anchor || span).attr("title", ts(date, "timeFirst"));
-    span.removeClass("time");
-  });
-}
-
-function isExternalLink(a) {
-  let href = a.attr("href");
-  return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
-}
-
-function deepLink(href) {
-  let linkTime = parseTime(gup("t", (href || location.href), "#"));
-  if (!linkTime) return false;
-
-  if (player.isPlaying()) {
-    player.scrubEnd(linkTime);
-  } else {
-    let playable = u("[data-play]");
-    player.load(playable.attr("href"), playable.data("play"), function() {
-      player.scrubEnd(linkTime);
-    });
-  }
-
-  return true;
-}
-
 window.onhashchange = function() {
-  deepLink();
+  App.deepLink();
 }
 
 u(document).on("turbolinks:before-cache", function() {
   u("body").removeClass("nav-open");
-  overlay.hide();
-  flash.detach();
+  App.overlay.hide();
+  App.detachFlash();
 });
 
 // on page load
 u(document).on("turbolinks:load", function() {
   Prism.highlightAll();
-  lazy.observe();
+  App.lazy.observe();
+  App.player.attach();
+  App.live.check();
   u(".news_item").each(el => { observer.observe(el) });
-  u(".js-mini-player").each(el => { new MiniPlayer(el) });
-  u(".js-comment").each(el => { new Comment(el) });
   autosize(document.querySelectorAll("textarea"));
-  new Tooltip(".has-tooltip");
-  player.attach();
-  flash.attach();
-  live.check();
-  formatTimes();
-  deepLink();
+  App.attachComments();
+  App.attachFlash();
+  App.attachMiniPlayers();
+  App.attachTooltips();
+  App.formatTimes();
+  App.deepLink();
+});
+
+u(document).on("ajax:load", function() {
+  App.attachComments();
+  App.attachFlash();
+  App.attachTooltips();
+  App.formatTimes();
+  App.lazy.observe();
+  autosize(document.querySelectorAll("textarea"));
 });
 
 Turbolinks.start();

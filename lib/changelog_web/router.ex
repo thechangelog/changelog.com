@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "js"]
     plug :fetch_session
     plug Plug.Turbolinks
     plug :fetch_flash

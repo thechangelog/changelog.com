@@ -60,7 +60,7 @@ config :plug_ets_cache,
   ttl_check: 1,
   ttl: 60
 
-config :mime, :types, %{"application/xml" => ["xml"]}
+config :mime, :types, %{"application/javascript" => ["js"], "application/xml" => ["xml"]}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

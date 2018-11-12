@@ -1,6 +1,10 @@
 <%#= invisible wrapper div so JS handles this like the reply forms %>
 <div class="js-comment">
-  <%= form_for @changeset, news_item_comment_path(@conn, :create), [class: "comment_form js-comment-form"], fn(f) -> %>
+  <%= form_for @changeset,
+    news_item_comment_path(@conn, :create),
+    [class: "comment_form js-comment-form", data: [ajax: true]],
+    fn(f) -> %>
+
     <%= hidden_input(f, :item_id, id: false) %>
     <%= textarea(f, :content, id: false, class: "comment_form-write", rows: 1, placeholder: "Your comment...") %>
 

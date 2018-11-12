@@ -1,5 +1,5 @@
 <a id="comment-<%= hashid(@comment) %>" class="anchor"></a>
-<article class="comment js-comment <%= modifier_classes(@item, @comment) %>">
+<article class="comment js-comment <%= modifier_classes(@item, @comment) %>" data-id="<%= hashid(@comment) %>">
   <button class="comment-toggle js-comment-collapse"></button>
   <div class="comment-connector js-comment-collapse"></div>
 

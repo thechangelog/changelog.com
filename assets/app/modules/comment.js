@@ -7,6 +7,7 @@ export default class Comment {
     this.attachUI();
     this.attachEvents();
     this.attachKeyboardShortcuts();
+    container.comment = this;
   }
 
   attachUI() {
@@ -18,6 +19,7 @@ export default class Comment {
     this.replyButton = this.container.children("footer").find(".js-comment-reply");
     this.previewButton = this.replyForm.find(".js-comment-preview");
     this.writeButton = this.replyForm.find(".js-comment-write");
+    this.replies = this.container.children(".comment-replies");
   }
 
   attachEvents() {
@@ -32,7 +34,7 @@ export default class Comment {
       // ctrl+enter or cmd+enter submits form
       if ((event.metaKey || event.ctrlKey) && event.key == "Enter") {
         event.preventDefault();
-        this.replyForm.first().submit();
+        this.replyForm.trigger("submit");
       }
     });
   }
@@ -59,12 +61,36 @@ export default class Comment {
     if (!this.replyForm.length) {
       Turbolinks.visit("/in");
     } else if (this.replyForm.hasClass("is-hidden")) {
-      this.replyForm.removeClass("is-hidden");
-      this.replyTextArea.focus();
-      this.replyButton.text("cancel");
+      this.openReplyForm();
     } else {
-      this.replyForm.addClass("is-hidden");
-      this.replyButton.text("reply");
+      this.closeReplyForm();
     }
+  }
+
+  openReplyForm() {
+    this.replyForm.removeClass("is-hidden");
+    this.replyTextArea.focus();
+    this.replyButton.text("cancel");
+  }
+
+  closeReplyForm() {
+    this.replyForm.addClass("is-hidden");
+    this.replyButton.text("reply");
+  }
+
+  clearReplyForm() {
+    this.replyForm.first().reset();
+  }
+
+  // this is only called on the very first comment form, not replies
+  addComment(content) {
+    this.clearReplyForm();
+    this.container.after(content);
+  }
+
+  addReply(comment) {
+    this.replies.prepend(comment);
+    this.clearReplyForm();
+    this.closeReplyForm();
   }
 }
