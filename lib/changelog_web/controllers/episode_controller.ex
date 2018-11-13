@@ -18,16 +18,12 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.published()
       |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
-
-    item =
-      episode
-      |> Episode.get_news_item()
-      |> Repo.one()
+      |> Episode.load_news_item()
 
     conn
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
-    |> assign(:item, item)
+    |> assign(:item, episode.news_item)
     |> render(:show)
     |> cache_public_response(:infinity)
   end
@@ -35,9 +31,9 @@ defmodule ChangelogWeb.EpisodeController do
   def embed(conn, params = %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published
+      |> Episode.published()
+      |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_all
 
     theme = Map.get(params, "theme", "night")
     source = Map.get(params, "source", "default")

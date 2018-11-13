@@ -11,7 +11,7 @@ defmodule ChangelogWeb.JsonFeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/json")
-    |> render("news.json", items: NewsItem.latest_news_items)
-    |> cache_public_response
+    |> render("news.json", items: NewsItem.latest_news_items())
+    |> cache_public_response()
   end
 end

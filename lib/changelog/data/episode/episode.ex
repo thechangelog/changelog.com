@@ -95,7 +95,10 @@ defmodule Changelog.Episode do
     |> derive_bytes_and_duration
   end
 
-  def get_news_item(episode), do: NewsItem.with_episode(episode)
+  def load_news_item(episode) do
+    item = episode |> NewsItem.with_episode() |> Repo.one()
+    Map.put(episode, :news_item, item)
+  end
 
   def object_id(episode), do: "#{episode.podcast.slug}:#{episode.slug}"
 

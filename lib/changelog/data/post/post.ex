@@ -1,7 +1,7 @@
 defmodule Changelog.Post do
   use Changelog.Data, default_sort: :published_at
 
-  alias Changelog.{Person, PostTopic, Regexp}
+  alias Changelog.{NewsItem, Person, PostTopic, Regexp}
 
   schema "posts" do
     field :title, :string
@@ -60,6 +60,11 @@ defmodule Changelog.Post do
     post
     |> Repo.preload(post_topics: {PostTopic.by_position, :topic})
     |> Repo.preload(:topics)
+  end
+
+  def load_news_item(post) do
+    item = post |> NewsItem.with_post() |> Repo.one()
+    Map.put(post, :news_item, item)
   end
 
   defp validate_published_has_published_at(changeset) do

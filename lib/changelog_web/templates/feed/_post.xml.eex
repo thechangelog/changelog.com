@@ -1,2 +1,4 @@
 <%= render("_post_title.xml", assigns) %>
-<description><![CDATA[<%= md_to_html(@post.body) %>]]></description>
+<description><![CDATA[
+<%= md_to_html(@post.body) %>
+<%= discussion_link(@post) %>]]></description>
