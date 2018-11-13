@@ -1,5 +1,6 @@
-import { u, ajax } from "umbrellajs";
+import autosize from "autosize";
 import Prism from "prismjs";
+import { u, ajax } from "umbrellajs";
 
 export default class Comment {
   constructor(container) {
@@ -54,6 +55,7 @@ export default class Comment {
   }
 
   showWrite() {
+    this.previewArea.html("");
     this.replyForm.removeClass("comment_form--preview");
   }
 
@@ -79,7 +81,9 @@ export default class Comment {
   }
 
   clearReplyForm() {
+    this.showWrite();
     this.replyForm.first().reset();
+    autosize.update(this.replyTextArea);
   }
 
   // this is only called on the very first comment form, not replies
