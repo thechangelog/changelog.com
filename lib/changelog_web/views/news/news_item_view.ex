@@ -24,13 +24,10 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-
-  def comment_path(conn, item) do
-    item_path = news_item_path(conn, :show, slug(item))
-    if item_path === conn.request_path do
-      item_path <> "#comments"
-    else
-      item_path
+  def comment_count_aside(item) do
+    case NewsItem.comment_count(item) do
+      0 -> ""
+      x -> "(#{x})"
     end
   end
 
@@ -38,6 +35,15 @@ defmodule ChangelogWeb.NewsItemView do
     case NewsItem.comment_count(item) do
       0 -> "Comment"
       x -> "Comments (#{x})"
+    end
+  end
+
+  def comment_path(conn, item) do
+    item_path = news_item_path(conn, :show, slug(item))
+    if item_path === conn.request_path do
+      item_path <> "#comments"
+    else
+      item_path
     end
   end
 

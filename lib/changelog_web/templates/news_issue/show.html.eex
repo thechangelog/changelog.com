@@ -63,7 +63,7 @@
                         <tr>
                           <td bgcolor="#ffffff">
                             <div class="editor_note">
-                              <%= @issue.note |> md_to_html |> raw %>
+                              <%= @issue.note |> md_to_html() |> raw() %>
                             </div>
                           </td>
                         </tr>
