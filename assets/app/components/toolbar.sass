@@ -44,6 +44,8 @@
 
     // Some toolbars scroll horizontally on mobile (like a quick swipe scroll)
     &_scroll-wrap
+        // Setting a height here to fix weird hover issue
+        height: 65px
         $width: 540px
 
         @media (min-width: ($smartphone + 50))

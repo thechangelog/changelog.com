@@ -52,3 +52,21 @@
     }
   }
 }
+
+.subnav_description {
+  color: $medium-grey;
+  font-family: $code;
+  font-size: 12px;
+  margin: 1.5em 0 2em 30px;
+  padding: 0 0.5em;
+
+  @include breakpoint(mobile) {
+    margin: -1.5em 0 2em 0px;
+  }
+
+  @include breakpoint(tablet) {
+    font-size: 14px;
+    margin: -1.5em 0 2em 0;
+    padding: 0 1em;
+  }
+}
