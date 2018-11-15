@@ -4,7 +4,7 @@ defmodule Changelog.EpisodeStat do
   alias Changelog.{Episode, Podcast}
 
   schema "episode_stats" do
-    field :date, Timex.Ecto.Date
+    field :date, :date
     field :episode_bytes, :integer
     field :total_bytes, :integer
     field :downloads, :float

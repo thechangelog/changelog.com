@@ -207,7 +207,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
     assert count(NewsQueue) == 1
-    item = NewsItem |> NewsItem.with_episode(e) |> Repo.one
+    item = NewsItem |> NewsItem.with_episode(e) |> Repo.one()
     assert item.headline == e.title
     assert item.published_at == e.published_at
   end

@@ -5,7 +5,6 @@ defmodule Changelog.Data do
     quote do
       use Ecto.Schema
       use Changelog.Arc.Ecto.Schema
-      use Timex.Ecto.Timestamps
 
       import Ecto
       import Ecto.Changeset

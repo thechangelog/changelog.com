@@ -18,8 +18,8 @@ defmodule Changelog.NewsItem do
     field :object_id, :string
 
     field :pinned, :boolean, default: false
-    field :published_at, Timex.Ecto.DateTime
-    field :refreshed_at, Timex.Ecto.DateTime
+    field :published_at, :utc_datetime
+    field :refreshed_at, :utc_datetime
 
     field :impression_count, :integer, default: 0
     field :click_count, :integer, default: 0

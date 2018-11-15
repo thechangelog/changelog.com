@@ -40,7 +40,6 @@ defmodule Changelog.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
-      {:timex_ecto, "~> 3.0"},
       {:scrivener_ecto, "~> 1.0"},
       {:scrivener_html, "~> 1.1"},
       {:cmark, "~> 0.6"},

@@ -31,9 +31,9 @@ defmodule Changelog.Person do
     field :bio, :string
     field :location, :string
     field :auth_token, :string
-    field :auth_token_expires_at, Timex.Ecto.DateTime
-    field :joined_at, Timex.Ecto.DateTime
-    field :signed_in_at, Timex.Ecto.DateTime
+    field :auth_token_expires_at, :utc_datetime
+    field :joined_at, :utc_datetime
+    field :signed_in_at, :utc_datetime
     field :avatar, Files.Avatar.Type
 
     field :admin, :boolean, default: false

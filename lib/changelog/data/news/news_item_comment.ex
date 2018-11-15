@@ -6,8 +6,8 @@ defmodule Changelog.NewsItemComment do
   schema "news_item_comments" do
     field :content, :string
 
-    field :edited_at, Timex.Ecto.DateTime
-    field :deleted_at, Timex.Ecto.DateTime
+    field :edited_at, :utc_datetime
+    field :deleted_at, :utc_datetime
 
     belongs_to :news_item, NewsItem, foreign_key: :item_id
     belongs_to :author, Person
