@@ -45,7 +45,7 @@ defmodule Changelog.Mixfile do
       {:scrivener_html, "~> 1.1"},
       {:cmark, "~> 0.6"},
       {:html_sanitize_ex, "~> 1.1"},
-      {:arc_ecto, "~> 0.10.0"},
+      {:arc_ecto, "~> 0.11.0"},
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
       {:bamboo_smtp, "~> 1.6.0"},
