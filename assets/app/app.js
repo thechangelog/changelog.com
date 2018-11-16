@@ -76,12 +76,12 @@ window.App = {
     let linkTime = parseTime(gup("t", (href || location.href), "#"));
     if (!linkTime) return false;
 
-    if (player.isPlaying()) {
-      player.scrubEnd(linkTime);
+    if (this.player.isPlaying()) {
+      this.player.scrubEnd(linkTime);
     } else {
       let playable = u("[data-play]");
-      player.load(playable.attr("href"), playable.data("play"), function() {
-        player.scrubEnd(linkTime);
+      this.player.load(playable.attr("href"), playable.data("play"), _ => {
+        this.player.scrubEnd(linkTime);
       });
     }
 
@@ -188,7 +188,7 @@ u(document).on("click", "a[href^=http]", function(event) {
   if (App.player.isActive()) {
     let clicked = u(this);
 
-    if (isExternalLink(clicked)) {
+    if (App.isExternalLink(clicked)) {
       event.preventDefault();
       let newWindow = window.open(clicked.attr("href"), "_blank");
       newWindow.opener = null;
@@ -212,7 +212,7 @@ u(document).handle("click", ".js-hide-subscribe-banner", function(event) {
 u(document).on("click", "a[href^=\\#t]", function(event) {
   let href = u(event.target).attr("href");
 
-  if (deepLink(href)) {
+  if (App.deepLink(href)) {
     event.preventDefault();
     history.replaceState({}, document.title, href);
   };
