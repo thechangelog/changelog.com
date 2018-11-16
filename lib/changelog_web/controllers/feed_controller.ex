@@ -12,7 +12,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("news.xml", items: NewsItem.latest_news_items())
-    # |> cache_public_response()
+    |> cache_public_response(:timer.minutes(10))
   end
 
   def news_titles(conn, _params) do
@@ -20,7 +20,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("news_titles.xml", items: NewsItem.latest_news_items())
-    # |> cache_public_response()
+    |> cache_public_response(:timer.minutes(10))
   end
 
   def podcast(conn, %{"slug" => "backstage"}) do
@@ -43,7 +43,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("podcast.xml", podcast: podcast, episodes: episodes)
-    # |> cache_public_response()
+    |> cache_public_response(:timer.minutes(10))
   end
 
   defp log_subscribers(conn, podcast) do
@@ -69,7 +69,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("posts.xml", posts: posts)
-    # |> cache_public_response()
+    |> cache_public_response(:timer.minutes(10))
   end
 
   def sitemap(conn, _params) do
@@ -113,6 +113,6 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:posts, posts)
     |> assign(:topics, topics)
     |> render("sitemap.xml")
-    |> cache_public_response()
+    |> cache_public_response(:timer.minutes(10))
   end
 end
