@@ -43,7 +43,7 @@
     display: flex;
     font-size: 16px; // Prevent iOS from zooming on input elements
     line-height: 1.65em;
-    padding: 1em 1.5em;
+    padding: 1em;
     resize: none !important;
     width: 100%;
 
@@ -58,7 +58,7 @@
 
   &-preview {
     display: none;
-    padding: 1em 1.5em;
+    padding: 1em;
     width: 100%;
 
     & > *:last-child {
@@ -263,7 +263,6 @@
   }
 
   &-replies {
-    margin-left: 26px;
     margin-top: $base-spacing;
 
     @include breakpoint(mobile) {
