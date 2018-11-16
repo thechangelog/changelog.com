@@ -21,7 +21,7 @@ defmodule Changelog.NewsIssue do
 
   def admin_changeset(issue, attrs \\ %{}) do
     issue
-    |> cast(attrs, ~w(slug teaser note published published_at))
+    |> cast(attrs, ~w(slug teaser note published published_at)a)
     |> validate_required([:slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)

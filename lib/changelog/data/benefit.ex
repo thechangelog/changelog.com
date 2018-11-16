@@ -16,7 +16,7 @@ defmodule Changelog.Benefit do
 
   def admin_changeset(benefit, attrs \\ %{}) do
     benefit
-    |> cast(attrs, ~w(offer notes code link_url sponsor_id))
+    |> cast(attrs, ~w(offer notes code link_url sponsor_id)a)
     |> validate_required([:offer, :sponsor_id])
   end
 

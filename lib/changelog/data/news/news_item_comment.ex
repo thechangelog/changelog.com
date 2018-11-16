@@ -19,7 +19,7 @@ defmodule Changelog.NewsItemComment do
 
   def insert_changeset(struct, attrs \\ %{}) do
     struct
-    |> cast(attrs, ~w(content author_id item_id parent_id))
+    |> cast(attrs, ~w(content author_id item_id parent_id)a)
     |> validate_required([:content, :author_id, :item_id])
   end
 

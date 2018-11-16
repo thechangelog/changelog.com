@@ -26,8 +26,8 @@ defmodule Changelog.NewsAd do
 
   def changeset(ad, attrs \\ %{}) do
     ad
-    |> cast(attrs, ~w(url headline story active newsletter delete))
-    |> cast_attachments(attrs, ~w(image))
+    |> cast(attrs, [:url, :headline, :story, :active, :newsletter, :delete])
+    |> cast_attachments(attrs, [:image])
     |> validate_required([:url, :headline])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:sponsorship_id)

@@ -25,7 +25,7 @@ defmodule Changelog.NewsSponsorship do
 
   def admin_changeset(sponsorship, attrs \\ %{}) do
     sponsorship
-    |> cast(attrs, ~w(name weeks sponsor_id))
+    |> cast(attrs, ~w(name weeks sponsor_id)a)
     |> validate_required([:weeks, :sponsor_id])
     |> validate_length(:weeks, min: 1)
     |> validate_beginning_of_weeks

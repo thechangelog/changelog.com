@@ -144,18 +144,18 @@ defmodule Changelog.NewsQueue do
   defp one_chance_in(n), do: Enum.random(1..n) == 1
 
   defp nothing_recent(interval) do
-    Timex.now
+    Timex.now()
     |> Timex.shift(minutes: -interval)
     |> NewsItem.published_since()
-    |> Repo.count
+    |> Repo.count()
     |> Kernel.==(0)
   end
 
   defp no_max(per_day) do
-    Timex.now
+    Timex.now()
     |> Timex.shift(days: -1)
     |> NewsItem.published_since()
-    |> Repo.count
+    |> Repo.count()
     |> Kernel.<(per_day)
   end
 end

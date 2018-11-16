@@ -82,8 +82,10 @@ defmodule Changelog.Episode do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(slug title subtitle published featured highlight subhighlight summary notes published_at recorded_at recorded_live guid))
-    |> cast_attachments(params, ~w(audio_file))
+    |> cast(params, [:slug, :title, :subtitle, :published, :featured,
+                     :highlight, :subhighlight, :summary, :notes, :published_at,
+                     :recorded_at, :recorded_live, :guid])
+    |> cast_attachments(params, [:audio_file])
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> validate_published_has_published_at

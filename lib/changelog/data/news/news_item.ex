@@ -71,11 +71,11 @@ defmodule Changelog.NewsItem do
   def top_ctr_first(query \\ __MODULE__),       do: from(q in query, order_by: fragment("click_count::float / NULLIF(impression_count, 0) desc nulls last"))
   def top_impressed_first(query \\ __MODULE__), do: from(q in query, order_by: [desc: :impression_count])
 
-  def file_changeset(item, attrs \\ %{}), do: cast_attachments(item, attrs, ~w(image), allow_urls: true)
+  def file_changeset(item, attrs \\ %{}), do: cast_attachments(item, attrs, [:image], allow_urls: true)
 
   def insert_changeset(item, attrs \\ %{}) do
     item
-    |> cast(attrs, ~w(status type url headline story pinned published_at author_id logger_id submitter_id object_id source_id))
+    |> cast(attrs, ~w(status type url headline story pinned published_at author_id logger_id submitter_id object_id source_id)a)
     |> validate_required([:type, :url, :headline, :logger_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
     |> foreign_key_constraint(:author_id)
@@ -86,7 +86,7 @@ defmodule Changelog.NewsItem do
 
   def submission_changeset(item, attrs \\ %{}) do
     item
-    |> cast(attrs, ~w(url headline story author_id submitter_id))
+    |> cast(attrs, ~w(url headline story author_id submitter_id)a)
     |> validate_required([:type, :url, :headline, :submitter_id])
     |> validate_format(:url, Regexp.http, message: Regexp.http_message)
   end
@@ -160,7 +160,7 @@ defmodule Changelog.NewsItem do
 
   def decline!(item),   do: item |> change(%{status: :declined}) |> Repo.update!()
   def queue!(item),     do: item |> change(%{status: :queued}) |> Repo.update!()
-  def publish!(item),   do: item |> change(%{status: :published, published_at: Timex.now, refreshed_at: Timex.now}) |> Repo.update!()
+  def publish!(item),   do: item |> change(%{status: :published, published_at: DateTime.truncate(Timex.now(), :second), refreshed_at: DateTime.truncate(Timex.now(), :second)}) |> Repo.update!()
   def unpublish!(item), do: item |> change(%{status: :draft, published_at: nil, refreshed_at: nil}) |> Repo.update!()
 
   def is_audio(item), do: item.type == :audio

@@ -1,5 +1,5 @@
 defmodule Changelog.Repo do
-  use Ecto.Repo, otp_app: :changelog
+  use Ecto.Repo, otp_app: :changelog, adapter: Ecto.Adapters.Postgres
   use Scrivener, page_size: 25
 
   require Ecto.Query

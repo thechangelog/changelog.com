@@ -24,7 +24,7 @@ defmodule Changelog.Post do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(title slug author_id published published_at body tldr))
+    |> cast(params, ~w(title slug author_id published published_at body tldr)a)
     |> validate_required([:title, :slug, :author_id])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)

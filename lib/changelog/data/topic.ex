@@ -29,11 +29,11 @@ defmodule Changelog.Topic do
       where: not(is_nil(i.id)))
   end
 
-  def file_changeset(topic, attrs \\ %{}), do: cast_attachments(topic, attrs, ~w(icon), allow_urls: true)
+  def file_changeset(topic, attrs \\ %{}), do: cast_attachments(topic, attrs, [:icon], allow_urls: true)
 
   def insert_changeset(topic, attrs \\ %{}) do
     topic
-    |> cast(attrs, ~w(name slug description twitter_handle website))
+    |> cast(attrs, ~w(name slug description twitter_handle website)a)
     |> validate_required([:name, :slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
