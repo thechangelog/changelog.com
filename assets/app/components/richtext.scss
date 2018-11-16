@@ -134,14 +134,12 @@
     padding: .15em 0 .15em 1em;
     color: $black;
 
-    @include breakpoint(desktop) {
-      font-size: 1.25em;
-    }
-
     p {
       color: $black;
       max-width: 680px;
     }
+
+    *:last-child { margin-bottom: 0; }
 
     ol, ul {
       margin-top: 0;
