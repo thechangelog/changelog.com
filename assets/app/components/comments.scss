@@ -40,9 +40,9 @@
   &-write {
     background: transparent;
     border: none;
-    display: flex;
+    display: block;
     font-size: 16px; // Prevent iOS from zooming on input elements
-    line-height: 1.65em;
+    line-height: 1.625em;
     padding: 1em;
     resize: none !important;
     width: 100%;
@@ -66,7 +66,7 @@
     }
 
     .comment_form--preview & {
-      display: flex;
+      display: block;
     }
   }
 
