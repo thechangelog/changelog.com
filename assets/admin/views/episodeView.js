@@ -1,7 +1,8 @@
+import ApexCharts from "apexcharts";
+import Clipboard from "clipboard";
 import SearchWidget from "components/searchWidget";
 import CalendarField from "components/calendarField";
 import Modal from "components/modal";
-import Clipboard from "clipboard";
 
 export default class EpisodeView {
   index() {
@@ -38,6 +39,36 @@ export default class EpisodeView {
 
     clipboard.on("error", function(e) {
       console.log(e);
+    });
+
+    $(".chart").each(function(index) {
+      let data = $(this).data("chart");
+
+      let options = {
+        chart: {
+          type: "line",
+          height: 400
+        },
+        title: {
+          text: data.title
+        },
+        series: data.series,
+        xaxis: {
+          type: "datetime",
+          categories: data.categories
+        },
+        yaxis: {
+           decimalsInFloat: 0,
+           labels: {
+            formatter: function(val) {
+              return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+             }
+           }
+        }
+      }
+
+      let chart = new ApexCharts(this, options);
+      chart.render();
     });
   }
 

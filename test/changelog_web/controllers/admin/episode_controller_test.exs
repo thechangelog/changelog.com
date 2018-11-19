@@ -35,14 +35,14 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    insert(:episode_stat, episode: e, date: ~D[2016-01-01], downloads: 1.4)
-    insert(:episode_stat, episode: e, date: ~D[2016-01-02], uniques: 345)
+    insert(:episode_stat, episode: e, date: ~D[2016-01-01], downloads: 1.6, uniques: 1)
+    insert(:episode_stat, episode: e, date: ~D[2016-01-02], downloads: 320, uniques: 345)
 
     conn = get(conn, admin_podcast_episode_path(conn, :show, p.slug, e.slug))
 
     assert conn.status == 200
     assert String.contains?(conn.resp_body, e.slug)
-    assert String.contains?(conn.resp_body, "1.4")
+    assert String.contains?(conn.resp_body, "2")
     assert String.contains?(conn.resp_body, "345")
   end
 
