@@ -94,6 +94,7 @@ export default class Comment {
 
   addReply(comment) {
     this.replies.prepend(comment);
+    this.container.addClass("comment--has_replies");
     this.clearReplyForm();
     this.closeReplyForm();
   }
