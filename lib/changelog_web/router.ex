@@ -143,7 +143,7 @@ defmodule ChangelogWeb.Router do
 
     get "/", NewsItemController, :index, as: :root
     get "/news/submit", NewsItemController, :new
-    get "/news/fresh", NewsItemController, :fresh
+    get "/news/active", NewsItemController, :active
     get "/news/top", NewsItemController, :top
     get "/news/top/week", NewsItemController, :top_week
     get "/news/top/month", NewsItemController, :top_month

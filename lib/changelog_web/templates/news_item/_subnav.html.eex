@@ -1,13 +1,16 @@
 <nav class="subnav">
   <ul class="subnav-list">
-    <li class="subnav-list-item">
-      <%= link("New", to: "/", title: "Top developer news this week") %>
+    <li class="subnav-list-item <%= active_class(@conn, ["news_item-index"]) %>">
+      <%= link("Frontpage", to: "/", title: "Recent news") %>
     </li>
-    <li class="subnav-list-item">
-      <%= link("Active", to: news_item_path(@conn, :fresh), title: "Top developer news this week") %>
+    <li class="subnav-list-item <%= active_class(@conn, [~r/\Anews_item-active\z/, "active"]) %>">
+      <%= link("Active", to: news_item_path(@conn, :active), title: "News with recent comments") %>
     </li>
     <li class="subnav-list-item <%= active_class(@conn, [~r/\Anews_item-top\z/, "news_item-top_week"]) %>">
       <%= link("Top", to: news_item_path(@conn, :top), title: "Top developer news this week") %>
     </li>
   </ul>
 </nav>
+<%= if sort_explanation(@conn) do %>
+  <p class="subnav_description"><%= sort_explanation(@conn) %></p>
+<% end %>
