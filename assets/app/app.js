@@ -32,6 +32,7 @@ window.App = {
   attachComments() {
     u(".js-comment").each(el => {
       if (el.comment === undefined) new Comment(el);
+      el.comment.detectPermalink();
     });
   },
 

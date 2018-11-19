@@ -5,6 +5,7 @@ import { u, ajax } from "umbrellajs";
 export default class Comment {
   constructor(container) {
     this.container = u(container);
+    this.id = this.container.data("id");
     this.attachUI();
     this.attachEvents();
     this.attachKeyboardShortcuts();
@@ -38,6 +39,14 @@ export default class Comment {
         this.replyForm.trigger("submit");
       }
     });
+  }
+
+  detectPermalink() {
+    if (location.hash.match(this.id)) {
+      this.container.addClass("is-permalink");
+    } else {
+      this.container.removeClass("is-permalink");
+    }
   }
 
   showPreview() {
