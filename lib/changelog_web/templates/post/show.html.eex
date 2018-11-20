@@ -1,47 +1,20 @@
-<article class="article">
-  <header class="post_header">
-    <div class="post_header-wrap">
-      <p class="post_header-date">
-        <time pubdate datetime="<%= @post.published_at %>"><%= TimeView.pretty_date(@post.published_at) %></time>
-        <%= admin_edit_link(@conn, @current_user, @post) %>
+<div class="page_news_item page_news_item--post">
+  <article class="news_item">
+    <header class="news_item-header">
+      <p class="news_item-source">
+        <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external", class: "news_item-source-image" do %>
+          <%= maybe_lazy_image(@conn, PersonView.avatar_url(@post.author), @post.author.name) %>
+        <% end %>
+        <%= link("changelog.com/blog", to: "/blog", title: "") %>
       </p>
-      <h1 class="post_header-title"><%= @post.title %></h1>
-
-      <div class="post_header-author">
-        <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external" do %>
-          <%= lazy_image(PersonView.avatar_url(@post.author), @post.author.name, width: 30, height: 30) %>
-        <% end %>
-        <span><%= link @post.author.name, to: PersonView.external_url(@post.author) %>
-          <!-- &ndash; Todo: Add author title -->
-        </span>
-      </div>
+      <h2 class="news_item-title"><%= @post.title %></h2>
+    </header>
+    <%#= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
+    <div class="news_item-content richtext">
+      <%= @post.body |> md_to_html |> raw %>
     </div>
-  </header>
+  </article>
 
-  <a id="feed" class="anchor"></a>
-  <div class="feed">
-    <%= render(SharedView, "_signup_banner.html", assigns) %>
-  </div>
-
-  <div class="richtext">
-    <%= @post.body |> md_to_html |> raw %>
-  </div>
-
-  <footer class="post_footer">
-    <div class="post_footer-tags">
-      <ul class="tags">
-        <%= if Enum.any?(@post.topics) do %>
-          <%= for topic <- @post.topics do %>
-            <li class="tags-item">
-              <%= link topic.name, to: topic_path(@conn, :show, topic.slug), title: "View Topic" %>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-
-    <%= if @post.author.bio do %>
-      <%= render("_author_bio.html", person: @post.author) %>
-    <% end %>
-  </footer>
-</article>
+  <%= render(SharedView, "_signup_banner.html", assigns) %>
+  <%#= render("_comments.html", assigns) %>
+</div>

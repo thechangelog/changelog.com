@@ -367,3 +367,11 @@
     @include video_container();
   }
 }
+
+.page_news_item {
+  &--post {
+    .news_item-title {
+      font-size: 2em;
+    }
+  }
+}
