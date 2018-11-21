@@ -7,13 +7,18 @@ defmodule ChangelogWeb.PostController do
 
   def index(conn, params) do
     page =
-      NewsItem.published
+      NewsItem.published()
       |> NewsItem.with_object_prefix("post")
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 15))
 
-    render(conn, :index, items: page.entries, page: page)
+    items = Enum.map(page.entries, &NewsItem.load_object/1)
+
+    conn
+    |> assign(:page, page)
+    |> assign(:items, items)
+    |> render(:index)
   end
 
   def show(conn, %{"id" => slug}) do

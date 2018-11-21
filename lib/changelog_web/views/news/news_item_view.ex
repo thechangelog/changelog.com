@@ -16,14 +16,6 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def comment_count(item) do
-    case NewsItem.comment_count(item) do
-      0 -> "comment"
-      1 -> "1 comment"
-      x -> "#{x} comments"
-    end
-  end
-
   def comment_count_aside(item) do
     case NewsItem.comment_count(item) do
       0 -> ""
@@ -31,17 +23,19 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def comment_count_trailing(item) do
-    case NewsItem.comment_count(item) do
-      0 -> "Comment"
-      x -> "Comments (#{x})"
-    end
+  def discuss_with_count(item) do
+    ["discuss", comment_count_aside(item)]
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.join(" ")
   end
 
-  def comment_path(conn, item) do
+  def discussion_path(_conn, item = %{type: :link, object: post}) when is_map(post) do
+     dev_relative("#{item.url}#discussion")
+  end
+  def discussion_path(conn, item = %NewsItem{}) do
     item_path = news_item_path(conn, :show, slug(item))
     if item_path === conn.request_path do
-      item_path <> "#comments"
+      "#discussion"
     else
       item_path
     end

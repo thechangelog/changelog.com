@@ -63,7 +63,12 @@ defmodule Changelog.Post do
   end
 
   def load_news_item(post) do
-    item = post |> NewsItem.with_post() |> Repo.one()
+    item =
+      post
+      |> NewsItem.with_post()
+      |> Repo.one()
+      |> NewsItem.load_object(post)
+
     Map.put(post, :news_item, item)
   end
 
