@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{NewsSponsorship, Sponsor}
+  alias Changelog.{ListKit, NewsSponsorship, Sponsor}
   alias ChangelogWeb.{Endpoint, TimeView}
   alias ChangelogWeb.Admin.{NewsAdView}
 
@@ -55,8 +55,6 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   end
 
   def sponsor_and_campaign_name(sponsorship) do
-    [sponsorship.sponsor.name, sponsorship.name]
-    |> Enum.reject(&is_nil/1)
-    |> Enum.join(" – ")
+    ListKit.compact_join([sponsorship.sponsor.name, sponsorship.name], " – ")
   end
 end

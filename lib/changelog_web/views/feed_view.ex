@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, NewsItem, Post}
+  alias Changelog.{Episode, ListKit, NewsItem, Post}
   alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView,
                       PodcastView, PostView, TimeView}
 
@@ -22,8 +22,7 @@ defmodule ChangelogWeb.FeedView do
     prefix = episode.title
     suffix =
       [episode.podcast.name, EpisodeView.number_with_pound(episode)]
-      |> Enum.reject(&is_nil/1)
-      |> Enum.join(" ")
+      |> ListKit.compact_join()
 
     "#{prefix} (#{suffix})"
   end

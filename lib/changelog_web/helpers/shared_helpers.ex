@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Helpers.SharedHelpers do
   use Phoenix.HTML
 
-  alias Changelog.Regexp
+  alias Changelog.{ListKit, Regexp}
   alias Phoenix.{Controller, Naming}
 
   @doc """
@@ -49,7 +49,14 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def current_path(conn), do: Controller.current_path(conn)
   def current_path(conn, params), do: Controller.current_path(conn, params)
 
-  def dev_relative(url), do: if Mix.env == :dev, do: URI.parse(url).path, else: url
+  def dev_relative(url) do
+    if Mix.env == :dev do
+      parsed = URI.parse(url)
+      [parsed.path, parsed.fragment] |> ListKit.compact_join("#")
+    else
+      url
+    end
+  end
 
   def domain_name(url) do
     url

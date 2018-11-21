@@ -44,8 +44,8 @@ defmodule Changelog.Post do
 
   def preload_all(post) do
     post
-    |> preload_author
-    |> preload_topics
+    |> preload_author()
+    |> preload_topics()
   end
 
   def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
@@ -63,7 +63,12 @@ defmodule Changelog.Post do
   end
 
   def load_news_item(post) do
-    item = post |> NewsItem.with_post() |> Repo.one()
+    item =
+      post
+      |> NewsItem.with_post()
+      |> Repo.one()
+      |> NewsItem.load_object(post)
+
     Map.put(post, :news_item, item)
   end
 

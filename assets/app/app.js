@@ -277,7 +277,7 @@ u(document).on("turbolinks:load", function() {
   App.lazy.observe();
   App.player.attach();
   App.live.check();
-  u(".news_item").each(el => { observer.observe(el) });
+  u(".js-track-news").each(el => { observer.observe(el) });
   autosize(document.querySelectorAll("textarea"));
   App.attachComments();
   App.attachFlash();

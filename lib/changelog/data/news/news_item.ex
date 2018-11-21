@@ -103,8 +103,11 @@ defmodule Changelog.NewsItem do
       _else -> load_post_object(item.object_id)
     end
 
-    Map.put(item, :object, object)
+    load_object(item, object)
   end
+
+  def load_object(nil, _object), do: nil
+  def load_object(item, object), do: Map.put(item, :object, object)
 
   defp load_episode_object(object_id) when is_nil(object_id), do: nil
   defp load_episode_object(object_id) do

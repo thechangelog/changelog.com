@@ -9,16 +9,16 @@
   li {
     font-size: 1em;
     line-height: 1.5em;
-    margin-bottom: .75em;
-    @include breakpoint(mobile) { font-size: 1.125em; }
+    margin-bottom: 0;
 
     p {
       font-size: 1em !important;
     }
   }
 
-  > ul, ol {
-    font-size: 1em;
+  // Nested lists
+  ol,
+  ul {
     margin: 0;
   }
 
@@ -56,6 +56,7 @@
 
     li {
       padding-left: 8px;
+      margin-bottom: 0;
     }
   }
 }

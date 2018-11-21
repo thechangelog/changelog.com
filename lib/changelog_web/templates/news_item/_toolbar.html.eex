@@ -9,7 +9,7 @@
     </span>
 
     <span class="news_item-toolbar-meta-item">
-      <%= link(comment_count(@item), to: comment_path(@conn, @item)) %>
+      <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
     </span>
 
   <%= if Enum.any?(@item.topics) do %>
