@@ -9,12 +9,12 @@
       </p>
       <h2 class="news_item-title"><%= @post.title %></h2>
     </header>
-    <%#= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
+    <%= if @item, do: render(NewsItemView, "_toolbar.html", Map.put(assigns, :style, "date")) %>
     <div class="news_item-content richtext">
-      <%= @post.body |> md_to_html |> raw %>
+      <%= @post.body |> md_to_html() |> raw() %>
     </div>
   </article>
 
   <%= render(SharedView, "_signup_banner.html", assigns) %>
-  <%#= render("_comments.html", assigns) %>
+  <%= if @item, do: render(NewsItemView, "_comments.html", assigns) %>
 </div>

@@ -44,8 +44,8 @@ defmodule Changelog.Post do
 
   def preload_all(post) do
     post
-    |> preload_author
-    |> preload_topics
+    |> preload_author()
+    |> preload_topics()
   end
 
   def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
