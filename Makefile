@@ -97,17 +97,15 @@ c: contrib
 .PHONY: proxy
 proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
 	@cd nginx && export BUILD_VERSION=$$(date -u +'%Y-%m-%d') ; \
-	$(DOCKER) build --tag thechangelog/proxy:$$BUILD_VERSION . && \
+	$(DOCKER) build --tag thechangelog/proxy:$$BUILD_VERSION --tag thechangelog/proxy:latest . && \
 	$(DOCKER) push thechangelog/proxy:$$BUILD_VERSION && \
-	$(DOCKER) tag thechangelog/proxy:$$BUILD_VERSION thechangelog/proxy:latest && \
 	$(DOCKER) push thechangelog/proxy:latest
 
 .PHONY: runtime
 runtime: $(DOCKER) ## Builds & publishes changelog.com runtime as a Docker image
 	@BUILD_VERSION=$$(date -u +'%Y-%m-%d.%H%M%S') ; \
-	$(DOCKER) build --tag thechangelog/runtime:$$BUILD_VERSION --file Dockerfile.runtime . && \
+	$(DOCKER) build --tag thechangelog/runtime:$$BUILD_VERSION --tag thechangelog/runtime:latest --file Dockerfile.runtime . && \
 	$(DOCKER) push thechangelog/runtime:$$BUILD_VERSION && \
-	$(DOCKER) tag thechangelog/runtime:$$BUILD_VERSION thechangelog/runtime:latest && \
 	$(DOCKER) push thechangelog/runtime:latest
 
 .PHONY: test
