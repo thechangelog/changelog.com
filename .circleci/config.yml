@@ -1,36 +1,109 @@
 ---
 version: 2
 jobs:
-  build:
-    parallelism: 1
+  deps:
+    working_directory: &dir /app
     docker:
-      - image: thechangelog/runtime
-        environment:
-          MIX_ENV: test
+      - image: &runtime thechangelog/runtime
+    steps:
+      - checkout
+      - restore_cache: &deps_cache
+          name: Restore cached deps
+          key: &deps_key deps-{{ checksum "mix.lock" }}
+      - run:
+          name: Update deps
+          command: mix deps.get
+      - restore_cache: &build_cache
+          name: Restore cached build
+          key: &build_key build-{{ checksum "mix.lock" }}
+      - run:
+          name: Build test deps
+          command: |
+            export MIX_ENV=test
+            mix deps.compile
+      - run:
+          name: Build prod deps
+          command: |
+            export MIX_ENV=prod
+            mix deps.compile
+      - save_cache:
+          name: Cache build
+          key: *build_key
+          paths:
+            - /app/_build
+      - save_cache:
+          name: Cache deps
+          key: *deps_key
+          paths:
+            - /app/deps
+      - restore_cache: &node_modules_cache
+          name: Restore cached node modules
+          key: &node_modules_key node_modules-{{ checksum "assets/yarn.lock" }}
+      - run:
+          name: Update node modules
+          command: cd assets && yarn install --frozen-lockfile
+      - save_cache:
+          name: Cache node modules
+          key: *node_modules_key
+          paths:
+            - /app/assets/node_modules
+
+  test:
+    working_directory: *dir
+    docker:
+      - image: *runtime
       - image: circleci/postgres:9.6
         environment:
           POSTGRES_USER: "postgres"
           POSTGRES_DB: changelog_test
           POSTGRES_PASSWORD: "postgres"
-
-    working_directory: ~/workspace
-
     steps:
       - checkout
-      - run:
-          name: Install hex locally
-          command: mix local.hex --force
-      - run:
-          name: Install rebar locally
-          command:  mix local.rebar --force
-      - run:
-          name: Get all dependencies & compile
-          command: mix do deps.get, compile
+      - restore_cache: *deps_cache
+      - restore_cache: *build_cache
       - run:
           name: Wait for PostgreSQL
           command: timeout 60 bash -c "while sleep 1; do nc -zv 127.0.0.1 5432 && break; done"
       - run:
           name: Run tests
-          command: mix test
-      - store_test_results:
-          path: _build/test/lib/changelog
+          command: |
+            export MIX_ENV=test
+            mix test
+
+  assets:
+    working_directory: *dir
+    docker:
+      - image: *runtime
+    steps:
+      - checkout
+      - restore_cache: *deps_cache
+      - restore_cache: *build_cache
+      - restore_cache: *node_modules_cache
+      - restore_cache: &assets_cache
+          name: Restore cached static assets
+          key: &assets_key assets-{{ .Revision }}
+      - run:
+          name: Compile static assets
+          command: cd assets && yarn run compile
+      - run:
+          name: Digest static assets
+          command: |
+            export MIX_ENV=prod
+            mix phx.digest
+      - save_cache:
+          name: Cache static assets
+          key: *assets_key
+          paths:
+            - /app/priv/static
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deps
+      - test:
+          requires:
+            - deps
+      - assets:
+          requires:
+            - deps
