@@ -5,9 +5,6 @@
     <div class="news_item-content richtext">
       <%= @item.story |> md_to_html() |> raw() %>
       <%= video_embed(@item) %>
-      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        Source: <%= external_link(@item.url, to: @item.url, data: [news: true]) %>
-      </p>
     </div>
     <%= image_link(@item) %>
   </article>
