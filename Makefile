@@ -180,9 +180,6 @@ rollbar: $(LPASS)
 .PHONY: buffer
 buffer: $(LPASS)
 	@echo "export BUFFER_TOKEN=$$($(LPASS) show --notes 4791620911166920938)"
-.PHONY: codecov
-codecov: $(LPASS)
-	@echo "export CODECOV_TOKEN=$$($(LPASS) show --notes 2203313003035524967)"
 .PHONY: coveralls
 coveralls: $(LPASS)
 	@echo "export COVERALLS_REPO_TOKEN=$$($(LPASS) show --notes 8654919576068551356)"
@@ -191,7 +188,7 @@ algolia: $(LPASS)
 	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
 	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes 1668162557359149736)"
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (es)
+env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## List secrets stored in LastPass (es)
 .PHONY: eps
 es: env-secrets
 
