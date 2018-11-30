@@ -194,10 +194,10 @@ coveralls: $(LPASS)
 algolia: $(LPASS)
 	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
 	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes 1668162557359149736)"
-.PHONY: list-lp-secrets
-list-lp-secrets: postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (lps)
-.PHONY: lps
-lps: list-lp-secrets
+.PHONY: env-secrets
+env-secrets: postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (es)
+.PHONY: eps
+es: env-secrets
 
 .PHONY: add-secret
 add-secret: $(LPASS) ## Add secret to origin (as)
