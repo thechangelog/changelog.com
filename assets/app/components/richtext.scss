@@ -134,11 +134,6 @@
   img {
     height: auto;
     width: 100%;
-
-    @media (min-width: $desktop) {
-      margin: $padding-large -10%;
-      width: 120%;
-    }
   }
 
   // borders for images in posts
