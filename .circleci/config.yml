@@ -96,9 +96,28 @@ jobs:
           paths:
             - /app/priv/static
 
+  publish:
+    working_directory: *dir
+    docker:
+      - image: docker:18.06.0-ce
+    steps:
+      - checkout
+      - restore_cache: *deps_cache
+      - restore_cache: *build_cache
+      - restore_cache: *assets_cache
+      - setup_remote_docker:
+          version: 18.06.0-ce
+      - run:
+          name: Build and publish Docker image
+          command: |
+            docker build --tag thechangelog/changelog.com:$CIRCLE_SHA1 --tag thechangelog/changelog.com:latest --file Dockerfile.production .
+            docker login --username $DOCKER_USER --password $DOCKER_PASS
+            docker push thechangelog/changelog.com:$CIRCLE_SHA1
+            docker push thechangelog/changelog.com:latest
+
 workflows:
   version: 2
-  deploy:
+  build:
     jobs:
       - deps
       - test:
@@ -107,3 +126,10 @@ workflows:
       - assets:
           requires:
             - deps
+      - publish:
+          requires:
+            - test
+            - assets
+          filters:
+            branches:
+              only: master

@@ -29,6 +29,8 @@ export LANG := en_US.UTF-8
 
 ### DEPS ###
 #
+CURL := /usr/bin/curl
+
 ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
 
@@ -65,6 +67,9 @@ JQ := /usr/bin/jq
 $(JQ):
 	$(error $(RED)Please install $(BOLD)jq$(NORMAL))
 endif
+
+$(CURL):
+	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
@@ -210,3 +215,13 @@ secrets: $(LPASS) ## List secrets at origin (s)
 	@$(SECRETS)
 .PHONY: s
 s: secrets
+
+.PHONY: setup-ci-secrets
+setup-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## Setup CircleCI secrets (scs)
+	@DOCKER_CREDENTIALS=$$($(LPASS) show --json 2219952586317097429) && \
+	DOCKER_USER="$$($(JQ) --compact-output '.[] | {name: "DOCKER_USER", value: .username}' <<< $$DOCKER_CREDENTIALS)" && \
+	DOCKER_PASS="$$($(JQ) --compact-output '.[] | {name: "DOCKER_PASS", value: .password}' <<< $$DOCKER_CREDENTIALS)" && \
+	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_USER" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" && \
+	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_PASS" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)"
+.PHONY: scs
+scs: setup-ci-secrets

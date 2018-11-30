@@ -10,7 +10,9 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
   app:
-    build: .
+    build:
+      context: ./
+      dockerfile: Dockerfile.development
     command: mix do ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
