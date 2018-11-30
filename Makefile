@@ -170,10 +170,6 @@ twitter: $(LPASS)
 app: $(LPASS)
 	@echo "export SECRET_KEY_BASE=$$($(LPASS) show --notes 7272253808960291967)" && \
 	echo "export SIGNING_SALT=$$($(LPASS) show --notes 8954230056631744101)"
-.PHONY: dns
-dns: $(LPASS)
-	@echo "export DNSIMPLE_EMAIL=$$($(LPASS) show --notes 4657841044703321334)" && \
-	echo "export DNSIMPLE_API_TOKEN=$$($(LPASS) show --notes 8003458400976532679)"
 .PHONY: slack
 slack: $(LPASS)
 	@echo "export SLACK_INVITE_API_TOKEN=$$($(LPASS) show --notes 3107315517561229870)" && \
@@ -195,7 +191,7 @@ algolia: $(LPASS)
 	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
 	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes 1668162557359149736)"
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (es)
+env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (es)
 .PHONY: eps
 es: env-secrets
 
