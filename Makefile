@@ -29,8 +29,6 @@ export LANG := en_US.UTF-8
 
 ### DEPS ###
 #
-CURL := /usr/bin/curl
-
 ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
 
@@ -62,9 +60,6 @@ $(DOCKER):
 COMPOSE := $(DOCKER)-compose
 $(COMPOSE):
 	$(error $(RED)Please install $(BOLD)docker-compose$(NORMAL))
-
-$(CURL):
-	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
 JQ := /usr/bin/jq
 $(JQ):
@@ -147,12 +142,6 @@ ifndef CIRCLE_TOKEN
 	exit 1
 endif
 
-.PHONY: list-ci-secrets
-list-ci-secrets: circle_token $(CURL) ## List secrets stored in CircleCI (cis)
-	@$(CURL) --silent --fail "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" | $(JQ) "."
-.PHONY: cis
-cis: list-ci-secrets
-
 .PHONY: sync-secrets
 sync-secrets: $(LPASS)
 	@$(LPASS) sync
@@ -209,17 +198,6 @@ algolia: $(LPASS)
 list-lp-secrets: postgres campaignmonitor github aws twitter app dns slack rollbar buffer codecov coveralls algolia ## List secrets stored in LastPass (lps)
 .PHONY: lps
 lps: list-lp-secrets
-
-.PHONY: mirror-secrets
-mirror-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## Mirror all LastPass secrets into CircleCI (mis)
-	@$(SECRETS) | \
-	  awk '! /secrets\/ / { system("$(LPASS) show --json " $$1) }' | \
-	  $(JQ) --compact-output '.[] | {name: .name, value: .note}' | while read -r envvar; \
-	  do \
-	  $(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d $$envvar "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)"; \
-	  done
-.PHONY: mis
-mis: mirror-secrets
 
 .PHONY: add-secret
 add-secret: $(LPASS) ## Add secret to origin (as)
