@@ -5,7 +5,7 @@
         <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external", class: "news_item-source-image" do %>
           <%= maybe_lazy_image(@conn, PersonView.avatar_url(@post.author), @post.author.name) %>
         <% end %>
-        <%= link("changelog.com/blog", to: "/blog", title: "") %>
+        <%= link("changelog.com/posts", to: "/posts", title: "") %>
       </p>
       <h2 class="news_item-title"><%= @post.title %></h2>
     </header>
