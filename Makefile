@@ -80,8 +80,10 @@ SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 .DEFAULT_GOAL := help
 
 .PHONY: build
-build: $(COMPOSE) ## Re-build changelog.com app container
+build: $(COMPOSE) ## Re-build changelog.com app container (b)
 	@$(COMPOSE) build
+.PHONY: b
+b: build
 
 .PHONY: help
 help:
@@ -112,7 +114,9 @@ legacy-assets: $(DOCKER)
 	$(DOCKER) push thechangelog/legacy_assets
 
 .PHONY: proxy
-proxy: build-proxy publish-proxy ## Builds & publishes thechangelog/proxy Docker image
+proxy: build-proxy publish-proxy ## Builds & publishes thechangelog/proxy Docker image (p)
+.PHONY: p
+p: proxy
 
 .PHONY: build-proxy
 build-proxy: $(DOCKER)
@@ -125,7 +129,9 @@ publish-proxy: $(DOCKER)
 	$(DOCKER) push thechangelog/proxy:latest
 
 .PHONY: runtime
-runtime: build-runtime publish-runtime ## Builds & publishes thechangelog/runtime Docker image
+runtime: build-runtime publish-runtime ## Builds & publishes thechangelog/runtime Docker image (r)
+.PHONY: r
+r: runtime
 
 .PHONY: build-runtime
 build-runtime: $(DOCKER)
@@ -137,8 +143,10 @@ publish-runtime: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:latest
 
 .PHONY: test
-test: $(COMPOSE) ## Runs tests as they run on CircleCI
+test: $(COMPOSE) ## Runs tests as they run on CircleCI (t)
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
+.PHONY: t
+t: test
 
 .PHONY: md
 md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
