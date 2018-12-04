@@ -96,6 +96,13 @@ contrib: $(COMPOSE) ## Contribute to changelog.com by running a local copy (c)
 .PHONY: c
 c: contrib
 
+.PHONY: clean-docker
+clean-docker: $(DOCKER) ## Cleans all Changelog artefacts from Docker (cd)
+	@$(DOCKER) volume ls | awk '/changelog/ { system("$(DOCKER) volume rm " $$2) }' ; \
+	$(DOCKER) images | awk '/changelog/ { system("$(DOCKER) image rm " $$1 ":" $$2) }'
+.PHONY: cd
+cd: clean-docker
+
 .PHONY: legacy-assets
 legacy-assets: $(DOCKER)
 	@echo "$(YELLOW)This is a secret target that is only meant to be executed if legacy assets are present locally$(NORMAL)" && \
