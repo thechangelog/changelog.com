@@ -27,6 +27,8 @@ endif
 export LC_ALL := en_US.UTF-8
 export LANG := en_US.UTF-8
 
+export BUILD_VERSION ?= $(shell date -u +'%Y-%m-%d.%H%M%S')
+
 ### DEPS ###
 #
 CURL := /usr/bin/curl
@@ -103,17 +105,28 @@ legacy-assets: $(DOCKER)
 	$(DOCKER) push thechangelog/legacy_assets
 
 .PHONY: proxy
-proxy: $(DOCKER) ## Builds & publishes thechangelog/proxy image
-	@cd nginx && export BUILD_VERSION=$$(date -u +'%Y-%m-%d') ; \
-	$(DOCKER) build --tag thechangelog/proxy:$$BUILD_VERSION --tag thechangelog/proxy:latest . && \
-	$(DOCKER) push thechangelog/proxy:$$BUILD_VERSION && \
+proxy: build-proxy publish-proxy ## Builds & publishes thechangelog/proxy Docker image
+
+.PHONY: build-proxy
+build-proxy: $(DOCKER)
+	@cd nginx && \
+	$(DOCKER) build --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
+
+.PHONY: publish-proxy
+publish-proxy: $(DOCKER)
+	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/proxy:latest
 
 .PHONY: runtime
-runtime: $(DOCKER) ## Builds & publishes changelog.com runtime as a Docker image
-	@BUILD_VERSION=$$(date -u +'%Y-%m-%d.%H%M%S') ; \
-	$(DOCKER) build --tag thechangelog/runtime:$$BUILD_VERSION --tag thechangelog/runtime:latest --file Dockerfile.runtime . && \
-	$(DOCKER) push thechangelog/runtime:$$BUILD_VERSION && \
+runtime: build-runtime publish-runtime ## Builds & publishes thechangelog/runtime Docker image
+
+.PHONY: build-runtime
+build-runtime: $(DOCKER)
+	@$(DOCKER) build --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file Dockerfile.runtime .
+
+.PHONY: publish-runtime
+publish-runtime: $(DOCKER)
+	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
 .PHONY: test
