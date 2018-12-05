@@ -3,11 +3,17 @@
 
 Your submission[1] got published!
 
-If this post resonates with our readers, it'll also be featured in Changelog Weekly[2]. Keep your 👀 peeled for that!
+Each week's top performing news is also featured in Changelog Weekly[2].
+
+Here are 3 ways you can help your submission make the grade:
+
+1. Start the discussion by being the first to comment
+2. Share the link on social media and may _The Algorithms_ #bless you
+3. <%= news_item_promotion_advice(@item) %>
 
 Don't want these notifications? Disable 'em[3]
 
-[1]: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@item)) %>
+[1]: <%= news_item_url(Endpoint, :show, NewsItemView.hashid(@item)) %>
 [2]: <%= page_url(Endpoint, :weekly) %>
 [3]: <%= PersonView.opt_out_url(Endpoint, @person, "email_on_submitted_news") %>
 

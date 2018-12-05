@@ -14,4 +14,12 @@ defmodule ChangelogWeb.EmailView do
 
     "Hey #{label},"
   end
+
+  def news_item_promotion_advice(item) do
+    case item.type do
+      :project -> ~s{Add "Featured on Changelog News" to the README and/or homepage}
+      :announcement -> ~s{Add "Discuss this on Changelog News" to the end of your announcement}
+      _else -> ~s{Add "Discuss this on Changelog News" to the end of your article}
+    end
+  end
 end
