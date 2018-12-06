@@ -8,7 +8,7 @@
     <button class="ui basic icon clipboard button" title="Bookmarklet" data-clipboard-text="<%= bookmarklet_code() %>"><i class="book icon"></i></button>
 
     <div class="ui primary basic buttons">
-      <%= link "Items", to: admin_news_item_path(@conn, :index), class: "ui button" %>
+      <%= link("Items", to: admin_news_item_path(@conn, :index), class: "ui button") %>
       <%= link to: admin_news_item_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
@@ -16,17 +16,21 @@
 
   <%= if Policies.AdminsOnly.index(@current_user) do %>
     <div class="ui basic buttons">
-      <%= link "Sources", to: admin_news_source_path(@conn, :index), class: "ui button" %>
+      <%= link("Sources", to: admin_news_source_path(@conn, :index), class: "ui button") %>
       <%= link to: admin_news_source_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
 
     <div class="ui basic buttons">
-      <%= link "Issues", to: admin_news_issue_path(@conn, :index), class: "ui button" %>
+      <%= link("Issues", to: admin_news_issue_path(@conn, :index), class: "ui button") %>
       <%= link to: admin_news_issue_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
+    </div>
+
+    <div class="ui basic buttons">
+      <%= link("Comments", to: admin_news_item_comment_path(@conn, :index), class: "ui button") %>
     </div>
   <% end %>
   </div>

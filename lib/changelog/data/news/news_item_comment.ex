@@ -23,6 +23,10 @@ defmodule Changelog.NewsItemComment do
     |> validate_required([:content, :author_id, :item_id])
   end
 
+  def update_changeset(struct, attrs \\ %{}) do
+    insert_changeset(struct, attrs)
+  end
+
   def nested(nil), do: []
   def nested([]), do: []
   def nested(comments) do
