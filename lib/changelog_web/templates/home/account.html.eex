@@ -44,6 +44,14 @@
             <span class="form-checklist-item-text">Email me when something I authored gets featured in Changelog News</span>
           </label>
         </div>
+
+        <div class="form-checklist-item <%= error_class(f, :email_on_comment_replies) %>">
+          <label>
+            <%= checkbox(i, :email_on_comment_replies) %>
+            <span class="form-checklist-item-box"></span>
+            <span class="form-checklist-item-text">Email me when someone replies to one of my comments</span>
+          </label>
+        </div>
       <% end %>
     </div>
 

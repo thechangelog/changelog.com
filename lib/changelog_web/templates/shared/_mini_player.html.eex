@@ -1,0 +1,17 @@
+<figure
+  class="mini_player js-mini-player"
+  data-title="<%= @title %>"
+  data-audio="<%= @audio %>"
+  data-duration="<%= @duration %>"
+>
+  <a href="<%= @audio %>" class="mini_player-button mini_player-button--play js-player-play-button"></a>
+  <form class="mini_player-slider">
+    <div class="range_slider">
+      <div class="range_slider-range_wrap">
+        <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="<%= @duration %>"/>
+        <div class="range_slider-range-track js-player-track"></div>
+      </div>
+    </div>
+  </form>
+  <output class="mini_player-time"><span class="js-player-current">0:00</span> / <span class="js-player-duration"><%= TimeView.duration(@duration) %></span></output>
+</figure>

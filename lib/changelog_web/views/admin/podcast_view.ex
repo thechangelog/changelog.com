@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PodcastView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Topic, Podcast}
+  alias Changelog.{EpisodeStat, Podcast, Repo, Topic}
   alias ChangelogWeb.PodcastView
 
   def episode_count(podcast), do: PodcastView.episode_count(podcast)
@@ -12,6 +12,19 @@ defmodule ChangelogWeb.Admin.PodcastView do
     else
       download_count(podcast)
     end
+  end
+
+  def last_stat(podcast) do
+    podcast
+      |> EpisodeStat.with_podcast
+      |> EpisodeStat.newest_first
+      |> EpisodeStat.limit(1)
+      |> Repo.one
+  end
+
+  def position_options do
+    count = Podcast.ours |> Podcast.not_retired |> Repo.count
+    1..count
   end
 
   def status_label(podcast) do

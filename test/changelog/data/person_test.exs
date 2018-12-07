@@ -27,13 +27,13 @@ defmodule Changelog.PersonTest do
     refute Map.has_key?(changeset.changes, :avatar)
   end
 
-  test "encoded_auth and decoded_auth" do
+  test "encoded_auth and decoded_data" do
     user = %Person{email: "jenny@hits.com", auth_token: "8675309"}
     {:ok, encoded} = Person.encoded_auth(user)
 
     assert encoded == "6A656E6E7940686974732E636F6D7C38363735333039"
 
-    assert ["jenny@hits.com", "8675309"] = Person.decoded_auth(encoded)
+    assert ["jenny@hits.com", "8675309"] = Person.decoded_data(encoded)
   end
 
   describe "get_by_ueberauth" do

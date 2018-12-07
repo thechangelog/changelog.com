@@ -18,6 +18,14 @@ export default class ChangelogAudio {
     this.audio.load();
   }
 
+  onPlay(callback) {
+    this.run("play", callback);
+  }
+
+  onPause(callback) {
+   this.run("pause", callback);
+  }
+
   onTimeUpdate(callback) {
     this.run("timeupdate", callback);
   }
@@ -31,12 +39,12 @@ export default class ChangelogAudio {
   }
 
   play() {
-    this.audio.play();
+    return this.audio.play();
   }
 
   pause() {
     if (!this.playing()) return;
-    this.audio.pause();
+    return this.audio.pause();
   }
 
   playing() {

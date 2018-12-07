@@ -1,4 +1,25 @@
 <%= greeting(@person) %>
 
+Your episode of <%= @podcast.name %> is now live! Here is the official link to share with your network of friends:
 
-<%= @message %>
+<%= episode_url(Endpoint, :show, @podcast.slug, @episode.slug) %>
+
+
+And here’s an embed snippet to use on your website and/or blog post:
+
+<%= EpisodeView.embed_code(@episode) %>
+
+
+(You can see it in action on the HashiCorp blog: https://www.hashicorp.com/blog/vault-on-the-changelog-podcast.html)
+
+You’re part of the Changelog family now. If there is _any way_ that we can help you in the future, don’t hesitate to contact us.
+
+We'd also love to send you a Changelog tee as a thanks for your time and all you do for the community. Please reply with your t-shirt size and mailing address so we can get it sent out. Visit this page to see the sizing info for our shirts so we can send you one that fits well:
+
+http://www.sizecharter.com/brands/americapparel
+
+Finally, people love keeping up by following Changelog News (check it out if you haven't yet). Use [this form](https://changelog.com/submit) to let us know when you have future news/announcements. We'd be happy to help you spread the word.
+
+Thanks again!
+
+Love, Logbot

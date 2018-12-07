@@ -34,7 +34,7 @@ defmodule ChangelogWeb.Plug.Turbolinks do
   defp redirect_with_turbolinks(conn, location) do
     resp = turbolinks_resp(location, conn.method)
     conn
-    |> put_resp_content_type(Plug.MIME.type("js"))
+    |> put_resp_content_type(MIME.type("js"))
     |> resp(200, resp)
   end
 

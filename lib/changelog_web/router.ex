@@ -5,41 +5,37 @@ defmodule ChangelogWeb.Router do
   alias ChangelogWeb.Plug
 
   if Mix.env == :dev do
-    forward "/sent_emails", Bamboo.EmailPreviewPlug
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "js"]
     plug :fetch_session
     plug Plug.Turbolinks
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Plug.Auth, repo: Changelog.Repo
-    plug PlugEtsCache.Plug
+    plug Plug.Authenticate, repo: Changelog.Repo
   end
 
   pipeline :feed do
     plug :accepts, ["xml"]
-    plug PlugEtsCache.Plug
   end
 
   pipeline :json_feed do
     plug :accepts, ["json"]
-    plug PlugEtsCache.Plug
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug PlugEtsCache.Plug
   end
 
   pipeline :admin do
     plug :put_layout, {ChangelogWeb.LayoutView, :admin}
-    plug Plug.RequireAdmin
   end
 
   pipeline :public do
+    plug Plug.LoadPodcasts
   end
 
   scope "/auth", ChangelogWeb do
@@ -67,6 +63,7 @@ defmodule ChangelogWeb.Router do
     delete "/news/items/:id/decline", NewsItemController, :decline, as: :news_item
     post "/news/items/:id/unpublish", NewsItemController, :unpublish, as: :news_item
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
+    resources "/news/comments", NewsItemCommentController, except: [:show, :new, :create]
     resources "/news/sources", NewsSourceController, except: [:show]
     get "/news/sponsorships/schedule", NewsSponsorshipController, :schedule
     resources "/news/sponsorships", NewsSponsorshipController
@@ -74,7 +71,9 @@ defmodule ChangelogWeb.Router do
     post "/news/issues/:id/publish", NewsIssueController, :publish, as: :news_issue
     post "/news/issues/:id/unpublish", NewsIssueController, :unpublish, as: :news_issue
 
-    resources "/people", PersonController, except: [:show]
+    resources "/people", PersonController
+    post "/people/:id/slack", PersonController, :slack, as: :person
+
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
@@ -145,7 +144,11 @@ defmodule ChangelogWeb.Router do
 
     get "/", NewsItemController, :index, as: :root
     get "/news/submit", NewsItemController, :new
+    get "/news/fresh", NewsItemController, :fresh
     get "/news/top", NewsItemController, :top
+    get "/news/top/week", NewsItemController, :top_week
+    get "/news/top/month", NewsItemController, :top_month
+    get "/news/top/all", NewsItemController, :top_all
     resources "/news", NewsItemController, only: [:show, :create], as: :news_item
     get "/news/:id/visit", NewsItemController, :visit, as: :news_item
     post "/news/impress", NewsItemController, :impress, as: :news_item
@@ -155,6 +158,8 @@ defmodule ChangelogWeb.Router do
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
+    resources "/news/comments", NewsItemCommentController, only: [:create]
+    post "/news/comments/preview", NewsItemCommentController, :preview, as: :news_item_comment
 
     resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]
@@ -185,6 +190,9 @@ defmodule ChangelogWeb.Router do
     get "/styleguide", PageController, :styleguide
     get "/sponsor", PageController, :sponsor
     get "/sponsor/pricing", PageController, :sponsor_pricing
+    get "/sponsor/styles", PageController, :sponsor_styles
+    get "/sponsor/details", PageController, :sponsor_details
+    get "/sponsor/stories/:slug", PageController, :sponsor_story
     get "/team", PageController, :team
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms
@@ -210,6 +218,7 @@ defmodule ChangelogWeb.Router do
 
   defp handle_errors(_conn, %{reason: %Ecto.NoResultsError{}}), do: true
   defp handle_errors(_conn, %{reason: %Phoenix.Router.NoRouteError{}}), do: true
+  defp handle_errors(_conn, %{reason: %Phoenix.NotAcceptableError{}}), do: true
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
     headers = Enum.into(conn.req_headers, %{})
     reason = Map.delete(reason, :assigns)

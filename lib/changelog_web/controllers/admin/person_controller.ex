@@ -1,18 +1,41 @@
 defmodule ChangelogWeb.Admin.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Newsletters, Person}
+  alias Changelog.{Mailer, Episode, NewsItem, Person, Slack}
   alias ChangelogWeb.Email
-  alias Craisin.Subscriber
 
+  plug :assign_person when action in [:edit, :update, :delete, :slack]
+  plug Authorize, [Policies.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
   def index(conn, params) do
-    page = Person
-    |> order_by([p], desc: p.id)
-    |> Repo.paginate(params)
+    page =
+      Person
+      |> order_by([p], desc: p.id)
+      |> Repo.paginate(params)
 
-    render conn, :index, people: page.entries, page: page
+    render(conn, :index, people: page.entries, page: page)
+  end
+
+  def show(conn, %{"id" => id}) do
+    person = Repo.get!(Person, id)
+
+    episodes =
+      assoc(person, :guest_episodes)
+      |> Episode.published
+      |> Episode.newest_first
+      |> Episode.preload_all
+      |> Repo.all
+
+    items =
+      NewsItem
+      |> NewsItem.published
+      |> NewsItem.newest_first
+      |> NewsItem.with_person(person)
+      |> NewsItem.preload_all
+      |> Repo.all
+
+    render(conn, :show, person: person, episodes: episodes, items: items)
   end
 
   def new(conn, _params) do
@@ -27,8 +50,6 @@ defmodule ChangelogWeb.Admin.PersonController do
       {:ok, person} ->
         Repo.update(Person.file_changeset(person, person_params))
 
-        community = Newsletters.community()
-        Subscriber.subscribe(community.list_id, person, handle: person.handle)
         handle_welcome_email(person, params)
 
         conn
@@ -41,14 +62,12 @@ defmodule ChangelogWeb.Admin.PersonController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    person = Repo.get!(Person, id)
+  def edit(conn = %{assigns: %{person: person}}, _params) do
     changeset = Person.admin_update_changeset(person)
     render(conn, :edit, person: person, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "person" => person_params}) do
-    person = Repo.get!(Person, id)
+  def update(conn = %{assigns: %{person: person}}, params = %{"person" => person_params}) do
     changeset = Person.admin_update_changeset(person, person_params)
 
     case Repo.update(changeset) do
@@ -63,14 +82,39 @@ defmodule ChangelogWeb.Admin.PersonController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    person = Repo.get!(Person, id)
+  def delete(conn = %{assigns: %{person: person}}, _params) do
     Repo.delete!(person)
-    community = Newsletters.community()
-    Subscriber.unsubscribe(community.list_id, person.email)
+
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_person_path(conn, :index))
+  end
+
+  def slack(conn = %{assigns: %{person: person}}, params) do
+    flash = case Slack.Client.invite(person.email) do
+      %{"ok" => true} ->
+        set_slack_id_to_pending(person)
+        "success"
+      %{"ok" => false, "error" => "already_in_team"} ->
+        set_slack_id_to_pending(person)
+        "success"
+      _else -> "failure"
+    end
+
+    conn
+    |> put_flash(:result, flash)
+    |> redirect_next(params, admin_person_path(conn, :index))
+  end
+
+  defp assign_person(conn = %{params: %{"id" => id}}, _) do
+    person = Repo.get!(Person, id)
+    assign(conn, :person, person)
+  end
+
+  defp set_slack_id_to_pending(person = %{slack_id: id}) when not is_nil(id), do: person
+  defp set_slack_id_to_pending(person) do
+    {:ok, person} = Repo.update(Person.slack_changeset(person, "pending"))
+    person
   end
 
   defp handle_welcome_email(person, params) do

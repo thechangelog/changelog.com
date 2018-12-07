@@ -1,0 +1,15 @@
+<%= greeting(@person) %>
+
+
+<%= PersonView.handle(@reply.author) %> replied to you on Changelog News! They said:
+
+<%= @reply.content %>
+
+
+Reply here: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@reply.news_item)) <> NewsItemCommentView.permalink_path(@reply) %>
+
+Don't want these notifications? Disable 'em:
+
+<%= PersonView.opt_out_url(Endpoint, @person, "email_on_comment_replies") %>
+
+💚, Logbot

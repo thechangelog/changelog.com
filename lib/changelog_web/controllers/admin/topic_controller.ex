@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Admin.TopicController do
 
   alias Changelog.Topic
 
+  plug :assign_topic when action in [:edit, :update, :delete]
+  plug Authorize, [Policies.AdminsOnly, :topic]
   plug :scrub_params, "topic" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -36,14 +38,12 @@ defmodule ChangelogWeb.Admin.TopicController do
     end
   end
 
-  def edit(conn, %{"id" => slug}) do
-    topic = Repo.get_by!(Topic, slug: slug)
+  def edit(conn = %{assigns: %{topic: topic}}, _params) do
     changeset = Topic.update_changeset(topic)
     render(conn, :edit, topic: topic, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => slug, "topic" => topic_params}) do
-    topic = Repo.get_by!(Topic, slug: slug)
+  def update(conn = %{assigns: %{topic: topic}}, params = %{"topic" => topic_params}) do
     changeset = Topic.update_changeset(topic, topic_params)
 
     case Repo.update(changeset) do
@@ -58,12 +58,16 @@ defmodule ChangelogWeb.Admin.TopicController do
     end
   end
 
-  def delete(conn, %{"id" => slug}) do
-    topic = Repo.get_by!(Topic, slug: slug)
+  def delete(conn = %{assigns: %{topic: topic}}, _params) do
     Repo.delete!(topic)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_topic_path(conn, :index))
+  end
+
+  defp assign_topic(conn = %{params: %{"id" => slug}}, _) do
+    topic = Repo.get_by!(Topic, slug: slug)
+    assign(conn, :topic, topic)
   end
 end

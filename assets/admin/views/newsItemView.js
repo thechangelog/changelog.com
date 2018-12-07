@@ -2,6 +2,7 @@ import Sortable from "sortablejs";
 import BelongsToWidget from "components/belongsToWidget";
 import SearchWidget from "components/searchWidget";
 import CalendarField from "components/calendarField";
+import Modal from "components/modal";
 import Clipboard from "clipboard";
 
 export default class newsItemView {
@@ -39,6 +40,7 @@ export default class newsItemView {
     new BelongsToWidget("source", "news_source");
     new BelongsToWidget("submitter", "person");
     new CalendarField(".ui.calendar");
+    new Modal(".js-style-guide-modal", ".style-guide.modal");
 
     $("form").on("click", ".js-schedule", function(event) {
       event.preventDefault();

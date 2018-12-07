@@ -4,10 +4,17 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
   import Mock
 
-  alias Changelog.{Episode, NewsItem, NewsQueue, Transcripts}
+  alias Changelog.{Episode, EpisodeGuest, Github, NewsItem, NewsQueue}
 
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
+
+  setup_with_mocks([
+    {Github.Pusher, [], [push: fn(_, _) -> {:ok, "success"} end]},
+    {Github.Puller, [], [update: fn(_, _) -> true end]}
+  ], assigns) do
+    assigns
+  end
 
   @tag :as_admin
   test "lists all podcast episodes on index", %{conn: conn} do
@@ -28,14 +35,14 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    insert(:episode_stat, episode: e, date: ~D[2016-01-01], downloads: 1.4)
-    insert(:episode_stat, episode: e, date: ~D[2016-01-02], uniques: 345)
+    insert(:episode_stat, episode: e, date: ~D[2016-01-01], downloads: 1.6, uniques: 1)
+    insert(:episode_stat, episode: e, date: ~D[2016-01-02], downloads: 320, uniques: 345)
 
     conn = get(conn, admin_podcast_episode_path(conn, :show, p.slug, e.slug))
 
     assert conn.status == 200
     assert String.contains?(conn.resp_body, e.slug)
-    assert String.contains?(conn.resp_body, "1.4")
+    assert String.contains?(conn.resp_body, "2")
     assert String.contains?(conn.resp_body, "345")
   end
 
@@ -82,8 +89,20 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @valid_attrs)
 
+    refute called Github.Pusher.push()
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode) == 1
+  end
+
+  @tag :as_admin
+  test "updates a public episode, pushing notes to GitHub", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:published_episode, podcast: p)
+
+    conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @valid_attrs)
+
+    assert called Github.Pusher.push(:_, e.notes)
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
   end
 
   @tag :as_admin
@@ -93,6 +112,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     conn = put(conn, admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @invalid_attrs)
 
+    refute called Github.Pusher.push()
     assert html_response(conn, 200) =~ ~r/error/
   end
 
@@ -126,24 +146,55 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
+    assert called Github.Pusher.push(:_, e.notes)
   end
 
   @tag :as_admin
-  test "publishes an episode, optionally sending thanks email to guests", %{conn: conn} do
+  test "schedules an episode for publishing", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p, published_at: Timex.end_of_week(Timex.now))
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 0
+    assert count(Episode.scheduled) == 1
+    assert called Github.Pusher.push(:_, e.notes)
+  end
+
+  @tag :as_admin
+  test "publishes an episode, optionally setting guest 'thanks' to true", %{conn: conn} do
     g1 = insert(:person)
     g2 = insert(:person)
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p)
-    insert(:episode_guest, episode: e, person: g1)
-    insert(:episode_guest, episode: e, person: g2)
+    eg1 = insert(:episode_guest, episode: e, person: g1, thanks: false)
+    eg2 = insert(:episode_guest, episode: e, person: g2, thanks: false)
 
-    email_opts = %{"from" => "john@doe.com", "reply" => "john@doe.com", "message" => "ohai!"}
-    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), Map.merge(email_opts, %{"thanks" => "true"}))
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{"thanks" => "true"})
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
-    assert_delivered_email ChangelogWeb.Email.guest_thanks(g1, email_opts)
-    assert_delivered_email ChangelogWeb.Email.guest_thanks(g2, email_opts)
+    assert Repo.get(EpisodeGuest, eg1.id).thanks
+    assert Repo.get(EpisodeGuest, eg2.id).thanks
+    assert called Github.Pusher.push(:_, e.notes)
+  end
+
+  @tag :as_admin
+  test "publishes an episode, optionally not setting guest thanks to 'true'", %{conn: conn} do
+    g1 = insert(:person)
+    g2 = insert(:person)
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+    eg1 = insert(:episode_guest, episode: e, person: g1)
+    eg2 = insert(:episode_guest, episode: e, person: g2)
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 1
+    refute Repo.get(EpisodeGuest, eg1.id).thanks
+    refute Repo.get(EpisodeGuest, eg2.id).thanks
   end
 
   @tag :as_inserted_admin
@@ -156,7 +207,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
     assert count(NewsQueue) == 1
-    item = NewsItem |> NewsItem.with_episode(e) |> Repo.one
+    item = NewsItem |> NewsItem.with_episode(e) |> Repo.one()
     assert item.headline == e.title
     assert item.published_at == e.published_at
   end
@@ -175,24 +226,6 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
-  test "publishes an episode, optionally not sending thanks email to guests", %{conn: conn} do
-    g1 = insert(:person)
-    g2 = insert(:person)
-    p = insert(:podcast)
-    e = insert(:publishable_episode, podcast: p)
-    insert(:episode_guest, episode: e, person: g1)
-    insert(:episode_guest, episode: e, person: g2)
-
-    email_opts = %{"from" => "john@doe.com", "reply" => "john@doe.com", "message" => "ohai!"}
-    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), email_opts)
-
-    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 1
-    refute_delivered_email ChangelogWeb.Email.guest_thanks(g1, email_opts)
-    refute_delivered_email ChangelogWeb.Email.guest_thanks(g2, email_opts)
-  end
-
-  @tag :as_admin
   test "unpublishes an episode", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
@@ -208,26 +241,26 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast, name: "Happy Cast", slug: "happy")
     e = insert(:published_episode, podcast: p, slug: "12")
 
-    with_mock Transcripts.Updater, [update: fn(_) -> true end] do
-      conn = post(conn, admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
+    conn = post(conn, admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
 
-      assert called Transcripts.Updater.update(:_)
-      assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    end
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert called Github.Puller.update(:_, :_)
   end
 
   test "requires user auth on all actions", %{conn: conn} do
+    podcast = insert(:podcast)
+
     Enum.each([
-      get(conn, admin_podcast_episode_path(conn, :index, "1")),
-      get(conn, admin_podcast_episode_path(conn, :new, "1")),
-      get(conn, admin_podcast_episode_path(conn, :show, "1", "2")),
-      post(conn, admin_podcast_episode_path(conn, :create, "1"), episode: @valid_attrs),
-      get(conn, admin_podcast_episode_path(conn, :edit, "1", "123")),
-      put(conn, admin_podcast_episode_path(conn, :update, "1", "123"), episode: @valid_attrs),
-      delete(conn, admin_podcast_episode_path(conn, :delete, "1", "123")),
-      post(conn, admin_podcast_episode_path(conn, :publish, "1", "123")),
-      post(conn, admin_podcast_episode_path(conn, :unpublish, "1", "123")),
-      post(conn, admin_podcast_episode_path(conn, :transcript, "1", "123"))
+      get(conn, admin_podcast_episode_path(conn, :index, podcast.slug)),
+      get(conn, admin_podcast_episode_path(conn, :new, podcast.slug)),
+      get(conn, admin_podcast_episode_path(conn, :show, podcast.slug, "2")),
+      post(conn, admin_podcast_episode_path(conn, :create, podcast.slug), episode: @valid_attrs),
+      get(conn, admin_podcast_episode_path(conn, :edit, podcast.slug, "123")),
+      put(conn, admin_podcast_episode_path(conn, :update, podcast.slug, "123"), episode: @valid_attrs),
+      delete(conn, admin_podcast_episode_path(conn, :delete, podcast.slug, "123")),
+      post(conn, admin_podcast_episode_path(conn, :publish, podcast.slug, "123")),
+      post(conn, admin_podcast_episode_path(conn, :unpublish, podcast.slug, "123")),
+      post(conn, admin_podcast_episode_path(conn, :transcript, podcast.slug, "123"))
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

@@ -5,27 +5,29 @@
   </h1>
 
   <div class="actions">
+  <%= if Policies.Post.new(@current_user) do %>
     <%= link to: admin_post_path(@conn, :new), class: "ui right floated primary basic button" do %>
-      <i class="add write icon"></i>
+      <i class="add pencil alternate icon"></i>
       Add Post
     <% end %>
+  <% end %>
   </div>
 </div>
 
 <div class="ui basic segment">
 <%= if Enum.any?(@drafts) do %>
   <h2 class="ui header">Drafts</h2>
-  <%= render("_table.html", conn: @conn, status: :draft, posts: @drafts) %>
+  <%= render("_table.html", Map.merge(assigns, %{status: :draft, posts: @drafts})) %>
 <% end %>
 
 <%= if Enum.any?(@scheduled) do %>
   <h2 class="ui header">Scheduled</h2>
-  <%= render("_table.html", conn: @conn, status: :scheduled, posts: @scheduled) %>
+  <%= render("_table.html", Map.merge(assigns, %{status: :scheduled, posts: @scheduled})) %>
 <% end %>
 
 <%= if Enum.any?(@posts) do %>
   <h2 class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
-  <%= render("_table.html", conn: @conn, status: :published, posts: @posts) %>
+  <%= render("_table.html", Map.merge(assigns, %{conn: @conn, status: :published, posts: @posts})) %>
   <%= pagination_links(@conn, @page, path: &admin_post_path/3) %>
 <% end %>
 </div>

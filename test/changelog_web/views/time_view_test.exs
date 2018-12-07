@@ -55,7 +55,7 @@ defmodule ChangelogWeb.TimeViewTest do
     end
 
     test "when input produces an integer" do
-      assert rounded_minutes(54000) == 900
+      assert rounded_minutes(54_000) == 900
     end
   end
 
@@ -77,7 +77,7 @@ defmodule ChangelogWeb.TimeViewTest do
 
     test "when duration is hour, minutes, and seconds" do
       assert seconds("01:35:10") == 5710
-      assert seconds("10:00:00") == 36000
+      assert seconds("10:00:00") == 36_000
     end
 
     test "when duration has fraction of a sentence" do

@@ -10,6 +10,7 @@ You can use the magic link below to tweak your profile, join our Slack, and/or c
 
 <%= AuthView.auth_url(Endpoint, @person) %>
 
+
 This link will self-destruct in <%= auth_link_expires_in(@person) %>.
 
 Already Expired? Request a new link: <%= sign_in_url(Endpoint, :new) %>

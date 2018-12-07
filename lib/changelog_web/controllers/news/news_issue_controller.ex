@@ -3,7 +3,6 @@ defmodule ChangelogWeb.NewsIssueController do
 
   alias Changelog.NewsIssue
 
-  plug RequireAdmin, "before preview" when action in [:preview]
   plug :put_layout, false
 
   def show(conn, %{"id" => slug}) do

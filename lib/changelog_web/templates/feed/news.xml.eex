@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
     <title>Changelog</title>
     <copyright>All rights reserved</copyright>
     <link><%= root_url(@conn, :index) %></link>
+    <atom:link href="<%= feed_url(@conn, :news) %>" rel="self" type="application/rss+xml" />
     <language>en-us</language>
     <description>News and podcasts for developers</description>
   <%= for item <- @items do %>

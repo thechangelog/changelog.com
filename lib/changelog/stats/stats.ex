@@ -22,9 +22,7 @@ defmodule Changelog.Stats do
     Logger.info("Stats: Finished processing for #{date}")
   end
 
-  def process(date, podcast) when not is_list(podcast) do
-    process(date, [podcast])
-  end
+  def process(date, podcast) when not is_list(podcast), do: process(date, [podcast])
 
   def process(date, podcasts) do
     podcasts

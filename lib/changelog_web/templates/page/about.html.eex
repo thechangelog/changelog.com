@@ -2,7 +2,7 @@
   <div class="richtext">
     <h1>About</h1>
 
-    <p>Changelog is a digital media company focused on telling developer-focused stories that gets to the heart. We exist to enrich the lives of developers.</p>
+    <p>Changelog is an independent media company that produces the best and most influential podcasts for developers and covers the news that matters. We exist to enrich the lives of developers.</p>
 
     <hr>
 
@@ -24,7 +24,7 @@
 
     <p><a href="https://linode.com/changelog">Linode</a> for providing our high performance SSD Linux cloud servers.</p>
     
-    <p><a href="https://rollbar.com/">Rollbar</a> for providing real-time error monitoring and alerting.</p>
+    <p><a href="https://rollbar.com/changelog">Rollbar</a> for providing real-time error monitoring and alerting.</p>
 
     <p><a href="https://soundcloud.com/breakmaster-cylinder">Breakmaster Cylinder</a> for working with us to create our awesome beets.</p>
 

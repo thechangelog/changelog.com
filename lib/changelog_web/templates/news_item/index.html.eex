@@ -4,15 +4,17 @@
 
 <a id="feed" class="anchor"></a>
 <div class="feed">
-<%= if @page.page_number == 1 do %>
-  <%= for item <- @pinned, do: render_item_summary_or_ad(item, assigns) %>
-<% end %>
+  <%#= render("_subnav.html", assigns) %>
 
-<%= for item_or_ad <- items_with_ads(@items, @ads), do: render_item_summary_or_ad(item_or_ad, assigns) %>
+  <%= if @page.page_number == 1 do %>
+    <%= for item <- @pinned, do: render_item_summary_or_ad(item, assigns) %>
+  <% end %>
 
-<%= if @page.page_number == 1 do %>
-  <%= render(SharedView, "_signup_banner.html", assigns) %>
-<% end %>
+  <%= for item_or_ad <- items_with_ads(@items, @ads), do: render_item_summary_or_ad(item_or_ad, assigns) %>
+
+  <%= if @page.page_number == 1 do %>
+    <%= render(SharedView, "_signup_banner.html", assigns) %>
+  <% end %>
 
   <%= render(SharedView, "_more_button.html", assigns) %>
 </div>
@@ -22,10 +24,10 @@
   <section class="show_list" id="podcasts">
     <header class="show_list-header">
       <h2>Our podcasts</h2>
-      <p>No matter where you are on your hacker path, we have a podcast for you. This community cares about the past, present, and future hacker generation. We're about lifting people up, not putting people down.</p>
+      <p>No matter who you are or where you are on your path of being a developer, we have a podcast for you. This community cares about the past, present, and future generation of developers. We're about lifting people up, not putting people down.</p>
     </header>
     <div class="show_list-shows">
-      <%= render_many(@podcasts, PodcastView, "_podcast_summary.html", assigns) %>
+      <%= render_many(@podcasts ++ [Podcast.master], PodcastView, "_summary.html", assigns) %>
     </div>
   </section>
 </div>

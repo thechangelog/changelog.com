@@ -28,14 +28,14 @@ defmodule ChangelogWeb.LiveControllerTest do
       episode1 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(24))
       episode2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(48))
       conn = get(conn, live_path(conn, :index))
-      assert html_response(conn, 200) =~ "Upcoming"
+
       assert html_response(conn, 200) =~ episode1.title
       assert html_response(conn, 200) =~ episode2.title
     end
 
     test "it renders when there are no episodes at all", %{conn: conn} do
       conn = get(conn, live_path(conn, :index))
-      assert html_response(conn, 200) =~ "Upcoming"
+      assert html_response(conn, 200) =~ "No scheduled shows"
     end
   end
 end

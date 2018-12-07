@@ -48,18 +48,20 @@ export default class OnsitePlayer {
   }
 
   attachEvents() {
-    this.playButton.handle("click", () => { this.togglePlayPause(); });
-    this.backButton.handle("click", () => { this.seekBy(-15); });
-    this.forwardButton.handle("click", () => { this.seekBy(15); });
-    this.scrubber.on("input", (event) => { this.scrub(event.target.value); });
-    this.scrubber.on("change", (event) => { this.scrubEnd(event.target.value); });
-    this.closeButton.handle("click", () => { this.close(); });
-    this.hideButton.handle("click", () => { this.hide(); });
-    this.audio.onTimeUpdate((event) => { this.trackTime(); });
+    this.playButton.handle("click", _ => { this.togglePlayPause(); });
+    this.backButton.handle("click", _ => { this.seekBy(-15); });
+    this.forwardButton.handle("click", _ => { this.seekBy(15); });
+    this.scrubber.on("input", event => { this.scrub(event.target.value); });
+    this.scrubber.on("change", event => { this.scrubEnd(event.target.value); });
+    this.closeButton.handle("click", _ => { this.close(); });
+    this.hideButton.handle("click", _ => { this.hide(); });
+    this.audio.onTimeUpdate(event => { this.trackTime(); });
+    this.audio.onPlay(event => { this.playUI(); });
+    this.audio.onPause(event => { this.pauseUI(); });
   }
 
   attachKeyboardShortcuts() {
-    u(document).on("keydown", (event) => {
+    u(document).on("keydown", event => {
       if (!this.isActive()) return;
       if (u(event.target).is("input, textarea")) return;
 
@@ -93,13 +95,27 @@ export default class OnsitePlayer {
 
   play() {
     requestAnimationFrame(this.step.bind(this));
-    this.audio.play();
+
+    this.audio.play().then(_ => {
+      this.playUI();
+    }).catch(error => {
+      this.pauseUI();
+      console.log("failed to play", error);
+    });
+  }
+
+  playUI() {
     this.playButtons.play();
     this.playButton.addClass("is-playing").removeClass("is-paused is-loading");
+    if (!this.isActive()) this.show();
   }
 
   pause() {
     this.audio.pause();
+    this.pauseUI();
+  }
+
+  pauseUI() {
     this.playButtons.pause();
     this.playButton.addClass("is-paused").removeClass("is-playing is-loading");
   }
@@ -119,6 +135,7 @@ export default class OnsitePlayer {
   seekBy(to) {
     const currentSeek = this.audio.currentSeek() || 0;
     this.audio.seek(currentSeek + to);
+    this.step();
   }
 
   // begins the process of playing the audio, fetching the details
@@ -134,7 +151,7 @@ export default class OnsitePlayer {
 
   loadAudio(audioUrl, andThen) {
     this.audioLoaded = false;
-    this.audio.load(audioUrl, () => {
+    this.audio.load(audioUrl, _ => {
       this.audioLoaded = true;
       this.play();
       if (andThen) andThen();
@@ -210,9 +227,9 @@ export default class OnsitePlayer {
     return Math.round(this.audio.currentSeek() || 0);
   }
 
-  percentComplete() {
+  percentComplete(asOfTime) {
     if (!this.detailsLoaded) return 0;
-    return this.currentTime() / this.episode.duration() * 100;
+    return asOfTime / this.episode.duration() * 100;
   }
 
   step() {
@@ -223,9 +240,10 @@ export default class OnsitePlayer {
     }
 
     if (!this.isScrubbing) {
-      this.current.text(Episode.formatTime(this.currentTime()));
-      this.scrubber.first().value = this.currentTime();
-      this.track.first().style.width = `${this.percentComplete()}%`;
+      let time = this.currentTime();
+      this.current.text(Episode.formatTime(time));
+      this.scrubber.first().value = time;
+      this.track.first().style.width = `${this.percentComplete(time)}%`;
     }
 
     if (this.isPlaying()) {
@@ -236,14 +254,14 @@ export default class OnsitePlayer {
   scrub(to) {
     this.isScrubbing = true;
     this.current.text(Episode.formatTime(to));
-    this.track.first().style.width = `${this.percentComplete()}%`;
+    this.track.first().style.width = `${this.percentComplete(to)}%`;
   }
 
   scrubEnd(to) {
     this.isScrubbing = false;
-    this.audio.seek(to, () => {
+    this.audio.seek(to, _ => {
       this.playButton.addClass("is-loading");
-    }, () => {
+    }, _ => {
       this.playButton.removeClass("is-loading");
     });
   }
@@ -265,7 +283,7 @@ export default class OnsitePlayer {
   }
 
   trackTime() {
-    let complete = this.percentComplete();
+    let complete = this.percentComplete(this.currentTime());
 
     for (var percent in this.tracked) {
       if (complete >= percent && !this.tracked[percent]) {

@@ -247,6 +247,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "RyanWillDev",
+      "name": "Ryan Will",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/12587988?v=4",
+      "profile": "https://ryanwilldev.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }

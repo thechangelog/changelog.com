@@ -1,6 +1,6 @@
 <div class="post_footer-author">
   <%= link to: PersonView.external_url(@person), title: @person.name, rel: "external" do %>
-    <img class="post_footer-author-image" src="<%= PersonView.avatar_url(@person) %>" width=50 height=50 alt="<%= @person.name %>"/>
+    <%= lazy_image(PersonView.avatar_url(@person), @person.name, class: "post_footer-author-image", width: 50, height: 50) %>
   <% end %>
 
   <div class="post_footer-author-bio">

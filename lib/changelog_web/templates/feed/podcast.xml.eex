@@ -23,7 +23,7 @@
     </itunes:category>
     <%= for episode <- @episodes do %>
       <item>
-        <title><%= podcast_title(@podcast, episode) |> html_escape |> safe_to_string %></title>
+        <title><%= episode_title(@podcast, episode) |> html_escape() |> safe_to_string() %></title>
         <link><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
@@ -43,7 +43,7 @@
         <itunes:duration><%= TimeView.duration(episode.duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:keywords><%= episode.podcast.keywords %></itunes:keywords>
-        <itunes:subtitle><%= episode.headline |> html_escape |> safe_to_string %></itunes:subtitle>
+        <itunes:subtitle><%= episode.subtitle |> html_escape |> safe_to_string %></itunes:subtitle>
         <itunes:summary><%= md_to_text(episode.summary) %></itunes:summary>
       </item>
     <% end %>

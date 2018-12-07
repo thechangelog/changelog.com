@@ -1,5 +1,5 @@
-<title><%= @item.headline |> html_escape |> safe_to_string %></title>
+<title><%= @item.headline |> html_escape() |> safe_to_string() %></title>
 <dc:creator><%= @item.logger.name %></dc:creator>
-<link><%= news_item_url(@conn, :show, NewsItemView.slug(@item)) %></link>
+<link><%= @item.url |> html_escape() |> safe_to_string() %></link>
 <guid isPermaLink="false"><%= "changelog.com/news/" <> NewsItemView.hashid(@item) %></guid>
 <pubDate><%= TimeView.rss(@item.published_at) %></pubDate>

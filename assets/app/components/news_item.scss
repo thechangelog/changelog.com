@@ -1,15 +1,15 @@
 .news_item {
+  $condensedBreakpoint: 1000px;
   $horizontal-padding: 20px;
-
   border-bottom: 1px solid $light-grey;
   margin-top: $base-spacing;
-  padding: 0 $base-spacing $base-spacing;
+  padding: 0 $horizontal-padding $base-spacing;
   position: relative;
 
   &--sponsor {
     background-color: $highlight;
     margin-top: 0;
-    padding-top: $base-spacing;
+    padding-top: $base-spacing !important;
   }
 
   &:last-of-type { border: none; }
@@ -18,9 +18,8 @@
     border-bottom: 0;
   }
 
-  @include breakpoint(mobile) {
-    padding-left: 70px + $horizontal-padding;
-    padding-right: $horizontal-padding;
+  @include breakpoint($condensedBreakpoint) {
+    padding: 0 $base-spacing $base-spacing;
   }
 
   &-header, &-toolbar {
@@ -31,12 +30,11 @@
         color: #000;
         text-decoration: underline;
       }
-    }
-  }
 
-  img {
-    height: auto;
-    max-width: 100%;
+      .lazy {
+        text-indent: -9999px;
+      }
+    }
   }
 
   &-source {
@@ -69,14 +67,6 @@
         height: $size;
         top: 0;
         left: 0;
-
-        &:nth-child(1) { z-index: 7; }
-        &:nth-child(2) { transform: translateX(-2px) translateY(-2px); z-index: 6; }
-        &:nth-child(3) { transform: translateX(-4px) translateY(-4px); z-index: 5; }
-        &:nth-child(4) { transform: translateX(-6px) translateY(-6px); z-index: 4; }
-        &:nth-child(5) { transform: translateX(-8px) translateY(-8px); z-index: 3; }
-        &:nth-child(6) { transform: translateX(-10px) translateY(-10px); z-index: 2; }
-        &:nth-child(7) { transform: translateX(-12px) translateY(-12px); z-index: 1; }
       }
 
       &-icon {
@@ -102,10 +92,10 @@
         }
       }
 
-      @include breakpoint(mobile) {
+      @include breakpoint($condensedBreakpoint) {
         $size: 50px;
         height: $size;
-        left: $horizontal-padding;
+        left: -50px;
         line-height: $size;
         position: absolute;
         width: $size;
@@ -126,6 +116,10 @@
     font-size: 1.25em;
     line-height: 1.25em;
     margin: 10px 0;
+
+    .page_news_item--post & {
+      font-size: 2em;
+    }
 
     &-external {
       background: url('/images/icons/icon-external.svg') no-repeat center;
@@ -200,6 +194,9 @@
   &-toolbar {
     align-items: center;
     display: flex;
+    @include breakpoint(mobile, max) {
+      align-items: flex-start;
+    }
 
     &-play_button,
     &-video_button,
@@ -218,8 +215,12 @@
       border-radius: $base-border-radius;
       padding: 0.5em 0.3em 0.3em;
       height: 33px;
-      width: 40px;
+      min-width: 40px;
       text-indent: -9999px;
+    }
+
+    &-video_button,
+    &-image_button {
       .page-news_item-show &, .page-news_ad-show & { display: none; }
     }
 
@@ -241,6 +242,7 @@
 
     &-meta {
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
       font-family: $code;
       font-size: 0.8125em;
@@ -270,17 +272,38 @@
           }
         }
       }
+
+      &-item__featuring {
+        margin-top: 5px;
+        margin-right: 10px;
+
+        a:hover {
+          text-decoration: none;
+        }
+
+        .lazy {
+          background: $lightest-grey;
+          border-radius: 2px;
+          display: inline-flex;
+          height: 24px;
+          width: 24px;
+          overflow: hidden;
+        }
+
+        &:after {
+          display: none;
+        }
+      }
     }
   }
 
   &-content {
-    margin-top: 30px;
-
-    &.richtext {
-      blockquote, p, li {
-        font-size: 1em;
-      }
+    .page_news_item--post & {
+      @include breakpoint(tiny) { font-size: 1.125em; }
+      @include breakpoint(tablet) { font-size: 1.125em; }
     }
+
+    margin-top: 2em;
   }
 
   &-meta {
@@ -304,6 +327,7 @@
       &-key {
         padding-right: 1em;
       }
+
       &-value a {
         color: $base-link-color;
         &:hover { color: $base-hover-color }

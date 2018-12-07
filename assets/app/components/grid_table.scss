@@ -1,0 +1,57 @@
+.grid_table {
+  font-family: $code;
+  font-size: 0.8125em;
+  margin: $base-spacing 0;
+
+  &-header,
+  &-row {
+    align-items: center;
+
+    @include breakpoint(tablet) {
+      display: grid;
+      grid-template-columns: 20% 30% auto;
+    }
+  }
+
+  &-header {
+    background: $black;
+    color: $white;
+    font-weight: bold;
+    margin-bottom: 1em;
+
+    p {
+      display: none;
+      margin: 0;
+      padding: 0.5em 1em;
+
+      @include breakpoint(tablet) {
+        display: block;
+      }
+    }
+  }
+
+  &-row {
+    @include breakpoint(tablet, max) {
+      border-top: 2px solid $light-grey;
+      padding: 2em 0;
+    }
+
+    &-column {
+      padding: 0 1em;
+
+      @include breakpoint(tablet) {
+        padding: 1em;
+      }
+
+      .mini_player {
+        margin: 1em 0 0;
+
+        @include breakpoint(tablet) {
+          margin: 0 1em 0 0;
+        }
+      }
+    }
+
+    p { margin: 0; }
+  }
+}

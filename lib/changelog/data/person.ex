@@ -1,8 +1,8 @@
 defmodule Changelog.Person do
   use Changelog.Data
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, PodcastHost,
-                   Post, Regexp}
+  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, NewsItemComment,
+                   PodcastHost, Post, Regexp}
   alias Timex.Duration
 
   defmodule Settings do
@@ -12,10 +12,11 @@ defmodule Changelog.Person do
     embedded_schema do
       field :email_on_authored_news, :boolean, default: true
       field :email_on_submitted_news, :boolean, default: true
+      field :email_on_comment_replies, :boolean, default: true
     end
 
     def changeset(struct, attrs) do
-      cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news])
+      cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news, :email_on_comment_replies])
     end
   end
 
@@ -30,35 +31,53 @@ defmodule Changelog.Person do
     field :bio, :string
     field :location, :string
     field :auth_token, :string
-    field :auth_token_expires_at, Timex.Ecto.DateTime
-    field :joined_at, Timex.Ecto.DateTime
-    field :signed_in_at, Timex.Ecto.DateTime
-    field :admin, :boolean
+    field :auth_token_expires_at, :utc_datetime
+    field :joined_at, :utc_datetime
+    field :signed_in_at, :utc_datetime
     field :avatar, Files.Avatar.Type
+
+    field :admin, :boolean, default: false
+    field :host, :boolean, default: false
+    field :editor, :boolean, default: false
 
     embeds_one :settings, Settings, on_replace: :update
 
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
+    has_many :host_episodes, through: [:episode_hosts, :episode]
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
+    has_many :guest_episodes, through: [:episode_guests, :episode]
     has_many :authored_posts, Post, foreign_key: :author_id, on_delete: :delete_all
     has_many :authored_news_items, NewsItem, foreign_key: :author_id
     has_many :logged_news_items, NewsItem, foreign_key: :logger_id
+    has_many :submitted_news_items, NewsItem, foreign_key: :submitter_id
+    has_many :comments, NewsItemComment, foreign_key: :author_id
 
     timestamps()
   end
 
-  def in_slack(query \\ __MODULE__), do: from(p in query, where: not(is_nil(p.slack_id)))
-  def joined(query \\ __MODULE__), do: from(p in query, where: not(is_nil(p.joined_at)))
+  def in_slack(query \\ __MODULE__),        do: from(q in query, where: not(is_nil(q.slack_id)))
+  def joined(query \\ __MODULE__),          do: from(a in query, where: not(is_nil(a.joined_at)))
+  def never_signed_in(query \\ __MODULE__), do: from(q in query, where: is_nil(q.signed_in_at))
+  def faked(query \\ __MODULE__),           do: from(q in query, where: q.name in ^Changelog.Faker.names())
 
   def joined_today(query \\ __MODULE__) do
     today = Timex.subtract(Timex.now, Duration.from_days(1))
     from(p in query, where: p.joined_at > ^today)
   end
 
+  def get_by_encoded_auth(token) do
+    case __MODULE__.decoded_data(token) do
+      [email, auth_token] -> Repo.get_by(__MODULE__, email: email, auth_token: auth_token)
+      _else -> nil
+    end
+  end
+
   def get_by_encoded_id(token) do
-    [id, email] = __MODULE__.decoded_id(token)
-    Repo.get_by(__MODULE__, id: id, email: email)
+    case __MODULE__.decoded_data(token) do
+      [id, email] -> Repo.get_by(__MODULE__, id: id, email: email)
+      _else -> nil
+    end
   end
 
   def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
@@ -72,7 +91,7 @@ defmodule Changelog.Person do
   def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at))
 
   def admin_insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle twitter_handle bio website location admin)
+    allowed = ~w(name email handle github_handle twitter_handle bio website location admin host editor)
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
@@ -131,22 +150,14 @@ defmodule Changelog.Person do
     person
   end
 
-  def encoded_auth(person) do
-    {:ok, Base.encode16("#{person.email}|#{person.auth_token}")}
-  end
+  def encoded_auth(person), do: {:ok, Base.encode16("#{person.email}|#{person.auth_token}")}
+  def encoded_id(person), do: {:ok, Base.encode16("#{person.id}|#{person.email}")}
 
-  def decoded_auth(encoded) do
-    {:ok, decoded} = Base.decode16(encoded)
-    String.split(decoded, "|")
-  end
-
-  def encoded_id(person) do
-    {:ok, Base.encode16("#{person.id}|#{person.email}")}
-  end
-
-  def decoded_id(encoded) do
-    {:ok, decoded} = Base.decode16(encoded)
-    String.split(decoded, "|")
+  def decoded_data(encoded) do
+    case Base.decode16(encoded) do
+      {:ok, decoded} -> String.split(decoded, "|")
+      :error -> ["", ""]
+    end
   end
 
   def episode_count(person) do

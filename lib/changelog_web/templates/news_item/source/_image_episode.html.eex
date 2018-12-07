@@ -1,17 +1,6 @@
-<%= if Enum.any?(@episode.guests) do %>
-  <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug) <> "#featuring", title: @episode.title, class: "news_item-source-image news_item-source-image--#{ length(@episode.guests) }", data: [news: true] do %>
-
-    <%= if controller_action_combo(@conn) == "news_issue-show" do %>
-      <% guest = Enum.at(@episode.guests, 0) %>
-      <img src="<%= PersonView.avatar_url(guest) %>" alt="<%= guest.name %> Avatar" />
-    <% else %>
-      <%= for guest <- Enum.reverse(@episode.guests) do %>
-        <img src="<%= PersonView.avatar_url(guest) %>" alt="<%= guest.name %> Avatar" />
-      <% end %>
-    <% end %>
-  <% end %>
-<% else %>
-  <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug), title: @episode.title, class: "news_item-source-image news_item-source-image--1", data: [news: true] do %>
-    <img style="background-color: #121921" src="<%= PodcastView.cover_url(@episode.podcast, :small) %>" alt="<%= @episode.podcast.name %>" />
-  <% end %>
+<%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug),
+   title: @episode.title,
+   class: "news_item-source-image news_item-source-image--1",
+   data: [news: true] do %>
+  <%= maybe_lazy_image(@conn, PodcastView.cover_url(@episode.podcast, :small), @episode.podcast.name, style: "background-color: #121921") %>
 <% end %>

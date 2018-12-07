@@ -1,0 +1,35 @@
+<article class="show_list-shows-item">
+  <div class="show_list-shows-item-wrap">
+    <%= link(to: podcast_path(@conn, :show, @podcast.slug), class: "show_list-shows-item-art", title: "View #{@podcast.name}") do %>
+      <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 220, height: 220) %>
+      <%= if @podcast.status == :soon do %>
+        <div class="show_list-shows-item-art-status show_list-shows-item-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
+      <% end %>
+    <% end %>
+    <div class="show_list-shows-item-content">
+      <div class="show_list-shows-item-content-heading">
+        <h2><a href="<%= podcast_path(@conn, :show, @podcast.slug) %>"><%= @podcast.name %></a></h2>
+        <%= if @podcast.status != :soon do %>
+          <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Subscribe</button>
+          <%= render("_subscribe_tooltip.html", conn: @conn, podcast: @podcast) %>
+        <% end %>
+      </div>
+      <%= @podcast.description |> md_to_html |> raw %>
+    <%= if Enum.any?(@podcast.hosts) do %>
+      <h3>Hosted by:</h3>
+      <ul class="show_list-shows-item-content-hosts">
+      <%= if length(@podcast.hosts) > 3 do %>
+        <%= for person <- Enum.take_random(@podcast.hosts, 3) do %>
+          <li><%= link(person.name, to: PersonView.external_url(person)) %></li>
+        <% end %>
+          <li><%= link("and more...", to: podcast_path(@conn, :show, @podcast.slug)) %></li>
+      <% else %>
+        <%= for person <- @podcast.hosts do %>
+          <li><%= link(person.name, to: PersonView.external_url(person)) %></li>
+        <% end %>
+      <% end %>
+      </ul>
+    <% end %>
+    </div>
+  </div>
+</article>

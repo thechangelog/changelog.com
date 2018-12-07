@@ -6,8 +6,8 @@ defmodule Changelog.Repo.Migrations.CreateEpisode do
       add :title, :string, null: false
       add :slug, :string, null: false
       add :published, :boolean, default: false
-      add :published_at, :datetime
-      add :recorded_at, :datetime
+      add :published_at, :naive_datetime
+      add :recorded_at, :naive_datetime
       add :duration, :integer
       add :summary, :text
       add :podcast_id, references(:podcasts)

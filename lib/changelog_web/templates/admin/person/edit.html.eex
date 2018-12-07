@@ -2,6 +2,10 @@
   <h1 class="ui dividing header">
     <%= link "People", to: admin_person_path(@conn, :index) %>
     &raquo; Edit
+
+    <%= link "(View)",
+      to: admin_person_path(@conn, :show, @person),
+      class: "view" %>
   </h1>
 
   <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_person_path(@conn, :update, @person)) %>

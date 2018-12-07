@@ -14,7 +14,7 @@ config :arc,
   storage_dir: "/uploads"
 
 config :changelog, Changelog.Repo,
-  url: {:system, "DB_URL"},
+  url: System.get_env("DB_URL"),
   adapter: Ecto.Adapters.Postgres,
   pool_size: 20
 

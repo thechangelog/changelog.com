@@ -21,11 +21,14 @@ $blue-grey: #222C36;
 $highlight: #fafafa;
 
 // Podcasts - Sometimes we wanna loop through 'em
-$podcasts: backstage, founderstalk, gotime, master, podcast, rfc, spotlight, jsparty, practicalai;
+$podcasts: afk, backstage, founderstalk, gotime, master, podcast, rfc, spotlight, jsparty, practicalai;
 
 // Podcast Colors
-$changelog: #9E978E;
-$changelog-transparent: rgba(darken($changelog, 45%), 0.6);
+$afk: #E4002B;
+$afk-transparent: rgba(darken($afk, 45%), 0.6);
+
+$podcast: #9E978E;
+$podcast-transparent: rgba(darken($podcast, 45%), 0.6);
 
 $gotime: #59CBE8;
 $gotime-transparent: rgba(darken($gotime, 50%), 0.3);
@@ -46,7 +49,7 @@ $jsparty: #FFCD00;
 $jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
 
 $practicalai: #4C5FAA;
-$gotime-transparent: rgba(darken($gotime, 50%), 0.3);
+$practicalai-transparent: rgba(darken($practicalai, 50%), 0.3);
 
 // Borders
 $border-color: $lightest-grey;

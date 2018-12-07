@@ -25,9 +25,9 @@ defmodule ChangelogWeb.FeedControllerTest do
 
   test "the news feed", %{conn: conn} do
     post = insert(:published_post, body: "zomg")
-    post |> post_news_item() |> insert
+    post |> post_news_item() |> insert()
     episode = insert(:published_episode, summary: "zomg")
-    episode |> episode_news_item() |> insert
+    episode |> episode_news_item() |> insert()
 
     conn = get(conn, feed_path(conn, :news))
 
@@ -61,6 +61,14 @@ defmodule ChangelogWeb.FeedControllerTest do
 
     assert conn.status == 200
     assert conn.resp_body =~ e.title
+  end
+
+  test "the backstage podcast feed doesn't exist", %{conn: conn} do
+    insert(:podcast, slug: "backstage")
+
+    conn = get(conn, feed_path(conn, :podcast, "backstage"))
+
+    assert conn.status == 404
   end
 
   test "the master podcast feed", %{conn: conn} do

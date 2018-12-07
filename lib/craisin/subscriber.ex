@@ -2,6 +2,7 @@ defmodule Craisin.Subscriber do
   import Craisin
 
   def details(list_id, email), do: "/subscribers/#{list_id}?email=#{email}" |> get |> local_handle
+  def delete(list_id, email), do: "/subscribers/#{list_id}?email=#{email}" |> delete |> local_handle
 
   def subscribe(list_id, person, custom_fields \\ %{}) do
     fields = %{"EmailAddress" => person.email,
@@ -17,8 +18,8 @@ defmodule Craisin.Subscriber do
     "/subscribers/#{list_id}/unsubscribe" |> post(Poison.encode!(fields)) |> local_handle
   end
 
-  defp local_handle({:ok, %HTTPoison.Response{body: %{"Code" => 1}}}), do: not_in_list()
-  defp local_handle({:ok, %HTTPoison.Response{body: %{"Code" => 203}}}), do: not_in_list()
+  defp local_handle({:ok, %{body: %{"Code" => 1}}}), do: not_in_list()
+  defp local_handle({:ok, %{body: %{"Code" => 203}}}), do: not_in_list()
   defp local_handle(response), do: handle(response)
 
   defp not_in_list, do: %{"State" => "NotInList"}

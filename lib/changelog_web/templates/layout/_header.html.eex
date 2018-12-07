@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header-container">
     <div class="header-wrap">
-      <h1 class="header-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
+      <h1 class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></h1>
 
       <nav class="header-nav">
         <div class="header-nav-wrap">
@@ -28,8 +28,8 @@
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-wrap">
                   <ul class="tooltip-list">
-                    <%= if @current_user.admin do %>
-                      <li><%= link "Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false] %></li>
+                    <%= if Policies.Admin.index(@current_user) do %>
+                      <li><%= link("Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
                     <% end %>
                     <li><%= link "My Subscriptions", to: home_path(@conn, :show) %></li>
                     <li><%= link "Profile Settings", to: home_path(@conn, :profile) %></li>
@@ -47,8 +47,7 @@
             <% end %>
 
             <form action="<%= search_path(@conn, :search) %>" method="get" class="header-search">
-              <label class="visually_hidden" for="name">Search</label>
-              <input name="q" type="text" placeholder="Search Changelog" value="" />
+              <input name="q" type="text" placeholder="Search Changelog" value="" aria-label="Search"/>
             </form>
 
             <button class="header-menu js-toggle-nav" title="Toggle Menu">
@@ -60,16 +59,7 @@
     </div>
   </div>
 
-  <%= if get_flash(@conn) do %>
-    <div class="flash_container">
-      <%= for {type, message} <- get_flash(@conn) do %>
-        <div class="flash flash--<%= type %>">
-          <div class="flash-message" role="alert"><p><%= message %></p></div>
-          <button class="flash-close js-close_flash" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M1 9L9 1M1 1l8 8" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></button>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+  <%= for {type, message} <- get_flash(@conn), do: render("_flash.html", type: type, message: message) %>
 </header>
 
 <nav class="mobile_nav">
@@ -92,8 +82,7 @@
 
     <div class="mobile_nav-bottom">
       <form action="<%= search_path(@conn, :search) %>" method="get" class="mobile_nav-search search-form">
-        <label class="visually_hidden" for="name">Search</label>
-        <input name="q" type="text" placeholder="Search Changelog" />
+        <input name="q" type="text" placeholder="Search Changelog" aria-label="Search"/>
       </form>
     </div>
   </div>

@@ -1,0 +1,157 @@
+$range-width: 100% !default;
+
+$range-handle-color: $green !default;
+$range-handle-color-hover: $green !default;
+$range-handle-size: 18px !default;
+
+$range-track-color: $black !default;
+$range-track-height: 2px !default;
+
+$range-label-color: $half-white !default;
+$range-label-width: 60px !default;
+
+@mixin range-handle($range-handle-size) {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: $range-handle-size;
+  background: $range-handle-color;
+  cursor: pointer;
+  height: $range-handle-size;
+  position: relative;
+  top: -8px;
+  transition: background .15s ease-in-out;
+  width: $range-handle-size;
+
+  &:hover { background: $range-handle-color-hover; }
+  &:active { background: $range-handle-color-hover; }
+  .mini_player & { opacity: 0; }
+}
+
+@mixin range-track($height, $bgcolor) {
+  -webkit-appearance: none;
+  width: $range-width;
+  height: $height;
+  cursor: pointer;
+  animate: 0.2s;
+  background: $bgcolor;
+  border-radius: 1px;
+  border: none;
+  margin: 8px 0;
+
+  body.embed--day & { background: $light-grey; }
+  .episode_player & { height: 6px; }
+  .mini_player & { height: 6px; background: $light-grey; }
+}
+
+.range_slider {
+  margin: 0;
+  width: $range-width;
+
+  @media (min-width: $tablet) {
+    display: flex;
+    flex-direction: column;
+  }
+  // input[type=range]
+  &-range {
+    -webkit-appearance: none;
+    background: none;
+    display: block;
+    position: relative;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    width: $range-width;
+
+    // These have to be done one-by-one because the
+    // browsers don't like this on to be comma-seperated
+    &::-moz-range-track { @include range-track($range-track-height, $range-track-color); }
+    &::-ms-track { @include range-track($range-track-height, $range-track-color); }
+    &::-webkit-slider-runnable-track { @include range-track($range-track-height, $range-track-color); }
+
+    &::-moz-range-thumb { @include range-handle($range-handle-size); }
+    &::-ms-thumb { @include range-handle($range-handle-size); }
+    &::-webkit-slider-thumb { @include range-handle($range-handle-size); }
+
+    // Parent
+    &_wrap {
+      margin: 3px 0;
+      position: relative;
+
+      .range_slider-range-track {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        background: $green;
+        height: $range-track-height;
+        border-radius: 1px;
+        width: 0%;
+        margin-top: -1px;
+        pointer-events: none;
+
+        .mini_player & {
+          height: 6px !important;
+          margin-top: -3px;
+        }
+
+        .episode_player & {
+          height: 6px;
+          margin-top: -3px;
+        }
+      }
+    }
+  }
+
+  &-above {
+    display: none;
+    color: $medium-grey;
+    font-family: $code;
+    font-size: 0.75em;
+    text-transform: none;
+
+    @media (min-width: $tablet) {
+      display: inline;
+    }
+  }
+
+  &-below {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .episode_player & { padding: 0; }
+
+    & > span {
+      display: none;
+      font-size: 0.875em;
+      font-weight: 900;
+
+      @media (min-width: $tablet) {
+        display: inline;
+      }
+    }
+
+    & > output {
+      margin-left: auto;
+      text-align: right;
+      color: $half-white;
+      font-family: $code;
+      letter-spacing: -0.05em;
+      font-size: 0.75em;
+
+      body.embed--day & {
+        color: $half-black;
+      }
+
+      .episode_player & {
+        margin-left: 0;
+        text-align: left;
+      }
+
+      & > b {
+        color: $green;
+        font-weight: 400;
+      }
+    }
+  }
+}

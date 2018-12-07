@@ -2,14 +2,24 @@ defmodule ChangelogWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: ChangelogWeb
+      use PlugEtsCache.Phoenix
 
-      alias Changelog.Repo
-      alias ChangelogWeb.Plug.{RequireAdmin, RequireUser, RequireGuest}
+      alias Changelog.{Policies, Repo}
+      alias ChangelogWeb.Plug.{Authorize, PublicEtsCache, RequireUser, RequireGuest}
       import Ecto
       import Ecto.Query
 
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Plug.Conn
+
+      @doc """
+      A small wrapper around PlugEtsCache.Phoenix.cache_response to short-circuit
+      the caching if connection has a user
+      """
+      def cache_public_response(conn = %{assigns: %{current_user: user}}) when not is_nil(user), do: conn
+      def cache_public_response(conn), do: cache_response(conn)
+      def cache_public_response(conn = %{assigns: %{current_user: user}}, _ttl) when not is_nil(user), do: conn
+      def cache_public_response(conn, ttl), do: cache_response(conn, ttl)
 
       defp is_admin?(user = %Changelog.Person{}), do: user.admin
       defp is_admin?(_), do: false
@@ -28,6 +38,7 @@ defmodule ChangelogWeb do
       import Scrivener.HTML
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
+      alias Changelog.Policies
       alias ChangelogWeb.TimeView
     end
   end
@@ -39,6 +50,7 @@ defmodule ChangelogWeb do
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1,get_flash: 2, view_module: 1]
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
+      alias Changelog.Policies
       alias ChangelogWeb.{SharedView, TimeView}
     end
   end

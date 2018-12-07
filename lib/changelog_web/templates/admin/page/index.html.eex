@@ -1,24 +1,16 @@
+<%= if Enum.any?(@draft_items) do %>
 <div class="ui basic segment">
-  <div class="ui stackable grid">
-    <div class="ui eight wide column">
-      <h1 class="ui header">Episode Drafts (Next Up)</h1>
-    <%= if Enum.any?(@draft_episodes) do %>
-      <%= render("_draft_episodes_table.html", assigns) %>
-    <% else %>
-      <p>There are no draft episodes at this time.</p>
-    <% end %>
-    </div>
-
-    <div class="ui eight wide column">
-      <h1 class="ui header">Post Drafts</h1>
-    <%= if Enum.any?(@draft_posts) do %>
-      <%= render("_draft_posts_table.html", assigns) %>
-    <% else %>
-      <p>There are no draft posts at this time.</p>
-    <% end %>
-    </div>
-  </div>
+  <h1 class="ui header">News drafts</h1>
+  <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{items: @draft_items, status: :draft})) %>
 </div>
+<% end %>
+
+<%= if Enum.any?(@draft_episodes) do %>
+<div class="ui basic segment">
+  <h1 class="ui header">Episode drafts (next up)</h1>
+  <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @draft_episodes, status: :draft})) %>
+</div>
+<% end %>
 
 <div class="ui basic segment">
   <div class="ui centered stackable grid">
@@ -49,26 +41,34 @@
     </div>
 
     <div class="ui four wide column">
-      <h1 class="ui header">Members</h1>
+      <h1 class="ui header">People</h1>
       <table class="ui celled table">
         <thead>
           <tr>
             <th>Metric</th>
-            <th></th>
+            <th class="center aligned">
+              <div class="ui basic buttons">
+                <%= icon_link("plus", to: admin_person_path(@conn, :new), title: "New Person") %>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>New Today</td>
-            <td><%= @members[:today] %></td>
+            <td>Members today</td>
+            <td><%= @members[:today] |> comma_separated %></td>
           </tr>
           <tr>
-            <td>In Slack</td>
-            <td><%= @members[:slack] %></td>
+            <td>Members in Slack</td>
+            <td><%= @members[:slack] |> comma_separated %></td>
           </tr>
           <tr>
-            <td>Total</td>
-            <td><%= @members[:total] %></td>
+            <td>Members in total</td>
+            <td><%= @members[:total] |> comma_separated %></td>
+          </tr>
+          <tr>
+            <td>People in total</td>
+            <td><%= Repo.count(Changelog.Person) |> comma_separated %></td>
           </tr>
         </tbody>
       </table>
@@ -77,7 +77,7 @@
 </div>
 
 <div class="ui basic segment">
-  <div class="ui stackable centered three column grid">
+  <div class="ui stackable centered two column grid">
   <%= for podcast <- @podcasts do %>
     <div class="column">
       <div class="ui segment">
@@ -87,7 +87,6 @@
             <%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
           </div>
         </h3>
-
         <%= render("_podcast_episodes_table.html", conn: @conn, podcast: podcast) %>
       </div>
     </div>

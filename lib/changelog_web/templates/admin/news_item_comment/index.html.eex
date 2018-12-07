@@ -1,0 +1,16 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("News", to: admin_news_item_path(@conn, :index)) %> &raquo; Comments
+    <div class="sub header">no spam!</div>
+  </h1>
+
+  <div class="actions right">
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@comments) do %>
+  <%= render("_table.html", conn: @conn, comments: @comments) %>
+  <%= pagination_links @conn, @page, path: &admin_news_item_comment_path/3 %>
+<% end %>
+</div>

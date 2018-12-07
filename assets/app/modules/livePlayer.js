@@ -8,7 +8,6 @@ export default class LivePlayer {
     this.streaming = false;
     this.failed = false;
     this.listeners = 0;
-    this.liveIndicator = u(".js-live-indicator");
     this.audio = new Audio();
     this.audio.type = "audio/mpeg";
     this.audio.autoplay = true;
@@ -115,8 +114,11 @@ export default class LivePlayer {
   }
 
   play() {
-    this.audio.play();
-    this.container.addClass("is-playing").removeClass("is-paused is-upcoming");
+    this.audio.play().then(_ => {
+      this.container.addClass("is-playing").removeClass("is-paused is-upcoming");
+    }).catch(error => {
+      console.log("failed to play", error);
+    });
   }
 
   pause() {
@@ -125,10 +127,10 @@ export default class LivePlayer {
   }
 
   showLiveIndicator() {
-    this.liveIndicator.removeClass("is-hidden");
+    u(".js-live-indicator").removeClass("is-hidden");
   }
 
   hideLiveIndicator() {
-   this.liveIndicator.addClass("is-hidden");
+   u(".js-live-indicator").addClass("is-hidden");
   }
 }

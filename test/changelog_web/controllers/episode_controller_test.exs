@@ -60,16 +60,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     end
   end
 
-  test "previewing a podcast episode when not an admin", %{conn: conn} do
-    p = insert(:podcast)
-    e = insert(:episode, podcast: p)
-
-    conn = get(conn, episode_path(conn, :preview, p.slug, e.slug))
-    assert conn.halted
-  end
-
-  @tag :as_admin
-  test "previewing a podcast episode when signed in as admin", %{conn: conn} do
+  test "previewing a podcast episode", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
     insert(:episode_guest, episode: e)
@@ -81,15 +72,6 @@ defmodule ChangelogWeb.EpisodeControllerTest do
   end
 
   describe "play" do
-    test "for unpublished episode", %{conn: conn} do
-      p = insert(:podcast)
-      e = insert(:episode, podcast: p)
-
-      assert_raise Ecto.NoResultsError, fn ->
-        get(conn, episode_path(conn, :play, p.slug, e.slug))
-      end
-    end
-
     test "for published episode", %{conn: conn} do
       p = insert(:podcast)
       e = insert(:published_episode, podcast: p)

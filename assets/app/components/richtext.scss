@@ -1,5 +1,4 @@
 .richtext {
-
   // Remove bottom-margin on last element in richtext
   > *:last-child {
     margin-bottom: 0 !important;
@@ -9,61 +8,21 @@
   //
   // Headings
   h1, h2, h3, h4, h5, h6 {
-    line-height: 1.5em;
+    line-height: 1.125em;
     margin-top: 1.375em;
-    margin-bottom: .75em;
+    margin-bottom: .5em;
 
     &:first-child { margin-top: 0; }
 
     a { font-weight: 900; }
   }
 
-  h1 {
-    font-size: 1.75em;
-    margin-bottom: 1.25em;
-    @include breakpoint(tiny) { font-size: 2em; }
-    @include breakpoint(tablet) {font-size: 2.25em; }
-  }
-  h2 {
-    font-size: 1.625em;
-    margin-top: 2em;
-    @include breakpoint(tiny) { font-size: 1.75em; }
-    @include breakpoint(tablet) { font-size: 2em; }
-  }
-  h3 {
-    font-size: 1.25em;
-    margin-top: 1.8em;
-    @include breakpoint(tiny) { font-size: 1.375em; }
-    @include breakpoint(tablet) { font-size: 1.5em; }
-  }
-  h4 {
-    font-size: 1.125em;
-    @include breakpoint(tiny) { font-size: 1.25em; }
-    @include breakpoint(tablet) { font-size: 1.375em; }
-  }
-  h5 {
-    font-size: 1em;
-    @include breakpoint(tiny) { font-size: 1.125em; }
-    @include breakpoint(tablet) { font-size: 1.25em; }
-  }
-  h6 {
-    font-size: .875em;
-    @include breakpoint(tiny) { font-size: 1em; }
-    @include breakpoint(tablet) { font-size: 1.125em; }
-  }
-
-  &--small {
-    h1 {
-      font-size: 1.675em;
-      @include breakpoint(tiny) { font-size: 1.75em; }
-      @include breakpoint(tablet) {font-size: 2em; }
-    }
-    h2 {
-      font-size: 1.5em;
-      @include breakpoint(tiny) { font-size: 1.675em; }
-      @include breakpoint(tablet) { font-size: 1.875em; }
-    }
-  }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.375em; }
+  h3 { font-size: 1.25em; }
+  h4 { font-size: 1.125em; }
+  h5 { font-size: 1em; }
+  h6 { font-size: .875em; }
 
   //
   //
@@ -71,45 +30,12 @@
   p {
     font-size: 1em;
     line-height: 1.65em;
-    @include breakpoint(tiny) { font-size: 1.125em; }
-    @include breakpoint(tablet) { font-size: 1.25em; }
   }
 
   p, li {
     // If a <code> tag is within a <p> or <li> tag show it as a snippet
     code {
-      background: rgba($black, .06);
-      color: $black;
-      display: inline-block;
-      font-family: $code;
-      font-size: 13px;
-      line-height: 1;
-      padding: .35em .5em;
-    }
-  }
-
-  &--small p { font-size: 1em; }
-
-  pre {
-    background: $black;
-    border-left: 6px solid $green;
-    border-top-right-radius: $base-border-radius;
-    border-bottom-right-radius: $base-border-radius;
-    hyphens: none;
-    min-width: 100%;
-    overflow-x: auto;
-    white-space: pre;
-    word-break: normal;
-    margin-bottom: 1.75em;
-
-    code {
-      color: $white;
-      line-height: 1.75;
-      font-size: 16px;
-      white-space: pre;
-      display: block;
-      overflow-x: scroll;
-      padding: 1em;
+      @include inline_code();
     }
   }
 
@@ -136,33 +62,24 @@
     }
   }
 
-  ul {
-    @include list;
-  }
-
-  ol {
-    @include list(ol);
-  }
-
-  &--small {
-    ul,
-    ol {
-      li {
-        font-size: 1em;
-      }
-    }
-  }
+  ul { @include list; }
+  ol { @include list(ol); }
 
   blockquote {
-    border-left: 3px solid $green;
-    // font-size: 1.25em;
-    // line-height: 1em;
+    border-left: 4px solid $green;
     margin: 1.25rem 0 1.5rem 0;
-    padding: 0 0 0 15px;
+    padding: .15em 0 .15em 1em;
     color: $black;
 
     p {
       color: $black;
+      max-width: 680px;
+    }
+
+    *:last-child { margin-bottom: 0; }
+
+    ol, ul {
+      margin-top: 0;
     }
   }
 
@@ -217,11 +134,6 @@
   img {
     height: auto;
     width: 100%;
-
-    @media (min-width: $desktop) {
-      margin: $padding-large -10%;
-      width: 120%;
-    }
   }
 
   // borders for images in posts

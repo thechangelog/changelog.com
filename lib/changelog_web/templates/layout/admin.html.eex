@@ -12,39 +12,56 @@
   <body data-module="<%= @view_module %>" data-template="<%= @view_template %>">
     <div class="ui fixed menu <%= get_flash(@conn, :result) %>">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
-      <%= link to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, "page", "active")}" do %>
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      <%= link(to: admin_page_path(@conn, :index), class: "item #{active_class(@conn, "page", "active")}") do %>
         Admin
       <% end %>
+    <% end %>
 
-      <%= link to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, ["podcast", "episode"], "active")}" do %>
+    <%= if Policies.Podcast.index(@current_user) do %>
+      <%= link(to: admin_podcast_path(@conn, :index), class: "item #{active_class(@conn, ["podcast", "episode"], "active")}") do %>
         <i class="unmute icon"></i>Podcasts
       <% end %>
+    <% end %>
 
-      <%= link to: admin_news_item_path(@conn, :index), class: "item #{active_class(@conn, ["news_item", "news_source"], "active")}" do %>
+    <%= if Policies.NewsItem.index(@current_user) do %>
+      <%= link(to: admin_news_item_path(@conn, :index), class: "item #{active_class(@conn, ["news_item", "news_source"], "active")}") do %>
         <i class="newspaper icon"></i>News</a>
       <% end %>
+    <% end %>
 
-      <%= link to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, "post", "active")}" do %>
-        <i class="write icon"></i>Posts
+    <%= if Policies.Post.index(@current_user) do %>
+      <%= link(to: admin_post_path(@conn, :index), class: "item #{active_class(@conn, "post", "active")}") do %>
+        <i class="pencil alternate icon"></i>Posts
       <% end %>
+    <% end %>
 
-      <%= link to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, "person", "active")}" do %>
+    <%= if Policies.Person.index(@current_user) do %>
+      <%= link(to: admin_person_path(@conn, :index), class: "item #{active_class(@conn, "person", "active")}") do %>
         <i class="user icon"></i>People
       <% end %>
+    <% end %>
 
-      <%= link to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, "topic", "active")}" do %>
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      <%= link(to: admin_topic_path(@conn, :index), class: "item #{active_class(@conn, "topic", "active")}") do %>
         <i class="hashtag icon"></i>Topics
       <% end %>
+    <% end %>
 
-      <%= link to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, "sponsor", "active")}" do %>
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      <%= link(to: admin_sponsor_path(@conn, :index), class: "item #{active_class(@conn, "sponsor", "active")}") do %>
         <i class="dollar icon"></i>Sponsors
       <% end %>
+    <% end %>
 
-      <%= link to: admin_benefit_path(@conn, :index), class: "item #{active_class(@conn, "benefit", "active")}" do %>
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      <%= link(to: admin_benefit_path(@conn, :index), class: "item #{active_class(@conn, "benefit", "active")}") do %>
         <i class="ticket icon"></i>Benefits
       <% end %>
+    <% end %>
 
       <div class="right menu">
+      <%= if Policies.AdminsOnly.index(@current_user) do %>
         <div class="ui right aligned navigation search item">
           <div class="ui transparent icon input">
             <input class="prompt" type="text">
@@ -52,8 +69,9 @@
           </div>
           <div class="results"></div>
         </div>
+      <% end %>
 
-        <%= link to: sign_out_path(@conn, :delete), class: "icon item" do %>
+        <%= link(to: sign_out_path(@conn, :delete), class: "icon item") do %>
           <i class="sign out icon"></i>
         <% end %>
       </div>

@@ -43,15 +43,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     end
   end
 
-  test "previewing a news item when not an admin", %{conn: conn} do
-    item = insert(:news_item)
-
-    conn = get(conn, news_item_path(conn, :preview, item))
-    assert conn.halted
-  end
-
-  @tag :as_admin
-  test "previewing a news item when signed in as admin", %{conn: conn} do
+  test "previewing a news item", %{conn: conn} do
     item = insert(:news_item)
 
     conn = get(conn, news_item_path(conn, :preview, item))
@@ -86,7 +78,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   test "hitting the impress endpoint", %{conn: conn} do
     item1 = insert(:published_news_item, headline: "You gonna like this")
     item2 = insert(:published_news_item, headline: "You gonna like this too")
-    conn = post(conn, news_item_path(conn, :impress), items: "#{hashid(item1)},#{hashid(item2)}")
+    conn = post(conn, news_item_path(conn, :impress), ids: "#{hashid(item1)},#{hashid(item2)}")
     assert conn.status == 204
     item1 = Repo.get(NewsItem, item1.id)
     item2 = Repo.get(NewsItem, item2.id)
@@ -97,7 +89,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   @tag :as_admin
   test "hitting the impress endpoint as admin does not impress", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
-    conn = post(conn, news_item_path(conn, :impress), items: "#{hashid(item)}")
+    conn = post(conn, news_item_path(conn, :impress), ids: "#{hashid(item)}")
     assert conn.status == 204
     item = Repo.get(NewsItem, item.id)
     assert item.impression_count == 0

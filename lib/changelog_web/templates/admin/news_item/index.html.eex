@@ -8,57 +8,65 @@
     <button class="ui basic icon clipboard button" title="Bookmarklet" data-clipboard-text="<%= bookmarklet_code() %>"><i class="book icon"></i></button>
 
     <div class="ui primary basic buttons">
-      <%= link "Items", to: admin_news_item_path(@conn, :index), class: "ui button" %>
+      <%= link("Items", to: admin_news_item_path(@conn, :index), class: "ui button") %>
       <%= link to: admin_news_item_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
 
+  <%= if Policies.AdminsOnly.index(@current_user) do %>
     <div class="ui basic buttons">
-      <%= link "Sources", to: admin_news_source_path(@conn, :index), class: "ui button" %>
+      <%= link("Sources", to: admin_news_source_path(@conn, :index), class: "ui button") %>
       <%= link to: admin_news_source_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
 
     <div class="ui basic buttons">
-      <%= link "Issues", to: admin_news_issue_path(@conn, :index), class: "ui button" %>
+      <%= link("Issues", to: admin_news_issue_path(@conn, :index), class: "ui button") %>
       <%= link to: admin_news_issue_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
+
+    <div class="ui basic buttons">
+      <%= link("Comments", to: admin_news_item_comment_path(@conn, :index), class: "ui button") %>
+    </div>
+  <% end %>
   </div>
 </div>
 
 <div class="ui basic segment">
   <%= if Enum.any?(@drafts) do %>
     <h2 id="drafts" class="ui header">My Drafts</h2>
-    <%= render("_table.html", conn: @conn, status: :draft, items: @drafts) %>
+    <%= render("_table.html", Map.merge(assigns, %{status: :draft, items: @drafts})) %>
   <% end %>
 
+<%= if Policies.AdminsOnly.index(@current_user) do %>
   <%= if Enum.any?(@submitted) do %>
     <h2 id="submitted" class="ui header">Submitted</h2>
-    <%= render("_table.html", conn: @conn, status: :submitted, items: @submitted) %>
+    <%= render("_table.html", Map.merge(assigns, %{status: :submitted, items: @submitted})) %>
   <% end %>
+<% end %>
 
   <%= if Enum.any?(@scheduled) do %>
     <h2 id="scheduled" class="ui header">Scheduled</h2>
-    <%= render("_table.html", conn: @conn, status: :scheduled, items: @scheduled) %>
+    <%= render("_table.html", Map.merge(assigns, %{status: :scheduled, items: @scheduled})) %>
   <% end %>
 
   <h2 id="queued" class="ui header">Queued</h2>
   <%= if Enum.any?(@queued) do %>
-    <%= render("_table.html", conn: @conn, status: :queued, items: @queued) %>
+    <%= render("_table.html", Map.merge(assigns, %{status: :queued, items: @queued})) %>
   <% else %>
     <div class="ui basic segment icon message">
       <i class="meh face icon"></i>
       <div class="content">
         <div class="header">No news items in the queue</div>
-        <p><%= link "Log", to: admin_news_item_path(@conn, :new) %> some news. <%= link "Add", to: admin_news_source_path(@conn, :new) %> a source. <%= link "Create", to: admin_news_issue_path(@conn, :new) %> an issue.</p>
       </div>
     </div>
   <% end %>
 
+<%= if Policies.AdminsOnly.index(@current_user) do %>
   <h2 id="sponsorships" class="ui header">
     <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
 
@@ -104,10 +112,11 @@
   <% end %>
   </div>
 </div>
+<% end %>
 
 <%= if Enum.any?(@published) do %>
   <h2 id="published" class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
-  <%= render("_table.html", conn: @conn, status: :published, items: @published) %>
+  <%= render("_table.html", Map.merge(assigns, %{status: :published, items: @published})) %>
   <%= pagination_links(@conn, @page, path: &admin_news_item_path/3) %>
 <% end %>
 </div>

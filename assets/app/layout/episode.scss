@@ -191,14 +191,14 @@
       }
 
       &-heading {
+        display: flex;
+        justify-content: space-between;
         font-family: $code;
-        font-size: 0.9375em;
-        font-weight: 700;
-        margin-bottom: 2em;
+        margin-bottom: $base-spacing;
+        width: 100%;
 
-        span {
-          border-bottom: 3px solid $light-grey;
-          padding: 0 0 0.25em;
+        &-note {
+          font-size: 0.75em;
         }
       }
     }

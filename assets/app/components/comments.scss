@@ -1,0 +1,320 @@
+.comments {
+  $condensedBreakpoint: 1000px;
+  $horizontal-padding: 20px;
+  margin: 0 auto 15vmax;
+  padding: 0 $horizontal-padding;
+  // Don't show indent border on first-level comments
+  // & > .comment:before { content: none; }
+
+  @include breakpoint($condensedBreakpoint) {
+    padding: 0 30px;
+  }
+
+  &-rule {
+    border: none;
+    border-top: 2px solid $light-grey;
+    margin: 10px 0 40px;
+  }
+}
+
+.comment_wrapper {
+  @include breakpoint(mobile, max) {
+    margin-left: 24px;
+    font-size: ($root-font-size * 0.95);
+  }
+}
+
+.comment_form {
+  $border: 1px solid $light-grey;
+  border: $border;
+  border-radius: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: $base-spacing*1.5;
+  min-height: 100px;
+
+  &.is-hidden {
+    display: none;
+  }
+
+  &-write {
+    background: transparent;
+    border: none;
+    display: block;
+    font-size: 16px; // Prevent iOS from zooming on input elements
+    line-height: 1.625em;
+    padding: 1em;
+    resize: none !important;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    .comment_form--preview & {
+      display: none;
+    }
+  }
+
+  &-preview {
+    display: none;
+    padding: 1em;
+    width: 100%;
+
+    & > *:last-child {
+      margin-bottom: 0;
+    }
+
+    .comment_form--preview & {
+      display: block;
+    }
+  }
+
+  &-toolbar {
+    align-self: flex-end;
+    background: $lightest-grey;
+    border-top: $border;
+    display: flex;
+    flex-wrap: wrap;
+    height: 40px;
+    justify-content: space-between;
+    padding: 0.25em;
+    width: 100%;
+
+    &-toggle {
+      align-items: center;
+      color: $medium-grey;
+      display: flex;
+      font-family: $code;
+      font-size: 0.8125em;
+
+      button {
+        color: $medium-grey;
+        padding: 0 0.5em;
+      }
+
+      &-write {
+        background: url("/images/icons/markdown.svg") left center no-repeat;
+        background-size: 20px 12px;
+        margin-left: 0.75em;
+        padding-left: 28px !important;
+        font-weight: bold;
+        .comment_form--preview & { font-weight: normal; }
+      }
+      &-preview {
+        .comment_form--preview & { font-weight: bold; }
+      }
+    }
+
+    &-submit {
+      // This is a button
+      border: none;
+      border-radius: $base-border-radius !important;
+      background: $green;
+      color: $white;
+      cursor: pointer;
+      font-family: $code;
+      font-size: 0.8125em;
+      padding: 0.5em 1em;
+    }
+  }
+}
+
+.comment {
+  margin: 0 0 $base-spacing;
+  position: relative;
+
+  // Child comments
+  .comment {
+    margin-bottom: $base-spacing/2;
+  }
+
+  &.is-collapsed {
+    .comment-header { opacity: 0.4; }
+
+    .comment_form,
+    .comment-footer,
+    .comment-replies,
+    .comment-body {
+      display: none;
+    }
+
+    .comment-toggle { cursor: s-resize; }
+    .comment-toggle:before { content: "[+]"; }
+  }
+
+  &-connector {
+    @include position(absolute, 0 null 0 -23px);
+    cursor: n-resize;
+    opacity: 0;
+    width: 18px;
+
+    &:before {
+      @include position(absolute, 40px null 0 8px);
+      content: "";
+      border-radius: 2px;
+      background: $light-grey;
+      width: 2px;
+    }
+
+    @include breakpoint(mobile) {
+      left: -28px;
+    }
+
+    .comment--has_replies > & {
+      opacity: 1;
+    }
+  }
+
+  &-toggle,
+  &-header,
+  &-footer {
+    font-family: $code;
+    font-size: 0.8125em;
+  }
+
+  &-toggle {
+    @include position(absolute, 2px null null -26px);
+    &:before { content: "[-]"; }
+    cursor: n-resize;
+    z-index: 2;
+
+    color: $medium-grey;
+    &:hover { color: $black; }
+
+    @include breakpoint(mobile) {
+      left: -($base-spacing);
+    }
+  }
+
+  &-header,
+  &-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+
+    & > * { z-index: 1; }
+  }
+  // Highlight the permalink comment
+  &.is-permalink > .comment-header {
+    &:before {
+      @include position(absolute, -4px -10px -4px -37px);
+      background: $light-green;
+      border-radius: 2px;
+      content: "";
+      z-index: 0;
+    }
+  }
+
+  &-footer {
+    margin-bottom: 1em;
+
+    .comment-actions {
+      margin-left: 0;
+    }
+  }
+
+  &.is-author {
+    .comment-author-name {
+      color: $base-hover-color;
+    }
+  }
+
+  &-author {
+    align-items: center;
+    display: flex;
+
+    &-image {
+      $size: 20px;
+      background: #000;
+      // box-shadow: 0 0 $size rgba($black, 0.2);
+      font-size: 8px;
+      border-radius: $base-border-radius;
+      width: $size;
+      height: $size;
+      margin-right: 10px;
+    }
+
+    &-name {
+      color: $black;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+
+  &-actions {
+    margin: 0 0 0 35px;
+
+    // Highlight the permalink comment
+    .comment.is-permalink > & a { color: $black; }
+
+    a {
+      color: $black;
+      &:hover { text-decoration: underline; }
+      &:after { content: " \2022"; }
+      &:last-child:after { display: none; }
+    }
+  }
+
+  &-body {
+    margin: 1em 0;
+  }
+
+  &-replies {
+    margin-top: $base-spacing;
+
+    @include breakpoint(mobile) {
+      margin-left: $base-spacing;
+    }
+  }
+}
+
+// Defining new styles specific to .richtext--comment
+.comment-body.richtext--comment,
+.comment_form-preview.richtext--comment,
+.comment_form-preview {
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1em;
+    margin: 0 0 1em;
+  }
+
+  blockquote, p, li {
+    font-size: 1em;
+  }
+
+  blockquote {
+    padding: 0.5em 0 0.5em 1.5em;
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  hr {
+    margin: 1em 0;
+  }
+
+  img {
+    height: auto;
+    max-width: 100%;
+    margin: 0;
+    width: auto;
+  }
+
+  pre {
+    margin-top: 0;
+    max-height: 30em;
+    overflow-x: scroll;
+
+    &:before {
+      display: none; // hide left line number (?) element
+    }
+
+    code {
+      padding: 1em;
+    }
+  }
+}

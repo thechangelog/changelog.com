@@ -17,6 +17,7 @@ config :changelog, ChangelogWeb.Endpoint,
 config :changelog,
   ecto_repos: [Changelog.Repo],
   buffer_token: System.get_env("BUFFER_TOKEN"),
+  github_api_token: System.get_env("GITHUB_API_TOKEN"),
   cm_api_token: Base.encode64("#{System.get_env("CM_API_TOKEN")}:x"),
   slack_invite_api_token: System.get_env("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: System.get_env("SLACK_APP_API_TOKEN")
@@ -56,10 +57,10 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
 
 config :plug_ets_cache,
   db_name: :response_cache,
-  ttl_check: 30,
-  ttl: 90
+  ttl_check: 1,
+  ttl: 60
 
-config :mime, :types, %{"application/xml" => ["xml"]}
+config :mime, :types, %{"application/javascript" => ["js"], "application/xml" => ["xml"]}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

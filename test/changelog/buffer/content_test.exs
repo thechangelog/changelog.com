@@ -18,14 +18,11 @@ defmodule Changelog.Buffer.ContentTest do
   end
 
   describe "episode_text" do
-    test "it uses episode headline if exists and falls back to title" do
-      ep1 = insert(:published_episode, title: "The Best", headline: "Evar!")
+    test "uses episode title" do
+      ep1 = insert(:published_episode, title: "The Best", subtitle: "Evar!")
       item1 = ep1 |> episode_news_item() |> insert
-      assert Content.episode_text(item1) =~ "Evar!"
-
-      ep2 = insert(:published_episode, title: "The Best")
-      item2 = ep2 |> episode_news_item() |> insert
-      assert Content.episode_text(item2) =~ "The Best"
+      assert Content.episode_text(item1) =~ "The Best"
+      refute Content.episode_text(item1) =~ "Evar!"
     end
 
     test "includes participant twitter handles and falls back to names" do
@@ -47,7 +44,7 @@ defmodule Changelog.Buffer.ContentTest do
       t2 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
-      assert Content.episode_text(item) =~ "#security, @OfficialiOS"
+      assert Content.episode_text(item) =~ "#security @OfficialiOS"
     end
   end
 
@@ -74,13 +71,8 @@ defmodule Changelog.Buffer.ContentTest do
       assert is_nil(Content.news_item_link(nil))
     end
 
-    test "returns item url when story is less than 20 words" do
-      item = build(:news_item, story: "This is too short")
-      assert Content.news_item_link(item) == item.url
-    end
-
-    test "returns news item permalink when story is 20 words or more" do
-      item = insert(:news_item, story: "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty")
+    test "returns news item permalink" do
+      item = insert(:news_item, story: "ohai here is a story")
       assert Content.news_item_link(item) == Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
     end
   end
@@ -90,7 +82,7 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(nil) == ""
     end
 
-    test "includes topic tags and twitter handles" do
+    test "uses verbose syntax with 3 or more topics" do
       item = insert(:news_item, headline: "News of iOS 9 doing Machine Learning things.")
       t1 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
       t2 = insert(:topic, name: "Machine Learning", slug: "machine-learning")
@@ -98,33 +90,38 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
       insert(:news_item_topic, news_item: item, topic: t3)
-      assert Content.news_item_text(item) =~ "@OfficialiOS, #machinelearning, #security"
+      assert Content.news_item_text(item) =~ "@OfficialiOS #machinelearning #security"
     end
 
-    test "includes 'via' when news source has twitter handle" do
-      source = insert(:news_source, twitter_handle: "wired")
-      item = insert(:news_item, source: source)
-      t1 = insert(:topic, name: "iOS", slug: "ios")
-      insert(:news_item_topic, news_item: item, topic: t1)
-      assert Content.news_item_text(item) =~ "via @wired"
-    end
-
-    test "excludes 'via' when news source has no twitter handle" do
-      source = insert(:news_source)
-      item = insert(:news_item, source: source)
-      refute Content.news_item_text(item) =~ " via "
-    end
-
-    test "includes 'by' when item has author and handle" do
+    test "uses terse syntax with no topics, includes 'by' with author handle" do
       author = insert(:person, twitter_handle: "BigDaddy")
       item = insert(:news_item, author: author)
       assert Content.news_item_text(item) =~ "by @BigDaddy"
     end
 
-    test "excludes 'by' when item author has no twitter handle" do
+    test "uses terse syntax with two topics, includes 'by' with author name" do
       author = insert(:person)
       item = insert(:news_item, author: author)
-      refute Content.news_item_text(item) =~ " by "
+      insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
+      insert(:topic, name: "Machine Learning", slug: "machine-learning")
+      text = Content.news_item_text(item)
+      assert text =~ " by #{author.name}"
+      refute text =~ "@OfficialiOS #machinelearning #security"
+    end
+
+    test "uses terse syntax with no topics, it includes author alone if source has no handle" do
+      author = insert(:person, twitter_handle: "BigDaddy")
+      source = insert(:news_source)
+      item = insert(:news_item, author: author, source: source)
+      text = Content.news_item_text(item)
+      assert text =~ " by @BigDaddy"
+      refute text =~ "via @wired"
+    end
+
+    test "it excludes source if there is no author" do
+      source = insert(:news_source, twitter_handle: "wired")
+      item = insert(:news_item, source: source)
+      refute Content.news_item_text(item) =~ "via @wired"
     end
   end
 
@@ -137,15 +134,5 @@ defmodule Changelog.Buffer.ContentTest do
       item = build(:news_item)
       assert Content.post_link(item) == item.url
     end
-  end
-
-  describe "post_text" do
-    # test "calls news_item_text" do
-    #   item = build(:news_item)
-    #   with_mock(Content, [news_item_text: fn() -> "text" end]) do
-    #     Content.post_text(item)
-    #     assert called(Content.news_item_text(item))
-    #   end
-    # end
   end
 end

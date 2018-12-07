@@ -25,8 +25,7 @@ defmodule ChangelogWeb.AuthController do
   end
 
   def create(conn, %{"token" => token}) do
-    [email, auth_token] = Person.decoded_auth(token)
-    person = Repo.get_by(Person, email: email, auth_token: auth_token)
+    person = Person.get_by_encoded_auth(token)
 
     if person && Timex.before?(Timex.now, person.auth_token_expires_at) do
       sign_in_and_redirect(conn, person, home_path(conn, :show))

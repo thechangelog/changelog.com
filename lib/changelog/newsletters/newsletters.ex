@@ -1,18 +1,18 @@
 defmodule Changelog.Newsletters do
 
+  alias Changelog.Cache
   alias Changelog.Newsletters.Newsletter
-  alias ConCache.Item
   alias Craisin.List
 
   def get_by_slug(slug) do
     apply(__MODULE__, String.to_existing_atom(slug), [])
   end
 
-  def community do
+  def afk do
     %Newsletter{
-      name: "Changelog Community",
-      list_id: "08773ce58bee33c04899904bc699a7e8",
-      web_id: "C7D35AA52CE2DAF7"
+      name: "Away from Keyboard",
+      list_id: "8c8c5f024909b9627f26ec8fc9fd7f65",
+      web_id: "41EF5A7A3399E7C1"
     }
   end
 
@@ -57,8 +57,9 @@ defmodule Changelog.Newsletters do
   end
 
   def get_stats(newsletter) do
-    stats = ConCache.get_or_store(:app_cache, "newsletter_#{newsletter.list_id}_stats", fn() ->
-      %Item{value: List.stats(newsletter.list_id), ttl: :timer.hours(1)}
+    cache_key = "newsletter_#{newsletter.list_id}_stats"
+    stats = Cache.get_or_store(cache_key, :timer.hours(1), fn ->
+      List.stats(newsletter.list_id)
     end)
 
     %Newsletter{newsletter | stats: stats}

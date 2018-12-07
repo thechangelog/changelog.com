@@ -21,7 +21,7 @@
         <%= for person <- participants do %>
           <article class="live-info-guests-item">
             <%= link(to: PersonView.external_url(person), title: "More Info", target: "_blank") do %>
-              <img class="live-info-guests-item-image" src="<%= PersonView.avatar_url(person) %>" alt="<%= String.at(person.name,0) %>" width="150" height="150">
+              <%= lazy_image(PersonView.avatar_url(person), String.at(person.name, 0), class: "live-info-guests-item-image", width: 150, height: 150) %>
               <h2 class="live-info-guests-item-title"><%= if Enum.any?(@episode.guests), do: host_or_guest(@episode, person) %></h2>
               <h1 class="live-info-guests-item-name"><%= person.name %></h1>
             <% end %>
@@ -30,11 +30,11 @@
         </div>
 
         <div class="live-info-cta">
-          <img class="live-info-cta-icon" src="<%= static_url(@conn, "/images/icon-slack-white.svg") %>" alt="Slack Logomark" width="25" height="25">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-slack-white.svg"), "Slack Logo", class: "live-info-cta-icon", width: 25, height: 25) %>
         <%= if @current_user do %>
-          <p>Join the discussion in our <%= link(raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{@podcast.slug}") %>.</p>
+          <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{slack_channel(@podcast)}") %>.</p>
         <% else %>
-          <p>Join the discussion in our <%= link(raw("##{@podcast.slug}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %>.</p>
+          <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %>.</p>
           <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a>.</small></p>
         <% end %>
         </div>
@@ -44,7 +44,7 @@
 
   <footer class="live-footer">
     <div class="live-footer-viewers">
-      <img class="live-info-cta-icon" src="/images/icon-eye.svg" alt="Viewers" width="37" height="26">
+      <%= lazy_image(static_url(@conn, "/images/icons/icon-eye.svg"), "Viewers", class: "live-info-cta-icon", width: 37, height: 26) %>
       <span class="js-live-viewers">0</span>
     </div>
 

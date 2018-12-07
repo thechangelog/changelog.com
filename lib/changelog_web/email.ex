@@ -1,25 +1,19 @@
 defmodule ChangelogWeb.Email do
   use Bamboo.Phoenix, view: ChangelogWeb.EmailView
 
-  def guest_thanks(person, opts) do
-    from = opts["from"] || "editors@changelog.com"
-    reply = opts["reply"] || "editors@changelog.com"
-    subject = opts["subject"] || "Your episode is live!"
-    message = opts["message"]
-
+  def guest_thanks(person, episode) do
     personal_email()
-    |> from(from)
-    |> put_header("Reply-To", reply)
     |> put_header("X-CMail-GroupName", "Guest Thanks")
     |> to(person)
-    |> subject(subject)
+    |> subject("You're on #{episode.podcast.name}!")
     |> assign(:person, person)
-    |> assign(:message, message)
+    |> assign(:episode, episode)
+    |> assign(:podcast, episode.podcast)
     |> render(:guest_thanks)
   end
 
   def guest_welcome(person) do
-    logbot_email()
+    styled_email()
     |> put_header("X-CMail-GroupName", "Guest Welcome")
     |> to(person)
     |> subject("Thanks for guesting on a Changelog show!")
@@ -28,7 +22,7 @@ defmodule ChangelogWeb.Email do
   end
 
   def sign_in(person) do
-    logbot_email()
+    styled_email()
     |> put_header("X-CMail-GroupName", "Sign In")
     |> to(person)
     |> subject("Your Sign In Link")
@@ -37,7 +31,7 @@ defmodule ChangelogWeb.Email do
   end
 
   def community_welcome(person) do
-    logbot_email()
+    styled_email()
     |> put_header("X-CMail-GroupName", "Welcome")
     |> to(person)
     |> subject("Welcome! Confirm your address")
@@ -46,7 +40,7 @@ defmodule ChangelogWeb.Email do
   end
 
   def subscriber_welcome(person, newsletter) do
-    logbot_email()
+    styled_email()
     |> put_header("X-CMail-GroupName", "Welcome")
     |> to(person)
     |> subject("Welcome! Confirm your address")
@@ -56,7 +50,7 @@ defmodule ChangelogWeb.Email do
   end
 
   def authored_news_published(person, item) do
-    logbot_email()
+    styled_email()
     |> put_header("X-CMail-GroupName", "Authored News")
     |> to(person)
     |> subject("You're on Changelog News!")
@@ -66,7 +60,7 @@ defmodule ChangelogWeb.Email do
   end
 
   def submitted_news_published(person, item) do
-    logbot_email()
+    styled_email()
     |> put_header("X-CMail-GroupName", "Submitted News")
     |> to(person)
     |> subject("Your submission is on Changelog News!")
@@ -75,15 +69,29 @@ defmodule ChangelogWeb.Email do
     |> render(:submitted_news_published)
   end
 
-  defp logbot_email do
+  def comment_reply(person, reply) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Comment Reply")
+    |> to(person)
+    |> subject("Someone replied to your comment on Changelog News!")
+    |> assign(:person, person)
+    |> assign(:reply, reply)
+    |> render(:comment_reply)
+  end
+
+  defp email_from_logbot do
     new_email()
     |> from("logbot@changelog.com")
     |> put_header("Reply-To", "editors@changelog.com")
-    |> put_html_layout({ChangelogWeb.LayoutView, "email_logbot.html"})
+  end
+
+  defp styled_email do
+    email_from_logbot()
+    |> put_html_layout({ChangelogWeb.LayoutView, "email_styled.html"})
   end
 
   defp personal_email do
-    new_email()
+    email_from_logbot()
     |> put_html_layout({ChangelogWeb.LayoutView, "email_personal.html"})
   end
 end

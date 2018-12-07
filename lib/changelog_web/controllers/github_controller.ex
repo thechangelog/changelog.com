@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.GithubController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Transcripts.{Source, Updater}
+  alias Changelog.Github
 
   require Logger
 
@@ -12,22 +12,28 @@ defmodule ChangelogWeb.GithubController do
     end
   end
 
-  defp push_event(conn, params = %{"repository" => %{"full_name" => repo}, "commits" => commits}) do
-    if repo == Source.repo_name() do
-      commits
-      |> Enum.map(&(Map.take(&1, ["added", "modified"])))
-      |> Enum.map(&Map.values/1)
-      |> List.flatten
-      |> Updater.update
-
-      json(conn, %{})
-    else
-      unsupported_event(conn, params, "push #{repo}")
+  defp push_event(conn, params = %{"repository" => %{"full_name" => full_name}, "commits" => commits}) do
+    case extract_supported_repository_from(full_name) do
+      %{"repo" => repo} ->
+        update_list = added_or_modified_files(commits)
+        Github.Puller.update(repo, update_list)
+        json(conn, %{})
+      nil -> unsupported_event(conn, params, "push #{full_name}")
     end
   end
-
   defp push_event(conn, params) do
     unsupported_event(conn, params, "push fail")
+  end
+
+  defp added_or_modified_files(commits) do
+    commits
+    |> Enum.map(&(Map.take(&1, ["added", "modified"])))
+    |> Enum.map(&Map.values/1)
+    |> List.flatten
+  end
+
+  defp extract_supported_repository_from(full_name) do
+    Regex.named_captures(Github.Source.repo_regex(), full_name)
   end
 
   defp unsupported_event(conn, params, event) do

@@ -50,6 +50,13 @@ defmodule ChangelogWeb.AuthControllerTest do
     assert get_encrypted_cookie(conn, "_changelog_user") == person.id
   end
 
+  test "following an invalid auth token doesn't sign you in", %{conn: conn} do
+    conn = get(conn, "/in/asdf1234")
+
+    assert html_response(conn, 200) =~ "Sign In"
+    assert is_nil(get_encrypted_cookie(conn, "_changelog_user"))
+  end
+
   test "following an expired auth token doesn't sign you in", %{conn: conn} do
     person = insert(:person)
 

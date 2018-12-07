@@ -44,7 +44,7 @@ defmodule Changelog.EpisodeStatTest do
       by_country = EpisodeStat.downloads_by_country(stat)
 
       assert Enum.take(by_country, 3) == [{"US", 2580.03}, {"GB", 390.35}, {"DE", 288.95}]
-      assert List.last(by_country) == {"NP", 0.0}
+      assert Enum.take(by_country, -2) == [{"AW", 0.0}, {"NP", 0.0}]
     end
 
     test "when passed multiple stats, it returns downloads sorted by country" do
@@ -55,7 +55,7 @@ defmodule Changelog.EpisodeStatTest do
       by_country = EpisodeStat.downloads_by_country([stat1, stat2, stat3])
 
       assert Enum.take(by_country, 4) == [{"JS", 6666.6}, {"US", 5160.06}, {"GB", 780.7}, {"DE", 577.9}]
-      assert List.last(by_country) == {"NP", 0.0}
+      assert Enum.take(by_country, -2) == [{"AW", 0.0}, {"NP", 0.0}]
     end
   end
 
@@ -65,8 +65,8 @@ defmodule Changelog.EpisodeStatTest do
 
       by_agent = EpisodeStat.downloads_by_client(stat)
 
-      assert Enum.take(by_agent, 3) == [{"Overcast", 1819.94}, {"AppleCoreMedia", 1192.2399999999998}, {"Pocket Casts", 889.2}]
-      assert List.last(by_agent) == {"iTMS", 0.0}
+      assert Enum.take(by_agent, 3) == [{"Overcast", 1819.94}, {"AppleCoreMedia", 1192.24}, {"Pocket Casts", 889.2}]
+      assert List.last(by_agent) == {"itunesstored", 0.0}
     end
 
     test "when passed multiple stats, it returns downloads grouped/sorted by agent" do
@@ -75,7 +75,7 @@ defmodule Changelog.EpisodeStatTest do
 
       by_agent = EpisodeStat.downloads_by_client([stat1, stat2])
 
-      assert Enum.take(by_agent, 3) == [{"Overcast", 3639.88}, {"AppleCoreMedia", 2384.4799999999996}, {"Pocket Casts", 1778.4}]
+      assert Enum.take(by_agent, 3) == [{"Overcast", 3639.88}, {"AppleCoreMedia", 2384.48}, {"Pocket Casts", 1778.4}]
     end
   end
 
@@ -85,7 +85,7 @@ defmodule Changelog.EpisodeStatTest do
 
       by_os = EpisodeStat.downloads_by_os(stat)
 
-      assert Enum.take(by_os, 2) == [{"Linux", 100.44}, {"Android", 55.39999999999999}]
+      assert Enum.take(by_os, 2) == [{"Linux", 100.44}, {"Android", 55.4}]
     end
 
     test "when passed multiple stats, it returns downloads grouped by browser" do
@@ -94,7 +94,7 @@ defmodule Changelog.EpisodeStatTest do
 
       by_os = EpisodeStat.downloads_by_os([stat1, stat2])
 
-      assert Enum.take(by_os, 2) == [{"Linux", 200.88}, {"Android", 110.79999999999998}]
+      assert Enum.take(by_os, 2) == [{"Linux", 200.88}, {"Android", 110.8}]
       assert List.last(by_os) == {"Windows XP", 0.0}
     end
   end

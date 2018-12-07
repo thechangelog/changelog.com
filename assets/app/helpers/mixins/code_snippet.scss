@@ -1,0 +1,39 @@
+@mixin inline_code() {
+  background: $lightest-grey;
+  border-radius: 3px;
+  color: lighten($dark-grey, 5%);
+  display: inline-block;
+  font-family: $code;
+  font-size: 13px;
+  line-height: 1;
+  padding: .35em .5em;
+}
+
+@mixin code_snippet() {
+  background: $black;
+  border-radius: 3px;
+  hyphens: none;
+  min-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  word-break: normal;
+  margin-bottom: 1.25em;
+  position: relative;
+
+  &:before {
+    @include position(absolute, 0 null 0 0);
+    background: lighten($black, 4%);
+    content: "";
+    width: 1em;
+  }
+
+  code {
+    color: $white;
+    line-height: 1.75;
+    font-size: 15px;
+    white-space: pre;
+    display: block;
+    overflow-x: scroll;
+    padding: 0.75em 1em 1em 2em;
+  }
+}

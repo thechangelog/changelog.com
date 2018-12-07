@@ -41,6 +41,15 @@
       </div>
     </div>
 
+    <noscript>
+      <div class="form-element_wrap">
+        <div class="form-element">
+          <label>Huntin' Robits</label>
+          <input name="gotcha" class="signup-form-input" value="Delete this if you're human"/>
+        </div>
+      </div>
+    </noscript>
+
     <div class="form-submit">
       <div class="form-submit-note">
         <div>Already a member? <em><%= link "Sign in", to: sign_in_path(@conn, :new), title: "" %></em></div>

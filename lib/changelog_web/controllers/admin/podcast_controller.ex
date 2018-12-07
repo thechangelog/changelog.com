@@ -1,29 +1,29 @@
 defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Podcast
+  alias Changelog.{Cache, Podcast}
 
+  plug :assign_podcast when action in [:show, :edit, :update]
+  plug Authorize, [Policies.Podcast, :podcast]
   plug :scrub_params, "podcast" when action in [:create, :update]
 
-  def index(conn, _params) do
-    ours =
-      Podcast.ours
+  def index(conn = %{assigns: %{current_user: user}}, _params) do
+    active =
+      Podcast.active
       |> Podcast.not_retired
-      |> Podcast.oldest_first
+      |> Podcast.by_position
+      |> Podcast.preload_hosts
       |> Repo.all
-
-    partners =
-      Podcast.partners
-      |> Podcast.not_retired
-      |> Podcast.oldest_first
-      |> Repo.all
+      |> Enum.filter(fn(p) -> Policies.Podcast.show(user, p) end)
 
     retired =
       Podcast.retired
       |> Podcast.oldest_first
+      |> Podcast.preload_hosts
       |> Repo.all
+      |> Enum.filter(fn(p) -> Policies.Podcast.show(user, p) end)
 
-    render(conn, :index, ours: ours, partners: partners, retired: retired)
+    render(conn, :index, active: active, retired: retired)
   end
 
   def new(conn, _params) do
@@ -37,10 +37,11 @@ defmodule ChangelogWeb.Admin.PodcastController do
     case Repo.insert(changeset) do
       {:ok, podcast} ->
         Repo.update(Podcast.file_changeset(podcast, podcast_params))
+        Cache.delete(podcast)
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_podcast_path(conn, :edit, podcast))
+        |> redirect_next(params, admin_podcast_path(conn, :edit, podcast.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -48,27 +49,39 @@ defmodule ChangelogWeb.Admin.PodcastController do
     end
   end
 
-  def edit(conn, %{"id" => slug}) do
-    podcast = Repo.get_by!(Podcast, slug: slug)
-      |> Repo.preload([podcast_hosts: {Changelog.PodcastHost.by_position, :person}])
-      |> Repo.preload([podcast_topics: {Changelog.PodcastTopic.by_position, :topic}])
+  def edit(conn = %{assigns: %{podcast: podcast}}, _params) do
+    podcast =
+      podcast
+      |> Podcast.preload_hosts
+      |> Podcast.preload_topics
+
     changeset = Podcast.update_changeset(podcast)
+
     render(conn, :edit, podcast: podcast, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => slug, "podcast" => podcast_params}) do
-    podcast = Repo.get_by!(Podcast, slug: slug)
+  def update(conn = %{assigns: %{podcast: podcast}}, params = %{"podcast" => podcast_params}) do
+    podcast =
+      podcast
       |> Repo.preload(:podcast_topics)
       |> Repo.preload(:podcast_hosts)
+
     changeset = Podcast.update_changeset(podcast, podcast_params)
 
     case Repo.update(changeset) do
-      {:ok, _podcast} ->
+      {:ok, podcast} ->
+        Cache.delete(podcast)
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_podcast_path(conn, :index))
       {:error, changeset} ->
         render(conn, :edit, podcast: podcast, changeset: changeset)
     end
+  end
+
+  defp assign_podcast(conn = %{params: %{"id" => id}}, _) do
+    podcast = Repo.get_by!(Podcast, slug: id) |> Podcast.preload_hosts
+    assign(conn, :podcast, podcast)
   end
 end

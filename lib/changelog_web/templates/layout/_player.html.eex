@@ -13,7 +13,7 @@
     </div>
     <div class="podcast-player_buttons">
       <button class="podcast-player-button podcast-player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
-        <span class="js-player-prev-number"></span><img src="<%= static_url(@conn, "/images/icons/podcast-arrow.svg") %>" alt="Previous episode"/>
+        <span class="js-player-prev-number"></span><%= lazy_image(static_url(@conn, "/images/icons/podcast-arrow.svg"), "Previous Episode") %>
       </button>
       <button class="podcast-player-button podcast-player-button--back15 js-player-back-button" title="Seek back 15 seconds"></button>
 
@@ -21,17 +21,17 @@
 
       <button class="podcast-player-button podcast-player-button--forward15 js-player-forward-button" title="Seek forward 15 seconds"></button>
       <button class="podcast-player-button podcast-player-button--next_episode js-player-next-button" title="Listen to the next episode">
-        <img class="flip-horizontal" src="<%= static_url(@conn, "/images/icons/podcast-arrow.svg") %>" alt="Next episode"/><span class="js-player-next-number"></span>
+        <%= lazy_image(static_url(@conn, "/images/icons/podcast-arrow.svg"), "Next Episode", class: "flip-horizontal") %><span class="js-player-next-number"></span>
       </button>
     </div>
     <form class="podcast-player_slider">
-      <div class="range-slider">
-        <span class="range-slider_above"><span class="js-player-now-playing"></span></span>
-        <div class="range-slider_range_wrap">
-          <input class="range-slider_range js-player-scrubber" type="range" value="0" min="0" max="500"/>
-          <div class="range-slider_range_track js-player-track"></div>
+      <div class="range_slider">
+        <span class="range_slider-above"><span class="js-player-now-playing"></span></span>
+        <div class="range_slider-range_wrap">
+          <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="500"/>
+          <div class="range_slider-range-track js-player-track"></div>
         </div>
-        <span class="range-slider_below"> <span class="js-player-title"></span>
+        <span class="range_slider-below"> <span class="js-player-title"></span>
           <output><b class="js-player-current">0:00</b> / <span class="js-player-duration">0:00</span></output></span>
       </div>
     </form>

@@ -4,6 +4,8 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   alias Changelog.{NewsSponsorship}
   alias ChangelogWeb.TimeView
 
+  plug :assign_sponsorship when action in [:show, :edit, :update, :delete]
+  plug Authorize, [Policies.NewsSponsorship, :sponsorship]
   plug :scrub_params, "news_sponsorship" when action in [:create, :update]
 
   def index(conn, params) do
@@ -16,9 +18,8 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     render(conn, :index, sponsorships: page.entries, page: page)
   end
 
-  def show(conn, %{"id" => id}) do
-    sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_all()
-    render(conn, :show, sponsorship: sponsorship)
+  def show(conn, _params) do
+    render(conn, :show)
   end
 
   def schedule(conn, params) do
@@ -60,14 +61,12 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
+  def edit(conn = %{assigns: %{sponsorship: sponsorship}}, _params) do
     changeset = NewsSponsorship.admin_changeset(sponsorship)
     render(conn, :edit, sponsorship: sponsorship, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "news_sponsorship" => sponsorship_params}) do
-    sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_ads()
+  def update(conn = %{assigns: %{sponsorship: sponsorship}}, params = %{"news_sponsorship" => sponsorship_params}) do
     changeset = NewsSponsorship.admin_changeset(sponsorship, sponsorship_params)
 
     case Repo.update(changeset) do
@@ -82,12 +81,16 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    sponsorship = Repo.get!(NewsSponsorship, id)
+  def delete(conn = %{assigns: %{sponsorship: sponsorship}}, _params) do
     Repo.delete!(sponsorship)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_sponsorship_path(conn, :index))
+  end
+
+  defp assign_sponsorship(conn = %{params: %{"id" => id}}, _) do
+    sponsorship = Repo.get!(NewsSponsorship, id) |> NewsSponsorship.preload_all()
+    assign(conn, :sponsorship, sponsorship)
   end
 end

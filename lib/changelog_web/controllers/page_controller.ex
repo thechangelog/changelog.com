@@ -1,9 +1,10 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Newsletters, Podcast}
+  alias Changelog.{Cache, Episode, Newsletters, Podcast}
   alias ChangelogWeb.TimeView
 
+  plug PublicEtsCache
   plug RequireGuest, "before joining" when action in [:join]
 
   # pages that need special treatment get their own matched function
@@ -14,6 +15,7 @@ defmodule ChangelogWeb.PageController do
       :home            -> home(conn, conn.params)
       :sponsor         -> sponsor(conn, conn.params)
       :sponsor_pricing -> sponsor_pricing(conn, conn.params)
+      :sponsor_story   -> sponsor_story(conn, Map.get(conn.params, "slug"))
       :weekly          -> weekly(conn, conn.params)
       :weekly_archive  -> weekly_archive(conn, conn.params)
       name             -> render(conn, name)
@@ -36,7 +38,12 @@ defmodule ChangelogWeb.PageController do
       |> Repo.one
       |> Episode.preload_podcast
 
-    render(conn, :guest, active: active, podcast: podcast, episode: episode)
+    conn
+    |> assign(:active, active)
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> render(:guest)
+    |> cache_public_response()
   end
 
   def home(conn, _params) do
@@ -64,6 +71,11 @@ defmodule ChangelogWeb.PageController do
     render(conn, :sponsor_pricing, weekly: weekly, weeks: weeks)
   end
 
+  def sponsor_story(conn, slug) do
+    story = Changelog.SponsorStory.get_by_slug(slug)
+    render(conn, :sponsor_story, story: story)
+  end
+
   def weekly(conn, _params) do
     render(conn, :weekly, latest: List.first(get_weekly_issues()))
   end
@@ -73,12 +85,9 @@ defmodule ChangelogWeb.PageController do
   end
 
   defp get_weekly_issues do
-    ConCache.get_or_store(:app_cache, "weekly_archive", fn() ->
-      campaigns =
-        Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
-        |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
-
-      %ConCache.Item{value: campaigns, ttl: :timer.hours(24)}
+    Cache.get_or_store("weekly_archive", :timer.hours(24), fn ->
+      Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
+      |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
     end)
   end
 end

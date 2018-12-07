@@ -39,14 +39,12 @@ defmodule ChangelogWeb.TimeView do
   end
 
   def hours_ago(hours) do
-    Timex.subtract(Timex.now, Duration.from_hours(hours)) |> without_microseconds
+    Timex.subtract(Timex.now, Duration.from_hours(hours))
   end
 
   def hours_from_now(hours) do
-    Timex.add(Timex.now, Duration.from_hours(hours)) |> without_microseconds
+    Timex.add(Timex.now, Duration.from_hours(hours))
   end
-
-  defp without_microseconds(datetime), do: %{datetime | microsecond: {0,0}}
 
   def pretty_date(ts) when is_nil(ts), do: ""
   def pretty_date(ts) when is_binary(ts) do
@@ -82,6 +80,11 @@ defmodule ChangelogWeb.TimeView do
       [s] -> to_seconds(s)
       _ -> 0
     end
+  end
+
+  def terse_date(ts) do
+    {:ok, result} = Timex.format(ts, "{0M}/{0D}/{YY}")
+    result
   end
 
   def time_is_url(nil), do: ""

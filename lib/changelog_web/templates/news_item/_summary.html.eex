@@ -1,4 +1,4 @@
-<article class="news_item" data-news-type="news" data-news-id="<%= hashid(@item) %>">
+<article class="news_item js-track-news" data-news-type="news" data-news-id="<%= hashid(@item) %>">
   <%= render("_header.html", assigns) %>
 <%= if @item.story do %>
   <div class="news_item-description">

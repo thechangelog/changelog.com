@@ -18,6 +18,23 @@ export default class newsSponsorshipView {
     clipboard.on("error", function(e) { console.log(e); });
   }
 
+  schedule() {
+    let past = $("tr.past");
+    let pastButton = $(".js-toggle-past");
+
+    pastButton.on("click", function() {
+      if (past.hasClass("hidden")) {
+        past.removeClass("hidden");
+        pastButton.text("Hide Past");
+      } else {
+        past.addClass("hidden");
+        pastButton.text("Show Past");
+      }
+    });
+
+    pastButton.trigger("click");
+  }
+
   new() {
     new BelongsToWidget("sponsor", "sponsor");
     this._handleAds();
@@ -68,9 +85,9 @@ export default class newsSponsorshipView {
     let $addButton = $(".js-add-weeks");
 
     let dateAsValue = function(date) {
-      let year = date.getUTCFullYear();
-      let month = date.getUTCMonth() + 1;
-      let day = date.getUTCDate();
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
       if (month < 10) month = `0${month}`;
       if (day < 10) day = `0${day}`;
       return `${year}-${month}-${day}`;

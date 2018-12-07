@@ -34,7 +34,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       assert json == %{
         id: news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
         title: news_item.headline,
-        url: news_item_url(endpoint, :show, NewsItemView.slug(news_item)),
+        url: news_item.url,
         date_published: TimeView.rfc3339(news_item.published_at),
         author: %{name: news_item.logger.name},
         content_html: SharedHelpers.md_to_html(news_item.story),

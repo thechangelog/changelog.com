@@ -21,7 +21,7 @@ defmodule ChangelogWeb.NewsAdControllerTest do
   test "hitting the impress endpoint", %{conn: conn} do
     ad1 = insert(:news_ad, headline: "You gonna like this")
     ad2 = insert(:news_ad, headline: "You gonna like this too")
-    conn = post(conn, news_ad_path(conn, :impress), ads: "#{hashid(ad1)},#{hashid(ad2)}")
+    conn = post(conn, news_ad_path(conn, :impress), ids: "#{hashid(ad1)},#{hashid(ad2)}")
     assert conn.status == 204
     ad1 = Repo.get(NewsAd, ad1.id) |> NewsAd.preload_sponsorship
     ad2 = Repo.get(NewsAd, ad2.id) |> NewsAd.preload_sponsorship
@@ -34,7 +34,7 @@ defmodule ChangelogWeb.NewsAdControllerTest do
   @tag :as_admin
   test "hitting the impress endpoint as admin does not impress", %{conn: conn} do
     ad = insert(:news_ad, headline: "You gonna like this")
-    conn = post(conn, news_ad_path(conn, :impress), ads: "#{hashid(ad)}")
+    conn = post(conn, news_ad_path(conn, :impress), ids: "#{hashid(ad)}")
     assert conn.status == 204
     ad = Repo.get(NewsAd, ad.id) |> NewsAd.preload_sponsorship
     assert ad.impression_count == 0

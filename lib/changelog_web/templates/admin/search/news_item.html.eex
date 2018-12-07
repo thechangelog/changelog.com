@@ -4,7 +4,7 @@
   </h1>
 
 <%= if Enum.any?(@results) do %>
-  <%= render(NewsItemView, "_table.html", conn: @conn, items: Enum.map(@results, &NewsItem.preload_all/1), status: :published) %>
+  <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{items: Enum.map(@results, &NewsItem.preload_all/1), status: :published})) %>
 <% end %>
 </div>
 

@@ -1,6 +1,0 @@
-#!/bin/bash -ex
-
-mix coveralls.json
-bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
-rm -rf cover
-rm *.coverdata

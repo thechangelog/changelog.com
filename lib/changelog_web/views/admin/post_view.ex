@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PostView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Topic, Post}
+  alias Changelog.{Post, Topic}
 
   def status_label(post) do
     if post.published do
