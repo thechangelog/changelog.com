@@ -32,11 +32,13 @@ export BUILD_VERSION ?= $(shell date -u +'%Y-%m-%d.%H%M%S')
 ### DEPS ###
 #
 CURL := /usr/bin/curl
+DOCKER := $(firstword $(wildcard /usr/bin/docker /usr/local/bin/docker))
+JQ := $(firstword $(wildcard /usr/bin/jq /usr/local/bin/jq))
+LPASS := $(firstword $(wildcard /usr/bin/lpass /usr/local/bin/lpass))
 
 ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
 
-DOCKER := /usr/local/bin/docker
 $(DOCKER):
 	@$(CASK) install docker
 
@@ -47,17 +49,14 @@ $(COMPOSE):
 	  exit 1 \
 	)
 
-JQ := /usr/local/bin/jq
 $(JQ):
 	@brew install jq
 
-LPASS := /usr/local/bin/lpass
 $(LPASS):
 	@brew install lastpass-cli
 endif
 
 ifeq ($(PLATFORM),Linux)
-DOCKER := /usr/bin/docker
 $(DOCKER):
 	$(error $(RED)Please install $(BOLD)docker$(NORMAL))
 
@@ -65,9 +64,11 @@ COMPOSE := $(DOCKER)-compose
 $(COMPOSE):
 	$(error $(RED)Please install $(BOLD)docker-compose$(NORMAL))
 
-JQ := /usr/bin/jq
 $(JQ):
 	$(error $(RED)Please install $(BOLD)jq$(NORMAL))
+
+$(LPASS):
+	$(error $(RED)Please install $(BOLD)lastpass$(NORMAL))
 endif
 
 $(CURL):
