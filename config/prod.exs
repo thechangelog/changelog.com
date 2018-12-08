@@ -2,9 +2,9 @@ use Mix.Config
 
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "changelog.com", port: 443],
+  url: [scheme: "https", host: (System.get_env("HOST") || "changelog.com"), port: 443],
   secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  static_url: [scheme: "https", host: "cdn.changelog.com", port: 443],
+  static_url: [scheme: "https", host: (System.get_env("STATIC_HOST") || "cdn.changelog.com"), port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :logger, level: :info

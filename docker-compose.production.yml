@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:9.6
+    # https://docs.docker.com/compose/compose-file/#expose
+    expose:
+      - "5432"
+    # https://docs.docker.com/compose/compose-file/#volumes
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  app:
+    image: thechangelog.com/changelog.com
+    command: mix do ecto.create, ecto.migrate, phx.server
+    environment:
+      DB_URL: "ecto://postgres@db:5432/changelog"
+      VIRTUAL_HOST: &vhost www2.changelog.com
+      HOST: *vhost
+      STATIC_HOST: *vhost
+    volumes:
+      - ./assets/admin/:/app/assets/admin/
+      - ./assets/app/:/app/assets/app/
+      - ./assets/assets/:/app/assets/assets/
+      - ./assets/email/:/app/assets/email/
+      - ./assets/semantic/:/app/assets/semantic/
+      - ./assets/shared/:/app/assets/shared/
+      - ./assets/test/:/app/assets/test/
+      - ./assets/.babelrc:/app/assets/.babelrc
+      - ./assets/embedder.js:/app/assets/embedder.js
+      - ./assets/postcss.config.js:/app/assets/postcss.config.js
+      - ./assets/webpack.config.js:/app/assets/webpack.config.js
+      - ./config:/app/config
+      - ./lib:/app/lib
+      - ./priv:/app/priv
+      - ./test:/app/test
+      - ./.iex.exs:/app/.iex.exs
+    depends_on:
+      - db
+  proxy:
+    image: thechangelog/proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/vhost.d:/etc/nginx/vhost.d:ro
+      - ./nginx/conf.d/changelog.conf:/etc/nginx/conf.d/changelog.conf:ro
+      - ./priv/uploads/:/var/www/uploads:ro
+
+volumes:
+  postgres:
