@@ -35,6 +35,7 @@ CURL := /usr/bin/curl
 DOCKER := $(firstword $(wildcard /usr/bin/docker /usr/local/bin/docker))
 JQ := $(firstword $(wildcard /usr/bin/jq /usr/local/bin/jq))
 LPASS := $(firstword $(wildcard /usr/bin/lpass /usr/local/bin/lpass))
+TERRAFORM := $(firstword $(wildcard /usr/bin/terraform /usr/local/bin/terraform))
 
 ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
@@ -54,6 +55,9 @@ $(JQ):
 
 $(LPASS):
 	@brew install lastpass-cli
+
+$(TERRAFORM):
+	@brew install terraform
 endif
 
 ifeq ($(PLATFORM),Linux)
@@ -69,12 +73,17 @@ $(JQ):
 
 $(LPASS):
 	$(error $(RED)Please install $(BOLD)lastpass$(NORMAL))
+
+$(TERRAFORM):
+	$(error $(RED)Please install $(BOLD)terraform$(NORMAL))
 endif
 
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
+
+TF := cd terraform && $(TERRAFORM)
 
 ### TARGETS ###
 #
@@ -157,22 +166,32 @@ md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
 	  --expose 5000 --publish 5000:5000 \
 	  mbentley/grip --context=. 0.0.0.0:5000
 
-define ENVRC
+define DIRENV
+We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables.
+This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
-PATH_add script
+    PATH_add script
 
-export CIRCLE_TOKEN=
+    export CIRCLE_TOKEN=
+    export TF_VAR_linode_token=
 
 endef
-export ENVRC
+export DIRENV
 .PHONY: circle_token
 circle_token:
 ifndef CIRCLE_TOKEN
-	@echo "$(RED)CIRCLE_TOKEN$(NORMAL) environment variable must be set" && \
+	@echo "$(RED)CIRCLE_TOKEN$(NORMAL) environment variable must be set\n" && \
 	echo "Learn more about CircleCI API tokens $(BOLD)https://circleci.com/docs/2.0/managing-api-tokens/$(NORMAL) " && \
-	echo "We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables, but you do what works for you." && \
-	echo "This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point for this repo:" && \
-	echo "$$ENVRC" && \
+	echo "$$DIRENV" && \
+	exit 1
+endif
+
+.PHONY: linode_token
+linode_token:
+ifndef TF_VAR_linode_token
+	@echo "$(RED)TF_VAR_linode_token$(NORMAL) environment variable must be set" && \
+	echo "Learn more about Linode API tokens $(BOLD)https://cloud.linode.com/profile/tokens$(NORMAL) " && \
+	echo "$$DIRENV" && \
 	exit 1
 endif
 
@@ -254,3 +273,22 @@ setup-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## Setup CircleCI secrets 
 	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_PASS" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)"
 .PHONY: scs
 scs: setup-ci-secrets
+
+.PHONY: linode
+linode: linode_token init validate apply ## Provision Linode infrastructure
+
+.PHONY: init
+init: $(TERRAFORM)
+	@$(TF) init
+
+.PHONY: validate
+validate: $(TERRAFORM)
+	@$(TF) validate
+
+.PHONY: plan
+plan: $(TERRAFORM)
+	@$(TF) plan
+
+.PHONY: apply
+apply: $(TERRAFORM)
+	@$(TF) apply
