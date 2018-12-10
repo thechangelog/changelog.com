@@ -8,6 +8,10 @@ services:
     expose:
       - "5432"
     image: postgres:9.6
+    logging: &logging
+      driver: syslog
+      options:
+        syslog-address: "tcp+tls://logs7.papertrailapp.com:40471"
     volumes:
       - postgres:/var/lib/postgresql/data
   app:
@@ -37,6 +41,7 @@ services:
     depends_on:
       - db
     image: thechangelog.com/changelog.com
+    logging: *logging
     secrets:
       - campaign_monitor_api_token
       - github_api_token
@@ -56,6 +61,7 @@ services:
       - algolia_api_key
   proxy:
     image: thechangelog/proxy
+    logging: *logging
     ports:
       - "80:80"
     volumes:
