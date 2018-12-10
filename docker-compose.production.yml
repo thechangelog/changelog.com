@@ -2,45 +2,62 @@ version: "3"
 
 services:
   db:
-    image: postgres:9.6
-    # https://docs.docker.com/compose/compose-file/#expose
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: changelog
     expose:
       - "5432"
-    # https://docs.docker.com/compose/compose-file/#volumes
+    image: postgres:9.6
     volumes:
       - postgres:/var/lib/postgresql/data
   app:
-    image: thechangelog.com/changelog.com
     command: mix do ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog"
       VIRTUAL_HOST: &vhost www2.changelog.com
       HOST: *vhost
       STATIC_HOST: *vhost
-    volumes:
-      - ./assets/admin/:/app/assets/admin/
-      - ./assets/app/:/app/assets/app/
-      - ./assets/assets/:/app/assets/assets/
-      - ./assets/email/:/app/assets/email/
-      - ./assets/semantic/:/app/assets/semantic/
-      - ./assets/shared/:/app/assets/shared/
-      - ./assets/test/:/app/assets/test/
-      - ./assets/.babelrc:/app/assets/.babelrc
-      - ./assets/embedder.js:/app/assets/embedder.js
-      - ./assets/postcss.config.js:/app/assets/postcss.config.js
-      - ./assets/webpack.config.js:/app/assets/webpack.config.js
-      - ./config:/app/config
-      - ./lib:/app/lib
-      - ./priv:/app/priv
-      - ./test:/app/test
-      - ./.iex.exs:/app/.iex.exs
+      CM_API_TOKEN: /run/secrets/campaign_monitor_api_token
+      GITHUB_API_TOKEN: /run/secrets/github_api_token
+      GITHUB_CLIENT_ID: /run/secrets/github_client_id
+      GITHUB_CLIENT_SECRET: /run/secrets/github_client_secret
+      AWS_ACCESS_KEY_ID: /run/secrets/aws_access_key_id
+      AWS_SECRET_ACCESS_KEY: /run/secrets/aws_secret_access_key
+      TWITTER_CONSUMER_KEY: /run/secrets/twitter_consumer_key
+      TWITTER_CONSUMER_SECRET: /run/secrets/twitter_consumer_secret
+      SECRET_KEY_BASE: /run/secrets/secret_key_base
+      SIGNING_SALT: /run/secrets/signing_salt
+      SLACK_INVITE_API_TOKEN: /run/secrets/slack_invite_api_token
+      SLACK_APP_API_TOKEN: /run/secrets/slack_app_api_token
+      ROLLBAR_ACCESS_TOKEN: /run/secrets/rollbar_access_token
+      BUFFER_TOKEN: /run/secrets/buffer_token
+      COVERALLS_REPO_TOKEN: /run/secrets/coveralls_repo_token
+      ALGOLIA_APPLICATION_ID: /run/secrets/algolia_application_id
+      ALGOLIA_API_KEY: /run/secrets/algolia_api_key
     depends_on:
       - db
+    image: thechangelog.com/changelog.com
+    secrets:
+      - campaign_monitor_api_token
+      - github_api_token
+      - github_client_id
+      - github_client_secret
+      - aws_access_key_id
+      - aws_secret_access_key
+      - twitter_consumer_key
+      - twitter_consumer_secret
+      - secret_key_base
+      - signing_salt
+      - slack_app_api_token
+      - rollbar_access_token
+      - buffer_token
+      - coveralls_repo_token
+      - algolia_application_id
+      - algolia_api_key
   proxy:
     image: thechangelog/proxy
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx/vhost.d:/etc/nginx/vhost.d:ro
