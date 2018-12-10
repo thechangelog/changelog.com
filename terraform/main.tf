@@ -28,10 +28,10 @@ data "linode_image" "changelog" {
   id = "linode/containerlinux"
 }
 
-resource "linode_instance" "www2" {
+resource "linode_instance" "2019" {
   region = "${data.linode_region.changelog.id}"
   type = "${data.linode_instance_type.changelog.id}"
-  label = "www2"
+  label = "2019"
   image = "${data.linode_image.changelog.id}"
   authorized_users = ["gerhard-changelog"]
 }
