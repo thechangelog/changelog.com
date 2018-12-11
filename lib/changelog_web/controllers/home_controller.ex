@@ -77,9 +77,9 @@ defmodule ChangelogWeb.HomeController do
   end
 
   defp podcasts do
-    Podcast.active
-    |> Podcast.oldest_first
-    |> Repo.all
+    Podcast.active()
+    |> Podcast.by_position()
+    |> Repo.all()
   end
 
   defp set_slack_id(person) do
