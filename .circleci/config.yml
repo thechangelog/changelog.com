@@ -110,7 +110,7 @@ jobs:
       - run:
           name: Build and publish Docker image
           command: |
-            docker build --tag thechangelog/changelog.com:$CIRCLE_SHA1 --tag thechangelog/changelog.com:latest --file Dockerfile.production .
+            docker build --tag thechangelog/changelog.com:$CIRCLE_SHA1 --tag thechangelog/changelog.com:latest --file docker/Dockerfile.production .
             docker login --username $DOCKER_USER --password $DOCKER_PASS
             docker push thechangelog/changelog.com:$CIRCLE_SHA1
             docker push thechangelog/changelog.com:latest

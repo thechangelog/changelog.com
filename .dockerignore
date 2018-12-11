@@ -3,6 +3,7 @@
 _build/dev
 _build/test
 assets/node_modules
+docker
 import
 nginx
 priv/uploads
@@ -15,7 +16,6 @@ test
 .envrc
 .gitattributes
 .gitignore
-Dockerfile*
 Makefile
 README.md
 coveralls.json

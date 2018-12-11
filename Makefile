@@ -145,7 +145,7 @@ r: runtime
 
 .PHONY: build-runtime
 build-runtime: $(DOCKER)
-	@$(DOCKER) build --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file Dockerfile.runtime .
+	@$(DOCKER) build --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
 
 .PHONY: publish-runtime
 publish-runtime: $(DOCKER)

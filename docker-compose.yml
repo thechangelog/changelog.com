@@ -12,7 +12,7 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Dockerfile.development
+      dockerfile: docker/Dockerfile.development
     command: mix do ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
