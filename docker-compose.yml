@@ -25,7 +25,7 @@ services:
       - ./assets/app:/app/assets/app
       - ./assets/assets:/app/assets/assets
       - ./assets/email:/app/assets/email
-      - node_modules:/assets/node_modules
+      - node_modules:/app/assets/node_modules
       - ./assets/semantic:/app/assets/semantic
       - ./assets/shared:/app/assets/shared
       - ./assets/test:/app/assets/test
