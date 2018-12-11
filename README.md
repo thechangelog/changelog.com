@@ -26,7 +26,7 @@ If you have questions about any of the code, holler [@Changelog](https://twitter
 
 ## How can I contribute?
 
-Assuming that you have Docker running locally and docker-compose available, all you have to do is run `docker-compose up` in your terminal.
+Assuming that you have Docker running locally and docker-compose available, all you have to do is run `rm -fr deps && docker-compose up` in your terminal.
 When you run this command for the first time, it will take around 7 minutes to pull all Docker images, build the app image and start all containers.
 Depending on your internet connection and CPUs used for compiling various artefacts, this can easily take 30 minutes or more.
 Next time you run this command, since all Docker images will be cached, you can expect all containers to be up and running within 30 seconds.

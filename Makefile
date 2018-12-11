@@ -89,8 +89,12 @@ TF := cd terraform && $(TERRAFORM)
 #
 .DEFAULT_GOAL := help
 
+.PHONY: prevent-incompatible-deps-reaching-the-docker-image
+prevent-incompatible-deps-reaching-the-docker-image:
+	@rm -fr deps
+
 .PHONY: build
-build: $(COMPOSE) ## Re-build changelog.com app container (b)
+build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## Re-build changelog.com app container (b)
 	@$(COMPOSE) build
 .PHONY: b
 b: build
@@ -100,7 +104,7 @@ help:
 	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-16s\033[0m %s\n", $$1, $$4 }' | sort
 
 .PHONY: contrib
-contrib: $(COMPOSE) ## Contribute to changelog.com by running a local copy (c)
+contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## Contribute to changelog.com by running a local copy (c)
 	@bash -c "trap '$(COMPOSE) down' INT; \
 	  $(COMPOSE) up; \
 	  [[ $$? =~ 0|2 ]] || \
