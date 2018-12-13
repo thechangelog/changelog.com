@@ -21,26 +21,17 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ./assets/admin:/app/assets/admin
-      - ./assets/app:/app/assets/app
-      - ./assets/assets:/app/assets/assets
-      - ./assets/email:/app/assets/email
-      - node_modules:/app/assets/node_modules
-      - ./assets/semantic:/app/assets/semantic
-      - ./assets/shared:/app/assets/shared
-      - ./assets/test:/app/assets/test
-      - ./assets/.babelrc:/app/assets/.babelrc
-      - ./assets/embedder.js:/app/assets/embedder.js
-      - ./assets/postcss.config.js:/app/assets/postcss.config.js
-      - ./assets/webpack.config.js:/app/assets/webpack.config.js
       - build:/app/_build
+      - ./assets:/app/assets
+      - node_modules:/app/assets/node_modules
       - ./config:/app/config
       - deps:/app/deps
       - ./lib:/app/lib
-      - ./priv/repo:/app/priv/repo
-      - ./priv/static:/app/priv/static
-      - ./priv/uploads:/app/priv/uploads
+      - ./priv:/app/priv
+      - ./script:/app/script
       - ./test:/app/test
+      - ./.all-contributorsrc:/app/.all-contributorsrc
+      - ./.credo.exs:/app/.credo.exs
       - ./.iex.exs:/app/.iex.exs
       - ./mix.exs:/app/mix.exs
       - ./mix.lock:/app/mix.lock
