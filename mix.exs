@@ -57,7 +57,7 @@ defmodule Changelog.Mixfile do
       {:nimble_csv, "~> 0.4"},
       {:sweet_xml, "~> 0.6"},
       {:briefly, "~> 0.3"},
-      {:cowboy, "~> 1.0"},
+      {:plug_cowboy, "~> 1.0"},
       {:user_agent_parser, "~> 1.0"},
       {:quantum, ">= 2.1.0"},
       {:oauth, github: "tim/erlang-oauth"},
