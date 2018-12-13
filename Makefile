@@ -278,6 +278,24 @@ setup-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## Setup CircleCI secrets 
 .PHONY: scs
 scs: setup-ci-secrets
 
+.PHONY: create-docker-secrets
+create-docker-secrets: $(LPASS) ## Create Docker secrets (cds)
+	@$(SECRETS) | \
+	awk '! /secrets\/? / { print($$1) }' | \
+	while read -r secret ; do \
+	  export secret_key="$$($(LPASS) show --name $$secret)" ; \
+	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
+	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret..." ; \
+	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
+	  ssh core@96.126.104.211 "echo $$secret_value | docker secret create $$secret_key -" < /dev/null ; \
+	done ; \
+	echo "$(BOLD)$(GREEN)All secrets are now setup as Docker secrets$(NORMAL)" ; \
+	echo "A Docker secret cannot be modified - it can only be removed and created again, with a different value" ; \
+	echo "A Docker secret can only be removed if it is not bound to a Docker service" ; \
+	echo "It might be easier to define a new secret, e.g. $(BOLD)ALGOLIA_API_KEY2$(NORMAL)"
+.PHONY: cds
+cds: create-docker-secrets
+
 .PHONY: linode
 linode: linode_token init validate apply ## Provision Linode infrastructure
 
