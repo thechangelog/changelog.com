@@ -168,7 +168,7 @@ cds: create-docker-secrets
 
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
-.PHONY: eps
+.PHONY: es
 es: env-secrets
 
 .PHONY: linode
