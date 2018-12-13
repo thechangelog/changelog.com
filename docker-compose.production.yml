@@ -18,7 +18,7 @@ services:
     command: mix do ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog"
-      VIRTUAL_HOST: &vhost www2.changelog.com
+      VIRTUAL_HOST: &vhost 2019.changelog.com
       HOST: *vhost
       STATIC_HOST: *vhost
       CM_API_TOKEN: /run/secrets/campaign_monitor_api_token
