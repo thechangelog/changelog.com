@@ -89,22 +89,55 @@ TF := cd terraform && $(TERRAFORM)
 #
 .DEFAULT_GOAL := help
 
+.PHONY: add-secret
+add-secret: $(LPASS) ## as  | Add secret to LastPass
+ifndef SECRET
+	@echo "$(RED)SECRET$(NORMAL) environment variable must be set to the name of the secret that will be added" && \
+	echo "This value must be in upper-case, e.g. $(BOLD)SOME_SECRET$(NORMAL)" && \
+	echo "This value must not match any of the existing secrets:" && \
+	$(SECRETS) && \
+	exit 1
+endif
+	@$(LPASS) add --notes "Shared-changelog/secrets/$(SECRET)"
+.PHONY: as
+as: add-secret
+
 .PHONY: prevent-incompatible-deps-reaching-the-docker-image
 prevent-incompatible-deps-reaching-the-docker-image:
 	@rm -fr deps
 
 .PHONY: build
-build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## Re-build changelog.com app container (b)
+build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## b   | Build changelog.com app container
 	@$(COMPOSE) build
 .PHONY: b
 b: build
 
+SEPARATOR := ----------------------------------------------------------------------------------
 .PHONY: help
 help:
-	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN { FS = "[:#]" } ; { printf "\033[36m%-16s\033[0m %s\n", $$1, $$4 }' | sort
+	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | \
+	awk 'BEGIN { FS = "[:#]" } ; { printf "$(SEPARATOR)\n\033[36m%-22s\033[0m %s\n", $$1, $$4 }' ; \
+	echo $(SEPARATOR)
+
+.PHONY: clean-docker
+clean-docker: $(DOCKER) ## cd  | Clean all changelog artefacts from Docker
+	@$(DOCKER) volume ls | awk '/changelog/ { system("$(DOCKER) volume rm " $$2) }' ; \
+	$(DOCKER) images | awk '/changelog/ { system("$(DOCKER) image rm " $$1 ":" $$2) }'
+.PHONY: cd
+cd: clean-docker
+
+.PHONY: configure-ci-secrets
+configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## ccs | Configure CircleCI secrets
+	@DOCKER_CREDENTIALS=$$($(LPASS) show --json 2219952586317097429) && \
+	DOCKER_USER="$$($(JQ) --compact-output '.[] | {name: "DOCKER_USER", value: .username}' <<< $$DOCKER_CREDENTIALS)" && \
+	DOCKER_PASS="$$($(JQ) --compact-output '.[] | {name: "DOCKER_PASS", value: .password}' <<< $$DOCKER_CREDENTIALS)" && \
+	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_USER" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" && \
+	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_PASS" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)"
+.PHONY: ccs
+ccs: configure-ci-secrets
 
 .PHONY: contrib
-contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## Contribute to changelog.com by running a local copy (c)
+contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## c   | Contribute to changelog.com by running a local copy
 	@bash -c "trap '$(COMPOSE) down' INT ; \
 	  $(COMPOSE) up ; \
 	  [[ $$? =~ 0|2 ]] || \
@@ -112,12 +145,60 @@ contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## Contr
 .PHONY: c
 c: contrib
 
-.PHONY: clean-docker
-clean-docker: $(DOCKER) ## Cleans all Changelog artefacts from Docker (cd)
-	@$(DOCKER) volume ls | awk '/changelog/ { system("$(DOCKER) volume rm " $$2) }' ; \
-	$(DOCKER) images | awk '/changelog/ { system("$(DOCKER) image rm " $$1 ":" $$2) }'
-.PHONY: cd
-cd: clean-docker
+.PHONY: create-docker-secrets
+create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
+	@$(SECRETS) | \
+	awk '! /secrets\/? / { print($$1) }' | \
+	while read -r secret ; do \
+	  export secret_key="$$($(LPASS) show --name $$secret)" ; \
+	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
+	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret..." ; \
+	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
+	  ssh core@96.126.104.211 "echo $$secret_value | docker secret create $$secret_key -" < /dev/null ; \
+	done ; \
+	echo "$(BOLD)$(GREEN)All secrets are now setup as Docker secrets$(NORMAL)" ; \
+	echo "A Docker secret cannot be modified - it can only be removed and created again, with a different value" ; \
+	echo "A Docker secret can only be removed if it is not bound to a Docker service" ; \
+	echo "It might be easier to define a new secret, e.g. $(BOLD)ALGOLIA_API_KEY2$(NORMAL)"
+.PHONY: cds
+cds: create-docker-secrets
+
+.PHONY: env-secrets
+env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
+.PHONY: eps
+es: env-secrets
+
+.PHONY: linode
+linode: linode_token init validate apply ## l   | Provision Linode infrastructure
+.PHONY: l
+l: linode
+
+.PHONY: init
+init: $(TERRAFORM)
+	@$(TF) init
+
+.PHONY: validate
+validate: $(TERRAFORM)
+	@$(TF) validate
+
+.PHONY: plan
+plan: $(TERRAFORM)
+	@$(TF) plan
+
+.PHONY: apply
+apply: $(TERRAFORM)
+	@$(TF) apply
+
+.PHONY: md
+md: $(DOCKER) ## m   | Preview Markdown as it will appear on GitHub
+	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
+	  --volume $(CURDIR):/data \
+	  --volume $(HOME)/.grip:/.grip \
+	  --expose 5000 --publish 5000:5000 \
+	  mbentley/grip --context=. 0.0.0.0:5000
+.PHONY: m
+m: md
+
 
 .PHONY: legacy-assets
 legacy-assets: $(DOCKER)
@@ -128,7 +209,7 @@ legacy-assets: $(DOCKER)
 	$(DOCKER) push thechangelog/legacy_assets
 
 .PHONY: proxy
-proxy: build-proxy publish-proxy ## Builds & publishes thechangelog/proxy Docker image (p)
+proxy: build-proxy publish-proxy ## p   | Builds & publishes thechangelog/proxy Docker image
 .PHONY: p
 p: proxy
 
@@ -143,7 +224,7 @@ publish-proxy: $(DOCKER)
 	$(DOCKER) push thechangelog/proxy:latest
 
 .PHONY: runtime
-runtime: build-runtime publish-runtime ## Builds & publishes thechangelog/runtime Docker image (r)
+runtime: build-runtime publish-runtime ## r   | Builds & publishes thechangelog/runtime Docker image
 .PHONY: r
 r: runtime
 
@@ -156,19 +237,17 @@ publish-runtime: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
+.PHONY: secrets
+secrets: $(LPASS) ## s   | List all LastPass secrets
+	@$(SECRETS)
+.PHONY: s
+s: secrets
+
 .PHONY: test
-test: $(COMPOSE) ## Runs tests as they run on CircleCI (t)
+test: $(COMPOSE) ## t   | Runs tests as they run on CircleCI
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
 .PHONY: t
 t: test
-
-.PHONY: md
-md: $(DOCKER) ## Preview Markdown locally, as it will appear on GitHub
-	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
-	  --volume $(CURDIR):/data \
-	  --volume $(HOME)/.grip:/.grip \
-	  --expose 5000 --publish 5000:5000 \
-	  mbentley/grip --context=. 0.0.0.0:5000
 
 define DIRENV
 We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables.
@@ -244,73 +323,3 @@ coveralls: $(LPASS)
 algolia: $(LPASS)
 	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
 	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes 1668162557359149736)"
-.PHONY: env-secrets
-env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## List secrets stored in LastPass (es)
-.PHONY: eps
-es: env-secrets
-
-.PHONY: add-secret
-add-secret: $(LPASS) ## Add secret to origin (as)
-ifndef SECRET
-	@echo "$(RED)SECRET$(NORMAL) environment variable must be set to the name of the secret that will be added" && \
-	echo "This value must be in upper-case, e.g. $(BOLD)SOME_SECRET$(NORMAL)" && \
-	echo "This value must not match any of the existing secrets:" && \
-	$(SECRETS) && \
-	exit 1
-endif
-	@$(LPASS) add --notes "Shared-changelog/secrets/$(SECRET)"
-.PHONY: as
-as: add-secret
-
-.PHONY: secrets
-secrets: $(LPASS) ## List secrets at origin (s)
-	@$(SECRETS)
-.PHONY: s
-s: secrets
-
-.PHONY: setup-ci-secrets
-setup-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## Setup CircleCI secrets (scs)
-	@DOCKER_CREDENTIALS=$$($(LPASS) show --json 2219952586317097429) && \
-	DOCKER_USER="$$($(JQ) --compact-output '.[] | {name: "DOCKER_USER", value: .username}' <<< $$DOCKER_CREDENTIALS)" && \
-	DOCKER_PASS="$$($(JQ) --compact-output '.[] | {name: "DOCKER_PASS", value: .password}' <<< $$DOCKER_CREDENTIALS)" && \
-	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_USER" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" && \
-	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_PASS" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)"
-.PHONY: scs
-scs: setup-ci-secrets
-
-.PHONY: create-docker-secrets
-create-docker-secrets: $(LPASS) ## Create Docker secrets (cds)
-	@$(SECRETS) | \
-	awk '! /secrets\/? / { print($$1) }' | \
-	while read -r secret ; do \
-	  export secret_key="$$($(LPASS) show --name $$secret)" ; \
-	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
-	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret..." ; \
-	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
-	  ssh core@96.126.104.211 "echo $$secret_value | docker secret create $$secret_key -" < /dev/null ; \
-	done ; \
-	echo "$(BOLD)$(GREEN)All secrets are now setup as Docker secrets$(NORMAL)" ; \
-	echo "A Docker secret cannot be modified - it can only be removed and created again, with a different value" ; \
-	echo "A Docker secret can only be removed if it is not bound to a Docker service" ; \
-	echo "It might be easier to define a new secret, e.g. $(BOLD)ALGOLIA_API_KEY2$(NORMAL)"
-.PHONY: cds
-cds: create-docker-secrets
-
-.PHONY: linode
-linode: linode_token init validate apply ## Provision Linode infrastructure
-
-.PHONY: init
-init: $(TERRAFORM)
-	@$(TF) init
-
-.PHONY: validate
-validate: $(TERRAFORM)
-	@$(TF) validate
-
-.PHONY: plan
-plan: $(TERRAFORM)
-	@$(TF) plan
-
-.PHONY: apply
-apply: $(TERRAFORM)
-	@$(TF) apply
