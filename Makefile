@@ -171,10 +171,10 @@ env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffe
 .PHONY: es
 es: env-secrets
 
-.PHONY: linode
-linode: linode_token init validate apply ## l   | Provision Linode infrastructure
-.PHONY: l
-l: linode
+.PHONY: iaas
+iaas: linode_token dnsimple_creds init validate apply ## i   | Provision IaaS infrastructure
+.PHONY: i
+i: iaas
 
 .PHONY: init
 init: $(TERRAFORM)
@@ -253,6 +253,7 @@ test: $(COMPOSE) ## t   | Runs tests as they run on CircleCI
 t: test
 
 define DIRENV
+
 We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables.
 This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
@@ -260,6 +261,8 @@ This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
     export CIRCLE_TOKEN=
     export TF_VAR_linode_token=
+    export DNSIMPLE_ACCOUNT=
+    export DNSIMPLE_TOKEN=
 
 endef
 export DIRENV
@@ -277,6 +280,21 @@ linode_token:
 ifndef TF_VAR_linode_token
 	@echo "$(RED)TF_VAR_linode_token$(NORMAL) environment variable must be set" && \
 	echo "Learn more about Linode API tokens $(BOLD)https://cloud.linode.com/profile/tokens$(NORMAL) " && \
+	echo "$$DIRENV" && \
+	exit 1
+endif
+
+.PHONY: dnsimple_creds
+dnsimple_creds:
+ifndef DNSIMPLE_ACCOUNT
+	@echo "$(RED)DNSIMPLE_ACCOUNT$(NORMAL) environment variable must be set" && \
+	echo "This will be the account's numerical ID, e.g. $(BOLD)00000$(NORMAL)" && \
+	echo "$$DIRENV" && \
+	exit 1
+endif
+ifndef DNSIMPLE_TOKEN
+	@echo "$(RED)DNSIMPLE_TOKEN$(NORMAL) environment variable must be set" && \
+	echo "Get a DNSimple user access token $(BOLD)https://dnsimple.com/user?account_id=$(DNSIMPLE_ACCOUNT)$(NORMAL) " && \
 	echo "$$DIRENV" && \
 	exit 1
 endif
