@@ -35,3 +35,13 @@ resource "linode_instance" "2019" {
   image = "${data.linode_image.changelog.id}"
   authorized_users = ["gerhard-changelog"]
 }
+
+provider "dnsimple" { }
+
+resource "dnsimple_record" "2019" {
+  domain = "changelog.com"
+  name = "2019"
+  value = "${linode_instance.2019.ip_address}"
+  type = "A"
+  ttl = 60
+}
