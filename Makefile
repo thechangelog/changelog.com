@@ -105,8 +105,8 @@ help:
 
 .PHONY: contrib
 contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## Contribute to changelog.com by running a local copy (c)
-	@bash -c "trap '$(COMPOSE) down' INT; \
-	  $(COMPOSE) up; \
+	@bash -c "trap '$(COMPOSE) down' INT ; \
+	  $(COMPOSE) up ; \
 	  [[ $$? =~ 0|2 ]] || \
 	    ( echo 'You might want to run $(BOLD)make build contrib$(NORMAL) if app dependencies have changed' && exit 1 )"
 .PHONY: c
