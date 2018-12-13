@@ -157,7 +157,7 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
 	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret..." ; \
 	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
-	  ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "echo $$secret_value | docker secret create $$secret_key -" < /dev/null || exit 1 ; \
+	  ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "echo $$secret_value | docker secret create $$secret_key - || true" < /dev/null || exit 1 ; \
 	done && \
 	echo "$(BOLD)$(GREEN)All secrets are now setup as Docker secrets$(NORMAL)" && \
 	echo "A Docker secret cannot be modified - it can only be removed and created again, with a different value" && \
