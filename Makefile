@@ -29,6 +29,9 @@ export LANG := en_US.UTF-8
 
 export BUILD_VERSION ?= $(shell date -u +'%Y-%m-%d.%H%M%S')
 
+DOCKER_HOST ?= 2019.changelog.com
+DOCKER_HOST_SSH_USER ?= core
+
 ### DEPS ###
 #
 CURL := /usr/bin/curl
@@ -154,11 +157,11 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
 	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret..." ; \
 	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
-	  ssh core@96.126.104.211 "echo $$secret_value | docker secret create $$secret_key -" < /dev/null ; \
-	done ; \
-	echo "$(BOLD)$(GREEN)All secrets are now setup as Docker secrets$(NORMAL)" ; \
-	echo "A Docker secret cannot be modified - it can only be removed and created again, with a different value" ; \
-	echo "A Docker secret can only be removed if it is not bound to a Docker service" ; \
+	  ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "echo $$secret_value | docker secret create $$secret_key -" < /dev/null || exit 1 ; \
+	done && \
+	echo "$(BOLD)$(GREEN)All secrets are now setup as Docker secrets$(NORMAL)" && \
+	echo "A Docker secret cannot be modified - it can only be removed and created again, with a different value" && \
+	echo "A Docker secret can only be removed if it is not bound to a Docker service" && \
 	echo "It might be easier to define a new secret, e.g. $(BOLD)ALGOLIA_API_KEY2$(NORMAL)"
 .PHONY: cds
 cds: create-docker-secrets
