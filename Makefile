@@ -166,6 +166,12 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 .PHONY: cds
 cds: create-docker-secrets
 
+.PHONY: remove-docker-secrets
+remove-docker-secrets: $(LPASS)
+	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker secret ls | awk '/ago/ { system(\"docker secret rm \" \$$1) }'"
+.PHONY: rds
+rds: remove-docker-secrets
+
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
