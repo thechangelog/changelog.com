@@ -252,6 +252,10 @@ secrets: $(LPASS) ## s   | List all LastPass secrets
 .PHONY: s
 s: secrets
 
+.PHONY: ssh
+ssh: ## ssh | SSH into 2019.changelog.com host
+	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST)
+
 .PHONY: test
 test: $(COMPOSE) ## t   | Runs tests as they run on CircleCI
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
