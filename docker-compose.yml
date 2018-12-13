@@ -13,7 +13,7 @@ services:
     build:
       context: ./
       dockerfile: docker/Dockerfile.development
-    command: mix do ecto.create, ecto.migrate, phx.server
+    command: mix do deps.get, compile, ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
       VIRTUAL_HOST: "${HOST:-localhost}"
@@ -42,6 +42,8 @@ services:
       - ./priv/uploads:/app/priv/uploads
       - ./test:/app/test
       - ./.iex.exs:/app/.iex.exs
+      - ./mix.exs:/app/mix.exs
+      - ./mix.lock:/app/mix.lock
     depends_on:
       - db
   proxy:
