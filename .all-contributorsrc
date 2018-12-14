@@ -68,15 +68,6 @@
       ]
     },
     {
-      "login": "dennisreimann",
-      "name": "Dennis Reimann",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/886?v=3",
-      "profile": "https://dennisreimann.de",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
       "login": "soleo",
       "name": "Xinjiang Shao",
       "avatar_url": "https://avatars3.githubusercontent.com/u/635858?v=3",
@@ -132,15 +123,6 @@
       ]
     },
     {
-      "login": "sotojuan",
-      "name": "Juan Soto",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/8217766?v=3",
-      "profile": "https://juansoto.me",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
       "login": "lucidstack",
       "name": "Andrea Rossi",
       "avatar_url": "https://avatars2.githubusercontent.com/u/1248581?v=3",
@@ -188,15 +170,6 @@
       "name": "Len Payne",
       "avatar_url": "https://avatars3.githubusercontent.com/u/1460304?v=4",
       "profile": "https://github.com/LenPayne",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
-      "login": "JordyZomer",
-      "name": "Jordy Zomer",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/17198473?v=4",
-      "profile": "https://github.com/JordyZomer",
       "contributions": [
         "code"
       ]
@@ -255,6 +228,33 @@
       "profile": "https://ryanwilldev.com",
       "contributions": [
         "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "dennisreimann",
+      "name": "Dennis Reimann",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/886?v=3",
+      "profile": "https://dennisreimann.de",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sotojuan",
+      "name": "Juan Soto",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8217766?v=3",
+      "profile": "https://juansoto.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "JordyZomer",
+      "name": "Jordy Zomer",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17198473?v=4",
+      "profile": "https://github.com/JordyZomer",
+      "contributions": [
         "code"
       ]
     }
