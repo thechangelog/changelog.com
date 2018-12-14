@@ -9,15 +9,9 @@ defmodule Changelog.Stats.Parser do
   # e.g. – ,""user agent"", but not ,"",
   @double_double_quotes_regex ~r/\"\"\b|\b\"\"/
 
-  def parse_files(files) do
-    files
-    |> Enum.map(&parse_file/1)
-    |> List.flatten
-  end
-
-  def parse_file(file) do
-    file
-    |> File.read!
+  def parse(logs) when is_list(logs), do: Enum.flat_map(logs, &parse/1)
+  def parse(log) when is_binary(log) do
+    log
     |> String.split("\n")
     |> Enum.reject(fn(x) -> String.length(x) == 0 end)
     |> Enum.map(&parse_line/1)

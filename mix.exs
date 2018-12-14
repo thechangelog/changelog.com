@@ -56,7 +56,6 @@ defmodule Changelog.Mixfile do
       {:ex_aws_s3, "~> 2.0"},
       {:nimble_csv, "~> 0.4"},
       {:sweet_xml, "~> 0.6"},
-      {:briefly, "~> 0.3"},
       {:plug_cowboy, "~> 1.0"},
       {:user_agent_parser, "~> 1.0"},
       {:quantum, ">= 2.1.0"},

@@ -4,7 +4,6 @@
   "arc_ecto": {:hex, :arc_ecto, "0.11.0", "41f19944df3804b49c7bf511dfbeffe09b5b500892ed70d062d891bc891de589", [:mix], [{:arc, "~> 0.11.0", [hex: :arc, repo: "hexpm", optional: false]}, {:ecto, "~> 2.1", [hex: :ecto, repo: "hexpm", optional: false]}], "hexpm"},
   "bamboo": {:hex, :bamboo, "1.1.0", "ecbdc851d0127d369957e5ca7bcfb4c7fe7dbfaf4fa0b2e5cc2493dd8a9a600e", [:mix], [{:hackney, ">= 1.13.0", [hex: :hackney, repo: "hexpm", optional: false]}, {:plug, "~> 1.0", [hex: :plug, repo: "hexpm", optional: false]}, {:poison, ">= 1.5.0", [hex: :poison, repo: "hexpm", optional: false]}], "hexpm"},
   "bamboo_smtp": {:hex, :bamboo_smtp, "1.6.0", "0a3607b77f22554af58c547350c1c73ebba6f4fb2c4bd0b11713ab5b4081588f", [:mix], [{:bamboo, "~> 1.0", [hex: :bamboo, repo: "hexpm", optional: false]}, {:gen_smtp, "~> 0.12.0", [hex: :gen_smtp, repo: "hexpm", optional: false]}], "hexpm"},
-  "briefly": {:hex, :briefly, "0.3.0", "16e6b76d2070ebc9cbd025fa85cf5dbaf52368c4bd896fb482b5a6b95a540c2f", [:mix], []},
   "bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [:mix], []},
   "certifi": {:hex, :certifi, "2.4.2", "75424ff0f3baaccfd34b1214184b6ef616d89e420b258bb0a5ea7d7bc628f7f0", [:rebar3], [{:parse_trans, "~>3.3", [hex: :parse_trans, repo: "hexpm", optional: false]}], "hexpm"},
   "cmark": {:hex, :cmark, "0.7.0", "cf20106714b35801df3a2250a8ca478366f93ad6067df9d6815c80b2606ae01e", [:make, :mix], []},
