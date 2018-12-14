@@ -198,15 +198,15 @@ plan: $(TERRAFORM)
 apply: $(TERRAFORM)
 	@$(TF) apply
 
-.PHONY: md
-md: $(DOCKER) ## m   | Preview Markdown as it will appear on GitHub
+.PHONY: markdown
+markdown: $(DOCKER) ## md  | Preview Markdown as it will appear on GitHub
 	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
 	  --volume $(CURDIR):/data \
 	  --volume $(HOME)/.grip:/.grip \
 	  --expose 5000 --publish 5000:5000 \
 	  mbentley/grip --context=. 0.0.0.0:5000
-.PHONY: m
-m: md
+.PHONY: md
+md: markdown
 
 
 .PHONY: legacy-assets
