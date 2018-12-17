@@ -146,7 +146,7 @@ u(document).handle("click", "[data-youtube]", function(event) {
 });
 
 u(document).handle("click", "[data-share]", function(event) {
-  new Share(overlay).load(u(this).data("share"));
+  new Share(App.overlay).load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
