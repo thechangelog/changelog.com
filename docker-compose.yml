@@ -41,8 +41,6 @@ services:
     image: thechangelog/proxy
     ports:
       - "80:80"
-    environment:
-      ENABLE_IPV6: "true"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx/vhost.d:/etc/nginx/vhost.d:ro
