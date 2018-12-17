@@ -64,7 +64,7 @@ services:
       - ALGOLIA_API_KEY
     depends_on:
       - db
-    image: thechangelog/changelog.com:local
+    image: thechangelog/changelog.com
     ports:
       - "4000:4000"
     volumes:
