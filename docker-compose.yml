@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
   db:
-    image: postgres:9.6
+    image: postgres:9.6.11
     # https://docs.docker.com/compose/compose-file/#ports
     expose:
       - "5432"
