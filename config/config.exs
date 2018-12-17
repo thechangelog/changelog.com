@@ -16,7 +16,7 @@ config :changelog, ChangelogWeb.Endpoint,
 
 config :changelog,
   ecto_repos: [Changelog.Repo],
-  buffer_token: (System.get_env("BUFFER_TOKEN") || File.read!("/run/secrets/BUFFER_TOKEN")),
+  buffer_token: (File.read!("/run/secrets/BUFFER_TOKEN") || System.get_env("BUFFER_TOKEN")),
   github_api_token: (System.get_env("GITHUB_API_TOKEN") || File.read!("/run/secrets/GITHUB_API_TOKEN")),
   cm_api_token: Base.encode64("#{(System.get_env("CM_API_TOKEN") || File.read!("/run/secrets/CM_API_TOKEN"))}:x"),
   slack_invite_api_token: (System.get_env("SLACK_INVITE_API_TOKEN") || File.read!("/run/secrets/SLACK_INVITE_API_TOKEN")),
