@@ -3,7 +3,7 @@ use Mix.Config
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: System.get_env("PORT")],
   url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_HOST") || "changelog.com"), port: (System.get_env("URL_PORT") || 443)],
-  secret_key_base: (System.get_env("SECRET_KEY_BASE") || File.read!("/run/secrets/SECRET_KEY_BASE")),
+  secret_key_base: DockerSecret.get("SECRET_KEY_BASE"),
   static_url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_STATIC_HOST") || "cdn.changelog.com"), port: (System.get_env("URL_PORT") || 443)],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
@@ -22,8 +22,8 @@ config :changelog, Changelog.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.api.createsend.com",
   port: 587,
-  username: (System.get_env("CM_SMTP_TOKEN") || File.read!("/run/secrets/CM_SMTP_TOKEN")),
-  password: (System.get_env("CM_SMTP_TOKEN") || File.read!("/run/secrets/CM_SMTP_TOKEN"))
+  username: DockerSecret.get("CM_SMTP_TOKEN"),
+  password: DockerSecret.get("CM_SMTP_TOKEN")
 
 config :changelog, Changelog.Scheduler,
   global: true,
@@ -35,5 +35,5 @@ config :changelog, Changelog.Scheduler,
   ]
 
 config :rollbax,
-  access_token: (System.get_env("ROLLBAR_ACCESS_TOKEN") || File.read!("/run/secrets/ROLLBAR_ACCESS_TOKEN")),
+  access_token: DockerSecret.get("ROLLBAR_ACCESS_TOKEN"),
   environment: "production"
