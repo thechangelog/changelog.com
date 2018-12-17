@@ -28,7 +28,7 @@ services:
       start_period: 5s
     image: postgres:9.6.11
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - /db:/var/lib/postgresql/data:rw
   app:
     command: mix do ecto.migrate, phx.server
     deploy:
@@ -68,7 +68,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - uploads:/uploads
+      - /uploads:/uploads:rw
   proxy:
     deploy:
       replicas: 1
@@ -79,11 +79,7 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - uploads:/var/www/uploads:ro
-
-volumes:
-  postgres:
-  uploads:
+      - /uploads:/var/www/uploads:ro
 
 secrets:
   CM_API_TOKEN:
