@@ -7,61 +7,14 @@
       <h1>We reach 75,000 developers&nbsp;weekly</h1>
       <p>100,000 monthly pageviews&nbsp;&nbsp;•&nbsp;&nbsp;225,000 monthly podcast listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> email subscribers</p>
 
-      <div class="marketing-button_group" style="--max-width-group: 400px;">
-        <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
-        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
+      <p class="button_note">Or call us at 888-974-CHLG (2454)</p>
     </header>
 
-    <div class="marketing_slider">
-      <div class="js-slider">
-        <%= for story <- @stories do %>
-          <div class="marketing_slider-item">
-            <%= link to: "/sponsor/stories/" <> story.slug, class: "marketing_slider-item-inner", title: "View Story" do %>
-              <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{story.slug}") %>@2x.png 2x' alt="<%= story.sponsor %> Logo" width="400">
-
-              <blockquote class="sponsor_story-quote">
-                <div class="sponsor_story-quote-body">
-                  <p>“<%= story.quote.content %>”</p>
-                </div>
-                <footer class="marketing_quote-footer">
-                  <img src='<%= static_url(@conn, "/images/content/sponsors/#{story.quote.image}") %>' alt="" width="50" height="50">
-                  <strong><%= story.quote.name %></strong>
-                  <span class="quote-title"><%= story.quote.title %></span>
-                </footer>
-              </blockquote>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-      <div class="slider_pagination">
-        <%= for {_story, index} <- Enum.with_index(@stories) do %>
-          <button class="slider_pagination-item slider_pagination-item--<%= index %>" data-goto="<%= index %>"></button>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="sponsor_grid">
-      <%= for story <- @stories do %>
-        <%= link to: "/sponsor/stories/#{story.slug}", class: "sponsor_grid-item", title: "View Story" do %>
-          <img class="sponsor_grid-item-logo" src="<%= sponsor_avatar_url(story) %>" alt="<%= story.sponsor %> Logo" width="60">
-
-          <div class="sponsor_grid-item-content">
-            <h4><%= story.sponsor %></h4>
-            <p><%= truncate(story.quote.content, 140) %></p>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-
-    <footer class="marketing-section-footer">
-      <p>Get in touch so we can help share your brand story with our developer community.</p>
-      <div class="marketing-button_group" style="--max-width-group: 400px;">
-        <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
-        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
-      </div>
-      <p class="button_note">Or call 888-974-CHLG (2454)</p>
-    </footer>
+    <%# render("_marketing_slider.html", assigns) %>
   </section>
 
   <section class="marketing-section">
@@ -69,7 +22,7 @@
     <header class="marketing-section-header">
       <img src='<%= static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
       <h2>How sponsorship works</h2>
-      <p>While our primary focus is on developers, people from every part of the software industry tune in to our podcasts and newsfeed to inform their next big idea. From UX Designer to CEOs, our audience cares about dev culture, the future of software, the tools that make their teams more efficient — and they're waiting to hear from you.</p>
+      <p>Our primary focus is on developers, but people from every part of the software industry tune in to our podcasts and newsfeed to inform their next big idea. From CTOs and Directors of Engineering to Frontend Developers and Product Designers, our audience cares about the future of software, dev culture, tooling, team efficiency &mdash; and they're waiting to hear from you.</p>
     </header>
 
     <div class="step_markers_wrap">
@@ -84,16 +37,16 @@
 
     <div class="marketing-section-grid marketing-section-grid--3">
       <div class="marketing-section-grid-item">
-        <h3>Develop a strategy</h3>
-        <p>Everything begins by understanding who you are and what you're trying to achieve. We have proven workflows to uncover who you are, what your goals are, what's working, and the aspects of your story developers need to know.</p>
+        <h3>Develop your strategy</h3>
+        <p>Everything begins by understanding who you are and the goals you're trying to achieve. We have proven workflows to uncover who you are, your goals, what's working, and the aspects of your story developers need to know.</p>
       </div>
       <div class="marketing-section-grid-item">
-        <h3>Plan an activation</h3>
+        <h3>Plan your activation</h3>
         <p>Once we have an understanding of who you are and how we can help you, we'll begin to shape what to say, how to say it, and where. Our team has years of growth and marketing experience and will plan a campaign focused on the goals we set together.</p>
       </div>
       <div class="marketing-section-grid-item">
-        <h3>Build a following</h3>
-        <p>Developers follow our podcasts and news to explore new ideas and discover new tools. Sponsorship is the best way to make sure your product is part of their journey — and we’re here to help you develop the right strategy to achieve the results you're looking for.</p>
+        <h3>Build your following</h3>
+        <p>Developers follow our podcasts and news to explore new ideas and discover new tools. Sponsorship is the best way to make sure your product is part of their journey. We're here to help you develop the right strategy to achieve the results you're looking for.</p>
       </div>
     </div>
 
@@ -135,9 +88,9 @@
 
     <footer class="marketing-section-footer">
       <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
-      <div class="marketing-button_group" style="--max-width-group: 400px;">
-        <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
-        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>
@@ -146,29 +99,29 @@
   <section class="marketing-section marketing-section--dark">
     <header class="marketing-section-header">
       <h2>Who you’ll reach</h2>
-      <p>Our focus is on the builders, planners, and leaders defining the future of software.</p>
+      <p>Our audience is the builders, leaders, and planners defining the future of software.</p>
     </header>
 
     <div class="marketing-section-wrap">
       <div class="bar_graph">
         <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 22%; width: 22%;">10%</div>
-          <div class="bar_graph-item-label">Founder / CEO</div>
+          <div class="bar_graph-item-percentage" style="height: 30%; width: 22%;">11%</div>
+          <div class="bar_graph-item-label">CEO / Execs</div>
         </div>
         <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 40%; width: 40%;">22%</div>
+          <div class="bar_graph-item-percentage" style="height: 50%; width: 40%;">27%</div>
           <div class="bar_graph-item-label">Frontend / UI</div>
         </div>
         <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">48%</div>
+          <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">43%</div>
           <div class="bar_graph-item-label">Backend / Engineer</div>
         </div>
         <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 27%; width: 27%;">13%</div>
-          <div class="bar_graph-item-label">CTO / Leadership</div>
+          <div class="bar_graph-item-percentage" style="height: 34%; width: 27%;">12%</div>
+          <div class="bar_graph-item-label">CTO / Engineering</div>
         </div>
         <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 18%; width: 18%">7%</div>
+          <div class="bar_graph-item-percentage" style="height: 22%; width: 18%">7%</div>
           <div class="bar_graph-item-label">Product / Design</div>
         </div>
       </div>
@@ -177,53 +130,53 @@
 
       <div class="logo_grid logo_grid--dark margin-vertical_large">
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>Community Leader</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/linux-foundation-gray.png") %>' alt="Linux Foundation">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
           <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>Executive VP</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/microsoft-gray.png") %>' alt="Micrsoft">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>SRE Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/google-gray.png") %>' alt="Google">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>Software Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/ibm-gray.png") %>' alt="IBM">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>Systems Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/datadog-gray.png") %>' alt="Datadog">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>React Core</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/facebook-gray.png") %>' alt="Facebook">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>Distributed Systems</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/uber-gray.png") %>' alt="Uber">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>Engineering Director</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/slack-gray.png") %>' alt="Slack">
         </div>
         <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <p>JavaScript Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/paypal-gray.png") %>' alt="PayPal">
         </div>
       </div>
     </div>
 
     <footer class="marketing-section-footer">
-      <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
-      <div class="marketing-button_group" style="--max-width-group: 400px;">
-        <%= link "Get in touch", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
-        <%= link "How it works", to: "#how-it-works", class: "button_large" %>
+      <p>Get in touch if you have more questions or would like to talk with someone.</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>
