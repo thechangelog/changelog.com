@@ -2,7 +2,7 @@ defmodule Changelog.Podcast do
   use Changelog.Data
 
   alias Changelog.{Episode, EpisodeStat, Files, NewsItem, PodcastTopic,
-                   PodcastHost, Regexp}
+                   PodcastHost, Regexp, Subscription}
 
   require Logger
 
@@ -35,6 +35,8 @@ defmodule Changelog.Podcast do
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
     has_many :episode_stats, EpisodeStat
+    # has_many :subscriptions, Subscription, where: [unsubscribed_at: {:not, nil}]
+    # has_many :subscribers, through: [:subscriptions, :person]
 
     timestamps()
   end
