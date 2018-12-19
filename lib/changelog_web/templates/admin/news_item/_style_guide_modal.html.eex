@@ -22,6 +22,6 @@
   ## Things we don't
 
   - We don't flame or call out people or projects. Healthy skepticism and concerns are legit, but we don't use destructive language or tone.
-  """ |> md_to_html |> raw %>
+  """ |> md_to_html() |> raw() %>
   </div>
 </div>

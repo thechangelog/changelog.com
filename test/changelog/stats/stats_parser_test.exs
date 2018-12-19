@@ -12,22 +12,20 @@ defmodule ChangelogStatsParserTest do
   @file1 ~s{test/fixtures/logs/2016-10-14T13:00:00.000-oe6twX9qexnc62cAAAAA.log}
   @file2 ~s{test/fixtures/logs/2016-10-13T08:00:00.000-aQlu8sDqCqHgsnMAAAAA.log}
 
-  describe "parse_files" do
-    test "it creates a list with all the entries for the list of files given" do
-      entries = Parser.parse_files([@file1, @file2])
+  describe "parse/1" do
+    test "it creates a list with all the entries for the list of logs given" do
+      entries = Parser.parse([File.read!(@file1), File.read!(@file2)])
       # actually 73 lines, but 26 of them have 0 byte entries
       assert length(entries) == (73 - 26)
     end
-  end
 
-  describe "parse_file" do
-    test "it creates a list with one entry when file has one line in it" do
-      entries = Parser.parse_file(@file1)
+    test "it creates a list with one entry when log has one line in it" do
+      entries = Parser.parse(File.read!(@file1))
       assert length(entries) == 1
     end
 
-    test "it creates a list with many entries when file has many lines in it" do
-      entries = Parser.parse_file(@file2)
+    test "it creates a list with many entries when log has many lines in it" do
+      entries = Parser.parse(File.read!(@file2))
       # actually 73 lines, but 26 of them have 0 byte entries and 1 is a 301 redirect
       assert length(entries) == (73 - 26 - 1)
     end

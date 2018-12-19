@@ -98,7 +98,12 @@ defmodule Changelog.Episode do
   end
 
   def load_news_item(episode) do
-    item = episode |> NewsItem.with_episode() |> Repo.one()
+    item =
+      episode
+      |> NewsItem.with_episode()
+      |> Repo.one()
+      |> NewsItem.load_object(episode)
+
     Map.put(episode, :news_item, item)
   end
 

@@ -92,18 +92,18 @@ defmodule Changelog.NewsQueue do
   end
 
   def publish_next do
-    NewsQueue.queued
+    NewsQueue.queued()
     |> NewsQueue.limit(1)
-    |> Repo.one
-    |> publish
+    |> Repo.one()
+    |> publish()
   end
 
   def publish_scheduled do
-    NewsQueue.scheduled
-    |> NewsQueue.past
+    NewsQueue.scheduled()
+    |> NewsQueue.past()
     |> NewsQueue.limit(1)
-    |> Repo.one
-    |> publish
+    |> Repo.one()
+    |> publish()
   end
 
   def publish do

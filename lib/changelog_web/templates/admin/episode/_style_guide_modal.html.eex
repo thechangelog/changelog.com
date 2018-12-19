@@ -1,0 +1,57 @@
+<div class="ui small modal title-guide">
+  <i class="close icon"></i>
+  <div class="header">
+    Title Style Guide
+  </div>
+  <div class="content">
+  <%=
+  """
+  The title's primary purpose is to **make people want to listen**. Its secondary purpose is to **be memorable** so that people can easily refer to it. Finally, it's always nice when a title includes search-friendly keywords to feed The Algorithms. Guidelines:
+
+  - Always write titles in sentence case. They're more conversational/informal than title case, and read better in creative forms.
+    - Yes: So you have an AI model, now what?
+    - No:  So You Have an AI Model, Now What?
+  - Strive to create interesting, playful titles whenever possible
+    - Drupal is a pretty big deal
+    - What up, docs? 🥕
+    - Kubernetes brings all the Cloud Natives to the yard
+    - Fantastic bugs and how to squash them
+  - Include prominent names/projects/companies when applicable
+    - The Great GatsbyJS
+    - UBER and Intel’s Machine Learning platforms
+    - The impact of AI at Microsoft
+  - Sometimes interesting is tough to achieve. Fall back to descriptive
+    - Segment's transition back to a monorepo
+    - Rebuilding Exercism from the ground up
+  - As a last resort, a comma-separated list of topics _works_ (but kinda sucks)
+    - Code Cartoons, Rust, WebAssembly
+    - Curl turns 20, HTTP/2, QUIC
+  - Phone a friend! The best titles are often created collaboratively. We love working together to 'birth' a great title.
+  """ |> md_to_html() |> raw() %>
+  </div>
+</div>
+
+<div class="ui small modal subtitle-guide">
+  <i class="close icon"></i>
+  <div class="header">
+    Subtitle Style Guide
+  </div>
+  <div class="content">
+  <%=
+  """
+  The purpose of the subtitle is to provide further clarity or additional information about the show. Guidelines:
+
+  - This is the perfect place for themes/sub-shows
+    - get Fully Connected with Chris and Daniel
+  - When referring to hosts or panelists, use first name only
+    - with Safia, Nick, Chris, and KBall
+    - with Adam and Jerod
+  - When referring to guests, use full name (and sometimes title if it's relevant)
+    - with Matz, the creator of Ruby
+    - with Corey Sanders and Steve Guggenheimer
+  - In the case where the episode title includes 'with', use 'featuring' in the subtitle
+    - Untangle your GitHub notifications with Octobox... featuring Andrew Nesbitt and Ben Nickolls
+    - Finding success with AI in the enterprise... featuring Susan Etlinger
+  """ |> md_to_html() |> raw() %>
+  </div>
+</div>

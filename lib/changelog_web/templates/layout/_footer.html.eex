@@ -77,7 +77,7 @@
       <ul>
         <li><%= link("Sponsor", to: page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
         <li><%= link("Search", to: search_path(@conn, :search), title: "Search Changelog") %></li>
-        <li><%= link("Blog", to: post_path(@conn, :index), title: "Changelog's blog") %></li>
+        <li><%= link("Posts", to: post_path(@conn, :index), title: "Changelog’s posts") %></li>
         <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
         <li><a href="https://github.com/thechangelog/changelog.com/issues">Report Issues</a></li>
         <li><a href="/terms">Terms &amp; Conditions</a></li>

@@ -1,6 +1,7 @@
 {
   "repository": {},
   "dependencies": {
+    "apexcharts": "^2.2.2",
     "autosize": "^4.0.0",
     "clipboard": "^2.0.1",
     "cookies-js": "^1.2.3",

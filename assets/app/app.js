@@ -32,6 +32,7 @@ window.App = {
   attachComments() {
     u(".js-comment").each(el => {
       if (el.comment === undefined) new Comment(el);
+      el.comment.detectPermalink();
     });
   },
 
@@ -76,12 +77,12 @@ window.App = {
     let linkTime = parseTime(gup("t", (href || location.href), "#"));
     if (!linkTime) return false;
 
-    if (player.isPlaying()) {
-      player.scrubEnd(linkTime);
+    if (this.player.isPlaying()) {
+      this.player.scrubEnd(linkTime);
     } else {
       let playable = u("[data-play]");
-      player.load(playable.attr("href"), playable.data("play"), function() {
-        player.scrubEnd(linkTime);
+      this.player.load(playable.attr("href"), playable.data("play"), _ => {
+        this.player.scrubEnd(linkTime);
       });
     }
 
@@ -145,7 +146,7 @@ u(document).handle("click", "[data-youtube]", function(event) {
 });
 
 u(document).handle("click", "[data-share]", function(event) {
-  new Share(overlay).load(u(this).data("share"));
+  new Share(App.overlay).load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -188,7 +189,7 @@ u(document).on("click", "a[href^=http]", function(event) {
   if (App.player.isActive()) {
     let clicked = u(this);
 
-    if (isExternalLink(clicked)) {
+    if (App.isExternalLink(clicked)) {
       event.preventDefault();
       let newWindow = window.open(clicked.attr("href"), "_blank");
       newWindow.opener = null;
@@ -212,7 +213,7 @@ u(document).handle("click", ".js-hide-subscribe-banner", function(event) {
 u(document).on("click", "a[href^=\\#t]", function(event) {
   let href = u(event.target).attr("href");
 
-  if (deepLink(href)) {
+  if (App.deepLink(href)) {
     event.preventDefault();
     history.replaceState({}, document.title, href);
   };
@@ -276,7 +277,7 @@ u(document).on("turbolinks:load", function() {
   App.lazy.observe();
   App.player.attach();
   App.live.check();
-  u(".news_item").each(el => { observer.observe(el) });
+  u(".js-track-news").each(el => { observer.observe(el) });
   autosize(document.querySelectorAll("textarea"));
   App.attachComments();
   App.attachFlash();

@@ -78,3 +78,7 @@ input[type=file] {
 .hidden.field, tr.hidden {
   display: none;
 }
+
+.chart {
+  max-height: 400px;
+}

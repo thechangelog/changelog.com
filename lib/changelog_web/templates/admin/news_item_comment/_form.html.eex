@@ -1,0 +1,33 @@
+<%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
+  <div class="field required <%= error_class(f, :author_id) %>">
+    <%= label(f, :author_id, "Author") %>
+    <div class="ui fluid remote author search selection dropdown">
+      <%= hidden_input(f, :author_id) %>
+      <i class="dropdown icon"></i>
+      <%= if is_persisted(f.data) do %>
+        <div class="selected text"><%= f.data.author.name %></div>
+      <% else %>
+        <div class="default text">Select Author</div>
+      <% end %>
+    </div>
+    <%= error_message(f, :author_id) %>
+  </div>
+
+  <div class="field <%= error_class(f, :content) %>">
+    <%= label(f, :content) %>
+    <%= textarea(f, :content, placeholder: "Markdown enabled.", rows: 1)%>
+    <%= error_message(f, :content) %>
+  </div>
+
+  <div class="ui hidden divider"></div>
+  <div class="ui equal width stackable grid">
+  <%= if !is_persisted(f.data) do %>
+    <div class="column"><%= submit_button(:primary, "Create") %></div>
+    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, admin_benefit_path(@conn, :index))) %></div>
+  <% else %>
+    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
+    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
+  <% end %>
+    <div class="column"></div>
+  </div>
+<% end %>
