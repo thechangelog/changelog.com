@@ -1,0 +1,18 @@
+.richtext {
+
+  // Special/Layout
+  .button {
+    color: $white !important;
+    display: inline-block;
+    font-size: 1.325em;
+    margin: 0.5em 0;
+    padding: 0.6em 1.5em 0.45em;
+    text-align: center;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &--small .button { font-size: 1.125em; }
+}

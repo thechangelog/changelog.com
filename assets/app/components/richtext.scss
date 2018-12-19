@@ -1,4 +1,5 @@
 .richtext {
+
   // Remove bottom-margin on last element in richtext
   > *:last-child {
     margin-bottom: 0 !important;
@@ -85,25 +86,6 @@
 
   &--small blockquote { font-size: 1.125em; }
 
-  //
-  //
-  // Special/Layout
-  .button {
-    // @extend %primary-button;
-    color: $white !important;
-    display: inline-block;
-    font-size: 1.325em;
-    margin: 0.5em 0;
-    padding: 0.6em 1.5em 0.45em;
-    text-align: center;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  &--small .button { font-size: 1.125em; }
-
   aside {
     padding-left: 1rem;
     border-left: 1px solid $green;
@@ -171,16 +153,6 @@
     p { margin: 0; }
   }
 
-  // Wistia margin
-  .wistia_responsive_padding,
-  .wistia_embed {
-    margin: 0 0 1rem;
-  }
-  // Responsive iframes and videos
-  .video-container {
-    @include video_container();
-  }
-
   .wide-gutter-wrap {
     height: auto;
     width: 100%;
@@ -190,66 +162,4 @@
       width: 140%;
     }
   }
-
-  table {
-    font-family: $code;
-    font-size: 14px;
-    line-height: 23px;
-    margin: 1.25em 0;
-    width:100%;
-    word-break: normal;
-    word-break: keep-all;
-    border-spacing: 0;
-    border-collapse: collapse;
-    text-align: left;
-    overflow: scroll;
-
-    a {
-      color: $green;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    th {
-      font-weight: 700;
-      background: #000;
-      color: $white;
-    }
-
-    td, th {
-      padding: 8px 14px;
-
-      &:first-child {
-        @include breakpoint(tiny) { width: 50%; }
-      }
-    }
-
-    tr {
-      background-color: $white;
-
-      &.footer {
-        font-weight: 700;
-        background: lighten($green,43%);
-        border-top: 1px solid $green;
-
-        a { font-weight: inherit; }
-      }
-
-      &:nth-child(2n) { background-color: $lightest-grey; }
-    }
-  }
-
-  tfoot {
-
-    tr {
-      border-top: 2px solid darken($lightest-grey,3%);
-    }
-
-    td {
-      font-size: 12px;
-      padding: 10px 14px;
-    }
-  }
-
 }

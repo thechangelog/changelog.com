@@ -1,0 +1,20 @@
+.richtext {
+
+  // Wistia margin
+  .wistia_responsive_padding,
+  .wistia_embed {
+    margin: 0 0 1rem;
+  }
+
+  // Responsive iframes and videos
+  .video-container {
+    @include video_container();
+  }
+
+  // Figure element controls margin
+  figure {
+    .video-container {
+      margin: 0;
+    }
+  }
+}

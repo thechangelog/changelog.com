@@ -1,7 +1,5 @@
 @import 'account/account_ctas';
 @import 'account/account_subscriptions';
-@import 'posts/post_footer';
-@import 'posts/post_header';
 @import 'auth';
 @import 'anchors';
 @import 'avatar_list';
@@ -26,6 +24,9 @@
 @import 'range_slider';
 @import 'reactions';
 @import 'richtext';
+@import 'richtext/button';
+@import 'richtext/figure';
+@import 'richtext/video';
 @import 'show_list';
 @import 'subnav';
 @import 'signup';
@@ -34,3 +35,4 @@
 @import 'tooltip';
 @import 'topic_list';
 @import 'transcript';
+@import 'twitter';
