@@ -36,6 +36,20 @@ resource "linode_instance" "2019" {
   authorized_users = ["gerhard-changelog"]
 }
 
+resource "linode_volume" "db" {
+  region = "${data.linode_region.changelog.id}"
+  label = "db"
+  size = 10
+  linode_id = "${linode_instance.2019.id}"
+}
+
+resource "linode_volume" "uploads" {
+  region = "${data.linode_region.changelog.id}"
+  label = "uploads"
+  size = 100
+  linode_id = "${linode_instance.2019.id}"
+}
+
 provider "dnsimple" { }
 
 resource "dnsimple_record" "2019" {
