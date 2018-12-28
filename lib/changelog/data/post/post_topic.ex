@@ -15,7 +15,7 @@ defmodule Changelog.PostTopic do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(position post_id topic_id delete))
+    |> cast(params, ~w(position post_id topic_id delete)a)
     |> validate_required([:position])
     |> mark_for_deletion()
   end

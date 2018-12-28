@@ -113,7 +113,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   defp set_slack_id_to_pending(person = %{slack_id: id}) when not is_nil(id), do: person
   defp set_slack_id_to_pending(person) do
-    {:ok, person} = Repo.update(Person.slack_changeset(person, "pending"))
+    {:ok, person} = Repo.update(Person.slack_changes(person, "pending"))
     person
   end
 
