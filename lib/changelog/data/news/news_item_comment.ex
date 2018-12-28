@@ -64,7 +64,7 @@ defmodule Changelog.NewsItemComment do
     comment
     |> preload_news_item()
     |> Map.get(:news_item)
-    |> change(refreshed_at: Timex.now)
+    |> change(refreshed_at: now_in_seconds())
     |> Repo.update()
   end
 end

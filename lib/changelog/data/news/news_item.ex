@@ -163,7 +163,7 @@ defmodule Changelog.NewsItem do
 
   def decline!(item),   do: item |> change(%{status: :declined}) |> Repo.update!()
   def queue!(item),     do: item |> change(%{status: :queued}) |> Repo.update!()
-  def publish!(item),   do: item |> change(%{status: :published, published_at: DateTime.truncate(Timex.now(), :second), refreshed_at: DateTime.truncate(Timex.now(), :second)}) |> Repo.update!()
+  def publish!(item),   do: item |> change(%{status: :published, published_at: now_in_seconds(), refreshed_at: now_in_seconds()}) |> Repo.update!()
   def unpublish!(item), do: item |> change(%{status: :draft, published_at: nil, refreshed_at: nil}) |> Repo.update!()
 
   def is_audio(item), do: item.type == :audio

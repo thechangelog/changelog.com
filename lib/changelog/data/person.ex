@@ -130,13 +130,11 @@ defmodule Changelog.Person do
   end
 
   def sign_in_changes(person) do
-    now = Timex.now() |> DateTime.truncate(:second)
-
     change(person, %{
       auth_token: nil,
       auth_token_expires_at: nil,
-      signed_in_at: now,
-      joined_at: (person.joined_at || now)
+      signed_in_at: now_in_seconds(),
+      joined_at: (person.joined_at || now_in_seconds())
     })
   end
 
