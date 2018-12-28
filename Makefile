@@ -123,8 +123,9 @@ help:
 	echo $(SEPARATOR)
 
 .PHONY: clean-docker
-clean-docker: $(DOCKER) ## cd  | Clean all changelog artefacts from Docker
-	@$(DOCKER) volume ls | awk '/changelog/ { system("$(DOCKER) volume rm " $$2) }' ; \
+clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Clean all changelog artefacts from Docker
+	@$(COMPOSE) stop && $(DOCKER) system prune && \
+	$(DOCKER) volume ls | awk '/changelog/ { system("$(DOCKER) volume rm " $$2) }' ; \
 	$(DOCKER) images | awk '/changelog/ { system("$(DOCKER) image rm " $$1 ":" $$2) }'
 .PHONY: cd
 cd: clean-docker
