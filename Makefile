@@ -22,6 +22,8 @@ endif
   $(error Please run with GNU Make v4 or newer)
 endif
 
+
+
 ### VARS ###
 #
 export LC_ALL := en_US.UTF-8
@@ -31,6 +33,8 @@ export BUILD_VERSION ?= $(shell date -u +'%Y-%m-%d.%H%M%S')
 
 DOCKER_HOST ?= 2019.changelog.com
 DOCKER_HOST_SSH_USER ?= core
+
+
 
 ### DEPS ###
 #
@@ -87,6 +91,13 @@ $(CURL):
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
 TF := cd terraform && $(TERRAFORM)
+# Enable Terraform debugging if make runs in debug mode
+ifneq (,$(findstring d,$(MFLAGS)))
+  TF_LOG ?= debug
+  export TF_LOG
+endif
+
+
 
 ### TARGETS ###
 #
