@@ -20,13 +20,13 @@ services:
     environment:
       POSTGRES_USER: &pg_user changelog
       POSTGRES_DB: *pg_user
-      # https://www.postgresql.org/docs/9.6/libpq-envars.html
+      # https://www.postgresql.org/docs/9.5/libpq-envars.html
       PGUSER: *pg_user
       PGDATABASE: *pg_user
     healthcheck:
       test: ["CMD", "pg_isready"]
       start_period: 5s
-    image: postgres:9.6.11
+    image: postgres:9.5.4
     volumes:
       - /db:/var/lib/postgresql/data:rw
   app:
