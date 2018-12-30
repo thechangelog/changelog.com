@@ -115,7 +115,7 @@ colours:
 .PHONY: $(DOCKER_HOST)
 # $(DOCKER_HOST): iaas create-docker-secrets
 $(DOCKER_HOST):
-	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro --volume changelog.com:/app:rw thechangelog/bootstrap:latest" && \
+	@ssh -t $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker run --tty --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro --volume changelog.com:/app:rw thechangelog/bootstrap:latest" && \
 	echo "$(BOLD)https://$(DOCKER_HOST)$(NORMAL) will be ready to serve requests in a few minutes"
 
 .PHONY: add-secret
