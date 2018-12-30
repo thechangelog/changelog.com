@@ -18,11 +18,11 @@ services:
       restart_policy:
         condition: any
     environment:
-      POSTGRES_USER: &pg_user changelog
-      POSTGRES_DB: *pg_user
+      POSTGRES_USER: &pg_user postgres
+      POSTGRES_DB: &pg_db changelog
       # https://www.postgresql.org/docs/9.5/libpq-envars.html
       PGUSER: *pg_user
-      PGDATABASE: *pg_user
+      PGDATABASE: *pg_db
     healthcheck:
       test: ["CMD", "pg_isready"]
       start_period: 5s
@@ -36,7 +36,7 @@ services:
       restart_policy:
         condition: any
     environment:
-      DB_URL: "ecto://changelog@db:5432/changelog"
+      DB_URL: "ecto://postgres@db:5432/changelog"
       PORT: 4000
       URL_HOST: *host
       URL_PORT: 80
