@@ -109,6 +109,9 @@ endif
 #
 .DEFAULT_GOAL := help
 
+colours:
+	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
+
 .PHONY: $(DOCKER_HOST)
 # $(DOCKER_HOST): iaas create-docker-secrets
 $(DOCKER_HOST):
