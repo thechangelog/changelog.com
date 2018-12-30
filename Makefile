@@ -230,10 +230,15 @@ deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 .PHONY: dds
 dds: deploy-docker-stack
 
+.PHONY: build-local-image
+build-local-image: $(DOCKER)
+	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
+.PHONY: bli
+bli: build-local-image
+
 .PHONY: deploy-docker-stack-local
-deploy-docker-stack-local: $(DOCKER)
-	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local . && \
-	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK) && \
+deploy-docker-stack-local: $(DOCKER) build-local-image
+	@$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK) && \
 	$(DOCKER) service update --image thechangelog/changelog.com:local --force $(DOCKER_STACK)_app
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
