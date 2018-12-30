@@ -202,7 +202,7 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 	while read -r secret ; do \
 	  export secret_key="$$($(LPASS) show --name $$secret)" ; \
 	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
-	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret..." ; \
+	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret on $(DOCKER_HOST)..." ; \
 	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
 	  ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "echo $$secret_value | docker secret create $$secret_key - || true" < /dev/null || exit 1 ; \
 	done && \
