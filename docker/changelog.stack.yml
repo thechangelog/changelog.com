@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3.7"
 
 services:
   log:
@@ -35,6 +35,10 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+      update_config:
+        failure_action: rollback
+        monitor: 30s
+        order: start-first
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog"
       PORT: 4000
