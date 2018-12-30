@@ -225,6 +225,14 @@ deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 .PHONY: dds
 dds: deploy-docker-stack
 
+.PHONY: deploy-docker-stack-local
+deploy-docker-stack-local: $(DOCKER)
+	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local . && \
+	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK) && \
+	$(DOCKER) service update --image thechangelog/changelog.com:local --force $(DOCKER_STACK)_app
+.PHONY: ddsl
+ddsl: deploy-docker-stack-local
+
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
