@@ -32,6 +32,8 @@ export LANG := en_US.UTF-8
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 
 DOCKER_STACK ?= 2019
+DOCKER_STACK_FILE ?= docker/changelog.stack.yml
+
 DOCKER_HOST ?= $(DOCKER_STACK).changelog.com
 DOCKER_HOST_SSH_USER ?= core
 
@@ -213,6 +215,12 @@ remove-docker-secrets: $(LPASS)
 	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker secret ls | awk '/ago/ { system(\"docker secret rm \" \$$1) }'"
 .PHONY: rds
 rds: remove-docker-secrets
+
+.PHONY: deploy-docker-stack
+deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
+	@$(DOCKER) stack deploy --compose-file $(DOCKER_STACK_FILE) --prune $(DOCKER_STACK)
+.PHONY: dds
+dds: deploy-docker-stack
 
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
