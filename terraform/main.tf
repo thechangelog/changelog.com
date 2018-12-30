@@ -118,6 +118,27 @@ resource "null_resource" "mount_volumes" {
   }
 }
 
+resource "null_resource" "init_docker_swarm" {
+  connection {
+    user = "${var.default_ssh_user}"
+    host = "${linode_instance.2019.ip_address}"
+  }
+
+  depends_on = [
+    "linode_instance.2019",
+  ]
+
+  provisioner "remote-exec" {
+    inline = [
+      "docker swarm init",
+    ]
+  }
+
+  triggers {
+    manually = "2018.12.29-16:12"
+  }
+}
+
 provider "dnsimple" { }
 
 resource "dnsimple_record" "2019" {
