@@ -38,7 +38,7 @@ DOCKER_HOST ?= $(DOCKER_STACK).changelog.com
 DOCKER_HOST_SSH_USER ?= core
 
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
-BOOTSTRAP_GIT_BRANCH ?= docker-compose-production
+BOOTSTRAP_GIT_BRANCH ?= master
 
 
 
