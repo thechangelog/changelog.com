@@ -126,7 +126,7 @@ build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## b   | B
 .PHONY: b
 b: build
 
-SEPARATOR := ----------------------------------------------------------------------------------
+SEPARATOR := ---------------------------------------------------------------------------------
 .PHONY: help
 help:
 	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | \
