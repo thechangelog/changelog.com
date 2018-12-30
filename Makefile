@@ -29,7 +29,7 @@ endif
 export LC_ALL := en_US.UTF-8
 export LANG := en_US.UTF-8
 
-export BUILD_VERSION ?= $(shell date -u +'%Y-%m-%d.%H%M%S')
+export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 
 DOCKER_HOST ?= 2019.changelog.com
 DOCKER_HOST_SSH_USER ?= core
