@@ -56,6 +56,10 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   consumer_key: DockerSecret.get("TWITTER_CONSUMER_KEY"),
   consumer_secret: DockerSecret.get("TWITTER_CONSUMER_SECRET")
 
+config :algolia,
+  application_id: DockerSecret.get("ALGOLIA_APPLICATION_ID"),
+  api_key: DockerSecret.get("ALGOLIA_API_KEY")
+
 config :plug_ets_cache,
   db_name: :response_cache,
   ttl_check: 1,
