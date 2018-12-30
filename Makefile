@@ -34,6 +34,9 @@ export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 DOCKER_HOST ?= 2019.changelog.com
 DOCKER_HOST_SSH_USER ?= core
 
+BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
+BOOTSTRAP_GIT_BRANCH ?= docker-compose-production
+
 
 
 ### DEPS ###
@@ -119,6 +122,26 @@ as: add-secret
 .PHONY: prevent-incompatible-deps-reaching-the-docker-image
 prevent-incompatible-deps-reaching-the-docker-image:
 	@rm -fr deps
+
+.PHONY: bootstrap-image
+bootstrap-image: build-bootstrap-image publish-bootstrap-image ## bi  | Build & publish thechangelog/bootstrap Docker image
+.PHONY: bi
+bi: bootstrap-image
+
+.PHONY: build-bootstrap-image
+build-bootstrap-image: $(DOCKER)
+	@cd docker && \
+	$(DOCKER) build \
+	  --build-arg GIT_REPOSITORY=$(BOOTSTRAP_GIT_REPOSITORY) \
+	  --build-arg GIT_BRANCH=$(BOOTSTRAP_GIT_BRANCH) \
+	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
+	  --tag thechangelog/bootstrap:latest \
+	  --file Dockerfile.bootstrap .
+
+.PHONY: publish-bootstrap-image
+publish-bootstrap-image: $(DOCKER)
+	@$(DOCKER) push thechangelog/bootstrap:$(BUILD_VERSION) && \
+	$(DOCKER) push thechangelog/bootstrap:latest
 
 .PHONY: build
 build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## b   | Build changelog.com app container
