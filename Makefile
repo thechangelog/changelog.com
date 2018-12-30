@@ -251,17 +251,6 @@ plan: $(TERRAFORM)
 apply: $(TERRAFORM)
 	@$(TF) apply
 
-.PHONY: markdown
-markdown: $(DOCKER) ## md  | Preview Markdown as it will appear on GitHub
-	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
-	  --volume $(CURDIR):/data \
-	  --volume $(HOME)/.grip:/.grip \
-	  --expose 5000 --publish 5000:5000 \
-	  mbentley/grip --context=. 0.0.0.0:5000
-.PHONY: md
-md: markdown
-
-
 .PHONY: legacy-assets
 legacy-assets: $(DOCKER)
 	@echo "$(YELLOW)This is a secret target that is only meant to be executed if legacy assets are present locally$(NORMAL)" && \
@@ -269,6 +258,16 @@ legacy-assets: $(DOCKER)
 	read -rp "Are you sure that you want to continue? (y|n) " -n 1 && ([[ $$REPLY =~ ^[Yy]$$ ]] || exit) && \
 	cd nginx && $(DOCKER) build --tag thechangelog/legacy_assets . --file Dockerfile.legacy_assets && \
 	$(DOCKER) push thechangelog/legacy_assets
+
+.PHONY: preview-readme
+preview-readme: $(DOCKER) ## pre | Preview README & live reload on edit
+	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
+	  --volume $(CURDIR):/data \
+	  --volume $(HOME)/.grip:/.grip \
+	  --expose 5000 --publish 5000:5000 \
+	  mbentley/grip --context=. 0.0.0.0:5000
+.PHONY: pre
+pre: preview-readme
 
 .PHONY: proxy-image
 proxy-image: build-proxy-image publish-proxy-image ## pi  | Build & publish thechangelog/proxy Docker image
@@ -284,7 +283,6 @@ build-proxy-image: $(DOCKER)
 publish-proxy-image: $(DOCKER)
 	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/proxy:latest
-
 
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image
