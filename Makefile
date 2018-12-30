@@ -270,7 +270,7 @@ ssh: ## ssh | SSH into 2019.changelog.com host
 	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST)
 
 .PHONY: test
-test: $(COMPOSE) ## t   | Runs tests as they run on CircleCI
+test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix do deps.get, compile, ecto.create, test
 .PHONY: t
 t: test
