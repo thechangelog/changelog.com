@@ -229,32 +229,33 @@ legacy-assets: $(DOCKER)
 	cd nginx && $(DOCKER) build --tag thechangelog/legacy_assets . --file Dockerfile.legacy_assets && \
 	$(DOCKER) push thechangelog/legacy_assets
 
-.PHONY: proxy
-proxy: build-proxy publish-proxy ## p   | Builds & publishes thechangelog/proxy Docker image
-.PHONY: p
-p: proxy
+.PHONY: proxy-image
+proxy-image: build-proxy-image publish-proxy-image ## pi  | Build & publish thechangelog/proxy Docker image
+.PHONY: pi
+pi: proxy-image
 
-.PHONY: build-proxy
-build-proxy: $(DOCKER)
+.PHONY: build-proxy-image
+build-proxy-image: $(DOCKER)
 	@cd nginx && \
 	$(DOCKER) build --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
 
-.PHONY: publish-proxy
-publish-proxy: $(DOCKER)
+.PHONY: publish-proxy-image
+publish-proxy-image: $(DOCKER)
 	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/proxy:latest
 
-.PHONY: runtime
-runtime: build-runtime publish-runtime ## r   | Builds & publishes thechangelog/runtime Docker image
-.PHONY: r
-r: runtime
 
-.PHONY: build-runtime
-build-runtime: $(DOCKER)
+.PHONY: runtime-image
+runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image
+.PHONY: ri
+ri: runtime-image
+
+.PHONY: build-runtime-image
+build-runtime-image: $(DOCKER)
 	@$(DOCKER) build --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
 
-.PHONY: publish-runtime
-publish-runtime: $(DOCKER)
+.PHONY: publish-runtime-image
+publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
