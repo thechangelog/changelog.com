@@ -12,4 +12,6 @@ ARG GIT_BRANCH=master
 ENV GIT_BRANCH=$GIT_BRANCH
 
 VOLUME /app
-ENTRYPOINT git clone --depth 1 --branch $GIT_BRANCH $GIT_REPOSITORY /app && cd /app && make deploy-docker-stack
+
+COPY bootstrap /bootstrap
+ENTRYPOINT /bin/bash -xe /bootstrap

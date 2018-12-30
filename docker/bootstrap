@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+main() {
+  clone_repository || reset_repository_to_origin_master
+  deploy_docker_stack
+}
+
+reset_repository_to_origin_master() {
+  cd /app || return 1
+  git checkout "${GIT_BRANCH:?must be set}"
+  git fetch
+  git reset --hard origin/master
+}
+
+clone_repository() {
+  git clone --depth 1 --branch "$GIT_BRANCH" "${GIT_REPOSITORY:?must be set}" /app
+}
+
+deploy_docker_stack() {
+  cd /app && make deploy-docker-stack
+}
+
+main
