@@ -31,7 +31,8 @@ export LANG := en_US.UTF-8
 
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 
-DOCKER_HOST ?= 2019.changelog.com
+DOCKER_STACK ?= 2019
+DOCKER_HOST ?= $(DOCKER_STACK).changelog.com
 DOCKER_HOST_SSH_USER ?= core
 
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
@@ -105,6 +106,12 @@ endif
 ### TARGETS ###
 #
 .DEFAULT_GOAL := help
+
+.PHONY: $(DOCKER_HOST)
+# $(DOCKER_HOST): iaas create-docker-secrets
+$(DOCKER_HOST):
+	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro --volume changelog.com:/app:rw thechangelog/bootstrap:latest" && \
+	echo "$(BOLD)https://$(DOCKER_HOST)$(NORMAL) will be ready to serve requests in a few minutes"
 
 .PHONY: add-secret
 add-secret: $(LPASS) ## as  | Add secret to LastPass
