@@ -149,6 +149,8 @@ build-bootstrap-image: $(DOCKER)
 	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
 	  --tag thechangelog/bootstrap:latest \
 	  --file Dockerfile.bootstrap .
+.PHONY: bbi
+bbi: build-bootstrap-image
 
 .PHONY: publish-bootstrap-image
 publish-bootstrap-image: $(DOCKER)
@@ -289,6 +291,8 @@ pi: proxy-image
 build-proxy-image: $(DOCKER)
 	@cd nginx && \
 	$(DOCKER) build --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
+.PHONY: bpi
+bpi: build-proxy-image
 
 .PHONY: publish-proxy-image
 publish-proxy-image: $(DOCKER)
@@ -303,6 +307,8 @@ ri: runtime-image
 .PHONY: build-runtime-image
 build-runtime-image: $(DOCKER)
 	@$(DOCKER) build --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
+.PHONY: bri
+bri: build-runtime-image
 
 .PHONY: publish-runtime-image
 publish-runtime-image: $(DOCKER)
