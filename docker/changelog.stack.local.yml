@@ -8,7 +8,7 @@ services:
       restart_policy:
         condition: any
     environment:
-      SYSLOG_HOSTNAME: &host 2019.changelog.com
+      SYSLOG_HOSTNAME: &host $USER.changelog.com
     image: gliderlabs/logspout:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
