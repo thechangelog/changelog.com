@@ -12,6 +12,7 @@ ARG GIT_BRANCH=master
 ENV GIT_BRANCH=$GIT_BRANCH
 
 VOLUME /app
+WORKDIR /app
 
 COPY bootstrap /bootstrap
 RUN chmod +x /bootstrap

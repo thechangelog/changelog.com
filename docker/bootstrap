@@ -4,22 +4,26 @@ set -e
 [ -z "$DEBUG" ] || set -x
 
 main() {
-  clone_repository || reset_repository_to_origin_master
+  is_repository || clone_repository
+  reset_to_remote_branch
   deploy_docker_stack
 }
 
-reset_repository_to_origin_master() {
-  cd /app || return 1
-  git fetch
-  git reset --hard origin/"${GIT_BRANCH:?must be set}"
+reset_to_remote_branch() {
+  git fetch origin "${GIT_BRANCH:?must be set}"
+  git reset --hard origin/"$GIT_BRANCH"
+}
+
+is_repository() {
+  git remote -v
 }
 
 clone_repository() {
-  git clone --depth 1 --branch "$GIT_BRANCH" "${GIT_REPOSITORY:?must be set}" /app
+  git clone "${GIT_REPOSITORY:?must be set}" /app
 }
 
 deploy_docker_stack() {
-  cd /app && make deploy-docker-stack
+  make deploy-docker-stack
 }
 
 main
