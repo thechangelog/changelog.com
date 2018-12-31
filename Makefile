@@ -7,9 +7,8 @@ BOLD := $(shell tput bold)
 NORMAL := $(shell tput sgr0)
 
 PLATFORM := $(shell uname)
-ifneq ($(PLATFORM),Darwin)
-  $(warning $(RED)$(PLATFORM) is not supported$(NORMAL), only macOS is supported.)
-  $(error $(BOLD)Please contribute support for your platform.$(NORMAL))
+ifeq ($(PLATFORM),Linux)
+  $(warning $(YELLOW)Not all Linux distributions are fully supported$(NORMAL), only Alpine is used on a regular basis.)
 endif
 
 ifneq (4,$(firstword $(sort $(MAKE_VERSION) 4)))
