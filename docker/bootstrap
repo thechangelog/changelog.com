@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+[ -z "$DEBUG" ] || set -x
+
 main() {
   clone_repository || reset_repository_to_origin_master
   deploy_docker_stack
