@@ -14,4 +14,7 @@ ENV GIT_BRANCH=$GIT_BRANCH
 VOLUME /app
 
 COPY bootstrap /bootstrap
-ENTRYPOINT /bin/bash -xe /bootstrap
+RUN chmod +x /bootstrap
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["/bootstrap"]
