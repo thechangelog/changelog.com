@@ -8,17 +8,13 @@ NORMAL := $(shell tput sgr0)
 
 PLATFORM := $(shell uname)
 ifneq ($(PLATFORM),Darwin)
-ifneq ($(PLATFORM),Linux)
-  $(warning $(RED)$(PLATFORM) is not supported$(NORMAL), only macOS and Linux are supported.)
+  $(warning $(RED)$(PLATFORM) is not supported$(NORMAL), only macOS is supported.)
   $(error $(BOLD)Please contribute support for your platform.$(NORMAL))
-endif
 endif
 
 ifneq (4,$(firstword $(sort $(MAKE_VERSION) 4)))
   $(warning $(BOLD)$(RED)GNU Make v4 or newer is required$(NORMAL))
-ifeq ($(PLATFORM),Darwin)
   $(info On macOS it can be installed with $(BOLD)brew install make$(NORMAL) and run as $(BOLD)gmake$(NORMAL))
-endif
   $(error Please run with GNU Make v4 or newer)
 endif
 
@@ -45,12 +41,11 @@ BOOTSTRAP_GIT_BRANCH ?= master
 ### DEPS ###
 #
 CURL := /usr/bin/curl
-DOCKER := $(firstword $(wildcard /usr/bin/docker /usr/local/bin/docker))
-JQ := $(firstword $(wildcard /usr/bin/jq /usr/local/bin/jq))
-LPASS := $(firstword $(wildcard /usr/bin/lpass /usr/local/bin/lpass))
-TERRAFORM := $(firstword $(wildcard /usr/bin/terraform /usr/local/bin/terraform))
+DOCKER := /usr/local/bin/docker
+JQ := /usr/local/bin/jq
+LPASS := /usr/local/bin/lpass
+TERRAFORM := /usr/local/bin/terraform
 
-ifeq ($(PLATFORM),Darwin)
 CASK := brew cask
 
 $(DOCKER):
@@ -71,25 +66,6 @@ $(LPASS):
 
 $(TERRAFORM):
 	@brew install terraform
-endif
-
-ifeq ($(PLATFORM),Linux)
-$(DOCKER):
-	$(error $(RED)Please install $(BOLD)docker$(NORMAL))
-
-COMPOSE := $(DOCKER)-compose
-$(COMPOSE):
-	$(error $(RED)Please install $(BOLD)docker-compose$(NORMAL))
-
-$(JQ):
-	$(error $(RED)Please install $(BOLD)jq$(NORMAL))
-
-$(LPASS):
-	$(error $(RED)Please install $(BOLD)lastpass$(NORMAL))
-
-$(TERRAFORM):
-	$(error $(RED)Please install $(BOLD)terraform$(NORMAL))
-endif
 
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
