@@ -10,9 +10,8 @@ main() {
 
 reset_repository_to_origin_master() {
   cd /app || return 1
-  git checkout "${GIT_BRANCH:?must be set}"
   git fetch
-  git reset --hard origin/master
+  git reset --hard origin/"${GIT_BRANCH:?must be set}"
 }
 
 clone_repository() {
