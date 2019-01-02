@@ -28,7 +28,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
 
   @tag :as_admin
   test "lists the sponsorships on a schedule", %{conn: conn} do
-    news_sponsorship = insert(:news_sponsorship, weeks: [Timex.beginning_of_year(Timex.today)])
+    news_sponsorship = insert(:news_sponsorship, weeks: [Timex.beginning_of_week(Timex.today)])
 
     conn = get(conn, admin_news_sponsorship_path(conn, :schedule))
 
