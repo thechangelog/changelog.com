@@ -1,0 +1,13 @@
+<nav class="subnav">
+  <ul class="subnav-list">
+    <li class="subnav-list-item">
+      <%= link("New", to: "/", title: "Top developer news this week") %>
+    </li>
+    <li class="subnav-list-item">
+      <%= link("Active", to: news_item_path(@conn, :fresh), title: "Top developer news this week") %>
+    </li>
+    <li class="subnav-list-item <%= active_class(@conn, [~r/\Anews_item-top\z/, "news_item-top_week"]) %>">
+      <%= link("Top", to: news_item_path(@conn, :top), title: "Top developer news this week") %>
+    </li>
+  </ul>
+</nav>

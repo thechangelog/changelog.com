@@ -1,8 +1,8 @@
 defmodule Changelog.Person do
   use Changelog.Data
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, PodcastHost,
-                   Post, Regexp}
+  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, NewsItemComment,
+                   PodcastHost, Post, Regexp}
   alias Timex.Duration
 
   defmodule Settings do
@@ -12,10 +12,11 @@ defmodule Changelog.Person do
     embedded_schema do
       field :email_on_authored_news, :boolean, default: true
       field :email_on_submitted_news, :boolean, default: true
+      field :email_on_comment_replies, :boolean, default: true
     end
 
     def changeset(struct, attrs) do
-      cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news])
+      cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news, :email_on_comment_replies])
     end
   end
 
@@ -30,9 +31,9 @@ defmodule Changelog.Person do
     field :bio, :string
     field :location, :string
     field :auth_token, :string
-    field :auth_token_expires_at, Timex.Ecto.DateTime
-    field :joined_at, Timex.Ecto.DateTime
-    field :signed_in_at, Timex.Ecto.DateTime
+    field :auth_token_expires_at, :utc_datetime
+    field :joined_at, :utc_datetime
+    field :signed_in_at, :utc_datetime
     field :avatar, Files.Avatar.Type
 
     field :admin, :boolean, default: false
@@ -50,6 +51,7 @@ defmodule Changelog.Person do
     has_many :authored_news_items, NewsItem, foreign_key: :author_id
     has_many :logged_news_items, NewsItem, foreign_key: :logger_id
     has_many :submitted_news_items, NewsItem, foreign_key: :submitter_id
+    has_many :comments, NewsItemComment, foreign_key: :author_id
 
     timestamps()
   end
@@ -86,10 +88,10 @@ defmodule Changelog.Person do
   end
   def get_by_ueberauth(_), do: nil
 
-  def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at))
+  def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at)a)
 
   def admin_insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle twitter_handle bio website location admin host editor)
+    allowed = ~w(name email handle github_handle twitter_handle bio website location admin host editor)a
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
@@ -99,10 +101,10 @@ defmodule Changelog.Person do
     |> file_changeset(attrs)
   end
 
-  def file_changeset(person, attrs \\ %{}), do: cast_attachments(person, attrs, ~w(avatar), allow_urls: true)
+  def file_changeset(person, attrs \\ %{}), do: cast_attachments(person, attrs, [:avatar], allow_urls: true)
 
   def insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle twitter_handle bio website location)
+    allowed = ~w(name email handle github_handle twitter_handle bio website location)a
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
@@ -127,16 +129,16 @@ defmodule Changelog.Person do
     |> unique_constraint(:twitter_handle)
   end
 
-  def sign_in_changeset(person) do
+  def sign_in_changes(person) do
     change(person, %{
       auth_token: nil,
       auth_token_expires_at: nil,
-      signed_in_at: Timex.now,
-      joined_at: (person.joined_at || Timex.now)
+      signed_in_at: now_in_seconds(),
+      joined_at: (person.joined_at || now_in_seconds())
     })
   end
 
-  def slack_changeset(person, slack_id) do
+  def slack_changes(person, slack_id) do
     change(person, %{slack_id: slack_id})
   end
 

@@ -15,7 +15,7 @@ defmodule Changelog.NewsIssueItem do
 
   def changeset(issue_item, params \\ %{}) do
     issue_item
-    |> cast(params, ~w(position item_id issue_id delete))
+    |> cast(params, ~w(position item_id issue_id delete)a)
     |> validate_required([:position])
     |> mark_for_deletion()
   end

@@ -24,6 +24,14 @@ defmodule ChangelogWeb.PostControllerTest do
     assert html_response(conn, 200) =~ p.title
   end
 
+  test "getting a published post page with a news item", %{conn: conn} do
+    p = insert(:published_post)
+    p |> post_news_item() |> insert()
+    conn = get(conn, post_path(conn, :show, p.slug))
+    assert html_response(conn, 200) =~ p.title
+    assert html_response(conn, 200) =~ "logged by"
+  end
+
   test "getting an unpublished post page", %{conn: conn} do
     p = insert(:post)
 
@@ -41,7 +49,7 @@ defmodule ChangelogWeb.PostControllerTest do
   test "previewing a post", %{conn: conn} do
     p = insert(:post)
 
-    conn = get(conn, post_path(conn, :preview, p.slug))
+    conn = get(conn, post_path(conn, :preview, p.id))
     assert html_response(conn, 200) =~ p.title
   end
 end

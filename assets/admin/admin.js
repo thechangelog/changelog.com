@@ -4,6 +4,7 @@ import benefitView from "views/benefitView";
 import episodeView from "views/episodeView";
 import newsIssueView from "views/newsIssueView";
 import newsItemView from "views/newsItemView";
+import newsItemCommentView from "views/newsItemCommentView";
 import newsSponsorshipView from "views/newsSponsorshipView";
 import podcastView from "views/podcastView";
 import postView from "views/postView";
@@ -16,6 +17,7 @@ let views = {
   "TopicView": topicView,
   "EpisodeView": episodeView,
   "NewsItemView": newsItemView,
+  "NewsItemCommentView": newsItemCommentView,
   "NewsIssueView": newsIssueView,
   "NewsSponsorshipView": newsSponsorshipView,
   "PodcastView": podcastView,

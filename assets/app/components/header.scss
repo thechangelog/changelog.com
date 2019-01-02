@@ -6,7 +6,6 @@
 .page-podcast-show,
 .page-episode-show,
 .page-episode-preview,
-.page-post-show,
 .page-page-community,
 .page-page-sponsor,
 .page-topic-show,
@@ -57,7 +56,7 @@
 .header {
   @include position(fixed, 0 0 null);
   width: 100%;
-  z-index: 999;
+  z-index: 99999;
 
   &-container {
     background-color: rgba($white, .98);
@@ -334,12 +333,14 @@
       color: $black;
       font-size: 13px;
       font-weight: 500;
-      line-height: 1.125em;
-      padding: 9px 10px;
-      width: 160px;
+      height: 38px;
+      line-height: 1;
+      min-width: 160px;
+      padding: 10px;
 
       &::placeholder {
         color: $medium-grey;
+        line-height: 1.5;
         transition: opacity .1s ease-in-out;
       }
 

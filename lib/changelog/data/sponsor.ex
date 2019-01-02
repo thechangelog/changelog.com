@@ -22,12 +22,12 @@ defmodule Changelog.Sponsor do
   end
 
   def file_changeset(sponsor, attrs \\ %{}) do
-    cast_attachments(sponsor, attrs, ~w(avatar color_logo dark_logo light_logo), allow_urls: true)
+    cast_attachments(sponsor, attrs, ~w(avatar color_logo dark_logo light_logo)a, allow_urls: true)
   end
 
   def insert_changeset(sponsor, attrs \\ %{}) do
     sponsor
-    |> cast(attrs, ~w(name description website github_handle twitter_handle))
+    |> cast(attrs, ~w(name description website github_handle twitter_handle)a)
     |> validate_required([:name])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> unique_constraint(:name)

@@ -15,7 +15,7 @@ defmodule Changelog.EpisodeHost do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(position episode_id person_id delete))
+    |> cast(params, ~w(position episode_id person_id delete)a)
     |> validate_required([:position])
     |> mark_for_deletion()
   end

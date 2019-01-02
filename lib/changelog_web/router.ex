@@ -9,29 +9,25 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "js"]
     plug :fetch_session
     plug Plug.Turbolinks
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Plug.Authenticate, repo: Changelog.Repo
-    plug Plug.PlugEtsCache
   end
 
   pipeline :feed do
     plug :accepts, ["xml"]
-    plug Plug.PlugEtsCache
   end
 
   pipeline :json_feed do
     plug :accepts, ["json"]
-    plug Plug.PlugEtsCache
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Plug.PlugEtsCache
   end
 
   pipeline :admin do
@@ -67,6 +63,7 @@ defmodule ChangelogWeb.Router do
     delete "/news/items/:id/decline", NewsItemController, :decline, as: :news_item
     post "/news/items/:id/unpublish", NewsItemController, :unpublish, as: :news_item
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
+    resources "/news/comments", NewsItemCommentController, except: [:show, :new, :create]
     resources "/news/sources", NewsSourceController, except: [:show]
     get "/news/sponsorships/schedule", NewsSponsorshipController, :schedule
     resources "/news/sponsorships", NewsSponsorshipController
@@ -147,7 +144,11 @@ defmodule ChangelogWeb.Router do
 
     get "/", NewsItemController, :index, as: :root
     get "/news/submit", NewsItemController, :new
+    get "/news/fresh", NewsItemController, :fresh
     get "/news/top", NewsItemController, :top
+    get "/news/top/week", NewsItemController, :top_week
+    get "/news/top/month", NewsItemController, :top_month
+    get "/news/top/all", NewsItemController, :top_all
     resources "/news", NewsItemController, only: [:show, :create], as: :news_item
     get "/news/:id/visit", NewsItemController, :visit, as: :news_item
     post "/news/impress", NewsItemController, :impress, as: :news_item
@@ -157,6 +158,8 @@ defmodule ChangelogWeb.Router do
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
+    resources "/news/comments", NewsItemCommentController, only: [:create]
+    post "/news/comments/preview", NewsItemCommentController, :preview, as: :news_item_comment
 
     resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]

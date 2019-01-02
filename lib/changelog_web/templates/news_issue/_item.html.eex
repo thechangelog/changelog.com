@@ -5,7 +5,7 @@
   </p>
   <h2 class="news_item-title"><%= link(@item.headline, to: @item.url) %></h2>
   <div class="news_item-content">
-    <%= @item.story |> md_to_html |> raw %>
+    <%= @item.story |> md_to_html() |> raw() %>
     <%= if @item.image do %>
       <p>
         <%= link to: @item.url do %>

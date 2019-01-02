@@ -25,9 +25,9 @@ defmodule ChangelogWeb.FeedControllerTest do
 
   test "the news feed", %{conn: conn} do
     post = insert(:published_post, body: "zomg")
-    post |> post_news_item() |> insert
+    post |> post_news_item() |> insert()
     episode = insert(:published_episode, summary: "zomg")
-    episode |> episode_news_item() |> insert
+    episode |> episode_news_item() |> insert()
 
     conn = get(conn, feed_path(conn, :news))
 

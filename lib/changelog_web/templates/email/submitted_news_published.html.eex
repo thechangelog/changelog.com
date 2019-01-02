@@ -2,11 +2,15 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>Your submission got published! Here's the link to share with your network of friends:</p>
+    <p>Your submission got published! ✊</p>
 
-    <p><%= link(@item.headline, to: news_item_url(Endpoint, :show, NewsItemView.slug(@item)), itemprop: "url") %></p>
+    <p>Each week's top performing news is also featured in <%= link("Changelog Weekly", to: page_url(Endpoint, :weekly), itemprop: "url") %>. Here are 3 ways you can help your submission make the grade:</p>
 
-    <p>If this post resonates with our readers, it'll also be featured in <%= link "Changelog Weekly", to: page_url(Endpoint, :weekly) %>. Keep your 👀 peeled for that!</p>
+    <ol>
+      <li>🗣 Start the discussion by being <%= link("the first to comment", to: news_item_url(Endpoint, :show, NewsItemView.hashid(@item)) <> "#discussion", itemprop: "url") %> </li>
+      <li>😇 Share <%= link("the link", to: news_item_url(Endpoint, :show, NewsItemView.hashid(@item)), itemprop: "url") %> on social media and may <em>The Algorithms</em> #bless you</li>
+      <li>🔥 <%= news_item_promotion_advice(@item) %></li>
+    </ol>
 
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "email_on_submitted_news")) %></em></p>
 

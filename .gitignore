@@ -20,6 +20,9 @@ npm-debug.log*
 # this depending on your deployment strategy.
 /priv/static/
 
+# Legacy assets which are built into thechangelog/proxy image
+/nginx/www/wp-content
+
 # The config/prod.secret.exs file by default contains sensitive
 # data and you should not commit it into version control.
 #
@@ -30,3 +33,9 @@ npm-debug.log*
 /priv/uploads
 /import/cookies.yml
 /cover
+
+# .envrc is likely to contain user-specific secrets, such as CIRCLE_TOKEN
+.envrc
+
+# .terraform will contain large, platform-specific binaries
+.terraform

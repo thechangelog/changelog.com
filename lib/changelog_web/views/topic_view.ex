@@ -19,7 +19,7 @@ defmodule ChangelogWeb.TopicView do
 
   def icon_url(topic), do: icon_url(topic, :small)
   def icon_url(topic, version) do
-    if (topic.icon) do
+    if topic.icon do
       static_url(Endpoint, icon_path(topic, version))
     else
       "/images/defaults/avatar-topic.png"

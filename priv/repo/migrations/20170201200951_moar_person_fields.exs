@@ -5,7 +5,7 @@ defmodule Changelog.Repo.Migrations.MoarPersonFields do
     alter table(:people) do
       add(:location, :string)
       add(:slack_id, :string)
-      add(:joined_at, :datetime)
+      add(:joined_at, :naive_datetime)
     end
   end
 end

@@ -5,7 +5,7 @@ defmodule ChangelogWeb do
       use PlugEtsCache.Phoenix
 
       alias Changelog.{Policies, Repo}
-      alias ChangelogWeb.Plug.{Authorize, RequireUser, RequireGuest}
+      alias ChangelogWeb.Plug.{Authorize, PublicEtsCache, RequireUser, RequireGuest}
       import Ecto
       import Ecto.Query
 

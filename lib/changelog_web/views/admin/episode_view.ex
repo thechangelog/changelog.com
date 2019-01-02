@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def megabytes(episode), do: EpisodeView.megabytes(episode)
   def numbered_title(episode), do: EpisodeView.numbered_title(episode)
 
-  def download_count(episode), do: episode.download_count |> round |> comma_separated
+  def download_count(episode), do: episode.download_count |> round() |> comma_separated()
   def reach_count(episode) do
     if episode.reach_count > episode.download_count do
       comma_separated(episode.reach_count)
@@ -36,6 +36,56 @@ defmodule ChangelogWeb.Admin.EpisodeView do
         result
       nil -> ""
     end
+  end
+
+  def line_chart_data(stats) when is_list(stats) do
+    stats = Enum.reverse(stats)
+
+    data = case length(stats) do
+      l when l <= 45  -> get_chart_data(stats)
+      l when l <= 365 -> get_chart_data_grouped_by(:week, stats)
+      l when l <= 730 -> get_chart_data_grouped_by(:month, stats)
+      _else -> get_chart_data_grouped_by(:year, stats)
+    end
+
+    Poison.encode!(data)
+  end
+
+  defp get_chart_data_grouped_by(interval, stats) do
+    {title, grouper} = case interval do
+      :week -> {"Week Chart", &Timex.beginning_of_week/1}
+      :month -> {"Month Chart", &Timex.beginning_of_month/1}
+      :year -> {"Year Chart", &Timex.beginning_of_year/1}
+    end
+
+    stats
+    |> Enum.map(fn(stat) -> Map.put(stat, :date, grouper.(stat.date)) end)
+    |> Enum.group_by(&(&1.date))
+    |> Enum.map(fn({date, list}) ->
+      %{
+        date: date,
+        downloads: list |> Enum.map(&(&1.downloads)) |> Enum.sum(),
+        uniques: list |> Enum.map(&(&1.uniques)) |> Enum.sum()
+      }
+    end)
+    |> Enum.sort(&(Timex.after?(&1.date, &2.date)))
+    |> get_chart_data(title)
+  end
+
+  defp get_chart_data(stats, title \\ "Day Chart") do
+    %{
+      title: title,
+      categories: Enum.map(stats, &stat_chart_date/1),
+      series: [
+        %{name: "Reach", data: Enum.map(stats, &(&1.uniques))},
+        %{name: "Downloads", data: Enum.map(stats, &(Float.round(&1.downloads)))}
+      ]
+    }
+  end
+
+  defp stat_chart_date(stat) do
+    {:ok, date} = Timex.format(stat.date, "{M}/{D}/{YYYY}")
+    date
   end
 
   def percent_of_downloads(episode, count) do

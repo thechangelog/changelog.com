@@ -53,7 +53,7 @@
         <td><%= item.type %></td>
         <td>
           <%= if item.image do %><i class="image icon"></i><% end %>
-          <%= link truncate(item.headline, 50), to: item.url %>
+          <%= link(truncate(item.headline, 50), to: item.url) %>
         </td>
         <td>
         <%= for topic <- item.topics do %>

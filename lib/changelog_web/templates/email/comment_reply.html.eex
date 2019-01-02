@@ -1,0 +1,15 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p><%= greeting(@person) %></p>
+
+    <p><strong><%= PersonView.handle(@reply.author) %></strong> replied to you <%= link("on Changelog News", to: news_item_url(Endpoint, :show, NewsItemView.slug(@reply.news_item))) %>! They said:</p>
+
+    <blockquote><pre><%= @reply.content %></pre></blockquote>
+
+    <%= link("Reply here", to: news_item_url(Endpoint, :show, NewsItemView.slug(@reply.news_item)) <> NewsItemCommentView.permalink_path(@reply), class: "btn-primary", itemprop: "url") %>
+
+    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "email_on_comment_replies")) %></em></p>
+
+    <p>💚, Logbot</p>
+  </td>
+</tr>

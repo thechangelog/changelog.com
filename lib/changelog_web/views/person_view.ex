@@ -56,12 +56,10 @@ defmodule ChangelogWeb.PersonView do
   def first_name(person) do
     person.name
     |> String.split(" ")
-    |> List.first
+    |> List.first()
   end
 
-  def handle(person) do
-    person.handle
-  end
+  def handle(person), do: person.handle
 
   def is_profile_complete(person) do
     !!(person.bio && person.website && person.location)

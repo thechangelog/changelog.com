@@ -4,6 +4,7 @@ defmodule ChangelogWeb.PageController do
   alias Changelog.{Cache, Episode, Newsletters, NewsSponsorship, Podcast}
   alias ChangelogWeb.TimeView
 
+  plug PublicEtsCache
   plug RequireGuest, "before joining" when action in [:join]
 
   # pages that need special treatment get their own matched function
@@ -37,7 +38,12 @@ defmodule ChangelogWeb.PageController do
       |> Repo.one
       |> Episode.preload_podcast
 
-    render(conn, :guest, active: active, podcast: podcast, episode: episode)
+    conn
+    |> assign(:active, active)
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> render(:guest)
+    |> cache_public_response()
   end
 
   def home(conn, _params) do

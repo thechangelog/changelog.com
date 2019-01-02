@@ -59,7 +59,7 @@
       <td><%= reach_count(episode) %></td>
     <% end %>
     <% else %>
-      <td><%= link(ts(episode.recorded_at), to: TimeView.time_is_url(episode.recorded_at), rel: "external") %></td>
+      <td><%= external_link(ts(episode.recorded_at), to: TimeView.time_is_url(episode.recorded_at)) %></td>
     <% end %>
       <td class="center aligned">
         <div class="ui small basic buttons">

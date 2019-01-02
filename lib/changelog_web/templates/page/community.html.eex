@@ -2,7 +2,7 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <h1>Changelog Developer Community</h1>
-      <p>More than 1,500 developers from all over the world get a backstage pass to everything we do. Access to our Slack community, exclusive community member only features, discounts and special offers from our partners, and more.</p>
+      <p><%= members_count() |> comma_separated() %> developers from all over the world get a backstage pass to everything we do. Access to our Slack community, exclusive community member only features, discounts and special offers from our partners, and more.</p>
 
       <%= render("_community_join_button.html", assigns) %>
     </header>

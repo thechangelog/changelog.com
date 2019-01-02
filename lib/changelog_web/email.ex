@@ -69,6 +69,16 @@ defmodule ChangelogWeb.Email do
     |> render(:submitted_news_published)
   end
 
+  def comment_reply(person, reply) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Comment Reply")
+    |> to(person)
+    |> subject("Someone replied to your comment on Changelog News!")
+    |> assign(:person, person)
+    |> assign(:reply, reply)
+    |> render(:comment_reply)
+  end
+
   defp email_from_logbot do
     new_email()
     |> from("logbot@changelog.com")

@@ -5,20 +5,22 @@ defmodule ChangelogWeb.FeedController do
 
   alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Podcast, Post, Topic}
 
+  plug PublicEtsCache
+
   def news(conn, _params) do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("news.xml", items: NewsItem.latest_news_items)
-    |> cache_public_response
+    |> render("news.xml", items: NewsItem.latest_news_items())
+    |> cache_public_response(random_duration())
   end
 
   def news_titles(conn, _params) do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("news_titles.xml", items: NewsItem.latest_news_items)
-    |> cache_public_response
+    |> render("news_titles.xml", items: NewsItem.latest_news_items())
+    |> cache_public_response(random_duration())
   end
 
   def podcast(conn, %{"slug" => "backstage"}) do
@@ -29,10 +31,11 @@ defmodule ChangelogWeb.FeedController do
 
     episodes =
       Podcast.get_episodes(podcast)
-      |> Episode.published
-      |> Episode.newest_first
-      |> Repo.all
-      |> Episode.preload_all
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.preload_all()
+      |> Repo.all()
+      |> Enum.map(&Episode.load_news_item/1)
 
     log_subscribers(conn, podcast)
 
@@ -40,7 +43,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("podcast.xml", podcast: podcast, episodes: episodes)
-    |> cache_public_response
+    |> cache_public_response(random_duration())
   end
 
   defp log_subscribers(conn, podcast) do
@@ -55,54 +58,63 @@ defmodule ChangelogWeb.FeedController do
 
   def posts(conn, _params) do
     posts =
-      Post.published
-      |> Post.newest_first
+      Post.published()
+      |> Post.newest_first()
       |> Post.limit(100)
-      |> Repo.all
-      |> Post.preload_author
+      |> Post.preload_author()
+      |> Repo.all()
+      |> Enum.map(&Post.load_news_item/1)
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("posts.xml", posts: posts)
-    |> cache_public_response
+    |> cache_public_response(random_duration())
   end
 
   def sitemap(conn, _params) do
     news_items =
-      NewsItem.published
-      |> NewsItem.newest_first
-      |> Repo.all
+      NewsItem.published()
+      |> NewsItem.newest_first()
+      |> Repo.all()
 
     news_sources =
       NewsSource
-      |> Repo.all
+      |> Repo.all()
 
     episodes =
-      Episode.published
-      |> Episode.newest_first
-      |> Repo.all
-      |> Episode.preload_podcast
+      Episode.published()
+      |> Episode.newest_first()
+      |> Repo.all()
+      |> Episode.preload_podcast()
 
     podcasts =
-      Podcast.public
-      |> Podcast.oldest_first
-      |> Podcast.preload_hosts
-      |> Repo.all
+      Podcast.public()
+      |> Podcast.oldest_first()
+      |> Podcast.preload_hosts()
+      |> Repo.all()
       |> Kernel.++([Podcast.master])
 
     posts =
-      Post.published
-      |> Post.newest_first
-      |> Repo.all
+      Post.published()
+      |> Post.newest_first()
+      |> Repo.all()
 
     topics =
-      Topic.with_news_items
-      |> Repo.all
+      Topic.with_news_items()
+      |> Repo.all()
 
     conn
     |> put_layout(false)
-    |> render("sitemap.xml", news_items: news_items, news_sources: news_sources, episodes: episodes, podcasts: podcasts, posts: posts, topics: topics)
-    |> cache_public_response
+    |> assign(:news_items, news_items)
+    |> assign(:news_sources, news_sources)
+    |> assign(:episodes, episodes)
+    |> assign(:podcasts, podcasts)
+    |> assign(:posts, posts)
+    |> assign(:topics, topics)
+    |> render("sitemap.xml")
+    |> cache_public_response(random_duration())
   end
+
+  defp random_duration, do: Enum.random(5..10) |> :timer.minutes()
 end

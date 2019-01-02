@@ -12,22 +12,20 @@ defmodule ChangelogStatsParserTest do
   @file1 ~s{test/fixtures/logs/2016-10-14T13:00:00.000-oe6twX9qexnc62cAAAAA.log}
   @file2 ~s{test/fixtures/logs/2016-10-13T08:00:00.000-aQlu8sDqCqHgsnMAAAAA.log}
 
-  describe "parse_files" do
-    test "it creates a list with all the entries for the list of files given" do
-      entries = Parser.parse_files([@file1, @file2])
+  describe "parse/1" do
+    test "it creates a list with all the entries for the list of logs given" do
+      entries = Parser.parse([File.read!(@file1), File.read!(@file2)])
       # actually 73 lines, but 26 of them have 0 byte entries
       assert length(entries) == (73 - 26)
     end
-  end
 
-  describe "parse_file" do
-    test "it creates a list with one entry when file has one line in it" do
-      entries = Parser.parse_file(@file1)
+    test "it creates a list with one entry when log has one line in it" do
+      entries = Parser.parse(File.read!(@file1))
       assert length(entries) == 1
     end
 
-    test "it creates a list with many entries when file has many lines in it" do
-      entries = Parser.parse_file(@file2)
+    test "it creates a list with many entries when log has many lines in it" do
+      entries = Parser.parse(File.read!(@file2))
       # actually 73 lines, but 26 of them have 0 byte entries and 1 is a 301 redirect
       assert length(entries) == (73 - 26 - 1)
     end
@@ -53,7 +51,7 @@ defmodule ChangelogStatsParserTest do
       assert Parser.parse_line(@log2) == %Entry{
         ip: "78.35.187.78",
         episode: "219",
-        bytes: 262144,
+        bytes: 262_144,
         status: 200,
         agent: "Mozilla/5.0 (Linux; Android 6.0.1; HUAWEI RIO-L01 Build/HuaweiRIO-L01) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36",
         latitude: 50.933,
@@ -68,7 +66,7 @@ defmodule ChangelogStatsParserTest do
       assert Parser.parse_line(@log3) == %Entry{
         ip: "122.163.200.110",
         episode: "204",
-        bytes: 13132042,
+        bytes: 13_132_042,
         status: 206,
         agent: "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0",
         latitude: 26.850,
@@ -83,7 +81,7 @@ defmodule ChangelogStatsParserTest do
       assert Parser.parse_line(@log5) == %Entry{
         ip: "178.189.150.213",
         episode: "19",
-        bytes: 328417,
+        bytes: 328_417,
         status: 200,
         agent: "",
         latitude: 47.100,

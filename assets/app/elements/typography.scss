@@ -1,0 +1,120 @@
+%display-font {
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1.3px;
+  font-family: $display;
+}
+
+body {
+  font-size: $root-font-size;
+  font-family: $content;
+  color: $black;
+}
+
+a {
+  color: $green;
+  text-decoration: none;
+}
+
+b {
+  font-weight: 900;
+  color: $black;
+}
+
+// Headings
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 1em;
+  line-height: 1em;
+  font-weight: 900;
+}
+
+.section_heading {
+  align-items: top;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: $code;
+  justify-content: space-between;
+  margin-bottom: $base-spacing;
+  width: 100%;
+
+  &-text {
+    border-bottom: 2px solid $light-grey;
+    font-size: 0.9375em;
+    font-weight: 700;
+    margin: 0 1em 0 0;
+    padding: 1px 0 0.25em;
+  }
+
+  &-note {
+    font-size: 0.75em;
+    margin-bottom: 0;
+
+    a {
+      color: $black;
+      font-weight: bold;
+
+      &:hover {
+        color: $medium-grey;
+      }
+    }
+  }
+}
+
+// Paragraphs, Lists, Etc.
+
+p {
+  margin: 0 0 1em;
+}
+
+p,
+ul,
+ol,
+dt,
+dd {
+  line-height: 1.5em;
+}
+
+p,
+ul,
+ol {
+  // color: $body-copy-color;
+}
+
+q {
+  font-size: 1.7em;
+  font-weight: 900;
+  text-align: center;
+
+  &:before,
+  &:after {
+    content: '';
+  }
+
+  & + cite {
+    font-size: 1em;
+    display: block;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 2;
+    margin-top: 1rem;
+  }
+
+  @media (min-width: $tablet) {
+    margin-top: 0;
+  }
+
+  & > sup {
+    font-style: italic;
+    display: block;
+    top: 0;
+    font-size: 0.85em;
+    line-height: 1.5;
+    vertical-align: baseline;
+  }
+}

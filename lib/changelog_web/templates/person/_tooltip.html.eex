@@ -1,0 +1,29 @@
+<div class="tooltip">
+  <div class="tooltip-arrow"></div>
+  <div class="tooltip-wrap">
+    <div class="profile_tooltip">
+      <%= link(to: external_url(@person), title: "View Profile", rel: "external", class: "profile_tooltip-header") do %>
+        <%= lazy_image(avatar_url(@person), @person.name, class: "profile_tooltip-header-avatar") %>
+        <div class="profile_tooltip-header-info">
+          <p class="profile_tooltip-header-info-name"><%= @person.name %></p>
+          <p class="profile_tooltip-header-info-location"><%= @person.location %></p>
+        </div>
+      </a>
+      <% end %>
+      <div class="profile_tooltip-info">
+        <p><%= @person.bio |> md_to_html |> raw %></p>
+        <ul class="profile_tooltip-info-links">
+        <%= if @person.website do %>
+          <li><%= external_link("Website", to: @person.website) %></li>
+        <% end %>
+        <%= if @person.twitter_handle do %>
+          <li><%= external_link("Twitter", to: twitter_url(@person)) %></li>
+        <% end %>
+        <%= if @person.github_handle do %>
+          <li><%= external_link("GitHub", to: github_url(@person)) %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

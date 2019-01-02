@@ -1,4 +1,18 @@
 defmodule Changelog.Slack.Messages do
+  alias ChangelogWeb.NewsItemView
+
+  def new_comment(comment) do
+    ~s"""
+    New comment by *#{comment.author.name}* on _#{comment.news_item.headline}_ https://changelog.com/news/#{NewsItemView.hashid(comment.news_item)}
+    """
+  end
+
+  def new_episode(podcast, url) do
+    ~s"""
+    New episode of #{podcast.name}! #{celebrate_emoji()} #{url}
+    """
+  end
+
   def welcome do
     ~s"""
     Welcome to Changelog's Community Slack team! :clap:
@@ -16,4 +30,6 @@ defmodule Changelog.Slack.Messages do
     :green_heart:
     """
   end
+
+  defp celebrate_emoji, do: ~w(:tada: :gift: :muscle: :raised_hands: :parrot: :dancer:) |> Enum.random()
 end

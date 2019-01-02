@@ -4,6 +4,7 @@
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
 use Mix.Config
+Code.load_file("config/docker_secret.exs")
 
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
@@ -16,11 +17,11 @@ config :changelog, ChangelogWeb.Endpoint,
 
 config :changelog,
   ecto_repos: [Changelog.Repo],
-  buffer_token: System.get_env("BUFFER_TOKEN"),
-  github_api_token: System.get_env("GITHUB_API_TOKEN"),
-  cm_api_token: Base.encode64("#{System.get_env("CM_API_TOKEN")}:x"),
-  slack_invite_api_token: System.get_env("SLACK_INVITE_API_TOKEN"),
-  slack_app_api_token: System.get_env("SLACK_APP_API_TOKEN")
+  buffer_token: DockerSecret.get("BUFFER_TOKEN"),
+  github_api_token: DockerSecret.get("GITHUB_API_TOKEN"),
+  cm_api_token: Base.encode64("#{DockerSecret.get("CM_API_TOKEN")}:x"),
+  slack_invite_api_token: DockerSecret.get("SLACK_APP_API_TOKEN"),
+  slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN")
 
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.LocalAdapter
@@ -38,8 +39,8 @@ config :scrivener_html,
   view_style: :semantic
 
 config :ex_aws,
-  access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
-  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"}
+  access_key_id: DockerSecret.get("AWS_ACCESS_KEY_ID"),
+  secret_access_key: DockerSecret.get("AWS_SECRET_ACCESS_KEY")
 
 config :ueberauth, Ueberauth,
   providers: [
@@ -48,19 +49,23 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id: System.get_env("GITHUB_CLIENT_ID"),
-  client_secret: System.get_env("GITHUB_CLIENT_SECRET")
+  client_id: DockerSecret.get("GITHUB_CLIENT_ID"),
+  client_secret: DockerSecret.get("GITHUB_CLIENT_SECRET")
 
 config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
-  consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
-  consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
+  consumer_key: DockerSecret.get("TWITTER_CONSUMER_KEY"),
+  consumer_secret: DockerSecret.get("TWITTER_CONSUMER_SECRET")
+
+config :algolia,
+  application_id: DockerSecret.get("ALGOLIA_APPLICATION_ID"),
+  api_key: DockerSecret.get("ALGOLIA_API_KEY")
 
 config :plug_ets_cache,
   db_name: :response_cache,
   ttl_check: 1,
   ttl: 60
 
-config :mime, :types, %{"application/xml" => ["xml"]}
+config :mime, :types, %{"application/javascript" => ["js"], "application/xml" => ["xml"]}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

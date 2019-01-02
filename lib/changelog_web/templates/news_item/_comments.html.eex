@@ -1,0 +1,15 @@
+<section class="comments">
+  <hr class="comments-rule">
+  <a id="discussion" class="anchor"></a>
+  <header class="section_heading">
+    <h3 class="section_heading-text">Discussion</h3>
+
+    <%= if !@current_user do %>
+      <p class="section_heading-note"><%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("join", to: person_path(@conn, :join)) %> to comment</p>
+    <% end %>
+  </header>
+
+  <%= if @current_user, do: render(NewsItemCommentView, "_form.html", assigns) %>
+
+  <%= render_many(@comments, NewsItemCommentView, "show.html", Map.merge(assigns, %{as: :comment})) %>
+</section>

@@ -1,8 +1,10 @@
 defmodule ChangelogWeb.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Podcast, Episode}
+  alias Changelog.{Episode, Podcast}
 
+  plug :allow_framing, "embeds are frameable" when action in [:embed]
+  plug PublicEtsCache
   plug :assign_podcast
 
   def action(conn, _) do
@@ -13,13 +15,15 @@ defmodule ChangelogWeb.EpisodeController do
   def show(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published
-      |> Episode.preload_all
+      |> Episode.published()
+      |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
+      |> Episode.load_news_item()
 
     conn
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
+    |> assign(:item, episode.news_item)
     |> render(:show)
     |> cache_public_response(:infinity)
   end
@@ -27,16 +31,15 @@ defmodule ChangelogWeb.EpisodeController do
   def embed(conn, params = %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published
+      |> Episode.published()
+      |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_all
 
     theme = Map.get(params, "theme", "night")
     source = Map.get(params, "source", "default")
 
     conn
     |> put_layout(false)
-    |> delete_resp_header("x-frame-options")
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
     |> assign(:theme, theme)
@@ -48,10 +51,14 @@ defmodule ChangelogWeb.EpisodeController do
   def preview(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
+      |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_all
 
-    render(conn, :show, podcast: podcast, episode: episode)
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> assign(:item, nil)
+    |> render(:show)
   end
 
   def play(conn, %{"slug" => slug}, podcast) do
@@ -90,6 +97,8 @@ defmodule ChangelogWeb.EpisodeController do
 
     render(conn, "share.json", podcast: podcast, episode: episode)
   end
+
+  defp allow_framing(conn, _), do: delete_resp_header(conn, "x-frame-options")
 
   defp assign_podcast(conn, _) do
     podcast = Repo.get_by!(Podcast, slug: conn.params["podcast"])

@@ -11,10 +11,7 @@ defmodule Changelog.Mixfile do
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps(),
-      preferred_cli_env: [
-         coveralls: :test,
-         "coveralls.html": :test,
-         "coveralls.json": :test],
+      preferred_cli_env: [coveralls: :test, "coveralls.html": :test, "coveralls.json": :test],
       test_coverage: [tool: ExCoveralls],
     ]
   end
@@ -37,31 +34,31 @@ defmodule Changelog.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.0", override: true},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
-      {:phoenix_html, "~> 2.10"},
+      {:phoenix, "~> 1.4.0"},
+      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix_html, "~> 2.11"},
+      {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
-      {:timex_ecto, "~> 3.0"},
-      {:scrivener_ecto, "~> 1.0"},
-      {:scrivener_html, "~> 1.1"},
+      {:scrivener_ecto, "~> 2.0"},
+      {:scrivener_html, "~> 1.7", github: "jerodsanto/scrivener_html", branch: "phx-1-4"},
       {:cmark, "~> 0.6"},
       {:html_sanitize_ex, "~> 1.1"},
-      {:arc_ecto, "~> 0.10.0"},
+      {:phoenix_ecto, "~> 4.0"},
+      {:ecto_sql, "~> 3.0"},
+      {:arc_ecto, "~> 0.11.1"},
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
       {:bamboo_smtp, "~> 1.6.0"},
       {:httpoison, "~> 1.0", override: true},
+      {:jason, "~> 1.0"},
       {:con_cache, "~> 0.13.0"},
-      {:plug_ets_cache, "~> 0.3.0"},
+      {:plug_ets_cache, "~> 0.3.1"},
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_s3, "~> 2.0"},
       {:nimble_csv, "~> 0.4"},
       {:sweet_xml, "~> 0.6"},
-      {:briefly, "~> 0.3"},
-      {:cowboy, "~> 1.0"},
       {:user_agent_parser, "~> 1.0"},
       {:quantum, ">= 2.1.0"},
       {:oauth, github: "tim/erlang-oauth"},
@@ -85,7 +82,7 @@ defmodule Changelog.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]

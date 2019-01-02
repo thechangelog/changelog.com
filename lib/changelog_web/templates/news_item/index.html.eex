@@ -4,15 +4,17 @@
 
 <a id="feed" class="anchor"></a>
 <div class="feed">
-<%= if @page.page_number == 1 do %>
-  <%= for item <- @pinned, do: render_item_summary_or_ad(item, assigns) %>
-<% end %>
+  <%#= render("_subnav.html", assigns) %>
 
-<%= for item_or_ad <- items_with_ads(@items, @ads), do: render_item_summary_or_ad(item_or_ad, assigns) %>
+  <%= if @page.page_number == 1 do %>
+    <%= for item <- @pinned, do: render_item_summary_or_ad(item, assigns) %>
+  <% end %>
 
-<%= if @page.page_number == 1 do %>
-  <%= render(SharedView, "_signup_banner.html", assigns) %>
-<% end %>
+  <%= for item_or_ad <- items_with_ads(@items, @ads), do: render_item_summary_or_ad(item_or_ad, assigns) %>
+
+  <%= if @page.page_number == 1 do %>
+    <%= render(SharedView, "_signup_banner.html", assigns) %>
+  <% end %>
 
   <%= render(SharedView, "_more_button.html", assigns) %>
 </div>

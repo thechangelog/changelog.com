@@ -45,7 +45,7 @@ defmodule Changelog.Buffer.BufferTest do
       item = %NewsItem{type: :link}
 
       with_mocks([
-        {Buffer.Content, [], [news_item_terse_text: fn(_) -> "text" end]},
+        {Buffer.Content, [], [news_item_text: fn(_) -> "text" end]},
         {Buffer.Content, [], [news_item_link: fn(_) -> "url1" end]},
         {Buffer.Content, [], [news_item_image: fn(_) -> "url2" end]},
         {Buffer.Client, [], [create: fn(_, _, _) -> true end]}

@@ -14,10 +14,11 @@
         <h3 class="episode-header-subtitle"><%= @episode.subtitle %></h3>
       <% end %>
 
+      <% {header, people} = if Enum.any?(@episode.guests), do: {"Guests", @episode.guests}, else: {"Hosts", @episode.hosts} %>
       <div class="episode-header-guests">
-        <h4 class="visually_hidden">Guests</h4>
-        <div class="avatar_list <%= if length(@episode.guests) > 6, do: "avatar_list--large" %>">
-          <%= for person <- @episode.guests do %>
+        <h4 class="visually_hidden"><%= header %></h4>
+        <div class="avatar_list <%= if length(people) > 6, do: "avatar_list--large" %>">
+          <%= for person <- people do %>
             <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
               <%= lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
             <% end %>
@@ -30,7 +31,7 @@
       <%= render("_play_bar.html", assigns) %>
     </div>
 
-    <%= link "All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button" %>
+    <%= link("All Episodes", to: podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button") %>
   </header>
 
   <div class="episode-body">
@@ -50,13 +51,17 @@
       <% end %>
 
       <div class="episode-body-summary-description">
-        <%= @episode.summary |> md_to_html |> raw %>
+        <%= @episode.summary |> md_to_html() |> raw() %>
       </div>
 
       <ul class="episode-body-summary-meta">
-        <li>Runtime <%= TimeView.rounded_minutes(@episode.duration) %> minutes</li>
-        <li><time datetime="<%= @episode.published_at %>">Published <%= TimeView.pretty_date(@episode.published_at) %></time></li>
-        <li><a href="<%= audio_url(@episode) %>" download>Download MP3 (<%= megabytes(@episode) %>MB)</a></li>
+        <li><%= TimeView.rounded_minutes(@episode.duration) %> minutes</li>
+        <li><time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time></li>
+        <li><a href="<%= audio_url(@episode) %>" download title="Download MP3">Download (<%= megabytes(@episode) %>MB)</a></li>
+      <%= if @item do %>
+        <li><%= link(String.capitalize(NewsItemView.discuss_with_count(@item)), to: news_item_path(@conn, :show, NewsItemView.slug(@item)), title: "Discuss this episode") %></li>
+      <% end %>
+        <li><%= link("Share", to: {:javascript, "javascript:void(0);"}, title: "Share this episode", data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)]) %></li>
         <li><%= admin_edit_link(@conn, @current_user, @episode) %></li>
       </ul>
 
@@ -76,8 +81,8 @@
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">
           <a id="featuring" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Featuring</h3>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Featuring</h3>
           </header>
           <div class="richtext richtext--small">
             <ul>
@@ -92,8 +97,8 @@
       <%= if Enum.any?(@episode.episode_sponsors) do %>
         <section class="episode-body-section">
           <a id="sponsors" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Sponsors</h3>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Sponsors</h3>
           </header>
           <div class="richtext richtext--small">
             <%= for sponsor <- @episode.episode_sponsors do %>
@@ -108,9 +113,9 @@
       <%= if @episode.notes do %>
         <section class="episode-body-section">
           <a id="notes" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Notes &amp; Links</h3>
-            <p class="episode-body-section-heading-note"><%= link "Edit on GitHub", to: show_notes_source_url(@episode), title: "View notes source on GitHub", rel: "external" %></p>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Notes &amp; Links</h3>
+            <p class="section_heading-note"><%= external_link("Edit on GitHub", to: show_notes_source_url(@episode), title: "View notes source on GitHub") %></p>
           </header>
           <div class="richtext richtext--small">
             <%= @episode.notes |> md_to_html |> raw %>
@@ -121,9 +126,9 @@
       <%= if Enum.any?(@episode.transcript) do %>
         <section class="episode-body-section">
           <a id="transcript" class="anchor"></a>
-          <header class="episode-body-section-heading">
-            <h3 class="episode-body-section-heading-title">Transcript</h3>
-            <p class="episode-body-section-heading-note"><%= link "Edit on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %></p>
+          <header class="section_heading">
+            <h3 class="section_heading-text">Transcript</h3>
+            <p class="section_heading-note"><%= external_link("Edit on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub") %></p>
           </header>
 
           <div class="transcript">

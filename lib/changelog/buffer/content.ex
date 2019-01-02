@@ -1,5 +1,5 @@
 defmodule Changelog.Buffer.Content do
-  alias Changelog.{Episode, NewsItem}
+  alias Changelog.{Episode, ListKit, NewsItem}
   alias ChangelogWeb.{Endpoint, NewsItemView, Router}
 
   def episode_link(nil), do: nil
@@ -51,18 +51,21 @@ defmodule Changelog.Buffer.Content do
   def news_item_text(item) do
     item = NewsItem.preload_all(item)
 
-    [news_item_headline(item), news_item_meta(item), news_item_link(item)]
-    |> Enum.reject(&is_nil/1)
-    |> Enum.join("\n\n")
+    if length(item.topics) >= 3 do
+      news_item_verbose_text(item)
+    else
+      news_item_terse_text(item)
+    end
   end
 
-  def news_item_terse_text(nil), do: ""
-  def news_item_terse_text(item) do
-    item = NewsItem.preload_all(item)
-
+  defp news_item_terse_text(item) do
     [news_item_headline(item), news_item_byline(item), news_item_link(item)]
-    |> Enum.reject(&is_nil/1)
-    |> Enum.join("\n\n")
+    |> ListKit.compact_join("\n\n")
+  end
+
+  defp news_item_verbose_text(item) do
+    [news_item_headline(item), news_item_meta(item), news_item_link(item)]
+    |> ListKit.compact_join("\n\n")
   end
 
   def post_link(nil), do: nil
@@ -75,10 +78,10 @@ defmodule Changelog.Buffer.Content do
   defp news_item_headline(item), do: item.headline
 
   defp news_item_byline(%{author: author, source: source}) when is_map(author) and is_map(source) do
-    "✍ by #{twitterized(author)} on #{twitterized(source)}"
+    "#{author_emoji()} by #{twitterized(author)} via #{twitterized(source)}"
   end
   defp news_item_byline(%{author: author}) when is_map(author) do
-    "✍ by #{twitterized(author)}"
+    "#{author_emoji()} by #{twitterized(author)}"
   end
   defp news_item_byline(_item), do: nil
 

@@ -35,14 +35,14 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    insert(:episode_stat, episode: e, date: ~D[2016-01-01], downloads: 1.4)
-    insert(:episode_stat, episode: e, date: ~D[2016-01-02], uniques: 345)
+    insert(:episode_stat, episode: e, date: ~D[2016-01-01], downloads: 1.6, uniques: 1)
+    insert(:episode_stat, episode: e, date: ~D[2016-01-02], downloads: 320, uniques: 345)
 
     conn = get(conn, admin_podcast_episode_path(conn, :show, p.slug, e.slug))
 
     assert conn.status == 200
     assert String.contains?(conn.resp_body, e.slug)
-    assert String.contains?(conn.resp_body, "1.4")
+    assert String.contains?(conn.resp_body, "2")
     assert String.contains?(conn.resp_body, "345")
   end
 
@@ -150,6 +150,19 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_admin
+  test "schedules an episode for publishing", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p, published_at: Timex.end_of_week(Timex.now))
+
+    conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
+
+    assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
+    assert count(Episode.published) == 0
+    assert count(Episode.scheduled) == 1
+    assert called Github.Pusher.push(:_, e.notes)
+  end
+
+  @tag :as_admin
   test "publishes an episode, optionally setting guest 'thanks' to true", %{conn: conn} do
     g1 = insert(:person)
     g2 = insert(:person)
@@ -194,7 +207,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published) == 1
     assert count(NewsQueue) == 1
-    item = NewsItem |> NewsItem.with_episode(e) |> Repo.one
+    item = NewsItem |> NewsItem.with_episode(e) |> Repo.one()
     assert item.headline == e.title
     assert item.published_at == e.published_at
   end

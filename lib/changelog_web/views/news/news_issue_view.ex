@@ -8,14 +8,14 @@ defmodule ChangelogWeb.NewsIssueView do
   def items_with_ads(items, ads) do
     items
     |> Enum.chunk_every(3)
-    |> Enum.with_index
+    |> Enum.with_index()
     |> Enum.map(fn{items, index} ->
       case Enum.at(ads, index) do
         nil -> items
         ad -> items ++ [ad]
       end
     end)
-    |> List.flatten
+    |> List.flatten()
   end
 
   def render_item_or_ad(ad = %NewsAd{}, assigns), do: render("_ad.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsorship.sponsor}))

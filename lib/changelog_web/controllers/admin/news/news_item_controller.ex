@@ -79,7 +79,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     images = HtmlKit.get_images(html)
 
-    render(conn, :new, changeset: changeset, images: images)
+    render(conn, :new, changeset: changeset, images: images, similar: similar_items(url))
   end
 
   def create(conn, params = %{"news_item" => item_params}) do
@@ -97,13 +97,13 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:new, changeset: changeset)
+        |> render(:new, changeset: changeset, similar: similar_items(changeset))
     end
   end
 
   def edit(conn = %{assigns: %{current_user: me, item: item}}, _params) do
     changeset = NewsItem.update_changeset(item, %{logger_id: item.logger_id || me.id})
-    render(conn, :edit, item: item, changeset: changeset)
+    render(conn, :edit, item: item, changeset: changeset, similar: similar_items(item))
   end
 
   def update(conn = %{assigns: %{item: item}}, params = %{"news_item" => item_params}) do
@@ -121,7 +121,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, item: item, changeset: changeset)
+        |> render(:edit, item: item, changeset: changeset, similar: similar_items(item))
     end
   end
 
@@ -189,6 +189,23 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   defp handle_search_update(item) do
     if NewsItem.is_published(item) do
       Task.start_link(fn -> Search.update_item(item) end)
+    end
+  end
+
+  defp similar_items(nil), do: []
+  defp similar_items(%Ecto.Changeset{changes: %{url: url}}) when is_binary(url), do: similar_items(url)
+  defp similar_items(%Ecto.Changeset{}), do: []
+  defp similar_items(url) when is_binary(url) do
+    url
+    |> NewsItem.similar_url
+    |> NewsItem.preload_all
+    |> Repo.all
+  end
+  defp similar_items(item = %NewsItem{}) do
+    if NewsItem.is_published(item) do
+      []
+    else
+      item |> NewsItem.similar_to |> NewsItem.preload_all |> Repo.all
     end
   end
 end

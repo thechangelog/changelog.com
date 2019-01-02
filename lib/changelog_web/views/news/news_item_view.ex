@@ -2,7 +2,8 @@ defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Podcast, Regexp, UrlKit}
-  alias ChangelogWeb.{Endpoint, NewsAdView, NewsSourceView, EpisodeView, PersonView, TopicView, PodcastView}
+  alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
+                      EpisodeView, PersonView, TopicView, PodcastView}
 
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
@@ -14,6 +15,33 @@ defmodule ChangelogWeb.NewsItemView do
       end
     end
   end
+
+  def comment_count_aside(item) do
+    case NewsItem.comment_count(item) do
+      0 -> ""
+      x -> "(#{x})"
+    end
+  end
+
+  def discuss_with_count(item) do
+    ["discuss", comment_count_aside(item)]
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.join(" ")
+  end
+
+  def discussion_path(_conn, item = %{type: :link, object: post}) when is_map(post) do
+     dev_relative("#{item.url}#discussion")
+  end
+  def discussion_path(conn, item = %NewsItem{}) do
+    item_path = news_item_path(conn, :show, slug(item))
+    if item_path === conn.request_path do
+      "#discussion"
+    else
+      item_path
+    end
+  end
+
+  def hashid(item), do: Hashid.encode(item.id)
 
   def image_link(item, version \\ :large) do
     if item.image do
@@ -125,10 +153,6 @@ defmodule ChangelogWeb.NewsItemView do
     |> Kernel.<>("-#{hashid(item)}")
   end
 
-  def hashid(item) do
-    Hashid.encode(item.id)
-  end
-
   def teaser(item, max_words \\ 20) do
     item.story
     |> md_to_html
@@ -164,7 +188,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   defp truncate(html_list, total_words, max_words) when total_words <= max_words, do: html_list
   defp truncate(html_list, _total_words, max_words) do
-    sliced = Enum.slice(html_list, 0..(max_words-1))
+    sliced = Enum.slice(html_list, 0..(max_words - 1))
     tags = Regex.scan(Regexp.tag, Enum.join(sliced, " "), capture: ["tag"]) |> List.flatten
 
     sliced ++ case Integer.mod(length(tags), 2) do

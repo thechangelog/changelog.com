@@ -49,7 +49,7 @@ defmodule Changelog.Buffer.Client do
   end
 
   defp log(message) do
-    Logger.debug("Buffer: #{message}")
+    Logger.debug(fn -> "Buffer: #{message}" end)
     message
   end
 end
