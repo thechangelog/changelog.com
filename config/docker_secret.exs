@@ -4,7 +4,7 @@ defmodule DockerSecret do
     case File.read(path) do
       {:ok, value} ->
         IO.puts("#{secret} read from #{path}")
-        value
+        String.trim(value)
       _ ->
         IO.puts("#{secret} read from environment")
         System.get_env(secret)
