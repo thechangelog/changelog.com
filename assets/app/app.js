@@ -23,7 +23,6 @@ import lozad from "lozad";
 
 window.u = u;
 window.App = {
-  csrf: u("[property=csrf]").attr("content"),
   lazy: lozad(".lazy"),
   live: new LivePlayer(".js-live"),
   overlay: new Overlay("#overlay"),
@@ -169,7 +168,8 @@ const observer = new IntersectionObserver(function(entries) {
     let el = u(entry.target);
     let type = el.data("news-type");
     let id = el.data("news-id");
-    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": App.csrf}, body: {"ids": id}});
+    let csrf = u("[property=csrf]").attr("content");
+    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": csrf}, body: {"ids": id}});
     observer.unobserve(entry.target);
   });
 });
