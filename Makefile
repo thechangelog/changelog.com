@@ -139,6 +139,12 @@ build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## b   | B
 .PHONY: b
 b: build
 
+.PHONY: build-test
+build-test: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## bt  | Build Docker image required to run tests locally
+	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix do deps.get, compile, ecto.create
+.PHONY: bt
+bt: build-test
+
 SEPARATOR := ---------------------------------------------------------------------------------
 .PHONY: help
 help:
@@ -308,7 +314,7 @@ ssh: ## ssh | SSH into 2019.changelog.com host
 
 .PHONY: test
 test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
-	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix do deps.get, compile, ecto.create, test
+	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
 .PHONY: t
 t: test
 
