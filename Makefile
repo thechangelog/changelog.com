@@ -292,32 +292,35 @@ legacy-assets: $(DOCKER)
 	cd nginx && $(DOCKER) build --tag thechangelog/legacy_assets --file Dockerfile.legacy_assets . && \
 	$(DOCKER) push thechangelog/legacy_assets
 
+CHANGELOG_SERVICES_SEPARATOR := --------------------------------------------------------------------------
 define CHANGELOG_SERVICES
 
                                                           $(BOLD)$(GREEN)Public$(NORMAL)   $(BOLD)$(RED)Private$(NORMAL)
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)CircleCI$(NORMAL)   | https://circleci.com/gh/thechangelog/changelog.com        |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)DockerHub$(NORMAL)  | https://hub.docker.com/u/thechangelog                     |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Fastly$(NORMAL)     | https://manage.fastly.com/services/all                    |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)GitHub$(NORMAL)     | https://github.com/thechangelog/changelog.com             |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Linode$(NORMAL)     | https://cloud.linode.com/dashboard                        |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Papertrail$(NORMAL) | https://papertrailapp.com/dashboard                       |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Pingdom - Uptime$(NORMAL)           | https://my.pingdom.com/reports/uptime     |
 | $(BOLD)$(RED)Pingdom - Page Speed$(NORMAL)       | https://my.pingdom.com/reports/rbc        |
 | $(BOLD)$(RED)Pingdom - Visitor Insights$(NORMAL) | https://my.pingdom.com/3/visitor-insights |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
+| $(BOLD)$(RED)Pivotal Tracker $(NORMAL)   | https://www.pivotaltracker.com/n/projects/1650121 |
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Rollbar$(NORMAL)  | https://rollbar.com/changelogmedia/changelog.com/           |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)Slack$(NORMAL)    | https://changelog.slack.com/                                |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)Status$(NORMAL)   | http://status.changelog.com/                                |
---------------------------------------------------------------------------
+$(CHANGELOG_SERVICES_SEPARATOR)
 
 endef
 export CHANGELOG_SERVICES
