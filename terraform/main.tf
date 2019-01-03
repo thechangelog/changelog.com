@@ -21,6 +21,19 @@ variable "default_ssh_user" {
   default = "core"
 }
 
+variable "ssl_key" {
+  description = "changelog.com SSL private key"
+}
+
+variable "ssl_cert" {
+  description = "changelog.com SSL certificate"
+}
+
+variable "generation" {
+  description = "The date this stack went into production"
+  default = "2019"
+}
+
 data "linode_region" "changelog" {
   id = "${var.linode_region}"
 }
@@ -36,9 +49,10 @@ data "linode_image" "changelog" {
 resource "linode_instance" "2019" {
   region = "${data.linode_region.changelog.id}"
   type = "${data.linode_instance_type.changelog.id}"
-  label = "2019"
+  label = "${var.generation}"
   image = "${data.linode_image.changelog.id}"
   authorized_users = ["gerhard-changelog"]
+  private_ip = true
 }
 
 data "template_file" "db_mount" {
@@ -139,11 +153,96 @@ resource "null_resource" "init_docker_swarm" {
   }
 }
 
+# https://github.com/terraform-providers/terraform-provider-linode/issues/23
+resource "null_resource" "configure_private_ip_manually_since_containerlinux_doesnt_support_network_helper" {
+  connection {
+    user = "${var.default_ssh_user}"
+    host = "${linode_instance.2019.ip_address}"
+  }
+
+  depends_on = [
+    "linode_instance.2019",
+  ]
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo -e '\nAddress=${linode_instance.2019.private_ip_address}/17\n' | sudo tee -a /etc/systemd/network/05-eth0.network",
+      "sudo systemctl daemon-reload",
+      "sudo systemctl restart systemd-networkd"
+    ]
+  }
+
+  triggers {
+    manually = "2019.01.03-01:23"
+  }
+}
+
+# https://www.linode.com/docs/platform/nodebalancer/getting-started-with-nodebalancers-new-manager/
+# https://linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide-new-manager/
+resource "linode_nodebalancer" "2019" {
+  label = "${var.generation}"
+  region = "${data.linode_region.changelog.id}"
+}
+
+resource "linode_nodebalancer_config" "http_2019" {
+  nodebalancer_id = "${linode_nodebalancer.2019.id}"
+  port = 80
+  protocol = "http"
+  check = "http"
+  check_interval = 20
+  check_timeout = 10
+  check_attempts = 3
+  check_path = "/"
+  check_passive = true
+  stickiness = "table"
+  algorithm = "leastconn"
+}
+
+resource "linode_nodebalancer_node" "http_2019" {
+  label = "${var.generation}"
+  address = "${linode_instance.2019.private_ip_address}:80"
+  mode = "accept"
+  nodebalancer_id = "${linode_nodebalancer.2019.id}"
+  config_id = "${linode_nodebalancer_config.http_2019.id}"
+}
+
+resource "linode_nodebalancer_config" "https_2019" {
+  nodebalancer_id = "${linode_nodebalancer.2019.id}"
+  port = 443
+  protocol = "https"
+  check = "http"
+  check_interval = 20
+  check_timeout = 10
+  check_attempts = 3
+  check_path = "/"
+  check_passive = true
+  stickiness = "table"
+  algorithm = "leastconn"
+  cipher_suite = "recommended"
+  ssl_key = "${var.ssl_key}"
+  ssl_cert = "${var.ssl_cert}"
+}
+resource "linode_nodebalancer_node" "https_2019" {
+  label = "${var.generation}"
+  address = "${linode_instance.2019.private_ip_address}:80"
+  mode = "accept"
+  nodebalancer_id = "${linode_nodebalancer.2019.id}"
+  config_id = "${linode_nodebalancer_config.https_2019.id}"
+}
+
 provider "dnsimple" { }
 
 resource "dnsimple_record" "2019" {
   domain = "changelog.com"
-  name = "2019"
+  name = "${var.generation}"
+  value = "${linode_nodebalancer.2019.ipv4}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "2019i" {
+  domain = "changelog.com"
+  name = "${var.generation}i"
   value = "${linode_instance.2019.ip_address}"
   type = "A"
   ttl = 60

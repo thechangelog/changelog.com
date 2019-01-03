@@ -44,7 +44,7 @@ services:
       PORT: 4000
       URL_HOST: &host 2019.changelog.com
       URL_PORT: 80
-      URL_SCHEME: http
+      URL_SCHEME: https
       URL_STATIC_HOST: *host
       VIRTUAL_HOST: *host
     secrets:

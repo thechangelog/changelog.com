@@ -29,7 +29,7 @@ export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 DOCKER_STACK ?= 2019
 DOCKER_STACK_FILE ?= docker/changelog.stack.yml
 
-DOCKER_HOST ?= $(DOCKER_STACK).changelog.com
+DOCKER_HOST ?= $(DOCKER_STACK)i.changelog.com
 DOCKER_HOST_SSH_USER ?= core
 
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
@@ -72,6 +72,8 @@ $(CURL):
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
 TF := cd terraform && $(TERRAFORM)
+TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8038492725192048930)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7748004306557989540)"
+
 # Enable Terraform debugging if make runs in debug mode
 ifneq (,$(findstring d,$(MFLAGS)))
   TF_LOG ?= debug
@@ -181,7 +183,7 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 	while read -r secret ; do \
 	  export secret_key="$$($(LPASS) show --name $$secret)" ; \
 	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
-	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) Docker secret on $(DOCKER_HOST)..." ; \
+	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) secret on $(DOCKER_HOST)..." ; \
 	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
 	  ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "echo $$secret_value | docker secret create $$secret_key - || true" < /dev/null || exit 1 ; \
 	done && \
@@ -233,15 +235,15 @@ init: $(TERRAFORM)
 
 .PHONY: validate
 validate: $(TERRAFORM)
-	@$(TF) validate
+	@$(TF_VAR) && $(TF) validate
 
 .PHONY: plan
 plan: $(TERRAFORM)
-	@$(TF) plan
+	@$(TF_VAR) && $(TF) plan
 
 .PHONY: apply
 apply: $(TERRAFORM)
-	@$(TF) apply
+	@$(TF_VAR) && $(TF) apply
 
 .PHONY: legacy-assets
 legacy-assets: $(DOCKER)
