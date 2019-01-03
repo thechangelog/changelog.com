@@ -292,6 +292,39 @@ legacy-assets: $(DOCKER)
 	cd nginx && $(DOCKER) build --tag thechangelog/legacy_assets --file Dockerfile.legacy_assets . && \
 	$(DOCKER) push thechangelog/legacy_assets
 
+define CHANGELOG_SERVICES
+
+                                                          $(BOLD)$(GREEN)Public$(NORMAL)   $(BOLD)$(RED)Private$(NORMAL)
+--------------------------------------------------------------------------
+| $(BOLD)$(GREEN)CircleCI$(NORMAL)   | https://circleci.com/gh/thechangelog/changelog.com        |
+--------------------------------------------------------------------------
+| $(BOLD)$(GREEN)DockerHub$(NORMAL)  | https://hub.docker.com/u/thechangelog                     |
+--------------------------------------------------------------------------
+| $(BOLD)$(RED)Fastly$(NORMAL)     | https://manage.fastly.com/services/all                    |
+--------------------------------------------------------------------------
+| $(BOLD)$(GREEN)GitHub$(NORMAL)     | https://github.com/thechangelog/changelog.com             |
+--------------------------------------------------------------------------
+| $(BOLD)$(RED)Linode$(NORMAL)     | https://cloud.linode.com/dashboard                        |
+--------------------------------------------------------------------------
+| $(BOLD)$(RED)Papertrail$(NORMAL) | https://papertrailapp.com/dashboard                       |
+--------------------------------------------------------------------------
+| $(BOLD)$(RED)Pingdom - Uptime$(NORMAL)           | https://my.pingdom.com/reports/uptime     |
+| $(BOLD)$(RED)Pingdom - Page Speed$(NORMAL)       | https://my.pingdom.com/reports/rbc        |
+| $(BOLD)$(RED)Pingdom - Visitor Insights$(NORMAL) | https://my.pingdom.com/3/visitor-insights |
+--------------------------------------------------------------------------
+| $(BOLD)$(RED)Rollbar$(NORMAL)  | https://rollbar.com/changelogmedia/changelog.com/           |
+--------------------------------------------------------------------------
+| $(BOLD)$(GREEN)Status$(NORMAL)   | http://status.changelog.com/                               |
+--------------------------------------------------------------------------
+
+endef
+export CHANGELOG_SERVICES
+.PHONY: links
+links: ## l   | Links to services used by changelog.com
+	@echo "$$CHANGELOG_SERVICES"
+.PHONY: l
+l: links
+
 .PHONY: preview-readme
 preview-readme: $(DOCKER) ## pre | Preview README & live reload on edit
 	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
