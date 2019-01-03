@@ -44,6 +44,14 @@ docker run --rm --interactive --tty \
   thechangelog/bootstrap:latest
 endef
 
+define CTOP_CONTAINER
+docker pull quay.io/vektorlab/ctop:latest && \
+docker run --rm --interactive --tty \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  quay.io/vektorlab/ctop:latest
+endef
+
+
 
 ### DEPS ###
 #
@@ -215,6 +223,12 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 	echo "It might be easier to define a new secret, e.g. $(BOLD)ALGOLIA_API_KEY2$(NORMAL)"
 .PHONY: cds
 cds: create-docker-secrets
+
+.PHONY: ctop
+ctop: ## ct  | View real-time container metrics & logs
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)"
+.PHONY: ct
+ct: ctop
 
 .PHONY: remove-docker-secrets
 remove-docker-secrets: $(LPASS)
