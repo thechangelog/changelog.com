@@ -6,11 +6,6 @@ YELLOW := $(shell tput setaf 3)
 BOLD := $(shell tput bold)
 NORMAL := $(shell tput sgr0)
 
-PLATFORM := $(shell uname)
-ifeq ($(PLATFORM),Linux)
-  $(warning $(YELLOW)Not all Linux distributions are fully supported$(NORMAL), only Alpine is used on a regular basis.)
-endif
-
 ifneq (4,$(firstword $(sort $(MAKE_VERSION) 4)))
   $(warning $(BOLD)$(RED)GNU Make v4 or newer is required$(NORMAL))
   $(info On macOS it can be installed with $(BOLD)brew install make$(NORMAL) and run as $(BOLD)gmake$(NORMAL))
