@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   log:
-    command: syslog+tls://logs7.papertrailapp.com:40471
+    command: syslog+tls://logs7.papertrailapp.com:14349
     deploy:
       mode: global
       restart_policy:
