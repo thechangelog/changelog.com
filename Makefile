@@ -30,12 +30,19 @@ DOMAIN ?= changelog.com
 DOCKER_STACK ?= 2019
 DOCKER_STACK_FILE ?= docker/changelog.stack.yml
 
-DOCKER_HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
-DOCKER_HOST_SSH_USER ?= core
+HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
+HOST_SSH_USER ?= core
 
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 BOOTSTRAP_GIT_BRANCH ?= master
 
+define BOOTSTRAP_CONTAINER
+docker pull thechangelog/bootstrap:latest && \
+docker run --rm --interactive --tty \
+  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+  --volume changelog.com:/app:rw \
+  thechangelog/bootstrap:latest
+endef
 
 
 ### DEPS ###
@@ -90,13 +97,12 @@ endif
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
 
-.PHONY: $(DOCKER_HOST)
-$(DOCKER_HOST): iaas create-docker-secrets bootstrap-docker
+.PHONY: $(HOST)
+$(HOST): iaas create-docker-secrets bootstrap-docker
 
 .PHONY: bootstrap-docker
 bootstrap-docker:
-	@ssh -t $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker pull thechangelog/bootstrap:latest && docker run --rm --interactive --tty --volume /var/run/docker.sock:/var/run/docker.sock:ro --volume changelog.com:/app:rw thechangelog/bootstrap:latest" && \
-	echo "$(BOLD)https://$(DOCKER_STACK).$(DOMAIN)$(NORMAL) will be ready to serve requests in a few minutes"
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER)"
 .PHONY: bd
 bd: bootstrap-docker
 
@@ -195,9 +201,13 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 	while read -r secret ; do \
 	  export secret_key="$$($(LPASS) show --name $$secret)" ; \
 	  export secret_value="$$($(LPASS) show --notes $$secret)" ; \
-	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) secret on $(DOCKER_HOST)..." ; \
+	  echo "Creating $(BOLD)$(YELLOW)$$secret_key$(NORMAL) secret on $(HOST)..." ; \
 	  echo "Prevent ssh from hijacking stdin: https://github.com/koalaman/shellcheck/wiki/SC2095" > /dev/null ; \
-	  ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "echo $$secret_value | docker secret create $$secret_key - || true" < /dev/null || exit 1 ; \
+	  if [ $(HOST) = localhost ] ; then \
+	    echo $$secret_value | docker secret create $$secret_key - || true ; \
+	  else \
+	    ssh $(HOST_SSH_USER)@$(HOST) "echo $$secret_value | docker secret create $$secret_key - || true" < /dev/null || exit 1 ; \
+	  fi \
 	done && \
 	echo "$(BOLD)$(GREEN)All secrets are now setup as Docker secrets$(NORMAL)" && \
 	echo "A Docker secret cannot be modified - it can only be removed and created again, with a different value" && \
@@ -208,7 +218,11 @@ cds: create-docker-secrets
 
 .PHONY: remove-docker-secrets
 remove-docker-secrets: $(LPASS)
-	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker secret ls | awk '/ago/ { system(\"docker secret rm \" \$$1) }'"
+	@if [ $(HOST) = localhost ] ; then \
+	  docker secret ls | awk '/ago/ { system("docker secret rm " $$1) }' ; \
+	else \
+	  ssh $(HOST_SSH_USER)@$(HOST) "docker secret ls | awk '/ago/ { system(\"docker secret rm \" \$$1) }'" ; \
+	fi
 .PHONY: rds
 rds: remove-docker-secrets
 
@@ -315,8 +329,8 @@ secrets: $(LPASS) ## s   | List all LastPass secrets
 s: secrets
 
 .PHONY: ssh
-ssh: ## ssh | SSH into 2019.changelog.com host
-	@ssh $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST)
+ssh: ## ssh | SSH into $HOST
+	@ssh $(HOST_SSH_USER)@$(HOST)
 
 .PHONY: test
 test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
