@@ -15,6 +15,13 @@ services:
   update:
     deploy:
       replicas: 1
+      restart_policy:
+        condition: any
+      # https://docs.docker.com/compose/compose-file/#update_config
+      update_config:
+        failure_action: rollback
+        monitor: 60s
+        order: stop-first
     environment:
       EVERY_N_SECONDS: 60
     image: thechangelog/bootstrap
