@@ -90,9 +90,14 @@ colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
 
 .PHONY: $(DOCKER_HOST)
-$(DOCKER_HOST): iaas create-docker-secrets
+$(DOCKER_HOST): iaas create-docker-secrets bootstrap-docker
+
+.PHONY: bootstrap-docker
+bootstrap-docker:
 	@ssh -t $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker pull thechangelog/bootstrap:latest && docker run --rm --interactive --tty --volume /var/run/docker.sock:/var/run/docker.sock:ro --volume changelog.com:/app:rw thechangelog/bootstrap:latest" && \
 	echo "$(BOLD)http://$(DOCKER_HOST)$(NORMAL) will be ready to serve requests in a few minutes"
+.PHONY: bd
+bd: bootstrap-docker
 
 .PHONY: add-secret
 add-secret: $(LPASS) ## as  | Add secret to LastPass
