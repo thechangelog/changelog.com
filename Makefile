@@ -226,7 +226,11 @@ cds: create-docker-secrets
 
 .PHONY: ctop
 ctop: ## ct  | View real-time container metrics & logs
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)"
+	@if [ $(HOST) = localhost ] ; then \
+	  $(CTOP_CONTAINER) ; \
+	else \
+	  ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)" ; \
+	fi
 .PHONY: ct
 ct: ctop
 
