@@ -28,7 +28,7 @@ deploy_docker_stack() {
 }
 
 deploy_docker_stack_continuously() {
-  echo "Will deploy Docker Stack every ${EVERY_N_SECONDS:?must be set} seconds"
+  echo "Updating Docker Stack every ${EVERY_N_SECONDS:?must be set} seconds..."
   while sleep "$EVERY_N_SECONDS"
   do
     make deploy-docker-stack
