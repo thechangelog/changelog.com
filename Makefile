@@ -314,7 +314,9 @@ define CHANGELOG_SERVICES
 --------------------------------------------------------------------------
 | $(BOLD)$(RED)Rollbar$(NORMAL)  | https://rollbar.com/changelogmedia/changelog.com/           |
 --------------------------------------------------------------------------
-| $(BOLD)$(GREEN)Status$(NORMAL)   | http://status.changelog.com/                               |
+| $(BOLD)$(GREEN)Slack$(NORMAL)    | https://changelog.slack.com/                                |
+--------------------------------------------------------------------------
+| $(BOLD)$(GREEN)Status$(NORMAL)   | http://status.changelog.com/                                |
 --------------------------------------------------------------------------
 
 endef
