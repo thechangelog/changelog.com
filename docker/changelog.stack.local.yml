@@ -28,7 +28,7 @@ services:
       start_period: 5s
     image: postgres:9.5.4
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data:rw
   app:
     command: mix do ecto.create, ecto.migrate, phx.server
     deploy:
@@ -74,7 +74,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - uploads:/uploads
+      - uploads:/uploads:rw
   proxy:
     deploy:
       replicas: 1
