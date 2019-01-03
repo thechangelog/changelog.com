@@ -7,6 +7,7 @@ main() {
   is_repository || clone_repository
   reset_to_remote_branch
   deploy_docker_stack
+  [ -z "$EVERY_N_SECONDS" ] || deploy_docker_stack_continuously
 }
 
 reset_to_remote_branch() {
@@ -24,6 +25,14 @@ clone_repository() {
 
 deploy_docker_stack() {
   make deploy-docker-stack
+}
+
+deploy_docker_stack_continuously() {
+  echo "Will deploy Docker Stack every ${EVERY_N_SECONDS:?must be set} seconds"
+  while sleep "$EVERY_N_SECONDS"
+  do
+    make deploy-docker-stack
+  done
 }
 
 main
