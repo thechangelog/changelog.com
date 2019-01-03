@@ -38,7 +38,7 @@ BOOTSTRAP_GIT_BRANCH ?= master
 
 define BOOTSTRAP_CONTAINER
 docker pull thechangelog/bootstrap:latest && \
-docker run --rm --interactive --tty \
+docker run --rm --interactive --tty --name bootstrap \
   --volume /var/run/docker.sock:/var/run/docker.sock:ro \
   --volume changelog.com:/app:rw \
   thechangelog/bootstrap:latest
