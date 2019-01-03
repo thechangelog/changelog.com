@@ -12,6 +12,15 @@ services:
     image: gliderlabs/logspout:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+  update:
+    deploy:
+      replicas: 1
+    environment:
+      EVERY_N_SECONDS: 60
+    image: thechangelog/bootstrap
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - changelog.com:/app:rw
   db:
     deploy:
       replicas: 1
@@ -90,6 +99,7 @@ services:
 volumes:
   postgres:
   uploads:
+  changelog.com:
 
 # https://docs.docker.com/engine/swarm/secrets/#defining-and-using-secrets-in-compose-files
 secrets:
