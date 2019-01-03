@@ -109,6 +109,7 @@ jobs:
           name: Write build identifiers
           command: |
             echo "$CIRCLE_SHA1" > GIT_SHA
+            echo "$CIRCLE_USERNAME" > COMMIT_USER
             echo "$CIRCLE_BUILD_URL" > BUILD_URL
       - setup_remote_docker:
           version: 18.06.0-ce
