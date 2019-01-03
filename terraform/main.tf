@@ -13,7 +13,7 @@ variable "linode_region" {
 
 variable "linode_instance_type" {
   description = "Instance type to provision for the app instance: https://www.linode.com/pricing#all"
-  default = "g6-standard-2"
+  default = "g6-standard-8"
 }
 
 variable "default_ssh_user" {
@@ -51,7 +51,7 @@ resource "linode_instance" "2019" {
   type = "${data.linode_instance_type.changelog.id}"
   label = "${var.generation}"
   image = "${data.linode_image.changelog.id}"
-  authorized_users = ["gerhard-changelog"]
+  authorized_users = ["gerhard-changelog", "jerodsanto", "adamstac"]
   private_ip = true
 }
 
@@ -129,6 +129,7 @@ resource "null_resource" "mount_volumes" {
 
   triggers {
     manually = "2018.12.28-16:05"
+    instance_id = "${linode_instance.2019.id}"
   }
 }
 
@@ -150,6 +151,7 @@ resource "null_resource" "init_docker_swarm" {
 
   triggers {
     manually = "2018.12.29-16:12"
+    instance_id = "${linode_instance.2019.id}"
   }
 }
 
@@ -166,7 +168,8 @@ resource "null_resource" "configure_private_ip_manually_since_containerlinux_doe
 
   provisioner "remote-exec" {
     inline = [
-      "echo -e '\nAddress=${linode_instance.2019.private_ip_address}/17\n' | sudo tee -a /etc/systemd/network/05-eth0.network",
+      "grep -q Address /etc/systemd/network/05-eth0.network || (echo -e '\nAddress=${linode_instance.2019.private_ip_address}/17\n' | sudo tee -a /etc/systemd/network/05-eth0.network)",
+      "sudo sed -i 's|^Address=.*$|Address=${linode_instance.2019.private_ip_address}/17|g' /etc/systemd/network/05-eth0.network",
       "sudo systemctl daemon-reload",
       "sudo systemctl restart systemd-networkd"
     ]
@@ -174,6 +177,7 @@ resource "null_resource" "configure_private_ip_manually_since_containerlinux_doe
 
   triggers {
     manually = "2019.01.03-01:23"
+    private_ip = "${linode_instance.2019.private_ip_address}"
   }
 }
 
