@@ -35,6 +35,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+      # https://docs.docker.com/compose/compose-file/#update_config
       update_config:
         failure_action: rollback
         monitor: 30s
@@ -90,6 +91,7 @@ volumes:
   postgres:
   uploads:
 
+# https://docs.docker.com/engine/swarm/secrets/#defining-and-using-secrets-in-compose-files
 secrets:
   CM_API_TOKEN:
     external: true
