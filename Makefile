@@ -26,10 +26,11 @@ export LANG := en_US.UTF-8
 
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 
+DOMAIN ?= changelog.com
 DOCKER_STACK ?= 2019
 DOCKER_STACK_FILE ?= docker/changelog.stack.yml
 
-DOCKER_HOST ?= $(DOCKER_STACK)i.changelog.com
+DOCKER_HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 DOCKER_HOST_SSH_USER ?= core
 
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
@@ -95,7 +96,7 @@ $(DOCKER_HOST): iaas create-docker-secrets bootstrap-docker
 .PHONY: bootstrap-docker
 bootstrap-docker:
 	@ssh -t $(DOCKER_HOST_SSH_USER)@$(DOCKER_HOST) "docker pull thechangelog/bootstrap:latest && docker run --rm --interactive --tty --volume /var/run/docker.sock:/var/run/docker.sock:ro --volume changelog.com:/app:rw thechangelog/bootstrap:latest" && \
-	echo "$(BOLD)https://$(DOCKER_HOST)$(NORMAL) will be ready to serve requests in a few minutes"
+	echo "$(BOLD)https://$(DOCKER_STACK).$(DOMAIN)$(NORMAL) will be ready to serve requests in a few minutes"
 .PHONY: bd
 bd: bootstrap-docker
 
