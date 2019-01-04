@@ -46,7 +46,6 @@ services:
     volumes:
       - /db:/var/lib/postgresql/data:rw
   app:
-    command: mix do ecto.create, ecto.migrate, phx.server
     deploy:
       replicas: 1
       restart_policy:

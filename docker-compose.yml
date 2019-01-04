@@ -13,7 +13,6 @@ services:
     build:
       context: ./
       dockerfile: docker/Dockerfile.development
-    command: mix do deps.get, compile, ecto.create, ecto.migrate, phx.server
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
       VIRTUAL_HOST: &host "${HOST:-localhost}"
