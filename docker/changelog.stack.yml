@@ -63,6 +63,7 @@ services:
       URL_SCHEME: https
       URL_STATIC_HOST: *host
       VIRTUAL_HOST: *host
+      ROLLBAR_ENVIRONMENT: production
     secrets:
       - CM_API_TOKEN
       - CM_SMTP_TOKEN

@@ -357,6 +357,14 @@ publish-proxy-image: $(DOCKER)
 	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/proxy:latest
 
+.PHONY: report-deploy
+report-deploy:
+	@ROLLBAR_ACCESS_TOKEN="$$(cat /run/secrets/ROLLBAR_ACCESS_TOKEN)" && export ROLLBAR_ACCESS_TOKEN && \
+	COMMIT_USER="$$(cat ./COMMIT_USER)" && export COMMIT_USER && \
+	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
+	curl --fail --request POST --url https://api.rollbar.com/api/1/deploy/ \
+	  --data '{"access_token":"'$$ROLLBAR_ACCESS_TOKEN'","environment":"'$$ROLLBAR_ENVIRONMENT'","rollbar_username":"'$$COMMIT_USER'","revision":"'$$COMMIT_SHA'"}'
+
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image
 .PHONY: ri

@@ -63,6 +63,7 @@ services:
       URL_SCHEME: http
       URL_STATIC_HOST: *host
       VIRTUAL_HOST: *host
+      ROLLBAR_ENVIRONMENT: local
     secrets:
       - CM_API_TOKEN
       - CM_SMTP_TOKEN
