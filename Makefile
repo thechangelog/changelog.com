@@ -34,6 +34,7 @@ BOOTSTRAP_GIT_BRANCH ?= master
 define BOOTSTRAP_CONTAINER
 docker pull thechangelog/bootstrap:latest && \
 docker run --rm --interactive --tty --name bootstrap \
+  --env HOSTNAME=$$HOSTNAME \
   --volume /var/run/docker.sock:/var/run/docker.sock:ro \
   --volume changelog.com:/app:rw \
   thechangelog/bootstrap:latest
@@ -241,7 +242,7 @@ rds: remove-docker-secrets
 
 .PHONY: deploy-docker-stack
 deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
-	@$(DOCKER) stack deploy --compose-file $(DOCKER_STACK_FILE) --prune $(DOCKER_STACK)
+	@export HOSTNAME && $(DOCKER) stack deploy --compose-file $(DOCKER_STACK_FILE) --prune $(DOCKER_STACK)
 .PHONY: dds
 dds: deploy-docker-stack
 
@@ -253,7 +254,8 @@ bli: build-local-image
 
 .PHONY: deploy-docker-stack-local
 deploy-docker-stack-local: $(DOCKER) build-local-image
-	@$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK) && \
+	@export HOSTNAME && \
+	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK) && \
 	$(DOCKER) service update --image thechangelog/changelog.com:local --force $(DOCKER_STACK)_app
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
@@ -362,8 +364,8 @@ report-deploy:
 	@ROLLBAR_ACCESS_TOKEN="$$(cat /run/secrets/ROLLBAR_ACCESS_TOKEN)" && export ROLLBAR_ACCESS_TOKEN && \
 	COMMIT_USER="$$(cat ./COMMIT_USER)" && export COMMIT_USER && \
 	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
-	  --data '{"access_token":"'$$ROLLBAR_ACCESS_TOKEN'","environment":"'$$ROLLBAR_ENVIRONMENT'","rollbar_username":"'$$COMMIT_USER'","revision":"'$$COMMIT_SHA'"}'
 	curl --silent --fail --request POST --url https://api.rollbar.com/api/1/deploy/ \
+	  --data '{"access_token":"'$$ROLLBAR_ACCESS_TOKEN'","environment":"'$$ROLLBAR_ENVIRONMENT'","rollbar_username":"'$$COMMIT_USER'","revision":"'$$COMMIT_SHA'","comment":"Running in container '$$HOSTNAME' on host '$$NODE'"}'
 
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image

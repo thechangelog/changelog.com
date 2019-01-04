@@ -24,6 +24,7 @@ services:
         order: stop-first
     environment:
       EVERY_N_SECONDS: 60
+      HOSTNAME: "${HOSTNAME}"
     image: thechangelog/bootstrap
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -56,6 +57,7 @@ services:
         monitor: 30s
         order: start-first
     environment:
+      NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
       PORT: 4000
       URL_HOST: &host 2019.changelog.com
