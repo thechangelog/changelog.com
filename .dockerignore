@@ -16,7 +16,6 @@ test
 .envrc
 .gitattributes
 .gitignore
-Makefile
 README.md
 coveralls.json
 docker-compose.yml
