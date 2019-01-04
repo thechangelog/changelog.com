@@ -324,11 +324,11 @@ $(CHANGELOG_SERVICES_SEPARATOR)
 
 endef
 export CHANGELOG_SERVICES
-.PHONY: links
-links: ## l   | Links to services used by changelog.com
+.PHONY: list-services
+list-services: ## ls  | List of all services used by changelog.com
 	@echo "$$CHANGELOG_SERVICES"
-.PHONY: l
-l: links
+.PHONY: ls
+ls: list-services
 
 .PHONY: preview-readme
 preview-readme: $(DOCKER) ## pre | Preview README & live reload on edit
