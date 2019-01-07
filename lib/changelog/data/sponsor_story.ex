@@ -1,7 +1,7 @@
 defmodule Changelog.SponsorStory do
-  defstruct [:sponsor, :slug, :logo, :quote, :examples, :content_md]
+  defstruct [:sponsor, :slug, :quote, :examples, :content_md]
 
-  def all, do: [rollbar()]
+  def all, do: [rollbar(), fastly(), linode(), datadog()]
 
   def get_by_slug(slug) do
     try do
@@ -15,7 +15,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Rollbar",
       slug: "rollbar",
-      logo: "rollbar",
       quote: %{
         name: "Mike Smith",
         content: "Partnering with Changelog on their news and podcasts have helped me to build brand awareness for Rollbar in a space where developers have heard the 'you need error tracking' message before. Adam and his team do an amazing job at finding the stories about our brand and service that developers want to hear. They're so good at getting the attention (and the trust) of their listeners.",
@@ -55,18 +54,18 @@ defmodule Changelog.SponsorStory do
 
       `---`
 
-      Partner: Rollbar  
-      Website: [rollbar.com](https://rollbar.com/)  
-      Employees: 50  
+      Partner: Rollbar
+      Website: [rollbar.com](https://rollbar.com/)
+      Employees: 50
       Annual Revenue: $1,000,000
       """
     }
   end
+
   def datadog do
     %__MODULE__{
       sponsor: "Datadog",
       slug: "datadog",
-      logo: "datadog",
       quote: %{
         name: "",
         content: "Datadog is a monitoring service for hybrid cloud applications, assisting organizations in improving agility, increasing efficiency, and providing end-to-end visibility across the application and organization. These capabilities are provided on a SaaS-based data analytics platform that enables developers, operations, and other teams to ensure application uptime and accelerate the process of delivering high quality software.",
@@ -85,7 +84,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Indeed",
       slug: "indeed",
-      logo: "indeed",
       quote: %{
         name: "Travis Triggs",
         content: "Indeed is the #1 job site in the world with over 200 million unique visitors every month. Indeed strives to put job seekers first, giving them free access to search for jobs, post resumes, and research companies. Every day, they connect millions of people to new opportunities.",
@@ -104,7 +102,6 @@ defmodule Changelog.SponsorStory do
     %__MODULE__{
       sponsor: "Intel",
       slug: "intel",
-      logo: "intel",
       quote: %{
         name: "Karl Fezer",
         content: "We partnered with Changelog on Practical AI to help foster conversations and communities across the landscape of Artificial Intelligence. Our ads on Practical AI have really helped to shape our AI story, how our customers are impacted impacted by our technology — we're even able to promote our teams and culture to attract the right talent. If you listen to Practical AI, that's a great start to being a fit here at Intel AI.",
@@ -118,11 +115,11 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def linode do
     %__MODULE__{
       sponsor: "Linode",
       slug: "linode",
-      logo: "linode",
       quote: %{
         name: "Tyler Van Fossen",
         content: "We're huge fans of Changelog here at Linode. The focus on developer news and podcasts is the right fit to help us share the Linode story.",
@@ -136,11 +133,11 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def fastly do
     %__MODULE__{
       sponsor: "Fastly",
       slug: "fastly",
-      logo: "fastly",
       quote: %{
         name: "Elaine Greenburg",
         content: "Wow! Fastly gets to be the content delivery backbone Changelog builds everything upon. Plus, the Fastly brand and core value add can be heard in the pre-roll of every podcast episode. We couldn't have asked for a better partner to help us reach the developer community.",

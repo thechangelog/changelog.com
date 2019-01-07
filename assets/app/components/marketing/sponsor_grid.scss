@@ -1,0 +1,70 @@
+.sponsor_grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 1217px;
+  padding: 1em $mobile-spacing;
+  width: 100%;
+
+  &-item { // <a>
+    display: flex;
+    flex: 0 0 100%;
+    padding: $mobile-spacing;
+    width: 100%;
+
+    @include breakpoint(tablet) {
+      flex: 0 0 50%;
+      padding: $base-spacing;
+    }
+
+    @include breakpoint(desktop) {
+      flex: 0 0 33.33333%;
+    }
+
+    &:hover {
+      background: $dark-grey;
+    }
+
+    &-logo {
+      $size: 40px;
+      background: $white;
+      border-radius: $base-border-radius;
+      box-shadow: 0 0 20px #000;
+      flex: 0 0 $size;
+      height: $size;
+      margin-right: $base-spacing/2;
+      width: $size;
+
+      @include breakpoint(tablet) {
+        $size: 56px;
+        flex: 0 0 $size;
+        height: $size;
+        width: $size;
+      }
+    }
+
+    &-content {
+      width: 100%;
+
+      h4 {
+        color: $white;
+        font-size: 1.125em;
+        margin-bottom: 0.25em;
+      }
+      p {
+        /* autoprefixer: autoprefixer: off */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0;
+        max-height: 4.5em; // Max-height for when line-clamp isn't supported
+        /* autoprefixer: autoprefixer: on */
+
+        @include breakpoint(tablet) {
+          -webkit-line-clamp: 3;
+        }
+      }
+    }
+  }
+}

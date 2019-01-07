@@ -45,6 +45,16 @@ defmodule Changelog.NewsSponsorship do
   def preload_sponsor(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :sponsor)
   def preload_sponsor(sponsorship), do: Repo.preload(sponsorship, :sponsor)
 
+  def get_ads_for_index(count \\ 2) do
+    Timex.today
+    |> week_of
+    |> preload_all
+    |> Repo.all
+    |> Enum.take_random(count)
+    |> Enum.map(&ad_for_index/1)
+    |> Enum.reject(&is_nil/1)
+  end
+
   def ad_for_index(sponsorship) do
     sponsorship
     |> preload_ads

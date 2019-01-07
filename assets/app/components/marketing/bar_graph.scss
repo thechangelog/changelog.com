@@ -1,0 +1,51 @@
+.bar_graph {
+  margin: $base-spacing 0;
+
+  @include breakpoint(tablet) {
+    display: flex;
+    margin: $base-spacing*2.5 0;
+  }
+
+  &-item {
+    margin: 0 1px 0 0;
+
+    @include breakpoint(tablet) {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 250px;
+      flex: 1 1 20%;
+    }
+
+    &-percentage,
+    &-label {
+      font-family: $code;
+      font-size: 0.825em;
+
+      @include breakpoint(tablet) {
+        text-align: center;
+      }
+    }
+    &-percentage {
+      background: $green;
+      color: $black;
+
+      @include breakpoint(tablet, max) {
+        padding: 1em;
+      }
+      @include breakpoint(tablet) {
+        border: 1em solid $green;
+        // padding-top: 1.5em;
+        width: 100% !important;
+      }
+    }
+    &-label {
+      padding: 0.5em 0 2em;
+
+      @include breakpoint(tablet) {
+        height: 2em;
+        padding: 2em 0 3em;
+      }
+    }
+  }
+}

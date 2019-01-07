@@ -13,6 +13,7 @@ import Overlay from "modules/overlay";
 import ImageButton from "modules/imageButton";
 import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
+import Slider from "modules/slider";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
 import Flash from "modules/flash";
@@ -27,6 +28,7 @@ window.App = {
   live: new LivePlayer(".js-live"),
   overlay: new Overlay("#overlay"),
   player: new OnsitePlayer("#player"),
+  slider: new Slider(".js-slider"),
 
   attachComments() {
     u(".js-comment").each(el => {

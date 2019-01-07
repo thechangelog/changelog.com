@@ -1,7 +1,11 @@
 <%= if @current_user do %>
-  <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "marketing-button button_large" %>
+  <div class="marketing-button_group" style="--max-width-group: 260px;">
+    <%= link "Welcome Back", to: home_path(@conn, :show), title: "", class: "button_large" %>
+  </div>
   <p class="button_note"><code>It’s good to be $HOME</code></p>
 <% else %>
-  <%= link "Join the Community", to: person_path(@conn, :join), title: "", class: "marketing-button button_large" %>
+  <div class="marketing-button_group" style="--max-width-group: 260px;">
+    <%= link "Join the Community", to: person_path(@conn, :join), title: "", class: "button_large" %>
+  </div>
   <p class="button_note">By joining you agree to this community's <%= link "Code of Conduct", to: page_path(@conn, :coc) %>.</p>
 <% end %>
