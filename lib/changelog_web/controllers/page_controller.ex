@@ -61,9 +61,9 @@ defmodule ChangelogWeb.PageController do
 
   def sponsor(conn, _params) do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
-    stories = Changelog.SponsorStory.all
+    examples = Changelog.SponsorStory.examples()
     ads = NewsSponsorship.get_ads_for_index()
-    render(conn, :sponsor, weekly: weekly, stories: stories, ads: ads)
+    render(conn, :sponsor, weekly: weekly, examples: examples, ads: ads)
   end
 
   def sponsor_pricing(conn, _params) do

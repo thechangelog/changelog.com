@@ -1,7 +1,19 @@
 defmodule Changelog.SponsorStory do
   defstruct [:sponsor, :slug, :quote, :examples, :content_md]
 
-  def all, do: [rollbar(), fastly(), linode(), datadog()]
+  def all, do: [rollbar(), fastly(), linode(), datadog(), indeed()]
+
+  @doc """
+  Provides _just_ the example data for the given sponsors. This is used on
+  /sponsor to display the podcast sponsorship example audio table.
+  """
+  def examples do
+    [
+      get_example(rollbar(), 0),
+      get_example(rollbar(), 1),
+      get_example(rollbar(), 2),
+    ]
+  end
 
   def get_by_slug(slug) do
     try do
@@ -80,6 +92,7 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def indeed do
     %__MODULE__{
       sponsor: "Indeed",
@@ -98,6 +111,7 @@ defmodule Changelog.SponsorStory do
       """
     }
   end
+
   def intel do
     %__MODULE__{
       sponsor: "Intel",
@@ -150,5 +164,9 @@ defmodule Changelog.SponsorStory do
       content_md: """
       """
     }
+  end
+
+  defp get_example(sponsor, index) do
+    sponsor |> Map.get(:examples) |> Enum.at(index)
   end
 end
