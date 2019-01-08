@@ -54,11 +54,11 @@ defmodule Changelog.Podcast do
     }
   end
 
-  def file_changeset(podcast, attrs \\ %{}), do: cast_attachments(podcast, attrs, ~w(cover))
+  def file_changeset(podcast, attrs \\ %{}), do: cast_attachments(podcast, attrs, [:cover])
 
   def insert_changeset(podcast, attrs \\ %{}) do
     podcast
-    |> cast(attrs, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live partner position))
+    |> cast(attrs, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live partner position)a)
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
     |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)

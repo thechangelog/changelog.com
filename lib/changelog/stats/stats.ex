@@ -27,18 +27,20 @@ defmodule Changelog.Stats do
   def process(date, podcasts) do
     podcasts
     |> Enum.map(&Task.async(fn -> process_podcast(date, &1) end))
-    |> Enum.map(&Task.await(&1, 600_000)) # 10 minutes
-    |> List.flatten
+    |> Enum.flat_map(&Task.await(&1, 600_000)) # 10 minutes
   end
 
   defp process_podcast(date, podcast) do
     Logger.info("Stats: Processing #{podcast.name}")
 
-    processed = S3.logs(date, podcast.slug)
-    |> Parser.parse_files
-    |> Enum.group_by(&(&1.episode))
-    |> Enum.map(fn({slug, entries}) -> process_episode(date, podcast, slug, entries) end)
+    processed =
+      S3.get_logs(date, podcast.slug)
+      |> Parser.parse()
+      |> Enum.group_by(&(&1.episode))
+      |> Task.async_stream(fn({slug, entries}) -> process_episode(date, podcast, slug, entries) end)
+      |> Enum.map(fn({:ok, stat}) -> stat end)
 
+    Podcast.update_stat_counts(podcast)
     Logger.info("Stats: Finished Processing #{podcast.name}")
 
     processed
@@ -64,7 +66,6 @@ defmodule Changelog.Stats do
       case Repo.insert_or_update(stat) do
         {:ok, stat} ->
           Episode.update_stat_counts(episode)
-          Podcast.update_stat_counts(podcast)
           stat
         {:error, _} -> Logger.info("Stats: Failed to insert/update episode: #{date} #{podcast.slug} #{slug}")
       end

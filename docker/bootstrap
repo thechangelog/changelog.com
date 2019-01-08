@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -e
+[ -z "$DEBUG" ] || set -x
+
+main() {
+  is_repository || clone_repository
+  reset_to_remote_branch
+  deploy_docker_stack
+  [ -z "$EVERY_N_SECONDS" ] || deploy_docker_stack_continuously
+}
+
+reset_to_remote_branch() {
+  git fetch origin "${GIT_BRANCH:?must be set}"
+  git reset --hard origin/"$GIT_BRANCH"
+}
+
+is_repository() {
+  git remote -v
+}
+
+clone_repository() {
+  git clone "${GIT_REPOSITORY:?must be set}" /app
+}
+
+deploy_docker_stack() {
+  make deploy-docker-stack
+}
+
+deploy_docker_stack_continuously() {
+  echo "Updating Docker Stack every ${EVERY_N_SECONDS:?must be set} seconds..."
+  while sleep "$EVERY_N_SECONDS"
+  do
+    make deploy-docker-stack
+  done
+}
+
+main

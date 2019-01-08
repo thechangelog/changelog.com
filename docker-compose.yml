@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
   db:
-    image: postgres:9.6
+    image: postgres:9.5.4
     # https://docs.docker.com/compose/compose-file/#ports
     expose:
       - "5432"
@@ -12,44 +12,34 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Dockerfile.development
-    command: mix do ecto.create, ecto.migrate, phx.server
+      dockerfile: docker/Dockerfile.development
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
-      VIRTUAL_HOST: "${HOST:-localhost}"
-      HOST: "${HOST:-localhost}"
+      VIRTUAL_HOST: &host "${HOST:-localhost}"
+      HOST: *host
     ports:
       - "4000:4000"
     volumes:
-      - ./assets/admin:/app/assets/admin
-      - ./assets/app:/app/assets/app
-      - ./assets/assets:/app/assets/assets
-      - ./assets/email:/app/assets/email
-      - node_modules:/assets/node_modules
-      - ./assets/semantic:/app/assets/semantic
-      - ./assets/shared:/app/assets/shared
-      - ./assets/test:/app/assets/test
-      - ./assets/.babelrc:/app/assets/.babelrc
-      - ./assets/embedder.js:/app/assets/embedder.js
-      - ./assets/postcss.config.js:/app/assets/postcss.config.js
-      - ./assets/webpack.config.js:/app/assets/webpack.config.js
       - build:/app/_build
+      - ./assets:/app/assets
+      - node_modules:/app/assets/node_modules
       - ./config:/app/config
       - deps:/app/deps
       - ./lib:/app/lib
-      - ./priv/repo:/app/priv/repo
-      - ./priv/static:/app/priv/static
-      - ./priv/uploads:/app/priv/uploads
+      - ./priv:/app/priv
+      - ./script:/app/script
       - ./test:/app/test
+      - ./.all-contributorsrc:/app/.all-contributorsrc
+      - ./.credo.exs:/app/.credo.exs
       - ./.iex.exs:/app/.iex.exs
+      - ./mix.exs:/app/mix.exs
+      - ./mix.lock:/app/mix.lock
     depends_on:
       - db
   proxy:
     image: thechangelog/proxy
     ports:
       - "80:80"
-    environment:
-      ENABLE_IPV6: "true"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx/vhost.d:/etc/nginx/vhost.d:ro

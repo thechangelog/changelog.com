@@ -51,7 +51,7 @@ defmodule Changelog.Buffer.Content do
   def news_item_text(item) do
     item = NewsItem.preload_all(item)
 
-    if length(item.topics) >= 3 do
+    if length(item.topics) >= 2 do
       news_item_verbose_text(item)
     else
       news_item_terse_text(item)
@@ -60,7 +60,7 @@ defmodule Changelog.Buffer.Content do
 
   defp news_item_terse_text(item) do
     [news_item_headline(item), news_item_byline(item), news_item_link(item)]
-    |> ListKit.compact_join("\n\n")
+    |> ListKit.compact_join("\n")
   end
 
   defp news_item_verbose_text(item) do
@@ -99,13 +99,13 @@ defmodule Changelog.Buffer.Content do
     end
   end
 
-  defp author_emoji, do: ~w(✍ 🖋 📝) |> Enum.random
-  defp episode_emoji, do: ~w(🙌 🎉 📢 🔥 🎧) |> Enum.random
-  defp featuring_emoji, do: ~w(🌟 🎙 ✨ ⚡️) |> Enum.random
-  defp source_emoji, do: ~w(📨 📡 📢) |> Enum.random
-  defp title_emoji, do: ~w(🗣 💬) |> Enum.random
-  defp topic_emoji, do: ~w(🏷) |> Enum.random
-  defp video_emoji, do: ~w(🎞 📽 🎬 🍿) |> Enum.random
+  defp author_emoji,    do: ~w(✍ 🖋 📝 🗣) |> Enum.random()
+  defp episode_emoji,   do: ~w(🙌 🎉 📢 🔥 🎧 🎁 💥) |> Enum.random()
+  defp featuring_emoji, do: ~w(🌟 🎙 ✨ ⚡️ 💫) |> Enum.random()
+  defp source_emoji,    do: ~w(📨 📡 📢 🔊) |> Enum.random()
+  defp title_emoji,     do: ~w(🗣 💬) |> Enum.random()
+  defp topic_emoji,     do: ~w(🏷 💭 🗂 ) |> Enum.random()
+  defp video_emoji,     do: ~w(🎞 📽 🎬 🍿) |> Enum.random()
 
   defp author_meta(%{author: nil}), do: nil
   defp author_meta(%{author: %{twitter_handle: nil}}), do: nil

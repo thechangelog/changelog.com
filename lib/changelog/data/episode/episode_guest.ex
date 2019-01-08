@@ -16,7 +16,7 @@ defmodule Changelog.EpisodeGuest do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(position episode_id person_id thanks delete))
+    |> cast(params, ~w(position episode_id person_id thanks delete)a)
     |> validate_required([:position])
     |> mark_for_deletion()
   end

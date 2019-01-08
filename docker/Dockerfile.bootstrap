@@ -1,0 +1,22 @@
+FROM docker/compose:1.23.2
+
+RUN apk add git && git version
+RUN apk add make && make --version
+RUN apk add ncurses && tput -V
+RUN apk add bash && bash --version
+ENV SHELL=/bin/bash
+ENV TERM=xterm-256color
+
+ARG GIT_REPOSITORY=https://github.com/thechangelog/changelog.com
+ENV GIT_REPOSITORY=$GIT_REPOSITORY
+ARG GIT_BRANCH=master
+ENV GIT_BRANCH=$GIT_BRANCH
+
+VOLUME /app
+WORKDIR /app
+
+COPY bootstrap /bootstrap
+RUN chmod +x /bootstrap
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["/bootstrap"]

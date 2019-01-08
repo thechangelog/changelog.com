@@ -29,7 +29,7 @@ defmodule Changelog.EpisodeStat do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics))
+    |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics)a)
     |> validate_required([:date, :episode_id, :podcast_id])
   end
 

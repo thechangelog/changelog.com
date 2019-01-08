@@ -1,24 +1,24 @@
-<a href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal"></a>
-<a href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-fastly.png") %>' alt="Fastly"></a>
-<a href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-linode.png") %>' alt="Linode"></a>
-<a href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-rollbar.png") %>' alt="Rollbar"></a>
-<a href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-ibm.png") %>' alt="IBM"></a>
-<a href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-strongloop.png") %>' alt="StrongLoop"></a>
-<a href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-flatiron.png") %>' alt="Flatiron School"></a>
-<a href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-codeschool.png") %>' alt="Code School"></a>
-<a href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a>
-<a href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-gocd.png") %>' alt="Go"></a>
-<a href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-heap.png") %>' alt="Heap"></a>
-<a href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-sentry.png") %>' alt="Sentry"></a>
-<a href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a>
-<a href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a>
-<a href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-ato.png") %>' alt="All things open."></a>
-<a href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a>
-<a href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-elixirconf.png") %>' alt="ElixirConf"></a>
-<a href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-compose.png") %>' alt="Compose"></a>
-<a href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-hired.png") %>' alt="Hired"></a>
-<a href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-datadog.png") %>' alt="Datadog"></a>
-<a href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-casper.png") %>' alt="Casper"></a>
-<a href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-imgix.png") %>' alt="imgix"></a>
-<a href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a>
-<a href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-codeship.png") %>' alt="Codeship"></a>
+<a class="logo_grid-item" href="https://www.toptal.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-toptal.png") %>' alt="Toptal"></a>
+<a class="logo_grid-item" href="http://fastly.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-fastly.png") %>' alt="Fastly"></a>
+<a class="logo_grid-item" href="https://www.linode.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-linode.png") %>' alt="Linode"></a>
+<a class="logo_grid-item" href="https://rollbar.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-rollbar.png") %>' alt="Rollbar"></a>
+<a class="logo_grid-item" href="http://www.ibm.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-ibm.png") %>' alt="IBM"></a>
+<a class="logo_grid-item" href="https://strongloop.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-strongloop.png") %>' alt="StrongLoop"></a>
+<a class="logo_grid-item" href="http://flatiron500.com" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-flatiron.png") %>' alt="Flatiron School"></a>
+<a class="logo_grid-item" href="https://www.codeschool.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-codeschool.png") %>' alt="Code School"></a>
+<a class="logo_grid-item" href="https://m.do.co/c/313e6c84edc3" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-digital-ocean.png") %>' alt="Digital Ocean"></a>
+<a class="logo_grid-item" href="https://www.gocd.io/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-gocd.png") %>' alt="Go"></a>
+<a class="logo_grid-item" href="https://heapanalytics.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-heap.png") %>' alt="Heap"></a>
+<a class="logo_grid-item" href="https://sentry.io/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-sentry.png") %>' alt="Sentry"></a>
+<a class="logo_grid-item" href="https://nodejs.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-nodejs.png") %>' alt="Node.js Foundation"></a>
+<a class="logo_grid-item" href="https://www.linuxfoundation.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-linux-foundation.png") %>' alt="The Linux Foundation"></a>
+<a class="logo_grid-item" href="https://allthingsopen.org/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-ato.png") %>' alt="All things open."></a>
+<a class="logo_grid-item" href="http://www.oreilly.com/pub/cpc/58768" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-oreilly-media.png") %>' alt="O'Reilly Media"></a>
+<a class="logo_grid-item" href="https://elixirconf.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-elixirconf.png") %>' alt="ElixirConf"></a>
+<a class="logo_grid-item" href="https://compose.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-compose.png") %>' alt="Compose"></a>
+<a class="logo_grid-item" href="https://hired.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-hired.png") %>' alt="Hired"></a>
+<a class="logo_grid-item" href="https://www.datadoghq.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-datadog.png") %>' alt="Datadog"></a>
+<a class="logo_grid-item" href="https://casper.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-casper.png") %>' alt="Casper"></a>
+<a class="logo_grid-item" href="https://www.imgix.com/?utm_source=changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-imgix.png") %>' alt="imgix"></a>
+<a class="logo_grid-item" href="http://www.hackerparadise.org/" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-hacker-paradise.png") %>' alt="Hacker Paradise"></a>
+<a class="logo_grid-item" href="https://codeship.com/changelog" title=""><img src='<%= static_url(@conn, "/images/content/community/sponsors/sponsor-codeship.png") %>' alt="Codeship"></a>

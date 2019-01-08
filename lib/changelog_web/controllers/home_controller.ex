@@ -86,7 +86,7 @@ defmodule ChangelogWeb.HomeController do
     if person.slack_id do
       person
     else
-      {:ok, person} = Repo.update(Person.slack_changeset(person, "pending"))
+      {:ok, person} = Repo.update(Person.slack_changes(person, "pending"))
       person
     end
   end
