@@ -220,6 +220,28 @@ defmodule Changelog.Factory do
     }
   end
 
+  def subscription_on_item_factory do
+    %Changelog.Subscription{
+      person: build(:person),
+      item: build(:news_item)
+    }
+  end
+
+  def unsubscribed_subscription_on_item_factory do
+    %Changelog.Subscription{subscription_on_item_factory() | unsubscribed_at: hours_ago(24)}
+  end
+
+  def subscription_on_podcast_factory do
+    %Changelog.Subscription{
+      person: build(:person),
+      podcast: build(:podcast)
+    }
+  end
+
+  def unsubscribed_subscription_on_podcast_factory do
+    %Changelog.Subscription{subscription_on_podcast_factory() | unsubscribed_at: hours_ago(24)}
+  end
+
   defp hours_ago(count) do
     count
     |> ChangelogWeb.TimeView.hours_ago()

@@ -35,8 +35,7 @@ defmodule Changelog.Podcast do
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
     has_many :episode_stats, EpisodeStat
-    # has_many :subscriptions, Subscription, where: [unsubscribed_at: {:not, nil}]
-    # has_many :subscribers, through: [:subscriptions, :person]
+    has_many :subscriptions, Subscription, where: [unsubscribed_at: {:not, nil}], on_delete: :delete_all
 
     timestamps()
   end
