@@ -134,8 +134,8 @@ defmodule ChangelogWeb.Router do
     get "/~/nope/:token/:notification", HomeController, :opt_out
 
     post "/~/slack", HomeController, :slack
-    post "/~/subscribe/:id", HomeController, :subscribe
-    post "/~/unsubscribe/:id", HomeController, :unsubscribe
+    post "/~/subscribe", HomeController, :subscribe
+    post "/~/unsubscribe", HomeController, :unsubscribe
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in

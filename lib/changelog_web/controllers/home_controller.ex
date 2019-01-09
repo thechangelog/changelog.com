@@ -1,15 +1,15 @@
 defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Person, Slack, Podcast}
+  alias Changelog.{Person, Podcast, Slack, Subscription}
   alias Craisin.Subscriber
 
   plug RequireUser, "except from email links" when action not in [:opt_out]
   plug :scrub_params, "person" when action in [:update]
 
-  def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil, podcasts: podcasts())
-  def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id, podcasts: podcasts())
-  def show(conn, _params), do: render(conn, :show, subscribed: nil, unsubscribed: nil, podcasts: podcasts())
+  def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil)
+  def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id)
+  def show(conn, _params), do: render(conn, :show, subscribed: nil, unsubscribed: nil)
 
   def account(conn = %{assigns: %{current_user: me}}, _params) do
     render(conn, :account, changeset: Person.update_changeset(me))
@@ -41,6 +41,11 @@ defmodule ChangelogWeb.HomeController do
     |> put_flash(:success, "You're subscribed! You'll get the next issue in your inbox 📥")
     |> redirect(to: home_path(conn, :show, subscribed: newsletter_id))
   end
+  def subscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
+    podcast = Podcast.get_by_slug!(slug)
+    Subscription.subscribe(me, podcast)
+    send_resp(conn, 200, "")
+  end
 
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
     Subscriber.unsubscribe(newsletter_id, me.email)
@@ -48,6 +53,11 @@ defmodule ChangelogWeb.HomeController do
     conn
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
     |> redirect(to: home_path(conn, :show, unsubscribed: newsletter_id))
+  end
+  def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
+    podcast = Podcast.get_by_slug!(slug)
+    Subscription.unsubscribe(me, podcast)
+    send_resp(conn, 200, "")
   end
 
   def slack(conn = %{assigns: %{current_user: me}}, _params) do
@@ -74,12 +84,6 @@ defmodule ChangelogWeb.HomeController do
     end
 
     render(conn, :opt_out)
-  end
-
-  defp podcasts do
-    Podcast.active()
-    |> Podcast.by_position()
-    |> Repo.all()
   end
 
   defp set_slack_id(person) do

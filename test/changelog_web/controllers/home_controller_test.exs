@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.HomeControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.Person
+  alias Changelog.{Person, Subscription}
 
   @tag :as_user
   test "renders the home page", %{conn: conn} do
@@ -40,6 +40,24 @@ defmodule ChangelogWeb.HomeControllerTest do
     conn = get(conn, home_path(conn, :opt_out, token, "email_on_authored_news"))
     assert conn.status == 200
     refute Repo.get(Person, person.id).settings.email_on_authored_news
+  end
+
+  @tag :as_inserted_user
+  test "subscribing to a podcast", %{conn: conn} do
+    podcast = insert(:podcast)
+    conn = post(conn, home_path(conn, :subscribe, slug: podcast.slug))
+    assert conn.status == 200
+    assert count(Subscription.subscribed) == 1
+  end
+
+  @tag :as_inserted_user
+  test "unsubscribing to a podcast", %{conn: conn} do
+    podcast = insert(:podcast)
+    insert(:subscription_on_podcast, podcast: podcast, person: conn.assigns.current_user)
+    assert count(Subscription.subscribed) == 1
+    conn = post(conn, home_path(conn, :unsubscribe, slug: podcast.slug))
+    assert conn.status == 200
+    assert count(Subscription.subscribed) == 0
   end
 
   @tag :as_inserted_user
