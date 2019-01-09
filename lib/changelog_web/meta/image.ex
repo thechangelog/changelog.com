@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Meta.Image do
   import ChangelogWeb.Router.Helpers, only: [static_url: 2]
 
-  alias ChangelogWeb.{Endpoint, NewsItemView, NewsSourceView, PersonView, PodcastView, TopicView, HomeView}
+  alias ChangelogWeb.{Endpoint, NewsItemView, NewsSourceView, PersonView, PodcastView, TopicView}
 
   def fb_image(assigns), do: assigns |> get_fb
   def fb_image_width(assigns), do: assigns |> get_fb_width

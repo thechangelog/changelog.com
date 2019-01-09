@@ -57,23 +57,6 @@ window.App = {
     u(".js-flash").each(el => { el.flash.remove(); });
   },
 
-  formatTimes() {
-    u("span.time").each(el => {
-      let span = u(el);
-      let anchor = span.parent("a");
-      let date = new Date(span.text());
-      let style = span.data("style");
-      span.text(ts(date, style));
-      (anchor || span).attr("title", ts(date, "timeFirst"));
-      span.removeClass("time");
-    });
-  },
-
-  isExternalLink(a) {
-    let href = a.attr("href");
-    return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
-  },
-
   deepLink(href) {
     let linkTime = parseTime(gup("t", (href || location.href), "#"));
     if (!linkTime) return false;
@@ -88,13 +71,29 @@ window.App = {
     }
 
     return true;
+  },
+
+  formatTimes() {
+    u("span.time").each(el => {
+      let span = u(el);
+      let anchor = span.parent("a");
+      let date = new Date(span.text());
+      let style = span.data("style");
+      span.text(ts(date, style));
+      (anchor || span).attr("title", ts(date, "timeFirst"));
+      span.removeClass("time");
+    });
+  },
+
+  getCsrf() {
+    return u("[property=csrf]").attr("content");
+  },
+
+  isExternalLink(a) {
+    let href = a.attr("href");
+    return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
   }
 }
-
-// TODO: Delete this, it’s just for mocking the interaction
-u(document).handle("click", ".account_subscriptions-shows-item", function(event) {
-  u(event.target).toggleClass("is-subscribed");
-});
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
@@ -110,6 +109,14 @@ u(document).handle("click", ".js-toggle-nav", function(event) {
   setTimeout(() => {
     u("body").toggleClass("nav-animate", "");
   }, 50);
+});
+
+// Toggle podcast subscriptions via ajax
+u(document).on("change", ".js-toggle-subscription", function(event) {
+  let checkBox = u(event.target);
+  let slug = checkBox.data("slug");
+  let action = checkBox.is(":checked") ? "subscribe" : "unsubscribe";
+  ajax(`~/${action}`, {method: "POST", headers: {"x-csrf-token": App.getCsrf()}, body: {"slug": slug}});
 });
 
 u(document).handle("click", ".js-toggle_element", function(event) {
@@ -175,8 +182,7 @@ const observer = new IntersectionObserver(function(entries) {
     let el = u(entry.target);
     let type = el.data("news-type");
     let id = el.data("news-id");
-    let csrf = u("[property=csrf]").attr("content");
-    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": csrf}, body: {"ids": id}});
+    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": App.getCsrf()}, body: {"ids": id}});
     observer.unobserve(entry.target);
   });
 });

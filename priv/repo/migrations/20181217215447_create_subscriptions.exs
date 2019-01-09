@@ -4,9 +4,9 @@ defmodule Changelog.Repo.Migrations.CreateSubscriptions do
   def change do
     create table(:subscriptions) do
       add :unsubscribed_at, :naive_datetime
-      add :person_id, references(:people)
-      add :podcast_id, references(:podcasts)
-      add :item_id, references(:news_items)
+      add :person_id, references(:people, on_delete: :delete_all)
+      add :podcast_id, references(:podcasts, on_delete: :delete_all)
+      add :item_id, references(:news_items, on_delete: :delete_all)
       timestamps()
     end
 

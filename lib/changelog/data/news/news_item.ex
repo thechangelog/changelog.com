@@ -32,7 +32,7 @@ defmodule Changelog.NewsItem do
     has_many :news_item_topics, NewsItemTopic, foreign_key: :item_id, on_delete: :delete_all
     has_many :topics, through: [:news_item_topics, :topic]
     has_many :comments, NewsItemComment, foreign_key: :item_id, on_delete: :delete_all
-    has_many :subscriptions, Subscription, where: [unsubscribed_at: {:not, nil}], foreign_key: :item_id, on_delete: :delete_all
+    has_many :subscriptions, Subscription, where: [unsubscribed_at: nil], foreign_key: :item_id
 
     timestamps()
   end

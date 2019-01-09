@@ -45,7 +45,7 @@
         <p class="account_subscriptions-item-info-meta">Delivered each time a new episode is published</p>
       </div>
       <div class="account_subscriptions-item-button">
-        <%= link("Subscribe to All", to: home_path(@conn, :profile)) %>
+        <%#= link("Subscribe to All", to: home_path(@conn, :profile)) %>
       </div>
       <div class="account_subscriptions-list">
         <%= for podcast <- @podcasts do %>
@@ -53,7 +53,12 @@
             <img class="account_subscriptions-list-item-icon" src="<%= PodcastView.cover_url(podcast, :medium) %>" width="30" height="30" alt="<%= podcast.name %>">
             <p class="account_subscriptions-list-item-title"><%= podcast.name %></p>
             <div class="account_subscriptions-list-item-toggle toggle toggle--light">
-              <input type="checkbox" class="check">
+              <input
+                type="checkbox"
+                class="check js-toggle-subscription"
+                data-slug="<%= podcast.slug %>"
+                <%= if is_subscribed(@current_user, podcast), do: "checked" %>
+              />
               <div class="switch"></div>
             </div>
           </div>

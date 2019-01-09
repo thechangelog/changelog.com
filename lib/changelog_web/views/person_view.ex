@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PersonView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, Person, Podcast}
+  alias Changelog.{Files, NewsItem, Person, Podcast}
   alias ChangelogWeb.{Endpoint, SharedView, PodcastView}
 
   def avatar_path(person, version) do
@@ -65,6 +65,18 @@ defmodule ChangelogWeb.PersonView do
     !!(person.bio && person.website && person.location)
   end
 
+  def is_subscribed(person, %NewsItem{id: id}) do
+    person
+    |> Person.preload_subscriptions()
+    |> Map.get(:subscriptions)
+    |> Enum.any?(&(&1.item_id == id))
+  end
+  def is_subscribed(person, %Podcast{id: id}) do
+    person
+    |> Person.preload_subscriptions()
+    |> Map.get(:subscriptions)
+    |> Enum.any?(&(&1.podcast_id == id))
+  end
   def is_subscribed(person, newsletter) do
     case Craisin.Subscriber.details(newsletter.list_id, person.email) do
       %{"State" => "Active"} -> true
