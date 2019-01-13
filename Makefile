@@ -248,7 +248,7 @@ dds: deploy-docker-stack
 
 .PHONY: update-app-service
 update-app-service: $(DOCKER)
-	@$(DOCKER) service update --quiet --image thechangelog/changelog.com:latest $(DOCKER_STACK)_app
+	@$(DOCKER) service update --quiet --image thechangelog/changelog.com:latest $(DOCKER_STACK)_app 1>/dev/null
 
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
