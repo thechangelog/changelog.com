@@ -248,7 +248,7 @@ dds: deploy-docker-stack
 
 .PHONY: update-app-service
 update-app-service: $(DOCKER)
-	@$(DOCKER) service update $(DOCKER_STACK)_app
+	@$(DOCKER) service update --quiet $(DOCKER_STACK)_app
 
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
