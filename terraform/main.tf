@@ -181,6 +181,8 @@ resource "null_resource" "configure_private_ip_manually_since_containerlinux_doe
   }
 }
 
+# It would have been nice to disable these via Ignition, but this is not supported on Linode...
+# https://www.linode.com/community/questions/427/help-i-am-running-coreos-and-need-to-add-custom-cloud-config
 resource "null_resource" "disable_automatic_updates" {
   connection {
     user = "${var.default_ssh_user}"
