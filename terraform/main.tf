@@ -181,6 +181,29 @@ resource "null_resource" "configure_private_ip_manually_since_containerlinux_doe
   }
 }
 
+resource "null_resource" "disable_automatic_updates" {
+  connection {
+    user = "${var.default_ssh_user}"
+    host = "${linode_instance.2019.ip_address}"
+  }
+
+  depends_on = [
+    "linode_instance.2019",
+  ]
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo systemctl disable update-engine",
+      "sudo systemctl stop update-engine",
+      "systemctl status update-engine | grep 'Stopped Update Engine'",
+    ]
+  }
+
+  triggers {
+    always = "${timestamp()}"
+  }
+}
+
 # https://www.linode.com/docs/platform/nodebalancer/getting-started-with-nodebalancers-new-manager/
 # https://linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide-new-manager/
 resource "linode_nodebalancer" "2019" {
