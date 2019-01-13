@@ -28,7 +28,7 @@ deploy_docker_stack() {
 }
 
 update_app_continuously() {
-  echo "Updating App every ${UPDATE_APP_EVERY_N_SECONDS:?must be set} seconds..."
+  echo "Updating app every ${UPDATE_APP_EVERY_N_SECONDS:?must be set} seconds..."
   while sleep "$UPDATE_APP_EVERY_N_SECONDS"
   do
     make update-app-service
