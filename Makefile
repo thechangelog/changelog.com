@@ -246,6 +246,10 @@ deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 .PHONY: dds
 dds: deploy-docker-stack
 
+.PHONY: update-app-service
+update-app-service: $(DOCKER)
+	@$(DOCKER) service update $(DOCKER_STACK)_app
+
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
 	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .

@@ -23,7 +23,7 @@ services:
         monitor: 60s
         order: stop-first
     environment:
-      EVERY_N_SECONDS: 60
+      UPDATE_APP_EVERY_N_SECONDS: 60
       HOSTNAME: "${HOSTNAME}"
     image: thechangelog/bootstrap
     volumes:
