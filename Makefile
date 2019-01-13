@@ -368,7 +368,7 @@ report-deploy:
 	@ROLLBAR_ACCESS_TOKEN="$$(cat /run/secrets/ROLLBAR_ACCESS_TOKEN)" && export ROLLBAR_ACCESS_TOKEN && \
 	COMMIT_USER="$$(cat ./COMMIT_USER)" && export COMMIT_USER && \
 	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
-	curl --silent --fail --request POST --url https://api.rollbar.com/api/1/deploy/ \
+	curl --silent --fail --output /dev/null --request POST --url https://api.rollbar.com/api/1/deploy/ \
 	  --data '{"access_token":"'$$ROLLBAR_ACCESS_TOKEN'","environment":"'$$ROLLBAR_ENVIRONMENT'","rollbar_username":"'$$COMMIT_USER'","revision":"'$$COMMIT_SHA'","comment":"Running in container '$$HOSTNAME' on host '$$NODE'"}'
 
 .PHONY: runtime-image
