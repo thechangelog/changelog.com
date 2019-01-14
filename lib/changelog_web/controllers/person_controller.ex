@@ -1,9 +1,8 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Newsletters, Person, Repo}
+  alias Changelog.{Mailer, Newsletters, Person, Podcast, Subscription}
   alias ChangelogWeb.Email
-  alias Craisin.Subscriber
 
   plug RequireGuest, "before joining" when action in [:join]
 
@@ -37,19 +36,30 @@ defmodule ChangelogWeb.PersonController do
     end
   end
 
-  defp welcome_subscriber(conn, person, list) do
+  defp welcome_subscriber(conn, person, subscribe_to) do
     person = Person.refresh_auth_token(person)
-    newsletter = Newsletters.get_by_slug(list)
 
-    Subscriber.subscribe(newsletter.list_id, Person.sans_fake_data(person))
-
-    Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later()
+    case Newsletters.get_by_slug(subscribe_to) do
+      nil -> subscribe_to_podcast(person, subscribe_to)
+      newsletter -> subscribe_to_newsletter(person, newsletter)
+    end
 
     conn
     |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)
     |> put_resp_cookie("hide_subscribe_banner", "true", http_only: false)
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
     |> redirect(to: root_path(conn, :index))
+  end
+
+  defp subscribe_to_newsletter(person, newsletter) do
+    Craisin.Subscriber.subscribe(newsletter.list_id, Person.sans_fake_data(person))
+    Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later()
+  end
+
+  defp subscribe_to_podcast(person, slug) do
+    podcast = Podcast.get_by_slug!(slug)
+    Subscription.subscribe(person, podcast)
+    Email.subscriber_welcome(person, podcast) |> Mailer.deliver_later()
   end
 
   def join(conn = %{method: "GET"}, params) do
@@ -90,7 +100,7 @@ defmodule ChangelogWeb.PersonController do
   defp welcome_community(conn, person) do
     person = Person.refresh_auth_token(person)
 
-    Email.community_welcome(person) |> Mailer.deliver_later
+    Email.community_welcome(person) |> Mailer.deliver_later()
 
     conn
     |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)

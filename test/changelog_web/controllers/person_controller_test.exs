@@ -4,7 +4,7 @@ defmodule ChangelogWeb.PersonControllerTest do
 
   import Mock
 
-  alias Changelog.{Newsletters, Person}
+  alias Changelog.{Newsletters, Person, Subscription}
 
   describe "joining" do
     test "getting the form", %{conn: conn} do
@@ -64,7 +64,7 @@ defmodule ChangelogWeb.PersonControllerTest do
     end
   end
 
-  describe "subscribing" do
+  describe "subscribing in general" do
     test "getting the form", %{conn: conn} do
       conn = get(conn, person_path(conn, :subscribe))
 
@@ -78,7 +78,9 @@ defmodule ChangelogWeb.PersonControllerTest do
       assert redirected_to(conn) == person_path(conn, :subscribe)
       assert count(Person) == count_before
     end
+  end
 
+  describe "subscribing to newsletters" do
     test "with required data creates person, subscribes, sends email, redirects", %{conn: conn} do
       with_mock(Craisin.Subscriber, [subscribe: fn(_, _) -> nil end]) do
         count_before = count(Person)
@@ -108,6 +110,37 @@ defmodule ChangelogWeb.PersonControllerTest do
         assert redirected_to(conn) == root_path(conn, :index)
         assert count(Person) == count_before
       end
+    end
+  end
+
+  describe "subscribing to podcasts" do
+    test "with required data creates person, subscribes, sends email, redirects", %{conn: conn} do
+      podcast = insert(:podcast)
+      count_before = count(Person)
+
+      conn = post(conn, person_path(conn, :subscribe), email: "joe@blow.com", to: podcast.slug)
+
+      person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
+
+      assert_delivered_email ChangelogWeb.Email.subscriber_welcome(person, podcast)
+      assert redirected_to(conn) == root_path(conn, :index)
+      assert count(Person) == count_before + 1
+      assert count(Subscription) == 1
+    end
+
+    test "with existing email subscribes, sends email, redirects, but doesn't create person", %{conn: conn} do
+      podcast = insert(:podcast)
+      existing = insert(:person)
+      count_before = count(Person)
+
+      conn = post(conn, person_path(conn, :subscribe), email: existing.email, to: podcast.slug)
+
+      existing = Repo.one(from p in Person, where: p.email == ^existing.email)
+
+      assert_delivered_email ChangelogWeb.Email.subscriber_welcome(existing, podcast)
+      assert redirected_to(conn) == root_path(conn, :index)
+      assert count(Person) == count_before
+      assert count(Subscription) == 1
     end
   end
 end

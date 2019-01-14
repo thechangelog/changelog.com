@@ -42,7 +42,7 @@ defmodule ChangelogWeb.EmailTest do
     assert email.html_body =~ ~r/guest/i
   end
 
-  test "subscriber welcome" do
+  test "subscriber welcome to newsletter" do
     person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now)
     email = Email.subscriber_welcome(person, Newsletters.weekly())
 
@@ -50,5 +50,16 @@ defmodule ChangelogWeb.EmailTest do
     assert email.subject =~ ~r/welcome/i
     assert email.html_body =~ ~r/subscribed/i
     assert email.html_body =~ ~r/Changelog Weekly/
+  end
+
+  test "subscriber welcome to podcast" do
+    person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now)
+    podcast = build(:podcast)
+    email = Email.subscriber_welcome(person, podcast)
+
+    assert email.to == person
+    assert email.subject =~ ~r/welcome/i
+    assert email.html_body =~ ~r/subscribed/i
+    assert email.html_body =~ ~r/#{podcast.name}/
   end
 end

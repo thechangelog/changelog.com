@@ -1,21 +1,22 @@
 defmodule Changelog.Newsletters do
+  alias Changelog.Cache
 
   defmodule Newsletter do
-    defstruct name: nil, list_id: nil, web_id: nil, stats: %{}
+    defstruct name: nil, slug: nil, list_id: nil, web_id: nil, stats: %{}
   end
-
-  alias Changelog.Cache
-  alias Changelog.Newsletters.Newsletter
 
   def all, do: [weekly(), nightly()]
 
+  def slugs, do: Enum.map(all(), &(&1.slug))
+
   def get_by_slug(slug) do
-    apply(__MODULE__, String.to_existing_atom(slug), [])
+    Enum.find(all(), fn(newsletter) -> newsletter.slug == slug end)
   end
 
   def nightly do
     %Newsletter{
       name: "Changelog Nightly",
+      slug: "nightly",
       list_id: "95a8fbc221a2240ac7469d661bac650a",
       web_id: "82E49C221D20C4F7"
     }
@@ -24,6 +25,7 @@ defmodule Changelog.Newsletters do
   def weekly do
     %Newsletter{
       name: "Changelog Weekly",
+      slug: "weekly",
       list_id: "eddd53c07cf9e23029fe8a67fe84731f",
       web_id: "82E49C221D20C4F7"
     }

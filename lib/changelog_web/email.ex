@@ -32,20 +32,20 @@ defmodule ChangelogWeb.Email do
 
   def community_welcome(person) do
     styled_email()
-    |> put_header("X-CMail-GroupName", "Welcome")
+    |> put_header("X-CMail-GroupName", "Community Welcome")
     |> to(person)
     |> subject("Welcome! Confirm your address")
     |> assign(:person, person)
     |> render(:community_welcome)
   end
 
-  def subscriber_welcome(person, newsletter) do
+  def subscriber_welcome(person, subscribed_to) do
     styled_email()
-    |> put_header("X-CMail-GroupName", "Welcome")
+    |> put_header("X-CMail-GroupName", "Subscriber Welcome")
     |> to(person)
     |> subject("Welcome! Confirm your address")
     |> assign(:person, person)
-    |> assign(:newsletter, newsletter)
+    |> assign(:subscribed_to, subscribed_to)
     |> render(:subscriber_welcome)
   end
 
