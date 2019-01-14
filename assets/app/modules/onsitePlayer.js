@@ -86,7 +86,7 @@ export default class OnsitePlayer {
   }
 
   isActive() {
-    return this.player.hasClass("podcast-player--is-active");
+    return this.player.hasClass("podcast_player--is-active");
   }
 
   isPlaying() {
@@ -268,18 +268,18 @@ export default class OnsitePlayer {
 
   show() {
     u('body').addClass('player-open');
-    this.player.addClass("podcast-player--is-active").removeClass("podcast-player--is-hidden");
+    this.player.addClass("podcast_player--is-active").removeClass("podcast_player--is-hidden");
   }
 
   hide() {
     u('body').toggleClass('player-open');
-    this.player.toggleClass("podcast-player--is-hidden");
+    this.player.toggleClass("podcast_player--is-hidden");
   }
 
   close() {
     this.pause();
     u('body').removeClass('player-open');
-    this.player.removeClass("podcast-player--is-active");
+    this.player.removeClass("podcast_player--is-active");
   }
 
   trackTime() {
