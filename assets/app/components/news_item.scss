@@ -133,33 +133,32 @@
   }
 
   &-description {
+    display: block;
     margin-bottom: 1em;
     max-height: 3em;
     overflow: hidden;
     position: relative;
 
     p {
+      color: $black;
       margin: 0;
     }
 
     &-continue {
       background: $white;
       bottom: 1px;
-      color: $green !important;
+      color: $black !important;
       font-family: $code;
       font-size: 0.75em;
+      font-weight: bold;
       line-height: 1.5em;
       padding: 0 0 0.25em 0.5em;
       position: absolute;
       right: 0;
+      text-decoration: underline;
 
       .news_item--sponsor & {
         background: $highlight;
-      }
-
-      &:hover {
-        color: darken($green, 10%) !important;
-        text-decoration: underline;
       }
 
       @include breakpoint(mobile) {
@@ -167,7 +166,7 @@
           transition: all 0.15s $base-easing;
           opacity: 0;
         }
-        .news_item:hover & {
+        .news_item-description:hover & {
           span { opacity: 1; }
         }
       }
