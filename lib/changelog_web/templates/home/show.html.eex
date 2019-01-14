@@ -40,6 +40,7 @@
     </div>
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">
+        <a id="podcasts" class="anchor"></a>
         <h3>Podcast emails</h3>
         <p>Get notified as soon as an episode is published. Subscribe to as many as you’d like.</p>
         <p class="account_subscriptions-item-info-meta">Delivered each time a new episode is published</p>

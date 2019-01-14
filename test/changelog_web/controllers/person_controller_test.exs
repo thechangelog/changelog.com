@@ -99,7 +99,7 @@ defmodule ChangelogWeb.PersonControllerTest do
         existing = insert(:person)
         count_before = count(Person)
 
-        conn = post(conn, person_path(conn, :subscribe), email: existing.email, list: "nightly")
+        conn = post(conn, person_path(conn, :subscribe), email: existing.email, to: "nightly")
 
         existing = Repo.one(from p in Person, where: p.email == ^existing.email)
 

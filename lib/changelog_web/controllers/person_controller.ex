@@ -17,10 +17,10 @@ defmodule ChangelogWeb.PersonController do
     |> redirect(to: person_path(conn, :subscribe))
   end
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
-    list = Map.get(params, "list", "weekly")
+    subscribe_to = Map.get(params, "to", "weekly")
 
     if person = Repo.get_by(Person, email: email) do
-      welcome_subscriber(conn, person, list)
+      welcome_subscriber(conn, person, subscribe_to)
     else
       changeset =
         Person.with_fake_data()
@@ -28,7 +28,7 @@ defmodule ChangelogWeb.PersonController do
 
       case Repo.insert(changeset) do
         {:ok, person} ->
-          welcome_subscriber(conn, person, list)
+          welcome_subscriber(conn, person, subscribe_to)
         {:error, _changeset} ->
           conn
           |> put_flash(:error, "Something went wrong. 😭")
@@ -43,7 +43,7 @@ defmodule ChangelogWeb.PersonController do
 
     Subscriber.subscribe(newsletter.list_id, Person.sans_fake_data(person))
 
-    Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later
+    Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later()
 
     conn
     |> put_resp_cookie("hide_subscribe_cta", "true", http_only: false)
