@@ -1,0 +1,13 @@
+FROM thechangelog/runtime
+
+RUN mkdir /app
+COPY . /app
+WORKDIR /app
+
+ENV MIX_ENV prod
+
+EXPOSE 4000
+HEALTHCHECK --start-period=30s --interval=30s --timeout=30s --retries=3 \
+  CMD curl --fail --silent http://127.0.0.1:4000 || exit 1
+
+CMD make report-deploy ; mix do ecto.create, ecto.migrate, phx.server

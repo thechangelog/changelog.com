@@ -1,0 +1,35 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Author</th>
+      <th>News</th>
+      <th>Excerpt</th>
+      <th>Create Time</th>
+      <th>Edit Time</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for comment <- @comments do %>
+    <tr>
+      <td>
+        <%= link to: admin_person_path(@conn, :show, comment.author), title: "Author: #{comment.author.name}", data: [popup: true] do %>
+          <img class="ui avatar image" src="<%= PersonView.avatar_url(comment.author) %>">
+        <% end %>
+      </td>
+      <td><%= link(truncate(comment.news_item.headline, 50), to: comment.news_item.url, rel: "external") %></td>
+      <td><%= comment.content |> md_to_text() |> truncate(50) %></td>
+      <td><%= ts(comment.inserted_at) %></td>
+      <td><%= ts(comment.edited_at) %></td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= icon_link("eye", to: permalink(@conn, comment)) %>
+          <%= icon_link("edit", to: admin_news_item_comment_path(@conn, :edit, comment)) %>
+          <%= icon_link("trash", to: admin_news_item_comment_path(@conn, :delete, comment), method: :delete, data: [confirm: "Are you sure?"]) %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

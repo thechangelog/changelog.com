@@ -5,15 +5,15 @@ defmodule ChangelogStatsTest do
 
   alias Changelog.{Stats, Episode, Podcast, Repo}
 
-  defp fixture_list(date) do
+  defp log_fixtures(date) do
     file_dir = "#{fixtures_path()}/logs/#{date}"
     {:ok, files} = File.ls(file_dir)
-     Enum.map(files, fn(file) -> "#{file_dir}/#{file}" end)
+     Enum.map(files, fn(file) -> File.read!("#{file_dir}/#{file}") end)
   end
 
   describe "process" do
     test_with_mock "it processes known logs from 2016-10-10", Stats.S3,
-      [logs: fn(date, _slug) -> fixture_list(date) end] do
+      [get_logs: fn(date, _slug) -> log_fixtures(date) end] do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "223", bytes: 80_743_303)
@@ -31,7 +31,7 @@ defmodule ChangelogStatsTest do
     end
 
     test_with_mock "it processes known logs from 2016-10-11", Stats.S3,
-      [logs: fn(date, _slug) -> fixture_list(date) end] do
+      [get_logs: fn(date, _slug) -> log_fixtures(date) end] do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "114", bytes: 26_238_621)

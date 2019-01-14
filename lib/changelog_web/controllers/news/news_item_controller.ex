@@ -167,10 +167,10 @@ defmodule ChangelogWeb.NewsItemController do
   end
 
   defp get_ads do
-    Timex.today
-    |> NewsSponsorship.week_of
-    |> NewsSponsorship.preload_all
-    |> Repo.all
+    Timex.today()
+    |> NewsSponsorship.week_of()
+    |> NewsSponsorship.preload_all()
+    |> Repo.all()
     |> Enum.take_random(2)
     |> Enum.map(&NewsSponsorship.ad_for_index/1)
     |> Enum.reject(&is_nil/1)

@@ -1,0 +1,81 @@
+.marketing_slider {
+  margin: $base-spacing*2 0;
+  padding-top: 60px;
+  position: relative;
+  transition: max-height 1s linear;
+
+  @include breakpoint(tablet) {
+    padding-top: 0;
+  }
+
+  &-item {
+    display: none;
+    margin: 0 20px;
+
+    &:first-child {
+      display: block;
+    }
+
+    @include breakpoint(tablet) {
+      margin: 0 $base-spacing;
+    }
+
+    &-inner {
+      background: $white;
+      border-radius: 3px;
+      display: block;
+      margin: 0 auto;
+      max-width: 1217px;
+      padding: 1em 1em $base-spacing*2;
+      transition: box-shadow 0.3s ease-in-out;
+
+      &:hover { box-shadow: 0 0 40px 2px #000; }
+
+      &,
+      p {
+        color: $black !important;
+      }
+
+      @include breakpoint(tablet) {
+        padding: $base-spacing $base-spacing $base-spacing*2;
+      }
+    }
+  }
+
+  .slider_pagination {
+    display: flex;
+    justify-content: space-between;
+    margin: $base-spacing auto 0;
+    padding: 0 $base-spacing;
+    max-width: 400px;
+
+    @include breakpoint(tablet, max) {
+      @include position(absolute, 0 0 null 0);
+      margin-top: 0;
+      max-width: 80%;
+    }
+
+    &-item {
+      $size: 30px;
+      background: $green;
+      border: 10px solid $black;
+      border-radius: $size;
+      display: inline-block;
+      opacity: 0.5;
+      height: $size;
+      width: $size;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      &.is-active {
+        background: $green;
+        opacity: 1;
+        transform: scale(1.4);
+      }
+    }
+  }
+}

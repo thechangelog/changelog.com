@@ -8,4 +8,5 @@
   ga("create", "UA-4556641-20", "auto");
   ga("send", "pageview");
 </script>
+<script src="//rum-static.pingdom.net/pa-5a1c4f2830a8ef000700001d.js" async></script>
 <% end %>

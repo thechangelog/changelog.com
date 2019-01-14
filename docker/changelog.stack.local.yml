@@ -1,0 +1,135 @@
+version: "3.7"
+
+services:
+  log:
+    command: syslog+tls://logs7.papertrailapp.com:14349
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+    environment:
+      SYSLOG_HOSTNAME: "${USER}"
+    image: gliderlabs/logspout:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  db:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    environment:
+      POSTGRES_USER: &pg_user postgres
+      POSTGRES_DB: &pg_db changelog
+      # https://www.postgresql.org/docs/9.5/libpq-envars.html
+      PGUSER: *pg_user
+      PGDATABASE: *pg_db
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      start_period: 5s
+    image: postgres:9.5.4
+    volumes:
+      - postgres:/var/lib/postgresql/data:rw
+  app:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      # https://docs.docker.com/compose/compose-file/#update_config
+      update_config:
+        failure_action: rollback
+        monitor: 30s
+        order: start-first
+    environment:
+      NODE: "${HOSTNAME}"
+      DB_URL: "ecto://postgres@db:5432/changelog"
+      PORT: 4000
+      URL_HOST: &host "${USER}.changelog.com"
+      URL_PORT: 80
+      URL_SCHEME: http
+      URL_STATIC_HOST: *host
+      VIRTUAL_HOST: *host
+      ROLLBAR_ENVIRONMENT: local
+    secrets:
+      - CM_API_TOKEN
+      - CM_SMTP_TOKEN
+      - GITHUB_API_TOKEN
+      - GITHUB_CLIENT_ID
+      - GITHUB_CLIENT_SECRET
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - TWITTER_CONSUMER_KEY
+      - TWITTER_CONSUMER_SECRET
+      - SECRET_KEY_BASE
+      - SIGNING_SALT
+      - SLACK_INVITE_API_TOKEN
+      - SLACK_APP_API_TOKEN
+      - ROLLBAR_ACCESS_TOKEN
+      - BUFFER_TOKEN
+      - COVERALLS_REPO_TOKEN
+      - ALGOLIA_APPLICATION_ID
+      - ALGOLIA_API_KEY
+      - DB_URL
+    depends_on:
+      - db
+    image: thechangelog/changelog.com:local
+    ports:
+      - "4000:4000"
+    volumes:
+      - uploads:/uploads:rw
+  proxy:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    image: thechangelog/proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - uploads:/var/www/uploads:ro
+
+volumes:
+  postgres:
+  uploads:
+  changelog.com:
+
+# https://docs.docker.com/engine/swarm/secrets/#defining-and-using-secrets-in-compose-files
+secrets:
+  CM_API_TOKEN:
+    external: true
+  CM_SMTP_TOKEN:
+    external: true
+  GITHUB_API_TOKEN:
+    external: true
+  GITHUB_CLIENT_ID:
+    external: true
+  GITHUB_CLIENT_SECRET:
+    external: true
+  AWS_ACCESS_KEY_ID:
+    external: true
+  AWS_SECRET_ACCESS_KEY:
+    external: true
+  TWITTER_CONSUMER_KEY:
+    external: true
+  TWITTER_CONSUMER_SECRET:
+    external: true
+  SECRET_KEY_BASE:
+    external: true
+  SIGNING_SALT:
+    external: true
+  SLACK_INVITE_API_TOKEN:
+    external: true
+  SLACK_APP_API_TOKEN:
+    external: true
+  ROLLBAR_ACCESS_TOKEN:
+    external: true
+  BUFFER_TOKEN:
+    external: true
+  COVERALLS_REPO_TOKEN:
+    external: true
+  ALGOLIA_APPLICATION_ID:
+    external: true
+  ALGOLIA_API_KEY:
+    external: true
+  DB_URL:
+    external: true

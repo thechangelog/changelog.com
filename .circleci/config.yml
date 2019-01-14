@@ -52,7 +52,7 @@ jobs:
     working_directory: *dir
     docker:
       - image: *runtime
-      - image: circleci/postgres:9.6
+      - image: circleci/postgres:9.5
         environment:
           POSTGRES_USER: "postgres"
           POSTGRES_DB: changelog_test
@@ -105,12 +105,18 @@ jobs:
       - restore_cache: *deps_cache
       - restore_cache: *build_cache
       - restore_cache: *assets_cache
+      - run:
+          name: Write build identifiers
+          command: |
+            echo "$CIRCLE_SHA1" > COMMIT_SHA
+            echo "$CIRCLE_USERNAME" > COMMIT_USER
+            echo "$CIRCLE_BUILD_URL" > BUILD_URL
       - setup_remote_docker:
           version: 18.06.0-ce
       - run:
           name: Build and publish Docker image
           command: |
-            docker build --tag thechangelog/changelog.com:$CIRCLE_SHA1 --tag thechangelog/changelog.com:latest --file Dockerfile.production .
+            docker build --tag thechangelog/changelog.com:$CIRCLE_SHA1 --tag thechangelog/changelog.com:latest --file docker/Dockerfile.production .
             docker login --username $DOCKER_USER --password $DOCKER_PASS
             docker push thechangelog/changelog.com:$CIRCLE_SHA1
             docker push thechangelog/changelog.com:latest

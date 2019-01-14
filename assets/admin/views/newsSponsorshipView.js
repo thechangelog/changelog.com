@@ -3,6 +3,7 @@ import FormUI from "components/formUI";
 import weekLabel from "templates/weekLabel.hbs";
 import adSegment from "templates/adSegment.hbs";
 import Clipboard from "clipboard";
+import gup from "../../shared/gup";
 
 export default class newsSponsorshipView {
   index() {
@@ -21,18 +22,27 @@ export default class newsSponsorshipView {
   schedule() {
     let past = $("tr.past");
     let pastButton = $(".js-toggle-past");
+    let hidingPast = false;
 
     pastButton.on("click", function() {
-      if (past.hasClass("hidden")) {
+      if (hidingPast) {
         past.removeClass("hidden");
         pastButton.text("Hide Past");
+        hidingPast = false;
       } else {
         past.addClass("hidden");
         pastButton.text("Show Past");
+        hidingPast = true;
       }
     });
 
-    pastButton.trigger("click");
+    let currentYear = new Date().getFullYear();
+    let effectiveYear = gup("year") || currentYear;
+
+    // auto-hide past when viewing current year
+    if (effectiveYear == currentYear) {
+      pastButton.trigger("click");
+    }
   }
 
   new() {

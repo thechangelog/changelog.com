@@ -4,97 +4,180 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
-      <h1>Your partner in reaching developers</h1>
+      <h1>We reach 75,000 developers&nbsp;weekly</h1>
       <p>100,000 monthly pageviews&nbsp;&nbsp;•&nbsp;&nbsp;225,000 monthly podcast listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> comma_separated %> email subscribers</p>
 
-      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), class: "marketing-button button_large" %>
-      <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
-    </header>
-  </section>
-
-  <section class="marketing-section marketing-section--body">
-    <header class="marketing-section-header">
-      <h2>Why partner with us?</h2>
-      <p>Developers have trusted Changelog since 2009 to share the latest <%= link "news", to: root_path(@conn, :index) %> and <%= link "podcasts", to: podcast_path(@conn, :index) %> for software professionals. Whether you want to increase exposure, generate awareness, build your company's brand, or test an idea with a large developer audience, we're here to help you develop the right strategy to achieve the results you're looking for.</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+      </div>
+      <p class="button_note">Or call us at 888-974-CHLG (2454)</p>
     </header>
 
-    <div class="marketing-section-grid">
-      <div class="marketing-section-grid-item">
-        <h3>Large engaged audience</h3>
-        <p>Our <%= link "news", to: root_path(@conn, :index) %> and <%= link "podcasts", to: podcast_path(@conn, :index) %> reach a global audience of hundreds of thousands developers each month. Trust us to help you put your brand in front of your target audience. We're built by developers for&nbsp;developers.</p>
-      </div>
-      <div class="marketing-section-grid-item">
-        <h3>Invested partnership</h3>
-        <p>Your success is our success. We're passionate about partnering with you to develop campaigns that drive measurable results. Rely on our knowledge of developer marketing to create ads that get&nbsp;attention.</p>
-      </div>
-      <div class="marketing-section-grid-item">
-        <h3>Goals focused, measurable results</h3>
-        <p>Our team will work closely with you to determine your goals and design a campaign focused on your goals with measurable results. By understanding your challenges we're able to help you share your message in an authentic&nbsp;way.</p>
-      </div>
-      <div class="marketing-section-grid-item">
-        <h3>Loyal trusted community</h3>
-        <p>We're not just a podcast or a news site &mdash; we're a community. Everything we do is focused on creating an environment developers love and trust. We have strict guidelines for the ads we accept on our site. Our ads are tasteful, non-intrusive, and meet the needs of our community members. Developers trust&nbsp;us.</p>
-      </div>
-    </div>
-
-    <div class="marketing-section-centered">
-      <%= link "Get started", to: page_path(@conn, :sponsor_pricing), title: "", class: "marketing-button button_large" %>
-      <p class="button_note">or call <a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></p>
-    </div>
+    <%# render("_marketing_slider.html", assigns) %>
   </section>
-
-  <hr />
 
   <section class="marketing-section">
+    <a id="how-it-works" class="anchor"></a>
     <header class="marketing-section-header">
-      <h2>Brands who want to reach developers advertise with&nbsp;Changelog</h2>
-      <p>Join businesses around the world who are using Changelog Ads to increase awareness and get real business results. Their success is our success. We're partners.</p>
+      <img src='<%= static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
+      <h2>How sponsorship works</h2>
+      <p>Our primary focus is on developers, but people from every part of the software industry tune in to our podcasts and newsfeed to inform their next big idea. From CTOs and Directors of Engineering to Frontend Developers and Product Designers, our audience cares about the future of software, dev culture, tooling, team efficiency &mdash; and they're waiting to hear from you.</p>
     </header>
 
-    <div class="marketing-section-logos">
-      <%= render("_sponsors.html", assigns) %>
+    <div class="step_markers_wrap">
+      <div class="step_markers step_markers--3">
+        <div class="step_markers-circle"></div>
+        <div class="step_markers-line"></div>
+        <div class="step_markers-circle"></div>
+        <div class="step_markers-line"></div>
+        <div class="step_markers-circle"></div>
+      </div>
     </div>
+
+    <div class="marketing-section-grid marketing-section-grid--3">
+      <div class="marketing-section-grid-item">
+        <h3>1. Develop your strategy</h3>
+        <p>Everything begins by understanding who you are and the goals you're trying to achieve. We have proven workflows to uncover who you are, your goals, what's working, and the aspects of your story developers need to know.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>2. Plan your activation</h3>
+        <p>Once we have an understanding of who you are and how we can help you, we'll begin to shape what to say, how to say it, and where. Our team has years of growth and marketing experience to develop a campaign focused your goals.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>3. Build your following</h3>
+        <p>Developers follow our content to explore new ideas and discover new tools. We make sure your brand and product are a part of their journey. We're here to guide and help you every step of the way.</p>
+      </div>
+    </div>
+
+    <div class="marketing-section-wrap">
+      <h3>Podcast sponsorship examples</h3>
+      <div class="grid_table">
+        <div class="grid_table-header">
+          <div class="grid_table-header-column"><p>Campaign type</p></div>
+          <div class="grid_table-header-column"><p>Campaign name</p></div>
+          <div class="grid_table-header-column"><p>Campaign production</p></div>
+        </div>
+      <%= for example <- @examples do %>
+        <div class="grid_table-row">
+          <div class="grid_table-row-column"><p><%= example.type %></p></div>
+          <div class="grid_table-row-column"><p><%= example.name %></p></div>
+          <div class="grid_table-row-column">
+            <%= render(SharedView, "_mini_player.html", title: "Examples: #{example.type}", audio: example.audio, duration: example.duration) %>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+
+    <div class="marketing-section-wrap">
+      <h3>News sponsorship examples</h3>
+      <div class="mock_browser">
+        <div class="mock_browser-header">
+          <div class="mock_browser-header-buttons"><span></span><span></span><span></span></div>
+          <div class="mock_browser-header-address_bar">changelog.com</div>
+        </div>
+        <div class="mock_browser-body">
+          <div class="feed">
+            <%= for ad <- @ads, do: NewsItemView.render_item_summary_or_ad(ad, assigns) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="marketing-section-footer">
+      <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
   </section>
 
-  <!-- TODO
-  <section class="marketing-section marketing-section--no_top_padding">
+  <section class="marketing-section marketing-section--dark">
     <header class="marketing-section-header">
-      <h3>What our sponsors are saying</h3>
+      <h2>Who you’ll reach</h2>
+      <p>Our audience is the builders, leaders, and planners defining the future of software.</p>
     </header>
 
-    <div class="marketing-section-grid">
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Breanden Boneschott">
-          <h3>Breanden Beneschott</h3>
-          <p class="marketing-section-grid-quote-title">Toptal &mdash; Co-Founder / COO</p>
-          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+    <div class="marketing-section-wrap">
+      <div class="bar_graph">
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 30%; width: 22%;">11%</div>
+          <div class="bar_graph-item-label">CEO / Execs</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 50%; width: 40%;">27%</div>
+          <div class="bar_graph-item-label">Frontend / UI</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">43%</div>
+          <div class="bar_graph-item-label">Backend / Engineer</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 34%; width: 27%;">12%</div>
+          <div class="bar_graph-item-label">CTO / Engineering</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 22%; width: 18%">7%</div>
+          <div class="bar_graph-item-label">Product / Design</div>
         </div>
       </div>
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/adam.jpg") %>' alt="David Roesch">
-          <h3>David Roesch</h3>
-          <p class="marketing-section-grid-quote-title">Linode &mdash; Director of Marketing</p>
-          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
+
+      <p class="text-center">Every day we influence developers at some of the most innovative tech companies in the world.</p>
+
+      <div class="logo_grid logo_grid--dark margin-vertical_large">
+        <div class="logo_grid-item">
+          <p>Community Leader</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/linux-foundation-gray.png") %>' alt="Linux Foundation">
         </div>
-      </div>
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/jerod.jpg") %>' alt="Todd Lewis">
-          <h3>Todd Lewis</h3>
-          <p class="marketing-section-grid-quote-title">All Things Open &mdash; Creator and Chair</p>
-          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide&nbsp;us.</p>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
-      </div>
-      <div class="marketing-section-grid-item">
-        <div class="marketing-section-grid-quote">
-          <img src='<%= static_url(@conn, "/images/content/about/heather.jpg") %>' alt="Elaine Greenberg">
-          <h3>Elaine Greenberg</h3>
-          <p class="marketing-section-grid-quote-title">Fastly &mdash; Communications</p>
-          <p>The components and priorities for the change program building flexibility through spreading knowledge and self-organization, empowerment of all personnel, not just key operatives. Exploitation of core competencies as an essential enabler, by adopting project appraisal through incremental cash flow&nbsp;analysis.</p>
+        <div class="logo_grid-item">
+          <p>Executive VP</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/microsoft-gray.png") %>' alt="Micrsoft">
+        </div>
+        <div class="logo_grid-item">
+          <p>SRE Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/google-gray.png") %>' alt="Google">
+        </div>
+        <div class="logo_grid-item">
+          <p>Software Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/ibm-gray.png") %>' alt="IBM">
+        </div>
+        <div class="logo_grid-item">
+          <p>Systems Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/datadog-gray.png") %>' alt="Datadog">
+        </div>
+        <div class="logo_grid-item">
+          <p>React Core</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/facebook-gray.png") %>' alt="Facebook">
+        </div>
+        <div class="logo_grid-item">
+          <p>Distributed Systems</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/uber-gray.png") %>' alt="Uber">
+        </div>
+        <div class="logo_grid-item">
+          <p>Engineering Director</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/slack-gray.png") %>' alt="Slack">
+        </div>
+        <div class="logo_grid-item">
+          <p>JavaScript Engineer</p>
+          <img src='<%= static_url(@conn, "/images/content/sponsors/paypal-gray.png") %>' alt="PayPal">
         </div>
       </div>
     </div>
-  </section> -->
+
+    <footer class="marketing-section-footer">
+      <p>Get in touch if you have more questions or would like to talk with someone.</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
+  </section>
 </article>

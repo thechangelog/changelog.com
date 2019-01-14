@@ -13,6 +13,7 @@ import Overlay from "modules/overlay";
 import ImageButton from "modules/imageButton";
 import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
+import Slider from "modules/slider";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
 import Flash from "modules/flash";
@@ -23,11 +24,11 @@ import lozad from "lozad";
 
 window.u = u;
 window.App = {
-  csrf: u("[property=csrf]").attr("content"),
   lazy: lozad(".lazy"),
   live: new LivePlayer(".js-live"),
   overlay: new Overlay("#overlay"),
   player: new OnsitePlayer("#player"),
+  slider: new Slider(".js-slider"),
 
   attachComments() {
     u(".js-comment").each(el => {
@@ -146,7 +147,7 @@ u(document).handle("click", "[data-youtube]", function(event) {
 });
 
 u(document).handle("click", "[data-share]", function(event) {
-  new Share(overlay).load(u(this).data("share"));
+  new Share(App.overlay).load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -169,7 +170,8 @@ const observer = new IntersectionObserver(function(entries) {
     let el = u(entry.target);
     let type = el.data("news-type");
     let id = el.data("news-id");
-    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": App.csrf}, body: {"ids": id}});
+    let csrf = u("[property=csrf]").attr("content");
+    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": csrf}, body: {"ids": id}});
     observer.unobserve(entry.target);
   });
 });

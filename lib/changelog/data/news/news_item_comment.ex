@@ -19,8 +19,12 @@ defmodule Changelog.NewsItemComment do
 
   def insert_changeset(struct, attrs \\ %{}) do
     struct
-    |> cast(attrs, ~w(content author_id item_id parent_id))
+    |> cast(attrs, ~w(content author_id item_id parent_id)a)
     |> validate_required([:content, :author_id, :item_id])
+  end
+
+  def update_changeset(struct, attrs \\ %{}) do
+    insert_changeset(struct, attrs)
   end
 
   def nested(nil), do: []
@@ -60,7 +64,7 @@ defmodule Changelog.NewsItemComment do
     comment
     |> preload_news_item()
     |> Map.get(:news_item)
-    |> change(refreshed_at: Timex.now)
+    |> change(refreshed_at: now_in_seconds())
     |> Repo.update()
   end
 end

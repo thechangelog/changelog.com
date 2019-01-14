@@ -26,11 +26,11 @@ defmodule Changelog.NewsSource do
       where: not(is_nil(i.id)))
   end
 
-  def file_changeset(source, attrs \\ %{}), do: cast_attachments(source, attrs, ~w(icon), allow_urls: true)
+  def file_changeset(source, attrs \\ %{}), do: cast_attachments(source, attrs, [:icon], allow_urls: true)
 
   def insert_changeset(source, attrs \\ %{}) do
     source
-    |> cast(attrs, ~w(name slug website twitter_handle description regex feed))
+    |> cast(attrs, ~w(name slug website twitter_handle description regex feed)a)
     |> validate_required([:name, :slug, :website])
     |> validate_format(:website, Regexp.http, message: Regexp.http_message)
     |> validate_format(:feed, Regexp.http, message: Regexp.http_message)

@@ -91,7 +91,8 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
   end
 
   def publish(conn = %{assigns: %{issue: issue}}, _params) do
-    changeset = Ecto.Changeset.change(issue, %{published: true, published_at: Timex.now})
+    now = DateTime.truncate(Timex.now(), :second)
+    changeset = Ecto.Changeset.change(issue, %{published: true, published_at: now})
 
     case Repo.update(changeset) do
       {:ok, _issue} ->

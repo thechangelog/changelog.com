@@ -4,8 +4,12 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
   alias Changelog.{Person, Regexp}
 
   def auth_link_expires_in(person) do
-    diff = Timex.diff(person.auth_token_expires_at, Timex.now, :duration)
-    Timex.format_duration(diff, :humanized)
+    person.auth_token_expires_at
+    |> Timex.diff(Timex.now(), :duration)
+    |> Timex.Duration.to_minutes()
+    |> round()
+    |> Timex.Duration.from_minutes()
+    |> Timex.format_duration(:humanized)
   end
 
   def error_class(form, field) do

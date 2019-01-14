@@ -82,7 +82,7 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(nil) == ""
     end
 
-    test "uses verbose syntax with 3 or more topics" do
+    test "uses verbose syntax with 0 or more topics" do
       item = insert(:news_item, headline: "News of iOS 9 doing Machine Learning things.")
       t1 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
       t2 = insert(:topic, name: "Machine Learning", slug: "machine-learning")
@@ -93,20 +93,22 @@ defmodule Changelog.Buffer.ContentTest do
       assert Content.news_item_text(item) =~ "@OfficialiOS #machinelearning #security"
     end
 
+    test "uses verbose syntax with two topics, includes 'by' with author name" do
+      author = insert(:person, twitter_handle: "ohai")
+      item = insert(:news_item, author: author)
+      t1 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
+      t2 = insert(:topic, name: "Machine Learning", slug: "machine-learning")
+      insert(:news_item_topic, news_item: item, topic: t1)
+      insert(:news_item_topic, news_item: item, topic: t2)
+      text = Content.news_item_text(item)
+      assert text =~ " by @ohai"
+      assert text =~ "@OfficialiOS #machinelearning"
+    end
+
     test "uses terse syntax with no topics, includes 'by' with author handle" do
       author = insert(:person, twitter_handle: "BigDaddy")
       item = insert(:news_item, author: author)
       assert Content.news_item_text(item) =~ "by @BigDaddy"
-    end
-
-    test "uses terse syntax with two topics, includes 'by' with author name" do
-      author = insert(:person)
-      item = insert(:news_item, author: author)
-      insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
-      insert(:topic, name: "Machine Learning", slug: "machine-learning")
-      text = Content.news_item_text(item)
-      assert text =~ " by #{author.name}"
-      refute text =~ "@OfficialiOS #machinelearning #security"
     end
 
     test "uses terse syntax with no topics, it includes author alone if source has no handle" do

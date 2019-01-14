@@ -1,8 +1,6 @@
 defmodule Changelog.Factory do
   use ExMachina.Ecto, repo: Changelog.Repo
 
-  import ChangelogWeb.TimeView, only: [hours_from_now: 1, hours_ago: 1]
-
   def benefit_factory do
     %Changelog.Benefit{
       offer: "Free stuff!",
@@ -220,5 +218,17 @@ defmodule Changelog.Factory do
     %Changelog.Sponsor{
       name: sequence(:name, &"Sponsor #{&1}")
     }
+  end
+
+  defp hours_ago(count) do
+    count
+    |> ChangelogWeb.TimeView.hours_ago()
+    |> DateTime.truncate(:second)
+  end
+
+  defp hours_from_now(count) do
+    count
+    |> ChangelogWeb.TimeView.hours_from_now()
+    |> DateTime.truncate(:second)
   end
 end

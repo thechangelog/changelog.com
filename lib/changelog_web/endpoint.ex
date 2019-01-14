@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :changelog
 
-  socket "/socket", ChangelogWeb.UserSocket
+  socket "/socket", ChangelogWeb.UserSocket,
+    websocket: true # or list of options
 
   # Serve at "/" the static files from "priv/static" directory.
   #

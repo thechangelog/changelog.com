@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, Newsletters, Podcast}
+  alias Changelog.{Cache, Episode, Newsletters, NewsSponsorship, Podcast}
   alias ChangelogWeb.TimeView
 
   plug PublicEtsCache
@@ -61,8 +61,9 @@ defmodule ChangelogWeb.PageController do
 
   def sponsor(conn, _params) do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
-
-    render(conn, :sponsor, weekly: weekly)
+    examples = Changelog.SponsorStory.examples()
+    ads = NewsSponsorship.get_ads_for_index()
+    render(conn, :sponsor, weekly: weekly, examples: examples, ads: ads)
   end
 
   def sponsor_pricing(conn, _params) do

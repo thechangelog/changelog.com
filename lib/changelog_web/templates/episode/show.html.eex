@@ -14,10 +14,11 @@
         <h3 class="episode-header-subtitle"><%= @episode.subtitle %></h3>
       <% end %>
 
+      <% {header, people} = if Enum.any?(@episode.guests), do: {"Guests", @episode.guests}, else: {"Hosts", @episode.hosts} %>
       <div class="episode-header-guests">
-        <h4 class="visually_hidden">Guests</h4>
-        <div class="avatar_list <%= if length(@episode.guests) > 6, do: "avatar_list--large" %>">
-          <%= for person <- @episode.guests do %>
+        <h4 class="visually_hidden"><%= header %></h4>
+        <div class="avatar_list <%= if length(people) > 6, do: "avatar_list--large" %>">
+          <%= for person <- people do %>
             <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
               <%= lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
             <% end %>

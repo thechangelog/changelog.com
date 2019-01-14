@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.SearchView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{EpisodeSponsor, NewsItem, Repo}
+  alias Changelog.{EpisodeSponsor, Faker, NewsItem, Repo}
   alias ChangelogWeb.Endpoint
   alias ChangelogWeb.Admin.{TopicView, EpisodeView, NewsItemView, NewsSourceView,
                             PersonView, PostView, SponsorView}
@@ -79,9 +79,15 @@ defmodule ChangelogWeb.Admin.SearchView do
   end
 
   defp person_result(person) do
+    {title, description} = if Enum.member?(Faker.names(), person.name) do
+      {person.email, "(profile incomplete)"}
+    else
+      {person.name,"(#{person.handle})"}
+    end
+
     %{id: person.id,
-      title: person.name,
-      description: "(@#{person.handle})",
+      title: title,
+      description: description,
       image: PersonView.avatar_url(person),
       url: admin_person_path(Endpoint, :edit, person)}
   end
