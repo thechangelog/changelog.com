@@ -7,11 +7,7 @@ defmodule ChangelogWeb.Admin.PageController do
 
   def index(conn = %{assigns: %{current_user: me = %{admin: true}}}, _params) do
     newsletters =
-      [Newsletters.weekly(),
-       Newsletters.nightly(),
-       Newsletters.gotime(),
-       Newsletters.jsparty(),
-       Newsletters.practicalai()]
+      Newsletters.all()
       |> Enum.map(&Newsletters.get_stats/1)
 
     render(conn, :index,
