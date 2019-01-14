@@ -24,7 +24,10 @@ $range-label-width: 60px !default;
 
   &:hover { background: $range-handle-color-hover; }
   &:active { background: $range-handle-color-hover; }
-  .mini_player & { opacity: 0; }
+  .richtext_player &,
+  .mini_player & {
+    opacity: 0;
+  }
 }
 
 @mixin range-track($height, $bgcolor) {
@@ -41,6 +44,7 @@ $range-label-width: 60px !default;
   body.embed--day & { background: $light-grey; }
   .episode_player & { height: 6px; }
   .mini_player & { height: 6px; background: $light-grey; }
+  .richtext_player & { height: 6px; background: #282F36; }
 }
 
 .range_slider {

@@ -1,0 +1,40 @@
+.richtext_player {
+  background: $black;
+  align-items: center;
+  display: flex;
+  margin: 0;
+  padding: $mobile-spacing;
+
+  &-button {
+    $size: 36px;
+    background: $green url('/images/icons/toolbar-play-white.svg') center no-repeat;
+    background-size: auto 14px;
+    background-position: 13px center;
+    border-radius: $size;
+    flex: 0 0 $size;
+    margin-right: 1em;
+    height: $size;
+    width: $size;
+    text-indent: -9999px;
+
+    &.is-playing {
+      background-image: url('/images/icons/toolbar-pause-white.svg');
+      background-position: center;
+    }
+  }
+  &-slider {
+    flex: 1 100%;
+  }
+  &-time {
+    color: $medium-grey;
+    display: none;
+    font-family: $code;
+    font-size: 0.75em;
+    flex: 1 0 auto;
+    margin: 0 0 0 1em;
+
+    @include breakpoint(tiny) {
+      display: block;
+    }
+  }
+}
