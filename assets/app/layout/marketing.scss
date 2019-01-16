@@ -28,7 +28,7 @@
       min-width: var(--min-width-button);
       flex: 1 0 0;
     }
-    // 
+    //
     // .page-page-weekly &,
     // .page-page-nightly & {
     //   margin: 0;
@@ -103,7 +103,9 @@
 
     &-header {
       i {
-        img { margin: 0 auto; }
+        img {
+          margin: 0 auto;
+        }
       }
 
       &-leadin {
@@ -112,7 +114,7 @@
         margin-bottom: $base-spacing;
       }
 
-      img {
+      & > img {
         text-align: center;
         margin: $base-spacing/2 auto $base-spacing;
         max-width: 370px;
