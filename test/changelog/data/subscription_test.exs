@@ -3,6 +3,22 @@ defmodule Changelog.SubscriptionTest do
 
   alias Changelog.Subscription
 
+  describe "is_subscribed/1" do
+    test "is false when unsubscribed_at is set" do
+      sub = %Subscription{unsubscribed_at: Timex.now()}
+      refute Subscription.is_subscribed(sub)
+    end
+
+    test "is false when sent not a subscription" do
+      refute Subscription.is_subscribed(nil)
+    end
+
+    test "is true when not unsubscribed_at is not set" do
+      sub = %Subscription{}
+      assert Subscription.is_subscribed(sub)
+    end
+  end
+
   describe "subscribe/2 with news item" do
     setup do
       {:ok, person: insert(:person), item: insert(:news_item)}

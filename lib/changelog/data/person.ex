@@ -17,6 +17,14 @@ defmodule Changelog.Person do
     def changeset(struct, attrs) do
       cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news, :email_on_comment_replies])
     end
+
+    def is_valid(name) when is_binary(name) do
+      __MODULE__.__struct__
+      |> Map.keys()
+      |> Enum.map(&Atom.to_string/1)
+      |> Enum.any?(&(&1 == name))
+    end
+    def is_valid(_), do: false
   end
 
   schema "people" do
