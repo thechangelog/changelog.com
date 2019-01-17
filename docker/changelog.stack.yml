@@ -115,6 +115,8 @@ services:
     hostname: &netdata_host netdata.changelog.com
     environment:
       VIRTUAL_HOST: *netdata_host
+      # gmake ssh && grep docker /etc/group | cut -d ':' -f 3
+      PGID: 233
     ports:
       - 19999:19999
     # cap_add, security_opt & privileged are not support by Docker Swarm, works OK without
