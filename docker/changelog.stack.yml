@@ -99,6 +99,8 @@ services:
       restart_policy:
         condition: any
     image: thechangelog/proxy
+    environment:
+      DEFAULT_HOST: *host
     ports:
       - "80:80"
     volumes:
