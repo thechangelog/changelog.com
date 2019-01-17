@@ -100,6 +100,8 @@ services:
       VIRTUAL_HOST: *netdata_host
     ports:
       - 19999:19999
+    # cap_add, security_opt & privileged are not support by Docker Swarm, works OK without
+    # https://stackoverflow.com/questions/53163044/docker-stack-ignoring-unsupported-options
     cap_add:
       - SYS_PTRACE
     security_opt:
