@@ -104,6 +104,25 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /uploads:/var/www/uploads:ro
+  netdata:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    image: netdata/netdata
+    hostname: &netdata_host netdata.changelog.com
+    environment:
+      VIRTUAL_HOST: *netdata_host
+    ports:
+      - 19999:19999
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
 volumes:
   changelog.com:
