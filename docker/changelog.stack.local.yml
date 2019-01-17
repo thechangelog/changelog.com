@@ -81,6 +81,10 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+      update_config:
+        failure_action: rollback
+        monitor: 15s
+        order: start-first
     image: thechangelog/proxy
     environment:
       DEFAULT_HOST: *host
