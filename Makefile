@@ -354,7 +354,7 @@ pi: proxy-image
 .PHONY: build-proxy-image
 build-proxy-image: $(DOCKER)
 	@cd nginx && \
-	$(DOCKER) build --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
+	$(DOCKER) build --no-cache --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
 .PHONY: bpi
 bpi: build-proxy-image
 
@@ -378,7 +378,7 @@ ri: runtime-image
 
 .PHONY: build-runtime-image
 build-runtime-image: $(DOCKER)
-	@$(DOCKER) build --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
+	@$(DOCKER) build --no-cache --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
 .PHONY: bri
 bri: build-runtime-image
 
