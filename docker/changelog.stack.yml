@@ -112,9 +112,9 @@ services:
       restart_policy:
         condition: any
     image: netdata/netdata
-    hostname: &netdata_host netdata.changelog.com
+    hostname: 2019_netdata
     environment:
-      VIRTUAL_HOST: *netdata_host
+      VIRTUAL_HOST: netdata.changelog.com
       # gmake ssh && grep docker /etc/group | cut -d ':' -f 3
       PGID: 233
     ports:
