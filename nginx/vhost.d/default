@@ -13,6 +13,9 @@ proxy_max_temp_file_size 0;
 # http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size
 client_max_body_size 200M;
 
+# Disable access log, it generates **a lot** of logs in production
+access_log off;
+
 location ^~ /uploads {
   root /var/www;
 
