@@ -115,6 +115,10 @@ services:
       replicas: 1
       restart_policy:
         condition: any
+      update_config:
+        failure_action: rollback
+        monitor: 30s
+        order: start-first
     image: netdata/netdata
     hostname: 2019_netdata
     environment:
