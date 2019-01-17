@@ -123,6 +123,8 @@ services:
     hostname: 2019_netdata
     environment:
       VIRTUAL_HOST: netdata.changelog.com
+      # We want to see container names in netdata, not container IDs
+      # Defining the docker group id makes it possible, as described in https://hub.docker.com/r/netdata/netdata/
       # gmake ssh && grep docker /etc/group | cut -d ':' -f 3
       PGID: 233
     ports:
