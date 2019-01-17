@@ -147,8 +147,12 @@ defmodule Changelog.NewsItem do
     |> preload_topics()
   end
 
-  def preload_comments(query = %Ecto.Query{}), do: Ecto.Query.preload(query, comments: :author)
-  def preload_comments(item), do: Repo.preload(item, comments: :author)
+  def preload_comments(query = %Ecto.Query{}) do
+    Ecto.Query.preload(query, [comments: ^NewsItemComment.newest_first])
+  end
+  def preload_comments(item) do
+    Repo.preload(item, comments: {NewsItemComment.newest_first, [:author]})
+  end
 
   def preload_topics(query = %Ecto.Query{}) do
     query

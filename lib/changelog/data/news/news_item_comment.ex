@@ -27,12 +27,12 @@ defmodule Changelog.NewsItemComment do
     insert_changeset(struct, attrs)
   end
 
+  # Expects newest comments first
   def nested(nil), do: []
   def nested([]), do: []
   def nested(comments) do
     comments
     |> Enum.map(&(Map.put(&1, :children, [])))
-    |> Enum.reverse()
     |> Enum.reduce(%{}, fn(comment, map) ->
       comment = %{comment | children: Map.get(map, comment.id, [])}
       Map.update(map, comment.parent_id, [comment], fn(comments) -> [comment | comments] end)
