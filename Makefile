@@ -397,6 +397,12 @@ s: secrets
 ssh: ## ssh | SSH into $HOST
 	@ssh $(HOST_SSH_USER)@$(HOST)
 
+.PHONY: ssl_report
+ssl_report: ## ssl | Run an SSL report via SSL Labs
+	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(DOCKER_STACK).$(DOMAIN)&latest"
+.PHONY: ssl
+ssl: ssl_report
+
 .PHONY: test
 test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
