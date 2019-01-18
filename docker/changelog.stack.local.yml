@@ -103,9 +103,12 @@ services:
         monitor: 30s
         order: start-first
     image: netdata/netdata
-    hostname: 2019_netdata
+    hostname: "${USER}-netdata"
     environment:
       VIRTUAL_HOST: "${USER}-netdata.changelog.com"
+      # netdata container is too verbose, tell Logspout to not send logs to Papertrail
+      # https://github.com/gliderlabs/logspout#ignoring-specific-containers
+      LOGSPOUT: ignore
     ports:
       - "19999:19999"
     # cap_add, security_opt & privileged are not support by Docker Swarm, works OK without
