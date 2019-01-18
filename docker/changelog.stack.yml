@@ -90,7 +90,7 @@ services:
     command: update_service_continuously
     environment:
       HOSTNAME: "${HOSTNAME}"
-      UPDATE_SERVICE_EVERY_N_SECONDS: 60
+      UPDATE_SERVICE_EVERY_N_SECONDS: 30
     image: thechangelog/bootstrap
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
