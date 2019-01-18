@@ -27,4 +27,4 @@ COPY update_service_continuously /usr/local/bin/update_service_continuously
 RUN chmod +x /usr/local/bin/deploy_docker_stack /usr/local/bin/update_service_continuously
 
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["/deploy_docker_stack"]
+CMD ["deploy_docker_stack"]
