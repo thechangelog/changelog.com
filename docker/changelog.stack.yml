@@ -60,11 +60,11 @@ services:
       NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
       PORT: 4000
-      URL_HOST: &host 2019.changelog.com
+      URL_HOST: &host changelog.com
       URL_PORT: 443
       URL_SCHEME: https
-      URL_STATIC_HOST: *host
-      VIRTUAL_HOST: *host
+      URL_STATIC_HOST: cdn.changelog.com
+      VIRTUAL_HOST: "changelog.com,*.changelog.com"
       ROLLBAR_ENVIRONMENT: production
     secrets:
       - CM_API_TOKEN
