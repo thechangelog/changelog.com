@@ -34,22 +34,6 @@ BOOTSTRAP_GIT_BRANCH ?= master
 
 APP_IMAGE ?= thechangelog/changelog.com:latest
 
-define BOOTSTRAP_CONTAINER
-docker pull thechangelog/bootstrap:latest && \
-docker run --rm --interactive --tty --name bootstrap \
-  --env HOSTNAME=\$$HOSTNAME \
-  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
-  --volume changelog.com:/app:rw \
-  thechangelog/bootstrap:latest
-endef
-
-define CTOP_CONTAINER
-docker pull quay.io/vektorlab/ctop:latest && \
-docker run --rm --interactive --tty \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  quay.io/vektorlab/ctop:latest
-endef
-
 
 
 ### DEPS ###
@@ -107,6 +91,14 @@ colours:
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
 
+define BOOTSTRAP_CONTAINER
+docker pull thechangelog/bootstrap:latest && \
+docker run --rm --interactive --tty --name bootstrap \
+  --env HOSTNAME=\$$HOSTNAME \
+  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+  --volume changelog.com:/app:rw \
+  thechangelog/bootstrap:latest
+endef
 .PHONY: bootstrap-docker
 bootstrap-docker:
 	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER)"
@@ -227,6 +219,12 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 .PHONY: cds
 cds: create-docker-secrets
 
+define CTOP_CONTAINER
+docker pull quay.io/vektorlab/ctop:latest && \
+docker run --rm --interactive --tty \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  quay.io/vektorlab/ctop:latest
+endef
 .PHONY: ctop
 ctop: ## ct  | View real-time container metrics & logs
 	@if [ $(HOST) = localhost ] ; then \
