@@ -409,7 +409,7 @@ ru: rsync-uploads
 .PHONY: rsync_small_uploads_local
 rsync_small_uploads_local: create-dirs-mounted-as-volumes
 	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
-	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons}" $(CURDIR)/priv/uploads/
+	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons,logos}" $(CURDIR)/priv/uploads/
 .PHONY: rsul
 rsul: rsync_small_uploads_local
 
