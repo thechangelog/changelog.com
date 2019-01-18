@@ -28,7 +28,7 @@ services:
       start_period: 5s
     image: postgres:9.5.4
     volumes:
-      - postgres:/var/lib/postgresql/data:rw
+      - ${PWD}/priv/db:/var/lib/postgresql/data:rw
   app:
     deploy:
       replicas: 1
@@ -75,7 +75,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - uploads:/uploads:rw
+      - ${PWD}/priv/uploads:/uploads:rw
   proxy:
     deploy:
       replicas: 1
@@ -92,7 +92,7 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - uploads:/var/www/uploads:ro
+      - ${PWD}/priv/uploads:/var/www/uploads:ro
   netdata:
     deploy:
       replicas: 1
@@ -107,7 +107,7 @@ services:
     environment:
       VIRTUAL_HOST: "${USER}-netdata.changelog.com"
     ports:
-      - 19999:19999
+      - "19999:19999"
     # cap_add, security_opt & privileged are not support by Docker Swarm, works OK without
     # https://stackoverflow.com/questions/53163044/docker-stack-ignoring-unsupported-options
     cap_add:
@@ -118,11 +118,6 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
-volumes:
-  postgres:
-  uploads:
-  changelog.com:
 
 # https://docs.docker.com/engine/swarm/secrets/#defining-and-using-secrets-in-compose-files
 secrets:

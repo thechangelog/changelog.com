@@ -32,6 +32,8 @@ RSYNC_SRC_HOST ?= root@172.104.216.248
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 BOOTSTRAP_GIT_BRANCH ?= master
 
+APP_IMAGE ?= thechangelog/changelog.com:latest
+
 define BOOTSTRAP_CONTAINER
 docker pull thechangelog/bootstrap:latest && \
 docker run --rm --interactive --tty --name bootstrap \
@@ -128,6 +130,10 @@ as: add-secret
 prevent-incompatible-deps-reaching-the-docker-image:
 	@rm -fr deps
 
+.PHONY: create-dirs-mounted-as-volumes
+create-dirs-mounted-as-volumes:
+	@mkdir -p $(CURDIR)/priv/{uploads,db}
+
 .PHONY: bootstrap-image
 bootstrap-image: build-bootstrap-image publish-bootstrap-image ## bi  | Build & publish thechangelog/bootstrap Docker image
 .PHONY: bi
@@ -191,7 +197,7 @@ configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## ccs | Configure Cir
 ccs: configure-ci-secrets
 
 .PHONY: contrib
-contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## c   | Contribute to changelog.com by running a local copy
+contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image create-dirs-mounted-as-volumes ## c   | Contribute to changelog.com by running a local copy
 	@bash -c "trap '$(COMPOSE) down' INT ; \
 	  $(COMPOSE) up ; \
 	  [[ $$? =~ 0|2 ]] || \
@@ -249,7 +255,9 @@ dds: deploy-docker-stack
 
 .PHONY: update-app-service
 update-app-service: $(DOCKER)
-	@$(DOCKER) service update --quiet --image thechangelog/changelog.com:latest $(DOCKER_STACK)_app 1>/dev/null
+	@$(DOCKER) service update --quiet --image $(APP_IMAGE) $(DOCKER_STACK)_app 1>/dev/null
+.PHONY: uas
+uas: update-app-service
 
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
@@ -258,10 +266,9 @@ build-local-image: $(DOCKER)
 bli: build-local-image
 
 .PHONY: deploy-docker-stack-local
-deploy-docker-stack-local: $(DOCKER) build-local-image
+deploy-docker-stack-local: $(DOCKER) build-local-image create-dirs-mounted-as-volumes
 	@export HOSTNAME && \
-	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK) && \
-	$(DOCKER) service update --image thechangelog/changelog.com:local --force $(DOCKER_STACK)_app
+	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK)
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
 
@@ -404,6 +411,13 @@ endef
 .PHONY: rsync_uploads
 rsync_uploads:
 	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(RSYNC_UPLOADS)"
+
+.PHONY: rsync_small_uploads_local
+rsync_small_uploads_local: create-dirs-mounted-as-volumes
+	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
+	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons}" $(CURDIR)/priv/uploads/
+.PHONY: rsul
+rsul: rsync_small_uploads_local
 
 .PHONY: ssh
 ssh: ## ssh | SSH into $HOST
