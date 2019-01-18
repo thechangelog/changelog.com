@@ -397,20 +397,16 @@ publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
-.PHONY: secrets
-secrets: $(LPASS) ## s   | List all LastPass secrets
-	@$(SECRETS)
-.PHONY: s
-s: secrets
-
 define RSYNC_UPLOADS
   sudo --preserve-env --shell \
     rsync --archive --delete --update --inplace --verbose --progress --human-readable \
       $(RSYNC_SRC_HOST):/data/www/uploads/ /uploads/
 endef
-.PHONY: rsync_uploads
-rsync_uploads:
+.PHONY: rsync-uploads
+rsync-uploads: ## ru  | Synchronise uploads between remote hosts
 	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(RSYNC_UPLOADS)"
+.PHONY: ru
+ru: rsync-uploads
 
 .PHONY: rsync_small_uploads_local
 rsync_small_uploads_local: create-dirs-mounted-as-volumes
@@ -418,6 +414,13 @@ rsync_small_uploads_local: create-dirs-mounted-as-volumes
 	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons}" $(CURDIR)/priv/uploads/
 .PHONY: rsul
 rsul: rsync_small_uploads_local
+
+
+.PHONY: secrets
+secrets: $(LPASS) ## s   | List all LastPass secrets
+	@$(SECRETS)
+.PHONY: s
+s: secrets
 
 .PHONY: ssh
 ssh: ## ssh | SSH into $HOST
