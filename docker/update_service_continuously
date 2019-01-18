@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+[ -z "$DEBUG" ] || set -x
+
+echo "Updating ${DOCKER_SERVICE_NAME:?must be set} from ${DOCKER_SERVICE_IMAGE:?must be set} every ${UPDATE_SERVICE_EVERY_N_SECONDS:?must be set} seconds..."
+while sleep "$UPDATE_SERVICE_EVERY_N_SECONDS"
+do
+  docker service update --quiet --image "$DOCKER_SERVICE_IMAGE" "$DOCKER_SERVICE_NAME" 1>/dev/null 2>&1
+done

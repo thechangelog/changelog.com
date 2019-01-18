@@ -92,6 +92,7 @@ colours:
 $(HOST): iaas create-docker-secrets bootstrap-docker
 
 define BOOTSTRAP_CONTAINER
+docker service scale $(DOCKER_STACK)_app_updater=0 ; \
 docker pull thechangelog/bootstrap:latest && \
 docker run --rm --interactive --tty --name bootstrap \
   --env HOSTNAME=\$$HOSTNAME \
@@ -247,7 +248,9 @@ rds: remove-docker-secrets
 
 .PHONY: deploy-docker-stack
 deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
-	@export HOSTNAME && $(DOCKER) stack deploy --compose-file $(DOCKER_STACK_FILE) --prune $(DOCKER_STACK)
+	@export HOSTNAME ; \
+	$(DOCKER) service scale $(DOCKER_STACK)_app_updater=0 ; \
+	$(DOCKER) stack deploy --compose-file $(DOCKER_STACK_FILE) --prune $(DOCKER_STACK)
 .PHONY: dds
 dds: deploy-docker-stack
 
@@ -265,7 +268,8 @@ bli: build-local-image
 
 .PHONY: deploy-docker-stack-local
 deploy-docker-stack-local: $(DOCKER) build-local-image create-dirs-mounted-as-volumes
-	@export HOSTNAME && \
+	@export HOSTNAME ; \
+	$(DOCKER) service scale $(DOCKER_STACK)_app_updater=0 ; \
 	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK)
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local

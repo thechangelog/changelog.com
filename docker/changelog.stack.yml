@@ -12,23 +12,6 @@ services:
     image: gliderlabs/logspout:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-  update:
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: any
-      # https://docs.docker.com/compose/compose-file/#update_config
-      update_config:
-        failure_action: rollback
-        monitor: 60s
-        order: stop-first
-    environment:
-      UPDATE_APP_EVERY_N_SECONDS: 60
-      HOSTNAME: "${HOSTNAME}"
-    image: thechangelog/bootstrap
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - changelog.com:/app:rw
   db:
     deploy:
       replicas: 1
@@ -93,6 +76,25 @@ services:
       - "4000:4000"
     volumes:
       - /uploads:/uploads:rw
+  app_updater:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      # https://docs.docker.com/compose/compose-file/#update_config
+      update_config:
+        failure_action: rollback
+        monitor: 30s
+        order: stop-first
+    command: update_service_continuously
+    environment:
+      HOSTNAME: "${HOSTNAME}"
+      UPDATE_SERVICE_EVERY_N_SECONDS: 60
+    image: thechangelog/bootstrap
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - changelog.com:/app:rw
   proxy:
     deploy:
       replicas: 1
