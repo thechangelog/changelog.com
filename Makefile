@@ -423,8 +423,8 @@ rsul: rsync_small_uploads_local
 ssh: ## ssh | SSH into $HOST
 	@ssh $(HOST_SSH_USER)@$(HOST)
 
-.PHONY: ssl_report
-ssl_report: ## ssl | Run an SSL report via SSL Labs
+.PHONY: ssl-report
+ssl-report: ## ssl | Run an SSL report via SSL Labs
 	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(DOCKER_STACK).$(DOMAIN)&latest"
 .PHONY: ssl
 ssl: ssl_report
