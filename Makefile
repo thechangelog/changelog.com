@@ -27,6 +27,7 @@ DOCKER_STACK_FILE ?= docker/changelog.stack.yml
 
 HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
+RSYNC_SRC_HOST ?= root@172.104.216.248
 
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 BOOTSTRAP_GIT_BRANCH ?= master
@@ -394,6 +395,15 @@ secrets: $(LPASS) ## s   | List all LastPass secrets
 	@$(SECRETS)
 .PHONY: s
 s: secrets
+
+define RSYNC_UPLOADS
+  sudo --preserve-env --shell \
+    rsync --archive --delete --update --inplace --verbose --progress --human-readable \
+      $(RSYNC_SRC_HOST):/data/www/uploads/ /uploads/
+endef
+.PHONY: rsync_uploads
+rsync_uploads:
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(RSYNC_UPLOADS)"
 
 .PHONY: ssh
 ssh: ## ssh | SSH into $HOST
