@@ -6,10 +6,12 @@ assets/node_modules
 docker
 import
 nginx
+priv/db
 priv/uploads
 script
 terraform
 test
+tmp
 .all-contributorsrc
 .credo.exs
 .dockerignore
