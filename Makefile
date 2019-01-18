@@ -313,6 +313,8 @@ $(CHANGELOG_SERVICES_SEPARATOR)
 $(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Linode$(NORMAL)     | https://cloud.linode.com/dashboard                        |
 $(CHANGELOG_SERVICES_SEPARATOR)
+| $(BOLD)$(GREEN)Netdata$(NORMAL)    | https://netdata.changelog.com                             |
+$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Papertrail$(NORMAL) | https://papertrailapp.com/dashboard                       |
 $(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Pingdom - Uptime$(NORMAL)           | https://my.pingdom.com/reports/uptime     |
