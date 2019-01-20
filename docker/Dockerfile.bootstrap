@@ -22,9 +22,8 @@ ENV DOCKER_SERVICE_IMAGE=$DOCKER_SERVICE_IMAGE
 VOLUME /app
 WORKDIR /app
 
-COPY deploy_docker_stack /usr/local/bin/deploy_docker_stack
-COPY update_service_continuously /usr/local/bin/update_service_continuously
-RUN chmod +x /usr/local/bin/deploy_docker_stack /usr/local/bin/update_service_continuously
+COPY deploy_docker_stack update_service_continuously /usr/local/bin/
+RUN cd /usr/local/bin && chmod +x deploy_docker_stack update_service_continuously
 
 ENTRYPOINT ["/bin/bash", "-c"]
 CMD ["deploy_docker_stack"]
