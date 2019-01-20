@@ -180,7 +180,7 @@ clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, ima
 cd: clean-docker
 
 .PHONY: configure-ci-secrets
-configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## ccs | Configure CircleCI secrets
+configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle-token ## ccs | Configure CircleCI secrets
 	@DOCKER_CREDENTIALS=$$($(LPASS) show --json 2219952586317097429) && \
 	DOCKER_USER="$$($(JQ) --compact-output '.[] | {name: "DOCKER_USER", value: .username}' <<< $$DOCKER_CREDENTIALS)" && \
 	DOCKER_PASS="$$($(JQ) --compact-output '.[] | {name: "DOCKER_PASS", value: .password}' <<< $$DOCKER_CREDENTIALS)" && \
@@ -280,7 +280,7 @@ env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffe
 es: env-secrets
 
 .PHONY: iaas
-iaas: linode_token dnsimple_creds init validate apply ## i   | Provision IaaS infrastructure
+iaas: linode-token dnsimple-creds init validate apply ## i   | Provision IaaS infrastructure
 .PHONY: i
 i: iaas
 
@@ -410,12 +410,12 @@ rsync-uploads: ## ru  | Synchronise uploads between remote hosts
 .PHONY: ru
 ru: rsync-uploads
 
-.PHONY: rsync_small_uploads_local
-rsync_small_uploads_local: create-dirs-mounted-as-volumes
+.PHONY: rsync-small-uploads-local
+rsync-small-uploads-local: create-dirs-mounted-as-volumes
 	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
 	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons,logos}" $(CURDIR)/priv/uploads/
 .PHONY: rsul
-rsul: rsync_small_uploads_local
+rsul: rsync-small-uploads-local
 
 
 .PHONY: secrets
@@ -432,7 +432,7 @@ ssh: ## ssh | SSH into $HOST
 ssl-report: ## ssl | Run an SSL report via SSL Labs
 	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(DOCKER_STACK).$(DOMAIN)&latest"
 .PHONY: ssl
-ssl: ssl_report
+ssl: ssl-report
 
 .PHONY: test
 test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
@@ -454,8 +454,8 @@ This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
 endef
 export DIRENV
-.PHONY: circle_token
-circle_token:
+.PHONY: circle-token
+circle-token:
 ifndef CIRCLE_TOKEN
 	@echo "$(RED)CIRCLE_TOKEN$(NORMAL) environment variable must be set\n" && \
 	echo "Learn more about CircleCI API tokens $(BOLD)https://circleci.com/docs/2.0/managing-api-tokens/$(NORMAL) " && \
@@ -463,8 +463,8 @@ ifndef CIRCLE_TOKEN
 	exit 1
 endif
 
-.PHONY: linode_token
-linode_token:
+.PHONY: linode-token
+linode-token:
 ifndef TF_VAR_linode_token
 	@echo "$(RED)TF_VAR_linode_token$(NORMAL) environment variable must be set" && \
 	echo "Learn more about Linode API tokens $(BOLD)https://cloud.linode.com/profile/tokens$(NORMAL) " && \
@@ -472,8 +472,8 @@ ifndef TF_VAR_linode_token
 	exit 1
 endif
 
-.PHONY: dnsimple_creds
-dnsimple_creds:
+.PHONY: dnsimple-creds
+dnsimple-creds:
 ifndef DNSIMPLE_ACCOUNT
 	@echo "$(RED)DNSIMPLE_ACCOUNT$(NORMAL) environment variable must be set" && \
 	echo "This will be the account's numerical ID, e.g. $(BOLD)00000$(NORMAL)" && \
