@@ -84,6 +84,13 @@
     padding: 20px;
   }
 
+  .footnote {
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+
   .footer p, .footer a, .footer td {
     color: #999;
     font-size: 12px;
@@ -202,10 +209,6 @@
 
     .content-wrap {
       padding: 10px !important;
-    }
-
-    .invoice {
-      width: 100% !important;
     }
   }
 </style>

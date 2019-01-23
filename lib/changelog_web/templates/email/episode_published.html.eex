@@ -2,7 +2,13 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>Hot off the press! <%= link(@episode.title, to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) %></p>
+    <p>Hot off the press! Here’s the latest episode of <%= link(@episode.podcast.name, to: podcast_url(Endpoint, :show, @episode.podcast.slug)) %> for you.</p>
+
+    <p>
+      <%= link(to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) do %>
+        <%= EpisodeView.podcast_name_and_number(@episode) %>: <%= @episode.title %>
+      <% end %>
+    </p>
 
     <blockquote><%= @episode.summary |> md_to_html() |> raw()  %></blockquote>
 
@@ -11,5 +17,9 @@
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, @subscription.id)) %></em></p>
 
     <p>💚, Logbot</p>
+
+  <%= if String.length(@subscription.context) > 0 do %>
+    <p class="footnote">(You received this email because <%= @subscription.context %>)</p>
+  <% end %>
   </td>
 </tr>
