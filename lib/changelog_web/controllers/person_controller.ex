@@ -58,7 +58,8 @@ defmodule ChangelogWeb.PersonController do
 
   defp subscribe_to_podcast(person, slug) do
     podcast = Podcast.get_by_slug!(slug)
-    Subscription.subscribe(person, podcast)
+    context = "you signed up for email notifications for #{podcast.name} on changelog.com"
+    Subscription.subscribe(person, podcast, context)
     Email.subscriber_welcome(person, podcast) |> Mailer.deliver_later()
   end
 

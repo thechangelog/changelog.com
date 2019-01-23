@@ -7,6 +7,7 @@ defmodule Changelog.Repo.Migrations.CreateSubscriptions do
       add :person_id, references(:people, on_delete: :delete_all)
       add :podcast_id, references(:podcasts, on_delete: :delete_all)
       add :item_id, references(:news_items, on_delete: :delete_all)
+      add :context, :text, default: ""
       timestamps()
     end
 

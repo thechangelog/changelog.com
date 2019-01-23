@@ -5,6 +5,7 @@ defmodule Changelog.Subscription do
 
   schema "subscriptions" do
     field :unsubscribed_at, :utc_datetime
+    field :context, :string
 
     belongs_to :person, Person
     belongs_to :podcast, Podcast
@@ -35,7 +36,7 @@ defmodule Changelog.Subscription do
   def preload_podcast(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :podcast)
   def preload_podcast(sub), do: Repo.preload(sub, :podcast)
 
-  def subscribe(person = %Person{}, to) do
+  def subscribe(person = %Person{}, to, context \\ "") do
     attrs = case to do
       %NewsItem{id: id} -> %{person_id: person.id, item_id: id}
       %Podcast{id: id} -> %{person_id: person.id, podcast_id: id}
@@ -46,6 +47,7 @@ defmodule Changelog.Subscription do
       sub -> sub
     end
     |> change(unsubscribed_at: nil)
+    |> change(context: context)
     |> Repo.insert_or_update()
   end
 
