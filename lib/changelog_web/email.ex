@@ -92,7 +92,7 @@ defmodule ChangelogWeb.Email do
 
   defp email_from_logbot do
     new_email()
-    |> from("logbot@changelog.com")
+    |> from({"Logbot", "logbot@changelog.com"})
     |> put_header("Reply-To", "editors@changelog.com")
   end
 

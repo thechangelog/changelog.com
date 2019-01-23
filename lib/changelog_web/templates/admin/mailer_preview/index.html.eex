@@ -1,0 +1,12 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    Mailers
+    <div class="sub header">For your previewing pleasure</div>
+  </h1>
+
+  <div class="ui ordered large list">
+  <%= for preview <- @previews do %>
+    <div class="item"><%= link(preview, to: admin_mailer_preview_path(@conn, :show, preview)) %></div>
+  <% end %>
+  </div>
+</div>

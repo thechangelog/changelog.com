@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html><head>
+<meta name="viewport" content="width=device-width" />
+<style type="text/css">
+  html, body, iframe {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  header {
+    width: 100%;
+    padding: 10px 0 0 0;
+    margin: 0;
+    background: white;
+    font: 12px "Lucida Grande", sans-serif;
+    border-bottom: 1px solid #dedede;
+    overflow: hidden;
+  }
+
+  dl {
+    margin: 0 0 10px 0;
+    padding: 0;
+  }
+
+  dt {
+    width: 80px;
+    padding: 1px;
+    float: left;
+    clear: left;
+    text-align: right;
+    color: #7f7f7f;
+  }
+
+  dd {
+    margin-left: 90px; /* 80px + 10px */
+    padding: 1px;
+  }
+
+  dd:empty:before {
+    content: "\00a0"; // &nbsp;
+  }
+
+  iframe {
+    border: 0;
+    width: 100%;
+  }
+</style>
+</head>
+
+<body>
+  <header>
+    <dl>
+      <dt>From:</dt>
+      <dd><%= format_email_address(@email.from) %></dd>
+
+    <%= if reply_to(@email) do %>
+      <dt>Reply-To:</dt>
+      <dd><%= reply_to(@email) %></dd>
+    <% end %>
+
+      <dt>To:</dt>
+      <dd><%= email_addresses(@email) %></dd>
+
+
+      <dt>Subject:</dt>
+      <dd><strong><%= @email.subject %></strong></dd>
+    </dl>
+  </header>
+
+  <iframe seamless srcdoc="<%= @email.html_body %>"></iframe>
+</body>
+</html>

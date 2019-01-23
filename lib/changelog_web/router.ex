@@ -82,6 +82,7 @@ defmodule ChangelogWeb.Router do
     end
     resources "/posts", PostController, except: [:show]
     resources "/sponsors", SponsorController
+    resources "/mailers", MailerPreviewController, only: [:index, :show]
   end
 
   scope "/api", ChangelogWeb, as: :api do
