@@ -19,6 +19,22 @@ defmodule Changelog.Subscription do
   def is_subscribed(%__MODULE__{unsubscribed_at: ts}), do: is_nil(ts)
   def is_subscribed(_), do: false
 
+  def preload_all(sub) do
+    sub
+    |> preload_item()
+    |> preload_person()
+    |> preload_podcast()
+  end
+
+  def preload_item(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :item)
+  def preload_item(sub), do: Repo.preload(sub, :item)
+
+  def preload_person(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :person)
+  def preload_person(sub), do: Repo.preload(sub, :person)
+
+  def preload_podcast(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :podcast)
+  def preload_podcast(sub), do: Repo.preload(sub, :podcast)
+
   def subscribe(person = %Person{}, to) do
     attrs = case to do
       %NewsItem{id: id} -> %{person_id: person.id, item_id: id}

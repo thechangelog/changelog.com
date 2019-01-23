@@ -1,0 +1,15 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p><%= greeting(@person) %></p>
+
+    <p>Hot off the press! <%= link(@episode.title, to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) %></p>
+
+    <blockquote><%= @episode.summary |> md_to_html() |> raw()  %></blockquote>
+
+    <%= link("Listen here", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), class: "btn-primary", itemprop: "url") %>
+
+    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, @subscription.id)) %></em></p>
+
+    <p>💚, Logbot</p>
+  </td>
+</tr>

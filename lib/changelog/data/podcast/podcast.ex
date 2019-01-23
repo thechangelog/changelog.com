@@ -160,6 +160,9 @@ defmodule Changelog.Podcast do
     |> Repo.preload(:topics)
   end
 
+  def preload_subscriptions(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :subscriptions)
+  def preload_subscriptions(podcast), do: Repo.preload(podcast, :subscriptions)
+
   def update_stat_counts(podcast) do
     episodes = Repo.all(assoc(podcast, :episodes))
 

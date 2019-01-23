@@ -1,6 +1,46 @@
 defmodule ChangelogWeb.Email do
   use Bamboo.Phoenix, view: ChangelogWeb.EmailView
 
+  def authored_news_published(person, item) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Authored News")
+    |> to(person)
+    |> subject("You're on Changelog News!")
+    |> assign(:person, person)
+    |> assign(:item, item)
+    |> render(:authored_news_published)
+  end
+
+  def comment_reply(person, reply) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Comment Reply")
+    |> to(person)
+    |> subject("Someone replied to your comment on Changelog News!")
+    |> assign(:person, person)
+    |> assign(:reply, reply)
+    |> render(:comment_reply)
+  end
+
+  def community_welcome(person) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Community Welcome")
+    |> to(person)
+    |> subject("Welcome! Confirm your address")
+    |> assign(:person, person)
+    |> render(:community_welcome)
+  end
+
+  def episode_published(subscription, episode) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug}")
+    |> to(subscription.person)
+    |> subject("New episode of #{episode.podcast.name}!")
+    |> assign(:subscription, subscription)
+    |> assign(:person, subscription.person)
+    |> assign(:episode, episode)
+    |> render(:episode_published)
+  end
+
   def guest_thanks(person, episode) do
     personal_email()
     |> put_header("X-CMail-GroupName", "Guest Thanks")
@@ -30,15 +70,6 @@ defmodule ChangelogWeb.Email do
     |> render(:sign_in)
   end
 
-  def community_welcome(person) do
-    styled_email()
-    |> put_header("X-CMail-GroupName", "Community Welcome")
-    |> to(person)
-    |> subject("Welcome! Confirm your address")
-    |> assign(:person, person)
-    |> render(:community_welcome)
-  end
-
   def subscriber_welcome(person, subscribed_to) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Subscriber Welcome")
@@ -49,16 +80,6 @@ defmodule ChangelogWeb.Email do
     |> render(:subscriber_welcome)
   end
 
-  def authored_news_published(person, item) do
-    styled_email()
-    |> put_header("X-CMail-GroupName", "Authored News")
-    |> to(person)
-    |> subject("You're on Changelog News!")
-    |> assign(:person, person)
-    |> assign(:item, item)
-    |> render(:authored_news_published)
-  end
-
   def submitted_news_published(person, item) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Submitted News")
@@ -67,16 +88,6 @@ defmodule ChangelogWeb.Email do
     |> assign(:person, person)
     |> assign(:item, item)
     |> render(:submitted_news_published)
-  end
-
-  def comment_reply(person, reply) do
-    styled_email()
-    |> put_header("X-CMail-GroupName", "Comment Reply")
-    |> to(person)
-    |> subject("Someone replied to your comment on Changelog News!")
-    |> assign(:person, person)
-    |> assign(:reply, reply)
-    |> render(:comment_reply)
   end
 
   defp email_from_logbot do
