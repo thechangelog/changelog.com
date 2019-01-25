@@ -440,6 +440,14 @@ test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
 .PHONY: t
 t: test
 
+define UPDATE_NETDATA
+docker pull netdata/netdata && \
+docker service update $(DOCKER_STACK)_netdata
+endef
+.PHONY: update_netdata
+update_netdata:
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(UPDATE_NETDATA)"
+
 define DIRENV
 
 We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables.
