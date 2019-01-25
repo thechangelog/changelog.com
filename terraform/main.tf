@@ -222,7 +222,7 @@ resource "linode_nodebalancer_config" "http_2019" {
   check_timeout = 10
   check_attempts = 3
   check_path = "/"
-  check_passive = true
+  check_passive = false
   stickiness = "table"
   algorithm = "leastconn"
 }
@@ -244,7 +244,7 @@ resource "linode_nodebalancer_config" "https_2019" {
   check_timeout = 10
   check_attempts = 3
   check_path = "/"
-  check_passive = true
+  check_passive = false
   stickiness = "table"
   algorithm = "leastconn"
   cipher_suite = "recommended"
