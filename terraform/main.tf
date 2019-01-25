@@ -287,7 +287,7 @@ resource "dnsimple_record" "netdata_changelog_com" {
 
 resource "dnsimple_record" "apex-changelog_com" {
   domain = "changelog.com"
-  name = "@"
+  name = ""
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
   ttl = 60
@@ -303,7 +303,7 @@ resource "dnsimple_record" "www_changelog_com" {
 
 resource "dnsimple_record" "apex-changelog_fm" {
   domain = "changelog.fm"
-  name = "@"
+  name = ""
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
   ttl = 60
@@ -311,7 +311,7 @@ resource "dnsimple_record" "apex-changelog_fm" {
 
 resource "dnsimple_record" "apex-gotime_fm" {
   domain = "gotime.fm"
-  name = "@"
+  name = ""
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
   ttl = 60
@@ -319,7 +319,7 @@ resource "dnsimple_record" "apex-gotime_fm" {
 
 resource "dnsimple_record" "apex-jsparty_fm" {
   domain = "jsparty.fm"
-  name = "@"
+  name = ""
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
   ttl = 60
@@ -327,7 +327,7 @@ resource "dnsimple_record" "apex-jsparty_fm" {
 
 resource "dnsimple_record" "apex-rfc_fm" {
   domain = "rfc.fm"
-  name = "@"
+  name = ""
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
   ttl = 60
