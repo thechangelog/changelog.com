@@ -86,7 +86,7 @@ defmodule Changelog.Podcast do
   def get_by_slug!(slug) do
     public()
     |> Repo.get_by!(slug: slug)
-    |> preload_hosts
+    |> preload_hosts()
   end
 
   def get_episodes(%{slug: "master"}), do: from(e in Episode)

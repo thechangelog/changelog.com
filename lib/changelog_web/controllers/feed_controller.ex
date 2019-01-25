@@ -33,16 +33,18 @@ defmodule ChangelogWeb.FeedController do
       Podcast.get_episodes(podcast)
       |> Episode.published()
       |> Episode.newest_first()
+      |> Episode.exclude_transcript()
       |> Episode.preload_all()
       |> Repo.all()
-      |> Enum.map(&Episode.load_news_item/1)
 
     log_subscribers(conn, podcast)
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("podcast.xml", podcast: podcast, episodes: episodes)
+    |> assign(:podcast, podcast)
+    |> assign(:episodes, episodes)
+    |> render("podcast.xml")
     |> cache_public_response(random_duration())
   end
 

@@ -63,6 +63,11 @@ defmodule Changelog.Episode do
   def with_slug(query \\ __MODULE__, slug),          do: from(q in query, where: q.slug == ^slug)
   def with_podcast_slug(query \\ __MODULE__, slug),  do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
+  def exclude_transcript(query \\ __MODULE__) do
+    fields = __MODULE__.__schema__(:fields) |> Enum.reject(&(&1 == :transcript))
+    from(q in query, select: ^fields)
+  end
+
   def is_public(episode, as_of \\ Timex.now) do
     is_published(episode) && Timex.before?(episode.published_at, as_of)
   end
@@ -120,11 +125,11 @@ defmodule Changelog.Episode do
 
   def preload_all(episode) do
     episode
-    |> preload_podcast
-    |> preload_topics
-    |> preload_guests
-    |> preload_hosts
-    |> preload_sponsors
+    |> preload_podcast()
+    |> preload_topics()
+    |> preload_guests()
+    |> preload_hosts()
+    |> preload_sponsors()
   end
 
   def preload_topics(query = %Ecto.Query{}) do

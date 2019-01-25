@@ -20,4 +20,3 @@
 <% end %>
 <p>Notes and Links</p>
 <%= md_to_html(@episode.notes) %>
-<%= discussion_link(@episode) %>]]></description>
