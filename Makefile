@@ -65,13 +65,17 @@ $(LPASS):
 $(TERRAFORM):
 	@brew install terraform
 
+OPENSSL := /usr/local/opt/openssl/bin/openssl
+$(OPENSSL):
+	@brew install openssl
+
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
 TF := cd terraform && $(TERRAFORM)
-TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8038492725192048930)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7748004306557989540)"
+TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8038492725192048930)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7748004306557989540 && cat terraform/dhparams.pem)"
 
 # Enable Terraform debugging if make runs in debug mode
 ifneq (,$(findstring d,$(MFLAGS)))
@@ -280,9 +284,13 @@ env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffe
 es: env-secrets
 
 .PHONY: iaas
-iaas: linode-token dnsimple-creds init validate apply ## i   | Provision IaaS infrastructure
+iaas: linode-token dnsimple-creds terraform/dhparams.pem init validate apply ## i   | Provision IaaS infrastructure
 .PHONY: i
 i: iaas
+
+# https://www.linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide/#diffie-hellman-parameters
+terraform/dhparams.pem: $(OPENSSL)
+	@$(OPENSSL) dhparam -out terraform/dhparams.pem 2048
 
 .PHONY: init
 init: $(TERRAFORM)
