@@ -115,6 +115,7 @@ defmodule Changelog.NewsItem do
     Episode.published()
     |> Episode.with_podcast_slug(p)
     |> Episode.with_slug(e)
+    |> Episode.exclude_transcript()
     |> Episode.preload_podcast()
     |> Episode.preload_guests()
     |> Repo.one()

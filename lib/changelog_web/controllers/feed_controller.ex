@@ -89,8 +89,9 @@ defmodule ChangelogWeb.FeedController do
     episodes =
       Episode.published()
       |> Episode.newest_first()
-      |> Repo.all()
+      |> Episode.exclude_transcript()
       |> Episode.preload_podcast()
+      |> Repo.all()
 
     podcasts =
       Podcast.public()
