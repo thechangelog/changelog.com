@@ -67,7 +67,6 @@ defmodule ChangelogWeb.PersonControllerTest do
   describe "subscribing in general" do
     test "getting the form", %{conn: conn} do
       conn = get(conn, person_path(conn, :subscribe))
-
       assert conn.status == 200
       assert conn.resp_body =~ "form"
     end
@@ -81,6 +80,12 @@ defmodule ChangelogWeb.PersonControllerTest do
   end
 
   describe "subscribing to newsletters" do
+    test "getting the form", %{conn: conn} do
+      conn = get(conn, person_path(conn, :subscribe, to: "nightly"))
+      assert conn.status == 200
+      assert conn.resp_body =~ "form"
+    end
+
     test "with required data creates person, subscribes, sends email, redirects", %{conn: conn} do
       with_mock(Craisin.Subscriber, [subscribe: fn(_, _) -> nil end]) do
         count_before = count(Person)
@@ -114,6 +119,13 @@ defmodule ChangelogWeb.PersonControllerTest do
   end
 
   describe "subscribing to podcasts" do
+    test "getting the form", %{conn: conn} do
+      podcast = insert(:podcast)
+      conn = get(conn, person_path(conn, :subscribe, to: podcast.slug))
+      assert conn.status == 200
+      assert conn.resp_body =~ "form"
+    end
+
     test "with required data creates person, subscribes, sends email, redirects", %{conn: conn} do
       podcast = insert(:podcast)
       count_before = count(Person)

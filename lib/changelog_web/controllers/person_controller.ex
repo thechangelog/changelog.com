@@ -6,10 +6,23 @@ defmodule ChangelogWeb.PersonController do
 
   plug RequireGuest, "before joining" when action in [:join]
 
+  def subscribe(conn = %{method: "GET"}, %{"to" => to}) when to in ["weekly", "nightly"] do
+    newsletter = Newsletters.get_by_slug(to)
+
+    conn
+    |> assign(:newsletter, newsletter)
+    |> render(:subscribe_newsletter)
+  end
+  def subscribe(conn = %{method: "GET"}, %{"to" => to}) when is_binary(to) do
+    podcast = Podcast.get_by_slug!(to)
+
+    conn
+    |> assign(:podcast, podcast)
+    |> render(:subscribe_podcast)
+  end
   def subscribe(conn = %{method: "GET"}, _params) do
     render(conn, :subscribe)
   end
-
   def subscribe(conn = %{method: "POST"}, %{"gotcha" => robo}) when byte_size(robo) > 0 do
     conn
     |> put_flash(:error, "Something smells fishy. 🤖")

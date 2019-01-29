@@ -1,0 +1,12 @@
+<section class="signup">
+  <div class="signup-content">
+    <div class="signup-icons">
+      <div class="signup-icons-item signup-icons-item--news"></div>
+      <div class="signup-icons-item signup-icons-item--podcasts"></div>
+    </div>
+    <h1 class="signup-heading">You're subscribing to <%= @newsletter.name %></h1>
+    <p class="signup-text">Cody take it from here.</p>
+
+    <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
+  </div>
+</section>
