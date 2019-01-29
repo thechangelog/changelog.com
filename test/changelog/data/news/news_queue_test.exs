@@ -122,7 +122,10 @@ defmodule Changelog.NewsQueueTest do
       insert(:news_queue, item: i1, position: 1.0)
       insert(:news_queue, item: i2, position: 2.0)
 
-      with_mock(Buffer, [queue: fn(_) -> true end]) do
+      with_mocks([
+        {Buffer, [], [queue: fn(_) -> true end]},
+        {Algolia, [], [save_object: fn(_, _, _) -> true end]}
+      ]) do
         NewsQueue.publish_next()
 
         published = Repo.all(NewsItem.published)
@@ -152,7 +155,10 @@ defmodule Changelog.NewsQueueTest do
       insert(:news_queue, item: i1, position: 1.0)
       insert(:news_queue, item: i2, position: 2.0)
 
-      with_mock(Buffer, [queue: fn(_) -> true end]) do
+      with_mocks([
+        {Buffer, [], [queue: fn(_) -> true end]},
+        {Algolia, [], [save_object: fn(_, _, _) -> true end]}
+      ]) do
         NewsQueue.publish_scheduled()
 
         published = Repo.all(NewsItem.published)
@@ -174,12 +180,14 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn(_) -> true end]},
-        {Notifier, [], [notify: fn(_) -> true end]}
+        {Notifier, [], [notify: fn(_) -> true end]},
+        {Algolia, [], [save_object: fn(_, _, _) -> true end]}
       ]) do
         NewsQueue.publish(item)
         assert Repo.count(NewsItem.published) == 1
         assert called(Buffer.queue(:_))
         assert called(Notifier.notify(:_))
+        assert called(Algolia.save_object(:_, :_, :_))
       end
     end
 
@@ -194,9 +202,13 @@ defmodule Changelog.NewsQueueTest do
       insert(:news_queue, item: i2, position: 2.0)
       insert(:news_queue, item: i3, position: 3.0)
 
-      with_mock(Buffer, [queue: fn(_) -> true end]) do
+      with_mocks([
+        {Buffer, [], [queue: fn(_) -> true end]},
+        {Algolia, [], [save_object: fn(_, _, _) -> true end]}
+      ]) do
         NewsQueue.publish(i2)
         assert called(Buffer.queue(:_))
+        assert called(Algolia.save_object(:_, :_, :_))
         published = Repo.all(NewsItem.published)
         assert Enum.map(published, &(&1.id)) == [i2.id]
         assert Repo.count(NewsQueue) == 2

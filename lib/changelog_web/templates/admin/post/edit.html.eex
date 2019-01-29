@@ -7,10 +7,9 @@
       to: post_path(@conn, :show, @post.slug),
       class: "view" %>
   <% else %>
-    <%= link "(Preview)",
-      to: post_path(@conn, :preview, @post.slug),
-      class: "view",
-      rel: "external" %>
+    <%= external_link "(Preview)",
+      to: post_path(@conn, :preview, @post),
+      class: "view" %>
   <% end %>
   </h1>
 

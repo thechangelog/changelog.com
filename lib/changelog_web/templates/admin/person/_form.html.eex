@@ -1,24 +1,16 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="two fields">
-    <div class="fourteen wide field required <%= error_class(f, :name) %>">
+    <div class="field required <%= error_class(f, :name) %>">
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "Grace Hopper") %>
       <%= error_message(f, :name) %>
     </div>
 
-    <div class="two wide field">
-      <%= label(f, :admin) %>
-      <div class="ui fitted toggle checkbox">
-        <%= checkbox(f, :admin, class: "hidden") %>
-        <label></label>
-      </div>
+    <div class="field required <%= error_class(f, :email) %>">
+      <%= label(f, :email, "Email") %>
+      <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
+      <%= error_message(f, :email) %>
     </div>
-  </div>
-
-  <div class="field required <%= error_class(f, :email) %>">
-    <%= label(f, :email, "Email") %>
-    <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
-    <%= error_message(f, :email) %>
   </div>
 
   <div class="three fields">
@@ -89,6 +81,33 @@
     <%= error_message(f, :bio) %>
   </div>
 
+  <div class="ui horizontal divider">Roles</div>
+
+  <div class="fields">
+    <div class="field">
+      <%= label(f, :admin) %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :admin, class: "hidden") %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label(f, :host) %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :host, class: "hidden") %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label(f, :editor) %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :editor, class: "hidden") %>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui horizontal divider">Settings</div>
+
 <%= inputs_for f, :settings, fn(i) -> %>
   <div class="inline field">
     <div class="ui toggle checkbox">
@@ -103,28 +122,37 @@
       <%= label(f, :email_on_submitted_news, "Email on submitted news") %>
     </div>
   </div>
+
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <%= checkbox(i, :email_on_comment_replies, class: "hidden") %>
+      <%= label(f, :email_on_comment_replies, "Email on comment replies") %>
+    </div>
+  </div>
 <% end %>
 
 <%= if !is_persisted(f.data) do %>
-  <div class="ui divider"></div>
-  <div class="inline fields">
-    <label>Send Welcome Email</label>
+  <div class="ui horizontal divider">Welcome Email</div>
+
+  <div class="fields">
     <div class="field">
+      <label>Nope <%= help_icon("Useful for News authors because they'll get an email when their news gets published instead.") %></label>
       <div class="ui toggle radio checkbox">
         <input type="radio" name="welcome" value="" checked>
-        <label>Nope <%= help_icon("Useful for News authors because they'll get an email when their news gets published instead.") %></label>
       </div>
     </div>
+
     <div class="field">
+      <label>Generic <%= help_icon("This is the email all new community members get when they sign up. Use this if you're creating an account on someone's behalf.") %></label>
       <div class="ui toggle radio checkbox">
         <input type="radio" name="welcome" value="generic">
-        <label>Generic <%= help_icon("This is the email all new community members get when they sign up. Use this if you're creating an account on someone's behalf.") %></label>
       </div>
     </div>
+
     <div class="field">
+      <label>Guest <%= help_icon("This welcome email is written with guests in mind. Use this if you're creating a person to be a show guest.") %></label>
       <div class="ui toggle radio checkbox">
         <input type="radio" name="welcome" value="guest">
-        <label>Guest <%= help_icon("This welcome email is written with guests in mind. Use this if you're creating a person to be a show guest.") %></label>
       </div>
     </div>
   </div>

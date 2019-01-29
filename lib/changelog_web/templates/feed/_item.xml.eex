@@ -1,2 +1,6 @@
 <%= render("_item_title.xml", assigns) %>
-<description><![CDATA[<%= md_to_html(@item.story) %><%= video_embed(@item) %><%= image_link(@item) %>]]></description>
+<description><![CDATA[
+<%= md_to_html(@item.story) %>
+<%= video_embed(@item) %>
+<%= image_link(@item) %>
+<%= discussion_link(@item) %>]]></description>

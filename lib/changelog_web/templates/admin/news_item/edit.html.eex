@@ -5,7 +5,7 @@
   <%= if NewsItem.is_published(@item) do %>
     <%= link "(View)", to: news_item_path(@conn, :show, NewsItemView.slug(@item)), class: "view" %>
   <% else %>
-    <%= link "(Preview)", to: news_item_path(@conn, :preview, @item), class: "view", rel: "external" %>
+    <%= external_link "(Preview)", to: news_item_path(@conn, :preview, @item), class: "view" %>
   <% end %>
   </h1>
 

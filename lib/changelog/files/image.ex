@@ -1,5 +1,5 @@
 defmodule Changelog.Files.Image do
-  use Changelog.File, [:jpg, :jpeg, :png, :gif]
+  use Changelog.File, [:jpg, :jpeg, :png, :gif, :svg]
 
   @versions [:original, :large, :medium, :small]
 
@@ -8,10 +8,10 @@ defmodule Changelog.Files.Image do
 
   def transform(:original, _), do: :noaction
   def transform(version, {file, _scope}) do
-    if file_type(file) == :gif do
-      :noaction
-    else
-      {:convert, "-strip -resize #{dimensions(version)}"}
+    case file_type(file) do
+      :gif -> :noaction
+      :svg -> :noaction
+      _ -> {:convert, "-strip -resize #{dimensions(version)}"}
     end
   end
 

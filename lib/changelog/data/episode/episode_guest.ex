@@ -5,6 +5,7 @@ defmodule Changelog.EpisodeGuest do
 
   schema "episode_guests" do
     field :position, :integer
+    field :thanks, :boolean, default: true
     field :delete, :boolean, virtual: true
 
     belongs_to :person, Person
@@ -15,7 +16,7 @@ defmodule Changelog.EpisodeGuest do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(position episode_id person_id delete))
+    |> cast(params, ~w(position episode_id person_id thanks delete)a)
     |> validate_required([:position])
     |> mark_for_deletion()
   end

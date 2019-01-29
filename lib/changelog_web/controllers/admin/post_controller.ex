@@ -1,11 +1,13 @@
 defmodule ChangelogWeb.Admin.PostController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Post
+  alias Changelog.{Cache, Post}
 
+  plug :assign_post when action in [:edit, :update, :delete]
+  plug Authorize, [Policies.Post, :post]
   plug :scrub_params, "post" when action in [:create, :update]
 
-  def index(conn, params) do
+  def index(conn = %{assigns: %{current_user: me}}, params) do
     page =
       Post.published
       |> Post.newest_first
@@ -20,6 +22,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
     drafts =
       Post.unpublished
+      |> Post.authored_by(me)
       |> Post.newest_first(:inserted_at)
       |> preload(:author)
       |> Repo.all
@@ -47,35 +50,41 @@ defmodule ChangelogWeb.Admin.PostController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    post = Repo.get!(Post, id) |> Post.preload_all
-
+  def edit(conn = %{assigns: %{post: post}}, _params) do
+    post = Post.preload_all(post)
     changeset = Post.admin_changeset(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+    render(conn, :edit, post: post, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "post" => post_params}) do
-    post = Repo.get!(Post, id) |> Post.preload_all
+  def update(conn = %{assigns: %{post: post}}, params = %{"post" => post_params}) do
+    post = Post.preload_all(post)
     changeset = Post.admin_changeset(post, post_params)
 
     case Repo.update(changeset) do
-      {:ok, _post} ->
+      {:ok, post} ->
+        Cache.delete(post)
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_post_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", post: post, changeset: changeset)
+        |> render(:edit, post: post, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    post = Repo.get!(Post, id)
+  def delete(conn = %{assigns: %{post: post}}, _params) do
     Repo.delete!(post)
+    Cache.delete(post)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_post_path(conn, :index))
+  end
+
+  defp assign_post(conn = %{params: %{"id" => id}}, _) do
+    post = Repo.get!(Post, id) |> Post.preload_all
+    assign(conn, :post, post)
   end
 end

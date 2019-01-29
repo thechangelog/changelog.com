@@ -2,7 +2,7 @@ defmodule Changelog.Github.Puller do
 
   require Logger
 
-  alias Changelog.{Episode, Github, Podcast, Repo}
+  alias Changelog.{Cache, Episode, Github, Podcast, Repo}
   alias ChangelogWeb.PodcastView
 
   def update(type, items) when is_list(items) do
@@ -10,6 +10,7 @@ defmodule Changelog.Github.Puller do
       item
       |> get_episode
       |> update_episode(type)
+      |> Cache.delete
     end
   end
   def update(type, item), do: update(type, [item])

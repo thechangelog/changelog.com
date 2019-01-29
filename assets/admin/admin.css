@@ -46,25 +46,25 @@ input[type=file] {
   height: 38px;
 }
 
-@-webkit-keyframes success {
+@keyframes success {
   0% { background-color: #E5F9E7; }
   100% { background-color: white; }
 }
 
-@-webkit-keyframes failure {
+@keyframes failure {
   0% { background-color: #FFE8E6; }
   100% { background-color: white; }
 }
 .ui.menu.success {
-  -webkit-animation-name: success;
-  -webkit-animation-duration: 3000ms;
-  -webkit-animation-iteration-count: 1;
+  animation-name: success;
+  animation-duration: 3000ms;
+  animation-iteration-count: 1;
 }
 
 .ui.menu.failure {
-  -webkit-animation-name: failure;
-  -webkit-animation-duration: 3000ms;
-  -webkit-animation-iteration-count: 1;
+  animation-name: failure;
+  animation-duration: 3000ms;
+  animation-iteration-count: 1;
 }
 
 .ui.table tr.disabled td, .ui.table tr td.disabled, .ui.table tr.disabled:hover, .ui.table tr:hover td.disabled {
@@ -75,6 +75,10 @@ input[type=file] {
   text-align: right;
 }
 
-.hidden.field {
+.hidden.field, tr.hidden {
   display: none;
+}
+
+.chart {
+  max-height: 400px;
 }

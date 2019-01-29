@@ -78,8 +78,8 @@ defmodule Changelog.EpisodeTest do
       insert(:episode_stat, date: ~D[2016-01-03], episode: episode, downloads: 53.4)
       insert(:episode_stat, downloads: 100.0)
       episode = Episode.update_stat_counts(episode)
-      assert episode.download_count == 98.5+100.75+84+53.4
-      assert episode.reach_count == 4+45
+      assert episode.download_count == 98.5 + 100.75 + 84 + 53.4
+      assert episode.reach_count == 4 + 45
     end
   end
 
@@ -117,6 +117,20 @@ defmodule Changelog.EpisodeTest do
         |> Enum.map(&(&1.title))
 
       assert episode_titles == ["Phoenix"]
+    end
+  end
+
+  describe "is_public" do
+    test "is false when episode isn't published" do
+      refute Episode.is_public(build(:episode))
+    end
+
+    test "is false when episode is published but in the future" do
+      refute Episode.is_public(build(:scheduled_episode))
+    end
+
+    test "is true when episode is published in the past" do
+      assert Episode.is_public(build(:published_episode))
     end
   end
 

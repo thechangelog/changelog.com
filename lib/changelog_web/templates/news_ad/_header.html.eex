@@ -1,10 +1,10 @@
 <header class="news_item-header">
   <p class="news_item-source">
     <%= link to: @ad.url, title: @sponsor.name, rel: "external", data: [news: true], class: "news_item-source-image" do %>
-      <img src="<%= SponsorView.avatar_url(@sponsor, :small) %>" alt="<%= @sponsor.name %> Icon" />
+      <%= lazy_image(SponsorView.avatar_url(@sponsor, :small), "#{@sponsor.name} Icon") %>
     <% end %>
 
-    <%= link("#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name, rel: "external", data: [news: true]) %>
+    <%= external_link("#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name, data: [news: true]) %>
   </p>
   <h2 class="news_item-title"><%= link(@ad.headline, to: @ad.url, rel: "external", data: [news: true]) %></h2>
 </header>

@@ -1,0 +1,6 @@
+<span class="news_item-toolbar-meta-item">
+  logged by <strong><%= external_link(PersonView.handle(@item.logger), to: twitter_url(@item.logger)) %></strong>
+<%= if @item.submitter do %>
+  via <strong><%= external_link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter)) %></strong>
+<% end %>
+</span>

@@ -1,0 +1,3 @@
+var content = "<%= for {type, message} <- get_flash(@conn), do: javascript_escape(render(LayoutView, "_flash.html", type: type, message: message)) %>";
+
+u("header.header").append(content);

@@ -1,25 +1,29 @@
+<%= render(SharedView, "_drift_js.html") %>
+
 <article class="sponsor_story">
   <header class="sponsor_story-header">
-    <div class="sponsor_story-header-breadcrumbs">Partner Story</div>
+    <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: page_path(@conn, :sponsor) %> / Partner Story</div>
 
-    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.logo}") %>' alt="<%= @story.sponsor %>" width="320">
+    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
 
     <blockquote class="sponsor_story-quote">
       <div class="sponsor_story-quote-body">
         <p>"<%= @story.quote.content %>"</p>
       </div>
-      <footer class="marketing-quote-footer">
-          <img src='<%= static_url(@conn, "/images/content/sponsors/#{@story.quote.image}") %>' alt="" width="50" height="50">
-          <strong><%= @story.quote.name %></strong>
-          <span class="quote-title"><%= @story.quote.title %></span>
+      <%= if @story.quote.name != "" do %>
+      <footer class="marketing_quote-footer">
+        <img src='<%= static_url(@conn, "/images/content/sponsors/#{@story.quote.image}") %>' alt="" width="50" height="50">
+        <strong><%= @story.quote.name %></strong>
+        <span class="quote-title"><%= @story.quote.title %></span>
       </footer>
+      <% end %>
     </blockquote>
   </header>
 
   <hr>
 
   <div class="sponsor_story-examples">
-    <h3><%= @story.sponsor %> &ndash; Ad Campaign Examples</h3>
+    <h3>Sponsorship Examples</h3>
     <div class="grid_table">
       <div class="grid_table-header">
         <div class="grid_table-header-column"><p>Campaign type</p></div>
@@ -37,17 +41,19 @@
     <% end %>
   </div>
 
-  <hr>
+  <%= if @story.content_md != "" do %>
+    <hr>
 
-  <div class="sponsor_story-content richtext">
-    <%= @story.content_md |> md_to_html |> raw %>
-  </div>
+    <div class="sponsor_story-content richtext">
+      <%= @story.content_md |> md_to_html |> raw %>
+    </div>
+  <% end %>
 
   <hr>
 
   <div class="sponsor_story-sponsors">
     <h2>Loved by brands, trusted by developers</h2>
-    <div class="marketing-section-logos">
+    <div class="logo_grid">
       <%= render("_sponsors.html", assigns) %>
     </div>
 
@@ -65,7 +71,9 @@
     <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
     <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
 
-    <%= link "Get in Touch", to: "mailto:adam@changelog.com", title: "", class: "marketing-button button_large" %>
+    <div class="marketing-button_group" style="--max-width-group: 200px;">
+      <%= link "Get in Touch", to: "mailto:adam@changelog.com", title: "", class: "button_large" %>
+    </div>
   </header>
 
   <div class="marketing-map">

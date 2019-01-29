@@ -1,30 +1,30 @@
 <div id="player" data-turbolinks-permanent>
-  <figure class="podcast-player js-player">
-    <nav class="podcast-player_nav">
-      <button class="podcast-player_nav_button podcast-player_nav_button--hide js-player-hide" title="Hide Player"></button>
-      <button class="podcast-player_nav_button podcast-player_nav_button--close js-player-close" title="Close Player"></button>
+  <figure class="podcast_player js-player">
+    <nav class="podcast_player-nav">
+      <button class="podcast_player-nav-button podcast_player-nav-button--hide js-player-hide" title="Hide Player"></button>
+      <button class="podcast_player-nav-button podcast_player-nav-button--close js-player-close" title="Close Player"></button>
     </nav>
-    <img class="podcast-player_art js-player-art">
-    <div class="podcast-player_details">
-      <div class="podcast-player_details_title">
+    <img class="podcast_player-art js-player-art">
+    <div class="podcast_player-details">
+      <div class="podcast_player-details-title">
         <span class="js-player-now-playing"></span>
         <figcaption class="js-player-title"></figcaption>
       </div>
     </div>
-    <div class="podcast-player_buttons">
-      <button class="podcast-player-button podcast-player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
-        <span class="js-player-prev-number"></span><img src="<%= static_url(@conn, "/images/icons/podcast-arrow.svg") %>" alt="Previous episode"/>
+    <div class="podcast_player-buttons">
+      <button class="podcast_player-button podcast_player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
+        <span class="js-player-prev-number"></span><%= lazy_image(static_url(@conn, "/images/icons/podcast-arrow.svg"), "Previous Episode") %>
       </button>
-      <button class="podcast-player-button podcast-player-button--back15 js-player-back-button" title="Seek back 15 seconds"></button>
+      <button class="podcast_player-button podcast_player-button--back15 js-player-back-button" title="Seek back 15 seconds"></button>
 
-      <button class="podcast-player-button podcast-player-button--play js-player-play-button"></button>
+      <button class="podcast_player-button podcast_player-button--play js-player-play-button"></button>
 
-      <button class="podcast-player-button podcast-player-button--forward15 js-player-forward-button" title="Seek forward 15 seconds"></button>
-      <button class="podcast-player-button podcast-player-button--next_episode js-player-next-button" title="Listen to the next episode">
-        <img class="flip-horizontal" src="<%= static_url(@conn, "/images/icons/podcast-arrow.svg") %>" alt="Next episode"/><span class="js-player-next-number"></span>
+      <button class="podcast_player-button podcast_player-button--forward15 js-player-forward-button" title="Seek forward 15 seconds"></button>
+      <button class="podcast_player-button podcast_player-button--next_episode js-player-next-button" title="Listen to the next episode">
+        <%= lazy_image(static_url(@conn, "/images/icons/podcast-arrow.svg"), "Next Episode", class: "flip-horizontal") %><span class="js-player-next-number"></span>
       </button>
     </div>
-    <form class="podcast-player_slider">
+    <form class="podcast_player-slider">
       <div class="range_slider">
         <span class="range_slider-above"><span class="js-player-now-playing"></span></span>
         <div class="range_slider-range_wrap">

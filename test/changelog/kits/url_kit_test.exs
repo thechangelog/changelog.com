@@ -124,4 +124,12 @@ defmodule Changelog.UrlKitTest do
       assert UrlKit.normalize_url(url) == normalized
     end
   end
+
+  describe "sans_scheme" do
+    test "it removes the scheme, but leaves everything else" do
+      url = "https://news.ycombinator.com/item?id=18120667"
+      sans = UrlKit.sans_scheme(url)
+      assert sans == "news.ycombinator.com/item?id=18120667"
+    end
+  end
 end

@@ -1,32 +1,33 @@
 <div class="toolbar_scroll-wrap">
   <div class="toolbar toolbar--dark">
-    <%= if @episode.audio_file do %>
-      <%= link "Play",
-          title: "Play Most Recent Episode",
-          to: audio_url(@episode),
-          data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
-          role: "button",
-          class: "toolbar_item toolbar_item--button playbar playbar_play" %>
-    <% end %>
+  <%= if @episode.audio_file do %>
+    <%= link("Play",
+        title: "Play Episode",
+        to: audio_url(@episode),
+        data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
+        role: "button",
+        class: "toolbar_item toolbar_item--button playbar playbar_play") %>
+  <% end %>
 
-    <%= link "Subscribe",
-        title: "",
+  <%= if @item do %>
+    <%= link("Discuss",
+        title: "Discuss this Episode",
+        to: news_item_path(@conn, :show, NewsItemView.slug(@item)),
+        class: "toolbar_item toolbar_item--button",
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-chat.svg")}')") %>
+  <% end %>
+
+    <%= link("Subscribe",
+        title: "Subscribe to Podcast",
         to: {:javascript, "javascript:void(0);"},
         class: "toolbar_item toolbar_item--button has-tooltip",
-        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
-    <%= render(PodcastView, "_podcast_subscribe.html", conn: @conn, podcast: @episode.podcast) %>
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')") %>
+    <%= render(PodcastView, "_subscribe_tooltip.html", conn: @conn, podcast: @episode.podcast) %>
 
-    <%= link "Sponsor",
-        title: "",
+    <%= link("Sponsor",
+        title: "Sponsor Podcast",
         to: page_path(@conn, :sponsor),
         class: "toolbar_item toolbar_item--button",
-        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-sponsor.svg")}')" %>
-
-    <%= link "Share",
-        title: "Share",
-        to: {:javascript, "javascript:void(0);"},
-        class: "toolbar_item toolbar_item--button",
-        data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
-        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-share.svg")}')" %>
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-sponsor.svg")}')") %>
   </div>
 </div>

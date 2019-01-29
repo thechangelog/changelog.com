@@ -11,4 +11,11 @@ defmodule ChangelogWeb.LiveView do
       "Guest"
     end
   end
+
+  def slack_channel(podcast) do
+    case podcast.slug do
+      "spotlight" -> "applenerds"
+      slug -> slug
+    end
+  end
 end

@@ -6,9 +6,7 @@ defmodule Changelog.File do
 
       def __storage, do: Arc.Storage.Local
 
-      def default_url(_version, _scope) do
-        "/images/defaults/black.png"
-      end
+      def default_url(_version, _scope), do: "/images/defaults/black.png"
 
       def expanded_dir(path) do
         Application.fetch_env!(:arc, :storage_dir) <> path
@@ -25,6 +23,7 @@ defmodule Changelog.File do
           :png  -> "image/png"
           :gif  -> "image/gif"
           :mp3  -> "audio/mpeg"
+          :svg  -> "image/svg+xml"
         end
       end
 
@@ -37,10 +36,7 @@ defmodule Changelog.File do
       end
 
       defp hashed(id), do: Changelog.Hashid.encode(id)
-      defp source(scope) do
-        {_, source} = scope.__meta__.source
-        source
-      end
+      defp source(scope), do: scope.__meta__.source
     end
   end
 end

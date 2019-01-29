@@ -4,7 +4,7 @@
   </h1>
 
 <%= if Enum.any?(@results) do %>
-  <%= render(PersonView, "_table.html", conn: @conn, people: @results) %>
+  <%= render(PersonView, "_table.html", Map.merge(assigns, %{people: @results})) %>
 <% end %>
 </div>
 

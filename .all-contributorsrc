@@ -42,7 +42,7 @@
     {
       "login": "jakestutzman",
       "name": "Jake Stutzman",
-      "avatar_url": "https://pbs.twimg.com/profile_images/562681393130377216/9Vyehvz8.jpeg",
+      "avatar_url": "https://pbs.twimg.com/profile_images/1053277843176677379/7y-9aoX5_400x400.jpg",
       "profile": "http://elevate.co",
       "contributions": [
         "design"
@@ -64,15 +64,6 @@
       "profile": "https://github.com/gerhard",
       "contributions": [
         "infra",
-        "code"
-      ]
-    },
-    {
-      "login": "dennisreimann",
-      "name": "Dennis Reimann",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/886?v=3",
-      "profile": "https://dennisreimann.de",
-      "contributions": [
         "code"
       ]
     },
@@ -132,15 +123,6 @@
       ]
     },
     {
-      "login": "sotojuan",
-      "name": "Juan Soto",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/8217766?v=3",
-      "profile": "https://juansoto.me",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
       "login": "lucidstack",
       "name": "Andrea Rossi",
       "avatar_url": "https://avatars2.githubusercontent.com/u/1248581?v=3",
@@ -193,15 +175,6 @@
       ]
     },
     {
-      "login": "JordyZomer",
-      "name": "Jordy Zomer",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/17198473?v=4",
-      "profile": "https://github.com/JordyZomer",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
       "login": "joebew42",
       "name": "JoeBew42",
       "avatar_url": "https://avatars2.githubusercontent.com/u/1238549?v=4",
@@ -245,6 +218,43 @@
       "profile": "https://nickjanetakis.com",
       "contributions": [
         "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "RyanWillDev",
+      "name": "Ryan Will",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/12587988?v=4",
+      "profile": "https://ryanwilldev.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "dennisreimann",
+      "name": "Dennis Reimann",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/886?v=3",
+      "profile": "https://dennisreimann.de",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sotojuan",
+      "name": "Juan Soto",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8217766?v=3",
+      "profile": "https://juansoto.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "JordyZomer",
+      "name": "Jordy Zomer",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17198473?v=4",
+      "profile": "https://github.com/JordyZomer",
+      "contributions": [
         "code"
       ]
     }

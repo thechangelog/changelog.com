@@ -11,9 +11,9 @@
       <%= select(f, :status, status_options(), class: "ui fluid dropdown") %>
     </div>
 
-    <div class="field required <%= error_class(f, :partner) %>">
-      <%= label(f, :partner) %>
-      <%= select(f, :partner, yes_no_options(), class: "ui fluid dropdown") %>
+    <div class="field required <%= error_class(f, :position) %>">
+      <%= label(f, :position) %>
+      <%= select(f, :position, position_options(), class: "ui fluid dropdown") %>
     </div>
   </div>
 

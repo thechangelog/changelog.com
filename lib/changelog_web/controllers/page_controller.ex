@@ -1,9 +1,10 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Newsletters, Podcast}
+  alias Changelog.{Cache, Episode, Newsletters, NewsSponsorship, Podcast}
   alias ChangelogWeb.TimeView
 
+  plug PublicEtsCache
   plug RequireGuest, "before joining" when action in [:join]
 
   # pages that need special treatment get their own matched function
@@ -37,7 +38,12 @@ defmodule ChangelogWeb.PageController do
       |> Repo.one
       |> Episode.preload_podcast
 
-    render(conn, :guest, active: active, podcast: podcast, episode: episode)
+    conn
+    |> assign(:active, active)
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> render(:guest)
+    |> cache_public_response()
   end
 
   def home(conn, _params) do
@@ -55,8 +61,9 @@ defmodule ChangelogWeb.PageController do
 
   def sponsor(conn, _params) do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
-
-    render(conn, :sponsor, weekly: weekly)
+    examples = Changelog.SponsorStory.examples()
+    ads = NewsSponsorship.get_ads_for_index()
+    render(conn, :sponsor, weekly: weekly, examples: examples, ads: ads)
   end
 
   def sponsor_pricing(conn, _params) do
@@ -79,12 +86,9 @@ defmodule ChangelogWeb.PageController do
   end
 
   defp get_weekly_issues do
-    ConCache.get_or_store(:app_cache, "weekly_archive", fn() ->
-      campaigns =
-        Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
-        |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
-
-      %ConCache.Item{value: campaigns, ttl: :timer.hours(24)}
+    Cache.get_or_store("weekly_archive", :timer.hours(24), fn ->
+      Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
+      |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
     end)
   end
 end

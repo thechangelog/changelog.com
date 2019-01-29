@@ -84,13 +84,15 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
   end
 
   test "requires user auth on all actions", %{conn: conn} do
+    benefit = insert(:benefit)
+
     Enum.each([
       get(conn, admin_benefit_path(conn, :index)),
       get(conn, admin_benefit_path(conn, :new)),
       post(conn, admin_benefit_path(conn, :create), benefit: @valid_attrs),
-      get(conn, admin_benefit_path(conn, :edit, "123")),
-      put(conn, admin_benefit_path(conn, :update, "123"), benefit: @valid_attrs),
-      delete(conn, admin_benefit_path(conn, :delete, "123")),
+      get(conn, admin_benefit_path(conn, :edit, benefit.id)),
+      put(conn, admin_benefit_path(conn, :update, benefit.id), benefit: @valid_attrs),
+      delete(conn, admin_benefit_path(conn, :delete, benefit.id)),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

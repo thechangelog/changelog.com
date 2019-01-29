@@ -1,0 +1,63 @@
+.is-hidden {
+  display: none;
+}
+
+.text {
+  // Align
+  &-left { text-align: left; }
+  &-center { text-align: center; }
+  &-right { text-align: right; }
+
+  // Transform
+  &-lowercase { text-align: lowercase; }
+  &-uppercase { text-align: uppercase; }
+  &-capitalize { text-align: capitalize; }
+}
+
+//
+//
+// Marging
+.margin {
+  $small: $base-spacing;
+  $medium: $base-spacing*1.5;
+  $large: $base-spacing*2;
+
+  @mixin margin($direction, $mobileSize, $desktopSize) {
+    margin-#{$direction}: $mobileSize !important;
+    @include breakpoint(mobile) {
+      margin-#{$direction}: $desktopSize !important;
+    }
+  }
+
+  &-top {
+    margin-top: $small !important;
+    &_large { @include margin(top, $medium, $large); }
+    &_variable {
+      --margin: $small;
+      @include margin(top, $small, var(--margin));
+    }
+  }
+
+  &-bottom {
+    margin-bottom: $small !important;
+    &_large { @include margin(bottom, $medium, $large); }
+    &_variable {
+      --margin: $small;
+      @include margin(bottom, $small, var(--margin));
+    }
+  }
+
+  &-vertical {
+    margin-bottom: $small !important;
+    margin-top: $small !important;
+    &_large {
+      @include margin(bottom, $medium, $large);
+      @include margin(top, $medium, $large);
+    }
+    &_variable {
+      --margin: $small;
+      @include margin(bottom, $small, var(--margin));
+      @include margin(top, $small, var(--margin));
+    }
+  }
+}

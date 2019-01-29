@@ -23,7 +23,7 @@ defmodule Changelog.Arc.Ecto.Schema do
       end
 
       # Cast supports both atom and string keys, ensure we're matching on both.
-      allowed = Enum.map(allowed, fn key ->
+      allowed_param_keys = Enum.map(allowed, fn key ->
         case key do
           key when is_binary(key) -> key
           key when is_atom(key) -> Atom.to_string(key)
@@ -36,7 +36,7 @@ defmodule Changelog.Arc.Ecto.Schema do
         %{} ->
           params
           |> Changelog.Arc.Ecto.Schema.convert_params_to_binary
-          |> Map.take(allowed)
+          |> Map.take(allowed_param_keys)
           |> Enum.reduce([], fn
             # Don't wrap nil casts in the scope object
             {field, nil}, fields -> [{field, nil} | fields]

@@ -1,0 +1,27 @@
+<div class="ui small modal style-guide">
+  <i class="close icon"></i>
+  <div class="header">
+    Style Guide
+  </div>
+  <div class="content">
+  <%=
+  """
+  ## Things we do
+
+  - We write headlines in sentence case.
+    - Yes: "Webamp now includes MilkDrop 🤘"
+    - No:  "Webamp Now Includes MilkDrop 🤘"
+  - We use the oxford comma.
+     - Yes: "Lightweight, beautiful, and user-friendly interactive prompts"
+     - No: "Lightweight, beautiful and user-friendly interactive prompts"
+  - We prefer "open source" to "open-source".
+  - We attribute pull quotes with author name and link when appropriate.
+  - We link to external resources (definitions, references, etc) liberally.
+  - We address the reader directly with questions, advice, opinions, etc.
+
+  ## Things we don't
+
+  - We don't flame or call out people or projects. Healthy skepticism and concerns are legit, but we don't use destructive language or tone.
+  """ |> md_to_html() |> raw() %>
+  </div>
+</div>

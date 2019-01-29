@@ -7,6 +7,11 @@
   padding: 15px 20px;
   position: relative;
 
+  .page-news_item-show &  {
+    max-width: 780px;
+    margin: 0 auto 40px;
+  }
+
   &-content {
     flex: 1 500px;
     margin: 10px;

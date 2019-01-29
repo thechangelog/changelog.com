@@ -1,0 +1,35 @@
+<header class="show-header">
+  <div class="show-header-art">
+    <h2 class="visually_hidden"><%= @podcast.name %></h2>
+    <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 220, height: 220) %>
+    <%= if @podcast.status != :published do %>
+      <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
+    <% end %>
+  </div>
+
+  <div class="show-header-description">
+    <%= @podcast.description |> no_widowed_words |> md_to_html |> raw %>
+    <%= @podcast.schedule_note |> md_to_html |> raw %>
+    <%= if Podcast.has_feed(@podcast) do %><% else %>
+    <p>You can only subscribe to this podcast via the <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
+    <% end %>
+  </div>
+
+  <%= if (@podcast.status == :soon) do %>
+    <p class="signup-text"><em>Sign-up to get notified of launch and new episodes.</em></p>
+    <%= render(SharedView, "_subscribe_form.html", assigns) %>
+  <% else %>
+    <%= render("_subscribe_buttons.html", assigns) %>
+  <% end %>
+
+  <div class="show-header-hosts">
+    <div class="avatar_list <%= if length(@podcast.hosts) > 6, do: "avatar_list--large" %>">
+    <%= for person <- @podcast.hosts do %>
+      <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
+        <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 50, height: 50) %>
+        <p><%= person.name %></p>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+</header>

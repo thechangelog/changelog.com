@@ -1,0 +1,43 @@
+<%= render(SharedView, "_drift_js.html") %>
+
+<article class="sponsor_story">
+  <div class="sponsor_story-content richtext">
+    <h1>Podcast sponsorship styles</h1>
+    
+    <h3>Endorsement</h3>
+    <p>This is our most popular ad style and is read by a member of our ad team. We will take care of all the creative writing based on the goals and strategy we set with you. We can focus on different aspects of the service, a big promotion, an upcoming event you're hosting — or work together to come up with ideas on how to direct people to your current marketing goals and funnels. We like to get creative!</p>
+
+    <h3>Insider Story</h3>
+    <p>Talking to someone inside your company really helps to humanize who you are and allows you tell the developer world who you are in your own words. This prodution is created by having our ad team speak with someone inside your company — an engineer, developer, support, design — really anyone who can speak to the product or service, the work they do, and how that might help the listener to learn more and why they should give it a try. The call to record the initial conversation is around 20-40 minutes.</p>
+
+    <h3>Customer Story / Endorsement</h3>
+    <p>Customer stories are powerful and we are experts at getting your customers talking and sharing details that get the listeners attention. This is a chance to have a future customer hear from one of their peers on why they choose your product or service and why it works for them. This is also a great example of social proof.</p>
+    <p>This prodution is created by having our ad team speak with one of your customers or users. The person we speak with should be well spoken and can be anyone that is in charge of decisions or someone who's directly impacted by the product or service. The call to record the initial conversation is around 20-40 minutes.</p>
+
+    <h3>Team Culture / Hiring</h3>
+    <p>We're helping engineering teams to tell their story and attract the best talent. We'll work closely with you to determine what the developer community needs to know about your teams and point them in the right direction to learn more and take the first step.</p>
+
+    <hr>
+  </div>
+  <div class="sponsor_story-examples">
+    <h3>Sponsorship Examples</h3>
+
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Campaign type</p></div>
+        <div class="grid_table-header-column"><p>Campaign name</p></div>
+        <div class="grid_table-header-column"><p>Campaign production</p></div>
+      </div>
+    <%= for example <- Changelog.SponsorStyle.all() do %>
+      <div class="grid_table-row">
+        <div class="grid_table-row-column"><p><%= example.type %></p></div>
+        <div class="grid_table-row-column"><p><%= example.name %></p></div>
+        <div class="grid_table-row-column">
+          <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+    
+  </div>
+</article>

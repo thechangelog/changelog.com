@@ -14,7 +14,15 @@
       <%= if Enum.member?([:published, :scheduled], @status) do %>
         <th>Publish Time</th>
       <% end %>
-        <th></th>
+        <th class="center aligned">
+        <%= if @status == :draft do %>
+          <div class="ui basic buttons">
+            <%= if Policies.NewsItem.new(@current_user), do: icon_link("add", to: admin_news_item_path(@conn, :new), title: "New Item") %>
+            <%= if Policies.AdminsOnly.new(@current_user), do: icon_link("rss", to: admin_news_source_path(@conn, :new), title: "New Source") %>
+            <%= if Policies.AdminsOnly.new(@current_user), do: icon_link("newspaper", to: admin_news_issue_path(@conn, :new), title: "New Issue") %>
+          </div>
+        <% end %>
+        </th>
       </tr>
     </thead>
 
@@ -27,17 +35,17 @@
       <tr data-id="<%= item.id %>">
         <td class="center aligned">
         <%= if is_loaded(item.submitter) do %>
-          <%= link to: admin_person_path(@conn, :edit, item.submitter), title: "Submitter: #{item.submitter.name}", data: [popup: true] do %>
+          <%= link to: admin_person_path(@conn, :show, item.submitter), title: "Submitter: #{item.submitter.name}", data: [popup: true] do %>
             <img class="ui avatar image" src="<%= PersonView.avatar_url(item.submitter) %>">
           <% end %>
         <% end %>
         <%= if is_loaded(item.logger) do %>
-          <%= link to: admin_person_path(@conn, :edit, item.logger), title: "Logger: #{item.logger.name}", data: [popup: true] do %>
+          <%= link to: admin_person_path(@conn, :show, item.logger), title: "Logger: #{item.logger.name}", data: [popup: true] do %>
             <img class="ui avatar image" src="<%= PersonView.avatar_url(item.logger) %>">
           <% end %>
         <% end %>
         <%= if is_loaded(item.author) && @status != :submitted do %>
-          <%= link to: admin_person_path(@conn, :edit, item.author), title: "Author: #{item.author.name}", data: [popup: true] do %>
+          <%= link to: admin_person_path(@conn, :show, item.author), title: "Author: #{item.author.name}", data: [popup: true] do %>
             <img class="ui avatar image" src="<%= PersonView.avatar_url(item.author) %>">
           <% end %>
         <% end %>
@@ -45,7 +53,7 @@
         <td><%= item.type %></td>
         <td>
           <%= if item.image do %><i class="image icon"></i><% end %>
-          <%= link truncate(item.headline, 50), to: item.url %>
+          <%= link(truncate(item.headline, 50), to: item.url) %>
         </td>
         <td>
         <%= for topic <- item.topics do %>
@@ -64,14 +72,14 @@
         <td class="center aligned">
           <div class="ui small basic buttons">
           <%= if @status == :queued do %>
-            <%= icon_link "move", to: admin_news_item_path(@conn, :edit, item) %>
+            <%= icon_link("move", to: admin_news_item_path(@conn, :edit, item)) %>
           <% end %>
-            <%= icon_link "eye", to: show_or_preview_path(@conn, item) %>
-            <%= icon_link "edit", to: admin_news_item_path(@conn, :edit, item) %>
+            <%= icon_link("eye", to: show_or_preview_path(@conn, item)) %>
+            <%= if Policies.NewsItem.edit(@current_user, item), do: icon_link("edit", to: admin_news_item_path(@conn, :edit, item)) %>
           <%= if @status == :submitted do %>
-            <%= icon_link "thumbs down", to: admin_news_item_path(@conn, :decline, item), method: :delete, data: [confirm: "Decline this item?"] %>
+            <%= icon_link("thumbs down", to: admin_news_item_path(@conn, :decline, item), method: :delete, data: [confirm: "Decline this item?"]) %>
           <% else %>
-            <%= icon_link "trash", to: admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"] %>
+            <%= if Policies.NewsItem.delete(@current_user, item), do: icon_link("trash", to: admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
           <% end %>
           </div>
         </td>

@@ -24,8 +24,7 @@
       <tr>
         <th>Weeks</th>
         <th>Ads</th>
-        <th>Start Week</th>
-        <th>End Week</th>
+        <th>Weeks</th>
         <th><i class="mouse pointer icon"></i> / <i class="eye icon"></i></th>
         <th>CTR</th>
       </tr>
@@ -35,8 +34,11 @@
       <tr>
         <td><%= length(@sponsorship.weeks) %></td>
         <td><%= length(@sponsorship.ads) %></td>
-        <td><%= @sponsorship.weeks |> List.first |> TimeView.pretty_date %></td>
-        <td><%= @sponsorship.weeks |> List.last |> TimeView.pretty_date %></td>
+        <td>
+        <%= for week <- @sponsorship.weeks do %>
+          <div class="ui label"><%= TimeView.terse_date(week) %></div>
+        <% end %>
+        </td>
         <td><%= @sponsorship.click_count %> / <%= @sponsorship.impression_count %></td>
         <td><%= ctr(@sponsorship) %>%</td>
       </tr>
@@ -65,7 +67,7 @@
     <%= for ad <- ads do %>
       <tr>
         <td><%= ad.headline %></td>
-        <td><%= link domain_name(ad.url), to: ad.url %></td>
+        <td><%= link(domain_name(ad.url), to: ad.url) %></td>
         <td><%= ad.active %></td>
         <td><%= ad.click_count %> / <%= ad.impression_count %></td>
         <td><%= ctr(ad) %>%</td>

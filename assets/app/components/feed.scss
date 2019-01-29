@@ -1,9 +1,24 @@
 .page_news_item,
 .feed {
   @include wrap;
+  max-width: 880px;
 
   @include breakpoint(mobile, max) {
     padding: 0;
+  }
+}
+
+.feed {
+  $condensedBreakpoint: 1000px;
+  @include breakpoint($condensedBreakpoint) {
+    .news_item {
+      padding-left: 90px;
+      padding-right: 30px;
+
+      &-source-image {
+        left: 20px;
+      }
+    }
   }
 }
 

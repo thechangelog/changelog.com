@@ -6,7 +6,7 @@ defmodule Changelog.Transcripts.Parser do
   def parse_text(string, participants) do
     @speaker_regex
     |> Regex.split(string, include_captures: true, trim: true)
-    |> Enum.chunk(2)
+    |> Enum.chunk_every(2)
     |> Enum.map(fn(tuple) ->
       [speaker_section, content_section] = tuple
 

@@ -28,6 +28,41 @@
       font-size: 1.125em;
       margin: 1em 0;
       max-width: 600px;
+
+      &.show_list-header-master_cta {
+        font-family: $code;
+        font-size: 13px;
+        line-height: 1.625em;
+        color: $green;
+        margin-bottom: 30px;
+        max-width: 80%;
+
+        strong {
+          font-weight: bold;
+          text-decoration: underline;
+        }
+
+        span {
+          background: $green;
+          border-radius: 2px;
+          color: $black;
+          font-weight: bold;
+          display: inline-block;
+          padding: 0 0.5em 1px;
+          text-transform: uppercase;
+        }
+
+        a {
+          background-color: #13231b;
+          display: inline-block;
+          padding: 4px 8px;
+          &:hover {
+            background-color: #162b21;
+            font-weight: bold;
+            // text-decoration: underline;
+          }
+        }
+      }
     }
   }
 
@@ -86,26 +121,36 @@
         color: $medium-grey;
 
         &-heading {
-          align-items: flex-start;
+          align-items: center;
           display: flex;
+          margin-bottom: 5px;
 
-          &-subscribe {
+          h2 {
+            flex: 1 0 auto;
+            font-size: 1em;
+            line-height: 1.375em;
+            margin: 0 1em 0 0;
+
+            a { color: $white; }
+          }
+
+          button {
+            $size: 16px;
             background: $green;
             border-radius: 50%;
-            flex: 0 0 20px;
-            height: 20px;
-            margin: -1px 0 0 8px;
+            flex: 0 0 $size;
+            height: $size;
             position: relative;
             text-indent: -9999px;
             transition: background 0.2s ease-in-out;
-            width: 20px;
+            width: $size;
 
             &:hover { background: darken($green, 10%); }
 
             &:before,
             &:after {
               @include position(absolute, 50% null null 50%);
-              background: $white;
+              background: $black;
               content: "";
               height: 2px;
               margin: -1px 0 0 -5px;
@@ -122,14 +167,6 @@
 
         &-hosts {
           a:hover { text-decoration: underline; }
-        }
-
-        h2 {
-          font-size: 1em;
-          line-height: 1.375em;
-          margin-bottom: 0.5em;
-
-          a { color: $white; }
         }
 
         h3,

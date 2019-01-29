@@ -7,12 +7,12 @@ defmodule Changelog.Transcripts.ParserTest do
 
   test "parsing an empty string" do
     parsed = Parser.parse_text("")
-    assert length(parsed) == 0
+    assert Enum.empty?(parsed)
   end
 
   test "parsing nil" do
     parsed = Parser.parse_text(nil)
-    assert length(parsed) == 0
+    assert Enum.empty?(parsed)
   end
 
   test "parsing The Changelog 200" do

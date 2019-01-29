@@ -44,13 +44,30 @@
 
   <div class="field required <%= error_class(f, :url) %>">
     <%= label(f, :url, "URL") %>
-    <%= text_input(f, :url) %>
+    <%= text_input(f, :url, placeholder: "https://www.youtube.com/watch?v=dQw4w9WgXcQ") %>
     <%= error_message(f, :url) %>
   </div>
 
+<%= if Enum.any?(@similar) do %>
+  <div class="field">
+    <label>Similar Items</label>
+    <div class="ui ordered list">
+    <%= for item <- @similar do %>
+      <div class="item">
+        <%= link item.headline, to: show_or_preview_path(@conn, item) %> (<%= item.status %>)
+      <%= if item.logger, do: "logged by #{item.logger.handle}" %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+<% end %>
+
   <div class="field required <%= error_class(f, :headline) %>">
-    <%= label(f, :headline, "Headline") %>
-    <%= text_input(f, :headline, placeholder: "10 Best Blog Post Titles") %>
+    <label for="headline">
+      Headline
+      <span><a href="javascript:void(0);" class="field-action js-style-guide-modal">(style guide)</a></span>
+    </label>
+    <%= text_input(f, :headline, placeholder: "The 10 best blog post titles") %>
     <%= error_message(f, :headline) %>
   </div>
 
@@ -189,3 +206,5 @@
 <% end %>
   </div>
 <% end %>
+
+<%= render("_style_guide_modal.html", assigns) %>

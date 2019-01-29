@@ -4,7 +4,7 @@
   </h1>
 
 <%= if Enum.any?(@results) do %>
-  <%= render(TopicView, "_table.html", conn: @conn, topics: @results) %>
+  <%= render(TopicView, "_table.html", Map.merge(assigns, %{topics: @results})) %>
 <% end %>
 </div>
 

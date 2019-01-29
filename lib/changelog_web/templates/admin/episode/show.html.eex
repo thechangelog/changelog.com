@@ -6,15 +6,13 @@
 
     <div class="ui basic right floated buttons">
       <%= if @episode.published do %>
-        <%= link "View Public",
+        <%= external_link "View Public",
           to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
-          class: "ui button",
-          rel: "external" %>
+          class: "ui button" %>
       <% else %>
-        <%= link "Preview",
+        <%= external_link "Preview",
           to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
-          class: "ui button",
-          rel: "external" %>
+          class: "ui button" %>
       <% end %>
       <%= if @item do %>
         <%= link("News Item", to: admin_news_item_path(@conn, :edit, @item), class: "ui button") %>
@@ -45,6 +43,33 @@
   </div>
 
 <%= if Enum.any?(@stats) do %>
+  <h2 class="ui header">Stats</h2>
+
+  <div class="ui centered stackable grid">
+    <div class="ui four wide column">
+      <div class="ui horizontal statistics">
+        <div class="statistic">
+          <div class="value"><%= reach_count(@episode) %></div>
+          <div class="label">Reach</div>
+        </div>
+
+        <div class="statistic">
+          <div class="value"><%= download_count(@episode) %></div>
+          <div class="label">Downloads</div>
+        </div>
+
+        <div class="statistic">
+          <div class="value"><%= length(@stats) %></div>
+          <div class="label">Days Published</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui twelve wide column">
+      <div class="chart" data-chart="<%= line_chart_data(@stats) %>"></div>
+    </div>
+  </div>
+
   <h2 class="ui header">Demographics</h2>
 
   <div class="ui centered stackable grid">
@@ -234,26 +259,4 @@
       </div>
     </div>
   </div>
-
-  <h2 class="ui header">Stats</h2>
-
-  <table class="ui celled striped unstackable table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Downloads &ndash; (<%= download_count(@episode) %>)</th>
-        <th>Reach &ndash; (<%= reach_count(@episode) %>)</th>
-      </tr>
-    </thead>
-
-    <tbody>
-    <%= for stat <- @stats do %>
-      <tr>
-        <td><%= stat_date(stat) %></td>
-        <td><%= stat.downloads %></td>
-        <td><%= stat.uniques %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
 <% end %>

@@ -1,0 +1,262 @@
+.podcast_player {
+  @include animate-up("&--is-active");
+  background: rgba($black, 0.95);
+  bottom: 0;
+  color: $white;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+
+  // For when it's active but hidden
+  &--is-hidden {
+    transform: translateY(100%) scale(1.0001);
+  }
+
+  @media (min-width: $tablet) {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  &-nav {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+
+    @media (min-width: $tablet) {
+      transition: all 0.1s ease-in-out 0s;
+      will-change: transform;
+      position: absolute;
+      left: auto;
+      right: 0;
+      bottom: auto;
+      top: 6px;
+
+      .podcast_player--is-hidden & {
+        top: 0;
+        transform: translateY(-100%);
+        transition-delay: 0.3s;
+      }
+    }
+
+    &-button {
+      transition: background 0.1s ease-in-out 0s;
+      background: $black center no-repeat;
+      background-size: 10px;
+      float: left;
+      height: 50px;
+      padding: 0;
+      width: 50%;
+
+      @media (min-width: $tablet) {
+        background-color: transparent;
+        height: 22px;
+        width: 42px;
+
+        .podcast_player--is-hidden & {
+          background-color: rgba($black, 0.9);
+        }
+      }
+
+      &--hide {
+        background-image: url("/images/icons/icon-down.svg");
+        .podcast_player--is-hidden & {
+          background-image: url("/images/icons/icon-up.svg");
+        }
+      }
+
+      &--close {
+        background-image: url("/images/icons/icon-close.svg");
+      }
+    }
+  }
+
+  &-art {
+    display: none;
+    height: 5rem;
+    width: 5rem;
+
+    @media (min-width: 415px) {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    @media (min-width: $tablet) {
+      position: relative;
+    }
+  }
+
+  &-details {
+    background: rgba($black, 0.5);
+    display: flex;
+    flex: 1 1 auto;
+    padding: 1em 0;
+    justify-content: space-between;
+    max-width: 100%;
+    min-height: 5rem;
+
+    @media (min-width: 415px) {
+      padding-left: 5rem;
+    }
+
+    @media (min-width: $tablet) {
+      background: none;
+      flex: 0 0 auto;
+      order: 4;
+      padding-left: 0;
+    }
+
+    &-title {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 1rem;
+      min-width: 0;
+      max-width: 100%;
+
+      @media(min-width: $tablet) {
+        display: none;
+      }
+
+      & > span, & > figcaption {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      & > span {
+        @extend %display-font;
+
+        & > b {
+          color: $green;
+        }
+      }
+
+      & > figcaption {
+        font-weight: 500;
+        font-size: 1.25em;
+      }
+    }
+
+    &-share {
+      flex: 0 1 auto;
+    }
+  }
+
+  &-buttons {
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+
+    @media (min-width: $tablet) {
+      width: auto;
+      padding: 0 1rem;
+      flex: 0 0 auto;
+    }
+  }
+
+  &-slider {
+    padding: 0 1rem 1rem 1rem;
+    flex: 1 0 auto;
+
+    @media (min-width: $tablet) {
+      width: auto;
+      padding: 0 1rem;
+    }
+  }
+}
+
+.podcast_player-button {
+  background: rgba($black, 0.5) center no-repeat;
+  border-radius: 200px;
+  color: $half-white;
+  padding: 0;
+  height: 3.85rem;
+  width: 3.85rem;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  font-family: $display;
+
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  &:hover {
+    filter: brightness(115%);
+    color: $white;
+  }
+
+  &--play {
+    background-image: url("/images/icons/play.svg");
+
+    &.is-paused {
+      background-image: url("/images/icons/play.svg");
+      background-size: 18px;
+    }
+    &.is-playing {
+      background-image: url("/images/icons/pause.svg");
+    }
+    &.is-loading {
+      background-image: url("/images/icons/loading.svg");
+      -webkit-animation: spin 1s ease-in-out infinite;
+      animation: spin 1s ease-in-out infinite;
+
+      &:after {
+        -webkit-animation: spin 1s ease-in-out infinite;
+        animation: spin 1s ease-in-out infinite;
+        content: "";
+        background: url("/images/icons/loading-2.svg") center no-repeat;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+  }
+
+  &--is-hidden {
+    display: none;
+  }
+
+  &--forward15,
+  &--back15 {
+    height: 2.25rem;
+    width: 2.25rem;
+    margin: 0 0.5rem;
+  }
+  &--back15 { background-image: url("/images/icons/prev-15.svg"); }
+  &--forward15 { background-image: url("/images/icons/next-15.svg"); }
+
+  &--next_episode,
+  &--prev_episode {
+    background-color: transparent;
+    justify-content: space-around;
+    line-height: 1.25rem;
+
+    & > img { height: 1.25rem; }
+  }
+
+  .flip-horizontal {
+    transform: scaleX(-1);
+  }
+
+  &--next_episode:not([data-play]),
+  &--prev_episode:not([data-play]) {
+    filter: brightness(50%);
+    cursor: default;
+  }
+}

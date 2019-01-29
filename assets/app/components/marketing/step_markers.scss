@@ -1,0 +1,51 @@
+// Step, timeline-esque, markers for "How sponsorship works" grid
+.step_markers {
+  &_wrap {
+    display: none;
+    margin: $base-spacing*2.5 auto 0;
+    max-width: 1140px;
+
+    @include breakpoint(tablet) {
+      display: block;
+    }
+  }
+
+  $weight: 4px;
+  $color: #F3F3F4;
+  align-items: center;
+  display: flex;
+  height: $weight;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  width: 66.666%;
+
+  // Stem
+  &:before {
+    content: "";
+    background: $color;
+    height: $base-spacing*2;
+    bottom: 0;
+    left: 50%;
+    margin-left: -$weight/2;
+    position: absolute;
+    width: $weight;
+    z-index: 0;
+  }
+
+  &-line {
+    border: $weight/2 solid $color;
+    flex: 1 0 auto;
+  }
+
+  &-circle {
+    $size: 28px;
+    background: $white;
+    border: $weight solid $color;
+    border-radius: $size;
+    height: $size;
+    position: relative;
+    width: $size;
+    z-index: 1;
+  }
+}

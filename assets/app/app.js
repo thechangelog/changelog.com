@@ -1,8 +1,11 @@
 import "phoenix_html";
+import "intersection-observer";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import autosize from "autosize";
 import Cookies from "cookies-js";
+import Prism from "prismjs";
+import Comment from "modules/comment";
 import OnsitePlayer from "modules/onsitePlayer";
 import MiniPlayer from "modules/miniPlayer";
 import LivePlayer from "modules/livePlayer";
@@ -10,17 +13,83 @@ import Overlay from "modules/overlay";
 import ImageButton from "modules/imageButton";
 import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
+import Slider from "modules/slider";
 import Log from "modules/log";
 import Tooltip from "modules/tooltip";
+import Flash from "modules/flash";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
-
-const player = new OnsitePlayer("#player");
-const live = new LivePlayer(".js-live");
-const overlay = new Overlay("#overlay");
+import lozad from "lozad";
 
 window.u = u;
+window.App = {
+  lazy: lozad(".lazy"),
+  live: new LivePlayer(".js-live"),
+  overlay: new Overlay("#overlay"),
+  player: new OnsitePlayer("#player"),
+  slider: new Slider(".js-slider"),
+
+  attachComments() {
+    u(".js-comment").each(el => {
+      if (el.comment === undefined) new Comment(el);
+      el.comment.detectPermalink();
+    });
+  },
+
+  attachFlash() {
+    u(".js-flash").each(el => {
+      if (el.flash === undefined) new Flash(el);
+    });
+  },
+
+  attachMiniPlayers() {
+    u(".js-mini-player").each(el => {
+      if (el.player === undefined) new MiniPlayer(el);
+    });
+  },
+
+  attachTooltips() {
+    new Tooltip(".has-tooltip");
+  },
+
+  detachFlash() {
+    u(".js-flash").each(el => { el.flash.remove(); });
+  },
+
+  formatTimes() {
+    u("span.time").each(el => {
+      let span = u(el);
+      let anchor = span.parent("a");
+      let date = new Date(span.text());
+      let style = span.data("style");
+      span.text(ts(date, style));
+      (anchor || span).attr("title", ts(date, "timeFirst"));
+      span.removeClass("time");
+    });
+  },
+
+  isExternalLink(a) {
+    let href = a.attr("href");
+    return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
+  },
+
+  deepLink(href) {
+    let linkTime = parseTime(gup("t", (href || location.href), "#"));
+    if (!linkTime) return false;
+
+    if (this.player.isPlaying()) {
+      this.player.scrubEnd(linkTime);
+    } else {
+      let playable = u("[data-play]");
+      this.player.load(playable.attr("href"), playable.data("play"), _ => {
+        this.player.scrubEnd(linkTime);
+      });
+    }
+
+    return true;
+  }
+}
 
 // Hide tooltips when clicking anywhere else
 u(document).on("click", function(event) {
@@ -45,7 +114,7 @@ u(document).handle("click", ".js-toggle_element", function(event) {
 
 u(document).handle("click", ".js-account-nav", function(event) {
   const content = u(".js-account-nav-content").html();
-  overlay.html(content).show();
+  App.overlay.html(content).show();
 });
 
 u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
@@ -53,14 +122,18 @@ u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
 });
 
 u(document).on("click", "[data-play]", function(event) {
-  if (player.canPlay()) {
+  if (App.player.canPlay()) {
     event.preventDefault();
-    const clicked = u(event.target).closest("a, button");
 
-    if (player.currentlyLoaded == clicked.data("play")) {
-      player.togglePlayPause();
+    let clicked = u(event.target).closest("a, button");
+    let audioUrl = clicked.attr("href");
+    let detailsUrl = clicked.data("play");
+
+    if (App.player.currentlyLoaded == detailsUrl) {
+      App.player.togglePlayPause();
     } else {
-      player.load(clicked.attr("href"), clicked.data("play"));
+      App.player.pause();
+      App.player.load(audioUrl, detailsUrl);
     }
   }
 });
@@ -74,17 +147,7 @@ u(document).handle("click", "[data-youtube]", function(event) {
 });
 
 u(document).handle("click", "[data-share]", function(event) {
-  new Share(overlay).load(u(this).data("share"));
-});
-
-// flash messages
-function closeFlash(element) {
-  element.addClass("is-closing");
-  setTimeout(() => { element.remove(); }, 1000);
-}
-
-u(document).handle("click", ".js-close_flash", function(event) {
-  closeFlash(u(event.target).closest('.flash_container'));
+  new Share(App.overlay).load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
@@ -100,6 +163,19 @@ u(document).handle("click", ".js-share-popup", function(event) {
   shareWindow.opener = null;
 });
 
+// track news impressions
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    let el = u(entry.target);
+    let type = el.data("news-type");
+    let id = el.data("news-id");
+    let csrf = u("[property=csrf]").attr("content");
+    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": csrf}, body: {"ids": id}});
+    observer.unobserve(entry.target);
+  });
+});
+
 // track news clicks
 u(document).on("mousedown", "[data-news]", function(event) {
   let clicked = u(this);
@@ -112,10 +188,10 @@ u(document).on("mousedown", "[data-news]", function(event) {
 
 // open external links in new window when player is doing its thing
 u(document).on("click", "a[href^=http]", function(event) {
-  if (player.isActive()) {
+  if (App.player.isActive()) {
     let clicked = u(this);
 
-    if (isExternalLink(clicked)) {
+    if (App.isExternalLink(clicked)) {
       event.preventDefault();
       let newWindow = window.open(clicked.attr("href"), "_blank");
       newWindow.opener = null;
@@ -139,7 +215,7 @@ u(document).handle("click", ".js-hide-subscribe-banner", function(event) {
 u(document).on("click", "a[href^=\\#t]", function(event) {
   let href = u(event.target).attr("href");
 
-  if (deepLink(href)) {
+  if (App.deepLink(href)) {
     event.preventDefault();
     history.replaceState({}, document.title, href);
   };
@@ -149,21 +225,36 @@ u(document).on("click", "a[href^=\\#t]", function(event) {
 u(document).on("submit", "form", function(event) {
   event.preventDefault();
 
-  const form = u(this);
-  const action = form.attr("action");
-  const method = form.attr("method");
-  const referrer = location.href;
+  let form = u(this);
+  let submits = form.find("input[type=submit]");
+  let action = form.attr("action");
+  let method = form.attr("method");
+  let referrer = location.href;
 
   if (method == "get") {
     return Turbolinks.visit(`${action}?${form.serialize()}`);
   }
 
-  const options = {method: method, body: new FormData(form.first()), headers: {"Turbolinks-Referrer": referrer}};
-  const andThen = function(err, resp, req) {
+  let options = {
+    method: method,
+    body: new FormData(form.first()),
+    headers: {"Turbolinks-Referrer": referrer}
+  };
+
+  if (form.data("ajax")) {
+    options.headers["Accept"] = "application/javascript";
+  }
+
+  submits.each(el => { el.setAttribute("disabled", true); });
+
+  let andThen = function(err, resp, req) {
+    submits.each(el => { el.removeAttribute("disabled"); });
+
     if (req.getResponseHeader("content-type").match(/javascript/)) {
       eval(resp);
+      u(document).trigger("ajax:load");
     } else {
-      const snapshot = Turbolinks.Snapshot.wrap(resp);
+      let snapshot = Turbolinks.Snapshot.wrap(resp);
       Turbolinks.controller.cache.put(referrer, snapshot);
       Turbolinks.visit(referrer, {action: "restore"});
     }
@@ -172,87 +263,39 @@ u(document).on("submit", "form", function(event) {
   ajax(action, options, andThen);
 });
 
-function formatTimes() {
-  u("span.time").each(function(el) {
-    let span = u(el);
-    let date = new Date(span.text());
-    let style = span.data("style");
-    span.text(ts(date, style));
-    span.attr("title", ts(date, "timeFirst"));
-    span.removeClass("time");
-  });
-}
-
-function isExternalLink(a) {
-  let href = a.attr("href");
-  return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
-}
-
-function impress() {
-  let ads = Array.from(document.querySelectorAll("[data-news-type=ad]"));
-  let items = Array.from(document.querySelectorAll("[data-news-type=news]"));
-
-  if (ads.length) {
-    let adIds = ads.map(function(x) { return u(x).data("news-id"); });
-    let options = {
-      method: "POST",
-      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
-      body: {"ads": adIds}
-    };
-    ajax("/ad/impress", options);
-  }
-
-  if (items.length) {
-    let itemIds = items.map(function(x) { return u(x).data("news-id"); });
-    let options = {
-      method: "POST",
-      headers: {"x-csrf-token": u("[property=csrf]").attr("content")},
-      body: {"items": itemIds}
-    };
-    ajax("/news/impress", options);
-  }
-}
-
-function deepLink(href) {
-  let linkTime = parseTime(gup("t", (href || location.href), "#"));
-  if (!linkTime) return false;
-
-  if (player.isPlaying()) {
-    player.scrubEnd(linkTime);
-  } else {
-    let playable = u("[data-play]");
-    player.load(playable.attr("href"), playable.data("play"), function() {
-      player.scrubEnd(linkTime);
-    });
-  }
-
-  return true;
-}
-
-window.onresize = function() {
-}
-
 window.onhashchange = function() {
-  deepLink();
+  App.deepLink();
 }
 
 u(document).on("turbolinks:before-cache", function() {
-  u("body > .flash").remove();
+  u("body").removeClass("nav-open");
+  App.overlay.hide();
+  App.detachFlash();
 });
 
 // on page load
 u(document).on("turbolinks:load", function() {
+  Prism.highlightAll();
+  App.lazy.observe();
+  App.player.attach();
+  App.live.check();
+  u(".js-track-news").each(el => { observer.observe(el) });
   autosize(document.querySelectorAll("textarea"));
-  new Tooltip(".has-tooltip");
-  u("body").removeClass("nav-open");
-  u(".js-mini-player").each(function(container) { new MiniPlayer(container); });
-  player.attach();
-  overlay.hide();
-  live.check();
-  formatTimes();
-  deepLink();
-  impress();
-  setTimeout(() => { closeFlash(u(".flash_container")); }, 10*1000);
+  App.attachComments();
+  App.attachFlash();
+  App.attachMiniPlayers();
+  App.attachTooltips();
+  App.formatTimes();
+  App.deepLink();
+});
+
+u(document).on("ajax:load", function() {
+  App.attachComments();
+  App.attachFlash();
+  App.attachTooltips();
+  App.formatTimes();
+  App.lazy.observe();
+  autosize(document.querySelectorAll("textarea"));
 });
 
 Turbolinks.start();

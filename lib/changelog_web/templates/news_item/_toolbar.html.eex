@@ -2,17 +2,18 @@
   <%= render_toolbar_button(@conn, @item) %>
 
   <div class="news_item-toolbar-item news_item-toolbar-meta">
-    <span class="news_item-toolbar-meta-item">
-      logged by <strong><%= link(PersonView.handle(@item.logger), to: twitter_url(@item.logger), rel: "external") %></strong>
-    <%= if @item.submitter do %>
-      via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter), rel: "external") %></strong>
-    <% end %>
-    </span>
+    <%= render_meta_people(@conn, @item) %>
+
     <span class="news_item-toolbar-meta-item">
       <%= link(TimeView.ts(@item.published_at, @style), to: permalink_path(@conn, @item), data: permalink_data(@item)) %>
     </span>
+
+    <span class="news_item-toolbar-meta-item">
+      <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
+    </span>
+
   <%= if Enum.any?(@item.topics) do %>
-    <% {main_topics, additional_topics} = Enum.split(@item.topics, 2) %>
+    <% {main_topics, additional_topics} = Enum.split(@item.topics, 1) %>
 
     <span class="news_item-toolbar-meta-item">
     <%= for topic <- main_topics do %>

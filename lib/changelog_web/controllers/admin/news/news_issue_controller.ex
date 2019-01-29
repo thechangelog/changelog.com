@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
 
   alias Changelog.{NewsIssue, NewsItem, NewsIssueAd, NewsIssueItem, NewsSponsorship}
 
+  plug :assign_issue when action in [:edit, :update, :publish, :unpublish, :delete]
+  plug Authorize, [Policies.NewsIssue, :issue]
   plug :scrub_params, "news_issue" when action in [:create, :update]
 
   def index(conn, params) do
@@ -68,14 +70,12 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    issue = NewsIssue |> Repo.get!(id) |> NewsIssue.preload_all()
+  def edit(conn = %{assigns: %{issue: issue}}, _params) do
     changeset = NewsIssue.admin_changeset(issue)
     render(conn, :edit, issue: issue, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "news_issue" => issue_params}) do
-    issue = NewsIssue |> Repo.get!(id) |> NewsIssue.preload_all()
+  def update(conn = %{assigns: %{issue: issue}}, params = %{"news_issue" => issue_params}) do
     changeset = NewsIssue.admin_changeset(issue, issue_params)
 
     case Repo.update(changeset) do
@@ -90,9 +90,9 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     end
   end
 
-  def publish(conn, %{"id" => id}) do
-    issue = NewsIssue |> Repo.get!(id)
-    changeset = Ecto.Changeset.change(issue, %{published: true, published_at: Timex.now})
+  def publish(conn = %{assigns: %{issue: issue}}, _params) do
+    now = DateTime.truncate(Timex.now(), :second)
+    changeset = Ecto.Changeset.change(issue, %{published: true, published_at: now})
 
     case Repo.update(changeset) do
       {:ok, _issue} ->
@@ -106,8 +106,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     end
   end
 
-  def unpublish(conn, %{"id" => id}) do
-    issue = NewsIssue |> Repo.get!(id)
+  def unpublish(conn = %{assigns: %{issue: issue}}, _params) do
     changeset = Ecto.Changeset.change(issue, %{published: false, published_at: nil})
 
     case Repo.update(changeset) do
@@ -122,12 +121,16 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    issue = Repo.get!(NewsIssue, id)
+  def delete(conn = %{assigns: %{issue: issue}}, _params) do
     Repo.delete!(issue)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_issue_path(conn, :index))
+  end
+
+  defp assign_issue(conn = %{params: %{"id" => id}}, _) do
+    issue = NewsIssue |> Repo.get!(id) |> NewsIssue.preload_all()
+    assign(conn, :issue, issue)
   end
 end

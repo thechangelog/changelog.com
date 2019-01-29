@@ -16,8 +16,8 @@ config :changelog, Changelog.Mailer,
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "changelog_test",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool: Ecto.Adapters.SQL.Sandbox,
+  url: (System.get_env("DB_URL") || "ecto://postgres:postgres@localhost:5432/changelog_test")
 
 config :arc,
   storage_dir: "priv/uploads"
@@ -25,4 +25,4 @@ config :arc,
 config :rollbax,
   access_token: "",
   environment: "test",
-  enabled: false
+  enabled: :log

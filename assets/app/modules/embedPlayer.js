@@ -142,15 +142,16 @@ export default class EmbedPlayer {
     return Math.round(this.audio.currentSeek() || 0);
   }
 
-  percentComplete() {
-    return this.currentTime() / this.episodeDuration() * 100;
+  percentComplete(asOfTime) {
+    return asOfTime / this.episodeDuration() * 100;
   }
 
   step() {
     if (!this.isScrubbing) {
-      this.current.text(Episode.formatTime(this.currentTime()));
-      this.scrubber.first().value = this.currentTime();
-      this.track.first().style.width = `${this.percentComplete()}%`;
+      let time = this.currentTime();
+      this.current.text(Episode.formatTime(time));
+      this.scrubber.first().value = time;
+      this.track.first().style.width = `${this.percentComplete(time)}%`;
     }
 
     if (this.isPlaying()) {
@@ -161,7 +162,7 @@ export default class EmbedPlayer {
   scrub(to) {
     this.isScrubbing = true;
     this.current.text(Episode.formatTime(to));
-    this.track.first().style.width = `${this.percentComplete()}%`;
+    this.track.first().style.width = `${this.percentComplete(to)}%`;
   }
 
   scrubEnd(to) {

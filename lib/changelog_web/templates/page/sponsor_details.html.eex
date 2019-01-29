@@ -1,0 +1,74 @@
+<%= render(SharedView, "_drift_js.html") %>
+
+<article class="sponsor_story">
+  <div class="sponsor_story-content richtext">
+    <h1>Podcast sponsorship styles</h1>
+    
+    <h3>Endorsement</h3>
+    <p>This is our most popular ad style and is usually read by me. We'll do all the creative writing needed based on bullet points and guidance on goals we set with you. We can focus on different aspects of the service, a big promotion, an upcoming event you're hosting — or work together and come up with ideas on how to direct people to your current marketing goals and funnels. We like to get creative!</p>
+
+    <h3>Insider Story</h3>
+    <p>Talking to someone inside your company really helps to humanize who you are and allows you tell the developer world who you are in your own words. This is usually me talking with someone inside the company — an engineer, developer, support, design — really anyone who can speak to the product or service, the work they do, and how that might help the listener to learn more and why they should give it a try. The call to record the initial conversation is around 20-40 minutes.</p>
+  </div>
+  <div class="sponsor_story-examples">
+    <h3>Sponsorship Examples</h3>
+
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Campaign type</p></div>
+        <div class="grid_table-header-column"><p>Campaign name</p></div>
+        <div class="grid_table-header-column"><p>Campaign production</p></div>
+      </div>
+
+      <div class="grid_table-row">
+        <div class="grid_table-row-column">
+          <p>Team Culture</p>
+        </div>
+        <div class="grid_table-row-column">
+          <p>Indeed Assesments, Darren Nix</p>
+        </div>
+        <div class="grid_table-row-column">
+          <figure class="mini_player js-mini-player" data-title="title" data-audio="https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3" data-duration="141">
+            <a href="https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3"
+              class="mini_player-button mini_player-button--play js-player-play-button"></a>
+            <form class="mini_player-slider">
+              <div class="range_slider">
+                <div class="range_slider-range_wrap">
+                  <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="141" />
+                  <div class="range_slider-range-track js-player-track"></div>
+                </div>
+              </div>
+            </form>
+            <output class="mini_player-time"><span class="js-player-current">0:00</span> / <span class="js-player-duration">2:21</span></output>
+          </figure>
+        </div>
+      </div>
+
+      <div class="grid_table-row">
+        <div class="grid_table-row-column">
+          <p>Team Culture</p>
+        </div>
+        <div class="grid_table-row-column">
+          <p>Indeed Assesments, Bryan Chaney</p>
+        </div>
+        <div class="grid_table-row-column">
+          <figure class="mini_player js-mini-player" data-title="title" data-audio="https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-bryan-001.mp3" data-duration="126">
+            <a href="https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-bryan-001.mp3"
+              class="mini_player-button mini_player-button--play js-player-play-button"></a>
+            <form class="mini_player-slider">
+              <div class="range_slider">
+                <div class="range_slider-range_wrap">
+                  <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="126" />
+                  <div class="range_slider-range-track js-player-track"></div>
+                </div>
+              </div>
+            </form>
+            <output class="mini_player-time"><span class="js-player-current">0:00</span> / <span class="js-player-duration">2:06</span></output>
+          </figure>
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+</article>

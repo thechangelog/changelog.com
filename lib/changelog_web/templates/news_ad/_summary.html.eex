@@ -1,12 +1,10 @@
-<article class="news_item news_item--sponsor" data-news-type="ad" data-news-id="<%= hashid(@ad) %>">
+<article class="news_item news_item--sponsor js-track-news" data-news-type="ad" data-news-id="<%= hashid(@ad) %>">
   <%= render("_header.html", assigns) %>
 <%= if @ad.story do %>
-  <div class="news_item-description">
+  <%= link to: news_ad_path(@conn, :show, slug(@ad)), class: "news_item-description" do %>
     <p><%= @ad.story |> md_to_text %></p>
-    <%= link to: news_ad_path(@conn, :show, slug(@ad)), class: "news_item-description-continue" do %>
-      <span>read more...</span>
-    <% end %>
-  </div>
+    <p class="news_item-description-continue"><span>read more</span></p>
+  <% end %>
 <% end %>
   <%= render("_toolbar.html", assigns) %>
 </article>

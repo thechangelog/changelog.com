@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Admin.SponsorController do
 
   alias Changelog.Sponsor
 
+  plug :assign_sponsor when action in [:edit, :update, :delete]
+  plug Authorize, [Policies.AdminsOnly, :sponsor]
   plug :scrub_params, "sponsor" when action in [:create, :update]
 
   def index(conn, params) do
@@ -15,7 +17,7 @@ defmodule ChangelogWeb.Admin.SponsorController do
 
   def new(conn, _params) do
     changeset = Sponsor.insert_changeset(%Sponsor{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"sponsor" => sponsor_params}) do
@@ -31,18 +33,16 @@ defmodule ChangelogWeb.Admin.SponsorController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("new.html", changeset: changeset)
+        |> render(:new, changeset: changeset)
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    sponsor = Repo.get!(Sponsor, id)
+  def edit(conn = %{assigns: %{sponsor: sponsor}}, _params) do
     changeset = Sponsor.update_changeset(sponsor)
-    render(conn, "edit.html", sponsor: sponsor, changeset: changeset)
+    render(conn, :edit, sponsor: sponsor, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "sponsor" => sponsor_params}) do
-    sponsor = Repo.get!(Sponsor, id)
+  def update(conn = %{assigns: %{sponsor: sponsor}}, params = %{"sponsor" => sponsor_params}) do
     changeset = Sponsor.update_changeset(sponsor, sponsor_params)
 
     case Repo.update(changeset) do
@@ -53,16 +53,20 @@ defmodule ChangelogWeb.Admin.SponsorController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render("edit.html", sponsor: sponsor, changeset: changeset)
+        |> render(:edit, sponsor: sponsor, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    sponsor = Repo.get!(Sponsor, id)
+  def delete(conn = %{assigns: %{sponsor: sponsor}}, _params) do
     Repo.delete!(sponsor)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_sponsor_path(conn, :index))
+  end
+
+  defp assign_sponsor(conn = %{params: %{"id" => id}}, _) do
+    sponsor = Repo.get!(Sponsor, id)
+    assign(conn, :sponsor, sponsor)
   end
 end

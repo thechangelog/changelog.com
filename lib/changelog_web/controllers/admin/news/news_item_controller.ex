@@ -1,8 +1,10 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{HtmlKit, NewsItem, NewsSource, NewsQueue, Topic, UrlKit}
+  alias Changelog.{HtmlKit, NewsItem, NewsSource, NewsQueue, Search, Topic, UrlKit}
 
+  plug :assign_item when action in [:edit, :update, :move, :decline, :move, :unpublish, :delete]
+  plug Authorize, [Policies.NewsItem, :item]
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
 
@@ -55,7 +57,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     activity =
       (topic_activity ++ source_activity)
       |> Enum.sort(&(Timex.after?(&1.updated_at, &2.updated_at)))
-      |> Enum.chunk(activity_count)
+      |> Enum.chunk_every(activity_count)
 
     render(conn, :index, drafts: drafts, submitted: submitted, queued: queued,
                          scheduled: scheduled, activity: activity,
@@ -77,7 +79,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     images = HtmlKit.get_images(html)
 
-    render(conn, :new, changeset: changeset, images: images)
+    render(conn, :new, changeset: changeset, images: images, similar: similar_items(url))
   end
 
   def create(conn, params = %{"news_item" => item_params}) do
@@ -95,24 +97,23 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:new, changeset: changeset)
+        |> render(:new, changeset: changeset, similar: similar_items(changeset))
     end
   end
 
-  def edit(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
-    item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
+  def edit(conn = %{assigns: %{current_user: me, item: item}}, _params) do
     changeset = NewsItem.update_changeset(item, %{logger_id: item.logger_id || me.id})
-    render(conn, :edit, item: item, changeset: changeset)
+    render(conn, :edit, item: item, changeset: changeset, similar: similar_items(item))
   end
 
-  def update(conn, params = %{"id" => id, "news_item" => item_params}) do
+  def update(conn = %{assigns: %{item: item}}, params = %{"news_item" => item_params}) do
     item_params = detect_object_id(item_params)
-    item = Repo.get!(NewsItem, id) |> NewsItem.preload_topics()
     changeset = NewsItem.update_changeset(item, item_params)
 
     case Repo.update(changeset) do
       {:ok, item} ->
         handle_status_changes(item, params)
+        handle_search_update(item)
 
         conn
         |> put_flash(:result, "success")
@@ -120,12 +121,11 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, item: item, changeset: changeset)
+        |> render(:edit, item: item, changeset: changeset, similar: similar_items(item))
     end
   end
 
-  def decline(conn, %{"id" => id}) do
-    item = Repo.get!(NewsItem, id)
+  def decline(conn = %{assigns: %{item: item}}, _params) do
     NewsItem.decline!(item)
 
     conn
@@ -133,28 +133,32 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     |> redirect(to: admin_news_item_path(conn, :index))
   end
 
-  def delete(conn, %{"id" => id}) do
-    item = Repo.get!(NewsItem, id)
+  def delete(conn = %{assigns: %{item: item}}, _params) do
     Repo.delete!(item)
+    Task.start_link(fn -> Search.delete_item(item) end)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_item_path(conn, :index))
   end
 
-  def unpublish(conn, %{"id" => id}) do
-    item = Repo.get!(NewsItem, id)
+  def unpublish(conn = %{assigns: %{item: item}}, _params) do
     NewsItem.unpublish!(item)
+    Task.start_link(fn -> Search.delete_item(item) end)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_item_path(conn, :index))
   end
 
-  def move(conn, %{"id" => id, "position" => position}) do
-    item = Repo.get!(NewsItem, id)
+  def move(conn = %{assigns: %{item: item}}, %{"position" => position}) do
     NewsQueue.move(item, String.to_integer(position))
     send_resp(conn, 200, "")
+  end
+
+  defp assign_item(conn = %{params: %{"id" => id}}, _) do
+    item = Repo.get!(NewsItem, id) |> NewsItem.preload_all()
+    assign(conn, :item, item)
   end
 
   defp detect_quick_form(conn, _opts) do
@@ -179,6 +183,29 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       "prepend" -> NewsQueue.prepend(item)
       "append"  -> NewsQueue.append(item)
       "draft"   -> true
+    end
+  end
+
+  defp handle_search_update(item) do
+    if NewsItem.is_published(item) do
+      Task.start_link(fn -> Search.update_item(item) end)
+    end
+  end
+
+  defp similar_items(nil), do: []
+  defp similar_items(%Ecto.Changeset{changes: %{url: url}}) when is_binary(url), do: similar_items(url)
+  defp similar_items(%Ecto.Changeset{}), do: []
+  defp similar_items(url) when is_binary(url) do
+    url
+    |> NewsItem.similar_url
+    |> NewsItem.preload_all
+    |> Repo.all
+  end
+  defp similar_items(item = %NewsItem{}) do
+    if NewsItem.is_published(item) do
+      []
+    else
+      item |> NewsItem.similar_to |> NewsItem.preload_all |> Repo.all
     end
   end
 end

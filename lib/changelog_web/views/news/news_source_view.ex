@@ -19,7 +19,7 @@ defmodule ChangelogWeb.NewsSourceView do
 
   def icon_url(news_source), do: icon_url(news_source, :small)
   def icon_url(news_source, version) do
-    if (news_source.icon) do
+    if news_source.icon do
       static_url(Endpoint, icon_path(news_source, version))
     else
       "/images/defaults/avatar-source.png"

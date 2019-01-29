@@ -1,1 +1,7 @@
-<%= link @item.headline, to: @item.url, rel: "external", data: [news: true] %>
+<%=
+if controller_action_combo(@conn) == "news_item-show" do
+  external_link(raw(@item.headline <> "&nbsp;&nbsp;↦"), to: @item.url, data: [news: true])
+else
+  external_link(@item.headline, to: @item.url, data: [news: true])
+end
+%>

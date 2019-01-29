@@ -1,11 +1,11 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, EpisodeTopic, EpisodeHost, EpisodeStat, Github,
-                   Mailer, NewsItem, NewsQueue, Podcast}
-  alias ChangelogWeb.Email
+  alias Changelog.{Cache, Episode, EpisodeTopic, EpisodeGuest, EpisodeHost,
+                   EpisodeStat, Github, NewsItem, NewsQueue, Podcast}
 
   plug :assign_podcast
+  plug Authorize, [Policies.Episode, :podcast]
   plug :scrub_params, "episode" when action in [:create, :update]
 
   # pass assigned podcast as a function arg
@@ -129,6 +129,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     case Repo.update(changeset) do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
+        Cache.delete(episode)
 
         conn
         |> put_flash(:result, "success")
@@ -147,13 +148,14 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     Repo.delete!(episode)
+    Cache.delete(episode)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
 
-  def publish(conn, %{"id" => slug}, podcast) do
+  def publish(conn, params = %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
@@ -162,9 +164,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
-        handle_thanks_email(conn, episode)
+        handle_guest_thanks(params, episode)
         handle_news_item(conn, episode)
         handle_notes_push_to_github(episode)
+        Cache.delete(episode)
 
         conn
         |> put_flash(:result, "success")
@@ -184,7 +187,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     changeset = Ecto.Changeset.change(episode, %{published: false})
 
     case Repo.update(changeset) do
-      {:ok, _episode} ->
+      {:ok, episode} ->
+        Cache.delete(episode)
+
         conn
         |> put_flash(:result, "success")
         |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
@@ -207,8 +212,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
   end
 
-  defp assign_podcast(conn, _) do
-    podcast = Repo.get_by!(Podcast, slug: conn.params["podcast_id"])
+  defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
+    podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts
     assign(conn, :podcast, podcast)
   end
 
@@ -224,7 +229,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       type: :audio,
       object_id: "#{episode.podcast.slug}:#{episode.slug}",
       url: episode_url(conn, :show, episode.podcast.slug, episode.slug),
-      headline: (episode.headline || episode.title),
+      headline: episode.title,
       story: episode.summary,
       published_at: episode.published_at,
       logger_id: conn.assigns.current_user.id,
@@ -236,20 +241,23 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp handle_news_item(_, _), do: false
 
   defp handle_notes_push_to_github(episode) do
-    if Episode.is_public(episode) do
+    if Episode.is_published(episode) do
       episode = Episode.preload_podcast(episode)
       source = Github.Source.new("show-notes", episode)
       Github.Pusher.push(source, episode.notes)
     end
   end
 
-  defp handle_thanks_email(conn = %{params: %{"thanks" => _}}, episode) do
-    episode = Episode.preload_guests(episode)
-    email_opts = Map.take(conn.params, ["from", "reply", "subject", "message"])
+  defp handle_guest_thanks(%{"thanks" => _}, episode), do: set_guest_thanks(episode, true)
+  defp handle_guest_thanks(_, episode), do: set_guest_thanks(episode, false)
 
-    for guest <- episode.guests do
-      Email.guest_thanks(guest, email_opts) |> Mailer.deliver_later
+  defp set_guest_thanks(episode, should_thank) do
+    episode = Episode.preload_guests(episode)
+
+    for guest <- episode.episode_guests do
+      guest
+      |> EpisodeGuest.changeset(%{thanks: should_thank})
+      |> Repo.update()
     end
   end
-  defp handle_thanks_email(_, _), do: false
 end

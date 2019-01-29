@@ -81,13 +81,15 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
   end
 
   test "requires user auth on all actions", %{conn: conn} do
+    sponsor = insert(:sponsor)
+
     Enum.each([
       get(conn, admin_sponsor_path(conn, :index)),
       get(conn, admin_sponsor_path(conn, :new)),
       post(conn, admin_sponsor_path(conn, :create), sponsor: @valid_attrs),
-      get(conn, admin_sponsor_path(conn, :edit, "123")),
-      put(conn, admin_sponsor_path(conn, :update, "123"), sponsor: @valid_attrs),
-      delete(conn, admin_sponsor_path(conn, :delete, "123")),
+      get(conn, admin_sponsor_path(conn, :edit, sponsor.id)),
+      put(conn, admin_sponsor_path(conn, :update, sponsor.id), sponsor: @valid_attrs),
+      delete(conn, admin_sponsor_path(conn, :delete, sponsor.id)),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

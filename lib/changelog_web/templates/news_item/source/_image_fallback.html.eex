@@ -1,3 +1,3 @@
 <%= link to: @item.url, title: domain_name(@item.url), class: "news_item-source-image" do %>
-  <img src="/images/defaults/type-<%= @item.type %>.png" alt="<%= @item.type %> Icon" />
+  <%= maybe_lazy_image(@conn, static_url(@conn, "/images/defaults/type-#{@item.type}.png"), "#{@item.type} Icon") %>
 <% end %>

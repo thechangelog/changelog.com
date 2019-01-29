@@ -11,10 +11,7 @@ var common = {
       {
         test: /\.js$/,
         exclude: [/node_modules/, /semantic/, /uploads/],
-        loader: "babel-loader",
-        options: {
-          presets: ["es2015"]
-        }
+        loader: "babel-loader"
       },
       {
         test: /\.hbs$/,

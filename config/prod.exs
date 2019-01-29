@@ -1,10 +1,10 @@
 use Mix.Config
 
 config :changelog, ChangelogWeb.Endpoint,
-  http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "changelog.com", port: 443],
-  secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  static_url: [scheme: "https", host: "cdn.changelog.com", port: 443],
+  http: [port: System.get_env("PORT")],
+  url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_HOST") || "changelog.com"), port: (System.get_env("URL_PORT") || 443)],
+  secret_key_base: DockerSecret.get("SECRET_KEY_BASE"),
+  static_url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_STATIC_HOST") || "cdn.changelog.com"), port: (System.get_env("URL_PORT") || 443)],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :logger, level: :info
@@ -14,7 +14,7 @@ config :arc,
   storage_dir: "/uploads"
 
 config :changelog, Changelog.Repo,
-  url: {:system, "DB_URL"},
+  url: DockerSecret.get("DB_URL"),
   adapter: Ecto.Adapters.Postgres,
   pool_size: 20
 
@@ -22,8 +22,8 @@ config :changelog, Changelog.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.api.createsend.com",
   port: 587,
-  username: {:system, "CM_SMTP_TOKEN"},
-  password: {:system, "CM_SMTP_TOKEN"}
+  username: DockerSecret.get("CM_SMTP_TOKEN"),
+  password: DockerSecret.get("CM_SMTP_TOKEN")
 
 config :changelog, Changelog.Scheduler,
   global: true,
@@ -35,5 +35,5 @@ config :changelog, Changelog.Scheduler,
   ]
 
 config :rollbax,
-  access_token: {:system, "ROLLBAR_ACCESS_TOKEN"},
+  access_token: DockerSecret.get("ROLLBAR_ACCESS_TOKEN"),
   environment: "production"

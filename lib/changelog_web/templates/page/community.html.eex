@@ -2,7 +2,7 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <h1>Changelog Developer Community</h1>
-      <p>More than 1,500 developers from all over the world get a backstage pass to everything we do. Access to our Slack community, exclusive community member only features, discounts and special offers from our partners, and more.</p>
+      <p><%= members_count() |> comma_separated() %> developers from all over the world get a backstage pass to everything we do. Access to our Slack community, exclusive community member only features, discounts and special offers from our partners, and more.</p>
 
       <%= render("_community_join_button.html", assigns) %>
     </header>
@@ -10,22 +10,22 @@
     <ul class="marketing-section-features">
       <li class="marketing-section-features-item">
         <a href="#community" title="Jump to section">
-          <img src='<%= static_url(@conn, "/images/icons/icon-large-chat.svg") %>' width="60" height="60" alt="Chat Icon">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-large-chat.svg"), "Chat Icon", width: 60, height: 60) %>
           <span>Access to our private Slack community</span>
         </a>
       </li>
       <li class="marketing-section-features-item">
         <a href="#deals" title="Jump to section">
-          <img src='<%= static_url(@conn, "/images/icons/icon-large-percent.svg") %>' width="60" height="60" alt="Deals Icon">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-large-percent.svg"), "Deals Icon", width: 60, height: 60) %>
           <span>Discounts and special offers from our partners</span>
         </a>
       </li>
       <li class="marketing-section-features-item">
-        <img src='<%= static_url(@conn, "/images/icons/icon-large-ticket.svg") %>' width="60" height="60" alt="Ticket Icon">
+        <%= lazy_image(static_url(@conn, "/images/icons/icon-large-ticket.svg"), "Ticket Icon", width: 60, height: 60) %>
         <span>Early access to new podcasts and content</span>
       </li>
       <li class="marketing-section-features-item">
-        <img src='<%= static_url(@conn, "/images/icons/icon-large-bolt.svg") %>' width="60" height="60" alt="Bolt Icon">
+        <%= lazy_image(static_url(@conn, "/images/icons/icon-large-bolt.svg"), "Bolt Icon", width: 60, height: 60) %>
         <span>Exclusive features for community members</span>
       </li>
     </ul>
@@ -34,32 +34,33 @@
   <a id="community" class="anchor"></a>
   <section class="marketing-section">
     <header class="marketing-section-header">
-      <i><img src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="60" height="60" alt="Slack Logomark"></i>
-      <h2>Slack everyday with&nbsp;friends</h2>
-      <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
+      <i><%= lazy_image(static_url(@conn, "/images/content/community/slack-mark.svg"), "Slack Logo", width: 60, height: 60) %></i>
+      <h2>There are no imposters&nbsp;here.</h2>
+      <p>Everyone is welcome. You are not an imposter. No matter who you are or where you are on your path of being a developer &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
+
     </header>
 
     <div class="marketing-section-content marketing-section-content--slack">
       <div class="marketing-section-content-image">
-        <img src='<%= static_url(@conn, "/images/content/community/slack-screenshot.jpg") %>' alt="Screenshot of a Slack channel conversation.">
+        <%= lazy_image(static_url(@conn, "/images/content/community/slack-screenshot.jpg"), "Screenshot of a Slack channel conversation") %>
       </div>
       <div class="marketing-section-content-info">
         <div class="marketing-section-content-info-top">
-          <h3>There are no imposters&nbsp;here.</h3>
-          <p>Everyone is welcome. You are not an imposter. No matter where you are on your hacker path &mdash; this community is a safe place for you to hang your hat and call home. All you have to do is take the first step.</p>
+          <h3>Slack everyday with&nbsp;friends</h3>
+          <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
         <%= if !@current_user do %>
           <p><%= link "Join the community", to: person_path(@conn, :join), title: "Join the community" %>&nbsp;&nbsp;🔥🔥🔥</p>
         <% end %>
         </div>
 
         <div class="marketing-section-content-info-bottom">
-          <blockquote class="marketing-quote">
-            <div class="marketing-quote-body">
+          <blockquote class="marketing_quote">
+            <div class="marketing_quote-body">
               <p>There's no way to truely say how much value I get from being a part of Changelog's developer community. I'm there everyday, and there's always something interesting being discussed. It's&nbsp;awesome.</p>
             </div>
-            <footer class="marketing-quote-footer">
+            <footer class="marketing_quote-footer">
               <a href="https://twitter.com/jdorfman" title="Justin Dorfman on Twitter">
-                <img src='<%= static_url(@conn, "/images/content/community/justin-dorfman.jpg") %>' alt="A smiling man in a ballcap and glasses." width="65" height="65">
+                <%= lazy_image(static_url(@conn, "/images/content/community/justin-dorfman.jpg"), "A smiling man in a ballcap and glasses.", width: 65, height: 65) %>
                 <strong>Justin Dorfman</strong>
                 <span class="quote-title">Developer Relations at Sticker Mule</span>
               </a>
@@ -77,21 +78,21 @@
       <p>We work hard to develop relationships with the most trusted brands, products, and services — we give the rewards of those efforts to you, the developer&nbsp;community.</p>
     </header>
 
-    <div class="marketing-section-logos">
+    <div class="logo_grid">
       <%= render("_sponsors.html", assigns) %>
     </div>
   </section>
 
   <section class="marketing-section marketing-section--map">
     <header class="marketing-section-header">
-      <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
+      <i><%= lazy_image(static_url(@conn, "/images/brand/changelog-mark-only.svg"), "Changelog Logo", width: 60, height: 60) %></i>
       <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
 
       <%= render("_community_join_button.html", assigns) %>
     </header>
 
     <div class="marketing-map">
-      <img src='<%= static_url(@conn, "/images/content/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+      <%= lazy_image(static_url(@conn, "/images/content/community/map.png"), "World map with dots indicating approximate locations of Changelog community members") %>
     </div>
   </section>
 </article>

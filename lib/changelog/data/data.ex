@@ -5,7 +5,6 @@ defmodule Changelog.Data do
     quote do
       use Ecto.Schema
       use Changelog.Arc.Ecto.Schema
-      use Timex.Ecto.Timestamps
 
       import Ecto
       import Ecto.Changeset
@@ -26,6 +25,8 @@ defmodule Changelog.Data do
           changeset
         end
       end
+
+      defp now_in_seconds, do: Timex.now() |> DateTime.truncate(:second)
     end
   end
 end

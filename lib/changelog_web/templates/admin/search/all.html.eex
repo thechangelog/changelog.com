@@ -1,7 +1,7 @@
-<%= render("topic.html", conn: @conn, query: @query, results: @results.topics) %>
-<%= render("episode.html", conn: @conn, query: @query, results: @results.episodes) %>
-<%= render("news_item.html", conn: @conn, query: @query, results: @results.news_items) %>
-<%= render("news_source.html", conn: @conn, query: @query, results: @results.news_sources) %>
-<%= render("person.html", conn: @conn, query: @query, results: @results.people) %>
-<%= render("post.html", conn: @conn, query: @query, results: @results.posts) %>
-<%= render("sponsor.html", conn: @conn, query: @query, results: @results.sponsors) %>
+<%= if Enum.any?(@results.episodes), do: render("episode.html", Map.merge(assigns, %{query: @query, results: @results.episodes})) %>
+<%= if Enum.any?(@results.news_items), do: render("news_item.html", Map.merge(assigns, %{query: @query, results: @results.news_items})) %>
+<%= if Enum.any?(@results.news_sources), do: render("news_source.html", Map.merge(assigns, %{query: @query, results: @results.news_sources})) %>
+<%= if Enum.any?(@results.people), do: render("person.html", Map.merge(assigns, %{query: @query, results: @results.people})) %>
+<%= if Enum.any?(@results.posts), do: render("post.html", Map.merge(assigns, %{query: @query, results: @results.posts})) %>
+<%= if Enum.any?(@results.sponsors), do: render("sponsor.html", Map.merge(assigns, %{query: @query, results: @results.sponsors})) %>
+<%= if Enum.any?(@results.topics), do: render("topic.html", Map.merge(assigns, %{query: @query, results: @results.topics})) %>

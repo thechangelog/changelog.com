@@ -13,15 +13,18 @@
       Sponsorship
     <% end %>
 
-    <%= link to: admin_news_sponsorship_path(@conn, :schedule, year: @year + 1), class: "ui right floated basic button" do %>
-      <i class="angle double right icon"></i>
-      <%= @year + 1 %>
-    <% end %>
+    <div class="ui right floated basic buttons">
+      <%= link to: admin_news_sponsorship_path(@conn, :schedule, year: @year - 1), class: "ui button" do %>
+        <i class="angle double left icon"></i>
+        <%= @year - 1 %>
+      <% end %>
+      <button class="ui button js-toggle-past">Hide Past</button>
+      <%= link to: admin_news_sponsorship_path(@conn, :schedule, year: @year + 1), class: "ui button" do %>
+        <%= @year + 1 %>
+        <i class="angle double right icon"></i>
+      <% end %>
+    </div>
 
-    <%= link to: admin_news_sponsorship_path(@conn, :schedule, year: @year - 1), class: "ui right floated basic button" do %>
-      <i class="angle double left icon"></i>
-      <%= @year - 1 %>
-    <% end %>
   </div>
 </div>
 

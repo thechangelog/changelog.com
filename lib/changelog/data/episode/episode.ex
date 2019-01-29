@@ -10,8 +10,7 @@ defmodule Changelog.Episode do
     field :guid, :string
 
     field :title, :string
-    field :headline, :string
-    field :subheadline, :string
+    field :subtitle, :string
 
     field :featured, :boolean, default: false
     field :highlight, :string
@@ -21,8 +20,8 @@ defmodule Changelog.Episode do
     field :notes, :string
 
     field :published, :boolean, default: false
-    field :published_at, Timex.Ecto.DateTime
-    field :recorded_at, Timex.Ecto.DateTime
+    field :published_at, :utc_datetime
+    field :recorded_at, :utc_datetime
     field :recorded_live, :boolean, default: false
 
     field :audio_file, Files.Audio.Type
@@ -64,8 +63,13 @@ defmodule Changelog.Episode do
   def with_slug(query \\ __MODULE__, slug),          do: from(q in query, where: q.slug == ^slug)
   def with_podcast_slug(query \\ __MODULE__, slug),  do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
+  def exclude_transcript(query \\ __MODULE__) do
+    fields = __MODULE__.__schema__(:fields) |> Enum.reject(&(&1 == :transcript))
+    from(q in query, select: ^fields)
+  end
+
   def is_public(episode, as_of \\ Timex.now) do
-    is_published(episode) && episode.published_at <= as_of
+    is_published(episode) && Timex.before?(episode.published_at, as_of)
   end
 
   def is_published(episode), do: episode.published
@@ -83,8 +87,10 @@ defmodule Changelog.Episode do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(slug title published featured headline subheadline highlight subhighlight summary notes published_at recorded_at recorded_live guid))
-    |> cast_attachments(params, ~w(audio_file))
+    |> cast(params, [:slug, :title, :subtitle, :published, :featured,
+                     :highlight, :subhighlight, :summary, :notes, :published_at,
+                     :recorded_at, :recorded_live, :guid])
+    |> cast_attachments(params, [:audio_file])
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> validate_published_has_published_at
@@ -96,7 +102,15 @@ defmodule Changelog.Episode do
     |> derive_bytes_and_duration
   end
 
-  def get_news_item(episode), do: NewsItem.with_episode(episode)
+  def load_news_item(episode) do
+    item =
+      episode
+      |> NewsItem.with_episode()
+      |> Repo.one()
+      |> NewsItem.load_object(episode)
+
+    Map.put(episode, :news_item, item)
+  end
 
   def object_id(episode), do: "#{episode.podcast.slug}:#{episode.slug}"
 
@@ -111,11 +125,11 @@ defmodule Changelog.Episode do
 
   def preload_all(episode) do
     episode
-    |> preload_podcast
-    |> preload_topics
-    |> preload_guests
-    |> preload_hosts
-    |> preload_sponsors
+    |> preload_podcast()
+    |> preload_topics()
+    |> preload_guests()
+    |> preload_hosts()
+    |> preload_sponsors()
   end
 
   def preload_topics(query = %Ecto.Query{}) do

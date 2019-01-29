@@ -1,16 +1,20 @@
 defmodule Changelog.UrlKit do
-  alias Changelog.NewsSource
+  alias Changelog.{NewsSource, Regexp}
 
-  def get_html(url) when is_nil(url), do: ""
+  def get_html(nil), do: ""
   def get_html(url) do
-    case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
-      %{status_code: 200, headers: headers, body: body} ->
-        case List.keyfind(headers, "Content-Encoding", 0) do
-          {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
-          {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
-          _else -> body
-        end
-      _else -> ""
+    try do
+      case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
+        %{status_code: 200, headers: headers, body: body} ->
+          case List.keyfind(headers, "Content-Encoding", 0) do
+            {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
+            {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
+            _else -> body
+          end
+        _else -> ""
+      end
+    rescue
+      HTTPoison.Error -> ""
     end
   end
 
@@ -24,12 +28,12 @@ defmodule Changelog.UrlKit do
     end
   end
 
-  def get_source(url) when is_nil(url), do: nil
+  def get_source(nil), do: nil
   def get_source(url) do
     NewsSource.get_by_url(url)
   end
 
-  def get_type(url) when is_nil(url), do: :link
+  def get_type(nil), do: :link
   def get_type(url) do
     cond do
       Enum.any?(project_regexes(), fn(r) -> Regex.match?(r, url) end) -> :project
@@ -53,12 +57,12 @@ defmodule Changelog.UrlKit do
     end
   end
 
-  def is_youtube(url) when is_nil(url), do: false
+  def is_youtube(nil), do: false
   def is_youtube(url) do
     Enum.any?(youtube_regexes(), &(String.match?(url, &1)))
   end
 
-  def normalize_url(url) when is_nil(url), do: nil
+  def normalize_url(nil), do: nil
   def normalize_url(url) do
     parsed = URI.parse(url)
     query = normalize_query_string(parsed.query)
@@ -68,9 +72,12 @@ defmodule Changelog.UrlKit do
     |> URI.to_string()
   end
 
+  def sans_scheme(nil), do: nil
+  def sans_scheme(url), do: String.replace(url, Regexp.http(), "")
+
   defp is_self_hosted(url), do: String.contains?(url, "changelog.com")
 
-  defp normalize_query_string(query) when is_nil(query), do: nil
+  defp normalize_query_string(nil), do: nil
   defp normalize_query_string(query) do
     normalized =
       query

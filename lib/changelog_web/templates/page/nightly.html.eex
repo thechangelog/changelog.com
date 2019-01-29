@@ -3,11 +3,13 @@
     <header class="marketing-section-header">
       <h1>Subscribe to Changelog Nightly</h1>
 
-      <%= if @current_user do %>
-        <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "marketing-button button_large" %>
-      <% else %>
-        <%= link "Subscribe", to: person_path(@conn, :subscribe, list: "nightly"), class: "marketing-button button_large" %>
-      <% end %>
+      <div class="marketing-button_group" style="--max-width-group: 260px;">
+        <%= if @current_user do %>
+          <%= link "Manage Subscriptions", to: home_path(@conn, :show), class: "button_large" %>
+        <% else %>
+          <%= link "Subscribe", to: person_path(@conn, :subscribe, list: "nightly"), class: "button_large" %>
+        <% end %>
+      </div>
     </header>
   </section>
 
@@ -22,7 +24,9 @@
     </div>
 
     <div class="image">
-      <a href="http://nightly.changelog.com/2016/10/06/"><img src="<%= static_url(@conn, "/images/content/changelog-nightly.jpg") %>" alt="Changelog Nightly" /></a>
+      <a href="http://nightly.changelog.com/2016/10/06/">
+        <%= lazy_image(static_url(@conn, "/images/content/changelog-nightly.jpg"), "Changelog Nightly") %>
+      </a>
     </div>
 
     <div class="richtext">

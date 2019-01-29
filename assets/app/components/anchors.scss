@@ -2,9 +2,9 @@
   display: block;
   position: relative;
   // Account for the sticky navigation
-  top: -$header-height;
+  top: -($header-height + 20);
 
   @include breakpoint(tablet, max) {
-    top: -$header-height--mobile;
+    top: -($header-height--mobile + 20);
   }
 }

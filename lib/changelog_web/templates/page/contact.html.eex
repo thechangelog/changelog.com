@@ -10,7 +10,7 @@
 
     <p><%= link("Start here", to: page_path(@conn, :sponsor)) %> for sponsorship opportunities.</p>
 
-    <p><a href="https://changelog.com/thechangelog/changelog.com/issues">Open an issue</a> with bug reports and feature requests.</p>
+    <p><a href="https://github.com/thechangelog/changelog.com/issues">Open an issue</a> with bug reports and feature requests.</p>
 
     <p>Or email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a> if you prefer to get in touch privately.</p>
 

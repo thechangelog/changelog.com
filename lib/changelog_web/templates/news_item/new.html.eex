@@ -18,8 +18,8 @@
 
     <div class="form-element_wrap">
       <div class="form-element <%= error_class(f, :headline) %>">
-        <label>What is it?<span>*</span></label>
-        <%= text_input(f, :headline, user_required_options(@current_user, placeholder: "Article or project title...", required: true)) %>
+        <label>Title<span>*</span></label>
+        <%= text_input(f, :headline, user_required_options(@current_user, placeholder: "Project/Article title...", required: true)) %>
         <%= error_message(f, :headline) %>
       </div>
     </div>

@@ -7,24 +7,13 @@ defmodule ChangelogWeb.EmailTest do
   alias Changelog.Newsletters
   alias ChangelogWeb.Email
 
-  describe "guest thanks" do
-    test "with mostly blank options" do
-      person = build(:person)
-      email = Email.guest_thanks(person, %{"message" => "shpedoinkel!"})
+  test "guest thanks" do
+    person = build(:person)
+    episode = build(:published_episode)
+    email = Email.guest_thanks(person, episode)
 
-      assert email.to == person
-      assert email.from == "editors@changelog.com"
-      assert email.html_body =~ ~r/shpedoinkel!/i
-    end
-
-    test "with more options" do
-      person = build(:person)
-      email = Email.guest_thanks(person, %{"from" => "john@doe.com","message" => "shpedoinkel!"})
-
-      assert email.to == person
-      assert email.from == "john@doe.com"
-      assert email.html_body =~ ~r/shpedoinkel!/i
-    end
+    assert email.to == person
+    assert email.html_body =~ ~r/#{episode.title}/i
   end
 
   test "sign in" do
@@ -41,7 +30,7 @@ defmodule ChangelogWeb.EmailTest do
 
     assert email.to == person
     assert email.subject =~ ~r/welcome/i
-    assert email.html_body =~~r/welcome/i
+    assert email.html_body =~ ~r/welcome/i
   end
 
   test "guest welcome" do

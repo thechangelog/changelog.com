@@ -3,7 +3,7 @@
 <div class="main-podcasts">
   <section class="show_list" id="podcasts">
     <div class="show_list-shows">
-      <%= render_many(@podcasts, PodcastView, "_podcast_summary.html", assigns) %>
+      <%= render_many(@podcasts ++ [Podcast.master], PodcastView, "_summary.html", assigns) %>
     </div>
   </section>
 </div>

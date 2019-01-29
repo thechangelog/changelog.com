@@ -15,3 +15,5 @@ mix local.hex --force
 mix deps.get
 
 cd assets && yarn install
+
+createuser --superuser --no-password postgres

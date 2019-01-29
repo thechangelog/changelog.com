@@ -1,0 +1,9 @@
+<%= cond do %>
+<% Episode.is_published(@changeset.data) -> %>
+  <%= link "Unpublish", to: "#{@action}/unpublish", class: "ui red fluid basic button", method: :post, data: [confirm: "Are you sure?"] %>
+<% Episode.is_publishable(@changeset.data) -> %>
+  <button class="ui green fluid basic button js-publish-modal">Publish</button>
+  <%= render("_publish_modal.html", assigns) %>
+<% true -> %>
+  <button class="ui green fluid basic disabled button">Publish</button>
+<% end %>

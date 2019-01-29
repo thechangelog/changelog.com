@@ -1,0 +1,9 @@
+var content = "<%= javascript_escape(render("show.html", assigns)) %>";
+
+<%= if @comment.parent_id do %>
+  var comment = u(".js-comment[data-id='<%= hashid(@comment.parent_id) %>']").first().comment;
+  comment.addReply(content);
+<% else %>
+  var comment = u(".js-comment").first().comment;
+  comment.addComment(content);
+<% end %>

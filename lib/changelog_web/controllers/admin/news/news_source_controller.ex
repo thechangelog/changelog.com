@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
   alias Changelog.NewsSource
 
+  plug :assign_source when action in [:edit, :update, :delete]
+  plug Authorize, [Policies.AdminsOnly, :source]
   plug :scrub_params, "news_source" when action in [:create, :update]
 
   def index(conn, params) do
@@ -35,14 +37,12 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    source = Repo.get!(NewsSource, id)
+  def edit(conn = %{assigns: %{source: source}}, _params) do
     changeset = NewsSource.update_changeset(source)
     render(conn, :edit, source: source, changeset: changeset)
   end
 
-  def update(conn, params = %{"id" => id, "news_source" => source_params}) do
-    source = Repo.get!(NewsSource, id)
+  def update(conn = %{assigns: %{source: source}}, params = %{"news_source" => source_params}) do
     changeset = NewsSource.update_changeset(source, source_params)
 
     case Repo.update(changeset) do
@@ -57,12 +57,16 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    source = Repo.get!(NewsSource, id)
+  def delete(conn = %{assigns: %{source: source}}, _params) do
     Repo.delete!(source)
 
     conn
     |> put_flash(:result, "success")
     |> redirect(to: admin_news_source_path(conn, :index))
+  end
+
+  defp assign_source(conn = %{params: %{"id" => id}}, _) do
+    source = Repo.get!(NewsSource, id)
+    assign(conn, :source, source)
   end
 end

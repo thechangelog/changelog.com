@@ -23,18 +23,24 @@
     }
 
     &-logo {
-      height: auto;
-      margin: $base-spacing auto;
-      padding: 0 $base-spacing;
+      margin: 0 auto;
       max-width: 100%;
+    }
+
+    a {
+      color: $black;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
   &-quote {
-    margin: 0;
+    margin: 0 auto;
+    max-width: 940px;
 
     &-body {
-      margin: 2.5em 0;
+      margin-bottom: 2.5em;
       text-align: center;
 
       p {

@@ -1,0 +1,27 @@
+<%= if Podcast.has_feed(@podcast) do %>
+<div class="show-header-subscribe">
+  <div class="show-header-subscribe-buttons">
+  <%= if @podcast.itunes_url do %>
+    <%= link "Apple", to: @podcast.itunes_url, class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple", title: "Subscribe on Apple" %>
+    <%= link "Overcast", to: subscribe_on_overcast_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--overcast", title: "Subscribe on Overcast" %>
+  <% end %>
+    <%= link "Android", to: subscribe_on_android_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android", title: "Subscribe on Android" %>
+    <%= link "RSS", to: feed_path(@conn, :podcast, @podcast.slug), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--rss", title: "Subscribe via RSS", data: [turbolinks: false] %>
+  </div>
+
+  <button class="show-header-subscribe-mobile has-tooltip">Subscribe</button>
+  <div class="tooltip">
+    <div class="tooltip-arrow"></div>
+    <div class="tooltip-wrap">
+      <ul class="tooltip-list tooltip-list--centered">
+      <%= if @podcast.itunes_url do %>
+        <li class="tooltip-list-item"><%= link "Apple", to: @podcast.itunes_url, title: "Subscribe on Apple" %></li>
+        <li class="tooltip-list-item"><%= link "Overcast", to: subscribe_on_overcast_url(@podcast), title: "Subscribe on Overcast" %></li>
+      <% end %>
+        <li class="tooltip-list-item"><%= link "Android", to: subscribe_on_android_url(@podcast), title: "Subscribe on Android" %></li>
+        <li class="tooltip-list-item"><%= link "RSS", to: feed_path(@conn, :podcast, @podcast.slug), title: "Subscribe via RSS", data: [turbolinks: false] %></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>

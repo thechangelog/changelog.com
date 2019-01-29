@@ -5,6 +5,7 @@ You requested a fancy, passwordless sign in link. Here you go:
 
 <%= AuthView.auth_url(Endpoint, @person) %>
 
+
 This link will self-destruct in <%= auth_link_expires_in(@person) %>.
 
 Already Expired? Request a new link: <%= sign_in_url(Endpoint, :new) %>

@@ -4,7 +4,7 @@ defmodule Changelog.EpisodeStat do
   alias Changelog.{Episode, Podcast}
 
   schema "episode_stats" do
-    field :date, Timex.Ecto.Date
+    field :date, :date
     field :episode_bytes, :integer
     field :total_bytes, :integer
     field :downloads, :float
@@ -18,19 +18,18 @@ defmodule Changelog.EpisodeStat do
   end
 
   def on_date(date, query \\ __MODULE__), do: from(q in query, where: q.date == ^date)
+  def with_podcast(query \\ __MODULE__, podcast), do: from(q in query, where: q.podcast_id == ^podcast.id)
 
   def oldest_date do
     Repo.one(from s in __MODULE__, select: [min(s.date)], limit: 1)
     |> List.first
   end
 
-  def any_on_date?(date) do
-    Repo.count(on_date(date)) > 0
-  end
+  def any_on_date?(date), do: Repo.count(on_date(date)) > 0
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics))
+    |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics)a)
     |> validate_required([:date, :episode_id, :podcast_id])
   end
 
@@ -92,7 +91,9 @@ defmodule Changelog.EpisodeStat do
   defp downloads_list_merged_and_sorted(list) do
     list
     |> Enum.reduce(fn(x, acc) -> Map.merge(acc, x, fn(_k, v1, v2) -> v1 + v2 end) end)
-    |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
+    |> Enum.map(fn({k, v}) -> {k, Float.round(v, 2)} end)
+    # sort by highest value, then alpha by name
+    |> Enum.sort(fn({ak, av}, {bk, bv}) -> if av == bv, do: ak < bk, else: av > bv end)
   end
 
   defp browsers_agents_only(agents) do

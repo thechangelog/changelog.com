@@ -6,16 +6,18 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
   @valid_attrs %{title: "Ruby on Rails", slug: "ruby-on-rails", author_id: 42}
   @invalid_attrs %{title: "Ruby on Rails", slug: "", author_id: 42}
 
-  @tag :as_admin
-  test "lists all posts", %{conn: conn} do
+  @tag :as_inserted_admin
+  test "lists published posts and my draft posts", %{conn: conn} do
     t1 = insert(:published_post)
-    t2 = insert(:post)
+    t2 = insert(:post, author: conn.assigns.current_user)
+    t3 = insert(:post)
 
     conn = get(conn, admin_post_path(conn, :index))
 
     assert html_response(conn, 200) =~ ~r/Posts/
     assert String.contains?(conn.resp_body, t1.title)
     assert String.contains?(conn.resp_body, t2.title)
+    refute String.contains?(conn.resp_body, t3.title)
   end
 
   @tag :as_admin
@@ -74,13 +76,15 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
   end
 
   test "requires user auth on all actions", %{conn: conn} do
+    post = insert(:post)
+
     Enum.each([
       get(conn, admin_post_path(conn, :index)),
       get(conn, admin_post_path(conn, :new)),
       post(conn, admin_post_path(conn, :create), post: @valid_attrs),
-      get(conn, admin_post_path(conn, :edit, "123")),
-      put(conn, admin_post_path(conn, :update, "123"), post: @valid_attrs),
-      delete(conn, admin_post_path(conn, :delete, "123")),
+      get(conn, admin_post_path(conn, :edit, post.id)),
+      put(conn, admin_post_path(conn, :update, post.id), post: @valid_attrs),
+      delete(conn, admin_post_path(conn, :delete, post.id)),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

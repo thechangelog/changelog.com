@@ -1,8 +1,11 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
   <div class="two fields">
     <div class="twelve wide field required <%= error_class(f, :title) %>">
-      <%= label(f, :title) %>
-      <%= text_input(f, :title, placeholder: "SQLite with Richard Hipp") %>
+      <label for="title">
+        Title
+        <span><a href="javascript:void(0);" class="field-action js-title-guide-modal">(style guide)</a></span>
+      </label>
+      <%= text_input(f, :title, placeholder: "Why SQLite succeeded as a database") %>
       <%= error_message(f, :title) %>
     </div>
 
@@ -13,18 +16,12 @@
     </div>
   </div>
 
-  <div class="field <%= error_class(f, :headline) %>">
-    <%= label(:f, :headline) do %>
-      Headline <%= help_icon("Used as primary title on episode page and iTunes subtitle.") %>
+  <div class="field <%= error_class(f, :subtitle) %>">
+    <%= label(:f, :subtitle) do %>
+      Subtitle <%= help_icon("Used underneath title on episode page and combined with title for html <title>") %>
+      <span><a href="javascript:void(0);" class="field-action js-subtitle-guide-modal">(style guide)</a></span>
     <% end %>
-    <%= text_input(f, :headline, placeholder: "Why SQLite Succeeded as a Database") %>
-  </div>
-
-  <div class="field <%= error_class(f, :headline) %>">
-    <%= label(:f, :subheadline) do %>
-      Sub Headline <%= help_icon("Used underneath headline on episode page. Markdown supported.") %>
-    <% end %>
-    <%= text_input(f, :subheadline, placeholder: "with [Richard Hipp](http://www.hwaci.com/drh/), creator of [SQLite](http://sqlite.org)") %>
+    <%= text_input(f, :subtitle, placeholder: "with Richard Hipp, creator of SQlite") %>
   </div>
 
   <div class="inline field <%= error_class(f, :featured) %>">
@@ -247,15 +244,10 @@
   <% end %>
   <% end %>
   <div class="column">
-  <%= cond do %>
-  <% Episode.is_published(@changeset.data) -> %>
-    <%= link "Unpublish", to: "#{@action}/unpublish", class: "ui red fluid basic button", method: :post, data: [confirm: "Are you sure?"] %>
-  <% Episode.is_publishable(@changeset.data) -> %>
-    <button class="ui green fluid basic button js-publish-modal">Publish</button>
-    <%= render("_publish_modal.html", assigns) %>
-  <% true -> %>
-    <button class="ui green fluid basic disabled button">Publish</button>
+  <%= if Policies.Episode.publish(@current_user, @changeset.data) do %>
+    <%= render("_publish_buttons.html", assigns) %>
   <% end %>
   </div>
 </div>
 
+<%= render("_style_guide_modal.html", assigns) %>
