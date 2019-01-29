@@ -51,7 +51,7 @@
       <div class="account_subscriptions-list">
         <%= for podcast <- @podcasts do %>
           <div class="account_subscriptions-list-item">
-            <img class="account_subscriptions-list-item-icon" src="<%= PodcastView.cover_url(podcast, :medium) %>" width="30" height="30" alt="<%= podcast.name %>">
+            <img class="account_subscriptions-list-item-icon" src="<%= PodcastView.cover_url(podcast, :medium) %>" width="50" height="50" alt="<%= podcast.name %>">
             <p class="account_subscriptions-list-item-title"><%= podcast.name %></p>
             <div class="account_subscriptions-list-item-toggle toggle toggle--light">
               <input
