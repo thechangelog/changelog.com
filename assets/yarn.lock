@@ -1403,6 +1403,7 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
 clamp-js@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/clamp-js/-/clamp-js-0.7.0.tgz#95c49e0e28323c8eeac8c63201dddf30dbd78fce"
+  integrity sha1-lcSeDigyPI7qyMYyAd3fMNvXj84=
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -5312,6 +5313,7 @@ shebang-regex@^1.0.0:
 siema@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/siema/-/siema-1.5.1.tgz#eff312b77e8340fa4d81d5d053ebbeb9113ff888"
+  integrity sha1-7/MSt36DQPpNgdXQU+u+uRE/+Ig=
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"

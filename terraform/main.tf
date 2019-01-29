@@ -181,6 +181,31 @@ resource "null_resource" "configure_private_ip_manually_since_containerlinux_doe
   }
 }
 
+# It would have been nice to disable these via Ignition, but this is not supported on Linode...
+# https://www.linode.com/community/questions/427/help-i-am-running-coreos-and-need-to-add-custom-cloud-config
+resource "null_resource" "disable_automatic_updates" {
+  connection {
+    user = "${var.default_ssh_user}"
+    host = "${linode_instance.2019.ip_address}"
+  }
+
+  depends_on = [
+    "linode_instance.2019",
+  ]
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo systemctl disable update-engine",
+      "sudo systemctl stop update-engine",
+      "systemctl status update-engine | grep 'Stopped Update Engine'",
+    ]
+  }
+
+  triggers {
+    always = "${timestamp()}"
+  }
+}
+
 # https://www.linode.com/docs/platform/nodebalancer/getting-started-with-nodebalancers-new-manager/
 # https://linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide-new-manager/
 resource "linode_nodebalancer" "2019" {
@@ -197,7 +222,7 @@ resource "linode_nodebalancer_config" "http_2019" {
   check_timeout = 10
   check_attempts = 3
   check_path = "/"
-  check_passive = true
+  check_passive = false
   stickiness = "table"
   algorithm = "leastconn"
 }
@@ -219,7 +244,7 @@ resource "linode_nodebalancer_config" "https_2019" {
   check_timeout = 10
   check_attempts = 3
   check_path = "/"
-  check_passive = true
+  check_passive = false
   stickiness = "table"
   algorithm = "leastconn"
   cipher_suite = "recommended"
@@ -236,7 +261,7 @@ resource "linode_nodebalancer_node" "https_2019" {
 
 provider "dnsimple" { }
 
-resource "dnsimple_record" "2019" {
+resource "dnsimple_record" "2019_changelog_com" {
   domain = "changelog.com"
   name = "${var.generation}"
   value = "${linode_nodebalancer.2019.ipv4}"
@@ -244,10 +269,66 @@ resource "dnsimple_record" "2019" {
   ttl = 60
 }
 
-resource "dnsimple_record" "2019i" {
+resource "dnsimple_record" "2019i_changelog_com" {
   domain = "changelog.com"
   name = "${var.generation}i"
   value = "${linode_instance.2019.ip_address}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "netdata_changelog_com" {
+  domain = "changelog.com"
+  name = "netdata"
+  value = "${linode_nodebalancer.2019.ipv4}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "apex-changelog_com" {
+  domain = "changelog.com"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv4}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "www_changelog_com" {
+  domain = "changelog.com"
+  name = "www"
+  value = "${linode_nodebalancer.2019.ipv4}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "apex-changelog_fm" {
+  domain = "changelog.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv4}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "apex-gotime_fm" {
+  domain = "gotime.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv4}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "apex-jsparty_fm" {
+  domain = "jsparty.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv4}"
+  type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "apex-rfc_fm" {
+  domain = "rfc.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
   ttl = 60
 }

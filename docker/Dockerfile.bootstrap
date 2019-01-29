@@ -12,11 +12,18 @@ ENV GIT_REPOSITORY=$GIT_REPOSITORY
 ARG GIT_BRANCH=master
 ENV GIT_BRANCH=$GIT_BRANCH
 
+ARG UPDATE_SERVICE_EVERY_N_SECONDS=60
+ENV UPDATE_SERVICE_EVERY_N_SECONDS=$UPDATE_SERVICE_EVERY_N_SECONDS
+ARG DOCKER_SERVICE_NAME=2019_app
+ENV DOCKER_SERVICE_NAME=$DOCKER_SERVICE_NAME
+ARG DOCKER_SERVICE_IMAGE=thechangelog/changelog.com
+ENV DOCKER_SERVICE_IMAGE=$DOCKER_SERVICE_IMAGE
+
 VOLUME /app
 WORKDIR /app
 
-COPY bootstrap /bootstrap
-RUN chmod +x /bootstrap
+COPY deploy_docker_stack update_service_continuously /usr/local/bin/
+RUN cd /usr/local/bin && chmod +x deploy_docker_stack update_service_continuously
 
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["/bootstrap"]
+CMD ["deploy_docker_stack"]

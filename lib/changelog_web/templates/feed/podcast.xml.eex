@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
     <title><%= @podcast.name %></title>
     <copyright>All rights reserved</copyright>
     <link><%= PodcastView.vanity_domain_with_fallback_url(@podcast) %></link>
-    <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="application/rss+xml" />
+    <atom:link href="<%= feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
+    <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="text/html" />
     <language>en-us</language>
     <description><%= md_to_text(@podcast.description) %> <%= @podcast.extended_description %></description>
     <itunes:subtitle><%= @podcast.name %></itunes:subtitle>

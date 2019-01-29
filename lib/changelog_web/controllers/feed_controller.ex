@@ -11,16 +11,18 @@ defmodule ChangelogWeb.FeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("news.xml", items: NewsItem.latest_news_items())
-    |> cache_public_response(random_duration())
+    |> assign(:items, NewsItem.latest_news_items())
+    |> render("news.xml")
+    |> cache_public_response(cache_duration())
   end
 
   def news_titles(conn, _params) do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("news_titles.xml", items: NewsItem.latest_news_items())
-    |> cache_public_response(random_duration())
+    |> assign(:items, NewsItem.latest_news_items())
+    |> render("news_titles.xml")
+    |> cache_public_response(cache_duration())
   end
 
   def podcast(conn, %{"slug" => "backstage"}) do
@@ -33,17 +35,19 @@ defmodule ChangelogWeb.FeedController do
       Podcast.get_episodes(podcast)
       |> Episode.published()
       |> Episode.newest_first()
+      |> Episode.exclude_transcript()
       |> Episode.preload_all()
       |> Repo.all()
-      |> Enum.map(&Episode.load_news_item/1)
 
     log_subscribers(conn, podcast)
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> render("podcast.xml", podcast: podcast, episodes: episodes)
-    |> cache_public_response(random_duration())
+    |> assign(:podcast, podcast)
+    |> assign(:episodes, episodes)
+    |> render("podcast.xml")
+    |> cache_public_response(cache_duration())
   end
 
   defp log_subscribers(conn, podcast) do
@@ -69,7 +73,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> render("posts.xml", posts: posts)
-    |> cache_public_response(random_duration())
+    |> cache_public_response(cache_duration())
   end
 
   def sitemap(conn, _params) do
@@ -85,8 +89,9 @@ defmodule ChangelogWeb.FeedController do
     episodes =
       Episode.published()
       |> Episode.newest_first()
-      |> Repo.all()
+      |> Episode.exclude_transcript()
       |> Episode.preload_podcast()
+      |> Repo.all()
 
     podcasts =
       Podcast.public()
@@ -113,8 +118,8 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:posts, posts)
     |> assign(:topics, topics)
     |> render("sitemap.xml")
-    |> cache_public_response(random_duration())
+    |> cache_public_response(cache_duration())
   end
 
-  defp random_duration, do: Enum.random(5..10) |> :timer.minutes()
+  defp cache_duration, do: :timer.minutes(5)
 end

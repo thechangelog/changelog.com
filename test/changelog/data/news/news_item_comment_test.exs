@@ -14,4 +14,16 @@ defmodule Changelog.NewsItemCommentTest do
       refute changeset.valid?
     end
   end
+
+  describe "nested/1" do
+    test "nests comments appropriately" do
+      parent = %{id: 1, parent_id: nil, content: "ohai"}
+      reply = %{id: 2, parent_id: 1, content: "bai now"}
+
+      nested = NewsItemComment.nested([reply, parent])
+
+      assert length(nested) == 1
+      assert length(List.first(nested).children) == 1
+    end
+  end
 end

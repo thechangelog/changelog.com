@@ -27,25 +27,12 @@ DOCKER_STACK_FILE ?= docker/changelog.stack.yml
 
 HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
+RSYNC_SRC_HOST ?= root@172.104.216.248
 
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 BOOTSTRAP_GIT_BRANCH ?= master
 
-define BOOTSTRAP_CONTAINER
-docker pull thechangelog/bootstrap:latest && \
-docker run --rm --interactive --tty --name bootstrap \
-  --env HOSTNAME=$$HOSTNAME \
-  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
-  --volume changelog.com:/app:rw \
-  thechangelog/bootstrap:latest
-endef
-
-define CTOP_CONTAINER
-docker pull quay.io/vektorlab/ctop:latest && \
-docker run --rm --interactive --tty \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  quay.io/vektorlab/ctop:latest
-endef
+APP_IMAGE ?= thechangelog/changelog.com:latest
 
 
 
@@ -78,13 +65,17 @@ $(LPASS):
 $(TERRAFORM):
 	@brew install terraform
 
+OPENSSL := /usr/local/opt/openssl/bin/openssl
+$(OPENSSL):
+	@brew install openssl
+
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
 TF := cd terraform && $(TERRAFORM)
-TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8038492725192048930)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7748004306557989540)"
+TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8038492725192048930)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7748004306557989540 && cat terraform/dhparams.pem)"
 
 # Enable Terraform debugging if make runs in debug mode
 ifneq (,$(findstring d,$(MFLAGS)))
@@ -104,6 +95,15 @@ colours:
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
 
+define BOOTSTRAP_CONTAINER
+docker service scale $(DOCKER_STACK)_app_updater=0 ; \
+docker pull thechangelog/bootstrap:latest && \
+docker run --rm --interactive --tty --name bootstrap \
+  --env HOSTNAME=\$$HOSTNAME \
+  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+  --volume changelog.com:/app:rw \
+  thechangelog/bootstrap:latest
+endef
 .PHONY: bootstrap-docker
 bootstrap-docker:
 	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER)"
@@ -126,6 +126,10 @@ as: add-secret
 .PHONY: prevent-incompatible-deps-reaching-the-docker-image
 prevent-incompatible-deps-reaching-the-docker-image:
 	@rm -fr deps
+
+.PHONY: create-dirs-mounted-as-volumes
+create-dirs-mounted-as-volumes:
+	@mkdir -p $(CURDIR)/priv/{uploads,db}
 
 .PHONY: bootstrap-image
 bootstrap-image: build-bootstrap-image publish-bootstrap-image ## bi  | Build & publish thechangelog/bootstrap Docker image
@@ -180,7 +184,7 @@ clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, ima
 cd: clean-docker
 
 .PHONY: configure-ci-secrets
-configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## ccs | Configure CircleCI secrets
+configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle-token ## ccs | Configure CircleCI secrets
 	@DOCKER_CREDENTIALS=$$($(LPASS) show --json 2219952586317097429) && \
 	DOCKER_USER="$$($(JQ) --compact-output '.[] | {name: "DOCKER_USER", value: .username}' <<< $$DOCKER_CREDENTIALS)" && \
 	DOCKER_PASS="$$($(JQ) --compact-output '.[] | {name: "DOCKER_PASS", value: .password}' <<< $$DOCKER_CREDENTIALS)" && \
@@ -190,7 +194,7 @@ configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle_token ## ccs | Configure Cir
 ccs: configure-ci-secrets
 
 .PHONY: contrib
-contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## c   | Contribute to changelog.com by running a local copy
+contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image create-dirs-mounted-as-volumes ## c   | Contribute to changelog.com by running a local copy
 	@bash -c "trap '$(COMPOSE) down' INT ; \
 	  $(COMPOSE) up ; \
 	  [[ $$? =~ 0|2 ]] || \
@@ -220,6 +224,12 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 .PHONY: cds
 cds: create-docker-secrets
 
+define CTOP_CONTAINER
+docker pull quay.io/vektorlab/ctop:latest && \
+docker run --rm --interactive --tty \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  quay.io/vektorlab/ctop:latest
+endef
 .PHONY: ctop
 ctop: ## ct  | View real-time container metrics & logs
 	@if [ $(HOST) = localhost ] ; then \
@@ -242,9 +252,17 @@ rds: remove-docker-secrets
 
 .PHONY: deploy-docker-stack
 deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
-	@export HOSTNAME && $(DOCKER) stack deploy --compose-file $(DOCKER_STACK_FILE) --prune $(DOCKER_STACK)
+	@export HOSTNAME ; \
+	$(DOCKER) service scale $(DOCKER_STACK)_app_updater=0 ; \
+	$(DOCKER) stack deploy --compose-file $(DOCKER_STACK_FILE) --prune $(DOCKER_STACK)
 .PHONY: dds
 dds: deploy-docker-stack
+
+.PHONY: update-app-service
+update-app-service: $(DOCKER)
+	@$(DOCKER) service update --quiet --image $(APP_IMAGE) $(DOCKER_STACK)_app 1>/dev/null
+.PHONY: uas
+uas: update-app-service
 
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
@@ -253,10 +271,10 @@ build-local-image: $(DOCKER)
 bli: build-local-image
 
 .PHONY: deploy-docker-stack-local
-deploy-docker-stack-local: $(DOCKER) build-local-image
-	@export HOSTNAME && \
-	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK) && \
-	$(DOCKER) service update --image thechangelog/changelog.com:local --force $(DOCKER_STACK)_app
+deploy-docker-stack-local: $(DOCKER) build-local-image create-dirs-mounted-as-volumes
+	@export HOSTNAME ; \
+	$(DOCKER) service scale $(DOCKER_STACK)_app_updater=0 ; \
+	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK)
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
 
@@ -266,9 +284,13 @@ env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffe
 es: env-secrets
 
 .PHONY: iaas
-iaas: linode_token dnsimple_creds init validate apply ## i   | Provision IaaS infrastructure
+iaas: linode-token dnsimple-creds terraform/dhparams.pem init validate apply ## i   | Provision IaaS infrastructure
 .PHONY: i
 i: iaas
+
+# https://www.linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide/#diffie-hellman-parameters
+terraform/dhparams.pem: $(OPENSSL)
+	@$(OPENSSL) dhparam -out terraform/dhparams.pem 2048
 
 .PHONY: init
 init: $(TERRAFORM)
@@ -294,34 +316,36 @@ legacy-assets: $(DOCKER)
 	cd nginx && $(DOCKER) build --tag thechangelog/legacy_assets --file Dockerfile.legacy_assets . && \
 	$(DOCKER) push thechangelog/legacy_assets
 
-CHANGELOG_SERVICES_SEPARATOR := --------------------------------------------------------------------------
+CHANGELOG_SERVICES_SEPARATOR := ----------------------------------------------------------------------------------------
 define CHANGELOG_SERVICES
 
-                                                          $(BOLD)$(GREEN)Public$(NORMAL)   $(BOLD)$(RED)Private$(NORMAL)
+                                                                        $(BOLD)$(RED)Private$(NORMAL)   $(BOLD)$(GREEN)Public$(NORMAL)
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)CircleCI$(NORMAL)   | https://circleci.com/gh/thechangelog/changelog.com        |
+| $(BOLD)$(RED)Papertrail$(NORMAL)               | https://papertrailapp.com/dashboard                       |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)DockerHub$(NORMAL)  | https://hub.docker.com/u/thechangelog                     |
+| $(BOLD)$(RED)Fastly$(NORMAL)                   | https://manage.fastly.com/services/all                    |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Fastly$(NORMAL)     | https://manage.fastly.com/services/all                    |
+| $(BOLD)$(RED)Linode$(NORMAL)                   | https://cloud.linode.com/dashboard                        |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)GitHub$(NORMAL)     | https://github.com/thechangelog/changelog.com             |
+| $(BOLD)$(RED)Pivotal Tracker$(NORMAL)          | https://www.pivotaltracker.com/n/projects/1650121         |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Linode$(NORMAL)     | https://cloud.linode.com/dashboard                        |
+| $(BOLD)$(RED)Rollbar Dashboard$(NORMAL)        | https://rollbar.com/changelogmedia/changelog.com/         |
+| $(BOLD)$(RED)Rollbar Deploys$(NORMAL)          | https://rollbar.com/changelogmedia/changelog.com/deploys/ |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Papertrail$(NORMAL) | https://papertrailapp.com/dashboard                       |
+| $(BOLD)$(RED)Pingdom Uptime$(NORMAL)           | https://my.pingdom.com/reports/uptime                     |
+| $(BOLD)$(RED)Pingdom Page Speed$(NORMAL)       | https://my.pingdom.com/reports/rbc                        |
+| $(BOLD)$(RED)Pingdom Visitor Insights$(NORMAL) | https://my.pingdom.com/3/visitor-insights                 |
+| $(BOLD)$(GREEN)Pingdom Status$(NORMAL)           | http://status.changelog.com/                              |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Pingdom - Uptime$(NORMAL)           | https://my.pingdom.com/reports/uptime     |
-| $(BOLD)$(RED)Pingdom - Page Speed$(NORMAL)       | https://my.pingdom.com/reports/rbc        |
-| $(BOLD)$(RED)Pingdom - Visitor Insights$(NORMAL) | https://my.pingdom.com/3/visitor-insights |
+| $(BOLD)$(GREEN)Netdata$(NORMAL)                  | https://netdata.changelog.com                             |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Pivotal Tracker $(NORMAL)   | https://www.pivotaltracker.com/n/projects/1650121 |
+| $(BOLD)$(GREEN)DockerHub$(NORMAL)                | https://hub.docker.com/u/thechangelog                     |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Rollbar$(NORMAL)  | https://rollbar.com/changelogmedia/changelog.com/           |
+| $(BOLD)$(GREEN)CircleCI$(NORMAL)                 | https://circleci.com/gh/thechangelog/changelog.com        |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)Slack$(NORMAL)    | https://changelog.slack.com/                                |
+| $(BOLD)$(GREEN)GitHub$(NORMAL)                   | https://github.com/thechangelog/changelog.com             |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)Status$(NORMAL)   | http://status.changelog.com/                                |
+| $(BOLD)$(GREEN)Slack$(NORMAL)                    | https://changelog.slack.com/                              |
 $(CHANGELOG_SERVICES_SEPARATOR)
 
 endef
@@ -350,7 +374,7 @@ pi: proxy-image
 .PHONY: build-proxy-image
 build-proxy-image: $(DOCKER)
 	@cd nginx && \
-	$(DOCKER) build --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
+	$(DOCKER) build --no-cache --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
 .PHONY: bpi
 bpi: build-proxy-image
 
@@ -364,7 +388,7 @@ report-deploy:
 	@ROLLBAR_ACCESS_TOKEN="$$(cat /run/secrets/ROLLBAR_ACCESS_TOKEN)" && export ROLLBAR_ACCESS_TOKEN && \
 	COMMIT_USER="$$(cat ./COMMIT_USER)" && export COMMIT_USER && \
 	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
-	curl --silent --fail --request POST --url https://api.rollbar.com/api/1/deploy/ \
+	curl --silent --fail --output /dev/null --request POST --url https://api.rollbar.com/api/1/deploy/ \
 	  --data '{"access_token":"'$$ROLLBAR_ACCESS_TOKEN'","environment":"'$$ROLLBAR_ENVIRONMENT'","rollbar_username":"'$$COMMIT_USER'","revision":"'$$COMMIT_SHA'","comment":"Running in container '$$HOSTNAME' on host '$$NODE'"}'
 
 .PHONY: runtime-image
@@ -374,7 +398,7 @@ ri: runtime-image
 
 .PHONY: build-runtime-image
 build-runtime-image: $(DOCKER)
-	@$(DOCKER) build --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
+	@$(DOCKER) build --no-cache --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
 .PHONY: bri
 bri: build-runtime-image
 
@@ -382,6 +406,25 @@ bri: build-runtime-image
 publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
+
+define RSYNC_UPLOADS
+  sudo --preserve-env --shell \
+    rsync --archive --delete --update --inplace --verbose --progress --human-readable \
+      $(RSYNC_SRC_HOST):/data/www/uploads/ /uploads/
+endef
+.PHONY: rsync-uploads
+rsync-uploads: ## ru  | Synchronise uploads between remote hosts
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(RSYNC_UPLOADS)"
+.PHONY: ru
+ru: rsync-uploads
+
+.PHONY: rsync-small-uploads-local
+rsync-small-uploads-local: create-dirs-mounted-as-volumes
+	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
+	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons,logos}" $(CURDIR)/priv/uploads/
+.PHONY: rsul
+rsul: rsync-small-uploads-local
+
 
 .PHONY: secrets
 secrets: $(LPASS) ## s   | List all LastPass secrets
@@ -393,11 +436,25 @@ s: secrets
 ssh: ## ssh | SSH into $HOST
 	@ssh $(HOST_SSH_USER)@$(HOST)
 
+.PHONY: ssl-report
+ssl-report: ## ssl | Run an SSL report via SSL Labs
+	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(DOCKER_STACK).$(DOMAIN)&latest"
+.PHONY: ssl
+ssl: ssl-report
+
 .PHONY: test
 test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
 .PHONY: t
 t: test
+
+define UPDATE_NETDATA
+docker pull netdata/netdata && \
+docker service update $(DOCKER_STACK)_netdata
+endef
+.PHONY: update_netdata
+update_netdata:
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(UPDATE_NETDATA)"
 
 define DIRENV
 
@@ -413,8 +470,8 @@ This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
 endef
 export DIRENV
-.PHONY: circle_token
-circle_token:
+.PHONY: circle-token
+circle-token:
 ifndef CIRCLE_TOKEN
 	@echo "$(RED)CIRCLE_TOKEN$(NORMAL) environment variable must be set\n" && \
 	echo "Learn more about CircleCI API tokens $(BOLD)https://circleci.com/docs/2.0/managing-api-tokens/$(NORMAL) " && \
@@ -422,8 +479,8 @@ ifndef CIRCLE_TOKEN
 	exit 1
 endif
 
-.PHONY: linode_token
-linode_token:
+.PHONY: linode-token
+linode-token:
 ifndef TF_VAR_linode_token
 	@echo "$(RED)TF_VAR_linode_token$(NORMAL) environment variable must be set" && \
 	echo "Learn more about Linode API tokens $(BOLD)https://cloud.linode.com/profile/tokens$(NORMAL) " && \
@@ -431,8 +488,8 @@ ifndef TF_VAR_linode_token
 	exit 1
 endif
 
-.PHONY: dnsimple_creds
-dnsimple_creds:
+.PHONY: dnsimple-creds
+dnsimple-creds:
 ifndef DNSIMPLE_ACCOUNT
 	@echo "$(RED)DNSIMPLE_ACCOUNT$(NORMAL) environment variable must be set" && \
 	echo "This will be the account's numerical ID, e.g. $(BOLD)00000$(NORMAL)" && \

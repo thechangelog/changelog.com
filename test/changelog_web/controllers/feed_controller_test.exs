@@ -3,6 +3,11 @@ defmodule ChangelogWeb.FeedControllerTest do
 
   alias ChangelogWeb.NewsItemView
 
+  def valid_xml(conn) do
+    SweetXml.parse(conn.resp_body)
+    true
+  end
+
   test "the sitemap", %{conn: conn} do
     post = insert(:published_post)
     podcast = insert(:podcast)
@@ -15,6 +20,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     conn = get(conn, feed_path(conn, :sitemap))
 
     assert conn.status == 200
+    assert valid_xml(conn)
     assert conn.resp_body =~ post.slug
     assert conn.resp_body =~ podcast.slug
     assert conn.resp_body =~ episode.slug
@@ -32,6 +38,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     conn = get(conn, feed_path(conn, :news))
 
     assert conn.status == 200
+    assert valid_xml(conn)
     assert conn.resp_body =~ post.title
     assert conn.resp_body =~ episode.title
     assert conn.resp_body =~ post.body
@@ -47,6 +54,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     conn = get(conn, feed_path(conn, :news_titles))
 
     assert conn.status == 200
+    assert valid_xml(conn)
     assert conn.resp_body =~ post.title
     assert conn.resp_body =~ episode.title
     refute conn.resp_body =~ post.body
@@ -60,6 +68,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     conn = get(conn, feed_path(conn, :podcast, p.slug))
 
     assert conn.status == 200
+    assert valid_xml(conn)
     assert conn.resp_body =~ e.title
   end
 
@@ -80,6 +89,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     conn = get(conn, feed_path(conn, :podcast, "master"))
 
     assert conn.status == 200
+    assert valid_xml(conn)
     assert conn.resp_body =~ e1.title
     assert conn.resp_body =~ e2.title
   end
@@ -92,6 +102,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     conn = get(conn, feed_path(conn, :posts))
 
     assert conn.status == 200
+    assert valid_xml(conn)
     assert conn.resp_body =~ p1.title
     refute conn.resp_body =~ p2.title
     assert conn.resp_body =~ p3.title

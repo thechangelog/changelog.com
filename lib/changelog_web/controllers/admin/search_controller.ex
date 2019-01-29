@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.SearchController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Faker, Episode, NewsItem, NewsSource, Person, Sponsor, Post, Topic}
+  alias Changelog.{Episode, NewsItem, NewsSource, Person, Sponsor, Post, Topic}
 
   plug :assign_type when action in [:one]
   plug Authorize, [Policies.Search, :type]
@@ -50,9 +50,11 @@ defmodule ChangelogWeb.Admin.SearchController do
 
   defp search_people(""), do: []
   defp search_people(q) do
-    from(q in Person, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.handle, ^"%#{q}%"), or_where: ilike(q.email, ^"%#{q}%"))
+    from(q in Person,
+      where: ilike(q.name, ^"%#{q}%"),
+      or_where: ilike(q.handle, ^"%#{q}%"),
+      or_where: ilike(q.email, ^"%#{q}%"))
     |> Repo.all()
-    |> Enum.reject(fn(p) -> Enum.member?(Faker.names(), p.name) end)
   end
 
   defp search_posts(""), do: []

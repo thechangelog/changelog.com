@@ -216,7 +216,7 @@
     }
   }
 
-  &.is-author {
+  &.is-author > .comment-header {
     .comment-author-name {
       color: $base-hover-color;
     }
