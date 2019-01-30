@@ -1,0 +1,11 @@
+.richtext {
+
+  // Hide until rendered
+  .twitter-tweet {
+    visibility: hidden;
+
+    &-rendered {
+      visibility: visible;
+    }
+  }
+}

@@ -1,0 +1,89 @@
+.richtext {
+
+  &-figure {
+    $figure-spacing: 2em; // 36px
+    $figcaption-spacing: 1.5em; // 18px
+
+    margin: $base-spacing 0;
+
+    // Set up figure variants
+    @include breakpoint(1000px) {
+      margin-top: $figure-spacing;
+      margin-bottom: $figure-spacing;
+
+      &--full,
+      &--left,
+      &--right {
+        $offset: 80px;
+        display: flex;
+        flex-direction: column;
+        margin-left: (-$offset);
+        margin-right: (-$offset);
+        width: calc(100% + (#{$offset} * 2));
+      }
+
+      img {
+        height: 100%; // Windows fix
+      }
+    }
+
+    // Define default caption styles (overridden below)
+    figcaption {
+      @include breakpoint(1000px) {
+        text-align: center;
+      }
+
+      color: $medium-grey;
+      font-family: $code;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: $figcaption-spacing auto 0;
+      max-width: 760px;
+    }
+
+    // Define left/right style overrides
+    &--left,
+    &--right {
+      @include breakpoint(1000px) {
+        .richtext-figure-video,
+        img {
+          flex: 1 0 75%;
+          width: 75%; // Widows fix
+        }
+
+        figcaption {
+          align-self: flex-end;
+        }
+      }
+    }
+
+    @include breakpoint(1000px) {
+      &--right {
+        flex-direction: row-reverse;
+
+        figcaption {
+          margin-right: $figcaption-spacing;
+          text-align: right;
+        }
+      }
+
+      &--left {
+        flex-direction: row;
+
+        figcaption {
+          margin-left: $figcaption-spacing;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .twitter-tweet {
+    margin: 0 auto;
+
+    // Match default Twitter embed width
+    &-caption {
+      max-width: 500px;
+    }
+  }
+}

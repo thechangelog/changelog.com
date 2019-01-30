@@ -26,7 +26,7 @@ body {
   }
 }
 .main {
-  flex: 1;
+  flex: 0 1 auto;
   min-height: calc(100vh - #{($header-height + $footer-height)});
 
   // Pages that should have black backgrounds

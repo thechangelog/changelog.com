@@ -1,0 +1,63 @@
+.richtext {
+
+  table {
+    font-family: $code;
+    font-size: 14px;
+    line-height: 23px;
+    margin: 1.25em 0;
+    width:100%;
+    word-break: normal;
+    word-break: keep-all;
+    border-spacing: 0;
+    border-collapse: collapse;
+    text-align: left;
+    overflow: scroll;
+
+    a {
+      color: $green;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    th {
+      font-weight: 700;
+      background: #000;
+      color: $white;
+    }
+
+    td, th {
+      padding: 8px 14px;
+
+      &:first-child {
+        @include breakpoint(tiny) { width: 50%; }
+      }
+    }
+
+    tr {
+      background-color: $white;
+
+      &.footer {
+        font-weight: 700;
+        background: lighten($green,43%);
+        border-top: 1px solid $green;
+
+        a { font-weight: inherit; }
+      }
+
+      &:nth-child(2n) { background-color: $lightest-grey; }
+    }
+  }
+
+  tfoot {
+
+    tr {
+      border-top: 2px solid darken($lightest-grey,3%);
+    }
+
+    td {
+      font-size: 12px;
+      padding: 10px 14px;
+    }
+  }
+}
