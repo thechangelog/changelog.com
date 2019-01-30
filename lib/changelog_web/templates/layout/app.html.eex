@@ -37,6 +37,9 @@
     <meta property="og:description" content="<%= description(assigns) %>">
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
+  <%= if apple_id = apple_podcasts_id(assigns) do %>
+    <meta name="apple-itunes-app" content="app-id=<%= apple_id %>">
+  <% end %>
   <%= for feed <- rss_feeds(assigns) do %>
     <link href="<%= feed.url %>" rel="alternate" title="<%= feed.title %>" type="application/rss+xml">
   <% end %>
