@@ -18,6 +18,10 @@ defmodule Changelog.Data do
       def newest_first(query \\ __MODULE__, field \\ unquote(opts[:default_sort])), do: from(q in query, order_by: [desc: ^field])
       def newest_last(query \\ __MODULE__, field \\ unquote(opts[:default_sort])), do: from(q in query, order_by: [asc: ^field])
 
+      def older_than(query \\ __MODULE__, date_or_time)
+      def older_than(query, date = %Date{}), do: from(q in query, where: q.inserted_at < ^Timex.to_datetime(date))
+      def older_than(query, time = %DateTime{}), do: from(q in query, where: q.inserted_at < ^time)
+
       defp mark_for_deletion(changeset) do
         if get_change(changeset, :delete) do
           %{changeset | action: :delete}
