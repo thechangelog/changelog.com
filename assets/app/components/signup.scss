@@ -9,7 +9,7 @@
   &-content {
     color: $white;
     margin: 0 auto;
-    max-width: 760px;
+    max-width: 640px;
     padding: 40px 0;
     text-align: center;
     width: 100%;
@@ -20,6 +20,10 @@
     @include breakpoint(tablet) {
       padding: 60px 0;
     }
+  }
+
+  &-art img {
+    margin: 0 auto $base-spacing;
   }
 
   &-icons {
@@ -59,7 +63,7 @@
   &-form {
     background-color: $white;
     height: 44px;
-    margin: 0 auto;
+    margin: 30px auto 0;
     max-width: 520px;
     position: relative;
     width: 100%;

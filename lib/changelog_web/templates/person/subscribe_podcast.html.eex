@@ -1,11 +1,10 @@
 <section class="signup">
   <div class="signup-content">
-    <div class="signup-icons">
-      <div class="signup-icons-item signup-icons-item--news"></div>
-      <div class="signup-icons-item signup-icons-item--podcasts"></div>
+    <div class="signup-art">
+      <%= lazy_image(PodcastView.cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 180, height: 180) %>
     </div>
-    <h1 class="signup-heading">You're subscribing to <%= @podcast.name %></h1>
-    <p class="signup-text">Cody take it from here.</p>
+    <h1 class="signup-heading">You&rsquo;re subscribing to <%= @podcast.name %>.</h1>
+    <p class="signup-text"><%= @podcast.description %></p>
 
     <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
   </div>
