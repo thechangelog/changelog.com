@@ -127,6 +127,7 @@ defmodule ChangelogWeb.Router do
     get "/join", PersonController, :join, as: :person
     post "/join", PersonController, :join, as: :person
     get "/subscribe", PersonController, :subscribe, as: :person
+    get "/subscribe/:to", PersonController, :subscribe, as: :person
     post "/subscribe", PersonController, :subscribe, as: :person
 
     resources "/~", HomeController, only: [:show, :update], singleton: true

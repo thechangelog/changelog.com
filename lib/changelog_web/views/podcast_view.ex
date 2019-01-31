@@ -59,7 +59,7 @@ defmodule ChangelogWeb.PodcastView do
     if conn.assigns.current_user do
       home_path(conn, :show) <> "#podcasts"
     else
-      person_path(conn, :subscribe, to: podcast.slug)
+      person_path(conn, :subscribe, podcast.slug)
     end
   end
 
