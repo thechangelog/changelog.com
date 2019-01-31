@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Newsletters, Person, Podcast, Subscription}
+  alias Changelog.{Cache, Mailer, Newsletters, Person, Podcast, Subscription}
   alias ChangelogWeb.Email
 
   plug RequireGuest, "before joining" when action in [:join]
@@ -16,9 +16,13 @@ defmodule ChangelogWeb.PersonController do
   def subscribe(conn = %{method: "GET"}, %{"to" => to}) when is_binary(to) do
     podcast = Podcast.get_by_slug!(to)
 
-    conn
-    |> assign(:podcast, podcast)
-    |> render(:subscribe_podcast)
+    if Podcast.has_feed(podcast) do
+      conn
+      |> assign(:podcast, podcast)
+      |> render(:subscribe_podcast)
+    else
+      redirect(conn, to: person_path(conn, :subscribe))
+    end
   end
   def subscribe(conn = %{method: "GET"}, _params) do
     render(conn, :subscribe)
@@ -66,14 +70,22 @@ defmodule ChangelogWeb.PersonController do
 
   defp subscribe_to_newsletter(person, newsletter) do
     Craisin.Subscriber.subscribe(newsletter.list_id, Person.sans_fake_data(person))
-    Email.subscriber_welcome(person, newsletter) |> Mailer.deliver_later()
+     person |> Email.subscriber_welcome(newsletter) |> Mailer.deliver_later()
   end
 
+  defp subscribe_to_podcast(person, "master") do
+    for podcast <- Cache.podcasts() do
+      context = "you signed up for email notifications for #{podcast.name} on changelog.com"
+      Subscription.subscribe(person, podcast, context)
+    end
+
+    person |> Email.subscriber_welcome(Podcast.master()) |> Mailer.deliver_later()
+  end
   defp subscribe_to_podcast(person, slug) do
     podcast = Podcast.get_by_slug!(slug)
     context = "you signed up for email notifications for #{podcast.name} on changelog.com"
     Subscription.subscribe(person, podcast, context)
-    Email.subscriber_welcome(person, podcast) |> Mailer.deliver_later()
+    person |> Email.subscriber_welcome(podcast) |> Mailer.deliver_later()
   end
 
   def join(conn = %{method: "GET"}, params) do

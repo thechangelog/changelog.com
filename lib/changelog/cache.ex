@@ -2,7 +2,7 @@ defmodule Changelog.Cache do
   @moduledoc """
   A small wrapper around ConCache to unify response/app caches
   """
-  alias Changelog.{Episode, Podcast, Post}
+  alias Changelog.{Episode, Podcast, Post, Repo}
 
   def delete(nil), do: :ok
   def delete(episode = %Episode{}) do
@@ -45,5 +45,15 @@ defmodule Changelog.Cache do
     |> ConCache.ets
     |> :ets.tab2list
     |> Enum.map(&(elem(&1, 0)))
+  end
+
+  def podcasts do
+    get_or_store("podcasts", :infinity, fn ->
+      Podcast.active()
+      |> Podcast.ours()
+      |> Podcast.by_position()
+      |> Podcast.preload_hosts()
+      |> Repo.all()
+    end)
   end
 end
