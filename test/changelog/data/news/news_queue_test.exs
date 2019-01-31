@@ -132,9 +132,10 @@ defmodule Changelog.NewsQueueTest do
         assert Enum.map(published, &(&1.id)) == [i1.id]
         assert Repo.count(NewsQueue) == 1
 
+        :timer.sleep(1000)
         NewsQueue.publish_next()
 
-        published = NewsItem.published |> NewsItem.newest_first |> Repo.all
+        published = NewsItem.published() |> NewsItem.newest_first() |> Repo.all()
         assert Enum.map(published, &(&1.id)) == [i2.id, i1.id]
         assert Repo.count(NewsQueue) == 0
       end
