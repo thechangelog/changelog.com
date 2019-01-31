@@ -47,12 +47,20 @@ defmodule ChangelogWeb.PodcastView do
     feed_url_sans_protocol =
       feed_url(Endpoint, :podcast, podcast.slug)
       |> String.replace(~r/\Ahttps?:\/\//, "")
-    "http://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
+    "https://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
   end
 
   def subscribe_on_overcast_url(podcast) do
     %{"id" => id, "name" => name} = Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.itunes_url)
     "https://overcast.fm/itunes#{id}/#{name}"
+  end
+
+  def subscribe_via_email_path(conn, podcast) do
+    if conn.assigns.current_user do
+      home_path(conn, :show) <> "#podcasts"
+    else
+      person_path(conn, :subscribe, podcast.slug)
+    end
   end
 
   def vanity_domain_with_fallback_url(podcast) do

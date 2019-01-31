@@ -82,6 +82,7 @@ defmodule ChangelogWeb.Router do
     end
     resources "/posts", PostController, except: [:show]
     resources "/sponsors", SponsorController
+    resources "/mailers", MailerPreviewController, only: [:index, :show]
   end
 
   scope "/api", ChangelogWeb, as: :api do
@@ -126,6 +127,7 @@ defmodule ChangelogWeb.Router do
     get "/join", PersonController, :join, as: :person
     post "/join", PersonController, :join, as: :person
     get "/subscribe", PersonController, :subscribe, as: :person
+    get "/subscribe/:to", PersonController, :subscribe, as: :person
     post "/subscribe", PersonController, :subscribe, as: :person
 
     resources "/~", HomeController, only: [:show, :update], singleton: true
@@ -134,8 +136,8 @@ defmodule ChangelogWeb.Router do
     get "/~/nope/:token/:notification", HomeController, :opt_out
 
     post "/~/slack", HomeController, :slack
-    post "/~/subscribe/:id", HomeController, :subscribe
-    post "/~/unsubscribe/:id", HomeController, :unsubscribe
+    post "/~/subscribe", HomeController, :subscribe
+    post "/~/unsubscribe", HomeController, :unsubscribe
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in

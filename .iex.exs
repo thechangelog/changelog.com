@@ -1,6 +1,6 @@
-alias Changelog.{Buffer, Repo, Person, Episode, EpisodeHost, EpisodeGuest, NewsAd,
-                 NewsItem, NewsItemComment, NewsSource, NewsSponsorship,
-                 NewsQueue, Podcast, Topic, Sponsor, Post, Github}
+alias Changelog.{Buffer, Repo, Person, Episode, EpisodeHost, EpisodeGuest, Github,
+                 NewsAd, NewsItem, NewsItemComment, NewsSource, NewsSponsorship,
+                 NewsQueue, Podcast, Post, Sponsor, Subscription, Topic}
 
 import Ecto
 import Ecto.Changeset

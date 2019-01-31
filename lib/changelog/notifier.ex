@@ -1,5 +1,6 @@
 defmodule Changelog.Notifier do
-  alias Changelog.{Mailer, Episode, NewsItem, NewsItemComment, Slack}
+  alias Changelog.{Mailer, Episode, NewsItem, NewsItemComment, Podcast,
+                   Subscription, Slack}
   alias ChangelogWeb.Email
 
   def notify(item = %NewsItem{type: :audio}) do
@@ -10,6 +11,7 @@ defmodule Changelog.Notifier do
       |> Episode.preload_all()
 
     deliver_guest_thanks_emails(episode)
+    deliver_podcast_subscription_emails(episode)
     deliver_slack_new_episode_message(episode.podcast, item.url)
   end
   def notify(item = %NewsItem{}) do
@@ -36,21 +38,37 @@ defmodule Changelog.Notifier do
   defp deliver_author_email(nil, _item), do: false
   defp deliver_author_email(person, item) do
     if person.settings.email_on_authored_news do
-      Email.authored_news_published(person, item) |> Mailer.deliver_later()
+      person
+      |> Email.authored_news_published(item)
+      |> Mailer.deliver_later()
     end
   end
 
   defp deliver_comment_reply_email(nil, _reply), do: false
   defp deliver_comment_reply_email(person, reply) do
     if person.settings.email_on_comment_replies do
-      Email.comment_reply(person, reply) |> Mailer.deliver_later()
+      person
+      |> Email.comment_reply(reply)
+      |> Mailer.deliver_later()
     end
   end
 
-
   defp deliver_guest_thanks_emails(episode) do
     for eg <- Enum.filter(episode.episode_guests, &(&1.thanks)) do
-      Email.guest_thanks(eg.person, episode) |> Mailer.deliver_later()
+      eg.person
+      |> Email.guest_thanks(episode)
+      |> Mailer.deliver_later()
+    end
+  end
+
+  defp deliver_podcast_subscription_emails(episode) do
+    podcast = Podcast.preload_subscriptions(episode.podcast)
+
+    for subscription <- podcast.subscriptions do
+      subscription
+      |> Subscription.preload_all()
+      |> Email.episode_published(episode)
+      |> Mailer.deliver_later()
     end
   end
 
@@ -67,7 +85,9 @@ defmodule Changelog.Notifier do
   defp deliver_submitter_email(nil, _item), do: false
   defp deliver_submitter_email(person, item) do
     if person.settings.email_on_submitted_news do
-      Email.submitted_news_published(person, item) |> Mailer.deliver_later()
+      person
+      |> Email.submitted_news_published(item)
+      |> Mailer.deliver_later()
     end
   end
 end

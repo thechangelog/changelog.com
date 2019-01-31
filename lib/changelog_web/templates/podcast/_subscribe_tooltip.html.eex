@@ -13,6 +13,7 @@
       <%= if @podcast.twitter_handle do %>
         <li><%= link("Twitter", to: twitter_url(@podcast.twitter_handle)) %></li>
       <% end %>
+        <li><%= link("Email", to: subscribe_via_email_path(@conn, @podcast), title: "Subscribe via Email") %></li>
     <% else %>
       <li><%= link("Via Master", to: podcast_path(@conn, :show, "master")) %></li>
     <% end %>

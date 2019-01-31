@@ -2,7 +2,7 @@ defmodule Changelog.Podcast do
   use Changelog.Data
 
   alias Changelog.{Episode, EpisodeStat, Files, NewsItem, PodcastTopic,
-                   PodcastHost, Regexp}
+                   PodcastHost, Regexp, Subscription}
 
   require Logger
 
@@ -35,6 +35,7 @@ defmodule Changelog.Podcast do
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
     has_many :episode_stats, EpisodeStat
+    has_many :subscriptions, Subscription, where: [unsubscribed_at: nil]
 
     timestamps()
   end
@@ -158,6 +159,9 @@ defmodule Changelog.Podcast do
     |> Repo.preload(podcast_topics: {PodcastTopic.by_position, :topic})
     |> Repo.preload(:topics)
   end
+
+  def preload_subscriptions(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :subscriptions)
+  def preload_subscriptions(podcast), do: Repo.preload(podcast, :subscriptions)
 
   def update_stat_counts(podcast) do
     episodes = Repo.all(assoc(podcast, :episodes))

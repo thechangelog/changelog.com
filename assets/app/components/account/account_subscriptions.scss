@@ -3,12 +3,12 @@
     border-bottom: 1px solid $border-color;
     padding: $base-spacing 0;
 
-    &:first-child {
-      padding-top: 0;
-    }
+    &:first-child { padding-top: 0; }
+    &:last-child { border-bottom: 0; }
 
     @include breakpoint(mobile) {
       display: flex;
+      flex-wrap: wrap;
     }
 
     &-info {
@@ -22,6 +22,7 @@
 
       p {
         margin-bottom: 0;
+        max-width: 600px;
       }
 
       &-meta {
@@ -48,6 +49,61 @@
         &.is-subscribed {
           @include button($light-grey, $medium-grey);
         }
+      }
+    }
+  }
+
+  &-list {
+    margin: 1em 0 0;
+
+    @include breakpoint(mobile) {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &-item {
+      $gap: 1em;
+      $width: calc(50% - #{$gap});
+      border-bottom: 1px solid $border-color;
+      align-items: center;
+      display: flex;
+      flex: 1 0 $width;
+      padding: 0.5em 0;
+
+      @include breakpoint(mobile) {
+        max-width: $width;
+
+        &:nth-of-type(odd) {
+          margin-right: $gap;
+        }
+
+        &:nth-of-type(even) {
+          margin-left: $gap;
+        }
+      }
+
+      &-icon {
+        background: $black;
+        border-radius: 2px;
+        margin-right: 0.5em;
+        min-width: 50px;
+
+        @include breakpoint(mobile) {
+          margin-right: $gap;
+        }
+      }
+
+      &-title {
+        color: $dark-grey;
+        font-size: 0.875em;
+        flex: 0 1 auto;
+        font-weight: bold;
+        margin: 0 0.5em 0;
+      }
+
+      &-toggle {
+        margin-left: auto;
+        min-width: 40px;
       }
     }
   }

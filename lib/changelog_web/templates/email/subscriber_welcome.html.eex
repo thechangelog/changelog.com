@@ -2,7 +2,7 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>You're subscribed to <%= @newsletter.name %>!</p>
+    <p>You're subscribed to <strong><%= @subscribed_to.name %></strong>!</p>
 
     <p>Sign in to your account to access our Slack, manage your email subscriptions, and complete your profile.</p>
 

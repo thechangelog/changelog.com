@@ -1,9 +1,8 @@
 defmodule Changelog.Person do
   use Changelog.Data
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem, NewsItemComment,
-                   PodcastHost, Post, Regexp}
-  alias Timex.Duration
+  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem,
+                   NewsItemComment, PodcastHost, Post, Regexp, Subscription}
 
   defmodule Settings do
     use Changelog.Data
@@ -18,6 +17,14 @@ defmodule Changelog.Person do
     def changeset(struct, attrs) do
       cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news, :email_on_comment_replies])
     end
+
+    def is_valid(name) when is_binary(name) do
+      __MODULE__.__struct__
+      |> Map.keys()
+      |> Enum.map(&Atom.to_string/1)
+      |> Enum.any?(&(&1 == name))
+    end
+    def is_valid(_), do: false
   end
 
   schema "people" do
@@ -52,6 +59,7 @@ defmodule Changelog.Person do
     has_many :logged_news_items, NewsItem, foreign_key: :logger_id
     has_many :submitted_news_items, NewsItem, foreign_key: :submitter_id
     has_many :comments, NewsItemComment, foreign_key: :author_id
+    has_many :subscriptions, Subscription, where: [unsubscribed_at: nil]
 
     timestamps()
   end
@@ -62,7 +70,7 @@ defmodule Changelog.Person do
   def faked(query \\ __MODULE__),           do: from(q in query, where: q.name in ^Changelog.Faker.names())
 
   def joined_today(query \\ __MODULE__) do
-    today = Timex.subtract(Timex.now, Duration.from_days(1))
+    today = Timex.subtract(Timex.now, Timex.Duration.from_days(1))
     from(p in query, where: p.joined_at > ^today)
   end
 
@@ -144,7 +152,7 @@ defmodule Changelog.Person do
 
   def refresh_auth_token(person, expires_in \\ 30) do
     auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
-    expires_at = Timex.add(Timex.now, Duration.from_minutes(expires_in))
+    expires_at = Timex.add(Timex.now, Timex.Duration.from_minutes(expires_in))
     changeset = auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})
     {:ok, person} = Repo.update(changeset)
     person
@@ -169,6 +177,9 @@ defmodule Changelog.Person do
   def post_count(person) do
     Repo.count(from(p in Post, where: p.author_id == ^person.id))
   end
+
+  def preload_subscriptions(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :subscriptions)
+  def preload_subscriptions(person), do: Repo.preload(person, :subscriptions)
 
   def with_fake_data(person \\ %__MODULE__{}) do
     fake_name = Faker.name()

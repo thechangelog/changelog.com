@@ -91,6 +91,17 @@ defmodule Changelog.NotifierTest do
       assert_delivered_email Email.guest_thanks(g3, episode)
       assert called Slack.Client.message("#main", :_)
     end
+
+    test "when podcast has subscriptions" do
+      podcast = insert(:podcast)
+      s1 = insert(:subscription_on_podcast, podcast: podcast)
+      s2 = insert(:subscription_on_podcast, podcast: podcast)
+      episode = insert(:published_episode, podcast: podcast)
+      item = episode |> episode_news_item() |> insert()
+      Notifier.notify(item)
+      assert_delivered_email Email.episode_published(s1, episode)
+      assert_delivered_email Email.episode_published(s2, episode)
+    end
   end
 
   describe "notify with regular item" do
