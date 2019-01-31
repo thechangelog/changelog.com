@@ -24,15 +24,12 @@ defmodule Changelog.Buffer.Content do
     if Enum.any?(meta) do
       """
       #{episode_emoji()} New episode of #{episode.podcast.name}!
-
       #{Enum.join(meta, "\n")}
-
       💚 #{episode_link(item)}
       """
     else
       """
       #{episode_emoji()} New episode of #{episode.podcast.name}!
-
       💚 #{episode_link(item)}
       """
     end
@@ -65,7 +62,7 @@ defmodule Changelog.Buffer.Content do
 
   defp news_item_verbose_text(item) do
     [news_item_headline(item), news_item_meta(item), news_item_link(item)]
-    |> ListKit.compact_join("\n\n")
+    |> ListKit.compact_join("\n")
   end
 
   def post_link(nil), do: nil
@@ -112,7 +109,7 @@ defmodule Changelog.Buffer.Content do
   defp author_meta(%{author: %{twitter_handle: handle}}), do: "#{author_emoji()} by @#{handle}"
 
   defp featuring_meta([]), do: nil
-  defp featuring_meta(people), do: "#{featuring_emoji()} #{twitter_list(people, ", ")}"
+  defp featuring_meta(people), do: "#{featuring_emoji()} #{twitter_list(people, " ")}"
 
   defp source_meta(%{source: nil}), do: nil
   defp source_meta(%{source: %{twitter_handle: nil}}), do: nil

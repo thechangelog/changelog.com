@@ -34,7 +34,7 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:episode_guest, episode: ep, person: g2, position: 2)
       insert(:episode_host, episode: ep, person: h1)
       item = ep |> episode_news_item() |> insert
-      assert Content.episode_text(item) =~ "@janedoe, John Doe, @v_cool"
+      assert Content.episode_text(item) =~ "@janedoe John Doe @v_cool"
     end
 
     test "includes topic tags and twitter handles" do
