@@ -96,11 +96,9 @@ defmodule Changelog.Podcast do
   def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio)
   def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
 
-  def episode_count(podcast) do
-    podcast
-    |> assoc(:episodes)
-    |> Repo.count
-  end
+  def episode_count(podcast), do: podcast |> assoc(:episodes) |> Repo.count()
+
+  def subscription_count(podcast), do: podcast |> assoc(:subscriptions) |> Repo.count()
 
   def has_feed(podcast), do: podcast.slug != "backstage"
 

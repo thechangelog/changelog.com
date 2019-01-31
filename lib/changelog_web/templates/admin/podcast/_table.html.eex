@@ -31,6 +31,7 @@
       <td><%= status_label(podcast) %></td>
       <td><%= twitter_link(podcast) %></td>
       <td>
+        <strong>Email:</strong> <%= comma_separated(Podcast.subscription_count(podcast)) %><br/>
       <%= for {client, count} <- (podcast.subscribers || %{}) do %>
         <strong><%= client %>:</strong> <%= comma_separated(count) %><br/>
       <% end %>
