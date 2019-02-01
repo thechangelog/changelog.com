@@ -129,7 +129,7 @@ prevent-incompatible-deps-reaching-the-docker-image:
 
 .PHONY: create-dirs-mounted-as-volumes
 create-dirs-mounted-as-volumes:
-	@mkdir -p $(CURDIR)/priv/{uploads,db}
+	@mkdir -p $(CURDIR)/priv/{uploads,db,db11}
 
 .PHONY: bootstrap-image
 bootstrap-image: build-bootstrap-image publish-bootstrap-image ## bi  | Build & publish thechangelog/bootstrap Docker image

@@ -32,6 +32,7 @@ npm-debug.log*
 /config/prod.secret.exs
 /priv/uploads
 /priv/db
+/priv/db11
 /import/cookies.yml
 /cover
 

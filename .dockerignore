@@ -7,6 +7,7 @@ docker
 import
 nginx
 priv/db
+priv/db11
 priv/uploads
 script
 terraform

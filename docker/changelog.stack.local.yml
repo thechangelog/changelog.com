@@ -29,6 +29,23 @@ services:
     image: postgres:9.5.4
     volumes:
       - ${PWD}/priv/db:/var/lib/postgresql/data:rw
+  db11:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    environment:
+      POSTGRES_USER: &pg_user postgres
+      POSTGRES_DB: &pg_db changelog
+      # https://www.postgresql.org/docs/11/libpq-envars.html
+      PGUSER: *pg_user
+      PGDATABASE: *pg_db
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      start_period: 5s
+    image: postgres:11.1
+    volumes:
+      - ${PWD}/priv/db11:/var/lib/postgresql/data:rw
   app:
     deploy:
       replicas: 1
@@ -41,7 +58,7 @@ services:
         order: start-first
     environment:
       NODE: "${HOSTNAME}"
-      DB_URL: "ecto://postgres@db:5432/changelog"
+      DB_URL: "ecto://postgres@db11:5432/changelog"
       PORT: 4000
       URL_HOST: &host "${USER}.changelog.com"
       URL_PORT: 80
@@ -70,7 +87,7 @@ services:
       - ALGOLIA_API_KEY
       - DB_URL
     depends_on:
-      - db
+      - db11
     image: thechangelog/changelog.com:local
     ports:
       - "4000:4000"
