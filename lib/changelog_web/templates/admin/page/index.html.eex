@@ -77,6 +77,10 @@
 </div>
 
 <div class="ui basic segment">
+  <%= render(EpisodeView, "_reach.html", assigns) %>
+</div>
+
+<div class="ui basic segment">
   <div class="ui stackable centered two column grid">
   <%= for podcast <- @podcasts do %>
     <div class="column">

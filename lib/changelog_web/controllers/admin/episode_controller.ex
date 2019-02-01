@@ -19,23 +19,29 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     page =
       episodes
-      |> Episode.published
-      |> Episode.newest_first
+      |> Episode.published()
+      |> Episode.newest_first()
       |> Repo.paginate(params)
 
     scheduled =
       episodes
-      |> Episode.scheduled
-      |> Episode.newest_first
-      |> Repo.all
+      |> Episode.scheduled()
+      |> Episode.newest_first()
+      |> Repo.all()
 
     drafts =
       episodes
-      |> Episode.unpublished
+      |> Episode.unpublished()
       |> Episode.newest_first(:recorded_at)
-      |> Repo.all
+      |> Repo.all()
 
-    render(conn, :index, episodes: page.entries, scheduled: scheduled, drafts: drafts, page: page)
+    conn
+    |> assign(:episodes, page.entries)
+    |> assign(:scheduled, scheduled)
+    |> assign(:drafts, drafts)
+    |> assign(:page, page)
+    |> assign(:reach, reach(podcast))
+    |> render(:index)
   end
 
   def show(conn, %{"id" => slug}, podcast) do
@@ -250,6 +256,21 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
   defp handle_guest_thanks(%{"thanks" => _}, episode), do: set_guest_thanks(episode, true)
   defp handle_guest_thanks(_, episode), do: set_guest_thanks(episode, false)
+
+  defp reach(podcast) do
+    yesterday = Timex.today() |> Timex.shift(days: -1)
+    yesteryear = yesterday |> Timex.shift(years: -1)
+
+    Cache.get_or_store("stats-reach-#{podcast.slug}-#{yesterday}", fn ->
+      %{as_of: Timex.now(),
+        now_seven: EpisodeStat.date_range_reach(podcast, yesterday, days: -7),
+        now_thirty: EpisodeStat.date_range_reach(podcast, yesterday, days: -30),
+        now_ninety: EpisodeStat.date_range_reach(podcast, yesterday, days: -90),
+        then_seven: EpisodeStat.date_range_reach(podcast, yesteryear, days: -7),
+        then_thirty: EpisodeStat.date_range_reach(podcast, yesteryear, days: -30),
+        then_ninety: EpisodeStat.date_range_reach(podcast, yesteryear, days: -90)}
+    end)
+  end
 
   defp set_guest_thanks(episode, should_thank) do
     episode = Episode.preload_guests(episode)

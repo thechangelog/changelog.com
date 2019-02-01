@@ -17,15 +17,14 @@ defmodule Changelog.EpisodeStat do
     timestamps()
   end
 
-  def on_date(date, query \\ __MODULE__), do: from(q in query, where: q.date == ^date)
-  def with_podcast(query \\ __MODULE__, podcast), do: from(q in query, where: q.podcast_id == ^podcast.id)
+  def between(query \\ __MODULE__, start_date, end_date), do: from(q in query, where: q.date < ^end_date, where: q.date >= ^start_date)
+  def sum_reach(query \\ __MODULE__), do: from(q in query, select: sum(q.uniques))
+  def sum_downloads(query \\ __MODULE__), do: from(q in query, select: sum(q.downloads))
 
   def oldest_date do
     Repo.one(from s in __MODULE__, select: [min(s.date)], limit: 1)
     |> List.first
   end
-
-  def any_on_date?(date), do: Repo.count(on_date(date)) > 0
 
   def changeset(struct, params \\ %{}) do
     struct
@@ -87,6 +86,23 @@ defmodule Changelog.EpisodeStat do
     |> downloads_list_merged_and_sorted
   end
   def downloads_by_os(stat), do: downloads_by_os([stat])
+
+  def date_range_reach(end_date, shift_amount) do
+    __MODULE__
+    |> between(Timex.shift(end_date, shift_amount), end_date)
+    |> sum_reach()
+    |> Repo.one()
+    |> Kernel.||(0)
+  end
+
+  def date_range_reach(podcast = %Podcast{}, end_date, shift_amount) do
+    podcast
+    |> assoc(:episode_stats)
+    |> between(Timex.shift(end_date, shift_amount), end_date)
+    |> sum_reach()
+    |> Repo.one()
+    |> Kernel.||(0)
+  end
 
   defp downloads_list_merged_and_sorted(list) do
     list

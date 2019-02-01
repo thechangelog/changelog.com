@@ -89,6 +89,14 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   def ts(ts), do: TimeView.ts(ts)
 
+  def up_or_down_class(a, b) when is_integer(a) and is_integer(b) do
+    if a > b do
+      "green"
+    else
+      "red"
+    end
+  end
+
   def yes_no_options do
     [{"Yes", true}, {"No", false}]
   end

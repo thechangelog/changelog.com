@@ -16,14 +16,14 @@ defmodule ChangelogWeb.Admin.PodcastView do
 
   def last_stat(podcast) do
     podcast
-      |> EpisodeStat.with_podcast
-      |> EpisodeStat.newest_first
-      |> EpisodeStat.limit(1)
-      |> Repo.one
+    |> Ecto.assoc(:episode_stats)
+    |> EpisodeStat.newest_first()
+    |> EpisodeStat.limit(1)
+    |> Repo.one
   end
 
   def position_options do
-    count = Podcast.ours |> Podcast.not_retired |> Repo.count
+    count = Podcast.ours() |> Podcast.not_retired() |> Repo.count()
     1..count
   end
 

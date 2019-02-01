@@ -33,6 +33,13 @@ defmodule Changelog.Cache do
     |> Enum.each(fn(key) -> delete(cache, key) end)
   end
 
+  def get_or_store(key, function) do
+    ConCache.get_or_store(:app_cache, key, fn() ->
+      value = apply(function, [])
+      %ConCache.Item{value: value, ttl: :infinity}
+    end)
+  end
+
   def get_or_store(key, ttl, function) do
     ConCache.get_or_store(:app_cache, key, fn() ->
       value = apply(function, [])

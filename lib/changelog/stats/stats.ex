@@ -2,7 +2,7 @@ defmodule Changelog.Stats do
   import Ecto
   import Ecto.Changeset
 
-  alias Changelog.{Podcast, Repo, Episode, EpisodeStat}
+  alias Changelog.{Cache, Podcast, Repo, Episode, EpisodeStat}
   alias Changelog.Stats.{Analyzer, Parser, S3}
 
   require Logger
@@ -19,6 +19,7 @@ defmodule Changelog.Stats do
     Logger.info("Stats: Start processing for #{date}")
     podcasts = Repo.all(Podcast.public)
     process(date, podcasts)
+    Cache.delete_prefix(:app_cache, "stats-")
     Logger.info("Stats: Finished processing for #{date}")
   end
 
