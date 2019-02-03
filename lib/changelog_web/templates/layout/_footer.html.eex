@@ -47,8 +47,6 @@
         <li><%= link("Changelog Weekly", to: page_path(@conn, :weekly), title: "Changelog Weekly") %></li>
         <li><%= link("Changelog Nightly", to: page_path(@conn, :nightly), title: "Changelog Nightly") %></li>
         <li>---</li>
-        <li><%= link("Fresh", to: news_item_path(@conn, :fresh), title: "Freshest news") %></li>
-        <li><%= link("Top", to: news_item_path(@conn, :top), title: "Top news") %></li>
         <li><%= link("Submit", to: news_item_path(@conn, :new), title: "Submit news") %></li>
       </ul>
     </div>

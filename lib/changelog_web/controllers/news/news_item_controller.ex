@@ -34,7 +34,7 @@ defmodule ChangelogWeb.NewsItemController do
     |> render(:index)
   end
 
-  def fresh(conn, params) do
+  def active(conn, params) do
     page =
       NewsItem
       |> NewsItem.published()
@@ -44,7 +44,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     items = Enum.map(page.entries, &NewsItem.load_object/1)
 
-    render(conn, :fresh, ads: get_ads(), items: items, page: page)
+    render(conn, :active, ads: get_ads(), items: items, page: page)
   end
 
   def top_week(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))

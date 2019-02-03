@@ -5,6 +5,19 @@ defmodule ChangelogWeb.NewsItemView do
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
                       EpisodeView, PersonView, TopicView, PodcastView}
 
+  def sort_explanation(conn) do
+    active_id = controller_action_combo(conn)
+
+    case active_id do
+      "news_item-active" -> "News with recent comments."
+      "news_item-top" -> "Top news of the week."
+      "news_item-top_week" -> "Top news of the week."
+      "news_item-top_month" -> "Top news of the month."
+      "news_item-top_all" -> "Top news of all time."
+      _else -> false
+    end
+  end
+
   def admin_edit_link(conn, user, item) do
     if user && user.admin do
       content_tag(:span, class: "news_item-toolbar-meta-item") do
