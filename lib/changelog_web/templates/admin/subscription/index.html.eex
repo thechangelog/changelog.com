@@ -1,0 +1,53 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("Podcasts", to: admin_podcast_path(@conn, :index)) %>
+    &raquo;
+    <%= link(@podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    &raquo;
+    Subscriptions
+    <%= link("(View)", to: podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+  </h1>
+
+  <div class="actions right">
+  </div>
+</div>
+
+<div class="ui basic segment">
+  <div class="ui horizontal statistic">
+    <div class="value"><%= @podcast |> Subscription.subscribed_count() |> comma_separated() %></div>
+    <div class="label">Subscribed</div>
+  </div>
+  <div class="ui horizontal statistic">
+    <div class="value"><%= @podcast |> Subscription.unsubscribed_count() |> comma_separated() %></div>
+    <div class="label">Unsubscribed</div>
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@subscriptions) do %>
+  <table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>Person</th>
+        <th>Context</th>
+        <th>Subscribed At</th>
+        <th>Unsubscribed At</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for sub <- @subscriptions do %>
+      <tr>
+        <td>
+          <img class="ui avatar image" src="<%= PersonView.avatar_url(sub.person) %>">
+          <%= sub.person.name %>
+          (<%= sub.person.handle %>)
+        </td>
+        <td><%= sub.context |> String.replace_leading("you", "") %></td>
+        <td><%= ts(sub.inserted_at) %></td>
+        <td><%= ts(sub.unsubscribed_at) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -14,6 +14,8 @@ defmodule Changelog.Subscription do
     timestamps()
   end
 
+  def on_item(query \\ __MODULE__, item), do: from(q in query, where: q.item_id == ^item.id)
+  def on_podcast(query \\ __MODULE__, podcast), do: from(q in query, where: q.podcast_id == ^podcast.id)
   def subscribed(query \\ __MODULE__), do: from(q in query, where: is_nil(q.unsubscribed_at))
   def unsubscribed(query \\ __MODULE__), do: from(q in query, where: not(is_nil(q.unsubscribed_at)))
 
@@ -49,6 +51,20 @@ defmodule Changelog.Subscription do
     |> change(unsubscribed_at: nil)
     |> change(context: context)
     |> Repo.insert_or_update()
+  end
+
+  def subscribed_count(podcast = %Podcast{}) do
+    podcast
+    |> on_podcast()
+    |> subscribed()
+    |> Repo.count()
+  end
+
+  def unsubscribed_count(podcast = %Podcast{}) do
+    podcast
+    |> on_podcast()
+    |> unsubscribed()
+    |> Repo.count()
   end
 
   def subscribed_to(%{item_id: id}) when not is_nil(id), do: Repo.get(NewsItem, id)
