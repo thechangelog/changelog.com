@@ -121,5 +121,5 @@ defmodule ChangelogWeb.FeedController do
     |> cache_public_response(cache_duration())
   end
 
-  defp cache_duration, do: :timer.minutes(5)
+  defp cache_duration, do: 2..10 |> Enum.random() |> :timer.minutes()
 end
