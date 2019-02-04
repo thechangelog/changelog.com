@@ -85,10 +85,6 @@ window.App = {
     });
   },
 
-  getCsrf() {
-    return u("[property=csrf]").attr("content");
-  },
-
   isExternalLink(a) {
     let href = a.attr("href");
     return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
@@ -116,7 +112,7 @@ u(document).on("change", ".js-toggle-subscription", function(event) {
   let checkBox = u(event.target);
   let slug = checkBox.data("slug");
   let action = checkBox.is(":checked") ? "subscribe" : "unsubscribe";
-  ajax(`~/${action}`, {method: "POST", headers: {"x-csrf-token": App.getCsrf()}, body: {"slug": slug}});
+  ajax(`~/${action}`, {method: "POST", body: {"slug": slug}});
 });
 
 u(document).handle("click", ".js-toggle_element", function(event) {
@@ -182,7 +178,7 @@ const observer = new IntersectionObserver(function(entries) {
     let el = u(entry.target);
     let type = el.data("news-type");
     let id = el.data("news-id");
-    ajax(`/${type}/impress`, {method: "POST", headers: {"x-csrf-token": App.getCsrf()}, body: {"ids": id}});
+    ajax(`/${type}/impress`, {method: "POST", body: {"ids": id}});
     observer.unobserve(entry.target);
   });
 });

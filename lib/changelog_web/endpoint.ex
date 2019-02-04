@@ -41,7 +41,8 @@ defmodule ChangelogWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_changelog_key",
-    signing_salt: System.get_env("SIGNING_SALT") || "8bAOekZm"
+    signing_salt: System.get_env("SIGNING_SALT") || "8bAOekZm",
+    extra: "SameSite=Strict"
 
   plug ChangelogWeb.Router
 end

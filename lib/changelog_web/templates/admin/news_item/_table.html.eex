@@ -27,7 +27,7 @@
     </thead>
 
   <%= if @status == :queued do %>
-    <tbody class="js-queue" data-csrf="<%= get_csrf_token() %>">
+    <tbody class="js-queue">
   <% else %>
     <tbody>
   <% end %>

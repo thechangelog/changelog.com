@@ -17,8 +17,7 @@ export default class newsItemView {
           $.ajax({
             type: "post",
             url: `/admin/news/items/${$(event.item).data("id")}/move`,
-            data: {position: event.newIndex},
-            headers: {"x-csrf-token": $queue.data("csrf")}
+            data: {position: event.newIndex}
           });
         }
       });
