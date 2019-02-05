@@ -99,6 +99,17 @@ defmodule Changelog.NewsItem do
     |> file_changeset(attrs)
   end
 
+  def hashid(item), do: Changelog.Hashid.encode(item.id)
+
+  def slug(item) do
+    item.headline
+    |> String.downcase
+    |> String.replace(~r/[^a-z0-9\s]/, "")
+    |> String.trim
+    |> String.replace(~r/\s+/, "-")
+    |> Kernel.<>("-#{hashid(item)}")
+  end
+
   def load_object(item) do
     object = case item.type do
       :audio -> load_episode_object(item.object_id)

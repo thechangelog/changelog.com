@@ -102,13 +102,14 @@ defmodule Changelog.Episode do
     |> derive_bytes_and_duration
   end
 
-  def load_news_item(episode) do
-    item =
-      episode
-      |> NewsItem.with_episode()
-      |> Repo.one()
-      |> NewsItem.load_object(episode)
+  def get_news_item(episode) do
+    episode
+    |> NewsItem.with_episode()
+    |> Repo.one()
+  end
 
+  def load_news_item(episode) do
+    item = episode |> get_news_item() |> NewsItem.load_object(episode)
     Map.put(episode, :news_item, item)
   end
 

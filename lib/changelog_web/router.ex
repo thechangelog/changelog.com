@@ -216,6 +216,7 @@ defmodule ChangelogWeb.Router do
     get "/:podcast/:slug/preview", EpisodeController, :preview, as: :episode
     get "/:podcast/:slug/play", EpisodeController, :play, as: :episode
     get "/:podcast/:slug/share", EpisodeController, :share, as: :episode
+    get "/:podcast/:slug/discuss", EpisodeController, :discuss, as: :episode
   end
 
   defp handle_errors(_conn, %{reason: %Ecto.NoResultsError{}}), do: true

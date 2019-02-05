@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, Hashid, NewsAd, NewsItem, Podcast, Regexp, UrlKit}
+  alias Changelog.{Episode, Files, NewsAd, NewsItem, Podcast, Regexp, UrlKit}
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
                       EpisodeView, PersonView, TopicView, PodcastView}
 
@@ -41,7 +41,7 @@ defmodule ChangelogWeb.NewsItemView do
     end
   end
 
-  def hashid(item), do: Hashid.encode(item.id)
+  def hashid(item), do: NewsItem.hashid(item)
 
   def image_link(item, version \\ :large) do
     if item.image do
@@ -144,14 +144,7 @@ defmodule ChangelogWeb.NewsItemView do
   def render_youtube_embed(nil), do: nil
   def render_youtube_embed(id), do: render("_youtube_embed.html", id: id)
 
-  def slug(item) do
-    item.headline
-    |> String.downcase
-    |> String.replace(~r/[^a-z0-9\s]/, "")
-    |> String.trim
-    |> String.replace(~r/\s+/, "-")
-    |> Kernel.<>("-#{hashid(item)}")
-  end
+  def slug(item), do: NewsItem.slug(item)
 
   def teaser(item, max_words \\ 20) do
     item.story
