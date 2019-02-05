@@ -6,7 +6,9 @@ defmodule ChangelogWeb.FeedView do
                       PodcastView, PostView, TimeView}
 
   def discussion_link(nil), do: ""
-  def discussion_link(episode = %Episode{}), do: discussion_link(episode.news_item)
+  def discussion_link(episode = %Episode{}) do
+    Endpoint |> episode_url(:discuss, episode.podcast.slug, episode.slug) |> discussion_link()
+  end
   def discussion_link(post = %Post{}), do: discussion_link(post.news_item)
   def discussion_link(item = %NewsItem{}) do
     url = news_item_url(Endpoint, :show, NewsItemView.hashid(item))
