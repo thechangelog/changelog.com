@@ -21,7 +21,13 @@ defmodule ChangelogWeb.PodcastController do
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :show, podcast: podcast, list: podcast.slug, items: items, page: page)
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:list, podcast.slug)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> cache_public(:timer.minutes(5))
+    |> render(:show)
   end
 
   def recommended(conn, params = %{"slug" => slug}) do

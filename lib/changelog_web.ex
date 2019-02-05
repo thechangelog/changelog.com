@@ -2,10 +2,9 @@ defmodule ChangelogWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: ChangelogWeb
-      use PlugEtsCache.Phoenix
 
       alias Changelog.{Policies, Repo}
-      alias ChangelogWeb.Plug.{Authorize, PublicEtsCache, RequireUser, RequireGuest}
+      alias ChangelogWeb.Plug.{Authorize, RequireUser, RequireGuest}
 
       import Ecto
       import Ecto.Query
@@ -13,14 +12,8 @@ defmodule ChangelogWeb do
       import ChangelogWeb.Router.Helpers
       import ChangelogWeb.Plug.Conn
 
-      @doc """
-      A small wrapper around PlugEtsCache.Phoenix.cache_response to short-circuit
-      the caching if connection has a user
-      """
-      def cache_public_response(conn = %{assigns: %{current_user: user}}) when not is_nil(user), do: conn
-      def cache_public_response(conn), do: cache_response(conn)
-      def cache_public_response(conn = %{assigns: %{current_user: user}}, _ttl) when not is_nil(user), do: conn
-      def cache_public_response(conn, ttl), do: cache_response(conn, ttl)
+      plug ChangelogWeb.Plug.ResponseCache
+      import ChangelogWeb.Plug.ResponseCache, only: [cache_public: 1, cache_public: 2]
 
       defp is_admin?(user = %Changelog.Person{}), do: user.admin
       defp is_admin?(_), do: false

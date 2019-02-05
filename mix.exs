@@ -53,7 +53,6 @@ defmodule Changelog.Mixfile do
       {:httpoison, "~> 1.0", override: true},
       {:jason, "~> 1.0"},
       {:con_cache, "~> 0.13.0"},
-      {:plug_ets_cache, "~> 0.3.1"},
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_s3, "~> 2.0"},

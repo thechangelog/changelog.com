@@ -7,19 +7,19 @@ defmodule Changelog.Cache do
   def delete(nil), do: :ok
   def delete(episode = %Episode{}) do
     episode = Episode.preload_podcast(episode)
-    delete_prefix(:response_cache, "/#{episode.podcast.slug}/#{episode.slug}")
+    delete_prefix(:app_cache, "/#{episode.podcast.slug}/#{episode.slug}")
   end
   def delete(_podcast = %Podcast{}) do
     delete(:app_cache, "podcasts")
   end
   def delete(post = %Post{}) do
-    delete(:response_cache, "/posts/#{post.slug}")
+    delete(:app_cache, "/posts/#{post.slug}")
   end
 
   def delete(cache, key), do: ConCache.delete(cache, key)
 
   def delete_all do
-    for cache <- [:app_cache, :response_cache] do
+    for cache <- [:app_cache] do
       cache
       |> keys()
       |> Enum.each(fn(key) -> delete(cache, key) end)

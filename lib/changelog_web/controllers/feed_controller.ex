@@ -5,15 +5,13 @@ defmodule ChangelogWeb.FeedController do
 
   alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Podcast, Post, Topic}
 
-  plug PublicEtsCache
-
   def news(conn, _params) do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
+    |> cache_public(cache_duration())
     |> render("news.xml")
-    |> cache_public_response(cache_duration())
   end
 
   def news_titles(conn, _params) do
@@ -21,8 +19,8 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
+    |> cache_public(cache_duration())
     |> render("news_titles.xml")
-    |> cache_public_response(cache_duration())
   end
 
   def podcast(conn, %{"slug" => "backstage"}) do
@@ -46,8 +44,8 @@ defmodule ChangelogWeb.FeedController do
     |> put_resp_content_type("application/xml")
     |> assign(:podcast, podcast)
     |> assign(:episodes, episodes)
+    |> cache_public(cache_duration())
     |> render("podcast.xml")
-    |> cache_public_response(cache_duration())
   end
 
   defp log_subscribers(conn, podcast) do
@@ -72,8 +70,8 @@ defmodule ChangelogWeb.FeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
+    |> cache_public(cache_duration())
     |> render("posts.xml", posts: posts)
-    |> cache_public_response(cache_duration())
   end
 
   def sitemap(conn, _params) do
@@ -117,8 +115,8 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:podcasts, podcasts)
     |> assign(:posts, posts)
     |> assign(:topics, topics)
+    |> cache_public(cache_duration())
     |> render("sitemap.xml")
-    |> cache_public_response(cache_duration())
   end
 
   defp cache_duration, do: 2..10 |> Enum.random() |> :timer.minutes()

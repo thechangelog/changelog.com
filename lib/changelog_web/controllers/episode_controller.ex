@@ -4,7 +4,6 @@ defmodule ChangelogWeb.EpisodeController do
   alias Changelog.{Episode, Podcast}
 
   plug :allow_framing, "embeds are frameable" when action in [:embed]
-  plug PublicEtsCache
   plug :assign_podcast
 
   def action(conn, _) do
@@ -24,8 +23,8 @@ defmodule ChangelogWeb.EpisodeController do
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
     |> assign(:item, episode.news_item)
+    |> cache_public(:timer.minutes(5))
     |> render(:show)
-    |> cache_public_response(:infinity)
   end
 
   def embed(conn, params = %{"slug" => slug}, podcast) do
@@ -44,8 +43,8 @@ defmodule ChangelogWeb.EpisodeController do
     |> assign(:episode, episode)
     |> assign(:theme, theme)
     |> assign(:source, source)
+    |> cache_public(:infinity)
     |> render(:embed)
-    |> cache_public_response(:infinity)
   end
 
   def preview(conn, %{"slug" => slug}, podcast) do
@@ -91,9 +90,9 @@ defmodule ChangelogWeb.EpisodeController do
   def share(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published
+      |> Episode.published()
+      |> Episode.preload_podcast()
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_podcast
 
     render(conn, "share.json", podcast: podcast, episode: episode)
   end
