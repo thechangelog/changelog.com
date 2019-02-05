@@ -43,7 +43,7 @@ defmodule ChangelogWeb.HomeController do
   end
   def subscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
-    context = "you toggled on email notifications for #{podcast.name} in your changelog.com settings"
+    context = "you toggled on email notifications in your changelog.com settings"
     Subscription.subscribe(me, podcast, context)
     send_resp(conn, 200, "")
   end

@@ -75,7 +75,7 @@ defmodule ChangelogWeb.PersonController do
 
   defp subscribe_to_podcast(person, "master") do
     for podcast <- Cache.podcasts() do
-      context = "you signed up for email notifications for #{podcast.name} on changelog.com"
+      context = "you signed up for email notifications on changelog.com"
       Subscription.subscribe(person, podcast, context)
     end
 
@@ -83,7 +83,7 @@ defmodule ChangelogWeb.PersonController do
   end
   defp subscribe_to_podcast(person, slug) do
     podcast = Podcast.get_by_slug!(slug)
-    context = "you signed up for email notifications for #{podcast.name} on changelog.com"
+    context = "you signed up for email notifications on changelog.com"
     Subscription.subscribe(person, podcast, context)
     person |> Email.subscriber_welcome(podcast) |> Mailer.deliver_later()
   end
