@@ -64,10 +64,11 @@ defmodule Changelog.Person do
     timestamps()
   end
 
-  def in_slack(query \\ __MODULE__),        do: from(q in query, where: not(is_nil(q.slack_id)))
-  def joined(query \\ __MODULE__),          do: from(a in query, where: not(is_nil(a.joined_at)))
-  def never_signed_in(query \\ __MODULE__), do: from(q in query, where: is_nil(q.signed_in_at))
-  def faked(query \\ __MODULE__),           do: from(q in query, where: q.name in ^Changelog.Faker.names())
+  def in_slack(query \\ __MODULE__),          do: from(q in query, where: not(is_nil(q.slack_id)))
+  def joined(query \\ __MODULE__),            do: from(a in query, where: not(is_nil(a.joined_at)))
+  def never_signed_in(query \\ __MODULE__),   do: from(q in query, where: is_nil(q.signed_in_at))
+  def faked(query \\ __MODULE__),             do: from(q in query, where: q.name in ^Changelog.Faker.names())
+  def with_email(query \\ __MODULE__, email), do: from(q in query, where: q.email == ^email)
 
   def joined_today(query \\ __MODULE__) do
     today = Timex.subtract(Timex.now, Timex.Duration.from_days(1))
