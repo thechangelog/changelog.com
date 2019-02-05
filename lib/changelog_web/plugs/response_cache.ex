@@ -29,9 +29,8 @@ defmodule ChangelogWeb.Plug.ResponseCache do
 
   def cache_public(conn = %{assigns: %{current_user: user}}, _ttl) when not is_nil(user), do: conn
   def cache_public(conn, ttl), do: cache(conn, ttl)
-  def cache(conn), do: cache(conn, :infinity)
 
-  def cache(conn, ttl) do
+  def cache(conn, ttl \\ :infinity) do
     conn
     |> Map.put(:cache_ttl, ttl)
     |> register_before_send(&cache_response/1)
