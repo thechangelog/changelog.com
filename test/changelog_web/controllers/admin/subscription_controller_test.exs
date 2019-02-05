@@ -12,8 +12,8 @@ defmodule ChangelogWeb.Admin.SubscriptionControllerTest do
     conn = get(conn, admin_podcast_subscription_path(conn, :index, podcast.slug))
 
     assert html_response(conn, 200) =~ ~r/Subscriptions/
-    assert String.contains?(conn.resp_body, p1.handle)
-    assert String.contains?(conn.resp_body, p2.handle)
+    assert String.contains?(conn.resp_body, p1.name)
+    assert String.contains?(conn.resp_body, p2.name)
   end
 
   test "requires user auth on all actions", %{conn: conn} do
