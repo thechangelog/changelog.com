@@ -19,7 +19,7 @@ defmodule Changelog.Stats do
     Logger.info("Stats: Start processing for #{date}")
     podcasts = Repo.all(Podcast.public)
     process(date, podcasts)
-    Cache.delete_prefix(:app_cache, "stats-")
+    Cache.delete_prefix("stats-")
     Logger.info("Stats: Finished processing for #{date}")
   end
 

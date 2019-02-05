@@ -8,9 +8,9 @@ defmodule Changelog.Github.Puller do
   def update(type, items) when is_list(items) do
     for item <- items do
       item
-      |> get_episode
+      |> get_episode()
       |> update_episode(type)
-      |> Cache.delete
+      |> Cache.delete()
     end
   end
   def update(type, item), do: update(type, [item])
@@ -20,7 +20,7 @@ defmodule Changelog.Github.Puller do
     case String.split(filename, "/") do
       [podcast_slug, episode_section] ->
         podcast_slug
-        |> get_podcast_from_repo
+        |> get_podcast_from_repo()
         |> get_episode_from_repo(episode_section)
       _else -> nil
     end

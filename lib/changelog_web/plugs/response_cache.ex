@@ -1,6 +1,6 @@
 defmodule ChangelogWeb.Plug.ResponseCache do
   @moduledoc """
-  Adds ability to store/retrieve responses in/from ConCache.
+  Adds ability to store/retrieve responses in/from the app cache.
 
   Storage is managed by the `cache` and `cache_public` functions which must be
   called before calling `render`.
@@ -10,11 +10,12 @@ defmodule ChangelogWeb.Plug.ResponseCache do
   """
   import Plug.Conn
   use Plug.Builder
+  alias Changelog.Cache
 
   plug :cached_response
   def cached_response(conn = %{assigns: %{current_user: user}}, _opts) when not is_nil(user), do: conn
   def cached_response(conn, _opts) do
-    case ConCache.get(:app_cache, key(conn)) do
+    case Cache.get(key(conn)) do
       nil -> conn
       result ->
         conn
@@ -40,7 +41,7 @@ defmodule ChangelogWeb.Plug.ResponseCache do
     type = conn |> get_resp_header("content-type") |> hd()
     ttl = conn |> Map.get(:cache_ttl)
     item = %{type: type, value: body, ttl: ttl}
-    ConCache.put(:app_cache, key(conn), item)
+    Cache.put(key(conn), item)
     conn
   end
 

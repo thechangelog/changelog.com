@@ -1,54 +1,54 @@
 defmodule Changelog.Cache do
   @moduledoc """
-  A small wrapper around ConCache to unify response/app caches
+  A small wrapper around ConCache to simplify interface
   """
   alias Changelog.{Episode, Podcast, Post, Repo}
+
+  def cache_name, do: :app_cache
 
   def delete(nil), do: :ok
   def delete(episode = %Episode{}) do
     episode = Episode.preload_podcast(episode)
-    delete_prefix(:app_cache, "/#{episode.podcast.slug}/#{episode.slug}")
+    delete_prefix("/#{episode.podcast.slug}/#{episode.slug}")
   end
   def delete(_podcast = %Podcast{}) do
-    delete(:app_cache, "podcasts")
+    delete("podcasts")
   end
   def delete(post = %Post{}) do
-    delete(:app_cache, "/posts/#{post.slug}")
+    delete("/posts/#{post.slug}")
   end
-
-  def delete(cache, key), do: ConCache.delete(cache, key)
+  def delete(key), do: ConCache.delete(cache_name(), key)
 
   def delete_all do
-    for cache <- [:app_cache] do
-      cache
-      |> keys()
-      |> Enum.each(fn(key) -> delete(cache, key) end)
-    end
+    Enum.each(keys(), fn(key) -> delete(key) end)
   end
 
-  def delete_prefix(cache, prefix) do
-    cache
-    |> keys()
+  def delete_prefix(prefix) do
+    keys()
     |> Enum.filter(fn(key) -> key =~ prefix end)
-    |> Enum.each(fn(key) -> delete(cache, key) end)
+    |> Enum.each(fn(key) -> delete(key) end)
   end
+
+  def get(key), do: ConCache.get(cache_name(), key)
 
   def get_or_store(key, function) do
-    ConCache.get_or_store(:app_cache, key, fn() ->
+    ConCache.get_or_store(cache_name(), key, fn() ->
       value = apply(function, [])
       %ConCache.Item{value: value, ttl: :infinity}
     end)
   end
 
   def get_or_store(key, ttl, function) do
-    ConCache.get_or_store(:app_cache, key, fn() ->
+    ConCache.get_or_store(cache_name(), key, fn() ->
       value = apply(function, [])
       %ConCache.Item{value: value, ttl: ttl}
     end)
   end
 
-  def keys(cache) do
-    cache
+  def put(key, item), do: ConCache.put(cache_name(), key, item)
+
+  def keys do
+    cache_name()
     |> ConCache.ets
     |> :ets.tab2list
     |> Enum.map(&(elem(&1, 0)))
