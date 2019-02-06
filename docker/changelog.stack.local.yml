@@ -12,23 +12,6 @@ services:
     image: gliderlabs/logspout:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-  db:
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: any
-    environment:
-      POSTGRES_USER: &pg_user postgres
-      POSTGRES_DB: &pg_db changelog
-      # https://www.postgresql.org/docs/9.5/libpq-envars.html
-      PGUSER: *pg_user
-      PGDATABASE: *pg_db
-    healthcheck:
-      test: ["CMD", "pg_isready"]
-      start_period: 5s
-    image: postgres:9.5.4
-    volumes:
-      - ${PWD}/priv/db:/var/lib/postgresql/data:rw
   db11:
     deploy:
       replicas: 1
