@@ -22,20 +22,33 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     episodes =
       assoc(person, :guest_episodes)
-      |> Episode.published
-      |> Episode.newest_first
-      |> Episode.preload_all
-      |> Repo.all
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.preload_all()
+      |> Repo.all()
 
-    items =
+    published =
       NewsItem
-      |> NewsItem.published
-      |> NewsItem.newest_first
       |> NewsItem.with_person(person)
-      |> NewsItem.preload_all
-      |> Repo.all
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.all()
 
-    render(conn, :show, person: person, episodes: episodes, items: items)
+    declined =
+      NewsItem
+      |> NewsItem.with_person(person)
+      |> NewsItem.declined()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.all()
+
+    conn
+    |> assign(:person, person)
+    |> assign(:episodes, episodes)
+    |> assign(:published, published)
+    |> assign(:declined, declined)
+    |> render(:show)
   end
 
   def new(conn, _params) do
