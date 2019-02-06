@@ -53,6 +53,12 @@ defmodule Changelog.Subscription do
     |> Repo.insert_or_update()
   end
 
+  def subscribed_count(item = %NewsItem{}) do
+    item
+    |> on_item()
+    |> subscribed()
+    |> Repo.count()
+  end
   def subscribed_count(podcast = %Podcast{}) do
     podcast
     |> on_podcast()
@@ -60,6 +66,12 @@ defmodule Changelog.Subscription do
     |> Repo.count()
   end
 
+  def unsubscribed_count(item = %NewsItem{}) do
+    item
+    |> on_item()
+    |> unsubscribed()
+    |> Repo.count()
+  end
   def unsubscribed_count(podcast = %Podcast{}) do
     podcast
     |> on_podcast()

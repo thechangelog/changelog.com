@@ -118,8 +118,8 @@ defmodule Changelog.Episode do
   def participants(episode) do
     episode =
       episode
-      |> preload_guests
-      |> preload_hosts
+      |> preload_guests()
+      |> preload_hosts()
 
     episode.guests ++ episode.hosts
   end

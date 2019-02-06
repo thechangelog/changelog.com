@@ -144,6 +144,17 @@ defmodule Changelog.NewsItem do
 
   def comment_count(item), do: Repo.count(from(q in NewsItemComment, where: q.item_id == ^item.id))
 
+  def participants(item) do
+    item = preload_all(item)
+    [
+      item.author,
+      item.submitter,
+      item.logger
+    ]
+    |> Enum.reject(&is_nil/1)
+    |> Enum.uniq
+  end
+
   def preload_all(query = %Ecto.Query{}) do
     query
     |> Ecto.Query.preload(:author)
@@ -190,6 +201,23 @@ defmodule Changelog.NewsItem do
   def is_draft(item),     do: item.status == :draft
   def is_published(item), do: item.status == :published
   def is_queued(item),    do: item.status == :queued
+
+  def subscribe_participants(item = %{type: :audio}) do
+    item
+    |> load_object()
+    |> Map.get(:object)
+    |> Episode.participants()
+    |> Enum.each(fn(person) ->
+      Subscription.subscribe(person, item, "you were on this episode")
+    end)
+  end
+  def subscribe_participants(item) do
+    item
+    |> participants()
+    |> Enum.each(fn(person) ->
+      Subscription.subscribe(person, item, "you contributed to this news item")
+    end)
+  end
 
   def track_click(item) do
     item

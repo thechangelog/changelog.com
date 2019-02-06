@@ -1,7 +1,7 @@
 defmodule Changelog.NewsItemTest do
   use Changelog.DataCase
 
-  alias Changelog.NewsItem
+  alias Changelog.{NewsItem, Subscription}
 
   describe "insert_changeset" do
     test "with valid attributes" do
@@ -12,6 +12,40 @@ defmodule Changelog.NewsItemTest do
     test "with invalid attributes" do
       changeset = NewsItem.insert_changeset(%NewsItem{}, %{})
       refute changeset.valid?
+    end
+  end
+
+  describe "subscribe_participants/1" do
+    test "creates subs for all episode participants" do
+      host = insert(:person, handle: "letterman")
+      guest1 = insert(:person, handle: "madonna")
+      guest2 = insert(:person, handle: "leary")
+      episode = insert(:published_episode)
+      insert(:episode_host, person: host, episode: episode)
+      insert(:episode_guest, person: guest1, episode: episode)
+      insert(:episode_guest, person: guest2, episode: episode)
+      item = episode |> episode_news_item() |> insert()
+
+      NewsItem.subscribe_participants(item)
+      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(&(&1.person_id))
+
+      assert Subscription.subscribed_count(item) == 3
+      assert Enum.member?(subscribed_ids, host.id)
+      assert Enum.member?(subscribed_ids, guest1.id)
+      assert Enum.member?(subscribed_ids, guest2.id)
+    end
+
+    test "generates subs for all item participants" do
+      fred = insert(:person)
+      wilma = insert(:person)
+      item = insert(:news_item, submitter: fred, author: fred, logger: wilma)
+
+      NewsItem.subscribe_participants(item)
+      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(&(&1.person_id))
+
+      assert Subscription.subscribed_count(item) == 2
+      assert Enum.member?(subscribed_ids, fred.id)
+      assert Enum.member?(subscribed_ids, wilma.id)
     end
   end
 end
