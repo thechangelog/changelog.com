@@ -41,7 +41,7 @@ services:
         order: start-first
     environment:
       NODE: "${HOSTNAME}"
-      DB_URL: "ecto://postgres@db11:5432/changelog"
+      DB_URL: "ecto://postgres@db11:5432/changelog" # DB_URL secret has precendence over this!
       PORT: 4000
       URL_HOST: &host "${USER}.changelog.com"
       URL_PORT: 80
@@ -68,7 +68,6 @@ services:
       - COVERALLS_REPO_TOKEN
       - ALGOLIA_APPLICATION_ID
       - ALGOLIA_API_KEY
-      - DB_URL
     depends_on:
       - db11
     image: thechangelog/changelog.com:local
@@ -182,6 +181,4 @@ secrets:
   ALGOLIA_APPLICATION_ID:
     external: true
   ALGOLIA_API_KEY:
-    external: true
-  DB_URL:
     external: true
