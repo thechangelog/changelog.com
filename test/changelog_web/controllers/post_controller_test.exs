@@ -29,7 +29,7 @@ defmodule ChangelogWeb.PostControllerTest do
     p |> post_news_item() |> insert()
     conn = get(conn, post_path(conn, :show, p.slug))
     assert html_response(conn, 200) =~ p.title
-    assert html_response(conn, 200) =~ "logged by"
+    assert html_response(conn, 200) =~ "by"
   end
 
   test "getting an unpublished post page", %{conn: conn} do
