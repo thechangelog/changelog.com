@@ -92,6 +92,9 @@ defmodule ChangelogWeb.NewsItemView do
   def render_meta_people(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("meta/_featuring.html", conn: conn, item: item, episode: episode)
   end
+  def render_meta_people(conn, item = %{type: :link, object: post}) when is_map(post) do
+    render("meta/_by.html", conn: conn, item: item, post: post)
+  end
   def render_meta_people(conn, item) do
     render("meta/_logged_by.html", conn: conn, item: item)
   end

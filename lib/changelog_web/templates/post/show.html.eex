@@ -10,7 +10,6 @@
       </p>
       <h2 class="news_item-title"><%= @post.title %></h2>
     </header>
-    <!-- TODO: Change from 'logged by' to 'by' -->
     <%= if @item, do: render(NewsItemView, "_toolbar.html", Map.put(assigns, :style, "date")) %>
     <div class="news_item-content richtext">
       <%= @post.body |> md_to_html() |> raw() %>
