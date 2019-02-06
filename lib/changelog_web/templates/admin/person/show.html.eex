@@ -9,7 +9,7 @@
       &bull; joined <%= TimeView.terse_date(@person.joined_at) %>
     <% end %>
     <%= if @person.signed_in_at do %>
-      &bull; last seen <%= TimeView.terse_date(@person.signed_in_at) %>
+      &bull; last sign in <%= TimeView.terse_date(@person.signed_in_at) %>
     <% end %>
     </div>
   </h1>
