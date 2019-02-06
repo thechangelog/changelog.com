@@ -103,7 +103,7 @@ defmodule ChangelogWeb.NewsItemController do
     item = item_from_hashid(hashid, NewsItem.published)
 
     if slug == hashid do
-      redirect(conn, to: news_item_path(conn, :show, NewsItemView.slug(item)))
+      redirect(conn, to: news_item_path(conn, :show, NewsItem.slug(item)))
     else
       item =
         item

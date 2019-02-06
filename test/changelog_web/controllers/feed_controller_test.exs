@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.FeedControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias ChangelogWeb.NewsItemView
+  alias Changelog.NewsItem
 
   def valid_xml(conn) do
     SweetXml.parse(conn.resp_body)
@@ -26,7 +26,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     assert conn.resp_body =~ episode.slug
     assert conn.resp_body =~ news_source.slug
     assert conn.resp_body =~ topic.slug
-    assert conn.resp_body =~ NewsItemView.slug(news_item)
+    assert conn.resp_body =~ NewsItem.slug(news_item)
   end
 
   test "the news feed", %{conn: conn} do

@@ -2,7 +2,6 @@ defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{NewsItem, Person, Podcast, Slack, Subscription}
-  alias ChangelogWeb.NewsItemView
 
   plug RequireUser, "except from email links" when action not in [:opt_out]
   plug :scrub_params, "person" when action in [:update]
@@ -111,7 +110,7 @@ defmodule ChangelogWeb.HomeController do
         podcast_path(conn, :show, podcast.slug)}
       item = %NewsItem{} ->
         {"You've muted this discussion. 🤐",
-        news_item_path(conn, :show, NewsItemView.slug(item))}
+        news_item_path(conn, :show, NewsItem.slug(item))}
     end
 
     conn

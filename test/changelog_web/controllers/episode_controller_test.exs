@@ -1,8 +1,7 @@
 defmodule ChangelogWeb.EpisodeControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.Episode
-  alias ChangelogWeb.NewsItemView
+  alias Changelog.{Episode, NewsItem}
 
   test "getting a published podcast episode page and its embed", %{conn: conn} do
     p = insert(:podcast)
@@ -115,7 +114,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
 
       conn = get(conn, episode_path(conn, :discuss, p.slug, e.slug))
 
-      assert redirected_to(conn) == news_item_path(conn, :show, NewsItemView.slug(i))
+      assert redirected_to(conn) == news_item_path(conn, :show, NewsItem.slug(i))
     end
 
     test "redirects to episode when episode doesn't have one" do

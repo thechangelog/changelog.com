@@ -16,7 +16,7 @@ defmodule ChangelogWeb.Admin.NewsItemView do
 
   def show_or_preview_path(conn, item) do
     if NewsItem.is_published(item) do
-      news_item_path(conn, :show, NewsItemView.slug(item))
+      news_item_path(conn, :show, NewsItem.slug(item))
     else
       news_item_path(conn, :preview, item)
     end

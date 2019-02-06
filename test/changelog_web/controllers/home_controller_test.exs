@@ -1,8 +1,7 @@
 defmodule ChangelogWeb.HomeControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.{Person, Subscription}
-  alias ChangelogWeb.NewsItemView
+  alias Changelog.{NewsItem, Person, Subscription}
 
   @tag :as_user
   test "renders the home page", %{conn: conn} do
@@ -59,7 +58,7 @@ defmodule ChangelogWeb.HomeControllerTest do
     sub = insert(:subscription_on_podcast, person: person, item: item)
     {:ok, token} = Person.encoded_id(person)
     conn = get(conn, home_path(conn, :opt_out, token, sub.id))
-    assert redirected_to(conn) == news_item_path(conn, :show, NewsItemView.slug(item))
+    assert redirected_to(conn) == news_item_path(conn, :show, NewsItem.slug(item))
     refute Subscription.is_subscribed(Repo.get(Subscription, sub.id))
   end
 
