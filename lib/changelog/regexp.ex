@@ -9,6 +9,10 @@ defmodule Changelog.Regexp do
 
   def tag(name), do: ~r/(?<open><\/?)#{name}(?<close>>)/
 
+  def social, do: ~r/\A[a-z|A-Z|0-9|_|-]+\z/
+
+  def social_message, do: "just the username, plz"
+
   def slug, do: ~r/\A[a-z|0-9|_|-]+\z/
 
   def slug_message, do: "valid chars: a-z, 0-9, -, _"
