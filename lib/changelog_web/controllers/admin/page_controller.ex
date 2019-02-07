@@ -49,17 +49,20 @@ defmodule ChangelogWeb.Admin.PageController do
   end
 
   defp reach do
-    yesterday = Timex.today() |> Timex.shift(days: -1)
-    yesteryear = yesterday |> Timex.shift(years: -1)
+    now = Timex.today() |> Timex.shift(days: -1)
+    then = now |> Timex.shift(years: -1)
 
-    Cache.get_or_store("stats-reach-#{yesterday}", fn ->
+    Cache.get_or_store("stats-reach-#{now}", fn ->
       %{as_of: Timex.now(),
-        now_seven: EpisodeStat.date_range_reach(yesterday, days: -7),
-        now_thirty: EpisodeStat.date_range_reach(yesterday, days: -30),
-        now_ninety: EpisodeStat.date_range_reach(yesterday, days: -90),
-        then_seven: EpisodeStat.date_range_reach(yesteryear, days: -7),
-        then_thirty: EpisodeStat.date_range_reach(yesteryear, days: -30),
-        then_ninety: EpisodeStat.date_range_reach(yesteryear, days: -90)}
+        now_7:   EpisodeStat.date_range_reach(now, days: -7),
+        now_30:  EpisodeStat.date_range_reach(now, days: -30),
+        now_90:  EpisodeStat.date_range_reach(now, days: -90),
+        prev_7:  EpisodeStat.date_range_reach(Timex.shift(now, days: -7), days: -7),
+        prev_30: EpisodeStat.date_range_reach(Timex.shift(now, days: -30), days: -30),
+        prev_90: EpisodeStat.date_range_reach(Timex.shift(now, days: -90), days: -90),
+        then_7:  EpisodeStat.date_range_reach(then, days: -7),
+        then_30: EpisodeStat.date_range_reach(then, days: -30),
+        then_90: EpisodeStat.date_range_reach(then, days: -90)}
     end)
   end
 end

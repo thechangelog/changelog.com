@@ -1,46 +1,60 @@
 <div class="ui stackable centered three column grid">
   <div class="ui column">
-    <h2 class="ui dividing header">Last 7 days</h2>
-    <div class="ui tiny horizontal statistics <%= up_or_down_class(@reach[:now_seven], @reach[:then_seven]) %>">
+    <h3 class="ui dividing header">7 day reach</h3>
+    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_7], @reach[:prev_7]) %>">
       <div class="statistic">
-        <div class="value"><%= @reach[:now_seven] |> comma_separated() %></div>
-        <div class="label">reach</div>
+        <div class="value"><%= @reach[:now_7] |> comma_separated() %></div>
+        <div class="label">current</div>
         <div style="display: none;"><%= ts(@reach[:as_of]) %></div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:then_seven] |> comma_separated() %></div>
-        <div class="label">last year</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="ui column">
-    <h2 class="ui dividing header">Last 30 days</h2>
-    <div class="ui tiny horizontal statistics <%= up_or_down_class(@reach[:now_thirty], @reach[:then_thirty]) %>">
-      <div class="statistic">
-        <div class="value"><%= @reach[:now_thirty] |> comma_separated() %></div>
-        <div class="label">reach</div>
+        <div class="value"><%= @reach[:prev_7] |> comma_separated() %></div>
+        <div class="label">previous</div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:then_thirty] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:then_7] |> comma_separated() %></div>
         <div class="label">last year</div>
       </div>
     </div>
   </div>
 
   <div class="ui column">
-    <h2 class="ui dividing header">Last 90 days</h2>
-    <div class="ui tiny horizontal statistics <%= up_or_down_class(@reach[:now_ninety], @reach[:then_ninety]) %>">
+    <h3 class="ui dividing header">30 day reach</h3>
+    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_30], @reach[:prev_30]) %>">
       <div class="statistic">
-        <div class="value"><%= @reach[:now_ninety] |> comma_separated() %></div>
-        <div class="label">reach</div>
+        <div class="value"><%= @reach[:now_30] |> comma_separated() %></div>
+        <div class="label">current</div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:then_ninety] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:prev_30] |> comma_separated() %></div>
+        <div class="label">previous</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= @reach[:then_30] |> comma_separated() %></div>
+        <div class="label">last year</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui column">
+    <h3 class="ui dividing header">90 day reach</h3>
+    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_90], @reach[:prev_90]) %>">
+      <div class="statistic">
+        <div class="value"><%= @reach[:now_90] |> comma_separated() %></div>
+        <div class="label">current</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= @reach[:prev_90] |> comma_separated() %></div>
+        <div class="label">previous</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= @reach[:then_90] |> comma_separated() %></div>
         <div class="label">last year</div>
       </div>
     </div>
