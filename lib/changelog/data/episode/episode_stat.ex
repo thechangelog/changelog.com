@@ -23,7 +23,7 @@ defmodule Changelog.EpisodeStat do
 
   def oldest_date do
     Repo.one(from s in __MODULE__, select: [min(s.date)], limit: 1)
-    |> List.first
+    |> List.first()
   end
 
   def changeset(struct, params \\ %{}) do
@@ -37,7 +37,7 @@ defmodule Changelog.EpisodeStat do
     |> Enum.map(&(Map.get(&1.demographics, "agents")))
     |> Enum.map(fn(agents) ->
       agents
-      |> browsers_agents_only
+      |> browsers_agents_only()
       |> group_agents_by(fn(agent) ->
         case UserAgentParser.detect_browser(agent) do
           %UA.Browser{family: family} -> family
@@ -45,7 +45,7 @@ defmodule Changelog.EpisodeStat do
         end
       end)
     end)
-    |> downloads_list_merged_and_sorted
+    |> downloads_list_merged_and_sorted()
   end
   def downloads_by_browser(stat), do: downloads_by_browser([stat])
 
@@ -54,19 +54,18 @@ defmodule Changelog.EpisodeStat do
     |> Enum.map(&(Map.get(&1.demographics, "agents")))
     |> Enum.map(fn(agents) ->
       Enum.reduce(agents, %{}, fn({agent, downloads}, acc) ->
-        # the 'client' is the section of the user agent prior to a '/'
-        key = List.first(String.split(agent, "/"))
+        key = extract_client_from_agent(agent)
         Map.update(acc, key, downloads, &(&1 + downloads))
       end)
     end)
-    |> downloads_list_merged_and_sorted
+    |> downloads_list_merged_and_sorted()
   end
   def downloads_by_client(stat), do: downloads_by_client([stat])
 
   def downloads_by_country(stats) when is_list(stats) do
     stats
     |> Enum.map(&(Map.get(&1.demographics, "countries")))
-    |> downloads_list_merged_and_sorted
+    |> downloads_list_merged_and_sorted()
   end
   def downloads_by_country(stat), do: downloads_by_country([stat])
 
@@ -83,7 +82,7 @@ defmodule Changelog.EpisodeStat do
         end
        end)
     end)
-    |> downloads_list_merged_and_sorted
+    |> downloads_list_merged_and_sorted()
   end
   def downloads_by_os(stat), do: downloads_by_os([stat])
 
@@ -113,8 +112,14 @@ defmodule Changelog.EpisodeStat do
   end
 
   defp browsers_agents_only(agents) do
-    agents
-    |> Enum.filter(fn({agent, _downloads}) -> String.match?(agent, ~r/^Mozilla\//) end)
+    agents |> Enum.filter(fn({agent, _downloads}) -> String.match?(agent, ~r/^Mozilla\//) end)
+  end
+
+  # the 'client' is the section of the user agent prior to a '/'
+  defp extract_client_from_agent(agent) do
+    agent
+    |> String.split("/")
+    |> List.first()
   end
 
   defp group_agents_by(agents, groupingFn) do

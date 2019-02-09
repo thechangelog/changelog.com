@@ -118,6 +118,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     case name do
       "AppleCoreMedia" -> "Apple Podcasts"
       "Mozilla" -> "Browsers"
+      "otc" -> "watchOS"
       _else -> name
     end
   end
