@@ -83,14 +83,13 @@
           </div>
         </h3>
 
-        <% countries = EpisodeStat.downloads_by_country(@stats) %>
+        <% countries = @stats |> EpisodeStat.downloads_by_country() |> round_and_filter() %>
 
         <table class="ui basic compact striped table">
           <tbody>
-          <%= for {country, index} <- Enum.take(countries, 10) |> Enum.with_index do %>
-            <% downloads = round(elem(country, 1)) %>
+          <%= for {{country, downloads}, index} <- countries |> Enum.take(10) |> Enum.with_index() do %>
             <tr>
-              <td><%= index + 1 %>) <%= ChangelogWeb.Countries.name(elem(country, 0)) %></td>
+              <td><%= index + 1 %>) <%= ChangelogWeb.Countries.name(country) %></td>
               <td><%= downloads %></td>
               <td><%= percent_of_downloads(@episode, downloads) %>%</td>
             </tr>
@@ -105,11 +104,10 @@
           <div class="content">
             <table class="ui striped table">
               <tbody>
-              <%= for {country, index} <- Enum.with_index(countries) do %>
-                <% downloads = round(elem(country, 1)) %>
+              <%= for {{country, downloads}, index} <- Enum.with_index(countries) do %>
                 <tr>
                   <td><%= index + 1 %></td>
-                  <td><%= ChangelogWeb.Countries.name(elem(country, 0)) %></td>
+                  <td><%= ChangelogWeb.Countries.name(country) %></td>
                   <td><%= downloads %></td>
                   <td><%= percent_of_downloads(@episode, downloads) %>%</td>
                 </tr>
@@ -130,14 +128,13 @@
           </div>
         </h3>
 
-        <% clients = EpisodeStat.downloads_by_client(@stats) %>
+        <% clients = @stats |> EpisodeStat.downloads_by_client() |> round_and_filter() %>
 
         <table class="ui basic compact striped table">
           <tbody>
-          <%= for {client, index} <- Enum.take(clients, 10) |> Enum.with_index do %>
-            <% downloads = round(elem(client, 1)) %>
+          <%= for {{client, downloads}, index} <- clients |> Enum.take(10) |> Enum.with_index() do %>
             <tr>
-              <td><%= index + 1 %>) <%= client_name(elem(client, 0)) %></td>
+              <td><%= index + 1 %>) <%= client_name(client) %></td>
               <td><%= downloads %></td>
               <td><%= percent_of_downloads(@episode, downloads) %>%</td>
             </tr>
@@ -152,10 +149,9 @@
           <div class="content">
             <table class="ui striped table">
               <tbody>
-              <%= for {client, index} <- Enum.with_index(clients) do %>
-                <% downloads = round(elem(client, 1)) %>
+              <%= for {{client, downloads}, index} <- Enum.with_index(clients) do %>
                 <tr>
-                  <td><%= index + 1 %>) <%= client_name(elem(client, 0)) %></td>
+                  <td><%= index + 1 %>) <%= client_name(client) %></td>
                   <td><%= downloads %></td>
                   <td><%= percent_of_downloads(@episode, downloads) %>%</td>
                 </tr>
@@ -176,14 +172,13 @@
           </div>
         </h3>
 
-        <% browsers = EpisodeStat.downloads_by_browser(@stats) %>
+        <% browsers = @stats |> EpisodeStat.downloads_by_browser() |> round_and_filter() %>
 
         <table class="ui basic compact striped table">
           <tbody>
-          <%= for {browser, index} <- Enum.take(browsers, 10) |> Enum.with_index do %>
-            <% downloads = round(elem(browser, 1)) %>
+          <%= for {{browser, downloads}, index} <- Enum.take(browsers, 10) |> Enum.with_index do %>
             <tr>
-              <td><%= index + 1 %>) <%= elem(browser, 0) %></td>
+              <td><%= index + 1 %>) <%= browser %></td>
               <td><%= downloads %></td>
               <td><%= percent_of_downloads(@episode, downloads) %>%</td>
             </tr>
@@ -222,14 +217,13 @@
           </div>
         </h3>
 
-        <% oses = EpisodeStat.downloads_by_os(@stats) %>
+        <% oses = @stats |> EpisodeStat.downloads_by_os() |> round_and_filter() %>
 
         <table class="ui basic compact striped table">
           <tbody>
-          <%= for {os, index} <- Enum.take(oses, 10) |> Enum.with_index do %>
-            <% downloads = round(elem(os, 1)) %>
+          <%= for {{os, downloads}, index} <- oses |> Enum.take(10) |> Enum.with_index() do %>
             <tr>
-              <td><%= index + 1 %>) <%= elem(os, 0) %></td>
+              <td><%= index + 1 %>) <%= os %></td>
               <td><%= downloads %></td>
               <td><%= percent_of_downloads(@episode, downloads) %>%</td>
             </tr>
@@ -244,10 +238,9 @@
           <div class="content">
             <table class="ui striped table">
               <tbody>
-              <%= for {os, index} <- Enum.with_index(oses) do %>
-                <% downloads = round(elem(os, 1)) %>
+              <%= for {{os, downloads}, index} <- Enum.with_index(oses) do %>
                 <tr>
-                  <td><%= index + 1 %>) <%= elem(os, 0) %></td>
+                  <td><%= index + 1 %>) <%= os %></td>
                   <td><%= downloads %></td>
                   <td><%= percent_of_downloads(@episode, downloads) %>%</td>
                 </tr>

@@ -92,6 +92,12 @@ defmodule ChangelogWeb.Admin.EpisodeView do
      ((count / episode.download_count) * 100) |> round
   end
 
+  def round_and_filter(stats) do
+    stats
+    |> Enum.map(fn({key, value}) -> {key, round(value)} end)
+    |> Enum.reject(fn({_key, value}) -> value == 0 end)
+  end
+
   def status_label(episode) do
     if episode.published do
       content_tag :span, "Published", class: "ui tiny green basic label"
