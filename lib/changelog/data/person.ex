@@ -153,7 +153,7 @@ defmodule Changelog.Person do
     change(person, %{slack_id: slack_id})
   end
 
-  def refresh_auth_token(person, expires_in \\ 30) do
+  def refresh_auth_token(person, expires_in \\ 60 * 24) do
     auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
     expires_at = Timex.add(Timex.now, Timex.Duration.from_minutes(expires_in))
     changeset = auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})

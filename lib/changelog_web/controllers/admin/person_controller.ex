@@ -138,11 +138,11 @@ defmodule ChangelogWeb.Admin.PersonController do
     end
   end
   defp handle_generic_welcome_email(person) do
-    person = Person.refresh_auth_token(person, 60 * 24)
+    person = Person.refresh_auth_token(person)
     Email.community_welcome(person) |> Mailer.deliver_later
   end
   defp handle_guest_welcome_email(person) do
-    person = Person.refresh_auth_token(person, 60 * 24)
+    person = Person.refresh_auth_token(person)
     Email.guest_welcome(person) |> Mailer.deliver_later
   end
 end
