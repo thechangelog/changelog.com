@@ -3,6 +3,23 @@ defmodule Changelog.AgentKitTest do
 
   alias Changelog.AgentKit
 
+  describe "get_podcast_client/1" do
+    test "returns 'Apple Watch' for known user agents" do
+      ua = "(null)/(null) watchOS/5.0.1 model/Watch3,2 hwp/t8004 build/16R381 (6; dt:154)"
+      assert AgentKit.get_podcast_client(ua) == "Apple Watch"
+    end
+
+    test "returns 'Apple Podcasts' if prefix is 'AppleCoreMedia'" do
+      ua = "AppleCoreMedia/5.0.1 model/Watch3,2 hwp/t8004 build/16R381 (6; dt:154)"
+      assert AgentKit.get_podcast_client(ua) == "Apple Podcasts"
+    end
+
+    test "returns everything before opening '/' otherwise" do
+      ua = "LG-K428/V20l Player/LG Player 1.0 for Android 7.0"
+      assert AgentKit.get_podcast_client(ua) == "LG-K428"
+    end
+  end
+
   describe "get_subscribers/1" do
     test "returns :error and :no_ua_string when sent nil" do
       assert {:error, :no_ua_string} = AgentKit.get_subscribers(nil)

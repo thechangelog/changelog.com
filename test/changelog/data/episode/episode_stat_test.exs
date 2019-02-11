@@ -65,7 +65,7 @@ defmodule Changelog.EpisodeStatTest do
 
       by_agent = EpisodeStat.downloads_by_client(stat)
 
-      assert Enum.take(by_agent, 3) == [{"Overcast", 1819.94}, {"AppleCoreMedia", 1192.24}, {"Pocket Casts", 889.2}]
+      assert Enum.take(by_agent, 3) == [{"Overcast", 1819.94}, {"Apple Podcasts", 1191.42}, {"Pocket Casts", 889.2}]
       assert List.last(by_agent) == {"itunesstored", 0.0}
     end
 
@@ -75,7 +75,7 @@ defmodule Changelog.EpisodeStatTest do
 
       by_agent = EpisodeStat.downloads_by_client([stat1, stat2])
 
-      assert Enum.take(by_agent, 3) == [{"Overcast", 3639.88}, {"AppleCoreMedia", 2384.48}, {"Pocket Casts", 1778.4}]
+      assert Enum.take(by_agent, 3) == [{"Overcast", 3639.88}, {"Apple Podcasts", 2382.84}, {"Pocket Casts", 1778.4}]
     end
   end
 

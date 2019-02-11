@@ -3,6 +3,31 @@ defmodule Changelog.AgentKit do
                  "Inoreader", "NewsBlur", "Bloglovin", "NewsGator",
                  "TheOldReader", "G2Reader", "Feedly"]
 
+  @client_regexes [
+    {"Apple TV", ~r/^AppleCoreMedia\/1\.(.*)Apple TV/},
+    {"Castro", ~r/^Castro\s/},
+    {"Apple Watch", ~r/^AppleCoreMedia\/1\.(.*)Apple Watch/},
+    {"Apple Watch", ~r/(.*)watchOS\//},
+    {"Google Play", ~r/(.*)Google-Podcast/}
+  ]
+
+  # see https://podnews.net/article/podcast-app-useragents
+  def get_podcast_client(ua) when is_binary(ua) do
+    ua = URI.decode(ua)
+
+    name = case Enum.find(@client_regexes, fn({_, regex}) -> String.match?(ua, regex) end) do
+      {client, _} -> client
+      _else -> ua |> String.split("/") |> List.first()
+    end
+
+    case name do
+      "AppleCoreMedia" -> "Apple Podcasts"
+      "Mozilla" -> "Browsers"
+      _else -> name
+    end
+  end
+  def get_podcast_client(_), do: "Unknown"
+
   def get_subscribers(nil), do: {:error, :no_ua_string}
   def get_subscribers(ua) do
     subscribers = extract_subscribers(ua)

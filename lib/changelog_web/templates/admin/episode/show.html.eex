@@ -134,7 +134,7 @@
           <tbody>
           <%= for {{client, downloads}, index} <- clients |> Enum.take(10) |> Enum.with_index() do %>
             <tr>
-              <td><%= index + 1 %>) <%= client_name(client) %></td>
+              <td><%= index + 1 %>) <%= client %></td>
               <td><%= downloads %></td>
               <td><%= percent_of_downloads(@episode, downloads) %>%</td>
             </tr>
@@ -151,7 +151,7 @@
               <tbody>
               <%= for {{client, downloads}, index} <- Enum.with_index(clients) do %>
                 <tr>
-                  <td><%= index + 1 %>) <%= client_name(client) %></td>
+                  <td><%= index + 1 %>) <%= client %></td>
                   <td><%= downloads %></td>
                   <td><%= percent_of_downloads(@episode, downloads) %>%</td>
                 </tr>

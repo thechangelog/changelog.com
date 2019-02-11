@@ -114,15 +114,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     end
   end
 
-  def client_name(name) do
-    case name do
-      "AppleCoreMedia" -> "Apple Podcasts"
-      "Mozilla" -> "Browsers"
-      "otc" -> "watchOS"
-      _else -> name
-    end
-  end
-
   def stat_date(nil), do: "never"
   def stat_date(stat) do
     {:ok, result} = Timex.format(stat.date, "{WDshort}, {M}/{D}")

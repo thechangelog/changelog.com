@@ -1,7 +1,7 @@
 defmodule Changelog.EpisodeStat do
   use Changelog.Data, default_sort: :date
 
-  alias Changelog.{Episode, Podcast}
+  alias Changelog.{AgentKit, Episode, Podcast}
 
   schema "episode_stats" do
     field :date, :date
@@ -54,7 +54,7 @@ defmodule Changelog.EpisodeStat do
     |> Enum.map(&(Map.get(&1.demographics, "agents")))
     |> Enum.map(fn(agents) ->
       Enum.reduce(agents, %{}, fn({agent, downloads}, acc) ->
-        key = extract_client_from_agent(agent)
+        key = AgentKit.get_podcast_client(agent)
         Map.update(acc, key, downloads, &(&1 + downloads))
       end)
     end)
@@ -113,13 +113,6 @@ defmodule Changelog.EpisodeStat do
 
   defp browsers_agents_only(agents) do
     agents |> Enum.filter(fn({agent, _downloads}) -> String.match?(agent, ~r/^Mozilla\//) end)
-  end
-
-  # the 'client' is the section of the user agent prior to a '/'
-  defp extract_client_from_agent(agent) do
-    agent
-    |> String.split("/")
-    |> List.first()
   end
 
   defp group_agents_by(agents, groupingFn) do
