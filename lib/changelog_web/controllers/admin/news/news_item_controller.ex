@@ -10,34 +10,34 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   def index(conn = %{assigns: %{current_user: me}}, params) do
     drafts =
-      NewsItem.drafted
+      NewsItem.drafted()
       |> NewsItem.newest_first(:inserted_at)
       |> NewsItem.logged_by(me)
-      |> NewsItem.preload_all
-      |> Repo.all
+      |> NewsItem.preload_all()
+      |> Repo.all()
 
     queued =
-      NewsQueue.queued
-      |> NewsQueue.preload_all
-      |> Repo.all
+      NewsQueue.queued()
+      |> NewsQueue.preload_all()
+      |> Repo.all()
       |> Enum.map(&(&1.item))
 
     scheduled =
-      NewsQueue.scheduled
-      |> NewsQueue.preload_all
-      |> Repo.all
+      NewsQueue.scheduled()
+      |> NewsQueue.preload_all()
+      |> Repo.all()
       |> Enum.map(&(&1.item))
 
     submitted =
-      NewsItem.submitted
+      NewsItem.submitted()
       |> NewsItem.newest_first(:inserted_at)
-      |> NewsItem.preload_all
-      |> Repo.all
+      |> NewsItem.preload_all()
+      |> Repo.all()
 
     page =
-      NewsItem.published
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(params)
 
     activity_count = 5
@@ -46,22 +46,28 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       Topic
       |> Topic.newest_first(:updated_at)
       |> Topic.limit(activity_count)
-      |> Repo.all
+      |> Repo.all()
 
     source_activity =
       NewsSource
       |> NewsSource.newest_first(:updated_at)
       |> NewsSource.limit(activity_count)
-      |> Repo.all
+      |> Repo.all()
 
     activity =
       (topic_activity ++ source_activity)
       |> Enum.sort(&(Timex.after?(&1.updated_at, &2.updated_at)))
       |> Enum.chunk_every(activity_count)
 
-    render(conn, :index, drafts: drafts, submitted: submitted, queued: queued,
-                         scheduled: scheduled, activity: activity,
-                         published: page.entries, page: page)
+    conn
+    |> assign(:drafts, drafts)
+    |> assign(:submitted, submitted)
+    |> assign(:queued, queued)
+    |> assign(:scheduled, scheduled)
+    |> assign(:activity, activity)
+    |> assign(:published, page.entries)
+    |> assign(:page, page)
+    |> render(:index)
   end
 
   def new(conn = %{assigns: %{current_user: me}}, params) do
@@ -77,9 +83,11 @@ defmodule ChangelogWeb.Admin.NewsItemController do
         type: UrlKit.get_type(url))
       |> NewsItem.insert_changeset()
 
-    images = HtmlKit.get_images(html)
-
-    render(conn, :new, changeset: changeset, images: images, similar: similar_items(url))
+    conn
+    |> assign(:changeset, changeset)
+    |> assign(:images, HtmlKit.get_images(html))
+    |> assign(:similar, similar_items(url))
+    |> render(:new)
   end
 
   def create(conn, params = %{"news_item" => item_params}) do
@@ -197,15 +205,15 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   defp similar_items(%Ecto.Changeset{}), do: []
   defp similar_items(url) when is_binary(url) do
     url
-    |> NewsItem.similar_url
-    |> NewsItem.preload_all
-    |> Repo.all
+    |> NewsItem.similar_url()
+    |> NewsItem.preload_all()
+    |> Repo.all()
   end
   defp similar_items(item = %NewsItem{}) do
     if NewsItem.is_published(item) do
       []
     else
-      item |> NewsItem.similar_to |> NewsItem.preload_all |> Repo.all
+      item |> NewsItem.similar_to() |> NewsItem.preload_all() |> Repo.all()
     end
   end
 end
