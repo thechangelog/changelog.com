@@ -128,6 +128,7 @@ defmodule Changelog.NewsQueue do
 
   defp publish_item(item = %NewsItem{}) do
     item = NewsItem.publish!(item)
+    Task.start_link(fn -> NewsItem.subscribe_participants(item) end)
     Task.start_link(fn -> Search.save_item(item) end)
     Task.start_link(fn -> Buffer.queue(item) end)
     Task.start_link(fn -> Notifier.notify(item) end)
