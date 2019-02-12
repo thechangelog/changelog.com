@@ -2,6 +2,7 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
   use Mix.Task
 
   alias Changelog.{Faker, Person, Podcast, Repo, Subscription}
+  alias ChangelogWeb.PersonView
   alias NimbleCSV.RFC4180, as: CSV
 
   @shortdoc "Imports people and subscriptions from CM csv exports"
@@ -19,9 +20,16 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
     |> File.read!()
     |> CSV.parse_string()
     |> Enum.each(fn([name, email, _]) ->
-      person = find_or_insert_person(email, name)
-      Subscription.subscribe(person, podcast, "you subscribed way back in the day (pre-launch)")
+      email
+      |> find_or_insert_person(name)
+      |> subscribe_if_not_already(podcast)
     end)
+  end
+
+  defp subscribe_if_not_already(person, podcast) do
+    if !PersonView.is_subscribed(person, podcast) do
+      Subscription.subscribe(person, podcast, "you subscribed way back in the day (pre-launch)")
+    end
   end
 
   defp find_or_insert_person(email, name) do
