@@ -109,24 +109,51 @@
   <div class="ui horizontal divider">Settings</div>
 
 <%= inputs_for f, :settings, fn(i) -> %>
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(i, :email_on_authored_news, class: "hidden") %>
-      <%= label(f, :email_on_authored_news, "Email on authored news") %>
-    </div>
-  </div>
+  <div class="ui two column stackable grid">
+    <div class="column">
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <%= checkbox(i, :email_on_authored_news, class: "hidden") %>
+          <%= label(f, :email_on_authored_news, "Email on authored news") %>
+        </div>
+      </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(i, :email_on_submitted_news, class: "hidden") %>
-      <%= label(f, :email_on_submitted_news, "Email on submitted news") %>
-    </div>
-  </div>
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <%= checkbox(i, :email_on_submitted_news, class: "hidden") %>
+          <%= label(f, :email_on_submitted_news, "Email on submitted news") %>
+        </div>
+      </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(i, :email_on_comment_replies, class: "hidden") %>
-      <%= label(f, :email_on_comment_replies, "Email on comment replies") %>
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <%= checkbox(i, :email_on_comment_replies, class: "hidden") %>
+          <%= label(f, :email_on_comment_replies, "Email on comment replies") %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <%= checkbox(i, :email_on_comment_mentions, class: "hidden") %>
+          <%= label(f, :email_on_comment_mentions, "Email on comment @mentions") %>
+        </div>
+      </div>
+
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <%= checkbox(i, :subscribe_to_contributed_news, class: "hidden") %>
+          <%= label(f, :subscribe_to_contributed_news, "Subscribe to contributed news") %>
+        </div>
+      </div>
+
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <%= checkbox(i, :subscribe_to_participated_episodes, class: "hidden") %>
+          <%= label(f, :subscribe_to_participated_episodes, "Subscribe to participated episodes") %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

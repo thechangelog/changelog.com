@@ -32,6 +32,20 @@
     </div>
 
     <div class="form-element_wrap form-element_wrap--2">
+      <div class="form-element <%= error_class(f, :github_handle) %>">
+        <label>On GitHub</label>
+        <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= error_message(f, :github_handle) %>
+      </div>
+
+      <div class="form-element <%= error_class(f, :twitter_handle) %>">
+        <label>On Twitter</label>
+        <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= error_message(f, :twitter_handle) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap form-element_wrap--2">
       <div class="form-element <%= error_class(f, :location) %>">
         <label>Location</label>
         <%= text_input(f, :location, placeholder: "New York, New York") %>
@@ -51,20 +65,6 @@
         <%= textarea(f, :bio) %>
         <%= error_message(f, :bio) %>
         <p class="form-element-note">Try some Markdown. It *may* work.</p>
-      </div>
-    </div>
-
-    <div class="form-element_wrap form-element_wrap--2">
-      <div class="form-element <%= error_class(f, :github_handle) %>">
-        <label>On GitHub</label>
-        <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-        <%= error_message(f, :github_handle) %>
-      </div>
-
-      <div class="form-element <%= error_class(f, :twitter_handle) %>">
-        <label>On Twitter</label>
-        <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-        <%= error_message(f, :twitter_handle) %>
       </div>
     </div>
 

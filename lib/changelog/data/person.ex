@@ -9,18 +9,20 @@ defmodule Changelog.Person do
 
     @primary_key false
     embedded_schema do
+      field :subscribe_to_contributed_news, :boolean, default: true
+      field :subscribe_to_participated_episodes, :boolean, default: true
       field :email_on_authored_news, :boolean, default: true
       field :email_on_submitted_news, :boolean, default: true
       field :email_on_comment_replies, :boolean, default: true
+      field :email_on_comment_mentions, :boolean, default: true
     end
 
     def changeset(struct, attrs) do
-      cast(struct, attrs, [:email_on_authored_news, :email_on_submitted_news, :email_on_comment_replies])
+      cast(struct, attrs, __MODULE__.__schema__(:fields))
     end
 
     def is_valid(name) when is_binary(name) do
-      __MODULE__.__struct__
-      |> Map.keys()
+      __MODULE__.__schema__(:fields)
       |> Enum.map(&Atom.to_string/1)
       |> Enum.any?(&(&1 == name))
     end

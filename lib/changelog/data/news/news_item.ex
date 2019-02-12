@@ -215,7 +215,7 @@ defmodule Changelog.NewsItem do
     item
     |> participants()
     |> Enum.each(fn(person) ->
-      Subscription.subscribe(person, item, "you contributed to this news item")
+      Subscription.subscribe(person, item, "you contributed to this news")
     end)
   end
 
