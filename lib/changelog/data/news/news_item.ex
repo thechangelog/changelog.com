@@ -207,6 +207,7 @@ defmodule Changelog.NewsItem do
     |> load_object()
     |> Map.get(:object)
     |> Episode.participants()
+    |> Enum.filter(&(&1.settings.subscribe_to_participated_episodes))
     |> Enum.each(fn(person) ->
       Subscription.subscribe(person, item, "you were on this episode")
     end)
@@ -214,6 +215,7 @@ defmodule Changelog.NewsItem do
   def subscribe_participants(item) do
     item
     |> participants()
+    |> Enum.filter(&(&1.settings.subscribe_to_contributed_news))
     |> Enum.each(fn(person) ->
       Subscription.subscribe(person, item, "you contributed to this news")
     end)
