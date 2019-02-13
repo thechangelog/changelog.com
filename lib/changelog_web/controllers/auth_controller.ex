@@ -19,7 +19,6 @@ defmodule ChangelogWeb.AuthController do
       |> redirect(to: person_path(conn, :join, %{email: email}))
     end
   end
-
   def new(conn, _params) do
     render(conn, "new.html", person: nil)
   end
@@ -51,7 +50,6 @@ defmodule ChangelogWeb.AuthController do
       |> redirect(to: person_path(conn, :join, params_from_ueberauth(auth)))
     end
   end
-
   def callback(conn = %{assigns: %{ueberauth_failure: _fails}}, _params) do
     conn
     |> put_flash(:error, "Something went wrong. 😭")
@@ -61,13 +59,12 @@ defmodule ChangelogWeb.AuthController do
   defp params_from_ueberauth(%{provider: :github, info: info}) do
     %{name: info.name, handle: info.nickname, github_handle: info.nickname}
   end
-
   defp params_from_ueberauth(%{provider: :twitter, info: info}) do
     %{name: info.name, handle: info.nickname, twitter_handle: info.nickname}
   end
 
   defp sign_in_and_redirect(conn, person, route) do
-    Repo.update(Person.sign_in_changes(person))
+    person |> Person.sign_in_changes() |> Repo.update()
 
     conn
     |> assign(:current_user, person)

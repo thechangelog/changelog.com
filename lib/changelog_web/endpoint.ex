@@ -42,7 +42,7 @@ defmodule ChangelogWeb.Endpoint do
     store: :cookie,
     key: "_changelog_key",
     signing_salt: System.get_env("SIGNING_SALT") || "8bAOekZm",
-    extra: "SameSite=Strict"
+    extra: "SameSite=Lax"
 
   plug ChangelogWeb.Router
 end
