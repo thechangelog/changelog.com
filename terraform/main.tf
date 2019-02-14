@@ -55,6 +55,13 @@ resource "linode_instance" "2019" {
   private_ip = true
 }
 
+resource "linode_volume" "db" {
+  region = "${data.linode_region.changelog.id}"
+  label = "db"
+  size = 10
+  linode_id = "${linode_instance.2019.id}"
+}
+
 data "template_file" "db_mount" {
   template = "${file("${path.module}/volume.mount.tpl")}"
 
@@ -64,11 +71,20 @@ data "template_file" "db_mount" {
   }
 }
 
-resource "linode_volume" "db" {
+resource "linode_volume" "db11" {
   region = "${data.linode_region.changelog.id}"
-  label = "db"
+  label = "db11"
   size = 10
   linode_id = "${linode_instance.2019.id}"
+}
+
+data "template_file" "db11_mount" {
+  template = "${file("${path.module}/volume.mount.tpl")}"
+
+  vars {
+    DISK = "${linode_volume.db11.filesystem_path}"
+    MOUNT_PATH = "/db11"
+  }
 }
 
 resource "linode_volume" "uploads" {
@@ -96,6 +112,7 @@ resource "null_resource" "mount_volumes" {
   depends_on = [
     "linode_instance.2019",
     "linode_volume.db",
+    "linode_volume.db11",
     "linode_volume.uploads",
   ]
 
@@ -114,6 +131,20 @@ resource "null_resource" "mount_volumes" {
   }
 
   provisioner "file" {
+    content = "${data.template_file.db11_mount.rendered}"
+    destination = "/tmp/db11.mount"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv /tmp/db11.mount /etc/systemd/system/db11.mount",
+      "sudo systemctl enable db11.mount",
+      "sudo systemctl start db11.mount",
+      "sudo systemctl status db11.mount | grep active.*mounted",
+    ]
+  }
+
+  provisioner "file" {
     content = "${data.template_file.uploads_mount.rendered}"
     destination = "/tmp/uploads.mount"
   }
@@ -128,7 +159,7 @@ resource "null_resource" "mount_volumes" {
   }
 
   triggers {
-    manually = "2018.12.28-16:05"
+    manually = "2019.02.08-09:17"
     instance_id = "${linode_instance.2019.id}"
   }
 }
