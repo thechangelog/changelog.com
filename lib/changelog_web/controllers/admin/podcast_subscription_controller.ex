@@ -4,15 +4,9 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionController do
   alias Changelog.{Podcast, Subscription}
 
   plug :assign_podcast
-  plug Authorize, [Policies.Episode, :podcast]
+  plug Authorize, [Policies.Subscription, :podcast]
 
-  # pass assigned podcast as a function arg
-  def action(conn, _) do
-    arg_list = [conn, conn.params, conn.assigns.podcast]
-    apply(__MODULE__, action_name(conn), arg_list)
-  end
-
-  def index(conn, params, podcast) do
+  def index(conn = %{assigns: %{podcast: podcast}}, params) do
     page =
       Subscription.on_podcast(podcast)
       |> Subscription.newest_first()

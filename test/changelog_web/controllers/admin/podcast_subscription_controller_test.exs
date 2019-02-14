@@ -1,4 +1,4 @@
-defmodule ChangelogWeb.Admin.SubscriptionControllerTest do
+defmodule ChangelogWeb.Admin.PodcastSubscriptionControllerTest do
   use ChangelogWeb.ConnCase
 
   @tag :as_admin
