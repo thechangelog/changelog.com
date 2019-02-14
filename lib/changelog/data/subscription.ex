@@ -22,6 +22,18 @@ defmodule Changelog.Subscription do
   def is_subscribed(%__MODULE__{unsubscribed_at: ts}), do: is_nil(ts)
   def is_subscribed(_), do: false
 
+  # this is a lot like unsubscribe/2 only it won't no-op if person isn't subbed yet
+  def mute(person = %Person{}, item = %NewsItem{}) do
+    attrs = %{person_id: person.id, item_id: item.id}
+
+    case Repo.get_by(__MODULE__, attrs) do
+      nil -> Map.merge(%__MODULE__{}, attrs)
+      sub -> sub
+    end
+    |> change(unsubscribed_at: now_in_seconds())
+    |> Repo.insert_or_update()
+  end
+
   def preload_all(sub) do
     sub
     |> preload_item()
@@ -90,10 +102,8 @@ defmodule Changelog.Subscription do
       %Podcast{id: id} -> %{person_id: person.id, podcast_id: id}
     end
 
-    __MODULE__.subscribed
+    __MODULE__.subscribed()
     |> Repo.get_by(attrs)
     |> unsubscribe()
-
-    :ok
   end
 end

@@ -19,6 +19,25 @@ defmodule Changelog.SubscriptionTest do
     end
   end
 
+  describe "mute/2" do
+    setup do
+      {:ok, person: insert(:person), item: insert(:news_item)}
+    end
+
+    test "creates an 'unsubscribed' sub when person has never subscribed", %{person: person, item: item} do
+      Subscription.mute(person, item)
+      assert Repo.count(Subscription) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
+    end
+
+    test "updates an existing subscription when person has already subscribed", %{person: person, item: item} do
+      insert(:unsubscribed_subscription_on_item, person: person, item: item)
+      Subscription.mute(person, item)
+      assert Repo.count(Subscription) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
+    end
+  end
+
   describe "subscribe/2 with news item" do
     setup do
       {:ok, person: insert(:person), item: insert(:news_item)}
@@ -80,23 +99,23 @@ defmodule Changelog.SubscriptionTest do
       {:ok, person: insert(:person), item: insert(:news_item)}
     end
 
-    test "when person has never subscribed", %{person: person, item: item} do
-      :ok = Subscription.unsubscribe(person, item)
+    test "no-op when person has never subscribed", %{person: person, item: item} do
+      Subscription.unsubscribe(person, item)
       assert Repo.count(Subscription) == 0
     end
 
     test "when person has already unsubscribed", %{person: person, item: item} do
       insert(:unsubscribed_subscription_on_item, person: person, item: item)
-      :ok = Subscription.unsubscribe(person, item)
+      Subscription.unsubscribe(person, item)
       assert Repo.count(Subscription) == 1
-      assert Repo.count(Subscription.unsubscribed) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
     end
 
     test "when person is subscribed", %{person: person, item: item} do
       insert(:subscription_on_item, person: person, item: item)
-      :ok = Subscription.unsubscribe(person, item)
+      Subscription.unsubscribe(person, item)
       assert Repo.count(Subscription) == 1
-      assert Repo.count(Subscription.unsubscribed) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
     end
   end
 
@@ -106,22 +125,22 @@ defmodule Changelog.SubscriptionTest do
     end
 
     test "when person has never subscribed", %{person: person, podcast: podcast} do
-      :ok = Subscription.unsubscribe(person, podcast)
+      Subscription.unsubscribe(person, podcast)
       assert Repo.count(Subscription) == 0
     end
 
     test "when person has already unsubscribed", %{person: person, podcast: podcast} do
       insert(:unsubscribed_subscription_on_podcast, person: person, podcast: podcast)
-      :ok = Subscription.unsubscribe(person, podcast)
+      Subscription.unsubscribe(person, podcast)
       assert Repo.count(Subscription) == 1
-      assert Repo.count(Subscription.unsubscribed) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
     end
 
     test "when person is subscribed", %{person: person, podcast: podcast} do
       insert(:subscription_on_podcast, person: person, podcast: podcast)
-      :ok = Subscription.unsubscribe(person, podcast)
+      Subscription.unsubscribe(person, podcast)
       assert Repo.count(Subscription) == 1
-      assert Repo.count(Subscription.unsubscribed) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
     end
   end
 end
