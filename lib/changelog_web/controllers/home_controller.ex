@@ -3,8 +3,8 @@ defmodule ChangelogWeb.HomeController do
 
   alias Changelog.{NewsItem, Person, Podcast, Slack, Subscription}
 
-  plug RequireUser, "except from email links" when action not in [:opt_out]
-  plug :scrub_params, "person" when action in [:update]
+  plug(RequireUser, "except from email links" when action not in [:opt_out])
+  plug(:scrub_params, "person" when action in [:update])
 
   def show(conn, %{"subscribed" => newsletter_id}), do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil)
   def show(conn, %{"unsubscribed" => newsletter_id}), do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id)
@@ -54,6 +54,7 @@ defmodule ChangelogWeb.HomeController do
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
     |> redirect(to: home_path(conn, :show, unsubscribed: newsletter_id))
   end
+
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
     Subscription.unsubscribe(me, podcast)
@@ -76,46 +77,42 @@ defmodule ChangelogWeb.HomeController do
     |> redirect(to: home_path(conn, :show))
   end
 
-  def opt_out(conn, %{"token" => token, "notification" => notification}) do
+  def opt_out(conn, %{"token" => token, "type" => type, "id" => id}) do
     person = Person.get_by_encoded_id(token)
 
-    if Person.Settings.is_valid(notification) do
-      opt_out_of_setting(conn, person, notification)
-    else
-      opt_out_of_subscription(conn, person, notification)
+    case type do
+      "news"    -> opt_out_news(conn, person, id)
+      "podcast" -> opt_out_podcast(conn, person, id)
+      "setting" -> opt_out_setting(conn, person, id)
     end
   end
 
-  defp opt_out_of_setting(conn, person, notification) do
-    change = %{settings: %{notification => false}}
-
-    person
-    |> Person.update_changeset(change)
-    |> Repo.update()
-
-    render(conn, :opt_out)
-  end
-
-  defp opt_out_of_subscription(conn, person, id) do
-    sub =
-      person
-      |> assoc(:subscriptions)
-      |> Repo.get!(id)
-
-    Subscription.unsubscribe(sub)
-
-    {message, path} = case Subscription.subscribed_to(sub) do
-      podcast = %Podcast{} ->
-        {"You're unsubscribed! Resubscribe any time 🤗",
-        podcast_path(conn, :show, podcast.slug)}
-      item = %NewsItem{} ->
-        {"You've muted this discussion. 🤐",
-        news_item_path(conn, :show, NewsItem.slug(item))}
-    end
+  defp opt_out_news(conn, person, id) do
+    item = Repo.get!(NewsItem, id)
+    Subscription.unsubscribe(person, item)
 
     conn
-    |> put_flash(:success, message)
-    |> redirect(to: path)
+    |> put_flash(:success, "You've muted this discussion. 🤐")
+    |> redirect(to: news_item_path(conn, :show, NewsItem.slug(item)))
+  end
+
+  defp opt_out_podcast(conn, person, slug) do
+    podcast = Podcast.get_by_slug!(slug)
+    Subscription.unsubscribe(person, podcast)
+
+    conn
+    |> put_flash(:success, "You're unsubscribed! Resubscribe any time 🤗")
+    |> redirect(to: podcast_path(conn, :show, podcast.slug))
+  end
+
+  defp opt_out_setting(conn, person, setting) do
+    if Person.Settings.is_valid(setting) do
+      person
+      |> Person.update_changeset(%{settings: %{setting => false}})
+      |> Repo.update()
+    end
+
+    render(conn, :opt_out)
   end
 
   defp set_slack_id(person) do

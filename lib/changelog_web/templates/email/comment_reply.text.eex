@@ -10,6 +10,6 @@ Reply here: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@reply.news_ite
 
 Don't want these notifications? Disable 'em:
 
-<%= PersonView.opt_out_url(Endpoint, @person, "email_on_comment_replies") %>
+<%= PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_comment_replies") %>
 
 💚, Logbot

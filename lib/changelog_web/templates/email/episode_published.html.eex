@@ -14,7 +14,7 @@
 
     <%= link("Listen here", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), class: "btn-primary", itemprop: "url") %>
 
-    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, @subscription.id)) %></em></p>
+    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>
 
     <p>💚, Logbot</p>
 

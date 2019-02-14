@@ -8,7 +8,7 @@
 
     <%= link("Reply here", to: news_item_url(Endpoint, :show, NewsItemView.slug(@reply.news_item)) <> NewsItemCommentView.permalink_path(@reply), class: "btn-primary", itemprop: "url") %>
 
-    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "email_on_comment_replies")) %></em></p>
+    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_comment_replies")) %></em></p>
 
     <p>💚, Logbot</p>
   </td>

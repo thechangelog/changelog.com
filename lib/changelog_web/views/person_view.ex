@@ -95,13 +95,13 @@ defmodule ChangelogWeb.PersonView do
     |> Enum.join(", ")
   end
 
-  def opt_out_path(conn, person, notification) do
+  def opt_out_path(conn, person, type, id) do
     {:ok, encoded} = Person.encoded_id(person)
-    home_path(conn, :opt_out, encoded, notification)
+    home_path(conn, :opt_out, encoded, type, id)
   end
 
-  def opt_out_url(conn, person, notification) do
+  def opt_out_url(conn, person, type, id) do
     {:ok, encoded} = Person.encoded_id(person)
-    home_url(conn, :opt_out, encoded, notification)
+    home_url(conn, :opt_out, encoded, type, id)
   end
 end

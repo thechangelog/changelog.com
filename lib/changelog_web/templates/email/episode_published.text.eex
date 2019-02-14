@@ -10,7 +10,7 @@ Hot off the press! Here’s the latest episode of <%= @episode.podcast.name %> f
 
 Listen here: <%= episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) %>
 
-Don't want these notifications? Disable 'em: <%= PersonView.opt_out_url(Endpoint, @person, @subscription.id) %>
+Don't want these notifications? Disable 'em: <%= PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug) %>
 
 
 💚, Logbot
