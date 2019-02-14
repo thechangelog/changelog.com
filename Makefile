@@ -69,6 +69,10 @@ OPENSSL := /usr/local/opt/openssl/bin/openssl
 $(OPENSSL):
 	@brew install openssl
 
+WATCH := /usr/local/bin/watch
+$(WATCH):
+	@brew install watch
+
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
@@ -425,7 +429,6 @@ rsync-small-uploads-local: create-dirs-mounted-as-volumes
 .PHONY: rsul
 rsul: rsync-small-uploads-local
 
-
 .PHONY: secrets
 secrets: $(LPASS) ## s   | List all LastPass secrets
 	@$(SECRETS)
@@ -447,6 +450,13 @@ test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
 .PHONY: t
 t: test
+
+.PHONY: watch
+watch: $(WATCH) $(DOCKER) ## w   | Watch all containers
+	@$(WATCH) -c "$(DOCKER) ps --all \
+	  --format='table {{.Status}}\t{{.Names}}\t{{.Image}}\t{{.ID}}'"
+.PHONY: w
+w: watch
 
 define UPDATE_NETDATA
 docker pull netdata/netdata && \
