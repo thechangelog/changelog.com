@@ -13,6 +13,8 @@ defmodule Changelog.Data do
 
       alias Changelog.Repo
 
+      def any?(query), do: Repo.count(query) > 0
+
       def by_position(query \\ __MODULE__), do: from(q in query, order_by: q.position)
       def limit(query \\ __MODULE__, count), do: from(q in query, limit: ^count)
       def newest_first(query \\ __MODULE__, field \\ unquote(opts[:default_sort])), do: from(q in query, order_by: [desc: ^field])

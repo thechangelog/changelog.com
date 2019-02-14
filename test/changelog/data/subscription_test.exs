@@ -19,22 +19,55 @@ defmodule Changelog.SubscriptionTest do
     end
   end
 
-  describe "mute/2" do
+  describe "is_subscribed/2" do
     setup do
       {:ok, person: insert(:person), item: insert(:news_item)}
     end
 
-    test "creates an 'unsubscribed' sub when person has never subscribed", %{person: person, item: item} do
-      Subscription.mute(person, item)
-      assert Repo.count(Subscription) == 1
-      assert Repo.count(Subscription.unsubscribed()) == 1
+    test "is false when person has never subscribed to item", %{person: person, item: item} do
+      refute Subscription.is_subscribed(person, item)
     end
 
-    test "updates an existing subscription when person has already subscribed", %{person: person, item: item} do
-      insert(:unsubscribed_subscription_on_item, person: person, item: item)
-      Subscription.mute(person, item)
-      assert Repo.count(Subscription) == 1
-      assert Repo.count(Subscription.unsubscribed()) == 1
+    test "is false when person has unsubscribed from item", %{person: person, item: item} do
+      Subscription.subscribe(person, item)
+      Subscription.unsubscribe(person, item)
+      refute Subscription.is_subscribed(person, item)
+    end
+
+    test "is false when person has muted item", %{person: person, item: item} do
+      Subscription.unsubscribe(person, item)
+      refute Subscription.is_subscribed(person, item)
+    end
+
+    test "is true when person is subscribed to item", %{person: person, item: item} do
+      Subscription.subscribe(person, item)
+      assert Subscription.is_subscribed(person, item)
+    end
+  end
+
+  describe "is_unsubscribed/2" do
+    setup do
+      {:ok, person: insert(:person), item: insert(:news_item)}
+    end
+
+    test "is false when person has never subscribed to item", %{person: person, item: item} do
+      refute Subscription.is_unsubscribed(person, item)
+    end
+
+    test "is true when person subs then unsubs", %{person: person, item: item} do
+      Subscription.subscribe(person, item)
+      Subscription.unsubscribe(person, item)
+      assert Subscription.is_unsubscribed(person, item)
+    end
+
+    test "is true when person unsubs right away", %{person: person, item: item} do
+      Subscription.unsubscribe(person, item)
+      assert Subscription.is_unsubscribed(person, item)
+    end
+
+    test "is false when person is subscribed to item", %{person: person, item: item} do
+      Subscription.subscribe(person, item)
+      refute Subscription.is_unsubscribed(person, item)
     end
   end
 
@@ -99,9 +132,10 @@ defmodule Changelog.SubscriptionTest do
       {:ok, person: insert(:person), item: insert(:news_item)}
     end
 
-    test "no-op when person has never subscribed", %{person: person, item: item} do
+    test "creates an 'unsubscribed' sub when person has never subscribed", %{person: person, item: item} do
       Subscription.unsubscribe(person, item)
-      assert Repo.count(Subscription) == 0
+      assert Repo.count(Subscription) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
     end
 
     test "when person has already unsubscribed", %{person: person, item: item} do
@@ -124,9 +158,10 @@ defmodule Changelog.SubscriptionTest do
       {:ok, person: insert(:person), podcast: insert(:podcast)}
     end
 
-    test "when person has never subscribed", %{person: person, podcast: podcast} do
+    test "creates an 'unsubscribed' sub when person has never subscribed", %{person: person, podcast: podcast} do
       Subscription.unsubscribe(person, podcast)
-      assert Repo.count(Subscription) == 0
+      assert Repo.count(Subscription) == 1
+      assert Repo.count(Subscription.unsubscribed()) == 1
     end
 
     test "when person has already unsubscribed", %{person: person, podcast: podcast} do
