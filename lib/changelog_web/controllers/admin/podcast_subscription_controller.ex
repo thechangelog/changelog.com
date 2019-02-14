@@ -1,4 +1,4 @@
-defmodule ChangelogWeb.Admin.SubscriptionController do
+defmodule ChangelogWeb.Admin.PodcastSubscriptionController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Podcast, Subscription}

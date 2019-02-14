@@ -1,4 +1,4 @@
-defmodule ChangelogWeb.Admin.SubscriptionView do
+defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.Subscription
