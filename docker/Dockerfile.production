@@ -4,7 +4,8 @@ RUN mkdir /app
 COPY . /app
 WORKDIR /app
 
-ENV MIX_ENV prod
+ENV MIX_ENV=prod
+ENV TERM=xterm
 
 EXPOSE 4000
 HEALTHCHECK --start-period=30s --interval=30s --timeout=30s --retries=3 \
