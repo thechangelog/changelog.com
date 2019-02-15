@@ -45,11 +45,14 @@
         <p>Get notified as soon as an episode is published. Subscribe to as many as you’d like.</p>
         <p class="account_subscriptions-item-info-meta">Delivered each time a new episode is published</p>
       </div>
+      <% podcasts_with_subs = Enum.map(@podcasts, fn(p) -> Map.put(p, :is_subscribed, is_subscribed(@current_user, p)) end) %>
       <div class="account_subscriptions-item-button">
-        <%#= link("Subscribe to All", to: home_path(@conn, :profile)) %>
+      <%= if Enum.any?(podcasts_with_subs, fn(p) -> !p.is_subscribed end) do %>
+        <a href="javascript:void(0);" class="js-subscribe-all">Collect 'em all</a>
+      <% end %>
       </div>
       <div class="account_subscriptions-list">
-        <%= for podcast <- @podcasts do %>
+        <%= for podcast <- podcasts_with_subs do %>
           <div class="account_subscriptions-list-item">
             <img class="account_subscriptions-list-item-icon" src="<%= PodcastView.cover_url(podcast, :medium) %>" width="50" height="50" alt="<%= podcast.name %>">
             <p class="account_subscriptions-list-item-title"><%= podcast.name %></p>
@@ -58,7 +61,7 @@
                 type="checkbox"
                 class="check js-toggle-subscription"
                 data-slug="<%= podcast.slug %>"
-                <%= if is_subscribed(@current_user, podcast), do: "checked" %>
+                <%= if podcast.is_subscribed, do: "checked" %>
               />
               <div class="switch"></div>
             </div>

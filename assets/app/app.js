@@ -115,6 +115,11 @@ u(document).on("change", ".js-toggle-subscription", function(event) {
   ajax(`~/${action}`, {method: "POST", body: {"slug": slug}});
 });
 
+u(document).handle("click", ".js-subscribe-all", function(event) {
+  u(event.target).remove();
+  u(".js-toggle-subscription:not(:checked").each(el => { el.click(); });
+});
+
 u(document).handle("click", ".js-toggle_element", function(event) {
   const href = u(event.target).attr("href");
   u(href).toggleClass("is-hidden");
