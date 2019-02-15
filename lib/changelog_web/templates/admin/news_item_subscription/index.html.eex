@@ -54,4 +54,7 @@
     <% end %>
     </tbody>
   </table>
+
+  <%= pagination_links(@conn, @page, [@item], path: &admin_news_item_subscription_path/4) %>
 <% end %>
+</div>
