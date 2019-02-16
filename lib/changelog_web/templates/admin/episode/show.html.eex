@@ -84,6 +84,7 @@
         </h3>
 
         <% countries = @stats |> EpisodeStat.downloads_by_country() |> round_and_filter() %>
+        <% countries_downloads = countries |> Enum.map(&(elem(&1, 1))) |> Enum.sum() %>
 
         <table class="ui basic compact striped table">
           <tbody>
@@ -91,7 +92,7 @@
             <tr>
               <td><%= index + 1 %>) <%= ChangelogWeb.Countries.name(country) %></td>
               <td><%= downloads %></td>
-              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+              <td><%= percent(downloads, countries_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -109,7 +110,7 @@
                   <td><%= index + 1 %></td>
                   <td><%= ChangelogWeb.Countries.name(country) %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                  <td><%= percent(downloads, countries_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>
@@ -129,6 +130,7 @@
         </h3>
 
         <% clients = @stats |> EpisodeStat.downloads_by_client() |> round_and_filter() %>
+        <% clients_downloads = clients |> Enum.map(&(elem(&1, 1))) |> Enum.sum() %>
 
         <table class="ui basic compact striped table">
           <tbody>
@@ -136,7 +138,7 @@
             <tr>
               <td><%= index + 1 %>) <%= client %></td>
               <td><%= downloads %></td>
-              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+              <td><%= percent(downloads, clients_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -153,7 +155,7 @@
                 <tr>
                   <td><%= index + 1 %>) <%= client %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                  <td><%= percent(downloads, clients_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>
@@ -173,6 +175,7 @@
         </h3>
 
         <% browsers = @stats |> EpisodeStat.downloads_by_browser() |> round_and_filter() %>
+        <% browsers_downloads = browsers |> Enum.map(&(elem(&1, 1))) |> Enum.sum() %>
 
         <table class="ui basic compact striped table">
           <tbody>
@@ -180,7 +183,7 @@
             <tr>
               <td><%= index + 1 %>) <%= browser %></td>
               <td><%= downloads %></td>
-              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+              <td><%= percent(downloads, browsers_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -198,7 +201,7 @@
                 <tr>
                   <td><%= index + 1 %>) <%= elem(browser, 0) %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                  <td><%= percent(downloads, browsers_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>
@@ -218,6 +221,7 @@
         </h3>
 
         <% oses = @stats |> EpisodeStat.downloads_by_os() |> round_and_filter() %>
+        <% oses_downloads = oses |> Enum.map(&(elem(&1, 1))) |> Enum.sum() %>
 
         <table class="ui basic compact striped table">
           <tbody>
@@ -225,7 +229,7 @@
             <tr>
               <td><%= index + 1 %>) <%= os %></td>
               <td><%= downloads %></td>
-              <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+              <td><%= percent(downloads, oses_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -242,7 +246,7 @@
                 <tr>
                   <td><%= index + 1 %>) <%= os %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent_of_downloads(@episode, downloads) %>%</td>
+                  <td><%= percent(downloads, oses_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>

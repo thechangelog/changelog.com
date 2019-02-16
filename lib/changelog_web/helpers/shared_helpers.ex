@@ -88,6 +88,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def is_future?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == 1
+
+  def is_past?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == -1
+
   def lazy_image(src, alt, attrs \\ []) do
     attrs = Keyword.merge(attrs, [data: [src: src], alt: alt, src: transparent_gif()])
     attrs = Keyword.update(attrs, :class, "lazy", &("#{&1} lazy"))
@@ -118,12 +122,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def md_to_text(nil), do: ""
   def md_to_text(md) when is_binary(md), do: md |> md_to_html |> HtmlSanitizeEx.strip_tags |> sans_new_lines
 
+  def percent(numerator, divisor), do: ((numerator / divisor) * 100) |> round()
+
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
   def sans_new_lines(string), do: String.replace(string, "\n", " ")
-
-  def is_future?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == 1
-  def is_past?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == -1
 
   def transparent_gif, do: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 

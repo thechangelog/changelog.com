@@ -88,10 +88,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     date
   end
 
-  def percent_of_downloads(episode, count) do
-     ((count / episode.download_count) * 100) |> round
-  end
-
   def round_and_filter(stats) do
     stats
     |> Enum.map(fn({key, value}) -> {key, round(value)} end)
