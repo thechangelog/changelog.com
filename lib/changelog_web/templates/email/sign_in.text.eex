@@ -1,7 +1,7 @@
 <%= greeting(@person) %>
 
 
-You requested a fancy, passwordless sign in link. Here you go:
+You requested a magic sign-in link. Here you go:
 
 <%= AuthView.auth_url(Endpoint, @person) %>
 

@@ -2,7 +2,7 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>You requested a fancy, passwordless sign in link. <em>Here you go:</em></p>
+    <p>You requested a magic sign-in link. <em>Here you go:</em></p>
 
     <%= link("Sign in to Changelog", to: AuthView.auth_url(Endpoint, @person), class: "btn-primary", itemprop: "url") %>
 

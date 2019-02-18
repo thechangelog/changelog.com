@@ -78,7 +78,7 @@ defmodule ChangelogWeb.Email do
     styled_email()
     |> put_header("X-CMail-GroupName", "Sign In")
     |> to(person)
-    |> subject("Your Sign In Link")
+    |> subject("Your magic link")
     |> assign(:person, person)
     |> render(:sign_in)
   end
