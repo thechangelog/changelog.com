@@ -18,6 +18,7 @@ defmodule ChangelogWeb.Email do
     |> subject("Someone replied to your comment on Changelog News!")
     |> assign(:person, person)
     |> assign(:reply, reply)
+    |> assign(:item, reply.news_item)
     |> render(:comment_reply)
   end
 

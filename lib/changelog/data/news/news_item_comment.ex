@@ -17,6 +17,8 @@ defmodule Changelog.NewsItemComment do
     timestamps()
   end
 
+  def replies(query \\ __MODULE__), do: from(q in query, where: not(is_nil(q.parent_id)))
+
   def insert_changeset(struct, attrs \\ %{}) do
     struct
     |> cast(attrs, ~w(content author_id item_id parent_id)a)

@@ -6,9 +6,13 @@
 <%= @reply.content %>
 
 
-Reply here: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@reply.news_item)) <> NewsItemCommentView.permalink_path(@reply) %>
+Reply here: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@item)) <> NewsItemCommentView.permalink_path(@reply) %>
 
-Don't want these notifications? Disable 'em:
+Seen enough? Mute this discussion:
+
+<%= PersonView.opt_out_url(Endpoint, @person, "news", @item.id) %>
+
+Or disable reply notifications all together:
 
 <%= PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_comment_replies") %>
 

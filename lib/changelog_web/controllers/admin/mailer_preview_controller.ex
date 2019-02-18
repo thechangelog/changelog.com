@@ -36,6 +36,22 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.authored_news_published(item.author, item)
   end
 
+  def comment_reply_email do
+    comment =
+      NewsItemComment.newest_first()
+      |> NewsItemComment.replies()
+      |> NewsItemComment.limit(1)
+      |> NewsItemComment.preload_all()
+      |> Repo.one()
+
+    person =
+      comment.parent
+      |> NewsItemComment.preload_author()
+      |> Map.get(:author)
+
+    Email.comment_reply(person, comment)
+  end
+
   def comment_subscription_email do
     comment =
       NewsItemComment.newest_first()
