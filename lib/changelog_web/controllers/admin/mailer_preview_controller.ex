@@ -68,17 +68,22 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
   end
 
   def community_welcome_email do
-    person =
-      Person.newest_first()
-      |> Person.limit(1)
-      |> Repo.one()
-
-    Email.community_welcome(person)
+    latest_person() |> Email.community_welcome()
   end
 
   def episode_published_email do
     sub = Subscription |> Repo.get(1) |> Subscription.preload_all()
     ep =  Episode |> Repo.get(654) |> Episode.preload_podcast()
     Email.episode_published(sub, ep)
+  end
+
+  def guest_welcome_email do
+    latest_person() |> Email.guest_welcome()
+  end
+
+  defp latest_person do
+    Person.newest_first()
+    |> Person.limit(1)
+    |> Repo.one()
   end
 end
