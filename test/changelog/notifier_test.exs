@@ -4,7 +4,7 @@ defmodule Changelog.NotifierTest do
 
   import Mock
 
-  alias Changelog.{Notifier, Slack}
+  alias Changelog.{Notifier, Slack, Subscription}
   alias ChangelogWeb.Email
 
   describe "notify with news item comment" do
@@ -14,14 +14,47 @@ defmodule Changelog.NotifierTest do
       :ok
     end
 
-    test "when comment has no parent" do
+    test "when comment has no parent or subscribers" do
       comment = insert(:news_item_comment)
       Notifier.notify(comment)
       assert_no_emails_delivered()
       assert called Slack.Client.message("#news-comments", :_)
     end
 
-    test "when comment is a reply and parent author has notifications enabled" do
+    test "when comment has subscriber who is also commenter" do
+      item = insert(:news_item)
+      commenter = insert(:person)
+      Subscription.subscribe(commenter, item)
+      comment = insert(:news_item_comment, news_item: item, author: commenter)
+      Notifier.notify(comment)
+      assert_no_emails_delivered()
+      assert called Slack.Client.message("#news-comments", :_)
+    end
+
+    test "when comment has no parent but 2 subscribers" do
+      item = insert(:news_item)
+      sub1 = insert(:subscription_on_item, item: item)
+      sub2 = insert(:subscription_on_item, item: item)
+      comment = insert(:news_item_comment, news_item: item)
+      Notifier.notify(comment)
+      assert_delivered_email Email.comment_subscription(sub1, comment)
+      assert_delivered_email Email.comment_subscription(sub2, comment)
+      assert called Slack.Client.message("#news-comments", :_)
+    end
+
+    test "when comment has no parents but 2 muted subscribers" do
+      item = insert(:news_item)
+      sub1 = insert(:subscription_on_item, item: item)
+      sub2 = insert(:subscription_on_item, item: item)
+      comment = insert(:news_item_comment, news_item: item)
+      Subscription.unsubscribe(sub1.person, item)
+      Subscription.unsubscribe(sub2.person, item)
+      Notifier.notify(comment)
+      assert_no_emails_delivered()
+      assert called Slack.Client.message("#news-comments", :_)
+    end
+
+    test "when comment is a reply and author has notifications enabled" do
       comment = insert(:news_item_comment)
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
       Notifier.notify(reply)
@@ -29,10 +62,24 @@ defmodule Changelog.NotifierTest do
       assert called Slack.Client.message("#news-comments", :_)
     end
 
-    test "when comment is a reply to own comment" do
-      person = insert(:person)
-      comment = insert(:news_item_comment, author: person)
-      reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment, author: person)
+    test "when comment is a reply and parent is also subscribed" do
+      parent = insert(:person)
+      item = insert(:news_item)
+      sub = insert(:subscription_on_item, person: parent, item: item)
+      comment = insert(:news_item_comment, news_item: item, author: parent)
+      reply = insert(:news_item_comment, news_item: item, parent: comment)
+      Notifier.notify(reply)
+      assert_delivered_email Email.comment_reply(parent, reply)
+      refute_delivered_email Email.comment_subscription(sub, reply)
+      assert called Slack.Client.message("#news-comments", :_)
+    end
+
+    test "when comment is a reply and parent has notifications enabled but discussion muted" do
+      parent = insert(:person)
+      item = insert(:news_item)
+      Subscription.unsubscribe(parent, item)
+      comment = insert(:news_item_comment, news_item: item, author: parent)
+      reply = insert(:news_item_comment, news_item: item, parent: comment)
       Notifier.notify(reply)
       assert_no_emails_delivered()
       assert called Slack.Client.message("#news-comments", :_)
@@ -42,6 +89,15 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_comment_replies: false})
       comment = insert(:news_item_comment, author: person)
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
+      Notifier.notify(reply)
+      assert_no_emails_delivered()
+      assert called Slack.Client.message("#news-comments", :_)
+    end
+
+    test "when comment is a reply to own comment" do
+      person = insert(:person)
+      comment = insert(:news_item_comment, author: person)
+      reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment, author: person)
       Notifier.notify(reply)
       assert_no_emails_delivered()
       assert called Slack.Client.message("#news-comments", :_)

@@ -1,5 +1,5 @@
 defmodule Changelog.Notifier do
-  alias Changelog.{Mailer, Episode, NewsItem, NewsItemComment, Podcast,
+  alias Changelog.{Episode, Mailer, NewsItem, NewsItemComment, Podcast, Repo,
                    Subscription, Slack}
   alias ChangelogWeb.Email
 
@@ -26,13 +26,58 @@ defmodule Changelog.Notifier do
   end
   def notify(comment = %NewsItemComment{}) do
     comment = NewsItemComment.preload_all(comment)
-    parent  = NewsItemComment.preload_all(comment.parent)
 
     deliver_slack_new_comment_message(comment)
 
-    if parent && parent.author != comment.author do
-      deliver_comment_reply_email(parent.author, comment)
+    # these functions all return lists of tuples where each tuple consists of:
+    # {person, email_recipient (person or subscription), email_type}
+    list_of_comment_mention_recipients(comment) ++
+    list_of_comment_reply_recipients(comment) ++
+    list_of_comment_subscriptions(comment)
+    |> List.flatten()
+    |> Enum.uniq_by(fn({person, _recipient, _type}) -> person end)
+    |> Enum.reject(fn({person, _recipient, _type}) ->
+      Subscription.is_unsubscribed(person, comment.news_item)
+    end)
+    |> Enum.each(fn({_person, recipient, type}) ->
+      case type do
+        :comment_reply ->
+          recipient
+          |> Email.comment_reply(comment)
+          |> Mailer.deliver_later()
+        :comment_subscription ->
+          recipient
+          |> Email.comment_subscription(comment)
+          |> Mailer.deliver_later()
+        _else -> nil
+      end
+    end)
+  end
+
+  defp list_of_comment_mention_recipients(_), do: [] # TODO implement mentions
+
+  defp list_of_comment_reply_recipients(%{parent: nil}), do: []
+  defp list_of_comment_reply_recipients(reply = %{parent: parent}) do
+    parent = NewsItemComment.preload_all(parent).author
+    replyer = reply.author
+
+    if parent != replyer && parent.settings.email_on_comment_replies do
+      [{parent, parent, :comment_reply}]
+    else
+      []
     end
+  end
+
+  defp list_of_comment_subscriptions(comment) do
+    comment.news_item
+    |> Subscription.on_item()
+    |> Subscription.subscribed()
+    |> Subscription.preload_person()
+    |> Repo.all()
+    |> Enum.reject(&(&1.person == comment.author))
+    |> Enum.map(fn(subscription) ->
+      {subscription.person, subscription, :comment_subscription}
+    end)
   end
 
   defp deliver_author_email(nil, _item), do: false
@@ -40,15 +85,6 @@ defmodule Changelog.Notifier do
     if person.settings.email_on_authored_news do
       person
       |> Email.authored_news_published(item)
-      |> Mailer.deliver_later()
-    end
-  end
-
-  defp deliver_comment_reply_email(nil, _reply), do: false
-  defp deliver_comment_reply_email(person, reply) do
-    if person.settings.email_on_comment_replies do
-      person
-      |> Email.comment_reply(reply)
       |> Mailer.deliver_later()
     end
   end
