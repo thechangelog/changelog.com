@@ -120,9 +120,13 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
 
   def md_to_text(nil), do: ""
-  def md_to_text(md) when is_binary(md), do: md |> md_to_html |> HtmlSanitizeEx.strip_tags |> sans_new_lines
+  def md_to_text(md) when is_binary(md), do: md |> md_to_html() |> HtmlSanitizeEx.strip_tags() |> sans_new_lines()
 
   def percent(numerator, divisor), do: ((numerator / divisor) * 100) |> round()
+
+  def pluralize(list, singular, plural) when is_list(list), do: pluralize(length(list), singular, plural)
+  def pluralize(1, singular, _plural), do: "1 #{singular}"
+  def pluralize(count, _singular, plural), do: "#{count} #{plural}"
 
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
@@ -158,10 +162,6 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def word_count(nil), do: 0
   def word_count(text) when is_binary(text) do
-    text |> md_to_text |> String.split |> length
+    text |> md_to_text() |> String.split() |> length()
   end
-
-  def pluralize(list, singular, plural) when is_list(list), do: pluralize(length(list), singular, plural)
-  def pluralize(1, singular, _plural), do: "1 #{singular}"
-  def pluralize(count, _singular, plural), do: "#{count} #{plural}"
 end
