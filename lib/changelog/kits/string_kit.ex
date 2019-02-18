@@ -14,7 +14,7 @@ defmodule Changelog.StringKit do
       (?<=^|\s|\()     # positive look behind: start of string | space | left paren
       (?<!]\()         # negative look behind: '[(' (existing md link)
       (https?:\/\/.*?) # capture http(s) url
-      (?=$|\s|\))      # positive look ahead: end of string | space | right paren
+      (?=$|\s|\W\s|\)) # positive look ahead: end of string | space | nonword-space | right paren
     /x
 
     Regex.replace(regex, string, ~s{[\\1](\\1)})

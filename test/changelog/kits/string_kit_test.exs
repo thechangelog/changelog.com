@@ -3,7 +3,7 @@ defmodule Changelog.StringKitTest do
 
   alias Changelog.StringKit
 
-  test "dasherize" do
+  test "dasherize/1" do
     assert StringKit.dasherize("The Changelog") == "the-changelog"
     assert StringKit.dasherize("Go Time") == "go-time"
     assert StringKit.dasherize("Hell's Kitchen!") == "hells-kitchen"
@@ -49,6 +49,18 @@ defmodule Changelog.StringKitTest do
       Yo check this out ~> [http://test.com/ohai](http://test.com/ohai)
 
       Also I dig ([https://changelog.com/jsparty](https://changelog.com/jsparty)), don't you?
+      """
+
+      assert StringKit.md_linkify(raw) == linkified
+    end
+
+    test "transforms with a single https url followed by punctuation" do
+      raw = """
+      read Turing Award lectures - https://amturing.acm.org/lectures.cfm?
+      """
+
+      linkified = """
+      read Turing Award lectures - [https://amturing.acm.org/lectures.cfm](https://amturing.acm.org/lectures.cfm)?
       """
 
       assert StringKit.md_linkify(raw) == linkified
