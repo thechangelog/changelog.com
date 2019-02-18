@@ -2,11 +2,11 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p><strong><%= PersonView.handle(@reply.author) %></strong> replied to you <%= link("on Changelog News", to: news_item_url(Endpoint, :show, NewsItemView.slug(@item))) %>! They said:</p>
+    <p><strong><%= PersonView.handle(@reply.author) %></strong> replied to you <%= link("on Changelog News", to: news_item_url(@item)) %>! They said:</p>
 
     <blockquote><pre><%= @reply.content %></pre></blockquote>
 
-    <%= link("Reply here", to: news_item_url(Endpoint, :show, NewsItemView.slug(@item)) <> NewsItemCommentView.permalink_path(@reply), class: "btn-primary", itemprop: "url") %>
+    <%= link("Reply here", to: comment_url(@item, @reply), class: "btn-primary", itemprop: "url") %>
 
     <p>Seen enough? <%= link("Mute this discussion", to: PersonView.opt_out_url(Endpoint, @person, "news", @item.id)) %> or <%= link("disable reply notifications", to: PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_comment_replies")) %> all together.</p>
 

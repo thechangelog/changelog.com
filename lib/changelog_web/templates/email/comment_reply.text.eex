@@ -6,7 +6,7 @@
 <%= @reply.content %>
 
 
-Reply here: <%= news_item_url(Endpoint, :show, NewsItemView.slug(@item)) <> NewsItemCommentView.permalink_path(@reply) %>
+Reply here: <%= comment_url(@item, @reply) %>
 
 Seen enough? Mute this discussion:
 

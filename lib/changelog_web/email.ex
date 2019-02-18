@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.Email do
   use Bamboo.Phoenix, view: ChangelogWeb.EmailView
 
+  alias Changelog.NewsItem
+
   def authored_news_published(person, item) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Authored News")
@@ -12,17 +14,21 @@ defmodule ChangelogWeb.Email do
   end
 
   def comment_reply(person, reply) do
+    item = NewsItem.load_object(reply.news_item)
+
     styled_email()
     |> put_header("X-CMail-GroupName", "Comment Reply")
     |> to(person)
     |> subject("Someone replied to your comment on Changelog News!")
     |> assign(:person, person)
     |> assign(:reply, reply)
-    |> assign(:item, reply.news_item)
+    |> assign(:item, item)
     |> render(:comment_reply)
   end
 
   def comment_subscription(subscription, comment) do
+    item = NewsItem.load_object(comment.news_item)
+
     styled_email()
     |> put_header("X-CMail-GroupName", "Comment Subscription")
     |> to(subscription.person)
@@ -30,7 +36,7 @@ defmodule ChangelogWeb.Email do
     |> assign(:subscription, subscription)
     |> assign(:person, subscription.person)
     |> assign(:comment, comment)
-    |> assign(:item, comment.news_item)
+    |> assign(:item, item)
     |> render(:comment_subscription)
   end
 

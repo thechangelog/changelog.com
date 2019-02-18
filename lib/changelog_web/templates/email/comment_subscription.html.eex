@@ -2,11 +2,11 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p><strong><%= PersonView.handle(@comment.author) %></strong> commented on <%= link("a discussion", to: news_item_url(Endpoint, :show, NewsItemView.slug(@item))) %> you're subscribed to! They said:</p>
+    <p><strong><%= PersonView.handle(@comment.author) %></strong> commented on <%= link("a discussion", to: news_item_url(@item)) %> you're subscribed to! They said:</p>
 
     <blockquote><pre><%= @comment.content %></pre></blockquote>
 
-    <%= link("Reply here", to: news_item_url(Endpoint, :show, NewsItemView.slug(@item)) <> NewsItemCommentView.permalink_path(@comment), class: "btn-primary", itemprop: "url") %>
+    <%= link("Reply here", to: comment_url(@item, @comment), class: "btn-primary", itemprop: "url") %>
 
     <p>Don't want these notifications? <em><%= link("Unsubscribe here", to: PersonView.opt_out_url(Endpoint, @person, "news", @item.id)) %></em></p>
 
