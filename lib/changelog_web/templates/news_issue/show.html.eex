@@ -75,7 +75,7 @@
                     <tbody>
                       <tr>
                         <td bgcolor="#ffffff">
-                        <%= for item_or_ad <- items_with_ads(@issue.items, @issue.ads) do %>
+                        <%= for item_or_ad <- items_with_ads(@items, @ads) do %>
                           <%= render_item_or_ad(item_or_ad, assigns) %>
                         <% end %>
                         </td>

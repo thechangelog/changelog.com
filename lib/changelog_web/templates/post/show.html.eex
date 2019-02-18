@@ -6,7 +6,7 @@
           <%= maybe_lazy_image(@conn, PersonView.avatar_url(@post.author), @post.author.name) %>
         <% end %>
         <!-- TODO: Make this a 'kicker' -->
-        <%= link("changelog.com/posts", to: "/posts", title: "") %>
+        <%= link("changelog.com/posts", to: post_path(@conn, :index), title: "Changelog Posts") %>
       </p>
       <h2 class="news_item-title"><%= @post.title %></h2>
     </header>

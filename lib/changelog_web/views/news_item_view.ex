@@ -115,6 +115,9 @@ defmodule ChangelogWeb.NewsItemView do
   def render_source_name(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("source/_name_episode.html", conn: conn, item: item, episode: episode)
   end
+  def render_source_name(conn, item = %{type: :link, object: post}) when is_map(post) do
+    render("source/_name_post.html", conn: conn, item: item, post: post)
+  end
   def render_source_name(conn, item) do
     cond do
       item.source && item.source.icon -> render("source/_name_source.html", conn: conn, item: item, source: item.source)

@@ -44,7 +44,7 @@ defmodule Changelog.NewsIssue do
   end
 
   def preload_all(issue) do
-    issue |> preload_ads |> preload_items
+    issue |> preload_ads() |> preload_items()
   end
 
   def preload_ads(query = %Ecto.Query{}) do

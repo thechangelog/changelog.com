@@ -112,8 +112,8 @@ defmodule Changelog.NewsItem do
 
   def load_object(item) do
     object = case item.type do
-      :audio -> load_episode_object(item.object_id)
-      _else -> load_post_object(item.object_id)
+      :audio -> get_episode_object(item.object_id)
+      _else -> get_post_object(item.object_id)
     end
 
     load_object(item, object)
@@ -122,8 +122,8 @@ defmodule Changelog.NewsItem do
   def load_object(nil, _object), do: nil
   def load_object(item, object), do: Map.put(item, :object, object)
 
-  defp load_episode_object(object_id) when is_nil(object_id), do: nil
-  defp load_episode_object(object_id) do
+  defp get_episode_object(object_id) when is_nil(object_id), do: nil
+  defp get_episode_object(object_id) do
     [p, e] = String.split(object_id, ":")
     Episode.published()
     |> Episode.with_podcast_slug(p)
@@ -134,8 +134,8 @@ defmodule Changelog.NewsItem do
     |> Repo.one()
   end
 
-  defp load_post_object(object_id) when is_nil(object_id), do: nil
-  defp load_post_object(object_id) do
+  defp get_post_object(object_id) when is_nil(object_id), do: nil
+  defp get_post_object(object_id) do
     [_, slug] = String.split(object_id, ":")
     Post.published()
     |> Post.preload_all()
