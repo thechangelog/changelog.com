@@ -21,6 +21,18 @@ defmodule ChangelogWeb.Email do
     |> render(:comment_reply)
   end
 
+  def comment_subscription(subscription, comment) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Comment Subscription")
+    |> to(subscription.person)
+    |> subject("New comment on '#{comment.news_item.headline}'")
+    |> assign(:subscription, subscription)
+    |> assign(:person, subscription.person)
+    |> assign(:comment, comment)
+    |> assign(:item, comment.news_item)
+    |> render(:comment_subscription)
+  end
+
   def community_welcome(person) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Community Welcome")
