@@ -1,6 +1,6 @@
 <article class="article">
   <div class="richtext">
-    <h1>Be Our Guest</h1>
+    <h1>Be our guest</h1>
     <p>First off, <mark>thank you</mark> for joining us on
 
     <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
@@ -9,31 +9,37 @@
     <% end %>
     </select>! Here's what you can expect:</p>
 
-    <h3 id="before">Before Recording</h3>
+    <h3 id="before">Before you record</h3>
 
     <p>We strive for the best audio quality possible (within reason). Things you'll need to achieve this:</p>
 
     <ul>
-      <li>A good external microphone or USB headset (Impossible? We can make earbuds sound <em>OK</em>)</li>
-      <li>Headphones (Over-the-ear preferred)</li>
-      <li>A quiet place to record</li>
-      <li>A reliable internet connection</li>
+      <li>A good external microphone or USB headset 🎙</li>
+      <li>A pair of headphones (Over-the-ear preferred) 🎧</li>
+      <li>A quiet place to record 🤫</li>
+      <li>A reliable internet connection 🔌</li>
     <%= if uses_skype?(@podcast) do %>
-      <li>A <a href="https://www.skype.com/">Skype</a> account</li>
+      <li>A <a href="https://www.skype.com/">Skype</a> account 📞</li>
     <% end %>
     </ul>
 
   <%= if uses_skype?(@podcast) do %>
-    <p>Send us your Skype username <a href="mailto:editors@changelog.com">via email</a> and add <code><%= skype_account(@podcast) %></code> as a contact.
+    <p>
+    <%= if @podcast.slug == "practicalai" do %>
+      Send your Skype username to the hosts via email
+    <% else %>
+      Send us your Skype username <a href="mailto:editors@changelog.com">via email</a> and add <code><%= skype_account(@podcast) %></code> as a contact.
+    <% end %>
+    </p>
   <% end %>
 
-    <h4 id="local-recording">Creating a Local Recording</h4>
+    <h4 id="local-recording">Creating a local recording</h4>
 
     <p>To get the best quality, we ask that you please create a local recording. Here's a video on how to do that:</p>
 
     <script src="https://fast.wistia.com/embed/medias/7in6285tx0.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_7in6285tx0 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/7in6285tx0/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
 
-    <h3 id="during">During Recording</h3>
+    <h3 id="during">During recording</h3>
 
     <p>Be ready <%= if uses_skype?(@podcast), do: "on Skype" %> approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>. Here's some <em>tips and tricks</em> for a great show:</p>
 
@@ -42,26 +48,26 @@
       <li><mark>This show records live</mark>.</li>
       <li>You can interact with listeners in our <%= link "Community Slack", to: page_path(@conn, :community) %>.</li>
     <% end %>
-      <li>Put your mobile device(s) on Silence and Airplane Mode.</li>
-      <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome.</li>
-      <li>Relax. Have fun. Bring your opinions.</li>
+      <li>Put your mobile device(s) on Airplane Mode 📳</li>
+      <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome 🚰</li>
+      <li>Relax. Have fun. Bring your opinions 💯</li>
     </ul>
 
-    <h3 id="after">After Recording</h3>
+    <h3 id="after">After recording</h3>
 
-    <p>The <strike>hard</strike> <strike>intimidating</strike> talking part is over! As soon as you're able, <mark>upload your local audio file <a href="https://www.dropbox.com/request/4b4c8Hk5zMM0xlciMk6W" rel="nofollow" title="Audio upload link">right here</a></mark>. The episode will be professionially edited, produced, and transcribed. Then:</p>
+    <p>The <strike>hard</strike> <strike>intimidating</strike> talking part is over! As soon as you're able, <mark>upload your local audio file <a href="https://www.dropbox.com/request/4b4c8Hk5zMM0xlciMk6W" rel="nofollow" title="Audio upload link">right here</a></mark>. The episode will be professionially edited, produced, and transcribed. Then you will:</p>
 
     <ul>
-      <li>We'll email you when your show is published.</li>
-      <li>You'll get an awesome t-shirt as a thanks from us.</li>
-      <li>We'll all share and promote the episode!</li>
+      <li>Receive an email when the show is published 📥</li>
+      <li>Help share and promote the episode 🗣</li>
+      <li>Get an awesome t-shirt as a thanks from us ✊</li>
     </ul>
 
     <p>Please do <mark>share your episode</mark>. You put a lot of effort in to what you do and we want to see its impact maximized. Our guests' favorite places to share their show:</p>
 
     <ul>
-      <li>Project Website and/or README</li>
-      <li>Personal Website, Blog, and/or Medium</li>
+      <li>Project website and/or README</li>
+      <li>Personal website, blog, and/or Medium</li>
       <li>Twitter, Reddit, Hacker News, etc.</li>
     </ul>
 
@@ -74,7 +80,7 @@
     <%= EpisodeView.embed_iframe(@episode, "day") |> raw %>
   <% end %>
 
-    <h3>That's All!</h3>
+    <h3>That's all!</h3>
 
     <p>Thanks again, we truly appreciate it! 💚💚💚</p>
   </div>
