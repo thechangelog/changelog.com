@@ -10,7 +10,8 @@ defmodule ChangelogWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :changelog, gzip: true,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only_matching: ~w(css fonts images js android-chrome apple-touch
+      browserconfig favicon manifest mstile robots safari-pinned-tab)
 
   # In dev environment, serve uploaded files from "priv/uploads".
   #
