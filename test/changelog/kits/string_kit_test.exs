@@ -9,6 +9,29 @@ defmodule Changelog.StringKitTest do
     assert StringKit.dasherize("Hell's Kitchen!") == "hells-kitchen"
   end
 
+  describe "extract_mentions/1" do
+    test "returns an empty list when there aren't any" do
+      raw = ~s{Yo here is my _super cool_ thing}
+      assert StringKit.extract_mentions(raw) == []
+    end
+
+    test "returns one mention when string has one" do
+      raw = """
+      @kball representing the JS Party community in Amsterdam?! Yes please.
+      """
+
+      assert StringKit.extract_mentions(raw) == ["kball"]
+    end
+
+    test "returns multiple mentions when separated by commas" do
+      raw = """
+      I think we should pull in @jerodsanto, @codyjames, and @adamstac!
+      """
+
+      assert StringKit.extract_mentions(raw) == ["jerodsanto", "codyjames", "adamstac"]
+    end
+  end
+
   describe "md_linkify/1" do
     test "no-ops with nothing to linkify" do
       raw = ~s{Yo here is my _super cool_ thing}
@@ -80,6 +103,49 @@ defmodule Changelog.StringKitTest do
       """
 
       assert StringKit.md_linkify(raw) == linkified
+    end
+  end
+
+  describe "mentions_linkify/1" do
+    test "it no-ops when no mentions to linkify" do
+      raw = ~s{Yo here is my _super cool_ thing}
+      assert StringKit.mentions_linkify(raw, []) == raw
+    end
+
+    test "it no-ops when it has a mention but they aren't a known person" do
+      raw = """
+      @kball representing the JS Party community in Amsterdam?! Yes please.
+      """
+
+      assert StringKit.mentions_linkify(raw, []) == raw
+    end
+
+    test "it replaces one mention with the appropriate markdown-style link" do
+      kball = %{handle: "kball", website: "https://zendev.com"}
+
+      raw = """
+      @kball representing the JS Party community in Amsterdam?! Yes please.
+      """
+
+      linkified = """
+      [@kball](https://zendev.com) representing the JS Party community in Amsterdam?! Yes please.
+      """
+      assert StringKit.mentions_linkify(raw, [kball]) == linkified
+    end
+
+    test "it replaces multiple mentions with the appropriate markdown-style link" do
+      jerodsanto = %{handle: "jerodsanto", website: "https://jerodsanto.net"}
+      adamstac = %{handle: "adamstac", website: "https://adamstacoviak.com"}
+
+      raw = """
+      Well that is awesome @adamstac @jerodsanto, thanks!
+      """
+
+      linkified = """
+      Well that is awesome [@adamstac](https://adamstacoviak.com) [@jerodsanto](https://jerodsanto.net), thanks!
+      """
+
+      assert StringKit.mentions_linkify(raw, [jerodsanto, adamstac]) == linkified
     end
   end
 end

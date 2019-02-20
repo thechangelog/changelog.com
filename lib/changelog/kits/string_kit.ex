@@ -1,9 +1,21 @@
 defmodule Changelog.StringKit do
+
+  alias ChangelogWeb.PersonView
+
   def dasherize(string) do
     string
     |> String.downcase
     |> String.replace(~r/[^\w\s]/, "")
     |> String.replace(" ", "-")
+  end
+
+  @doc """
+  Returns a list of sub-strings that are possible @mentions for further processing
+  """
+  def extract_mentions(string) do
+    ~r/@([a-z|0-9|_|-]+)\W/
+    |> Regex.scan(string)
+    |> Enum.map(&List.last/1)
   end
 
   @doc """
@@ -18,5 +30,17 @@ defmodule Changelog.StringKit do
     /x
 
     Regex.replace(regex, string, ~s{[\\1](\\1)})
+  end
+
+  @doc """
+  Converts 'bare' mentions to Markdown-style links for further processing
+  """
+  def mentions_linkify(string, []), do: string
+  def mentions_linkify(string, people) do
+    Enum.reduce(people, string, fn(person, string) ->
+      mention = "@#{person.handle}"
+      url = PersonView.external_url(person)
+      String.replace(string, "#{mention}", "[#{mention}](#{url})")
+    end)
   end
 end

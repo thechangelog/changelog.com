@@ -16,6 +16,11 @@ defmodule ChangelogWeb.NewsItemCommentView do
   def permalink_path(comment), do: "#comment-#{hashid(comment)}"
 
   def transformed_content(content) do
-    content |> StringKit.md_linkify() |> md_to_safe_html()
+    mentioned = NewsItemComment.mentioned_people(content)
+
+    content
+    |> StringKit.mentions_linkify(mentioned)
+    |> StringKit.md_linkify()
+    |> md_to_safe_html()
   end
 end

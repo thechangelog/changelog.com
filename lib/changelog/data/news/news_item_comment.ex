@@ -1,7 +1,7 @@
 defmodule Changelog.NewsItemComment do
   use Changelog.Data
 
-  alias Changelog.{NewsItem, Person}
+  alias Changelog.{NewsItem, Person, StringKit}
 
   schema "news_item_comments" do
     field :content, :string
@@ -27,6 +27,20 @@ defmodule Changelog.NewsItemComment do
 
   def update_changeset(struct, attrs \\ %{}) do
     insert_changeset(struct, attrs)
+  end
+
+  def mentioned_people(%__MODULE__{content: content}), do: mentioned_people(content)
+  def mentioned_people(content) do
+    content
+    |> StringKit.extract_mentions()
+    |> get_mentioned_people()
+  end
+
+  defp get_mentioned_people([]), do: []
+  defp get_mentioned_people(handles) do
+    handles
+    |> Person.with_handles()
+    |> Repo.all()
   end
 
   # Expects newest comments first
