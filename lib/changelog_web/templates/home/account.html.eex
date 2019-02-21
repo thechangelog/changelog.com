@@ -44,7 +44,7 @@
         <label>
           <%= checkbox(i, :email_on_comment_mentions) %>
           <span class="form-checklist-item-box"></span>
-          <span class="form-checklist-item-text">Email when someone @mentions me in discussions</span>
+          <span class="form-checklist-item-text">Email when someone mentions me in discussions</span>
         </label>
       </div>
     </div>

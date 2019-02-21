@@ -1,0 +1,17 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p><%= greeting(@person) %></p>
+
+    <p><strong><%= PersonView.handle(@comment.author) %></strong> mentioned you <%= link("on Changelog News", to: news_item_url(@item)) %>, saying:</p>
+
+    <blockquote><pre><%= @comment.content %></pre></blockquote>
+
+    <%= link("Reply here", to: comment_url(@item, @comment), class: "btn-primary", itemprop: "url") %>
+
+    <p>Seen enough? <%= link("Mute this discussion", to: PersonView.opt_out_url(Endpoint, @person, "news", @item.id)) %> or <%= link("disable mention notifications", to: PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_comment_mentions")) %> all together.</p>
+
+    <p>💚, Logbot</p>
+
+    <p class="footnote">(You received this email because you have mention notifications enabled on changelog.com)</p>
+  </td>
+</tr>

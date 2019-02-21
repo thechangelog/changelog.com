@@ -30,31 +30,30 @@ defmodule Changelog.Notifier do
     deliver_slack_new_comment_message(comment)
 
     # these functions all return lists of tuples where each tuple consists of:
-    # {person, email_recipient (person or subscription), email_type}
-    list_of_comment_mention_recipients(comment) ++
+    # {person, email_recipient (person or subscription), mailer_fn}
     list_of_comment_reply_recipients(comment) ++
+    list_of_comment_mention_recipients(comment) ++
     list_of_comment_subscriptions(comment)
     |> List.flatten()
-    |> Enum.uniq_by(fn({person, _recipient, _type}) -> person end)
-    |> Enum.reject(fn({person, _recipient, _type}) ->
+    |> Enum.uniq_by(fn({person, _recipient, _mailer}) -> person end)
+    |> Enum.reject(fn({person, _recipient, _mailer}) ->
       Subscription.is_unsubscribed(person, comment.news_item)
     end)
-    |> Enum.each(fn({_person, recipient, type}) ->
-      case type do
-        :comment_reply ->
-          recipient
-          |> Email.comment_reply(comment)
-          |> Mailer.deliver_later()
-        :comment_subscription ->
-          recipient
-          |> Email.comment_subscription(comment)
-          |> Mailer.deliver_later()
-        _else -> nil
-      end
+    |> Enum.each(fn({_person, recipient, mailer}) ->
+      Email
+      |> apply(mailer, [recipient, comment])
+      |> Mailer.deliver_later()
     end)
   end
 
-  defp list_of_comment_mention_recipients(_), do: [] # TODO implement mentions
+  defp list_of_comment_mention_recipients(comment) do
+    comment
+    |> NewsItemComment.mentioned_people()
+    |> Enum.filter(&(&1.settings.email_on_comment_mentions))
+    |> Enum.map(fn(person) ->
+      {person, person, :comment_mention}
+    end)
+  end
 
   defp list_of_comment_reply_recipients(%{parent: nil}), do: []
   defp list_of_comment_reply_recipients(reply = %{parent: parent}) do

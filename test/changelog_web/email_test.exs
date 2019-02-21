@@ -12,6 +12,14 @@ defmodule ChangelogWeb.EmailTest do
     {:ok, person: person}
   end
 
+  test "comment mention", %{person: person} do
+    item = build(:published_news_item, id: 123)
+    comment = build(:news_item_comment, news_item: item, id: 321, content: "@#{person.handle}")
+    email = Email.comment_mention(person, comment)
+    assert email.to == person
+    assert email.html_body =~ ~r/#{person.handle}/i
+  end
+
   test "comment subscription", %{person: person} do
     item = build(:published_news_item, id: 123)
     sub = build(:subscription_on_item, person: person, item: item)
@@ -20,7 +28,6 @@ defmodule ChangelogWeb.EmailTest do
 
     assert email.to == person
     assert email.subject =~ ~r/#{item.headline}/i
-
   end
 
   test "community welcome", %{person: person} do

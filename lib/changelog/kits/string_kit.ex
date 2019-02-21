@@ -10,7 +10,7 @@ defmodule Changelog.StringKit do
   end
 
   @doc """
-  Returns a list of sub-strings that are possible @mentions for further processing
+  Returns a list of sub-strings that are possible mentions for further processing
   """
   def extract_mentions(string) do
     ~r/@([a-z|0-9|_|-]+)\W/

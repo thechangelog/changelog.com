@@ -36,6 +36,19 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.authored_news_published(item.author, item)
   end
 
+  def comment_mention_email do
+    comment =
+      NewsItemComment.newest_first()
+      |> NewsItemComment.limit(1)
+      |> NewsItemComment.preload_all()
+      |> Repo.one()
+
+    # person doesn't matter because no actual mention detection here
+    person = latest_person()
+
+    Email.comment_mention(person, comment)
+  end
+
   def comment_reply_email do
     comment =
       NewsItemComment.newest_first()
@@ -72,8 +85,16 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
   end
 
   def episode_published_email do
-    sub = Subscription |> Repo.get(1) |> Subscription.preload_all()
-    ep =  Episode |> Repo.get(654) |> Episode.preload_podcast()
+    sub =
+      Subscription
+      |> Repo.get(1)
+      |> Subscription.preload_all()
+
+    ep =
+      Episode
+      |> Repo.get(654)
+      |> Episode.preload_podcast()
+
     Email.episode_published(sub, ep)
   end
 

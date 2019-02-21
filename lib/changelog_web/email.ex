@@ -13,13 +13,26 @@ defmodule ChangelogWeb.Email do
     |> render(:authored_news_published)
   end
 
+  def comment_mention(person, comment) do
+    item = NewsItem.load_object(comment.news_item)
+
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Comment Mention")
+    |> to(person)
+    |> subject("Someone mentioned you on Changelog News")
+    |> assign(:person, person)
+    |> assign(:comment, comment)
+    |> assign(:item, item)
+    |> render(:comment_mention)
+  end
+
   def comment_reply(person, reply) do
     item = NewsItem.load_object(reply.news_item)
 
     styled_email()
     |> put_header("X-CMail-GroupName", "Comment Reply")
     |> to(person)
-    |> subject("Someone replied to your comment on Changelog News!")
+    |> subject("Someone replied to you on Changelog News")
     |> assign(:person, person)
     |> assign(:reply, reply)
     |> assign(:item, item)

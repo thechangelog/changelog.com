@@ -2,7 +2,7 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p><strong><%= PersonView.handle(@reply.author) %></strong> replied to you <%= link("on Changelog News", to: news_item_url(@item)) %>! They said:</p>
+    <p><strong><%= PersonView.handle(@reply.author) %></strong> replied to you <%= link("on Changelog News", to: news_item_url(@item)) %>, saying:</p>
 
     <blockquote><pre><%= @reply.content %></pre></blockquote>
 

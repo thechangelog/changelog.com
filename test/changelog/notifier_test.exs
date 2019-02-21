@@ -54,6 +54,17 @@ defmodule Changelog.NotifierTest do
       assert called Slack.Client.message("#news-comments", :_)
     end
 
+    test "when a comment mentions 3 people, 1 of which has mention notifications disabled" do
+      p1 = insert(:person, handle: "p1")
+      p2 = insert(:person, handle: "p2")
+      p3 = insert(:person, handle: "p3", settings: %{email_on_comment_mentions: false})
+      comment = insert(:news_item_comment, content: "Yo @p1 @p2 and @p3 what up!")
+      Notifier.notify(comment)
+      assert_delivered_email Email.comment_mention(p1, comment)
+      assert_delivered_email Email.comment_mention(p2, comment)
+      refute_delivered_email Email.comment_mention(p3, comment)
+    end
+
     test "when comment is a reply and author has notifications enabled" do
       comment = insert(:news_item_comment)
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
@@ -70,6 +81,21 @@ defmodule Changelog.NotifierTest do
       reply = insert(:news_item_comment, news_item: item, parent: comment)
       Notifier.notify(reply)
       assert_delivered_email Email.comment_reply(parent, reply)
+      refute_delivered_email Email.comment_subscription(sub, reply)
+      assert called Slack.Client.message("#news-comments", :_)
+    end
+
+    test "when comment is a reply and parent is subscribed and 2 mentions" do
+      parent = insert(:person, handle: "person1")
+      mentioned = insert(:person, handle: "person2")
+      item = insert(:news_item)
+      sub = insert(:subscription_on_item, person: parent, item: item)
+      comment = insert(:news_item_comment, news_item: item, author: parent)
+      reply = insert(:news_item_comment, news_item: item, parent: comment, content: "Thanks @person1 @person2!")
+      Notifier.notify(reply)
+      assert_delivered_email Email.comment_reply(parent, reply)
+      assert_delivered_email Email.comment_mention(mentioned, reply)
+      refute_delivered_email Email.comment_mention(parent, reply)
       refute_delivered_email Email.comment_subscription(sub, reply)
       assert called Slack.Client.message("#news-comments", :_)
     end

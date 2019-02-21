@@ -137,7 +137,7 @@
       <div class="inline field">
         <div class="ui toggle checkbox">
           <%= checkbox(i, :email_on_comment_mentions, class: "hidden") %>
-          <%= label(f, :email_on_comment_mentions, "Email on comment @mentions") %>
+          <%= label(f, :email_on_comment_mentions, "Email on comment mentions") %>
         </div>
       </div>
 

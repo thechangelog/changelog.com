@@ -1,7 +1,7 @@
 <%= greeting(@person) %>
 
 
-<%= PersonView.handle(@reply.author) %> replied to you on Changelog News! They said:
+<%= PersonView.handle(@reply.author) %> replied to you on Changelog News, saying:
 
 <%= @reply.content %>
 
