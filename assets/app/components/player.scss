@@ -200,14 +200,14 @@
   }
 
   &--play {
-    background-image: url("/images/icons/play.svg");
+    background-image: url("/images/icons/player-play.svg");
 
     &.is-paused {
-      background-image: url("/images/icons/play.svg");
+      background-image: url("/images/icons/player-play.svg");
       background-size: 18px;
     }
     &.is-playing {
-      background-image: url("/images/icons/pause.svg");
+      background-image: url("/images/icons/player-pause.svg");
     }
     &.is-loading {
       background-image: url("/images/icons/loading.svg");
@@ -238,8 +238,8 @@
     width: 2.25rem;
     margin: 0 0.5rem;
   }
-  &--back15 { background-image: url("/images/icons/prev-15.svg"); }
-  &--forward15 { background-image: url("/images/icons/next-15.svg"); }
+  &--back15 { background-image: url("/images/icons/player-prev-15.svg"); }
+  &--forward15 { background-image: url("/images/icons/player-next-15.svg"); }
 
   &--next_episode,
   &--prev_episode {
