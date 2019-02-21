@@ -77,11 +77,11 @@
         text-transform: uppercase;
 
         &--link {
-          background: $black url('/images/icons/type-link.svg') no-repeat center;
+          background: $black url('/images/defaults/type-link.svg') no-repeat center;
           background-size: 20px;
         }
         &--project {
-          background: $black url('/images/icons/type-project.svg') no-repeat center;
+          background: $black url('/images/defaults/type-project.svg') no-repeat center;
           background-size: 20px;
         }
 
