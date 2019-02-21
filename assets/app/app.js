@@ -50,7 +50,9 @@ window.App = {
   },
 
   attachTooltips() {
-    new Tooltip(".has-tooltip");
+    u(".has-tooltip").each(el => {
+      if (el.tooltip === undefined) new Tooltip(el);
+    });
   },
 
   detachFlash() {
@@ -123,11 +125,6 @@ u(document).handle("click", ".js-subscribe-all", function(event) {
 u(document).handle("click", ".js-toggle_element", function(event) {
   const href = u(event.target).attr("href");
   u(href).toggleClass("is-hidden");
-});
-
-u(document).handle("click", ".js-account-nav", function(event) {
-  const content = u(".js-account-nav-content").html();
-  App.overlay.html(content).show();
 });
 
 u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
