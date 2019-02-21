@@ -64,7 +64,7 @@ module.exports = [
       ]
     },
     plugins: [
-      new CopyWebpackPlugin([{ from: __dirname + "/assets"}]),
+      new CopyWebpackPlugin([{ from: __dirname + "/static"}]),
       new MiniCssExtractPlugin({filename: "css/app.css"})
     ]
   }),
