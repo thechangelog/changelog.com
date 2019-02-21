@@ -33,14 +33,20 @@
 
     <div class="form-element_wrap form-element_wrap--2">
       <div class="form-element <%= error_class(f, :github_handle) %>">
-        <label>On GitHub</label>
-        <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <label>GitHub Handle</label>
+        <div class="form-element-preppended_field">
+          <span>github.com/</span>
+          <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
         <%= error_message(f, :github_handle) %>
       </div>
 
       <div class="form-element <%= error_class(f, :twitter_handle) %>">
-        <label>On Twitter</label>
-        <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <label>Twitter Handle</label>
+        <div class="form-element-preppended_field">
+          <span>twitter.com/</span>
+          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
         <%= error_message(f, :twitter_handle) %>
       </div>
     </div>

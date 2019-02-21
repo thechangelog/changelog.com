@@ -21,13 +21,13 @@
     </div>
 
     <div class="field <%= error_class(f, :github_handle) %>">
-      <%= label(f, :github_handle, "On GitHub") %>
+      <%= label(f, :github_handle, "GitHub Handle") %>
       <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
       <%= error_message(f, :github_handle) %>
     </div>
 
     <div class="field <%= error_class(f, :twitter_handle) %>">
-      <%= label(f, :twitter_handle, "On Twitter") %>
+      <%= label(f, :twitter_handle, "Twitter Handle") %>
       <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
       <%= error_message(f, :twitter_handle) %>
     </div>
@@ -137,7 +137,7 @@
       <div class="inline field">
         <div class="ui toggle checkbox">
           <%= checkbox(i, :email_on_comment_mentions, class: "hidden") %>
-          <%= label(f, :email_on_comment_mentions, "Email on comment mentions") %>
+          <%= label(f, :email_on_comment_mentions, "Email on comment @mentions") %>
         </div>
       </div>
 
