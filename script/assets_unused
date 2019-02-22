@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+class Asset < Struct.new(:path)
+  def name; File.basename path; end
+  def image?; name.end_with? "png", "jpg", "gif", "svg"; end
+  def in_js_or_css?; `ack #{name} priv/static`.length > 0; end
+  def in_elixir?; `ack #{name} lib`.length > 0; end
+end
+
+Dir["assets/static/**/*"].map { |x| Asset.new x }.select(&:image?).each do |image|
+  next if image.in_js_or_css? || image.in_elixir?
+  puts "#{image.path} not referenced"
+end
