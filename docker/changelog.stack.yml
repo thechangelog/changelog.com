@@ -39,6 +39,12 @@ services:
         failure_action: rollback
         monitor: 30s
         order: start-first
+    healthcheck:
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 60s
     environment:
       NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
