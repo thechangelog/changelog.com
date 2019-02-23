@@ -35,11 +35,7 @@ APP_IMAGE ?= thechangelog/changelog.com:latest
 
 ### DEPS ###
 #
-CURL := /usr/bin/curl
 DOCKER := /usr/local/bin/docker
-JQ := /usr/local/bin/jq
-LPASS := /usr/local/bin/lpass
-TERRAFORM := /usr/local/bin/terraform
 
 CASK := brew cask
 
@@ -53,12 +49,15 @@ $(COMPOSE):
 	  exit 1 \
 	)
 
+JQ := /usr/local/bin/jq
 $(JQ):
 	@brew install jq
 
+LPASS := /usr/local/bin/lpass
 $(LPASS):
 	@brew install lastpass-cli
 
+TERRAFORM := /usr/local/bin/terraform
 $(TERRAFORM):
 	@brew install terraform
 
@@ -70,6 +69,7 @@ WATCH := /usr/local/bin/watch
 $(WATCH):
 	@brew install watch
 
+CURL := /usr/bin/curl
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
