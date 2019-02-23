@@ -216,6 +216,7 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 .PHONY: cds
 cds: create-docker-secrets
 
+# https://github.com/bcicen/ctop
 define CTOP_CONTAINER
 docker pull quay.io/vektorlab/ctop:latest && \
 docker run --rm --interactive --tty \
@@ -225,14 +226,16 @@ docker run --rm --interactive --tty \
   quay.io/vektorlab/ctop:latest
 endef
 .PHONY: ctop
-ctop: ## ct  | View real-time container metrics & logs
-	@if [ $(HOST) = localhost ] ; then \
-	  $(CTOP_CONTAINER) ; \
-	else \
-	  ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)" ; \
-	fi
+ctop: ## ct  | View real-time container metrics & logs remotely
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)"
 .PHONY: ct
 ct: ctop
+
+.PHONY: ctop-local
+ctop-local:
+	@$(CTOP_CONTAINER)
+.PHONY: ctl
+ctl: ctop-local
 
 .PHONY: remove-docker-secrets
 remove-docker-secrets: $(LPASS)
