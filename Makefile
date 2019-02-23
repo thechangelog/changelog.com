@@ -36,18 +36,9 @@ APP_IMAGE ?= thechangelog/changelog.com:latest
 ### DEPS ###
 #
 DOCKER := /usr/local/bin/docker
-
-CASK := brew cask
-
-$(DOCKER):
-	@$(CASK) install docker
-
 COMPOSE := $(DOCKER)-compose
-$(COMPOSE):
-	@[ -f $(COMPOSE) ] || (\
-	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
-	  exit 1 \
-	)
+$(DOCKER) $(COMPOSE):
+	@brew cask install docker
 
 JQ := /usr/local/bin/jq
 $(JQ):
