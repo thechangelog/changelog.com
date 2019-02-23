@@ -219,6 +219,7 @@ cds: create-docker-secrets
 define CTOP_CONTAINER
 docker pull quay.io/vektorlab/ctop:latest && \
 docker run --rm --interactive --tty \
+  --cpus 0.5 --memory 128M \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   quay.io/vektorlab/ctop:latest
 endef
