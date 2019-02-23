@@ -269,7 +269,7 @@ uasl: update-app-service-local
 
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
-	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
+	@$(DOCKER) build --pull --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
 .PHONY: bli
 bli: build-local-image
 
