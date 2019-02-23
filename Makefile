@@ -285,6 +285,27 @@ iaas: linode-token dnsimple-creds terraform/dhparams.pem init validate apply ## 
 .PHONY: i
 i: iaas
 
+# https://github.com/hishamhm/htop
+define HTOP_CONTAINER
+docker pull jess/htop:latest && \
+docker run --rm --interactive --tty \
+  --cpus 0.5 --memory 128M \
+  --net="host" --pid="host" \
+  --name htop_$(USER) \
+  jess/htop:latest
+endef
+.PHONY: htop
+htop: ## ht  | View real-time host system metrics
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(HTOP_CONTAINER)"
+.PHONY: ht
+ht: htop
+
+.PHONY: htop-local
+htop-local:
+	@$(HTOP_CONTAINER)
+.PHONY: htl
+htl: htop-local
+
 # https://www.linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide/#diffie-hellman-parameters
 terraform/dhparams.pem: $(OPENSSL)
 	@$(OPENSSL) dhparam -out terraform/dhparams.pem 2048
