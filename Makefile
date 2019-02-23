@@ -255,25 +255,23 @@ deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 .PHONY: dds
 dds: deploy-docker-stack
 
-.PHONY: update-app-service
-update-app-service: $(DOCKER)
-	@$(DOCKER) service update --quiet --image $(APP_IMAGE) $(DOCKER_STACK)_app 1>/dev/null
-.PHONY: uas
-uas: update-app-service
+.PHONY: deploy-docker-stack-local
+deploy-docker-stack-local: DOCKER_STACK_FILE = docker/changelog.stack.local.yml
+deploy-docker-stack-local: deploy-docker-stack
+.PHONY: ddsl
+ddsl: deploy-docker-stack-local
+
+.PHONY: update-app-service-local
+update-app-service-local:
+	@$(DOCKER) service update --force --quiet --image thechangelog/changelog.com:local $(DOCKER_STACK)_app
+.PHONY: uasl
+uasl: update-app-service-local
 
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
 	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
 .PHONY: bli
 bli: build-local-image
-
-.PHONY: deploy-docker-stack-local
-deploy-docker-stack-local: $(DOCKER) build-local-image create-dirs-mounted-as-volumes
-	@export HOSTNAME ; \
-	$(DOCKER) service scale $(DOCKER_STACK)_app_updater=0 ; \
-	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK)
-.PHONY: ddsl
-ddsl: deploy-docker-stack-local
 
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
