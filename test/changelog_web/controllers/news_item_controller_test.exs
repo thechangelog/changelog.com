@@ -129,7 +129,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   test "cannot subscribe with no user", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = post(conn, news_item_path(conn, :subscribe, hashid(item)))
+    conn = get(conn, news_item_path(conn, :subscribe, hashid(item)))
 
     assert redirected_to(conn) == sign_in_path(conn, :new)
   end
@@ -137,7 +137,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   @tag :as_inserted_user
   test "subscribes and redirects back to news item", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = post(conn, news_item_path(conn, :subscribe, hashid(item)))
+    conn = get(conn, news_item_path(conn, :subscribe, hashid(item)))
 
     assert redirected_to(conn) == news_item_path(conn, :show, slug(item))
     assert count(Subscription.subscribed) == 1
@@ -145,7 +145,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   test "cannot unsubscribe with no user", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = post(conn, news_item_path(conn, :unsubscribe, hashid(item)))
+    conn = get(conn, news_item_path(conn, :unsubscribe, hashid(item)))
 
     assert redirected_to(conn) == sign_in_path(conn, :new)
   end
@@ -153,7 +153,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   @tag :as_inserted_user
   test "unsubscribes and redirects back to news item", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = post(conn, news_item_path(conn, :unsubscribe, hashid(item)))
+    conn = get(conn, news_item_path(conn, :unsubscribe, hashid(item)))
 
     assert redirected_to(conn) == news_item_path(conn, :show, slug(item))
     assert count(Subscription.subscribed) == 0

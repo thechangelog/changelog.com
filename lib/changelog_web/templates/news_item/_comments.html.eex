@@ -9,9 +9,9 @@
   <% is_nil(@current_user) -> %>
     <%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("Join", to: person_path(@conn, :join)) %> to comment or subscribe
   <% Subscription.is_subscribed(@current_user, @item) -> %>
-    <%= link("Unsubscribe 🔕", to: news_item_path(@conn, :unsubscribe, hashid(@item)), method: :post, title: "Unsubscribe from this discussion") %>
+    <%= link("Unsubscribe 🔕", to: news_item_path(@conn, :unsubscribe, hashid(@item)), title: "Unsubscribe from this discussion") %>
   <% true -> %>
-    <%= link("Subscribe 🔔", to: news_item_path(@conn, :subscribe, hashid(@item)), method: :post, title: "Get notified of new comments") %>
+    <%= link("Subscribe 🔔", to: news_item_path(@conn, :subscribe, hashid(@item)), title: "Get notified of new comments") %>
   <% end %>
     </p>
   </header>

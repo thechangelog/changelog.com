@@ -156,8 +156,8 @@ defmodule ChangelogWeb.Router do
     resources "/news", NewsItemController, only: [:show, :create], as: :news_item
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
     get "/news/:id/visit", NewsItemController, :visit, as: :news_item
-    post "/news/:id/subscribe", NewsItemController, :subscribe, as: :news_item
-    post "/news/:id/unsubscribe", NewsItemController, :unsubscribe, as: :news_item
+    get "/news/:id/subscribe", NewsItemController, :subscribe, as: :news_item
+    get "/news/:id/unsubscribe", NewsItemController, :unsubscribe, as: :news_item
     post "/news/impress", NewsItemController, :impress, as: :news_item
     resources "/ads", NewsAdController, only: [:show], as: :news_ad
     post "/ad/impress", NewsAdController, :impress, as: :news_ad
