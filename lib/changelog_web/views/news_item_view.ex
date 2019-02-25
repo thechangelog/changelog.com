@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, NewsAd, NewsItem, Podcast, Regexp, UrlKit}
+  alias Changelog.{Episode, Files, NewsAd, NewsItem, Podcast, Regexp, Subscription, UrlKit}
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
                       EpisodeView, PersonView, TopicView, PodcastView}
 
