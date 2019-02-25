@@ -3,7 +3,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   import ChangelogWeb.NewsItemView, only: [hashid: 1, slug: 1]
 
-  alias Changelog.{NewsItem, NewsQueue}
+  alias Changelog.{NewsItem, NewsQueue, Subscription}
 
   test "getting the index", %{conn: conn} do
     i1 = insert(:news_item)
@@ -125,5 +125,38 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsItem) == count_before
+  end
+
+  test "cannot subscribe with no user", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = post(conn, news_item_path(conn, :subscribe, hashid(item)))
+
+    assert redirected_to(conn) == sign_in_path(conn, :new)
+  end
+
+  @tag :as_inserted_user
+  test "subscribes and redirects back to news item", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = post(conn, news_item_path(conn, :subscribe, hashid(item)))
+
+    assert redirected_to(conn) == news_item_path(conn, :show, slug(item))
+    assert count(Subscription.subscribed) == 1
+  end
+
+  test "cannot unsubscribe with no user", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = post(conn, news_item_path(conn, :unsubscribe, hashid(item)))
+
+    assert redirected_to(conn) == sign_in_path(conn, :new)
+  end
+
+  @tag :as_inserted_user
+  test "unsubscribes and redirects back to news item", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = post(conn, news_item_path(conn, :unsubscribe, hashid(item)))
+
+    assert redirected_to(conn) == news_item_path(conn, :show, slug(item))
+    assert count(Subscription.subscribed) == 0
+    assert count(Subscription.unsubscribed) == 1
   end
 end

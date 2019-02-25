@@ -1,10 +1,11 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsItem, NewsItemComment, NewsSponsorship}
+  alias Changelog.{Hashid, NewsItem, NewsItemComment, NewsSponsorship, Subscription}
   alias ChangelogWeb.NewsItemView
 
   plug RequireUser, "before submitting" when action in [:create]
+  plug RequireUser, "before subscribing" when action in [:subscribe, :unsubscribe]
 
   def index(conn, params) do
     pinned =
@@ -164,6 +165,25 @@ defmodule ChangelogWeb.NewsItemController do
     |> assign(:comments, [])
     |> assign(:changeset, changeset)
     |> render(:show)
+  end
+
+  def subscribe(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
+    item = item_from_hashid(hashid)
+    context = "you clicked the 'Subscribe' link at the top of the discussion"
+    Subscription.subscribe(user, item, context)
+
+    conn
+    |> put_flash(:success, "We'll email you when folks comment 📥")
+    |> redirect(to: news_item_path(conn, :show, NewsItem.slug(item)))
+  end
+
+  def unsubscribe(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
+    item = item_from_hashid(hashid)
+    Subscription.unsubscribe(user, item)
+
+    conn
+    |> put_flash(:success, "No more email notifications from now on 🤐")
+    |> redirect(to: news_item_path(conn, :show, NewsItem.slug(item)))
   end
 
   defp get_ads do
