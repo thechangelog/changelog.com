@@ -9,12 +9,23 @@ defmodule ChangelogWeb.Admin.PersonController do
   plug :scrub_params, "person" when action in [:create, :update]
 
   def index(conn, params) do
+    filter = Map.get(params, "filter", "all")
+
     page =
-      Person
-      |> order_by([p], desc: p.id)
+      case filter do
+        "admin"  -> Person.admins()
+        "host"   -> Person.hosts()
+        "editor" -> Person.editors()
+        _else    -> Person
+      end
+      |> Person.newest_first()
       |> Repo.paginate(params)
 
-    render(conn, :index, people: page.entries, page: page)
+    conn
+    |> assign(:people, page.entries)
+    |> assign(:filter, filter)
+    |> assign(:page, page)
+    |> render(:index)
   end
 
   def show(conn, %{"id" => id}) do

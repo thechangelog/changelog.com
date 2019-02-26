@@ -66,6 +66,10 @@ defmodule Changelog.Person do
     timestamps()
   end
 
+  def admins(query \\ __MODULE__),  do: from(q in query, where: q.admin)
+  def editors(query \\ __MODULE__),  do: from(q in query, where: q.editor)
+  def hosts(query \\ __MODULE__),  do: from(q in query, where: q.host)
+
   def in_slack(query \\ __MODULE__),              do: from(q in query, where: not(is_nil(q.slack_id)))
   def joined(query \\ __MODULE__),                do: from(a in query, where: not(is_nil(a.joined_at)))
   def never_signed_in(query \\ __MODULE__),       do: from(q in query, where: is_nil(q.signed_in_at))

@@ -14,7 +14,7 @@
 
 <div class="ui basic segment">
 <%= if Enum.any?(@people) do %>
-  <%= render "_table.html", conn: @conn, people: @people %>
-  <%= pagination_links @conn, @page, path: &admin_person_path/3 %>
+  <%= render("_table.html", assigns) %>
+  <%= pagination_links(@conn, @page, path: &admin_person_path/3) %>
 <% end %>
 </div>

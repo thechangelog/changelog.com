@@ -6,6 +6,7 @@ import newsIssueView from "views/newsIssueView";
 import newsItemView from "views/newsItemView";
 import newsItemCommentView from "views/newsItemCommentView";
 import newsSponsorshipView from "views/newsSponsorshipView";
+import personView from "views/personView";
 import podcastView from "views/podcastView";
 import postView from "views/postView";
 import topicView from "views/topicView";
@@ -14,14 +15,15 @@ import FormUI from "components/formUI";
 
 let views = {
   "BenefitView": benefitView,
-  "TopicView": topicView,
   "EpisodeView": episodeView,
   "NewsItemView": newsItemView,
   "NewsItemCommentView": newsItemCommentView,
   "NewsIssueView": newsIssueView,
   "NewsSponsorshipView": newsSponsorshipView,
+  "PersonView": personView,
   "PodcastView": podcastView,
-  "PostView": postView
+  "PostView": postView,
+  "TopicView": topicView,
 };
 
 FormUI.init();

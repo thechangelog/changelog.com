@@ -27,6 +27,20 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     end
   end
 
+  def filter_select(filter, options) when is_binary(filter), do: filter_select(String.to_atom(filter), options)
+  def filter_select(filter, options) do
+    content_tag(:select, class: "ui fluid selection dropdown js-filter") do
+      Enum.map(options, fn({value, label}) ->
+        args = if filter == value do
+          [value: value, selected: true]
+        else
+          [value: value]
+        end
+        content_tag(:option, label, args)
+      end)
+    end
+  end
+
   def help_icon(help_text) do
     ~e"""
     <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>

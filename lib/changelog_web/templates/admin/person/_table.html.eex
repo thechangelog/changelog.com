@@ -8,7 +8,9 @@
       <th>Last Seen</th>
       <th>Posts</th>
       <th>Episodes</th>
-      <th></th>
+      <th>
+        <%= filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
+      </th>
     </tr>
   </thead>
 
