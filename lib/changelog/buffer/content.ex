@@ -24,7 +24,9 @@ defmodule Changelog.Buffer.Content do
     if Enum.any?(meta) do
       """
       #{episode_emoji()} New episode of #{episode.podcast.name}!
+
       #{Enum.join(meta, "\n")}
+
       💚 #{episode_link(item)}
       """
     else
