@@ -137,18 +137,18 @@ export default class Time {
     let weeks = Math.round(days / 7);
 
     if (weeks < 4) {
-      return long ? `${this._pluralize(weeks, "week")} ago` : `${weeks}w`;
+      return long ? `${this._pluralize(weeks, "week")} ago` : `${weeks}wk`;
     }
 
     let months = Math.round(weeks / 4);
 
     if (months < 12) {
-      return long ? `${this._pluralize(months, "month")} ago` : `${months}m`;
+      return long ? `${this._pluralize(months, "month")} ago` : `${months}mo`;
     }
 
     let years = Math.round(months / 12);
 
-    return long ? `${this._pluralize(years, "year")} ago` : `${years}y`;
+    return long ? `${this._pluralize(years, "year")} ago` : `${years}yr`;
   }
 
   _pluralize(number, string) {
