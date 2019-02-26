@@ -84,7 +84,7 @@
 
     <hr>
 
-    <h2>JS Party</h3>
+    <h2>JS Party</h2>
 
     <p>A panel of web development experts and special guests discuss the latest in JavaScript and the web platform.</p>
 
@@ -103,7 +103,7 @@
 
     <hr>
 
-    <h2>Founders Talk</h3>
+    <h2>Founders Talk</h2>
 
     <p>In-depth, one-on-one, conversations with Founders. The journey, successes, failures, do-overs, lessons learned.</p>
 
@@ -121,7 +121,7 @@
 
     <hr>
 
-    <h2>Practical AI</h3>
+    <h2>Practical AI</h2>
 
     <p>A podcast focused on making artificial intelligence practical, productive, and accessible to every developer.</p>
 
