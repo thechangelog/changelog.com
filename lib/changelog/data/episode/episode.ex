@@ -5,12 +5,15 @@ defmodule Changelog.Episode do
                    EpisodeSponsor, Files, NewsItem, Podcast, Regexp, Transcripts}
   alias ChangelogWeb.{EpisodeView, TimeView}
 
+  defenum Type, full: 0, bonus: 1, trailer: 2
+
   schema "episodes" do
     field :slug, :string
     field :guid, :string
 
     field :title, :string
     field :subtitle, :string
+    field :type, Type
 
     field :featured, :boolean, default: false
     field :highlight, :string
@@ -89,7 +92,7 @@ defmodule Changelog.Episode do
     struct
     |> cast(params, [:slug, :title, :subtitle, :published, :featured,
                      :highlight, :subhighlight, :summary, :notes, :published_at,
-                     :recorded_at, :recorded_live, :guid])
+                     :recorded_at, :recorded_live, :guid, :type])
     |> cast_attachments(params, [:audio_file])
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
