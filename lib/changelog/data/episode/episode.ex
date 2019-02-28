@@ -66,6 +66,10 @@ defmodule Changelog.Episode do
   def with_slug(query \\ __MODULE__, slug),          do: from(q in query, where: q.slug == ^slug)
   def with_podcast_slug(query \\ __MODULE__, slug),  do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
+  def full(query \\ __MODULE__),    do: from(q in query, where: q.type == ^:full)
+  def bonus(query \\ __MODULE__),   do: from(q in query, where: q.type == ^:bonus)
+  def trailer(query \\ __MODULE__), do: from(q in query, where: q.type == ^:trailer)
+
   def exclude_transcript(query \\ __MODULE__) do
     fields = __MODULE__.__schema__(:fields) |> Enum.reject(&(&1 == :transcript))
     from(q in query, select: ^fields)

@@ -28,7 +28,10 @@
           <%= icon_link("list", to: admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
           <%= icon_link("add", to: admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
         </div>
-      <% end %>
+    <% end %>
+    <%= if assigns[:filter] && @status == :published do %>
+      <%= filter_select(assigns[:filter], all: "All", full: "Full Episodes", bonus: "Bonus Episodes", trailer: "Trailers") %>
+    <% end %>
       </th>
     </tr>
   </thead>
