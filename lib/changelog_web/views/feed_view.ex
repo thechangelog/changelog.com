@@ -28,7 +28,7 @@ defmodule ChangelogWeb.FeedView do
 
     "#{prefix} (#{suffix})"
   end
-  def episode_title(_podcast, episode), do: EpisodeView.numbered_title(episode)
+  def episode_title(_podcast, episode), do: episode.title
 
   def image_link(item = %NewsItem{}) do
     if link = NewsItemView.image_link(item), do: safe_to_string(link)
