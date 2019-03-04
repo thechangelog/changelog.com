@@ -1,6 +1,8 @@
 <![CDATA[<%= md_to_html(@episode.summary) %>
+<%= discussion_link(@episode) %>
 <%= if Enum.any?(@episode.sponsors) do %>
-  <p>Sponsors</p>
+<p>Sponsors</p>
+<p>
   <ul>
   <%= for sponsor <- @episode.episode_sponsors do %>
     <li>
@@ -8,16 +10,18 @@
     </li>
   <% end %>
   </ul>
+</p>
 <% end %>
 <% participants = EpisodeView.participants(@episode) %>
 <%= if Enum.any?(participants) do %>
-  <p>Featuring</p>
+<p>Featuring</p>
+<p>
   <ul>
   <%= for person <- participants do %>
     <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links() %></li>
   <% end %>
   </ul>
+</p>
 <% end %>
 <p>Notes and Links</p>
-<%= md_to_html(@episode.notes) %>
-<%= discussion_link(@episode) %>]]>
+<%= md_to_html(@episode.notes) %>]]>
