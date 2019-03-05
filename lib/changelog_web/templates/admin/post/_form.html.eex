@@ -55,8 +55,10 @@
   </div>
 
   <div class="field <%= error_class(f, :tldr) %>">
-    <%= label f, :tldr %>
-    <%= textarea f, :tldr, placeholder: "Tweet-sized. Markdown enabled.", rows: 1 %>
+    <label for="tldr">
+      TLDR <%= help_icon("Used for the associated news item's teaser content") %>
+    </label>
+    <%= textarea(f, :tldr, placeholder: "Tweet-sized. Markdown enabled.", rows: 2) %>
     <%= error_message(f, :tldr) %>
   </div>
 
