@@ -103,23 +103,24 @@ defmodule ChangelogWeb.NewsItemController do
     hashid = slug |> String.split("-") |> List.last()
     item = item_from_hashid(hashid, NewsItem.published)
 
-    if slug == hashid do
-      redirect(conn, to: news_item_path(conn, :show, NewsItem.slug(item)))
-    else
-      item =
-        item
-        |> NewsItem.preload_all()
-        |> NewsItem.preload_comments()
-        |> NewsItem.load_object()
+    cond do
+      NewsItem.is_post(item) -> redirect(conn, to: NewsItemView.object_path(item))
+      slug == hashid -> redirect(conn, to: news_item_path(conn, :show, NewsItem.slug(item)))
+      true ->
+        item =
+          item
+          |> NewsItem.preload_all()
+          |> NewsItem.preload_comments()
+          |> NewsItem.load_object()
 
-      comments = NewsItemComment.nested(item.comments)
-      changeset = item |> build_assoc(:comments) |> NewsItemComment.insert_changeset()
+        comments = NewsItemComment.nested(item.comments)
+        changeset = item |> build_assoc(:comments) |> NewsItemComment.insert_changeset()
 
-      conn
-      |> assign(:item, item)
-      |> assign(:comments, comments)
-      |> assign(:changeset, changeset)
-      |> render(:show)
+        conn
+        |> assign(:item, item)
+        |> assign(:comments, comments)
+        |> assign(:changeset, changeset)
+        |> render(:show)
     end
   end
 

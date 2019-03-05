@@ -196,6 +196,7 @@ defmodule Changelog.NewsItem do
   def unpublish!(item), do: item |> change(%{status: :draft, published_at: nil, refreshed_at: nil}) |> Repo.update!()
 
   def is_audio(item), do: item.type == :audio
+  def is_post(item),  do: item.type == :link && !is_nil(item.object_id)
   def is_video(item), do: item.type == :video
 
   def is_draft(item),     do: item.status == :draft
