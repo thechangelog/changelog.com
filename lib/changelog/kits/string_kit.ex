@@ -13,7 +13,13 @@ defmodule Changelog.StringKit do
   Returns a list of sub-strings that are possible mentions for further processing
   """
   def extract_mentions(string) do
-    ~r/@([a-z|0-9|_|-]+)\W/
+    regex = ~r/
+    @([a-z|0-9|_|-]+) # capture @ followed by valid username chars
+    (?!\.)            # negative look ahead: a period, which indicates email address
+    \W                # lastly a non-word char, indicating the end of mention
+    /x
+
+    regex
     |> Regex.scan(string)
     |> Enum.map(&List.last/1)
   end
