@@ -39,7 +39,7 @@ defmodule Changelog.Post do
   def unpublished(query \\ __MODULE__),         do: from(q in query, where: not(q.published))
 
   def is_public(post, as_of \\ Timex.now) do
-    post.published && post.published_at <= as_of
+    post.published && Timex.before?(post.published_at, as_of)
   end
 
   def preload_all(post) do
