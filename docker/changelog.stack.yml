@@ -110,7 +110,7 @@ services:
         failure_action: rollback
         monitor: 15s
         order: start-first
-    image: thechangelog/proxy
+    image: thechangelog/proxy:2019-01-17.180232
     environment:
       DEFAULT_HOST: *host
     ports:
