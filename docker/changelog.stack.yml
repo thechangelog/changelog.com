@@ -7,6 +7,17 @@ services:
       mode: global
       restart_policy:
         condition: any
+      update_config:
+        failure_action: rollback
+        # start_period + (interval * retries)
+        monitor: 50s
+        order: start-first
+    healthcheck:
+      test: ["CMD", "wget", "--output-document", "/dev/null", "--quiet",  "http://127.0.0.1:80/health"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 5s
     environment:
       SYSLOG_HOSTNAME: 2019
     image: gliderlabs/logspout:latest
