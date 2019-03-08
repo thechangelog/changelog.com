@@ -37,12 +37,13 @@ services:
       # https://docs.docker.com/compose/compose-file/#update_config
       update_config:
         failure_action: rollback
-        monitor: 30s
+        # start_period + (interval * retries)
+        monitor: 115s
         order: start-first
     healthcheck:
       test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/"]
-      interval: 30s
-      timeout: 30s
+      interval: 15s
+      timeout: 15s
       retries: 3
       start_period: 60s
     environment:
