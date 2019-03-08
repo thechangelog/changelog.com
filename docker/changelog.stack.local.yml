@@ -110,9 +110,16 @@ services:
         condition: any
       update_config:
         failure_action: rollback
-        monitor: 15s
+        # start_period + interval
+        monitor: 20s
         order: start-first
     image: thechangelog/proxy
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 10s
+      timeout: 10s
+      retries: 0
+      start_period: 5s
     environment:
       DEFAULT_HOST: *host
     ports:
