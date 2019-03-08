@@ -135,7 +135,7 @@ services:
       # We want to see container names in netdata, not container IDs
       # Defining the docker group id makes it possible, as described in https://hub.docker.com/r/netdata/netdata/
       # gmake ssh && grep docker /etc/group | cut -d ':' -f 3
-      PGID: 233
+      PGID: 233 # docker on CoreOS
       # netdata container is too verbose, tell Logspout to not send logs to Papertrail
       # https://github.com/gliderlabs/logspout#ignoring-specific-containers
       LOGSPOUT: ignore
