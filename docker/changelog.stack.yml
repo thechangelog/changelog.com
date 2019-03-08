@@ -25,7 +25,7 @@ services:
       PGDATABASE: *pg_db
     healthcheck:
       test: ["CMD", "pg_isready"]
-      start_period: 5s
+      start_period: 30s
     image: postgres:9.5.4
     volumes:
       - /db:/var/lib/postgresql/data:rw
