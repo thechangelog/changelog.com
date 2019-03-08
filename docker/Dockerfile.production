@@ -8,7 +8,5 @@ ENV MIX_ENV=prod
 ENV TERM=xterm
 
 EXPOSE 4000
-HEALTHCHECK --start-period=60s --interval=15s --timeout=15s --retries=3 \
-  CMD curl --output /dev/null --fail --silent http://127.0.0.1:4000/ || exit 1
 
 CMD make report-deploy ; mix do ecto.create, ecto.migrate, phx.server
