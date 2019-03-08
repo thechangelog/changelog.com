@@ -134,8 +134,15 @@ services:
         condition: any
       update_config:
         failure_action: rollback
-        monitor: 30s
+        # start_period + (interval * retries)
+        monitor: 75s
         order: start-first
+    healthcheck:
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:19999/"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 30s
     image: netdata/netdata
     hostname: "${USER}-netdata"
     environment:
