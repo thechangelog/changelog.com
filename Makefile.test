@@ -1,0 +1,60 @@
+SHELL := bash# we want bash behaviour in all shell invocations
+
+RED := $(shell tput setaf 1)
+GREEN := $(shell tput setaf 2)
+YELLOW := $(shell tput setaf 3)
+BOLD := $(shell tput bold)
+NORMAL := $(shell tput sgr0)
+
+ifneq (4,$(firstword $(sort $(MAKE_VERSION) 4)))
+  $(warning $(BOLD)$(RED)GNU Make v4 or newer is required$(NORMAL))
+  $(info On macOS it can be installed with $(BOLD)brew install make$(NORMAL) and run as $(BOLD)gmake$(NORMAL))
+  $(error Please run with GNU Make v4 or newer)
+endif
+
+
+
+### VARS ###
+#
+
+FQDN = changelog.com
+IPv4 = $(shell dig +short -4 $(FQDN))
+
+ifneq ($(LOCAL),)
+  FQDN = $(USER).changelog.com
+  IPv4 = 127.0.0.1
+endif
+export FQDN
+export IPv4
+
+
+### DEPS ###
+#
+CURL := /usr/bin/curl
+$(CURL):
+	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
+
+BATS := /usr/local/bin/bats
+$(BATS):
+	@brew install bats-core
+
+
+### TARGETS ###
+#
+.DEFAULT_GOAL := help
+
+bats: $(CURL) $(BATS)
+	@echo "Testing $(BOLD)$(FQDN)$(NORMAL) resolving to $(BOLD)$(IPv4)$(NORMAL)..."
+
+SEPARATOR := ---------------------------------------------------------------------------------
+.PHONY: help
+help:
+	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | \
+	awk 'BEGIN { FS = "[:#]" } ; { printf "$(SEPARATOR)\n\033[36m%-22s\033[0m %s\n", $$1, $$4 }' ; \
+	echo $(SEPARATOR)
+
+.PHONY: proxy
+proxy: bats ## p  | Test proxy
+	@$(BATS) test/e2e/proxy.bats
+.PHONY: p
+p: proxy

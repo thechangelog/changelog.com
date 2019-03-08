@@ -136,7 +136,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
       - ${PWD}/priv/uploads:/var/www/uploads:ro
   netdata:
     deploy:

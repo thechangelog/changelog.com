@@ -1,6 +1,6 @@
 FROM thechangelog/legacy_assets AS legacy_assets
-FROM jwilder/nginx-proxy
+FROM nginx:1.15.9
 
-COPY ./vhost.d/default /etc/nginx/vhost.d/default
-COPY ./conf.d/changelog.conf /etc/nginx/conf.d/changelog.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./conf.d /etc/nginx/conf.d
 COPY --from=legacy_assets /var/www/wp-content /var/www/wp-content
