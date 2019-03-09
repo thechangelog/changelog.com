@@ -65,7 +65,6 @@ services:
       URL_PORT: 80
       URL_SCHEME: http
       URL_STATIC_HOST: *host
-      VIRTUAL_HOST: *host
       ROLLBAR_ENVIRONMENT: local
     secrets:
       - CM_API_TOKEN
@@ -156,7 +155,6 @@ services:
     image: netdata/netdata
     hostname: "${USER}-netdata"
     environment:
-      VIRTUAL_HOST: "${USER}-netdata.changelog.com"
       # netdata container is too verbose, tell Logspout to not send logs to Papertrail
       # https://github.com/gliderlabs/logspout#ignoring-specific-containers
       LOGSPOUT: ignore

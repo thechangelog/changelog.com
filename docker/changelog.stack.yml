@@ -65,7 +65,6 @@ services:
       URL_PORT: 443
       URL_SCHEME: https
       URL_STATIC_HOST: cdn.changelog.com
-      VIRTUAL_HOST: "changelog.com,*.changelog.com"
       ROLLBAR_ENVIRONMENT: production
     secrets:
       - CM_API_TOKEN
@@ -129,9 +128,7 @@ services:
       timeout: 10s
       retries: 0
       start_period: 5s
-    image: thechangelog/proxy:2019-01-17.180232
-    environment:
-      DEFAULT_HOST: *host
+    image: thechangelog/proxy
     ports:
       - "80:80"
     volumes:
@@ -156,7 +153,6 @@ services:
     image: netdata/netdata
     hostname: 2019_netdata
     environment:
-      VIRTUAL_HOST: netdata.changelog.com
       # We want to see container names in netdata, not container IDs
       # Defining the docker group id makes it possible, as described in https://hub.docker.com/r/netdata/netdata/
       # gmake ssh && grep docker /etc/group | cut -d ':' -f 3
