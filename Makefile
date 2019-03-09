@@ -26,6 +26,11 @@ HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
 RSYNC_SRC_HOST ?= root@172.104.216.248
 
+FQDN := $(DOMAIN)
+IPv4 = $(shell dig +short -4 $(FQDN))
+export FQDN
+export IPv4
+
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 BOOTSTRAP_GIT_BRANCH ?= master
 
@@ -64,6 +69,10 @@ CURL := /usr/bin/curl
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
+BATS := /usr/local/bin/bats
+$(BATS):
+	@brew install bats-core
+
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
 TF := cd terraform && $(TERRAFORM)
@@ -83,6 +92,10 @@ endif
 
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
+
+.PHONY: bats
+bats: $(CURL) $(BATS)
+	@echo "Testing $(BOLD)$(FQDN)$(NORMAL) resolving to $(BOLD)$(IPv4)$(NORMAL)..."
 
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
@@ -398,6 +411,20 @@ bpi: build-proxy-image
 publish-proxy-image: $(DOCKER)
 	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/proxy:latest
+
+.PHONY: proxy-test
+proxy-test: bats
+	@$(BATS) test/e2e/proxy.bats
+.PHONY: pt
+pt: proxy-test
+
+.PHONY: proxy-test-local
+proxy-test-local: FQDN = $(USER).$(DOMAIN)
+proxy-test-local: IPv4 = 127.0.0.1
+proxy-test-local: bats
+	@$(BATS) test/e2e/proxy.bats
+.PHONY: ptl
+ptl: proxy-test-local
 
 .PHONY: report-deploy
 report-deploy:
