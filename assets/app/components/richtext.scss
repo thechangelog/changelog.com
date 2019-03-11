@@ -65,6 +65,8 @@
         padding: 0 3px;
       }
     }
+
+    strong a { font-weight: inherit; }
   }
 
   ul { @include list; }
