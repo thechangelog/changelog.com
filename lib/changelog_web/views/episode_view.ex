@@ -121,7 +121,7 @@ defmodule ChangelogWeb.EpisodeView do
       duration: episode.duration,
       art_url: PodcastView.cover_url(podcast, :small),
       audio_url: audio_url(episode),
-      share_url: "#{PodcastView.vanity_domain_with_fallback_url(podcast)}/#{episode.slug}"
+      share_url: episode_url(Endpoint, :show, podcast.slug, episode.slug)
     }
 
     info = if prev do

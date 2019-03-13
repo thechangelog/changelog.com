@@ -1,6 +1,8 @@
 <div id="player" data-turbolinks-permanent>
   <figure class="podcast_player js-player">
     <nav class="podcast_player-nav">
+      <a href="" class="podcast_player-nav-button podcast_player-nav-button--copy js-player-copy-url" title="Copy Timestamp to Clipboard"></a>
+      <input type="hidden" class="js-player-current-url">
       <button class="podcast_player-nav-button podcast_player-nav-button--hide js-player-hide" title="Hide Player"></button>
       <button class="podcast_player-nav-button podcast_player-nav-button--close js-player-close" title="Close Player"></button>
     </nav>

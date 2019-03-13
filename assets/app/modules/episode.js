@@ -48,6 +48,22 @@ export default class Episode {
     return !!this.next;
   }
 
+  nextNumber() {
+    return `#${this.next.number}`;
+  }
+
+  nextTitle() {
+    return this.next.title;
+  }
+
+  nextLocation() {
+    return this.next.location;
+  }
+
+  nextAudio() {
+   return this.next.audio_url;
+  }
+
   nowPlaying() {
     if (this.ep.number) {
       return `${this.podcastName()} #${this.ep.number}`
@@ -76,20 +92,12 @@ export default class Episode {
     return this.prev.location;
   }
 
-  nextNumber() {
-    return `#${this.next.number}`;
+  shareUrl() {
+    return this.ep.share_url;
   }
 
-  nextTitle() {
-    return this.next.title;
-  }
-
-  nextLocation() {
-    return this.next.location;
-  }
-
-  nextAudio() {
-   return this.next.audio_url;
+  shareUrlWithTs(asOfTime) {
+    return `${this.shareUrl()}#t=${Episode.formatTime(asOfTime)}`;
   }
 
   title() {

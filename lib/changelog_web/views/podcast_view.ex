@@ -63,14 +63,6 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
-  def vanity_domain_with_fallback_url(podcast) do
-    if podcast.vanity_domain do
-      podcast.vanity_domain
-    else
-      podcast_url(Endpoint, :show, podcast.slug)
-    end
-  end
-
   def status_text(podcast) do
     if podcast.status == :soon do
       "coming soon"
