@@ -1,5 +1,5 @@
 <article class="auth">
-  <h1 class="auth-header">Join the Community</h1>
+  <h1 class="auth-header">Join the community</h1>
   <%= form_for @changeset, person_path(@conn, :join), [class: "form form--full_width", multipart: true], fn f -> %>
     <div class="form-element_wrap <%= error_class(f, :name) %>">
       <div class="form-element">
@@ -22,6 +22,16 @@
         <label>Username / Handle<span>*</span></label>
         <%= text_input(f, :handle, placeholder: "gracehopper", required: true, autocapitalize: "none") %>
         <%= error_message(f, :handle) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :avatar) %>">
+        <label>Avatar</label>
+        <%= file_input(f, :avatar) %>
+        <%= error_message(f, :avatar) %>
+        <p class="form-element-note">Ideally 600px by 600px. We'll crop it square.</p>
+        <p class="form-element-note">Leave blank for gravatar.</p>
       </div>
     </div>
 

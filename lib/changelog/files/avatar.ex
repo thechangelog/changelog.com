@@ -7,8 +7,8 @@ defmodule Changelog.Files.Avatar do
   def filename(version, _), do: "avatar_#{version}"
 
   def transform(:original, _), do: :noaction
-  def transform(version, _) do
-    {:convert, "-strip -resize #{dimensions(version)} -format png", :png}
+  def transform(version, {_file, _scope}) do
+    {:convert, "-strip -resize #{dimensions(version)}^ -gravity center -crop #{dimensions(version)}+0+0 -format png", :png}
   end
 
   defp dimensions(:large), do: "600x600"

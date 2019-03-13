@@ -114,6 +114,7 @@ defmodule ChangelogWeb.PersonController do
 
       case Repo.insert(changeset) do
         {:ok, person} ->
+          Repo.update(Person.file_changeset(person, person_params))
           welcome_community(conn, person)
         {:error, changeset} ->
           conn

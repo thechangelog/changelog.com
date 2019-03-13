@@ -22,12 +22,17 @@
       </div>
     </div>
 
-    <div class="form-element_wrap">
+    <div class="form-element_wrap form-element_wrap--2">
       <div class="form-element <%= error_class(f, :avatar) %>">
         <label>Avatar</label>
         <%= file_input(f, :avatar) %>
         <%= error_message(f, :avatar) %>
         <p class="form-element-note">Ideally 600px by 600px. We'll crop it square.</p>
+      </div>
+
+      <div class="form-element">
+        <%= maybe_lazy_image(@conn, avatar_url(@changeset.data), @changeset.data.name, width: 67, height: 67) %>
+        <p class="form-element-note"><%= if @changeset.data.avatar, do: "This image was uploaded to changelog.com", else: "This image is loaded from Gravatar" %>
       </div>
     </div>
 
