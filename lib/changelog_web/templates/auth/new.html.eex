@@ -7,11 +7,11 @@
       <p>Psst! Since you're hacking we'll just skip the email process. <%= link "click here", to: auth_path(@conn, @person), data: [turbolinks: false] %> instead!</p>
     <% end %>
   <% else %>
-    <p class="auth-links">Via <a href="/auth/twitter" title="Sign in via Twitter">Twitter</a> • Via <a href="/auth/github" title="Sign in via GitHub">GitHub</a></p>
+    <p class="auth-links">via <a href="/auth/twitter" title="Sign in via Twitter">Twitter</a> • via <a href="/auth/github" title="Sign in via GitHub">GitHub</a></p>
     <%= form_for @conn, sign_in_path(@conn, :new), [as: :auth, class: "form form--full_width"], fn f -> %>
       <div class="form-element_wrap">
         <div class="form-element">
-          <label>Via Email Address</label>
+          <label>via Email Address</label>
           <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none", autofocus: true, required: true) %>
         </div>
       </div>

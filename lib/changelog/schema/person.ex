@@ -34,6 +34,7 @@ defmodule Changelog.Person do
     field :email, :string
     field :handle, :string
     field :github_handle, :string
+    field :linkedin_handle, :string
     field :twitter_handle, :string
     field :slack_id, :string
     field :website, :string
@@ -107,7 +108,7 @@ defmodule Changelog.Person do
   def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at)a)
 
   def admin_insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle twitter_handle bio website location admin host editor)a
+    allowed = ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor)a
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
@@ -120,7 +121,7 @@ defmodule Changelog.Person do
   def file_changeset(person, attrs \\ %{}), do: cast_attachments(person, attrs, [:avatar], allow_urls: true)
 
   def insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle twitter_handle bio website location)a
+    allowed = ~w(name email handle github_handle linkedin_handle twitter_handle bio website location)a
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
@@ -140,10 +141,12 @@ defmodule Changelog.Person do
     |> validate_format(:handle, Regexp.slug(), message: Regexp.slug_message())
     |> validate_length(:handle, max: 40, message: "max 40 chars")
     |> validate_format(:github_handle, Regexp.social(), message: Regexp.social_message())
+    |> validate_format(:linkedin_handle, Regexp.social(), message: Regexp.social_message())
     |> validate_format(:twitter_handle, Regexp.social(), message: Regexp.social_message())
     |> unique_constraint(:email)
     |> unique_constraint(:handle)
     |> unique_constraint(:github_handle)
+    |> unique_constraint(:linkedin_handle)
     |> unique_constraint(:twitter_handle)
   end
 

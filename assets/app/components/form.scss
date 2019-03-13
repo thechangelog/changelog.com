@@ -24,6 +24,17 @@
           }
         }
       }
+
+      &--3 {
+        @include breakpoint(mobile) {
+          display: flex;
+          justify-content: space-between;
+
+          .form-element {
+            width: calc(33% - 10px);
+          }
+        }
+      }
     }
 
     &-preppended_field {

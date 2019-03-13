@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="form-element_wrap form-element_wrap--2">
+    <div class="form-element_wrap form-element_wrap--3">
       <div class="form-element <%= error_class(f, :github_handle) %>">
         <label>GitHub Handle</label>
         <div class="form-element-preppended_field">
@@ -53,6 +53,15 @@
           <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
         </div>
         <%= error_message(f, :twitter_handle) %>
+      </div>
+
+      <div class="form-element <%= error_class(f, :linkedin_handle) %>">
+        <label>LinkedIn Handle</label>
+        <div class="form-element-preppended_field">
+          <span>linked.com/in/</span>
+          <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
+        <%= error_message(f, :linkedin_handle) %>
       </div>
     </div>
 

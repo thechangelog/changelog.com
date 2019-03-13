@@ -57,6 +57,17 @@
       </div>
     </div>
 
+    <div class="form-element_wrap <%= error_class(f, :linkedin_handle) %>">
+      <div class="form-element">
+        <label>LinkedIn Handle</label>
+        <div class="form-element-preppended_field">
+          <span>linkedin.com/in/</span>
+          <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
+        <%= error_message(f, :linkedin_handle) %>
+      </div>
+    </div>
+
     <noscript>
       <div class="form-element_wrap">
         <div class="form-element">
