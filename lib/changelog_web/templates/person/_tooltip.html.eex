@@ -22,6 +22,9 @@
         <%= if @person.github_handle do %>
           <li><%= external_link("GitHub", to: github_url(@person)) %></li>
         <% end %>
+        <%= if @person.linkedin_handle do %>
+          <li><%= external_link("LinkedIn", to: linkedin_url(@person)) %></li>
+        <% end %>
         </ul>
       </div>
     </div>
