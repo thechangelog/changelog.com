@@ -143,6 +143,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
         Cache.delete(episode)
+        params = replace_next_edit_path(params, admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
 
         conn
         |> put_flash(:result, "success")

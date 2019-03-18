@@ -47,7 +47,9 @@ defmodule ChangelogWeb.Admin.TopicController do
     changeset = Topic.update_changeset(topic, topic_params)
 
     case Repo.update(changeset) do
-      {:ok, _topic} ->
+      {:ok, topic} ->
+        params = replace_next_edit_path(params, admin_topic_path(conn, :edit, topic.slug))
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_topic_path(conn, :index))
