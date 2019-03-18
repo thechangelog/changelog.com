@@ -59,10 +59,10 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
     changeset = NewsIssue.admin_changeset(%NewsIssue{}, issue_params)
 
     case Repo.insert(changeset) do
-      {:ok, _issue} ->
+      {:ok, issue} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_issue_path(conn, :index))
+        |> redirect_next(params, admin_news_issue_path(conn, :edit, issue))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

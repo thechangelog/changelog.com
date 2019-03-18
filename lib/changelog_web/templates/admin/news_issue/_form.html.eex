@@ -81,12 +81,13 @@
   <div class="ui hidden divider"></div>
 
   <div class="ui equal width stackable grid">
-    <div class="column">
-      <button class="ui primary fluid basic button" type="submit" name="next" value="<%= current_path(@conn) %>">Save</button>
-    </div>
-    <div class="column">
-      <button class="ui secondary fluid basic button" type="submit" name="next" value="<%= next_param(@conn) %>">Save and Close</button>
-    </div>
+  <%= if !is_persisted(f.data) do %>
+    <div class="column"><%= submit_button(:primary, "Create") %></div>
+    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, admin_news_issue_path(@conn, :index))) %></div>
+  <% else %>
+    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
+    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn, admin_news_issue_path(@conn, :index))) %></div>
+  <% end %>
   <% end %>
   <div class="column">
   <%= cond do %>
@@ -98,3 +99,4 @@
     <button class="ui green fluid basic disabled button">Publish</button>
   <% end %>
   </div>
+</div>
