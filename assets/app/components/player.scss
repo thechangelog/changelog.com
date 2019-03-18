@@ -61,6 +61,14 @@
         }
       }
 
+      &--copy {
+        background-image: url("/images/icons/icon-share.svg");
+      }
+
+      &--copy.is-copying {
+        background-image: url("/images/icons/icon-link-white.svg");
+      }
+
       &--hide {
         background-image: url("/images/icons/icon-down.svg");
         .podcast_player--is-hidden & {

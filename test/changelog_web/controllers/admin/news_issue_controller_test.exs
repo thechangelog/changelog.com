@@ -30,8 +30,8 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
   @tag :as_admin
   test "creates news issue and redirects", %{conn: conn} do
     conn = post(conn, admin_news_issue_path(conn, :create), news_issue: @valid_attrs)
-
-    assert redirected_to(conn) == admin_news_issue_path(conn, :index)
+    news_issue = Repo.one(NewsIssue)
+    assert redirected_to(conn) == admin_news_issue_path(conn, :edit, news_issue)
     assert count(NewsIssue) == 1
   end
 

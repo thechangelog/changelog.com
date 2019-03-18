@@ -43,6 +43,10 @@
   strong {
     color: $black;
     font-weight: 700;
+
+    a {
+      font-weight: inherit;
+    }
   }
 
   p, li, h1, h2, h3, h4, h5, h6 {
@@ -61,6 +65,8 @@
         padding: 0 3px;
       }
     }
+
+    strong a { font-weight: inherit; }
   }
 
   ul { @include list; }

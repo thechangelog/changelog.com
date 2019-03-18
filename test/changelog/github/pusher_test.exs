@@ -1,5 +1,5 @@
 defmodule Changelog.Github.PusherTest do
-  use Changelog.DataCase
+  use Changelog.SchemaCase
 
   import Mock
 

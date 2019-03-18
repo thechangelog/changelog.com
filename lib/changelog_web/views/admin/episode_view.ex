@@ -115,4 +115,9 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     {:ok, result} = Timex.format(stat.date, "{WDshort}, {M}/{D}")
     result
   end
+
+  def type_options do
+    Episode.Type.__enum_map__()
+    |> Enum.map(fn({k, _v}) -> {String.capitalize(Atom.to_string(k)), k} end)
+  end
 end

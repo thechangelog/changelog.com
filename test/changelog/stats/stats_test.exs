@@ -1,5 +1,5 @@
 defmodule ChangelogStatsTest do
-  use Changelog.DataCase
+  use Changelog.SchemaCase
 
   import Mock
 

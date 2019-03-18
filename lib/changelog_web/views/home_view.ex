@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.HomeView do
   use ChangelogWeb, :public_view
 
-  import ChangelogWeb.PersonView, only: [is_subscribed: 2]
+  import ChangelogWeb.PersonView, only: [avatar_url: 1, is_subscribed: 2]
   alias ChangelogWeb.{PodcastView}
 
   def newsletter_link(newsletter, assigns) do

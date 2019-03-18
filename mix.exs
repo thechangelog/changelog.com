@@ -11,7 +11,7 @@ defmodule Changelog.Mixfile do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      preferred_cli_env: [coveralls: :test, "coveralls.html": :test, "coveralls.json": :test],
+      preferred_cli_env: [coveralls: :test, "coveralls.circle": :test],
       test_coverage: [tool: ExCoveralls],
     ]
   end
@@ -68,7 +68,7 @@ defmodule Changelog.Mixfile do
       {:html_entities, "~> 0.3"},
       {:algolia, "~> 0.8.0"},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.6", only: :test},
+      {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
    ]
   end

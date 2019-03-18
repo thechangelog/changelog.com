@@ -1,11 +1,14 @@
 import ApexCharts from "apexcharts";
 import Clipboard from "clipboard";
 import SearchWidget from "components/searchWidget";
+import FilterWidget from "components/filterWidget";
 import CalendarField from "components/calendarField";
 import Modal from "components/modal";
 
 export default class EpisodeView {
   index() {
+    new FilterWidget();
+
     let scheduled = $(".ui.calendar").data("scheduled").map((string) => {
       let date = new Date(string);
       return date.toDateString();

@@ -1,5 +1,5 @@
 defmodule Changelog.NotifierTest do
-  use Changelog.DataCase
+  use Changelog.SchemaCase
   use Bamboo.Test
 
   import Mock

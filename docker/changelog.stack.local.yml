@@ -7,6 +7,17 @@ services:
       mode: global
       restart_policy:
         condition: any
+      update_config:
+        failure_action: rollback
+        # start_period + (interval * retries)
+        monitor: 50s
+        order: start-first
+    healthcheck:
+      test: ["CMD", "wget", "--output-document", "/dev/null", "--quiet",  "http://127.0.0.1:80/health"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 5s
     environment:
       SYSLOG_HOSTNAME: "${USER}"
     image: gliderlabs/logspout:latest
@@ -37,8 +48,15 @@ services:
       # https://docs.docker.com/compose/compose-file/#update_config
       update_config:
         failure_action: rollback
-        monitor: 60s
+        # start_period + (interval * retries)
+        monitor: 115s
         order: start-first
+    healthcheck:
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
     environment:
       NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
@@ -47,7 +65,6 @@ services:
       URL_PORT: 80
       URL_SCHEME: http
       URL_STATIC_HOST: *host
-      VIRTUAL_HOST: *host
       ROLLBAR_ENVIRONMENT: local
     secrets:
       - CM_API_TOKEN
@@ -103,15 +120,21 @@ services:
         condition: any
       update_config:
         failure_action: rollback
-        monitor: 15s
+        # start_period + interval
+        monitor: 20s
         order: start-first
     image: thechangelog/proxy
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 10s
+      timeout: 10s
+      retries: 0
+      start_period: 5s
     environment:
       DEFAULT_HOST: *host
     ports:
       - "80:80"
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
       - ${PWD}/priv/uploads:/var/www/uploads:ro
   netdata:
     deploy:
@@ -120,12 +143,18 @@ services:
         condition: any
       update_config:
         failure_action: rollback
-        monitor: 30s
+        # start_period + (interval * retries)
+        monitor: 75s
         order: start-first
+    healthcheck:
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:19999/"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 30s
     image: netdata/netdata
     hostname: "${USER}-netdata"
     environment:
-      VIRTUAL_HOST: "${USER}-netdata.changelog.com"
       # netdata container is too verbose, tell Logspout to not send logs to Papertrail
       # https://github.com/gliderlabs/logspout#ignoring-specific-containers
       LOGSPOUT: ignore

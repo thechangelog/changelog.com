@@ -30,8 +30,10 @@ defmodule ChangelogWeb.FeedController do
     podcast = Podcast.get_by_slug!(slug)
 
     episodes =
-      Podcast.get_episodes(podcast)
+      podcast
+      |> Podcast.get_episodes()
       |> Episode.published()
+      |> Episode.limit(100)
       |> Episode.newest_first()
       |> Episode.exclude_transcript()
       |> Episode.preload_all()

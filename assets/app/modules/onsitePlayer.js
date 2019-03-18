@@ -43,6 +43,7 @@ export default class OnsitePlayer {
     this.playButton = this.container.find(".js-player-play-button");
     this.backButton = this.container.find(".js-player-back-button");
     this.forwardButton = this.container.find(".js-player-forward-button");
+    this.copyUrlButton = this.container.find(".js-player-copy-url");
     this.closeButton = this.container.find(".js-player-close");
     this.hideButton = this.container.find(".js-player-hide");
   }
@@ -53,9 +54,10 @@ export default class OnsitePlayer {
     this.forwardButton.handle("click", _ => { this.seekBy(15); });
     this.scrubber.on("input", event => { this.scrub(event.target.value); });
     this.scrubber.on("change", event => { this.scrubEnd(event.target.value); });
+    this.copyUrlButton.on("click", event => { this.copyUrlToClipboard(event); });
     this.closeButton.handle("click", _ => { this.close(); });
     this.hideButton.handle("click", _ => { this.hide(); });
-    this.audio.onTimeUpdate(event => { this.trackTime(); });
+    this.audio.onTimeUpdate(event => { this.updateCopyUrlTime(); this.trackTime(); });
     this.audio.onPlay(event => { this.playUI(); });
     this.audio.onPause(event => { this.pauseUI(); });
   }
@@ -205,6 +207,7 @@ export default class OnsitePlayer {
     this.current.text("0:00");
     this.duration.text("0:00");
     this.playButton.first().removeAttribute("data-loaded");
+    this.copyUrlButton.attr("href", "");
     this.resetPrevUI();
     this.resetNextUI();
     this.scrubber.first().value = 0;
@@ -282,6 +285,26 @@ export default class OnsitePlayer {
     this.player.removeClass("podcast_player--is-active");
   }
 
+  copyUrlToClipboard(event) {
+    if (!"execCommand" in document) return event;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.copyUrlButton.addClass("is-copying");
+
+    let url = u(".js-player-current-url");
+    url.attr("type", "text");
+    url.attr("value", this.copyUrlButton.attr("href"));
+    url.first().select();
+    document.execCommand("copy");
+    url.attr("type", "hidden");
+
+    setTimeout(_ => {
+      this.copyUrlButton.removeClass("is-copying");
+    }, 400);
+  }
+
   trackTime() {
     let complete = this.percentComplete(this.currentTime());
 
@@ -290,6 +313,13 @@ export default class OnsitePlayer {
         this.log(`${percent}% Played`);
         this.tracked[percent] = true;
       }
+    }
+  }
+
+  updateCopyUrlTime() {
+    let time = this.currentTime();
+    if (this.episode && time > 0) {
+      this.copyUrlButton.attr("href", this.episode.shareUrlWithTs(time));
     }
   }
 }

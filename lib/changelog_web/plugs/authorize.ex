@@ -1,8 +1,7 @@
 defmodule ChangelogWeb.Plug.Authorize do
   import Plug.Conn
   import Phoenix.Controller
-
-  alias ChangelogWeb.Router.Helpers
+  import ChangelogWeb.Plug.Conn, only: [referer_or_root_path: 1]
 
   def init(opts), do: opts
 
@@ -23,11 +22,4 @@ defmodule ChangelogWeb.Plug.Authorize do
 
   defp apply_policy(module, action, user, nil), do: apply(module, action, [user])
   defp apply_policy(module, action, user, resource), do: apply(module, action, [user, resource])
-
-  defp referer_or_root_path(conn) do
-    case conn |> get_req_header("referer") |> List.last do
-      nil -> Helpers.root_path(conn, :index)
-      referer ->  referer |> URI.parse |> Map.get(:path)
-    end
-  end
 end

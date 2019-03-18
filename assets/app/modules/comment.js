@@ -27,6 +27,7 @@ export default class Comment {
     this.collapseButton.handle("click", _ => { this.container.toggleClass("is-collapsed") });
     this.replyButton.handle("click", _ => { this.toggleReplyForm() });
     this.previewButton.handle("click", _ => { this.showPreview() });
+    this.previewArea.handle("click", _ => { this.showWrite() });
     this.writeButton.handle("click", _ => { this.showWrite() });
   }
 
@@ -62,8 +63,11 @@ export default class Comment {
   }
 
   showWrite() {
+    let endPosition = this.replyTextArea.value.length;
     this.previewArea.html("");
     this.replyForm.removeClass("comment_form--preview");
+    this.replyTextArea.focus();
+    this.replyTextArea.setSelectionRange(endPosition, endPosition);
   }
 
   toggleReplyForm() {

@@ -1,5 +1,5 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
-  <div class="two fields">
+  <div class="three fields">
     <div class="field required <%= error_class(f, :name) %>">
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "Grace Hopper") %>
@@ -11,25 +11,31 @@
       <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
       <%= error_message(f, :email) %>
     </div>
-  </div>
 
-  <div class="three fields">
     <div class="field required <%= error_class(f, :handle) %>">
       <%= label(f, :handle, "Handle") %>
       <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
       <%= error_message(f, :handle) %>
     </div>
+  </div>
 
+  <div class="three fields">
     <div class="field <%= error_class(f, :github_handle) %>">
-      <%= label(f, :github_handle, "On GitHub") %>
+      <%= label(f, :github_handle, "GitHub Handle") %>
       <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
       <%= error_message(f, :github_handle) %>
     </div>
 
     <div class="field <%= error_class(f, :twitter_handle) %>">
-      <%= label(f, :twitter_handle, "On Twitter") %>
+      <%= label(f, :twitter_handle, "Twitter Handle") %>
       <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
       <%= error_message(f, :twitter_handle) %>
+    </div>
+
+    <div class="field <%= error_class(f, :linkedin_handle) %>">
+      <%= label(f, :linkedin_handle, "LinkedIn Handle") %>
+      <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+      <%= error_message(f, :linkedin_handle) %>
     </div>
   </div>
 
@@ -137,7 +143,7 @@
       <div class="inline field">
         <div class="ui toggle checkbox">
           <%= checkbox(i, :email_on_comment_mentions, class: "hidden") %>
-          <%= label(f, :email_on_comment_mentions, "Email on comment mentions") %>
+          <%= label(f, :email_on_comment_mentions, "Email on comment @mentions") %>
         </div>
       </div>
 

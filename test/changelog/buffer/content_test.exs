@@ -1,5 +1,5 @@
 defmodule Changelog.Buffer.ContentTest do
-  use Changelog.DataCase
+  use Changelog.SchemaCase
 
   import Mock
 

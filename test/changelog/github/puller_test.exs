@@ -1,5 +1,5 @@
 defmodule Changelog.Github.PullerTest do
-  use Changelog.DataCase
+  use Changelog.SchemaCase
 
   import Mock
 

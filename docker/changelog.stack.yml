@@ -7,6 +7,17 @@ services:
       mode: global
       restart_policy:
         condition: any
+      update_config:
+        failure_action: rollback
+        # start_period + (interval * retries)
+        monitor: 50s
+        order: start-first
+    healthcheck:
+      test: ["CMD", "wget", "--output-document", "/dev/null", "--quiet",  "http://127.0.0.1:80/health"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 5s
     environment:
       SYSLOG_HOSTNAME: 2019
     image: gliderlabs/logspout:latest
@@ -25,7 +36,7 @@ services:
       PGDATABASE: *pg_db
     healthcheck:
       test: ["CMD", "pg_isready"]
-      start_period: 5s
+      start_period: 30s
     image: postgres:9.5.4
     volumes:
       - /db:/var/lib/postgresql/data:rw
@@ -37,8 +48,15 @@ services:
       # https://docs.docker.com/compose/compose-file/#update_config
       update_config:
         failure_action: rollback
-        monitor: 30s
+        # start_period + (interval * retries)
+        monitor: 115s
         order: start-first
+    healthcheck:
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
     environment:
       NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
@@ -47,7 +65,6 @@ services:
       URL_PORT: 443
       URL_SCHEME: https
       URL_STATIC_HOST: cdn.changelog.com
-      VIRTUAL_HOST: "changelog.com,*.changelog.com"
       ROLLBAR_ENVIRONMENT: production
     secrets:
       - CM_API_TOKEN
@@ -102,11 +119,16 @@ services:
         condition: any
       update_config:
         failure_action: rollback
-        monitor: 15s
+        # start_period + interval
+        monitor: 20s
         order: start-first
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 10s
+      timeout: 10s
+      retries: 0
+      start_period: 5s
     image: thechangelog/proxy
-    environment:
-      DEFAULT_HOST: *host
     ports:
       - "80:80"
     volumes:
@@ -119,16 +141,22 @@ services:
         condition: any
       update_config:
         failure_action: rollback
-        monitor: 30s
+        # start_period + (interval * retries)
+        monitor: 75s
         order: start-first
+    healthcheck:
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:19999/"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 30s
     image: netdata/netdata
     hostname: 2019_netdata
     environment:
-      VIRTUAL_HOST: netdata.changelog.com
       # We want to see container names in netdata, not container IDs
       # Defining the docker group id makes it possible, as described in https://hub.docker.com/r/netdata/netdata/
       # gmake ssh && grep docker /etc/group | cut -d ':' -f 3
-      PGID: 233
+      PGID: 233 # docker on CoreOS
       # netdata container is too verbose, tell Logspout to not send logs to Papertrail
       # https://github.com/gliderlabs/logspout#ignoring-specific-containers
       LOGSPOUT: ignore

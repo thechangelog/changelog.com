@@ -16,9 +16,6 @@ endif
 
 ### VARS ###
 #
-export LC_ALL := en_US.UTF-8
-export LANG := en_US.UTF-8
-
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 
 DOMAIN ?= changelog.com
@@ -29,6 +26,11 @@ HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
 RSYNC_SRC_HOST ?= root@172.104.216.248
 
+FQDN := $(DOMAIN)
+IPv4 = $(shell dig +short -4 $(FQDN))
+export FQDN
+export IPv4
+
 BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 BOOTSTRAP_GIT_BRANCH ?= master
 
@@ -38,30 +40,20 @@ APP_IMAGE ?= thechangelog/changelog.com:latest
 
 ### DEPS ###
 #
-CURL := /usr/bin/curl
 DOCKER := /usr/local/bin/docker
-JQ := /usr/local/bin/jq
-LPASS := /usr/local/bin/lpass
-TERRAFORM := /usr/local/bin/terraform
-
-CASK := brew cask
-
-$(DOCKER):
-	@$(CASK) install docker
-
 COMPOSE := $(DOCKER)-compose
-$(COMPOSE):
-	@[ -f $(COMPOSE) ] || (\
-	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
-	  exit 1 \
-	)
+$(DOCKER) $(COMPOSE):
+	@brew cask install docker
 
+JQ := /usr/local/bin/jq
 $(JQ):
 	@brew install jq
 
+LPASS := /usr/local/bin/lpass
 $(LPASS):
 	@brew install lastpass-cli
 
+TERRAFORM := /usr/local/bin/terraform
 $(TERRAFORM):
 	@brew install terraform
 
@@ -73,8 +65,13 @@ WATCH := /usr/local/bin/watch
 $(WATCH):
 	@brew install watch
 
+CURL := /usr/bin/curl
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
+
+BATS := /usr/local/bin/bats
+$(BATS):
+	@brew install bats-core
 
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
@@ -95,6 +92,10 @@ endif
 
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
+
+.PHONY: bats
+bats: $(CURL) $(BATS)
+	@echo "Testing $(BOLD)$(FQDN)$(NORMAL) resolving to $(BOLD)$(IPv4)$(NORMAL)..."
 
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
@@ -228,21 +229,26 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 .PHONY: cds
 cds: create-docker-secrets
 
+# https://github.com/bcicen/ctop
 define CTOP_CONTAINER
 docker pull quay.io/vektorlab/ctop:latest && \
 docker run --rm --interactive --tty \
+  --cpus 0.5 --memory 128M \
   --volume /var/run/docker.sock:/var/run/docker.sock \
+  --name ctop_$(USER) \
   quay.io/vektorlab/ctop:latest
 endef
 .PHONY: ctop
-ctop: ## ct  | View real-time container metrics & logs
-	@if [ $(HOST) = localhost ] ; then \
-	  $(CTOP_CONTAINER) ; \
-	else \
-	  ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)" ; \
-	fi
+ctop: ## ct  | View real-time container metrics & logs remotely
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)"
 .PHONY: ct
 ct: ctop
+
+.PHONY: ctop-local
+ctop-local:
+	@$(CTOP_CONTAINER)
+.PHONY: ctl
+ctl: ctop-local
 
 .PHONY: remove-docker-secrets
 remove-docker-secrets: $(LPASS)
@@ -262,25 +268,23 @@ deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 .PHONY: dds
 dds: deploy-docker-stack
 
-.PHONY: update-app-service
-update-app-service: $(DOCKER)
-	@$(DOCKER) service update --quiet --image $(APP_IMAGE) $(DOCKER_STACK)_app 1>/dev/null
-.PHONY: uas
-uas: update-app-service
+.PHONY: deploy-docker-stack-local
+deploy-docker-stack-local: DOCKER_STACK_FILE = docker/changelog.stack.local.yml
+deploy-docker-stack-local: deploy-docker-stack
+.PHONY: ddsl
+ddsl: deploy-docker-stack-local
+
+.PHONY: update-app-service-local
+update-app-service-local:
+	@$(DOCKER) service update --force --quiet --image thechangelog/changelog.com:local $(DOCKER_STACK)_app
+.PHONY: uasl
+uasl: update-app-service-local
 
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
-	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
+	@$(DOCKER) build --pull --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
 .PHONY: bli
 bli: build-local-image
-
-.PHONY: deploy-docker-stack-local
-deploy-docker-stack-local: $(DOCKER) build-local-image create-dirs-mounted-as-volumes
-	@export HOSTNAME ; \
-	$(DOCKER) service scale $(DOCKER_STACK)_app_updater=0 ; \
-	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK)
-.PHONY: ddsl
-ddsl: deploy-docker-stack-local
 
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
@@ -291,6 +295,27 @@ es: env-secrets
 iaas: linode-token dnsimple-creds terraform/dhparams.pem init validate apply ## i   | Provision IaaS infrastructure
 .PHONY: i
 i: iaas
+
+# https://github.com/hishamhm/htop
+define HTOP_CONTAINER
+docker pull jess/htop:latest && \
+docker run --rm --interactive --tty \
+  --cpus 0.5 --memory 128M \
+  --net="host" --pid="host" \
+  --name htop_$(USER) \
+  jess/htop:latest
+endef
+.PHONY: htop
+htop: ## ht  | View real-time host system metrics
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(HTOP_CONTAINER)"
+.PHONY: ht
+ht: htop
+
+.PHONY: htop-local
+htop-local:
+	@$(HTOP_CONTAINER)
+.PHONY: htl
+htl: htop-local
 
 # https://www.linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide/#diffie-hellman-parameters
 terraform/dhparams.pem: $(OPENSSL)
@@ -386,6 +411,20 @@ bpi: build-proxy-image
 publish-proxy-image: $(DOCKER)
 	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/proxy:latest
+
+.PHONY: proxy-test
+proxy-test: bats
+	@$(BATS) test/e2e/proxy.bats
+.PHONY: pt
+pt: proxy-test
+
+.PHONY: proxy-test-local
+proxy-test-local: FQDN = $(USER).$(DOMAIN)
+proxy-test-local: IPv4 = 127.0.0.1
+proxy-test-local: bats
+	@$(BATS) test/e2e/proxy.bats
+.PHONY: ptl
+ptl: proxy-test-local
 
 .PHONY: report-deploy
 report-deploy:

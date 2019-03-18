@@ -18,11 +18,11 @@ defmodule ChangelogWeb.FeedViewTest do
       assert title == "Why testing is cool (The Changelog #12)"
     end
 
-    test "only includes episode number/title when not master" do
-      podcast = %{name: "Away from Keyboard", slug: "afk"}
+    test "only includes episode title when not master" do
+      podcast = %{name: "Practial AI", slug: "practicalai"}
       episode = %{title: "Why testing is cool", slug: "12", podcast: podcast}
       title = FeedView.episode_title(podcast, episode)
-      assert title == "12: Why testing is cool"
+      assert title == "Why testing is cool"
     end
   end
 end

@@ -49,6 +49,7 @@ defmodule ChangelogWeb.PersonView do
       person.website -> person.website
       person.twitter_handle -> twitter_url(person.twitter_handle)
       person.github_handle -> github_url(person.github_handle)
+      person.linkedin_handle -> linkedin_url(person.linkedin_handle)
       true -> "#"
     end
   end
@@ -89,6 +90,7 @@ defmodule ChangelogWeb.PersonView do
   def list_of_links(person) do
     [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
      %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
+     %{value: person.linkedin_handle, text: "LinkedIn", url: linkedin_url(person.linkedin_handle)},
      %{value: person.website, text: "Website", url: person.website}]
     |> Enum.reject(fn(x) -> x.value == nil end)
     |> Enum.map(fn(x) -> ~s{<a href="#{x.url}">#{x.text}</a>} end)

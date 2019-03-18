@@ -88,6 +88,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     end
   end
 
+  def linkedin_url(nil), do: ""
+  def linkedin_url(%{linkedin_handle: nil}), do: ""
+  def linkedin_url(%{linkedin_handle: handle}), do: linkedin_url(handle)
+  def linkedin_url(handle), do: "https://www.linkedin.com/in/#{handle}"
+
   def is_future?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == 1
 
   def is_past?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == -1

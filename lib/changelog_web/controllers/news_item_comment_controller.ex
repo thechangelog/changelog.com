@@ -49,13 +49,6 @@ defmodule ChangelogWeb.NewsItemCommentController do
     html(conn, transformed_content(markdown))
   end
 
-  defp referer_or_root_path(conn) do
-    case conn |> get_req_header("referer") |> List.last() do
-      nil -> root_path(conn, :index)
-      referer ->  referer |> URI.parse() |> Map.get(:path)
-    end
-  end
-
   defp random_success_message do
     [
       "Now that's a solid take! ✊",

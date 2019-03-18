@@ -15,12 +15,22 @@ defmodule ChangelogWeb do
       plug ChangelogWeb.Plug.ResponseCache
       import ChangelogWeb.Plug.ResponseCache, only: [cache_public: 1, cache_public: 2]
 
+      @doc """
+      Allows param-based 'next' path to redirect with fallback when not specified
+      """
+      def redirect_next(conn, %{"next" => ""}, fallback), do: redirect(conn, to: fallback)
+      def redirect_next(conn, %{"next" => next}, _fallback), do: redirect(conn, to: next)
+      def redirect_next(conn, _params, fallback), do: redirect(conn, to: fallback)
+
+      @doc """
+      Useful in combination with `redirect_next` when schema changes (usually slug)
+      affect the edit path being redirected to
+      """
+      def replace_next_edit_path(params = %{"next" => "edit"}, path), do: Map.put(params, "next", path)
+      def replace_next_edit_path(params, _path), do: params
+
       defp is_admin?(user = %Changelog.Person{}), do: user.admin
       defp is_admin?(_), do: false
-
-      defp redirect_next(conn, %{"next" => ""}, fallback), do: redirect(conn, to: fallback)
-      defp redirect_next(conn, %{"next" => next}, _fallback), do: redirect(conn, to: next)
-      defp redirect_next(conn, _next, fallback), do: redirect(conn, to: fallback)
     end
   end
 

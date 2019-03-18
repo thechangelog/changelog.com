@@ -50,6 +50,8 @@ defmodule ChangelogWeb.ConnCase do
     user = cond do
       tags[:as_admin] -> Changelog.Factory.build(:person, admin: true)
       tags[:as_inserted_admin] -> Changelog.Factory.insert(:person, admin: true)
+      tags[:as_editor] -> Changelog.Factory.build(:person, editor: true)
+      tags[:as_inserted_editor] -> Changelog.Factory.insert(:person, editor: true)
       tags[:as_user] -> Changelog.Factory.build(:person, admin: false)
       tags[:as_inserted_user] -> Changelog.Factory.insert(:person, admin: false)
       true -> nil

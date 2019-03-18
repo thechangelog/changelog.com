@@ -1,2 +1,2 @@
 <%= render("_episode_title.xml", assigns) %>
-<%= render("_episode_description.xml", assigns) %>
+<description><%= render("_show_notes.xml", assigns) %></description>

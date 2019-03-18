@@ -15,10 +15,16 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   def index(conn, params, podcast) do
+    filter = Map.get(params, "filter", "all")
     episodes = assoc(podcast, :episodes)
 
     page =
-      episodes
+      case filter do
+        "full"    -> Episode.full(episodes)
+        "bonus"   -> Episode.bonus(episodes)
+        "trailer" -> Episode.trailer(episodes)
+        _else     -> episodes
+      end
       |> Episode.published()
       |> Episode.newest_first()
       |> Repo.paginate(params)
@@ -39,6 +45,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:episodes, page.entries)
     |> assign(:scheduled, scheduled)
     |> assign(:drafts, drafts)
+    |> assign(:filter, filter)
     |> assign(:page, page)
     |> assign(:reach, reach(podcast))
     |> render(:index)
@@ -136,6 +143,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
         Cache.delete(episode)
+        params = replace_next_edit_path(params, admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
 
         conn
         |> put_flash(:result, "success")

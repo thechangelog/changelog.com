@@ -21,8 +21,8 @@ defmodule ChangelogWeb.Admin.PostController do
       |> Repo.all
 
     drafts =
-      Post.unpublished
-      |> Post.authored_by(me)
+      (if me.admin, do: Post, else: Post.authored_by(me))
+      |> Post.unpublished
       |> Post.newest_first(:inserted_at)
       |> preload(:author)
       |> Repo.all

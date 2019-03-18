@@ -11,11 +11,11 @@ defmodule ChangelogWeb.Admin.PostView do
     end
   end
 
-  def show_or_preview(post) do
+  def show_or_preview_path(conn, post) do
     if Post.is_public(post) do
-      :show
+      post_path(conn, :show, post.slug)
     else
-      :preview
+      post_path(conn, :preview, post)
     end
   end
 end

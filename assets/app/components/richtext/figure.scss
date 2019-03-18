@@ -33,12 +33,20 @@
         text-align: center;
       }
 
-      color: $medium-grey;
+      color: $black;
       font-family: $code;
       font-size: 12px;
       line-height: 1.5;
       margin: $figcaption-spacing auto 0;
       max-width: 760px;
+
+      a {
+        color: $black;
+        text-decoration: underline;
+        &:hover {
+          font-weight: bold;
+        }
+      }
     }
 
     // Define left/right style overrides

@@ -9,18 +9,18 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
   def index(conn = %{assigns: %{current_user: user}}, _params) do
     active =
-      Podcast.active
-      |> Podcast.not_retired
-      |> Podcast.by_position
-      |> Podcast.preload_hosts
-      |> Repo.all
+      Podcast.active()
+      |> Podcast.not_retired()
+      |> Podcast.by_position()
+      |> Podcast.preload_hosts()
+      |> Repo.all()
       |> Enum.filter(fn(p) -> Policies.Podcast.show(user, p) end)
 
     retired =
-      Podcast.retired
-      |> Podcast.oldest_first
-      |> Podcast.preload_hosts
-      |> Repo.all
+      Podcast.retired()
+      |> Podcast.oldest_first()
+      |> Podcast.preload_hosts()
+      |> Repo.all()
       |> Enum.filter(fn(p) -> Policies.Podcast.show(user, p) end)
 
     render(conn, :index, active: active, retired: retired)
@@ -71,6 +71,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     case Repo.update(changeset) do
       {:ok, podcast} ->
         Cache.delete(podcast)
+        params = replace_next_edit_path(params, admin_podcast_path(conn, :edit, podcast.slug))
 
         conn
         |> put_flash(:result, "success")

@@ -1,5 +1,5 @@
 defmodule Changelog.UrlKitTest do
-  use Changelog.DataCase
+  use Changelog.SchemaCase
 
   alias Changelog.UrlKit
 

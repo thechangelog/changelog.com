@@ -16,13 +16,23 @@
     </div>
   </div>
 
-  <div class="field <%= error_class(f, :subtitle) %>">
-    <%= label(:f, :subtitle) do %>
-      Subtitle <%= help_icon("Used underneath title on episode page and combined with title for html <title>") %>
-      <span><a href="javascript:void(0);" class="field-action js-subtitle-guide-modal">(style guide)</a></span>
-    <% end %>
-    <%= text_input(f, :subtitle, placeholder: "with Richard Hipp, creator of SQlite") %>
+  <div class="two fields">
+    <div class="twelve wide field <%= error_class(f, :subtitle) %>">
+      <%= label(:f, :subtitle) do %>
+        Subtitle <%= help_icon("Used underneath title on episode page and combined with title for html <title>") %>
+        <span><a href="javascript:void(0);" class="field-action js-subtitle-guide-modal">(style guide)</a></span>
+      <% end %>
+      <%= text_input(f, :subtitle, placeholder: "with Richard Hipp, creator of SQlite") %>
+    </div>
+
+    <div class="four wide field <%= error_class(f, :status) %>">
+      <%= label(:f, :type) do %>
+        Type <%= help_icon("Full episodes require a numbered slug. Bonus & Trailer episodes are feed-only (no news item)") %>
+      <% end %>
+      <%= select(f, :type, type_options(), class: "ui fluid dropdown") %>
+    </div>
   </div>
+
 
   <div class="inline field <%= error_class(f, :featured) %>">
     <div class="ui toggle checkbox">
@@ -239,7 +249,7 @@
     <div class="column"><%= submit_button(:primary, "Create") %></div>
     <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, admin_podcast_episode_path(@conn, :index, @podcast.slug))) %></div>
   <% else %>
-    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
+    <div class="column"><%= submit_button(:primary, "Save", "edit") %></div>
     <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
   <% end %>
   <% end %>

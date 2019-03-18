@@ -30,6 +30,14 @@ defmodule Changelog.StringKitTest do
 
       assert StringKit.extract_mentions(raw) == ["jerodsanto", "codyjames", "adamstac"]
     end
+
+    test "does not return a mention when part of email address" do
+      raw = """
+      Shoot me an email at hi@gerhard.io or just mention me @gerhard
+      """
+
+      assert StringKit.extract_mentions(raw) == ["gerhard"]
+    end
   end
 
   describe "md_linkify/1" do

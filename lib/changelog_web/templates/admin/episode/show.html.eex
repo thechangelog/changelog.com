@@ -26,7 +26,7 @@
 <div class="ui basic segment">
   <div class="ui equal width grid">
     <div class="column">
-      <h2 class="ui header">Embed Via JS</h2>
+      <h2 class="ui header">Embed via JS</h2>
       <div class="ui fluid action input">
         <input type="text" value="<%= embed_code(@episode) %>">
         <button class="ui basic icon clipboard button"><i class="clipboard icon"></i></button>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="column">
-      <h2 class="ui header">Embed Via Frame</h2>
+      <h2 class="ui header">Embed via Frame</h2>
       <div class="ui fluid action input">
         <input type="text" value="<%= embed_iframe(@episode, "night") %>">
         <button class="ui basic icon clipboard button"><i class="clipboard icon"></i></button>

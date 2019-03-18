@@ -3,7 +3,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   import ChangelogWeb.NewsItemView, only: [hashid: 1, slug: 1]
 
-  alias Changelog.{NewsItem, NewsQueue}
+  alias Changelog.{NewsItem, NewsQueue, Subscription}
 
   test "getting the index", %{conn: conn} do
     i1 = insert(:news_item)
@@ -27,6 +27,14 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     item = insert(:published_news_item, headline: "You gonna like this")
     conn = get(conn, news_item_path(conn, :show, slug(item)))
     assert html_response(conn, 200) =~ item.headline
+  end
+
+  test "getting a published news item page of that has a post", %{conn: conn} do
+    post = insert(:published_post)
+    item = post |> post_news_item() |> insert()
+    hashid = hashid(item)
+    conn = get(conn, news_item_path(conn, :show, hashid))
+    assert redirected_to(conn) == post_path(conn, :show, post.slug)
   end
 
   test "getting an unpublished news item page", %{conn: conn} do
@@ -125,5 +133,38 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsItem) == count_before
+  end
+
+  test "cannot subscribe with no user", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = get(conn, news_item_path(conn, :subscribe, hashid(item)))
+
+    assert redirected_to(conn) == sign_in_path(conn, :new)
+  end
+
+  @tag :as_inserted_user
+  test "subscribes and redirects back to news item", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = get(conn, news_item_path(conn, :subscribe, hashid(item)))
+
+    assert redirected_to(conn) == news_item_path(conn, :show, slug(item))
+    assert count(Subscription.subscribed) == 1
+  end
+
+  test "cannot unsubscribe with no user", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = get(conn, news_item_path(conn, :unsubscribe, hashid(item)))
+
+    assert redirected_to(conn) == sign_in_path(conn, :new)
+  end
+
+  @tag :as_inserted_user
+  test "unsubscribes and redirects back to news item", %{conn: conn} do
+    item = insert(:published_news_item)
+    conn = get(conn, news_item_path(conn, :unsubscribe, hashid(item)))
+
+    assert redirected_to(conn) == news_item_path(conn, :show, slug(item))
+    assert count(Subscription.subscribed) == 0
+    assert count(Subscription.unsubscribed) == 1
   end
 end

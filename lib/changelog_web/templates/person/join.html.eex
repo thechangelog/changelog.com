@@ -1,5 +1,5 @@
 <article class="auth">
-  <h1 class="auth-header">Join the Community</h1>
+  <h1 class="auth-header">Join the community</h1>
   <%= form_for @changeset, person_path(@conn, :join), [class: "form form--full_width", multipart: true], fn f -> %>
     <div class="form-element_wrap <%= error_class(f, :name) %>">
       <div class="form-element">
@@ -25,19 +25,46 @@
       </div>
     </div>
 
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :avatar) %>">
+        <label>Avatar</label>
+        <%= file_input(f, :avatar) %>
+        <%= error_message(f, :avatar) %>
+        <p class="form-element-note">Ideally 600px by 600px. We'll crop it square.</p>
+        <p class="form-element-note">Leave blank for gravatar.</p>
+      </div>
+    </div>
+
     <div class="form-element_wrap <%= error_class(f, :github_handle) %>">
       <div class="form-element">
-        <label>On GitHub</label>
-        <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <label>GitHub Handle</label>
+        <div class="form-element-preppended_field">
+          <span>github.com/</span>
+          <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
         <%= error_message(f, :github_handle) %>
       </div>
     </div>
 
     <div class="form-element_wrap <%= error_class(f, :twitter_handle) %>">
       <div class="form-element">
-        <label>On Twitter</label>
-        <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <label>Twitter Handle</label>
+        <div class="form-element-preppended_field">
+          <span>twitter.com/</span>
+          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
         <%= error_message(f, :twitter_handle) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap <%= error_class(f, :linkedin_handle) %>">
+      <div class="form-element">
+        <label>LinkedIn Handle</label>
+        <div class="form-element-preppended_field">
+          <span>linkedin.com/in/</span>
+          <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
+        <%= error_message(f, :linkedin_handle) %>
       </div>
     </div>
 

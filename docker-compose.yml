@@ -41,10 +41,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./nginx/vhost.d:/etc/nginx/vhost.d:ro
-      - ./nginx/conf.d/changelog.conf:/etc/nginx/conf.d/changelog.conf:ro
       - ./priv/uploads/:/var/www/uploads:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
 
 volumes:
   build:
