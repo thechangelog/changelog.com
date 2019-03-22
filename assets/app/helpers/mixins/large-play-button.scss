@@ -59,7 +59,7 @@
         -moz-animation: $spin;
         animation: $spin;
         content: "";
-        background: url("/images/loading-2-white.svg") center no-repeat;
+        background: url("/images/icons/loading-2-white.svg") center no-repeat;
         background-size: auto 60%;
         position: absolute;
         top: 0;
@@ -69,7 +69,7 @@
       }
 
       &:before {
-        background-image: url("/images/loading-white.svg");
+        background-image: url("/images/icons/loading-white.svg");
         background-size: auto 60%;
         -webkit-animation: $spin;
         -moz-animation: $spin;
