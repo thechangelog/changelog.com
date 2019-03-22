@@ -21,10 +21,6 @@
         margin-right: (-$offset);
         width: calc(100% + (#{$offset} * 2));
       }
-
-      img {
-        height: 100%; // Windows fix
-      }
     }
 
     // Define default caption styles (overridden below)
