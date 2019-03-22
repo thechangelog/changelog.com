@@ -24,7 +24,7 @@
       <%= if @latest do %>
         <a href="<%= @latest["WebVersionURL"] %>">Check out the latest issue</a>
       <% else %>
-        <a href="http://email.changelog.com/t/t-4C23387E18E09BF8">Check out Issue #125</a>
+        <a href="https://email.changelog.com/t/t-BEDDF63865C6A3D2">Check out Issue #215</a>
       <% end %>
 
         or <%= link "view the archive", to: page_path(@conn, :weekly_archive) %>.</p>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="image">
-      <a href="http://email.changelog.com/t/t-4C23387E18E09BF8" title="Preview Changelog Weekly">
+      <a href="https://email.changelog.com/t/t-70253FB1820F8A66" title="Preview Changelog Weekly">
         <%= lazy_image(static_url(@conn, "/images/content/changelog-weekly.jpg"), "Changelog Weekly Preview") %>
       </a>
     </div>

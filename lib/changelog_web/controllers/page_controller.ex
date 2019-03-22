@@ -77,17 +77,26 @@ defmodule ChangelogWeb.PageController do
   end
 
   def weekly(conn, _params) do
-    render(conn, :weekly, latest: List.first(get_weekly_issues()))
+    latest = get_weekly_issues() |> List.first()
+    render(conn, :weekly, latest: latest)
   end
 
   def weekly_archive(conn, _params) do
-    render(conn, :weekly_archive, issues: get_weekly_issues())
+    issues_by_year =
+      get_weekly_issues()
+      |> Enum.group_by(fn(c) -> String.slice(c["SentDate"], 0..3) end)
+      |> Enum.reverse()
+
+    conn
+    |> assign(:issues, issues_by_year)
+    |> render(:weekly_archive)
   end
 
   defp get_weekly_issues do
     Cache.get_or_store("weekly_archive", :timer.hours(24), fn ->
       Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
-      |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/\AWeekly - Issue \#\d+\z/) end)
+      |> Enum.filter(fn(c) -> String.starts_with?(c["Name"], "Weekly") end)
+      |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/Issue \#\d+\z/) end)
     end)
   end
 end
