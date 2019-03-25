@@ -4,13 +4,11 @@
     &raquo;
     <%= @person.name %> (<%= @person.handle %>)
     <div class="sub header">
-      created <%= TimeView.terse_date(@person.inserted_at) %>
-    <%= if @person.joined_at do %>
-      &bull; joined <%= TimeView.terse_date(@person.joined_at) %>
-    <% end %>
-    <%= if @person.signed_in_at do %>
-      &bull; last sign in <%= TimeView.terse_date(@person.signed_in_at) %>
-    <% end %>
+      created: <%= ts(@person.inserted_at) %>
+      &nbsp;&bull;&nbsp;
+      joined: <%= if @person.joined_at, do: ts(@person.joined_at), else: "never" %>
+      &nbsp;&bull;&nbsp;
+      last signed in: <%= if @person.signed_in_at, do: ts(@person.signed_in_at), else: "never" %>
     </div>
   </h1>
 </div>

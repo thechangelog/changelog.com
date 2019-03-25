@@ -90,6 +90,10 @@ defmodule ChangelogWeb.TimeView do
   def time_is_url(nil), do: ""
   def time_is_url(ts), do: "https://time.is/#{DateTime.to_unix(ts)}"
 
+  @ doc """
+  Formats a timestamp for js-based relativism and display. See functions *Style
+  functions in time.js for possible styles
+  """
   def ts(ts, style \\ "admin")
   def ts(ts, _style) when is_nil(ts), do: ""
   def ts(ts, style) do

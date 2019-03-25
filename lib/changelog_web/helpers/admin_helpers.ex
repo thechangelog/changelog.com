@@ -102,6 +102,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   end
 
   def ts(ts), do: TimeView.ts(ts)
+  def ts(ts, style), do: TimeView.ts(ts, style)
 
   def up_or_down_class(a, b) when is_integer(a) and is_integer(b) do
     if a > b do
