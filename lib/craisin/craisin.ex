@@ -12,7 +12,7 @@ defmodule Craisin do
 
   def process_request_headers(headers) do
     auth = Application.get_env(:changelog, :cm_api_token)
-    Enum.into(headers, [{"Authorization", "Basic #{auth}"}])
+    headers ++ [{"Authorization", "Basic #{auth}"}]
   end
 
   def process_response_body(body) do

@@ -23,7 +23,7 @@ defmodule Changelog.Stats.Parser do
       values = line
       |> String.replace(@prefix_regex, "")
       |> String.replace(@double_double_quotes_regex, "\"")
-      |> CSV.parse_string(headers: false)
+      |> CSV.parse_string(skip_headers: false)
       |> List.first
 
       %Entry{ip: get_ip(values),
