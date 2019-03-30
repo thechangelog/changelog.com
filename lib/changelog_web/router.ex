@@ -14,6 +14,7 @@ defmodule ChangelogWeb.Router do
     plug Plug.Turbolinks
     plug :fetch_flash
     plug :put_secure_browser_headers
+    plug Plug.AllowFraming
     plug Plug.Authenticate, repo: Changelog.Repo
   end
 
