@@ -5,15 +5,15 @@
   <% end %>
 <% end %>
   <span class="news_item-meta-text">
-    logged by <strong><%= external_link(PersonView.handle(@item.logger), to: twitter_url(@item.logger)) %></strong>
+    <%= NewsItemView.render_meta_people(@conn, @item) %>
   <%= if @item.submitter do %>
     via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter)) %></strong>
   <% end %>
-    • <span class="news_item-toolbar-meta-item">
+    <span>•</span> <span class="news_item-toolbar-meta-item">
         <%= link("Discuss", to: NewsItemView.discussion_path(@conn, @item)) %><%= NewsItemView.comment_count_aside(@item) %>
       </span>
   <%= if Enum.any?(@item.topics) do %>
-    • <span class="news_item-toolbar-meta-item">
+    <span>•</span> <span class="news_item-toolbar-meta-item">
         <%= for topic <- @item.topics, do: NewsItemView.topic_link(@conn, topic) %>
       </span>
   <% end %>
