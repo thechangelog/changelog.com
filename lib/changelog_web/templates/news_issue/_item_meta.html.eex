@@ -6,9 +6,6 @@
 <% end %>
   <span class="news_item-meta-text">
     <%= NewsItemView.render_meta_people(@conn, @item) %>
-  <%= if @item.submitter do %>
-    via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.external_url(@item.submitter)) %></strong>
-  <% end %>
     <span>•</span> <span class="news_item-toolbar-meta-item">
         <%= link("Discuss", to: NewsItemView.discussion_path(@conn, @item)) %><%= NewsItemView.comment_count_aside(@item) %>
       </span>
