@@ -269,11 +269,27 @@ resource "dnsimple_record" "2019_changelog_com" {
   ttl = 60
 }
 
+resource "dnsimple_record" "2019_changelog_com_ipv6" {
+  domain = "changelog.com"
+  name = "${var.generation}"
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
+  ttl = 60
+}
+
 resource "dnsimple_record" "2019i_changelog_com" {
   domain = "changelog.com"
   name = "${var.generation}i"
-  value = "${linode_instance.2019.ip_address}"
+  value = "${linode_instance.2019.ipv4}"
   type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "2019i_changelog_com_ipv6" {
+  domain = "changelog.com"
+  name = "${var.generation}i"
+  value = "${linode_instance.2019.ipv6}"
+  type = "AAAA"
   ttl = 60
 }
 
@@ -285,6 +301,14 @@ resource "dnsimple_record" "netdata_changelog_com" {
   ttl = 60
 }
 
+resource "dnsimple_record" "netdata_changelog_com_ipv6" {
+  domain = "changelog.com"
+  name = "netdata"
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
+  ttl = 60
+}
+
 resource "dnsimple_record" "apex-changelog_com" {
   domain = "changelog.com"
   name = ""
@@ -293,11 +317,27 @@ resource "dnsimple_record" "apex-changelog_com" {
   ttl = 60
 }
 
+resource "dnsimple_record" "apex-changelog_com_ipv6" {
+  domain = "changelog.com"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
+  ttl = 60
+}
+
 resource "dnsimple_record" "www_changelog_com" {
   domain = "changelog.com"
   name = "www"
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "www_changelog_com_ipv6" {
+  domain = "changelog.com"
+  name = "www"
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
   ttl = 60
 }
 
@@ -373,11 +413,27 @@ resource "dnsimple_record" "apex-changelog_fm" {
   ttl = 60
 }
 
+resource "dnsimple_record" "apex-changelog_fm_ipv6" {
+  domain = "changelog.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
+  ttl = 60
+}
+
 resource "dnsimple_record" "apex-gotime_fm" {
   domain = "gotime.fm"
   name = ""
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "apex-gotime_fm_ipv6" {
+  domain = "gotime.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
   ttl = 60
 }
 
@@ -389,10 +445,26 @@ resource "dnsimple_record" "apex-jsparty_fm" {
   ttl = 60
 }
 
+resource "dnsimple_record" "apex-jsparty_fm_ipv6" {
+  domain = "jsparty.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
+  ttl = 60
+}
+
 resource "dnsimple_record" "apex-rfc_fm" {
   domain = "rfc.fm"
   name = ""
   value = "${linode_nodebalancer.2019.ipv4}"
   type = "A"
+  ttl = 60
+}
+
+resource "dnsimple_record" "apex-rfc_fm_ipv6" {
+  domain = "rfc.fm"
+  name = ""
+  value = "${linode_nodebalancer.2019.ipv6}"
+  type = "AAAA"
   ttl = 60
 }
