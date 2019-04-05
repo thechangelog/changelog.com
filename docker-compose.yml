@@ -36,14 +36,6 @@ services:
       - ./mix.lock:/app/mix.lock
     depends_on:
       - db
-  proxy:
-    image: thechangelog/proxy
-    ports:
-      - "80:80"
-    volumes:
-      - ./priv/uploads/:/var/www/uploads:ro
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/conf.d:/etc/nginx/conf.d
 
 volumes:
   build:
