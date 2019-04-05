@@ -113,7 +113,7 @@ jobs:
           command: |
             echo "$CIRCLE_SHA1" | tee COMMIT_SHA priv/static/version.txt
             echo "$CIRCLE_USERNAME" | tee COMMIT_USER
-            echo "$CIRCLE_BUILD_URL" | tee BUILD_URL
+            echo "$CIRCLE_BUILD_URL" | tee BUILD_URL priv/static/build.txt
       - setup_remote_docker:
           version: 18.06.0-ce
       - run:
