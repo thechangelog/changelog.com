@@ -16,9 +16,6 @@ endif
 
 ### VARS ###
 #
-export LC_ALL := en_US.UTF-8
-export LANG := en_US.UTF-8
-
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
 
 DOMAIN ?= changelog.com
@@ -38,30 +35,20 @@ APP_IMAGE ?= thechangelog/changelog.com:latest
 
 ### DEPS ###
 #
-CURL := /usr/bin/curl
 DOCKER := /usr/local/bin/docker
-JQ := /usr/local/bin/jq
-LPASS := /usr/local/bin/lpass
-TERRAFORM := /usr/local/bin/terraform
-
-CASK := brew cask
-
-$(DOCKER):
-	@$(CASK) install docker
-
 COMPOSE := $(DOCKER)-compose
-$(COMPOSE):
-	@[ -f $(COMPOSE) ] || (\
-	  echo "Please install Docker via $(BOLD)brew cask docker$(NORMAL) so that $(BOLD)docker-compose$(NORMAL) will be managed in lock-step with Docker" && \
-	  exit 1 \
-	)
+$(DOCKER) $(COMPOSE):
+	@brew cask install docker
 
+JQ := /usr/local/bin/jq
 $(JQ):
 	@brew install jq
 
+LPASS := /usr/local/bin/lpass
 $(LPASS):
 	@brew install lastpass-cli
 
+TERRAFORM := /usr/local/bin/terraform
 $(TERRAFORM):
 	@brew install terraform
 
@@ -69,6 +56,11 @@ OPENSSL := /usr/local/opt/openssl/bin/openssl
 $(OPENSSL):
 	@brew install openssl
 
+WATCH := /usr/local/bin/watch
+$(WATCH):
+	@brew install watch
+
+CURL := /usr/bin/curl
 $(CURL):
 	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
 
@@ -227,6 +219,7 @@ cds: create-docker-secrets
 define CTOP_CONTAINER
 docker pull quay.io/vektorlab/ctop:latest && \
 docker run --rm --interactive --tty \
+  --cpus 0.5 --memory 128M \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   quay.io/vektorlab/ctop:latest
 endef
@@ -239,6 +232,10 @@ ctop: ## ct  | View real-time container metrics & logs
 	fi
 .PHONY: ct
 ct: ctop
+
+# docker run --rm -it --name gtop --net="host" --pid="host" devmtl/gtop:edge
+# https://github.com/google/cadvisor
+# https://www.weave.works/docs/scope/latest/installing/
 
 .PHONY: remove-docker-secrets
 remove-docker-secrets: $(LPASS)
@@ -258,25 +255,29 @@ deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 .PHONY: dds
 dds: deploy-docker-stack
 
+.PHONY: deploy-docker-stack-local
+deploy-docker-stack-local: DOCKER_STACK_FILE = docker/changelog.stack.local.yml
+deploy-docker-stack-local: deploy-docker-stack
+.PHONY: ddsl
+ddsl: deploy-docker-stack-local
+
 .PHONY: update-app-service
 update-app-service: $(DOCKER)
-	@$(DOCKER) service update --quiet --image $(APP_IMAGE) $(DOCKER_STACK)_app 1>/dev/null
+	@$(DOCKER) service update --force --quiet --image $(APP_IMAGE) $(DOCKER_STACK)_app 1>/dev/null
 .PHONY: uas
 uas: update-app-service
 
+.PHONY: update-app-service-local
+update-app-service-local: APP_IMAGE = thechangelog/changelog.com:local
+update-app-service-local: update-app-service
+.PHONY: uasl
+uasl: update-app-service-local
+
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
-	@$(DOCKER) build --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
+	@$(DOCKER) build --pull --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
 .PHONY: bli
 bli: build-local-image
-
-.PHONY: deploy-docker-stack-local
-deploy-docker-stack-local: $(DOCKER) build-local-image create-dirs-mounted-as-volumes
-	@export HOSTNAME ; \
-	$(DOCKER) service scale $(DOCKER_STACK)_app_updater=0 ; \
-	$(DOCKER) stack deploy --compose-file docker/changelog.stack.local.yml --prune $(DOCKER_STACK)
-.PHONY: ddsl
-ddsl: deploy-docker-stack-local
 
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
@@ -407,6 +408,19 @@ publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
+define APP_CONTAINER
+$$($(DOCKER) container ls \
+  --filter label=com.docker.swarm.service.name=2019_app \
+  --format='{{.ID}}' \
+  --last 1)
+endef
+.PHONY: remsh-local
+remsh-local:
+	@$(DOCKER) exec --tty --interactive "$(APP_CONTAINER)" \
+	  bash -c "iex --hidden --sname debug@\$$HOSTNAME --remsh changelog@\$$HOSTNAME"
+.PHONY: rl
+rl: remsh-local
+
 define RSYNC_UPLOADS
   sudo --preserve-env --shell \
     rsync --archive --delete --update --inplace --verbose --progress --human-readable \
@@ -424,7 +438,6 @@ rsync-small-uploads-local: create-dirs-mounted-as-volumes
 	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons,logos}" $(CURDIR)/priv/uploads/
 .PHONY: rsul
 rsul: rsync-small-uploads-local
-
 
 .PHONY: secrets
 secrets: $(LPASS) ## s   | List all LastPass secrets
@@ -447,6 +460,13 @@ test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
 	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
 .PHONY: t
 t: test
+
+.PHONY: watch
+watch: $(WATCH) $(DOCKER) ## w   | Watch all containers
+	@$(WATCH) -c "$(DOCKER) ps --all \
+	  --format='table {{.Status}}\t{{.Names}}\t{{.Image}}\t{{.ID}}'"
+.PHONY: w
+w: watch
 
 define UPDATE_NETDATA
 docker pull netdata/netdata && \
