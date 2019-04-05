@@ -69,9 +69,21 @@ jobs:
           command: |
             export MIX_ENV=test
             mix test
+
+  test_coverage:
+    working_directory: *dir
+    docker:
+      - image: *runtime
+    steps:
+      - checkout
+      - restore_cache: *deps_cache
+      - restore_cache: *build_cache
       - run:
           name: Report test coverage
-          command: mix coveralls.circle
+          command: |
+            export MIX_ENV=test
+            mix coveralls.circle
+
 
   assets:
     working_directory: *dir
@@ -132,6 +144,12 @@ workflows:
       - test:
           requires:
             - deps
+      - test_coverage:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
       - assets:
           requires:
             - deps
