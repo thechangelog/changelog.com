@@ -26,13 +26,16 @@ HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
 RSYNC_SRC_HOST ?= root@172.104.216.248
 
+HOSTNAME := $(DOCKER_STACK).$(DOMAIN)
+HOSTNAME_LOCAL := $(USER).$(DOMAIN)
+
 FQDN := $(DOMAIN)
 IPv4 = $(shell dig +short -4 $(FQDN))
 export FQDN
 export IPv4
 
-BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
-BOOTSTRAP_GIT_BRANCH ?= master
+GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
+GIT_BRANCH ?= master
 
 APP_IMAGE ?= thechangelog/changelog.com:latest
 
@@ -145,8 +148,8 @@ bi: bootstrap-image
 build-bootstrap-image: $(DOCKER)
 	@cd docker && \
 	$(DOCKER) build \
-	  --build-arg GIT_REPOSITORY=$(BOOTSTRAP_GIT_REPOSITORY) \
-	  --build-arg GIT_BRANCH=$(BOOTSTRAP_GIT_BRANCH) \
+	  --build-arg GIT_REPOSITORY=$(GIT_REPOSITORY) \
+	  --build-arg GIT_BRANCH=$(GIT_BRANCH) \
 	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
 	  --tag thechangelog/bootstrap:latest \
 	  --file Dockerfile.bootstrap .
@@ -228,6 +231,26 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 	echo "It might be easier to define a new secret, e.g. $(BOLD)ALGOLIA_API_KEY2$(NORMAL)"
 .PHONY: cds
 cds: create-docker-secrets
+
+define VERSION_CHECK
+VERSION="$$($(CURL) --silent --location \
+  --write-out '$(NORMAL)HTTP/%{http_version} %{http_code} in %{time_total}s' \
+  http://$(HOSTNAME)/version.txt)" && \
+echo $(BOLD)$(PRE_VERSION)$$VERSION
+endef
+.PHONY: check-deployed-version
+check-deployed-version: PRE_VERSION = $(GIT_REPOSITORY)/tree/
+check-deployed-version: $(CURL) ## cdv | Check the currently deployed git sha
+	@$(VERSION_CHECK)
+.PHONY: cdv
+cdv: check-deployed-version
+
+.PHONY: check-deployed-version-local
+check-deployed-version-local: HOSTNAME = $(HOSTNAME_LOCAL)
+check-deployed-version-local: $(CURL)
+	@$(VERSION_CHECK)
+.PHONY: cdvl
+cdvl: check-deployed-version-local
 
 # https://github.com/bcicen/ctop
 define CTOP_CONTAINER
@@ -419,7 +442,7 @@ proxy-test: bats
 pt: proxy-test
 
 .PHONY: proxy-test-local
-proxy-test-local: FQDN = $(USER).$(DOMAIN)
+proxy-test-local: FQDN = $(HOSTNAME_LOCAL)
 proxy-test-local: IPv4 = 127.0.0.1
 proxy-test-local: bats
 	@$(BATS) test/e2e/proxy.bats
@@ -480,7 +503,7 @@ ssh: ## ssh | SSH into $HOST
 
 .PHONY: ssl-report
 ssl-report: ## ssl | Run an SSL report via SSL Labs
-	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(DOCKER_STACK).$(DOMAIN)&latest"
+	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(HOSTNAME)&latest"
 .PHONY: ssl
 ssl: ssl-report
 
