@@ -298,17 +298,17 @@ deploy-docker-stack-local: deploy-docker-stack
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
 
-.PHONY: update-app-service-local
-update-app-service-local:
-	@$(DOCKER) service update --force --quiet --image thechangelog/changelog.com:local $(DOCKER_STACK)_app
-.PHONY: uasl
-uasl: update-app-service-local
-
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
 	@$(DOCKER) build --pull --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
 .PHONY: bli
 bli: build-local-image
+
+.PHONY: update-app-service-local
+update-app-service-local: $(DOCKER)
+	@$(DOCKER) service update --force --image thechangelog/changelog.com:local $(DOCKER_STACK)_app
+.PHONY: uasl
+uasl: update-app-service-local
 
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
