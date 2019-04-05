@@ -16,7 +16,8 @@ endif
 
 ### VARS ###
 #
-export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
+# https://tools.ietf.org/html/rfc3339 format
+export BUILD_VERSION := $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
 
 DOMAIN ?= changelog.com
 DOCKER_STACK ?= 2019
