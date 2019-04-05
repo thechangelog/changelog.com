@@ -474,6 +474,19 @@ publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
+define APP_CONTAINER
+$$($(DOCKER) container ls \
+  --filter label=com.docker.swarm.service.name=2019_app \
+  --format='{{.ID}}' \
+  --last 1)
+endef
+.PHONY: remsh-local
+remsh-local:
+	@$(DOCKER) exec --tty --interactive "$(APP_CONTAINER)" \
+	  bash -c "iex --hidden --sname debug@\$$HOSTNAME --remsh changelog@\$$HOSTNAME"
+.PHONY: rl
+rl: remsh-local
+
 define RSYNC_UPLOADS
   sudo --preserve-env --shell \
     rsync --archive --delete --update --inplace --verbose --progress --human-readable \
