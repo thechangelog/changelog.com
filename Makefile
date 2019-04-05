@@ -522,7 +522,7 @@ w: watch
 
 define UPDATE_NETDATA
 docker pull netdata/netdata && \
-docker service update $(DOCKER_STACK)_netdata
+docker service update --force --image netdata/netdata $(DOCKER_STACK)_netdata
 endef
 .PHONY: update_netdata
 update_netdata:
