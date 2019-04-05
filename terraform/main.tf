@@ -280,7 +280,7 @@ resource "dnsimple_record" "2019_changelog_com_ipv6" {
 resource "dnsimple_record" "2019i_changelog_com" {
   domain = "changelog.com"
   name = "${var.generation}i"
-  value = "${linode_instance.2019.ipv4}"
+  value = "${linode_instance.2019.ip_address}"
   type = "A"
   ttl = 60
 }
