@@ -1,20 +1,20 @@
 <%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
   <div class="field required <%= error_class(f, :title) %>">
-    <%= label f, :title, "Title" %>
-    <%= text_input f, :title, placeholder: "10 Best Blog Post Titles" %>
+    <%= label(f, :title, "Title") %>
+    <%= text_input(f, :title, placeholder: "10 Best Blog Post Titles") %>
     <%= error_message(f, :title) %>
   </div>
 
   <div class="field required <%= error_class(f, :slug) %>">
-    <%= label f, :slug, "Slug" %>
-    <%= text_input f, :slug, placeholder: "10-best-blog-post-titles", readonly: f.data.published %>
+    <%= label(f, :slug, "Slug") %>
+    <%= text_input(f, :slug, placeholder: "10-best-blog-post-titles", readonly: f.data.published) %>
     <%= error_message(f, :slug) %>
   </div>
 
   <div class="field required <%= error_class(f, :author_id) %>">
-    <%= label f, :author_id, "Author" %>
+    <%= label(f, :author_id, "Author") %>
     <div class="ui fluid remote author search selection dropdown">
-      <%= hidden_input f, :author_id %>
+      <%= hidden_input(f, :author_id) %>
       <i class="dropdown icon"></i>
       <%= if is_loaded(f.data.author) do %>
         <div class="selected text"><%= f.data.author.name %></div>
@@ -23,6 +23,12 @@
       <% end %>
     </div>
     <%= error_message(f, :author_id) %>
+  </div>
+
+  <div class="field <%= error_class(f, :slug) %>">
+    <%= label(f, :canonical_url, "Canonical URL") %>
+    <%= text_input(f, :canonical_url) %>
+    <%= error_message(f, :canonical_url) %>
   </div>
 
   <div class="field">

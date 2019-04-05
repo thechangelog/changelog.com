@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#59B287">
     <title><%= page_title(assigns) %></title>
-    <link rel="canonical" href="<%= canonical_url(@conn) %>">
+    <link rel="canonical" href="<%= canonical_url(assigns) || current_url(@conn) %>">
     <meta name="description" content="<%= description(assigns) %>">
     <meta name="copyright" content="Changelog Media LLC">
   <% twitter_card_type = twitter_card_type(assigns) %>
@@ -21,12 +21,12 @@
     <meta name="twitter:player:stream" content="<%= twitter_audio_url(assigns) %>">
     <meta name="twitter:player:stream:content_type" content="audio/mpeg">
   <% else %>
-    <meta name="twitter:url" content="<%= canonical_url(@conn) %>">
+    <meta name="twitter:url" content="<%= current_url(@conn) %>">
   <% end %>
   <%= if twitter_image = twitter_image(assigns) do %>
     <meta name="twitter:image" content="<%= twitter_image %>">
   <% end %>
-    <meta property="og:url" content="<%= canonical_url(@conn) %>">
+    <meta property="og:url" content="<%= current_url(@conn) %>">
     <meta property="og:type" content="website">
     <meta property="og:title" content="<%= share_title(assigns) || page_title(assigns) %>">
   <%= if fbimg = fb_image(assigns) do %>
