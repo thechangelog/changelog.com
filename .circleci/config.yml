@@ -74,10 +74,18 @@ jobs:
     working_directory: *dir
     docker:
       - image: *runtime
+      - image: circleci/postgres:9.5
+        environment:
+          POSTGRES_USER: "postgres"
+          POSTGRES_DB: changelog_test
+          POSTGRES_PASSWORD: "postgres"
     steps:
       - checkout
       - restore_cache: *deps_cache
       - restore_cache: *build_cache
+      - run:
+          name: Wait for PostgreSQL
+          command: timeout 60 bash -c "while sleep 1; do nc -zv 127.0.0.1 5432 && break; done"
       - run:
           name: Report test coverage
           command: |
