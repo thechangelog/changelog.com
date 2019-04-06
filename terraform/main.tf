@@ -285,14 +285,6 @@ resource "dnsimple_record" "2019i_changelog_com" {
   ttl = 60
 }
 
-resource "dnsimple_record" "2019i_changelog_com_ipv6" {
-  domain = "changelog.com"
-  name = "${var.generation}i"
-  value = "${linode_instance.2019.ipv6}"
-  type = "AAAA"
-  ttl = 60
-}
-
 resource "dnsimple_record" "netdata_changelog_com" {
   domain = "changelog.com"
   name = "netdata"
