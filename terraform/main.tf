@@ -1,5 +1,18 @@
 provider "linode" {
   token = "${var.linode_token}"
+  version = "~> 1.3"
+}
+
+provider "dnsimple" {
+  version = "~> 0.1"
+}
+
+provider "null" {
+  version = "~> 1.0"
+}
+
+provider "template" {
+  version = "~> 1.0"
 }
 
 variable "linode_token" {
@@ -258,8 +271,6 @@ resource "linode_nodebalancer_node" "https_2019" {
   nodebalancer_id = "${linode_nodebalancer.2019.id}"
   config_id = "${linode_nodebalancer_config.https_2019.id}"
 }
-
-provider "dnsimple" { }
 
 resource "dnsimple_record" "2019_changelog_com" {
   domain = "changelog.com"
