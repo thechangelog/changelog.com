@@ -26,26 +26,26 @@ defmodule ChangelogWeb.FeedController do
   def podcast(conn, %{"slug" => "backstage"}) do
     send_resp(conn, :not_found, "")
   end
-  def podcast(conn, %{"slug" => slug}) do
+  def podcast(conn, params = %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
 
-    episodes =
+    page =
       podcast
       |> Podcast.get_episodes()
       |> Episode.published()
-      |> Episode.limit(100)
       |> Episode.newest_first()
       |> Episode.exclude_transcript()
       |> Episode.preload_all()
-      |> Repo.all()
+      |> Repo.paginate(Map.put(params, :page_size, 100))
 
     log_subscribers(conn, podcast)
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
+    |> assign(:page, page)
     |> assign(:podcast, podcast)
-    |> assign(:episodes, episodes)
+    |> assign(:episodes, page.entries)
     |> cache_public(cache_duration())
     |> render("podcast.xml")
   end
