@@ -192,15 +192,29 @@ clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, ima
 .PHONY: cd
 cd: clean-docker
 
+CIRCLE_CI_ADD_ENV_VAR_URL = https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)
 .PHONY: configure-ci-secrets
-configure-ci-secrets: $(LPASS) $(JQ) $(CURL) circle-token ## ccs | Configure CircleCI secrets
+configure-ci-secrets: configure-ci-docker-secret configure-ci-coveralls-secret ## ccs | Configure CircleCI secrets
+.PHONY: ccs
+ccs: configure-ci-secrets
+
+.PHONY: configure-ci-docker-secret
+configure-ci-docker-secret: $(LPASS) $(JQ) $(CURL) circle-token
 	@DOCKER_CREDENTIALS=$$($(LPASS) show --json 2219952586317097429) && \
 	DOCKER_USER="$$($(JQ) --compact-output '.[] | {name: "DOCKER_USER", value: .username}' <<< $$DOCKER_CREDENTIALS)" && \
 	DOCKER_PASS="$$($(JQ) --compact-output '.[] | {name: "DOCKER_PASS", value: .password}' <<< $$DOCKER_CREDENTIALS)" && \
-	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_USER" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)" && \
-	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_PASS" "https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)"
-.PHONY: ccs
-ccs: configure-ci-secrets
+	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_USER" "$(CIRCLE_CI_ADD_ENV_VAR_URL)" && \
+	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$DOCKER_PASS" "$(CIRCLE_CI_ADD_ENV_VAR_URL)"
+.PHONY: ccds
+ccds: configure-ci-docker-secret
+
+.PHONY: configure-ci-coveralls-secret
+configure-ci-coveralls-secret: $(LPASS) $(JQ) $(CURL) circle-token
+	@COVERALLS_TOKEN='{"name":"COVERALLS_REPO_TOKEN", "value":"'$$($(LPASS) show --notes 8654919576068551356)'"}' && \
+	$(CURL) --silent --fail --request POST --header "Content-Type: application/json" -d "$$COVERALLS_TOKEN" "$(CIRCLE_CI_ADD_ENV_VAR_URL)"
+.PHONY: cccs
+.PHONY: cccs
+cccs: configure-ci-coveralls-secret
 
 .PHONY: contrib
 contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image create-dirs-mounted-as-volumes ## c   | Contribute to changelog.com by running a local copy
