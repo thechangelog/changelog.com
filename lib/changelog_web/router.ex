@@ -14,6 +14,7 @@ defmodule ChangelogWeb.Router do
     plug Plug.Turbolinks
     plug :fetch_flash
     plug :put_secure_browser_headers
+    plug Plug.AllowFraming
     plug Plug.Authenticate, repo: Changelog.Repo
   end
 
@@ -187,6 +188,7 @@ defmodule ChangelogWeb.Router do
     get "/coc", PageController, :coc
     get "/community", PageController, :community
     get "/contact", PageController, :contact
+    get "/contribute", PageController, :contribute
     get "/films", PageController, :films
     get "/films/gophercon-2015", PageController, :films_gophercon_2015
     get "/films/gophercon-2016", PageController, :films_gophercon_2016

@@ -16,7 +16,8 @@ endif
 
 ### VARS ###
 #
-export BUILD_VERSION := $(shell date -u +'%Y-%m-%d.%H%M%S')
+# https://tools.ietf.org/html/rfc3339 format
+export BUILD_VERSION := $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
 
 DOMAIN ?= changelog.com
 DOCKER_STACK ?= 2019
@@ -26,13 +27,16 @@ HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
 RSYNC_SRC_HOST ?= root@172.104.216.248
 
+HOSTNAME := $(DOCKER_STACK).$(DOMAIN)
+HOSTNAME_LOCAL := $(USER).$(DOMAIN)
+
 FQDN := $(DOMAIN)
 IPv4 = $(shell dig +short -4 $(FQDN))
 export FQDN
 export IPv4
 
-BOOTSTRAP_GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
-BOOTSTRAP_GIT_BRANCH ?= master
+GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
+GIT_BRANCH ?= master
 
 APP_IMAGE ?= thechangelog/changelog.com:latest
 
@@ -145,8 +149,8 @@ bi: bootstrap-image
 build-bootstrap-image: $(DOCKER)
 	@cd docker && \
 	$(DOCKER) build \
-	  --build-arg GIT_REPOSITORY=$(BOOTSTRAP_GIT_REPOSITORY) \
-	  --build-arg GIT_BRANCH=$(BOOTSTRAP_GIT_BRANCH) \
+	  --build-arg GIT_REPOSITORY=$(GIT_REPOSITORY) \
+	  --build-arg GIT_BRANCH=$(GIT_BRANCH) \
 	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
 	  --tag thechangelog/bootstrap:latest \
 	  --file Dockerfile.bootstrap .
@@ -229,6 +233,26 @@ create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
 .PHONY: cds
 cds: create-docker-secrets
 
+define VERSION_CHECK
+VERSION="$$($(CURL) --silent --location \
+  --write-out '$(NORMAL)HTTP/%{http_version} %{http_code} in %{time_total}s' \
+  http://$(HOSTNAME)/version.txt)" && \
+echo $(BOLD)$(PRE_VERSION)$$VERSION @ $$(date)
+endef
+.PHONY: check-deployed-version
+check-deployed-version: PRE_VERSION = $(GIT_REPOSITORY)/tree/
+check-deployed-version: $(CURL) ## cdv | Check the currently deployed git sha
+	@$(VERSION_CHECK)
+.PHONY: cdv
+cdv: check-deployed-version
+
+.PHONY: check-deployed-version-local
+check-deployed-version-local: HOSTNAME = $(HOSTNAME_LOCAL)
+check-deployed-version-local: $(CURL)
+	@$(VERSION_CHECK)
+.PHONY: cdvl
+cdvl: check-deployed-version-local
+
 # https://github.com/bcicen/ctop
 define CTOP_CONTAINER
 docker pull quay.io/vektorlab/ctop:latest && \
@@ -274,17 +298,17 @@ deploy-docker-stack-local: deploy-docker-stack
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
 
-.PHONY: update-app-service-local
-update-app-service-local:
-	@$(DOCKER) service update --force --quiet --image thechangelog/changelog.com:local $(DOCKER_STACK)_app
-.PHONY: uasl
-uasl: update-app-service-local
-
 .PHONY: build-local-image
 build-local-image: $(DOCKER)
 	@$(DOCKER) build --pull --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
 .PHONY: bli
 bli: build-local-image
+
+.PHONY: update-app-service-local
+update-app-service-local: $(DOCKER)
+	@$(DOCKER) service update --force --image thechangelog/changelog.com:local $(DOCKER_STACK)_app
+.PHONY: uasl
+uasl: update-app-service-local
 
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
@@ -419,7 +443,7 @@ proxy-test: bats
 pt: proxy-test
 
 .PHONY: proxy-test-local
-proxy-test-local: FQDN = $(USER).$(DOMAIN)
+proxy-test-local: FQDN = $(HOSTNAME_LOCAL)
 proxy-test-local: IPv4 = 127.0.0.1
 proxy-test-local: bats
 	@$(BATS) test/e2e/proxy.bats
@@ -427,11 +451,11 @@ proxy-test-local: bats
 ptl: proxy-test-local
 
 .PHONY: report-deploy
-report-deploy:
+report-deploy: $(CURL)
 	@ROLLBAR_ACCESS_TOKEN="$$(cat /run/secrets/ROLLBAR_ACCESS_TOKEN)" && export ROLLBAR_ACCESS_TOKEN && \
 	COMMIT_USER="$$(cat ./COMMIT_USER)" && export COMMIT_USER && \
 	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
-	curl --silent --fail --output /dev/null --request POST --url https://api.rollbar.com/api/1/deploy/ \
+	$(CURL) --silent --fail --output /dev/null --request POST --url https://api.rollbar.com/api/1/deploy/ \
 	  --data '{"access_token":"'$$ROLLBAR_ACCESS_TOKEN'","environment":"'$$ROLLBAR_ENVIRONMENT'","rollbar_username":"'$$COMMIT_USER'","revision":"'$$COMMIT_SHA'","comment":"Running in container '$$HOSTNAME' on host '$$NODE'"}'
 
 .PHONY: runtime-image
@@ -449,6 +473,19 @@ bri: build-runtime-image
 publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
+
+define APP_CONTAINER
+$$($(DOCKER) container ls \
+  --filter label=com.docker.swarm.service.name=2019_app \
+  --format='{{.ID}}' \
+  --last 1)
+endef
+.PHONY: remsh-local
+remsh-local:
+	@$(DOCKER) exec --tty --interactive "$(APP_CONTAINER)" \
+	  bash -c "iex --hidden --sname debug@\$$HOSTNAME --remsh changelog@\$$HOSTNAME"
+.PHONY: rl
+rl: remsh-local
 
 define RSYNC_UPLOADS
   sudo --preserve-env --shell \
@@ -480,7 +517,7 @@ ssh: ## ssh | SSH into $HOST
 
 .PHONY: ssl-report
 ssl-report: ## ssl | Run an SSL report via SSL Labs
-	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(DOCKER_STACK).$(DOMAIN)&latest"
+	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(HOSTNAME)&latest"
 .PHONY: ssl
 ssl: ssl-report
 
@@ -499,7 +536,7 @@ w: watch
 
 define UPDATE_NETDATA
 docker pull netdata/netdata && \
-docker service update $(DOCKER_STACK)_netdata
+docker service update --force --image netdata/netdata $(DOCKER_STACK)_netdata
 endef
 .PHONY: update_netdata
 update_netdata:

@@ -14,6 +14,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     assert html_response(conn, 200) =~ e.title
 
     conn = get(conn, episode_path(conn, :embed, p.slug, e.slug))
+    assert get_resp_header(conn, "x-frame-options") == []
     assert html_response(conn, 200) =~ e.title
   end
 

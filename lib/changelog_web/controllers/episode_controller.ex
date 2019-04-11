@@ -3,7 +3,6 @@ defmodule ChangelogWeb.EpisodeController do
 
   alias Changelog.{Episode, NewsItem, Podcast}
 
-  plug :allow_framing, "embeds are frameable" when action in [:embed]
   plug :assign_podcast
 
   def action(conn, _) do
@@ -117,8 +116,6 @@ defmodule ChangelogWeb.EpisodeController do
       redirect(conn, to: episode_path(conn, :show, podcast.slug, episode.slug))
     end
   end
-
-  defp allow_framing(conn, _), do: delete_resp_header(conn, "x-frame-options")
 
   defp assign_podcast(conn, _) do
     podcast = Repo.get_by!(Podcast, slug: conn.params["podcast"])

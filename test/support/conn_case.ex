@@ -23,7 +23,7 @@ defmodule ChangelogWeb.ConnCase do
       alias Changelog.Repo
       import Ecto
       import Ecto.Query, only: [from: 2]
-      import Plug.Conn, only: [assign: 3, put_req_header: 3]
+      import Plug.Conn, only: [assign: 3, put_req_header: 3, get_resp_header: 2]
 
       defp count(query), do: Repo.count(query)
 

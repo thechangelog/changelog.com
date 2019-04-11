@@ -8,6 +8,7 @@ defmodule Changelog.Post do
 
     field :slug, :string
     field :guid, :string
+    field :canonical_url, :string
 
     field :tldr, :string
     field :body, :string
@@ -24,9 +25,10 @@ defmodule Changelog.Post do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(title slug author_id published published_at body tldr)a)
+    |> cast(params, ~w(title slug canonical_url author_id published published_at body tldr)a)
     |> validate_required([:title, :slug, :author_id])
-    |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
+    |> validate_format(:canonical_url, Regexp.http(), message: Regexp.http_message())
+    |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
     |> unique_constraint(:slug)
     |> validate_published_has_published_at
     |> cast_assoc(:post_topics)
