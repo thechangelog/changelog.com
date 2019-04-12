@@ -40,6 +40,28 @@ services:
     image: postgres:9.5.4
     volumes:
       - ${PWD}/priv/db:/var/lib/postgresql/data:rw
+  # db_backup:
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
+  #       max_attempts: 3
+  #       order: stop-first
+  #       failure_action: rollback
+  #       monitor: 15s
+  #   environment:
+  #     # https://www.postgresql.org/docs/9.5/libpq-envars.html
+  #     PGHOST: db
+  #     PGUSER: *pg_user
+  #     PGDATABASE: *pg_db
+  #     AWS_REGION: "us-east-1"
+  #     AWS_S3_BUCKET: "changelog-com-backups-dev"
+  #     AWS_ACCESS_KEY: "no"
+  #     AWS_SECRET_KEY: "way"
+  #     BACKUP_DB_EVERY_N_SECONDS: 60
+  #   image: thechangelog/db_backup
+  #   depends_on:
+  #     - db
   app:
     deploy:
       replicas: 1

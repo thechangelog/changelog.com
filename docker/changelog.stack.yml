@@ -40,6 +40,29 @@ services:
     image: postgres:9.5.4
     volumes:
       - /db:/var/lib/postgresql/data:rw
+  db_backup:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        order: stop-first
+        failure_action: rollback
+        monitor: 15s
+    environment:
+      # https://www.postgresql.org/docs/9.5/libpq-envars.html
+      PGHOST: db
+      PGUSER: *pg_user
+      PGDATABASE: *pg_db
+      AWS_REGION: "us-east-1"
+      AWS_S3_BUCKET: "changelog-com-backups"
+      BACKUP_DB_EVERY_N_SECONDS: 86400
+    secrets:
+      - BACKUPS_AWS_ACCESS_KEY
+      - BACKUPS_AWS_SECRET_KEY
+    image: thechangelog/db_backup
+    depends_on:
+      - db
   app:
     deploy:
       replicas: 1
@@ -191,6 +214,10 @@ secrets:
   AWS_ACCESS_KEY_ID:
     external: true
   AWS_SECRET_ACCESS_KEY:
+    external: true
+  BACKUPS_AWS_ACCESS_KEY:
+    external: true
+  BACKUPS_AWS_SECRET_KEY:
     external: true
   TWITTER_CONSUMER_KEY:
     external: true
