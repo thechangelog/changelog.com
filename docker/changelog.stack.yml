@@ -45,10 +45,13 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+        delay: 10s
         max_attempts: 3
-        order: stop-first
+        window: 15s
+      update_config:
         failure_action: rollback
         monitor: 15s
+        order: stop-first
     environment:
       # https://www.postgresql.org/docs/9.5/libpq-envars.html
       PGHOST: db
