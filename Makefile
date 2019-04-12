@@ -298,6 +298,26 @@ remove-docker-secrets: $(LPASS)
 .PHONY: rds
 rds: remove-docker-secrets
 
+.PHONY: db-backup-image
+db-backup-image: build-db-backup-image publish-db-backup-image ## dbi | Build & publish thechangelog/db_backup Docker image
+.PHONY: dbi
+dbi: db-backup-image
+
+.PHONY: build-db-backup-image
+build-db-backup-image: $(DOCKER)
+	@cd docker && \
+	$(DOCKER) build \
+	  --tag thechangelog/db_backup:$(BUILD_VERSION) \
+	  --tag thechangelog/db_backup:latest \
+	  --file Dockerfile.db_backup .
+.PHONY: bdbi
+bdbi: build-db-backup-image
+
+.PHONY: publish-db-backup-image
+publish-db-backup-image: $(DOCKER)
+	@$(DOCKER) push thechangelog/db_backup:$(BUILD_VERSION) && \
+	$(DOCKER) push thechangelog/db_backup:latest
+
 .PHONY: deploy-docker-stack
 deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 	@export HOSTNAME ; \
