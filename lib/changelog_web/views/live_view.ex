@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.LiveView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.Wavestreamer
+  alias Changelog.Icecast
   alias ChangelogWeb.{EpisodeView, PersonView, PodcastView}
 
   def host_or_guest(episode, person) do

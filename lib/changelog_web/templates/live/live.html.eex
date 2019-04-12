@@ -1,6 +1,6 @@
 <section class="live live--<%= @episode.podcast.slug %> is-upcoming js-live">
   <div class="live-content">
-    <%= link(to: Wavestreamer.live_url(), role: "button", class: "live-button js-live-play-button", data: []) do %>
+    <%= link(to: Icecast.live_url(), role: "button", class: "live-button js-live-play-button", data: []) do %>
       <div class="live-button-bg"></div>
       <div class="live-button-icon">Play</div>
     <% end %>
