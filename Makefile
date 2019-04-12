@@ -325,7 +325,7 @@ update-app-service-local: $(DOCKER)
 uasl: update-app-service-local
 
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
+env-secrets: postgres campaignmonitor github aws backups_aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
 es: env-secrets
 
@@ -623,6 +623,10 @@ github: $(LPASS)
 aws: $(LPASS)
 	@echo "export AWS_ACCESS_KEY_ID=$$($(LPASS) show --notes 5523519094417729320)" && \
 	echo "export AWS_SECRET_ACCESS_KEY=$$($(LPASS) show --notes 1520570655547620905)"
+.PHONY: backups_aws
+backups_aws: $(LPASS)
+	@echo "export BACKUPS_AWS_ACCESS_KEY=$$($(LPASS) show --notes 2383382642830769087)" && \
+	echo "export BACKUPS_AWS_SECRET_KEY=$$($(LPASS) show --notes 4892015361959119196)"
 .PHONY: twitter
 twitter: $(LPASS)
 	@echo "export TWITTER_CONSUMER_KEY=$$($(LPASS) show --notes 1932439368993537002)" && \
