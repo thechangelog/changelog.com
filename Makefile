@@ -490,7 +490,7 @@ publish-runtime-image: $(DOCKER)
 
 define APP_CONTAINER
 $$($(DOCKER) container ls \
-  --filter label=com.docker.swarm.service.name=2019_app \
+  --filter label=com.docker.swarm.service.name=$(DOCKER_STACK)_app \
   --format='{{.ID}}' \
   --last 1)
 endef
