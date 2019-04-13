@@ -15,6 +15,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 ARG BACKUP_DB_EVERY_N_SECONDS=86400
 ENV BACKUP_DB_EVERY_N_SECONDS=${BACKUP_DB_EVERY_N_SECONDS}
 
+ARG AWS_S3_STORAGE_CLASS=STANDARD
+ENV AWS_S3_STORAGE_CLASS=${AWS_S3_STORAGE_CLASS}
+
 COPY backup_db_continuously upload_stdin_s3 /usr/local/bin/
 RUN cd /usr/local/bin && chmod +x backup_db_continuously upload_stdin_s3
 
