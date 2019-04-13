@@ -86,7 +86,6 @@ services:
       start_period: 60s
     environment:
       NODE: "${HOSTNAME}"
-      DB_URL: "ecto://postgres@db:5432/changelog"
       PORT: 4000
       URL_HOST: &host changelog.com
       URL_PORT: 443
