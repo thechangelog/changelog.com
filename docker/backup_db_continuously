@@ -2,7 +2,12 @@
 
 set -e
 set -o pipefail
-[ -z "$DEBUG" ] || set -x
+
+if [ -r /run/secrets/DB_PASSWORD ]
+then
+  PGPASSWORD="$(cat /run/secrets/DB_PASSWORD)"
+  export PGPASSWORD
+fi
 
 echo "Will backup ${PGDATABASE:?must be set} db every ${BACKUP_DB_EVERY_N_SECONDS:?must be set} seconds"
 while true

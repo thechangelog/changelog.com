@@ -63,6 +63,7 @@ services:
     secrets:
       - BACKUPS_AWS_ACCESS_KEY
       - BACKUPS_AWS_SECRET_KEY
+      - DB_PASSWORD
     image: thechangelog/db_backup
     depends_on:
       - db
@@ -245,4 +246,6 @@ secrets:
   ALGOLIA_API_KEY:
     external: true
   DB_URL:
+    external: true
+  DB_PASSWORD:
     external: true
