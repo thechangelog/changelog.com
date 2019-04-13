@@ -105,7 +105,6 @@ bats: $(CURL) $(BATS)
 $(HOST): iaas create-docker-secrets bootstrap-docker
 
 define BOOTSTRAP_CONTAINER
-docker service scale $(DOCKER_STACK)_app_updater=0 ; \
 docker pull thechangelog/bootstrap:latest && \
 docker run --rm --interactive --tty --name bootstrap \
   --env HOSTNAME=\$$HOSTNAME \
@@ -113,11 +112,20 @@ docker run --rm --interactive --tty --name bootstrap \
   --volume changelog.com:/app:rw \
   thechangelog/bootstrap:latest
 endef
+define DISABLE_APP_UPDATER
+docker service scale $(DOCKER_STACK)_app_updater=0
+endef
 .PHONY: bootstrap-docker
 bootstrap-docker:
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER)"
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(DISABLE_APP_UPDATER) ; $(BOOTSTRAP_CONTAINER)"
 .PHONY: bd
 bd: bootstrap-docker
+
+.PHONY: interactive-bootstrap
+interactive-bootstrap:
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER) bash"
+.PHONY: ib
+ib: interactive-bootstrap
 
 .PHONY: add-secret
 add-secret: $(LPASS) ## as  | Add secret to LastPass
