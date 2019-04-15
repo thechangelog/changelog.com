@@ -40,6 +40,31 @@ services:
     image: postgres:9.5.4
     volumes:
       - ${PWD}/priv/db:/var/lib/postgresql/data:rw
+  # db_backup:
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 10s
+  #       max_attempts: 3
+  #       window: 15s
+  #     update_config:
+  #       failure_action: rollback
+  #       monitor: 15s
+  #       order: stop-first
+  #   environment:
+  #     # https://www.postgresql.org/docs/9.5/libpq-envars.html
+  #     PGHOST: db
+  #     PGUSER: *pg_user
+  #     PGDATABASE: *pg_db
+  #     AWS_REGION: "us-east-1"
+  #     AWS_S3_BUCKET: "changelog-com-backups-dev"
+  #     AWS_ACCESS_KEY: "no"
+  #     AWS_SECRET_KEY: "way"
+  #     BACKUP_DB_EVERY_N_SECONDS: 60
+  #   image: thechangelog/db_backup
+  #   depends_on:
+  #     - db
   app:
     deploy:
       replicas: 1
@@ -72,8 +97,6 @@ services:
       - GITHUB_API_TOKEN
       - GITHUB_CLIENT_ID
       - GITHUB_CLIENT_SECRET
-      - AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY
       - TWITTER_CONSUMER_KEY
       - TWITTER_CONSUMER_SECRET
       - SECRET_KEY_BASE
@@ -85,7 +108,6 @@ services:
       - COVERALLS_REPO_TOKEN
       - ALGOLIA_APPLICATION_ID
       - ALGOLIA_API_KEY
-      - DB_URL
     depends_on:
       - db
     image: thechangelog/changelog.com:local
@@ -93,26 +115,26 @@ services:
       - "4000:4000"
     volumes:
       - ${PWD}/priv/uploads:/uploads:rw
-  app_updater:
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-        max_attempts: 3
-      # https://docs.docker.com/compose/compose-file/#update_config
-      update_config:
-        failure_action: rollback
-        monitor: 30s
-        order: stop-first
-    command: update_service_continuously
-    environment:
-      HOSTNAME: "${HOSTNAME}"
-      UPDATE_SERVICE_EVERY_N_SECONDS: 10
-      DOCKER_SERVICE_IMAGE: thechangelog/changelog.com:local
-    image: thechangelog/bootstrap
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - changelog.com:/app:rw
+  # app_updater:
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
+  #       max_attempts: 3
+  #     # https://docs.docker.com/compose/compose-file/#update_config
+  #     update_config:
+  #       failure_action: rollback
+  #       monitor: 30s
+  #       order: stop-first
+  #   command: update_service_continuously
+  #   environment:
+  #     HOSTNAME: "${HOSTNAME}"
+  #     UPDATE_SERVICE_EVERY_N_SECONDS: 10
+  #     DOCKER_SERVICE_IMAGE: thechangelog/changelog.com:local
+  #   image: thechangelog/bootstrap
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - changelog.com:/app:rw
   proxy:
     deploy:
       replicas: 1
@@ -186,10 +208,6 @@ secrets:
     external: true
   GITHUB_CLIENT_SECRET:
     external: true
-  AWS_ACCESS_KEY_ID:
-    external: true
-  AWS_SECRET_ACCESS_KEY:
-    external: true
   TWITTER_CONSUMER_KEY:
     external: true
   TWITTER_CONSUMER_SECRET:
@@ -211,6 +229,4 @@ secrets:
   ALGOLIA_APPLICATION_ID:
     external: true
   ALGOLIA_API_KEY:
-    external: true
-  DB_URL:
     external: true

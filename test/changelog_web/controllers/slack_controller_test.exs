@@ -32,7 +32,7 @@ defmodule ChangelogWeb.SlackControllerTest do
 
     test "it uses an episode that is currently recording", %{conn: conn, podcast: podcast} do
       insert(:live_episode, podcast: podcast, recorded_at: hours_ago(1))
-      conn = with_mock Changelog.Wavestreamer, [is_streaming: fn() -> true end] do
+      conn = with_mock Changelog.Icecast, [is_streaming: fn() -> true end] do
         get(conn, slack_path(conn, :countdown, podcast.slug))
       end
       assert conn.status == 200

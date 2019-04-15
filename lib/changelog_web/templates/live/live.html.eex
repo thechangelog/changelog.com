@@ -1,6 +1,6 @@
 <section class="live live--<%= @episode.podcast.slug %> is-upcoming js-live">
   <div class="live-content">
-    <%= link(to: Wavestreamer.live_url(), role: "button", class: "live-button js-live-play-button", data: []) do %>
+    <%= link(to: Icecast.live_url(), role: "button", class: "live-button js-live-play-button", data: []) do %>
       <div class="live-button-bg"></div>
       <div class="live-button-icon">Play</div>
     <% end %>
@@ -31,11 +31,15 @@
 
         <div class="live-info-cta">
           <%= lazy_image(static_url(@conn, "/images/icons/icon-slack-white.svg"), "Slack Logo", class: "live-info-cta-icon", width: 25, height: 25) %>
-        <%= if @current_user do %>
-          <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{slack_channel(@podcast)}") %>.</p>
+        <%= if @podcast.slug == "gotime" do %>
+          <p>Join the discussion in the Gophers <%= link(raw("#gotimefm&nbsp;Slack&nbsp;channel"), to: "https://gophers.slack.com/messages/gotimefm") %></p>
         <% else %>
-          <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %>.</p>
-          <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a>.</small></p>
+          <%= if @current_user do %>
+            <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{slack_channel(@podcast)}") %></p>
+          <% else %>
+            <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %></p>
+            <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a></small></p>
+          <% end %>
         <% end %>
         </div>
       </div>

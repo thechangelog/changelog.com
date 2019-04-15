@@ -29,12 +29,12 @@
         <label>What's interesting about it?</label>
         <%= textarea(f, :story, user_required_options(@current_user, placeholder: "Proverbial elevator pitch...")) %>
         <%= error_message(f, :story) %>
-        <p class="form-element-note">Try some Markdown. It *may* work.</p>
+        <p class="form-element-note">Markdown supported</p>
       </div>
     </div>
 
     <div class="form-submit">
-      <p class="form-submit-toc"><a href="#guidelines" class="js-toggle_element">View submission guidelines</a></p>
+      <p class="form-submit-toc"></p>
       <div>
         <input type="submit" <%= unless(@current_user, do: "disabled") %>>
         <div class="form_submit_responses"></div>
@@ -42,7 +42,7 @@
     </div>
   <% end %>
 
-  <div id="guidelines" class="richtext richtext--small is-hidden">
+  <div id="guidelines" class="richtext richtext--small">
     <hr>
     <h3>Submission Guidelines</h3>
     <p>Submitting your own stuff is encouraged. Submitting other people's stuff is also encouraged.</p>

@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.LiveController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Wavestreamer}
+  alias Changelog.{Episode, Icecast}
   alias ChangelogWeb.TimeView
 
   def index(conn, _params) do
@@ -25,6 +25,6 @@ defmodule ChangelogWeb.LiveController do
   end
 
   def status(conn, _params) do
-    json(conn, Wavestreamer.get_stats())
+    json(conn, Icecast.get_stats())
   end
 end

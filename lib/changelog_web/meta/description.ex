@@ -1,19 +1,18 @@
 defmodule ChangelogWeb.Meta.Description do
-
   import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_text: 1, truncate: 2]
 
   alias ChangelogWeb.{EpisodeView, NewsItemView, NewsSourceView, PageView,
                       PodcastView, PostView, TopicView}
 
-  def description(assigns), do: assigns |> get
+  def description(assigns), do: get(assigns)
 
-  defp get(%{view_module: EpisodeView, episode: episode}), do: episode.summary |> md_to_text |> truncate(320)
-  defp get(%{view_module: NewsItemView, item: item}), do: item.story |> md_to_text |> truncate(320)
+  defp get(%{view_module: EpisodeView, episode: episode}), do: episode.summary |> md_to_text() |> truncate(320)
+  defp get(%{view_module: NewsItemView, item: item}), do: item.story |> md_to_text() |> truncate(320)
   defp get(%{view_module: NewsSourceView, source: source}), do: source.description
   defp get(%{view_module: PodcastView, podcast: podcast}), do: podcast.description
   defp get(%{view_module: PostView, post: post}) do
     if post.tldr do
-      post.tldr |> md_to_text |> truncate(320)
+      post.tldr |> md_to_text() |> truncate(320)
     else
       post.title
     end

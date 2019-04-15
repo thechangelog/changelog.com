@@ -1,9 +1,8 @@
 defmodule ChangelogWeb.LayoutView do
   use ChangelogWeb, :public_view
 
-  import ChangelogWeb.Meta.{AdminTitle, Apple, Title, Image, Description, Feeds, Twitter}
+  import ChangelogWeb.Meta.{AdminTitle, Apple, CanonicalUrl, Description, Feeds,
+                            Image, Title, Twitter}
 
   alias ChangelogWeb.{Endpoint, PersonView}
-
-  def canonical_url(conn), do: url(conn) <> conn.request_path
 end

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+if [ -r /run/secrets/DB_PASSWORD ]
+then
+  PGPASSWORD="$(cat /run/secrets/DB_PASSWORD)"
+  export PGPASSWORD
+fi
+
+echo "Will backup ${PGDATABASE:?must be set} db every ${BACKUP_DB_EVERY_N_SECONDS:?must be set} seconds"
+while true
+do
+  AWS_S3_DEST_FILE_PATH="${PGDATABASE}-$(date -u +'%Y-%m-%dT%H.%M.%SZ').gz"
+  export AWS_S3_DEST_FILE_PATH
+
+  echo "--------------------------------------------"
+  echo "Starting $PGDATABASE db backup..."
+
+  pg_dump --compress=9 | upload_stdin_s3
+
+  echo "$PGDATABASE db backup succeeded - next backup in $BACKUP_DB_EVERY_N_SECONDS seconds"
+  sleep "$BACKUP_DB_EVERY_N_SECONDS"
+done
