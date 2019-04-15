@@ -196,7 +196,6 @@ h2.news_item-title {
 .news_item-meta span,
 .news_item-meta a {
   display: inline-block;
-  vertical-align: middle;
 }
 .news_item-toolbar-meta-item a {
   display: inline-block;
@@ -212,10 +211,11 @@ h2.news_item-title {
   background: #EEEEEE;
   border-radius: 2px;
   display: inline-block;
-  font-size: 8px;
+  font-size: 0px;
   height: 24px;
   width: 24px;
-  overflow: hidden;
+  vertical-align: middle;
+  margin-top: -7px;
 }
 /* Account for play button */
 .news_item-meta-play {
