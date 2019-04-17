@@ -3,7 +3,7 @@ version: "3.6"
 services:
   db:
     image: postgres:9.5.4
-    # https://docs.docker.com/compose/compose-file/#ports
+    # https://docs.docker.com/compose/compose-file/#expose
     expose:
       - "5432"
     # https://docs.docker.com/compose/compose-file/#volumes
@@ -17,6 +17,7 @@ services:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
       VIRTUAL_HOST: &host "${HOST:-localhost}"
       HOST: *host
+    # https://docs.docker.com/compose/compose-file/#ports
     ports:
       - "4000:4000"
     volumes:
