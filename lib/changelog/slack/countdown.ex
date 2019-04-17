@@ -3,7 +3,7 @@ defmodule Changelog.Slack.Countdown do
   alias Changelog.Icecast
 
   def live(nil) do
-    respond("There aren't any upcoming live recordings scheduled :sob:")
+    respond("No live recordings scheduled yet...")
   end
 
   def live(next_episode) do
