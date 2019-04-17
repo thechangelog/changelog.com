@@ -336,6 +336,14 @@ resource "dnsimple_record" "www_changelog_com" {
   ttl = 60
 }
 
+resource "dnsimple_record" "cdn_changelog_com" {
+  domain = "changelog.com"
+  name = "cdn"
+  value = "dualstack.changelog.map.fastly.net"
+  type = "CNAME"
+  ttl = 60
+}
+
 resource "dnsimple_record" "www_changelog_com_ipv6" {
   domain = "changelog.com"
   name = "www"
