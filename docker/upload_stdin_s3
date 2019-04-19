@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if [ -r /run/secrets/BACKUPS_AWS_ACCESS_KEY ]
+then
+  AWS_ACCESS_KEY="$(cat /run/secrets/BACKUPS_AWS_ACCESS_KEY)"
+fi
+
+if [ -r /run/secrets/BACKUPS_AWS_SECRET_KEY ]
+then
+  AWS_SECRET_KEY="$(cat /run/secrets/BACKUPS_AWS_SECRET_KEY)"
+fi
+
+s3cmd \
+  --ssl --check-certificate --check-hostname \
+  --no-encrypt --acl-private \
+  --progress --stats --stop-on-error \
+  --storage-class="${AWS_S3_STORAGE_CLASS:?must be set}" \
+  --region="${AWS_REGION:?must be set}"  \
+  --access_key="${AWS_ACCESS_KEY:?must be set}" \
+  --secret_key="${AWS_SECRET_KEY:?must be set}" \
+  put - "s3://${AWS_S3_BUCKET:?must be set}/${AWS_S3_DEST_FILE_PATH:?must be set}"

@@ -1,9 +1,9 @@
 defmodule Changelog.Slack.Countdown do
   alias Timex.Duration
-  alias Changelog.Wavestreamer
+  alias Changelog.Icecast
 
   def live(nil) do
-    respond("There aren't any upcoming live recordings scheduled :sob:")
+    respond("No live recordings scheduled yet...")
   end
 
   def live(next_episode) do
@@ -14,7 +14,7 @@ defmodule Changelog.Slack.Countdown do
 
     respond(case Duration.to_hours(diff) do
       h when h <= 0 ->
-        if Wavestreamer.is_streaming() do
+        if Icecast.is_streaming() do
           "#{live_message(podcast)}! Listen ~> https://changelog.com/live :tada:"
         else
           "#{podcast} _should_ be live, but the stream isn't up yet :thinking_face:"

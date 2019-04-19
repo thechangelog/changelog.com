@@ -68,10 +68,12 @@ jobs:
           name: Run tests
           command: |
             export MIX_ENV=test
-            mix test
-      - run:
-          name: Report test coverage
-          command: mix coveralls.circle
+            if [ "$CIRCLE_BRANCH" = "master" ]
+            then
+              mix coveralls.circle
+            else
+              mix test
+            fi
 
   assets:
     working_directory: *dir
@@ -111,9 +113,9 @@ jobs:
       - run:
           name: Write build identifiers
           command: |
-            echo "$CIRCLE_SHA1" > COMMIT_SHA
-            echo "$CIRCLE_USERNAME" > COMMIT_USER
-            echo "$CIRCLE_BUILD_URL" > BUILD_URL
+            echo "$CIRCLE_SHA1" | tee COMMIT_SHA priv/static/version.txt
+            echo "$CIRCLE_USERNAME" | tee COMMIT_USER
+            echo "$CIRCLE_BUILD_URL" | tee BUILD_URL priv/static/build.txt
       - setup_remote_docker:
           version: 18.06.0-ce
       - run:

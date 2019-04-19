@@ -11,7 +11,7 @@ defmodule ChangelogWeb.Endpoint do
   plug Plug.Static,
     at: "/", from: :changelog, gzip: true,
     only_matching: ~w(css fonts images js android-chrome apple-touch
-      browserconfig favicon manifest mstile robots safari-pinned-tab)
+      browserconfig favicon manifest mstile robots safari-pinned-tab version build)
 
   # In dev environment, serve uploaded files from "priv/uploads".
   #

@@ -1,11 +1,11 @@
 defmodule Changelog.SponsorStyle do
   def all do
     [
-      %{type: "Endorsment", name: "Linode, Zeus-like power", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/linode-zeus-like-power.mp3", duration: 30},
-      %{type: "Endorsment", name: "Digital Ocean, Simplicity", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/digitalocean-simplicity-3.mp3", duration: 51},
-      %{type: "Endorsment", name: "Raygun, APM for .NET", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/raygun-apm-1.mp3", duration: 72},
+      %{type: "Endorsement", name: "Linode, Zeus-like power", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/linode-zeus-like-power.mp3", duration: 30},
+      %{type: "Endorsement", name: "Digital Ocean, Simplicity", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/digitalocean-simplicity-3.mp3", duration: 51},
+      %{type: "Endorsement", name: "Raygun, APM for .NET", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/raygun-apm-1.mp3", duration: 72},
       %{type: "Insider", name: "Vettery, Talent executive", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/vettery-talent-exec-short.mp3", duration: 125},
-      %{type: "Endorsment", name: "Datadog, overview (The Changelog)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3", duration: 55},
+      %{type: "Endorsement", name: "Datadog, overview (The Changelog)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3", duration: 55},
       %{type: "Endorsement", name: "Datadog, overview (Go Time)", audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-gotime-001.mp3", duration: 44},
       %{type: "Team Culture / Hiring", name: "Indeed, Darren Nix", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3", duration: 141},
       %{type: "Team Culture / Hiring", name: "Indeed, Bryan Chaney", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-bryan-001.mp3", duration: 126},
@@ -20,9 +20,9 @@ defmodule Changelog.SponsorStyle do
 
   def sponsor_landing do
     [
-      %{type: "Endorsment", name: "Linode, Zeus-like power", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/linode-zeus-like-power.mp3", duration: 38},
-      %{type: "Endorsment", name: "Linode, Dedicated CPUs", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/linode-dedicated-cpu.mp3", duration: 52},
-      %{type: "Endorsment", name: "Digital Ocean, Product Lineup", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/digitalocean-product-lineup.mp3", duration: 43},
+      %{type: "Endorsement", name: "Linode, Zeus-like power", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/linode-zeus-like-power.mp3", duration: 38},
+      %{type: "Endorsement", name: "Linode, Dedicated CPUs", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/linode-dedicated-cpu.mp3", duration: 52},
+      %{type: "Endorsement", name: "Digital Ocean, Product Lineup", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/digitalocean-product-lineup.mp3", duration: 43},
       %{type: "Customer story", name: "Rollbar, CircleCI - Paul Biggar", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/rollbar-circleci-1.mp3", duration: 63},
       %{type: "Team Culture / Hiring", name: "Indeed, Darren Nix", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3", duration: 141},
       %{type: "Endorsement", name: "Rollbar, Move fast and fix things", audio: "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/rollbar-move-fast-and-fix-things.mp3", duration: 33},

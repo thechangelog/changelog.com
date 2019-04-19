@@ -50,7 +50,7 @@
         </aside>
       <% end %>
 
-      <div class="episode-body-summary-description">
+      <div class="episode-body-summary-description richtext">
         <%= @episode.summary |> md_to_html() |> raw() %>
       </div>
 

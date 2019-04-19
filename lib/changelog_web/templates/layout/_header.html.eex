@@ -1,7 +1,11 @@
 <header class="header">
   <div class="header-container">
     <div class="header-wrap">
-      <h1 class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></h1>
+      <%= if controller_action_combo(@conn) == "news_item-index" do %>
+        <h1 class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></h1>
+      <% else %>
+        <p class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></p>
+      <% end %>
 
       <nav class="header-nav">
         <div class="header-nav-wrap">

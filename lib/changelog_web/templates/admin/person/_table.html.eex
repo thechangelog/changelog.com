@@ -9,7 +9,7 @@
       <th>Posts</th>
       <th>Episodes</th>
       <th>
-        <%= filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
+        <%= if assigns[:filter], do: filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
       </th>
     </tr>
   </thead>

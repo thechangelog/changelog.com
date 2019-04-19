@@ -193,13 +193,29 @@ h2.news_item-title {
   font-size: 12px;
   margin: 20px 0 0 0;
 }
-.news_item-meta-text {
-  vertical-align: middle;
+.news_item-meta span,
+.news_item-meta a {
+  display: inline-block;
 }
 .news_item-toolbar-meta-item a {
   display: inline-block;
   margin-right: 5px;
   text-decoration: underline;
+}
+.news_item-toolbar-meta-item__featuring {
+  display: inline-block;
+  font-size: 0;
+  position: relative;
+}
+.news_item-toolbar-meta-item__featuring img {
+  background: #EEEEEE;
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 0px;
+  height: 24px;
+  width: 24px;
+  vertical-align: middle;
+  margin-top: -7px;
 }
 /* Account for play button */
 .news_item-meta-play {

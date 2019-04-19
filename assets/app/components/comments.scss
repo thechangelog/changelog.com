@@ -40,15 +40,18 @@
   &-write {
     background: transparent;
     border: none;
+    border-radius: 2px 2px 0 0;
     display: block;
     font-size: 16px; // Prevent iOS from zooming on input elements
     line-height: 1.625em;
+    min-height: 58px;
     padding: 1em;
     resize: none !important;
     width: 100%;
 
     &:focus {
       outline: none;
+      box-shadow: inset 0px 0px 3px 1px $green;
     }
 
     .comment_form--preview & {
@@ -89,7 +92,7 @@
       font-size: 0.8125em;
 
       button {
-        color: $medium-grey;
+        color: $dark-grey;
         padding: 0 0.5em;
       }
 
@@ -99,7 +102,9 @@
         margin-left: 0.75em;
         padding-left: 28px !important;
         font-weight: bold;
-        .comment_form--preview & { font-weight: normal; }
+        .comment_form--preview & {
+          font-weight: normal;
+        }
       }
       &-preview {
         .comment_form--preview & { font-weight: bold; }
