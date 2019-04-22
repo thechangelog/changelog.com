@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+# require "pry"
+
+ASSET_PATH = "assets/static"
 
 class Asset < Struct.new(:path)
   def name; File.basename path; end
@@ -7,7 +10,21 @@ class Asset < Struct.new(:path)
   def in_elixir?; `ack #{name} lib`.length > 0; end
 end
 
-Dir["assets/static/**/*"].map { |x| Asset.new x }.select(&:image?).each do |image|
+puts "Images in #{ASSET_PATH} that are not referenced anywhere in code"
+puts ""
+
+Dir["#{ASSET_PATH}/**/*"].map { |x| Asset.new x }.select(&:image?).each do |image|
   next if image.in_js_or_css? || image.in_elixir?
-  puts "#{image.path} not referenced"
+  puts "\t#{image.path} not referenced"
+end
+
+puts "Images that are referenced in scss that do not exist in #{ASSET_PATH}"
+puts ""
+
+Dir["assets/app/**/*.scss"].each do |path|
+  File.read(path).scan(/url\(['"](.*?)['"]\)/).flatten.each do |asset|
+    if !File.exists?("#{ASSET_PATH}#{asset}")
+      puts "\t#{asset} referenced in #{path} but does not exist"
+    end
+  end
 end
