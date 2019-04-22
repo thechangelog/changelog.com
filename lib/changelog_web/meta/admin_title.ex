@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Meta.AdminTitle do
 
   @suffix "Changelog Admin"
 
-  def admin_page_title(assigns), do: assigns |> get |> put_suffix
+  def admin_page_title(assigns), do: assigns |> get() |> put_suffix()
 
   defp put_suffix(nil), do: @suffix
   defp put_suffix(title), do: "#{title} |> #{@suffix}"

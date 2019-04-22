@@ -3,15 +3,16 @@ defmodule ChangelogWeb.Meta.Title do
   alias ChangelogWeb.{AuthView, EpisodeView, LiveView, NewsItemView, NewsSourceView,
                       PageView, PersonView, PodcastView, PostView, TopicView, SearchView}
 
-  @suffix "News and podcasts for developers | Changelog"
+  @default "News and podcasts for developers"
 
-  def page_title(assigns), do: assigns |> get |> put_suffix
+  def page_title(assigns) do
+    [get(assigns), @default, "Changelog"]
+    |> Enum.reject(&is_nil/1)
+    |> Enum.join(" |> ")
+  end
 
   # no need for the suffix on these
-  def share_title(assigns), do: assigns |> get
-
-  defp put_suffix(nil), do: @suffix
-  defp put_suffix(title), do: title <> " | " <> @suffix
+  def share_title(assigns), do:  get(assigns) || @default
 
   # Search views
   defp get(%{view_module: SearchView, view_template: "search.html", query: ""}), do: "Search"

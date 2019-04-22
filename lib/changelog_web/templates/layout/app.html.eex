@@ -12,7 +12,7 @@
   <% twitter_card_type = twitter_card_type(assigns) %>
     <meta name="twitter:card" content="<%= twitter_card_type %>">
     <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:title" content="<%= share_title(assigns) || page_title(assigns) %>">
+    <meta name="twitter:title" content="<%= share_title(assigns) %>">
     <meta name="twitter:description" content="<%= description(assigns) %>">
   <%= if twitter_card_type == "player" do %>
     <meta name="twitter:player" content="<%= twitter_player_url(assigns) %>">
@@ -28,7 +28,7 @@
   <% end %>
     <meta property="og:url" content="<%= current_url(@conn) %>">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<%= share_title(assigns) || page_title(assigns) %>">
+    <meta property="og:title" content="<%= share_title(assigns) %>">
   <%= if fbimg = fb_image(assigns) do %>
     <meta property="og:image" content="<%= fbimg %>">
     <meta property="og:image:width" content="<%= fb_image_width(assigns) %>">

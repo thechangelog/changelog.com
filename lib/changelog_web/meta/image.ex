@@ -3,17 +3,22 @@ defmodule ChangelogWeb.Meta.Image do
 
   alias ChangelogWeb.{Endpoint, NewsItemView, NewsSourceView, PersonView, PodcastView, TopicView}
 
-  def fb_image(assigns), do: assigns |> get_fb
-  def fb_image_width(assigns), do: assigns |> get_fb_width
-  def fb_image_height(assigns), do: assigns |> get_fb_height
-  def twitter_image(assigns), do: assigns |> get_twitter
+  def fb_image(assigns), do: assigns |> get_fb()
+
+  def fb_image_width(assigns), do: assigns |> get_fb_width()
+
+  def fb_image_height(assigns), do: assigns |> get_fb_height()
+
+  def twitter_image(assigns), do: assigns |> get_twitter()
 
   defp get_fb(%{podcast: podcast}), do: podcast_image(podcast)
-  defp get_fb(_), do: nil
+  defp get_fb(_), do: static_image("/images/share/sitewide-fb.png")
+
   defp get_fb_width(%{podcast: _podcast}), do: "3000"
-  defp get_fb_width(_), do: nil
+  defp get_fb_width(_), do: "1200"
+
   defp get_fb_height(%{podcast: _podcast}), do: "3000"
-  defp get_fb_height(_), do: nil
+  defp get_fb_height(_), do: "630"
 
   defp get_twitter(%{podcast: podcast}), do: podcast_image(podcast)
   defp get_twitter(%{view_module: NewsItemView, item: item}) do
