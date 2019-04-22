@@ -38,7 +38,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
-    "uglifyjs-webpack-plugin": "^2.1.2",
+    "terser-webpack-plugin": "^1.2.3",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.0.3",
     "webpack-merge": "^4.1.0"

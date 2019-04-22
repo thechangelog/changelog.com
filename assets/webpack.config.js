@@ -1,6 +1,6 @@
 var webpack = require("webpack");
 var merge = require("webpack-merge");
-var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+var TerserPlugin = require("terser-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -40,7 +40,7 @@ var common = {
   },
   optimization: {
     minimizer: [
-    new UglifyJsPlugin({cache: true, parallel: true}),
+    new TerserPlugin(),
       new OptimizeCSSAssetsPlugin({})
     ]
   }
