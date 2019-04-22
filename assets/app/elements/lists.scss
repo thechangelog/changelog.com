@@ -93,13 +93,6 @@ ul, ol {
 
       &:hover { opacity: 0.8; }
 
-      &.twitter    { background-image: url("/images/icons/icon-twitter.svg"); }
-      &.hackernews { background-image: url("/images/icons/icon-hackernews.svg"); }
-      &.reddit     { background-image: url("/images/icons/icon-reddit.svg"); }
-      &.facebook   { background-image: url("/images/icons/icon-facebook.svg"); }
-      &.github     { background-image: url("/images/icons/icon-github.svg"); }
-      &.email      { background-image: url("/images/icons/icon-email.svg"); }
-
       .button_list--green & {
         background-color: $green;
 
@@ -108,13 +101,6 @@ ul, ol {
           color: $black;
           text-decoration: none;
         }
-
-        &.twitter    { background-image: url("/images/icons/icon-twitter-black.svg"); }
-        &.hackernews { background-image: url("/images/icons/icon-hackernews-black.svg"); }
-        &.reddit     { background-image: url("/images/icons/icon-reddit-black.svg"); }
-        &.facebook   { background-image: url("/images/icons/icon-facebook-black.svg"); }
-        &.github     { background-image: url("/images/icons/icon-github-black.svg"); }
-        &.email      { background-image: url("/images/icons/icon-email-black.svg"); }
       }
     }
   }
