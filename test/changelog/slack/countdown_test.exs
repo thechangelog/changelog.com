@@ -10,7 +10,7 @@ defmodule Changelog.Slack.CountdownTest do
   describe "live" do
     test "when there's no upcoming recording" do
       response = Countdown.live(nil)
-      assert response.text =~ "There aren't any"
+      assert response.text =~ "No live recordings scheduled"
     end
 
     test "when the upcoming recording is far away" do
