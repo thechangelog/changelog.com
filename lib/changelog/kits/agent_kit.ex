@@ -1,7 +1,7 @@
 defmodule Changelog.AgentKit do
   @known_agents ["Overcast", "PlayerFM", "Feedbin", "Feed Wrangler",
                  "Inoreader", "NewsBlur", "Bloglovin", "NewsGator",
-                 "TheOldReader", "G2Reader", "Feedly"]
+                 "TheOldReader", "G2Reader", "Feedly", "BazQux"]
 
   @client_regexes [
     {"Apple TV", ~r/^AppleCoreMedia\/1\.(.*)Apple TV/},
