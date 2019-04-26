@@ -6,6 +6,23 @@ import CalendarField from "components/calendarField";
 import Modal from "components/modal";
 
 export default class EpisodeView {
+  constructor() {
+    this.chartOptions = {
+      chart: {
+        type: "line",
+        height: 400
+      },
+      yaxis: {
+         decimalsInFloat: 0,
+         labels: {
+          formatter: function(val) {
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+           }
+         }
+      }
+    }
+  }
+
   index() {
     new FilterWidget();
 
@@ -26,6 +43,25 @@ export default class EpisodeView {
         return false;
       }
     });
+
+    let chartOptions = this.chartOptions;
+
+    $(".launch-chart").each(function(index) {
+      let data = $(this).data("chart");
+
+      let options = $.extend(chartOptions, {
+        title: {
+          text: data.title
+        },
+        series: data.series,
+        xaxis: {
+          categories: data.categories
+        }
+      });
+
+      let chart = new ApexCharts(this, options);
+      chart.render();
+    });
   }
 
   show() {
@@ -44,31 +80,20 @@ export default class EpisodeView {
       console.log(e);
     });
 
+    let chartOptions = this.chartOptions;
+
     $(".chart").each(function(index) {
       let data = $(this).data("chart");
 
-      let options = {
-        chart: {
-          type: "line",
-          height: 400
-        },
+      let options = $.extend(chartOptions, {
         title: {
           text: data.title
         },
         series: data.series,
         xaxis: {
-          type: "datetime",
           categories: data.categories
-        },
-        yaxis: {
-           decimalsInFloat: 0,
-           labels: {
-            formatter: function(val) {
-              return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-             }
-           }
         }
-      }
+      });
 
       let chart = new ApexCharts(this, options);
       chart.render();

@@ -27,7 +27,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       end
       |> Episode.published()
       |> Episode.newest_first()
-      |> Repo.paginate(params)
+      |> Repo.paginate(Map.put(params, :page_size, 50))
 
     scheduled =
       episodes
@@ -41,6 +41,29 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.newest_first(:recorded_at)
       |> Repo.all()
 
+    launch =
+      page.entries
+      |> Enum.filter(fn(ep) ->
+        ep.type == :full &&
+        Timex.compare(ep.published_at, Timex.shift(Timex.today(), days: -7)) == -1
+      end)
+      |> Enum.reverse()
+      |> Enum.map(fn(ep) ->
+        start_date = Timex.to_date(ep.published_at)
+        end_date = Timex.shift(start_date, days: 7)
+
+        reach =
+          ep
+          |> assoc(:episode_stats)
+          |> EpisodeStat.between(start_date, end_date)
+          |> EpisodeStat.sum_reach()
+          |> Repo.one()
+          |> Kernel.||(0)
+
+        {ep.slug, reach}
+      end)
+      |> Enum.reject(fn({_, reach}) -> reach == 0 end)
+
     conn
     |> assign(:episodes, page.entries)
     |> assign(:scheduled, scheduled)
@@ -48,6 +71,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:filter, filter)
     |> assign(:page, page)
     |> assign(:reach, reach(podcast))
+    |> assign(:launch, launch)
     |> render(:index)
   end
 
@@ -56,28 +80,32 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       podcast
       |> assoc(:episodes)
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_all
+      |> Episode.preload_all()
 
     news_item =
       NewsItem
-      |> NewsItem.published
+      |> NewsItem.published()
       |> NewsItem.with_episode(episode)
-      |> Repo.one
+      |> Repo.one()
 
     stats =
       episode
       |> assoc(:episode_stats)
-      |> EpisodeStat.newest_first
-      |> Repo.all
+      |> EpisodeStat.newest_first()
+      |> Repo.all()
 
-    render(conn, :show, episode: episode, item: news_item, stats: stats)
+    conn
+    |> assign(:episode, episode)
+    |> assign(:item, news_item)
+    |> assign(:stats, stats)
+    |> render(:show)
   end
 
   def new(conn, _params, podcast) do
     podcast =
       podcast
-      |> Podcast.preload_topics
-      |> Podcast.preload_hosts
+      |> Podcast.preload_topics()
+      |> Podcast.preload_hosts()
 
     default_hosts =
       podcast.hosts
@@ -98,7 +126,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         episode_hosts: default_hosts,
         recorded_live: podcast.recorded_live,
         slug: default_slug)
-      |> Episode.admin_changeset
+      |> Episode.admin_changeset()
 
     render(conn, :new, changeset: changeset)
   end
@@ -106,7 +134,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   def create(conn, params = %{"episode" => episode_params}, podcast) do
     changeset =
       build_assoc(podcast, :episodes)
-      |> Episode.preload_all
+      |> Episode.preload_all()
       |> Episode.admin_changeset(episode_params)
 
     case Repo.insert(changeset) do
@@ -125,7 +153,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_all
+      |> Episode.preload_all()
 
     changeset = Episode.admin_changeset(episode)
     render(conn, :edit, episode: episode, changeset: changeset)
@@ -135,7 +163,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     episode =
       assoc(podcast, :episodes)
       |> Repo.get_by!(slug: slug)
-      |> Episode.preload_all
+      |> Episode.preload_all()
 
     changeset = Episode.admin_changeset(episode, episode_params)
 
@@ -158,7 +186,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   def delete(conn, %{"id" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.unpublished
+      |> Episode.unpublished()
       |> Repo.get_by!(slug: slug)
 
     Repo.delete!(episode)
@@ -234,8 +262,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do
     episode =
       episode
-      |> Episode.preload_podcast
-      |> Episode.preload_topics
+      |> Episode.preload_podcast()
+      |> Episode.preload_topics()
 
     topics = Enum.map(episode.episode_topics, fn(t) -> Map.take(t, [:topic_id, :position]) end)
 
@@ -248,9 +276,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       published_at: episode.published_at,
       logger_id: conn.assigns.current_user.id,
       news_item_topics: topics}
-    |> NewsItem.insert_changeset
-    |> Repo.insert!
-    |> NewsQueue.append
+    |> NewsItem.insert_changeset()
+    |> Repo.insert!()
+    |> NewsQueue.append()
   end
   defp handle_news_item(_, _), do: false
 

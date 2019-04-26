@@ -38,6 +38,16 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     end
   end
 
+  def launch_data(stats) when is_list(stats) do
+    data = %{
+      title: "Episode Launch (7 days)",
+      categories: Enum.map(stats, &(elem(&1, 0))),
+      series: [%{name: "Reach", data: Enum.map(stats, &(elem(&1, 1)))}]
+    }
+
+    Poison.encode!(data)
+  end
+
   def line_chart_data(stats) when is_list(stats) do
     stats = Enum.reverse(stats)
 
