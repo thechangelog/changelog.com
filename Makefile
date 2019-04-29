@@ -581,6 +581,20 @@ test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
 .PHONY: t
 t: test
 
+test_flakes:
+	@mkdir -p test_flakes
+
+TEST_RUNS ?= 10
+.PHONY: find-flaky-tests
+find-flaky-tests: test_flakes
+	@for TEST_RUN_NO in {1..$(TEST_RUNS)}; do \
+	  echo "RUNNING TEST $$TEST_RUN_NO ... " ; \
+	  ($(MAKE) --no-print-directory test >> test_flakes/$$TEST_RUN_NO && \
+	    rm test_flakes/$$TEST_RUN_NO && \
+	    echo -e "$(GREEN)PASS$(NORMAL)\n") || \
+	  echo -e "$(RED)FAIL$(NORMAL)\n"; \
+	done
+
 .PHONY: watch
 watch: $(WATCH) $(DOCKER) ## w   | Watch all containers
 	@$(WATCH) -c "$(DOCKER) ps --all \
