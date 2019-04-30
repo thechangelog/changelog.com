@@ -99,9 +99,6 @@ export default class Time {
     return `${this.weekday()}, ${this.monthName()} ${this.day()}`;
   }
 
-  liveStyle() {
-    return `${this.hours12()}${this.minutes(":00")} ${this.tz()}`;
-  }
 
   timeFirstStyle() {
     return `${this.amPmStyle()} – ${this.dayAndDateStyle()}`;
