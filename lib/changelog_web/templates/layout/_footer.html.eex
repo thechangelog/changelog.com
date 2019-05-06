@@ -101,7 +101,7 @@
         </a>
       </div>
       <div class="footer-sponsors-item">
-        <a href="https://rollbar.com/" title="Visit Rollbar.com">
+        <a href="https://rollbar.com/changelog" title="Visit Rollbar.com">
           <p>Error monitoring by</p>
           <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-rollbar.png"), "Rollbar") %>
         </a>
