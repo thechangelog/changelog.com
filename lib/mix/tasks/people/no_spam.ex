@@ -22,6 +22,8 @@ defmodule Mix.Tasks.Changelog.NoSpam do
       |> Person.never_signed_in()
       |> Person.older_than(older_than)
 
+    fakers_count = Repo.count(fakers)
+
     for person <- Repo.all(fakers) do
       IO.puts "Purging #{person.id} #{person.name} (#{person.email})"
       Subscriber.delete(Newsletters.weekly().list_id, person.email)
@@ -29,6 +31,6 @@ defmodule Mix.Tasks.Changelog.NoSpam do
       Repo.delete!(person)
     end
 
-    IO.puts "Finished purging #{Repo.count(fakers)} fakes older than #{older_than}"
+    IO.puts "Finished purging #{fakers_count} fakes older than #{older_than}"
   end
 end
