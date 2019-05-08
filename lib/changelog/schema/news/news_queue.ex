@@ -107,7 +107,7 @@ defmodule Changelog.NewsQueue do
   end
 
   def publish do
-    publish_scheduled() || publish_next_maybe(10 , 60)
+    publish_scheduled() || publish_next_maybe(12 , 45)
   end
   def publish(item = %NewsItem{}) do
     case Repo.get_by(NewsQueue, item_id: item.id) do
