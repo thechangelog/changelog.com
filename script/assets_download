@@ -7,6 +7,6 @@ for type in icons avatars covers logos news_ads news_items; do
         --partial \
         --progress \
         --ignore-existing \
-        cl-app:/data/www/uploads/$type \
+        cl-app:/uploads/$type \
         priv/uploads/
 done
