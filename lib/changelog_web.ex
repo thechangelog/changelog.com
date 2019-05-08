@@ -3,6 +3,8 @@ defmodule ChangelogWeb do
     quote do
       use Phoenix.Controller, namespace: ChangelogWeb
 
+      require Logger
+
       alias Changelog.{Policies, Repo}
       alias ChangelogWeb.Plug.{Authorize, RequireUser, RequireGuest}
 
@@ -14,6 +16,15 @@ defmodule ChangelogWeb do
 
       plug ChangelogWeb.Plug.ResponseCache
       import ChangelogWeb.Plug.ResponseCache, only: [cache_public: 1, cache_public: 2]
+
+      def log_request(conn, prefix \\ "REQUEST DETAILS") do
+        details =
+          conn
+          |> Map.take([:params, :remote_ip, :req_headers])
+          |> inspect()
+
+        Logger.info("#{prefix}: #{conn.method} /#{conn.path_info} #{details}")
+      end
 
       @doc """
       Allows param-based 'next' path to redirect with fallback when not specified

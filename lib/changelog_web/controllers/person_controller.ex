@@ -44,6 +44,7 @@ defmodule ChangelogWeb.PersonController do
 
       case Repo.insert(changeset) do
         {:ok, person} ->
+          log_request(conn)
           welcome_subscriber(conn, person, subscribe_to)
         {:error, _changeset} ->
           conn
