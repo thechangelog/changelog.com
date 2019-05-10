@@ -19,7 +19,7 @@
           </a>
         </li>
         <li>
-          <a href="https://www.youtube.com/c/thechangelog" title="Changelog on YouTube">
+          <a href="https://www.youtube.com/changelog" title="Changelog on YouTube">
             <%= lazy_image(static_url(@conn, "/images/icons/icon-youtube-black.svg"), "YouTube Icon") %>
           </a>
         </li>
