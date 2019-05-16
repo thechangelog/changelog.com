@@ -50,6 +50,7 @@ defmodule ChangelogWeb.PodcastController do
         |> Repo.one()
         |> NewsItem.load_object(episode)
       end)
+      |> Enum.reject(&is_nil/1)
 
     conn
     |> assign(:podcast, podcast)
