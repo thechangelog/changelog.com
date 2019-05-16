@@ -5,16 +5,22 @@ defmodule ChangelogWeb.NewsItemView do
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
                       EpisodeView, PersonView, TopicView, PodcastView}
 
-  def admin_edit_link(conn, user, item) do
-    if user && user.admin do
-      content_tag(:span, class: "news_item-toolbar-meta-item") do
-        [
-          link("[Edit]", to: admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false]),
-          content_tag(:span, " (#{item.click_count}/#{item.impression_count})")
-        ]
-      end
+  def admin_edit_link(conn, %{admin: true}, item = %{type: :audio, object: episode}) do
+    content_tag(:span, class: "news_item-toolbar-meta-item") do
+      [
+        link("[#{item.click_count}/#{item.impression_count}]", to: admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false]),
+        link(" [#{comma_separated(episode.reach_count)}]", to: admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn)), data: [turbolinks: false])
+      ]
     end
   end
+  def admin_edit_link(conn, %{admin: true}, item) do
+    content_tag(:span, class: "news_item-toolbar-meta-item") do
+      [
+        link("#{item.click_count}/#{item.impression_count}]", to: admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false])
+      ]
+    end
+  end
+  def admin_edit_link(_, _, _), do: nil
 
   def comment_count_aside(item) do
     case NewsItem.comment_count(item) do

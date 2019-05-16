@@ -4,16 +4,15 @@ defmodule ChangelogWeb.NewsAdView do
   alias Changelog.{Files, Hashid}
   alias ChangelogWeb.{Endpoint, SponsorView}
 
-  def admin_edit_link(conn, user, ad) do
-    if user && user.admin do
-      content_tag(:span, class: "news_item-toolbar-meta-item") do
-        [
-          link("[Edit]", to: admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: current_path(conn)), data: [turbolinks: false]),
-          content_tag(:span, " (#{ad.click_count}/#{ad.impression_count})")
-        ]
-      end
+  def admin_edit_link(conn, %{admin: true}, ad) do
+    path = admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: current_path(conn))
+    content_tag(:span, class: "news_item-toolbar-meta-item") do
+      [
+        link("(#{ad.click_count}/#{ad.impression_count})", to: path, data: [turbolinks: false])
+      ]
     end
   end
+  def admin_edit_link(_, _, _), do: nil
 
   def hashid(ad), do: Hashid.encode(ad.id)
 

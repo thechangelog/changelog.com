@@ -5,11 +5,11 @@ defmodule ChangelogWeb.NewsSourceView do
   alias Changelog.NewsSource
   alias ChangelogWeb.{Endpoint, NewsItemView}
 
-  def admin_edit_link(conn, user, source) do
-    if user && user.admin do
-      link("[Edit]", to: admin_news_source_path(conn, :edit, source, next: current_path(conn)), data: [turbolinks: false])
-    end
+  def admin_edit_link(conn, %{admin: true}, source) do
+    path = admin_news_source_path(conn, :edit, source, next: current_path(conn))
+    link("[edit]", to: path, data: [turbolinks: false])
   end
+  def admin_edit_link(_, _, _), do: nil
 
   def icon_path(news_source, version) do
     {news_source.icon, news_source}

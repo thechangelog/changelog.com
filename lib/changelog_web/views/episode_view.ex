@@ -7,17 +7,15 @@ defmodule ChangelogWeb.EpisodeView do
   alias ChangelogWeb.{Endpoint, LayoutView, NewsItemView, PersonView,
                       PodcastView, SponsorView, TimeView}
 
-  def admin_edit_link(conn, user, episode) do
-    if user && user.admin do
-      path = admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))
-      content_tag(:span) do
-        [
-          link("[Edit]", to: path, data: [turbolinks: false]),
-          content_tag(:span, " (#{comma_separated(episode.reach_count)})")
-        ]
-      end
+  def admin_edit_link(conn, %{admin: true}, episode) do
+    path = admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))
+    content_tag(:span) do
+      [
+        link("(#{comma_separated(episode.reach_count)})", to: path, data: [turbolinks: false])
+      ]
     end
   end
+  def admin_edit_link(_, _, _), do: nil
 
   def audio_filename(episode) do
     Files.Audio.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
