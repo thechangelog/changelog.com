@@ -62,6 +62,7 @@ defmodule Changelog.Episode do
   def scheduled(query \\ __MODULE__),                do: from(q in query, where: q.published, where: q.published_at > ^Timex.now)
   def search(query, term),                           do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
   def unpublished(query \\ __MODULE__),              do: from(q in query, where: not(q.published))
+  def top_reach_first(query \\ __MODULE__),          do: from(q in query, order_by: [desc: :reach_count])
   def with_numbered_slug(query \\ __MODULE__),       do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
   def with_slug(query \\ __MODULE__, slug),          do: from(q in query, where: q.slug == ^slug)
   def with_podcast_slug(query \\ __MODULE__, slug),  do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)

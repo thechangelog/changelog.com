@@ -10,6 +10,9 @@
     <li class="subnav-list-item <%= active_class(@conn, "recommended") %>">
       <%= link "Recommended", to: podcast_path(@conn, :recommended, @podcast.slug) <> "#feed", title: "Recommended episodes of #{@podcast.name}" %>
     </li>
+    <li class="subnav-list-item <%= active_class(@conn, "popular") %>">
+      <%= link "Popular", to: podcast_path(@conn, :popular, @podcast.slug) <> "#feed", title: "Popular episodes of #{@podcast.name}" %>
+    </li>
   <%= if @podcast.status != :retired do %>
     <!--<li class="subnav-list-item <%= active_class(@conn, "upcoming") %>">
       <%= link "Upcoming", to: podcast_path(@conn, :upcoming, @podcast.slug) <> "#feed" %>

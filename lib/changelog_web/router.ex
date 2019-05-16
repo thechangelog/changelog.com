@@ -214,8 +214,9 @@ defmodule ChangelogWeb.Router do
 
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast
-    get "/:slug/upcoming", PodcastController, :upcoming, as: :podcast
+    get "/:slug/popular", PodcastController, :popular, as: :podcast
     get "/:slug/recommended", PodcastController, :recommended, as: :podcast
+    get "/:slug/upcoming", PodcastController, :upcoming, as: :podcast
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
     get "/:podcast/:slug/embed", EpisodeController, :embed, as: :episode

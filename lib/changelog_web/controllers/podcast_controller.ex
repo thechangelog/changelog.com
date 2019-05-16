@@ -12,9 +12,9 @@ defmodule ChangelogWeb.PodcastController do
 
     page =
       Podcast.get_news_items(podcast)
-      |> NewsItem.published
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 30))
 
     items =
@@ -30,26 +30,61 @@ defmodule ChangelogWeb.PodcastController do
     |> render(:show)
   end
 
+  def popular(conn, params = %{"slug" => slug}) do
+    podcast = Podcast.get_by_slug!(slug)
+
+    page =
+      Podcast.get_episodes(podcast)
+      |> Episode.published()
+      |> Episode.newer_than(~D[2016-10-10]) # modern era
+      |> Episode.top_reach_first()
+      |> Episode.exclude_transcript()
+      |> Episode.preload_podcast()
+      |> Repo.paginate(Map.put(params, :page_size, 10))
+
+    items =
+      Enum.map(page.entries, fn(episode) ->
+        episode
+        |> NewsItem.with_episode()
+        |> NewsItem.preload_all()
+        |> Repo.one()
+        |> NewsItem.load_object(episode)
+      end)
+
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> assign(:tab, "popular")
+    |> render(:show)
+  end
+
   def recommended(conn, params = %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
 
     page =
       Podcast.get_episodes(podcast)
-      |> Episode.published
-      |> Episode.featured
-      |> Episode.preload_podcast
+      |> Episode.published()
+      |> Episode.featured()
+      |> Episode.exclude_transcript()
+      |> Episode.preload_podcast()
       |> Repo.paginate(Map.put(params, :page_size, 30))
 
     items =
       page.entries
-      |> NewsItem.with_episodes
-      |> NewsItem.published
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
-      |> Repo.all
+      |> NewsItem.with_episodes()
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.all()
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :show, podcast: podcast, items: items, page: page, tab: "recommended")
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> assign(:tab, "recommended")
+    |> render(:show)
   end
 
   def upcoming(conn, params = %{"slug" => slug}) do
@@ -57,9 +92,10 @@ defmodule ChangelogWeb.PodcastController do
 
     page =
       Podcast.get_episodes(podcast)
-      |> Episode.unpublished
+      |> Episode.unpublished()
       |> NewsItem.newest_last(:recorded_at)
-      |> Episode.preload_all
+      |> Episode.preload_all()
+      |> Episode.exclude_transcript()
       |> Repo.paginate(Map.put(params, :page_size, 10))
 
     items =
@@ -72,6 +108,11 @@ defmodule ChangelogWeb.PodcastController do
         Map.put(item, :object, episode)
       end)
 
-    render(conn, :show, podcast: podcast, items: items, page: page, tab: "upcoming")
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> assign(:tab, "upcoming")
+    |> render(:show)
   end
 end

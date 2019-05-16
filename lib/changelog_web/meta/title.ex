@@ -93,6 +93,9 @@ defmodule ChangelogWeb.Meta.Title do
   defp get(%{view_module: PodcastView, view_template: "index.html"}), do: "All Changelog podcasts"
 
   # Podcast homepages
+  defp get(%{view_module: PodcastView, podcast: podcast, tab: "popular"}) do
+    "Popular episodes of #{podcast.name}"
+  end
   defp get(%{view_module: PodcastView, podcast: podcast, tab: "recommended"}) do
     "Recommended episodes of #{podcast.name}"
   end
