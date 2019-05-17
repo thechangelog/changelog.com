@@ -500,6 +500,15 @@ report-deploy: $(CURL)
 	$(CURL) --silent --fail --output /dev/null --request POST --url https://api.rollbar.com/api/1/deploy/ \
 	  --data '{"access_token":"'$$ROLLBAR_ACCESS_TOKEN'","environment":"'$$ROLLBAR_ENVIRONMENT'","rollbar_username":"'$$COMMIT_USER'","revision":"'$$COMMIT_SHA'","comment":"Running in container '$$HOSTNAME' on host '$$NODE'"}'
 
+.PHONY: report-deploy-slack
+report-deploy-slack: $(CURL)
+	@SLACK_DEPLOY_WEBHOOK="$$(cat /run/secrets/SLACK_DEPLOY_WEBHOOK)" && export SLACK_DEPLOY_WEBHOOK && \
+	COMMIT_USER="$$(cat ./COMMIT_USER)" && export COMMIT_USER && \
+	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
+	$(CURL) --silent --fail --output /dev/null --request POST --url $$SLACK_DEPLOY_WEBHOOK \
+	  --header 'Content-type: application/json' \
+	  --data '{"text":"<$(GIT_REPOSITORY)/commit/$$COMMIT_SHA|$$COMMIT_SHA> by <$(GIT_REPOSITORY)/commits?author=$$COMMIT_USER|$$COMMIT_USER> is now live - <http://$$URL_HOST/version.txt|check>"}'
+
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image
 .PHONY: ri

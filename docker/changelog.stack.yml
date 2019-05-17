@@ -112,6 +112,7 @@ services:
       - ALGOLIA_APPLICATION_ID
       - ALGOLIA_API_KEY
       - DB_URL
+      - SLACK_DEPLOY_WEBHOOK
     depends_on:
       - db
     image: thechangelog/changelog.com
@@ -247,4 +248,6 @@ secrets:
   DB_URL:
     external: true
   DB_PASSWORD:
+    external: true
+  SLACK_DEPLOY_WEBHOOK:
     external: true
