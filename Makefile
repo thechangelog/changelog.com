@@ -493,7 +493,10 @@ proxy-test-local: bats
 ptl: proxy-test-local
 
 .PHONY: report-deploy
-report-deploy: $(CURL)
+report-deploy: report-deploy-slack report-deploy-rollbar
+
+.PHONY: report-deploy-rollbar
+report-deploy-rollbar: $(CURL)
 	@ROLLBAR_ACCESS_TOKEN="$$(cat /run/secrets/ROLLBAR_ACCESS_TOKEN)" && export ROLLBAR_ACCESS_TOKEN && \
 	COMMIT_USER="$$(cat ./COMMIT_USER)" && export COMMIT_USER && \
 	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
