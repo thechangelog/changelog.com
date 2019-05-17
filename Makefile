@@ -510,7 +510,7 @@ report-deploy-slack: $(CURL)
 	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
 	$(CURL) --silent --fail --output /dev/null --request POST --url $$SLACK_DEPLOY_WEBHOOK \
 	  --header 'Content-type: application/json' \
-	  --data '{"text":"<$(GIT_REPOSITORY)/commit/'$$COMMIT_SHA'|'$$COMMIT_SHA'> by <$(GIT_REPOSITORY)/commits?author='$$COMMIT_USER'|'$$COMMIT_USER'> is now live - <http://'$$URL_HOST'/version.txt|check>"}'
+	  --data '{"text":"<$(GIT_REPOSITORY)/commit/'$$COMMIT_SHA'|'$${COMMIT_SHA:0:7}'> by <$(GIT_REPOSITORY)/commits?author='$$COMMIT_USER'|'$$COMMIT_USER'> is coming up at <https://'$$URL_HOST'>"}'
 
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image
