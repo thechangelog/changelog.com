@@ -163,6 +163,10 @@ defmodule ChangelogWeb.Router do
     resources "/ads", NewsAdController, only: [:show], as: :news_ad
     post "/ad/impress", NewsAdController, :impress, as: :news_ad
     get "/ad/:id/visit", NewsAdController, :visit, as: :news_ad
+
+    resources "/sponsored", NewsAdController, only: [:show], as: :news_sponsored
+    post "/sponsored/impress", NewsAdController, :impress, as: :news_sponsored
+    get "/sponsored/:id/visit", NewsAdController, :visit, as: :news_sponsored
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
     resources "/news/comments", NewsItemCommentController, only: [:create]

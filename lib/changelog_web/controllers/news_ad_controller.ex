@@ -5,11 +5,11 @@ defmodule ChangelogWeb.NewsAdController do
   alias ChangelogWeb.NewsAdView
 
   def show(conn, %{"id" => slug}) do
-    hashid = slug |> String.split("-") |> List.last
+    hashid = slug |> String.split("-") |> List.last()
     ad = ad_from_hashid(hashid)
 
     if slug == hashid do
-      redirect(conn, to: news_ad_path(conn, :show, NewsAdView.slug(ad)))
+      redirect(conn, to: news_sponsored_path(conn, :show, NewsAdView.slug(ad)))
     else
       render(conn, :show, ad: ad, sponsor: ad.sponsorship.sponsor)
     end
@@ -40,6 +40,6 @@ defmodule ChangelogWeb.NewsAdController do
   defp ad_from_hashid(hashid) do
     NewsAd
     |> Repo.get_by!(id: Hashid.decode(hashid))
-    |> NewsAd.preload_sponsorship
+    |> NewsAd.preload_sponsorship()
   end
 end

@@ -1,7 +1,7 @@
-<article class="news_item news_item--sponsor js-track-news" data-news-type="ad" data-news-id="<%= hashid(@ad) %>">
+<article class="news_item news_item--sponsor js-track-news" data-news-type="sponsored" data-news-id="<%= hashid(@ad) %>">
   <%= render("_header.html", assigns) %>
 <%= if @ad.story do %>
-  <%= link to: news_ad_path(@conn, :show, slug(@ad)), class: "news_item-description" do %>
+  <%= link to: news_sponsored_path(@conn, :show, slug(@ad)), class: "news_item-description" do %>
     <p><%= @ad.story |> md_to_text %></p>
     <p class="news_item-description-continue"><span>read more</span></p>
   <% end %>
