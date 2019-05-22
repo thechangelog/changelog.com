@@ -1,7 +1,7 @@
 {
     "name": "Changelog",
     "short_name": "Changelog",
-    "start_url": "/",
+    "start_url": "https://changelog.com/",
     "display": "standalone",
     "description": "News and podcasts for developers",
     "icons": [
