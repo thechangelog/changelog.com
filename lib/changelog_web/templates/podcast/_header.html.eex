@@ -15,12 +15,16 @@
   <% end %>
   </div>
 
-  <%= if (@podcast.status == :soon) do %>
-    <p class="signup-text"><em>Sign-up to get notified of launch and new episodes.</em></p>
-    <%= render(SharedView, "_subscribe_form.html", assigns) %>
+<%= if (@podcast.status == :soon) do %>
+  <p class="signup-text"><em>Sign-up to get notified of launch and new episodes.</em></p>
+  <%= if @current_user do %>
+    <%= link("Manage Subscriptions", to: home_path(@conn, :show) <> "#podcasts", class: "button_large") %>
   <% else %>
-    <%= render("_subscribe_buttons.html", assigns) %>
+    <%= render(SharedView, "_subscribe_form.html", assigns) %>
   <% end %>
+<% else %>
+  <%= render("_subscribe_buttons.html", assigns) %>
+<% end %>
 
   <div class="show-header-hosts">
     <div class="avatar_list <%= if length(@podcast.hosts) > 6, do: "avatar_list--large" %>">
