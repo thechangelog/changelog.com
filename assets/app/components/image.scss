@@ -9,3 +9,12 @@
     max-width: 100%;
   }
 }
+
+.image_border_hack {
+  position: relative;
+  overflow: hidden;
+  
+  img {
+    transform: scale(1.06);
+  }
+}

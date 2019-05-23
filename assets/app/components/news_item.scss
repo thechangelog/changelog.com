@@ -69,6 +69,10 @@
         left: 0;
       }
 
+      &--episode img {
+        border-radius: 0;
+      }
+
       &-icon {
         background-color: $black;
         color: $white;

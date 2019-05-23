@@ -1,6 +1,6 @@
 <%= link to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug),
    title: @episode.title,
-   class: "news_item-source-image news_item-source-image--1",
+   class: "news_item-source-image news_item-source-image--episode",
    data: [news: true] do %>
   <%= maybe_lazy_image(@conn, PodcastView.cover_url(@episode.podcast, :small), @episode.podcast.name, style: "background-color: #121921") %>
 <% end %>

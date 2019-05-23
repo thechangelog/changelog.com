@@ -93,7 +93,6 @@
       }
 
       &-art {
-        $border-color: #ffffff;
         display: block;
         margin-bottom: 10px;
         height: 0;
@@ -101,14 +100,9 @@
         padding-bottom: 100%;
 
         img {
-          border: 1px solid rgba($border-color, 0.1);
           height: auto;
           width: 100%;
           transition: all 0.2s $base-easing;
-        }
-
-        &:hover img {
-          border-color: rgba($border-color, 0.2);
         }
 
         &-status {

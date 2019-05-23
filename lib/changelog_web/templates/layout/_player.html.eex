@@ -6,7 +6,9 @@
       <button class="podcast_player-nav-button podcast_player-nav-button--hide js-player-hide" title="Hide Player"></button>
       <button class="podcast_player-nav-button podcast_player-nav-button--close js-player-close" title="Close Player"></button>
     </nav>
-    <img class="podcast_player-art js-player-art">
+    <div class="image_border_hack">
+      <img class="podcast_player-art js-player-art">
+    </div>
     <div class="podcast_player-details">
       <div class="podcast_player-details-title">
         <span class="js-player-now-playing"></span>
