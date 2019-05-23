@@ -119,7 +119,7 @@ u(document).on("change", ".js-toggle-subscription", function(event) {
 
 u(document).handle("click", ".js-subscribe-all", function(event) {
   u(event.target).remove();
-  u(".js-toggle-subscription:not(:checked").each(el => { el.click(); });
+  u(".js-toggle-subscription:not(:checked)").each(el => { el.click(); });
 });
 
 u(document).handle("click", ".js-toggle_element", function(event) {
