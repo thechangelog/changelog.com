@@ -4,7 +4,7 @@ defmodule Changelog.Schema do
 
     quote do
       use Ecto.Schema
-      use Changelog.Arc.Ecto.Schema
+      use Arc.Ecto.Schema
 
       import Ecto
       import Ecto.Changeset
