@@ -14,16 +14,24 @@
   </div>
 </div>
 
-<div class="ui basic segment">
+
 <%= if Enum.any?(@active) do %>
+<div class="ui basic segment">
   <h2 class="ui header">Active podcasts</h2>
   <%= render("_table.html", Map.merge(assigns, %{podcasts: @active})) %>
-<% end %>
 </div>
+<% end %>
 
+<%= if Enum.any?(@draft) do %>
 <div class="ui basic segment">
+  <h2 class="ui header">Draft podcasts</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcasts: @draft})) %>
+</div>
+<% end %>
+
 <%= if Enum.any?(@retired) do %>
+<div class="ui basic segment">
   <h2 class="ui header">Retired podcasts</h2>
   <%= render("_table.html", Map.merge(assigns, %{podcasts: @retired})) %>
-<% end %>
 </div>
+<% end %>

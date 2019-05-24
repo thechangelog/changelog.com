@@ -75,11 +75,10 @@ defmodule Changelog.Podcast do
   end
 
   def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published])
+  def draft(query \\ __MODULE__), do: from(q in query, where: q.status == ^:draft)
   def public(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published, ^:retired])
   def retired(query \\ __MODULE__), do: from(q in query, where: q.status == ^:retired)
   def not_retired(query \\ __MODULE__), do: from(q in query, where: q.status != ^:retired)
-  def ours(query \\ __MODULE__), do: from(q in query, where: not(q.partner))
-  def partners(query \\ __MODULE__), do: from(q in query, where: q.partner)
   def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
   def retired_last(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.status])
 

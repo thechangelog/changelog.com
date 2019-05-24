@@ -8,6 +8,12 @@ defmodule ChangelogWeb.Admin.PodcastController do
   plug :scrub_params, "podcast" when action in [:create, :update]
 
   def index(conn = %{assigns: %{current_user: user}}, _params) do
+    draft =
+      Podcast.draft()
+      |> Podcast.preload_hosts()
+      |> Repo.all()
+      |> Enum.filter(fn(p) -> Policies.Podcast.show(user, p) end)
+
     active =
       Podcast.active()
       |> Podcast.not_retired()
@@ -23,7 +29,11 @@ defmodule ChangelogWeb.Admin.PodcastController do
       |> Repo.all()
       |> Enum.filter(fn(p) -> Policies.Podcast.show(user, p) end)
 
-    render(conn, :index, active: active, retired: retired)
+    conn
+    |> assign(:active, active)
+    |> assign(:draft, draft)
+    |> assign(:retired, retired)
+    |> render(:index)
   end
 
   def new(conn, _params) do

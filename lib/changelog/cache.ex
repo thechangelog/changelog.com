@@ -57,7 +57,6 @@ defmodule Changelog.Cache do
   def podcasts do
     get_or_store("podcasts", :infinity, fn ->
       Podcast.active()
-      |> Podcast.ours()
       |> Podcast.by_position()
       |> Podcast.preload_hosts()
       |> Repo.all()

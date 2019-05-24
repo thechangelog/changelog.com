@@ -23,8 +23,7 @@ defmodule ChangelogWeb.Admin.PodcastView do
   end
 
   def position_options do
-    count = Podcast.ours() |> Podcast.not_retired() |> Repo.count()
-    1..count
+    1..Repo.count(Podcast.not_retired())
   end
 
   def status_label(podcast) do
