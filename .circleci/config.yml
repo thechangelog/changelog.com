@@ -4,7 +4,7 @@ jobs:
   deps:
     working_directory: &dir /app
     docker:
-      - image: &runtime thechangelog/runtime
+      - image: &runtime thechangelog/runtime:2018-11-23.103218
     steps:
       - checkout
       - restore_cache: &deps_cache
@@ -38,7 +38,7 @@ jobs:
             - /app/deps
       - restore_cache: &node_modules_cache
           name: Restore cached node modules
-          key: &node_modules_key node_10_modules-{{ checksum "assets/yarn.lock" }}
+          key: &node_modules_key node_8_modules-{{ checksum "assets/yarn.lock" }}
       - run:
           name: Update node modules
           command: cd assets && yarn install --frozen-lockfile
