@@ -1,5 +1,6 @@
 defmodule Changelog.Icecast do
   defmodule Stats do
+    @derive Jason.Encoder
     defstruct type: :icecast, streaming: false, listeners: 0
   end
 
