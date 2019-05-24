@@ -1,4 +1,4 @@
-FROM thechangelog/runtime:2018-11-23.103218
+FROM thechangelog/runtime:2019-05-24T21.10.15Z
 
 RUN mkdir /app
 COPY . /app
