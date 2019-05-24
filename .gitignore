@@ -40,3 +40,7 @@ npm-debug.log*
 
 # .terraform will contain large, platform-specific binaries
 .terraform
+
+# Ignore local dir where test run results are stored
+# Helps identify flaky tests
+/test_flakes
