@@ -17,7 +17,7 @@ defmodule Craisin do
 
   def process_response_body(body) do
     try do
-      Poison.decode!(body)
+      Jason.decode!(body)
     rescue
       _ -> body
     end

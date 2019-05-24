@@ -45,7 +45,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
       series: [%{name: "Reach", data: Enum.map(stats, &(elem(&1, 1)))}]
     }
 
-    Poison.encode!(data)
+    Jason.encode!(data)
   end
 
   def line_chart_data(stats) when is_list(stats) do
@@ -58,7 +58,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
       _else -> get_chart_data_grouped_by(:year, stats)
     end
 
-    Poison.encode!(data)
+    Jason.encode!(data)
   end
 
   defp get_chart_data_grouped_by(interval, stats) do

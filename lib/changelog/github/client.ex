@@ -5,7 +5,7 @@ defmodule Changelog.Github.Client do
 
   def process_response_body(body) do
     try do
-      Poison.decode!(body)
+      Jason.decode!(body)
     rescue
       _ -> body
     end
@@ -24,8 +24,8 @@ defmodule Changelog.Github.Client do
     params = %{"content" => Base.encode64(content), "message" => message}
 
     source
-    |> file_content_path
-    |> put(Poison.encode!(params))
+    |> file_content_path()
+    |> put(Jason.encode!(params))
   end
 
   def edit_file(source, content, message) do
@@ -44,12 +44,12 @@ defmodule Changelog.Github.Client do
       }
 
       source
-      |> file_content_path
-      |> put(Poison.encode!(params))
+      |> file_content_path()
+      |> put(Jason.encode!(params))
     end
   end
 
-  def get_file(source), do: source |> file_content_path |> get
+  def get_file(source), do: source |> file_content_path() |> get()
 
   def file_exists?(source) do
     {:ok, response} = get_file(source)

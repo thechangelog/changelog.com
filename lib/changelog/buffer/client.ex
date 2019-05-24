@@ -14,7 +14,7 @@ defmodule Changelog.Buffer.Client do
 
   def process_response_body(body) do
     try do
-      Poison.decode!(body)
+      Jason.decode!(body)
     rescue
       _ -> body
     end
@@ -31,12 +31,12 @@ defmodule Changelog.Buffer.Client do
       {"text", text},
       profile_list_to_params(profiles),
       media_list_to_params(media)
-    ] |> List.flatten
+    ] |> List.flatten()
 
-    "/updates/create" |> post({:form, params}) |> handle
+    "/updates/create" |> post({:form, params}) |> handle()
   end
 
-  def profiles, do: "/profiles" |> get |> handle
+  def profiles, do: "/profiles" |> get() |> handle()
 
   defp media_list_to_params(media) do
     media

@@ -91,7 +91,7 @@
   <% end %>
 
   <%= if assigns[:images] do %>
-    <div class="ui small images js-image-options" data-options="<%= Poison.encode!(@images) %>"></div>
+    <div class="ui small images js-image-options" data-options="<%= Jason.encode!(@images) %>"></div>
   <% end %>
   </div>
 

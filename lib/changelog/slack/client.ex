@@ -5,7 +5,7 @@ defmodule Changelog.Slack.Client do
 
   def process_response_body(body) do
     try do
-      Poison.decode!(body)
+      Jason.decode!(body)
     rescue
       _ -> body
     end
@@ -21,12 +21,12 @@ defmodule Changelog.Slack.Client do
   def invite(email) do
     token = Application.get_env(:changelog, :slack_invite_api_token)
     form = ~s(email=#{email}&token=#{token}&resend=true)
-    "/users.admin.invite" |> post(form) |> handle
+    "/users.admin.invite" |> post(form) |> handle()
   end
 
   def list do
     token = Application.get_env(:changelog, :slack_app_api_token)
-    "/users.list?token=#{token}" |> get |> handle
+    "/users.list?token=#{token}" |> get() |> handle()
   end
 
   def im(user, message) do
@@ -41,12 +41,12 @@ defmodule Changelog.Slack.Client do
   def message(channel, message) do
     token = Application.get_env(:changelog, :slack_app_api_token)
     form = ~s(token=#{token}&channel=#{channel}&as_user=true&text=#{message})
-    "/chat.postMessage" |> post(form) |> handle
+    "/chat.postMessage" |> post(form) |> handle()
   end
 
   defp open_im(user_id) do
     token = Application.get_env(:changelog, :slack_app_api_token)
     form = ~s(token=#{token}&user=#{user_id})
-    "/im.open" |> post(form) |> handle
+    "/im.open" |> post(form) |> handle()
   end
 end

@@ -19,12 +19,12 @@ defmodule Changelog.Icecast do
       stats_url()
       |> HTTPoison.get!()
       |> Map.get(:body)
-      |> Poison.decode!()
+      |> Jason.decode!()
       |> get_in(["icestats", "source"])
       |> source_stats()
     rescue
       HTTPoison.Error    -> %Stats{}
-      Poison.SyntaxError -> %Stats{}
+      Jason.DecodeError -> %Stats{}
     end
   end
 

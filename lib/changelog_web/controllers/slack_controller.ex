@@ -10,13 +10,13 @@ defmodule ChangelogWeb.SlackController do
     time_with_buffer = Timex.subtract(Timex.now, Timex.Duration.from_hours(1.5))
 
     next =
-      Episode.recorded_live
+      Episode.recorded_live()
       |> Episode.with_podcast_slug(slug)
       |> Episode.recorded_future_to(time_with_buffer)
       |> Episode.newest_last(:recorded_at)
       |> Episode.limit(1)
-      |> Repo.one
-      |> Episode.preload_podcast
+      |> Episode.preload_podcast()
+      |> Repo.one()
 
     json(conn, Countdown.live(next))
   end
