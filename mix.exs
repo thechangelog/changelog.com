@@ -67,6 +67,7 @@ defmodule Changelog.Mixfile do
       {:rollbax, "~> 0.8.2"},
       {:html_entities, "~> 0.3"},
       {:algolia, "~> 0.8.0"},
+      {:tzdata, "~> 0.5.20"},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
