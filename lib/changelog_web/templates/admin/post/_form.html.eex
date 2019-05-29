@@ -48,6 +48,8 @@
               <%= hidden_input i, :delete %>
             </a>
           </div>
+
+          <%= error_message(i, :topic_id) %>
         </div>
       <% end %>
     </div>
