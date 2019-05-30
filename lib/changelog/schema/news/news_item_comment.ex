@@ -23,6 +23,9 @@ defmodule Changelog.NewsItemComment do
     struct
     |> cast(attrs, ~w(content author_id item_id parent_id)a)
     |> validate_required([:content, :author_id, :item_id])
+    |> foreign_key_constraint(:author_id)
+    |> foreign_key_constraint(:item_id)
+    |> foreign_key_constraint(:parent_id)
   end
 
   def update_changeset(struct, attrs \\ %{}) do

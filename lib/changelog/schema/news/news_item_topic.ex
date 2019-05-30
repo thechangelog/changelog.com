@@ -17,6 +17,8 @@ defmodule Changelog.NewsItemTopic do
     item_topic
     |> cast(params, ~w(position item_id topic_id delete)a)
     |> validate_required([:position])
+    |> foreign_key_constraint(:item_id)
+    |> foreign_key_constraint(:topic_id)
     |> mark_for_deletion()
   end
 

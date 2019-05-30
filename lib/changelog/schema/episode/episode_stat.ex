@@ -30,6 +30,8 @@ defmodule Changelog.EpisodeStat do
     struct
     |> cast(params, ~w(date episode_id podcast_id episode_bytes total_bytes downloads uniques demographics)a)
     |> validate_required([:date, :episode_id, :podcast_id])
+    |> foreign_key_constraint(:episode_id)
+    |> foreign_key_constraint(:podcast_id)
   end
 
   def downloads_by_browser(stats) when is_list(stats) do

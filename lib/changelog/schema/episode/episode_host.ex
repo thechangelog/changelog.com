@@ -17,6 +17,8 @@ defmodule Changelog.EpisodeHost do
     struct
     |> cast(params, ~w(position episode_id person_id delete)a)
     |> validate_required([:position])
+    |> foreign_key_constraint(:person_id)
+    |> foreign_key_constraint(:episode_id)
     |> mark_for_deletion()
   end
 

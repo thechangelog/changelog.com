@@ -7,8 +7,8 @@ defmodule Changelog.PodcastHost do
     field :position, :integer
     field :delete, :boolean, virtual: true
 
-    belongs_to :podcast, Podcast
     belongs_to :person, Person
+    belongs_to :podcast, Podcast
 
     timestamps()
   end
@@ -17,6 +17,8 @@ defmodule Changelog.PodcastHost do
     struct
     |> cast(params, ~w(position podcast_id person_id delete)a)
     |> validate_required([:position])
+    |> foreign_key_constraint(:person_id)
+    |> foreign_key_constraint(:podcast_id)
     |> mark_for_deletion()
   end
 end

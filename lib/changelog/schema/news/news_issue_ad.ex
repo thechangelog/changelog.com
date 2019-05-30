@@ -17,6 +17,8 @@ defmodule Changelog.NewsIssueAd do
     issue_ad
     |> cast(params, ~w(position ad_id issue_id delete)a)
     |> validate_required([:position])
+    |> foreign_key_constraint(:ad_id)
+    |> foreign_key_constraint(:issue_id)
     |> mark_for_deletion()
   end
 

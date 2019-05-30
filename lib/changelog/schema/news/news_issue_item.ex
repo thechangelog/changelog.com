@@ -7,8 +7,8 @@ defmodule Changelog.NewsIssueItem do
     field :position, :integer
     field :delete, :boolean, virtual: true
 
-    belongs_to :item, NewsItem, foreign_key: :item_id
     belongs_to :issue, NewsIssue, foreign_key: :issue_id
+    belongs_to :item, NewsItem, foreign_key: :item_id
 
     timestamps()
   end
@@ -17,6 +17,8 @@ defmodule Changelog.NewsIssueItem do
     issue_item
     |> cast(params, ~w(position item_id issue_id delete)a)
     |> validate_required([:position])
+    |> foreign_key_constraint(:issue_id)
+    |> foreign_key_constraint(:item_id)
     |> mark_for_deletion()
   end
 
