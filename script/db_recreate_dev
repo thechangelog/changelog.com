@@ -1,0 +1,5 @@
+#!/bin/bash -ex
+
+dropdb changelog_dev --if-exists
+createdb changelog_dev
+psql changelog_dev < $1
