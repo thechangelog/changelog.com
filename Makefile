@@ -1,4 +1,5 @@
 SHELL := bash# we want bash behaviour in all shell invocations
+PLATFORM := $(shell uname)
 
 RED := $(shell tput setaf 1)
 GREEN := $(shell tput setaf 2)
@@ -44,38 +45,95 @@ APP_IMAGE ?= thechangelog/changelog.com:latest
 
 ### DEPS ###
 #
+ifeq ($(PLATFORM),Darwin)
 DOCKER := /usr/local/bin/docker
 COMPOSE := $(DOCKER)-compose
 $(DOCKER) $(COMPOSE):
 	@brew cask install docker
+endif
+ifeq ($(PLATFORM),Linux)
+DOCKER ?= /usr/bin/docker
+$(DOCKER): $(CURL)
+	@sudo apt-get update && \
+	sudo apt-get install apt-transport-https gnupg-agent && \
+	$(CURL) -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+	APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true apt-key finger | \
+	  grep --quiet "9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88" && \
+	echo "deb https://download.docker.com/linux/ubuntu $$(lsb_release -c -s) stable" | \
+	  sudo tee /etc/apt/sources.list.d/docker.list && \
+	sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io && \
+	sudo adduser $$USER docker && newgrp docker && sudo service restart docker
+COMPOSE ?= /usr/local/bin/docker-compose
+$(COMPOSE):
+	@sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$$(uname -s)-$$(uname -m)" -o /usr/local/bin/docker-compose && \
+	sudo chmod a+x /usr/local/bin/docker-compose
+endif
 
+CURL ?= /usr/bin/curl
+ifeq ($(PLATFORM),Linux)
+$(CURL):
+	@sudo apt-get update && sudo apt-get install curl
+endif
+
+ifeq ($(PLATFORM),Darwin)
 JQ := /usr/local/bin/jq
 $(JQ):
 	@brew install jq
+endif
+ifeq ($(PLATFORM),Linux)
+JQ ?= /snap/bin/jq
+$(JQ):
+	@sudo snap install jq
+endif
 
+ifeq ($(PLATFORM),Darwin)
 LPASS := /usr/local/bin/lpass
 $(LPASS):
 	@brew install lastpass-cli
+endif
+ifeq ($(PLATFORM),Linux)
+LPASS := /usr/bin/lpass
+$(LPASS):
+	@sudo apt-get update && sudo apt-get install lastpass-cli
+endif
 
 TERRAFORM := /usr/local/bin/terraform
 $(TERRAFORM):
+ifeq ($(PLATFORM),Darwin)
 	@brew install terraform
+endif
+ifeq ($(PLATFORM),Linux)
+	$(error $(RED)Please install $(BOLD)terraform$(NORMAL) in $(TERRAFORM): https://www.terraform.io/downloads.html)
+endif
 
+ifeq ($(PLATFORM),Darwin)
 OPENSSL := /usr/local/opt/openssl/bin/openssl
 $(OPENSSL):
 	@brew install openssl
+endif
+ifeq ($(PLATFORM),Linux)
+OPENSSL := /usr/bin/openssl
+$(OPENSSL):
+	@sudo apt-get update && sudo apt-get install openssl
+endif
 
+ifeq ($(PLATFORM),Darwin)
 WATCH := /usr/local/bin/watch
 $(WATCH):
 	@brew install watch
-
-CURL := /usr/bin/curl
-$(CURL):
-	$(error $(RED)Please install $(BOLD)curl$(NORMAL))
+endif
+ifeq ($(PLATFORM),Linux)
+WATCH := /usr/bin/watch
+endif
 
 BATS := /usr/local/bin/bats
 $(BATS):
+ifeq ($(PLATFORM),Darwin)
 	@brew install bats-core
+endif
+ifeq ($(PLATFORM),Linux)
+	$(error $(RED)Please install $(BOLD)bats-core$(NORMAL) in $(BATS): https://github.com/bats-core/bats-core#installation)
+endif
 
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
