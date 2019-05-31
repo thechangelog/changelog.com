@@ -10,7 +10,7 @@
 
     <pre><%= EpisodeView.embed_code(@episode) %></pre>
 
-    <p><em>(You can see it in action on the <a href="https://www.hashicorp.com/blog/vault-on-the-changelog-podcast.html">HashiCorp blog)</a></em></p>
+    <p><em>(You can see it in action on <a href="https://blog.npmjs.org/post/182374655445/on-building-npm-and-hiring-a-ceo-founders-talk">npm's blog)</a></em></p>
 
     <p>You’re part of the Changelog family now. If there is <em>any way</em> that we can help you in the future, don’t hesitate to contact us.</p>
 
