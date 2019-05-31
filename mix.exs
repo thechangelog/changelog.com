@@ -49,7 +49,7 @@ defmodule Changelog.Mixfile do
       {:arc_ecto, "~> 0.11.1"},
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
-      {:bamboo_smtp, "~> 1.6.0"},
+      {:bamboo_smtp, "~> 1.7.0"},
       {:httpoison, "~> 1.0", override: true},
       {:jason, "~> 1.0"},
       {:con_cache, "~> 0.13.0"},
