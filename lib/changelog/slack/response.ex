@@ -1,4 +1,4 @@
 defmodule Changelog.Slack.Response do
   @derive Jason.Encoder
-  defstruct response_type: "in_channel", text: ""
+  defstruct response_type: "in_channel", text: "", data: nil
 end
