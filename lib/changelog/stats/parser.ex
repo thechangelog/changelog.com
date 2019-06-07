@@ -67,7 +67,8 @@ defmodule Changelog.Stats.Parser do
   defp get_country_code(list), do: Enum.at(list, 10)
   defp get_country_name(list), do: Enum.at(list, 11)
 
-  defp useless_entry(entry) do
-    entry.bytes == 0 || entry.status == 301
-  end
+  defp useless_entry(%{bytes: 0}), do: true
+  defp useless_entry(%{status: 301}), do: true
+  defp useless_entry(%{status: 404}), do: true
+  defp useless_entry(_), do: false
 end
