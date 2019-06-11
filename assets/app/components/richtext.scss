@@ -15,7 +15,7 @@
 
     &:first-child { margin-top: 0; }
 
-    a { font-weight: 900; }
+    a { font-weight: inherit; }
   }
 
   // https://www.modularscale.com/?1&em&1.25
@@ -37,6 +37,10 @@
   p {
     font-size: 1em;
     line-height: 1.65em;
+
+    a {
+      font-weight: 500;
+    }
   }
 
   p, li {
@@ -58,7 +62,6 @@
   p, li, h1, h2, h3, h4, h5, h6 {
     a {
       color: $black;
-      font-weight: 500;
       border-bottom: 2px solid $light-grey;
 
       &:hover {
