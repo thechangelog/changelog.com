@@ -24,15 +24,18 @@
           <% end %>
 
           <div class="episode_player-details-vwrap">
-            <h2 class="episode_player-details-podcast">
+            <p class="episode_player-details-podcast">
               <%= link @podcast.name, to: podcast_url(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
               <%= if number = number(@episode) do %>
                 <%= link "##{number}", to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank", class: "js-listen-link" %>
               <% end %>
-            </h2>
+            </p>
             <h1 class="episode_player-details-title">
               <%= link @episode.title, to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank", class: "js-listen-link" %>
             </h1>
+            <h2 class="episode_player-details-subtitle">
+              <%= @episode.subtitle %>
+            </h2>
           </div>
         </div>
       </div>

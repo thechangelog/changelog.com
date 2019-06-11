@@ -247,5 +247,15 @@ body.embed {
         body.embed--day & { color: $black; }
       }
     }
+
+    &-subtitle {
+      color: $half-white;
+      font-size: 1.375em;
+      font-style: italic;
+      font-weight: normal;
+      margin: 0.5em 0 0;
+
+      body.embed--day & { color: $half-black; }
+    }
   }
 }
