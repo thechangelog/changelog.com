@@ -21,35 +21,29 @@ $blue-grey: #222C36;
 $highlight: #fafafa;
 
 // Podcasts - Sometimes we wanna loop through 'em
-$podcasts: afk, backstage, founderstalk, gotime, master, podcast, rfc, spotlight, jsparty, practicalai;
+$podcasts: podcast, founderstalk, gotime, jsparty, practicalai, backstage, brainscience, master;
 
 // Podcast Colors
-$afk: #E4002B;
-$afk-transparent: rgba(darken($afk, 45%), 0.6);
-
 $podcast: #9E978E;
 $podcast-transparent: rgba(darken($podcast, 45%), 0.6);
-
-$gotime: #59CBE8;
-$gotime-transparent: rgba(darken($gotime, 50%), 0.3);
-
-$rfc: #E10098;
-$rfc-transparent: rgba(darken($rfc, 30%), 0.3);
 
 $founderstalk: #3CDBC0;
 $founderstalk-transparent: rgba(darken($founderstalk, 40%), 0.3);
 
-$backstage: #FC4C02;
-$backstage-transparent: rgba(darken($backstage, 30%), 0.6);
-
-$spotlight: #F9A05D;
-$spotlight-transparent: rgba(darken($spotlight, 30%), 0.4);
+$gotime: #59CBE8;
+$gotime-transparent: rgba(darken($gotime, 50%), 0.3);
 
 $jsparty: #FFCD00;
 $jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
 
 $practicalai: #4C5FAA;
 $practicalai-transparent: rgba(darken($practicalai, 50%), 0.3);
+
+$backstage: #FC4C02;
+$backstage-transparent: rgba(darken($backstage, 30%), 0.6);
+
+$brainscience: #F9423A;
+$brainscience-transparent: rgba(darken($brainscience, 30%), 0.6);
 
 // Borders
 $border-color: $lightest-grey;
