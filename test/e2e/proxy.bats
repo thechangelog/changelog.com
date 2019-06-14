@@ -7,7 +7,7 @@ load http
   force_https
 }
 
-@test "http://$FQDN/wp-content/uploads/balanced-150x150.jpg keep http" {
+@test "http://$FQDN/wp-content/uploads/balanced-150x150.jpg" {
   http_get "http://$FQDN/wp-content/uploads/balanced-150x150.jpg"
   is_ok
   is_jpg
@@ -55,7 +55,7 @@ load http
   is_netdata
 }
 
-@test "http://$FQDN/nginx_status is forbidden" {
+@test "http://$FQDN/nginx_status forbidden" {
   http_get "http://$FQDN/nginx_status"
   is_forbidden
 }
