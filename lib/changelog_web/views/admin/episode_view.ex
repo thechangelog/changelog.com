@@ -78,7 +78,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
         uniques: list |> Enum.map(&(&1.uniques)) |> Enum.sum()
       }
     end)
-    |> Enum.sort(&(Timex.after?(&1.date, &2.date)))
+    |> Enum.sort(&(Timex.before?(&1.date, &2.date)))
     |> get_chart_data(title)
   end
 
