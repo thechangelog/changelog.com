@@ -3,6 +3,10 @@ use Mix.Config
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: System.get_env("PORT")],
   url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_HOST") || "changelog.com"), port: (System.get_env("URL_PORT") || 443)],
+  force_ssl: [
+    rewrite_on: [:x_forwarded_proto],
+    exclude: ["127.0.0.1", "localhost", "changelog.localhost"]
+  ],
   secret_key_base: DockerSecret.get("SECRET_KEY_BASE"),
   static_url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_STATIC_HOST") || "cdn.changelog.com"), port: (System.get_env("URL_PORT") || 443)],
   cache_static_manifest: "priv/static/cache_manifest.json"

@@ -29,17 +29,14 @@ HOST_SSH_USER ?= core
 RSYNC_SRC_HOST ?= root@172.104.216.248
 
 HOSTNAME := $(DOCKER_STACK).$(DOMAIN)
-HOSTNAME_LOCAL := $(USER).$(DOMAIN)
-
-FQDN := $(DOMAIN)
-IPv4 = $(shell dig +short -4 $(FQDN))
-export FQDN
-export IPv4
+HOSTNAME_LOCAL := changelog.localhost
 
 GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 GIT_BRANCH ?= master
 
 APP_IMAGE ?= thechangelog/changelog.com:latest
+
+export FQDN IPv4
 
 
 
@@ -154,10 +151,6 @@ endif
 
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
-
-.PHONY: bats
-bats: $(CURL) $(BATS)
-	@echo "Testing $(BOLD)$(FQDN)$(NORMAL) resolving to $(BOLD)$(IPv4)$(NORMAL)..."
 
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
@@ -392,9 +385,12 @@ deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 .PHONY: dds
 dds: deploy-docker-stack
 
+priv/db:
+	@mkdir -p priv/db
+
 .PHONY: deploy-docker-stack-local
 deploy-docker-stack-local: DOCKER_STACK_FILE = docker/changelog.stack.local.yml
-deploy-docker-stack-local: deploy-docker-stack
+deploy-docker-stack-local: deploy-docker-stack priv/db
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
 
@@ -406,7 +402,7 @@ bli: build-local-image
 
 .PHONY: update-app-service-local
 update-app-service-local: $(DOCKER)
-	@$(DOCKER) service update --force --image thechangelog/changelog.com:local $(DOCKER_STACK)_app
+	@$(DOCKER) service update --force --image thechangelog/changelog.com:local --update-monitor 10s $(DOCKER_STACK)_app
 .PHONY: uasl
 uasl: update-app-service-local
 
@@ -536,17 +532,24 @@ publish-proxy-image: $(DOCKER)
 	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/proxy:latest
 
+.PHONY: e2e
+e2e: $(BATS) $(CURL)
+
 .PHONY: proxy-test
-proxy-test: bats
-	@$(BATS) test/e2e/proxy.bats
+proxy-test: FQDN = $(DOMAIN)
+proxy-test: IPv4 = 69.164.223.133
+proxy-test: e2e
+	@cd test/e2e && \
+	$(BATS) proxy.bats proxy.prod.bats
 .PHONY: pt
 pt: proxy-test
 
 .PHONY: proxy-test-local
 proxy-test-local: FQDN = $(HOSTNAME_LOCAL)
 proxy-test-local: IPv4 = 127.0.0.1
-proxy-test-local: bats
-	@$(BATS) test/e2e/proxy.bats
+proxy-test-local: e2e
+	@cd test/e2e && \
+	$(BATS) proxy.bats proxy.local.bats
 .PHONY: ptl
 ptl: proxy-test-local
 

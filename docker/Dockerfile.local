@@ -5,10 +5,8 @@ FROM thechangelog/changelog.com
 
 # It's safest to copy files which have dependencies already met in the current production
 # If you find yourself needing to test changes which require a new mix dep, or asset recompilation, consider using `gmake contrib` instead
-# COPY ./config /app/config
-# COPY ./lib/changelog_web/controllers/feed_controller.ex /app/lib/changelog_web/controllers/feed_controller.ex
-COPY ./lib/changelog_web/endpoint.ex /app/lib/changelog_web/endpoint.ex
+COPY ./config /app/config
 RUN date -u +'%Y-%m-%dT%H:%M:%SZ' > /app/priv/static/version.txt
 COPY ./Makefile /app/Makefile
 
-CMD make report-deploy ; elixir --sname changelog -S mix do ecto.create, ecto.migrate, phx.server
+CMD elixir --sname changelog -S mix do ecto.create, ecto.migrate, phx.server

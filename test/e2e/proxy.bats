@@ -1,100 +1,85 @@
 #!/usr/bin/env bash
 
-FQDN="${FQDN:-changelog.com}"
-IPv4="${IPv4:-$(dig +short -4 "$FQDN")}"
+load http
 
-get() {
-  # shellcheck disable=SC2068
-  curl --verbose --silent $@
+@test "http://changelog.com @ ${IPv4:?must be set} -> https://${FQDN:?must be set}" {
+  run get --resolve "changelog.com:80:$IPv4" "http://changelog.com"
+
+  echo "$output" |
+    grep "location: https://$FQDN/\s"
 }
 
-@test "changelog.com http" {
-  get "http://$FQDN" |
-    grep "News and podcasts for developers | Changelog"
+@test "http://changelog.com @ $IPv4 X-Forwarded-Proto https" {
+  run get --header "X-Forwarded-Proto: https" --resolve "changelog.com:80:$IPv4" "http://changelog.com"
+
+  echo "$output" |
+    grep "Changelog Media LLC"
 }
 
-@test "changelog.com https" {
-  [ "$IPv4" != "127.0.0.1" ] ||
-    skip "HTTPS is not configured for $IPv4"
+@test "http://changelog.com/posts/the... @ $IPv4 -> https://$FQDN/posts/the..." {
+  run get --resolve "changelog.com:80:$IPv4" "http://changelog.com/posts/the-new-changelog-setup-for-2019"
 
-  get "https://$FQDN" |
-    grep "News and podcasts for developers | Changelog"
+  echo "$output"
+
+  echo "$output" |
+    grep "location: https://$FQDN/posts/the-new-changelog-setup-for-2019\s"
 }
 
-@test "default vhost is changelog.com" {
-  get "http://$IPv4" |
-    grep "News and podcasts for developers | Changelog"
-}
-
-@test "legacy assets http" {
+@test "http://$FQDN legacy assets" {
   run get "http://$FQDN/wp-content/uploads/changelog-nightly-2015-03-08-night-1024x890.png"
 
   echo "$output" |
     grep "200 OK"
 }
 
-@test "legacy assets https" {
-  [ "$IPv4" != "127.0.0.1" ] ||
-    skip "HTTPS is not configured for $IPv4"
-
-  run get "https://$FQDN/wp-content/uploads/changelog-nightly-2015-03-08-night-1024x890.png"
-
-  echo "$output" |
-    grep "200 OK"
-}
-
-@test "posts redirects" {
+@test "http://$FQDN posts redirects" {
   run get "http://$FQDN/day-one-recap-gophercon-2016"
 
   echo "$output" |
-    grep "Location: http://$FQDN/posts/day-one-recap-gophercon-2016"
+    grep "Location: https://$FQDN/posts/day-one-recap-gophercon-2016"
 }
 
-@test "changelog.fm http-only" {
-  get --resolve "changelog.fm:80:$IPv4" "http://changelog.fm" 2>&1 |
-    grep "Location: http://changelog.com/podcast\s"
+@test "http://changelog.fm @ $IPv4 -> https://changelog.com/podcast" {
+  run get --resolve "changelog.fm:80:$IPv4" "http://changelog.fm"
+
+  echo "$output" |
+    grep "Location: https://changelog.com/podcast\s"
 }
 
-@test "gotime.fm http-only" {
-  get --resolve "gotime.fm:80:$IPv4" "http://gotime.fm" 2>&1 |
-    grep "Location: http://changelog.com/gotime\s"
+@test "http://gotime.fm @ $IPv4 -> https://changelog.com/gotime" {
+  run get --resolve "gotime.fm:80:$IPv4" "http://gotime.fm"
+
+  echo "$output" |
+    grep "Location: https://changelog.com/gotime\s"
 }
 
-@test "jsparty.fm http-only" {
-  get --resolve "jsparty.fm:80:$IPv4" "http://jsparty.fm" 2>&1 |
-    grep "Location: http://changelog.com/jsparty\s"
+@test "http://jsparty.fm @ $IPv4 -> https://changelog.com/jsparty" {
+  run get --resolve "jsparty.fm:80:$IPv4" "http://jsparty.fm"
+
+  echo "$output" |
+    grep "Location: https://changelog.com/jsparty\s"
 }
 
-@test "rfc.fm http-only" {
-  get --resolve "rfc.fm:80:$IPv4" "http://rfc.fm" 2>&1 |
-    grep "Location: http://changelog.com/rfc\s"
+@test "http://rfc.fm @ $IPv4 -> https://changelog.com/rfc" {
+  run get --resolve "rfc.fm:80:$IPv4" "http://rfc.fm"
+
+  echo "$output" |
+    grep "Location: https://changelog.com/rfc\s"
 }
 
-@test "nginx_status is forbidden" {
-  get "http://$FQDN/nginx_status" 2>&1 |
+@test "http://netdata.$FQDN" {
+  run get "http://netdata.$FQDN"
+
+  echo "$output" |
+    grep "netdata dashboard"
+
+  echo "$output" |
+    grep "Server: NetData Embedded HTTP Server"
+}
+
+@test "http://$FQDN/nginx_status is forbidden" {
+  run get "http://$FQDN/nginx_status"
+
+  echo "$output" |
     grep "403 Forbidden"
 }
-
-@test "netdata http" {
-  run get "http://netdata.$FQDN"
-
-  echo "$output" |
-    grep "netdata dashboard"
-
-  echo "$output" |
-    grep "Server: NetData Embedded HTTP Server"
-}
-
-@test "netdata https" {
-  [ "$IPv4" != "127.0.0.1" ] ||
-    skip "HTTPS is not configured for $IPv4"
-
-  run get "http://netdata.$FQDN"
-
-  echo "$output" |
-    grep "netdata dashboard"
-
-  echo "$output" |
-    grep "Server: NetData Embedded HTTP Server"
-}
-

@@ -1,28 +1,28 @@
 version: "3.7"
 
 services:
-  log:
-    command: syslog+tls://logs7.papertrailapp.com:14349
-    deploy:
-      mode: global
-      restart_policy:
-        condition: any
-      update_config:
-        failure_action: rollback
-        # start_period + (interval * retries)
-        monitor: 50s
-        order: start-first
-    healthcheck:
-      test: ["CMD", "wget", "--output-document", "/dev/null", "--quiet",  "http://127.0.0.1:80/health"]
-      interval: 15s
-      timeout: 15s
-      retries: 3
-      start_period: 5s
-    environment:
-      SYSLOG_HOSTNAME: "${USER}"
-    image: gliderlabs/logspout:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+  # log:
+  #   command: syslog+tls://logs7.papertrailapp.com:14349
+  #   deploy:
+  #     mode: global
+  #     restart_policy:
+  #       condition: any
+  #     update_config:
+  #       failure_action: rollback
+  #       # start_period + (interval * retries)
+  #       monitor: 50s
+  #       order: start-first
+  #   healthcheck:
+  #     test: ["CMD", "wget", "--output-document", "/dev/null", "--quiet",  "http://127.0.0.1:80/health"]
+  #     interval: 15s
+  #     timeout: 15s
+  #     retries: 3
+  #     start_period: 5s
+  #   environment:
+  #     SYSLOG_HOSTNAME: "${USER}.localhost"
+  #   image: gliderlabs/logspout:latest
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
   db:
     deploy:
       replicas: 1
@@ -86,7 +86,7 @@ services:
       NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
       PORT: 4000
-      URL_HOST: &host "${USER}.changelog.com"
+      URL_HOST: &host "changelog.localhost"
       URL_PORT: 80
       URL_SCHEME: http
       URL_STATIC_HOST: *host
@@ -175,7 +175,7 @@ services:
       retries: 3
       start_period: 30s
     image: netdata/netdata
-    hostname: "${USER}-netdata"
+    hostname: "netdata"
     environment:
       # netdata container is too verbose, tell Logspout to not send logs to Papertrail
       # https://github.com/gliderlabs/logspout#ignoring-specific-containers
