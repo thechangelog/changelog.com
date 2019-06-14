@@ -3,83 +3,59 @@
 load http
 
 @test "http://changelog.com @ ${IPv4:?must be set} -> https://${FQDN:?must be set}" {
-  run get --resolve "changelog.com:80:$IPv4" "http://changelog.com"
-
-  echo "$output" |
-    grep "location: https://$FQDN/\s"
+  http_get --resolve "changelog.com:80:$IPv4" "http://changelog.com"
+  force_https
 }
 
-@test "http://changelog.com @ $IPv4 X-Forwarded-Proto https" {
-  run get --header "X-Forwarded-Proto: https" --resolve "changelog.com:80:$IPv4" "http://changelog.com"
-
-  echo "$output" |
-    grep "Changelog Media LLC"
+@test "http://$FQDN/wp-content/uploads/balanced-150x150.jpg keep http" {
+  http_get "http://$FQDN/wp-content/uploads/balanced-150x150.jpg"
+  is_ok
+  is_jpg
 }
 
-@test "http://changelog.com/posts/the... @ $IPv4 -> https://$FQDN/posts/the..." {
-  run get --resolve "changelog.com:80:$IPv4" "http://changelog.com/posts/the-new-changelog-setup-for-2019"
+@test "http://$FQDN/day-one-recap-gophercon-2016 -> https://$FQDN/posts/day-one-recap-gophercon-2016" {
+  http_get "http://$FQDN/day-one-recap-gophercon-2016"
 
-  echo "$output"
-
-  echo "$output" |
-    grep "location: https://$FQDN/posts/the-new-changelog-setup-for-2019\s"
+  grep "Location: https://$FQDN/posts/day-one-recap-gophercon-2016" <<< "$output"
 }
 
-@test "http://$FQDN legacy assets" {
-  run get "http://$FQDN/wp-content/uploads/changelog-nightly-2015-03-08-night-1024x890.png"
+@test "http://$FQDN/posts/the-new-changelog-setup-for-2019 -> https://$FQDN/posts/the-new-changelog-setup-for-2019" {
+  http_get "http://${FQDN}/posts/the-new-changelog-setup-for-2019"
 
-  echo "$output" |
-    grep "200 OK"
-}
-
-@test "http://$FQDN posts redirects" {
-  run get "http://$FQDN/day-one-recap-gophercon-2016"
-
-  echo "$output" |
-    grep "Location: https://$FQDN/posts/day-one-recap-gophercon-2016"
+  grep "location: https://$FQDN/posts/the-new-changelog-setup-for-2019\s" <<< "$output"
 }
 
 @test "http://changelog.fm @ $IPv4 -> https://changelog.com/podcast" {
-  run get --resolve "changelog.fm:80:$IPv4" "http://changelog.fm"
+  http_get --resolve "changelog.fm:80:$IPv4" "http://changelog.fm"
 
-  echo "$output" |
-    grep "Location: https://changelog.com/podcast\s"
+  grep "Location: https://changelog.com/podcast\s" <<< "$output"
 }
 
 @test "http://gotime.fm @ $IPv4 -> https://changelog.com/gotime" {
-  run get --resolve "gotime.fm:80:$IPv4" "http://gotime.fm"
+  http_get --resolve "gotime.fm:80:$IPv4" "http://gotime.fm"
 
-  echo "$output" |
-    grep "Location: https://changelog.com/gotime\s"
+  grep "Location: https://changelog.com/gotime\s" <<< "$output"
 }
 
 @test "http://jsparty.fm @ $IPv4 -> https://changelog.com/jsparty" {
-  run get --resolve "jsparty.fm:80:$IPv4" "http://jsparty.fm"
+  http_get --resolve "jsparty.fm:80:$IPv4" "http://jsparty.fm"
 
-  echo "$output" |
-    grep "Location: https://changelog.com/jsparty\s"
+  grep "Location: https://changelog.com/jsparty\s" <<< "$output"
 }
 
 @test "http://rfc.fm @ $IPv4 -> https://changelog.com/rfc" {
-  run get --resolve "rfc.fm:80:$IPv4" "http://rfc.fm"
+  http_get --resolve "rfc.fm:80:$IPv4" "http://rfc.fm"
 
-  echo "$output" |
-    grep "Location: https://changelog.com/rfc\s"
+  grep "Location: https://changelog.com/rfc\s" <<< "$output"
 }
 
 @test "http://netdata.$FQDN" {
-  run get "http://netdata.$FQDN"
-
-  echo "$output" |
-    grep "netdata dashboard"
-
-  echo "$output" |
-    grep "Server: NetData Embedded HTTP Server"
+  http_get "http://netdata.$FQDN"
+  is_ok
+  is_netdata
 }
 
 @test "http://$FQDN/nginx_status is forbidden" {
-  run get "http://$FQDN/nginx_status"
-
-  echo "$output" |
-    grep "403 Forbidden"
+  http_get "http://$FQDN/nginx_status"
+  is_forbidden
 }
