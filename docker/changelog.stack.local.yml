@@ -175,7 +175,7 @@ services:
       retries: 3
       start_period: 30s
     image: netdata/netdata
-    hostname: "netdata"
+    hostname: local_netdata
     environment:
       # netdata container is too verbose, tell Logspout to not send logs to Papertrail
       # https://github.com/gliderlabs/logspout#ignoring-specific-containers
