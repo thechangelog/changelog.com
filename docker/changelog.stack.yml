@@ -79,7 +79,7 @@ services:
         monitor: 115s
         order: start-first
     healthcheck:
-      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/"]
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/health"]
       interval: 15s
       timeout: 15s
       retries: 3

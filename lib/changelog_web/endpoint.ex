@@ -4,6 +4,8 @@ defmodule ChangelogWeb.Endpoint do
   socket "/socket", ChangelogWeb.UserSocket,
     websocket: true # or list of options
 
+  plug(ChangelogWeb.Plug.HealthCheck)
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
