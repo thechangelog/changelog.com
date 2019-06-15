@@ -20,7 +20,8 @@ config :arc,
 config :changelog, Changelog.Repo,
   url: DockerSecret.get("DB_URL"),
   adapter: Ecto.Adapters.Postgres,
-  pool_size: 20
+  pool_size: 20,
+  timeout: 60000
 
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.SMTPAdapter,
