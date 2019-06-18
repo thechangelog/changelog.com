@@ -13,6 +13,13 @@ defmodule ChangelogWeb.NewsItemView do
       ]
     end
   end
+  def admin_edit_link(conn, %{admin: true}, item = %{type: :link, object: post}) do
+    content_tag(:span, class: "news_item-toolbar-meta-item") do
+      [
+        link("[#{item.click_count}/#{item.impression_count}]", to: admin_post_path(conn, :edit, post, next: current_path(conn)), data: [turbolinks: false])
+      ]
+    end
+  end
   def admin_edit_link(conn, %{admin: true}, item) do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
