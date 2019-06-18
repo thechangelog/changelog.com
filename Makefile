@@ -310,10 +310,10 @@ define VERSION_CHECK
 VERSION="$$($(CURL) --silent --location \
   --write-out '$(NORMAL)HTTP/%{http_version} %{http_code} in %{time_total}s' \
   http://$(HOSTNAME)/version.txt)" && \
-echo $(BOLD)$(PRE_VERSION)$$VERSION @ $$(date)
+echo $(BOLD)$(GIT_TREE)$$VERSION @ $$(date)
 endef
 .PHONY: check-deployed-version
-check-deployed-version: PRE_VERSION = $(GIT_REPOSITORY)/tree/
+check-deployed-version: GIT_TREE = $(GIT_REPOSITORY)/tree/
 check-deployed-version: $(CURL) ## cdv | Check the currently deployed git sha
 	@$(VERSION_CHECK)
 .PHONY: cdv
