@@ -9,6 +9,9 @@ RUN apk add bash && bash --version
 ENV SHELL=/bin/bash
 ENV TERM=xterm
 
+ENV DOCKER=/usr/local/bin/docker
+ENV COMPOSE=/usr/local/bin/docker-compose
+
 ARG GIT_REPOSITORY=https://github.com/thechangelog/changelog.com
 ENV GIT_REPOSITORY=$GIT_REPOSITORY
 ARG GIT_BRANCH=master
