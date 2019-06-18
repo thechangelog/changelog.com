@@ -18,7 +18,7 @@ config :changelog, ChangelogWeb.Endpoint,
 config :changelog,
   ecto_repos: [Changelog.Repo],
   buffer_token: DockerSecret.get("BUFFER_TOKEN"),
-  github_api_token: DockerSecret.get("GITHUB_API_TOKEN"),
+  github_api_token: DockerSecret.get("GITHUB_API_TOKEN2"),
   cm_api_token: Base.encode64("#{DockerSecret.get("CM_API_TOKEN")}:x"),
   slack_invite_api_token: DockerSecret.get("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN")
