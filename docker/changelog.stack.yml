@@ -96,6 +96,7 @@ services:
       - CM_API_TOKEN
       - CM_SMTP_TOKEN
       - GITHUB_API_TOKEN
+      - GITHUB_API_TOKEN2
       - GITHUB_CLIENT_ID
       - GITHUB_CLIENT_SECRET
       - AWS_ACCESS_KEY_ID
@@ -205,6 +206,8 @@ secrets:
   CM_SMTP_TOKEN:
     external: true
   GITHUB_API_TOKEN:
+    external: true
+  GITHUB_API_TOKEN2:
     external: true
   GITHUB_CLIENT_ID:
     external: true
