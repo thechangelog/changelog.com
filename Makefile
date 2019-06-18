@@ -42,14 +42,16 @@ export FQDN IPv4
 
 ### DEPS ###
 #
+DOCKER_DARWIN := /usr/local/bin/docker
 ifeq ($(PLATFORM),Darwin)
-DOCKER := /usr/local/bin/docker
+DOCKER := $(DOCKER_DARWIN)
 COMPOSE := $(DOCKER)-compose
 $(DOCKER) $(COMPOSE):
 	@brew cask install docker
 endif
+DOCKER_LINUX := /usr/bin/docker
 ifeq ($(PLATFORM),Linux)
-DOCKER ?= /usr/bin/docker
+DOCKER ?= $(DOCKER_LINUX)
 $(DOCKER): $(CURL)
 	@sudo apt-get update && \
 	sudo apt-get install apt-transport-https gnupg-agent && \
@@ -406,9 +408,19 @@ update-app-service-local: $(DOCKER)
 .PHONY: uasl
 uasl: update-app-service-local
 
+define WATCH_STACK
+watch $(DOCKER) stack ps --no-trunc $(DOCKER_STACK)
+endef
+.PHONY: watch-stack
+watch-stack: DOCKER = $(DOCKER_LINUX)
+watch-stack:
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(WATCH_STACK)"
+.PHONY: ws
+ws: watch-stack
+
 .PHONY: watch-stack-local
 watch-stack-local: $(DOCKER)
-	@watch $(DOCKER) stack ps --no-trunc $(DOCKER_STACK)
+	@$(WATCH_STACK)
 .PHONY: wsl
 wsl: watch-stack-local
 
