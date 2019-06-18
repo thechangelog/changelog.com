@@ -5,7 +5,7 @@ defmodule ChangelogWeb.NewsItemView do
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
                       EpisodeView, PersonView, TopicView, PodcastView}
 
-  def admin_edit_link(conn, %{admin: true}, item = %{type: :audio, object: episode}) do
+  def admin_edit_link(conn, %{admin: true}, item = %{type: :audio, object: episode}) when is_map(episode) do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("[#{item.click_count}/#{item.impression_count}]", to: admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false]),
@@ -13,7 +13,7 @@ defmodule ChangelogWeb.NewsItemView do
       ]
     end
   end
-  def admin_edit_link(conn, %{admin: true}, item = %{type: :link, object: post}) do
+  def admin_edit_link(conn, %{admin: true}, item = %{type: :link, object: post}) when is_map(post) do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("[#{item.click_count}/#{item.impression_count}]", to: admin_post_path(conn, :edit, post, next: current_path(conn)), data: [turbolinks: false])
