@@ -44,8 +44,8 @@ export FQDN IPv4
 #
 DOCKER_DARWIN := /usr/local/bin/docker
 ifeq ($(PLATFORM),Darwin)
-DOCKER := $(DOCKER_DARWIN)
-COMPOSE := $(DOCKER)-compose
+DOCKER ?= $(DOCKER_DARWIN)
+COMPOSE ?= $(DOCKER)-compose
 $(DOCKER) $(COMPOSE):
 	@brew cask install docker
 endif
