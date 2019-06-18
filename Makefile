@@ -394,11 +394,11 @@ deploy-docker-stack-local: deploy-docker-stack priv/db
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
 
-.PHONY: build-local-image
-build-local-image: $(DOCKER)
+.PHONY: build-image-local
+build-image-local: $(DOCKER)
 	@$(DOCKER) build --pull --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
-.PHONY: bli
-bli: build-local-image
+.PHONY: bil
+bil: build-image-local
 
 .PHONY: update-app-service-local
 update-app-service-local: $(DOCKER)
