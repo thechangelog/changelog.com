@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+FQDN="${FQDN:-changelog.localhost}"
+IPv4="${IPv4:-127.0.0.1}"
+
 load http
 
 @test "http://${FQDN:?must be set}" {
