@@ -1,4 +1,6 @@
-FROM docker/compose:1.23.2
+# https://hub.docker.com/r/docker/compose/tags
+ARG DOCKER_COMPOSE_VERSION
+FROM docker/compose:$DOCKER_COMPOSE_VERSION
 
 RUN apk add git && git version
 RUN apk add make && make --version

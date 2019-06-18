@@ -210,6 +210,7 @@ bi: bootstrap-image
 build-bootstrap-image: $(DOCKER)
 	@cd docker && \
 	$(DOCKER) build \
+	  --build-arg DOCKER_COMPOSE_VERSION=$$($(COMPOSE) version --short) \
 	  --build-arg GIT_REPOSITORY=$(GIT_REPOSITORY) \
 	  --build-arg GIT_BRANCH=$(GIT_BRANCH) \
 	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
