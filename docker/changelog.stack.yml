@@ -76,7 +76,7 @@ services:
       update_config:
         failure_action: rollback
         # start_period + (interval * retries)
-        monitor: 115s
+        monitor: 200s
         order: start-first
     healthcheck:
       test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/health"]
