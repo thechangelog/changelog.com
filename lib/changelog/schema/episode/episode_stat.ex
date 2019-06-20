@@ -18,6 +18,7 @@ defmodule Changelog.EpisodeStat do
   end
 
   def between(query \\ __MODULE__, start_date, end_date), do: from(q in query, where: q.date < ^end_date, where: q.date >= ^start_date)
+  def on_date(query \\ __MODULE__, date), do: from(q in query, where: q.date == ^date)
   def sum_reach(query \\ __MODULE__), do: from(q in query, select: sum(q.uniques))
   def sum_downloads(query \\ __MODULE__), do: from(q in query, select: sum(q.downloads))
 

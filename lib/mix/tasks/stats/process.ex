@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Changelog.Stats do
+defmodule Mix.Tasks.Changelog.Stats.Process do
   use Mix.Task
 
   @shortdoc "Processes stats for given date, or all missing dates"
