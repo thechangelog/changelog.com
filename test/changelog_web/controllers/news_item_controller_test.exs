@@ -16,6 +16,16 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert conn.resp_body =~ i2.headline
   end
 
+  @tag :as_admin
+  test "getting the index as admin", %{conn: conn} do
+    i1 = insert(:published_news_item)
+
+    conn = get(conn, root_path(conn, :index))
+
+    assert conn.status == 200
+    assert conn.resp_body =~ i1.headline
+  end
+
   test "getting a published news item page via hashid", %{conn: conn} do
     item = insert(:published_news_item, headline: "Hash ID me!")
     hashid = hashid(item)
