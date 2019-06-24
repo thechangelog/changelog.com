@@ -38,6 +38,12 @@
         <%= hidden_input(i, :position, class: "js-position") %>
 
         <div class="right floated content">
+        <%= if item.image do %>
+          <div class="ui tiny basic icon button js-image" title="Toggle image visibility">
+            <i class="eye icon <%= if !i.data.image, do: "slash" %>"></i>
+            <%= hidden_input(i, :image) %>
+          </div>
+        <% end %>
           <div class="ui tiny basic icon button js-move"><i class="move icon"></i></div>
           <div class="ui tiny basic icon button js-remove"><i class="trash icon"></i></div>
           <%= hidden_input(i, :delete) %>
@@ -67,6 +73,12 @@
         <%= hidden_input(i, :position, class: "js-position") %>
 
         <div class="right floated content">
+        <%= if ad.image do %>
+          <div class="ui tiny basic icon button js-image" title="Toggle image visibility">
+            <i class="eye icon <%= if !i.data.image, do: "slash" %>"></i>
+            <%= hidden_input(i, :image) %>
+          </div>
+        <% end %>
           <div class="ui tiny basic icon button js-move"><i class="move icon"></i></div>
         </div>
         <div class="content" style="margin-left: 6px;">

@@ -29,6 +29,20 @@ export default class ListWidget {
       $members.append(linkItem(context));
     });
 
+    $members.on("click", ".js-image", function(event) {
+      let $clicked = $(this);
+      let $icon = $clicked.find("i");
+      let $input = $clicked.find("input");
+
+      if ($icon.hasClass("slash")) {
+        $input.val(true);
+        $icon.removeClass("slash");
+      } else {
+        $input.val(false);
+        $icon.addClass("slash");
+      }
+    })
+
     $members.on("click", ".js-remove", function(event) {
       let $clicked = $(this);
       let $member = $clicked.closest(".item");

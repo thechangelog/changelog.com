@@ -16,7 +16,7 @@ defmodule Changelog.NewsIssueAd do
 
   def changeset(issue_ad, params \\ %{}) do
     issue_ad
-    |> cast(params, ~w(position ad_id issue_id delete)a)
+    |> cast(params, ~w(position ad_id issue_id image delete)a)
     |> validate_required([:position])
     |> foreign_key_constraint(:ad_id)
     |> foreign_key_constraint(:issue_id)
