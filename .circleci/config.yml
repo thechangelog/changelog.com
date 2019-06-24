@@ -68,6 +68,7 @@ jobs:
           name: Run tests
           command: |
             export MIX_ENV=test
+            mix ecto.drop --force
             if [ "$CIRCLE_BRANCH" = "master" ]
             then
               mix coveralls.circle
