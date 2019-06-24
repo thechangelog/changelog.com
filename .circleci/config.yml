@@ -69,12 +69,7 @@ jobs:
           command: |
             export MIX_ENV=test
             mix ecto.drop --force
-            if [ "$CIRCLE_BRANCH" = "master" ]
-            then
-              mix coveralls.circle
-            else
-              mix test
-            fi
+            mix test
 
   assets:
     working_directory: *dir
