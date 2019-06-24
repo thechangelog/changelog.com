@@ -1,13 +1,16 @@
 defmodule ChangelogWeb.Admin.NewsIssueView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{NewsIssue, NewsItem}
-  alias ChangelogWeb.NewsItemView
+  alias Changelog.{NewsAd, NewsIssue, NewsItem}
 
   def ad_count(issue), do: NewsIssue.ad_count(issue)
+
   def item_count(issue), do: NewsIssue.item_count(issue)
 
-  def item_icon(item) do
+  def icon(%NewsAd{} = ad) do
+    if ad.image, do: content_tag(:i, "", class: "image icon")
+  end
+  def icon(%NewsItem{} = item) do
     icon_class = cond do
       item.image -> "image"
       NewsItem.is_audio(item) -> "volume up"

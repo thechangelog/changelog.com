@@ -45,8 +45,8 @@
         <div class="content" style="margin-left: 6px;">
           <%= link("#{item.headline} (#{ctr(item)}%)", to: item.url, class: "header") %>
           <div class="description" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            <%= item_icon(item) %>
-            <%= item.story |> md_to_text %>
+            <%= icon(item) %>
+            <%= item.story |> md_to_text() %>
           </div>
         </div>
       </div>
@@ -71,7 +71,10 @@
         </div>
         <div class="content" style="margin-left: 6px;">
           <%= link("#{ad.headline} (#{ctr(ad)}%)", to: ad.url, class: "header") %>
-          <div class="description"><%= ad |> NewsItemView.teaser |> raw %></div>
+          <div class="description" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            <%= icon(ad) %>
+            <%= ad.story |> md_to_text() %>
+          </div>
         </div>
       </div>
     <% end %>
