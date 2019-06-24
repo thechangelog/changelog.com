@@ -8,32 +8,42 @@ defmodule ChangelogWeb.NewsIssueController do
   def show(conn, %{"id" => slug}) do
     issue =
       NewsIssue.published()
-      |> Repo.get_by!(slug: slug)
       |> NewsIssue.preload_all()
-
-    ads = issue.ads
-    items = Enum.map(issue.items, &NewsItem.load_object/1)
+      |> Repo.get_by!(slug: slug)
 
     conn
     |> assign(:issue, issue)
-    |> assign(:ads, ads)
-    |> assign(:items, items)
+    |> assign(:ads, ads_for_issue(issue))
+    |> assign(:items, items_for_issue(issue))
     |> render(:show)
   end
 
   def preview(conn, %{"id" => slug}) do
     issue =
       NewsIssue
-      |> Repo.get_by!(slug: slug)
       |> NewsIssue.preload_all()
-
-    ads = issue.ads
-    items = Enum.map(issue.items, &NewsItem.load_object/1)
+      |> Repo.get_by!(slug: slug)
 
     conn
     |> assign(:issue, issue)
-    |> assign(:ads, ads)
-    |> assign(:items, items)
+    |> assign(:ads, ads_for_issue(issue))
+    |> assign(:items, items_for_issue(issue))
     |> render(:show)
   end
+
+  defp ads_for_issue(issue) do
+    issue
+    |> Map.get(:news_issue_ads)
+    |> Enum.map(fn(a) -> apply_image_setting(a.ad, a.image) end)
+  end
+
+  defp items_for_issue(issue) do
+    issue
+    |> Map.get(:news_issue_items)
+    |> Enum.map(fn(i) -> apply_image_setting(i.item, i.image) end)
+    |> Enum.map(&NewsItem.load_object/1)
+  end
+
+  defp apply_image_setting(item_or_ad, true), do: item_or_ad
+  defp apply_image_setting(item_or_ad, false), do: Map.put(item_or_ad, :image, false)
 end
