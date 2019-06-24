@@ -24,6 +24,8 @@ defmodule Changelog.NewsAd do
     timestamps()
   end
 
+  def with_image(query \\ __MODULE__), do: from(q in query, where: not(is_nil(q.image)))
+
   def changeset(ad, attrs \\ %{}) do
     ad
     |> cast(attrs, [:url, :headline, :story, :active, :newsletter, :delete])

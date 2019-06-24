@@ -5,6 +5,7 @@ defmodule Changelog.NewsIssueAd do
 
   schema "news_issue_ads" do
     field :position, :integer
+    field :image, :boolean, default: false
     field :delete, :boolean, virtual: true
 
     belongs_to :ad, NewsAd, foreign_key: :ad_id
