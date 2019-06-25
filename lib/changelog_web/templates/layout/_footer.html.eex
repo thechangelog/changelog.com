@@ -106,6 +106,12 @@
           <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-rollbar.png"), "Rollbar") %>
         </a>
       </div>
+      <div class="footer-sponsors-item">
+        <a href="https://tidelift.com/?utm_source=changelog.com&utm_medium=referral" title="Visit Tidelift.com">
+          <p>Dependencies managed by</p>
+          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-tidelift.png"), "Tidelift") %>
+        </a>
+      </div>
     </div>
   </div>
 </footer>

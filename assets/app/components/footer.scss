@@ -115,15 +115,14 @@
     padding: $base-spacing 0 0;
 
     &_wrap {
-      justify-content: space-around;
+      justify-content: center;
       display: flex;
       flex-wrap: wrap;
       margin: 0 auto;
-      max-width: 810px;
     }
 
     &-item {
-      flex: 0 200px;
+      flex: 0 220px;
       font-family: $code;
       margin-bottom: 20px;
       text-align: center;
