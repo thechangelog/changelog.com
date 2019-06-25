@@ -24,11 +24,13 @@ ENV DOCKER_SERVICE_NAME=$DOCKER_SERVICE_NAME
 ARG DOCKER_SERVICE_IMAGE=thechangelog/changelog.com
 ENV DOCKER_SERVICE_IMAGE=$DOCKER_SERVICE_IMAGE
 
+COPY aliases.sh /etc/profile.d/aliases.sh
+
 VOLUME /app
 WORKDIR /app
 
 COPY deploy_docker_stack update_service_continuously /usr/local/bin/
 RUN cd /usr/local/bin && chmod +x deploy_docker_stack update_service_continuously
 
-ENTRYPOINT ["/bin/bash", "-c"]
+ENTRYPOINT ["/bin/bash", "--login", "-c"]
 CMD ["deploy_docker_stack"]

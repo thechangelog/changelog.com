@@ -163,8 +163,9 @@ docker run --rm --interactive --tty --name bootstrap \
   --env HOSTNAME=\$$HOSTNAME \
   --volume /var/run/docker.sock:/var/run/docker.sock:ro \
   --volume changelog.com:/app:rw \
-  thechangelog/bootstrap:latest
+  $(BOOTSTRAP_RUN)
 endef
+BOOTSTRAP_RUN ?= thechangelog/bootstrap:latest
 define DISABLE_APP_UPDATER
 docker service scale $(DOCKER_STACK)_app_updater=0
 endef
@@ -175,8 +176,9 @@ bootstrap-docker:
 bd: bootstrap-docker
 
 .PHONY: interactive-bootstrap
+interactive-bootstrap: BOOTSTRAP_RUN = --entrypoint /bin/bash thechangelog/bootstrap:latest --login
 interactive-bootstrap:
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER) bash"
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER)"
 .PHONY: ib
 ib: interactive-bootstrap
 
