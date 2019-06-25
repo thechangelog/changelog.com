@@ -68,7 +68,9 @@ jobs:
           name: Run tests
           command: |
             export MIX_ENV=test
+            echo "Drop $MIX_ENV db..."
             mix ecto.drop --force
+            echo "Run tests..."
             if [ "$CIRCLE_BRANCH" = "master" ]
             then
               mix coveralls.circle
