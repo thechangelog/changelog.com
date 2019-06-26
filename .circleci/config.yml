@@ -52,7 +52,7 @@ jobs:
     working_directory: *dir
     docker:
       - image: *runtime
-      - image: circleci/postgres:9.5
+      - image: circleci/postgres@sha256:e1a06b1327a3fca4770b9e537dda7d95d31e3585adda2370d2e49a7974963b90
         environment:
           POSTGRES_USER: "postgres"
           POSTGRES_DB: changelog_test
@@ -68,9 +68,6 @@ jobs:
           name: Run tests
           command: |
             export MIX_ENV=test
-            echo "Drop $MIX_ENV db..."
-            mix ecto.drop --force
-            echo "Run tests..."
             if [ "$CIRCLE_BRANCH" = "master" ]
             then
               mix coveralls.circle
@@ -134,15 +131,15 @@ workflows:
   build:
     jobs:
       - deps
-      # - test:
-      #     requires:
-      #       - deps
+      - test:
+          requires:
+            - deps
       - assets:
           requires:
             - deps
       - publish:
           requires:
-            # - test
+            - test
             - assets
           filters:
             branches:
