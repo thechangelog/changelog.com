@@ -134,15 +134,15 @@ workflows:
   build:
     jobs:
       - deps
-      - test:
-          requires:
-            - deps
+      # - test:
+      #     requires:
+      #       - deps
       - assets:
           requires:
             - deps
       - publish:
           requires:
-            - test
+            # - test
             - assets
           filters:
             branches:
