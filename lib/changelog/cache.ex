@@ -2,6 +2,8 @@ defmodule Changelog.Cache do
   @moduledoc """
   A small wrapper around ConCache to simplify interface
   """
+  require Logger
+
   alias Changelog.{Episode, Podcast, Post, Repo}
 
   def cache_name, do: :app_cache
@@ -17,7 +19,10 @@ defmodule Changelog.Cache do
   def delete(post = %Post{}) do
     delete("/posts/#{post.slug}")
   end
-  def delete(key), do: ConCache.delete(cache_name(), key)
+  def delete(key) do
+    Logger.info("Cache: Deleting #{key}")
+    ConCache.delete(cache_name(), key)
+  end
 
   def delete_all do
     Enum.each(keys(), fn(key) -> delete(key) end)
