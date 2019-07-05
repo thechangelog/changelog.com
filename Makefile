@@ -252,7 +252,8 @@ clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, ima
 	$(DOCKER) system prune && \
 	$(DOCKER) volume prune && \
 	$(DOCKER) volume ls | awk '/changelog|$(DOCKER_STACK)/ { system("$(DOCKER) volume rm " $$2) }' ; \
-	$(DOCKER) images | awk '/changelog|$(DOCKER_STACK)/ { system("$(DOCKER) image rm " $$1 ":" $$2) }'
+	$(DOCKER) image ls | awk '/changelog|$(DOCKER_STACK)/ { system("$(DOCKER) image rm " $$1 ":" $$2) }' ; \
+	$(DOCKER) config ls | awk '/changelog|$(DOCKER_STACK)/ { system("$(DOCKER) config rm " $$2) }'
 .PHONY: cd
 cd: clean-docker
 
