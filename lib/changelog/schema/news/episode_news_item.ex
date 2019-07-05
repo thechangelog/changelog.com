@@ -23,11 +23,18 @@ defmodule Changelog.EpisodeNewsItem do
       item
       |> NewsItem.preload_topics()
       |> change(%{
+        url: EpisodeView.url(episode, :show),
         headline: episode.title,
         story: episode.summary,
         news_item_topics: episode_topics(episode)})
       |> Repo.update!()
       |> update_search()
+    end
+  end
+
+  def delete(episode) do
+    if item = Episode.get_news_item(episode) do
+      Repo.delete!(item)
     end
   end
 

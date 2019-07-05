@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PostController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Post}
+  alias Changelog.{Cache, Post, PostNewsItem}
 
   plug :assign_post when action in [:edit, :update, :delete]
   plug Authorize, [Policies.Post, :post]
@@ -62,6 +62,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
     case Repo.update(changeset) do
       {:ok, post} ->
+        PostNewsItem.update(post)
         Cache.delete(post)
 
         conn
@@ -76,6 +77,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
   def delete(conn = %{assigns: %{post: post}}, _params) do
     Repo.delete!(post)
+    PostNewsItem.delete(post)
     Cache.delete(post)
 
     conn

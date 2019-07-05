@@ -7,10 +7,7 @@ export default class Slugifier {
   }
 
   slugify(event) {
-    if (this.$to.val() !== "") {
-      return;
-    }
-
+    if (this.$to.val() !== "") return;
     this.$to.val(this.stringToSlug(this.$from.val()));
   }
 

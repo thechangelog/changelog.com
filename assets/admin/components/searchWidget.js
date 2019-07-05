@@ -8,6 +8,9 @@ import sponsorItem from "templates/sponsorItem.hbs";
 export default class SearchWidget {
   constructor(type, parentType, relationType) {
     let $members = $(`.js-${relationType}`);
+
+    if (!$members.length) return;
+
     let $search = $members.siblings(".search");
 
     var setPositions = function() {

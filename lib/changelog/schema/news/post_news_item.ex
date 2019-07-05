@@ -25,9 +25,16 @@ defmodule Changelog.PostNewsItem do
       |> change(%{
         headline: post.title,
         story: post.tldr,
+        url: PostView.url(post, :show),
         news_item_topics: post_topics(post)})
       |> Repo.update!()
       |> update_search()
+    end
+  end
+
+  def delete(post) do
+    if item = Post.get_news_item(post) do
+      Repo.delete!(item)
     end
   end
 

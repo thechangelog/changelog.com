@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, EpisodeTopic, EpisodeGuest, EpisodeHost,
-                   EpisodeStat, Github, NewsItem, NewsQueue, Podcast}
+  alias Changelog.{Cache, Episode, EpisodeNewsItem, EpisodeTopic, EpisodeGuest,
+                   EpisodeHost, EpisodeStat, Github, NewsItem, NewsQueue, Podcast}
 
   plug :assign_podcast
   plug Authorize, [Policies.Episode, :podcast]
@@ -170,6 +170,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     case Repo.update(changeset) do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
+        EpisodeNewsItem.update(episode)
         Cache.delete(episode)
         params = replace_next_edit_path(params, admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
 
@@ -190,6 +191,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     Repo.delete!(episode)
+    EpisodeNewsItem.delete(episode)
     Cache.delete(episode)
 
     conn
@@ -260,24 +262,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do
-    episode =
-      episode
-      |> Episode.preload_podcast()
-      |> Episode.preload_topics()
-
-    topics = Enum.map(episode.episode_topics, fn(t) -> Map.take(t, [:topic_id, :position]) end)
-
-    %NewsItem{
-      type: :audio,
-      object_id: "#{episode.podcast.slug}:#{episode.slug}",
-      url: episode_url(conn, :show, episode.podcast.slug, episode.slug),
-      headline: episode.title,
-      story: episode.summary,
-      published_at: episode.published_at,
-      logger_id: conn.assigns.current_user.id,
-      news_item_topics: topics}
-    |> NewsItem.insert_changeset()
-    |> Repo.insert!()
+    episode
+    |> EpisodeNewsItem.insert(conn.assigns.current_user)
     |> NewsQueue.append()
   end
   defp handle_news_item(_, _), do: false

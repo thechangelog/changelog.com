@@ -111,7 +111,12 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   def edit(conn = %{assigns: %{current_user: me, item: item}}, _params) do
     changeset = NewsItem.update_changeset(item, %{logger_id: item.logger_id || me.id})
-    render(conn, :edit, item: item, changeset: changeset, similar: similar_items(item))
+
+    conn
+    |> assign(:item, item)
+    |> assign(:changeset, changeset)
+    |> assign(:similar, similar_items(item))
+    |> render(:edit)
   end
 
   def update(conn = %{assigns: %{item: item}}, params = %{"news_item" => item_params}) do

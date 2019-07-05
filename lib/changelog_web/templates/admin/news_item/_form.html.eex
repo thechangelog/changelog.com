@@ -6,12 +6,12 @@
   <div class="three fields">
     <div class="field required <%= error_class(f, :type) %>">
       <%= label(f, :type, "Type") %>
-      <%= select(f, :type, type_options(), class: "ui fluid dropdown") %>
+      <%= select(f, :type, type_options(), class: "ui fluid dropdown", disabled: has_object(f.data)) %>
     </div>
 
     <div class="field <%= error_class(f, :source_id) %>">
       <%= label_with_clear(:source_id, "Source") %>
-      <div class="ui fluid remote source search selection dropdown">
+      <div class="ui fluid remote source search selection dropdown <%= if has_object(f.data), do: "disabled" %>">
         <i class="dropdown icon"></i>
         <% source = load_from_form(f, NewsSource, :source) %>
         <%= if source do %>
@@ -27,7 +27,7 @@
 
     <div class="field <%= error_class(f, :author_id) %>">
       <%= label_with_clear(:author_id, "Author") %>
-      <div class="ui fluid remote author search selection dropdown">
+      <div class="ui fluid remote author search selection dropdown <%= if has_object(f.data), do: "disabled" %>">
         <i class="dropdown icon"></i>
         <% author = load_from_form(f, Person, :author) %>
         <%= if author do %>
@@ -44,7 +44,7 @@
 
   <div class="field required <%= error_class(f, :url) %>">
     <%= label(f, :url, "URL") %>
-    <%= text_input(f, :url, placeholder: "https://www.youtube.com/watch?v=dQw4w9WgXcQ") %>
+    <%= text_input(f, :url, placeholder: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", disabled: has_object(f.data)) %>
     <%= error_message(f, :url) %>
   </div>
 
@@ -67,13 +67,13 @@
       Headline
       <span><a href="javascript:void(0);" class="field-action js-style-guide-modal">(style guide)</a></span>
     </label>
-    <%= text_input(f, :headline, placeholder: "The 10 best blog post titles") %>
+    <%= text_input(f, :headline, placeholder: "The 10 best blog post titles", disabled: has_object(f.data)) %>
     <%= error_message(f, :headline) %>
   </div>
 
   <div class="field <%= error_class(f, :story) %>">
     <%= label(f, :story) %>
-    <%= textarea(f, :story, placeholder: "Markdown enabled.", rows: 5)%>
+    <%= textarea(f, :story, placeholder: "Markdown enabled.", rows: 5, disabled: has_object(f.data)) %>
     <%= error_message(f, :story) %>
   </div>
 
@@ -98,6 +98,16 @@
   <div class="field">
     <%= label(f, :topics) %>
 
+  <%= if has_object(f.data) do %>
+    <div class="ui horizontal selection list">
+      <%= inputs_for f, :news_item_topics, fn i -> %>
+        <% topic = load_from_form(i, Topic, :topic) %>
+        <div class="item">
+          <div class="content"><a class="ui label"><%= topic.name %></a></div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
     <div class="ui horizontal selection list js-topics">
       <%= inputs_for f, :news_item_topics, fn i -> %>
         <% topic = load_from_form(i, Topic, :topic) %>
@@ -122,12 +132,13 @@
         <i class="block layout icon"></i>
       </div>
     </div>
+  <% end %>
   </div>
 
   <div class="two fields">
     <div class="field required <%= error_class(f, :logger_id) %>">
       <%= label(f, :logger_id, "Logged By") %>
-      <div class="ui fluid remote logger search selection dropdown">
+      <div class="ui fluid remote logger search selection dropdown <%= if has_object(f.data), do: "disabled" %>">
         <i class="dropdown icon"></i>
         <% logger = load_from_form(f, Person, :logger) %>
         <%= if logger do %>
@@ -143,7 +154,7 @@
 
     <div class="field <%= error_class(f, :submitter_id) %>">
       <%= label_with_clear(:submitter_id, "Submitted By") %>
-      <div class="ui fluid remote submitter search selection dropdown">
+      <div class="ui fluid remote submitter search selection dropdown <%= if has_object(f.data), do: "disabled" %>">
         <i class="dropdown icon"></i>
         <% submitter = load_from_form(f, Person, :submitter) %>
         <%= if submitter do %>
