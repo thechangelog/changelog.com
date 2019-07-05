@@ -13,13 +13,15 @@ defmodule Changelog.Search do
     end
   end
 
-  def save_item(item) do
+  def save_item(item = %NewsItem{status: :published}) do
     Algolia.save_object(namespace(), indexed_attributes(item), item.id)
   end
+  def save_item(_), do: false
 
-  def update_item(item) do
+  def update_item(item = %NewsItem{status: :published}) do
     Algolia.partial_update_object(namespace(), indexed_attributes(item), item.id)
   end
+  def update_item(_), do: false
 
   def delete_item(item) do
     Algolia.delete_object(namespace(), item.id)

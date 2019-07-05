@@ -50,14 +50,13 @@ defmodule ChangelogWeb.EpisodeView do
 
   def embed_code(episode), do: embed_code(episode, episode.podcast)
   def embed_code(episode, podcast) do
-    ~s{<audio data-theme="night" data-src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
-    ~s{<p><a href="#{episode_url(Endpoint, :show, podcast.slug, episode.slug)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
+    ~s{<audio data-theme="night" data-src="#{url(episode, :embed)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
+    ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
     ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
 
-  def embed_iframe(episode, theme), do: embed_iframe(episode, episode.podcast, theme)
-  def embed_iframe(episode, podcast, theme) do
-    ~s{<iframe src="#{episode_url(Endpoint, :embed, podcast.slug, episode.slug)}?theme=#{theme}" width="100%" height=220 scrolling=no frameborder=no></iframe>}
+  def embed_iframe(episode, theme) do
+    ~s{<iframe src="#{url(episode, :embed)}?theme=#{theme}" width="100%" height=220 scrolling=no frameborder=no></iframe>}
   end
 
   def guid(episode) do
@@ -119,7 +118,7 @@ defmodule ChangelogWeb.EpisodeView do
       duration: episode.duration,
       art_url: PodcastView.cover_url(podcast, :small),
       audio_url: audio_url(episode),
-      share_url: episode_url(Endpoint, :show, podcast.slug, episode.slug)
+      share_url: url(episode, :show)
     }
 
     info = if prev do
@@ -147,8 +146,8 @@ defmodule ChangelogWeb.EpisodeView do
     info
   end
 
-  def render("share.json", %{podcast: podcast, episode: episode}) do
-    url = episode_url(Endpoint, :show, podcast.slug, episode.slug)
+  def render("share.json", %{podcast: _podcast, episode: episode}) do
+    url = url(episode, :show)
 
     %{url: url,
       twitter: tweet_url(episode.title, url),
@@ -156,5 +155,10 @@ defmodule ChangelogWeb.EpisodeView do
       reddit: reddit_url(episode.title, url),
       facebook: facebook_url(url),
       embed: embed_code(episode)}
+  end
+
+  def url(episode, action) do
+    episode = Episode.preload_podcast(episode)
+    episode_url(Endpoint, action, episode.podcast.slug, episode.slug)
   end
 end

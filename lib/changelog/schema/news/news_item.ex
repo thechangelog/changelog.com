@@ -29,7 +29,7 @@ defmodule Changelog.NewsItem do
     belongs_to :submitter, Person
     belongs_to :source, NewsSource
     has_one :news_queue, NewsQueue, foreign_key: :item_id, on_delete: :delete_all
-    has_many :news_item_topics, NewsItemTopic, foreign_key: :item_id, on_delete: :delete_all
+    has_many :news_item_topics, NewsItemTopic, foreign_key: :item_id, on_delete: :delete_all, on_replace: :delete
     has_many :topics, through: [:news_item_topics, :topic]
     has_many :comments, NewsItemComment, foreign_key: :item_id, on_delete: :delete_all
     has_many :subscriptions, Subscription, where: [unsubscribed_at: nil], foreign_key: :item_id

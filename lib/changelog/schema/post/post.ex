@@ -64,15 +64,18 @@ defmodule Changelog.Post do
     |> Repo.preload(:topics)
   end
 
-  def load_news_item(post) do
-    item =
-      post
-      |> NewsItem.with_post()
-      |> Repo.one()
-      |> NewsItem.load_object(post)
+  def get_news_item(post) do
+    post
+    |> NewsItem.with_post()
+    |> Repo.one()
+  end
 
+  def load_news_item(post) do
+    item = post |> get_news_item() |> NewsItem.load_object(post)
     Map.put(post, :news_item, item)
   end
+
+  def object_id(post), do: "posts:#{post.slug}"
 
   defp validate_published_has_published_at(changeset) do
     published = get_field(changeset, :published)

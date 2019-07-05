@@ -63,6 +63,13 @@ defmodule Changelog.Factory do
     }
   end
 
+  def episode_topic_factory do
+    %Changelog.EpisodeTopic{
+      episode: build(:episode),
+      topic: build(:topic)
+    }
+  end
+
   def live_episode_factory do
     %Changelog.Episode{episode_factory() | recorded_live: true}
   end
@@ -203,6 +210,13 @@ defmodule Changelog.Factory do
       title: sequence(:name, &"Post #{&1}"),
       slug: sequence(:slug, &"post-#{&1}"),
       author: build(:person)
+    }
+  end
+
+  def post_topic_factory do
+    %Changelog.PostTopic{
+      post: build(:post),
+      topic: build(:topic)
     }
   end
 
