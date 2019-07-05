@@ -6,7 +6,7 @@ defmodule Changelog.Policies.NewsItem do
   def update(actor, item), do: is_admin(actor) || is_logger(actor, item)
   def move(actor, _), do: is_admin(actor)
   def decline(actor, _), do: is_admin(actor)
-  def unpublish(actor, _), do: is_admin(actor)
+  def unpublish(actor, item), do: is_admin(actor) || is_logger(actor, item)
 
   def delete(actor, item = %{status: status}) do
     case status do
