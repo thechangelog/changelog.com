@@ -2,8 +2,6 @@ version: "3.7"
 #
 # https://docs.docker.com/engine/swarm/configs/
 configs:
-  netdata_config:
-    file: ./netdata/netdata.conf
   netdata_nginx_config:
     file: ./netdata/nginx.conf
 
@@ -241,8 +239,6 @@ services:
       - ${PWD}/priv/uploads:/var/www/uploads:ro
   netdata:
     configs:
-      - source: netdata_config
-        target: /etc/netdata/netdata.conf
       - source: netdata_nginx_config
         target: /etc/netdata/python.d/nginx.conf
     deploy:
@@ -254,10 +250,10 @@ services:
       resources:
         reservations:
           cpus: "1"
-          memory: 8G
+          memory: 128M
         limits:
           cpus: "1"
-          memory: 8G
+          memory: 128M
       update_config:
         failure_action: rollback
         # start_period + (interval * retries)
