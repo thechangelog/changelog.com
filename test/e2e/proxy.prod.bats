@@ -38,9 +38,3 @@ load http
   is_ok
   is_jpg
 }
-
-@test "https://netdata.$FQDN" {
-  http_get "http://netdata.$FQDN"
-  is_ok
-  is_netdata
-}

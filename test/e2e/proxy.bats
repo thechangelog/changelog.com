@@ -52,12 +52,6 @@ load http
   grep "Location: https://changelog.com/rfc\s" <<< "$output"
 }
 
-@test "http://netdata.$FQDN" {
-  http_get "http://netdata.$FQDN"
-  is_ok
-  is_netdata
-}
-
 @test "http://$FQDN/nginx_status forbidden" {
   http_get "http://$FQDN/nginx_status"
   is_forbidden
