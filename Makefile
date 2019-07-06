@@ -96,13 +96,13 @@ $(LPASS):
 	@sudo apt-get update && sudo apt-get install lastpass-cli
 endif
 
-TERRAFORM := /usr/local/bin/terraform
+TERRAFORM := /usr/local/opt/terraform@0.11/bin/terraform
 $(TERRAFORM):
 ifeq ($(PLATFORM),Darwin)
-	@brew install terraform
+	@brew install terraform@0.11
 endif
 ifeq ($(PLATFORM),Linux)
-	$(error $(RED)Please install $(BOLD)terraform$(NORMAL) in $(TERRAFORM): https://www.terraform.io/downloads.html)
+	$(error $(RED)Please install $(BOLD)terraform v0.11$(NORMAL) in $(TERRAFORM): https://www.terraform.io/downloads.html)
 endif
 
 ifeq ($(PLATFORM),Darwin)
