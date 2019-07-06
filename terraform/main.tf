@@ -299,16 +299,8 @@ resource "dnsimple_record" "2019i_changelog_com" {
 resource "dnsimple_record" "netdata_changelog_com" {
   domain = "changelog.com"
   name = "netdata"
-  value = "${linode_nodebalancer.2019.ipv4}"
-  type = "A"
-  ttl = 60
-}
-
-resource "dnsimple_record" "netdata_changelog_com_ipv6" {
-  domain = "changelog.com"
-  name = "netdata"
-  value = "${linode_nodebalancer.2019.ipv6}"
-  type = "AAAA"
+  value = "http://${var.generation}i.changelog.com:19999/"
+  type = "URL"
   ttl = 60
 }
 
