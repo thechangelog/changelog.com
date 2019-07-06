@@ -2,6 +2,8 @@ version: "3.7"
 #
 # https://docs.docker.com/engine/swarm/configs/
 configs:
+  netdata_config:
+    file: ./netdata/netdata.local.conf
   netdata_nginx_config:
     file: ./netdata/nginx.conf
 
@@ -239,6 +241,8 @@ services:
       - ${PWD}/priv/uploads:/var/www/uploads:ro
   netdata:
     configs:
+      - source: netdata_config
+        target: /etc/netdata/netdata.conf
       - source: netdata_nginx_config
         target: /etc/netdata/python.d/nginx.conf
     deploy:
@@ -260,7 +264,7 @@ services:
         monitor: 75s
         order: start-first
     healthcheck:
-      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:19999/"]
+      test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://netdata:19999/"]
       interval: 15s
       timeout: 15s
       retries: 3
