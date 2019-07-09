@@ -2,7 +2,7 @@
   <%= render("_nav.html", conn: @conn) %>
 
   <div class="flash flash--inline flash--success">
-    <div class="flash-message"><p>Public profiles are launching soon. Add your info today to reserve your username.</p></div>
+    <div class="flash-message"><p>Public profiles will be a thing someday. Add your info today to reserve your username.</p></div>
   </div>
 
   <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
