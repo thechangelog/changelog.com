@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Changelog.Avatars do
   use Mix.Task
 
-  alias Changelog.{Person, Repo}
+  alias Changelog.{Episode, Person, Podcast, Repo}
   alias ChangelogWeb.{PersonView}
 
   @shortdoc "Downloads all people's avatars to a temp directory"
@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Changelog.Avatars do
 
     File.mkdir("avatars")
 
-    for person <- Repo.all(Person) do
+    for person <- all_people_on_podcast("practicalai") do
       try do
         url = PersonView.avatar_url(person)
 
@@ -32,5 +32,18 @@ defmodule Mix.Tasks.Changelog.Avatars do
         e -> IO.puts "Failed to download #{person.name}. #{e}"
       end
     end
+  end
+
+  # defp all_people, do: Repo.all(Person)
+
+  defp all_people_on_podcast(slug) do
+    Podcast
+    |> Repo.get_by(slug: slug)
+    |> Ecto.assoc(:episodes)
+    |> Episode.published()
+    |> Repo.all()
+    |> Enum.map(&Episode.participants/1)
+    |> List.flatten()
+    |> Enum.uniq()
   end
 end
