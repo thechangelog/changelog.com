@@ -44,6 +44,8 @@ defmodule ChangelogWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_changelog_key",
+    encryption_salt: System.get_env("ENCRYPTION_SALT") || "8675309",
+    max_age: 31_536_000,
     signing_salt: System.get_env("SIGNING_SALT") || "8bAOekZm",
     extra: "SameSite=Lax"
 

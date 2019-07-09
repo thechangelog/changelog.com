@@ -37,7 +37,7 @@ defmodule ChangelogWeb.AuthController do
 
   def delete(conn, _params) do
     conn
-    |> delete_resp_cookie("_changelog_user")
+    |> clear_session()
     |> redirect(to: root_path(conn, :index))
   end
 
@@ -69,7 +69,7 @@ defmodule ChangelogWeb.AuthController do
     conn
     |> assign(:current_user, person)
     |> put_flash(:success, "Welcome to Changelog!")
-    |> put_encrypted_cookie("_changelog_user", person.id)
+    |> put_session("id", person.id)
     |> configure_session(renew: true)
     |> redirect(to: route)
   end

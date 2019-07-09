@@ -47,14 +47,14 @@ defmodule ChangelogWeb.AuthControllerTest do
     conn = get(conn, "/in/#{encoded}")
 
     assert redirected_to(conn) == home_path(conn, :show)
-    assert get_encrypted_cookie(conn, "_changelog_user") == person.id
+    assert get_session(conn, "id") == person.id
   end
 
   test "following an invalid auth token doesn't sign you in", %{conn: conn} do
     conn = get(conn, "/in/asdf1234")
 
     assert html_response(conn, 200) =~ "Sign In"
-    assert is_nil(get_encrypted_cookie(conn, "_changelog_user"))
+    assert is_nil(get_session(conn, "id"))
   end
 
   test "following an expired auth token doesn't sign you in", %{conn: conn} do
@@ -71,7 +71,7 @@ defmodule ChangelogWeb.AuthControllerTest do
     conn = get(conn, "/in/#{encoded}")
 
     assert html_response(conn, 200) =~ "Sign In"
-    refute get_encrypted_cookie(conn, "_changelog_user") == person.id
+    refute get_session(conn, "id") == person.id
   end
 
   describe "github auth" do
@@ -84,7 +84,7 @@ defmodule ChangelogWeb.AuthControllerTest do
         |> get("/auth/github/callback")
 
       assert redirected_to(conn) == home_path(conn, :show)
-      assert get_encrypted_cookie(conn, "_changelog_user") == person.id
+      assert get_session(conn, "id") == person.id
     end
 
     test "successful auth on new person sends you to join", %{conn: conn} do
@@ -103,7 +103,7 @@ defmodule ChangelogWeb.AuthControllerTest do
         |> get("/auth/github/callback")
 
       assert conn.status == 200
-      assert get_encrypted_cookie(conn, "_changelog_user") == nil
+      assert get_session(conn, "id") == nil
     end
   end
 
@@ -117,7 +117,7 @@ defmodule ChangelogWeb.AuthControllerTest do
         |> get("/auth/github/callback")
 
       assert redirected_to(conn) == home_path(conn, :show)
-      assert get_encrypted_cookie(conn, "_changelog_user") == person.id
+      assert get_session(conn, "id") == person.id
     end
 
     test "successful twitter auth on new person sends you to join", %{conn: conn} do
@@ -136,7 +136,7 @@ defmodule ChangelogWeb.AuthControllerTest do
         |> get("/auth/twitter/callback")
 
       assert conn.status == 200
-      assert get_encrypted_cookie(conn, "_changelog_user") == nil
+      assert get_session(conn, "id") == nil
     end
   end
 
