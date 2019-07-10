@@ -24,7 +24,7 @@ defmodule Changelog.Stats.Parser do
       |> String.replace(@prefix_regex, "")
       |> String.replace(@double_double_quotes_regex, "\"")
       |> CSV.parse_string(skip_headers: false)
-      |> List.first
+      |> List.first()
 
       %Entry{ip: get_ip(values),
              episode: get_episode(values),
@@ -47,9 +47,9 @@ defmodule Changelog.Stats.Parser do
 
   defp get_ip(list), do: Enum.at(list, 0)
   defp get_episode(list), do: Enum.at(list, 2) |> String.split("/") |> Enum.at(3)
-  defp get_bytes(list), do: Enum.at(list, 3) |> String.to_integer
-  defp get_status(list), do: Enum.at(list, 4) |> String.to_integer
-  defp get_agent(list), do: Enum.at(list, 5) |> get_agent_with_default
+  defp get_bytes(list), do: Enum.at(list, 3) |> String.to_integer()
+  defp get_status(list), do: Enum.at(list, 4) |> String.to_integer()
+  defp get_agent(list), do: Enum.at(list, 5) |> get_agent_with_default()
   defp get_agent_with_default("(null)"), do: "Unknown"
   defp get_agent_with_default(name) do
     if String.printable?(name) do
@@ -58,9 +58,9 @@ defmodule Changelog.Stats.Parser do
       "Unknown"
     end
   end
-  defp get_latitude(list), do: Enum.at(list, 6) |> String.to_float
-  defp get_longitude(list), do: Enum.at(list, 7) |> String.to_float
-  defp get_city_name(list), do: Enum.at(list, 8) |> get_city_name_with_default
+  defp get_latitude(list), do: Enum.at(list, 6) |> String.to_float()
+  defp get_longitude(list), do: Enum.at(list, 7) |> String.to_float()
+  defp get_city_name(list), do: Enum.at(list, 8) |> get_city_name_with_default()
   defp get_city_name_with_default("(null)"), do: "Unknown"
   defp get_city_name_with_default(name), do: name
   defp get_continent_code(list), do: Enum.at(list, 9)
