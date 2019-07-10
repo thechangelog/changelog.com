@@ -220,6 +220,10 @@ defmodule Changelog.Factory do
     }
   end
 
+  def publishable_post_factory do
+    %Changelog.Post{post_factory() | tldr: "tldr", body: "ohai", published_at: hours_ago(1)}
+  end
+
   def published_post_factory do
     %Changelog.Post{post_factory() | published: true, published_at: hours_ago(1)}
   end

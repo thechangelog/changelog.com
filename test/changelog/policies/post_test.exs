@@ -13,8 +13,8 @@ defmodule Changelog.Policies.PostTest do
     end
   end
 
-  test "only admins and post author can show/edit/update" do
-    for policy <- [:show, :edit, :update] do
+  test "only admins and post author can show/edit/update/publish" do
+    for policy <- [:show, :edit, :update, :publish] do
       refute apply(Policies.Post, policy, [@guest, %{}])
       refute apply(Policies.Post, policy, [@user, %{}])
       refute apply(Policies.Post, policy, [@editor, %{}])
@@ -24,17 +24,18 @@ defmodule Changelog.Policies.PostTest do
     end
   end
 
-  test "only admins can delete" do
+  test "nobody can delete published post" do
     refute Policies.Post.delete(@guest, %{})
     refute Policies.Post.delete(@user, %{})
     refute Policies.Post.delete(@editor, %{})
     refute Policies.Post.delete(@host, %{})
-    assert Policies.Post.delete(@admin, %{})
+    refute Policies.Post.delete(@admin, %{})
   end
 
-  test "post author can delete if it's not published" do
+  test "post author and admin can delete if it's not published" do
     refute Policies.Post.delete(@editor, %{author: @editor, published: true})
     refute Policies.Post.delete(@editor, %{author: @user, published: false})
     assert Policies.Post.delete(@editor, %{author: @editor, published: false})
+    assert Policies.Post.delete(@admin, %{author: @editor, published: false})
   end
 end

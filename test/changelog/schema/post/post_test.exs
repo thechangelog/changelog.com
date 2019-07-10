@@ -15,6 +15,20 @@ defmodule Changelog.PostTest do
     end
   end
 
+  describe "is_publishable" do
+    test "is false when post is missing required fields" do
+      refute Post.is_publishable(build(:post))
+    end
+
+    test "is false when post is published" do
+      refute Post.is_publishable(build(:published_post))
+    end
+
+    test "is true when post has all fields and isn't published" do
+      assert Post.is_publishable(insert(:publishable_post))
+    end
+  end
+
   describe "search" do
     setup do
       {:ok, phoenix: insert(:published_post, slug: "phoenix-post", title: "Phoenix", tldr: "A web framework for Elixir", body: "Chris McCord"),

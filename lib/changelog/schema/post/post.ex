@@ -30,7 +30,7 @@ defmodule Changelog.Post do
     |> validate_format(:canonical_url, Regexp.http(), message: Regexp.http_message())
     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
     |> unique_constraint(:slug)
-    |> validate_published_has_published_at
+    |> validate_published_has_published_at()
     |> cast_assoc(:post_topics)
   end
 
@@ -42,6 +42,17 @@ defmodule Changelog.Post do
 
   def is_public(post, as_of \\ Timex.now) do
     post.published && Timex.before?(post.published_at, as_of)
+  end
+
+  def is_published(post), do: post.published
+
+  def is_publishable(post) do
+    validated =
+      post
+      |> admin_changeset(%{})
+      |> validate_required([:slug, :title, :published_at, :tldr, :body])
+
+    validated.valid? && !is_published(post)
   end
 
   def preload_all(post) do

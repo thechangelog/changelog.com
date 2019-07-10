@@ -13,5 +13,5 @@
   <% end %>
   </h1>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_post_path(@conn, :update, @post)) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: admin_post_path(@conn, :update, @post)})) %>
 </div>

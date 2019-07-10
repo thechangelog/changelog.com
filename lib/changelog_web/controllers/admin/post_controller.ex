@@ -1,9 +1,9 @@
 defmodule ChangelogWeb.Admin.PostController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Post, PostNewsItem}
+  alias Changelog.{Cache, NewsQueue, Post, PostNewsItem}
 
-  plug :assign_post when action in [:edit, :update, :delete]
+  plug :assign_post when action in [:edit, :update, :delete, :publish, :unpublish]
   plug Authorize, [Policies.Post, :post]
   plug :scrub_params, "post" when action in [:create, :update]
 
@@ -85,8 +85,48 @@ defmodule ChangelogWeb.Admin.PostController do
     |> redirect(to: admin_post_path(conn, :index))
   end
 
+  def publish(conn = %{assigns: %{post: post}}, params) do
+    changeset = Ecto.Changeset.change(post, %{published: true})
+
+    case Repo.update(changeset) do
+      {:ok, post} ->
+        handle_news_item(conn, post)
+
+        conn
+        |> put_flash(:result, "success")
+        |> redirect_next(params, admin_post_path(conn, :index))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:result, "failure")
+        |> render(:edit, post: post, changeset: changeset)
+    end
+  end
+
+  def unpublish(conn = %{assigns: %{post: post}}, params) do
+    changeset = Ecto.Changeset.change(post, %{published: false})
+
+    case Repo.update(changeset) do
+      {:ok, post} ->
+        Cache.delete(post)
+
+        conn
+        |> put_flash(:result, "success")
+        |> redirect_next(params, admin_post_path(conn, :index))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:result, "failure")
+        |> render(:edit, post: post, changeset: changeset)
+    end
+  end
+
   defp assign_post(conn = %{params: %{"id" => id}}, _) do
-    post = Repo.get!(Post, id) |> Post.preload_all
+    post = Repo.get!(Post, id) |> Post.preload_all()
     assign(conn, :post, post)
+  end
+
+  defp handle_news_item(%{assigns: %{current_user: logger}}, post) do
+    post
+    |> PostNewsItem.insert(logger)
+    |> NewsQueue.append()
   end
 end

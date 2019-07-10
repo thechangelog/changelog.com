@@ -71,27 +71,21 @@
   </div>
 
   <div class="field <%= error_class(f, :body) %>">
-    <%= label f, :body %>
-    <%= textarea f, :body, placeholder: "Markdown enabled.", rows: 10 %>
+    <%= label(f, :body) %>
+    <%= textarea(f, :body, placeholder: "Markdown enabled.", rows: 10) %>
     <%= error_message(f, :body) %>
   </div>
 
   <div class="field <%= error_class(f, :published_at) %>">
     <%= label(f, :published_at) do %>
-      Publish Time <%= help_icon("To schedule: set this in the future and toggle 'Published'") %>
+      Publish Time <%= help_icon("Select a future time and click 'Publish' to schedule") %>
     <% end %>
     <%= semantic_calendar_field(f, :published_at) %>
     <%= error_message(f, :published_at) %>
   </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox f, :published, class: "hidden" %>
-      <label>Published</label>
-    </div>
-  </div>
-
   <div class="ui hidden divider"></div>
+
   <div class="ui equal width stackable grid">
   <%= if !is_persisted(f.data) do %>
     <div class="column"><%= submit_button(:primary, "Create") %></div>
@@ -100,6 +94,10 @@
     <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
     <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
   <% end %>
-    <div class="column"></div>
+  <% end %>
+    <div class="column">
+      <%= if Policies.Post.publish(@current_user, @changeset.data) do %>
+        <%= render("_publish_buttons.html", assigns) %>
+      <% end %>
+    </div>
   </div>
-<% end %>

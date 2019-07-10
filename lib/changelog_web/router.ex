@@ -83,7 +83,11 @@ defmodule ChangelogWeb.Router do
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
     end
+
     resources "/posts", PostController, except: [:show]
+    post "/posts/:id/publish", PostController, :publish, as: :post
+    post "/posts/:id/unpublish", PostController, :unpublish, as: :post
+
     resources "/sponsors", SponsorController
     resources "/mailers", MailerPreviewController, only: [:index, :show]
   end

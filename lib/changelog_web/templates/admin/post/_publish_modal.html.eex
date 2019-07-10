@@ -1,0 +1,20 @@
+<div class="ui small publish modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Publishing: <em><%= @changeset.data.title %></em>
+  </div>
+  <div class="content">
+    <%= form_tag "#{@action}/publish", method: "POST", id: "publish", class: "ui small form" do %>
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <input type="checkbox" name="news" class="hidden" value="1" checked readonly>
+          <label>Post to Changelog News <%= help_icon("This isn't really an option") %></label>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="actions">
+    <input type="submit" form="publish" name="publish" class="ui primary basic button" value="Publish">
+    <div class="ui basic cancel button">Cancel</div>
+  </div>
+</div>

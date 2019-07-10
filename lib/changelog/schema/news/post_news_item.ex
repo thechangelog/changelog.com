@@ -13,6 +13,7 @@ defmodule Changelog.PostNewsItem do
       story: post.tldr,
       published_at: post.published_at,
       logger_id: logger.id,
+      author_id: post.author_id,
       news_item_topics: post_topics(post)}
     |> NewsItem.insert_changeset()
     |> Repo.insert!()

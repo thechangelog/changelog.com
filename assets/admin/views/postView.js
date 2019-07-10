@@ -2,6 +2,7 @@ import BelongsToWidget from "components/belongsToWidget";
 import SearchWidget from "components/searchWidget";
 import Slugifier from "components/slugifier";
 import CalendarField from "components/calendarField";
+import Modal from "components/modal";
 
 export default class PostView {
   new() {
@@ -13,5 +14,7 @@ export default class PostView {
 
   edit() {
     this.new();
+
+    new Modal(".js-publish-modal", ".publish.modal");
   }
 }

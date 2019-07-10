@@ -145,7 +145,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 1
+    assert count(Episode.published()) == 1
     assert called Github.Pusher.push(:_, e.notes)
   end
 
@@ -157,7 +157,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 0
+    assert count(Episode.published()) == 0
     assert count(Episode.scheduled) == 1
     assert called Github.Pusher.push(:_, e.notes)
   end
@@ -174,7 +174,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{"thanks" => "true"})
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 1
+    assert count(Episode.published()) == 1
     assert Repo.get(EpisodeGuest, eg1.id).thanks
     assert Repo.get(EpisodeGuest, eg2.id).thanks
     assert called Github.Pusher.push(:_, e.notes)
@@ -192,7 +192,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 1
+    assert count(Episode.published()) == 1
     refute Repo.get(EpisodeGuest, eg1.id).thanks
     refute Repo.get(EpisodeGuest, eg2.id).thanks
   end
@@ -205,7 +205,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{"news" => "1"})
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 1
+    assert count(Episode.published()) == 1
     assert count(NewsQueue) == 1
     item = NewsItem |> NewsItem.with_episode(e) |> Repo.one()
     assert item.headline == e.title
@@ -220,7 +220,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 1
+    assert count(Episode.published()) == 1
     assert count(NewsItem) == 0
     assert count(NewsQueue) == 0
   end
@@ -233,7 +233,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, admin_podcast_episode_path(conn, :unpublish, p.slug, e.slug))
 
     assert redirected_to(conn) == admin_podcast_episode_path(conn, :index, p.slug)
-    assert count(Episode.published) == 0
+    assert count(Episode.published()) == 0
   end
 
   @tag :as_admin

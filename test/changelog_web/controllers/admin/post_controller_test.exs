@@ -89,6 +89,26 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
     assert count(Post) == count_before
   end
 
+  @tag :as_inserted_admin
+  test "publishes a post", %{conn: conn} do
+    post = insert(:publishable_post)
+
+    conn = post(conn, admin_post_path(conn, :publish, post))
+
+    assert redirected_to(conn) == admin_post_path(conn, :index)
+    assert count(Post.published()) == 1
+  end
+
+  @tag :as_admin
+  test "unpublishes a post", %{conn: conn} do
+    post = insert(:published_post)
+
+    conn = post(conn, admin_post_path(conn, :unpublish, post))
+
+    assert redirected_to(conn) == admin_post_path(conn, :index)
+    assert count(Post.published()) == 0
+  end
+
   test "requires user auth on all actions", %{conn: conn} do
     post = insert(:post)
 
