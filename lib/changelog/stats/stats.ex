@@ -8,10 +8,11 @@ defmodule Changelog.Stats do
   require Logger
 
   def process do
-    date_range = Timex.Interval.new(from: Timex.shift(Timex.today, weeks: -1), until: Timex.today)
+    end_date = Timex.today
+    start_date = Timex.shift(end_date, days: -2)
 
-    for time <- date_range do
-      Timex.to_date(time) |> process
+    for time <- Timex.Interval.new(from: start_date, until: end_date) do
+      time |> Timex.to_date() |> process()
     end
   end
 
