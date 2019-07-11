@@ -2,7 +2,7 @@ defmodule Changelog.Buffer do
   alias Changelog.NewsItem
   alias Changelog.Buffer.{Client, Content}
 
-  @errbody      ~w(506b005149bbd8223400006b 5226807fe2965a1f3100001c)
+  @errbody      ~w(506b005149bbd8223400006b 5d27885cb3e9832ca87111a8)
 
   @afk          ~w(5af9b7a28bae46d01ead92d3)
   @changelog    ~w(4f3ad7c8512f7ef962000004)
