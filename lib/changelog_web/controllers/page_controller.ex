@@ -24,18 +24,18 @@ defmodule ChangelogWeb.PageController do
   def guest(conn, slug) when is_nil(slug), do: guest(conn, "podcast")
   def guest(conn, slug) do
     active =
-      Podcast.active
-      |> Podcast.oldest_first
-      |> Repo.all
+      Podcast.active()
+      |> Podcast.oldest_first()
+      |> Repo.all()
 
     podcast = Podcast.get_by_slug!(slug)
     episode =
       Podcast.get_episodes(podcast)
-      |> Episode.published
-      |> Episode.newest_first
+      |> Episode.published()
+      |> Episode.newest_first()
       |> Episode.limit(1)
-      |> Repo.one
-      |> Episode.preload_podcast
+      |> Repo.one()
+      |> Episode.preload_podcast()
 
     conn
     |> assign(:active, active)
@@ -47,13 +47,13 @@ defmodule ChangelogWeb.PageController do
 
   def home(conn, _params) do
     featured =
-      Episode.published
-      |> Episode.featured
-      |> Episode.newest_first
+      Episode.published()
+      |> Episode.featured()
+      |> Episode.newest_first()
       |> Episode.limit(5)
-      |> Repo.all
-      |> Episode.preload_podcast
-      |> Episode.preload_sponsors
+      |> Repo.all()
+      |> Episode.preload_podcast()
+      |> Episode.preload_sponsors()
 
     render(conn, :home, featured: featured)
   end
