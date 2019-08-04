@@ -49,6 +49,8 @@ secrets:
     external: true
   BUFFER_TOKEN:
     external: true
+  BUFFER_TOKEN_2:
+    external: true
   COVERALLS_REPO_TOKEN:
     external: true
   ALGOLIA_APPLICATION_ID:
@@ -189,6 +191,7 @@ services:
       - SLACK_APP_API_TOKEN
       - ROLLBAR_ACCESS_TOKEN
       - BUFFER_TOKEN
+      - BUFFER_TOKEN_2
       - COVERALLS_REPO_TOKEN
       - ALGOLIA_APPLICATION_ID
       - ALGOLIA_API_KEY
