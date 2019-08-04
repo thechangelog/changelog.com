@@ -781,7 +781,7 @@ rollbar: $(LPASS)
 	@echo "export ROLLBAR_ACCESS_TOKEN=$$($(LPASS) show --notes 5433360937426957091)"
 .PHONY: buffer
 buffer: $(LPASS)
-	@echo "export BUFFER_TOKEN=$$($(LPASS) show --notes 4791620911166920938)"
+	@echo "export BUFFER_TOKEN=$$($(LPASS) show --notes Shared-changelog/secrets/BUFFER_TOKEN_2)"
 .PHONY: coveralls
 coveralls: $(LPASS)
 	@echo "export COVERALLS_REPO_TOKEN=$$($(LPASS) show --notes 8654919576068551356)"
