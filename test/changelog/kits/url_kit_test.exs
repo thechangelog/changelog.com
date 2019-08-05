@@ -3,6 +3,19 @@ defmodule Changelog.UrlKitTest do
 
   alias Changelog.UrlKit
 
+  describe "get_author" do
+    test "defaults to nil" do
+      assert UrlKit.get_source(nil) == nil
+      assert UrlKit.get_source("https://test.com") == nil
+    end
+
+    test "returns the author when a match is found in the db" do
+      jerod = insert(:person, website: "https://jerodsanto.net")
+      url = "https://jerodsanto.net/2017/10/this-is-not-real"
+      assert UrlKit.get_author(url) == jerod
+    end
+  end
+
   describe "is_youtube" do
     test "is true for youtube URLS" do
       assert UrlKit.is_youtube("https://youtu.be/7msERxu7ivg")

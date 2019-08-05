@@ -105,6 +105,16 @@ defmodule Changelog.Person do
   end
   def get_by_ueberauth(_), do: nil
 
+  def get_by_website(url) do
+    try do
+      from(q in __MODULE__, where: fragment("? ~* website", ^url))
+      |> Repo.all()
+      |> List.first()
+    rescue
+      Postgrex.Error -> nil
+    end
+  end
+
   def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at)a)
 
   def admin_insert_changeset(person, attrs \\ %{}) do

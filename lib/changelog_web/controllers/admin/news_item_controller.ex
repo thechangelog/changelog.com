@@ -80,7 +80,8 @@ defmodule ChangelogWeb.Admin.NewsItemController do
         url: url,
         headline: String.capitalize(HtmlKit.get_title(html)),
         source: UrlKit.get_source(url),
-        type: UrlKit.get_type(url))
+        type: UrlKit.get_type(url),
+        author: UrlKit.get_author(url))
       |> NewsItem.insert_changeset()
 
     conn

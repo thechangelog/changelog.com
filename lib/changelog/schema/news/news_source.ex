@@ -50,8 +50,8 @@ defmodule Changelog.NewsSource do
   def get_by_url(url) do
     try do
       matching(url)
-      |> Repo.all
-      |> List.first
+      |> Repo.all()
+      |> List.first()
     rescue
       Postgrex.Error -> nil
     end

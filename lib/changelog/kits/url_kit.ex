@@ -1,5 +1,8 @@
 defmodule Changelog.UrlKit do
-  alias Changelog.{NewsSource, Regexp}
+  alias Changelog.{NewsSource, Person, Regexp}
+
+  def get_author(nil), do: nil
+  def get_author(url), do: Person.get_by_website(url)
 
   def get_html(nil), do: ""
   def get_html(url) do
@@ -29,9 +32,7 @@ defmodule Changelog.UrlKit do
   end
 
   def get_source(nil), do: nil
-  def get_source(url) do
-    NewsSource.get_by_url(url)
-  end
+  def get_source(url), do: NewsSource.get_by_url(url)
 
   def get_type(nil), do: :link
   def get_type(url) do
@@ -58,9 +59,7 @@ defmodule Changelog.UrlKit do
   end
 
   def is_youtube(nil), do: false
-  def is_youtube(url) do
-    Enum.any?(youtube_regexes(), &(String.match?(url, &1)))
-  end
+  def is_youtube(url), do: Enum.any?(youtube_regexes(), &(String.match?(url, &1)))
 
   def normalize_url(nil), do: nil
   def normalize_url(url) do
