@@ -2,7 +2,7 @@ defmodule Changelog.Buffer do
   alias Changelog.NewsItem
   alias Changelog.Buffer.{Client, Content}
 
-  @errbody      ~w(506b005149bbd8223400006b 5d27885cb3e9832ca87111a8)
+  @shared       ~w(506b005149bbd8223400006b 5d27885cb3e9832ca87111a8)
 
   @afk          ~w(5af9b7a28bae46d01ead92d3)
   @changelog    ~w(4f3ad7c8512f7ef962000004)
@@ -24,18 +24,20 @@ defmodule Changelog.Buffer do
       true -> @changelog
     end
 
-    Client.create((profiles ++ @errbody), text, [link: link])
+    Client.create(with_shared(profiles), text, [link: link])
   end
   def queue(%NewsItem{type: :audio}), do: false
   def queue(item = %NewsItem{object_id: id}) when is_binary(id) do
     link = Content.post_link(item)
     text = Content.post_text(item)
-    Client.create(@changelog, text, [link: link])
+    Client.create(with_shared(@changelog), text, [link: link])
   end
   def queue(item = %NewsItem{}) do
     image = Content.news_item_image(item)
     link = Content.news_item_link(item)
     text = Content.news_item_text(item)
-    Client.create(@changelog, text, [link: link, photo: image])
+    Client.create(with_shared(@changelog), text, [link: link, photo: image])
   end
+
+  def with_shared(profiles), do: profiles ++ @shared
 end
