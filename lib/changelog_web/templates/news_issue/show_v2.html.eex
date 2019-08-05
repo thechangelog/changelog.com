@@ -75,7 +75,19 @@
                     <tbody>
                       <tr>
                         <td bgcolor="#ffffff">
-                        <%= for item_or_ad <- items_with_ads(@items, @ads) do %>
+                        <%= for episode <- @items |> Enum.filter(&NewsItem.is_audio/1) do %>
+                          <%= render("_item_audio_summary.html", Map.merge(assigns, %{item: episode})) %>
+                        <% end %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+                    <tbody>
+                      <tr>
+                        <td bgcolor="#ffffff">
+                        <%= for item_or_ad <- @items |> Enum.filter(&NewsItem.is_non_audio/1) |> items_with_ads(@ads) do %>
                           <%= render_item_or_ad(item_or_ad, assigns) %>
                         <% end %>
                         </td>

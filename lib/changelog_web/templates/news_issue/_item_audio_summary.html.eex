@@ -1,0 +1,12 @@
+<div class="news_item">
+  <%= if @item.object do %>
+    <p class="news_item-source">
+      <%= NewsItemView.render_source_image(@conn, @item) %>
+      <%= NewsItemView.render_source_name(@conn, @item) %>
+    </p>
+  <% end %>
+  <h2 class="news_item-title"><%= link(@item.headline, to: @item.url) %></h2>
+  <div class="news_item-content">
+  </div>
+  <%= render("_item_meta.html", assigns) %>
+</div>

@@ -5,9 +5,10 @@ defmodule ChangelogWeb.NewsIssueView do
   alias ChangelogWeb.{NewsItemView, SponsorView}
 
   def items_with_ads(items, []), do: items
-  def items_with_ads(items, ads) do
+  def items_with_ads(items, ads), do: items_with_ads(items, ads, 3)
+  def items_with_ads(items, ads, every) do
     items
-    |> Enum.chunk_every(3)
+    |> Enum.chunk_every(every)
     |> Enum.with_index()
     |> Enum.map(fn{items, index} ->
       case Enum.at(ads, index) do
