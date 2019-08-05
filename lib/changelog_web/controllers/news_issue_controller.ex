@@ -20,7 +20,7 @@ defmodule ChangelogWeb.NewsIssueController do
 
   def preview(conn, %{"id" => slug}) do
     issue =
-      NewsIssue
+      NewsIssue.unpublished()
       |> NewsIssue.preload_all()
       |> Repo.get_by!(slug: slug)
 
