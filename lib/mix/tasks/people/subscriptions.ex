@@ -5,9 +5,10 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
   alias ChangelogWeb.PersonView
   alias NimbleCSV.RFC4180, as: CSV
 
-  @shortdoc "Imports people and subscriptions from CM csv exports"
+  @shortdoc "Imports people and subscriptions from CSV"
 
-  def run([import_file]) do
+  def run([import_file]), do: run([import_file, "you subscribed way back in the day (pre-launch)"])
+  def run([import_file, context]) do
     Mix.Task.run "app.start"
 
     podcast =
@@ -19,16 +20,17 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
     import_file
     |> File.read!()
     |> CSV.parse_string()
-    |> Enum.each(fn([name, email, _]) ->
+    |> Enum.map(fn([name, email]) -> [String.trim(name), String.trim(email)] end)
+    |> Enum.each(fn([name, email]) ->
       email
       |> find_or_insert_person(name)
-      |> subscribe_if_not_already(podcast)
+      |> subscribe_if_not_already(podcast, context)
     end)
   end
 
-  defp subscribe_if_not_already(person, podcast) do
+  defp subscribe_if_not_already(person, podcast, context) do
     if !PersonView.is_subscribed(person, podcast) do
-      Subscription.subscribe(person, podcast, "you subscribed way back in the day (pre-launch)")
+      Subscription.subscribe(person, podcast, context)
     end
   end
 
