@@ -96,7 +96,6 @@ defmodule Changelog.Notifier do
     end
   end
 
-  defp deliver_podcast_subscription_emails(%{podcast: %{slug: "brainscience"}}), do: true
   defp deliver_podcast_subscription_emails(episode) do
     podcast = Podcast.preload_subscriptions(episode.podcast)
 
