@@ -5,6 +5,7 @@ defmodule Changelog.Buffer do
   @shared       ~w(506b005149bbd8223400006b 5d27885cb3e9832ca87111a8)
 
   @afk          ~w(5af9b7a28bae46d01ead92d3)
+  @brainscience ~w(5d49c7410eb4bb4992040a42)
   @changelog    ~w(4f3ad7c8512f7ef962000004)
   @founderstalk ~w(5b23f65f772894a723424ec5)
   @gotime       ~w(5734d7fc1b14578733224a70)
@@ -17,6 +18,7 @@ defmodule Changelog.Buffer do
 
     profiles = cond do
       String.starts_with?(id, "afk") -> @afk
+      String.starts_with?(id, "brainscience") -> @brainscience
       String.starts_with?(id, "founderstalk") -> @founderstalk
       String.starts_with?(id, "gotime") -> @gotime
       String.starts_with?(id, "jsparty") -> @jsparty
