@@ -161,19 +161,23 @@ a {
 .episodes_item a {
   color: #ffffff;
 }
+.episodes_item-artwork a {
+  overflow: auto;
+}
 .episodes_item-artwork img {
+  display: block;
   margin-right: 20px;
 }
 .episodes_item-podcast {
   font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
   font-size: 12px;
-  margin: 0 0 8px;
+  margin: 0 0 4px;
 }
 .episodes_item-title {
   font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
   font-size: 18px;
   line-height: 1.25em;
-  margin: 0 0 8px;
+  margin: 0 0 4px;
 }
 .episodes_item-subtitle {
   font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
