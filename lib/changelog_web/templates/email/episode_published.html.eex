@@ -12,7 +12,9 @@
 
     <blockquote><%= @episode.summary |> md_to_html() |> raw()  %></blockquote>
 
-    <%= link("Listen here", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), class: "btn-primary", itemprop: "url") %>
+    <span class="btn-primary">
+      <%= link("Listen here", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %>
+    </span>
 
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>
 

@@ -137,9 +137,9 @@
     text-decoration: underline;
   }
 
-  .btn-primary {
+  .btn-primary a {
     text-decoration: none;
-    color: #FFF;
+    color: #ffffff !important;
     background-color: #61c192;
     border: solid #61c192;
     border-width: 10px 20px;
