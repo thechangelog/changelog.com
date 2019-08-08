@@ -1,12 +1,23 @@
-<div class="news_item">
-  <%= if @item.object do %>
-    <p class="news_item-source">
-      <%= NewsItemView.render_source_image(@conn, @item) %>
-      <%= NewsItemView.render_source_name(@conn, @item) %>
-    </p>
-  <% end %>
-  <h2 class="news_item-title"><%= link(@item.headline, to: @item.url) %></h2>
-  <div class="news_item-content">
-  </div>
-  <%= render("_item_meta.html", assigns) %>
-</div>
+<table class="episodes_item" width="600" cellpadding="0" cellspacing="0" border="0" align="center">
+  <tbody>
+    <tr>
+      <td width="60">
+        <%= if @item.object do %>
+          <%= link to: episode_path(@conn, :show, @item.object.podcast.slug, @item.object.slug),
+            title: @item.object.title,
+            class: "episodes_item-artwork",
+            data: [news: true] do %>
+            <img src="<%= PodcastView.cover_url(@item.object.podcast, :small) %>" alt="<%= @item.object.podcast.name %>" width="60">
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <div class="episodes_item-info">
+          <p class="episodes_item-podcast"><%= NewsItemView.render_source_name(@conn, @item) %></p>
+          <h2 class="episodes_item-title"><%= link(@item.headline, to: @item.url) %></h2>
+          <p class="episodes_item-subtitle"><%= link(@item.object.subtitle, to: @item.url) %></p>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

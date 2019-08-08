@@ -137,6 +137,57 @@ a {
 }
 
 /* --- --- --- --- --- */
+/* Episodes */
+/* --- --- --- --- --- */
+
+
+.section_heading {
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
+  font-size: 20px;
+  margin: 40px 20px 0;
+}
+.section_heading--white {
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.episodes {
+  padding: 0 0 40px;
+}
+.episodes_item {
+  padding: 10px 20px;
+  overflow: auto;
+}
+.episodes_item a {
+  color: #ffffff;
+}
+.episodes_item-artwork img {
+  margin-right: 20px;
+}
+.episodes_item-podcast {
+  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
+  font-size: 12px;
+  margin: 0 0 8px;
+}
+.episodes_item-title {
+  font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
+  font-size: 18px;
+  line-height: 1.25em;
+  margin: 0 0 8px;
+}
+.episodes_item-subtitle {
+  font-family: "Open Sans",Helvetica,Arial,Calibri,sans-serif;
+  font-size: 14px;
+  font-style: italic;
+  margin: 0;
+}
+.episodes_item-podcast a,
+.episodes_item-subtitle a {
+  color: #AFAFAF;
+}
+
+
+/* --- --- --- --- --- */
 /* News Item */
 /* --- --- --- --- --- */
 

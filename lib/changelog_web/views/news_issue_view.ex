@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsIssueView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{NewsItem, NewsAd}
-  alias ChangelogWeb.{NewsItemView, SponsorView}
+  alias ChangelogWeb.{NewsItemView, SponsorView, PodcastView}
 
   def items_with_ads(items, []), do: items
   def items_with_ads(items, ads), do: items_with_ads(items, ads, 3)
