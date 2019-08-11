@@ -48,7 +48,7 @@ defmodule Changelog.Search do
     }
   end
 
-  defp namespace, do: "#{Mix.env}_news_items"
+  defp namespace, do: "#{Application.get_env(:changelog, :env)}_news_items"
 
   defp indexed_attributes(item) do
     %{

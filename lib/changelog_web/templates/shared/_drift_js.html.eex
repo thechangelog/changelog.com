@@ -1,4 +1,4 @@
-<%= if Mix.env == :prod do %>
+<%= if Application.get_env(:changelog, :env) == :prod do %>
 <script>
 !function() {
  var t;

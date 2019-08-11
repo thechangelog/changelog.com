@@ -28,6 +28,7 @@ services:
       - deps:/app/deps
       - ./lib:/app/lib
       - ./priv:/app/priv
+      - ./rel:/app/rel
       - ./script:/app/script
       - ./test:/app/test
       - ./.all-contributorsrc:/app/.all-contributorsrc

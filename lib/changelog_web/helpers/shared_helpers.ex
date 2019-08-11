@@ -50,7 +50,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def current_path(conn, params), do: Controller.current_path(conn, params)
 
   def dev_relative(url) do
-    if Mix.env == :dev do
+    if Application.get_env(:changelog, :env) == :dev do
       parsed = URI.parse(url)
       [parsed.path, parsed.fragment] |> ListKit.compact_join("#")
     else

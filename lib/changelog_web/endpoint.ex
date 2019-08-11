@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Endpoint do
   # In dev environment, serve uploaded files from "priv/uploads".
   #
   # Nginx will serve these in production.
-  if Mix.env == :dev do
+  if Application.get_env(:changelog, :env) == :dev do
     plug Plug.Static,
       at: "/uploads", from: {:changelog, "priv/uploads"}, gzip: false, headers: %{"Accept-Ranges" => "bytes"}
   end
