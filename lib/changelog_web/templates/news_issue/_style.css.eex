@@ -140,19 +140,8 @@ a {
 /* Episodes */
 /* --- --- --- --- --- */
 
-
-.section_heading {
-  font-family: "Roboto Mono",Menlo,"Courier New",Courier,monospace;
-  font-size: 20px;
-  margin: 40px 20px 0;
-}
-.section_heading--white {
-  color: #ffffff;
-  margin-bottom: 20px;
-}
-
 .episodes {
-  padding: 0 0 40px;
+  padding: 40px 0;
 }
 .episodes_item {
   padding: 10px 20px;

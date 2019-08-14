@@ -51,7 +51,7 @@
                     </tbody>
                   </table>
 
-                  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e6e5e6">
+                  <table width="680" cellpadding="0" cellspacing="0" border="0" bgcolor="#e6e5e6" align="center">
                     <tbody>
                       <tr><td bgcolor="#e6e5e6" height="1" width="100%"></td></tr>
                     </tbody>
@@ -71,7 +71,7 @@
                     </table>
                   <% end %>
 
-                  <table class="episodes" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000" align="center">
+                  <table class="episodes" width="680" cellpadding="0" cellspacing="0" border="0" bgcolor="#000" align="center">
                     <tbody>
                       <tr>
                         <td bgcolor="#000">
@@ -79,7 +79,6 @@
                            <tbody>
                               <tr>
                                 <td>
-                                  <h2 class="section_heading section_heading--white">Podcasts</h2>
 <%= for episode <- @items |> Enum.filter(&NewsItem.is_audio/1) do %>
   <%= render("_item_audio_summary.html", Map.merge(assigns, %{item: episode})) %>
 <% end %>
@@ -96,7 +95,6 @@
                     <tbody>
                       <tr>
                         <td bgcolor="#ffffff">
-                        <h2 class="section_heading">News</h2>
                         <%= for item_or_ad <- @items |> Enum.filter(&NewsItem.is_non_audio/1) |> items_with_ads(@ads) do %>
                           <%= render_item_or_ad(item_or_ad, assigns) %>
                         <% end %>
