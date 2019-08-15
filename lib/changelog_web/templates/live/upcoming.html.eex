@@ -5,9 +5,11 @@
       <%= for episode <- @episodes do %>
         <div class="live_upcoming-grid-item">
           <div class="live_upcoming-grid-item-image">
-            <%= link to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" do %>
-              <%= lazy_image(PodcastView.cover_url(episode.podcast, :medium), "#{episode.podcast.name} Artwork", width: 120, height: 120) %>
-            <% end %>
+            <div class="image_border_hack">
+              <%= link to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" do %>
+                <%= lazy_image(PodcastView.cover_url(episode.podcast, :medium), "#{episode.podcast.name} Artwork", width: 120, height: 120) %>
+              <% end %>
+            </div>
           </div>
 
           <div class="live_upcoming-grid-item-time">
