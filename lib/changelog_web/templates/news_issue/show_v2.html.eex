@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Changelog Weekly - Issue #<%= @issue.slug %></title>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    <%= {:safe, render("_style.css")} %>
+  </style>
+</head>
+<body>
+  <p style="display: none !important;"><%= @issue.teaser %></p>
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+    <tbody>
+      <tr>
+        <td width="100%" bgcolor="#ffffff">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+            <tbody>
+              <tr>
+                <td width="600">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+                    <tbody>
+                      <tr>
+                        <td width="100%" bgcolor="#ffffff">
+                          <table width="600" cellpadding="0" cellspacing="0" border="0" align="center">
+                            <tbody>
+                              <tr>
+                                <td width="600">
+                                  <table width="600" cellpadding="0" cellspacing="0" border="0">
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <div class="header">
+                                            <a href="https://changelog.com/">
+                                              <img class="header-logo" width="300" alt="Changelog" src="https://changelog-assets.s3.amazonaws.com/weekly/changelog-logo.png">
+                                            </a>
+                                            <p><webversion>Issue #<%= @issue.slug %> • <%= TimeView.hacker_date(@issue.published_at) %></webversion></p>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <table width="680" cellpadding="0" cellspacing="0" border="0" bgcolor="#e6e5e6" align="center">
+                    <tbody>
+                      <tr><td bgcolor="#e6e5e6" height="1" width="100%"></td></tr>
+                    </tbody>
+                  </table>
+
+                  <%= if @issue.note do %>
+                    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center">
+                      <tbody>
+                        <tr>
+                          <td bgcolor="#ffffff">
+                            <div class="editor_note">
+                              <%= @issue.note |> md_to_html() |> raw() %>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  <% end %>
+
+                  <table class="episodes" width="680" cellpadding="0" cellspacing="0" border="0" bgcolor="#000" align="center">
+                    <tbody>
+                      <tr>
+                        <td bgcolor="#000">
+                          <table width="600" cellpadding="0" cellspacing="0" border="0" align="center">
+                           <tbody>
+                              <tr>
+                                <td>
+<%= for episode <- @items |> Enum.filter(&NewsItem.is_audio/1) do %>
+  <%= render("_item_audio_summary.html", Map.merge(assigns, %{item: episode})) %>
+<% end %>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center">
+                    <tbody>
+                      <tr>
+                        <td bgcolor="#ffffff">
+                        <%= for item_or_ad <- @items |> Enum.filter(&NewsItem.is_non_audio/1) |> items_with_ads(@ads) do %>
+                          <%= render_item_or_ad(item_or_ad, assigns) %>
+                        <% end %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center">
+                    <tbody>
+                      <tr>
+                        <td bgcolor="#ffffff" align="center">
+                          <div class="footer">
+                            <p><webversion>View in Browser</webversion> &bull; <preferences>Manage Subscription</preferences> &bull; <unsubscribe>Unsubscribe</unsubscribe></p>
+                            <p>You received this email because you're a subscriber of Changelog.com emails with this email address: [email]</p>
+                            <p><a href="https://changelog.com/">Changelog</a> - News and podcasts for developers</p>
+                            <p class="last-of-type hacker-heart">💚</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -15,12 +15,12 @@ defmodule ChangelogWeb.NewsIssueController do
     |> assign(:issue, issue)
     |> assign(:ads, ads_for_issue(issue))
     |> assign(:items, items_for_issue(issue))
-    |> render(:show)
+    |> render(template_for_issue(issue))
   end
 
   def preview(conn, %{"id" => slug}) do
     issue =
-      NewsIssue
+      NewsIssue.unpublished()
       |> NewsIssue.preload_all()
       |> Repo.get_by!(slug: slug)
 
@@ -28,7 +28,7 @@ defmodule ChangelogWeb.NewsIssueController do
     |> assign(:issue, issue)
     |> assign(:ads, ads_for_issue(issue))
     |> assign(:items, items_for_issue(issue))
-    |> render(:show)
+    |> render(template_for_issue(issue))
   end
 
   defp ads_for_issue(issue) do
@@ -46,4 +46,8 @@ defmodule ChangelogWeb.NewsIssueController do
 
   defp apply_image_setting(item_or_ad, true), do: item_or_ad
   defp apply_image_setting(item_or_ad, false), do: Map.put(item_or_ad, :image, false)
+
+  defp template_for_issue(issue) do
+    String.to_atom("show_#{NewsIssue.layout(issue)}")
+  end
 end

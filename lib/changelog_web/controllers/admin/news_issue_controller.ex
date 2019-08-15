@@ -24,23 +24,33 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
 
   def new(conn, _params) do
     last_issue =
-      NewsIssue.published
-      |> NewsIssue.newest_first
+      NewsIssue.published()
+      |> NewsIssue.newest_first()
       |> NewsIssue.limit(1)
-      |> Repo.one
+      |> Repo.one()
+
+    episodes =
+      NewsItem.published_since(last_issue)
+      |> NewsItem.audio()
+      |> NewsItem.top_ctr_first()
+      |> Repo.all()
+
+    news =
+      NewsItem.published_since(last_issue)
+      |> NewsItem.non_audio()
+      |> NewsItem.top_ctr_first()
+      |> Repo.all()
 
     items =
-      NewsItem.published_since(last_issue)
-      |> NewsItem.top_ctr_first
-      |> Repo.all
-      |> Enum.with_index(1)
-      |> Enum.map(&NewsIssueItem.build_and_preload/1)
+     (episodes ++ news)
+     |> Enum.with_index(1)
+     |> Enum.map(&NewsIssueItem.build_and_preload/1)
 
     ads =
-      Timex.today
-      |> NewsSponsorship.week_of
-      |> NewsSponsorship.preload_all
-      |> Repo.all
+      Timex.today()
+      |> NewsSponsorship.week_of()
+      |> NewsSponsorship.preload_all()
+      |> Repo.all()
       |> Enum.map(&NewsSponsorship.ad_for_issue/1)
       |> Enum.reject(&is_nil/1)
       |> Enum.with_index(1)

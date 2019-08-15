@@ -80,4 +80,7 @@ defmodule Changelog.NewsIssue do
   def is_published(issue), do: issue.published
 
   def is_publishable(issue), do: is_integer(issue.id) && !is_published(issue)
+
+  def layout(%{id: id}) when is_integer(id) and id > 105, do: "v2"
+  def layout(_), do: "v1"
 end
