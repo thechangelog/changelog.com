@@ -34,14 +34,7 @@ defmodule Changelog.NewsIssue do
   def unpublished(query \\ __MODULE__), do: from(q in query, where: q.published == false)
 
   def next_slug(issue) when is_nil(issue), do: 1
-  def next_slug(issue) do
-    last_slug = case Integer.parse(issue.slug) do
-      {int, _remainder} -> int
-      :error -> 0
-    end
-
-    last_slug + 1
-  end
+  def next_slug(issue), do: slug_to_integer(issue.slug) + 1
 
   def preload_all(issue) do
     issue |> preload_ads() |> preload_items()
@@ -81,6 +74,16 @@ defmodule Changelog.NewsIssue do
 
   def is_publishable(issue), do: is_integer(issue.id) && !is_published(issue)
 
-  def layout(%{id: id}) when is_integer(id) and id > 105, do: "v2"
-  def layout(_), do: "v1"
+  def layout(%{slug: slug}) do
+    if slug_to_integer(slug) <= 267, do: "v1", else: "v2"
+  end
+
+  defp slug_to_integer(slug, default \\ 0)
+  defp slug_to_integer(nil, default), do: default
+  defp slug_to_integer(slug, default) do
+    case Integer.parse(slug) do
+      {int, _remainder} -> int
+      :error -> default
+    end
+  end
 end
