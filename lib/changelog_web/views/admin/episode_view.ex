@@ -12,15 +12,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def megabytes(episode), do: EpisodeView.megabytes(episode)
   def numbered_title(episode), do: EpisodeView.numbered_title(episode)
 
-  def download_count(episode), do: episode.download_count |> round() |> comma_separated()
-  def reach_count(episode) do
-    if episode.reach_count > episode.download_count do
-      comma_separated(episode.reach_count)
-    else
-      download_count(episode)
-    end
-  end
-
   def featured_label(episode) do
     if episode.featured do
       content_tag :span, "Recommended", class: "ui tiny blue basic label"

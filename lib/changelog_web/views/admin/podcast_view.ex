@@ -5,14 +5,6 @@ defmodule ChangelogWeb.Admin.PodcastView do
   alias ChangelogWeb.PodcastView
 
   def episode_count(podcast), do: PodcastView.episode_count(podcast)
-  def download_count(podcast), do: podcast.download_count |> round |> comma_separated
-  def reach_count(podcast) do
-    if podcast.reach_count > podcast.download_count do
-      comma_separated(podcast.reach_count)
-    else
-      download_count(podcast)
-    end
-  end
 
   def last_stat(podcast) do
     podcast

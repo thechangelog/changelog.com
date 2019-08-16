@@ -1,0 +1,54 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("Sponsors", to: admin_sponsor_path(@conn, :index)) %>
+    &raquo;
+    <%= @sponsor.name %>
+
+  <%= if @sponsor.website do %>
+    <div class="sub header"><%= link(domain_name(@sponsor.website), to: @sponsor.website, external: true) %></div>
+  <% end %>
+  </h1>
+</div>
+
+<%= if Enum.any?(@episode_sponsorships) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Sponsored Episodes (<%= @episode_sponsorships |> length() |> comma_separated() %>)</h2>
+
+  <table class="ui celled striped table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Episode</th>
+        <th>Description</th>
+        <th>Reach</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for {sponsorship, episode} <- Enum.map(@episode_sponsorships, fn(es) -> {es, es.episode} end) do %>
+      <tr>
+        <td><%= TimeView.pretty_date(episode.published_at) %></td>
+        <td><%= EpisodeView.podcast_name_and_number(episode) %> – <%= episode.title %></td>
+        <td><%= sponsorship.description |> md_to_html() |> raw() %></td>
+        <td><%= reach_count(episode) %></td>
+        <td class="center aligned">
+          <div class="ui small basic buttons">
+            <%= icon_link("eye", to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+<% end %>
+
+<%= if Enum.any?(@news_sponsorships) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Sponsored News (<%= @news_sponsorships |> length() |> comma_separated() %>)</h2>
+
+  <%= render(Admin.NewsSponsorshipView, "_table.html", conn: @conn, sponsorships: @news_sponsorships) %>
+</div>
+<% end %>

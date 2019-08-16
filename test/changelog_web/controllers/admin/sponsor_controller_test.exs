@@ -19,6 +19,15 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
   end
 
   @tag :as_admin
+  test "shows a specific sponsor", %{conn: conn} do
+    sponsor = insert(:sponsor)
+
+    conn = get(conn, admin_sponsor_path(conn, :show, sponsor))
+
+    assert String.contains?(conn.resp_body, sponsor.name)
+  end
+
+  @tag :as_admin
   test "renders form to create new sponsor", %{conn: conn} do
     conn = get(conn, admin_sponsor_path(conn, :new))
     assert html_response(conn, 200) =~ ~r/new/

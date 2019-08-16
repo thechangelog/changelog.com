@@ -17,6 +17,7 @@ defmodule Changelog.Sponsor do
 
     has_many :benefits, Benefit, on_delete: :delete_all
     has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
+    has_many :news_sponsorships, NewsSponsorship, on_delete: :delete_all
 
     timestamps()
   end

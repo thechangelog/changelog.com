@@ -1,9 +1,9 @@
 defmodule ChangelogWeb.Admin.SponsorController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Sponsor
+  alias Changelog.{EpisodeSponsor, NewsSponsorship, Sponsor}
 
-  plug :assign_sponsor when action in [:edit, :update, :delete]
+  plug :assign_sponsor when action in [:show, :edit, :update, :delete]
   plug Authorize, [Policies.AdminsOnly, :sponsor]
   plug :scrub_params, "sponsor" when action in [:create, :update]
 
@@ -13,6 +13,27 @@ defmodule ChangelogWeb.Admin.SponsorController do
     |> Repo.paginate(params)
 
     render(conn, :index, sponsors: page.entries, page: page)
+  end
+
+  def show(conn = %{assigns: %{sponsor: sponsor}}, _params) do
+    news_sponsorships =
+      sponsor
+      |> assoc(:news_sponsorships)
+      |> NewsSponsorship.preload_all()
+      |> Repo.all()
+
+    episode_sponsorships =
+      sponsor
+      |> assoc(:episode_sponsors)
+      |> EpisodeSponsor.newest_first()
+      |> EpisodeSponsor.preload_episode()
+      |> Repo.all()
+
+    conn
+    |> assign(:sponsor, sponsor)
+    |> assign(:news_sponsorships, news_sponsorships)
+    |> assign(:episode_sponsorships, episode_sponsorships)
+    |> render(:show)
   end
 
   def new(conn, _params) do

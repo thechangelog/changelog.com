@@ -26,4 +26,7 @@ defmodule Changelog.EpisodeSponsor do
     |> foreign_key_constraint(:sponsor_id)
     |> mark_for_deletion()
   end
+
+  def preload_episode(query = %Ecto.Query{}), do: Ecto.Query.preload(query, episode: :podcast)
+  def preload_episode(sponsor), do: Repo.preload(sponsor, episode: :podcast)
 end
