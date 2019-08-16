@@ -1,0 +1,69 @@
+<div class="page_basic">
+  <h1>Request a show 🙏</h1>
+
+<%= unless @current_user do %>
+  <div class="flash flash--inline flash--error">
+    <div class="flash-message"><p>Please <%= link("sign in", to: sign_in_path(@conn, :new)) %> / <%= link("up", to: person_path(@conn, :join)) %> to request a show. Your profile is used for attribution and notification.</p></div>
+  </div>
+<% end %>
+
+  <%= form_for @changeset, episode_request_path(@conn, :create), fn f -> %>
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :podcast_id) %>">
+        <label>This request is for...</label>
+        <%= select(f, :podcast_id, Enum.map(@podcasts, &{&1.name, &1.id})) %>
+        <%= error_message(f, :podcast_id) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :guests) %>">
+        <label>I would love to hear...</label>
+        <%= text_input(f, :guests, user_required_options(@current_user, placeholder: "possible guest name(s)")) %>
+        <%= error_message(f, :guests) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :hosts) %>">
+        <label>talk to...</label>
+        <%= text_input(f, :hosts, user_required_options(@current_user, placeholder: "other guest or specific host(s)")) %>
+        <%= error_message(f, :hosts) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :topics) %>">
+        <label>all about...</label>
+        <%= text_input(f, :topics, user_required_options(@current_user, placeholder: "topic(s) to be discussed")) %>
+        <%= error_message(f, :topics) %>
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :pitch) %>">
+        <label>because...</label>
+
+        <%= textarea(f, :pitch, user_required_options(@current_user, placeholder: "proverbial elevator pitch...", required: true)) %>
+        <%= error_message(f, :pitch) %>
+        <p class="form-element-note">Markdown supported</p>
+      </div>
+    </div>
+
+    <div class="form-element_wrap">
+      <div class="form-element <%= error_class(f, :pronunciation) %>">
+        <label>my name is pronounced...</label>
+        <%= text_input(f, :pronunciation, user_required_options(@current_user, placeholder: "leave blank and we'll keep you anon")) %>
+        <%= error_message(f, :pronunciation) %>
+      </div>
+    </div>
+
+    <div class="form-submit">
+      <p class="form-submit-toc"></p>
+      <div>
+        <input type="submit" <%= unless(@current_user, do: "disabled") %>>
+        <div class="form_submit_responses"></div>
+      </div>
+    </div>
+  <% end %>
+</div>

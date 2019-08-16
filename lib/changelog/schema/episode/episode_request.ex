@@ -21,6 +21,11 @@ defmodule Changelog.EpisodeRequest do
     timestamps()
   end
 
+  def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
+  def pending(query \\ __MODULE__), do: from(q in query, where: q.status == ^:pending)
+  def published(query \\ __MODULE__), do: from(q in query, where: q.status == ^:published)
+  def submitted(query \\ __MODULE__), do: from(q in query, where: q.status == ^:submitted)
+
   def submission_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(podcast_id submitter_id hosts guests topics pitch pronunciation)a)
