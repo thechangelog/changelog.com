@@ -24,7 +24,7 @@
               <p><strong>
                 <%= link EpisodeView.podcast_name_and_number(episode), to: podcast_path(@conn, :show, episode.podcast.slug), title: "View Podcast" %>
               </strong></p>
-              <p><%= episode.title %></p>
+              <p><%= episode.title %> <%= if episode.subtitle, do: "(#{episode.subtitle})" %></p>
             </div>
           </div>
         </div>
