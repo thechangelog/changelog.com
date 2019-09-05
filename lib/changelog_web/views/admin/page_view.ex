@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Admin.PageView do
 
   alias Changelog.{Episode, Repo}
   alias ChangelogWeb.TimeView
-  alias ChangelogWeb.Admin.{EpisodeView, NewsItemView, NewsletterView,}
+  alias ChangelogWeb.Admin.{EpisodeView, EpisodeRequestView, NewsItemView, NewsletterView,}
 
   def recent_episodes(podcast, limit \\ 5) do
     podcast
