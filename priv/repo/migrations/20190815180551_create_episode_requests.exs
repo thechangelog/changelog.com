@@ -7,8 +7,8 @@ defmodule Changelog.Repo.Migrations.CreateEpisodeRequests do
       add :hosts, :string
       add :guests, :string
       add :topics, :string
-      add :pitch, :string
       add :pronunciation, :string
+      add :pitch, :text
 
       add :submitter_id, references(:people, on_delete: :delete_all)
       add :podcast_id, references(:podcasts, on_delete: :delete_all)
