@@ -1,5 +1,5 @@
 <div class="page_basic">
-  <h1>Request a show 🙏</h1>
+  <h1>Request an episode 🙏</h1>
 
 <%= unless @current_user do %>
   <div class="flash flash--inline flash--error">

@@ -223,6 +223,7 @@ defmodule ChangelogWeb.Router do
     get "/weekly/unsubscribed", PageController, :weekly_unsubscribed
 
     get "/request", EpisodeRequestController, :new, as: :episode_request
+    get "/request/:slug", EpisodeRequestController, :new, as: :episode_request
     post "/request", EpisodeRequestController, :create, as: :episode_request
 
     get "/podcasts", PodcastController, :index, as: :podcast
