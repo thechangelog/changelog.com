@@ -2,9 +2,9 @@
 
 <article class="article">
   <div class="richtext">
-    <h1>Get in touch. Say hello.</h1>
+    <h1>Get in touch. Say hello 👋</h1>
 
-    <p><a href="https://github.com/thechangelog/ping/issues">Ping us on GitHub</a> with show ideas, feedback, or general questions.</p>
+    <p><%= link("Request an episode", to: episode_request_path(@conn, :new)) %> of your favorite show.</p>
 
     <p><%= link("Submit news", to: news_item_path(@conn, :new)) %> for publishing consideration.</p>
 
@@ -12,7 +12,7 @@
 
     <p><a href="https://github.com/thechangelog/changelog.com/issues">Open an issue</a> with bug reports and feature requests.</p>
 
-    <p>Or email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a> if you prefer to get in touch privately.</p>
+    <p>For everything else, email <a href="mailto:editors@changelog.com?subject=Hello Changelog!">editors@changelog.com</a>.</p>
 
   </div>
 </article>

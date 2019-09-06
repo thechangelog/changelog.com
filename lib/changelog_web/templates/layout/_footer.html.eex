@@ -60,6 +60,8 @@
       <% end %>
         <li>---</li>
         <li><%= link("Master", to: podcast_path(@conn, :show, :master), title: "Master feed") %></li>
+        <li>---</li>
+        <li><%= link("Request Episode", to: episode_request_path(@conn, :new), title: "Request an episode") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
