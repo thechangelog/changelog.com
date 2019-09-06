@@ -18,11 +18,8 @@
       <li><%= link("Via Master", to: podcast_path(@conn, :show, "master")) %></li>
     <% end %>
     </ul>
-
-    <%= if @podcast.ping_url do %>
-      <div class="tooltip-footer">
-        <%= link("Ping Us!", to: @podcast.ping_url) %>
-      </div>
-    <% end %>
+    <div class="tooltip-footer">
+      <%= link("Request Episode", to: episode_request_path(@conn, :new, @podcast.slug)) %>
+    </div>
   </div>
 </div>
