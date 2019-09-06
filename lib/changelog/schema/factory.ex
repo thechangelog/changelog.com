@@ -52,6 +52,14 @@ defmodule Changelog.Factory do
     }
   end
 
+  def episode_request_factory do
+    %Changelog.EpisodeRequest{
+      pitch: "You gotta do this!",
+      podcast: build(:podcast),
+      submitter: build(:person),
+    }
+  end
+
   def episode_sponsor_factory do
     %Changelog.EpisodeSponsor{
       episode: build(:episode),

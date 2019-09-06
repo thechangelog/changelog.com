@@ -152,12 +152,6 @@
     <%= error_message(f, :itunes_url) %>
   </div>
 
-  <div class="field <%= error_class(f, :ping_url) %>">
-    <%= label(f, :ping_url, "Ping URL") %>
-    <%= text_input(f, :ping_url) %>
-    <%= error_message(f, :ping_url) %>
-  </div>
-
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !is_persisted(f.data) do %>

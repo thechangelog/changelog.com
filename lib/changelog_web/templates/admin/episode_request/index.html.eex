@@ -1,0 +1,28 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("Podcasts", to: admin_podcast_path(@conn, :index)) %>
+    &raquo;
+    <%= link(@podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    &raquo;
+    Episode Requests
+    <%= link("(View)", to: podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+  </h1>
+
+  <div class="actions right">
+    <%= link to: admin_podcast_episode_path(@conn, :new, @podcast.slug), class: "ui right floated primary basic button" do %>
+      <i class="icon unmute"></i>
+      Add Episode
+    <% end %>
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@active) do %>
+  <h2 class="ui header">Active Requests</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @active, status: :active})) %>
+<% end %>
+
+<%= if Enum.any?(@archived) do %>
+  <h2 class="ui header">Archived Requests</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @archived, status: :archived})) %>
+<% end %>

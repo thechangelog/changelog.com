@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, EpisodeStat, NewsItem, Newsletters, Person}
+  alias Changelog.{Cache, Episode, EpisodeRequest, EpisodeStat, NewsItem, Newsletters, Person}
 
   plug Authorize, Policies.Admin
 
@@ -12,21 +12,22 @@ defmodule ChangelogWeb.Admin.PageController do
 
     conn
     |> assign(:newsletters, newsletters)
-    |> assign(:draft_episodes, draft_episodes())
-    |> assign(:draft_items, draft_items(me))
+    |> assign(:episode_drafts, episode_drafts())
+    |> assign(:episode_requests, episode_requests())
+    |> assign(:item_drafts, item_drafts(me))
     |> assign(:members, members())
     |> assign(:podcasts, Cache.podcasts())
     |> assign(:reach, reach())
     |> render(:index)
   end
-  def index(conn = %{assigns: %{current_user: %{editor: true}}}, _params) do
-    redirect(conn, to: admin_news_item_path(conn, :index))
-  end
   def index(conn = %{assigns: %{current_user: %{host: true}}}, _params) do
     redirect(conn, to: admin_podcast_path(conn, :index))
   end
+  def index(conn = %{assigns: %{current_user: %{editor: true}}}, _params) do
+    redirect(conn, to: admin_news_item_path(conn, :index))
+  end
 
-  defp draft_episodes do
+  defp episode_drafts do
     Episode.unpublished()
     |> Episode.newest_last(:recorded_at)
     |> Episode.distinct_podcast()
@@ -34,7 +35,14 @@ defmodule ChangelogWeb.Admin.PageController do
     |> Repo.all()
   end
 
-  defp draft_items(user) do
+  defp episode_requests do
+    EpisodeRequest.submitted()
+    |> EpisodeRequest.newest_first()
+    |> EpisodeRequest.preload_all()
+    |> Repo.all()
+  end
+
+  defp item_drafts(user) do
     NewsItem.drafted()
     |> NewsItem.newest_first(:inserted_at)
     |> NewsItem.logged_by(user)

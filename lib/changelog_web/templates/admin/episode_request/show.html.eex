@@ -1,0 +1,35 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("Podcasts", to: admin_podcast_path(@conn, :index)) %>
+    &raquo;
+    <%= link(@podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    &raquo;
+    <%= link("Episode Requests", to: admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
+    <%= link("(View)", to: podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+  </h1>
+</div>
+
+<div class="ui basic segment">
+  <div class="ui text container">
+    <h4 class="ui block header">Submitter</h4>
+
+    <p><%= @request.submitter.name %> (<%= submitter_name(@request) %>) on <%= ts(@request.inserted_at) %></p>
+
+    <h4 class="ui block header">Guests</h4>
+
+    <p><%= @request.guests || "None specified" %></p>
+
+    <h4 class="ui block header">Hosts</h4>
+
+    <p><%= @request.hosts || "None specified" %></p>
+
+    <h4 class="ui block header">Topics</h4>
+
+    <p><%= @request.topics || "None specified" %></p>
+
+    <h4 class="ui block header">Pitch</h4>
+
+    <p><%= @request.pitch |> md_to_html() |> raw() %></p>
+  </div>
+</div>
+

@@ -81,6 +81,8 @@ defmodule ChangelogWeb.Router do
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
       post "/episodes/:id/unpublish", EpisodeController, :unpublish, as: :episode
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode
+      resources "/episode_requests", EpisodeRequestController
+      delete "/episode_requests/:id/decline", EpisodeRequestController, :decline, as: :episode_request
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
     end
 
@@ -219,6 +221,10 @@ defmodule ChangelogWeb.Router do
     get "/weekly", PageController, :weekly
     get "/weekly/archive", PageController, :weekly_archive
     get "/weekly/unsubscribed", PageController, :weekly_unsubscribed
+
+    get "/request", EpisodeRequestController, :new, as: :episode_request
+    get "/request/:slug", EpisodeRequestController, :new, as: :episode_request
+    post "/request", EpisodeRequestController, :create, as: :episode_request
 
     get "/podcasts", PodcastController, :index, as: :podcast
     get "/:slug", PodcastController, :show, as: :podcast
