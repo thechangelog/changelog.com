@@ -1,16 +1,16 @@
 defmodule ChangelogWeb.EpisodeRequestController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{EpisodeRequest, Podcast}
+  alias Changelog.{EpisodeRequest}
 
   plug RequireUser, "before submitting" when action in [:create]
 
-  def new(conn, params) do
-    slug = Map.get(params, "slug", "podcast")
+  def new(conn = %{assigns: %{podcasts: podcasts}}, params) do
+    podcast = Enum.find(podcasts, fn(p) -> p.slug == params["slug"] end)
 
-    podcast_id = case Repo.get_by(Podcast, slug: slug) do
-      podcast = %Podcast{} -> podcast.id
-      _else -> 1
+    {conn, podcast_id} = case podcast do
+      nil -> {conn, 1}
+      p -> {assign(conn, :podcast, p), p.id}
     end
 
     changeset = EpisodeRequest.submission_changeset(%EpisodeRequest{podcast_id: podcast_id})

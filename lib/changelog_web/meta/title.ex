@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Meta.Title do
 
-  alias ChangelogWeb.{AuthView, EpisodeView, LiveView, NewsItemView, NewsSourceView,
-                      PageView, PersonView, PodcastView, PostView, TopicView, SearchView}
+  alias ChangelogWeb.{AuthView, EpisodeView, EpisodeRequestView, LiveView,
+                      NewsItemView, NewsSourceView, PageView, PersonView,
+                      PodcastView, PostView, TopicView, SearchView}
 
   @default "News and podcasts for developers"
 
@@ -111,6 +112,14 @@ defmodule ChangelogWeb.Meta.Title do
   # Episode page
   defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
     "#{podcast.name} #{EpisodeView.numbered_title(episode, "#")} #{episode.subtitle}"
+  end
+
+  # Episode request form
+  defp get(%{view_module: EpisodeRequestView, view_template: "new.html", podcast: podcast}) do
+    "Request an episode of #{podcast.name}"
+  end
+  defp get(%{view_module: EpisodeRequestView, view_template: "new.html"}) do
+    "Request an episode"
   end
 
   # Posts index (blog)
