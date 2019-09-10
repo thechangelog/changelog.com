@@ -15,21 +15,26 @@
   <url><loc><%= person_url(@conn, :subscribe) %></loc></url>
   <url><loc><%= live_url(@conn, :index) %></loc></url>
 
-  <%= for item <- @news_items do %>
-    <url><loc><%= news_item_url(@conn, :show, NewsItemView.slug(item)) %></loc></url>
-  <% end %>
+<%= for item <- @news_items do %>
+  <url><loc><%= news_item_url(@conn, :show, NewsItemView.slug(item)) %></loc></url>
+<% end %>
 
   <url><loc><%= news_source_url(@conn, :index) %></loc></url>
-  <%= for source <- @news_sources do %>
-    <url><loc><%= news_source_url(@conn, :show, source.slug) %></loc></url>
-  <% end %>
+<%= for source <- @news_sources do %>
+  <url><loc><%= news_source_url(@conn, :show, source.slug) %></loc></url>
+<% end %>
 
   <url><loc><%= podcast_url(@conn, :index) %></loc></url>
-  <%= for podcast <- @podcasts do %>
-    <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
-    <url><loc><%= podcast_url(@conn, :popular, podcast.slug) %></loc></url>
-    <url><loc><%= podcast_url(@conn, :recommended, podcast.slug) %></loc></url>
-  <% end %>
+<%= for podcast <- @podcasts do %>
+  <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
+  <url><loc><%= podcast_url(@conn, :popular, podcast.slug) %></loc></url>
+  <url><loc><%= podcast_url(@conn, :recommended, podcast.slug) %></loc></url>
+<% end %>
+
+  <url><loc><%= episode_request_url(@conn, :new) %></loc></url>
+<%= for podcast <- @podcasts do %>
+  <url><loc><%= episode_request_url(@conn, :new, podcast.slug) %></loc></url>
+<% end %>
 
   <%= for episode <- @episodes do %>
     <url><loc><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></loc></url>
