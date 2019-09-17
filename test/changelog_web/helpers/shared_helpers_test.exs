@@ -11,6 +11,20 @@ defmodule ChangelogWeb.SharedHelpersTest do
     end
   end
 
+  test "comma_separated_names" do
+    p1 = build(:person, name: "The Gangsta")
+    p2 = build(:person, name: "The Killa")
+    p3 = build(:person, name: "The Dope Dealer")
+    p4 = build(:person, name: "You")
+
+    assert comma_separated_names(nil) == ""
+    assert comma_separated_names([]) == ""
+    assert comma_separated_names([p1]) == "The Gangsta"
+    assert comma_separated_names([p1, p2]) == "The Gangsta and The Killa"
+    assert comma_separated_names([p1, p2, p3]) == "The Gangsta, The Killa, and The Dope Dealer"
+    assert comma_separated_names([p1, p2, p3, p4]) == "The Gangsta, The Killa, The Dope Dealer, and You"
+  end
+
   describe "domain_name" do
     test "includes subdomain by default" do
       assert domain_name("https://blog.jerodsanto.net/2018") == "blog.jerodsanto.net"

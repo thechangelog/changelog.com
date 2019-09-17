@@ -36,14 +36,6 @@ defmodule ChangelogWeb.PersonView do
     "https://secure.gravatar.com/avatar/#{hash}.jpg?s=#{size}&d=mm"
   end
 
-  @spec comma_separated_names([binary()]) :: binary()
-  def comma_separated_names(people)
-  def comma_separated_names([first]),                do: first.name
-  def comma_separated_names([first, second]),        do: "#{first.name} and #{second.name}"
-  def comma_separated_names([first, second, third]), do: "#{first.name}, #{second.name}, and #{third.name}"
-  def comma_separated_names([first | rest]),         do: "#{first.name}, #{comma_separated_names(rest)}"
-  def comma_separated_names(_unhandled),             do: ""
-
   def external_url(person) do
     cond do
       person.website -> person.website

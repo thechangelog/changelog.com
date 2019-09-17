@@ -56,8 +56,8 @@
         <itunes:summary><%= md_to_text(episode.summary) %></itunes:summary>
 
       <%= if Enum.any?(episode.hosts) do %>
-        <dc:creator><%= PersonView.comma_separated_names(episode.hosts) %></dc:creator>
-        <itunes:author><%= PersonView.comma_separated_names(episode.hosts) %></itunes:author>
+        <dc:creator><%= comma_separated_names(episode.hosts) %></dc:creator>
+        <itunes:author><%= comma_separated_names(episode.hosts) %></itunes:author>
       <% else %>
         <dc:creator>Changelog Media</dc:creator>
         <itunes:author>Changelog Media</itunes:author>

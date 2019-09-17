@@ -33,6 +33,13 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     |> String.reverse()
   end
 
+  def comma_separated_names(list)
+  def comma_separated_names([first]),                do: first.name
+  def comma_separated_names([first, second]),        do: "#{first.name} and #{second.name}"
+  def comma_separated_names([first, second, third]), do: "#{first.name}, #{second.name}, and #{third.name}"
+  def comma_separated_names([first | rest]),         do: "#{first.name}, #{comma_separated_names(rest)}"
+  def comma_separated_names(_unhandled),             do: ""
+
   def controller_name(conn), do: Controller.controller_module(conn) |> Naming.resource_name("Controller")
   def controller_action_combo(conn), do: [controller_name(conn), action_name(conn)] |> Enum.join("-")
   def controller_action_combo_matches?(conn, list) when is_list(list) do

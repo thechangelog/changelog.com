@@ -1,4 +1,5 @@
 defmodule ChangelogWeb.Meta.Title do
+  import ChangelogWeb.Helpers.SharedHelpers, only: [comma_separated_names: 1]
 
   alias ChangelogWeb.{AuthView, EpisodeView, EpisodeRequestView, LiveView,
                       NewsItemView, NewsSourceView, PageView, PersonView,
@@ -92,7 +93,7 @@ defmodule ChangelogWeb.Meta.Title do
   end
 
   # Podcasts index
-  defp get(%{view_module: PodcastView, view_template: "index.html"}), do: "All Changelog podcasts"
+  defp get(%{view_module: PodcastView, view_template: "index.html"}), do: "Podcasts for developers"
 
   # Podcast homepages
   defp get(%{view_module: PodcastView, podcast: podcast, tab: "popular"}) do
@@ -103,7 +104,7 @@ defmodule ChangelogWeb.Meta.Title do
   end
   defp get(%{view_module: PodcastView, podcast: podcast}) do
     if Enum.any?(podcast.hosts) do
-      "#{podcast.name} Podcast with #{PersonView.comma_separated_names(podcast.hosts)}"
+      "#{podcast.name} Podcast with #{comma_separated_names(podcast.hosts)}"
     else
       podcast.name
     end
