@@ -21,6 +21,7 @@ defmodule Changelog.AgentKit do
     end
 
     case name do
+      "AndroidDownloadManager" -> "Android"
       "AppleCoreMedia" -> "Apple Podcasts"
       "Mozilla" -> "Browsers"
       _else -> name
