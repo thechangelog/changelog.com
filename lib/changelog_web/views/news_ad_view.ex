@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsAdView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, Hashid}
+  alias Changelog.{Files, NewsAd}
   alias ChangelogWeb.{Endpoint, SponsorView}
 
   def admin_edit_link(conn, %{admin: true}, ad) do
@@ -14,7 +14,7 @@ defmodule ChangelogWeb.NewsAdView do
   end
   def admin_edit_link(_, _, _), do: nil
 
-  def hashid(ad), do: Hashid.encode(ad.id)
+  def hashid(ad), do: NewsAd.hashid(ad)
 
   def image_link(ad, version \\ :large) do
     if ad.image do

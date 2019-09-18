@@ -28,6 +28,9 @@ defmodule Changelog.Schema do
       def older_than(query, date = %Date{}), do: from(q in query, where: q.inserted_at < ^Timex.to_datetime(date))
       def older_than(query, time = %DateTime{}), do: from(q in query, where: q.inserted_at < ^time)
 
+      def hashid(id) when is_integer(id), do: Changelog.Hashid.encode(id)
+      def hashid(struct), do: hashid(struct.id)
+
       defp mark_for_deletion(changeset) do
         if get_change(changeset, :delete) do
           %{changeset | action: :delete}

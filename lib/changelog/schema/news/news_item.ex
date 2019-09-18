@@ -99,8 +99,6 @@ defmodule Changelog.NewsItem do
     |> file_changeset(attrs)
   end
 
-  def hashid(item), do: Changelog.Hashid.encode(item.id)
-
   def slug(item) do
     item.headline
     |> String.downcase
