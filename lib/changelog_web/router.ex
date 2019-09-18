@@ -190,6 +190,8 @@ defmodule ChangelogWeb.Router do
     get "/topic/:slug/podcasts", TopicController, :podcasts, as: :topic
 
     get "/live", LiveController, :index
+    get "/live/:id", LiveController, :show
+
     get "/live/status", LiveController, :status
     get "/search", SearchController, :search
 

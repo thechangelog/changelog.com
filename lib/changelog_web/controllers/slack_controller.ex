@@ -7,7 +7,7 @@ defmodule ChangelogWeb.SlackController do
   require Logger
 
   def countdown(conn, %{"slug" => slug}) do
-    time_with_buffer = Timex.subtract(Timex.now, Timex.Duration.from_hours(1.5))
+    time_with_buffer = Timex.subtract(Timex.now(), Timex.Duration.from_hours(1.5))
 
     next =
       Episode.recorded_live()

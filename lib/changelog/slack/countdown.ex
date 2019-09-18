@@ -5,7 +5,7 @@ defmodule Changelog.Slack.Countdown do
   def live(nil), do: respond("No live recordings scheduled yet...")
 
   def live(next_episode) do
-    diff = Timex.diff(next_episode.recorded_at, Timex.now, :duration)
+    diff = Timex.diff(next_episode.recorded_at, Timex.now(), :duration)
     formatted = Timex.format_duration(diff, :humanized)
     podcast = next_episode.podcast.name
     title = next_episode.title

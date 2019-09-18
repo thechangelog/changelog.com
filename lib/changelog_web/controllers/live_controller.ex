@@ -1,27 +1,32 @@
 defmodule ChangelogWeb.LiveController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Icecast}
+  alias Changelog.{Episode, Hashid, Icecast}
   alias ChangelogWeb.TimeView
 
   def index(conn, _params) do
-    live_window_start = TimeView.hours_ago(1.5)
-    live_window_end = TimeView.hours_from_now(12)
-
     episodes =
-      Episode.recorded_live
-      |> Episode.recorded_future_to(live_window_start)
+      Episode.recorded_live()
+      |> Episode.recorded_future_to(TimeView.hours_ago(2))
       |> Episode.newest_last(:recorded_at)
-      |> Repo.all
-      |> Episode.preload_all
+      |> Repo.all()
+      |> Episode.preload_all()
 
-    up_next = List.first(episodes)
+    conn
+    |> assign(:episodes, episodes)
+    |> render(:index)
+  end
 
-    if up_next && Timex.before?(up_next.recorded_at, live_window_end) do
-      render(conn, :live, episode: up_next, podcast: up_next.podcast)
-    else
-      render(conn, :upcoming, episodes: episodes)
-    end
+  def show(conn, %{"id" => hashid}) do
+    episode =
+      Episode.recorded_live()
+      |> Repo.get_by!(id: Hashid.decode(hashid))
+      |> Episode.preload_all()
+
+    conn
+    |> assign(:episode, episode)
+    |> assign(:podcast, episode.podcast)
+    |> render(:show)
   end
 
   def status(conn, _params) do
