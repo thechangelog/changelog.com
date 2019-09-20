@@ -35,6 +35,11 @@
       display: flex;
       flex-wrap: wrap;
       height: 100%;
+      position: relative;
+
+      &:hover {
+        background: darken($black, 3%);
+      }
 
       &:last-child {
         border-bottom: 0;
@@ -55,7 +60,7 @@
 
         p {
           font-size: 18px;
-          line-height: 1em;
+          line-height: 1.5em;
           margin: 0.5em 0;
 
           a {
@@ -71,6 +76,7 @@
       }
 
       &-image {
+        background: #000;
         border-right: $border;
         flex: 0 0 120px;
         padding: 0;
@@ -96,6 +102,24 @@
         @media (min-width: 868px) {
           border-top: 0;
           box-shadow: 0;
+        }
+      }
+
+      &-live_indicator {
+        @include position(absolute, 11px 10px null null);
+        font-weight: bold;
+        color: $red;
+
+        span {
+          $size: 11px;
+          animation: pulse 4s infinite 1s;
+          background: $red;
+          border-radius: $size;
+          box-shadow: 0 0 0 0 rgba($red, .9);
+          display: inline-block;
+          height: $size;
+          width: $size;
+          margin-left: 3px;
         }
       }
     }

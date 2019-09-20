@@ -53,7 +53,7 @@
     </div>
 
     <ul class="live-footer-stats">
-      <li><strong>Start Time</strong> <%= TimeView.ts(@episode.recorded_at, "amPm") %></li>
+      <li><strong><%= TimeView.ts(@episode.recorded_at, "dayAndDate") %></strong> <%= TimeView.ts(@episode.recorded_at, "amPm") %></li>
     </ul>
     <div class="live-footer-status js-live-status">Upcoming</div>
   </footer>
