@@ -4,7 +4,7 @@
   }
 
   position: relative;
-  #{$parent}.is-upcoming & { pointer-events: none; }
+  #{$parent}.is-upcoming &, #{$parent}.is-complete & { pointer-events: none; }
   &:hover &-bg { transform: scale(1.1); }
 
   &-bg,
@@ -22,7 +22,7 @@
     transition: all 0.2s $ease-in-out-quint;
     z-index: 2;
 
-    #{$parent}.is-upcoming & {
+    #{$parent}.is-upcoming &, #{$parent}.is-complete & {
       background-color: darken($black, 4%);
     }
   }
@@ -46,7 +46,7 @@
     #{$parent}.is-playing & {
       background-image: url("/images/icons/icon-pause-white.svg");
     }
-    #{$parent}.is-upcoming & {
+    #{$parent}.is-upcoming &, #{$parent}.is-complete & {
       opacity: 0.2;
     }
     #{$parent}.is-loading & {

@@ -20,6 +20,15 @@
     display: none;
   }
 }
+.live.is-complete {
+  .live-footer-status {
+    background-color: $medium-grey;
+  }
+
+  .live-footer-viewers {
+    display: none;
+  }
+}
 .live {
   color: $white;
   padding: 60px 0 160px;

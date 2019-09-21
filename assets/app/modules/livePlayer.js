@@ -6,6 +6,7 @@ export default class LivePlayer {
     this.selector = selector;
     this.isAttached = false;
     this.streaming = false;
+    this.complete = false;
     this.failed = false;
     this.listeners = 0;
     this.audio = new Audio();
@@ -37,6 +38,7 @@ export default class LivePlayer {
     this.playButton.handle("click", () => { this.togglePlayPause(); });
     this.monitorStatus();
     this.monitorId = setInterval(() => { this.monitorStatus(); }, 3000);
+    this.complete = this.container.hasClass("is-complete");
     // yup
     this.isAttached = true;
   }
@@ -51,7 +53,9 @@ export default class LivePlayer {
   loadUI() {
     this.liveViewers.text(this.listeners);
 
-    if (this.streaming) {
+    if (this.complete) {
+      // do nothing
+    } else if (this.streaming) {
       this.status.text("Live");
       this.container.removeClass("is-upcoming");
     } else {

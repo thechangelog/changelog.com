@@ -1,4 +1,4 @@
-<section class="live live--<%= @episode.podcast.slug %> is-upcoming js-live">
+<section class="live live--<%= @episode.podcast.slug %> js-live <%= status_class(@episode) %>">
   <div class="live-content">
     <%= link(to: Icecast.live_url(), role: "button", class: "live-button js-live-play-button", data: []) do %>
       <div class="live-button-bg"></div>
@@ -55,6 +55,9 @@
     <ul class="live-footer-stats">
       <li><strong><%= TimeView.ts(@episode.recorded_at, "dayAndDate") %></strong> <%= TimeView.ts(@episode.recorded_at, "amPm") %></li>
     </ul>
-    <div class="live-footer-status js-live-status">Upcoming</div>
+
+    <div class="live-footer-status js-live-status">
+      <%= if should_be_complete(@episode), do: "Complete", else: "Upcoming" %>
+    </div>
   </footer>
 </section>
