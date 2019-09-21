@@ -50,6 +50,10 @@
         border-bottom-color: $green;
       }
     }
+
+    &-item--right {
+      margin-left: auto;
+    }
   }
 }
 

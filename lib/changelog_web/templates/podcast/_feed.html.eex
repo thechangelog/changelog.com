@@ -5,19 +5,22 @@
 <nav class="subnav">
   <ul class="subnav-list">
     <li class="subnav-list-item <%= active_class(@conn, "show") %>">
-      <%= link "Recent", to: podcast_path(@conn, :show, @podcast.slug) <> "#feed", title: "Recent episodes of #{@podcast.name}" %>
+      <%= link("Recent", to: podcast_path(@conn, :show, @podcast.slug) <> "#feed", title: "Recent episodes of #{@podcast.name}") %>
     </li>
     <li class="subnav-list-item <%= active_class(@conn, "recommended") %>">
-      <%= link "Recommended", to: podcast_path(@conn, :recommended, @podcast.slug) <> "#feed", title: "Recommended episodes of #{@podcast.name}" %>
+      <%= link("Recommended", to: podcast_path(@conn, :recommended, @podcast.slug) <> "#feed", title: "Recommended episodes of #{@podcast.name}") %>
     </li>
     <li class="subnav-list-item <%= active_class(@conn, "popular") %>">
-      <%= link "Popular", to: podcast_path(@conn, :popular, @podcast.slug) <> "#feed", title: "Popular episodes of #{@podcast.name}" %>
+      <%= link("Popular", to: podcast_path(@conn, :popular, @podcast.slug) <> "#feed", title: "Popular episodes of #{@podcast.name}") %>
     </li>
   <%= if @podcast.status != :retired do %>
     <!--<li class="subnav-list-item <%= active_class(@conn, "upcoming") %>">
       <%= link "Upcoming", to: podcast_path(@conn, :upcoming, @podcast.slug) <> "#feed" %>
     </li>-->
   <% end %>
+    <li class="subnav-list-item subnav-list-item--right">
+      <%= link("🙏 Request!", to: episode_request_path(@conn, :new, @podcast.slug), title: "Request an episode of #{@podcast.name}") %>
+    </li>
   </ul>
 </nav>
 
