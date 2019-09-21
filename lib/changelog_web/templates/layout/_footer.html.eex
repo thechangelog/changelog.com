@@ -70,7 +70,6 @@
         <li><%= link("Join the Community", to: page_path(@conn, :community), title: "Join the community") %></li>
         <li><%= link("Code of Conduct", to: page_path(@conn, :coc), title: "Read the code of conduct") %></li>
         <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
-        <li><%= link("Ping Us", to: "https://github.com/thechangelog/ping", title: "Ping us on GitHub") %></li>
         <li><%= link("Perks", to: page_path(@conn, :community), title: "Community perks") %></li>
       </ul>
     </div>
