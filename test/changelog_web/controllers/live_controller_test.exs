@@ -1,7 +1,9 @@
 defmodule ChangelogWeb.LiveControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.Episode
+  import Mock
+
+  alias Changelog.{Episode, Icecast}
 
   describe "the live index" do
     test "with episodes coming soon", %{conn: conn} do
@@ -44,6 +46,26 @@ defmodule ChangelogWeb.LiveControllerTest do
 
     assert_raise Ecto.NoResultsError, fn ->
       get(conn, live_path(conn, :show, Episode.hashid(episode)))
+    end
+  end
+
+  describe "the live status" do
+    test "is false when nothing is streaming", %{conn: conn} do
+      with_mock(Icecast, [get_stats: fn() -> %Icecast.Stats{} end]) do
+        conn = get(conn, live_path(conn, :status))
+        response = json_response(conn, 200)
+        refute response["streaming"]
+        assert response["listeners"] == 0
+      end
+    end
+
+    test "is true when something is streaming", %{conn: conn} do
+      with_mock(Icecast, [get_stats: fn() -> %Icecast.Stats{streaming: true, listeners: 14} end]) do
+        conn = get(conn, live_path(conn, :status))
+        response = json_response(conn, 200)
+        assert response["streaming"]
+        assert response["listeners"] == 14
+      end
     end
   end
 end
