@@ -78,6 +78,12 @@ export default class OnsitePlayer {
         case 83: // s
           this.changeSpeed();
           break;
+        case 187: // +
+          this.changeVolumeBy(0.1);
+          break;
+        case 189: // -
+          this.changeVolumeBy(-0.1);
+          break;
         default:
       }
     });
@@ -132,6 +138,11 @@ export default class OnsitePlayer {
 
   changeSpeed() {
     this.audio.changeSpeed();
+  }
+
+  changeVolumeBy(to) {
+    let currentVolume = this.audio.volume();
+    this.audio.setVolume(currentVolume + to);
   }
 
   seekBy(to) {
