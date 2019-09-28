@@ -285,6 +285,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "icholy",
+      "name": "Ilia Choly",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/943597?v=4",
+      "profile": "http://choly.ca",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
