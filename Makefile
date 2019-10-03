@@ -154,6 +154,22 @@ endif
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
 
+define MAKE_TARGETS
+  awk -F: '/^[^\.%\t][a-zA-Z\._\-]*:+.*$$/ { printf "%s\n", $$1 }' $(MAKEFILE_LIST)
+endef
+define BASH_AUTOCOMPLETE
+  complete -W \"$$($(MAKE_TARGETS) | sort | uniq)\" make gmake m
+endef
+.PHONY: autocomplete
+autocomplete: ## ac  | Configure shell autocomplete - eval "$(make autocomplete)"
+	@echo "$(BASH_AUTOCOMPLETE)"
+.PHONY: ac
+ac: autocomplete
+# Continuous Feedback for the ac target - run in a separate pane while iterating on it
+.PHONY: CFac
+CFac:
+	@watch -c $(MAKE) ac
+
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
 
