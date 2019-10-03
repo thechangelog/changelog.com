@@ -210,7 +210,7 @@ resource "null_resource" "disable_automatic_updates" {
     inline = [
       "sudo systemctl disable update-engine",
       "sudo systemctl stop update-engine",
-      "systemctl status update-engine | grep 'Stopped Update Engine'",
+      "systemctl is-active --quiet update-engine || echo 'OK: Update Engine is not active'",
     ]
   }
 
