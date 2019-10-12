@@ -150,6 +150,8 @@ endif
 #
 .DEFAULT_GOAL := help
 
+include mk/inspect.mk
+
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
 
@@ -255,11 +257,10 @@ build-test: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## bt
 .PHONY: bt
 bt: build-test
 
-SEPARATOR := -------------------------------------------------------------------------------------------
 .PHONY: help
 help:
-	@awk -F"[:#]" '/^[^\.][a-zA-Z\._\-]+:+.+##.+$$/ { printf "$(SEPARATOR)\n\033[36m%-24s\033[0m %s\n", $$1, $$4 }' $(MAKEFILE_LIST) \
-	; echo $(SEPARATOR)
+	@awk -F"[:#]" '/^[^\.][a-zA-Z\._\-]+:+.+##.+$$/ { printf "\033[36m%-24s\033[0m %s\n", $$1, $$4 }' $(MAKEFILE_LIST) \
+	| sort
 # Continuous Feedback for the help target - run in a split window while iterating on it
 .PHONY: CFhelp
 CFhelp:
@@ -352,27 +353,6 @@ check-deployed-version-local: $(CURL)
 .PHONY: cdvl
 cdvl: check-deployed-version-local
 
-# https://github.com/bcicen/ctop
-define CTOP_CONTAINER
-docker pull quay.io/vektorlab/ctop:latest && \
-docker run --rm --interactive --tty \
-  --cpus 0.5 --memory 128M \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --name ctop_$(USER) \
-  quay.io/vektorlab/ctop:latest
-endef
-.PHONY: ctop
-ctop: ## ct  | View real-time container metrics & logs remotely
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(CTOP_CONTAINER)"
-.PHONY: ct
-ct: ctop
-
-.PHONY: ctop-local
-ctop-local:
-	@$(CTOP_CONTAINER)
-.PHONY: ctl
-ctl: ctop-local
-
 .PHONY: remove-docker-secrets
 remove-docker-secrets: $(LPASS)
 	@if [ $(HOST) = localhost ] ; then \
@@ -457,27 +437,6 @@ es: env-secrets
 iaas: linode-token dnsimple-creds terraform/dhparams.pem init validate apply ## i   | Provision IaaS infrastructure
 .PHONY: i
 i: iaas
-
-# https://github.com/hishamhm/htop
-define HTOP_CONTAINER
-docker pull jess/htop:latest && \
-docker run --rm --interactive --tty \
-  --cpus 0.5 --memory 128M \
-  --net="host" --pid="host" \
-  --name htop_$(USER) \
-  jess/htop:latest
-endef
-.PHONY: htop
-htop: ## ht  | View real-time host system metrics
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(HTOP_CONTAINER)"
-.PHONY: ht
-ht: htop
-
-.PHONY: htop-local
-htop-local:
-	@$(HTOP_CONTAINER)
-.PHONY: htl
-htl: htop-local
 
 # https://www.linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide/#diffie-hellman-parameters
 terraform/dhparams.pem: $(OPENSSL)
@@ -631,19 +590,6 @@ publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
-define APP_CONTAINER
-$$($(DOCKER) container ls \
-  --filter label=com.docker.swarm.service.name=$(DOCKER_STACK)_app \
-  --format='{{.ID}}' \
-  --last 1)
-endef
-.PHONY: remsh-local
-remsh-local:
-	@$(DOCKER) exec --tty --interactive "$(APP_CONTAINER)" \
-	  bash -c "iex --hidden --sname debug@\$$HOSTNAME --remsh changelog@\$$HOSTNAME"
-.PHONY: rl
-rl: remsh-local
-
 .PHONY: rsync-small-uploads-local
 rsync-small-uploads-local: create-dirs-mounted-as-volumes
 	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
@@ -656,10 +602,6 @@ secrets: $(LPASS) ## s   | List all LastPass secrets
 	@$(SECRETS)
 .PHONY: s
 s: secrets
-
-.PHONY: ssh
-ssh: ## ssh | SSH into $HOST
-	@ssh $(HOST_SSH_USER)@$(HOST)
 
 .PHONY: ssl-report
 ssl-report: ## ssl | Run an SSL report via SSL Labs
@@ -686,13 +628,6 @@ find-flaky-tests: test_flakes
 	    echo -e "$(GREEN)PASS$(NORMAL)\n") || \
 	  echo -e "$(RED)FAIL$(NORMAL)\n"; \
 	done
-
-.PHONY: watch
-watch: $(WATCH) $(DOCKER) ## w   | Watch all containers
-	@$(WATCH) -c "$(DOCKER) ps --all \
-	  --format='table {{.Status}}\t{{.Names}}\t{{.Image}}\t{{.ID}}'"
-.PHONY: w
-w: watch
 
 define UPDATE_NETDATA
 docker pull netdata/netdata && \
