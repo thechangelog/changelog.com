@@ -1,0 +1,5 @@
+DOCKER_STACK := 201910
+MIGRATE_FROM := core@2019i.changelog.com
+
+include Makefile
+include mk/migrate.mk

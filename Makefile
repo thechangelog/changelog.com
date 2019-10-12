@@ -26,7 +26,6 @@ DOCKER_STACK_FILE ?= docker/changelog.stack.yml
 
 HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
-RSYNC_SRC_HOST ?= root@172.104.216.248
 
 HOSTNAME := $(DOCKER_STACK).$(DOMAIN)
 HOSTNAME_LOCAL := changelog.localhost
@@ -165,7 +164,7 @@ autocomplete: ## ac  | Configure shell autocomplete - eval "$(make autocomplete)
 	@echo "$(BASH_AUTOCOMPLETE)"
 .PHONY: ac
 ac: autocomplete
-# Continuous Feedback for the ac target - run in a separate pane while iterating on it
+# Continuous Feedback for the ac target - run in a split window while iterating on it
 .PHONY: CFac
 CFac:
 	@watch -c $(MAKE) ac
@@ -254,12 +253,15 @@ build-test: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## bt
 .PHONY: bt
 bt: build-test
 
-SEPARATOR := ---------------------------------------------------------------------------------
+SEPARATOR := -------------------------------------------------------------------------------------------
 .PHONY: help
 help:
-	@grep -E '^[a-zA-Z_-]+:+.*?## .*$$' $(MAKEFILE_LIST) | \
-	awk 'BEGIN { FS = "[:#]" } ; { printf "$(SEPARATOR)\n\033[36m%-22s\033[0m %s\n", $$1, $$4 }' ; \
-	echo $(SEPARATOR)
+	@awk -F"[:#]" '/^[^\.][a-zA-Z\._\-]+:+.+##.+$$/ { printf "$(SEPARATOR)\n\033[36m%-24s\033[0m %s\n", $$1, $$4 }' $(MAKEFILE_LIST) \
+	; echo $(SEPARATOR)
+# Continuous Feedback for the help target - run in a split window while iterating on it
+.PHONY: CFhelp
+CFhelp:
+	@watch -c $(MAKE) help
 
 .PHONY: clean-docker
 clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, images & volumes
@@ -640,21 +642,10 @@ remsh-local:
 .PHONY: rl
 rl: remsh-local
 
-define RSYNC_UPLOADS
-  sudo --preserve-env --shell \
-    rsync --archive --delete --update --inplace --verbose --progress --human-readable \
-      $(RSYNC_SRC_HOST):/data/www/uploads/ /uploads/
-endef
-.PHONY: rsync-uploads
-rsync-uploads: ## ru  | Synchronise uploads between remote hosts
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(RSYNC_UPLOADS)"
-.PHONY: ru
-ru: rsync-uploads
-
 .PHONY: rsync-small-uploads-local
 rsync-small-uploads-local: create-dirs-mounted-as-volumes
 	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
-	  "$(RSYNC_SRC_HOST):/data/www/uploads/{avatars,covers,icons,logos}" $(CURDIR)/priv/uploads/
+	  "$(HOST_SSH_USER)@$(HOST):/uploads/{avatars,covers,icons,logos}" $(CURDIR)/priv/uploads/
 .PHONY: rsul
 rsul: rsync-small-uploads-local
 
