@@ -572,7 +572,7 @@ report-deploy-slack: $(CURL)
 	COMMIT_SHA="$$(cat ./COMMIT_SHA)" && export COMMIT_SHA && \
 	$(CURL) --silent --fail --output /dev/null --request POST --url $$SLACK_DEPLOY_WEBHOOK \
 	  --header 'Content-type: application/json' \
-	  --data '{"text":"<$(GIT_REPOSITORY)/commit/'$$COMMIT_SHA'|'$${COMMIT_SHA:0:7}'> by <$(GIT_REPOSITORY)/commits?author='$$COMMIT_USER'|'$$COMMIT_USER'> just started, it will be promoted to live when healthy 🐳 $(DOCKER_STACK).stack"}'
+	  --data '{"text":"<$(GIT_REPOSITORY)/commit/'$$COMMIT_SHA'|'$${COMMIT_SHA:0:7}'> by <$(GIT_REPOSITORY)/commits?author='$$COMMIT_USER'|'$$COMMIT_USER'> just started, it will be promoted to live when healthy. <$(GIT_REPOSITORY)/>blob/master/docker/$(DOCKER_STACK).stack.yml|$(DOCKER_STACK).stack>"}'
 
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image
