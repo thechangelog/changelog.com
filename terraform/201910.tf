@@ -12,6 +12,12 @@ resource "linode_volume" "db_2019_10" {
   label = "db_2019_10"
   size = 10
   linode_id = "${linode_instance.prod_2019_10.id}"
+
+  # Reject with an error any plan that would destroy the infrastructure object associated with the resource
+  # https://www.terraform.io/docs/configuration/resources.html#prevent_destroy
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 data "template_file" "db_2019_10_mount" {
@@ -28,6 +34,12 @@ resource "linode_volume" "uploads_2019_10" {
   label = "uploads_2019_10"
   size = 100
   linode_id = "${linode_instance.prod_2019_10.id}"
+
+  # Reject with an error any plan that would destroy the infrastructure object associated with the resource
+  # https://www.terraform.io/docs/configuration/resources.html#prevent_destroy
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 data "template_file" "uploads_2019_10_mount" {
@@ -203,6 +215,7 @@ resource "linode_nodebalancer_config" "prod_2019_10_https" {
   ssl_key = "${var.ssl_key}"
   ssl_cert = "${var.ssl_cert}"
 }
+
 resource "linode_nodebalancer_node" "prod_2019_10_https" {
   label = "prod_2019_10_https"
   address = "${linode_instance.prod_2019_10.private_ip_address}:80"
