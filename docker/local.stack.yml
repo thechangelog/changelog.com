@@ -204,7 +204,7 @@ services:
   #     HOSTNAME: "${HOSTNAME}"
   #     UPDATE_SERVICE_EVERY_N_SECONDS: 10
   #     DOCKER_SERVICE_IMAGE: thechangelog/changelog.com:local
-  #   image: thechangelog/bootstrap
+  #   image: thechangelog/bootstrap:201910
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
   #     - changelog.com:/app:rw

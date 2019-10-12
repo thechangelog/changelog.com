@@ -229,7 +229,7 @@ services:
     environment:
       HOSTNAME: "${HOSTNAME}"
       UPDATE_SERVICE_EVERY_N_SECONDS: 30
-    image: thechangelog/bootstrap
+    image: thechangelog/bootstrap:2019
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - changelog.com:/app:rw
