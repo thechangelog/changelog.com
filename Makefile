@@ -487,7 +487,7 @@ $(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Pingdom Visitor Insights$(NORMAL) | https://my.pingdom.com/3/visitor-insights                 |
 | $(BOLD)$(GREEN)Pingdom Status$(NORMAL)           | http://status.changelog.com/                              |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)Netdata$(NORMAL)                  | https://netdata.changelog.com                             |
+| $(BOLD)$(GREEN)Netdata$(NORMAL)                  | http://netdata.changelog.com                              |
 $(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)DockerHub$(NORMAL)                | https://hub.docker.com/u/thechangelog                     |
 $(CHANGELOG_SERVICES_SEPARATOR)
