@@ -22,7 +22,7 @@ export BUILD_VERSION := $(shell date -u +'%Y-%m-%dT%H.%M.%SZ')
 
 DOMAIN ?= changelog.com
 DOCKER_STACK ?= 2019
-DOCKER_STACK_FILE ?= docker/changelog.stack.yml
+DOCKER_STACK_FILE ?= docker/$(DOCKER_STACK).stack.yml
 
 HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
 HOST_SSH_USER ?= core
@@ -173,14 +173,14 @@ CFac:
 $(HOST): iaas create-docker-secrets bootstrap-docker
 
 define BOOTSTRAP_CONTAINER
-docker pull thechangelog/bootstrap:latest && \
+docker pull thechangelog/bootstrap:$(DOCKER_STACK) && \
 docker run --rm --interactive --tty --name bootstrap \
   --env HOSTNAME=\$$HOSTNAME \
   --volume /var/run/docker.sock:/var/run/docker.sock:ro \
   --volume changelog.com:/app:rw \
   $(BOOTSTRAP_RUN)
 endef
-BOOTSTRAP_RUN ?= thechangelog/bootstrap:latest
+BOOTSTRAP_RUN ?= thechangelog/bootstrap:$(DOCKER_STACK)
 define DISABLE_APP_UPDATER
 docker service scale $(DOCKER_STACK)_app_updater=0
 endef
@@ -191,7 +191,7 @@ bootstrap-docker:
 bd: bootstrap-docker
 
 .PHONY: interactive-bootstrap
-interactive-bootstrap: BOOTSTRAP_RUN = --entrypoint /bin/bash thechangelog/bootstrap:latest --login
+interactive-bootstrap: BOOTSTRAP_RUN = --entrypoint /bin/bash thechangelog/bootstrap:$(DOCKER_STACK) --login
 interactive-bootstrap:
 	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(BOOTSTRAP_CONTAINER)"
 .PHONY: ib
@@ -225,21 +225,22 @@ bi: bootstrap-image
 
 .PHONY: build-bootstrap-image
 build-bootstrap-image: $(DOCKER)
-	@cd docker && \
-	$(DOCKER) build \
+	@cd docker \
+	&& $(DOCKER) build \
 	  --build-arg DOCKER_COMPOSE_VERSION=$$($(COMPOSE) version --short) \
 	  --build-arg GIT_REPOSITORY=$(GIT_REPOSITORY) \
 	  --build-arg GIT_BRANCH=$(GIT_BRANCH) \
+	  --build-arg DOCKER_SERVICE_NAME=$(DOCKER_STACK)_app \
 	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
-	  --tag thechangelog/bootstrap:latest \
+	  --tag thechangelog/bootstrap:$(DOCKER_STACK) \
 	  --file Dockerfile.bootstrap .
 .PHONY: bbi
 bbi: build-bootstrap-image
 
 .PHONY: publish-bootstrap-image
 publish-bootstrap-image: $(DOCKER)
-	@$(DOCKER) push thechangelog/bootstrap:$(BUILD_VERSION) && \
-	$(DOCKER) push thechangelog/bootstrap:latest
+	@$(DOCKER) push thechangelog/bootstrap:$(BUILD_VERSION) \
+	&& $(DOCKER) push thechangelog/bootstrap:$(DOCKER_STACK)
 
 .PHONY: build
 build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## b   | Build changelog.com app container
@@ -413,7 +414,7 @@ priv/db:
 	@mkdir -p priv/db
 
 .PHONY: deploy-docker-stack-local
-deploy-docker-stack-local: DOCKER_STACK_FILE = docker/changelog.stack.local.yml
+deploy-docker-stack-local: DOCKER_STACK_FILE = docker/local.stack.yml
 deploy-docker-stack-local: deploy-docker-stack priv/db
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local

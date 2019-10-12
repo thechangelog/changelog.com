@@ -15,7 +15,7 @@ reset_to_remote_branch() {
 }
 
 is_repository() {
-  git remote -v
+  git remote --verbose
 }
 
 clone_repository() {
@@ -23,7 +23,7 @@ clone_repository() {
 }
 
 deploy_docker_stack() {
-  make deploy-docker-stack
+  make --makefile "${MAKEFILE:?must be set}" deploy-docker-stack
 }
 
 main
