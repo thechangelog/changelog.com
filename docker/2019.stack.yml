@@ -167,6 +167,7 @@ services:
       retries: 4
       start_period: 120s
     environment:
+      MAKEFILE: Makefile
       NODE: "${HOSTNAME}"
       PORT: 4000
       URL_HOST: &host changelog.com
