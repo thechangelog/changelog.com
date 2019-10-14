@@ -14,3 +14,15 @@ endif
 .PHONY: ru
 ru: rsync-uploads
 
+# Rather than creating a new container which needs to access the db container over a custom network,
+# exec in the db backup container instead.  Secrets are in place, let's just rock'n'roll!
+define DB_RESTORE_CONTEXT
+docker exec --interactive --tty \
+  \$$(docker ps --quiet --latest --filter name=$(DOCKER_STACK)_db_backup) \
+  bash
+endef
+.PHONY: db-restore-interactive
+db-restore-interactive:
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(DB_RESTORE_CONTEXT)"
+.PHONY: dbri
+dbri: db-restore-interactive
