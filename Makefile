@@ -168,8 +168,8 @@ autocomplete: ## ac  | Configure shell autocomplete - eval "$(make autocomplete)
 ac: autocomplete
 # Continuous Feedback for the ac target - run in a split window while iterating on it
 .PHONY: CFac
-CFac:
-	@watch -c $(MAKE) ac
+CFac: $(WATCH)
+	@$(WATCH) -c $(MAKE) ac
 
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
@@ -263,8 +263,8 @@ help:
 	| sort
 # Continuous Feedback for the help target - run in a split window while iterating on it
 .PHONY: CFhelp
-CFhelp:
-	@watch -c $(MAKE) help
+CFhelp: $(WATCH)
+	@$(WATCH) -c $(MAKE) help
 
 .PHONY: clean-docker
 clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, images & volumes
