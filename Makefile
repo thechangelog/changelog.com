@@ -412,22 +412,6 @@ update-app-service-local: $(DOCKER)
 .PHONY: uasl
 uasl: update-app-service-local
 
-define WATCH_STACK
-watch $(DOCKER) stack ps --no-trunc $(DOCKER_STACK)
-endef
-.PHONY: watch-stack
-watch-stack: DOCKER = $(DOCKER_LINUX)
-watch-stack:
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(WATCH_STACK)"
-.PHONY: ws
-ws: watch-stack
-
-.PHONY: watch-stack-local
-watch-stack-local: $(DOCKER)
-	@$(WATCH_STACK)
-.PHONY: wsl
-wsl: watch-stack-local
-
 .PHONY: env-secrets
 env-secrets: postgres campaignmonitor github aws backups_aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es

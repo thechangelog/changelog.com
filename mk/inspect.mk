@@ -86,3 +86,18 @@ watch: $(WATCH) $(DOCKER) ## w   | Watch all containers
 .PHONY: w
 w: watch
 
+define DOCKER_STACK_SERVICES
+$(DOCKER) stack ps --no-trunc $(DOCKER_STACK)
+endef
+.PHONY: watch-stack
+watch-stack: DOCKER = $(DOCKER_LINUX)
+watch-stack:
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "watch -c '$(DOCKER_STACK_SERVICES)'"
+.PHONY: ws
+ws: watch-stack
+
+.PHONY: watch-stack-local
+watch-stack-local: $(WATCH) $(DOCKER)
+	@$(WATCH) -c '$(DOCKER_STACK_SERVICES)'
+.PHONY: wsl
+wsl: watch-stack-local
