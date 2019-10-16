@@ -18,6 +18,9 @@ ENV BACKUP_DB_EVERY_N_SECONDS=${BACKUP_DB_EVERY_N_SECONDS}
 ARG AWS_S3_STORAGE_CLASS=STANDARD
 ENV AWS_S3_STORAGE_CLASS=${AWS_S3_STORAGE_CLASS}
 
+ARG STACK_VERSION
+ENV STACK_VERSION=$STACK_VERSION
+
 COPY backup_db_continuously upload_stdin_s3 db_backups_s3 select_db_backup_restore /usr/local/bin/
 RUN cd /usr/local/bin && chmod +x backup_db_continuously upload_stdin_s3 db_backups_s3 select_db_backup_restore
 

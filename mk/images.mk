@@ -33,6 +33,7 @@ dbi: db-backup-image
 build-db-backup-image: $(DOCKER)
 	@cd docker && \
 	$(DOCKER) build \
+	  --build-arg STACK_VERSION=$(DOCKER_STACK) \
 	  --tag thechangelog/db_backup:$(BUILD_VERSION) \
 	  --tag thechangelog/db_backup:$(DOCKER_STACK) \
 	  --file Dockerfile.db_backup .

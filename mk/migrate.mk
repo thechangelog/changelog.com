@@ -15,7 +15,7 @@ endif
 ru: rsync-uploads
 
 # Rather than creating a new container which needs to access the db container over a custom network,
-# exec in the db backup container instead.  Secrets are in place, let's just rock'n'roll!
+# exec in the db backup container instead. Secrets are in place, let's just rock'n'roll!
 define DB_RESTORE_CONTEXT
 docker exec --interactive --tty \
   \$$(docker ps --quiet --latest --filter name=$(DOCKER_STACK)_db_backup) \
