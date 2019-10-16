@@ -134,6 +134,8 @@ services:
         failure_action: rollback
         monitor: 15s
         order: stop-first
+    depends_on:
+      - db
     environment:
       # https://www.postgresql.org/docs/9.5/libpq-envars.html
       PGHOST: db
@@ -142,13 +144,11 @@ services:
       AWS_REGION: "us-east-1"
       AWS_S3_BUCKET: "changelog-com-backups"
       BACKUP_DB_EVERY_N_SECONDS: 86400
+    image: thechangelog/db_backup:201910
     secrets:
       - BACKUPS_AWS_ACCESS_KEY
       - BACKUPS_AWS_SECRET_KEY
       - DB_PASSWORD
-    image: thechangelog/db_backup
-    depends_on:
-      - db
   app:
     deploy:
       replicas: 1

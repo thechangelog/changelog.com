@@ -149,6 +149,7 @@ endif
 .DEFAULT_GOAL := help
 
 include mk/inspect.mk
+include mk/images.mk
 
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
@@ -217,31 +218,6 @@ prevent-incompatible-deps-reaching-the-docker-image:
 .PHONY: create-dirs-mounted-as-volumes
 create-dirs-mounted-as-volumes:
 	@mkdir -p $(CURDIR)/priv/{uploads,db}
-
-.PHONY: bootstrap-image
-bootstrap-image: build-bootstrap-image publish-bootstrap-image ## bi  | Build & publish thechangelog/bootstrap Docker image
-.PHONY: bi
-bi: bootstrap-image
-
-.PHONY: build-bootstrap-image
-build-bootstrap-image: $(DOCKER)
-	@cd docker \
-	&& $(DOCKER) build \
-	  --build-arg DOCKER_COMPOSE_VERSION=$$($(COMPOSE) version --short) \
-	  --build-arg GIT_REPOSITORY=$(GIT_REPOSITORY) \
-	  --build-arg GIT_BRANCH=$(GIT_BRANCH) \
-	  --build-arg DOCKER_SERVICE_NAME=$(DOCKER_STACK)_app \
-	  --build-arg MAKEFILE=$(firstword $(MAKEFILE_LIST)) \
-	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
-	  --tag thechangelog/bootstrap:$(DOCKER_STACK) \
-	  --file Dockerfile.bootstrap .
-.PHONY: bbi
-bbi: build-bootstrap-image
-
-.PHONY: publish-bootstrap-image
-publish-bootstrap-image: $(DOCKER)
-	@$(DOCKER) push thechangelog/bootstrap:$(BUILD_VERSION) \
-	&& $(DOCKER) push thechangelog/bootstrap:$(DOCKER_STACK)
 
 .PHONY: build
 build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## b   | Build changelog.com app container
@@ -361,26 +337,6 @@ remove-docker-secrets: $(LPASS)
 .PHONY: rds
 rds: remove-docker-secrets
 
-.PHONY: db-backup-image
-db-backup-image: build-db-backup-image publish-db-backup-image ## dbi | Build & publish thechangelog/db_backup Docker image
-.PHONY: dbi
-dbi: db-backup-image
-
-.PHONY: build-db-backup-image
-build-db-backup-image: $(DOCKER)
-	@cd docker && \
-	$(DOCKER) build \
-	  --tag thechangelog/db_backup:$(BUILD_VERSION) \
-	  --tag thechangelog/db_backup:latest \
-	  --file Dockerfile.db_backup .
-.PHONY: bdbi
-bdbi: build-db-backup-image
-
-.PHONY: publish-db-backup-image
-publish-db-backup-image: $(DOCKER)
-	@$(DOCKER) push thechangelog/db_backup:$(BUILD_VERSION) && \
-	$(DOCKER) push thechangelog/db_backup:latest
-
 .PHONY: deploy-docker-stack
 deploy-docker-stack: $(DOCKER) ## dds | Deploy the changelog.com Docker Stack
 	@export HOSTNAME ; \
@@ -397,12 +353,6 @@ deploy-docker-stack-local: DOCKER_STACK_FILE = docker/local.stack.yml
 deploy-docker-stack-local: deploy-docker-stack priv/db
 .PHONY: ddsl
 ddsl: deploy-docker-stack-local
-
-.PHONY: build-image-local
-build-image-local: $(DOCKER)
-	@$(DOCKER) build --pull --tag thechangelog/changelog.com:local --file docker/Dockerfile.local .
-.PHONY: bil
-bil: build-image-local
 
 .PHONY: update-app-service-local
 update-app-service-local: $(DOCKER)
@@ -498,23 +448,6 @@ preview-readme: $(DOCKER) ## pre | Preview README & live reload on edit
 .PHONY: pre
 pre: preview-readme
 
-.PHONY: proxy-image
-proxy-image: build-proxy-image publish-proxy-image ## pi  | Build & publish thechangelog/proxy Docker image
-.PHONY: pi
-pi: proxy-image
-
-.PHONY: build-proxy-image
-build-proxy-image: $(DOCKER)
-	@cd nginx && \
-	$(DOCKER) build --no-cache --tag thechangelog/proxy:$(BUILD_VERSION) --tag thechangelog/proxy:latest .
-.PHONY: bpi
-bpi: build-proxy-image
-
-.PHONY: publish-proxy-image
-publish-proxy-image: $(DOCKER)
-	@$(DOCKER) push thechangelog/proxy:$(BUILD_VERSION) && \
-	$(DOCKER) push thechangelog/proxy:latest
-
 .PHONY: e2e
 e2e: $(BATS) $(CURL)
 
@@ -555,22 +488,6 @@ report-deploy-slack: $(CURL)
 	$(CURL) --silent --fail --output /dev/null --request POST --url $$SLACK_DEPLOY_WEBHOOK \
 	  --header 'Content-type: application/json' \
 	  --data '{"text":"<$(GIT_REPOSITORY)/commit/'$$COMMIT_SHA'|'$${COMMIT_SHA:0:7}'> by <$(GIT_REPOSITORY)/commits?author='$$COMMIT_USER'|'$$COMMIT_USER'> just started, it will be promoted to live when healthy. <$(GIT_REPOSITORY)/blob/master/docker/$(DOCKER_STACK).stack.yml|$(DOCKER_STACK).stack>"}'
-
-.PHONY: runtime-image
-runtime-image: build-runtime-image publish-runtime-image ## ri  | Build & publish thechangelog/runtime Docker image
-.PHONY: ri
-ri: runtime-image
-
-.PHONY: build-runtime-image
-build-runtime-image: $(DOCKER)
-	@$(DOCKER) build --no-cache --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
-.PHONY: bri
-bri: build-runtime-image
-
-.PHONY: publish-runtime-image
-publish-runtime-image: $(DOCKER)
-	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
-	$(DOCKER) push thechangelog/runtime:latest
 
 .PHONY: rsync-small-uploads-local
 rsync-small-uploads-local: create-dirs-mounted-as-volumes
