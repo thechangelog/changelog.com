@@ -33,8 +33,6 @@ HOSTNAME_LOCAL := changelog.localhost
 GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 GIT_BRANCH ?= master
 
-APP_IMAGE ?= thechangelog/changelog.com:latest
-
 export FQDN IPv4
 
 
