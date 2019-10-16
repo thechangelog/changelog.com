@@ -12,7 +12,7 @@ build-bootstrap-image: $(DOCKER)
 	  --build-arg GIT_REPOSITORY=$(GIT_REPOSITORY) \
 	  --build-arg GIT_BRANCH=$(GIT_BRANCH) \
 	  --build-arg DOCKER_SERVICE_NAME=$(DOCKER_STACK)_app \
-	  --build-arg MAKEFILE=$(firstword $(MAKEFILE_LIST)) \
+	  --build-arg MAKEFILE=$(MAKEFILE) \
 	  --tag thechangelog/bootstrap:$(BUILD_VERSION) \
 	  --tag thechangelog/bootstrap:$(DOCKER_STACK) \
 	  --file Dockerfile.bootstrap .

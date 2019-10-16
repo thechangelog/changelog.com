@@ -22,7 +22,22 @@ docker exec --interactive --tty \
   bash
 endef
 .PHONY: db-restore-interactive
-db-restore-interactive:
+db-restore-interactive: ## dbri| Restore DB from backup interactively
 	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(DB_RESTORE_CONTEXT)"
 .PHONY: dbri
 dbri: db-restore-interactive
+
+define STACK_PUBLIC_IP
+$$(dig +short $(DOCKER_STACK).changelog.com)
+endef
+.PHONY: force-resolve-stack
+force-resolve-stack: ## frs | Force *.changelog.com resolution to this stack
+	@echo -e "$(STACK_PUBLIC_IP)\tchangelog.com www.changelog.com cdn.changelog.com" \
+	| sudo tee -a /etc/hosts
+.PHONY: frs
+frs: force-resolve-stack
+
+.PHONY: force-resolve-stack-rm
+force-resolve-stack-rm: ## frsr| Remove force *.changelog.com resolution to this stack
+	@sudo sed -i.bak "/$(STACK_PUBLIC_IP)/d" /etc/hosts
+frsr: force-resolve-stack-rm

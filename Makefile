@@ -1,5 +1,6 @@
 SHELL := bash# we want bash behaviour in all shell invocations
 PLATFORM := $(shell uname)
+MAKEFILE := $(firstword $(MAKEFILE_LIST))
 
 RED := $(shell tput setaf 1)
 GREEN := $(shell tput setaf 2)
@@ -168,7 +169,7 @@ ac: autocomplete
 # Continuous Feedback for the ac target - run in a split window while iterating on it
 .PHONY: CFac
 CFac: $(WATCH)
-	@$(WATCH) -c $(MAKE) ac
+	@$(WATCH) --color $(MAKE) --makefile $(MAKEFILE) ac
 
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
@@ -238,7 +239,7 @@ help:
 # Continuous Feedback for the help target - run in a split window while iterating on it
 .PHONY: CFhelp
 CFhelp: $(WATCH)
-	@$(WATCH) -c $(MAKE) help
+	@$(WATCH) --color $(MAKE) --makefile $(MAKEFILE) help
 
 .PHONY: clean-docker
 clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, images & volumes
