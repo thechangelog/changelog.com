@@ -40,7 +40,7 @@
         <link><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
-        <enclosure url="<%= EpisodeView.audio_url(episode) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
+        <enclosure url="<%= enclosure_url(episode) %>" length="<%= episode.bytes %>" type="audio/mpeg" />
         <description><%= md_to_text(episode.summary) %></description>
         <content:encoded><%= render("_show_notes.xml", episode: episode) %></content:encoded>
 
