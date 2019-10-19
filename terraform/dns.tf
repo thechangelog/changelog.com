@@ -1,7 +1,7 @@
 resource "dnsimple_record" "netdata_changelog_com" {
   domain = "changelog.com"
   name = "netdata"
-  value = "http://2019010i.changelog.com:19999/"
+  value = "http://201910i.changelog.com:19999/"
   type = "URL"
   ttl = 60
 }
