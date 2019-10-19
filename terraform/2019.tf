@@ -193,7 +193,7 @@ resource "linode_nodebalancer_config" "http_2019" {
 
 resource "linode_nodebalancer_node" "http_2019" {
   label = "${var.generation}"
-  address = "${linode_instance.2019.private_ip_address}:80"
+  address = "${linode_instance.prod_2019_10.private_ip_address}:80"
   mode = "accept"
   nodebalancer_id = "${linode_nodebalancer.2019.id}"
   config_id = "${linode_nodebalancer_config.http_2019.id}"
@@ -218,7 +218,7 @@ resource "linode_nodebalancer_config" "https_2019" {
 
 resource "linode_nodebalancer_node" "https_2019" {
   label = "${var.generation}"
-  address = "${linode_instance.2019.private_ip_address}:80"
+  address = "${linode_instance.prod_2019_10.private_ip_address}:80"
   mode = "accept"
   nodebalancer_id = "${linode_nodebalancer.2019.id}"
   config_id = "${linode_nodebalancer_config.https_2019.id}"
