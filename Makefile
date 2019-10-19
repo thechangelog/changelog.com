@@ -22,7 +22,7 @@ endif
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%dT%H.%M.%SZ')
 
 DOMAIN ?= changelog.com
-DOCKER_STACK ?= 2019
+DOCKER_STACK ?= 201910
 DOCKER_STACK_FILE ?= docker/$(DOCKER_STACK).stack.yml
 
 HOST ?= $(DOCKER_STACK)i.$(DOMAIN)
@@ -151,6 +151,9 @@ endif
 
 include mk/inspect.mk
 include mk/images.mk
+
+MIGRATE_FROM := core@2019i.changelog.com
+include mk/migrate.mk
 
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"

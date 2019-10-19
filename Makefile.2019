@@ -1,0 +1,3 @@
+DOCKER_STACK := 2019
+
+include Makefile
