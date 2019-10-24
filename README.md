@@ -11,7 +11,7 @@ This is the CMS behind [changelog.com](https://changelog.com). It's an [Elixir](
 A few reasons:
 
 1. We _love_ open source. Our careers (and livelihoods) wouldn't be possible without open source. Keeping it closed just feels _wrong_.
-2. Phoenix is really great, but it's young enough in its lifecycle that there aren't _too many_ in-production, open source sites for people to refer to as examples or inspiration. We want to throw our hat into that ring and hopefully others will follow.
+2. Phoenix is really great, but it's young enough in its lifecycle that there aren't _too many_ in-production, open source sites for people to refer to as examples or inspiration. We want to throw our hat into that ring and hopefully, others will follow.
 3. Changelog is a community of hackers. We know open sourcing the website will lead to good things from y'all (such as bug reports, feature requests, and pull requests).
 
 ## Should I fork this and use it as a platform?
@@ -59,7 +59,7 @@ When you want to stop all Docker containers required to run a dev copy of change
 
 If any app dependencies have changed, or the cached Docker app image has diverged from the source code, you will need to re-build it by running `docker-compose build` before you can run `docker-compose up`.
 
-If you are running on macOS or Linux, all the above commands are available as make targets (e.g. `build` &amp; `contrib`).
+If you are running on macOS or Linux, all the above commands are available as to make targets (e.g. `build` &amp; `contrib`).
 Learn about all available commands by running `make` in your terminal.
 
 By default, macOS ships with GNU Make v3.81. Our Makefile requires GNU Make >= 4 which can be installed via `brew install make`.
