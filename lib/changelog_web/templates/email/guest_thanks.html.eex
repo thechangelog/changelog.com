@@ -2,19 +2,21 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>Your episode of <%= @podcast.name %> is now live! Here is the official link to share with your network of friends:</p>
+    <p>Your episode of <%= @podcast.name %> is now live! 🙌</p>
 
-    <p><%= link(episode_url(Endpoint, :show, @podcast.slug, @episode.slug), to: episode_url(Endpoint, :show, @podcast.slug, @episode.slug)) %></p>
+    <p>Here is the official link to share with your network of friends: <%= link(episode_url(Endpoint, :show, @podcast.slug, @episode.slug), to: episode_url(Endpoint, :show, @podcast.slug, @episode.slug)) %></p>
 
-    <p>And here’s an embed snippet to use on your website and/or blog post:</p>
+    <p>Tweets are nice and <em>easy</em>, but their shelf-life can be measured in seconds (minutes if you're lucky). If you have a blog or website where you can link to the show, <mark>we'd greatly appreciate</mark> you taking the time to do so. 🙏</p>
+
+    <p>Here’s an embed snippet you can use so folks can listen to the episode without leaving your site:</p>
 
     <pre><%= EpisodeView.embed_code(@episode) %></pre>
 
     <p><em>(You can see it in action on <a href="https://blog.npmjs.org/post/182374655445/on-building-npm-and-hiring-a-ceo-founders-talk">npm's blog)</a></em></p>
 
-    <p>You’re part of the Changelog family now. If there is <em>any way</em> that we can help you in the future, don’t hesitate to contact us.</p>
+    <p>You’re part of the Changelog family now. <mark>If there is <em>any way</em> that we can help you</mark> in the future, don’t hesitate to contact us.</p>
 
-    <p>We'd also love to send you a Changelog tee as a thanks for your time and all you do for the community. Please reply with your t-shirt size and mailing address so we can get it sent out. Visit <a href="http://www.sizecharter.com/brands/americapparel">this page</a> to see the sizing info for our shirts so we can send you one that fits well.</p>
+    <p>We want to send you a free Changelog tee as a thanks for your time and all you do for the community. Please reply with your t-shirt size and mailing address so we can get it sent out. Visit <a href="http://www.sizecharter.com/brands/americapparel">this page</a> to see the sizing info for our shirts so we can send you one that fits well.</p>
 
     <p>Finally, people love keeping up by following <a href="https://changelog.com">Changelog News</a> (check it out if you haven't yet). Use <a href="https://changelog.com/submit">this form</a> to let us know when you have future news/announcements. We'd be happy to help you spread the word. ✊</p>
 

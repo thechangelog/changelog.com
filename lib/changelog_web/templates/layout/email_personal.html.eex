@@ -24,8 +24,8 @@
   }
 
   mark {
-    padding: 1px 3px;
-    background-color: #fff2cc;
+    padding: 2px 1px;
+    background-color: #fffedb;
   }
 
   hr {
