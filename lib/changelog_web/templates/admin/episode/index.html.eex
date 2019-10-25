@@ -17,15 +17,25 @@
   </div>
 </div>
 
-<div class="ui basic segment">
 <%= if Enum.any?(@drafts) do %>
+<div class="ui basic segment">
   <h2 class="ui header">Drafts</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :draft, podcast: @podcast, episodes: @drafts, actions: false})) %>
+</div>
 <% end %>
 
 <%= if Enum.any?(@scheduled) do %>
+<div class="ui basic segment">
   <h2 class="ui header">Scheduled</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :scheduled, podcast: @podcast, episodes: @scheduled, actions: false})) %>
+</div>
+<% end %>
+
+<%= if Enum.any?(@episode_requests) do %>
+<div class="ui basic segment">
+  <h1 class="ui header">Episode requests</h1>
+  <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :active})) %>
+</div>
 <% end %>
 
 <div class="ui basic segment">
@@ -33,10 +43,11 @@
 </div>
 
 <%= if Enum.any?(@episodes) do %>
+<div class="ui basic segment">
   <div class="launch-chart" data-chart="<%= launch_data(@launch) %>"></div>
 
   <h2 class="ui header">Published</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :published, podcast: @podcast, episodes: @episodes, actions: false})) %>
   <%= pagination_links @conn, @page, [@podcast.slug], path: &admin_podcast_episode_path/4 %>
-<% end %>
 </div>
+<% end %>

@@ -2,7 +2,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Cache, Episode, EpisodeNewsItem, EpisodeTopic, EpisodeGuest,
-                   EpisodeHost, EpisodeStat, Github, NewsItem, NewsQueue, Podcast}
+                   EpisodeHost, EpisodeRequest, EpisodeStat, Github, NewsItem,
+                   NewsQueue, Podcast}
 
   plug :assign_podcast
   plug Authorize, [Policies.Episode, :podcast]
@@ -28,6 +29,14 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.published()
       |> Episode.newest_first()
       |> Repo.paginate(Map.put(params, :page_size, 50))
+
+    episode_requests =
+      podcast
+      |> assoc(:episode_requests)
+      |> EpisodeRequest.submitted()
+      |> EpisodeRequest.newest_first()
+      |> EpisodeRequest.preload_all()
+      |> Repo.all()
 
     scheduled =
       episodes
@@ -66,6 +75,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     conn
     |> assign(:episodes, page.entries)
+    |> assign(:episode_requests, episode_requests)
     |> assign(:scheduled, scheduled)
     |> assign(:drafts, drafts)
     |> assign(:filter, filter)
