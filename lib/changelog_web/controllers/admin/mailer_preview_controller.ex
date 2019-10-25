@@ -75,36 +75,49 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     subscription =
       Subscription.on_item(comment.news_item)
       |> Subscription.preload_all()
+      |> Subscription.limit(1)
       |> Repo.one()
 
     Email.comment_subscription(subscription, comment)
   end
 
   def community_welcome_email do
-    latest_person() |> Email.community_welcome()
+    latest_person()
+    |> Person.refresh_auth_token()
+    |> Email.community_welcome()
   end
 
   def episode_published_email do
-    sub =
-      Subscription
-      |> Repo.get(1)
-      |> Subscription.preload_all()
-
-    ep =
-      Episode
-      |> Repo.get(654)
-      |> Episode.preload_podcast()
-
-    Email.episode_published(sub, ep)
+    Email.episode_published(known_subscription(), known_episode())
   end
 
   def guest_welcome_email do
-    latest_person() |> Email.guest_welcome()
+    latest_person()
+    |> Person.refresh_auth_token()
+    |> Email.guest_welcome()
+  end
+
+  def guest_thanks_email do
+    ep = known_episode()
+    guest = List.first(ep.guests)
+    Email.guest_thanks(guest, ep)
   end
 
   defp latest_person do
     Person.newest_first()
     |> Person.limit(1)
     |> Repo.one()
+  end
+
+  defp known_episode do
+    Episode
+    |> Repo.get(654)
+    |> Episode.preload_all()
+  end
+
+  defp known_subscription do
+    Subscription
+    |> Repo.get(1)
+    |> Subscription.preload_all()
   end
 end
