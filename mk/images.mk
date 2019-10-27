@@ -1,4 +1,3 @@
-
 .PHONY: bootstrap-image
 bootstrap-image: build-bootstrap-image publish-bootstrap-image ## bi  | Build & publish thechangelog/bootstrap Docker image
 .PHONY: bi

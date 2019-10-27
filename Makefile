@@ -122,6 +122,7 @@ endif
 ifeq ($(PLATFORM),Linux)
 WATCH := /usr/bin/watch
 endif
+WATCH_MAKE_TARGET = $(WATCH) --color $(MAKE) --makefile $(MAKEFILE) --no-print-directory
 
 BATS := /usr/local/bin/bats
 $(BATS):
@@ -151,6 +152,7 @@ endif
 
 include mk/inspect.mk
 include mk/images.mk
+include mk/todo.mk
 
 MIGRATE_FROM := core@2019i.changelog.com
 include mk/migrate.mk
@@ -172,7 +174,7 @@ ac: autocomplete
 # Continuous Feedback for the ac target - run in a split window while iterating on it
 .PHONY: CFac
 CFac: $(WATCH)
-	@$(WATCH) --color $(MAKE) --makefile $(MAKEFILE) ac
+	@$(WATCH_MAKE_TARGET) ac
 
 .PHONY: $(HOST)
 $(HOST): iaas create-docker-secrets bootstrap-docker
@@ -242,7 +244,7 @@ help:
 # Continuous Feedback for the help target - run in a split window while iterating on it
 .PHONY: CFhelp
 CFhelp: $(WATCH)
-	@$(WATCH) --color $(MAKE) --makefile $(MAKEFILE) help
+	@$(WATCH_MAKE_TARGET) help
 
 .PHONY: clean-docker
 clean-docker: $(DOCKER) $(COMPOSE) ## cd  | Remove all changelog containers, images & volumes
