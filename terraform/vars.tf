@@ -41,4 +41,3 @@ data "linode_instance_type" "changelog" {
 data "linode_image" "changelog" {
   id = "linode/containerlinux"
 }
-
