@@ -52,6 +52,7 @@ defmodule ChangelogWeb.Router do
     pipe_through [:browser, :admin]
 
     get "/", PageController, :index
+    get "/purge", PageController, :purge
     get "/search", SearchController, :all
     get "/search/:type", SearchController, :one
 

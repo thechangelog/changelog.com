@@ -27,6 +27,14 @@ defmodule ChangelogWeb.Admin.PageController do
     redirect(conn, to: admin_news_item_path(conn, :index))
   end
 
+  def purge(conn, _params) do
+    Cache.delete_all()
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: admin_page_path(conn, :index))
+  end
+
   defp episode_drafts do
     Episode.unpublished()
     |> Episode.newest_last(:recorded_at)
