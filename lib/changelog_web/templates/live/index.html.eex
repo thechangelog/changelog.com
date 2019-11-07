@@ -22,7 +22,7 @@
           <p><strong>
             <%= EpisodeView.podcast_name_and_number(episode) %>
           </strong></p>
-          <p><%= episode.title %> <%= if episode.subtitle, do: "(#{episode.subtitle})" %></p>
+          <p><%= episode_title_with_subtitle(episode) %></p>
         </div>
       </div>
 

@@ -29,7 +29,20 @@ defmodule ChangelogWeb.LiveController do
     |> render(:show)
   end
 
-  def status(conn, _params) do
-    json(conn, Icecast.get_stats())
+  def ical(conn, params) do
+    episodes =
+      Episode.with_podcast_slug(params["slug"])
+      |> Episode.recorded_live()
+      |> Episode.recorded_future_to(TimeView.hours_ago(2))
+      |> Episode.newest_last(:recorded_at)
+      |> Repo.all()
+      |> Episode.preload_all()
+
+    conn
+    |> assign(:episodes, episodes)
+    |> cache_public(:timer.minutes(5))
+    |> render("ical.ics")
   end
+
+  def status(conn, _params), do: json(conn, Icecast.get_stats())
 end

@@ -49,6 +49,27 @@ defmodule ChangelogWeb.LiveControllerTest do
     end
   end
 
+  test "getting ical sans podcast slug", %{conn: conn} do
+    e1 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(1))
+    e2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(2))
+
+    conn = get(conn, live_path(conn, :ical))
+
+    assert conn.resp_body =~ e1.title
+    assert conn.resp_body =~ e2.title
+  end
+
+  test "getting ical with podcast slug", %{conn: conn} do
+    podcast = insert(:podcast)
+    e1 = insert(:episode, podcast: podcast, recorded_live: true, recorded_at: hours_from_now(1))
+    e2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(2))
+
+    conn = get(conn, live_path(conn, :ical, podcast.slug))
+
+    assert conn.resp_body =~ e1.title
+    refute conn.resp_body =~ e2.title
+  end
+
   describe "the live status" do
     test "is false when nothing is streaming", %{conn: conn} do
       with_mock(Icecast, [get_stats: fn() -> %Icecast.Stats{} end]) do

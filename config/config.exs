@@ -32,6 +32,9 @@ config :logger, :console,
 
 config :phoenix, :json_library, Jason
 
+config :phoenix, :format_encoders,
+  ics: ICalendar
+
 config :phoenix, :generators,
   migration: true,
   binary_id: false

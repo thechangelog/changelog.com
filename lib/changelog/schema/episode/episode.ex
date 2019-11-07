@@ -65,7 +65,10 @@ defmodule Changelog.Episode do
   def top_reach_first(query \\ __MODULE__),          do: from(q in query, order_by: [desc: :reach_count])
   def with_numbered_slug(query \\ __MODULE__),       do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
   def with_slug(query \\ __MODULE__, slug),          do: from(q in query, where: q.slug == ^slug)
-  def with_podcast_slug(query \\ __MODULE__, slug),  do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
+
+  def with_podcast_slug(query \\ __MODULE__, slug)
+  def with_podcast_slug(query, nil),  do: query
+  def with_podcast_slug(query, slug), do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
   def full(query \\ __MODULE__),    do: from(q in query, where: q.type == ^:full)
   def bonus(query \\ __MODULE__),   do: from(q in query, where: q.type == ^:bonus)
