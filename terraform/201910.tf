@@ -23,7 +23,7 @@ resource "linode_volume" "db_2019_10" {
 data "template_file" "db_2019_10_mount" {
   template = "${file("${path.module}/volume.mount.tpl")}"
 
-  vars {
+  vars = {
     DISK = "${linode_volume.db_2019_10.filesystem_path}"
     MOUNT_PATH = "/db"
   }
@@ -45,7 +45,7 @@ resource "linode_volume" "uploads_2019_10" {
 data "template_file" "uploads_2019_10_mount" {
   template = "${file("${path.module}/volume.mount.tpl")}"
 
-  vars {
+  vars = {
     DISK = "${linode_volume.uploads_2019_10.filesystem_path}"
     MOUNT_PATH = "/uploads"
   }
@@ -91,7 +91,7 @@ resource "null_resource" "mount_volumes_2019_10" {
     ]
   }
 
-  triggers {
+  triggers = {
     manually = "2019_10.03-21:17"
     instance_id = "${linode_instance.prod_2019_10.id}"
   }
@@ -113,7 +113,7 @@ resource "null_resource" "init_docker_swarm_2019_10" {
     ]
   }
 
-  triggers {
+  triggers = {
     manually = "2019_10.03-21:17"
     instance_id = "${linode_instance.prod_2019_10.id}"
   }
@@ -139,7 +139,7 @@ resource "null_resource" "configure_private_ip_manually_since_containerlinux_doe
     ]
   }
 
-  triggers {
+  triggers = {
     manually = "2019_10.03-21:17"
     private_ip = "${linode_instance.prod_2019_10.private_ip_address}"
   }
@@ -165,7 +165,7 @@ resource "null_resource" "disable_automatic_updates_2019_10" {
     ]
   }
 
-  triggers {
+  triggers = {
     always = "${timestamp()}"
   }
 }
@@ -224,7 +224,7 @@ resource "linode_nodebalancer_node" "prod_2019_10_https" {
   config_id = "${linode_nodebalancer_config.prod_2019_10_https.id}"
 }
 
-resource "dnsimple_record" "201910_changelog_com_ipv4" {
+resource "dnsimple_record" "changelog_com_ipv4_201910" {
   domain = "changelog.com"
   name = "201910"
   value = "${linode_nodebalancer.prod_2019_10.ipv4}"
@@ -232,7 +232,7 @@ resource "dnsimple_record" "201910_changelog_com_ipv4" {
   ttl = 60
 }
 
-resource "dnsimple_record" "201910_changelog_com_ipv6" {
+resource "dnsimple_record" "changelog_com_ipv6_201910" {
   domain = "changelog.com"
   name = "201910"
   value = "${linode_nodebalancer.prod_2019_10.ipv6}"
@@ -240,7 +240,7 @@ resource "dnsimple_record" "201910_changelog_com_ipv6" {
   ttl = 60
 }
 
-resource "dnsimple_record" "201910i_changelog_com_ipv4" {
+resource "dnsimple_record" "changelog_com_ipv4_201910i" {
   domain = "changelog.com"
   name = "201910i"
   value = "${linode_instance.prod_2019_10.ip_address}"
