@@ -1,0 +1,52 @@
+.ten {
+  color: $white;
+
+  &-section {
+    overflow: auto; // force inner margins to expand container
+
+    &:nth-child(even) {
+      background-color: #0D131A;
+    }
+
+    &-inner {
+      @include wrap();
+      max-width: 1170px; // TODO: Fix wrap include so max-width can be passed in correctly
+    }
+
+    &-heading {
+
+    }
+
+    &-button {
+      @include button($green, $white);
+    }
+  }
+
+  &-hero {
+
+    @keyframes Gradient {
+      0%{background-position:0% 0%}
+      50%{background-position:100% 100%}
+      100%{background-position:0% 0%}
+    }
+
+    &-logo {
+      position: relative;
+      width: 1008px;
+      height: 1008px;
+      background: linear-gradient(135deg, $jsparty, $gotime, $brainscience);
+      background-size: 200% 200%;
+      animation: Gradient 5s linear infinite;
+
+      #ten_year_logo-mask-background {
+        fill: rgba(255, 255, 255, 1);
+      }
+
+      #ten_year_logo-gradient {
+        fill: $black;
+        -webkit-mask: url(#ten_year_logo-mask);
+        mask: url(#ten_year_logo-mask);
+      }
+    }
+  }
+}

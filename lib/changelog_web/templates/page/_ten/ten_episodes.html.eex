@@ -1,0 +1,44 @@
+<div class="ten-episodes">
+  <div class="ten-episodes-item">
+    <img class="ten-episodes-image" src="https://cdn.changelog.com/uploads/covers/the-changelog-small.png" alt="The Changelog" width="75" height="75">
+    <div class="ten-episodes-content">
+      <h3 class="ten-episodes-episode">The Changelog #145</h3>
+      <h4 class="ten-episodes-title">There’s no server more secure than one that doesn’t exist.</h4>
+    </div>
+  </div>
+  <div class="ten-episodes-item">
+    <img class="ten-episodes-image" src="https://cdn.changelog.com/uploads/covers/js-party-small.png" alt="The Changelog" width="75" height="75">
+    <div class="ten-episodes-content">
+      <h3 class="ten-episodes-episode">The Changelog #145</h3>
+      <h4 class="ten-episodes-title">There’s no server more secure than one that doesn’t exist.</h4>
+    </div>
+  </div>
+  <div class="ten-episodes-item">
+    <img class="ten-episodes-image" src="https://cdn.changelog.com/uploads/covers/founders-talk-small.png" alt="The Changelog" width="75" height="75">
+    <div class="ten-episodes-content">
+      <h3 class="ten-episodes-episode">The Changelog #145</h3>
+      <h4 class="ten-episodes-title">There’s no server more secure than one that doesn’t exist.</h4>
+    </div>
+  </div>
+  <div class="ten-episodes-item">
+    <img class="ten-episodes-image" src="https://cdn.changelog.com/uploads/covers/go-time-small.png" alt="The Changelog" width="75" height="75">
+    <div class="ten-episodes-content">
+      <h3 class="ten-episodes-episode">The Changelog #145</h3>
+      <h4 class="ten-episodes-title">There’s no server more secure than one that doesn’t exist.</h4>
+    </div>
+  </div>
+  <div class="ten-episodes-item">
+    <img class="ten-episodes-image" src="https://cdn.changelog.com/uploads/covers/brain-science-small.png" alt="The Changelog" width="75" height="75">
+    <div class="ten-episodes-content">
+      <h3 class="ten-episodes-episode">The Changelog #145</h3>
+      <h4 class="ten-episodes-title">There’s no server more secure than one that doesn’t exist.</h4>
+    </div>
+  </div>
+  <div class="ten-episodes-item">
+    <img class="ten-episodes-image" src="https://cdn.changelog.com/uploads/covers/practical-ai-small.png" alt="The Changelog" width="75" height="75">
+    <div class="ten-episodes-content">
+      <h3 class="ten-episodes-episode">The Changelog #145</h3>
+      <h4 class="ten-episodes-title">There’s no server more secure than one that doesn’t exist.</h4>
+    </div>
+  </div>
+</div>

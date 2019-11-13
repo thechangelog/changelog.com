@@ -1,0 +1,65 @@
+<article class="ten">
+  <header class="ten-section ten-hero">
+    <div class="ten-section-inner">
+      <h1 class="ten-hero-logo">
+        <%= render("_ten/ten_year_logo.html", assigns) %>
+      </h1>
+      <h2 class="ten-hero-intro">Join Changelog in celebrating a decade of conversations, news, and&nbsp;community.</h2>
+      <%# TODO: Add Play icon to this button %>
+      <%= link("Hear the Story", to: "#", class: "ten-hero-button button_large") %>
+      <p class="ten-hero-fine_print">Adam and Jerod interviewed by Quincy from <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Free Code Camp</a>.</p>
+    </div>
+  </header>
+
+  <section class="ten-section">
+    <div class="ten-section-inner">
+      <h2 class="ten-section-heading">By the Numbers</h2>
+      <%= render("_ten/ten_stats.html", assigns) %>
+    </div>
+  </section>
+
+  <section class="ten-section">
+    <div class="ten-section-inner">
+      <h2 class="ten-section-heading">The Photos</h2>
+      <%= render("_ten/ten_gallery.html", assigns) %>
+    </div>
+  </section>
+
+  <section class="ten-section">
+    <div class="ten-section-inner">
+      <h2 class="ten-section-heading">The Timeline</h2>
+      <%= render("_ten/ten_timeline.html", assigns) %>
+    </div>
+  </section>
+
+  <section class="ten-section">
+    <div class="ten-section-inner">
+      <h2 class="ten-section-heading">Kind Words</h2>
+      <%= render("_ten/ten_testimonials.html", assigns) %>
+      <%= link("Share Yours", to: "#", class: "ten-section-button") %>
+    </div>
+  </section>
+
+  <section class="ten-section">
+    <div class="ten-section-inner">
+      <h2 class="ten-section-heading">Highlighted Episodes</h2>
+      <%= render("_ten/ten_episodes.html", assigns) %>
+      <%= link("View All Episodes", to: "#", class: "ten-section-button") %>
+    </div>
+  </section>
+
+  <section class="ten-section">
+    <div class="ten-section-inner">
+      <h2 class="ten-section-heading">Special Thanks</h2>
+      <%= render("_ten/ten_thanks.html", assigns) %>
+    </div>
+  </section>
+
+  <footer class="ten-section ten-footer">
+    <div class="ten-section-inner">
+      <p class="ten-footer-message">Thanks for joining us in our first ten years.<br>We look forward to the next ten.</p>
+      <p class="ten-footer-love"><span class="ten-footer-love-heart">♥</span> Love</p>
+      <%= link("Changelog", to: "/", class: "ten-footer-logo") %>
+    </div>
+  </footer>
+</article>

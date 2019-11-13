@@ -1,0 +1,80 @@
+<div class="ten-testimonials">
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-info">
+      <div class="ten-testimonials-info-main">
+        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-name">John Doe</h3>
+        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+      </div>
+      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
+        <%= link("Twitter", to: "#") %>
+      </div>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
+    </div>
+  </div>
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-info">
+      <div class="ten-testimonials-info-main">
+        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-name">John Doe</h3>
+        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+      </div>
+      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
+        <%= link("Twitter", to: "#") %>
+      </div>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
+    </div>
+  </div>
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-info">
+      <div class="ten-testimonials-info-main">
+        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-name">John Doe</h3>
+        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+      </div>
+      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
+        <%= link("Twitter", to: "#") %>
+      </div>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
+    </div>
+  </div>
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-info">
+      <div class="ten-testimonials-info-main">
+        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-name">John Doe</h3>
+        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+      </div>
+      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
+        <%= link("Twitter", to: "#") %>
+      </div>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
+    </div>
+  </div>
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-info">
+      <div class="ten-testimonials-info-main">
+        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-name">John Doe</h3>
+        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+      </div>
+      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
+        <%= link("Twitter", to: "#") %>
+      </div>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
+    </div>
+  </div>
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-info">
+      <div class="ten-testimonials-info-main">
+        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-name">John Doe</h3>
+        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+      </div>
+      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
+        <%= link("Twitter", to: "#") %>
+      </div>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
+    </div>
+  </div>
+</div>

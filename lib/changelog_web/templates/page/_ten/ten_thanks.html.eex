@@ -1,0 +1,29 @@
+<div class="ten-thanks">
+  <ul class="ten-thanks-people">
+    <li>Heather Stacoviak</li>
+    <li>Versie Maravilla</li>
+    <li>Britt Huang</li>
+    <li>Iris Scheel</li>
+    <li>Natashia Selden</li>
+    <li>Len Avendano</li>
+    <li>Glinda Rath</li>
+    <li>Natashia Selden</li>
+    <li>Jonie Lonergan</li>
+    <li>Angila Melia</li>
+    <li>Zonia Alleman</li>
+    <li>Jonie Lonergan</li>
+    <li>Noella Kleist</li>
+    <li>Toptal</li>
+    <li>Thuy Greenleaf</li>
+    <li>Noella Kleist</li>
+    <li>Royal Auvil</li>
+    <li>Carline Stickland</li>
+    <li>Anastasia Benshoof</li>
+  </ul>
+  <hr>
+  <div class="ten-thanks-companies logo_grid">
+    <%# NOTE: _sponsors.html is placeholder content – currently used on /community %>
+    <%# TODO: Replace with real content and use transparent PNGs for images %>
+    <%= render("_sponsors.html", assigns) %>
+  </div>
+</div>
