@@ -56,7 +56,7 @@
       width: 100%;
       margin: 20px auto;
       line-height: 0; // Remove H1's line-height
-      background: linear-gradient(135deg, $jsparty, $gotime, $brainscience);
+      background: radial-gradient(circle at top left, $jsparty, $gotime, $brainscience);
       background-size: 200% 200%;
       animation: Gradient 5s linear infinite;
 
