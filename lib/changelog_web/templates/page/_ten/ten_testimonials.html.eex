@@ -1,78 +1,102 @@
 <div class="ten-testimonials">
   <div class="ten-testimonials-item">
-    <div class="ten-testimonials-info">
-      <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-info-name">John Doe</h3>
-        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
-      </div>
-      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
-        <%= link("Twitter", to: "#") %>
-      </div>
-      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
-    </div>
-  </div>
-  <div class="ten-testimonials-item">
-    <div class="ten-testimonials-info">
-      <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-info-name">John Doe</h3>
-        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
-      </div>
-      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
-        <%= link("Twitter", to: "#") %>
+    <div class="ten-testimonials-item-inner">
+      <div class="ten-testimonials-info">
+        <div class="ten-testimonials-info-main">
+          <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+          <div class="testimonials-info-text">
+            <h3 class="ten-testimonials-info-name">John Doe</h3>
+            <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
+          </div>
+        </div>
+        <a class="ten-testimonials-info-source" href="#" title="Twitter">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+        </a>
       </div>
       <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
     </div>
   </div>
   <div class="ten-testimonials-item">
-    <div class="ten-testimonials-info">
-      <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-info-name">John Doe</h3>
-        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
+    <div class="ten-testimonials-item-inner">
+      <div class="ten-testimonials-info">
+        <div class="ten-testimonials-info-main">
+          <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+          <div class="testimonials-info-text">
+            <h3 class="ten-testimonials-info-name">John Doe, Really long name that can wrap two lines</h3>
+            <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
+          </div>
+        </div>
+        <a class="ten-testimonials-info-source" href="#" title="Facebook">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-facebook.svg"), "Facebook Icon") %>
+        </a>
       </div>
-      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
-        <%= link("Twitter", to: "#") %>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful.</p>
+    </div>
+  </div>
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-item-inner">
+      <div class="ten-testimonials-info">
+        <div class="ten-testimonials-info-main">
+          <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+          <div class="testimonials-info-text">
+            <h3 class="ten-testimonials-info-name">John Doe</h3>
+            <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
+          </div>
+        </div>
+        <a class="ten-testimonials-info-source" href="#" title="Instagram">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-instagram.svg"), "Instagram Icon") %>
+        </a>
+      </div>
+      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful.</p>
+    </div>
+  </div>
+  <div class="ten-testimonials-item">
+    <div class="ten-testimonials-item-inner">
+      <div class="ten-testimonials-info">
+        <div class="ten-testimonials-info-main">
+          <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+          <div class="testimonials-info-text">
+            <h3 class="ten-testimonials-info-name">John Doe</h3>
+            <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
+          </div>
+        </div>
+        <a class="ten-testimonials-info-source" href="#" title="Twitter">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+        </a>
       </div>
       <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
     </div>
   </div>
   <div class="ten-testimonials-item">
-    <div class="ten-testimonials-info">
-      <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-info-name">John Doe</h3>
-        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
-      </div>
-      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
-        <%= link("Twitter", to: "#") %>
-      </div>
-      <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
-    </div>
-  </div>
-  <div class="ten-testimonials-item">
-    <div class="ten-testimonials-info">
-      <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-info-name">John Doe</h3>
-        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
-      </div>
-      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
-        <%= link("Twitter", to: "#") %>
+    <div class="ten-testimonials-item-inner">
+      <div class="ten-testimonials-info">
+        <div class="ten-testimonials-info-main">
+          <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+          <div class="testimonials-info-text">
+            <h3 class="ten-testimonials-info-name">John Doe</h3>
+            <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
+          </div>
+        </div>
+        <a class="ten-testimonials-info-source" href="#" title="Twitter">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+        </a>
       </div>
       <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
     </div>
   </div>
   <div class="ten-testimonials-item">
-    <div class="ten-testimonials-info">
-      <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-info-name">John Doe</h3>
-        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
-      </div>
-      <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
-        <%= link("Twitter", to: "#") %>
+    <div class="ten-testimonials-item-inner">
+      <div class="ten-testimonials-info">
+        <div class="ten-testimonials-info-main">
+          <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+          <div class="testimonials-info-text">
+            <h3 class="ten-testimonials-info-name">John Doe</h3>
+            <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
+          </div>
+        </div>
+        <a class="ten-testimonials-info-source" href="#" title="Twitter">
+          <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+        </a>
       </div>
       <p class="ten-testimonials-text">The Brain Science podcast from <a href="#">@changelog</a> is really helpful. This episode on coping was just what I needed this week. Proper insight and tactical tips for owners of human brains.</p>
     </div>

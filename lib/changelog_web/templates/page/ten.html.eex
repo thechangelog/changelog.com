@@ -37,7 +37,9 @@
     <div class="ten-section-inner">
       <h2 class="ten-section-heading">Kind Words</h2>
       <%= render("_ten/ten_testimonials.html", assigns) %>
-      <%= link("Share Yours", to: "#", class: "ten-section-button") %>
+      <div class="ten-section-button">
+        <%= link("Share Yours", to: "#", class: "ten-section-button-link") %>
+      </div>
     </div>
   </section>
 
@@ -45,7 +47,9 @@
     <div class="ten-section-inner">
       <h2 class="ten-section-heading">Highlighted Episodes</h2>
       <%= render("_ten/ten_episodes.html", assigns) %>
-      <%= link("View All Episodes", to: "#", class: "ten-section-button") %>
+      <div class="ten-section-button">
+        <%= link("View All Episodes", to: "#", class: "ten-section-button-link") %>
+      </div>
     </div>
   </section>
 
