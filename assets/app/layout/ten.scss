@@ -48,6 +48,7 @@
 
       &-link {
         @include button($green, $white);
+        display: inline-block;
       }
     }
   }
@@ -352,26 +353,52 @@
 
   // Highlighted Episodes
   &-episodes {
-
+    display: flex;
+    flex-wrap: wrap;
+    margin: -30px -15px 0;
 
     &-item {
+      width: 100%;
+      padding: 30px 15px 0;
 
+      @include breakpoint(tablet) {
+        width: 50%;
+      }
+
+      &-link {
+        display: flex;
+        align-items: center;
+      }
     }
 
     &-image {
-
-    }
-
-    &-content {
-
+      margin-right: 15px;
+      align-self: flex-start;
     }
 
     &-episode {
-
+      margin: 0;
+      font-family: $code;
+      font-size: 0.75rem;
+      color: $medium-grey;
     }
 
     &-title {
+      margin: 0.5em 0 0;
+      font-size: 1.125rem;
+      font-weight: bold;
+      line-height: 1.25;
+      color: $white;
+      transition: color 0.1s linear;
 
+      a:hover &,
+      a:focus & {
+        color: $green;
+      }
+
+      @include breakpoint(mobile) {
+        font-size: 1.25rem;
+      }
     }
   }
 
