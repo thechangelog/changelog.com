@@ -321,12 +321,27 @@
   &-footer {
     text-align: center;
 
-    &-message {
+    &-message,
+    &-love {
+      font-family: $code;
+      font-size: 1rem;
 
+      @include breakpoint(mobile) {
+        font-size: 1.125rem;
+      }
+    }
+
+    &-message {
+      margin-bottom: 1.5em;
+
+      @include breakpoint(mobile, max) {
+        // Prevent awkward content breaks at mobile sizes
+        br { display: none; }
+      }
     }
 
     &-love {
-      
+      margin-bottom: 0.75em;
 
       &-heart {
         display: inline-block;
