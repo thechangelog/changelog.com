@@ -1,6 +1,7 @@
 .ten {
   color: $white;
 
+  // Generic section + section heading styles
   &-section {
     overflow: auto; // force inner margins to expand container
 
@@ -11,10 +12,27 @@
     &-inner {
       @include wrap();
       max-width: 1170px; // TODO: Fix wrap include so max-width can be passed in correctly
+
+      .ten-hero & {
+        margin-top: 0;
+      }
     }
 
     &-heading {
+      // TODO: Add section heading underline graphics
+      margin-bottom: 40px;
+      font-family: $code;
+      font-size: 0.875rem;
+      font-weight: normal;
+      text-align: center;
+      line-height: 1.25;
 
+      @include breakpoint(mobile) {
+        margin-bottom: 50px;
+      }
+      @include breakpoint(tablet) {
+        margin-bottom: 60px;
+      }
     }
 
     &-button {
@@ -22,7 +40,9 @@
     }
   }
 
+  // Hero + Logo
   &-hero {
+    text-align: center;
 
     @keyframes Gradient {
       0%{background-position:0% 0%}
@@ -32,21 +52,297 @@
 
     &-logo {
       position: relative;
-      width: 1008px;
-      height: 1008px;
+      max-width: 840px;
+      width: 100%;
+      margin: 20px auto;
+      line-height: 0; // Remove H1's line-height
       background: linear-gradient(135deg, $jsparty, $gotime, $brainscience);
       background-size: 200% 200%;
       animation: Gradient 5s linear infinite;
 
-      #ten_year_logo-mask-background {
-        fill: rgba(255, 255, 255, 1);
+      svg {
+        width: 100%;
+        height: auto;
+
+        #ten_year_logo-mask-background {
+          fill: rgba(255, 255, 255, 1);
+        }
+  
+        #ten_year_logo-gradient {
+          fill: $black;
+          -webkit-mask: url(#ten_year_logo-mask);
+          mask: url(#ten_year_logo-mask);
+        }
+      }
+    }
+
+    &-intro {
+      max-width: 450px;
+      margin: 0 auto 30px;
+      font-family: $code;
+      font-size: 1rem;
+      font-weight: normal;
+      line-height: 1.5;
+
+      @include breakpoint(mobile) {
+        font-size: 1.125rem;
+      }
+    }
+
+    &-button {
+      padding: 0.875em 1.25em 0.75em 2.5em;
+      background-image: url('/images/icons/toolbar-play-white.svg');
+      background-repeat: no-repeat;
+      background-position: 20px center;
+      background-size: 13px 16px;
+    }
+
+    &-fine_print {
+      font-family: $code;
+      font-size: 0.75rem;
+      color: $medium-grey;
+    }
+  }
+
+  // By the Numbers
+  &-stats {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -20px;
+
+    @include breakpoint(mobile) {
+      margin-top: -30px;
+    }
+    @include breakpoint(tablet) {
+      margin-top: -40px;
+    }
+
+    &-item {
+      width: 50%;
+      text-align: center;
+      margin: 30px 0 10px;
+      padding: 0 10px;
+
+      @include breakpoint(mobile) {
+        margin: 40px 0 20px;
+        padding: 0 15px;
+      }
+      @include breakpoint(tablet) {
+        width: 33.33%;
+        margin: 50px 0 30px;
+        padding: 0 20px;
+      }
+    }
+
+    &-heading {
+      margin: 0;
+      font-family: $code;
+      font-size: 0.75rem;
+      font-weight: normal;
+      line-height: 1.25;
+      color: $medium-grey;
+
+      @include breakpoint(mobile) {
+        font-size: 0.875rem;
       }
 
-      #ten_year_logo-gradient {
-        fill: $black;
-        -webkit-mask: url(#ten_year_logo-mask);
-        mask: url(#ten_year_logo-mask);
+      span {
+        display: block;
+        margin-bottom: 0.2em;
+        // NOTE: The design file used "Sana Sans Alt"
+        // TODO: See about adding "Sana Sans Alt" font
+        font-family: $content;
+        font-size: 2.25rem;
+        font-weight: 900;
+        color: $white;
+
+        @include breakpoint(mobile) {
+          font-size: 2.75rem;
+        }
+        @include breakpoint(tablet) {
+          font-size: 3.375rem;
+        }
+
+        small {
+          font-size: 0.675em;
+        }
       }
+    }
+  }
+
+  // The Photos
+  &-gallery {
+    margin: -20px -10px 0;
+    @include clearfix();
+
+    @include breakpoint(desktop) {
+      margin: -30px -15px 0;
+    }
+
+    // TODO: Consider forcing image aspect ratio for thumbnails, but allowing
+    // aspect ratio to be opened in modal view
+    &-image {
+      float: left;
+      width: 50%;
+      padding: 20px 10px 0;
+
+      @include breakpoint(desktop) {
+        width: 25%;
+        padding: 30px 15px 0;
+      }
+
+      &--large {
+        width: 100%;
+
+        @include breakpoint(desktop) {
+          width: 50%;
+        }
+      }
+    }
+  }
+
+  // The Timeline
+  &-timeline {
+
+
+    &-line {
+
+    }
+
+    &-item {
+      
+
+      &-date {
+
+      }
+
+      &-content {
+
+
+        h3 {
+
+        }
+
+        p {
+
+        }
+      }
+    }
+  }
+
+  // Kind Words
+  &-testimonials {
+
+
+    &-item {
+
+    }
+
+    &-info {
+
+
+      &-main {
+
+      }
+
+      &-image {
+
+      }
+  
+      &-name {
+  
+      }
+  
+      &-handle {
+  
+      }
+
+      &-source {
+
+
+        &--twitter {
+
+        }
+      }
+    }
+
+    &-text {
+
+    }
+  }
+
+  // Highlighted Episodes
+  &-episodes {
+
+
+    &-item {
+
+    }
+
+    &-image {
+
+    }
+
+    &-content {
+
+    }
+
+    &-episode {
+
+    }
+
+    &-title {
+
+    }
+  }
+
+  // Special Thanks
+  &-thanks {
+
+
+    &-people {
+
+
+      li {
+
+      }
+    }
+
+    hr {
+
+    }
+
+    &-companies {
+
+    }
+  }
+
+  // Footer
+  &-footer {
+    text-align: center;
+
+    &-message {
+
+    }
+
+    &-love {
+      
+
+      &-heart {
+        display: inline-block;
+        width: 27px;
+        height: 26px;
+        background: url("/images/icons/icon-heart.svg") no-repeat;
+        background-size: 27px 26px;
+      }
+    }
+
+    &-logo {
+      display: inline-block;
+      width: 199px;
+      height: 61px;
+      background: url('/images/brand/changelog-logo-full.svg') no-repeat;
+      text-indent: -9999px;
     }
   }
 }

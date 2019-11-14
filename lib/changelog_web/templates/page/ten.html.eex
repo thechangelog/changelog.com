@@ -2,12 +2,13 @@
   <header class="ten-section ten-hero">
     <div class="ten-section-inner">
       <h1 class="ten-hero-logo">
+        <%# TODO: Add fallback logo and display based on a "cssmask" Modernizr check %>
         <%= render("_ten/ten_year_logo.html", assigns) %>
       </h1>
       <h2 class="ten-hero-intro">Join Changelog in celebrating a decade of conversations, news, and&nbsp;community.</h2>
       <%# TODO: Add Play icon to this button %>
       <%= link("Hear the Story", to: "#", class: "ten-hero-button button_large") %>
-      <p class="ten-hero-fine_print">Adam and Jerod interviewed by Quincy from <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Free Code Camp</a>.</p>
+      <p class="ten-hero-fine_print">Adam and Jerod interviewed by<br>Quincy from <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Free Code Camp</a>.</p>
     </div>
   </header>
 
@@ -58,7 +59,7 @@
   <footer class="ten-section ten-footer">
     <div class="ten-section-inner">
       <p class="ten-footer-message">Thanks for joining us in our first ten years.<br>We look forward to the next ten.</p>
-      <p class="ten-footer-love"><span class="ten-footer-love-heart">♥</span> Love</p>
+      <p class="ten-footer-love"><span class="ten-footer-love-heart"></span> Love</p>
       <%= link("Changelog", to: "/", class: "ten-footer-logo") %>
     </div>
   </footer>

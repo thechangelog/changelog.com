@@ -2,9 +2,9 @@
   <div class="ten-testimonials-item">
     <div class="ten-testimonials-info">
       <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-name">John Doe</h3>
-        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-info-name">John Doe</h3>
+        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
       </div>
       <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
         <%= link("Twitter", to: "#") %>
@@ -15,9 +15,9 @@
   <div class="ten-testimonials-item">
     <div class="ten-testimonials-info">
       <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-name">John Doe</h3>
-        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-info-name">John Doe</h3>
+        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
       </div>
       <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
         <%= link("Twitter", to: "#") %>
@@ -28,9 +28,9 @@
   <div class="ten-testimonials-item">
     <div class="ten-testimonials-info">
       <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-name">John Doe</h3>
-        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-info-name">John Doe</h3>
+        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
       </div>
       <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
         <%= link("Twitter", to: "#") %>
@@ -41,9 +41,9 @@
   <div class="ten-testimonials-item">
     <div class="ten-testimonials-info">
       <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-name">John Doe</h3>
-        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-info-name">John Doe</h3>
+        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
       </div>
       <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
         <%= link("Twitter", to: "#") %>
@@ -54,9 +54,9 @@
   <div class="ten-testimonials-item">
     <div class="ten-testimonials-info">
       <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-name">John Doe</h3>
-        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-info-name">John Doe</h3>
+        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
       </div>
       <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
         <%= link("Twitter", to: "#") %>
@@ -67,9 +67,9 @@
   <div class="ten-testimonials-item">
     <div class="ten-testimonials-info">
       <div class="ten-testimonials-info-main">
-        <img class="ten-testimonials-image" src="https://via.placeholder.com/50x50" alt="">
-        <h3 class="ten-testimonials-name">John Doe</h3>
-        <p class="ten-testimonials-handle"><a href="#">@johndoe</a></p>
+        <img class="ten-testimonials-info-image" src="https://via.placeholder.com/50x50" alt="">
+        <h3 class="ten-testimonials-info-name">John Doe</h3>
+        <p class="ten-testimonials-info-handle"><a href="#">@johndoe</a></p>
       </div>
       <div class="ten-testimonials-info-source ten-testimonials-info-source--twitter">
         <%= link("Twitter", to: "#") %>

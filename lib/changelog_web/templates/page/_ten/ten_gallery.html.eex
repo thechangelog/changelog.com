@@ -1,5 +1,6 @@
+<%# TODO: Open gallery images in a modal on click %>
 <div class="ten-gallery">
-  <img class="ten-gallery-image ten-photos-gallery-image--large" src="https://via.placeholder.com/530x530" alt="" />
+  <img class="ten-gallery-image ten-gallery-image--large" src="https://via.placeholder.com/530x530" alt="" />
   <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
   <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
   <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />

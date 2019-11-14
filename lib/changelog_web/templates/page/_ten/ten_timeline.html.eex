@@ -2,24 +2,34 @@
   <div class="ten-timeline-line"></div>
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">November 9, 2009</p>
-    <h3>Changelog is conceived.</h3>
+    <div class="ten-timeline-item-content">
+      <h3>Changelog is conceived.</h3>
+    </div>
   </div>
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">November 19, 2009</p>
-    <h3>Episode #1 of Changelog hosted by Adam Stacoviak and Wynn Netherland.</h3>
-    <p><a href="#">Play Episode</a></p>
+    <div class="ten-timeline-item-content">
+      <h3>Episode #1 of Changelog hosted by Adam Stacoviak and Wynn Netherland.</h3>
+      <p><a href="#">Play Episode</a></p>
+    </div>
   </div>
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">November 9, 2011</p>
-    <h3>Wynn leaves to focus on his work at Github.</h3>
+    <div class="ten-timeline-item-content">
+      <h3>Wynn leaves to focus on his work at Github.</h3>
+    </div>
   </div>
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">November 19, 20012</p>
-    <h3>Episode #1 of Changelog hosted by Adam Stacoviak and Wynn Netherland.</h3>
-    <p><a href="#">Play Episode</a></p>
+    <div class="ten-timeline-item-content">
+      <h3>Episode #1 of Changelog hosted by Adam Stacoviak and Wynn Netherland.</h3>
+      <p><a href="#">Play Episode</a></p>
+    </div>
   </div>
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">November 9, 2013</p>
-    <h3>Changelog is conceived.</h3>
+    <div class="ten-timeline-item-content">
+      <h3>Changelog is conceived.</h3>
+    </div>
   </div>
 </div>
