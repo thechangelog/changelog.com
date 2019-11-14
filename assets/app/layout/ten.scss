@@ -292,6 +292,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 23px;
+        min-height: 50px; // Helps with text alignment in cases where an item has no image
       }
 
       &-image {
@@ -407,15 +408,36 @@
 
 
     &-people {
-
+      display: flex;
+      flex-wrap: wrap;
+      margin: -15px -15px 0;
 
       li {
+        width: 50%;
+        padding: 15px 15px 0;
+        text-align: center;
+        line-height: 1.25;
 
+        @include breakpoint(tablet) {
+          width: 33.33%;
+        }
+        @include breakpoint(desktop) {
+          width: 25%;
+        }
       }
     }
 
     hr {
+      margin: 40px 0;
+      border: none;
+      border-bottom: 1px solid lighten($dark-grey, 3%);
 
+      @include breakpoint(mobile) {
+        margin: 50px 0;
+      }
+      @include breakpoint(tablet) {
+        margin: 60px 0;
+      }
     }
 
     &-companies {

@@ -23,7 +23,8 @@
   <hr>
   <div class="ten-thanks-companies logo_grid">
     <%# NOTE: _sponsors.html is placeholder content – currently used on /community %>
-    <%# TODO: Replace with real content and use transparent PNGs for images %>
     <%= render("_sponsors.html", assigns) %>
+    <%# TODO: Replace with real content and use transparent PNGs for images %>
+    <%# NOTE: We may need to adjust things if "filter: grayscale(100%);" doesn't work well here %>
   </div>
 </div>
