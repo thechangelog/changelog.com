@@ -53,7 +53,11 @@
 
     &-heading {
       // TODO: Add section heading underline graphics
+      min-width: 220px;
       margin-bottom: 40px;
+      padding-bottom: 33px;
+      background: url("/images/icons/ten-year-heading-icon.svg") no-repeat;
+      background-position: bottom center;
       font-family: $code;
       font-size: 0.875rem;
       font-weight: normal;
@@ -65,6 +69,11 @@
       }
       @include breakpoint(tablet) {
         margin-bottom: 60px;
+      }
+
+      .ten-section:nth-child(even) & {
+        padding-bottom: 25px;
+        background-image: url("/images/icons/ten-year-heading-icon-alt.svg");
       }
     }
 
@@ -270,7 +279,7 @@
     position: relative;
     display: grid;
     // NOTE: Column count must match the number of "ten-timeline-item"(s)
-    grid-template-columns: repeat(9, 250px);
+    grid-template-columns: repeat(10, 250px);
     grid-column-gap: 30px;
     grid-row-gap: 25px;
     text-align: center;
