@@ -1,7 +1,7 @@
 <%# TODO: Increment stats when scrolled into view %>
 <div class="ten-stats">
   <div class="ten-stats-item">
-    <h3 class="ten-stats-heading"><span>734</span> Episodes Shipped</h3>
+    <h3 class="ten-stats-heading"><span class="js-increment" data-start-value="432" data-end-value="734">734</span> Episodes Shipped</h3>
   </div>
   <div class="ten-stats-item">
     <h3 class="ten-stats-heading"><span>1,054</span> Hours of Audio</h3>
@@ -10,7 +10,7 @@
     <h3 class="ten-stats-heading"><span>648</span> Guests &amp; Contributors</h3>
   </div>
   <div class="ten-stats-item">
-    <h3 class="ten-stats-heading"><span>5.12<small>TB</small></span> Raw Audio</h3>
+    <h3 class="ten-stats-heading"><span class="js-increment" data-start-value="3.81" data-end-value="5.12" data-decimal-places="2">5.12<small>TB</small></span> Raw Audio</h3>
   </div>
   <div class="ten-stats-item">
     <h3 class="ten-stats-heading"><span>148</span> Made Up Numbers</h3>

@@ -15,6 +15,7 @@ import YouTubeButton from "modules/youTubeButton";
 import Share from "modules/share";
 import Slider from "modules/slider";
 import Log from "modules/log";
+// import Ten from "modules/ten";
 import Tooltip from "modules/tooltip";
 import Flash from "modules/flash";
 import ts from "../shared/ts";
@@ -29,6 +30,8 @@ window.App = {
   overlay: new Overlay("#overlay"),
   player: new OnsitePlayer("#player"),
   slider: new Slider(".js-slider"),
+  // ten: new Ten(),
+
 
   attachComments() {
     u(".js-comment").each(el => {
