@@ -26,7 +26,7 @@
     </div>
   </section>
 
-  <section class="ten-section">
+  <section class="ten-section ten-section--timeline">
     <div class="ten-section-inner">
       <h2 class="ten-section-heading">The Timeline</h2>
       <%= render("_ten/ten_timeline.html", assigns) %>
