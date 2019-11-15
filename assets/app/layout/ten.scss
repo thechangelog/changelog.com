@@ -98,6 +98,7 @@
   // Hero + Logo
   &-hero {
     text-align: center;
+    overflow: hidden;
 
     @keyframes Gradient {
       0% {
@@ -119,33 +120,58 @@
       width: 100%;
       margin: 20px auto;
       line-height: 0; // Remove H1's line-height
-      overflow: hidden;
 
-      &:before {
-        content: "";
-        @include position(absolute, 0);
-        z-index: 1;
-        background: radial-gradient(circle at top left, $jsparty, $gotime, $practicalai, $jsparty , $brainscience);
-        background-size: 300% 300%;
-        animation: Gradient 16s linear infinite;
+      &-background {
+        @include position(absolute, 50% null null 50%);
+        width: 1368px;
+        height: 1020px;
+        margin-left: -684px;
+        margin-top: -400px;
+        background-image: url('/images/content/ten/ten-year-hero-background.svg');
+        background-position: center 0;
+        background-repeat: no-repeat;
+        background-size: 1368px; // NOTE: This is slightly scaled down from the original size to match the 10 year graphic
+
+        @include breakpoint(940px, max) {
+          display: none;
+        }
       }
 
-      svg {
+      &-main {
         position: relative;
-        z-index: 2;
-        width: 100%;
-        height: auto;
+        overflow: hidden;
 
-        #ten_year_logo-mask-background {
-          fill: rgba(255, 255, 255, 1);
+        &:before {
+          content: "";
+          @include position(absolute, 0);
+          z-index: 1;
+          background: radial-gradient(circle at top left, $jsparty, $gotime, $practicalai, $jsparty , $brainscience);
+          background-size: 300% 300%;
+          animation: Gradient 16s linear infinite;
         }
+        
   
-        #ten_year_logo-gradient_mask {
-          fill: $black;
-          -webkit-mask: url(#ten_year_logo-mask);
-          mask: url(#ten_year_logo-mask);
+        svg {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          height: auto;
+  
+          #ten_year_logo-mask-background {
+            fill: rgba(255, 255, 255, 1);
+          }
+    
+          #ten_year_logo-gradient_mask {
+            fill: $black;
+            -webkit-mask: url(#ten_year_logo-mask);
+            mask: url(#ten_year_logo-mask);
+          }
         }
       }
+    }
+
+    &-content {
+      position: relative;
     }
 
     &-intro {
@@ -648,6 +674,10 @@
     display: flex;
     align-items: center;
     min-height: 400px;
+    background-image: url('/images/content/ten/ten-year-footer-background.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 1368px; // NOTE: This is slightly scaled down from the original size to match the 10 year graphic
     text-align: center;
 
     @include breakpoint(mobile) {

@@ -7,11 +7,16 @@
       <h1 class="ten-hero-logo">
         <%# TODO: Add fallback logo and display based on a "cssmask" Modernizr check %>
         <%# TODO: Consider animating the Changelog icon part of the logo %>
-        <%= render("_ten/ten_year_logo.html", assigns) %>
+        <div class="ten-hero-logo-background"></div>
+        <div class="ten-hero-logo-main">
+          <%= render("_ten/ten_year_logo.html", assigns) %>
+        </div>
       </h1>
-      <h2 class="ten-hero-intro">Join Changelog in celebrating a decade of conversations, news, and&nbsp;community.</h2>
-      <%= link("Hear the Story", to: "#", class: "ten-hero-button button_large") %>
-      <p class="ten-hero-fine_print">Adam and Jerod interviewed by <br>Quincy from <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Free Code Camp</a>.</p>
+      <div class="ten-hero-content">
+        <h2 class="ten-hero-intro">Join Changelog in celebrating a decade of conversations, news, and&nbsp;community.</h2>
+        <%= link("Hear the Story", to: "#", class: "ten-hero-button button_large") %>
+        <p class="ten-hero-fine_print">Adam and Jerod interviewed by <br>Quincy from <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Free Code Camp</a>.</p>
+      </div>
     </div>
   </header>
 
