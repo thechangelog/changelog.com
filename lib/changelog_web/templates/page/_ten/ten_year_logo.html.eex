@@ -78,7 +78,7 @@
   </mask>
   
   <!-- Gradient -->
-  <rect id="ten_year_logo-gradient" x="0" y="0" width="1008" height="1008"/>
+  <rect id="ten_year_logo-gradient_mask" x="0" y="0" width="1008" height="1008"/>
 
   <!-- Outer Lines -->
   <g clip-path="url(#c)">

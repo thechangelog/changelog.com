@@ -1,12 +1,15 @@
+<%# TODO: Consider omitting default site footer for this page %>
+
 <article class="ten">
   <header class="ten-section ten-hero">
     <div class="ten-section-inner">
+      <%# TODO: Add + animate misc background elements %>
       <h1 class="ten-hero-logo">
         <%# TODO: Add fallback logo and display based on a "cssmask" Modernizr check %>
+        <%# TODO: Consider animating the Changelog icon part of the logo %>
         <%= render("_ten/ten_year_logo.html", assigns) %>
       </h1>
       <h2 class="ten-hero-intro">Join Changelog in celebrating a decade of conversations, news, and&nbsp;community.</h2>
-      <%# TODO: Add Play icon to this button %>
       <%= link("Hear the Story", to: "#", class: "ten-hero-button button_large") %>
       <p class="ten-hero-fine_print">Adam and Jerod interviewed by <br>Quincy from <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Free Code Camp</a>.</p>
     </div>

@@ -1,4 +1,5 @@
 .ten {
+  $ten-alt-black: #0D131A;
   color: $white;
 
   // Generic section + section heading styles
@@ -6,7 +7,7 @@
     overflow: auto; // force inner margins to expand container
 
     &:nth-child(even) {
-      background-color: #0D131A;
+      background-color: $ten-alt-black;
     }
 
     &-inner {
@@ -52,7 +53,6 @@
     }
 
     &-heading {
-      // TODO: Add section heading underline graphics
       min-width: 220px;
       margin-bottom: 40px;
       padding-bottom: 33px;
@@ -140,7 +140,7 @@
           fill: rgba(255, 255, 255, 1);
         }
   
-        #ten_year_logo-gradient {
+        #ten_year_logo-gradient_mask {
           fill: $black;
           -webkit-mask: url(#ten_year_logo-mask);
           mask: url(#ten_year_logo-mask);
@@ -274,7 +274,7 @@
   }
 
   // The Timeline
-  // TODO: Pad horizontal scrolling
+  // TODO: Pad horizontal scrolling (currently padding end by adding an extra grid column)
   &-timeline {
     position: relative;
     display: grid;
@@ -282,13 +282,22 @@
     grid-template-columns: repeat(10, 250px);
     grid-column-gap: 30px;
     grid-row-gap: 25px;
-    text-align: center;
     width: 100%;
-    padding: 0 $base-spacing;
+    padding: 10px $base-spacing;
+    text-align: center;
     overflow-x: auto;
 
+    @include breakpoint(mobile) {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    @include breakpoint(tablet) {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
     @include breakpoint(1170px) {
-      padding: 0 3vw;
+      padding-left: 3vw;
+      padding-right: 3vw;
     }
 
     // TODO: Consider adding click + drag side-scrolling via js
@@ -349,7 +358,7 @@
 
         // Adjust circle fill color to match section color
         .ten-section:nth-child(even) & {
-          background-color: #0D131A;
+          background-color: $ten-alt-black;
         }
       }
 
@@ -636,7 +645,17 @@
 
   // Footer
   &-footer {
+    display: flex;
+    align-items: center;
+    min-height: 400px;
     text-align: center;
+
+    @include breakpoint(mobile) {
+      min-height: 460px;
+    }
+    @include breakpoint(tablet) {
+      min-height: 520px;
+    }
 
     &-message,
     &-love {
