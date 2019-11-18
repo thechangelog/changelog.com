@@ -11,6 +11,7 @@
     "intersection-observer": "^0.7.0",
     "jquery": "^3.1.1",
     "lozad": "^1.9.0",
+    "micromodal": "^0.4.2",
     "normalize.css": "^8.0.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",

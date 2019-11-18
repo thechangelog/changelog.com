@@ -1,5 +1,6 @@
 import { u } from 'umbrellajs';
-import { CountUp } from 'countup.js';
+// import { CountUp } from 'countup.js';
+import MicroModal from 'micromodal';
 
 export default class Ten {
   constructor() {
@@ -24,10 +25,10 @@ export default class Ten {
       startVal: startValue,
       decimalPlaces: decimalPlaces
     };
-    const countUp = new CountUp(numberEl, endValue, options);
+    // const countUp = new CountUp(numberEl, endValue, options);
 
     // TODO: Start counting once element is in view
-    countUp.start();
+    // countUp.start();
     
     // const observer = new IntersectionObserver((entry, observer) => {
     //   console.log('entry:', entry);
