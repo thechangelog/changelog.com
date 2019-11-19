@@ -2,7 +2,7 @@
 
 <div class="ten-testimonials">
   <div class="ten-testimonials-slider js-slider">
-    <div class="ten-testimonials-slider-page">
+    <div class="ten-testimonials-slider-page js-slider-item">
       <div class="ten-testimonials-item">
         <div class="ten-testimonials-item-inner">
           <div class="ten-testimonials-info">
@@ -106,111 +106,7 @@
         </div>
       </div>
     </div>
-    <div class="ten-testimonials-slider-page">
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1152907803633127424/NzmBowte_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">Arpita Bhattacharjee</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/TLinguists" target="_blank" rel="noopener noreferrer">@TLinguists</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/TLinguists/status/934460788315529216" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text"><a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> Your podcasts really inspire me.</p>
-        </div>
-      </div>
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/805793188174819328/hhd1qxLO_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">Guido Marucci Blas</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/guidomb" target="_blank" rel="noopener noreferrer">@guidomb</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/guidomb/status/952534025528279041" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text">Am I the only one opening the Podcast app every day checking if there is a new release of the <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> ?</p>
-        </div>
-      </div>
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1173788586812092419/zIlsSXw4_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">Rob</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/rwncode" target="_blank" rel="noopener noreferrer">@rwncode</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/rwncode/status/982744642012803074" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text">Definitely not bored on my drive to Costco... Thanks <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a></p>
-        </div>
-      </div>
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1194038901700091905/pTpEoMOE_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">$justin; 🧢</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/carvtographer" target="_blank" rel="noopener noreferrer">@carvtographer</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/carvtographer/status/966056871575605248" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text">Love listening to <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> daily. I feel like I learn something new every single time!</p>
-        </div>
-      </div>
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1034972358451322880/I3IzZrdm_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">Roy Asfar</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/RoyAsfar" target="_blank" rel="noopener noreferrer">@RoyAsfar</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/RoyAsfar/status/1131755841571491840" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text">Love <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a>'s podcasts. I may not get everything the first time I listen, but I finish each podcast knowing a whole lot more. #DevOps #uxdesign #alwayslearning</p>
-        </div>
-      </div>
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1179179632643301376/RxrwJKvG_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">Justin Dorfman</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/jdorfman" target="_blank" rel="noopener noreferrer">@jdorfman</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/jdorfman/status/1018884703074467840" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text">Got to say, <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> has the best weekly newsletter. A lot of TLC goes in and it shows. 👏</p>
-        </div>
-      </div>
-    </div>
-    <div class="ten-testimonials-slider-page">
+    <div class="ten-testimonials-slider-page js-slider-item">
       <div class="ten-testimonials-item">
         <div class="ten-testimonials-item-inner">
           <div class="ten-testimonials-info">
@@ -266,6 +162,23 @@
         <div class="ten-testimonials-item-inner">
           <div class="ten-testimonials-info">
             <div class="ten-testimonials-info-main">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/714471609520812033/Fq8ageNj_400x400.jpg" alt="">
+              <div class="testimonials-info-text">
+                <h3 class="ten-testimonials-info-name">Stefan Buck</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/buckstefan" target="_blank" rel="noopener noreferrer">@buckstefan</a></p>
+              </div>
+            </div>
+            <a class="ten-testimonials-info-source" href="https://twitter.com/buckstefan/status/1162679533046308865" target="_blank" rel="noopener noreferrer" title="Twitter">
+              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+            </a>
+          </div>
+          <p class="ten-testimonials-text">If you are a podcasts listener, add <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> to your list. It's by far my favourite tech podcast! The latest episode with <a href="https://twitter.com/rjs" target="_blank" rel="noopener noreferrer">@rjs</a> is a MUST listen. Many insightful principles for building products.</p>
+        </div>
+      </div>
+      <div class="ten-testimonials-item">
+        <div class="ten-testimonials-item-inner">
+          <div class="ten-testimonials-info">
+            <div class="ten-testimonials-info-main">
               <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1183891891705798656/T0lW-1_g_400x400.jpg" alt="">
               <div class="testimonials-info-text">
                 <h3 class="ten-testimonials-info-name">Sam Coren</h3>
@@ -296,25 +209,8 @@
           <p class="ten-testimonials-text"><a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> has opened my eyes to many new things, but most importantly <a href="https://twitter.com/BrkmstrCylinder" target="_blank" rel="noopener noreferrer">@BrkmstrCylinder</a> #musicIsLife</p>
         </div>
       </div>
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/714471609520812033/Fq8ageNj_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">Stefan Buck</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/buckstefan" target="_blank" rel="noopener noreferrer">@buckstefan</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/buckstefan/status/1162679533046308865" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text">If you are a podcasts listener, add <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> to your list. It's by far my favourite tech podcast! The latest episode with <a href="https://twitter.com/rjs" target="_blank" rel="noopener noreferrer">@rjs</a> is a MUST listen. Many insightful principles for building products.</p>
-        </div>
-      </div>
     </div>
-    <div class="ten-testimonials-slider-page">
+    <div class="ten-testimonials-slider-page js-slider-item">
       <div class="ten-testimonials-item">
         <div class="ten-testimonials-item-inner">
           <div class="ten-testimonials-info">
@@ -417,6 +313,110 @@
             </a>
           </div>
           <p class="ten-testimonials-text">I cannot recommend <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> enough. Best #Podcast for #developers imho. #listenandlearn</p>
+        </div>
+      </div>
+    </div>
+        <div class="ten-testimonials-slider-page js-slider-item">
+      <div class="ten-testimonials-item">
+        <div class="ten-testimonials-item-inner">
+          <div class="ten-testimonials-info">
+            <div class="ten-testimonials-info-main">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1152907803633127424/NzmBowte_400x400.jpg" alt="">
+              <div class="testimonials-info-text">
+                <h3 class="ten-testimonials-info-name">Arpita Bhattacharjee</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/TLinguists" target="_blank" rel="noopener noreferrer">@TLinguists</a></p>
+              </div>
+            </div>
+            <a class="ten-testimonials-info-source" href="https://twitter.com/TLinguists/status/934460788315529216" target="_blank" rel="noopener noreferrer" title="Twitter">
+              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+            </a>
+          </div>
+          <p class="ten-testimonials-text"><a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> Your podcasts really inspire me.</p>
+        </div>
+      </div>
+      <div class="ten-testimonials-item">
+        <div class="ten-testimonials-item-inner">
+          <div class="ten-testimonials-info">
+            <div class="ten-testimonials-info-main">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/805793188174819328/hhd1qxLO_400x400.jpg" alt="">
+              <div class="testimonials-info-text">
+                <h3 class="ten-testimonials-info-name">Guido Marucci Blas</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/guidomb" target="_blank" rel="noopener noreferrer">@guidomb</a></p>
+              </div>
+            </div>
+            <a class="ten-testimonials-info-source" href="https://twitter.com/guidomb/status/952534025528279041" target="_blank" rel="noopener noreferrer" title="Twitter">
+              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+            </a>
+          </div>
+          <p class="ten-testimonials-text">Am I the only one opening the Podcast app every day checking if there is a new release of the <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> ?</p>
+        </div>
+      </div>
+      <div class="ten-testimonials-item">
+        <div class="ten-testimonials-item-inner">
+          <div class="ten-testimonials-info">
+            <div class="ten-testimonials-info-main">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1173788586812092419/zIlsSXw4_400x400.jpg" alt="">
+              <div class="testimonials-info-text">
+                <h3 class="ten-testimonials-info-name">Rob</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/rwncode" target="_blank" rel="noopener noreferrer">@rwncode</a></p>
+              </div>
+            </div>
+            <a class="ten-testimonials-info-source" href="https://twitter.com/rwncode/status/982744642012803074" target="_blank" rel="noopener noreferrer" title="Twitter">
+              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+            </a>
+          </div>
+          <p class="ten-testimonials-text">Definitely not bored on my drive to Costco... Thanks <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a></p>
+        </div>
+      </div>
+      <div class="ten-testimonials-item">
+        <div class="ten-testimonials-item-inner">
+          <div class="ten-testimonials-info">
+            <div class="ten-testimonials-info-main">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1194038901700091905/pTpEoMOE_400x400.jpg" alt="">
+              <div class="testimonials-info-text">
+                <h3 class="ten-testimonials-info-name">$justin; 🧢</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/carvtographer" target="_blank" rel="noopener noreferrer">@carvtographer</a></p>
+              </div>
+            </div>
+            <a class="ten-testimonials-info-source" href="https://twitter.com/carvtographer/status/966056871575605248" target="_blank" rel="noopener noreferrer" title="Twitter">
+              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+            </a>
+          </div>
+          <p class="ten-testimonials-text">Love listening to <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> daily. I feel like I learn something new every single time!</p>
+        </div>
+      </div>
+      <div class="ten-testimonials-item">
+        <div class="ten-testimonials-item-inner">
+          <div class="ten-testimonials-info">
+            <div class="ten-testimonials-info-main">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1034972358451322880/I3IzZrdm_400x400.jpg" alt="">
+              <div class="testimonials-info-text">
+                <h3 class="ten-testimonials-info-name">Roy Asfar</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/RoyAsfar" target="_blank" rel="noopener noreferrer">@RoyAsfar</a></p>
+              </div>
+            </div>
+            <a class="ten-testimonials-info-source" href="https://twitter.com/RoyAsfar/status/1131755841571491840" target="_blank" rel="noopener noreferrer" title="Twitter">
+              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+            </a>
+          </div>
+          <p class="ten-testimonials-text">Love <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a>'s podcasts. I may not get everything the first time I listen, but I finish each podcast knowing a whole lot more. #DevOps #uxdesign #alwayslearning</p>
+        </div>
+      </div>
+      <div class="ten-testimonials-item">
+        <div class="ten-testimonials-item-inner">
+          <div class="ten-testimonials-info">
+            <div class="ten-testimonials-info-main">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1179179632643301376/RxrwJKvG_400x400.jpg" alt="">
+              <div class="testimonials-info-text">
+                <h3 class="ten-testimonials-info-name">Justin Dorfman</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/jdorfman" target="_blank" rel="noopener noreferrer">@jdorfman</a></p>
+              </div>
+            </div>
+            <a class="ten-testimonials-info-source" href="https://twitter.com/jdorfman/status/1018884703074467840" target="_blank" rel="noopener noreferrer" title="Twitter">
+              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
+            </a>
+          </div>
+          <p class="ten-testimonials-text">Got to say, <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> has the best weekly newsletter. A lot of TLC goes in and it shows. 👏</p>
         </div>
       </div>
     </div>
