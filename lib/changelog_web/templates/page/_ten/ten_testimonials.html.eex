@@ -313,6 +313,8 @@
           <p class="ten-testimonials-text">If you are a podcasts listener, add <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> to your list. It's by far my favourite tech podcast! The latest episode with <a href="https://twitter.com/rjs" target="_blank" rel="noopener noreferrer">@rjs</a> is a MUST listen. Many insightful principles for building products.</p>
         </div>
       </div>
+    </div>
+    <div class="ten-testimonials-slider-page">
       <div class="ten-testimonials-item">
         <div class="ten-testimonials-item-inner">
           <div class="ten-testimonials-info">
@@ -344,7 +346,7 @@
               <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
             </a>
           </div>
-          <p class="ten-testimonials-text">Are there any podcast who don’t share the same boring Silicon Valley startup success stories? 
+          <p class="ten-testimonials-text">Are there any podcast who don’t share the same boring Silicon Valley startup success stories?
 
     Hearing about white tech bros raise millions of dollars is getting pretty old.</p>
         </div>
@@ -423,5 +425,7 @@
   <div class="slider_pagination">
     <button class="slider_pagination-item slider_pagination-item--0" data-goto="0"></button>
     <button class="slider_pagination-item slider_pagination-item--1" data-goto="1"></button>
+    <button class="slider_pagination-item slider_pagination-item--2" data-goto="2"></button>
+    <button class="slider_pagination-item slider_pagination-item--3" data-goto="3"></button>
   </div>
 </div>

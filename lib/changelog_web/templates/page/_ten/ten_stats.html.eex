@@ -15,7 +15,11 @@
   <div class="ten-stats-item">
     <h3 class="ten-stats-heading">
       <span class="ten-stats-number">
-        <span>33</span>
+        <span
+          class="js-increment"
+          data-start-value="24"
+          data-end-value="33"
+          data-decimal-places="0">33</span>
       </span>
       <span class="ten-stats-label">Full Days of Audio</span>
     </h3>
@@ -25,7 +29,7 @@
       <span class="ten-stats-number">
         <span
           class="js-increment"
-          data-start-value="10"
+          data-start-value="7"
           data-end-value="14">14</span><small>M</small>
       </span>
       <span class="ten-stats-label">Listens</span>
@@ -34,7 +38,11 @@
   <div class="ten-stats-item">
     <h3 class="ten-stats-heading">
       <span class="ten-stats-number">
-        <span>3</span>
+        <span
+          class="js-increment"
+          data-start-value="9999"
+          data-end-value="6789"
+          data-decimal-places="0">6789</span>
       </span>
       <span class="ten-stats-label">Guests &amp; Contributors</span>
     </h3>

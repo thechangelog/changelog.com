@@ -13,7 +13,12 @@
       </h1>
       <div class="ten-hero-content">
         <h2 class="ten-hero-intro">Join Changelog in celebrating a decade of conversations, news, and&nbsp;community.</h2>
-        <%= link("Hear the Story", to: "#", class: "ten-hero-button button_large") %>
+        <a
+          role="button"
+          class="ten-hero-button button_large"
+          data-play="/podcast/340/play"
+          href="https://cdn.changelog.com/uploads/podcast/340/the-changelog-340.mp3"
+          title="Play Episode">Hear The Story</a>
         <p class="ten-hero-fine_print">Adam and Jerod interviewed by <br>Quincy from <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Free Code Camp</a>.</p>
       </div>
     </div>
