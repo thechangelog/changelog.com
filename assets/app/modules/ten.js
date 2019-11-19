@@ -1,18 +1,24 @@
 import { u } from 'umbrellajs';
-// import { CountUp } from 'countup.js';
-import MicroModal from 'micromodal';
+import { CountUp } from 'countup.js';
+// import MicroModal from 'micromodal';
 
 export default class Ten {
   constructor() {
     // Elements
     this.numbers = u('.js-increment');
 
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        let numberEl = u(entry.target);
+        Ten.animateNumbers(u(numberEl));
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+      });
+    });
+
     // Run
     if (this.numbers.length) {
-      console.log(this.endValue);
-      numbers.forEach(numberEl => {
-        Ten.animateNumbers(numberEl);
-      });
+      this.numbers.each(el => { observer.observe(el) });
     }
   }
 
@@ -25,16 +31,8 @@ export default class Ten {
       startVal: startValue,
       decimalPlaces: decimalPlaces
     };
-    // const countUp = new CountUp(numberEl, endValue, options);
 
-    // TODO: Start counting once element is in view
-    // countUp.start();
-    
-    // const observer = new IntersectionObserver((entry, observer) => {
-    //   console.log('entry:', entry);
-    //   console.log('observer:', observer);
-    // });
-
-    // observer.observe(numberEl);
+    const countUp = new CountUp(numberEl.nodes[0], endValue, options);
+    countUp.start();
   }
 }

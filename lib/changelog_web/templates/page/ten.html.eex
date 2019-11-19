@@ -3,7 +3,6 @@
 <article class="ten">
   <header class="ten-section ten-hero">
     <div class="ten-section-inner">
-      <%# TODO: Add + animate misc background elements %>
       <h1 class="ten-hero-logo">
         <%# TODO: Add fallback logo and display based on a "cssmask" Modernizr check %>
         <%# TODO: Consider animating the Changelog icon part of the logo %>

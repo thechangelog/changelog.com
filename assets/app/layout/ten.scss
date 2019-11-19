@@ -33,13 +33,13 @@
         content: "";
         @include position(absolute, 0 null);
         z-index: 3;
-        width: 10vw;
+        width: 3vw;
         height: 100%;
         pointer-events: none;
 
-        @include breakpoint(1170px) {
-          width: 150px;
-        }
+        // @include breakpoint(1170px) {
+        //   width: 150px;
+        // }
       }
     }
 
@@ -149,18 +149,18 @@
           background-size: 300% 300%;
           animation: Gradient 16s linear infinite;
         }
-        
-  
+
+
         svg {
           position: relative;
           z-index: 2;
           width: 100%;
           height: auto;
-  
+
           #ten_year_logo-mask-background {
             fill: rgba(255, 255, 255, 1);
           }
-    
+
           #ten_year_logo-gradient_mask {
             fill: $black;
             -webkit-mask: url(#ten_year_logo-mask);
@@ -234,6 +234,41 @@
 
     &-heading {
       margin: 0;
+    }
+
+    &-number {
+      font-family: $code;
+      font-size: 2.25rem;
+      color: $white;
+      display: block;
+      line-height: 1em;
+      margin-bottom: 0.2em;
+
+      @include breakpoint(mobile) {
+        font-size: 2.75rem;
+      }
+      @include breakpoint(tablet) {
+        font-size: 3.375rem;
+      }
+
+      span,
+      small {
+        display: inline-block;
+      }
+
+      span {
+        // TODO: See about adding "Sana Sans Alt" font
+        font-size: 1em;
+        font-weight: 900;
+      }
+
+      small {
+        font-size: 0.675em;
+        font-family: $content;
+      }
+    }
+
+    &-label {
       font-family: $code;
       font-size: 0.75rem;
       font-weight: normal;
@@ -242,28 +277,6 @@
 
       @include breakpoint(mobile) {
         font-size: 0.875rem;
-      }
-
-      span {
-        display: block;
-        margin-bottom: 0.2em;
-        // NOTE: The design file used "Sana Sans Alt"
-        // TODO: See about adding "Sana Sans Alt" font
-        font-family: $content;
-        font-size: 2.25rem;
-        font-weight: 900;
-        color: $white;
-
-        @include breakpoint(mobile) {
-          font-size: 2.75rem;
-        }
-        @include breakpoint(tablet) {
-          font-size: 3.375rem;
-        }
-
-        small {
-          font-size: 0.675em;
-        }
       }
     }
   }
@@ -524,13 +537,13 @@
         border-radius: 50%;
         align-self: flex-start;
       }
-  
+
       &-name {
         margin: 0;
         font-weight: 500;
         font-size: 1rem;
       }
-  
+
       &-handle {
         margin: 0.1em 0 0;
         font-family: $code;
