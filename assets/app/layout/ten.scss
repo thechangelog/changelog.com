@@ -1,3 +1,7 @@
+.page-page-ten .footer {
+  display: none;
+}
+
 .ten {
   $ten-alt-black: #0D131A;
   color: $white;
@@ -499,9 +503,14 @@
 
   // Kind Words
   &-testimonials {
-    display: flex;
-    flex-wrap: wrap;
     margin: -30px -15px 0;
+
+    &-slider {
+      &-page {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
 
     &-item {
       width: 100%;
@@ -607,6 +616,12 @@
       &-link {
         display: flex;
         align-items: center;
+        transition: transform 0.1s linear;
+
+        &:hover {
+          color: $white;
+          transform: scale(0.99);
+        }
       }
     }
 
@@ -620,6 +635,7 @@
       font-family: $code;
       font-size: 0.75rem;
       color: $medium-grey;
+
     }
 
     &-title {
@@ -628,12 +644,6 @@
       font-weight: bold;
       line-height: 1.25;
       color: $white;
-      transition: color 0.1s linear;
-
-      a:hover &,
-      a:focus & {
-        color: $green;
-      }
 
       @include breakpoint(mobile) {
         font-size: 1.25rem;
