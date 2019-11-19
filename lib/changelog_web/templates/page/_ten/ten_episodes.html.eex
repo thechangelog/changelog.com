@@ -1,10 +1,22 @@
 <div class="ten-episodes">
   <div class="ten-episodes-item">
-    <a class="ten-episodes-item-link" href="#">
-      <img class="ten-episodes-image" src="https://cdn.changelog.com/uploads/covers/the-changelog-small.png" alt="The Changelog" width="75" height="75">
+    <%# GO TIME #100 %>
+    <a
+      role="button"
+      class="ten-episodes-item-link"
+      data-play="/gotime/100/play"
+      href="https://cdn.changelog.com/uploads/gotime/9/gotime-100.mp3"
+      title="Play Episode"
+      >
+      <img
+        class="ten-episodes-image"
+        src="https://cdn.changelog.com/uploads/covers/go-time-small.png"
+        alt="Go Time"
+        width="75"
+        height="75">
       <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">The Changelog #145</h3>
-        <h4 class="ten-episodes-title">There’s no server more secure than one that doesn’t exist.</h4>
+        <h3 class="ten-episodes-episode">Go Time #100</h3>
+        <h4 class="ten-episodes-title">Creating the Go programming language</h4>
       </div>
     </a>
   </div>

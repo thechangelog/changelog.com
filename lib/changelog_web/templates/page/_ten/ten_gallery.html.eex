@@ -1,8 +1,19 @@
-<%# TODO: Open gallery images in a modal on click %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+
 <div class="ten-gallery">
-  <img class="ten-gallery-image ten-gallery-image--large" src="https://via.placeholder.com/530x530" alt="" />
-  <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
-  <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
-  <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
-  <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
+  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/recording.jpg") %>' data-gallery="gallery">
+    <img class="ten-gallery-image ten-gallery-image--large" src="https://via.placeholder.com/530x530" alt="" />
+  </a>
+  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/recording.jpg") %>' data-gallery="gallery">
+    <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
+  </a>
+  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/recording.jpg") %>' data-gallery="gallery">
+    <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
+  </a>
+  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/recording.jpg") %>' data-gallery="gallery">
+    <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
+  </a>
+  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/recording.jpg") %>' data-gallery="gallery">
+    <img class="ten-gallery-image" src="https://via.placeholder.com/250x250" alt="" />
+  </a>
 </div>
