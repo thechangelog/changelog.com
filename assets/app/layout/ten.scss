@@ -317,7 +317,6 @@
   }
 
   // The Timeline
-  // TODO: Pad horizontal scrolling (currently padding end by adding an extra grid column)
   &-timeline {
     position: relative;
     display: grid;
@@ -338,12 +337,10 @@
       padding-top: 30px;
       padding-bottom: 30px;
     }
-    @include breakpoint(1170px) {
-      padding-left: 3vw;
-      padding-right: 3vw;
+    @include breakpoint(1280px) {
+      padding-left: 10vw;
+      padding-right: 10vw;
     }
-
-    // TODO: Consider adding click + drag side-scrolling via js
 
     // Hide scrollbar in Firefox
     scrollbar-width: none;
