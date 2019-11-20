@@ -65,6 +65,28 @@
     </a>
   </div>
 
+  <%# Exposing the deception of DeepFakes https://changelog.com/practicalai/49 %>
+  <div class="ten-episodes-item">
+    <a
+      role="button"
+      class="ten-episodes-item-link"
+      data-play="/practicalai/49/play"
+      href="https://cdn.changelog.com/uploads/practicalai/49/practical-ai-49.mp3"
+      title="Play Episode"
+      >
+      <img
+        class="ten-episodes-image"
+        src="https://cdn.changelog.com/uploads/covers/practical-ai-small.png"
+        alt="Practical AI Artwork"
+        width="75"
+        height="75">
+      <div class="ten-episodes-content">
+        <h3 class="ten-episodes-episode">Practical AI #49</h3>
+        <h4 class="ten-episodes-title">Exposing the deception of DeepFakes</h4>
+      </div>
+    </a>
+  </div>
+
   <%# A protocol for dying https://changelog.com/podcast/205 (edited) %>
   <div class="ten-episodes-item">
     <a
@@ -109,28 +131,6 @@
     </a>
   </div>
 
-  <%# Exposing the deception of DeepFakes https://changelog.com/practicalai/49 %>
-  <div class="ten-episodes-item">
-    <a
-      role="button"
-      class="ten-episodes-item-link"
-      data-play="/practicalai/49/play"
-      href="https://cdn.changelog.com/uploads/practicalai/49/practical-ai-49.mp3"
-      title="Play Episode"
-      >
-      <img
-        class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/practical-ai-small.png"
-        alt="Practical AI Artwork"
-        width="75"
-        height="75">
-      <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Practical AI #49</h3>
-        <h4 class="ten-episodes-title">Exposing the deception of DeepFakes</h4>
-      </div>
-    </a>
-  </div>
-
   <%# A call for kindness in open source https://changelog.com/podcast/318 %>
   <div class="ten-episodes-item">
     <a
@@ -149,6 +149,28 @@
       <div class="ten-episodes-content">
         <h3 class="ten-episodes-episode">Changelog #318</h3>
         <h4 class="ten-episodes-title">A call for kindness in open source</h4>
+      </div>
+    </a>
+  </div>
+
+  <%# Danielle Morrill on starting over from zero https://changelog.com/founderstalk/53 %>
+  <div class="ten-episodes-item">
+    <a
+      role="button"
+      class="ten-episodes-item-link"
+      data-play="/founderstalk/53/play"
+      href="https://cdn.changelog.com/uploads/founderstalk/53/founders-talk-53.mp3"
+      title="Play Episode"
+      >
+      <img
+        class="ten-episodes-image"
+        src="https://cdn.changelog.com/uploads/covers/founders-talk-small.png"
+        alt="Founders Talk Artwork"
+        width="75"
+        height="75">
+      <div class="ten-episodes-content">
+        <h3 class="ten-episodes-episode">Founders Talk #53</h3>
+        <h4 class="ten-episodes-title">Danielle Morrill on starting over from zero</h4>
       </div>
     </a>
   </div>
@@ -175,24 +197,24 @@
     </a>
   </div>
 
-  <%# Danielle Morrill on starting over from zero https://changelog.com/founderstalk/53 %>
+  <%# Humans and habits https://changelog.com/brainscience/3 %>
   <div class="ten-episodes-item">
     <a
       role="button"
       class="ten-episodes-item-link"
-      data-play="/founderstalk/53/play"
-      href="https://cdn.changelog.com/uploads/founderstalk/53/founders-talk-53.mp3"
+      data-play="/brainscience/3/play"
+      href="https://cdn.changelog.com/uploads/brainscience/3/brain-science-3.mp3"
       title="Play Episode"
       >
       <img
         class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/founders-talk-small.png"
-        alt="Founders Talk Artwork"
+        src="https://cdn.changelog.com/uploads/covers/brain-science-small.png"
+        alt="Brain Science Artwork"
         width="75"
         height="75">
       <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Founders Talk #53</h3>
-        <h4 class="ten-episodes-title">Danielle Morrill on starting over from zero</h4>
+        <h3 class="ten-episodes-episode">Brain Science #3</h3>
+        <h4 class="ten-episodes-title">Humans and habits</h4>
       </div>
     </a>
   </div>
@@ -237,28 +259,6 @@
       <div class="ten-episodes-content">
         <h3 class="ten-episodes-episode">Changelog #201</h3>
         <h4 class="ten-episodes-title">Why SQLite succeeded as a database</h4>
-      </div>
-    </a>
-  </div>
-
-  <%# Humans and habits https://changelog.com/brainscience/3 %>
-  <div class="ten-episodes-item">
-    <a
-      role="button"
-      class="ten-episodes-item-link"
-      data-play="/brainscience/3/play"
-      href="https://cdn.changelog.com/uploads/brainscience/100/brain-science-3.mp3"
-      title="Play Episode"
-      >
-      <img
-        class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/brain-science-small.png"
-        alt="Brain Science Artwork"
-        width="75"
-        height="75">
-      <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Brain Science #3</h3>
-        <h4 class="ten-episodes-title">Humans and habits</h4>
       </div>
     </a>
   </div>

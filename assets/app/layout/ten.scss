@@ -613,6 +613,10 @@
         width: 50%;
       }
 
+      @include breakpoint(desktop) {
+        width: 33.333%;
+      }
+
       &-link {
         display: flex;
         align-items: center;
@@ -640,13 +644,13 @@
 
     &-title {
       margin: 0.5em 0 0;
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: bold;
       line-height: 1.25;
       color: $white;
 
       @include breakpoint(mobile) {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
       }
     }
   }
