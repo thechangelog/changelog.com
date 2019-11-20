@@ -673,7 +673,6 @@
   // Special Thanks
   &-thanks {
 
-
     &-people {
       display: flex;
       flex-wrap: wrap;
@@ -682,9 +681,13 @@
       li {
         width: 50%;
         padding: 15px 15px 0;
+        font-size: 0.875rem;
         text-align: center;
         line-height: 1.25;
 
+        @include breakpoint(tiny) {
+          font-size: 1rem;
+        }
         @include breakpoint(tablet) {
           width: 33.33%;
         }
@@ -705,10 +708,6 @@
       @include breakpoint(tablet) {
         margin: 60px 0;
       }
-    }
-
-    &-companies {
-
     }
   }
 
