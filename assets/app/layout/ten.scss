@@ -320,8 +320,8 @@
   &-timeline {
     position: relative;
     display: grid;
-    // NOTE: Column count must match the number of "ten-timeline-item"(s)
-    grid-template-columns: repeat(10, 250px);
+    // NOTE: Column count must be the number of "ten-timeline-item"(s) + 1
+    grid-template-columns: repeat(26, 250px);
     grid-column-gap: 30px;
     grid-row-gap: 25px;
     width: 100%;
@@ -460,6 +460,23 @@
       &:nth-child(13) { grid-column: 13; }
       &:nth-child(14) { grid-column: 14; }
       &:nth-child(15) { grid-column: 15; }
+      &:nth-child(16) { grid-column: 16; }
+      &:nth-child(17) { grid-column: 17; }
+      &:nth-child(18) { grid-column: 18; }
+      &:nth-child(19) { grid-column: 19; }
+      &:nth-child(20) { grid-column: 20; }
+      &:nth-child(21) { grid-column: 21; }
+      &:nth-child(22) { grid-column: 22; }
+      &:nth-child(23) { grid-column: 23; }
+      &:nth-child(24) { grid-column: 24; }
+      &:nth-child(25) { grid-column: 25; }
+      &:nth-child(26) { grid-column: 26; }
+      &:nth-child(27) { grid-column: 27; }
+      &:nth-child(28) { grid-column: 28; }
+      &:nth-child(29) { grid-column: 29; }
+      &:nth-child(30) { grid-column: 30; }
+      &:nth-child(31) { grid-column: 31; }
+      &:nth-child(32) { grid-column: 32; }
 
       &-date {
         margin: 1em 0;
@@ -473,12 +490,12 @@
 
         h3 {
           margin: 0;
-          font-size: 1rem;
+          font-size: 0.875rem;
           font-weight: normal;
           line-height: 1.5;
 
           @include breakpoint(mobile) {
-            font-size: 1.125rem;
+            font-size: 1rem;
           }
         }
 
