@@ -7,9 +7,15 @@ export default class Ten {
     // Elements
     this.numbers = u('.js-increment');
     this.lightboxItems = u('.js-lightbox');
+    this.page = u('.page-page-ten');
 
-    const lightbox = GLightbox();
+    // Init
+    if (this.page.length) {
+      this.init();
+    }
+  }
 
+  init() {
     // Add observer for number count up
     const observer = new IntersectionObserver(function(entries) {
       entries.forEach(entry => {
@@ -20,20 +26,16 @@ export default class Ten {
       });
     });
 
-    // Run
-    if (this.numbers.length) {
-      this.numbers.each(el => { observer.observe(el) });
-    }
-    if (this.lightboxItems.length) {
-      Ten.initLightbox();
-    }
+    this.numbers.each(el => { observer.observe(el) });
+
+    Ten.initLightbox();
   }
 
   static initLightbox() {
     const lightbox = GLightbox({
       selector: 'js-lightbox',
       descPosition: 'bottom',
-      width: 800
+      width: 1280
     });
   }
 

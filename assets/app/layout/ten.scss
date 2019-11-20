@@ -147,7 +147,7 @@
 
         &:before {
           content: "";
-          @include position(absolute, 0);
+          @include position(absolute, 1px);
           z-index: 1;
           background: radial-gradient(circle at top left, $jsparty, $gotime, $practicalai, $jsparty , $brainscience);
           background-size: 300% 300%;

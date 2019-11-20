@@ -5,7 +5,6 @@
     <div class="ten-section-inner">
       <h1 class="ten-hero-logo">
         <%# TODO: Add fallback logo and display based on a "cssmask" Modernizr check %>
-        <%# TODO: Consider animating the Changelog icon part of the logo %>
         <div class="ten-hero-logo-background"></div>
         <div class="ten-hero-logo-main">
           <%= render("_ten/ten_year_logo.html", assigns) %>
