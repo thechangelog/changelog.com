@@ -60,9 +60,13 @@
   </ul>
   <hr>
   <div class="ten-thanks-companies logo_grid">
-    <%# NOTE: _sponsors.html is placeholder content – currently used on /community %>
-    <%= render("_sponsors.html", assigns) %>
-    <%# TODO: Replace with real content and use transparent PNGs for images %>
+    <a class="logo_grid-item" href="https://circleci.com/" title="CircleCI" target="_blank" rel="noopener noreferrer"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/circle-ci.png") %>' alt="CircleCI Logo"></a>
+    <a class="logo_grid-item" href="https://www.phoenixframework.org/" title="Phoenix Logo" target="_blank" rel="noopener noreferrer"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/elixir-phoenix.png") %>' alt="Elixir and Phoenix"></a>
+    <a class="logo_grid-item" href="https://www.freshbooks.com/" title="FreshBooks" target="_blank" rel="noopener noreferrer"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/freshbooks.png") %>' alt="FreshBooks Logo"></a>
+    <a class="logo_grid-item" href="https://github.com/" title="Github" target="_blank" rel="noopener noreferrer"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/github.png") %>' alt="Github Logo"></a>
+    <a class="logo_grid-item" href="https://golang.org/" title="Go" target="_blank" rel="noopener noreferrer"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go.png") %>' alt="Go Logo"></a>
+    <a class="logo_grid-item" href="https://www.linode.com/changelog" title="Linode" target="_blank" rel="noopener noreferrer"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/linode.png") %>' alt="Linode Logo"></a>
+    <a class="logo_grid-item" href="https://stripe.com/" title="Stripe" target="_blank" rel="noopener noreferrer"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/stripe.png") %>' alt="Stripe Logo"></a>
     <%# NOTE: We may need to adjust things if "filter: grayscale(100%);" doesn't work well here %>
   </div>
 </div>
