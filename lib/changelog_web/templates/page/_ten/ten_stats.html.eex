@@ -40,9 +40,9 @@
       <span class="ten-stats-number">
         <span
           class="js-increment"
-          data-start-value="9999"
-          data-end-value="6789"
-          data-decimal-places="0">6789</span>
+          data-start-value="500"
+          data-end-value="600"
+          data-decimal-places="0">600</span>+
       </span>
       <span class="ten-stats-label">Guests &amp; Contributors</span>
     </h3>
