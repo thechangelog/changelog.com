@@ -728,6 +728,23 @@
         margin: 60px 0;
       }
     }
+
+    &-companies {
+
+      &.logo_grid {
+        grid-template-columns: repeat(2, calc(50% - 10px));
+
+        @include breakpoint(500px) {
+          grid-template-columns: repeat(3, calc(33.33% - 10px));
+        }
+        @include breakpoint(750px) {
+          grid-template-columns: repeat(4, calc(25% - 10px));
+        }
+        @include breakpoint(1000px) {
+          grid-template-columns: repeat(5, calc(20% - 10px));
+        }
+      }
+    }
   }
 
   // Footer
