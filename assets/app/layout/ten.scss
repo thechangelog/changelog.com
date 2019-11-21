@@ -255,6 +255,18 @@
         font-size: 3.375rem;
       }
 
+      svg {
+        width: 50px;
+        height: auto;
+
+        @include breakpoint(mobile) {
+          width: 62px;
+        }
+        @include breakpoint(tablet) {
+          width: 76px;
+        }
+      }
+
       span,
       small {
         display: inline-block;
