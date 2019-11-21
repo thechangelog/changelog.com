@@ -1,88 +1,22 @@
 <div class="ten-episodes">
-  <%# All things text mode https://changelog.com/podcast/340 %>
+  <%# Ten years of Changelog https://changelog.com/backtage/9 %>
   <div class="ten-episodes-item">
     <a
       role="button"
       class="ten-episodes-item-link"
-      data-play="/podcast/340/play"
-      href="https://cdn.changelog.com/uploads/podcast/340/the-changelog-340.mp3"
+      data-play="/backstage/9/play"
+      href="https://cdn.changelog.com/uploads/backstage/9/backstage-9.mp3"
       title="Play Episode"
       >
       <img
         class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/the-changelog-small.png"
-        alt="Changelog Artwork"
+        src="https://cdn.changelog.com/uploads/covers/backstage-small.png"
+        alt="Backstage Artwork"
         width="70"
         height="70">
       <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Changelog #340</h3>
-        <h4 class="ten-episodes-title">All things text mode</h4>
-      </div>
-    </a>
-  </div>
-
- <%# Creating the Go programming language https://changelog.com/gotime/100 %>
-  <div class="ten-episodes-item">
-    <a
-      role="button"
-      class="ten-episodes-item-link"
-      data-play="/gotime/100/play"
-      href="https://cdn.changelog.com/uploads/gotime/100/go-time-100.mp3"
-      title="Play Episode"
-      >
-      <img
-        class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/go-time-small.png"
-        alt="Go Time Artwork"
-        width="70"
-        height="70">
-      <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Go Time #100</h3>
-        <h4 class="ten-episodes-title">Creating the Go programming language</h4>
-      </div>
-    </a>
-  </div>
-
-  <%# Remember, people are human https://changelog.com/jsparty/93 %>
-  <div class="ten-episodes-item">
-    <a
-      role="button"
-      class="ten-episodes-item-link"
-      data-play="/jsparty/93/play"
-      href="https://cdn.changelog.com/uploads/jsparty/100/js-party-93.mp3"
-      title="Play Episode"
-      >
-      <img
-        class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/js-party-small.png"
-        alt="JS Party Artwork"
-        width="70"
-        height="70">
-      <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">JS Party #93</h3>
-        <h4 class="ten-episodes-title">Remember, people are human</h4>
-      </div>
-    </a>
-  </div>
-
-  <%# Exposing the deception of DeepFakes https://changelog.com/practicalai/49 %>
-  <div class="ten-episodes-item">
-    <a
-      role="button"
-      class="ten-episodes-item-link"
-      data-play="/practicalai/49/play"
-      href="https://cdn.changelog.com/uploads/practicalai/49/practical-ai-49.mp3"
-      title="Play Episode"
-      >
-      <img
-        class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/practical-ai-small.png"
-        alt="Practical AI Artwork"
-        width="70"
-        height="70">
-      <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Practical AI #49</h3>
-        <h4 class="ten-episodes-title">Exposing the deception of DeepFakes</h4>
+        <h3 class="ten-episodes-episode">Backstage #9</h3>
+        <h4 class="ten-episodes-title">Ten years of Changelog</h4>
       </div>
     </a>
   </div>
@@ -109,24 +43,68 @@
     </a>
   </div>
 
-  <%# Websites should work without JS. Yep? Nope? https://changelog.com/jsparty/87 %>
+ <%# Creating the Go programming language https://changelog.com/gotime/100 %>
   <div class="ten-episodes-item">
     <a
       role="button"
       class="ten-episodes-item-link"
-      data-play="/jsparty/87/play"
-      href="https://cdn.changelog.com/uploads/jsparty/87/js-party-87.mp3"
+      data-play="/gotime/100/play"
+      href="https://cdn.changelog.com/uploads/gotime/100/go-time-100.mp3"
       title="Play Episode"
       >
       <img
         class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/js-party-small.png"
-        alt="JS Party Artwork"
+        src="https://cdn.changelog.com/uploads/covers/go-time-small.png"
+        alt="Go Time Artwork"
         width="70"
         height="70">
       <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">JS Party #87</h3>
-        <h4 class="ten-episodes-title">Websites should work without JS. Yep? Nope?</h4>
+        <h3 class="ten-episodes-episode">Go Time #100</h3>
+        <h4 class="ten-episodes-title">Creating the Go programming language</h4>
+      </div>
+    </a>
+  </div>
+
+  <%# 99 practical bottles of OOP https://changelog.com/podcast/225 %>
+  <div class="ten-episodes-item">
+    <a
+      role="button"
+      class="ten-episodes-item-link"
+      data-play="/podcast/225/play"
+      href="https://cdn.changelog.com/uploads/podcast/225/the-changelog-225.mp3"
+      title="Play Episode"
+      >
+      <img
+        class="ten-episodes-image"
+        src="https://cdn.changelog.com/uploads/covers/the-changelog-small.png"
+        alt="Changelog Artwork"
+        width="70"
+        height="70">
+      <div class="ten-episodes-content">
+        <h3 class="ten-episodes-episode">Changelog #225</h3>
+        <h4 class="ten-episodes-title">99 practical bottles of OOP</h4>
+      </div>
+    </a>
+  </div>
+
+  <%# Exposing the deception of DeepFakes https://changelog.com/practicalai/49 %>
+  <div class="ten-episodes-item">
+    <a
+      role="button"
+      class="ten-episodes-item-link"
+      data-play="/practicalai/49/play"
+      href="https://cdn.changelog.com/uploads/practicalai/49/practical-ai-49.mp3"
+      title="Play Episode"
+      >
+      <img
+        class="ten-episodes-image"
+        src="https://cdn.changelog.com/uploads/covers/practical-ai-small.png"
+        alt="Practical AI Artwork"
+        width="70"
+        height="70">
+      <div class="ten-episodes-content">
+        <h3 class="ten-episodes-episode">Practical AI #49</h3>
+        <h4 class="ten-episodes-title">Exposing the deception of DeepFakes</h4>
       </div>
     </a>
   </div>
@@ -149,6 +127,50 @@
       <div class="ten-episodes-content">
         <h3 class="ten-episodes-episode">Changelog #318</h3>
         <h4 class="ten-episodes-title">A call for kindness in open source</h4>
+      </div>
+    </a>
+  </div>
+
+  <%# Websites should work without JS. Yep? Nope? https://changelog.com/jsparty/87 %>
+  <div class="ten-episodes-item">
+    <a
+      role="button"
+      class="ten-episodes-item-link"
+      data-play="/jsparty/87/play"
+      href="https://cdn.changelog.com/uploads/jsparty/87/js-party-87.mp3"
+      title="Play Episode"
+      >
+      <img
+        class="ten-episodes-image"
+        src="https://cdn.changelog.com/uploads/covers/js-party-small.png"
+        alt="JS Party Artwork"
+        width="70"
+        height="70">
+      <div class="ten-episodes-content">
+        <h3 class="ten-episodes-episode">JS Party #87</h3>
+        <h4 class="ten-episodes-title">Websites should work without JS. Yep? Nope?</h4>
+      </div>
+    </a>
+  </div>
+
+  <%# Why SQLite succeeded as a database https://changelog.com/podcast/201 %>
+  <div class="ten-episodes-item">
+    <a
+      role="button"
+      class="ten-episodes-item-link"
+      data-play="/podcast/201/play"
+      href="https://cdn.changelog.com/uploads/podcast/201/the-changelog-201.mp3"
+      title="Play Episode"
+      >
+      <img
+        class="ten-episodes-image"
+        src="https://cdn.changelog.com/uploads/covers/the-changelog-small.png"
+        alt="Changelog Artwork"
+        width="70"
+        height="70">
+      <div class="ten-episodes-content">
+        <h3 class="ten-episodes-episode">Changelog #201</h3>
+        <h4 class="ten-episodes-title">Why SQLite succeeded as a database</h4>
       </div>
     </a>
   </div>
@@ -219,13 +241,13 @@
     </a>
   </div>
 
-  <%# 99 practical bottles of OOP https://changelog.com/podcast/225 %>
+  <%# All things text mode https://changelog.com/podcast/340 %>
   <div class="ten-episodes-item">
     <a
       role="button"
       class="ten-episodes-item-link"
-      data-play="/podcast/225/play"
-      href="https://cdn.changelog.com/uploads/podcast/225/the-changelog-225.mp3"
+      data-play="/podcast/340/play"
+      href="https://cdn.changelog.com/uploads/podcast/340/the-changelog-340.mp3"
       title="Play Episode"
       >
       <img
@@ -235,30 +257,8 @@
         width="70"
         height="70">
       <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Changelog #225</h3>
-        <h4 class="ten-episodes-title">99 practical bottles of OOP</h4>
-      </div>
-    </a>
-  </div>
-
-  <%# Why SQLite succeeded as a database https://changelog.com/podcast/201 %>
-  <div class="ten-episodes-item">
-    <a
-      role="button"
-      class="ten-episodes-item-link"
-      data-play="/podcast/201/play"
-      href="https://cdn.changelog.com/uploads/podcast/201/the-changelog-201.mp3"
-      title="Play Episode"
-      >
-      <img
-        class="ten-episodes-image"
-        src="https://cdn.changelog.com/uploads/covers/the-changelog-small.png"
-        alt="Changelog Artwork"
-        width="70"
-        height="70">
-      <div class="ten-episodes-content">
-        <h3 class="ten-episodes-episode">Changelog #201</h3>
-        <h4 class="ten-episodes-title">Why SQLite succeeded as a database</h4>
+        <h3 class="ten-episodes-episode">Changelog #340</h3>
+        <h4 class="ten-episodes-title">All things text mode</h4>
       </div>
     </a>
   </div>
