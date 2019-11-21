@@ -171,7 +171,15 @@
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">November 2019</p>
     <div class="ten-timeline-item-content">
-      <h3>Celebrating 10 years of&nbsp;Changelog</h3>
+      <h3>Celebrating 10 years of&nbsp;Changelog<br />🎉</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item ten-timeline-item--blank"></div>
+  <div class="ten-timeline-item ten-timeline-item--blank"></div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">2029</p>
+    <div class="ten-timeline-item-content">
+      <h3>Who knows?</h3>
     </div>
   </div>
   <div class="ten-timeline-line"></div>

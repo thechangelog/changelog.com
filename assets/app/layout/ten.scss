@@ -332,7 +332,7 @@
     position: relative;
     display: grid;
     // NOTE: Column count must be the number of "ten-timeline-item"(s) + 1
-    grid-template-columns: repeat(26, 250px);
+    grid-template-columns: repeat(30, 250px);
     grid-column-gap: 30px;
     grid-row-gap: 25px;
     width: 100%;
@@ -395,6 +395,13 @@
       position: relative;
       z-index: 2;
       margin: 0 15px;
+
+      &--blank {
+        &:after,
+        &:before {
+          content: none !important;
+        }
+      }
 
       // Timeline item circle
       &:before {
