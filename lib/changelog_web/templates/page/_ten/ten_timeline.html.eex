@@ -1,0 +1,170 @@
+<div class="ten-timeline">
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">November 5, 2009</p>
+    <div class="ten-timeline-item-content">
+      <h3>First post! Everything started with the post “Welcome to The&nbsp;Changelog”</h3>
+      <p><a href="/posts/welcome-to-the-changelog">Read Article</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">January 2010</p>
+    <div class="ten-timeline-item-content">
+      <h3>Recorded episode #10 with Chris Wanstrath, co-founder and former CEO of&nbsp;GitHub</h3>
+      <p>
+        <a
+          role="button"
+          data-play="/podcast/10/play"
+          href="https://cdn.changelog.com/uploads/podcast/10/the-changelog-10.mp3"
+          title="Play Episode"
+        >Play Episode</a>
+      </p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">January 2010</p>
+    <div class="ten-timeline-item-content">
+      <h3>Partnered with GitHub to syndicate The Changelog podcast to GitHub&nbsp;Explore</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">October 2010</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched Founders&nbsp;Talk</h3>
+      <p><a href="/founderstalk">View Podcasts</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">August 2012</p>
+    <div class="ten-timeline-item-content">
+      <h3>Wynn Netherland resigned and started at&nbsp;GitHub</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">February 2013</p>
+    <div class="ten-timeline-item-content">
+      <h3>Relaunched on WordPress with a new site and&nbsp;design</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">April 2013</p>
+    <div class="ten-timeline-item-content">
+      <h3>Returned from our&nbsp;pod-fade</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">May 2013</p>
+    <div class="ten-timeline-item-content">
+      <h3>Joined the 5by5 podcast&nbsp;network</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">August 2013</p>
+    <div class="ten-timeline-item-content">
+      <h3>Jerod joined the editorial&nbsp;team</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">October 2013</p>
+    <div class="ten-timeline-item-content">
+      <h3>Jerod joined as an official co-host of The&nbsp;Changelog</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">February 2015</p>
+    <div class="ten-timeline-item-content">
+      <h3>Adam resigned from Pure Charity to go full-time on Changelog&nbsp;Media</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">May 2016</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched Go&nbsp;Time</h3>
+      <p><a href="/gotime">View Podcasts</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">September 2016</p>
+    <div class="ten-timeline-item-content">
+      <h3>Partnered with&nbsp;Fastly</h3>
+      <p><a href="https://www.fastly.com/?utm_source=changelog" target="_blank" rel="noopener noreferrer">Thanks, Fastly!</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">November 2015</p>
+    <div class="ten-timeline-item-content">
+      <h3>Branding workshop with&nbsp;Elevate</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">October 2016</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched our new branding and a new site on Phoenix and&nbsp;Elixir</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">January 2017</p>
+    <div class="ten-timeline-item-content">
+      <h3>Worked with Breakmaster Cylinder on a new theme for The&nbsp;Changelog</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">March 2017</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched JS&nbsp;Party</h3>
+      <p><a href="/jsparty">View Podcasts</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">June 2017</p>
+    <div class="ten-timeline-item-content">
+      <h3>Partnered with&nbsp;Linode</h3>
+      <p><a href="https://www.linode.com/changelog" target="_blank" rel="noopener noreferrer">Thanks, Linode!</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">December 2017</p>
+    <div class="ten-timeline-item-content">
+      <h3>Partnered with&nbsp;Rollbar</h3>
+      <p><a href="https://rollbar.com/changelog" target="_blank" rel="noopener noreferrer">Thanks, Rollbar!</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">January 2018</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched new site design featuring the news feed on the&nbsp;homepage</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">April 2018</p>
+    <div class="ten-timeline-item-content">
+      <h3>Relaunched JS&nbsp;Party</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">July 2018</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched Practical&nbsp;AI</h3>
+      <p><a href="/practicalai">View Podcasts</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">July 2018</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched&nbsp;Backstage</h3>
+      <p><a href="/backstage">View Podcasts</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">April 2019</p>
+    <div class="ten-timeline-item-content">
+      <h3>Relaunched Go&nbsp;Time</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">November 2019</p>
+    <div class="ten-timeline-item-content">
+      <h3>Celebrating 10 years of&nbsp;Changelog</h3>
+    </div>
+  </div>
+  <div class="ten-timeline-line"></div>
+</div>

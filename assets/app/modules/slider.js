@@ -40,6 +40,8 @@ export default class slider {
     siemaSlider = new Siema(options);
     window.setTimeout(function() {
       slider.updateActive(0);
+      // Trigger a resize because sometimes flex items need it
+      window.dispatchEvent(new Event('resize'));
     }, 1000);
 
     window.addEventListener("resize", (event) => { slider.resizeSlider(siemaSlider.currentSlide); })
@@ -51,7 +53,7 @@ export default class slider {
   }
 
   static resizeSlider(currentSlide) {
-    const height = u('.marketing_slider-item-inner').nodes[currentSlide].offsetHeight;
+    const height = u('.js-slider-item').nodes[currentSlide].offsetHeight;
     u('.js-slider').nodes[0].style.maxHeight = `${height}px`;
   }
 }

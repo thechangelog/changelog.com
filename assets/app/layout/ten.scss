@@ -1,0 +1,769 @@
+.page-page-ten .footer {
+  display: none;
+}
+
+.ten {
+  $ten-alt-black: #0D131A;
+  color: $white;
+
+  // Generic section + section heading styles
+  &-section {
+    overflow: auto; // force inner margins to expand container
+
+    &:nth-child(even) {
+      background-color: $ten-alt-black;
+    }
+
+    &-inner {
+      @include wrap();
+      max-width: 1170px; // TODO: Fix wrap include so max-width can be passed in correctly
+
+      .ten-hero & {
+        margin-top: 0;
+      }
+
+      .ten-section--timeline & {
+        max-width: 100%;
+        padding: 0;
+      }
+    }
+
+    // Overflow gradient masks
+    &--timeline {
+      position: relative;
+
+      &:before,
+      &:after {
+        content: "";
+        @include position(absolute, 0 null);
+        z-index: 3;
+        width: 3vw;
+        height: 100%;
+        pointer-events: none;
+
+        // @include breakpoint(1170px) {
+        //   width: 150px;
+        // }
+      }
+    }
+
+    &:before {
+      background: linear-gradient(to right, $black, transparent);
+    }
+
+    &:after {
+      background: linear-gradient(to left, $black, transparent);
+      right: 0;
+    }
+
+    &-heading {
+      min-width: 220px;
+      margin-bottom: 40px;
+      padding-bottom: 33px;
+      background: url("/images/icons/ten-year-heading-icon.svg") no-repeat;
+      background-position: bottom center;
+      font-family: $code;
+      font-size: 0.875rem;
+      font-weight: normal;
+      text-align: center;
+      line-height: 1.25;
+
+      @include breakpoint(mobile) {
+        margin-bottom: 50px;
+      }
+      @include breakpoint(tablet) {
+        margin-bottom: 60px;
+      }
+
+      .ten-section:nth-child(even) & {
+        padding-bottom: 25px;
+        background-image: url("/images/icons/ten-year-heading-icon-alt.svg");
+      }
+    }
+
+    &-button {
+      text-align: center;
+      margin-top: 40px;
+
+      @include breakpoint(mobile) {
+        margin-top: 50px;
+      }
+      @include breakpoint(tablet) {
+        margin-top: 60px;
+      }
+
+      &-link {
+        @include button($green, $white);
+        display: inline-block;
+      }
+    }
+  }
+
+  // Hero + Logo
+  &-hero {
+    text-align: center;
+    overflow: hidden;
+
+    @keyframes Gradient {
+      0% {
+        background-position: 0% 0%;
+        transform: rotate(0deg);
+      }
+      50% {
+        background-position: 100% 100%;
+      }
+      100% {
+        background-position: 0% 0%;
+        transform: rotate(360deg);
+      }
+    }
+
+    &-logo {
+      position: relative;
+      max-width: 840px;
+      width: 100%;
+      margin: 20px auto;
+      line-height: 0; // Remove H1's line-height
+
+      &-background {
+        @include position(absolute, 50% null null 50%);
+        width: 1368px;
+        height: 1020px;
+        margin-left: -684px;
+        margin-top: -400px;
+        background-image: url('/images/content/ten/ten-year-hero-background.svg');
+        background-position: center 0;
+        background-repeat: no-repeat;
+        background-size: 1368px; // NOTE: This is slightly scaled down from the original size to match the 10 year graphic
+
+        @include breakpoint(940px, max) {
+          display: none;
+        }
+      }
+
+      &-main {
+        position: relative;
+        overflow: hidden;
+
+        &:before {
+          content: "";
+          @include position(absolute, 1px);
+          z-index: 1;
+          background: radial-gradient(circle at top left, $jsparty, $gotime, $practicalai, $jsparty , $brainscience);
+          background-size: 300% 300%;
+          animation: Gradient 16s linear infinite 2s;
+        }
+
+
+        svg {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          height: auto;
+
+          #ten_year_logo-mask-background {
+            fill: rgba(255, 255, 255, 1);
+          }
+
+          #ten_year_logo-gradient_mask {
+            fill: $black;
+            -webkit-mask: url(#ten_year_logo-mask);
+            mask: url(#ten_year_logo-mask);
+          }
+        }
+      }
+    }
+
+    &-content {
+      position: relative;
+    }
+
+    &-intro {
+      max-width: 450px;
+      margin: 0 auto 30px;
+      font-family: $code;
+      font-size: 1rem;
+      font-weight: normal;
+      line-height: 1.5;
+
+      @include breakpoint(mobile) {
+        font-size: 1.125rem;
+      }
+    }
+
+    &-button {
+      padding: 0.875em 1.25em 0.75em 2.5em;
+      background-image: url('/images/icons/toolbar-play-white.svg');
+      background-repeat: no-repeat;
+      background-position: 20px center;
+      background-size: 13px 16px;
+    }
+
+    &-fine_print {
+      font-family: $code;
+      font-size: 0.75rem;
+      color: $medium-grey;
+    }
+  }
+
+  // By the Numbers
+  &-stats {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -20px;
+
+    @include breakpoint(mobile) {
+      margin-top: -30px;
+    }
+    @include breakpoint(tablet) {
+      margin-top: -40px;
+    }
+
+    &-item {
+      width: 50%;
+      text-align: center;
+      margin: 30px 0 10px;
+      padding: 0 10px;
+
+      @include breakpoint(mobile) {
+        margin: 40px 0 20px;
+        padding: 0 15px;
+      }
+      @include breakpoint(tablet) {
+        width: 33.33%;
+        margin: 50px 0 30px;
+        padding: 0 20px;
+      }
+    }
+
+    &-heading {
+      margin: 0;
+    }
+
+    &-number {
+      font-family: $code;
+      font-size: 2.25rem;
+      color: $white;
+      display: block;
+      line-height: 1em;
+      margin-bottom: 0.2em;
+
+      @include breakpoint(mobile) {
+        font-size: 2.75rem;
+      }
+      @include breakpoint(tablet) {
+        font-size: 3.375rem;
+      }
+
+      span,
+      small {
+        display: inline-block;
+      }
+
+      span {
+        // TODO: See about adding "Sana Sans Alt" font
+        font-size: 1em;
+        font-weight: 900;
+      }
+
+      small {
+        font-size: 0.675em;
+        font-family: $content;
+      }
+    }
+
+    &-label {
+      font-family: $code;
+      font-size: 0.75rem;
+      font-weight: normal;
+      line-height: 1.25;
+      color: $medium-grey;
+
+      @include breakpoint(mobile) {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  // The Photos
+  &-gallery {
+    margin: -20px -10px 0;
+    @include clearfix();
+
+    @include breakpoint(desktop) {
+      margin: -30px -15px 0;
+    }
+
+    &-image {
+      float: left;
+      width: 50%;
+      padding: 20px 10px 0;
+
+      @include breakpoint(desktop) {
+        width: 25%;
+        padding: 30px 15px 0;
+      }
+
+      &--large {
+        width: 100%;
+
+        @include breakpoint(desktop) {
+          width: 50%;
+        }
+      }
+    }
+  }
+
+  // The Timeline
+  &-timeline {
+    position: relative;
+    display: grid;
+    // NOTE: Column count must be the number of "ten-timeline-item"(s) + 1
+    grid-template-columns: repeat(26, 250px);
+    grid-column-gap: 30px;
+    grid-row-gap: 25px;
+    width: 100%;
+    padding: 10px $base-spacing;
+    text-align: center;
+    overflow-x: auto;
+
+    @include breakpoint(mobile) {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    @include breakpoint(tablet) {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+    @include breakpoint(1280px) {
+      padding-left: 10vw;
+      padding-right: 10vw;
+    }
+
+    // Hide scrollbar in Firefox
+    scrollbar-width: none;
+
+    //  Hide scrollbar for IE and Edge
+    -ms-overflow-style: none;
+
+    // Hide scrollbar for Chrome, Safari and Opera
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &-line {
+      position: relative;
+      grid-column: 1 / -1;
+      grid-row: 2;
+      height: 1px;
+      background-color: $white;
+
+      // Timeline edges
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        top: -17px;
+        height: 35px;
+        width: 1px;
+        background-color: $white;
+      }
+
+      &:before {
+        left: 0;
+      }
+
+      &:after {
+        right: 0;
+      }
+    }
+
+    &-item {
+      position: relative;
+      z-index: 2;
+      margin: 0 15px;
+
+      // Timeline item circle
+      &:before {
+        content: "";
+        @include position(absolute, null null null 50%);
+        width: 13px;
+        height: 13px;
+        margin-left: -7px;
+        background-color: $black;
+        border: 1px solid $white;
+        border-radius: 50%;
+
+        // Adjust circle fill color to match section color
+        .ten-section:nth-child(even) & {
+          background-color: $ten-alt-black;
+        }
+      }
+
+      // Timeline item line
+      &:after {
+        content: "";
+        @include position(absolute, null null 0 50%);
+        width: 1px;
+        height: 12px;
+        margin-left: -1px;
+        background-color: $white;
+      }
+
+      &:nth-child(odd) {
+        display: flex;
+        flex-direction: column-reverse;
+
+        // Adjusted timeline item circle
+        &:before, {
+          bottom: 0;
+          margin-bottom: -32px;
+        }
+
+        // Adjusted timeline item line
+        &:after {
+          bottom: 0;
+          margin-bottom: -19px;
+        }
+      }
+
+      &:nth-child(even) {
+        grid-row: 3;
+
+        // Adjusted timeline item circle
+        &:before, {
+          top: 0;
+          margin-top: -32px;
+        }
+
+        // Adjusted timeline item line
+        &:after {
+          top: 0;
+          margin-top: -19px;
+        }
+      }
+
+      &:nth-child(1) { grid-column: 1; }
+      &:nth-child(2) { grid-column: 2; }
+      &:nth-child(3) { grid-column: 3; }
+      &:nth-child(4) { grid-column: 4; }
+      &:nth-child(5) { grid-column: 5; }
+      &:nth-child(6) { grid-column: 6; }
+      &:nth-child(7) { grid-column: 7; }
+      &:nth-child(8) { grid-column: 8; }
+      &:nth-child(9) { grid-column: 9; }
+      &:nth-child(10) { grid-column: 10; }
+      &:nth-child(11) { grid-column: 11; }
+      &:nth-child(12) { grid-column: 12; }
+      &:nth-child(13) { grid-column: 13; }
+      &:nth-child(14) { grid-column: 14; }
+      &:nth-child(15) { grid-column: 15; }
+      &:nth-child(16) { grid-column: 16; }
+      &:nth-child(17) { grid-column: 17; }
+      &:nth-child(18) { grid-column: 18; }
+      &:nth-child(19) { grid-column: 19; }
+      &:nth-child(20) { grid-column: 20; }
+      &:nth-child(21) { grid-column: 21; }
+      &:nth-child(22) { grid-column: 22; }
+      &:nth-child(23) { grid-column: 23; }
+      &:nth-child(24) { grid-column: 24; }
+      &:nth-child(25) { grid-column: 25; }
+      &:nth-child(26) { grid-column: 26; }
+      &:nth-child(27) { grid-column: 27; }
+      &:nth-child(28) { grid-column: 28; }
+      &:nth-child(29) { grid-column: 29; }
+      &:nth-child(30) { grid-column: 30; }
+      &:nth-child(31) { grid-column: 31; }
+      &:nth-child(32) { grid-column: 32; }
+
+      &-date {
+        margin: 1em 0;
+        font-family: $code;
+        font-size: 0.75rem;
+        color: $medium-grey;
+      }
+
+      &-content {
+
+
+        h3 {
+          margin: 0;
+          font-size: 0.875rem;
+          font-weight: normal;
+          line-height: 1.5;
+
+          @include breakpoint(mobile) {
+            font-size: 1rem;
+          }
+        }
+
+        p {
+          margin: 0.875em 0 0;
+          font-family: $code;
+          font-size: 0.75rem;
+
+          a {
+            &:hover,
+            &:focus {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Kind Words
+  &-testimonials {
+    margin: -30px -15px 0;
+
+    &-slider {
+      &-page {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    &-item {
+      width: 100%;
+      padding: 30px 15px 0;
+
+      @include breakpoint(tablet) {
+        width: 50%;
+      }
+
+      &-inner {
+        height: 100%;
+        padding: 25px;
+        border: 1px solid lighten($dark-grey, 3%);
+        border-radius: 4px;
+      }
+    }
+
+    &-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      &-main {
+        flex: 0 1 auto;
+        display: flex;
+        align-items: center;
+        margin-bottom: 23px;
+        min-height: 50px; // Helps with text alignment in cases where an item has no image
+      }
+
+      &-image {
+        width: 50px;
+        margin-right: 15px;
+        border-radius: 50%;
+        align-self: flex-start;
+      }
+
+      &-name {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      &-handle {
+        margin: 0.1em 0 0;
+        font-family: $code;
+        font-size: 0.75rem;
+
+        a {
+          color: $medium-grey;
+
+          &:hover,
+          &:focus {
+            color: $green;
+          }
+        }
+      }
+
+      &-source {
+        flex: 0 1 auto;
+        margin: 5px 0 0 15px;
+
+        img {
+          transition: transform 0.1s linear;
+        }
+
+        &:hover,
+        &:focus {
+          img {
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+
+    &-text {
+      font-size: 1rem;
+
+      @include breakpoint(mobile) {
+        font-size: 1.125rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // Highlighted Episodes
+  &-episodes {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -30px -15px 0;
+
+    &-item {
+      width: 100%;
+      padding: 30px 15px 0;
+
+      @include breakpoint(tablet) {
+        width: 50%;
+      }
+
+      @include breakpoint(desktop) {
+        width: 33.333%;
+      }
+
+      &-link {
+        display: flex;
+        align-items: center;
+        transition: transform 0.1s linear;
+
+        &:hover {
+          color: $white;
+          transform: scale(0.99);
+        }
+      }
+    }
+
+    &-image {
+      margin-right: 15px;
+      align-self: flex-start;
+    }
+
+    &-episode {
+      margin: 0;
+      font-family: $code;
+      font-size: 0.75rem;
+      font-weight: normal;
+      color: $medium-grey;
+
+    }
+
+    &-title {
+      margin: 0.5em 0 0;
+      font-size: 1rem;
+      font-weight: bold;
+      line-height: 1.25;
+      color: $white;
+
+      @include breakpoint(mobile) {
+        font-size: 1.125rem;
+      }
+    }
+  }
+
+  // Special Thanks
+  &-thanks {
+
+    &-people {
+      display: flex;
+      flex-wrap: wrap;
+      margin: -15px -15px 0;
+
+      li {
+        width: 50%;
+        padding: 15px 15px 0;
+        font-size: 0.875rem;
+        text-align: center;
+        line-height: 1.25;
+
+        @include breakpoint(tiny) {
+          font-size: 1rem;
+        }
+        @include breakpoint(tablet) {
+          width: 33.33%;
+        }
+        @include breakpoint(desktop) {
+          width: 25%;
+        }
+      }
+    }
+
+    hr {
+      margin: 40px 0;
+      border: none;
+      border-bottom: 1px solid lighten($dark-grey, 3%);
+
+      @include breakpoint(mobile) {
+        margin: 50px 0;
+      }
+      @include breakpoint(tablet) {
+        margin: 60px 0;
+      }
+    }
+  }
+
+  // Footer
+  &-footer {
+    display: flex;
+    align-items: center;
+    min-height: 400px;
+    background-image: url('/images/content/ten/ten-year-footer-background.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 1368px; // NOTE: This is slightly scaled down from the original size to match the 10 year graphic
+    text-align: center;
+
+    @include breakpoint(mobile) {
+      min-height: 460px;
+    }
+    @include breakpoint(tablet) {
+      min-height: 520px;
+    }
+
+    &-message,
+    &-love {
+      font-family: $code;
+      font-size: 1rem;
+
+      @include breakpoint(mobile) {
+        font-size: 1.125rem;
+      }
+    }
+
+    &-message {
+      margin-bottom: 1.5em;
+
+      @include breakpoint(mobile, max) {
+        // Prevent awkward content breaks at mobile sizes
+        br { display: none; }
+      }
+    }
+
+    &-love {
+      margin-bottom: 0.75em;
+
+      &-heart {
+        display: inline-block;
+        width: 27px;
+        height: 26px;
+        background: url("/images/icons/icon-heart.svg") no-repeat;
+        background-size: 27px 26px;
+      }
+    }
+
+    &-logo {
+      display: inline-block;
+      width: 199px;
+      height: 61px;
+      background: url('/images/brand/changelog-logo-full.svg') no-repeat;
+      text-indent: -9999px;
+    }
+  }
+}

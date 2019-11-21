@@ -1,0 +1,70 @@
+<%# TODO: Increment stats when scrolled into view %>
+<div class="ten-stats">
+  <div class="ten-stats-item">
+    <h3 class="ten-stats-heading">
+      <span class="ten-stats-number">
+        <span
+          class="js-increment"
+          data-start-value="720"
+          data-end-value="793"
+          data-decimal-places="0">793</span>
+      </span>
+      <span class="ten-stats-label">Episodes</span>
+    </h3>
+  </div>
+  <div class="ten-stats-item">
+    <h3 class="ten-stats-heading">
+      <span class="ten-stats-number">
+        <span
+          class="js-increment"
+          data-start-value="24"
+          data-end-value="33"
+          data-decimal-places="0">33</span>
+      </span>
+      <span class="ten-stats-label">Full Days of Audio</span>
+    </h3>
+  </div>
+  <div class="ten-stats-item">
+    <h3 class="ten-stats-heading">
+      <span class="ten-stats-number">
+        <span
+          class="js-increment"
+          data-start-value="7"
+          data-end-value="14">14</span><small>M</small>
+      </span>
+      <span class="ten-stats-label">Listens</span>
+    </h3>
+  </div>
+  <div class="ten-stats-item">
+    <h3 class="ten-stats-heading">
+      <span class="ten-stats-number">
+        <span
+          class="js-increment"
+          data-start-value="500"
+          data-end-value="600"
+          data-decimal-places="0">600</span>+
+      </span>
+      <span class="ten-stats-label">Guests &amp; Contributors</span>
+    </h3>
+  </div>
+  <div class="ten-stats-item">
+    <h3 class="ten-stats-heading">
+      <span class="ten-stats-number">
+        <span
+          class="js-increment"
+          data-start-value="4.81"
+          data-end-value="5.35"
+          data-decimal-places="2">5.35</span><small>TB</small>
+      </span>
+      <span class="ten-stats-label">Raw Audio</span>
+    </h3>
+  </div>
+  <div class="ten-stats-item">
+    <h3 class="ten-stats-heading">
+      <span class="ten-stats-number">
+        <span>∞</span>
+      </span>
+      <span class="ten-stats-label">Lives Changed</span>
+    </h3>
+  </div>
+</div>
