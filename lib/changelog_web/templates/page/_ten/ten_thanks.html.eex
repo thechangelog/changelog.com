@@ -113,12 +113,12 @@
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/rollbar.png") %>' alt="Rollbar Logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/linode.png") %>' alt="Linode logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/algolia.png") %>' alt="Algolia logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/digital-ocean.png") %>' alt="Digital Ocean logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/gitprime.png") %>' alt="GitPrime logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/elixir-phoenix.png") %>' alt="Elixir and Phoenix"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/github.png") %>' alt="Github logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go-cd.png") %>' alt="GoCD logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/digital-ocean.png") %>' alt="Digital Ocean logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/tidelift.png") %>' alt="Tidelift logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/github.png") %>' alt="Github logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/elixir-phoenix.png") %>' alt="Elixir and Phoenix"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go-cd.png") %>' alt="GoCD logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/circle-ci.png") %>' alt="CircleCI logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/datadog.png") %>' alt="Datadog logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/oreilly.png") %>' alt="Oreilly logo"></span>
