@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Meta.Image do
   import ChangelogWeb.Router.Helpers, only: [static_url: 2]
 
-  alias ChangelogWeb.{Endpoint, NewsItemView, NewsSourceView, PersonView, PodcastView, TopicView}
+  alias ChangelogWeb.{Endpoint, NewsItemView, NewsSourceView, PageView,
+                      PersonView, PodcastView, TopicView}
 
   def fb_image(assigns), do: assigns |> get_fb()
 
@@ -12,6 +13,7 @@ defmodule ChangelogWeb.Meta.Image do
   def twitter_image(assigns), do: assigns |> get_twitter()
 
   defp get_fb(%{podcast: podcast}), do: podcast_image(podcast)
+  defp get_fb(%{view_module: PageView, view_template: "ten.html"}), do: static_image("/images/content/ten/ten-year-social.jpg")
   defp get_fb(_), do: static_image("/images/share/fb-sitewide.png")
 
   defp get_fb_width(%{podcast: _podcast}), do: "3000"
@@ -21,6 +23,7 @@ defmodule ChangelogWeb.Meta.Image do
   defp get_fb_height(_), do: "630"
 
   defp get_twitter(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_image()
+  defp get_twitter(%{view_module: PageView, view_template: "ten.html"}), do: static_image("/images/content/ten/ten-year-social.jpg")
   defp get_twitter(%{podcast: podcast}), do: podcast_image(podcast)
   defp get_twitter(%{view_module: NewsItemView, item: item}) do
     cond do

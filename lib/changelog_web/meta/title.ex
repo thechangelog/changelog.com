@@ -83,6 +83,7 @@ defmodule ChangelogWeb.Meta.Title do
       "weekly.html"        -> "Subscribe to Changelog Weekly"
       "nightly.html"       -> "Subscribe to Changelog Nightly"
       "sponsor_story.html" -> "Partner story"
+      "ten.html"           -> "Celebrating ten years of Changelog"
       _else ->
         template
         |> String.replace(".html", "")
