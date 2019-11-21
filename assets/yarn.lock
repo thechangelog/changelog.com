@@ -2916,6 +2916,11 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+glightbox@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/glightbox/-/glightbox-2.0.4.tgz#46ad81beacd5ba3d230815a2d5d0fae50f12f75a"
+  integrity sha512-cL62Dw5AT0zZbda/Ig/gh6T38F+IgCJwGojeMbw5OYX9LK0z70iBlcBfg0jgKX+x61jLiCHBGBbIRe3pXuvGaQ==
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
@@ -3011,7 +3016,7 @@ growl@1.10.5:
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.5.tgz#f2735dc2283674fa67478b10181059355c369e5e"
   integrity sha512-qBr4OuELkhPenW6goKVXiv47US3clb3/IbuWF9KNKEijAy9oeHxU9IgzjvJhHkUzhaj7rOUD7+YGWqUjLp5oSA==
 
-handlebars-loader@^1.3.0:
+handlebars-loader@^1.7.0:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/handlebars-loader/-/handlebars-loader-1.7.1.tgz#07088f09d8a559344908f7c88c68c0ffdacc555d"
   integrity sha512-Q+Z/hDPQzU8ZTlVnAe/0T1LHABlyhL7opNcSKcQDhmUXK2ByGTqib1Z2Tfv4Ic50WqDcLFWQcOb3mhjcBRbscQ==
@@ -4018,11 +4023,6 @@ micromatch@^3.0.4, micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.8:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
-
-micromodal@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/micromodal/-/micromodal-0.4.2.tgz#8ca34f3d5b2f6f43df173bcdc98af20256a4f07a"
-  integrity sha512-tL8Z6Vi72haNUNlkhLjJJv1Q16eqUWMPAGT4RF7mwDM5DNyJXC67Yj8jw/yVgGYdhnCEBBf3X5JM3d/MpXSEKg==
 
 miller-rabin@^4.0.0:
   version "4.0.1"
