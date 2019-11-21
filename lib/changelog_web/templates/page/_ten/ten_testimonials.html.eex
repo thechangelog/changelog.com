@@ -232,19 +232,17 @@
         <div class="ten-testimonials-item-inner">
           <div class="ten-testimonials-info">
             <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1118265719286722561/Wt--U0No_400x400.jpg" alt="">
+              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1173788586812092419/zIlsSXw4_400x400.jpg" alt="">
               <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">🌎</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/jasminexETH" target="_blank" rel="noopener noreferrer">@jasminexETH</a></p>
+                <h3 class="ten-testimonials-info-name">Rob</h3>
+                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/rwncode" target="_blank" rel="noopener noreferrer">@rwncode</a></p>
               </div>
             </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/jasminexETH/status/1173616198614802432" target="_blank" rel="noopener noreferrer" title="Twitter">
+            <a class="ten-testimonials-info-source" href="https://twitter.com/rwncode/status/982744642012803074" target="_blank" rel="noopener noreferrer" title="Twitter">
               <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
             </a>
           </div>
-          <p class="ten-testimonials-text">Are there any podcast who don’t share the same boring Silicon Valley startup success stories?
-
-    Hearing about white tech bros raise millions of dollars is getting pretty old.</p>
+          <p class="ten-testimonials-text">Definitely not bored on my drive to Costco... Thanks <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a></p>
         </div>
       </div>
       <div class="ten-testimonials-item">
@@ -349,23 +347,6 @@
             </a>
           </div>
           <p class="ten-testimonials-text">Am I the only one opening the Podcast app every day checking if there is a new release of the <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a> ?</p>
-        </div>
-      </div>
-      <div class="ten-testimonials-item">
-        <div class="ten-testimonials-item-inner">
-          <div class="ten-testimonials-info">
-            <div class="ten-testimonials-info-main">
-              <img class="ten-testimonials-info-image" src="https://pbs.twimg.com/profile_images/1173788586812092419/zIlsSXw4_400x400.jpg" alt="">
-              <div class="testimonials-info-text">
-                <h3 class="ten-testimonials-info-name">Rob</h3>
-                <p class="ten-testimonials-info-handle"><a href="https://twitter.com/rwncode" target="_blank" rel="noopener noreferrer">@rwncode</a></p>
-              </div>
-            </div>
-            <a class="ten-testimonials-info-source" href="https://twitter.com/rwncode/status/982744642012803074" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter.svg"), "Twitter Icon") %>
-            </a>
-          </div>
-          <p class="ten-testimonials-text">Definitely not bored on my drive to Costco... Thanks <a href="https://twitter.com/changelog" target="_blank" rel="noopener noreferrer">@changelog</a></p>
         </div>
       </div>
       <div class="ten-testimonials-item">
