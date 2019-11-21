@@ -7,6 +7,7 @@
     <li>Breanden Beneschott</li>
     <li>Dan Benjamin</li>
     <li>Chris Benson</li>
+    <li>Bharat Bhat</li>
     <li>Johnny Boursiquot</li>
     <li>Jon Calhoun</li>
     <li>Tim Caswell</li>
@@ -89,34 +90,35 @@
   </ul>
   <hr>
   <div class="ten-thanks-companies logo_grid">
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/algolia.png") %>' alt="Algolia Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/ato.png") %>' alt="All Things Open Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/circle-ci.png") %>' alt="CircleCI Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/command-line-heroes.png") %>' alt="Command Line Heroes Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/datadog.png") %>' alt="Datadog Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/digital-ocean.png") %>' alt="Digital Ocean Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/elixir-phoenix.png") %>' alt="Elixir and Phoenix"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/freshbooks.png") %>' alt="FreshBooks Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/gauge.png") %>' alt="Gauge Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/github.png") %>' alt="Github Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/gitprime.png") %>' alt="GitPrime Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go-cd.png") %>' alt="GoCD Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go.png") %>' alt="Go Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/google.png") %>' alt="Google Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/intel.png") %>' alt="Intel Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/kubecon.png") %>' alt="Kubecon Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/linode.png") %>' alt="Linode Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/linux-foundation.png") %>' alt="Linux Foundation Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/microsoft.png") %>' alt="Microsoft Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/node-js-interactive.png") %>' alt="Nose JS Interactive Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/oreilly.png") %>' alt="Oreilly Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/oscon.png") %>' alt="Oscon Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/redhat.png") %>' alt="Redhat Logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/fastly.png") %>' alt="Fastly logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/rollbar.png") %>' alt="Rollbar Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/sentry.png") %>' alt="Sentry Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/slack.png") %>' alt="Slack Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/stripe.png") %>' alt="Stripe Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/tidelift.png") %>' alt="Tidelift Logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/toptal.png") %>' alt="Toptal Logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/linode.png") %>' alt="Linode logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/algolia.png") %>' alt="Algolia logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/digital-ocean.png") %>' alt="Digital Ocean logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/gitprime.png") %>' alt="GitPrime logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/elixir-phoenix.png") %>' alt="Elixir and Phoenix"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/github.png") %>' alt="Github logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go-cd.png") %>' alt="GoCD logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/tidelift.png") %>' alt="Tidelift logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/circle-ci.png") %>' alt="CircleCI logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/datadog.png") %>' alt="Datadog logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/oreilly.png") %>' alt="Oreilly logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/oscon.png") %>' alt="OSCON logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/ato.png") %>' alt="All Things Open logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/redhat.png") %>' alt="Redhat logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/command-line-heroes.png") %>' alt="Command Line Heroes logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/google.png") %>' alt="Google logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go.png") %>' alt="Go logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/gauge.png") %>' alt="Gauge logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/microsoft.png") %>' alt="Microsoft logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/linux-foundation.png") %>' alt="Linux Foundation logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/kubecon.png") %>' alt="KubeCon logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/intel.png") %>' alt="Intel logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/node-js-interactive.png") %>' alt="Nose JS Interactive logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/sentry.png") %>' alt="Sentry logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/slack.png") %>' alt="Slack logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/stripe.png") %>' alt="Stripe logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/freshbooks.png") %>' alt="FreshBooks logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/toptal.png") %>' alt="Toptal logo"></span>
   </div>
 </div>
