@@ -37,6 +37,10 @@ export default class Ten {
       descPosition: 'bottom',
       width: 1280
     });
+
+    u(document).handle("click", ".js-open_lightbox", () => {
+      lightbox.open();
+    });
   }
 
   static incrementStatNumbers(numberEl) {

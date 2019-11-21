@@ -34,6 +34,9 @@
     <div class="ten-section-inner">
       <h2 class="ten-section-heading">The Photos</h2>
       <%= render("_ten/ten_gallery.html", assigns) %>
+      <div class="ten-section-button">
+        <%= link("View Gallery", to: "#", class: "ten-section-button-link js-open_lightbox", 'data-gallery': "gallery", role: "button") %>
+      </div>
     </div>
   </section>
 
