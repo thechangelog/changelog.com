@@ -62,7 +62,7 @@
   <div class="ten-stats-item">
     <h3 class="ten-stats-heading">
       <span class="ten-stats-number">
-        <span>∞</span>
+        <span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="76.2" height="35.4" viewBox="0 0 76.2 35.4"><defs><clipPath id="a"><rect width="76.2" height="35.4" fill="none"/></clipPath></defs><title>infinity</title><g clip-path="url(#a)"><path d="M38.1,22.6c-5.9,6.1-12,12.8-21.4,12.8C6.9,35.4,0,28,0,17.7A17.58,17.58,0,0,1,17.6,0c8.6,0,14.9,7.1,20.5,12.8C44,6.7,50.1,0,59.5,0c9.8,0,16.7,7.4,16.7,17.7A17.52,17.52,0,0,1,58.6,35.4C50,35.4,43.6,28.4,38.1,22.6Zm-4.7-4.9c-4.5-4.3-9.3-10.5-16-10.5A10.37,10.37,0,0,0,7.2,17.7c0,6.1,4.2,10.5,9.8,10.5C23.7,28.3,29.1,22.4,33.4,17.7Zm35.5,0c0-6.1-4.2-10.5-9.8-10.5-6.6,0-11.9,5.9-16.3,10.5,4.5,4.3,9.3,10.5,16,10.5C64.5,28.3,68.9,23.4,68.9,17.7Z" fill="#fff"/></g></svg></span>
       </span>
       <span class="ten-stats-label">Lives Changed</span>
     </h3>
