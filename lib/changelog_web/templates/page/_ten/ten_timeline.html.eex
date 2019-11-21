@@ -161,11 +161,17 @@
       <p><a href="/gotime">View Podcast</a></p>
     </div>
   </div>
-    <div class="ten-timeline-item">
+  <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">August 2019</p>
     <div class="ten-timeline-item-content">
       <h3>Launched Brain&nbsp;Science</h3>
       <p><a href="/brainscience">View Podcast</a></p>
+    </div>
+  </div>
+  <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">September 2019</p>
+    <div class="ten-timeline-item-content">
+      <h3>Jerod came on full-time on Changelog&nbsp;Media</h3>
     </div>
   </div>
   <div class="ten-timeline-item">

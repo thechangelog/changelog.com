@@ -21,6 +21,7 @@
     <li>Nadia Eghbal</li>
     <li>Beth Faris</li>
     <li>Donald Fischer</li>
+    <li>Tyler Van Fossen</li>
     <li>Laura Franzese</li>
     <li>Ben Gillin</li>
     <li>Chris Grams</li>
@@ -86,7 +87,6 @@
     <li>Jake Stutzman</li>
     <li>Etel Sverdlov</li>
     <li>Andrew Thorp</li>
-    <li>Tyler Van Fossen</li>
     <li>Chris Wanstrath</li>
     <li>Emma Wedekind</li>
     <li>Manuel Weiss</li>
@@ -126,7 +126,7 @@
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/sentry.png") %>' alt="Sentry logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/slack.png") %>' alt="Slack logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/stripe.png") %>' alt="Stripe logo"></span>
-    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/freshbooks.png") %>' alt="FreshBooks logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/gitlab.png") %>' alt="GitLab logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/toptal.png") %>' alt="Toptal logo"></span>
   </div>
 </div>
