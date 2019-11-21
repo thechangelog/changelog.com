@@ -30,7 +30,7 @@
     <p class="ten-timeline-item-date">October 2010</p>
     <div class="ten-timeline-item-content">
       <h3>Launched Founders&nbsp;Talk</h3>
-      <p><a href="/founderstalk">View Podcasts</a></p>
+      <p><a href="/founderstalk">View Podcast</a></p>
     </div>
   </div>
   <div class="ten-timeline-item">
@@ -79,7 +79,7 @@
     <p class="ten-timeline-item-date">May 2016</p>
     <div class="ten-timeline-item-content">
       <h3>Launched Go&nbsp;Time</h3>
-      <p><a href="/gotime">View Podcasts</a></p>
+      <p><a href="/gotime">View Podcast</a></p>
     </div>
   </div>
   <div class="ten-timeline-item">
@@ -111,7 +111,7 @@
     <p class="ten-timeline-item-date">March 2017</p>
     <div class="ten-timeline-item-content">
       <h3>Launched JS&nbsp;Party</h3>
-      <p><a href="/jsparty">View Podcasts</a></p>
+      <p><a href="/jsparty">View Podcast</a></p>
     </div>
   </div>
   <div class="ten-timeline-item">
@@ -144,20 +144,28 @@
     <p class="ten-timeline-item-date">July 2018</p>
     <div class="ten-timeline-item-content">
       <h3>Launched Practical&nbsp;AI</h3>
-      <p><a href="/practicalai">View Podcasts</a></p>
+      <p><a href="/practicalai">View Podcast</a></p>
     </div>
   </div>
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">July 2018</p>
     <div class="ten-timeline-item-content">
       <h3>Launched&nbsp;Backstage</h3>
-      <p><a href="/backstage">View Podcasts</a></p>
+      <p><a href="/backstage">View Podcast</a></p>
     </div>
   </div>
   <div class="ten-timeline-item">
     <p class="ten-timeline-item-date">April 2019</p>
     <div class="ten-timeline-item-content">
       <h3>Relaunched Go&nbsp;Time</h3>
+      <p><a href="/gotime">View Podcast</a></p>
+    </div>
+  </div>
+    <div class="ten-timeline-item">
+    <p class="ten-timeline-item-date">August 2019</p>
+    <div class="ten-timeline-item-content">
+      <h3>Launched Brain&nbsp;Science</h3>
+      <p><a href="/brainscience">View Podcast</a></p>
     </div>
   </div>
   <div class="ten-timeline-item">
