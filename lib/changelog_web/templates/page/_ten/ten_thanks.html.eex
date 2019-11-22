@@ -14,9 +14,11 @@
     <li>Jon Calhoun</li>
     <li>Brett Cannon</li>
     <li>Tim Caswell</li>
+    <li>Matt Chandler</li>
     <li>Sam Coren</li>
     <li>David Cramer</li>
     <li>Breakmaster Cylinder</li>
+    <li>Dino DeRose</li>
     <li>Jaana B. Dogan</li>
     <li>Justin Dorfman</li>
     <li>David Dorman</li>
@@ -27,6 +29,7 @@
     <li>Donald Fischer</li>
     <li>Tyler Van Fossen</li>
     <li>Laura Franzese</li>
+    <li>Ted Garner</li>
     <li>Ben Gillin</li>
     <li>Chris Grams</li>
     <li>Elaine Greenberg</li>
@@ -34,7 +37,9 @@
     <li>Drill Sgt. Hillard</li>
     <li>Tracy Hinds</li>
     <li>Suz Hinton</li>
+    <li>Jennifer Hooper</li>
     <li>Steve Hotze</li>
+    <li>Sean Hughes</li>
     <li>Ivana Ivanovic</li>
     <li>Adam Jahnke</li>
     <li>Nick Janetakis</li>
@@ -55,18 +60,21 @@
     <li>Todd Lewis</li>
     <li>Tobias Macey</li>
     <li>Alexandru Maier</li>
+    <li>Frank Maio</li>
     <li>John Malone</li>
     <li>Jen Marley</li>
     <li>Kelly Martin</li>
     <li>Jessica Martin</li>
     <li>Ashley McNamara</li>
     <li>Jeff Meyerson</li>
+    <li>Trisha Mingus</li>
     <li>Danielle Morrill</li>
     <li>Beverly Nelson</li>
     <li>Wynn Netherland</li>
     <li>Pablo Nevares</li>
     <li>Nick Nisi</li>
     <li>Katrina Owen</li>
+    <li>Josh Owens</li>
     <li>Louda Pena</li>
     <li>Cody Peterson</li>
     <li>Carlisa Pinto</li>
@@ -99,11 +107,13 @@
     <li>Jake Stutzman</li>
     <li>Etel Sverdlov</li>
     <li>Andrew Thorp</li>
+    <li>Helaine de Tomasi</li>
+    <li>Mitch Wainer</li>
     <li>Chris Wanstrath</li>
     <li>Emma Wedekind</li>
     <li>Manuel Weiss</li>
     <li>Jessica West</li>
-    <li>Drill Sgt. Wheatley</li>
+    <li>Drill Sgt. Weekly</li>
     <li>Rachel White</li>
     <li>Daniel Whitenack</li>
     <li>Saron Yitbarek</li>
@@ -123,6 +133,7 @@
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/go-cd.png") %>' alt="GoCD logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/circle-ci.png") %>' alt="CircleCI logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/datadog.png") %>' alt="Datadog logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/heroku.png") %>' alt="Heroku logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/oreilly.png") %>' alt="Oreilly logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/oscon.png") %>' alt="OSCON logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/ato.png") %>' alt="All Things Open logo"></span>
@@ -140,6 +151,25 @@
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/slack.png") %>' alt="Slack logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/stripe.png") %>' alt="Stripe logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/gitlab.png") %>' alt="GitLab logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/square.png") %>' alt="Square logo"></span>
     <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/toptal.png") %>' alt="Toptal logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/auth0.png") %>' alt="Auth0 logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/clubhouse.png") %>' alt="Clubhouse logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/codacy.png") %>' alt="Codacy logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/heap.png") %>' alt="Heap logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/ibm.png") %>' alt="IBM logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/hired.png") %>' alt="Hired logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/indeed.png") %>' alt="Indeed logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/infinite-red.png") %>' alt="Infinite Red logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/manifold.png") %>' alt="Manifold logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/mongodb.png") %>' alt="MongoDB logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/raygun.png") %>' alt="Raygun logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/retool.png") %>' alt="Retool logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/segment.png") %>' alt="Segment logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/stream.png") %>' alt="Stream logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/strongdm.png") %>' alt="strongDM logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/testim.png") %>' alt="Testim logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/xteam.png") %>' alt="X-Team logo"></span>
+    <span class="logo_grid-item"><img src='<%= static_url(@conn, "/images/content/ten/sponsors/campaign-monitor.png") %>' alt="Campaign Monitor logo"></span>
   </div>
 </div>
