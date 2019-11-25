@@ -52,7 +52,7 @@
       <h2 class="ten-section-heading">Kind Words</h2>
       <%= render("_ten/ten_testimonials.html", assigns) %>
       <div class="ten-section-button">
-        <%= link("Share Yours", to: "https://twitter.com/compose/tweet?text=Happy%20ten%20year%20anniversary%20to%20%40changelog!&url=https%3A%2F%2Fchangelog.com%2Ften", class: "ten-section-button-link", target: "_blank") %>
+        <%= link("Share Yours", to: "https://twitter.com/intent/tweet?text=Happy%20ten%20year%20anniversary%20to%20%40changelog!&url=https%3A%2F%2Fchangelog.com%2Ften", class: "ten-section-button-link", target: "_blank") %>
       </div>
     </div>
   </section>
