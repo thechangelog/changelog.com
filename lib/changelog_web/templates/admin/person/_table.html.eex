@@ -25,7 +25,7 @@
           <div class="ui tiny blue basic label">Admin</div>
         <% end %>
       </td>
-      <td><div class="ui basic icon buttons"><%= person |> list_of_links |> raw %></div></td>
+      <td><div class="ui basic icon buttons"><%= person |> list_of_links() |> raw() %></div></td>
       <td><%= ts(person.inserted_at) %></td>
       <td><%= ts(person.joined_at) %></td>
       <td><%= ts(person.signed_in_at) %></td>

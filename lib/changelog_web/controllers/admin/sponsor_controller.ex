@@ -7,12 +7,15 @@ defmodule ChangelogWeb.Admin.SponsorController do
   plug Authorize, [Policies.AdminsOnly, :sponsor]
   plug :scrub_params, "sponsor" when action in [:create, :update]
 
-  def index(conn, params) do
-    page = Sponsor
-    |> order_by([p], desc: p.id)
-    |> Repo.paginate(params)
+  def index(conn, _params) do
+    sponsors =
+      Sponsor
+      |> Sponsor.newest_first(:updated_at)
+      |> Repo.all()
 
-    render(conn, :index, sponsors: page.entries, page: page)
+    conn
+    |> assign(:sponsors, sponsors)
+    |> render(:index)
   end
 
   def show(conn = %{assigns: %{sponsor: sponsor}}, _params) do

@@ -1,7 +1,7 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
     Sponsors
-    <div class="sub header">Putting their money where their mouths are (<%= @page.total_entries |> comma_separated %>)</div>
+    <div class="sub header">Putting their money where their mouths are (<%= @sponsors |> length() |> comma_separated %>)</div>
   </h1>
 
   <div class="actions">
@@ -19,7 +19,6 @@
 
 <div class="ui basic segment">
 <%= if Enum.any?(@sponsors) do %>
-  <%= render "_table.html", conn: @conn, sponsors: @sponsors %>
-  <%= pagination_links @conn, @page, path: &admin_sponsor_path/3 %>
+  <%= render("_table.html", conn: @conn, sponsors: @sponsors) %>
 <% end %>
 </div>

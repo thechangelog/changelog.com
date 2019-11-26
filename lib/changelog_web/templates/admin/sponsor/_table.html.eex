@@ -2,9 +2,8 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Website</th>
-      <th>GitHub</th>
-      <th>Twitter</th>
+      <th>Links</th>
+      <th>Edited</th>
       <th>Sponsored Eps</th>
       <th>Sponsored News</th>
       <th></th>
@@ -24,9 +23,8 @@
         </h4>
         <%= sponsor.name %>
       </td>
-      <td><%= website_link(sponsor) %></td>
-      <td><%= github_link(sponsor) %></td>
-      <td><%= twitter_link(sponsor) %></td>
+      <td><div class="ui basic icon buttons"><%= sponsor |> list_of_links() |> raw() %></div></td>
+      <td><%= ts(sponsor.updated_at) %></td>
       <td><%= sponsorship_count(sponsor, :episode) %></td>
       <td><%= sponsorship_count(sponsor, :news) %></td>
       <td class="center aligned">
