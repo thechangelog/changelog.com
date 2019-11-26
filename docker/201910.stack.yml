@@ -1,5 +1,5 @@
 version: "3.7"
-
+#
 # https://docs.docker.com/engine/swarm/configs/
 configs:
   netdata_config:
@@ -262,7 +262,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
       - /uploads:/var/www/uploads:ro
   netdata:
     configs:
