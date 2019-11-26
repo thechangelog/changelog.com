@@ -58,7 +58,7 @@ ld: lazydocker
 
 .PHONY: lazydocker-local
 lazydocker-local:
-	@$(LAZYDCOKER_CONTAINER)
+	@$(LAZYDOCKER_CONTAINER)
 .PHONY: ldl
 ldl: lazydocker-local
 
