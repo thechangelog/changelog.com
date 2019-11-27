@@ -55,6 +55,7 @@ export default class SearchWidget {
           handle: selected.description,
           avatarUrl: selected.image,
           index: $members.find(".item").length,
+          url: selected.url,
           extras: selected.extras
         }
 

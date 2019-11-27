@@ -100,9 +100,9 @@ defmodule ChangelogWeb.Admin.SearchView do
     latest =
       sponsor
       |> Ecto.assoc(:episode_sponsors)
-      |> EpisodeSponsor.newest_first
-      |> Ecto.Query.first
-      |> Repo.one
+      |> EpisodeSponsor.newest_first()
+      |> Ecto.Query.first()
+      |> Repo.one()
 
     extras = if latest do
        %{title: latest.title,
@@ -117,7 +117,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{id: sponsor.id,
       title: sponsor.name,
       image: SponsorView.avatar_url(sponsor, :small),
-      url: admin_sponsor_path(Endpoint, :edit, sponsor),
+      url: admin_sponsor_path(Endpoint, :show, sponsor),
       extras: extras}
   end
 end

@@ -82,6 +82,7 @@ defmodule ChangelogWeb.TimeView do
     end
   end
 
+  def terse_date(nil), do: ""
   def terse_date(ts) do
     {:ok, result} = Timex.format(ts, "{0M}/{0D}/{YY}")
     result

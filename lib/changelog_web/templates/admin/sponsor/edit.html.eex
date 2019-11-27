@@ -2,6 +2,10 @@
   <h1 class="ui dividing header">
     <%= link "Sponsors", to: admin_sponsor_path(@conn, :index) %>
     &raquo; Edit
+
+    <%= link "(View)",
+      to: admin_sponsor_path(@conn, :show, @sponsor),
+      class: "view" %>
   </h1>
 
   <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_sponsor_path(@conn, :update, @sponsor)) %>
