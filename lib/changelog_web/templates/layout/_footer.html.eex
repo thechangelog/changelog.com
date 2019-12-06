@@ -76,6 +76,7 @@
     <div class="footer-nav-list">
       <h4>Etc.</h4>
       <ul>
+        <li><%= link("Ten Years", to: page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %></li>
         <li><%= link("Sponsor", to: page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
         <li><%= link("Search", to: search_path(@conn, :search), title: "Search Changelog") %></li>
         <li><%= link("Posts", to: post_path(@conn, :index), title: "Changelog’s posts") %></li>

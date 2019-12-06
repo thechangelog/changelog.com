@@ -254,6 +254,28 @@
           }
         }
 
+        &--ten {
+          @keyframes LinearGradient {
+            0% {
+              background-position: 0% 0%;
+            }
+            50% {
+              background-position: 100% 100%;
+            }
+            100% {
+              background-position: 0% 0%;
+            }
+          }
+
+          a {
+            animation: LinearGradient 12s linear infinite 2s;
+            background: linear-gradient(to right, $jsparty, $green, $green, $practicalai, $brainscience);
+            background-clip: text;
+            background-size: 300% 300%;
+            -webkit-text-fill-color: transparent;
+          }
+        }
+
         &--live {
           a {
             color: $red !important;
