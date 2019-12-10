@@ -9,7 +9,7 @@ import newsSponsorshipView from "views/newsSponsorshipView";
 import personView from "views/personView";
 import podcastView from "views/podcastView";
 import postView from "views/postView";
-import sponsorView from "views/SponsorView";
+import sponsorView from "views/sponsorView";
 import topicView from "views/topicView";
 import ts from "../shared/ts";
 import FormUI from "components/formUI";
