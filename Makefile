@@ -157,6 +157,8 @@ include mk/todo.mk
 MIGRATE_FROM := core@2019i.changelog.com
 include mk/migrate.mk
 
+include mk/lke.mk
+
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
 
@@ -551,6 +553,7 @@ This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
     export CIRCLE_TOKEN=
     export TF_VAR_linode_token=
+    export LINODE_CLI_TOKEN=
     export DNSIMPLE_ACCOUNT=
     export DNSIMPLE_TOKEN=
 
@@ -569,6 +572,15 @@ endif
 linode-token:
 ifndef TF_VAR_linode_token
 	@echo "$(RED)TF_VAR_linode_token$(NORMAL) environment variable must be set" && \
+	echo "Learn more about Linode API tokens $(BOLD)https://cloud.linode.com/profile/tokens$(NORMAL) " && \
+	echo "$$DIRENV" && \
+	exit 1
+endif
+
+.PHONY: linode-cli-token
+linode-cli-token:
+ifndef LINODE_CLI_TOKEN
+	@echo "$(RED)LINODE_CLI_TOKEN$(NORMAL) environment variable must be set" && \
 	echo "Learn more about Linode API tokens $(BOLD)https://cloud.linode.com/profile/tokens$(NORMAL) " && \
 	echo "$$DIRENV" && \
 	exit 1

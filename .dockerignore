@@ -18,6 +18,7 @@ tmp
 .envrc
 .gitattributes
 .gitignore
+.kube
 README.md
 coveralls.json
 docker-compose.yml

@@ -44,3 +44,6 @@ npm-debug.log*
 # Ignore local dir where test run results are stored
 # Helps identify flaky tests
 /test_flakes
+
+# Kubernetes config files, LKE to begin with
+.kube
