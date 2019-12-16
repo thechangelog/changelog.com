@@ -14,6 +14,10 @@ $(LINODE_CLI): $(PIP)
 OCTANT ?= /usr/local/bin/octant
 $(OCTANT):
 	@brew install octant
+
+K9S ?= /usr/local/bin/k9s
+$(K9S):
+	@brew install derailed/k9s/k9s
 endif
 ifeq ($(PLATFORM),Linux)
 LINODE_CLI ?= /usr/bin/linode-cli
@@ -23,6 +27,10 @@ $(LINODE_CLI):
 OCTANT ?= /usr/bin/octant
 $(OCTANT):
 	$(error Please install octant: https://github.com/vmware-tanzu/octant#installation)
+
+K9S ?= /usr/bin/k9s
+$(K9S):
+	$(error Please install k9s: https://github.com/derailed/k9s#installation)
 endif
 
 LINODE := $(LINODE_CLI) --all
@@ -52,10 +60,24 @@ lke_configs: linode $(LKE_CONFIGS)
 	  && printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n" \
 	  && printf "\nTo use a specific config with $(BOLD)kubectl$(NORMAL), run e.g. $(BOLD)export KUBECONFING=$(NORMAL)\n"
 
+IS_KUBECONFIG_LKE_CONFIG := $(findstring $(LKE_CONFIGS), $(KUBECONFIG))
+define HINT_LKE_CONFIG
+printf "You may want to set $(BOLD)KUBECONFIG$(NORMAL) " \
+; printf "to one of the configs stored in $(BOLD)$(LKE_CONFIGS)$(NORMAL)\n"
+endef
+
 # https://octant.dev/
 .PHONY: lke_inspect
 lke_inspect: $(OCTANT)
-ifneq ($(findstring $(LKE_CONFIGS), $(KUBECONFIG)), $(LKE_CONFIGS))
-	@printf "You may want to set $(BOLD)KUBECONFIG$(NORMAL) to one of the configs stored in $(BOLD)$(LKE_CONFIGS)$(NORMAL)\n"
+ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
+	@$(HINT_LKE_CONFIG)
 endif
 	@$(OCTANT)
+
+# https://github.com/derailed/k9s
+.PHONY: lke_cli
+lke_cli: $(K9S)
+ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
+	@$(HINT_LKE_CONFIG)
+endif
+	@$(K9S)
