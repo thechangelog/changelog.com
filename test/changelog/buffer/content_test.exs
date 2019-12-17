@@ -20,7 +20,7 @@ defmodule Changelog.Buffer.ContentTest do
   describe "episode_text" do
     test "uses episode title" do
       ep1 = insert(:published_episode, title: "The Best", subtitle: "Evar!")
-      item1 = ep1 |> episode_news_item() |> insert
+      item1 = ep1 |> episode_news_item() |> insert()
       assert Content.episode_text(item1) =~ "The Best"
       refute Content.episode_text(item1) =~ "Evar!"
     end
@@ -45,6 +45,28 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:news_item_topic, news_item: item, topic: t1)
       insert(:news_item_topic, news_item: item, topic: t2)
       assert Content.episode_text(item) =~ "#security @OfficialiOS"
+    end
+  end
+
+  describe "news_item_brief" do
+    test "defaults to empty string" do
+      assert Content.news_item_text(nil) == ""
+    end
+
+    test "uses headline when no topics" do
+      item = insert(:news_item, headline: "This is cool")
+      text = Content.news_item_brief(item)
+      assert text == "This is cool"
+    end
+
+    test "uses headline and topic list" do
+      item = insert(:news_item, headline: "This is cool")
+      t1 = insert(:topic, name: "iOS", slug: "ios", twitter_handle: "OfficialiOS")
+      t2 = insert(:topic, name: "Machine Learning", slug: "machine-learning")
+      insert(:news_item_topic, news_item: item, topic: t1)
+      insert(:news_item_topic, news_item: item, topic: t2)
+      text = Content.news_item_brief(item)
+      assert text == "This is cool @OfficialiOS #machinelearning"
     end
   end
 

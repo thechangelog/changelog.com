@@ -12,34 +12,86 @@ defmodule Changelog.Buffer do
   @jsparty      ~w(58b47fd78d23761f5f19ca89)
   @practicalai  ~w(5ac3c64b3fda312b116ca788)
 
-  def queue(item = %NewsItem{type: :audio, object_id: id}) when is_binary(id) do
-    link = Content.episode_link(item)
-    text = Content.episode_text(item)
+  @topics %{
+    @founderstalk => ~w(startups leadership product-development vc),
+    @gotime => ~w(go),
+    @brainscience => ~w(brain-science mental-health),
+    @jsparty => ~w(javascript node html css npm),
+    @practicalai => ~w(ai datascience machinelearning deeplearning nlp)
+  }
 
-    profiles = cond do
-      String.starts_with?(id, "afk") -> @afk
-      String.starts_with?(id, "brainscience") -> @brainscience
-      String.starts_with?(id, "founderstalk") -> @founderstalk
-      String.starts_with?(id, "gotime") -> @gotime
-      String.starts_with?(id, "jsparty") -> @jsparty
-      String.starts_with?(id, "practicalai") -> @practicalai
+  # this returns a single profile, but they're stored as lists so it actually
+  # returns a list of one
+  def profiles_for_podcast(slug) do
+    cond do
+      String.starts_with?(slug, "afk") -> @afk
+      String.starts_with?(slug, "brainscience") -> @brainscience
+      String.starts_with?(slug, "founderstalk") -> @founderstalk
+      String.starts_with?(slug, "gotime") -> @gotime
+      String.starts_with?(slug, "jsparty") -> @jsparty
+      String.starts_with?(slug, "practicalai") -> @practicalai
       true -> @changelog
     end
+  end
 
+  # this can return multiple profile lists if they all match the given topics
+  # so we flatten them at the end to make one final list
+  def profiles_for_topics(topics) do
+    slugs = Enum.map(topics, &(&1.slug))
+
+    @topics
+    |> Enum.filter(fn({_profile_list, topic_list}) ->
+      Enum.any?(slugs, fn(slug) -> slug in topic_list end)
+    end)
+    |> Enum.map(fn({profile_list, _topic_list}) -> profile_list end)
+    |> List.flatten()
+  end
+
+  def queue(item) do
+    item
+    |> NewsItem.preload_all()
+    |> queue_item()
+  end
+
+  # an episode news item
+  defp queue_item(item = %NewsItem{type: :audio, object_id: slug}) when is_binary(slug) do
+    link = Content.episode_link(item)
+    text = Content.episode_text(item)
+    profiles = profiles_for_podcast(slug)
     Client.create(with_shared(profiles), text, [link: link])
   end
-  def queue(%NewsItem{type: :audio}), do: false
-  def queue(item = %NewsItem{object_id: id}) when is_binary(id) do
-    link = Content.post_link(item)
+  # an episode news item with no attached object
+  defp queue_item(%NewsItem{type: :audio}), do: false
+  defp queue_item(%NewsItem{type: :audio, object_id: nil}), do: false
+  # a post news item
+  defp queue_item(item = %NewsItem{object_id: id}) when is_binary(id) do
+    brief = Content.post_brief(item)
     text = Content.post_text(item)
+    link = Content.post_link(item)
+
+    # network-wide gets full text
     Client.create(with_shared(@changelog), text, [link: link])
+
+    # topic-specific profiles get brief version
+    for profile <- profiles_for_topics(item.topics) do
+      Client.create(profile, brief, [link: link])
+    end
   end
-  def queue(item = %NewsItem{}) do
+  # all other 'normal' news items
+  defp queue_item(item = %NewsItem{}) do
     image = Content.news_item_image(item)
-    link = Content.news_item_link(item)
     text = Content.news_item_text(item)
+    brief = Content.news_item_brief(item)
+    link = Content.news_item_link(item)
+
+    # network-wide gets full text
     Client.create(with_shared(@changelog), text, [link: link, photo: image])
+
+    # topic-specific profiles get brief version
+    for profile <- profiles_for_topics(item.topics) do
+      Client.create(profile, brief, [link: link, photo: image])
+    end
   end
 
-  def with_shared(profiles), do: profiles ++ @shared
+  defp with_shared(profiles), do: profiles ++ @shared
 end

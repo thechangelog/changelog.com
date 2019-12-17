@@ -37,6 +37,13 @@ defmodule Changelog.Buffer.Content do
     end
   end
 
+  def news_item_brief(nil), do: ""
+  def news_item_brief(item) do
+    item = NewsItem.preload_all(item)
+    [news_item_headline(item), twitter_list(item.topics)]
+    |> ListKit.compact_join(" ")
+  end
+
   def news_item_image(nil), do: nil
   def news_item_image(%{image: nil}), do: nil
   def news_item_image(item), do: NewsItemView.image_url(item, :original)
@@ -66,6 +73,8 @@ defmodule Changelog.Buffer.Content do
     [news_item_headline(item), news_item_meta(item), news_item_link(item)]
     |> ListKit.compact_join("\n")
   end
+
+  def post_brief(item), do: news_item_brief(item)
 
   def post_link(nil), do: nil
   def post_link(item), do: item.url
