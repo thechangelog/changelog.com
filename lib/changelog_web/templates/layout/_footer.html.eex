@@ -68,6 +68,7 @@
       <h4><a href="/community" title="">Community</a></h4>
       <ul>
         <li><%= link("Join the Community", to: page_path(@conn, :community), title: "Join the community") %></li>
+        <li><%= link("Listen Live", to: live_path(@conn, :index), title: "Listen live") %></li>
         <li><%= link("Code of Conduct", to: page_path(@conn, :coc), title: "Read the code of conduct") %></li>
         <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
         <li><%= link("Perks", to: page_path(@conn, :community), title: "Community perks") %></li>
