@@ -39,15 +39,15 @@ LINODE := $(LINODE_CLI) --all
 linode: $(LINODE_CLI) linode-cli-token
 
 LKE_LS := $(LINODE) lke clusters-list
-.PHONY: lke_ls
-lke_ls: linode
+.PHONY: lke-ls
+lke-ls: linode
 	@$(LKE_LS)
 
 $(LKE_CONFIGS):
 	@mkdir -p $(LKE_CONFIGS)
 
-.PHONY: lke_configs
-lke_configs: linode $(LKE_CONFIGS)
+.PHONY: lke-configs
+lke-configs: linode $(LKE_CONFIGS)
 	@$(LKE_LS) --json \
 	  | $(JQ) --raw-output --compact-output '.[] | [.id, .label] | join(" ")' \
 	  | while read -r lke_id lke_name \
@@ -67,16 +67,16 @@ printf "You may want to set $(BOLD)KUBECONFIG$(NORMAL) " \
 endef
 
 # https://octant.dev/
-.PHONY: lke_inspect
-lke_inspect: $(OCTANT)
+.PHONY: lke-inspect
+lke-inspect: $(OCTANT)
 ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
 	@$(HINT_LKE_CONFIG)
 endif
 	@$(OCTANT)
 
 # https://github.com/derailed/k9s
-.PHONY: lke_cli
-lke_cli: $(K9S)
+.PHONY: lke-cli
+lke-cli: $(K9S)
 ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
 	@$(HINT_LKE_CONFIG)
 endif
