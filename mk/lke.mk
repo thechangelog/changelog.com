@@ -18,6 +18,10 @@ $(OCTANT):
 K9S ?= /usr/local/bin/k9s
 $(K9S):
 	@brew install derailed/k9s/k9s
+
+POPEYE ?= /usr/local/bin/popeye
+$(POPEYE):
+	@brew install derailed/popeye/popeye
 endif
 ifeq ($(PLATFORM),Linux)
 LINODE_CLI ?= /usr/bin/linode-cli
@@ -31,6 +35,10 @@ $(OCTANT):
 K9S ?= /usr/bin/k9s
 $(K9S):
 	$(error Please install k9s: https://github.com/derailed/k9s#installation)
+
+POPEYE ?= /usr/bin/popeye
+$(POPEYE):
+	$(error Please install popeye: https://github.com/derailed/popeye#installation)
 endif
 
 LINODE := $(LINODE_CLI) --all
@@ -81,3 +89,11 @@ ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
 	@$(HINT_LKE_CONFIG)
 endif
 	@$(K9S)
+
+# https://github.com/derailed/popeye
+.PHONY: lke-sanitize
+lke-sanitize: $(K9S)
+ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
+	@$(HINT_LKE_CONFIG)
+endif
+	@$(POPEYE)
