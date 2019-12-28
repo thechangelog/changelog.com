@@ -7,7 +7,7 @@ LKE_VERSION := 1.16
 LKE_NODE_TYPE := g6-dedicated-2
 LKE_NODE_COUNT := 3
 define LKE_CLUSTER
-'{ \
+{ \
   "label": "$(LKE_LABEL)", \
   "region": "$(LKE_REGION)", \
   "version": "$(LKE_VERSION)", \
@@ -15,7 +15,7 @@ define LKE_CLUSTER
   "node_pools": [ \
     { "type": "$(LKE_NODE_TYPE)", "count": $(LKE_NODE_COUNT) } \
   ] \
-}'
+}
 endef
 
 ifeq ($(PLATFORM),Darwin)
@@ -35,6 +35,10 @@ $(LINODE_CLI): $(PIP)
 linode-cli-upgrade: $(PIP)
 	@$(PIP) install --upgrade linode-cli
 
+KUBECTL := /usr/local/bin/kubectl
+$(KUBECTL):
+	@brew install kubernetes-cli
+
 OCTANT ?= /usr/local/bin/octant
 $(OCTANT):
 	@brew install octant
@@ -52,6 +56,10 @@ LINODE_CLI ?= /usr/bin/linode-cli
 $(LINODE_CLI):
 	$(error Please install linode-cli: https://github.com/linode/linode-cli)
 
+KUBECTL ?= /usr/bin/kubectl
+$(KUBECTL):
+	$(error Please install kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl)
+
 OCTANT ?= /usr/bin/octant
 $(OCTANT):
 	$(error Please install octant: https://github.com/vmware-tanzu/octant#installation)
@@ -65,21 +73,28 @@ $(POPEYE):
 	$(error Please install popeye: https://github.com/derailed/popeye#installation)
 endif
 
-LINODE := $(LINODE_CLI) --all --no-defaults
+LINODE := $(LINODE_CLI) --no-defaults
 
 .PHONY: linode
 linode: $(LINODE_CLI) linode-cli-token
 
+.PHONY: linodes
+linodes: linode
+	@$(LINODE) linodes list
+
 # https://developers.linode.com/api/v4/lke-clusters/#post
 .PHONY: lke-new
-lke-new: $(CURL)
-	@$(CURL) --request POST \
-	--header "Content-Type: application/json" \
-	--header "Authorization: Bearer $$LINODE_CLI_TOKEN" \
-	--data $(LKE_CLUSTER) \
-	https://api.linode.com/v4beta/lke/clusters
+lke-new: $(CURL) linode-cli-token
+	@printf "Creating a new LKE cluster: \n$(BOLD)$(LKE_CLUSTER)$(NORMAL)\n" \
+	; $(CURL) --fail --request POST \
+	  --header "Content-Type: application/json" \
+	  --header "Authorization: Bearer $$LINODE_CLI_TOKEN" \
+	  --data '$(LKE_CLUSTER)' \
+	  https://api.linode.com/v4beta/lke/clusters \
+	&& printf "\n$(BOLD)$(GREEN)OK!$(NORMAL)\n" \
+	&& printf "\nTo see all available LKE clusters, run $(BOLD)$(MAKE) lke-ls$(NORMAL)"
 
-LKE_LS := $(LINODE) lke clusters-list
+LKE_LS := $(LINODE) --all lke clusters-list
 .PHONY: lke-ls
 lke-ls: linode
 	@$(LKE_LS)
@@ -99,13 +114,27 @@ lke-configs: linode $(LKE_CONFIGS)
 	      > $(LKE_CONFIGS)/$$lke_name.yml \
 	    ; done \
 	  && printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n" \
-	  && printf "\nTo use a specific config with $(BOLD)kubectl$(NORMAL), run e.g. $(BOLD)export KUBECONFING=$(NORMAL)\n"
+	  && printf "\nTo use a specific config with $(BOLD)kubectl$(NORMAL), run e.g. $(BOLD)export KUBECONFIG=$(NORMAL)\n"
 
 IS_KUBECONFIG_LKE_CONFIG := $(findstring $(LKE_CONFIGS), $(KUBECONFIG))
 define HINT_LKE_CONFIG
 printf "You may want to set $(BOLD)KUBECONFIG$(NORMAL) " \
 ; printf "to one of the configs stored in $(BOLD)$(LKE_CONFIGS)$(NORMAL)\n"
 endef
+
+.PHONY: lke-nodes
+lke-nodes: $(KUBECTL)
+ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
+	@$(HINT_LKE_CONFIG)
+endif
+	@$(KUBECTL) get --output=wide nodes
+
+.PHONY: lke-show-all
+lke-show-all: $(KUBECTL)
+ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
+	@$(HINT_LKE_CONFIG)
+endif
+	@$(KUBECTL) get all --all-namespaces
 
 # https://octant.dev/
 .PHONY: lke-inspect
