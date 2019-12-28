@@ -1,7 +1,8 @@
 # https://www.linode.com/docs/kubernetes/deploy-and-manage-lke-cluster-with-api-a-tutorial/
 
 LKE_CONFIGS := $(CURDIR)/.kube/configs
-LKE_LABEL := dev-$(shell date -u +'%Y%m%d')
+LKE_NAME ?= dev
+LKE_LABEL := $(LKE_NAME)-$(shell date -u +'%Y%m%d')
 LKE_REGION := us-central
 LKE_VERSION := 1.16
 LKE_NODE_TYPE := g6-dedicated-2
