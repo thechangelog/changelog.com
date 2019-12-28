@@ -1,8 +1,20 @@
 # https://www.linode.com/docs/kubernetes/deploy-and-manage-lke-cluster-with-api-a-tutorial/
+# https://github.com/linode/linode-cli
+
+LKE_LABEL := dev-$$(date -u +'%Y%m%d')
+LKE_REGION := us-central
+LKE_VERSION := 1.16
+LKE_NODE_TYPE := g6-dedicated-2
+LKE_NODE_COUNT := 3
 
 LKE_CONFIGS := $(CURDIR)/.kube/configs
 
 ifeq ($(PLATFORM),Darwin)
+
+# Use Python3 for all Python-based CLIs, such as linode-cli
+PATH := /usr/local/opt/python/libexec/bin:$(PATH)
+export PATH
+
 PIP ?= /usr/local/bin/pip3
 $(PIP):
 	@brew install python3
@@ -10,6 +22,9 @@ $(PIP):
 LINODE_CLI ?= /usr/local/bin/linode-cli
 $(LINODE_CLI): $(PIP)
 	@$(PIP) install linode-cli
+
+linode-cli-upgrade: $(PIP)
+	@$(PIP) install --upgrade linode-cli
 
 OCTANT ?= /usr/local/bin/octant
 $(OCTANT):
@@ -41,10 +56,20 @@ $(POPEYE):
 	$(error Please install popeye: https://github.com/derailed/popeye#installation)
 endif
 
-LINODE := $(LINODE_CLI) --all
+LINODE := $(LINODE_CLI) --all --no-defaults
 
 .PHONY: linode
 linode: $(LINODE_CLI) linode-cli-token
+
+.PHONY: lke-new
+lke-new: linode
+	$(LINODE) lke cluster-create \
+	  --label $(LKE_LABEL) \
+	  --region $(LKE_REGION) \
+	  --version $(LKE_VERSION) \
+	  --tags $(USER) \
+	  --node_pools.type $(LKE_NODE_TYPE) \
+	  --node_pools.count $(LKE_NODE_COUNT)
 
 LKE_LS := $(LINODE) lke clusters-list
 .PHONY: lke-ls
