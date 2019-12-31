@@ -2,7 +2,7 @@
 
 LKE_CONFIGS := $(CURDIR)/.kube/configs
 LKE_NAME ?= dev
-LKE_LABEL := $(LKE_NAME)-$(shell date -u +'%Y%m%d')
+LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
 LKE_REGION := us-central
 LKE_VERSION := 1.16
 LKE_NODE_TYPE := g6-dedicated-2
@@ -84,6 +84,26 @@ $(POPEYE):
 	$(error Please install popeye: https://github.com/derailed/popeye#installation)
 endif
 
+# https://github.com/k14s/ytt/releases
+YTT_VERSION := 0.23.0
+YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
+YTT_URL := https://github.com/k14s/ytt/releases/download/v$(YTT_VERSION)/ytt-$(platform)-amd64
+YTT := $(LOCAL_BIN)/$(YTT_BIN)
+$(YTT): $(CURL)
+	@mkdir -p $(LOCAL_BIN) \
+	&& cd $(LOCAL_BIN) \
+	&& $(CURL) --progress-bar --fail --location --output $(YTT) "$(YTT_URL)" \
+	&& touch $(YTT) \
+	&& chmod +x $(YTT) \
+	&& $(YTT) version \
+	   | grep $(YTT_VERSION) \
+	&& ln -sf $(YTT) $(LOCAL_BIN)/ytt
+.PHONY: ytt
+ytt: $(YTT)
+.PHONY: ytt-releases
+ytt-releases:
+	@$(OPEN) https://github.com/k14s/ytt/releases
+
 .PHONY: kubectx
 kubectx: $(KUBECTX)
 .PHONY: kubens
@@ -133,45 +153,50 @@ lke-configs: linode $(LKE_CONFIGS)
 	  && printf "\nTo use a specific config with $(BOLD)kubectl$(NORMAL), run e.g. $(BOLD)export KUBECONFIG=$(NORMAL)\n"
 
 IS_KUBECONFIG_LKE_CONFIG := $(findstring $(LKE_CONFIGS), $(KUBECONFIG))
-define HINT_LKE_CONFIG
-printf "You may want to set $(BOLD)KUBECONFIG$(NORMAL) " \
-; printf "to one of the configs stored in $(BOLD)$(LKE_CONFIGS)$(NORMAL)\n"
-endef
+.PHONY: lke-config-hint
+lke-config-hint:
+ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
+	@printf "You may want to set $(BOLD)KUBECONFIG$(NORMAL) " \
+	; printf "to one of the configs stored in $(BOLD)$(LKE_CONFIGS)$(NORMAL)\n"
+endif
 
 .PHONY: lke-nodes
-lke-nodes: $(KUBECTL)
-ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
-	@$(HINT_LKE_CONFIG)
-endif
+lke-nodes: $(KUBECTL) lke-config-hint
 	@$(KUBECTL) get --output=wide nodes
 
 .PHONY: lke-show-all
-lke-show-all: $(KUBECTL)
-ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
-	@$(HINT_LKE_CONFIG)
-endif
+lke-show-all: $(KUBECTL) lke-config-hint
 	@$(KUBECTL) get all --all-namespaces
+
+# https://github.com/k14s/ytt/blob/master/examples/k8s-docker-secret/config.yml
+.PHONY: lke-dnsimple-secret
+lke-dnsimple-secret: $(KUBECTL) dnsimple-creds lke-config-hint
+	@$(KUBECTL) create secret generic dnsimple \
+	  --from-literal=token="$(DNSIMPLE_TOKEN)" --dry-run --output json \
+	| $(KUBECTL) apply --filename - \
+
+.PHONY: lke-external-dns
+lke-external-dns: $(KUBECTL) $(YTT) lke-config-hint lke-dnsimple-secret
+	@printf "$(BOLD)Configuring LKE cluster to manage DNS ...$(NORMAL)\n" \
+	; $(YTT) --file k8s/external-dns \
+	| $(KUBECTL) apply --filename - \
+	&& printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n"
+
+.PHONY: lke-ten-changelog
+lke-ten-changelog: $(YTT) $(KUBECTL) lke-config-hint
+	@$(KUBECTL) apply --filename $(CURDIR)/k8s/ten
 
 # https://octant.dev/
 .PHONY: lke-inspect
-lke-inspect: $(OCTANT)
-ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
-	@$(HINT_LKE_CONFIG)
-endif
+lke-inspect: $(OCTANT) lke-config-hint
 	@$(OCTANT)
 
 # https://github.com/derailed/k9s
 .PHONY: lke-cli
-lke-cli: $(K9S)
-ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
-	@$(HINT_LKE_CONFIG)
-endif
+lke-cli: $(K9S) lke-config-hint
 	@$(K9S)
 
 # https://github.com/derailed/popeye
 .PHONY: lke-sanitize
-lke-sanitize: $(K9S)
-ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
-	@$(HINT_LKE_CONFIG)
-endif
+lke-sanitize: $(POPEYE) lke-config-hint
 	@$(POPEYE)

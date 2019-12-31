@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ten-nginx-conf
+data:
+  default.conf: |
+    server {
+      listen 80 default_server;
+      location / {
+        proxy_pass http://changelog.com/ten;
+      }
+    }

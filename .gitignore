@@ -47,3 +47,6 @@ npm-debug.log*
 
 # Kubernetes config files, LKE to begin with
 .kube
+
+# Local binaries
+/bin

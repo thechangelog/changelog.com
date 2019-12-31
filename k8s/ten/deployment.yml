@@ -1,0 +1,29 @@
+#! https://changelog.com/ten
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ten
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:1.17
+        ports:
+          - containerPort: 80
+        name: ten
+        volumeMounts:
+        - name: ten-nginx-conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: ten-nginx-conf
+        configMap:
+          name: ten-nginx-conf

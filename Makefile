@@ -1,7 +1,9 @@
 SHELL := bash# we want bash behaviour in all shell invocations
 PLATFORM := $(shell uname)
+platform = $(shell echo $(PLATFORM) | tr A-Z a-z)
 MAKEFILE := $(firstword $(MAKEFILE_LIST))
 
+# https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
 RED := $(shell tput setaf 1)
 GREEN := $(shell tput setaf 2)
 YELLOW := $(shell tput setaf 3)
@@ -33,6 +35,10 @@ HOSTNAME_LOCAL := changelog.localhost
 
 GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 GIT_BRANCH ?= master
+
+LOCAL_BIN := $(CURDIR)/bin
+PATH := $(LOCAL_BIN):$(PATH)
+export PATH
 
 export FQDN IPv4
 

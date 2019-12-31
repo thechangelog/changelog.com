@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ten
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: ten.changelog.com
+spec:
+  selector:
+    app: nginx
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  type: LoadBalancer

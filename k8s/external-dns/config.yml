@@ -1,0 +1,9 @@
+#@data/values
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/values.yml
+#! If necessary, these values can be overwritten in a number of ways: https://github.com/k14s/ytt/blob/master/docs/ytt-data-values.md
+---
+dns:
+  domain: changelog.com
+  record_owner: linode-kubernetes-engine
+  log_level: info #! debug for extra info
+image: registry.opensource.zalan.do/teapot/external-dns:v0.5.17

@@ -1,0 +1,41 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:assert", "assert")
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
+#! https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/dnsimple.md#manifest-for-clusters-with-rbac-enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: external-dns
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: external-dns
+    spec:
+      serviceAccountName: external-dns
+      containers:
+      - name: external-dns
+        image: #@ data.values.image or assert.fail("Missing image YTT data value")
+        args:
+        - --provider=dnsimple #! Not configurable since the DNSimple API token secret is hard-coded
+        - --source=service
+        - --registry=txt
+        env:
+        - name: EXTERNAL_DNS_DOMAIN_FILTER
+          value: #@ data.values.dns.domain or assert.fail("Missing dns.domain YTT data value")
+        - name: EXTERNAL_DNS_TXT_OWNER_ID
+          value: #@ data.values.dns.record_owner
+        - name: EXTERNAL_DNS_LOG_LEVEL
+          value: #@ data.values.dns.log_level
+        - name: DNSIMPLE_OAUTH
+          valueFrom:
+            secretKeyRef:
+              name: dnsimple
+              key: token
