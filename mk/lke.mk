@@ -40,6 +40,11 @@ KUBECTL := /usr/local/bin/kubectl
 $(KUBECTL):
 	@brew install kubernetes-cli
 
+KUBECTX := /usr/local/bin/kubectx
+KUBENS := /usr/local/bin/kubens
+$(KUBECTX) $(KUBENS):
+	@brew install kubectx
+
 OCTANT ?= /usr/local/bin/octant
 $(OCTANT):
 	@brew install octant
@@ -61,6 +66,11 @@ KUBECTL ?= /usr/bin/kubectl
 $(KUBECTL):
 	$(error Please install kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl)
 
+KUBECTX ?= /usr/bin/kubectx
+KUBENS ?= /usr/bin/kubens
+$(KUBECTX) $(KUBENS):
+	$(error Please install kubectx: https://github.com/ahmetb/kubectx#installation)
+
 OCTANT ?= /usr/bin/octant
 $(OCTANT):
 	$(error Please install octant: https://github.com/vmware-tanzu/octant#installation)
@@ -73,6 +83,11 @@ POPEYE ?= /usr/bin/popeye
 $(POPEYE):
 	$(error Please install popeye: https://github.com/derailed/popeye#installation)
 endif
+
+.PHONY: kubectx
+kubectx: $(KUBECTX)
+.PHONY: kubens
+kubens: $(KUBENS)
 
 LINODE := $(LINODE_CLI) --no-defaults
 
