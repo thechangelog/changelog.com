@@ -173,18 +173,21 @@ lke-show-all: $(KUBECTL) lke-config-hint
 lke-dnsimple-secret: $(KUBECTL) dnsimple-creds lke-config-hint
 	@$(KUBECTL) create secret generic dnsimple \
 	  --from-literal=token="$(DNSIMPLE_TOKEN)" --dry-run --output json \
-	| $(KUBECTL) apply --filename - \
+	 | $(KUBECTL) apply --filename -
 
 .PHONY: lke-external-dns
-lke-external-dns: $(KUBECTL) $(YTT) lke-config-hint lke-dnsimple-secret
+lke-external-dns: $(YTT) $(KUBECTL) lke-config-hint lke-dnsimple-secret
 	@printf "$(BOLD)Configuring LKE cluster to manage DNS ...$(NORMAL)\n" \
 	; $(YTT) --file k8s/external-dns \
-	| $(KUBECTL) apply --filename - \
+	  | $(KUBECTL) apply --filename - \
 	&& printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n"
 
+include $(CURDIR)/mk/ten.mk
+# Copy of https://changelog.com/ten
 .PHONY: lke-ten-changelog
 lke-ten-changelog: $(YTT) $(KUBECTL) lke-config-hint
-	@$(KUBECTL) apply --filename $(CURDIR)/k8s/ten
+	@$(YTT) --file $(CURDIR)/k8s/ten \
+	 | $(KUBECTL) apply --filename -
 
 # https://octant.dev/
 .PHONY: lke-inspect

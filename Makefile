@@ -46,16 +46,14 @@ export FQDN IPv4
 
 ### DEPS ###
 #
-DOCKER_DARWIN := /usr/local/bin/docker
 ifeq ($(PLATFORM),Darwin)
-DOCKER ?= $(DOCKER_DARWIN)
+DOCKER ?= /usr/local/bin/docker
 COMPOSE ?= $(DOCKER)-compose
 $(DOCKER) $(COMPOSE):
 	@brew cask install docker
 endif
-DOCKER_LINUX := /usr/bin/docker
 ifeq ($(PLATFORM),Linux)
-DOCKER ?= $(DOCKER_LINUX)
+DOCKER ?= /usr/bin/docker
 $(DOCKER): $(CURL)
 	@sudo apt-get update && \
 	sudo apt-get install apt-transport-https gnupg-agent && \
@@ -156,14 +154,14 @@ endif
 #
 .DEFAULT_GOAL := help
 
-include mk/inspect.mk
-include mk/images.mk
-include mk/todo.mk
+include $(CURDIR)/mk/inspect.mk
+include $(CURDIR)/mk/images.mk
+include $(CURDIR)/mk/todo.mk
 
 MIGRATE_FROM := core@2019i.changelog.com
-include mk/migrate.mk
+include $(CURDIR)/mk/migrate.mk
 
-include mk/lke.mk
+include $(CURDIR)/mk/lke.mk
 
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"

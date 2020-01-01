@@ -1,15 +1,17 @@
+#@ load("@ytt:data", "data")
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
 apiVersion: v1
 kind: Service
 metadata:
-  name: ten
+  name: #@ data.values.name
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: ten.changelog.com
+    external-dns.alpha.kubernetes.io/hostname: #@ data.values.fqdn
 spec:
   selector:
-    app: nginx
+    app: #@ data.values.name
   ports:
     - name: http
-      port: 80
+      port: #@ data.values.http_port
       protocol: TCP
-      targetPort: 80
+      targetPort: #@ data.values.http_port
   type: LoadBalancer

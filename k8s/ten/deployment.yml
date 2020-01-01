@@ -1,29 +1,28 @@
-#! https://changelog.com/ten
+#@ load("@ytt:data", "data")
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ten
+  name: #@ data.values.name
   labels:
-    app: nginx
+    app: #@ data.values.name
 spec:
-  replicas: 3
+  replicas: #@ data.values.replicas
   selector:
     matchLabels:
-      app: nginx
+      app: #@ data.values.name
   template:
     metadata:
       labels:
-        app: nginx
+        app: #@ data.values.name
     spec:
       containers:
-      - image: nginx:1.17
-        ports:
-          - containerPort: 80
-        name: ten
-        volumeMounts:
-        - name: ten-nginx-conf
-          mountPath: /etc/nginx/conf.d
-      volumes:
-      - name: ten-nginx-conf
-        configMap:
-          name: ten-nginx-conf
+        - image: #@ data.values.image
+          ports:
+            - name: http
+              containerPort: #@ data.values.http_port
+          name: #@ data.values.name
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5

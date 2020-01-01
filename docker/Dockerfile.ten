@@ -1,0 +1,5 @@
+# https://hub.docker.com/_/nginx?tab=tags
+# https://nginx.org/en/CHANGES
+FROM nginx:1.17
+
+COPY ./tmp/ten.html /usr/share/nginx/html/index.html

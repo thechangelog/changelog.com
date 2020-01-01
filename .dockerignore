@@ -11,7 +11,6 @@ priv/uploads
 script
 terraform
 test
-tmp
 .all-contributorsrc
 .credo.exs
 .dockerignore
