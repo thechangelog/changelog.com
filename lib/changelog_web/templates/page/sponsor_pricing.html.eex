@@ -23,13 +23,12 @@
 
     <ul>
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-      <li><mark>$2,000 for the featured pre-roll spot at the top of the show</mark></li>
-      <li><mark>$1,800 for mid-roll spots</mark></li>
+      <li><mark>$2,200 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$2,000 for mid-roll spots</mark></li>
       <li>Four (4) week minimum</li>
       <li>Reaches an average 25,000 to 45,000 listens per episode</li>
       <li>Reaches an average 250,000 listens per month, podcast-wide</li>
       <li>Published weekly</li>
-      <li>Each sponsor gets mentioned in the post-roll of the show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
       <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
     </ul>
@@ -38,13 +37,13 @@
 
     <h2>Changelog News (Web + Newsletter)</h2>
 
-    <p>A realtime editorialized feed and email covering this week in open source and software development. It's what developers read to keep up.</p>
+    <p>A realtime editorialized news feed and email newsletter covering this week in open source and software development. It's what developers read to keep up.</p>
 
     <ul>
-      <li><mark>$500 per week with a four (4) week minimum</mark></li>
+      <li><mark>$750 per week with a four (4) week minimum</mark></li>
       <li>Sponsored stories are promoted on the web and in our weekly newsletter, and run the week of to the weekend (Monday-Sunday)</li>
-      <li>Web - Estimated 1,500 impressions, with an average of 10-20 clicks</li>
-      <li>Newsletter - Estimated 7,500 impressions, with an average of 80-300 clicks</li>
+      <li>Web - Estimated 2,500 impressions, with an average of 10-20 clicks</li>
+      <li>Newsletter - Estimated 8,500 impressions, with an average of 80-300 clicks</li>
       <li>Very high engagement &mdash; 54.65% open rate + 52.81% click rate (this is huge).</li>
       <li>Sponsored stories include a linked heading, 2-3 lines of supporting text with links, pullquotes, etc.</li>
       <li>We take a native content approach to sponsored stories. Because most organization's blog, courses, ebooks, webinars, and other related content are treated as their inbound funnel &mdash; we leverage that when sharing your content with our community and let your marketing funnels do what they were designed to do &mdash; build trust and convert!</li>
@@ -84,56 +83,36 @@
 
     <hr>
 
-    <h2>JS Party</h2>
-
-    <p>A panel of web development experts and special guests discuss the latest in JavaScript and the web platform.</p>
-
-    <ul>
-      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-      <li><mark>$900 for the featured pre-roll spot at the top of the show</mark></li>
-      <li><mark>$800 for mid-roll spots</mark></li>
-      <li>Four (4) week minimum</li>
-      <li>Reaches an average 6,000 to 15,000 listens per episode</li>
-      <li>Reaches an average 47,000 listens per month, podcast-wide</li>
-      <li>Records live and published weekly</li>
-      <li>Each sponsor gets mentioned in the post-roll of the show</li>
-      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
-    </ul>
-
-    <hr>
-
-    <h2>Founders Talk</h2>
-
-    <p>In-depth, one-on-one conversations with founders, CEOs, and makers discussing the journey, lessons learned, and the struggles.</p>
-
-    <ul>
-      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-      <li><mark>$700 for the featured pre-roll spot at the top of the show</mark></li>
-      <li><mark>$600 for mid-roll spots</mark></li>
-      <li>Four (4) week minimum</li>
-      <li>Reaches an average 5,000 to 7,500 listens per episode</li>
-      <li>Reaches an average 29,000 listens per month, podcast-wide</li>
-      <li>Each sponsor gets mentioned in the post-roll of the show</li>
-      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
-    </ul>
-
-    <hr>
-
     <h2>Go Time</h2>
 
-    <p>A diverse panel and special guests discuss cloud infrastructure, distributed systems, microservices, Kubernetes, Docker...oh, and also Go!</p>
+    <p>Eack week a rotating panel of experts are joined by occasional special guests to discuss cloud infrastructure, distributed systems, microservices, Kubernetes...oh, and also Go!</p>
+
+    <ul>
+      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li><mark>$1,200 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$1,000 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 12,000 to 16,000 listens per episode</li>
+      <li>Reaches an average 75,000 listens per month, podcast-wide</li>
+      <li>Records live and published weekly</li>
+      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+    </ul>
+
+    <hr>
+
+    <h2>JS Party</h2>
+
+    <p>Eack week a rotating panel of experts are joined by occasional special guests to discuss the latest in JavaScript and the web platform.</p>
 
     <ul>
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
       <li><mark>$1,000 for the featured pre-roll spot at the top of the show</mark></li>
-      <li><mark>$800 for mid-roll spots</mark></li>
+      <li><mark>$900 for mid-roll spots</mark></li>
       <li>Four (4) week minimum</li>
-      <li>Reaches an average 10,000 to 16,000 listens per episode</li>
+      <li>Reaches an average 8,000 to 15,000 listens per episode</li>
       <li>Reaches an average 50,000 listens per month, podcast-wide</li>
       <li>Records live and published weekly</li>
-      <li>Each sponsor gets mentioned in the post-roll of the show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
       <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
     </ul>
@@ -142,16 +121,49 @@
 
     <h2>Practical AI</h2>
 
-    <p>A podcast focused on making artificial intelligence practical, productive, and accessible to every developer.</p>
+    <p>Journey into the world of artificial intelligence from the lens of expert AI practitioners. We're making artificial intelligence practical, productive, and accessible to developers.</p>
 
     <ul>
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-      <li><mark>$700 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$800 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$700 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 6,000 to 8,000 listens per episode</li>
+      <li>Reaches an average 35,000 listens per month, podcast-wide</li>
+      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+    </ul>
+
+    <hr>
+
+    <h2>Founders Talk</h2>
+
+    <p>In-depth one-on-one conversations with founders, CEOs, and makers where we discuss their journey, lessons learned, and the struggles they go through to build and run their business.</p>
+
+    <ul>
+      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li><mark>$800 for the featured pre-roll spot at the top of the show</mark></li>
       <li><mark>$600 for mid-roll spots</mark></li>
       <li>Four (4) week minimum</li>
-      <li>Reaches an average 4,000 to 6,000 listens per episode</li>
-      <li>Reaches an average 28,000 listens per month, podcast-wide</li>
-      <li>Each sponsor gets mentioned in the post-roll of the show</li>
+      <li>Reaches an average 5,000 to 8,500 listens per episode</li>
+      <li>Reaches an average 35,000 listens per month, podcast-wide</li>
+      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+    </ul>
+
+    <hr>
+
+    <h2>Brain Science</h2>
+
+    <p>For the curious! It's Brain Science applied &mdash; we're exploring the inner-workings of the human brain to understand behavior change, habit formation, mental health, and being human.</p>
+
+    <ul>
+      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li><mark>$500 for the featured pre-roll spot at the top of the show</mark></li>
+      <li><mark>$400 for mid-roll spots</mark></li>
+      <li>Four (4) week minimum</li>
+      <li>Reaches an average 2,500 to 4,000 listens per episode</li>
+      <li>Reaches an average 20,000 listens per month, podcast-wide</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
       <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
     </ul>
@@ -160,7 +172,7 @@
 
     <h2>Conference Sponsorship</h2>
 
-    <p>We love working with conferences! We have several options on how we support and partner with conference organizers.</p>
+    <p>We love to partner with community leaders and conferences! We have several options on how we can support and partner with you.</p>
 
     <p>We can come in as a media partner to help spread the word and provide the coverage you need, or we can involve <a href="https://changelog.com/films">Changelog Films</a> and help you tell your community's story like we have for our friends at <a href="https://changelog.com/films/gophercon-2015/">GopherCon</a>.</p>
   </div>
