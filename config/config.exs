@@ -4,7 +4,7 @@
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
 use Mix.Config
-Code.load_file("config/docker_secret.exs")
+Code.require_file("docker_secret.exs", "config")
 
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],

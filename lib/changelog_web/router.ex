@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Router do
 
   alias ChangelogWeb.Plug
 
-  if Mix.env == :dev do
+  if Application.get_env(:changelog, :env) == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 

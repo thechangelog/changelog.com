@@ -1,4 +1,4 @@
-FROM circleci/elixir:1.8-node
+FROM circleci/elixir:1.9-node
 
 USER root
 

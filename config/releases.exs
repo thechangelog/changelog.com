@@ -1,10 +1,20 @@
-use Mix.Config
+import Config
+# TODO: consider converting to Config.Provider:
+# https://hexdocs.pm/elixir/Config.Provider.html
+Code.require_file("docker_secret.exs", "config")
 
 config :changelog,
-  env: :prod
+  env: :prod,
+  ecto_repos: [Changelog.Repo],
+  buffer_token: DockerSecret.get("BUFFER_TOKEN_2"),
+  github_api_token: DockerSecret.get("GITHUB_API_TOKEN2"),
+  cm_api_token: Base.encode64("#{DockerSecret.get("CM_API_TOKEN")}:x"),
+  slack_invite_api_token: DockerSecret.get("SLACK_INVITE_API_TOKEN"),
+  slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN")
 
 config :changelog, ChangelogWeb.Endpoint,
-  http: [port: System.get_env("PORT")],
+  http: [port: String.to_integer(System.fetch_env!("PORT"))],
+  server: true,
   url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_HOST") || "changelog.com"), port: (System.get_env("URL_PORT") || 443)],
   force_ssl: [
     rewrite_on: [:x_forwarded_proto],
@@ -14,7 +24,8 @@ config :changelog, ChangelogWeb.Endpoint,
   static_url: [scheme: (System.get_env("URL_SCHEME") || "https"), host: (System.get_env("URL_STATIC_HOST") || "cdn.changelog.com"), port: (System.get_env("URL_PORT") || 443)],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :logger, level: :info
+config :logger,
+  level: :info
 # config :logger, :console, level: :debug, format: "[$level] $message\n"
 
 config :arc,
@@ -45,3 +56,19 @@ config :changelog, Changelog.Scheduler,
 config :rollbax,
   access_token: DockerSecret.get("ROLLBAR_ACCESS_TOKEN"),
   environment: "production"
+
+config :ex_aws,
+  access_key_id: DockerSecret.get("AWS_ACCESS_KEY_ID"),
+  secret_access_key: DockerSecret.get("AWS_SECRET_ACCESS_KEY")
+
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id: DockerSecret.get("GITHUB_CLIENT_ID"),
+  client_secret: DockerSecret.get("GITHUB_CLIENT_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+  consumer_key: DockerSecret.get("TWITTER_CONSUMER_KEY"),
+  consumer_secret: DockerSecret.get("TWITTER_CONSUMER_SECRET")
+
+config :algolia,
+  application_id: DockerSecret.get("ALGOLIA_APPLICATION_ID"),
+  api_key: DockerSecret.get("ALGOLIA_API_KEY")
