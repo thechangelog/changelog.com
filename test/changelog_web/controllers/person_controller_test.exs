@@ -35,6 +35,13 @@ defmodule ChangelogWeb.PersonControllerTest do
       assert count(Person) == count_before
     end
 
+    test "submission with qq.com re-renders with errors", %{conn: conn} do
+      count_before = count(Person)
+      conn = post(conn, person_path(conn, :join), person: %{email: "joe@qq.com", name: "Joe Blow", handle: "joeblow"})
+      assert html_response(conn, 200) =~ ~r/qq.com/i
+      assert count(Person) == count_before
+    end
+
     test "submission with required data creates person, sends email, and redirects", %{conn: conn} do
       count_before = count(Person)
 
@@ -74,6 +81,13 @@ defmodule ChangelogWeb.PersonControllerTest do
     test "submission with gotcha field filled out re-renders with errors", %{conn: conn} do
       count_before = count(Person)
       conn = post(conn, person_path(conn, :subscribe), email: "joe@blow.com", gotcha: "whoops robot")
+      assert redirected_to(conn) == person_path(conn, :subscribe)
+      assert count(Person) == count_before
+    end
+
+    test "submission with qq.com email address re-renders with errors", %{conn: conn} do
+      count_before = count(Person)
+      conn = post(conn, person_path(conn, :subscribe), email: "joe@qq.com")
       assert redirected_to(conn) == person_path(conn, :subscribe)
       assert count(Person) == count_before
     end

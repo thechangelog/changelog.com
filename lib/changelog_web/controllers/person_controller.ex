@@ -35,22 +35,27 @@ defmodule ChangelogWeb.PersonController do
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
     subscribe_to = Map.get(params, "to", "weekly")
 
-    if person = Repo.get_by(Person, email: email) do
-      welcome_subscriber(conn, person, subscribe_to)
-    else
-      changeset =
-        Person.with_fake_data()
-        |> Person.insert_changeset(params)
+    cond do
+      String.ends_with?(email, "qq.com") ->
+        conn
+        |> put_flash(:error, "qq.com emails temporarily not allowed due to abuse.")
+        |> redirect(to: person_path(conn, :subscribe))
+      person = Repo.get_by(Person, email: email) ->
+        welcome_subscriber(conn, person, subscribe_to)
+      true ->
+        changeset =
+          Person.with_fake_data()
+          |> Person.insert_changeset(params)
 
-      case Repo.insert(changeset) do
-        {:ok, person} ->
-          log_request(conn)
-          welcome_subscriber(conn, person, subscribe_to)
-        {:error, _changeset} ->
-          conn
-          |> put_flash(:error, "Something went wrong. 😭")
-          |> redirect(to: person_path(conn, :subscribe))
-      end
+        case Repo.insert(changeset) do
+          {:ok, person} ->
+            log_request(conn)
+            welcome_subscriber(conn, person, subscribe_to)
+          {:error, _changeset} ->
+            conn
+            |> put_flash(:error, "Something went wrong. 😭")
+            |> redirect(to: person_path(conn, :subscribe))
+        end
     end
   end
 
@@ -106,20 +111,27 @@ defmodule ChangelogWeb.PersonController do
     |> render(:join, changeset: changeset, person: nil)
   end
   def join(conn = %{method: "POST"}, %{"person" => person_params = %{"email" => email}}) do
-    if person = Repo.get_by(Person, email: email) do
-      welcome_community(conn, person)
-    else
-      changeset = Person.insert_changeset(%Person{}, person_params)
+    cond do
+      String.ends_with?(email, "qq.com") ->
+        changeset = Person.insert_changeset(%Person{}, person_params)
 
-      case Repo.insert(changeset) do
-        {:ok, person} ->
-          Repo.update(Person.file_changeset(person, person_params))
-          welcome_community(conn, person)
-        {:error, changeset} ->
-          conn
-          |> put_flash(:error, "Something went wrong. 😭")
-          |> render(:join, changeset: changeset, person: nil)
-      end
+        conn
+        |> put_flash(:error, "qq.com emails temporarily not allowed due to abuse.")
+        |> render(:join, changeset: changeset, person: nil)
+      person = Repo.get_by(Person, email: email) ->
+        welcome_community(conn, person)
+      true ->
+        changeset = Person.insert_changeset(%Person{}, person_params)
+
+        case Repo.insert(changeset) do
+          {:ok, person} ->
+            Repo.update(Person.file_changeset(person, person_params))
+            welcome_community(conn, person)
+          {:error, changeset} ->
+            conn
+            |> put_flash(:error, "Something went wrong. 😭")
+            |> render(:join, changeset: changeset, person: nil)
+        end
     end
   end
 
