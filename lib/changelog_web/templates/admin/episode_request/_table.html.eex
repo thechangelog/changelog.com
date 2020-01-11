@@ -2,6 +2,7 @@
 <table class="ui celled striped unstackable table">
   <thead>
     <tr>
+      <th>#</th>
     <%= if !assigns[:podcast] do %>
       <th>Podcast</th>
     <% end %>
@@ -17,6 +18,7 @@
   <%= for request <- @requests do %>
     <% podcast = assigns[:podcast] || request.podcast %>
     <tr>
+      <td><%= request.id %></td>
     <%= if !assigns[:podcast] do %>
       <td><%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
     <% end %>

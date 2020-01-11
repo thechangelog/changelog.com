@@ -3,10 +3,10 @@ defmodule Changelog.EpisodeRequest do
 
   alias Changelog.{Episode, Podcast, Person}
 
-  defenum Status, declined: -1, submitted: 0, pending: 1, published: 2
+  defenum Status, declined: -1, fresh: 0, pending: 1
 
   schema "episode_requests" do
-    field :status, Status, default: :submitted
+    field :status, Status, default: :fresh
 
     field :hosts, :string
     field :guests, :string
@@ -14,19 +14,18 @@ defmodule Changelog.EpisodeRequest do
     field :pitch, :string
     field :pronunciation, :string
 
-    belongs_to :episode, Episode
     belongs_to :podcast, Podcast
     belongs_to :submitter, Person
+
+    has_one :episode, Episode, foreign_key: :request_id
 
     timestamps()
   end
 
-  def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:submitted, ^:pending])
-  def archived(query \\ __MODULE__), do: from(q in query, where: q.status in [^:declined, ^:published])
-  def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
+  def fresh(query \\ __MODULE__), do: from(q in query, where: q.status == ^:fresh)
+  def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:fresh, ^:pending])
   def pending(query \\ __MODULE__), do: from(q in query, where: q.status == ^:pending)
-  def published(query \\ __MODULE__), do: from(q in query, where: q.status == ^:published)
-  def submitted(query \\ __MODULE__), do: from(q in query, where: q.status == ^:submitted)
+  def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
 
   def submission_changeset(struct, params \\ %{}) do
     struct
@@ -52,4 +51,5 @@ defmodule Changelog.EpisodeRequest do
   def preload_submitter(request), do: Repo.preload(request, :submitter)
 
   def decline!(request), do: request |> change(%{status: :declined}) |> Repo.update!()
+  def pend!(request), do: request |> change(%{status: :pending}) |> Repo.update!()
 end

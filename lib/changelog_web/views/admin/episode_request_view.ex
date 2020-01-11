@@ -3,12 +3,11 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
 
    alias ChangelogWeb.{PersonView}
 
-   def status_label(%{status: :submitted}), do: ""
+   def status_label(%{status: :fresh}), do: ""
    def status_label(%{status: status}) do
     {color, label} = case status do
       :pending -> {"yellow", "Pending"}
       :declined -> {"grey", "Declined"}
-      :published -> {"blue", "Published"}
     end
 
     content_tag :span, label, class: "ui tiny #{color} basic label"

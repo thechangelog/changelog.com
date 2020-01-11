@@ -21,7 +21,7 @@ defmodule ChangelogWeb.EpisodeRequestController do
   end
 
   def create(conn = %{assigns: %{current_user: user}}, %{"episode_request" => request_params}) do
-    request = %EpisodeRequest{submitter_id: user.id, status: :submitted}
+    request = %EpisodeRequest{submitter_id: user.id, status: :fresh}
     changeset = EpisodeRequest.submission_changeset(request, request_params)
 
     case Repo.insert(changeset) do

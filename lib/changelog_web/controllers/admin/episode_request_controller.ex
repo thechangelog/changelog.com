@@ -17,14 +17,14 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
 
     active =
       requests
-      |> EpisodeRequest.submitted()
+      |> EpisodeRequest.active()
       |> EpisodeRequest.newest_first()
       |> EpisodeRequest.preload_all()
       |> Repo.all()
 
     archived =
       requests
-      |> EpisodeRequest.archived()
+      |> EpisodeRequest.declined()
       |> EpisodeRequest.preload_all()
       |> Repo.all()
 

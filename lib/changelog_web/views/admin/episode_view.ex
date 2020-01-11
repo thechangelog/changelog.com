@@ -87,6 +87,14 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     date
   end
 
+  def request_options(requests) do
+    Enum.map(requests, fn(request) ->
+      {:ok, date} = Timex.format(request.inserted_at, "{M}/{D}")
+      description = "##{request.id} by #{request.submitter.handle} on #{date}"
+      {description, request.id}
+    end)
+  end
+
   def round_and_filter(stats) do
     stats
     |> Enum.map(fn({key, value}) -> {key, round(value)} end)

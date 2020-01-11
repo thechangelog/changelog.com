@@ -17,12 +17,12 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
   end
 
   @tag :as_inserted_user
-  test "creates request and sets it as submitted", %{conn: conn} do
+  test "creates request and sets it as fresh", %{conn: conn} do
     podcast = insert(:podcast)
     conn = post(conn, episode_request_path(conn, :create), episode_request: %{pitch: "pretty please!", podcast_id: podcast.id})
 
     assert redirected_to(conn) == root_path(conn, :index)
-    assert count(EpisodeRequest.submitted) == 1
+    assert count(EpisodeRequest.fresh) == 1
   end
 
   @tag :as_inserted_user

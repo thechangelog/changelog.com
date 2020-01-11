@@ -108,6 +108,18 @@ export default class EpisodeView {
     new CalendarField(".ui.calendar");
     new Modal(".js-title-guide-modal", ".title-guide.modal");
     new Modal(".js-subtitle-guide-modal", ".subtitle-guide.modal");
+
+    let requestedInput = $("input[name='episode[requested]']")
+    let requestSelect = $("select[name='episode[request_id]']")
+
+    requestedInput.on("change", function() {
+      if (requestedInput.is(":checked")) {
+        requestSelect.closest(".field").show();
+      } else {
+        requestSelect.closest(".field").hide();
+        requestSelect.dropdown("clear");
+      }
+    })
   }
 
   edit() {

@@ -33,7 +33,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     episode_requests =
       podcast
       |> assoc(:episode_requests)
-      |> EpisodeRequest.submitted()
+      |> EpisodeRequest.fresh()
       |> EpisodeRequest.newest_first()
       |> EpisodeRequest.preload_all()
       |> Repo.all()
@@ -138,7 +138,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         slug: default_slug)
       |> Episode.admin_changeset()
 
-    render(conn, :new, changeset: changeset)
+    conn
+    |> assign(:changeset, changeset)
+    |> assign(:episode_requests, episode_requests(podcast))
+    |> render(:new)
   end
 
   def create(conn, params = %{"episode" => episode_params}, podcast) do
@@ -155,7 +158,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:new, changeset: changeset)
+        |> assign(:changeset, changeset)
+        |> assign(:episode_requests, episode_requests(podcast))
+        |> render(:new)
     end
   end
 
@@ -166,7 +171,12 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.preload_all()
 
     changeset = Episode.admin_changeset(episode)
-    render(conn, :edit, episode: episode, changeset: changeset)
+
+    conn
+    |> assign(:episode, episode)
+    |> assign(:changeset, changeset)
+    |> assign(:episode_requests, episode_requests(podcast))
+    |> render(:edit)
   end
 
   def update(conn, params = %{"id" => slug, "episode" => episode_params}, podcast) do
@@ -175,7 +185,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all()
 
-    changeset = Episode.admin_changeset(episode, episode_params)
+    changeset = Episode.admin_changeset(episode, Map.merge(episode_params, %{"episode_request" => %{}}))
 
     case Repo.update(changeset) do
       {:ok, episode} ->
@@ -190,7 +200,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, episode: episode, changeset: changeset)
+        |> assign(:episode, episode)
+        |> assign(:changeset, changeset)
+        |> assign(:episode_requests, episode_requests(podcast))
+        |> render(:edit)
     end
   end
 
@@ -269,6 +282,15 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
     podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts
     assign(conn, :podcast, podcast)
+  end
+
+  defp episode_requests(podcast) do
+    podcast
+    |> assoc(:episode_requests)
+    |> EpisodeRequest.active()
+    |> EpisodeRequest.newest_first()
+    |> EpisodeRequest.preload_submitter()
+    |> Repo.all()
   end
 
   defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do

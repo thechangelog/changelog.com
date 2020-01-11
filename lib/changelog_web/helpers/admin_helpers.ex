@@ -5,9 +5,9 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   alias ChangelogWeb.TimeView
   alias ChangelogWeb.Helpers.SharedHelpers
 
-  def error_class(form, field) do
-    if form.errors[field], do: "error", else: ""
-  end
+  def error_class(form, field), do: if form.errors[field], do: "error", else: ""
+
+  def hidden_class(condition), do: if condition, do: "hidden", else: ""
 
   def error_message(form, field) do
     case form.errors[field] do

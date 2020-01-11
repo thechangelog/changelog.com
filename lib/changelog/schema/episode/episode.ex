@@ -1,8 +1,9 @@
 defmodule Changelog.Episode do
   use Changelog.Schema, default_sort: :published_at
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeTopic, EpisodeStat,
-                   EpisodeSponsor, Files, NewsItem, Podcast, Regexp, Transcripts}
+  alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeRequest, EpisodeTopic,
+                   EpisodeStat, EpisodeSponsor, Files, NewsItem, Podcast,
+                   Regexp, Transcripts}
   alias ChangelogWeb.{EpisodeView, TimeView}
 
   defenum Type, full: 0, bonus: 1, trailer: 2
@@ -38,6 +39,8 @@ defmodule Changelog.Episode do
     field :transcript, {:array, :map}
 
     belongs_to :podcast, Podcast
+    belongs_to :episode_request, EpisodeRequest, foreign_key: :request_id
+
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
     has_many :hosts, through: [:episode_hosts, :person]
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
@@ -98,19 +101,19 @@ defmodule Changelog.Episode do
 
   def admin_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:slug, :title, :subtitle, :published, :featured,
+    |> cast(params, [:slug, :title, :subtitle, :published, :featured, :request_id,
                      :highlight, :subhighlight, :summary, :notes, :published_at,
                      :recorded_at, :recorded_live, :guid, :type])
     |> cast_attachments(params, [:audio_file])
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
-    |> validate_published_has_published_at
+    |> validate_published_has_published_at()
     |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)
     |> cast_assoc(:episode_guests)
     |> cast_assoc(:episode_sponsors)
     |> cast_assoc(:episode_topics)
-    |> derive_bytes_and_duration
+    |> derive_bytes_and_duration()
   end
 
   def get_news_item(episode) do
