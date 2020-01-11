@@ -6,4 +6,4 @@ name: ten
 replicas: 6 #! worker nodes * 2
 http_port: 80
 fqdn: ten.changelog.com
-image: thechangelog/ten:2019-12-31T20.20.10Z
+image: thechangelog/ten:2019-11-01T10.10.10Z

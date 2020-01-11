@@ -9,16 +9,20 @@ $(MONOLITH):
 	$(error Please install monolith: https://github.com/Y2Z/monolith#installation)
 endif
 
-tmp/ten.html: $(MONOLITH)
+tmp/ten.html.monolith: $(MONOLITH)
 	@mkdir -p tmp \
-	&& $(MONOLITH) https://changelog.com/ten -I -o $(@)
+	&& $(MONOLITH) https://changelog.com/ten -I -o tmp/ten.html
+
+tmp/ten.html.curl: $(CURL)
+	@mkdir -p tmp \
+	&& $(CURL) --progress-bar --output tmp/ten.html https://changelog.com/ten
 
 .PHONY: ten-image
 ten-image: build-ten-image publish-ten-image
 
 .PHONY: build-ten-image
-build-ten-image: BUILD_VERSION = 2019-12-31T20.20.10Z
-build-ten-image: $(DOCKER) tmp/ten.html
+build-ten-image: BUILD_VERSION = 2019-11-01T10.10.10Z
+build-ten-image: $(DOCKER) tmp/ten.html.curl
 	@$(DOCKER) build \
 	  --pull \
 	  --tag thechangelog/ten:$(BUILD_VERSION) \
@@ -26,6 +30,6 @@ build-ten-image: $(DOCKER) tmp/ten.html
 	  .
 
 .PHONY: publish-ten-image
-publish-ten-image: BUILD_VERSION = 2019-12-31T20.20.10Z
+publish-ten-image: BUILD_VERSION = 2019-11-01T10.10.10Z
 publish-ten-image: $(DOCKER)
 	@$(DOCKER) push thechangelog/ten:$(BUILD_VERSION)
