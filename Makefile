@@ -554,6 +554,7 @@ We like $(BOLD)https://direnv.net/$(NORMAL) to manage environment variables.
 This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
     PATH_add script
+    PATH_add bin
 
     export CIRCLE_TOKEN=
     export TF_VAR_linode_token=

@@ -36,9 +36,13 @@ $(LINODE_CLI): $(PIP)
 linode-cli-upgrade: $(PIP)
 	@$(PIP) install --upgrade linode-cli
 
-KUBECTL := /usr/local/bin/kubectl
+# Do not use kubectl installed by Docker for Desktop, this will typically be an older version than kubernetes-cli
+KUBECTL := $(lastword /usr/local/Cellar/kubernetes-cli/$(LKE_VERSION).0/bin/kubectl $(wildcard /usr/local/Cellar/kubernetes-cli/*/bin/kubectl))
 $(KUBECTL):
 	@brew install kubernetes-cli
+bin/kubectl: $(KUBECTL)
+	@mkdir -p $(LOCAL_BIN) \
+	&& ln -s $(KUBECTL) $(LOCAL_BIN)/kubectl
 
 KUBECTX := /usr/local/bin/kubectx
 KUBENS := /usr/local/bin/kubens
