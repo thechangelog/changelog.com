@@ -26,40 +26,41 @@ export PATH
 
 PIP ?= /usr/local/bin/pip3
 $(PIP):
-	@brew install python3
+	brew install python3
 
 # https://github.com/linode/linode-cli
 LINODE_CLI ?= /usr/local/bin/linode-cli
 $(LINODE_CLI): $(PIP)
-	@$(PIP) install linode-cli
+	$(PIP) install linode-cli
 
 linode-cli-upgrade: $(PIP)
-	@$(PIP) install --upgrade linode-cli
+	$(PIP) install --upgrade linode-cli
 
 # Do not use kubectl installed by Docker for Desktop, this will typically be an older version than kubernetes-cli
 KUBECTL := $(lastword /usr/local/Cellar/kubernetes-cli/$(LKE_VERSION).0/bin/kubectl $(wildcard /usr/local/Cellar/kubernetes-cli/*/bin/kubectl))
 $(KUBECTL):
-	@brew install kubernetes-cli
+	brew install kubernetes-cli
 bin/kubectl: $(KUBECTL)
-	@mkdir -p $(LOCAL_BIN) \
-	&& ln -s $(KUBECTL) $(LOCAL_BIN)/kubectl
+	mkdir -p $(LOCAL_BIN) \
+	&& ln -sf $(KUBECTL) $(LOCAL_BIN)/kubectl
 
 KUBECTX := /usr/local/bin/kubectx
 KUBENS := /usr/local/bin/kubens
 $(KUBECTX) $(KUBENS):
-	@brew install kubectx
+	brew install kubectx
 
 OCTANT ?= /usr/local/bin/octant
 $(OCTANT):
-	@brew install octant
+	brew install octant
 
 K9S ?= /usr/local/bin/k9s
 $(K9S):
-	@brew install derailed/k9s/k9s
+	brew install derailed/k9s/k9s
 
 POPEYE ?= /usr/local/bin/popeye
 $(POPEYE):
-	@brew install derailed/popeye/popeye
+	brew install derailed/popeye/popeye
+
 KREW ?= /usr/local/bin/kubectl-krew
 $(KREW):
 	brew install krew
@@ -90,6 +91,7 @@ $(K9S):
 POPEYE ?= /usr/bin/popeye
 $(POPEYE):
 	$(error Please install popeye: https://github.com/derailed/popeye#installation)
+
 KREW ?= /usr/bin/kubectl-krew
 $(KREW):
 	$(error Please install krew: https://github.com/kubernetes-sigs/krew#installation)
@@ -99,6 +101,7 @@ endif
 KUBETREE := $(HOME)/.krew/bin/kubectl-tree
 $(KUBETREE): $(KUBECTL) $(KREW)
 	$(KUBECTL) krew install tree
+
 # https://github.com/k14s/ytt/releases
 YTT_VERSION := 0.23.0
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
@@ -131,7 +134,7 @@ linode: $(LINODE_CLI) linode-cli-token
 
 .PHONY: linodes
 linodes: linode
-	@$(LINODE) linodes list
+	$(LINODE) linodes list
 
 # https://developers.linode.com/api/v4/lke-clusters/#post
 .PHONY: lke-new
@@ -148,7 +151,7 @@ lke-new: $(CURL) linode-cli-token
 LKE_LS := $(LINODE) --all lke clusters-list
 .PHONY: lke-ls
 lke-ls: linode
-	@$(LKE_LS)
+	$(LKE_LS)
 
 $(LKE_CONFIGS):
 	@mkdir -p $(LKE_CONFIGS)
@@ -177,11 +180,11 @@ endif
 
 .PHONY: lke-nodes
 lke-nodes: $(KUBECTL) lke-config-hint
-	@$(KUBECTL) get --output=wide nodes
+	$(KUBECTL) get --output=wide nodes
 
 .PHONY: lke-show-all
 lke-show-all: $(KUBECTL) lke-config-hint
-	@$(KUBECTL) get all --all-namespaces
+	$(KUBECTL) get all --all-namespaces
 
 # https://github.com/k14s/ytt/blob/master/examples/k8s-docker-secret/config.yml
 .PHONY: lke-dnsimple-secret
@@ -212,14 +215,14 @@ lke-ten-changelog-inspect: $(KUBETREE)
 # https://octant.dev/
 .PHONY: lke-inspect
 lke-inspect: $(OCTANT) lke-config-hint
-	@$(OCTANT)
+	$(OCTANT)
 
 # https://github.com/derailed/k9s
 .PHONY: lke-cli
 lke-cli: $(K9S) lke-config-hint
-	@$(K9S)
+	$(K9S)
 
 # https://github.com/derailed/popeye
 .PHONY: lke-sanitize
 lke-sanitize: $(POPEYE) lke-config-hint
-	@$(POPEYE)
+	$(POPEYE)
