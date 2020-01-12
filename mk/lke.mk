@@ -60,6 +60,10 @@ $(K9S):
 POPEYE ?= /usr/local/bin/popeye
 $(POPEYE):
 	@brew install derailed/popeye/popeye
+KREW ?= /usr/local/bin/kubectl-krew
+$(KREW):
+	brew install krew
+krew: $(KREW)
 endif
 ifeq ($(PLATFORM),Linux)
 LINODE_CLI ?= /usr/bin/linode-cli
@@ -86,8 +90,15 @@ $(K9S):
 POPEYE ?= /usr/bin/popeye
 $(POPEYE):
 	$(error Please install popeye: https://github.com/derailed/popeye#installation)
+KREW ?= /usr/bin/kubectl-krew
+$(KREW):
+	$(error Please install krew: https://github.com/kubernetes-sigs/krew#installation)
 endif
 
+# https://github.com/ahmetb/kubectl-tree
+KUBETREE := $(HOME)/.krew/bin/kubectl-tree
+$(KUBETREE): $(KUBECTL) $(KREW)
+	$(KUBECTL) krew install tree
 # https://github.com/k14s/ytt/releases
 YTT_VERSION := 0.23.0
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
@@ -189,9 +200,14 @@ lke-external-dns: $(YTT) $(KUBECTL) lke-config-hint lke-dnsimple-secret
 include $(CURDIR)/mk/ten.mk
 # Copy of https://changelog.com/ten
 .PHONY: lke-ten-changelog
-lke-ten-changelog: $(YTT) $(KUBECTL) lke-config-hint
-	@$(YTT) --file $(CURDIR)/k8s/ten \
-	 | $(KUBECTL) apply --filename -
+lke-ten-changelog: $(YTT) $(KUBECTL) $(KUBETREE) lke-config-hint
+	$(YTT) --file $(CURDIR)/k8s/ten \
+	 | $(KUBECTL) apply --filename - \
+	&& $(KUBECTL) tree deployments ten
+
+.PHONY: lke-ten-changelog-inspect
+lke-ten-changelog-inspect: $(KUBETREE)
+	$(KUBECTL) tree deployments ten
 
 # https://octant.dev/
 .PHONY: lke-inspect
