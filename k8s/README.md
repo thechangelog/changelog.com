@@ -10,7 +10,7 @@ This command will resolve all dependencies, provision a new Linode Kubernetes En
 * container registry (Harbor)
 * continuous delivery (Argo/Flux)
 * monitoring, visualisation & logging (Prometheus, Grafana, Weave Scope & Loki)
-* highly-available database with disaster recovery (Crunchy Data PostgreSQL & pgBackRest + pgMonitor)
+* highly-available database with disaster recovery (Crunchy Data PostgreSQL with pgBackRest & pgMonitor)
 * web app (Phoenix)
 * proxy (Traefik)
 
@@ -18,9 +18,9 @@ If you have a domain that is managed by one of the DNS providers supported by [e
 For example, given a **gerhard.io** domain, it takes 1 command to get the entire Changelog setup running at https://changelog.gerhard.io.
 If you follow the link, you will see exactly what I mean.
 
-Now that you have the entire Changelog setup running in your own LKE cluster, you can see how various pieces fit together, experiment and better understand one way of combining a small subset of K8S-native services.
+Once you get the entire Changelog setup running in your own LKE cluster, you can see how various pieces fit together, experiment and better understand one way of combining a small subset of services that are made to run on K8S out of the box.
 As you do this, I encourage you to explore the other make targets that begin with `lke-`, such as `lke-cli`, `lke-inspect`, etc.
-Each of these commands makes it easy to use tools that are wonderful `kubectl` companions, like [Octant](https://octant.dev/), [K9S]()https://github.com/derailed/k9s & [Popeye](https://github.com/derailed/popeye), [kapp](https://get-kapp.io/), etc.
+Each of these commands makes it easy to use tools that are great `kubectl` companions, like [Octant](https://octant.dev/), [K9S](https://github.com/derailed/k9s) & [Popeye](https://github.com/derailed/popeye), [kapp](https://get-kapp.io/), etc.
 They all run locally, on your host, and can be used with any K8S, including [kind](https://kind.sigs.k8s.io/).
 
 If you find this useful and want to show your appreciation, we welcome your contributions via https://github.com/thechangelog/changelog.com.
@@ -28,7 +28,7 @@ This is the same place where you will find all changelog.com code and configurat
 This post is a follow-up to [The new changelog.com setup for 2019](https://changelog.com/posts/the-new-changelog-setup-for-2019) & [The code behind Changelog's infrastructure](https://changelog.com/posts/the-code-behind-changelog-infrastructure), 
 as well as [Changelog.com is open source](https://changelog.com/posts/changelog-is-open-source).
 
-## Why K8S in 2020?
+## Why K8S for 2020?
 
 ---
 
