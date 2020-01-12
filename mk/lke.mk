@@ -102,6 +102,10 @@ KUBETREE := $(HOME)/.krew/bin/kubectl-tree
 $(KUBETREE): $(KUBECTL) $(KREW)
 	$(KUBECTL) krew install tree
 
+# Make krew plugins available to kubectl
+PATH := $(HOME)/.krew/bin:$(PATH)
+export PATH
+
 # https://github.com/k14s/ytt/releases
 YTT_VERSION := 0.23.0
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
