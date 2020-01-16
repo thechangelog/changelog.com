@@ -9,10 +9,11 @@ services:
     # https://docs.docker.com/compose/compose-file/#volumes
     volumes:
       - postgres:/var/lib/postgresql/data
+      - ./priv:/app/priv
   app:
-    build:
-      context: ./
-      dockerfile: docker/Dockerfile.development
+    # Keep this in lock-step with docker/Dockerfile.production
+    image: thechangelog/runtime:2019-11-27T16.20.17Z
+    command: bash -exec "cd /app && mix deps.get && ( if (mix deps | grep 'mix deps.compile' 1>/dev/null); then mix deps.compile; fi ) && (cd assets && yarn install) && mix do ecto.create, ecto.migrate, phx.server"
     environment:
       DB_URL: "ecto://postgres@db:5432/changelog_dev"
       VIRTUAL_HOST: &host "${HOST:-localhost}"
@@ -21,25 +22,9 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - build:/app/_build
-      - ./assets:/app/assets
-      - node_modules:/app/assets/node_modules
-      - ./config:/app/config
-      - deps:/app/deps
-      - ./lib:/app/lib
-      - ./priv:/app/priv
-      - ./script:/app/script
-      - ./test:/app/test
-      - ./.all-contributorsrc:/app/.all-contributorsrc
-      - ./.credo.exs:/app/.credo.exs
-      - ./.iex.exs:/app/.iex.exs
-      - ./mix.exs:/app/mix.exs
-      - ./mix.lock:/app/mix.lock
+      - ./:/app
     depends_on:
       - db
 
 volumes:
   postgres:
-  build:
-  deps:
-  node_modules:

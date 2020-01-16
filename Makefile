@@ -223,25 +223,9 @@ endif
 .PHONY: as
 as: add-secret
 
-.PHONY: prevent-incompatible-deps-reaching-the-docker-image
-prevent-incompatible-deps-reaching-the-docker-image:
-	@rm -fr deps
-
 .PHONY: create-dirs-mounted-as-volumes
 create-dirs-mounted-as-volumes:
 	@mkdir -p $(CURDIR)/priv/{uploads,db}
-
-.PHONY: build
-build: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## b   | Build changelog.com app container
-	@$(COMPOSE) build
-.PHONY: b
-b: build
-
-.PHONY: build-test
-build-test: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image ## bt  | Build Docker image required to run tests locally
-	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix do deps.get, compile, ecto.create
-.PHONY: bt
-bt: build-test
 
 .PHONY: help
 help:
@@ -289,13 +273,17 @@ configure-ci-coveralls-secret: $(LPASS) $(JQ) $(CURL) circle-token
 cccs: configure-ci-coveralls-secret
 
 .PHONY: contrib
-contrib: $(COMPOSE) prevent-incompatible-deps-reaching-the-docker-image create-dirs-mounted-as-volumes ## c   | Contribute to changelog.com by running a local copy
+contrib: $(COMPOSE) create-dirs-mounted-as-volumes ## c   | Contribute to changelog.com by running a local copy
 	@bash -c "trap '$(COMPOSE) down' INT ; \
 	  $(COMPOSE) up ; \
 	  [[ $$? =~ 0|2 ]] || \
-	    ( echo 'You might want to run $(BOLD)make build contrib$(NORMAL) if app dependencies have changed' && exit 1 )"
+	    ( echo 'You might want to run $(BOLD)make clean contrib$(NORMAL) if app dependencies have changed' && exit 1 )"
 .PHONY: c
 c: contrib
+
+.PHONY: clean
+clean:
+	@rm -fr deps _build assets/node_modules
 
 .PHONY: create-docker-secrets
 create-docker-secrets: $(LPASS) ## cds | Create Docker secrets
@@ -501,12 +489,15 @@ report-deploy-slack: $(CURL)
 	  --header 'Content-type: application/json' \
 	  --data '{"text":"<$(GIT_REPOSITORY)/commit/'$$COMMIT_SHA'|'$${COMMIT_SHA:0:7}'> by <$(GIT_REPOSITORY)/commits?author='$$COMMIT_USER'|'$$COMMIT_USER'> just started, it will be promoted to live when healthy. <$(GIT_REPOSITORY)/blob/master/docker/$(DOCKER_STACK).stack.yml|$(DOCKER_STACK).stack>"}'
 
-.PHONY: rsync-small-uploads-local
-rsync-small-uploads-local: create-dirs-mounted-as-volumes
+.PHONY: rsync-image-uploads-to-local
+rsync-image-uploads-to-local: create-dirs-mounted-as-volumes
 	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
 	  "$(HOST_SSH_USER)@$(HOST):/uploads/{avatars,covers,icons,logos}" $(CURDIR)/priv/uploads/
-.PHONY: rsul
-rsul: rsync-small-uploads-local
+
+.PHONY: rsync-all-uploads-to-local
+rsync-all-uploads-local: create-dirs-mounted-as-volumes
+	@rsync --archive --delete --update --inplace --verbose --progress --human-readable \
+	  "$(HOST_SSH_USER)@$(HOST):/uploads/" $(CURDIR)/priv/uploads/
 
 .PHONY: secrets
 secrets: $(LPASS) ## s   | List all LastPass secrets

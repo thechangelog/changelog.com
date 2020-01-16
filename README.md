@@ -26,8 +26,9 @@ If you have questions about any of the code, holler [@Changelog](https://twitter
 
 ## How can I contribute?
 
-Assuming that you have Docker running locally and docker-compose available, all you have to do is run `rm -fr deps && docker-compose up` in your terminal.
-When you run this command for the first time, it will take around 7 minutes to pull all Docker images, build the app image and start all containers.
+Assuming that you have [Docker](https://docs.docker.com/install/) running locally and `docker-compose` available, all that you have to do is run `docker-compose up` in your terminal.
+
+When you run this command for the first time, it will take around 7 minutes to pull all Docker images, build the app image and start the app and db containers.
 Depending on your internet connection and CPUs used for compiling various artefacts, this can easily take 30 minutes or more.
 Next time you run this command, since all Docker images will be cached, you can expect all containers to be up and running within 30 seconds.
 
@@ -35,14 +36,11 @@ When all containers are up and running, you should see the following output in y
 
 ```
 Starting changelogcom_db_1    ... done
-Starting changelogcom_proxy_1 ... done
 Recreating changelogcom_app_1 ... done
-Attaching to changelogcom_db_1, changelogcom_proxy_1, changelogcom_app_1
+Attaching to changelogcom_db_1, changelogcom_app_1
 ...
 db_1     | LOG:  autovacuum launcher started
 db_1     | LOG:  database system is ready to accept connections
-...
-proxy_1  | dockergen.1 | 2018/07/20 16:01:05 Generated '/etc/nginx/conf.d/default.conf' from 3 containers
 ...
 app_1    | [info] Running ChangelogWeb.Endpoint with Cowboy using http://0.0.0.0:4000
 app_1    | yarn run v1.6.0
@@ -53,19 +51,36 @@ app_1    | Webpack is watching the files…
 ...
 ```
 
-You can access a dev copy of changelog.com locally, at http://localhost:4000
+You can now access a dev copy of changelog.com locally, at http://localhost:4000
 
-When you want to stop all Docker containers required to run a dev copy of changelog.com locally, press `CTRL` key and `c` at the same time (`Ctrl+C`).
-
-If any app dependencies have changed, or the cached Docker app image has diverged from the source code, you will need to re-build it by running `docker-compose build` before you can run `docker-compose up`.
-
-If you are running on macOS or Linux, all the above commands are available as make targets (e.g. `build` &amp; `contrib`).
-Learn about all available commands by running `make` in your terminal.
-
-By default, macOS ships with GNU Make v3.81. Our Makefile requires GNU Make >= 4 which can be installed via `brew install make`.
-By default, the make version that brew installs is invoked via `gmake`. For more info, see `brew info make`.
+When you want to stop all Docker containers, press both `CTRL` and `c` keys at the same time (`Ctrl+C`).
 
 Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
+
+### How do I import a db backup locally?
+
+First ensure that:
+
+* the local changelog containers are stopped, i.e. `docker-compose down`
+* you have an unarchived db backup file in the `priv/db` directory, e.g. `./priv/db/changelog-201910-2020-01-16T19.36.05Z`
+
+Next, run the following commands:
+
+```sh
+docker-compose up db
+# Run in a separate tab/window
+docker-compose exec --user postgres db dropdb changelog_dev
+docker-compose exec --user postgres db createdb changelog_dev
+docker-compose exec --user postgres db psql --file=/app/priv/db/changelog-201910-2020-01-16T19.36.05Z changelog_dev
+```
+
+Finally, stop the db container by pressing both `CTRL` and `c` keys and the same time in the window/tab that you have `docker-compose up db` running.
+
+You can now start the app normally, all changelog.com content at the time the db backup was taken will be available locally.
+
+### How do I get a local copy of all assets?
+
+Run `make rsync-image-uploads-to-local` in your terminal. There is even `make rsync-all-uploads-to-local` 😲
 
 ### Why is Docker for Mac slow?
 
