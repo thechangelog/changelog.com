@@ -230,3 +230,9 @@ lke-cli: $(K9S) lke-config-hint
 .PHONY: lke-sanitize
 lke-sanitize: $(POPEYE) lke-config-hint
 	$(POPEYE)
+
+# https://github.com/kubernetes/ingress-nginx/releases
+.PHONY: lke-nginx-ingress
+lke-nginx-ingress: $(KUBECTL) lke-config-hint
+	$(KUBECTL) apply --filename \
+	  https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.0/deploy/static/mandatory.yaml
