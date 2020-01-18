@@ -46,6 +46,14 @@ as well as [Changelog.com is open source](https://changelog.com/posts/changelog-
 
 ---
 
+[Jim Angel](https://twitter.com/jimmangel/status/1213855850986651648)
+> One of my biggest 💡 moments for Kubernetes was when my perspective shifted from:
+> "K8s needs LTS (long term support), it's too hard to keep up in enterprise environments"
+> to:
+> "We need to keep up with upstream K8s releases and begin treating platforms like software"
+
+---
+
 ## [Linode 2020 Roadmap](https://www.linode.com/2019/12/30/2019-a-year-in-review)
 
 Wanted roadmap items which are planned, sorted by interest (most interesting first):
