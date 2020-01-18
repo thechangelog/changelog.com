@@ -1,13 +1,16 @@
+#@ load("@ytt:data", "data")
 #! https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/dnsimple.md#manifest-for-clusters-with-rbac-enabled
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: external-dns
+  namespace: #@ data.values.namespace
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   name: external-dns
+  namespace: #@ data.values.namespace
 rules:
 - apiGroups: [""]
   resources: ["services"]
@@ -26,6 +29,7 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: external-dns-viewer
+  namespace: #@ data.values.namespace
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -33,4 +37,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: external-dns
-  namespace: default
+  namespace: #@ data.values.namespace

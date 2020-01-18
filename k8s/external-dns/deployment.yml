@@ -6,7 +6,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: external-dns
-  namespace: default
+  namespace: #@ data.values.namespace
 spec:
   selector:
     matchLabels:
