@@ -27,6 +27,12 @@ db-restore-interactive: ## dbri| Restore DB from backup interactively
 .PHONY: dbri
 dbri: db-restore-interactive
 
+.PHONY: db-restore-interactive-local
+db-restore-interactive-local:
+	@$(DB_RESTORE_CONTEXT)
+.PHONY: dbril
+dbril: db-restore-interactive-local
+
 define STACK_PUBLIC_IP
 $$(dig +short $(DOCKER_STACK).changelog.com)
 endef
