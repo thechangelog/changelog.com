@@ -50,7 +50,8 @@ ifeq ($(PLATFORM),Darwin)
 DOCKER ?= /usr/local/bin/docker
 COMPOSE ?= $(DOCKER)-compose
 $(DOCKER) $(COMPOSE):
-	@brew cask install docker
+	brew cask install docker \
+	&& open -a Docker
 endif
 ifeq ($(PLATFORM),Linux)
 DOCKER ?= /usr/bin/docker
