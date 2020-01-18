@@ -7,6 +7,7 @@ configs:
   netdata_nginx_config:
     file: ./netdata/nginx.conf
 
+# https://docs.docker.com/compose/compose-file/#volumes
 volumes:
   changelog.com:
 
@@ -90,7 +91,7 @@ services:
       PGDATABASE: *pg_db
     healthcheck:
       test: ["CMD", "pg_isready"]
-      start_period: 5s
+      start_period: 30s
     image: postgres:9.5.4
     volumes:
       - ${PWD}/priv/db:/var/lib/postgresql/data:rw
@@ -115,6 +116,8 @@ services:
   #       failure_action: rollback
   #       monitor: 15s
   #       order: stop-first
+  #   depends_on:
+  #     - db
   #   environment:
   #     # https://www.postgresql.org/docs/9.5/libpq-envars.html
   #     PGHOST: db
@@ -122,12 +125,10 @@ services:
   #     PGDATABASE: *pg_db
   #     AWS_REGION: "us-east-1"
   #     AWS_S3_BUCKET: "changelog-com-backups-dev"
-  #     AWS_ACCESS_KEY: "no"
-  #     AWS_SECRET_KEY: "way"
   #     BACKUP_DB_EVERY_N_SECONDS: 60
-  #   image: thechangelog/db_backup
-  #   depends_on:
-  #     - db
+  #     BACKUPS_AWS_ACCESS_KEY: "no"
+  #     BACKUPS_AWS_SECRET_KEY: "way"
+  #     image: thechangelog/db_backup:201910
   app:
     deploy:
       replicas: 1
@@ -137,16 +138,16 @@ services:
       update_config:
         failure_action: rollback
         # start_period + (interval * retries)
-        monitor: 115s
+        monitor: 180s
         order: start-first
     healthcheck:
       test: ["CMD", "curl", "--output", "/dev/null", "--fail", "--fail-early",  "--silent",  "http://127.0.0.1:4000/health"]
       interval: 15s
       timeout: 15s
-      retries: 3
-      start_period: 60s
+      retries: 4
+      start_period: 120s
     environment:
-      MAKEFILE: Makefile
+      MAKEFILE: Makefile.201910
       NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
       PORT: 4000
@@ -227,13 +228,13 @@ services:
         # start_period + interval
         monitor: 20s
         order: start-first
-    image: thechangelog/proxy
     healthcheck:
       test: ["CMD", "nginx", "-t"]
       interval: 10s
       timeout: 10s
       retries: 0
       start_period: 5s
+    image: thechangelog/proxy
     environment:
       DEFAULT_HOST: *host
     ports:
