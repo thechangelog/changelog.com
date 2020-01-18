@@ -16,6 +16,12 @@ load http
   is_jpg
 }
 
+@test "http://$FQDN/10 -> https://$FQDN/ten" {
+  http_get "http://$FQDN/10"
+
+  grep "Location: https://$FQDN/ten" <<< "$output"
+}
+
 @test "http://$FQDN/day-one-recap-gophercon-2016 -> https://$FQDN/posts/day-one-recap-gophercon-2016" {
   http_get "http://$FQDN/day-one-recap-gophercon-2016"
 
@@ -25,7 +31,7 @@ load http
 @test "http://$FQDN/posts/the-new-changelog-setup-for-2019 -> https://$FQDN/posts/the-new-changelog-setup-for-2019" {
   http_get "http://${FQDN}/posts/the-new-changelog-setup-for-2019"
 
-  grep "location: https://$FQDN/posts/the-new-changelog-setup-for-2019\s" <<< "$output"
+  grep "Location: https://$FQDN/posts/the-new-changelog-setup-for-2019\s" <<< "$output"
 }
 
 @test "http://changelog.fm @ $IPv4 -> https://changelog.com/podcast" {
