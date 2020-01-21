@@ -17,12 +17,22 @@
 </div>
 
 <div class="ui basic segment">
-<%= if Enum.any?(@active) do %>
-  <h2 class="ui header">Active Requests</h2>
-  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @active, status: :active})) %>
+<%= if Enum.any?(@fresh) do %>
+  <h2 class="ui header">Fresh</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @fresh, status: :fresh})) %>
 <% end %>
 
-<%= if Enum.any?(@archived) do %>
-  <h2 class="ui header">Archived Requests</h2>
-  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @archived, status: :archived})) %>
+<%= if Enum.any?(@pending) do %>
+  <h2 class="ui header">Pending</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @pending, status: :pending})) %>
+<% end %>
+
+<%= if Enum.any?(@accepted) do %>
+  <h2 class="ui header">Accepted</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @accepted, status: :accepted})) %>
+<% end %>
+
+<%= if Enum.any?(@declined) do %>
+  <h2 class="ui header">Declined</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @declined, status: :declined})) %>
 <% end %>

@@ -33,6 +33,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     episode_requests =
       podcast
       |> assoc(:episode_requests)
+      |> EpisodeRequest.sans_episode()
       |> EpisodeRequest.fresh()
       |> EpisodeRequest.newest_first()
       |> EpisodeRequest.preload_all()
@@ -111,7 +112,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> render(:show)
   end
 
-  def new(conn, _params, podcast) do
+  def new(conn, params, podcast) do
     podcast =
       podcast
       |> Podcast.preload_topics()
@@ -135,6 +136,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         episode_topics: default_topics,
         episode_hosts: default_hosts,
         recorded_live: podcast.recorded_live,
+        request_id: params["request_id"],
         slug: default_slug)
       |> Episode.admin_changeset()
 
@@ -287,7 +289,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp episode_requests(podcast) do
     podcast
     |> assoc(:episode_requests)
-    |> EpisodeRequest.active()
+    |> EpisodeRequest.sans_episode()
+    |> EpisodeRequest.fresh()
     |> EpisodeRequest.newest_first()
     |> EpisodeRequest.preload_submitter()
     |> Repo.all()

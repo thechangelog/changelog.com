@@ -22,10 +22,13 @@ defmodule Changelog.EpisodeRequest do
     timestamps()
   end
 
-  def fresh(query \\ __MODULE__), do: from(q in query, where: q.status == ^:fresh)
-  def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:fresh, ^:pending])
-  def pending(query \\ __MODULE__), do: from(q in query, where: q.status == ^:pending)
-  def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
+  def fresh(query \\ __MODULE__),        do: from(q in query, where: q.status == ^:fresh)
+  def active(query \\ __MODULE__),       do: from(q in query, where: q.status in [^:fresh, ^:pending])
+  def pending(query \\ __MODULE__),      do: from(q in query, where: q.status == ^:pending)
+  def declined(query \\ __MODULE__),     do: from(q in query, where: q.status == ^:declined)
+
+  def with_episode(query \\ __MODULE__), do: from(q in query, join: e in Episode, on: q.id == e.request_id)
+  def sans_episode(query \\ __MODULE__), do: from(q in query, left_join: e in Episode, on: q.id == e.request_id, where: is_nil(e.id))
 
   def submission_changeset(struct, params \\ %{}) do
     struct

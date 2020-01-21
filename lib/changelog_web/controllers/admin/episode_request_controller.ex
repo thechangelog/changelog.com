@@ -15,22 +15,40 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
   def index(conn, _params, podcast) do
     requests = assoc(podcast, :episode_requests)
 
-    active =
+    fresh =
       requests
-      |> EpisodeRequest.active()
+      |> EpisodeRequest.sans_episode()
+      |> EpisodeRequest.fresh()
       |> EpisodeRequest.newest_first()
       |> EpisodeRequest.preload_all()
       |> Repo.all()
 
-    archived =
+    pending =
+      requests
+      |> EpisodeRequest.sans_episode()
+      |> EpisodeRequest.pending()
+      |> EpisodeRequest.newest_first()
+      |> EpisodeRequest.preload_all()
+      |> Repo.all()
+
+    accepted =
+      requests
+      |> EpisodeRequest.with_episode()
+      |> EpisodeRequest.newest_first()
+      |> EpisodeRequest.preload_all()
+      |> Repo.all()
+
+    declined =
       requests
       |> EpisodeRequest.declined()
       |> EpisodeRequest.preload_all()
       |> Repo.all()
 
     conn
-    |> assign(:active, active)
-    |> assign(:archived, archived)
+    |> assign(:fresh, fresh)
+    |> assign(:pending, pending)
+    |> assign(:accepted, accepted)
+    |> assign(:declined, declined)
     |> render(:index)
   end
 

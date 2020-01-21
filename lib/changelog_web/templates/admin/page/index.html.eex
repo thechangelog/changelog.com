@@ -15,7 +15,7 @@
 <%= if Enum.any?(@episode_requests) do %>
 <div class="ui basic segment">
   <h1 class="ui header">Episode requests</h1>
-  <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :active})) %>
+  <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
 </div>
 <% end %>
 

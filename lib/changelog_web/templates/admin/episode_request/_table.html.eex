@@ -32,9 +32,10 @@
       <td><%= request.pitch |> md_to_text() |> truncate(80) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= if Policies.EpisodeRequest.show(@current_user, podcast), do: icon_link("eye", to: admin_podcast_episode_request_path(@conn, :show, podcast.slug, request)) %>
-        <%= if @status == :active do %>
-          <%= if Policies.EpisodeRequest.decline(@current_user, podcast), do: icon_link("thumbs down", to: admin_podcast_episode_request_path(@conn, :decline, podcast.slug, request), method: :delete, data: [confirm: "Decline this request?"]) %>
+          <%= if Policies.EpisodeRequest.show(@current_user, podcast), do: icon_link("eye", to: admin_podcast_episode_request_path(@conn, :show, podcast.slug, request), title: "View Details") %>
+        <%= if Enum.member?(~w(fresh pending)a, @status) do %>
+          <%= if Policies.Episode.create(@current_user, podcast), do: icon_link("add", to: admin_podcast_episode_path(@conn, :new, podcast.slug, request_id: request.id), title: "Start Episode") %>
+          <%= if Policies.EpisodeRequest.decline(@current_user, podcast), do: icon_link("thumbs down", to: admin_podcast_episode_request_path(@conn, :decline, podcast.slug, request), title: "Decline", method: :delete, data: [confirm: "Decline this request?"]) %>
         <% end %>
         </div>
       </td>
