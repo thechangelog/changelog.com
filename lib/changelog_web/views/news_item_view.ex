@@ -155,9 +155,6 @@ defmodule ChangelogWeb.NewsItemView do
       render("toolbar/_button_video.html", conn: conn, item: item, id: id)
     end
   end
-  def render_toolbar_button(conn, item = %{image: image}) when not is_nil(image) do
-    render("toolbar/_button_image.html", conn: conn, item: item)
-  end
   def render_toolbar_button(_conn, _item), do: nil
 
   def render_youtube_embed(nil), do: nil

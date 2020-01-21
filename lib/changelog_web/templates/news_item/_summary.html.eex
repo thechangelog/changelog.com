@@ -1,10 +1,9 @@
 <article class="news_item js-track-news" data-news-type="news" data-news-id="<%= hashid(@item) %>">
   <%= render("_header.html", assigns) %>
-<%= if @item.story do %>
-  <%= link to: permalink_path(@conn, @item), class: "news_item-description", data: permalink_data(@item) do %>
-    <p><%= @item.story |> md_to_text %></p>
-    <p class="news_item-description-continue"><span>read more</span></p>
-  <% end %>
-<% end %>
-  <%= render("_toolbar.html", assigns) %>
+  <%= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
+  <div class="news_item-content richtext">
+    <%= @item.story |> md_to_html() |> raw() %>
+    <%= video_embed(@item) %>
+  </div>
+  <%= image_link(@item) %>
 </article>
