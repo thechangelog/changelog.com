@@ -1,3 +1,5 @@
+<% participants = participants(@episode) %>
+
 <article class="episode">
   <header class="episode-header">
     <div class="episode-header-wrap">
@@ -14,11 +16,10 @@
         <h3 class="episode-header-subtitle"><%= @episode.subtitle %></h3>
       <% end %>
 
-      <% {header, people} = if Enum.any?(@episode.guests), do: {"Guests", @episode.guests}, else: {"Hosts", @episode.hosts} %>
       <div class="episode-header-guests">
-        <h4 class="visually_hidden"><%= header %></h4>
-        <div class="avatar_list <%= if length(people) > 6, do: "avatar_list--large" %>">
-          <%= for person <- people do %>
+        <h4 class="visually_hidden">Featuring</h4>
+        <div class="avatar_list <%= if length(participants) > 6, do: "avatar_list--large" %>">
+          <%= for person <- participants do %>
             <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
               <%= lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
             <% end %>
@@ -77,7 +78,6 @@
     </div>
 
     <div class="episode-body-details episode-body-details--<%= @podcast.slug %>">
-      <% participants = participants(@episode) %>
       <%= if Enum.any?(participants) do %>
         <section class="episode-body-section">
           <a id="featuring" class="anchor"></a>
