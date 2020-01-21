@@ -33,7 +33,10 @@
 
 <%= if Enum.any?(@episode_requests) do %>
 <div class="ui basic segment">
-  <h1 class="ui header">Requested episodes</h1>
+  <h2 class="ui header"><%= link("Requests", to: admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
+  &raquo;
+  Fresh
+  </h2>
   <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
 </div>
 <% end %>

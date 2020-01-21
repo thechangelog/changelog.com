@@ -90,6 +90,19 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
     |> redirect(to: admin_podcast_episode_request_path(conn, :index, podcast.slug))
   end
 
+  def pend(conn, %{"id" => id}, podcast) do
+    request =
+      podcast
+      |> assoc(:episode_requests)
+      |> Repo.get!(id)
+
+    EpisodeRequest.pend!(request)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: admin_podcast_episode_request_path(conn, :index, podcast.slug))
+  end
+
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
     podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts()
     assign(conn, :podcast, podcast)
