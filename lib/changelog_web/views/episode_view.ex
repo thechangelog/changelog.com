@@ -98,6 +98,15 @@ defmodule ChangelogWeb.EpisodeView do
     "#{episode.podcast.name} #{number_with_pound(episode)}"
   end
 
+  def smart_subtitle(%{subtitle: subtitle}) do
+    cond do
+      is_nil(subtitle) -> ""
+      String.starts_with?(subtitle, "with ") -> subtitle
+      String.starts_with?(subtitle, "featuring ") -> subtitle
+      true -> "(#{subtitle})"
+    end
+  end
+
   def sponsorships_with_dark_logo(episode) do
     Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.dark_logo) end)
   end

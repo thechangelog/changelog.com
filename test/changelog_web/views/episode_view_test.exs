@@ -67,4 +67,18 @@ defmodule ChangelogWeb.EpisodeViewTest do
       assert numbered_title(ep, "#") == "Test"
     end
   end
+
+  describe "smart_subtitle/1" do
+    test "it leaves subtitles that begin with 'with' alone" do
+      assert smart_subtitle(%{subtitle: "with Jerod"}) == "with Jerod"
+    end
+
+    test "it leaves subtitles that begin with 'featuring' alone" do
+      assert smart_subtitle(%{subtitle: "featuring Rachel"}) == "featuring Rachel"
+    end
+
+    test "it wraps subtitle in parentheses when it is a regular sentence" do
+      assert smart_subtitle(%{subtitle: "setting yourself up for success, not failure"}) == "(setting yourself up for success, not failure)"
+    end
+  end
 end
