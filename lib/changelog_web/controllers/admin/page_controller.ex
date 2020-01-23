@@ -45,6 +45,7 @@ defmodule ChangelogWeb.Admin.PageController do
 
   defp episode_requests do
     EpisodeRequest.fresh()
+    |> EpisodeRequest.sans_episode()
     |> EpisodeRequest.newest_first()
     |> EpisodeRequest.preload_all()
     |> Repo.all()
