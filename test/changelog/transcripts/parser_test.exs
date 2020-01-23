@@ -28,16 +28,16 @@ defmodule Changelog.Transcripts.ParserTest do
 
     people_ids =
       parsed
-      |> Enum.map(&(&1.person_id))
-      |> Enum.uniq
+      |> Enum.map(&(&1["person_id"]))
+      |> Enum.uniq()
       |> Enum.reject(&is_nil/1)
 
     assert people_ids == [adam.id, jerod.id, raquel.id]
 
     titles =
       parsed
-      |> Enum.map(&(&1.title))
-      |> Enum.uniq
+      |> Enum.map(&(&1["title"]))
+      |> Enum.uniq()
 
     assert titles == ["Adam Stacoviak", "Jerod Santo", "Raquel Vélez", "Break"]
   end
@@ -55,16 +55,16 @@ defmodule Changelog.Transcripts.ParserTest do
 
     people_ids =
       parsed
-      |> Enum.map(&(&1.person_id))
-      |> Enum.uniq
+      |> Enum.map(&(&1["person_id"]))
+      |> Enum.uniq()
       |> Enum.reject(&is_nil/1)
 
     assert people_ids == [mikeal.id, alex.id, rachel.id]
 
     titles =
       parsed
-      |> Enum.map(&(&1.title))
-      |> Enum.uniq
+      |> Enum.map(&(&1["title"]))
+      |> Enum.uniq()
 
     assert titles == ["Mikeal Rogers", "Alex Sexton", "Rachel White", "Break"]
   end
