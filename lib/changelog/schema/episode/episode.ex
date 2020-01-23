@@ -2,8 +2,8 @@ defmodule Changelog.Episode do
   use Changelog.Schema, default_sort: :published_at
 
   alias Changelog.{EpisodeHost, EpisodeGuest, EpisodeRequest, EpisodeTopic,
-                   EpisodeStat, EpisodeSponsor, Files, NewsItem, Podcast,
-                   Regexp, Transcripts}
+                   EpisodeStat, EpisodeSponsor, Files, NewsItem, Notifier,
+                   Podcast, Regexp, Transcripts}
   alias ChangelogWeb.{EpisodeView, TimeView}
 
   defenum Type, full: 0, bonus: 1, trailer: 2
@@ -81,6 +81,10 @@ defmodule Changelog.Episode do
     fields = __MODULE__.__schema__(:fields) |> Enum.reject(&(&1 == :transcript))
     from(q in query, select: ^fields)
   end
+
+  def has_transcript(%{transcript: nil}), do: false
+  def has_transcript(%{transcript: []}), do: false
+  def has_transcript(_), do: true
 
   def is_public(episode, as_of \\ Timex.now) do
     is_published(episode) && Timex.before?(episode.published_at, as_of)
@@ -216,21 +220,28 @@ defmodule Changelog.Episode do
 
     episode
     |> change(%{download_count: new_downloads, reach_count: new_reach})
-    |> Repo.update!
+    |> Repo.update!()
   end
 
   def update_notes(episode, text) do
     episode
     |> change(notes: text)
-    |> Repo.update!
+    |> Repo.update!()
   end
 
   def update_transcript(episode, text) do
     parsed = Transcripts.Parser.parse_text(text, participants(episode))
 
-    episode
-    |> change(transcript: parsed)
-    |> Repo.update!
+    updated =
+      episode
+      |> change(transcript: parsed)
+      |> Repo.update!()
+
+    if !has_transcript(episode) && has_transcript(updated) do
+      Task.start_link(fn -> Notifier.notify(updated) end)
+    end
+
+    updated
   end
 
   defp derive_bytes_and_duration(changeset) do

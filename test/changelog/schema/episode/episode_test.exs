@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeTest do
 
   import Mock
 
-  alias Changelog.{Episode}
+  alias Changelog.{Episode, Notifier}
   alias ChangelogWeb.{EpisodeView, PodcastView}
 
   describe "admin_changeset" do
@@ -83,6 +83,35 @@ defmodule Changelog.EpisodeTest do
     end
   end
 
+  # TODO I can't make these tests pass with `Task.start_link/1` even though
+  # they pass when I use `Task.async` and `Task.await`
+  #
+  # describe "update_transcript/2" do
+  #   test "it calls the Notifier when transcript is first set" do
+  #     with_mock(Notifier, [notify: fn(_) -> true end]) do
+  #       episode = insert(:episode)
+  #       Episode.update_transcript(episode, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n")
+  #       assert called(Notifier.notify(:_))
+  #     end
+  #   end
+
+  #   test "it does not call the Notifier when transcript is updated" do
+  #     with_mock(Notifier, [notify: fn(_) -> true end]) do
+  #       episode = insert(:episode, transcript: [%{"title" => "Host", "person_id" => nil, "text" => "Welcome!"}])
+  #       Episode.update_transcript(episode, "**Host:** Welcome!")
+  #       refute called(Notifier.notify(:_))
+  #     end
+  #   end
+
+  #   test "it does not call the Notifier when transcript is not set" do
+  #     with_mock(Notifier, [notify: fn(_) -> true end]) do
+  #       episode = insert(:episode)
+  #       Episode.update_transcript(episode, "")
+  #       refute called(Notifier.notify(:_))
+  #     end
+  #   end
+  # end
+
   describe "search" do
     setup do
       {:ok, phoenix: insert(:published_episode, slug: "phoenix-episode", title: "Phoenix", summary: "A web framework for Elixir", notes: "Chris McCord"),
@@ -120,7 +149,21 @@ defmodule Changelog.EpisodeTest do
     end
   end
 
-  describe "is_public" do
+  describe "has_transcript/1" do
+    test "is false when transcript is nil" do
+      refute Episode.has_transcript(build(:episode, transcript: nil))
+    end
+
+    test "is false when transcript is empty" do
+      refute Episode.has_transcript(build(:episode, transcript: []))
+    end
+
+    test "is true otherwise" do
+      assert Episode.has_transcript(build(:episode, transcript: [{}]))
+    end
+  end
+
+  describe "is_public/1" do
     test "is false when episode isn't published" do
       refute Episode.is_public(build(:episode))
     end
@@ -134,7 +177,7 @@ defmodule Changelog.EpisodeTest do
     end
   end
 
-  describe "is_publishable" do
+  describe "is_publishable/1" do
     test "is false when episode is missing required fields" do
       refute Episode.is_publishable(build(:episode))
     end

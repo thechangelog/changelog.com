@@ -91,6 +91,10 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.episode_published(known_subscription(), known_episode())
   end
 
+  def episode_transcribed_email do
+    Email.episode_transcribed(latest_person(), known_episode())
+  end
+
   def guest_welcome_email do
     latest_person()
     |> Person.refresh_auth_token()

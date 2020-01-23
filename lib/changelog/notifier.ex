@@ -1,6 +1,6 @@
 defmodule Changelog.Notifier do
-  alias Changelog.{Episode, Mailer, NewsItem, NewsItemComment, Podcast, Repo,
-                   Subscription, Slack}
+  alias Changelog.{Episode, Mailer, NewsItem, NewsItemComment, Person, Podcast,
+                   Repo, Subscription, Slack}
   alias ChangelogWeb.Email
 
   def notify(item = %NewsItem{type: :audio}) do
@@ -10,7 +10,7 @@ defmodule Changelog.Notifier do
       |> Map.get(:object)
       |> Episode.preload_all()
 
-    deliver_guest_thanks_emails(episode)
+    deliver_episode_guest_thanks_emails(episode)
     deliver_podcast_subscription_emails(episode)
     deliver_slack_new_episode_message(episode.podcast, item.url)
   end
@@ -44,6 +44,13 @@ defmodule Changelog.Notifier do
       |> apply(mailer, [recipient, comment])
       |> Mailer.deliver_later()
     end)
+  end
+  def notify(episode = %Episode{}) do
+    episode = Episode.preload_all(episode)
+
+    for person <- "jerod@changelog.com" |> Person.with_email() |> Repo.all() do
+      deliver_episode_transcribed_email(person, episode)
+    end
   end
 
   defp list_of_comment_mention_recipients(comment) do
@@ -88,12 +95,16 @@ defmodule Changelog.Notifier do
     end
   end
 
-  defp deliver_guest_thanks_emails(episode) do
+  defp deliver_episode_guest_thanks_emails(episode) do
     for eg <- Enum.filter(episode.episode_guests, &(&1.thanks)) do
       eg.person
       |> Email.guest_thanks(episode)
       |> Mailer.deliver_later()
     end
+  end
+
+  defp deliver_episode_transcribed_email(person, episode) do
+    person |> Email.episode_transcribed(episode) |> Mailer.deliver_later()
   end
 
   defp deliver_podcast_subscription_emails(episode) do

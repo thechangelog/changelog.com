@@ -73,6 +73,16 @@ defmodule ChangelogWeb.Email do
     |> render(:episode_published)
   end
 
+  def episode_transcribed(person, episode) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug} Transcribed")
+    |> to(person)
+    |> subject("Transcript published for #{episode.podcast.name} #{episode.slug}")
+    |> assign(:person, person)
+    |> assign(:episode, episode)
+    |> render(:episode_transcribed)
+  end
+
   def guest_thanks(person, episode) do
     personal_email()
     |> put_header("X-CMail-GroupName", "Guest Thanks")

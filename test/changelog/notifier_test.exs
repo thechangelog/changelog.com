@@ -7,7 +7,7 @@ defmodule Changelog.NotifierTest do
   alias Changelog.{Notifier, Slack, Subscription}
   alias ChangelogWeb.Email
 
-  describe "notify with news item comment" do
+  describe "notify/1 with news item comment" do
     setup_with_mocks([
       {Slack.Client, [], [message: fn(_, _) -> true end]}
     ]) do
@@ -130,7 +130,7 @@ defmodule Changelog.NotifierTest do
     end
   end
 
-  describe "notify with episode item" do
+  describe "notify/1 with episode item" do
     setup_with_mocks([
       {Slack.Client, [], [message: fn(_, _) -> true end]}
     ]) do
@@ -186,7 +186,7 @@ defmodule Changelog.NotifierTest do
     end
   end
 
-  describe "notify with regular item" do
+  describe "notify/1 with regular item" do
     test "when item has no submitter or author" do
       item = insert(:news_item)
       Notifier.notify(item)
@@ -236,6 +236,15 @@ defmodule Changelog.NotifierTest do
       Notifier.notify(item)
       assert_delivered_email Email.authored_news_published(author, item)
       assert_delivered_email Email.submitted_news_published(submitter, item)
+    end
+  end
+
+  describe "notify/1 with an episode" do
+    test "when episode has no transcript subscriptions (bc they aren't a thing yet" do
+      person = insert(:person, email: "jerod@changelog.com")
+      episode = insert(:episode)
+      Notifier.notify(episode)
+      assert_delivered_email Email.episode_transcribed(person, episode)
     end
   end
 end
