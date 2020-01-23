@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeTest do
 
   import Mock
 
-  alias Changelog.{Episode, Notifier}
+  alias Changelog.{Episode}
   alias ChangelogWeb.{EpisodeView, PodcastView}
 
   describe "admin_changeset" do
@@ -88,26 +88,26 @@ defmodule Changelog.EpisodeTest do
   #
   # describe "update_transcript/2" do
   #   test "it calls the Notifier when transcript is first set" do
-  #     with_mock(Notifier, [notify: fn(_) -> true end]) do
+  #     with_mock(Changelog.Notifier, [notify: fn(_) -> true end]) do
   #       episode = insert(:episode)
   #       Episode.update_transcript(episode, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n")
-  #       assert called(Notifier.notify(:_))
+  #       assert called(Changelog.Notifier.notify(:_))
   #     end
   #   end
 
   #   test "it does not call the Notifier when transcript is updated" do
-  #     with_mock(Notifier, [notify: fn(_) -> true end]) do
+  #     with_mock(Changelog.Notifier, [notify: fn(_) -> true end]) do
   #       episode = insert(:episode, transcript: [%{"title" => "Host", "person_id" => nil, "text" => "Welcome!"}])
   #       Episode.update_transcript(episode, "**Host:** Welcome!")
-  #       refute called(Notifier.notify(:_))
+  #       refute called(Changelog.Notifier.notify(:_))
   #     end
   #   end
 
   #   test "it does not call the Notifier when transcript is not set" do
-  #     with_mock(Notifier, [notify: fn(_) -> true end]) do
+  #     with_mock(Changelog.Notifier, [notify: fn(_) -> true end]) do
   #       episode = insert(:episode)
   #       Episode.update_transcript(episode, "")
-  #       refute called(Notifier.notify(:_))
+  #       refute called(Changelog.Notifier.notify(:_))
   #     end
   #   end
   # end
