@@ -1,7 +1,7 @@
 <div class="ui stackable centered three column grid">
   <div class="ui column">
     <h3 class="ui dividing header">7 day reach</h3>
-    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_7], @reach[:prev_7]) %>">
+    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_7], @reach[:then_7]) %>">
       <div class="statistic">
         <div class="value"><%= @reach[:now_7] |> comma_separated() %></div>
         <div class="label">current</div>
@@ -22,7 +22,7 @@
 
   <div class="ui column">
     <h3 class="ui dividing header">30 day reach</h3>
-    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_30], @reach[:prev_30]) %>">
+    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_30], @reach[:then_30]) %>">
       <div class="statistic">
         <div class="value"><%= @reach[:now_30] |> comma_separated() %></div>
         <div class="label">current</div>
@@ -42,7 +42,7 @@
 
   <div class="ui column">
     <h3 class="ui dividing header">90 day reach</h3>
-    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_90], @reach[:prev_90]) %>">
+    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_90], @reach[:then_90]) %>">
       <div class="statistic">
         <div class="value"><%= @reach[:now_90] |> comma_separated() %></div>
         <div class="label">current</div>
