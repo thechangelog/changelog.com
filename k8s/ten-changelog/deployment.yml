@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: #@ data.values.name
+  namespace: #@ data.values.namespace
   labels:
     app: #@ data.values.name
 spec:

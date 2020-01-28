@@ -2,8 +2,11 @@
 #! https://github.com/k14s/ytt/blob/master/examples/data-values/values.yml
 #! If necessary, these values can be overwritten in a number of ways: https://github.com/k14s/ytt/blob/master/docs/ytt-data-values.md
 ---
-name: ten
-replicas: 6 #! worker nodes * 2
-http_port: 80
 fqdn: ten.changelog.com
+http_port: 80
 image: thechangelog/ten:2019-11-01T10.10.10Z
+#! provided just-in-time
+name:
+#! provided just-in-time
+namespace:
+replicas: 6 #! worker nodes * 2

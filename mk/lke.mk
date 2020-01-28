@@ -32,6 +32,7 @@ $(PIP):
 LINODE_CLI ?= /usr/local/bin/linode-cli
 $(LINODE_CLI): $(PIP)
 	$(PIP) install linode-cli
+	touch $(@)
 
 linode-cli-upgrade: $(PIP)
 	$(PIP) install --upgrade linode-cli
@@ -140,6 +141,10 @@ linode: $(LINODE_CLI) linode-cli-token
 linodes: linode
 	$(LINODE) linodes list
 
+.PHONY: nodebalancers
+nodebalancers: linode
+	$(LINODE) nodebalancers list
+
 # https://developers.linode.com/api/v4/lke-clusters/#post
 .PHONY: lke-new
 lke-new: $(CURL) linode-cli-token
@@ -182,43 +187,45 @@ ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
 	; printf "to one of the configs stored in $(BOLD)$(LKE_CONFIGS)$(NORMAL)\n"
 endif
 
+.PHONY: lke
+lke: $(KUBECTL) lke-config-hint
+
 .PHONY: lke-nodes
-lke-nodes: $(KUBECTL) lke-config-hint
+lke-nodes: lke
 	$(KUBECTL) get --output=wide nodes
 
 .PHONY: lke-show-all
-lke-show-all: $(KUBECTL) lke-config-hint
+lke-show-all: lke
 	$(KUBECTL) get all --all-namespaces
 
+EXTERNAL_DNS_DEPLOYMENT := external-dns
+EXTERNAL_DNS_NAMESPACE := $(EXTERNAL_DNS_DEPLOYMENT)
+EXTERNAL_DNS_TREE := $(KUBETREE) deployments $(EXTERNAL_DNS_DEPLOYMENT) --namespace $(EXTERNAL_DNS_NAMESPACE)
 # https://github.com/k14s/ytt/blob/master/examples/k8s-docker-secret/config.yml
-.PHONY: lke-dnsimple-secret
-lke-dnsimple-secret: $(KUBECTL) dnsimple-creds lke-config-hint
-	@$(KUBECTL) create secret generic dnsimple \
-	  --from-literal=token="$(DNSIMPLE_TOKEN)" --dry-run --output json \
-	 | $(KUBECTL) apply --filename -
-
 .PHONY: lke-external-dns
-lke-external-dns: $(YTT) $(KUBECTL) lke-config-hint lke-dnsimple-secret
-	@printf "$(BOLD)Configuring LKE cluster to manage DNS ...$(NORMAL)\n" \
-	; $(YTT) --file k8s/external-dns \
-	  | $(KUBECTL) apply --filename - \
-	&& printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n"
+lke-external-dns: lke dnsimple-creds $(YTT) $(KUBETREE)
+	$(YTT) \
+	  --data-value namespace=$(EXTERNAL_DNS_NAMESPACE) \
+	  --file $(CURDIR)/k8s/external-dns > $(CURDIR)/k8s/external-dns.yml \
+	&& $(KUBECTL) apply --filename $(CURDIR)/k8s/external-dns.yml \
+	&& $(KUBECTL) create secret generic dnsimple \
+	    --from-literal=token="$(DNSIMPLE_TOKEN)" --dry-run --output json \
+	   | $(KUBECTL) apply --namespace $(EXTERNAL_DNS_NAMESPACE) --filename - \
+	&& $(KUBETREE) deployments $(EXTERNAL_DNS_DEPLOYMENT) --namespace $(EXTERNAL_DNS_NAMESPACE)
+
+.PHONY: lke-external-dns-tree
+lke-external-dns-tree: lke $(KUBETREE)
+	$(EXTERNAL_DNS_TREE)
+
+.PHONY: lke-external-dns-logs
+lke-external-dns-logs: lke
+	$(KUBECTL) logs deployments/$(EXTERNAL_DNS_DEPLOYMENT) --namespace $(EXTERNAL_DNS_NAMESPACE)
 
 include $(CURDIR)/mk/ten.mk
-# Copy of https://changelog.com/ten
-.PHONY: lke-ten-changelog
-lke-ten-changelog: $(YTT) $(KUBECTL) $(KUBETREE) lke-config-hint
-	$(YTT) --file $(CURDIR)/k8s/ten \
-	 | $(KUBECTL) apply --filename - \
-	&& $(KUBECTL) tree deployments ten
-
-.PHONY: lke-ten-changelog-inspect
-lke-ten-changelog-inspect: $(KUBETREE)
-	$(KUBECTL) tree deployments ten
 
 # https://octant.dev/
-.PHONY: lke-inspect
-lke-inspect: $(OCTANT) lke-config-hint
+.PHONY: lke-browse
+lke-browse: $(OCTANT) lke-config-hint
 	$(OCTANT)
 
 # https://github.com/derailed/k9s
@@ -232,7 +239,34 @@ lke-sanitize: $(POPEYE) lke-config-hint
 	$(POPEYE)
 
 # https://github.com/kubernetes/ingress-nginx/releases
+NGINX_INGRESS_VERSION := 0.27.1
 .PHONY: lke-nginx-ingress
-lke-nginx-ingress: $(KUBECTL) lke-config-hint
-	$(KUBECTL) apply --filename \
-	  https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.0/deploy/static/mandatory.yaml
+lke-nginx-ingress: lke
+	$(KUBECTL) apply \
+	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-$(NGINX_INGRESS_VERSION)/deploy/static/mandatory.yaml \
+	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-$(NGINX_INGRESS_VERSION)/deploy/static/provider/cloud-generic.yaml
+
+.PHONY: lke-nginx-ingress-verify
+lke-nginx-ingress-verify: lke
+	 $(KUBECTL) get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx --watch
+
+# https://github.com/jetstack/cert-manager/releases
+CERT_MANAGER_VERSION := 0.13.0
+CERT_MANAGER_NAMESPACE := cert-manager
+.PHONY: lke-cert-manager
+lke-cert-manager: lke
+	$(KUBECTL) apply \
+	  --filename https://raw.githubusercontent.com/jetstack/cert-manager/v$(CERT_MANAGER_VERSION)/deploy/manifests/01-namespace.yaml \
+	  --filename https://github.com/jetstack/cert-manager/releases/download/v$(CERT_MANAGER_VERSION)/cert-manager.yaml
+
+.PHONY: lke-cert-manager-verify
+lke-cert-manager-verify: lke
+	$(KUBECTL) apply \
+	   --filename $(CURDIR)/k8s/cert-manager/test-resources.yml \
+	&& $(KUBECTL) get certificate --namespace cert-manager-test --output=jsonpath='$(BOLD){"\n"}{.items[0].status.conditions[0].message}{"\n\n"}$(NORMAL)' \
+	&& $(KUBECTL) get certificate --namespace cert-manager-test --output=yaml
+
+.PHONY: lke-cert-manager-verify-clean
+lke-cert-manager-verify-clean: lke
+	$(KUBECTL) delete \
+	   --filename $(CURDIR)/k8s/cert-manager/test-resources.yml
