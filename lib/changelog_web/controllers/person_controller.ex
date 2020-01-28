@@ -58,6 +58,7 @@ defmodule ChangelogWeb.PersonController do
         end
     end
   end
+  def subscribe(conn = %{method: "POST"}, _params), do: redirect(conn, to: person_path(conn, :subscribe))
 
   defp welcome_subscriber(conn, person, subscribe_to) do
     person = Person.refresh_auth_token(person)
@@ -134,6 +135,7 @@ defmodule ChangelogWeb.PersonController do
         end
     end
   end
+  def join(conn = %{method: "POST"}, _params), do: redirect(conn, to: person_path(conn, :join))
 
   defp welcome_community(conn, person) do
     person = Person.refresh_auth_token(person)

@@ -21,6 +21,11 @@ defmodule ChangelogWeb.PersonControllerTest do
       assert conn.halted
     end
 
+    test "submission with no data redirects", %{conn: conn} do
+      conn = post(conn, person_path(conn, :join))
+      assert redirected_to(conn) == person_path(conn, :join)
+    end
+
     test "submission with missing data re-renders with errors", %{conn: conn} do
       count_before = count(Person)
       conn = post(conn, person_path(conn, :join), person: %{email: "nope"})
@@ -90,6 +95,11 @@ defmodule ChangelogWeb.PersonControllerTest do
       conn = post(conn, person_path(conn, :subscribe), email: "joe@qq.com")
       assert redirected_to(conn) == person_path(conn, :subscribe)
       assert count(Person) == count_before
+    end
+
+    test "submission with no data redirects", %{conn: conn} do
+      conn = post(conn, person_path(conn, :subscribe))
+      assert redirected_to(conn) == person_path(conn, :subscribe)
     end
   end
 
