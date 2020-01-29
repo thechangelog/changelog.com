@@ -85,6 +85,10 @@
         flex-direction: column;
         align-items: center;
       }
+
+      @include breakpoint(desktop) {
+        flex: 1 1 auto;
+      }
     }
 
     &-play_trailer {
@@ -96,10 +100,6 @@
       max-width: 540px;
       margin-bottom: $base-spacing;
       color: $medium-grey-alt;
-
-      @include breakpoint(desktop) {
-        flex: 1 1 auto;
-      }
 
       > *:last-child { margin-bottom: 0; }
 
