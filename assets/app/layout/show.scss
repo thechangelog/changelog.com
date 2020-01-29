@@ -105,17 +105,14 @@
 
       h3 {
         margin-bottom: 0.25em;
-        font-size: 1.5em;
+        font-size: 2em;
         line-height: 1.3;
         color: $white;
 
         @include breakpoint(mobile) {
-          font-size: 1.875em;
+          font-size: 2.125em;
         }
         @include breakpoint(desktop) {
-          font-size: 2.0625em;
-        }
-        @include breakpoint(1000px) {
           font-size: 2.25em;
         }
       }
