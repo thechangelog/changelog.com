@@ -177,7 +177,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     conn
     |> assign(:episode, episode)
     |> assign(:changeset, changeset)
-    |> assign(:episode_requests, episode_requests(podcast))
+    |> assign(:episode_requests, episode_requests(episode))
     |> render(:edit)
   end
 
@@ -204,7 +204,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         |> put_flash(:result, "failure")
         |> assign(:episode, episode)
         |> assign(:changeset, changeset)
-        |> assign(:episode_requests, episode_requests(podcast))
+        |> assign(:episode_requests, episode_requests(episode))
         |> render(:edit)
     end
   end
@@ -286,11 +286,19 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     assign(conn, :podcast, podcast)
   end
 
+  defp episode_requests(episode = %Episode{}) do
+    episode
+    |> Episode.preload_episode_request()
+    |> Map.get(:episode_request)
+    |> EpisodeRequest.preload_submitter()
+    |> List.wrap()
+    |> Kernel.++(episode_requests(episode.podcast))
+  end
   defp episode_requests(podcast) do
     podcast
     |> assoc(:episode_requests)
+    |> EpisodeRequest.active()
     |> EpisodeRequest.sans_episode()
-    |> EpisodeRequest.fresh()
     |> EpisodeRequest.newest_first()
     |> EpisodeRequest.preload_submitter()
     |> Repo.all()

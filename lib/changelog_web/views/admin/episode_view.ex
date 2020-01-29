@@ -89,9 +89,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
   def request_options(requests) do
     Enum.map(requests, fn(request) ->
-      {:ok, date} = Timex.format(request.inserted_at, "{M}/{D}")
-      description = "##{request.id} by #{request.submitter.handle} on #{date}"
-      {description, request.id}
+      {EpisodeRequestView.description(request), request.id}
     end)
   end
 

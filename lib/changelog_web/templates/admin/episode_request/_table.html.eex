@@ -29,7 +29,7 @@
         <% end %>
       </td>
       <td><%= submitter_name(request) %></td>
-      <td><%= request.pitch |> md_to_text() |> truncate(80) %></td>
+      <td><%= pitch_preview(request) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= if Policies.EpisodeRequest.show(@current_user, podcast), do: icon_link("eye", to: admin_podcast_episode_request_path(@conn, :show, podcast.slug, request), title: "View Details") %>

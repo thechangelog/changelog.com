@@ -154,16 +154,8 @@ defmodule Changelog.Episode do
     |> preload_sponsors()
   end
 
-  def preload_topics(query = %Ecto.Query{}) do
-    query
-    |> Ecto.Query.preload(episode_topics: ^EpisodeTopic.by_position)
-    |> Ecto.Query.preload(:topics)
-  end
-  def preload_topics(episode) do
-    episode
-    |> Repo.preload(episode_topics: {EpisodeTopic.by_position, :topic})
-    |> Repo.preload(:topics)
-  end
+  def preload_episode_request(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :episode_request)
+  def preload_episode_request(episode), do: Repo.preload(episode, :episode_request)
 
   def preload_hosts(query = %Ecto.Query{}) do
     query
@@ -200,6 +192,17 @@ defmodule Changelog.Episode do
     episode
     |> Repo.preload(episode_sponsors: {EpisodeSponsor.by_position, :sponsor})
     |> Repo.preload(:sponsors)
+  end
+
+  def preload_topics(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(episode_topics: ^EpisodeTopic.by_position)
+    |> Ecto.Query.preload(:topics)
+  end
+  def preload_topics(episode) do
+    episode
+    |> Repo.preload(episode_topics: {EpisodeTopic.by_position, :topic})
+    |> Repo.preload(:topics)
   end
 
   def update_stat_counts(episode) do
