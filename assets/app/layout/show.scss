@@ -41,17 +41,16 @@
     // Artwork
     &-art {
       position: relative;
-      display: flex;
-      justify-content: flex-end;
 
       img {
-        height: 160px;
-        width: 160px;
-        margin: 0 auto $base-spacing;
+        width: 60%;
+        min-width: 300px;
+        height: auto;
+        margin-bottom: $base-spacing;
 
         @include breakpoint(tablet) {
-          height: 220px;
-          width: 220px;
+          display: flex;
+          justify-content: flex-end;
         }
       }
 
@@ -83,7 +82,8 @@
       @include breakpoint(desktop, max) {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        text-align: left;
       }
 
       @include breakpoint(desktop) {
@@ -125,9 +125,7 @@
     }
 
     &-hosts {
-      @include breakpoint(desktop) {
-        justify-content: flex-start;
-      }
+      justify-content: flex-start;
     }
 
     &-break {
