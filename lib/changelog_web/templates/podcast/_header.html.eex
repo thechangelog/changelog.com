@@ -1,39 +1,53 @@
 <header class="show-header">
-  <div class="show-header-art">
-    <h2 class="visually_hidden"><%= @podcast.name %></h2>
-    <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 220, height: 220) %>
-    <%= if @podcast.status != :published do %>
-      <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
-    <% end %>
-  </div>
+  <h2 class="visually_hidden"><%= @podcast.name %></h2>
+  <div class="show-header-inner">
 
-  <div class="show-header-description">
-    <%= @podcast.description |> no_widowed_words() |> md_to_html() |> raw() %>
-    <%= @podcast.schedule_note |> md_to_html() |> raw() %>
-  <%= if !Podcast.has_feed(@podcast) do %>
-    <p>You can only subscribe to this podcast via the <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
-  <% end %>
-  </div>
-
-<%= if (@podcast.status == :soon) do %>
-  <p class="signup-text"><em>Sign-up to get notified of launch and new episodes.</em></p>
-  <%= if @current_user do %>
-    <%= link("Manage Subscriptions", to: home_path(@conn, :show) <> "#podcasts", class: "button_large") %>
-  <% else %>
-    <%= render(SharedView, "_subscribe_form.html", assigns) %>
-  <% end %>
-<% else %>
-  <%= render("_subscribe_buttons.html", assigns) %>
-<% end %>
-
-  <div class="show-header-hosts">
-    <div class="avatar_list <%= if length(@podcast.hosts) > 6, do: "avatar_list--large" %>">
-    <%= for person <- @podcast.hosts do %>
-      <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
-        <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 50, height: 50) %>
-        <p><%= person.name %></p>
+    <div class="show-header-art">
+      <%# TODO: Add large version of episode (cover_url) image %>
+      <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 490, height: 490) %>
+      <%# TODO: Verify what status does and ensure it has proper styling %>
+      <%= if @podcast.status != :published do %>
+        <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
       <% end %>
-    <% end %>
     </div>
+
+    <div class="show-header-content">
+      <%# TODO: Update link to play the trailer %>
+      <%= link("Listen to the Trailer", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-play_trailer button_play") %>
+
+      <div class="show-header-description">
+        <h3><%= @podcast.description |> no_widowed_words() |> raw() %></h3>
+        <p><%= @podcast.schedule_note |> raw() %></p>
+      <%= if !Podcast.has_feed(@podcast) do %>
+        <p>You can only subscribe to this podcast via the <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
+      <% end %>
+      </div>
+
+      <%# TODO: Add alternate styles when there are fewer people %>
+      <div class="show-header-hosts avatar_list <%= if length(@podcast.hosts) < 4, do: "avatar_list--full" %>">
+      <%= for person <- @podcast.hosts do %>
+        <%# TODO: Ensure that these open in a new tab if intended %>
+        <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
+          <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
+          <p class="avatar_list-item-first_name"><%= person.name |> String.split(" ") |> List.first %></p>
+          <p class="avatar_list-item-last_name"><%= person.name |> String.split(" ") |> List.last %></p>
+        <% end %>
+      <% end %>
+      </div>
+
+      <hr class="show-header-break">
+
+      <%= if @current_user do %>
+        <%# TODO: Conditionally show "Subscribe" or "Unsubscribe" depending on current_user's current preference %>
+        <%= link("Subscribe", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
+        <%#= link("Unsubscribe", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
+      <% else %>
+        <p class="show-header-signup_text">Subscribe for weekly episodes and curated Javascript News</p>
+        <%= render(SharedView, "_subscribe_form.html", assigns) %>
+      <% end %>
+
+      <%= render("_subscribe_buttons.html", assigns) %>
+    </div>
+
   </div>
 </header>

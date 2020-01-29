@@ -10,17 +10,30 @@
       margin-bottom: 0;
     }
   }
+
   // Header
   &-header {
     @include masthead();
+    text-align: left;
+
+    &-inner {
+      margin: 0 auto;
+      max-width: 1217px;
+
+      @include breakpoint(desktop) {
+        display: flex;
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+    }
 
     // Artwork
     &-art {
       $size: 160px;
-      margin: 0 auto $base-spacing;
       position: relative;
-
-      // &:after { @include c-hider(); }
+      display: flex;
+      justify-content: flex-end;
 
       &,
       img {
@@ -28,8 +41,9 @@
         width: $size;
       }
 
-      @include breakpoint(mobile) {
-        $size: 220px;
+      @include breakpoint(desktop) {
+        $size: 490px;
+        margin-left: 75px;
 
         &,
         img {
@@ -43,62 +57,98 @@
       }
     }
 
+    &-play_trailer {
+      margin-bottom: 25px;
+    }
+
     // Description
     &-description {
-      color: $medium-grey;
-      font-size: 1.125em;
-      margin: $base-spacing auto;
-      max-width: 680px;
+      max-width: 540px;
+      margin-bottom: $base-spacing;
+      color: $medium-grey-alt;
+
+      > *:last-child { margin-bottom: 0; }
+
+      h3 {
+        margin-bottom: 0.25em;
+        font-size: 1.5em;
+        line-height: 1.3;
+        color: $white;
+
+        @include breakpoint(mobile) {
+          font-size: 1.875em;
+        }
+        @include breakpoint(tablet) {
+          font-size: 2.0625em;
+        }
+        @include breakpoint(desktop) {
+          font-size: 2.25em;
+        }
+      }
 
       p {
-        margin-bottom: 0.5em;
+        margin-bottom: 0.75em;
+        font-size: 1em;
+        color: $medium-grey-alt;
       }
     }
 
-    // Sign-up Form (Coming Soon only)
+    &-hosts {
+      justify-content: flex-start;
+    }
+
+    &-break {
+      margin: $base-spacing 0;
+      border: none;
+      border-bottom: 1px solid $blue-grey;
+    }
+
+    &-signup_text {
+      margin-bottom: 0.5em;
+      font-size: 1.125em;
+      color: $white;
+    }
+
+    // "user_action" – Subscribe/Unsubscribe buttons (Logged in only)
+    // ".signup-form" (Coming Soon only)
+    &-user_action,
     .signup-form {
-      margin-bottom: $base-spacing;
+      margin: 0 0 $base-spacing;
     }
 
     // Subscribe
     &-subscribe {
       margin: 20px 0;
 
-      @mixin subscribe_button() {
-        background: #252B32 8px center no-repeat;
-        background-size: 30px;
-        border: 1px solid #333A42;
-        border-radius: $base-border-radius;
-        color: $white;
-        display: inline-block;
-        font-family: $code;
-        font-size: 15px;
-        padding: 15px 12px 14px;
-        transition: background 0.1s $base-easing;
-
-        &:hover {
-          background-color: #333A42;
-        }
-      }
-
-      &-mobile {
-        @include subscribe_button();
-        width: 100%;
-
-        @include breakpoint(mobile) { display: none; }
-      }
-
       &-buttons {
-        display: none;
-        font-size: 0;
-        text-align: center;
-
-        @include breakpoint(mobile) { display: block; }
+        display: flex;
+        flex-wrap: wrap;
 
         &-item {
-          @include subscribe_button();
-          margin: 10px;
-          padding: 15px 12px 14px 50px;
+          height: 20px;
+          margin: 0 15px 12px 0;
+          padding: 4px 0 0 30px;
+          background-size: 20px 20px;
+          background-repeat: no-repeat;
+          font-size: 0.9375em;
+          line-height: 1;
+          color: $white;
+          transition: color 0.1s $base-easing;
+
+          @include breakpoint(mobile, max) {
+            width: 30px;
+            height: 30px;
+            background-size: 30px 30px;
+            font-size: 0;
+          }
+
+          &:hover {
+            color: $medium-grey-alt;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
 
           &--apple { background-image: url('/images/icons/podcast_icon-apple.png'); }
           &--overcast { background-image: url('/images/icons/podcast_icon-overcast.png'); }

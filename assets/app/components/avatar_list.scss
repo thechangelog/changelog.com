@@ -2,53 +2,48 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-left: -5px;
+  margin-right: -5px;
 
   &-item {
-    display: block;
-    flex: 0 1 115px;
-    font-size: 0.875em;
-    margin: 1em 0;
-    min-width: 70px;
+    position: relative;
+    width: 60px;
+    margin: 5px 5px 23px;
     text-align: center;
-
-    .avatar_list--large & {
-      @include breakpoint(huge, max) {
-        flex: 0 1 50px;
-        min-width: 50px;
-      }
-    }
-
-
-    &:hover {
-      p { color: $white; }
-    }
 
     img {
       background: #000;
-      border-radius: $base-border-radius;
-      display: block;
-      font-size: 8px;
-      margin: 0 auto;
-      width: 50px;
-      height: 50px;
-
-      .avatar_list--large & {
-        @include breakpoint(huge, max) {
-          width: 30px;
-          height: 30px;
-        }
-      }
+      width: 60px;
+      height: 60px;
     }
 
-    p {
-      color: $medium-grey;
-      margin: 1em 0 0;
+    &-first_name,
+    &-last_name {
+      @include position(absolute, 100% null null 50%);
+      min-width: 100%;
+      transform: translateX(-50%);
+      padding: 5px;
+      background: $black;
+      font-size: 0.75em;
+      line-height: 1.2;
+      color: $medium-grey-alt;
       transition: color 0.1s $base-easing;
+    }
 
-      .avatar_list--large & {
-        @include breakpoint(huge, max) {
-          display: none;
-        }
+    &-last_name {
+      display: none;
+      border-radius: $base-border-radius;
+      transform: translate(-50%, 15px);
+      z-index: 10;
+    }
+
+    &:hover {
+      p {
+        color: $white;
+      }
+
+      .avatar_list-item-last_name {
+        display: block;
       }
     }
   }

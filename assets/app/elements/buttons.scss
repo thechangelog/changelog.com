@@ -19,3 +19,18 @@ button {
   padding-left: 1.25em;
   padding-right: 1.25em;
 }
+
+.button_play {
+  $button-background: #1e262d;
+  @include button($button-background, $green);
+  display: inline-block;
+  margin-bottom: 1em;
+  padding: 0.9em 1.25em 0.9em 3.5em;
+  background-image: url('/images/icons/icon-play-circle.svg');
+  background-repeat: no-repeat;
+  background-position: 1em center;
+  font-family: $code;
+  font-size: 0.75em;
+
+  &:hover { background-color: lighten($button-background, 2%); }
+}
