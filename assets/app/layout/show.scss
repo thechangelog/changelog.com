@@ -14,7 +14,17 @@
   // Header
   &-header {
     @include masthead();
-    text-align: left;
+
+    @include breakpoint(tablet) {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    @include breakpoint(desktop) {
+      padding-top: 100px;
+      padding-bottom: 100px;
+      text-align: left;
+    }
 
     &-inner {
       margin: 0 auto;
@@ -30,30 +40,50 @@
 
     // Artwork
     &-art {
-      $size: 160px;
       position: relative;
       display: flex;
       justify-content: flex-end;
 
-      &,
       img {
-        height: $size;
-        width: $size;
+        height: 160px;
+        width: 160px;
+        margin: 0 auto $base-spacing;
+
+        @include breakpoint(tablet) {
+          height: 220px;
+          width: 220px;
+        }
       }
 
       @include breakpoint(desktop) {
-        $size: 490px;
-        margin-left: 75px;
+        flex: 0 1 490px;
+        height: 100%;
+        margin: 0 0 0 45px;
 
-        &,
         img {
-          height: $size;
-          width: $size;
+          width: 100%;
+          height: auto;
+          margin: 0;
         }
+      }
+      @include breakpoint(1000px) {
+        margin-left: 60px;
+      }
+
+      @include breakpoint(1100px) {
+        margin-left: 75px;
       }
 
       &-status {
         @include status_label();
+      }
+    }
+
+    &-content {
+      @include breakpoint(desktop, max) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
     }
 
@@ -67,6 +97,10 @@
       margin-bottom: $base-spacing;
       color: $medium-grey-alt;
 
+      @include breakpoint(desktop) {
+        flex: 1 1 auto;
+      }
+
       > *:last-child { margin-bottom: 0; }
 
       h3 {
@@ -78,10 +112,10 @@
         @include breakpoint(mobile) {
           font-size: 1.875em;
         }
-        @include breakpoint(tablet) {
+        @include breakpoint(desktop) {
           font-size: 2.0625em;
         }
-        @include breakpoint(desktop) {
+        @include breakpoint(1000px) {
           font-size: 2.25em;
         }
       }
@@ -94,10 +128,13 @@
     }
 
     &-hosts {
-      justify-content: flex-start;
+      @include breakpoint(desktop) {
+        justify-content: flex-start;
+      }
     }
 
     &-break {
+      width: 100%;
       margin: $base-spacing 0;
       border: none;
       border-bottom: 1px solid $blue-grey;
@@ -118,7 +155,6 @@
 
     // Subscribe
     &-subscribe {
-      margin: 20px 0;
 
       &-buttons {
         display: flex;

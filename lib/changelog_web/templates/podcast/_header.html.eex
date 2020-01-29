@@ -29,6 +29,7 @@
         <%# TODO: Ensure that these open in a new tab if intended %>
         <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
           <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
+          <%# NOTE: This is only set up to work with a single first and last name %>
           <p class="avatar_list-item-first_name"><%= person.name |> String.split(" ") |> List.first %></p>
           <p class="avatar_list-item-last_name"><%= person.name |> String.split(" ") |> List.last %></p>
         <% end %>
@@ -42,7 +43,7 @@
         <%= link("Subscribe", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
         <%#= link("Unsubscribe", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
       <% else %>
-        <p class="show-header-signup_text">Subscribe for weekly episodes and curated Javascript News</p>
+        <p class="show-header-signup_text">Subscribe for weekly episodes and curated Javascript&nbsp;News</p>
         <%= render(SharedView, "_subscribe_form.html", assigns) %>
       <% end %>
 
