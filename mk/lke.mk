@@ -289,4 +289,19 @@ lke-cert-manager-verify-clean: lke-ctx
 lke-cert-manager-logs: lke-ctx
 	$(KUBECTL) logs deployments/cert-manager --namespace $(CERT_MANAGER_NAMESPACE) --follow
 
+# coreos/kube-prometheus recommends using master - YOLO!
+.PHONY: lke-monitoring
+lke-monitoring: lke-ctx kube-prometheus
+	$(KUBECTL) apply --filename tmp/kube-prometheus/manifests/setup \
+	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests
+
+.PHONY: kube-prometheus
+kube-prometheus: tmp/kube-prometheus
+	cd tmp/kube-prometheus \
+	&& git fetch \
+	&& git reset --hard origin/master
+
+tmp/kube-prometheus:
+	git clone https://github.com/coreos/kube-prometheus.git tmp/kube-prometheus
+
 include $(CURDIR)/mk/ten.mk
