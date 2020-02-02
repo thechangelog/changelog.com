@@ -56,7 +56,7 @@ TEN_NAMESPACE := $(TEN_DEPLOYMENT)
 TEN_TREE := $(KUBETREE) deployments $(TEN_DEPLOYMENT) --namespace $(TEN_NAMESPACE)
 # Copy of https://changelog.com/ten
 .PHONY: lke-ten-changelog
-lke-ten-changelog: lke $(KUBETREE) $(YTT)
+lke-ten-changelog: lke-ctx $(KUBETREE) $(YTT)
 	$(YTT) \
 	  --data-value name=$(TEN_DEPLOYMENT) \
 	  --data-value namespace=$(TEN_NAMESPACE) \
@@ -65,5 +65,13 @@ lke-ten-changelog: lke $(KUBETREE) $(YTT)
 	&& $(TEN_TREE)
 
 .PHONY: lke-ten-changelog-tree
-lke-ten-changelog-tree: lke $(KUBETREE)
+lke-ten-changelog-tree: lke-ctx $(KUBETREE)
 	$(TEN_TREE)
+
+.PHONY: lke-ten-changelog-logs
+lke-ten-changelog-logs: lke-ctx
+	$(KUBECTL) logs deployments/$(TEN_DEPLOYMENT) --namespace $(TEN_NAMESPACE) --follow
+
+.PHONY: lke-ten-changelog-certificate
+lke-ten-changelog-certificate: lke-ctx
+	$(KUBECTL) describe certificate --namespace $(TEN_NAMESPACE)

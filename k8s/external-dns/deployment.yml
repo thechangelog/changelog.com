@@ -25,6 +25,7 @@ spec:
         args:
         - --provider=dnsimple #! Not configurable since the DNSimple API token secret is hard-coded
         - --source=service
+        - --source=ingress
         - --registry=txt
         env:
         - name: EXTERNAL_DNS_DOMAIN_FILTER

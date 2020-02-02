@@ -5,14 +5,11 @@ kind: Service
 metadata:
   name: #@ data.values.name
   namespace: #@ data.values.namespace
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: #@ data.values.fqdn
 spec:
-  selector:
-    app: #@ data.values.name
   ports:
     - name: http
       port: #@ data.values.http_port
       protocol: TCP
       targetPort: #@ data.values.http_port
-  type: LoadBalancer
+  selector:
+    app: #@ data.values.name
