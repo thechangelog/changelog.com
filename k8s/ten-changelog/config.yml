@@ -5,8 +5,8 @@
 fqdn: ten.changelog.com
 http_port: 80
 image: thechangelog/ten:2019-11-01T10.10.10Z
+replicas: 3
 #! provided just-in-time
 name:
 #! provided just-in-time
 namespace:
-replicas: 6 #! worker nodes * 2
