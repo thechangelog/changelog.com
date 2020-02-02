@@ -242,11 +242,14 @@ lke-sanitize: $(POPEYE) lke-config-hint
 
 # https://github.com/kubernetes/ingress-nginx/releases
 NGINX_INGRESS_VERSION := 0.28.0
+NGINX_INGRESS_NAMESPACE := ingress-nginx
 .PHONY: lke-nginx-ingress
 lke-nginx-ingress: lke-ctx
 	$(KUBECTL) apply \
 	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-$(NGINX_INGRESS_VERSION)/deploy/static/mandatory.yaml \
-	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-$(NGINX_INGRESS_VERSION)/deploy/static/provider/cloud-generic.yaml
+	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-$(NGINX_INGRESS_VERSION)/deploy/static/provider/cloud-generic.yaml \
+	&& $(KUBECTL) scale --replicas=$(LKE_NODE_COUNT) deployment/nginx-ingress-controller --namespace $(NGINX_INGRESS_NAMESPACE) \
+	&& $(KUBETREE) deployments nginx-ingress-controller --namespace $(NGINX_INGRESS_NAMESPACE)
 lke-provision:: lke-nginx-ingress
 
 .PHONY: lke-nginx-ingress-verify
@@ -255,7 +258,7 @@ lke-nginx-ingress-verify: lke-ctx
 
 .PHONY: lke-nginx-ingress-logs
 lke-nginx-ingress-logs: lke-ctx
-	$(KUBECTL) logs deployments/nginx-ingress-controller --namespace ingress-nginx --follow
+	$(KUBECTL) logs deployments/nginx-ingress-controller --namespace $(NGINX_INGRESS_NAMESPACE) --follow
 
 # https://github.com/jetstack/cert-manager/releases
 CERT_MANAGER_VERSION := 0.13.0
