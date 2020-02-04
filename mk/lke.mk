@@ -289,6 +289,14 @@ lke-cert-manager-verify-clean: lke-ctx
 lke-cert-manager-logs: lke-ctx
 	$(KUBECTL) logs deployments/cert-manager --namespace $(CERT_MANAGER_NAMESPACE) --follow
 
+.PHONY: lke-monitoring-grafana
+lke-monitoring-grafana: lke-ctx
+	$(KUBECTL) --namespace monitoring port-forward svc/grafana 3000
+
+# https://github.com/openshift/cluster-monitoring-operator/blob/947f882593badbc3946853201ef6a82c9627f7de/jsonnet/grafana.jsonnet#L33
+# https://github.com/coreos/kube-prometheus/blob/master/examples/prometheus-pvc.jsonnet
+# https://github.com/coreos/kube-prometheus/issues/98#issuecomment-491782065
+
 # coreos/kube-prometheus recommends using master - YOLO!
 .PHONY: lke-monitoring
 lke-monitoring: lke-ctx kube-prometheus
