@@ -32,7 +32,6 @@ window.App = {
   slider: new Slider(".js-slider"),
   ten: new Ten(),
 
-
   attachComments() {
     u(".js-comment").each(el => {
       if (el.comment === undefined) new Comment(el);
@@ -141,12 +140,15 @@ u(document).on("click", "[data-play]", function(event) {
     let clicked = u(event.target).closest("a, button");
     let audioUrl = clicked.attr("href");
     let detailsUrl = clicked.data("play");
+    let linkTime = parseTime(clicked.data("t"));
 
     if (App.player.currentlyLoaded == detailsUrl) {
       App.player.togglePlayPause();
     } else {
       App.player.pause();
-      App.player.load(audioUrl, detailsUrl);
+      App.player.load(audioUrl, detailsUrl, _ => {
+        if (linkTime) App.player.scrubEnd(linkTime);
+      });
     }
   }
 });
