@@ -3,7 +3,7 @@ defmodule ChangelogWeb.EpisodeView do
 
   import ChangelogWeb.Meta.{Title, Description}
 
-  alias Changelog.{Episode, Files, Github}
+  alias Changelog.{Episode, Files, Github, ListKit}
   alias ChangelogWeb.{Endpoint, LayoutView, NewsItemView, PersonView,
                       PodcastView, SponsorView, TimeView}
 
@@ -113,6 +113,15 @@ defmodule ChangelogWeb.EpisodeView do
 
   def show_notes_source_url(episode) do
     Github.Source.new("show-notes", episode).html_url
+  end
+
+  def title_with_podcast_aside(episode) do
+    prefix = episode.title
+    suffix =
+      [episode.podcast.name, number_with_pound(episode)]
+      |> ListKit.compact_join()
+
+    "#{prefix} (#{suffix})"
   end
 
   def transcript_source_url(episode) do

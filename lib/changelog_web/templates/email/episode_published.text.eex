@@ -1,14 +1,12 @@
 <%= greeting(@person) %>
 
 
-Hot off the press! Here’s the latest episode of <%= @episode.podcast.name %> for you.
-
-<%= EpisodeView.podcast_name_and_number(@episode) %>: <%= @episode.title %>
+We just published a new episode of <%= @episode.podcast.name %>!
 
 <%= @episode.summary |> md_to_text()  %>
 
 
-Listen here: <%= episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) %>
+Listen and discuss here: <%= episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) %>
 
 Don't want these notifications? Disable 'em: <%= PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug) %>
 

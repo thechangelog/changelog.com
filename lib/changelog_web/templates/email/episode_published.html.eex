@@ -2,18 +2,12 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>Hot off the press! Here’s the latest episode of <%= link(@episode.podcast.name, to: podcast_url(Endpoint, :show, @episode.podcast.slug)) %> for you.</p>
-
-    <p>
-      <%= link(to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) do %>
-        <%= EpisodeView.podcast_name_and_number(@episode) %>: <%= @episode.title %>
-      <% end %>
-    </p>
+    <p>We <em>just</em> published <%= link("a new episode of #{@episode.podcast.name}", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) %>!</p>
 
     <blockquote><%= @episode.summary |> md_to_html() |> raw()  %></blockquote>
 
     <span class="btn-primary">
-      <%= link("Listen here", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %>
+      <%= link("Listen and discuss the episode", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %>
     </span>
 
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>

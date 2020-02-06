@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, ListKit, NewsItem, Post}
+  alias Changelog.{Episode, NewsItem, Post}
   alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView,
                       PodcastView, PostView, TimeView}
 
@@ -25,14 +25,7 @@ defmodule ChangelogWeb.FeedView do
   end
   def enclosure_url(episode), do: EpisodeView.audio_url(episode)
 
-  def episode_title(%{slug: "master"}, episode) do
-    prefix = episode.title
-    suffix =
-      [episode.podcast.name, EpisodeView.number_with_pound(episode)]
-      |> ListKit.compact_join()
-
-    "#{prefix} (#{suffix})"
-  end
+  def episode_title(%{slug: "master"}, episode), do: EpisodeView.title_with_podcast_aside(episode)
   def episode_title(_podcast, episode), do: episode.title
 
   def image_link(item = %NewsItem{}) do
