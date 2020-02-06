@@ -15,12 +15,14 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     render(conn, :index, previews: previews)
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, params = %{"id" => id}) do
     email = apply(__MODULE__, String.to_existing_atom("#{id}_email"), [])
+    format = Map.get(params, "format", "html")
 
     conn
     |> put_layout(false)
     |> assign(:email, email)
+    |> assign(:format, format)
     |> render(:show)
   end
 

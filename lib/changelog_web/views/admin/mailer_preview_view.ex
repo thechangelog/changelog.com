@@ -15,6 +15,9 @@ defmodule ChangelogWeb.Admin.MailerPreviewView do
     "#{name} <#{address}>"
   end
 
+  def iframe_content(email, "text"), do: content_tag(:pre, do: email.text_body)
+  def iframe_content(email, _other), do: email.html_body
+
   def reply_to(%{headers: %{"Reply-To" => to}}) when is_binary(to), do: to
   def reply_to(_else), do: nil
 end

@@ -53,6 +53,13 @@
 <body>
   <header>
     <dl>
+      <dt>Format:</dt>
+    <%= case @format do %>
+    <%= "html" -> %>
+      <dd>HTML [<a href="<%= current_path(@conn, %{format: "text"}) %>">see text</a>]</dd>
+    <%= "text" -> %>
+      <dd>Text [<a href="<%= current_path(@conn, %{format: "html"}) %>">see html</a>]</dd>
+    <%= end %>
       <dt>From:</dt>
       <dd><%= format_email_address(@email.from) %></dd>
 
@@ -64,12 +71,11 @@
       <dt>To:</dt>
       <dd><%= email_addresses(@email) %></dd>
 
-
       <dt>Subject:</dt>
       <dd><strong><%= @email.subject %></strong></dd>
     </dl>
   </header>
 
-  <iframe seamless srcdoc="<%= @email.html_body %>"></iframe>
+  <iframe seamless srcdoc="<%= iframe_content(@email, @format) %>"></iframe>
 </body>
 </html>
