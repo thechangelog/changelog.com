@@ -36,3 +36,8 @@
   <h2 class="ui header">Declined</h2>
   <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @declined, status: :declined})) %>
 <% end %>
+
+<%= if Enum.any?(@failed) do %>
+  <h2 class="ui header">Failed</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @declined, status: :failed})) %>
+<% end %>

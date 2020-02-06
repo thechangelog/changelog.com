@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeRequest do
 
   alias Changelog.{Episode, Podcast, Person}
 
-  defenum Status, declined: -1, fresh: 0, pending: 1
+  defenum Status, declined: -1, fresh: 0, pending: 1, failed: 2
 
   schema "episode_requests" do
     field :status, Status, default: :fresh
@@ -26,6 +26,7 @@ defmodule Changelog.EpisodeRequest do
   def active(query \\ __MODULE__),       do: from(q in query, where: q.status in [^:fresh, ^:pending])
   def pending(query \\ __MODULE__),      do: from(q in query, where: q.status == ^:pending)
   def declined(query \\ __MODULE__),     do: from(q in query, where: q.status == ^:declined)
+  def failed(query \\ __MODULE__),       do: from(q in query, where: q.status == ^:failed)
 
   def with_episode(query \\ __MODULE__), do: from(q in query, join: e in Episode, on: q.id == e.request_id)
   def sans_episode(query \\ __MODULE__), do: from(q in query, left_join: e in Episode, on: q.id == e.request_id, where: is_nil(e.id))
@@ -53,6 +54,15 @@ defmodule Changelog.EpisodeRequest do
   def preload_submitter(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :submitter)
   def preload_submitter(request), do: Repo.preload(request, :submitter)
 
-  def decline!(request), do: request |> change(%{status: :declined}) |> Repo.update!()
-  def pend!(request), do: request |> change(%{status: :pending}) |> Repo.update!()
+  def is_active(%{status: status}), do: Enum.member?(~w(fresh pending)a, status)
+  def is_archived(%{status: status}), do: Enum.member?(~w(failed declined)a, status)
+  def is_pendable(%{status: status}), do: Enum.member?(~w(fresh)a, status)
+
+  def decline!(request), do: update_status!(request, :declined)
+  def fail!(request), do: update_status!(request, :failed)
+  def pend!(request), do: update_status!(request, :pending)
+
+  defp update_status!(request, status) do
+    request |> change(%{status: status}) |> Repo.update!()
+  end
 end

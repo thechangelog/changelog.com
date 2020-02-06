@@ -38,6 +38,12 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
       |> EpisodeRequest.preload_all()
       |> Repo.all()
 
+    failed =
+      requests
+      |> EpisodeRequest.failed()
+      |> EpisodeRequest.preload_all()
+      |> Repo.all()
+
     declined =
       requests
       |> EpisodeRequest.declined()
@@ -49,6 +55,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
     |> assign(:pending, pending)
     |> assign(:accepted, accepted)
     |> assign(:declined, declined)
+    |> assign(:failed, failed)
     |> render(:index)
   end
 
@@ -64,7 +71,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
     |> render(:show)
   end
 
-  def delete(conn, %{"id" => id}, podcast) do
+  def delete(conn, params = %{"id" => id}, podcast) do
     request =
       podcast
       |> assoc(:episode_requests)
@@ -74,10 +81,10 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_podcast_episode_request_path(conn, :index, podcast.slug))
+    |> redirect_next_or_index(params, podcast)
   end
 
-  def decline(conn, %{"id" => id}, podcast) do
+  def decline(conn, params = %{"id" => id}, podcast) do
     request =
       podcast
       |> assoc(:episode_requests)
@@ -87,10 +94,23 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_podcast_episode_request_path(conn, :index, podcast.slug))
+    |> redirect_next_or_index(params, podcast)
   end
 
-  def pend(conn, %{"id" => id}, podcast) do
+  def fail(conn, params = %{"id" => id}, podcast) do
+    request =
+      podcast
+      |> assoc(:episode_requests)
+      |> Repo.get!(id)
+
+    EpisodeRequest.fail!(request)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect_next_or_index(params, podcast)
+  end
+
+  def pend(conn, params = %{"id" => id}, podcast) do
     request =
       podcast
       |> assoc(:episode_requests)
@@ -100,11 +120,16 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_podcast_episode_request_path(conn, :index, podcast.slug))
+    |> redirect_next_or_index(params, podcast)
   end
 
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
     podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts()
     assign(conn, :podcast, podcast)
+  end
+
+  defp redirect_next_or_index(conn, params, podcast) do
+    index_path = admin_podcast_episode_request_path(conn, :index, podcast.slug)
+    redirect_next(conn, params, index_path)
   end
 end

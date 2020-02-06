@@ -21,7 +21,7 @@ defmodule Changelog.Policies.EpisodeRequestTest do
     assert Policies.EpisodeRequest.show(@host, %{hosts: [@host]})
   end
 
-  test "only admins and podcast hosts can edit/update/decline" do
+  test "only admins and podcast hosts can edit/update/decline/fail/pend" do
     refute Policies.EpisodeRequest.edit(@guest, %{})
     refute Policies.EpisodeRequest.update(@user, %{})
     refute Policies.EpisodeRequest.update(@editor, %{})
@@ -30,6 +30,10 @@ defmodule Changelog.Policies.EpisodeRequestTest do
     assert Policies.EpisodeRequest.update(@admin, %{})
     assert Policies.EpisodeRequest.edit(@host, %{hosts: [@host]})
     assert Policies.EpisodeRequest.decline(@host, %{hosts: [@host]})
+    refute Policies.EpisodeRequest.fail(@host, %{})
+    assert Policies.EpisodeRequest.fail(@host, %{hosts: [@host]})
+    refute Policies.EpisodeRequest.pend(@host, %{})
+    assert Policies.EpisodeRequest.pend(@admin, %{})
   end
 
   test "only admins can delete" do
