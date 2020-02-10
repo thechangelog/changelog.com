@@ -74,6 +74,15 @@ defmodule ChangelogWeb.Meta.Title do
     "Developer news and podcasts about #{topic.name}"
   end
 
+  # Guest guide
+  defp get(%{view_module: PageView, view_template: "guest.html", podcast: podcast}) do
+    if podcast.slug == "podcast" do
+      "Changelog's guest guide"
+    else
+      "Changelog's guest guide for #{podcast.name}"
+    end
+  end
+
   # Pages
   defp get(%{view_module: PageView, view_template: template}) do
     case template do
