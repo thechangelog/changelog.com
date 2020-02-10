@@ -240,18 +240,18 @@
   </div>
 
   <div class="two fields">
+    <div class="field <%= error_class(f, :recorded_at) %>">
+      <%= label(f, :recorded_at, "Record Time") %>
+      <%= semantic_calendar_field(f, :recorded_at) %>
+      <%= error_message(f, :recorded_at) %>
+    </div>
+
     <div class="field <%= error_class(f, :published_at) %>">
       <%= label(f, :published_at) do %>
         Publish Time <%= help_icon("Select a future time and click 'Publish' to schedule") %>
       <% end %>
       <%= semantic_calendar_field(f, :published_at) %>
       <%= error_message(f, :published_at) %>
-    </div>
-
-    <div class="field <%= error_class(f, :recorded_at) %>">
-      <%= label(f, :recorded_at, "Record Time") %>
-      <%= semantic_calendar_field(f, :recorded_at) %>
-      <%= error_message(f, :recorded_at) %>
     </div>
   </div>
 
