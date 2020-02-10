@@ -3,12 +3,10 @@
   <div class="show-header-inner">
 
     <div class="show-header-art">
-      <%# TODO: Add large version of episode (cover_url) image %>
-      <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 490, height: 490) %>
-      <%# TODO: Verify what status does and ensure it has proper styling %>
-      <%= if @podcast.status != :published do %>
-        <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
-      <% end %>
+      <%= lazy_image(cover_url(@podcast, :original), "#{@podcast.name} Artwork", width: 490, height: 490) %>
+    <%= if @podcast.status != :published do %>
+      <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
+    <% end %>
     </div>
 
     <div class="show-header-content">
