@@ -1,15 +1,13 @@
 <%= greeting(@person) %>
 
 
-We just published a new episode of <%= @episode.podcast.name %>!
+We just published a new episode of <%= @episode.podcast.name %> with <%= comma_separated_names(EpisodeView.participants(@episode)) %>!
 
-<%= @episode.summary |> md_to_text()  %>
-
+> <%= @episode.summary |> md_to_text()  %>
 
 Listen and discuss here: <%= episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) %>
 
 Don't want these notifications? Disable 'em: <%= PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug) %>
-
 
 💚, Logbot
 
