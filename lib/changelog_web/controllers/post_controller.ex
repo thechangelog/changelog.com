@@ -45,8 +45,8 @@ defmodule ChangelogWeb.PostController do
     |> render(:show)
   end
 
-  def preview(conn, %{"id" => id}) do
-    post = Repo.get!(Post, id) |> Post.preload_all()
+  def preview(conn, %{"id" => hashid}) do
+    post = Post |> Repo.get_by!(id: Post.decode(hashid)) |> Post.preload_all()
     conn
     |> assign(:post, post)
     |> assign(:item, nil)

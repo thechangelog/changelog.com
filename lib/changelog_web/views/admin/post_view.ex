@@ -15,7 +15,7 @@ defmodule ChangelogWeb.Admin.PostView do
     if Post.is_public(post) do
       post_path(conn, :show, post.slug)
     else
-      post_path(conn, :preview, post)
+      post_path(conn, :preview, Post.hashid(post))
     end
   end
 end

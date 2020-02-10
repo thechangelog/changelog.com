@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.PostControllerTest do
   use ChangelogWeb.ConnCase
 
+  alias Changelog.Post
+
   test "getting the posts index", %{conn: conn} do
     p1 = insert(:published_post)
     i1 = insert(:published_news_item, object_id: "post:#{p1.slug}")
@@ -49,7 +51,7 @@ defmodule ChangelogWeb.PostControllerTest do
   test "previewing a post", %{conn: conn} do
     p = insert(:post)
 
-    conn = get(conn, post_path(conn, :preview, p.id))
+    conn = get(conn, post_path(conn, :preview, Post.hashid(p)))
     assert html_response(conn, 200) =~ p.title
   end
 end
