@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.LiveController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Hashid, Icecast}
+  alias Changelog.{Episode, Icecast}
   alias ChangelogWeb.TimeView
 
   def index(conn, _params) do
@@ -20,7 +20,7 @@ defmodule ChangelogWeb.LiveController do
   def show(conn, %{"id" => hashid}) do
     episode =
       Episode.recorded_live()
-      |> Repo.get_by!(id: Hashid.decode(hashid))
+      |> Repo.get_by!(id: Episode.decode(hashid))
       |> Episode.preload_all()
 
     conn

@@ -11,7 +11,7 @@ defmodule Changelog.Schema do
       import Ecto.Query, only: [from: 1, from: 2]
       import EctoEnum, only: [defenum: 2]
 
-      alias Changelog.Repo
+      alias Changelog.{Hashid, Repo}
 
       def any?(query), do: Repo.count(query) > 0
 
@@ -28,7 +28,10 @@ defmodule Changelog.Schema do
       def older_than(query, date = %Date{}), do: from(q in query, where: q.inserted_at < ^Timex.to_datetime(date))
       def older_than(query, time = %DateTime{}), do: from(q in query, where: q.inserted_at < ^time)
 
-      def hashid(id) when is_integer(id), do: Changelog.Hashid.encode(id)
+      def decode(hashid) when is_binary(hashid), do: Hashid.decode(hashid)
+      def decode(_), do: -1 # sentinal query value
+
+      def hashid(id) when is_integer(id), do: Hashid.encode(id)
       def hashid(struct), do: hashid(struct.id)
 
       defp mark_for_deletion(changeset) do

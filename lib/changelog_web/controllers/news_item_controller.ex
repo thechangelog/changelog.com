@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsItem, NewsItemComment, NewsSponsorship, Subscription}
+  alias Changelog.{NewsItem, NewsItemComment, NewsSponsorship, Subscription}
   alias ChangelogWeb.NewsItemView
 
   plug RequireUser, "before submitting" when action in [:create]
@@ -198,7 +198,7 @@ defmodule ChangelogWeb.NewsItemController do
   end
 
   defp item_from_hashid(hashid, query \\ NewsItem) do
-    Repo.get_by!(query, id: Hashid.decode(hashid))
+    Repo.get_by!(query, id: NewsItem.decode(hashid))
   end
 
   defp should_track?(user, item) do

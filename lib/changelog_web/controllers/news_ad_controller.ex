@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsAdController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Hashid, NewsAd}
+  alias Changelog.NewsAd
   alias ChangelogWeb.NewsAdView
 
   def show(conn, %{"id" => slug}) do
@@ -39,7 +39,7 @@ defmodule ChangelogWeb.NewsAdController do
 
   defp ad_from_hashid(hashid) do
     NewsAd
-    |> Repo.get_by!(id: Hashid.decode(hashid))
+    |> Repo.get_by!(id: NewsAd.decode(hashid))
     |> NewsAd.preload_sponsorship()
   end
 end
