@@ -1,7 +1,6 @@
 defmodule ChangelogWeb.Meta.Title do
   import ChangelogWeb.Helpers.SharedHelpers, only: [comma_separated_names: 1]
 
-  alias Changelog.ListKit
   alias ChangelogWeb.{AuthView, EpisodeView, EpisodeRequestView, LiveView,
                       NewsItemView, NewsSourceView, PageView, PersonView,
                       PodcastView, PostView, TopicView, SearchView}
@@ -113,12 +112,8 @@ defmodule ChangelogWeb.Meta.Title do
   end
 
   # Episode page
-  defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: podcast, episode: episode}) do
-    [
-      podcast.name,
-      EpisodeView.numbered_title(episode, "#"),
-      EpisodeView.smart_subtitle(episode)
-    ] |> ListKit.compact_join()
+  defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: _podcast, episode: episode}) do
+    EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode)
   end
 
   # Episode request form

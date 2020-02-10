@@ -68,17 +68,24 @@ defmodule ChangelogWeb.EpisodeViewTest do
     end
   end
 
-  describe "smart_subtitle/1" do
-    test "it leaves subtitles that begin with 'with' alone" do
-      assert smart_subtitle(%{subtitle: "with Jerod"}) == "with Jerod"
+  describe "is_subtitle_guest_focused/1" do
+    test "is false when subtitle begins with 'with' but no episode guest(s)" do
+      episode = %{subtitle: "with DHH", guests: []}
+      refute is_subtitle_guest_focused(episode)
+      episode = %{subtitle: "with DHH", guests: nil}
+      refute is_subtitle_guest_focused(episode)
     end
 
-    test "it leaves subtitles that begin with 'featuring' alone" do
-      assert smart_subtitle(%{subtitle: "featuring Rachel"}) == "featuring Rachel"
+    test "is false when subtitle doesn't begin with 'with' or 'featuring'" do
+      episode = %{subtitle: "when it hits the fan", guests: [%{}]}
+      refute is_subtitle_guest_focused(episode)
     end
 
-    test "it wraps subtitle in parentheses when it is a regular sentence" do
-      assert smart_subtitle(%{subtitle: "setting yourself up for success, not failure"}) == "(setting yourself up for success, not failure)"
+    test "is true when subtitle begins with 'with' or 'featuring' and episode has guest(s)" do
+      episode = %{subtitle: "with DHH", guests: [%{}]}
+      assert is_subtitle_guest_focused(episode)
+      episode = %{subtitle: "featuring DHH", guests: [%{}]}
+      assert is_subtitle_guest_focused(episode)
     end
   end
 end

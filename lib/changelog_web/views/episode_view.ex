@@ -59,8 +59,20 @@ defmodule ChangelogWeb.EpisodeView do
     ~s{<iframe src="#{url(episode, :embed)}?theme=#{theme}" width="100%" height=220 scrolling=no frameborder=no></iframe>}
   end
 
+  def guest_focused_subtitle(episode) do
+    if is_subtitle_guest_focused(episode), do: episode.subtitle, else: ""
+  end
+
   def guid(episode) do
     episode.guid || "changelog.com/#{episode.podcast_id}/#{episode.id}"
+  end
+
+  def is_subtitle_guest_focused(%{subtitle: nil}), do: false
+  def is_subtitle_guest_focused(%{guests: nil}), do: false
+  def is_subtitle_guest_focused(%{guests: []}), do: false
+  def is_subtitle_guest_focused(%{subtitle: subtitle}) do
+    String.starts_with?(subtitle, "with ") ||
+    String.starts_with?(subtitle, "featuring ")
   end
 
   def megabytes(episode) do
@@ -94,17 +106,12 @@ defmodule ChangelogWeb.EpisodeView do
     Episode.participants(episode)
   end
 
-  def podcast_name_and_number(episode) do
-    "#{episode.podcast.name} #{number_with_pound(episode)}"
+  def podcast_aside(episode) do
+    "(#{podcast_name_and_number(episode)})"
   end
 
-  def smart_subtitle(%{subtitle: subtitle}) do
-    cond do
-      is_nil(subtitle) -> ""
-      String.starts_with?(subtitle, "with ") -> subtitle
-      String.starts_with?(subtitle, "featuring ") -> subtitle
-      true -> "(#{subtitle})"
-    end
+  def podcast_name_and_number(episode) do
+    [episode.podcast.name, number_with_pound(episode)] |> ListKit.compact_join(" ")
   end
 
   def sponsorships_with_dark_logo(episode) do
@@ -116,12 +123,18 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def title_with_podcast_aside(episode) do
-    prefix = episode.title
-    suffix =
-      [episode.podcast.name, number_with_pound(episode)]
-      |> ListKit.compact_join()
+    [
+      episode.title,
+      podcast_aside(episode)
+    ] |> ListKit.compact_join(" ")
+  end
 
-    "#{prefix} (#{suffix})"
+  def title_with_guest_focused_subtitle_and_podcast_aside(episode) do
+    [
+      episode.title,
+      guest_focused_subtitle(episode),
+      "(#{podcast_name_and_number((episode))})"
+    ] |> ListKit.compact_join(" ")
   end
 
   def transcript_source_url(episode) do
