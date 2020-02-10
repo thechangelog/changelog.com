@@ -26,7 +26,13 @@ export default class CalendarField {
         }
       },
       onChange: function(date, text) {
-        $(this).find("input[type=hidden]").val(date.toISOString());
+        let input = $(this).find("input[type=hidden]");
+
+        if (date) {
+          input.val(date.toISOString());
+        } else {
+          input.val("")
+        }
       }
     });
   }
