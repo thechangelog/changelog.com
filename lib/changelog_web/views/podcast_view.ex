@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PodcastView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Podcast, StringKit}
-  alias ChangelogWeb.{Endpoint, NewsItemView, PersonView, SharedView}
+  alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
   def cover_path(%{slug: "master"}, version), do: "/images/podcasts/master-#{version}.png"

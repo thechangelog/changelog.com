@@ -10,12 +10,27 @@
     </div>
 
     <div class="show-header-content">
-      <%# TODO: Update link to play the trailer %>
-      <%= link("Listen to the Trailer", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-play_trailer button_play") %>
+    <%= if is_map(@trailer) do %>
+      <%= link("Listen to the Trailer",
+          title: "Play the Trailer",
+          to: EpisodeView.audio_url(@trailer),
+          role: "button",
+          data: [play: episode_path(@conn, :play, @podcast.slug, @trailer.slug)],
+          class: "show-header-play_trailer button_play") %>
+    <% else %>
+      <% latest = List.first(@items) %>
+      <%= if is_map(latest) do %>
+        <%= link("Listen to the latest",
+            to: EpisodeView.audio_url(latest.object),
+            role: "button",
+            data: [play: episode_path(@conn, :play, @podcast.slug, latest.object.slug)],
+            class: "show-header-play_trailer button_play") %>
+      <% end %>
+    <% end %>
 
       <div class="show-header-description">
         <h3><%= @podcast.description |> no_widowed_words() |> raw() %></h3>
-        <p><%= @podcast.schedule_note |> raw() %></p>
+        <p><%= @podcast.schedule_note |> md_to_html() |> raw() %></p>
       <%= if !Podcast.has_feed(@podcast) do %>
         <p>You can only subscribe to this podcast via the <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
       <% end %>
@@ -24,7 +39,6 @@
       <%= if Enum.any?(@podcast.hosts) do %>
       <div class="show-header-hosts avatar_list <%= if length(@podcast.hosts) < 4, do: 'avatar_list--full' %>">
       <%= for person <- @podcast.hosts do %>
-        <%# TODO: Ensure that these open in a new tab if intended %>
         <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
           <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
           <%# NOTE: This is only set up to work with a single first and last name %>

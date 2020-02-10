@@ -30,7 +30,7 @@ defmodule ChangelogWeb.PodcastController do
       |> Episode.limit(1)
       |> Repo.one()
 
-      conn
+    conn
     |> assign(:podcast, podcast)
     |> assign(:list, podcast.slug)
     |> assign(:items, items)
