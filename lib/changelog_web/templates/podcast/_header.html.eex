@@ -54,13 +54,13 @@
       <% !Podcast.has_feed(@podcast) -> %>
         <p>You can only subscribe to <em><%= @podcast.name %></em> by subscribing to our <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
       <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
-        <p class="show-header-signup_text">You are subscribed to be notified of new <em><%= @podcast.name %></em> episodes!</p>
+        <p class="show-header-signup_text">You are subscribed to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
         <%= link("Manage my subscription", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
       <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
-        <p class="show-header-signup_text">Subscribe to be notified of new <em><%= @podcast.name %></em> episodes!</p>
+        <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
         <%= link("Manage my subscription", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
       <% true -> %>
-        <p class="show-header-signup_text">Subscribe to be notified of new <em><%= @podcast.name %></em> episodes!</p>
+        <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
         <%= render(SharedView, "_subscribe_form.html", Map.merge(assigns, %{to: @list})) %>
       <% end %>
 
