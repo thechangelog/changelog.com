@@ -24,10 +24,11 @@
         style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')") %>
     <%= render(PodcastView, "_subscribe_tooltip.html", conn: @conn, podcast: @episode.podcast) %>
 
-    <%= link("Sponsor",
-        title: "Sponsor Podcast",
-        to: page_path(@conn, :sponsor),
+    <%= link("Share",
+        title: "Share this Episode",
+        to: {:javascript, "javascript:void(0);"},
         class: "toolbar_item toolbar_item--button",
-        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-sponsor.svg")}')") %>
+        data: [share: episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
+        style: "background-image: url('#{static_url(@conn, "/images/icons/icon-share.svg")}')") %>
   </div>
 </div>
