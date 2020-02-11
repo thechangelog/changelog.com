@@ -29,7 +29,7 @@
     <% end %>
 
       <div class="show-header-description">
-        <h3><%= @podcast.description |> no_widowed_words() |> raw() %></h3>
+        <h3><%= (@podcast.welcome || @podcast.description) |> no_widowed_words() |> raw() %></h3>
         <p><%= @podcast.schedule_note |> md_to_html() |> raw() %></p>
       </div>
 
