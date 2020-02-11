@@ -12,13 +12,16 @@ defmodule Changelog.Podcast do
     field :name, :string
     field :slug, :string
     field :status, Status
+
+    field :welcome, :string
     field :description, :string
     field :extended_description, :string
+
     field :vanity_domain, :string
     field :keywords, :string
     field :twitter_handle, :string
-    field :itunes_url, :string
-    field :ping_url, :string
+    field :apple_url, :string
+    field :spotify_url, :string
     field :schedule_note, :string
     field :download_count, :float
     field :reach_count, :integer
@@ -48,7 +51,7 @@ defmodule Changelog.Podcast do
       status: :published,
       description: "Master feed of all Changelog podcasts",
       keywords: "changelog, open source, oss, software, development, developer, hacker",
-      itunes_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
+      apple_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
       cover: true,
       hosts: []
     }
@@ -58,11 +61,11 @@ defmodule Changelog.Podcast do
 
   def insert_changeset(podcast, attrs \\ %{}) do
     podcast
-    |> cast(attrs, ~w(name slug status vanity_domain schedule_note description extended_description keywords twitter_handle itunes_url ping_url recorded_live partner position)a)
+    |> cast(attrs, ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords twitter_handle apple_url spotify_url recorded_live partner position)a)
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
-    |> validate_format(:itunes_url, Regexp.http, message: Regexp.http_message)
-    |> validate_format(:ping_url, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:apple_url, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:spotify_url, Regexp.http, message: Regexp.http_message)
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
     |> unique_constraint(:slug)
     |> cast_assoc(:podcast_topics)

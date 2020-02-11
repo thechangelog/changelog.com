@@ -1,8 +1,8 @@
 <%= if Podcast.has_feed(@podcast) do %>
 <div class="show-header-subscribe">
   <div class="show-header-subscribe-buttons">
-  <%= if @podcast.itunes_url do %>
-    <%= link("Apple", to: @podcast.itunes_url, class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple", title: "Subscribe on Apple") %>
+  <%= if @podcast.apple_url do %>
+    <%= link("Apple", to: @podcast.apple_url, class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple", title: "Subscribe on Apple") %>
     <%= link("Overcast", to: subscribe_on_overcast_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--overcast", title: "Subscribe on Overcast") %>
   <% end %>
     <%= link("Android", to: subscribe_on_android_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android", title: "Subscribe on Android") %>

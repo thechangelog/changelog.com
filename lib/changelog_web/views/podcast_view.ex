@@ -51,7 +51,7 @@ defmodule ChangelogWeb.PodcastView do
   end
 
   def subscribe_on_overcast_url(podcast) do
-    %{"id" => id, "name" => name} = Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.itunes_url)
+    %{"id" => id, "name" => name} = Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.apple_url)
     "https://overcast.fm/itunes#{id}/#{name}"
   end
 

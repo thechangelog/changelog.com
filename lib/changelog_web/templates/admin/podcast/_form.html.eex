@@ -126,6 +126,14 @@
     </div>
   </div>
 
+  <div class="field <%= error_class(f, :welcome) %>">
+    <%= label(f, :welcome) do %>
+      Welcome <%= help_icon("Only used on changelog.com landing pages.") %>
+    <% end %>
+    <%= textarea f, :welcome, placeholder: "Markdown enabled." %>
+    <%= error_message(f, :welcome) %>
+  </div>
+
   <div class="field <%= error_class(f, :description) %>">
     <%= label(f, :description) %>
     <%= textarea f, :description, placeholder: "Markdown enabled." %>
@@ -146,10 +154,16 @@
     <%= error_message(f, :keywords) %>
   </div>
 
-  <div class="field <%= error_class(f, :itunes_url) %>">
-    <%= label(f, :itunes_url, "iTunes URL") %>
-    <%= text_input(f, :itunes_url) %>
-    <%= error_message(f, :itunes_url) %>
+  <div class="field <%= error_class(f, :apple_url) %>">
+    <%= label(f, :apple_url, "Apple Podcasts URL") %>
+    <%= text_input(f, :apple_url) %>
+    <%= error_message(f, :apple_url) %>
+  </div>
+
+  <div class="field <%= error_class(f, :spotify_url) %>">
+    <%= label(f, :spotify_url, "Spotify URL") %>
+    <%= text_input(f, :spotify_url) %>
+    <%= error_message(f, :spotify_url) %>
   </div>
 
   <div class="ui hidden divider"></div>
