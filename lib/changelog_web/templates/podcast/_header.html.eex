@@ -31,9 +31,6 @@
       <div class="show-header-description">
         <h3><%= @podcast.description |> no_widowed_words() |> raw() %></h3>
         <p><%= @podcast.schedule_note |> md_to_html() |> raw() %></p>
-      <%= if !Podcast.has_feed(@podcast) do %>
-        <p>You can only subscribe to this podcast via the <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
-      <% end %>
       </div>
 
       <%= if Enum.any?(@podcast.hosts) do %>
@@ -53,13 +50,18 @@
 
       <hr class="show-header-break">
 
-      <%= if @current_user do %>
-        <%# TODO: Conditionally show "Subscribe" or "Unsubscribe" depending on current_user's current preference %>
-        <%= link("Subscribe", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
-        <%#= link("Unsubscribe", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
-      <% else %>
-        <p class="show-header-signup_text">Subscribe for weekly episodes and curated Javascript&nbsp;News</p>
-        <%= render(SharedView, "_subscribe_form.html", assigns) %>
+      <%= cond do %>
+      <% !Podcast.has_feed(@podcast) -> %>
+        <p>You can only subscribe to <em><%= @podcast.name %></em> by subscribing to our <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
+      <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
+        <p class="show-header-signup_text">You are subscribed to be notified of new <em><%= @podcast.name %></em> episodes!</p>
+        <%= link("Manage my subscription", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
+      <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
+        <p class="show-header-signup_text">Subscribe to be notified of new <em><%= @podcast.name %></em> episodes!</p>
+        <%= link("Manage my subscription", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
+      <% true -> %>
+        <p class="show-header-signup_text">Subscribe to be notified of new <em><%= @podcast.name %></em> episodes!</p>
+        <%= render(SharedView, "_subscribe_form.html", Map.merge(assigns, %{to: @list})) %>
       <% end %>
 
       <%= render("_subscribe_buttons.html", assigns) %>
