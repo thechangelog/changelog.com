@@ -46,7 +46,7 @@
         width: 60%;
         min-width: 300px;
         height: auto;
-        margin-bottom: $base-spacing;
+        margin: 0 auto $base-spacing;
 
         @include breakpoint(tablet) {
           display: flex;
