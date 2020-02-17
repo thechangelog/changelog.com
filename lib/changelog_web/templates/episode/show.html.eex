@@ -23,8 +23,7 @@
             <%# TODO: Ensure that these open in a new tab if intended %>
             <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
               <%= lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
-              <p class="avatar_list-item-first_name"><%= person.name |> String.split(" ") |> List.first %></p>
-              <p class="avatar_list-item-last_name"><%= person.name |> String.split(" ") |> List.last %></p>
+              <p><%= person.name |> String.split(" ") |> List.first %></p>
             <% end %>
           <% end %>
         </div>

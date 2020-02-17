@@ -38,11 +38,11 @@
       <%= for person <- @podcast.hosts do %>
         <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
           <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
-          <%# NOTE: This is only set up to work with a single first and last name %>
-          <div class="avatar_list-item-name">
-            <p class="avatar_list-item-first_name"><%= person.name |> String.split(" ") |> List.first %></p>
-            <p class="avatar_list-item-last_name"><%= person.name |> String.split(" ") |> List.last %></p>
-          </div>
+          <%= if length(@podcast.hosts) < 4 do %>
+            <p><%= person.name %></p>
+          <%= else %>
+            <p><%= person.name |> String.split(" ") |> List.first %></p>
+          <% end %>
         <% end %>
       <% end %>
       </div>

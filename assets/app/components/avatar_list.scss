@@ -30,55 +30,26 @@
       height: 60px;
     }
 
-    &-name {
-      .avatar_list--full & {
-        padding-left: 15px;
-      }
-    }
-
-    &-first_name,
-    &-last_name {
-      @include position(absolute, 100% null null 50%);
-      min-width: 100%;
-      transform: translateX(-50%);
+    p {
       margin: 0;
-      padding: 5px;
+      padding: 5px 0;
       background: $black;
       font-size: 0.75em;
       line-height: 1.2;
       color: $medium-grey-alt;
       transition: color 0.1s $base-easing;
-
-      .avatar_list--full & {
-        @include position(relative, 0);
-        min-width: 0;
-        padding: 0;
-        transform: none;
-        font-size: 1em;
-        font-weight: 500;
-      }
+      overflow: hidden; // Clips extra-long names to avoid overlap
     }
 
-    &-last_name {
-      display: none;
-      border-radius: $base-border-radius;
-      transform: translate(-50%, 15px);
-      z-index: 10;
-
-      .avatar_list--full & {
-        display: block;
-        border-radius: 0;
-      }
+    .avatar_list--full & p {
+      max-width: 110px; // Allows full names to auto wrap within a constrained width
+      padding: 0 0 0 15px;
+      font-size: 1em;
+      font-weight: 500;
     }
 
-    &:hover {
-      p {
-        color: $white;
-      }
-
-      .avatar_list-item-last_name {
-        display: block;
-      }
+    &:hover p {
+      color: $white;
     }
   }
 }
