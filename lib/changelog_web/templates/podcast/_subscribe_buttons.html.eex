@@ -6,8 +6,7 @@
     <%= link("Overcast", to: subscribe_on_overcast_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--overcast", title: "Subscribe on Overcast") %>
   <% end %>
   <%= if @podcast.spotify_url do %>
-    <%# TODO add Spotify image asset and enable this %>
-    <%#= link("Spotify", to: @podcast.spotify_url, class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--spotify", title: "Subscribe on Spotify") %>
+    <%= link("Spotify", to: @podcast.spotify_url, class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--spotify", title: "Subscribe on Spotify") %>
   <% end %>
     <%= link("Android", to: subscribe_on_android_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android", title: "Subscribe on Android") %>
     <%= link("RSS", to: feed_path(@conn, :podcast, @podcast.slug), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--rss", title: "Subscribe via RSS", data: [turbolinks: false]) %>
