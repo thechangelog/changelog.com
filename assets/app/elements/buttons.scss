@@ -20,17 +20,22 @@ button {
   padding-right: 1.25em;
 }
 
+.button_dark,
 .button_play {
   $button-background: #1e262d;
   @include button($button-background, $green);
   display: inline-block;
   margin-bottom: 1em;
-  padding: 0.9em 1.25em 0.9em 3.5em;
-  background-image: url('/images/icons/icon-play-circle.svg');
-  background-repeat: no-repeat;
-  background-position: 1em center;
+  padding: 0.9em 1.25em;
   font-family: $code;
   font-size: 0.75em;
 
   &:hover { background-color: lighten($button-background, 2%); }
+}
+
+.button_play {
+  padding-left: 3.5em;
+  background-image: url('/images/icons/icon-play-circle.svg');
+  background-repeat: no-repeat;
+  background-position: 1em center;
 }
