@@ -40,8 +40,8 @@
           <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
           <%= if length(@podcast.hosts) < 4 do %>
             <p><%= person.name %></p>
-          <%= else %>
-            <p><%= person.name |> String.split(" ") |> List.first %></p>
+          <% else %>
+            <p><%= PersonView.first_name(person) %></p>
           <% end %>
         <% end %>
       <% end %>

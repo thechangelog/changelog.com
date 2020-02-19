@@ -1,8 +1,8 @@
 <section class="show show--<%= @podcast.slug %> show--<%= @podcast.status %>">
-  <%= if @page.page_number !== 1 || assigns[:tab] do %>
-    <%= render("_header.html", assigns) %>
+  <%= if @page.page_number == 1 && !assigns[:tab] do %>
+    <%= render("_header_landing.html", assigns) %>
   <% else %>
-    <%= render("_header-landing.html", assigns) %>
+    <%= render("_header.html", assigns) %>
   <% end %>
 
   <a id="feed" class="anchor"></a>
