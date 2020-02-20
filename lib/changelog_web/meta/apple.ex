@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Meta.Apple do
   alias ChangelogWeb.PodcastView
 
   def apple_podcasts_id(%{view_module: PodcastView, podcast: podcast}) do
-    if url = podcast.itunes_url do
+    if url = podcast.apple_url do
       url
       |> String.split("/")
       |> List.last()

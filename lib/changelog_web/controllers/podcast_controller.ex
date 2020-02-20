@@ -11,7 +11,8 @@ defmodule ChangelogWeb.PodcastController do
     podcast = Podcast.get_by_slug!(slug)
 
     page =
-      Podcast.get_news_items(podcast)
+      podcast
+      |> Podcast.get_news_items()
       |> NewsItem.published()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()
@@ -21,10 +22,19 @@ defmodule ChangelogWeb.PodcastController do
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
+    trailer =
+      podcast
+      |> assoc(:episodes)
+      |> Episode.trailer()
+      |> Episode.published()
+      |> Episode.limit(1)
+      |> Repo.one()
+
     conn
     |> assign(:podcast, podcast)
     |> assign(:list, podcast.slug)
     |> assign(:items, items)
+    |> assign(:trailer, trailer)
     |> assign(:page, page)
     |> cache_public(:timer.minutes(5))
     |> render(:show)

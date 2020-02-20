@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PodcastView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Podcast, StringKit}
-  alias ChangelogWeb.{Endpoint, NewsItemView, PersonView, SharedView}
+  alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
   def cover_path(%{slug: "master"}, version), do: "/images/podcasts/master-#{version}.png"
@@ -51,7 +51,7 @@ defmodule ChangelogWeb.PodcastView do
   end
 
   def subscribe_on_overcast_url(podcast) do
-    %{"id" => id, "name" => name} = Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.itunes_url)
+    %{"id" => id, "name" => name} = Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.apple_url)
     "https://overcast.fm/itunes#{id}/#{name}"
   end
 

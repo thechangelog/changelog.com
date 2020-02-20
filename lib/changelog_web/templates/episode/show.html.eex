@@ -18,10 +18,12 @@
 
       <div class="episode-header-guests">
         <h4 class="visually_hidden">Featuring</h4>
-        <div class="avatar_list <%= if length(participants) > 6, do: "avatar_list--large" %>">
+        <div class="avatar_list">
           <%= for person <- participants do %>
+            <%# TODO: Ensure that these open in a new tab if intended %>
             <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
               <%= lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
+              <p><%= person.name |> String.split(" ") |> List.first %></p>
             <% end %>
           <% end %>
         </div>

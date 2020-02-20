@@ -1,0 +1,71 @@
+<header class="show-header">
+  <h2 class="visually_hidden"><%= @podcast.name %></h2>
+  <div class="show-header-inner">
+
+    <div class="show-header-art">
+      <%= lazy_image(cover_url(@podcast, :original), "#{@podcast.name} Artwork", width: 490, height: 490) %>
+    <%= if @podcast.status != :published do %>
+      <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
+    <% end %>
+    </div>
+
+    <div class="show-header-content">
+    <%= if is_map(@trailer) do %>
+      <%= link("Listen to the Trailer",
+          title: "Play the Trailer",
+          to: EpisodeView.audio_url(@trailer),
+          role: "button",
+          data: [play: episode_path(@conn, :play, @podcast.slug, @trailer.slug)],
+          class: "show-header-play_trailer button_play") %>
+    <% else %>
+      <% latest = List.first(@items) %>
+      <%= if is_map(latest) do %>
+        <%= link("Listen to the latest",
+            to: EpisodeView.audio_url(latest.object),
+            role: "button",
+            data: [play: episode_path(@conn, :play, @podcast.slug, latest.object.slug)],
+            class: "show-header-play_trailer button_play") %>
+      <% end %>
+    <% end %>
+
+      <div class="show-header-description">
+        <h3><%= (@podcast.welcome || @podcast.description) |> no_widowed_words() |> raw() %></h3>
+        <p><%= @podcast.schedule_note |> md_to_html() |> raw() %></p>
+      </div>
+
+      <%= if Enum.any?(@podcast.hosts) do %>
+      <div class="show-header-hosts avatar_list <%= if length(@podcast.hosts) < 4, do: 'avatar_list--full' %>">
+      <%= for person <- @podcast.hosts do %>
+        <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
+          <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
+          <%= if length(@podcast.hosts) < 4 do %>
+            <p><%= person.name %></p>
+          <% else %>
+            <p><%= PersonView.first_name(person) %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+      </div>
+      <% end %>
+
+      <hr class="show-header-break">
+
+      <%= cond do %>
+      <% !Podcast.has_feed(@podcast) -> %>
+        <p>You can only subscribe to <em><%= @podcast.name %></em> by subscribing to our <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
+      <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
+        <p class="show-header-signup_text">You are subscribed to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
+        <%= link("Manage my subscription", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
+      <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
+        <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
+        <%= link("Manage my subscription", to: home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
+      <% true -> %>
+        <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
+        <%= render(SharedView, "_subscribe_form.html", Map.merge(assigns, %{to: @list})) %>
+      <% end %>
+
+      <%= render("_subscribe_buttons.html", assigns) %>
+    </div>
+
+  </div>
+</header>
