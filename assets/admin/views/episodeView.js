@@ -50,12 +50,18 @@ export default class EpisodeView {
       let data = $(this).data("chart");
 
       let options = $.extend(chartOptions, {
+        series: data.series,
         title: {
           text: data.title
         },
-        series: data.series,
-        xaxis: {
-          categories: data.categories
+        tooltip: {
+          y: {
+            title: {
+              formatter: function(_value, {_series, seriesIndex, dataPointIndex, _w}) {
+                return data.series[seriesIndex].data[dataPointIndex].title;
+              }
+            }
+          }
         }
       });
 

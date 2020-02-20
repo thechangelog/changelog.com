@@ -70,9 +70,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
           |> Repo.one()
           |> Kernel.||(0)
 
-        {ep.slug, reach}
+        {ep.slug, reach, ep.title}
       end)
-      |> Enum.reject(fn({_, reach}) -> reach == 0 end)
+      |> Enum.reject(fn({_, reach, _}) -> reach == 0 end)
 
     conn
     |> assign(:episodes, page.entries)
