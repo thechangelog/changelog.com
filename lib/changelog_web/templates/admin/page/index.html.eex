@@ -12,13 +12,6 @@
 </div>
 <% end %>
 
-<%= if Enum.any?(@episode_requests) do %>
-<div class="ui basic segment">
-  <h1 class="ui header">Episode requests</h1>
-  <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
-</div>
-<% end %>
-
 <div class="ui basic segment">
   <div class="ui centered stackable grid">
     <div class="ui twelve wide column">
@@ -86,6 +79,13 @@
 <div class="ui basic segment">
   <%= render(EpisodeView, "_reach.html", assigns) %>
 </div>
+
+<%= if Enum.any?(@episode_requests) do %>
+<div class="ui basic segment">
+  <h1 class="ui header">Episode requests</h1>
+  <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
+</div>
+<% end %>
 
 <div class="ui basic segment">
   <div class="ui stackable centered two column grid">
