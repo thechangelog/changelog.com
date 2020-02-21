@@ -28,6 +28,7 @@ defmodule ChangelogWeb.PodcastController do
       |> Episode.trailer()
       |> Episode.published()
       |> Episode.limit(1)
+      |> Episode.preload_podcast()
       |> Repo.one()
 
     conn

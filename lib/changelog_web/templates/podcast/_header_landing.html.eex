@@ -10,21 +10,23 @@
     </div>
 
     <div class="show-header-content">
-    <%= if is_map(@trailer) do %>
-      <%= link("Listen to the Trailer",
-          title: "Play the Trailer",
-          to: EpisodeView.audio_url(@trailer),
-          role: "button",
-          data: [play: episode_path(@conn, :play, @podcast.slug, @trailer.slug)],
-          class: "show-header-play_trailer button_play") %>
-    <% else %>
-      <% latest = List.first(@items) %>
-      <%= if is_map(latest) do %>
-        <%= link("Listen to the latest",
-            to: EpisodeView.audio_url(latest.object),
+    <%= if @podcast.status != :retired do %>
+      <%= if is_map(@trailer) do %>
+        <%= link("Listen to the Trailer",
+            title: "Play the Trailer",
+            to: EpisodeView.audio_url(@trailer),
             role: "button",
-            data: [play: episode_path(@conn, :play, @podcast.slug, latest.object.slug)],
+            data: [play: episode_path(@conn, :play, @podcast.slug, @trailer.slug)],
             class: "show-header-play_trailer button_play") %>
+      <% else %>
+        <% latest = List.first(@items) %>
+        <%= if is_map(latest) do %>
+          <%= link("Listen to the latest",
+              to: EpisodeView.audio_url(latest.object),
+              role: "button",
+              data: [play: episode_path(@conn, :play, @podcast.slug, latest.object.slug)],
+              class: "show-header-play_trailer button_play") %>
+        <% end %>
       <% end %>
     <% end %>
 
@@ -51,6 +53,8 @@
       <hr class="show-header-break">
 
       <%= cond do %>
+      <% @podcast.status == :retired -> %>
+        <p class="show-header-signup_text">This podcast has been retired. <%= link("Head here", to: podcast_path(@conn, :index)) %> for more awesome podcasts.</p>
       <% !Podcast.has_feed(@podcast) -> %>
         <p>You can only subscribe to <em><%= @podcast.name %></em> by subscribing to our <%= link("Master Feed", to: podcast_path(@conn, :show, "master")) %></p>
       <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>

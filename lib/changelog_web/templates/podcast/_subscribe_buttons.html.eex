@@ -1,4 +1,4 @@
-<%= if Podcast.has_feed(@podcast) do %>
+<%= if Podcast.has_feed(@podcast) && @podcast.status != :retired do %>
 <div class="show-header-subscribe">
   <div class="show-header-subscribe-buttons">
   <%= if @podcast.apple_url do %>
