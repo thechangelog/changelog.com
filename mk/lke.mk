@@ -346,6 +346,23 @@ kube-prometheus: tmp/kube-prometheus $(JB)
 	&& git reset --hard origin/master \
 	&& $(JB) install
 
+# jb update fails - see https://github.com/coreos/kube-prometheus/issues/420
+#
+# GET https://github.com/prometheus/prometheus/archive/0e51cf65e78043fddd8ae8a8ea611b7f0f9ce39d.tar.gz 200
+# GET https://github.com/prometheus/node_exporter/archive/ef7c05816adcb0e8923defe34e97f6afcce0a939.tar.gz 200
+# GET https://github.com/ksonnet/ksonnet-lib/archive/0d2f82676817bbf9e4acf6495b2090205f323b9f.tar.gz 200
+# GET https://github.com/kubernetes-monitoring/kubernetes-mixin/archive/8e370046348970ac68bd0fcfd5a15184a6cbdf51.tar.gz 200
+# GET https://github.com/brancz/kubernetes-grafana/archive/23c20eb8df5047c4735d2d341d4a7bab6f87870b.tar.gz 200
+# GET https://github.com/coreos/prometheus-operator/archive/1aa773ddbbbd9b05405e9785e0190b975b1faadc.tar.gz 200
+# GET https://github.com/coreos/etcd/archive/8756286fe80e444c5e792e9cf5d42cf6ae816095.tar.gz 200
+# GET https://github.com/grafana/jsonnet-libs/archive/7ac7da1a0fe165b68cdb718b2521b560d51bd1f4.tar.gz 200
+# GET https://github.com/grafana/grafonnet-lib/archive/c459106d2d2b583dd3a83f6c75eb52abee3af764.tar.gz 200
+# GET https://github.com/kubernetes-monitoring/kubernetes-mixin/archive/8e370046348970ac68bd0fcfd5a15184a6cbdf51.tar.gz 200
+# GET https://github.com/metalmatze/slo-libsonnet/archive/437c402c5f3ad86c3c16db8471f1649284fef0ee.tar.gz 200
+# jb: error: failed to install packages: downloading: failed to create tmp dir: stat vendor/.tmp: no such file or directory
+#
+# jb version is v0.2.0 -> https://github.com/jsonnet-bundler/jsonnet-bundler/releases/tag/v0.2.0
+
 tmp/kube-prometheus:
 	git clone https://github.com/coreos/kube-prometheus.git tmp/kube-prometheus
 
