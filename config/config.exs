@@ -63,7 +63,7 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
 
 config :algolia,
   application_id: DockerSecret.get("ALGOLIA_APPLICATION_ID"),
-  api_key: DockerSecret.get("ALGOLIA_API_KEY")
+  api_key: DockerSecret.get("ALGOLIA_API_KEY2")
 
 config :mime, :types, %{"application/javascript" => ["js"], "application/xml" => ["xml"]}
 
