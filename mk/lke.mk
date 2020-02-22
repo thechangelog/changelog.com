@@ -24,12 +24,12 @@ ifeq ($(PLATFORM),Darwin)
 PATH := /usr/local/opt/python/libexec/bin:$(PATH)
 export PATH
 
-PIP ?= /usr/local/bin/pip3
+PIP := /usr/local/bin/pip3
 $(PIP):
 	brew install python3
 
 # https://github.com/linode/linode-cli
-LINODE_CLI ?= /usr/local/bin/linode-cli
+LINODE_CLI := /usr/local/bin/linode-cli
 $(LINODE_CLI): $(PIP)
 	$(PIP) install linode-cli
 	touch $(@)
@@ -50,19 +50,19 @@ KUBENS := /usr/local/bin/kubens
 $(KUBECTX) $(KUBENS):
 	brew install kubectx
 
-OCTANT ?= /usr/local/bin/octant
+OCTANT := /usr/local/bin/octant
 $(OCTANT):
 	brew install octant
 
-K9S ?= /usr/local/bin/k9s
+K9S := /usr/local/bin/k9s
 $(K9S):
 	brew install derailed/k9s/k9s
 
-POPEYE ?= /usr/local/bin/popeye
+POPEYE := /usr/local/bin/popeye
 $(POPEYE):
 	brew install derailed/popeye/popeye
 
-KREW ?= /usr/local/bin/kubectl-krew
+KREW := /usr/local/bin/kubectl-krew
 $(KREW):
 	brew install krew
 krew: $(KREW)
