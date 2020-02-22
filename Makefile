@@ -157,7 +157,6 @@ endif
 
 include $(CURDIR)/mk/inspect.mk
 include $(CURDIR)/mk/images.mk
-include $(CURDIR)/mk/todo.mk
 
 MIGRATE_FROM := core@2019i.changelog.com
 include $(CURDIR)/mk/migrate.mk
