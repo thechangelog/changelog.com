@@ -241,10 +241,11 @@ howto-rotate-secret:
 	@printf "\n 5/10. Maybe repeat the previous step for $(BOLD)docker/local.stack.yml$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 6/10. Commit & push all changes to GitHub\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 7/10. Apply the stack modifications by running $(BOLD)make bootstrap-docker$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
-	@printf "\n 8/10. After the previous command succeeds, ensure the new secret is available in the $(BOLD)app$(NORMAL) service\n       Run $(BOLD)make ctop > ENTER > exec shell$(NORMAL) on the running app container, then run e.g. $(BOLD)cat /var/run/secrets/ALGOLIA_API_KEY2$(NORMAL) inside the container\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 8/10. After the previous command succeeds, ensure the new secret is available in the $(BOLD)$(DOCKER_STACK)_app$(NORMAL) service\n       Run $(BOLD)make ctop > select running $(DOCKER_STACK)_app instance & ENTER > exec shell$(NORMAL), then run e.g. $(BOLD)cat /var/run/secrets/ALGOLIA_API_KEY2$(NORMAL) inside the container\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 9/10. Modify app to use new secret reference in either $(BOLD)config/config.exs$(NORMAL) or $(BOLD)config/prod.exs$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n10/10. Commit & push to GitHub\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n$(BOLD)$(GREEN)I know, that was really long & convoluted... BUT YOU DID IT!\nWhen the new app instance starts, it will use the new secret 🙌🏻 $(NORMAL)\n"
+	@printf "To double-check, search for e.g. $(BOLD)ALGOLIA_API_KEY$(NORMAL) in the app's logs in Papertrail\n"
 
 .PHONY: create-dirs-mounted-as-volumes
 create-dirs-mounted-as-volumes:
