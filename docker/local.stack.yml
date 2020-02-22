@@ -45,6 +45,8 @@ secrets:
     external: true
   ALGOLIA_API_KEY:
     external: true
+  ALGOLIA_API_KEY2:
+    external: true
 
 services:
   # log:
@@ -173,6 +175,7 @@ services:
       - COVERALLS_REPO_TOKEN
       - ALGOLIA_APPLICATION_ID
       - ALGOLIA_API_KEY
+      - ALGOLIA_API_KEY2
     depends_on:
       - db
     image: thechangelog/changelog.com:local
