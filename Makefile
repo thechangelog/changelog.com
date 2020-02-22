@@ -42,6 +42,12 @@ export PATH
 
 export FQDN IPv4
 
+ifeq ($(PLATFORM),Darwin)
+OPEN := open
+else
+OPEN := xdg-open
+endif
+
 
 
 ### DEPS ###
