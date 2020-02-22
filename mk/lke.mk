@@ -66,6 +66,14 @@ KREW := /usr/local/bin/kubectl-krew
 $(KREW):
 	brew install krew
 krew: $(KREW)
+
+JSONNET := /usr/local/bin/jsonnet
+$(JSONNET):
+	brew install jsonnet
+
+YQ := /usr/local/bin/yq
+$(YQ):
+	brew install yq
 endif
 ifeq ($(PLATFORM),Linux)
 LINODE_CLI ?= /usr/bin/linode-cli
@@ -96,6 +104,14 @@ $(POPEYE):
 KREW ?= /usr/bin/kubectl-krew
 $(KREW):
 	$(error Please install krew: https://github.com/kubernetes-sigs/krew#installation)
+
+JSONNET ?= /usr/bin/jsonnet
+$(JSONNET):
+	$(error Please install jsonnet: https://github.com/google/jsonnet#packages)
+
+YQ ?= /usr/bin/yq
+$(YQ):
+	$(error Please install yq: https://github.com/mikefarah/yq#install)
 endif
 
 # https://github.com/ahmetb/kubectl-tree
@@ -107,8 +123,8 @@ $(KUBETREE): $(KUBECTL) $(KREW)
 PATH := $(HOME)/.krew/bin:$(PATH)
 export PATH
 
-# https://github.com/k14s/ytt/releases
-YTT_VERSION := 0.23.0
+YTT_RELEASES := https://github.com/k14s/ytt/releases
+YTT_VERSION := 0.25.0
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
 YTT_URL := https://github.com/k14s/ytt/releases/download/v$(YTT_VERSION)/ytt-$(platform)-amd64
 YTT := $(LOCAL_BIN)/$(YTT_BIN)
@@ -123,9 +139,29 @@ $(YTT): $(CURL)
 	&& ln -sf $(YTT) $(LOCAL_BIN)/ytt
 .PHONY: ytt
 ytt: $(YTT)
-.PHONY: ytt-releases
-ytt-releases:
-	@$(OPEN) https://github.com/k14s/ytt/releases
+.PHONY: releases-ytt
+releases-ytt:
+	@$(OPEN) $(YTT_RELEASES)
+
+JB_RELEASES := https://github.com/jsonnet-bundler/jsonnet-bundler/releases
+JB_VERSION := 0.2.0
+JB_BIN := jb-$(JB_VERSION)-$(platform)-amd64
+JB_URL := https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v$(JB_VERSION)/jb-$(platform)-amd64
+JB := $(LOCAL_BIN)/$(JB_BIN)
+$(JB): $(CURL)
+	@mkdir -p $(LOCAL_BIN) \
+	&& cd $(LOCAL_BIN) \
+	&& $(CURL) --progress-bar --fail --location --output $(JB) "$(JB_URL)" \
+	&& touch $(JB) \
+	&& chmod +x $(JB) \
+	&& $(JB) --help 2>&1 \
+	   | grep "jsonnet package manager" \
+	&& ln -sf $(JB) $(LOCAL_BIN)/jb
+.PHONY: jb
+jb: $(JB)
+.PHONY: releases-jb
+releases-jb:
+	@$(OPEN) $(JB_RELEASES)
 
 .PHONY: kubectx
 kubectx: $(KUBECTX)
@@ -304,10 +340,11 @@ lke-monitoring: lke-ctx kube-prometheus
 	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests
 
 .PHONY: kube-prometheus
-kube-prometheus: tmp/kube-prometheus
+kube-prometheus: tmp/kube-prometheus $(JB)
 	cd tmp/kube-prometheus \
 	&& git fetch \
-	&& git reset --hard origin/master
+	&& git reset --hard origin/master \
+	&& $(JB) install
 
 tmp/kube-prometheus:
 	git clone https://github.com/coreos/kube-prometheus.git tmp/kube-prometheus
