@@ -24,6 +24,7 @@ defmodule Changelog.NewsIssue do
     |> cast(attrs, ~w(slug teaser note published published_at)a)
     |> validate_required([:slug])
     |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
+    |> validate_length(:teaser, max: 255)
     |> unique_constraint(:slug)
     |> cast_assoc(:news_issue_ads)
     |> cast_assoc(:news_issue_items)

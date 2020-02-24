@@ -9,15 +9,15 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
 
   def index(conn, params) do
     page =
-      NewsIssue.published
+      NewsIssue.published()
       |> order_by([s], desc: s.id)
-      |> NewsIssue.preload_all
+      |> NewsIssue.preload_all()
       |> Repo.paginate(params)
 
     drafts =
-      NewsIssue.unpublished
+      NewsIssue.unpublished()
       |> NewsIssue.newest_first(:inserted_at)
-      |> Repo.all
+      |> Repo.all()
 
     render(conn, :index, issues: page.entries, drafts: drafts, page: page)
   end
