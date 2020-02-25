@@ -181,7 +181,11 @@
     }
 
     &-hosts {
-      justify-content: flex-start;
+      justify-content: center;
+
+      @include breakpoint(desktop) {
+        justify-content: flex-start;
+      }
     }
 
     &-break {
@@ -195,6 +199,10 @@
       margin-bottom: 0.5em;
       font-size: 1.125em;
       color: $white;
+
+      @include breakpoint(desktop, max) {
+        text-align: center;
+      }
     }
 
     // "user_action" – Subscribe/Unsubscribe buttons (Logged in only)
