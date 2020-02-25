@@ -18,14 +18,8 @@
       <li>A pair of headphones (over-the-ear preferred) 🎧</li>
       <li>A quiet place to record 🤫</li>
       <li>A reliable internet connection 🔌</li>
-    <%= if uses_skype?(@podcast) do %>
-      <li>A <a href="https://www.skype.com/">Skype</a> account 📞</li>
-    <% end %>
+      <li>A <a href="https://zoom.us/">Zoom</a> client 📞</li>
     </ul>
-
-  <%= if uses_skype?(@podcast) do %>
-    <p>Send your Skype username to the hosts via email</p>
-  <% end %>
 
     <h4 id="local-recording">Creating a local recording</h4>
 
@@ -36,21 +30,20 @@
     <h3 id="during">During recording</h3>
 
     <p>
-    <%= if uses_skype?(@podcast) do %>
-      Be ready on Skype approximately 5-10 minutes prior to recording for a quick soundcheck. <mark>We will contact you</mark>.
-    <% else %>
-      Join the Zoom meeting at the scheduled time.
-    <% end %>
-      Here's some <em>tips and tricks</em> for a great show:
+      Join the Zoom meeting at the scheduled time. Here's some <em>tips and tricks</em> for a great show:
     </p>
 
     <ul>
     <%= if @podcast.recorded_live do %>
       <li><mark>This show records live</mark>.</li>
-      <li>You can interact with listeners in our <%= link "Community Slack", to: page_path(@conn, :community) %>.</li>
-    <% else %>
-      <li>Video optional! Feel free to opt out due to a slow connection or a bad hair day 📹</li>
+      <li>You can interact with listeners in
+      <%= if @podcast.slug == "gotime" do %>
+        the <%= link("Gophers Slack", to: "https://gophers.slack.com/messages/gotimefm") %>
+      <% else %>
+        our <%= link("Community Slack", to: page_path(@conn, :community)) %>.</li>
+      <% end %>
     <% end %>
+      <li>Video optional! Feel free to opt out due to a slow connection or a bad hair day 📹</li>
       <li>Put your mobile device(s) on Airplane Mode 📳</li>
       <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome 🚰</li>
       <li>Relax. Have fun. Bring your opinions 💯</li>

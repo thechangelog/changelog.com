@@ -10,11 +10,4 @@ defmodule ChangelogWeb.PageView do
     sponsor = Repo.get_by(Sponsor, name: story.sponsor) || %{avatar: nil}
     SponsorView.avatar_url(sponsor, :small)
   end
-
-  def uses_skype?(podcast) do
-    case podcast.slug do
-      "practicalai" -> true
-      _else -> false
-    end
-  end
 end
