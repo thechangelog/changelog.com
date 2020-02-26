@@ -37,6 +37,8 @@ npm-debug.log*
 
 # .envrc is likely to contain user-specific secrets, such as CIRCLE_TOKEN
 .envrc
+# like .envrc, but for asdf
+.tool-versions
 
 # .terraform will contain large, platform-specific binaries
 .terraform
