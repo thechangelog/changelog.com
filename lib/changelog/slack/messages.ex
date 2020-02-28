@@ -1,5 +1,5 @@
 defmodule Changelog.Slack.Messages do
-  alias ChangelogWeb.NewsItemView
+  alias ChangelogWeb.{NewsItemView, EpisodeView}
 
   def new_comment(comment) do
     ~s"""
@@ -7,9 +7,9 @@ defmodule Changelog.Slack.Messages do
     """
   end
 
-  def new_episode(podcast, url) do
+  def new_episode(episode, url) do
     ~s"""
-    New episode of #{podcast.name}! #{celebrate_emoji()} #{url}
+    #{EpisodeView.title_with_podcast_aside(episode)} #{celebrate_emoji()} #{url}
     """
   end
 

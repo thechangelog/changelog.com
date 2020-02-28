@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Changelog.Avatars do
   use Mix.Task
 
-  alias Changelog.{Episode, Person, Podcast, Repo}
+  alias Changelog.{Episode, Podcast, Repo}
   alias ChangelogWeb.{PersonView}
 
   @shortdoc "Downloads all people's avatars to a temp directory"
@@ -34,7 +34,7 @@ defmodule Mix.Tasks.Changelog.Avatars do
     end
   end
 
-  # defp all_people, do: Repo.all(Person)
+  # defp all_people, do: Repo.all(Changelog.Person)
 
   defp all_people_on_podcast(slug) do
     Podcast

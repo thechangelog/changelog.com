@@ -12,7 +12,7 @@ defmodule Changelog.Notifier do
 
     deliver_episode_guest_thanks_emails(episode)
     deliver_podcast_subscription_emails(episode)
-    deliver_slack_new_episode_message(episode.podcast, item.url)
+    deliver_slack_new_episode_message(episode, item.url)
   end
   def notify(item = %NewsItem{}) do
     item = NewsItem.preload_all(item)
@@ -123,8 +123,8 @@ defmodule Changelog.Notifier do
     Slack.Client.message("#news-comments", message)
   end
 
-  defp deliver_slack_new_episode_message(podcast, url) do
-    message = Slack.Messages.new_episode(podcast, url)
+  defp deliver_slack_new_episode_message(episode, url) do
+    message = Slack.Messages.new_episode(episode, url)
     Slack.Client.message("#main", message)
   end
 
