@@ -34,9 +34,6 @@ defmodule ChangelogWeb.NewsAdView do
 
   def image_url(ad, version), do: static_url(Endpoint, image_path(ad, version))
 
-  def render_toolbar_button(conn, ad = %{image: image}) when not is_nil(image) do
-    render("toolbar/_button_image.html", conn: conn, ad: ad)
-  end
   def render_toolbar_button(_conn, _ad), do: nil
 
   def slug(ad) do

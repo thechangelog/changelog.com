@@ -150,11 +150,6 @@ defmodule ChangelogWeb.NewsItemView do
   def render_toolbar_button(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("toolbar/_button_episode.html", conn: conn, item: item, episode: episode)
   end
-  def render_toolbar_button(conn, item = %{type: :video}) do
-    if id = UrlKit.get_youtube_id(item.url) do
-      render("toolbar/_button_video.html", conn: conn, item: item, id: id)
-    end
-  end
   def render_toolbar_button(_conn, _item), do: nil
 
   def render_youtube_embed(nil), do: nil
