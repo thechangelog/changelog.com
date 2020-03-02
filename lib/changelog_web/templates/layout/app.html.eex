@@ -29,10 +29,14 @@
     <meta property="og:url" content="<%= current_url(@conn) %>">
     <meta property="og:type" content="website">
     <meta property="og:title" content="<%= share_title(assigns) %>">
-  <%= if fbimg = fb_image(assigns) do %>
-    <meta property="og:image" content="<%= fbimg %>">
-    <meta property="og:image:width" content="<%= fb_image_width(assigns) %>">
-    <meta property="og:image:height" content="<%= fb_image_height(assigns) %>">
+  <%= if fb_image = fb_image(assigns) do %>
+    <meta property="og:image" content="<%= fb_image %>">
+  <% end %>
+  <%= if fb_image_width = fb_image_width(assigns) do %>
+    <meta property="og:image:width" content="<%= fb_image_width %>">
+  <% end %>
+  <%= if fb_image_height = fb_image_height(assigns) do %>
+    <meta property="og:image:height" content="<%= fb_image_height %>">
   <% end %>
     <meta property="og:description" content="<%= description(assigns) %>">
     <meta property="og:site_name" content="Changelog">

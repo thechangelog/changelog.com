@@ -13,13 +13,16 @@ defmodule ChangelogWeb.Meta.Image do
   def twitter_image(assigns), do: assigns |> get_twitter()
 
   defp get_fb(%{podcast: podcast}), do: podcast_image(podcast)
+  defp get_fb(%{view_module: NewsItemView, item: item = %{image: img}}) when is_map(img), do: NewsItemView.image_url(item, :original)
   defp get_fb(%{view_module: PageView, view_template: "ten.html"}), do: static_image("/images/content/ten/ten-year-social.jpg")
   defp get_fb(_), do: static_image("/images/share/fb-sitewide.png")
 
   defp get_fb_width(%{podcast: _podcast}), do: "3000"
+  defp get_fb_width(%{view_module: NewsItemView, item: %{image: img}}) when is_map(img), do: nil
   defp get_fb_width(_), do: "1200"
 
   defp get_fb_height(%{podcast: _podcast}), do: "1688"
+  defp get_fb_height(%{view_module: NewsItemView, item: %{image: img}}) when is_map(img), do: nil
   defp get_fb_height(_), do: "630"
 
   defp get_twitter(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_image()
