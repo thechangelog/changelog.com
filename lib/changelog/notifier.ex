@@ -47,8 +47,9 @@ defmodule Changelog.Notifier do
   end
   def notify(episode = %Episode{}) do
     episode = Episode.preload_all(episode)
+    interested = ~w(jerod@changelog.com adam@changelog.com)
 
-    for person <- "jerod@changelog.com" |> Person.with_email() |> Repo.all() do
+    for person <- interested |> Person.with_email() |> Repo.all() do
       deliver_episode_transcribed_email(person, episode)
     end
   end
