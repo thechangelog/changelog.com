@@ -15,12 +15,12 @@
             title: "Learn More",
             to: podcast_path(@conn, :show, @podcast.slug),
             role: "button",
-            class: "show-header-buttons-item button_dark") %>
+            class: "show-header-buttons-item button_small") %>
         <%= link("Subscribe",
             title: "Subscribe",
             to: podcast_path(@conn, :show, @podcast.slug),
             role: "button",
-            class: "show-header-buttons-item button_dark") %>
+            class: "show-header-buttons-item button_small") %>
       </div>
     </div>
   </div>
