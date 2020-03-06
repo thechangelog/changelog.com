@@ -107,7 +107,7 @@
       }
 
       @include breakpoint(desktop) {
-        flex: 1 1 auto;
+        flex: 1 1 700px;
 
         .show-header--minimal & {
           flex-shrink: 0;
@@ -121,7 +121,6 @@
 
     // Description
     &-description {
-      max-width: 540px;
       margin-bottom: $base-spacing;
       color: $medium-grey-alt;
 
