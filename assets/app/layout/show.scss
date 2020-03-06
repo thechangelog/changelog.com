@@ -203,6 +203,15 @@
       @include breakpoint(desktop, max) {
         text-align: center;
       }
+      @include breakpoint(mobile, max) {
+        display: none;
+      }
+    }
+
+    .signup-form {
+      @include breakpoint(mobile, max) {
+        display: none;
+      }
     }
 
     // "user_action" – Subscribe/Unsubscribe buttons (Logged in only)
