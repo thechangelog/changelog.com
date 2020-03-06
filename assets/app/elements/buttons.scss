@@ -20,17 +20,16 @@ button {
   padding-right: 1.25em;
 }
 
-.button_dark,
+.button_small,
 .button_play {
-  $button-background: #1e262d;
-  @include button($button-background, $green);
+  @include button($green, $black);
   display: inline-block;
   margin-bottom: 1em;
   padding: 0.9em 1.25em;
   font-family: $code;
   font-size: 0.75em;
 
-  &:hover { background-color: lighten($button-background, 2%); }
+  &:hover { background-color: darken($green, 10%); }
 }
 
 .button_play {
