@@ -631,7 +631,7 @@ postgres: $(LPASS)
 .PHONY: campaignmonitor
 campaignmonitor: $(LPASS)
 	@echo "export CM_SMTP_TOKEN=$$($(LPASS) show --notes 4518157498237793892)" && \
-	echo "export CM_API_TOKEN=$$($(LPASS) show --notes 2172742429466797248)"
+	echo "export CM_API_TOKEN=$$($(LPASS) show --notes Shared-changelog/secrets/CM_API_TOKEN_2)"
 .PHONY: github
 github: $(LPASS)
 	@echo "export GITHUB_CLIENT_ID=$$($(LPASS) show --notes 6311620502443842879)" && \
