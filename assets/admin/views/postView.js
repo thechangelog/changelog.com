@@ -7,6 +7,7 @@ import Modal from "components/modal";
 export default class PostView {
   new() {
     new BelongsToWidget("author", "person");
+    new BelongsToWidget("editor", "person");
     new Slugifier("#post_title", "#post_slug");
     new SearchWidget("topic", "post", "topics");
     new CalendarField(".ui.calendar");

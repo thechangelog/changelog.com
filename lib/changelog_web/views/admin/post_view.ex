@@ -2,6 +2,9 @@ defmodule ChangelogWeb.Admin.PostView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.{Post, Topic}
+  alias ChangelogWeb.PostView
+
+  def image_url(post, version), do: PostView.image_url(post, version)
 
   def status_label(post) do
     if post.published do

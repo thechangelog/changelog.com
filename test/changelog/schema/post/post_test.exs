@@ -3,19 +3,19 @@ defmodule Changelog.PostTest do
 
   alias Changelog.Post
 
-  describe "admin_changeset" do
+  describe "insert_changeset/2" do
     test "with valid attributes" do
-      changeset = Post.admin_changeset(%Post{}, %{slug: "what-a-post", title: "What a Post", author_id: 42})
+      changeset = Post.insert_changeset(%Post{}, %{slug: "what-a-post", title: "What a Post", author_id: 42})
       assert changeset.valid?
     end
 
     test "with invalid attributes" do
-      changeset = Post.admin_changeset(%Post{}, %{title: "What a Post"})
+      changeset = Post.insert_changeset(%Post{}, %{title: "What a Post"})
       refute changeset.valid?
     end
   end
 
-  describe "is_publishable" do
+  describe "is_publishable/1" do
     test "is false when post is missing required fields" do
       refute Post.is_publishable(build(:post))
     end

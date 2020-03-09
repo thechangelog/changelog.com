@@ -9,37 +9,44 @@ defmodule ChangelogWeb.Admin.PostController do
 
   def index(conn = %{assigns: %{current_user: me}}, params) do
     page =
-      Post.published
-      |> Post.newest_first
+      Post.published()
+      |> Post.newest_first()
       |> preload(:author)
       |> Repo.paginate(params)
 
     scheduled =
-      Post.scheduled
-      |> Post.newest_first
+      Post.scheduled()
+      |> Post.newest_first()
       |> preload(:author)
       |> Repo.all
 
     drafts =
       (if me.admin, do: Post, else: Post.authored_by(me))
-      |> Post.unpublished
+      |> Post.unpublished()
       |> Post.newest_first(:inserted_at)
       |> preload(:author)
-      |> Repo.all
+      |> Repo.all()
 
-    render(conn, :index, posts: page.entries, scheduled: scheduled, drafts: drafts, page: page)
+    conn
+    |> assign(:posts, page.entries)
+    |> assign(:scheduled, scheduled)
+    |> assign(:drafts, drafts)
+    |> assign(:page, page)
+    |> render(:index)
   end
 
   def new(conn, _params) do
-    changeset = Post.admin_changeset(%Post{})
-    render(conn, "new.html", changeset: changeset)
+    changeset = Post.insert_changeset(%Post{})
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, params = %{"post" => post_params}) do
-    changeset = Post.admin_changeset(%Post{}, post_params)
+    changeset = Post.insert_changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
       {:ok, post} ->
+        Repo.update(Post.file_changeset(post, post_params))
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, admin_post_path(conn, :edit, post))
@@ -52,13 +59,13 @@ defmodule ChangelogWeb.Admin.PostController do
 
   def edit(conn = %{assigns: %{post: post}}, _params) do
     post = Post.preload_all(post)
-    changeset = Post.admin_changeset(post)
+    changeset = Post.update_changeset(post)
     render(conn, :edit, post: post, changeset: changeset)
   end
 
   def update(conn = %{assigns: %{post: post}}, params = %{"post" => post_params}) do
     post = Post.preload_all(post)
-    changeset = Post.admin_changeset(post, post_params)
+    changeset = Post.update_changeset(post, post_params)
 
     case Repo.update(changeset) do
       {:ok, post} ->
@@ -120,7 +127,7 @@ defmodule ChangelogWeb.Admin.PostController do
   end
 
   defp assign_post(conn = %{params: %{"id" => id}}, _) do
-    post = Repo.get!(Post, id) |> Post.preload_all()
+    post = Post |> Repo.get!(id) |> Post.preload_all()
     assign(conn, :post, post)
   end
 

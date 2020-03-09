@@ -1,8 +1,14 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="field required <%= error_class(f, :title) %>">
     <%= label(f, :title, "Title") %>
     <%= text_input(f, :title, placeholder: "10 Best Blog Post Titles") %>
     <%= error_message(f, :title) %>
+  </div>
+
+  <div class="field <%= error_class(f, :subtitle) %>">
+    <%= label(f, :subtitle, "Subtitle") %>
+    <%= text_input(f, :subtitle, placeholder: "your path to blogging success") %>
+    <%= error_message(f, :subtitle) %>
   </div>
 
   <div class="field required <%= error_class(f, :slug) %>">
@@ -11,18 +17,34 @@
     <%= error_message(f, :slug) %>
   </div>
 
-  <div class="field required <%= error_class(f, :author_id) %>">
-    <%= label(f, :author_id, "Author") %>
-    <div class="ui fluid remote author search selection dropdown">
-      <%= hidden_input(f, :author_id) %>
-      <i class="dropdown icon"></i>
-      <%= if is_loaded(f.data.author) do %>
-        <div class="selected text"><%= f.data.author.name %></div>
-      <% else %>
-        <div class="default text">Select Author</div>
-      <% end %>
+  <div class="two fields">
+    <div class="field required <%= error_class(f, :author_id) %>">
+      <%= label(f, :author_id, "Author") %>
+      <div class="ui fluid remote author search selection dropdown">
+        <%= hidden_input(f, :author_id) %>
+        <i class="dropdown icon"></i>
+        <%= if is_loaded(f.data.author) do %>
+          <div class="selected text"><%= f.data.author.name %></div>
+        <% else %>
+          <div class="default text">Select Author</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :author_id) %>
     </div>
-    <%= error_message(f, :author_id) %>
+
+    <div class="field <%= error_class(f, :editor_id) %>">
+      <%= label(f, :editor_id, "Editor") %>
+      <div class="ui fluid remote editor search selection dropdown">
+        <%= hidden_input(f, :editor_id) %>
+        <i class="dropdown icon"></i>
+        <%= if is_loaded(f.data.editor) do %>
+          <div class="selected text"><%= f.data.editor.name %></div>
+        <% else %>
+          <div class="default text">Select Editor</div>
+        <% end %>
+      </div>
+      <%= error_message(f, :editor_id) %>
+    </div>
   </div>
 
   <div class="field <%= error_class(f, :slug) %>">
@@ -68,6 +90,20 @@
     </label>
     <%= textarea(f, :tldr, placeholder: "Tweet-sized. Markdown enabled.", rows: 2) %>
     <%= error_message(f, :tldr) %>
+  </div>
+
+  <div class="field">
+    <label for="image">
+      Share Image
+      <%= help_icon("1200x630 or larger (with same ratio).") %>
+      <%= file_toggle_buttons() %>
+    </label>
+    <%= file_input(f, :image) %>
+    <%= error_message(f, :image) %>
+
+  <%= if f.data.image do %>
+    <img src="<%= image_url(f.data, :large) %>" style="width: 100%;">
+  <% end %>
   </div>
 
   <div class="field <%= error_class(f, :body) %>">
