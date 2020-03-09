@@ -136,6 +136,17 @@
     }
   }
 
+  &-subtitle {
+    color: $dark-grey;
+    font-size: 1.25em;
+    line-height: 1.25em;
+    margin: 0 0 1em;
+
+    .page_news_item--post & {
+      font-size: 1.5em;
+    }
+  }
+
   &-description {
     display: block;
     margin-bottom: 1em;
