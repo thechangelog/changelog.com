@@ -1,6 +1,23 @@
 <section class="live_upcoming">
 <%= if Enum.any?(@episodes) do %>
-  <h1 class="live_upcoming-heading">Scheduled Live Shows</h1>
+
+  <header class="live_upcoming-header">
+    <h1 class="live_upcoming-header-heading">Scheduled Live Shows</h1>
+
+    <ul class="live_upcoming-header-subscribe_links">
+      <li>Subcribe via iCal: </li>
+      <li>
+        <a href="https://changelog.com/live/ical" title="iCal feed for all shows">All Shows</a>
+      </li>
+      <li>
+        <a href="https://changelog.com/live/ical/gotime" title="iCal feed for Go Time">Go Time</a>
+      </li>
+      <li>
+        <a href="https://changelog.com/live/ical/jsparty" title="iCal feed for JS Party">JS Party</a>
+      </li>
+    </ul>
+  </header>
+
   <div class="live_upcoming-grid">
   <%= for episode <- @episodes do %>
     <%= link to: live_path(@conn, :show, Episode.hashid(episode)), title: "View Live Details", class: "live_upcoming-grid-item live_upcoming-grid-item--live" do %>
