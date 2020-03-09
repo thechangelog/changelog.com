@@ -37,7 +37,7 @@ defmodule ChangelogWeb.NewsItemView do
   end
 
   def discuss_with_count(item) do
-    ["discuss", comment_count_aside(item)]
+    ["Discuss", comment_count_aside(item)]
     |> Enum.reject(&(&1 == ""))
     |> Enum.join(" ")
   end

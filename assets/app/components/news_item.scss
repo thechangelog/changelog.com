@@ -350,4 +350,20 @@
   &-video {
     @include video_container();
   }
+
+  &-footer {
+    margin-top: 2em;
+    font-family: $code;
+    font-size: 0.8125em;
+    line-height: 1.5em;
+
+    span {
+      margin-right: 1em;
+    }
+
+    a {
+      color: $black;
+      text-decoration: underline;
+    }
+  }
 }
