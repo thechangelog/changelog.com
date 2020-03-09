@@ -50,6 +50,8 @@
   <% end %>
   </div>
 <% else %>
-  <h1 class="live_upcoming-heading">No scheduled live shows. Check back soon.</h1>
+  <header class="live_upcoming-header">
+    <h1 class="live_upcoming-header-heading">No scheduled live shows. Check back soon.</h1>
+  </header>
 <% end %>
 </section>
