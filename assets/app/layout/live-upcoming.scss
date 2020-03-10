@@ -12,15 +12,40 @@
     color: $white;
   }
 
-  &-heading {
+  &-header {
     display: block;
     flex: none;
-    font-size: 1.625em;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 0 $padding-small $padding-large;
+    padding: 0 $padding-small $padding-large*2;
     text-align: center;
     width: 100%;
+
+    &-heading {
+      display: block;
+      font-size: 1.625em;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin: 0 0 0.5em;
+      width: 100%;
+    }
+
+    &-subscribe_links {
+      font-family: $code;
+      font-size: 0.875em;
+      justify-content: center;
+      display: flex;
+
+      li {
+        margin: 0 0.5em;
+
+        a {
+          text-decoration: underline;
+
+          &:hover {
+            color: $green;
+          }
+        }
+      }
+    }
   }
 
   &-grid {
@@ -76,15 +101,11 @@
       }
 
       &-image {
-        background: #000;
+        background: $black;
         border-right: $border;
         flex: 0 0 120px;
         padding: 0;
         text-align: center;
-
-        img {
-          z-index: -1;
-        }
       }
 
       &-time {
