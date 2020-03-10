@@ -88,4 +88,16 @@ defmodule ChangelogWeb.EpisodeViewTest do
       assert is_subtitle_guest_focused(episode)
     end
   end
+
+  describe "title_with_guest_focused_subtitle_and_podcast_aside/1" do
+    test "it only returns the title when episode is a trailer" do
+      episode = %{title: "This is JS Party", podcast: %{name: "JS Party"}, type: :trailer}
+      assert "This is JS Party" == title_with_guest_focused_subtitle_and_podcast_aside(episode)
+    end
+
+    test "it returns the title and podcast aside when not a trailer" do
+      episode = %{title: "This is JS Party", slug: "123", subtitle: nil, podcast: %{name: "JS Party"}}
+      assert "This is JS Party (JS Party #123)" == title_with_guest_focused_subtitle_and_podcast_aside(episode)
+    end
+  end
 end

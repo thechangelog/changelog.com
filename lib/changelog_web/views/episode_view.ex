@@ -129,6 +129,7 @@ defmodule ChangelogWeb.EpisodeView do
     ] |> ListKit.compact_join(" ")
   end
 
+  def title_with_guest_focused_subtitle_and_podcast_aside(episode = %{type: :trailer}), do: episode.title
   def title_with_guest_focused_subtitle_and_podcast_aside(episode) do
     [
       episode.title,
