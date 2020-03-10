@@ -27,15 +27,19 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     end
   end
 
-  def launch_data(stats) when is_list(stats) do
+  def performance_data(stats) when is_list(stats) do
     data = %{
-      title: "Episode Launch (7 days)",
-      series: [%{
-        name: "Reach",
-        data: Enum.map(stats, fn({slug, reach, title}) ->
-          %{x: slug, y: reach, title: title}
-        end)
-      }]
+      title: "Episode Performance",
+      series: [
+        %{name: "Launch",
+          data: Enum.map(stats, fn({slug, reach, title, _reach}) ->
+            %{x: slug, y: reach, title: title}
+          end)},
+        %{name: "Total",
+          data: Enum.map(stats, fn({slug, _reach, title, reach}) ->
+            %{x: slug, y: reach, title: title}
+          end)}
+      ]
     }
 
     Jason.encode!(data)

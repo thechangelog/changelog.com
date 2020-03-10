@@ -54,14 +54,24 @@ export default class EpisodeView {
         title: {
           text: data.title
         },
-        tooltip: {
-          y: {
-            title: {
-              formatter: function(_value, {_series, seriesIndex, dataPointIndex, _w}) {
-                return data.series[seriesIndex].data[dataPointIndex].title;
-              }
-            }
+        legend: {
+          position: "top",
+          horizontalAlign: "center",
+          floating: true
+        },
+        xaxis: {
+          tooltip: {
+            enabled: false
           }
+        },
+        tooltip: {
+          x: {
+            formatter: function(value, {_series, seriesIndex, dataPointIndex, _w}) {
+              let title = data.series[seriesIndex].data[dataPointIndex].title;
+              return `${value}: ${title}`;
+            }
+          },
+          marker: {show: false}
         }
       });
 

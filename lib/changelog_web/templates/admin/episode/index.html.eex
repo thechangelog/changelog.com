@@ -47,7 +47,7 @@
 
 <%= if Enum.any?(@episodes) do %>
 <div class="ui basic segment">
-  <div class="launch-chart" data-chart="<%= launch_data(@launch) %>"></div>
+  <div class="launch-chart" data-chart="<%= performance_data(@performance) %>"></div>
 
   <h2 class="ui header">Published</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :published, podcast: @podcast, episodes: @episodes, actions: false})) %>

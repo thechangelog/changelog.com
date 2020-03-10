@@ -51,7 +51,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.newest_first(:recorded_at)
       |> Repo.all()
 
-    launch =
+    performance =
       page.entries
       |> Enum.filter(fn(ep) ->
         ep.type == :full &&
@@ -70,9 +70,9 @@ defmodule ChangelogWeb.Admin.EpisodeController do
           |> Repo.one()
           |> Kernel.||(0)
 
-        {ep.slug, reach, ep.title}
+        {ep.slug, reach, ep.title, ep.reach_count}
       end)
-      |> Enum.reject(fn({_, reach, _}) -> reach == 0 end)
+      |> Enum.reject(fn({_, reach, _, _}) -> reach == 0 end)
 
     conn
     |> assign(:episodes, page.entries)
@@ -82,7 +82,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:filter, filter)
     |> assign(:page, page)
     |> assign(:reach, reach(podcast))
-    |> assign(:launch, launch)
+    |> assign(:performance, performance)
     |> render(:index)
   end
 
