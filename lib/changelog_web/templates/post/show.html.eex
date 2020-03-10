@@ -9,7 +9,9 @@
         <%= link("changelog.com/posts", to: post_path(@conn, :index), title: "Changelog Posts") %>
       </p>
       <h1 class="news_item-title"><%= @post.title %></h1>
-      <h2 class="news_item-subtitle">Add dynamic subtitle support here</h2>
+    <%= if @post.subtitle do %>
+      <h2 class="news_item-subtitle"><%= @post.subtitle %></h2>
+    <% end %>
     </header>
     <%= if @item, do: render(NewsItemView, "_toolbar.html", Map.put(assigns, :style, "date")) %>
     <div class="news_item-content richtext">
