@@ -3,7 +3,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   alias Changelog.{Episode, Files, NewsAd, NewsItem, Podcast, Regexp, Subscription, UrlKit}
   alias ChangelogWeb.{Endpoint, NewsAdView, NewsItemCommentView, NewsSourceView,
-                      EpisodeView, PersonView, TopicView, PodcastView}
+                      EpisodeView, PersonView, TopicView, PodcastView, PostView}
 
   def admin_edit_link(conn, %{admin: true}, item = %{type: :audio, object: episode}) when is_map(episode) do
     content_tag(:span, class: "news_item-toolbar-meta-item") do

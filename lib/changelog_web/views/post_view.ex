@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.PostView do
   use ChangelogWeb, :public_view
 
+  alias Changelog.ListKit
   alias ChangelogWeb.{Endpoint, NewsItemView, PersonView}
 
   def admin_edit_link(conn, %{admin: true}, post) do
@@ -11,6 +12,15 @@ defmodule ChangelogWeb.PostView do
 
   def guid(post) do
     post.guid || "changelog.com/posts/#{post.id}"
+  end
+
+  def paragraph_count(post) do
+    post
+    |> Map.get(:body, "")
+    |> md_to_html()
+    |> String.split("<p>")
+    |> ListKit.compact()
+    |> length()
   end
 
   def url(post, action) do
