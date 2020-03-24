@@ -6,7 +6,7 @@
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
 >
   <channel>
-    <title><%= @podcast.name %></title>
+    <title><%= @podcast |> podcast_name_with_metadata() |> html_escape() |> safe_to_string() %></title>
     <copyright>All rights reserved</copyright>
     <link><%= podcast_url(@conn, :show, @podcast.slug) %></link>
     <atom:link href="<%= feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
