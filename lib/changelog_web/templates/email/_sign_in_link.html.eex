@@ -1,0 +1,6 @@
+<span class="btn-primary">
+  <%= link "Sign in to Changelog", to: AuthView.auth_url(Endpoint, @person), itemprop: "url" %>
+</span>
+
+<p><em>This link will self-destruct in <%= auth_link_expires_in(@person) %>.</em><p>
+<p>Already expired? <em><%= link "Request a new link.", to: sign_in_url(Endpoint, :new) %></em></p>
