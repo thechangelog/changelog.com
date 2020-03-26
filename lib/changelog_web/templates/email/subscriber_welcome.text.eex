@@ -1,9 +1,9 @@
 <%= greeting(@person) %>
 
 
-You subscribed to <%= @subscribed_to.name %>!
+You subscribed to <%= @subscribed_to.name %>! Sign in to your account to:
 
-Sign in to your account to access our Slack, manage your email subscriptions, and complete your profile.
+<%= render("_account_actions.text", assigns) %>
 
 We don't use passwords. Each time you sign in we’ll send you a temporary link to your email address. That’s one less password to worry about (yay!). Here’s your first one:
 
