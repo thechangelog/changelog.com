@@ -114,7 +114,12 @@ export default class LivePlayer {
     this.status.text("Error");
     this.container.removeClass("is-upcoming");
     console.log("Stream failed to load", "The error:", event.target.error, "The URL", this.audio.src);
-    alert("Doh! Our stream failed to load. Maybe you're behind a firewall that blocks port 1882? If not, try refreshing!");
+    this.title.addClass("error").html(`
+    Doh! The stream failed to load.
+    Are you behind a firewall that blocks port 8000?
+    Or maybe Chrome is blocking mixed content?
+    Try accessing the stream directly <a href='${this.audio.src}'>right here</a>.
+    `);
   }
 
   play() {
