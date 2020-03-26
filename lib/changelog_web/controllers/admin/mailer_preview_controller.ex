@@ -109,6 +109,14 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.guest_thanks(guest, ep)
   end
 
+  def subscriber_welcome_email do
+    subscription = known_subscription()
+
+    subscription.person()
+    |> Person.refresh_auth_token()
+    |> Email.subscriber_welcome(subscription.podcast)
+  end
+
   defp latest_person do
     Person.newest_first()
     |> Person.limit(1)
