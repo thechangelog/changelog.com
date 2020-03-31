@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, ListKit, NewsItem, Post}
+  alias Changelog.{Episode, NewsItem, Post}
   alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView,
                       PodcastView, PostView, TimeView}
 
@@ -33,14 +33,14 @@ defmodule ChangelogWeb.FeedView do
   end
 
   def podcast_name_with_metadata(podcast) do
-    metadata = case podcast.slug do
-      "jsparty"     -> "celebrating JavaScript & web development"
-      "podcast"     -> "conversations about open source & software development"
-      "practicalai" -> "artificial intelligence, machine learning, & data science"
-      _else -> ""
+    case podcast.slug do
+      "brainscience" -> "#{podcast.name}: Neuroscience & Behavior"
+      "founderstalk" -> "#{podcast.name}: Startups & Leadership"
+      "jsparty"      -> "#{podcast.name}: JavaScript & Web Dev"
+      "podcast"      -> "#{podcast.name}: Software Dev & Open Source"
+      "practicalai"  -> "#{podcast.name}: Machine Learning & Data Science"
+      _else -> podcast.name
     end
-
-    [podcast.name, metadata] |> ListKit.compact_join(" - ")
   end
 
   def render_item(item = %{object: episode = %Episode{}}, assigns) do
