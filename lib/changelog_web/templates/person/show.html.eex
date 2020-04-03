@@ -2,18 +2,18 @@
   <header class="topic-header">
     <div class="topic-header-wrap">
       <div class="topic-header-avatar">
-        <img src="https://secure.gravatar.com/avatar/d63705fb0197936da304756dd7fea127.jpg?s=150&d=mm" width="80" height="80" alt="John Doe Avatar">
+        <img src="<%= avatar_url(@person) %>" width="80" height="80" alt="<%= @person.name %> Avatar">
       </div>
 
-      <h2 class="topic-header-title">Person Name</h2>
+      <h2 class="topic-header-title"><%= @person.name %></h2>
 
-      <div class="topic-header-description">UI/UX Designer and Developer. Future private detective. I now have a dog.</div>
+      <div class="topic-header-description"><%= @person.bio |> md_to_html() |> raw() %></div>
 
       <div class="topic-header-meta">
-        Omaha, NE ·
-        <a href="#" title="">example.com</a> ·
-        <a href="#" title="">Twitter</a> ·
-        <a href="#" title="">Github</a>
+      <%= if @person.location do %>
+        <%= @person.location %> ·
+      <% end %>
+        <%= @person |> list_of_links(" · ") |> raw() %>
       </div>
     </div>
   </header>
