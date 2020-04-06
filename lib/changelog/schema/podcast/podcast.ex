@@ -99,7 +99,7 @@ defmodule Changelog.Podcast do
   def get_episodes(podcast), do: assoc(podcast, :episodes)
 
   def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio)
-  def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio, podcast.slug)
+  def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio, podcast.id)
 
   def episode_count(podcast), do: podcast |> assoc(:episodes) |> Repo.count()
 

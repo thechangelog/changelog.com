@@ -131,10 +131,7 @@ defmodule Changelog.Episode do
     Map.put(episode, :news_item, item)
   end
 
-  def object_id(episode) do
-    episode = preload_podcast(episode)
-    "#{episode.podcast.slug}:#{episode.slug}"
-  end
+  def object_id(episode), do: "#{episode.podcast_id}:#{episode.id}"
 
   def participants(episode) do
     episode =
