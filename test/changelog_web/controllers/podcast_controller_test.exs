@@ -28,7 +28,7 @@ defmodule ChangelogWeb.PodcastControllerTest do
   test "getting a podcast page with a published episode", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
-    i = insert(:published_news_item, type: :audio, object_id: "#{p.slug}:#{e.slug}")
+    i = episode_news_item(e) |> insert()
     conn = get(conn, podcast_path(conn, :show, p.slug))
     assert html_response(conn, 200) =~ p.name
     assert String.contains?(conn.resp_body, i.headline)

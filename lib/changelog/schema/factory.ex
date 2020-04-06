@@ -135,7 +135,7 @@ defmodule Changelog.Factory do
   end
 
   def episode_news_item(episode) do
-    object_id = "#{episode.podcast.slug}:#{episode.slug}"
+    object_id = Changelog.Episode.object_id(episode)
     %{published_news_item_factory() | type: :audio, headline: episode.title, url: "https://changelog.com/episodes/#{episode.slug}", object_id: object_id}
   end
 
@@ -144,7 +144,7 @@ defmodule Changelog.Factory do
   end
 
   def post_news_item(post) do
-    object_id = "posts:#{post.slug}"
+    object_id = Changelog.Post.object_id(post)
     %{published_news_item_factory() | headline: post.title, url: "https://changelog.com/posts/#{post.slug}", object_id: object_id}
   end
 

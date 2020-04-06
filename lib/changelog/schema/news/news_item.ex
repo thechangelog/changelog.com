@@ -57,7 +57,7 @@ defmodule Changelog.NewsItem do
   def with_post(query \\ __MODULE__, post),            do: from(q in query, where: q.object_id == ^"posts:#{post.slug}")
   def with_object(query \\ __MODULE__),                do: from(q in query, where: not(is_nil(q.object_id)))
   def sans_object(query \\ __MODULE__),                do: from(q in query, where: is_nil(q.object_id))
-  def with_object_prefix(query \\ __MODULE__, prefix), do: from(q in query, where: like(q.object_id, ^"#{prefix}%"))
+  def with_object_prefix(query \\ __MODULE__, prefix), do: from(q in query, where: like(q.object_id, ^"#{prefix}:%"))
   def with_image(query \\ __MODULE__),                 do: from(q in query, where: not(is_nil(q.image)))
   def with_source(query \\ __MODULE__, source),        do: from(q in query, where: q.source_id == ^source.id)
   def with_topic(query \\ __MODULE__, topic),          do: from(q in query, join: t in assoc(q, :news_item_topics), where: t.topic_id == ^topic.id)
@@ -122,14 +122,12 @@ defmodule Changelog.NewsItem do
 
   defp get_episode_object(object_id) when is_nil(object_id), do: nil
   defp get_episode_object(object_id) do
-    [p, e] = String.split(object_id, ":")
+    [_podcast_id, episode_id] = String.split(object_id, ":")
     Episode.published()
-    |> Episode.with_podcast_slug(p)
-    |> Episode.with_slug(e)
     |> Episode.exclude_transcript()
     |> Episode.preload_podcast()
     |> Episode.preload_guests()
-    |> Repo.one()
+    |> Repo.get(episode_id)
   end
 
   defp get_post_object(object_id) when is_nil(object_id), do: nil

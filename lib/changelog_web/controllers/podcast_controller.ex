@@ -53,6 +53,8 @@ defmodule ChangelogWeb.PodcastController do
       |> Episode.preload_podcast()
       |> Repo.paginate(Map.put(params, :page_size, 10))
 
+    # this is handled differently than 'recommended' because 'popular'
+    # is an ordering whereas 'recommended' is a filter
     items =
       Enum.map(page.entries, fn(episode) ->
         episode
@@ -79,7 +81,6 @@ defmodule ChangelogWeb.PodcastController do
       |> Episode.published()
       |> Episode.featured()
       |> Episode.exclude_transcript()
-      |> Episode.preload_podcast()
       |> Repo.paginate(Map.put(params, :page_size, 30))
 
     items =
