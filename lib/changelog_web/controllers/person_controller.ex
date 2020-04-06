@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Mailer, NewsItem, Newsletters, Person, Podcast, Repo,
-                   Subscription}
+  alias Changelog.{Cache, Episode, Mailer, NewsItem, Newsletters, Person,
+                   Podcast, Repo, Subscription}
   alias ChangelogWeb.Email
 
   plug RequireGuest, "before joining" when action in [:join]
@@ -54,12 +54,18 @@ defmodule ChangelogWeb.PersonController do
   def show(conn, params = %{"handle" => handle}) do
     person = Repo.get_by!(Person, handle: handle)
 
+    episodes =
+      person
+      |> Person.participating_episode_ids()
+      |> Episode.with_ids()
+      |> Episode.exclude_transcript()
+      |> Repo.all()
+
     page =
-      NewsItem
-      |> NewsItem.published
-      |> NewsItem.unpinned
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      NewsItem.with_person_or_episodes(person, episodes)
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
 
     items =
@@ -73,15 +79,63 @@ defmodule ChangelogWeb.PersonController do
     |> render(:show)
   end
 
-  def subscribe(conn = %{method: "GET"}, _params) do
-    active =
-      Podcast.active
-      |> Podcast.oldest_first
-      |> Podcast.preload_hosts
-      |> Repo.all
-      |> Kernel.++([Podcast.master])
+  def news(conn, params = %{"handle" => handle}) do
+    person = Repo.get_by!(Person, handle: handle)
 
-    render(conn, :subscribe, podcasts: active)
+    page =
+      NewsItem
+      |> NewsItem.with_person(person)
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    conn
+    |> assign(:person, person)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> render(:show)
+  end
+
+  def podcasts(conn, params = %{"handle" => handle}) do
+    person = Repo.get_by!(Person, handle: handle)
+    episode_ids = Person.participating_episode_ids(person)
+
+    page =
+      Episode
+      |> Episode.with_ids(episode_ids)
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.exclude_transcript()
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> NewsItem.with_episodes()
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.all()
+      |> Enum.map(&NewsItem.load_object/1)
+
+      conn
+    |> assign(:person, person)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> assign(:tab, "podcasts")
+    |> render(:show)
+  end
+
+  def subscribe(conn = %{method: "GET"}, %{"to" => to}) when to in ["weekly", "nightly"] do
+    newsletter = Newsletters.get_by_slug(to)
+
+    conn
+    |> assign(:newsletter, newsletter)
+    |> render(:subscribe_newsletter)
   end
   def subscribe(conn = %{method: "GET"}, %{"to" => to}) when is_binary(to) do
     podcast = Podcast.get_by_slug!(to)

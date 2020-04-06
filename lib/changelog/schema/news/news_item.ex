@@ -63,6 +63,13 @@ defmodule Changelog.NewsItem do
   def with_topic(query \\ __MODULE__, topic),          do: from(q in query, join: t in assoc(q, :news_item_topics), where: t.topic_id == ^topic.id)
   def with_url(query \\ __MODULE__, url),              do: from(q in query, where: q.url == ^url)
 
+  def with_person_or_episodes(person, episodes) do
+    person_query = with_person(person)
+    episode_query = with_episodes(episodes)
+    unioned_query = Ecto.Query.union(person_query, ^episode_query)
+    from(q in Ecto.Query.subquery(unioned_query))
+  end
+
   def published_since(query \\ __MODULE__, issue_or_time)
   def published_since(query, i = %NewsIssue{}),   do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^i.published_at)
   def published_since(query, time = %DateTime{}), do: from(q in query, where: q.status == ^:published, where: q.published_at >= ^time)

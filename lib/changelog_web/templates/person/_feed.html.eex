@@ -1,13 +1,13 @@
 <nav class="subnav">
   <ul class="subnav-list">
     <li class="subnav-list-item <%= active_class(@conn, "show") %>">
-      <%= link("All", to: "#feed", title: "News and Podcasts about") %>
+      <%= link("All", to: person_path(@conn, :show, @person.handle) <> "#feed", title: "#{@person.name}: News and Podcast episodes") %>
     </li>
     <li class="subnav-list-item <%= active_class(@conn, "news") %>">
-      <%= link("News", to: "#feed", title: "News") %>
+      <%= link("News", to: person_path(@conn, :news, @person.handle) <> "#feed", title: "#{@person.name}: News contributed") %>
     </li>
     <li class="subnav-list-item <%= active_class(@conn, "podcasts") %>">
-      <%= link("Podcasts", to: "#feed", title: "Podcasts") %>
+      <%= link("Podcasts", to: person_path(@conn, :podcasts, @person.handle) <> "#feed", title: "#{@person.name}: Podcast episodes") %>
     </li>
   </ul>
 </nav>

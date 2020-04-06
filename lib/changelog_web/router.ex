@@ -142,6 +142,8 @@ defmodule ChangelogWeb.Router do
     get "/subscribe/:to", PersonController, :subscribe, as: :person
     post "/subscribe", PersonController, :subscribe, as: :person
     get "/person/:handle", PersonController, :show, as: :person
+    get "/person/:handle/news", PersonController, :news, as: :person
+    get "/person/:handle/podcasts", PersonController, :podcasts, as: :person
 
     resources "/~", HomeController, only: [:show, :update], singleton: true
     get "/~/profile", HomeController, :profile

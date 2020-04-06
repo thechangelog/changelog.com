@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PersonView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, NewsItem, Person, Podcast}
-  alias ChangelogWeb.{Endpoint, SharedView, PodcastView}
+  alias ChangelogWeb.{Endpoint, NewsItemView, SharedView, PodcastView}
 
   def avatar_path(person, version) do
     {person.avatar, person}
