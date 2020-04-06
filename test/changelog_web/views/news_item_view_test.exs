@@ -3,15 +3,17 @@ defmodule ChangelogWeb.NewstemViewTest do
 
   import ChangelogWeb.NewsItemView
 
-  describe "object_path" do
+  describe "object_path/1" do
     test "defaults to nil when object is nil" do
       item = build(:news_item, object_id: nil)
       assert is_nil(object_path(item))
     end
 
     test "reconstructs audio urls" do
-      item = build(:news_item, type: :audio, object_id: "gotime:45")
-      assert object_path(item) == "/gotime/45"
+      podcast = insert(:podcast, slug: "test1")
+      episode = insert(:episode, podcast: podcast, slug: "test2")
+      item = episode |> episode_news_item() |> insert()
+      assert object_path(item) == "/test1/test2"
     end
 
     test "reconstructs post urls" do

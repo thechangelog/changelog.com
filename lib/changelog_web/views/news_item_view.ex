@@ -89,6 +89,10 @@ defmodule ChangelogWeb.NewsItemView do
   end
 
   def object_path(%{object_id: nil}), do: nil
+  def object_path(item = %{type: :audio}) do
+    object = NewsItem.load_object(item).object
+    episode_path(Endpoint, :show, object.podcast.slug, object.slug)
+  end
   def object_path(%{object_id: object_id}), do: "/" <> String.replace(object_id, ":", "/")
 
   def permalink_path(conn, item) do

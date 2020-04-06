@@ -123,7 +123,7 @@ defmodule Changelog.NewsItem do
   defp get_episode_object(object_id) when is_nil(object_id), do: nil
   defp get_episode_object(object_id) do
     [_podcast_id, episode_id] = String.split(object_id, ":")
-    Episode.published()
+    Episode
     |> Episode.exclude_transcript()
     |> Episode.preload_podcast()
     |> Episode.preload_guests()
