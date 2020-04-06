@@ -77,9 +77,11 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   end
 
   test "hitting the visit endpoint with internal object uses http redirect", %{conn: conn} do
-    item = insert(:published_news_item, object_id: "rfc:20")
+    podcast = insert(:podcast, slug: "ohai")
+    episode = insert(:published_episode, podcast: podcast, slug: "okbai")
+    item = episode |> episode_news_item() |> insert()
     conn = get(conn, news_item_path(conn, :visit, hashid(item)))
-    assert redirected_to(conn) == "/rfc/20"
+    assert redirected_to(conn) == "/ohai/okbai"
     item = Repo.get(NewsItem, item.id)
     assert item.click_count == 1
   end
