@@ -20,16 +20,20 @@ defmodule ChangelogWeb.TopicController do
     page =
       NewsItem
       |> NewsItem.with_topic(topic)
-      |> NewsItem.published
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(params)
 
     items =
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :show, topic: topic, items: items, page: page)
+    conn
+    |> assign(:topic, topic)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> render(:show)
   end
 
   def news(conn, params = %{"slug" => slug}) do
@@ -38,17 +42,22 @@ defmodule ChangelogWeb.TopicController do
     page =
       NewsItem
       |> NewsItem.with_topic(topic)
-      |> NewsItem.non_audio
-      |> NewsItem.published
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      |> NewsItem.non_audio()
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(params)
 
     items =
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :show, topic: topic, items: items, page: page, tab: "news")
+    conn
+    |> assign(:topic, topic)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> assign(:tab, "news")
+    |> render(:show)
   end
 
   def podcasts(conn, params = %{"slug" => slug}) do
@@ -57,16 +66,21 @@ defmodule ChangelogWeb.TopicController do
     page =
       NewsItem
       |> NewsItem.with_topic(topic)
-      |> NewsItem.audio
-      |> NewsItem.published
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      |> NewsItem.audio()
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(params)
 
     items =
       page.entries
       |> Enum.map(&NewsItem.load_object/1)
 
-    render(conn, :show, topic: topic, items: items, page: page, tab: "podcasts")
+    conn
+    |> assign(:topic, topic)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> assign(:tab, "podcasts")
+    |> render(:show)
   end
 end

@@ -200,6 +200,12 @@ defmodule Changelog.Person do
     host_count + guest_count
   end
 
+  def participating_episode_ids(person) do
+    hostings = person |> Repo.preload(:episode_hosts) |> Map.get(:episode_hosts) |> Enum.map(&(&1.episode_id))
+    guestings = person |> Repo.preload(:episode_guests) |> Map.get(:episode_guests) |> Enum.map(&(&1.episode_id))
+    hostings ++ guestings
+  end
+
   def post_count(person) do
     Repo.count(from(p in Post, where: p.author_id == ^person.id))
   end

@@ -6,6 +6,12 @@ defmodule ChangelogWeb.PersonControllerTest do
 
   alias Changelog.{Newsletters, Person, Subscription}
 
+  test "getting a person's page", %{conn: conn} do
+    p = insert(:person)
+    conn = get(conn, person_path(conn, :show, p.handle))
+    assert html_response(conn, 200) =~ p.name
+  end
+
   describe "joining" do
     test "getting the form", %{conn: conn} do
       conn = get(conn, person_path(conn, :join))

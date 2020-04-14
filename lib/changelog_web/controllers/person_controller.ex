@@ -1,10 +1,134 @@
 defmodule ChangelogWeb.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Mailer, Newsletters, Person, Podcast, Subscription}
+  alias Changelog.{Cache, Episode, Mailer, NewsItem, Newsletters, Person,
+                   Podcast, Repo, Subscription}
   alias ChangelogWeb.Email
 
   plug RequireGuest, "before joining" when action in [:join]
+
+  def join(conn = %{method: "GET"}, params) do
+    person = %Person{
+      name: Map.get(params, "name"),
+      email: Map.get(params, "email"),
+      handle: Map.get(params, "handle"),
+      github_handle: Map.get(params, "github_handle"),
+      twitter_handle: Map.get(params, "twitter_handle")}
+
+    render(conn, :join, changeset: Person.insert_changeset(person), person: nil)
+  end
+
+  def join(conn = %{method: "POST"}, %{"person" => person_params, "gotcha" => robo}) when byte_size(robo) > 0 do
+    changeset = Person.insert_changeset(%Person{}, person_params)
+
+    conn
+    |> put_flash(:error, "Something smells fishy. 🤖")
+    |> render(:join, changeset: changeset, person: nil)
+  end
+  def join(conn = %{method: "POST"}, %{"person" => person_params = %{"email" => email}}) do
+    cond do
+      String.ends_with?(email, "qq.com") ->
+        changeset = Person.insert_changeset(%Person{}, person_params)
+
+        conn
+        |> put_flash(:error, "qq.com emails temporarily not allowed due to abuse.")
+        |> render(:join, changeset: changeset, person: nil)
+      person = Repo.get_by(Person, email: email) ->
+        welcome_community(conn, person)
+      true ->
+        changeset = Person.insert_changeset(%Person{}, person_params)
+
+        case Repo.insert(changeset) do
+          {:ok, person} ->
+            Repo.update(Person.file_changeset(person, person_params))
+            welcome_community(conn, person)
+          {:error, changeset} ->
+            conn
+            |> put_flash(:error, "Something went wrong. 😭")
+            |> render(:join, changeset: changeset, person: nil)
+        end
+    end
+  end
+  def join(conn = %{method: "POST"}, _params), do: redirect(conn, to: person_path(conn, :join))
+
+  def show(conn, params = %{"handle" => handle}) do
+    person = Repo.get_by!(Person, handle: handle)
+
+    episodes =
+      person
+      |> Person.participating_episode_ids()
+      |> Episode.with_ids()
+      |> Episode.exclude_transcript()
+      |> Repo.all()
+
+    page =
+      NewsItem.with_person_or_episodes(person, episodes)
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    conn
+    |> assign(:person, person)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> render(:show)
+  end
+
+  def news(conn, params = %{"handle" => handle}) do
+    person = Repo.get_by!(Person, handle: handle)
+
+    page =
+      NewsItem
+      |> NewsItem.with_person(person)
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    conn
+    |> assign(:person, person)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> render(:show)
+  end
+
+  def podcasts(conn, params = %{"handle" => handle}) do
+    person = Repo.get_by!(Person, handle: handle)
+    episode_ids = Person.participating_episode_ids(person)
+
+    page =
+      Episode
+      |> Episode.with_ids(episode_ids)
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.exclude_transcript()
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    items =
+      page.entries
+      |> NewsItem.with_episodes()
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.all()
+      |> Enum.map(&NewsItem.load_object/1)
+
+      conn
+    |> assign(:person, person)
+    |> assign(:items, items)
+    |> assign(:page, page)
+    |> assign(:tab, "podcasts")
+    |> render(:show)
+  end
 
   def subscribe(conn = %{method: "GET"}, %{"to" => to}) when to in ["weekly", "nightly"] do
     newsletter = Newsletters.get_by_slug(to)
@@ -92,50 +216,6 @@ defmodule ChangelogWeb.PersonController do
     Subscription.subscribe(person, podcast, context)
     person |> Email.subscriber_welcome(podcast) |> Mailer.deliver_later()
   end
-
-  def join(conn = %{method: "GET"}, params) do
-    person = %Person{
-      name: Map.get(params, "name"),
-      email: Map.get(params, "email"),
-      handle: Map.get(params, "handle"),
-      github_handle: Map.get(params, "github_handle"),
-      twitter_handle: Map.get(params, "twitter_handle")}
-
-    render(conn, :join, changeset: Person.insert_changeset(person), person: nil)
-  end
-
-  def join(conn = %{method: "POST"}, %{"person" => person_params, "gotcha" => robo}) when byte_size(robo) > 0 do
-    changeset = Person.insert_changeset(%Person{}, person_params)
-
-    conn
-    |> put_flash(:error, "Something smells fishy. 🤖")
-    |> render(:join, changeset: changeset, person: nil)
-  end
-  def join(conn = %{method: "POST"}, %{"person" => person_params = %{"email" => email}}) do
-    cond do
-      String.ends_with?(email, "qq.com") ->
-        changeset = Person.insert_changeset(%Person{}, person_params)
-
-        conn
-        |> put_flash(:error, "qq.com emails temporarily not allowed due to abuse.")
-        |> render(:join, changeset: changeset, person: nil)
-      person = Repo.get_by(Person, email: email) ->
-        welcome_community(conn, person)
-      true ->
-        changeset = Person.insert_changeset(%Person{}, person_params)
-
-        case Repo.insert(changeset) do
-          {:ok, person} ->
-            Repo.update(Person.file_changeset(person, person_params))
-            welcome_community(conn, person)
-          {:error, changeset} ->
-            conn
-            |> put_flash(:error, "Something went wrong. 😭")
-            |> render(:join, changeset: changeset, person: nil)
-        end
-    end
-  end
-  def join(conn = %{method: "POST"}, _params), do: redirect(conn, to: person_path(conn, :join))
 
   defp welcome_community(conn, person) do
     person = Person.refresh_auth_token(person)

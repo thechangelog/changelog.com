@@ -1,0 +1,25 @@
+<div class="topic">
+  <header class="topic-header">
+    <div class="topic-header-wrap">
+      <div class="topic-header-avatar">
+        <img src="<%= avatar_url(@person) %>" width="80" height="80" alt="<%= @person.name %> Avatar">
+      </div>
+
+      <h2 class="topic-header-title"><%= @person.name %></h2>
+
+      <div class="topic-header-description"><%= @person.bio |> md_to_html() |> raw() %></div>
+
+      <div class="topic-header-meta">
+      <%= if @person.location do %>
+        <%= @person.location %> ·
+      <% end %>
+        <%= @person |> list_of_links(" · ") |> raw() %>
+      </div>
+    </div>
+  </header>
+
+  <a id="feed" class="anchor"></a>
+  <div class="feed">
+    <%= render("_feed.html", assigns) %>
+  </div>
+</div>

@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PersonView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, NewsItem, Person, Podcast}
-  alias ChangelogWeb.{Endpoint, SharedView, PodcastView}
+  alias ChangelogWeb.{Endpoint, NewsItemView, SharedView, PodcastView}
 
   def avatar_path(person, version) do
     {person.avatar, person}
@@ -79,14 +79,14 @@ defmodule ChangelogWeb.PersonView do
 
   def is_staff(person), do: String.match?(person.email, ~r/@changelog.com/)
 
-  def list_of_links(person) do
+  def list_of_links(person, separator \\ ", ") do
     [%{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
      %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
      %{value: person.linkedin_handle, text: "LinkedIn", url: linkedin_url(person.linkedin_handle)},
      %{value: person.website, text: "Website", url: person.website}]
     |> Enum.reject(fn(x) -> x.value == nil end)
     |> Enum.map(fn(x) -> ~s{<a href="#{x.url}">#{x.text}</a>} end)
-    |> Enum.join(", ")
+    |> Enum.join(separator)
   end
 
   def opt_out_path(conn, person, type, id) do
