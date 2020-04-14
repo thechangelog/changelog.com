@@ -5,9 +5,9 @@ defmodule ChangelogWeb.PostControllerTest do
 
   test "getting the posts index", %{conn: conn} do
     p1 = insert(:published_post)
-    i1 = insert(:published_news_item, object_id: "post:#{p1.slug}")
+    i1 = insert(:published_news_item, object_id: "posts:#{p1.slug}")
     p2 = insert(:published_post)
-    i2 = insert(:published_news_item, object_id: "post:#{p2.slug}")
+    i2 = insert(:published_news_item, object_id: "posts:#{p2.slug}")
     unpublished = insert(:post, published: false)
     scheduled = insert(:scheduled_post)
 
