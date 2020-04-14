@@ -43,4 +43,19 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
       assert called(Notifier.notify(:_))
     end
   end
+
+  @tag :as_inserted_user
+  test "does not allow setting of author_id", %{conn: conn} do
+    item = insert(:published_news_item)
+    other = insert(:person)
+
+    with_mock(Notifier, [notify: fn(_) -> true end]) do
+      conn = post(conn, news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id, author_id: other.id})
+
+      assert redirected_to(conn) == root_path(conn, :index)
+      comment = Repo.one(NewsItemComment)
+      assert comment.author_id != other.id
+      assert called(Notifier.notify(:_))
+    end
+  end
 end

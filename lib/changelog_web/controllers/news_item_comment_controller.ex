@@ -9,6 +9,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
 
   def create(conn = %{assigns: %{current_user: user}}, %{"news_item_comment" => comment_params}) do
     comment = %NewsItemComment{author_id: user.id}
+    comment_params = Map.delete(comment_params, "author_id") # no sneaky sneaky
     changeset = NewsItemComment.insert_changeset(comment, comment_params)
 
     case Repo.insert(changeset) do
