@@ -19,7 +19,7 @@ defmodule ChangelogWeb.NewsAdView do
   def image_link(ad, version \\ :large) do
     if ad.image do
       content_tag :div, class: "news_item-image" do
-        link to: ad.url do
+        link to: ad.url, data: [news: true] do
           tag(:img, src: image_url(ad, version), alt: ad.headline)
         end
       end
