@@ -98,6 +98,7 @@ defmodule ChangelogWeb.PersonController do
     |> assign(:person, person)
     |> assign(:items, items)
     |> assign(:page, page)
+    |> assign(:tab, "news")
     |> render(:show)
   end
 

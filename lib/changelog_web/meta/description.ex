@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Meta.Description do
     only: [md_to_text: 1, truncate: 2]
 
   alias ChangelogWeb.{EpisodeView, LiveView, NewsItemView, NewsSourceView,
-                      PageView, PodcastView, PostView, TopicView}
+                      PageView, PersonView, PodcastView, PostView, TopicView}
 
   def description(assigns), do: get(assigns)
 
@@ -29,6 +29,9 @@ defmodule ChangelogWeb.Meta.Description do
   end
   defp get(%{view_module: PageView, view_template: "nightly.html"}) do
     "Get the hottest new repos trending on GitHub in your inbox every night. No fluff, just repos!"
+  end
+  defp get(%{view_module: PersonView, person: %{bio: bio}}) when is_binary(bio) do
+    bio |> md_to_text() |> truncate(320)
   end
   defp get(%{view_module: TopicView, topic: topic}), do: topic.description
   defp get(_), do: "News and podcasts for developers"

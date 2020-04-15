@@ -74,6 +74,17 @@ defmodule ChangelogWeb.Meta.Title do
     "Developer news and podcasts about #{topic.name}"
   end
 
+  # Person show pages
+  defp get(%{view_module: PersonView, person: person, tab: "news"}) do
+    "News contributed by #{person.name}"
+  end
+  defp get(%{view_module: PersonView, person: person, tab: "podcasts"}) do
+    "Podcast episodes featuring #{person.name}"
+  end
+  defp get(%{view_module: PersonView, person: person}) do
+    "#{person.name} on Changelog"
+  end
+
   # Guest guide
   defp get(%{view_module: PageView, view_template: "guest.html", podcast: podcast}) do
     if podcast.slug == "podcast" do

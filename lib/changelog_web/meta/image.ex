@@ -50,6 +50,7 @@ defmodule ChangelogWeb.Meta.Image do
     end
   end
   defp get_twitter(%{view_module: NewsSourceView, source: source}), do: source_image(source)
+  defp get_twitter(%{view_module: PersonView, person: person}) when is_map(person), do: person_image(person)
   defp get_twitter(%{view_module: TopicView, topic: topic}), do: topic_image(topic)
   defp get_twitter(_), do: twitter_summary_image()
 
