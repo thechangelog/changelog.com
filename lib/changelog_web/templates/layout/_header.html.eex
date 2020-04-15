@@ -55,6 +55,7 @@
                   <%= if Policies.Admin.index(@current_user) do %>
                     <li><%= link("Admin", to: admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
                   <% end %>
+                  <li><%= link("My Profile", to: person_path(@conn, :show, @current_user.handle)) %></li>
                   <li><%= link("My Subscriptions", to: home_path(@conn, :show)) %></li>
                   <li><%= link("Profile Settings", to: home_path(@conn, :profile)) %></li>
                   <li><%= link("Account Settings", to: home_path(@conn, :account)) %></li>

@@ -5,7 +5,7 @@
     </li>
     <li class="subnav-list-item <%= active_class(@conn, ["home-profile"]) %>">
       <%= link to: home_path(@conn, :profile) do %>
-        Public profile <small><em>(inactive)</em></small>
+        Profile
       <% end %>
     </li>
     <li class="subnav-list-item <%= active_class(@conn, ["home-account"]) %>">
