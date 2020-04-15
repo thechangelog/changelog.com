@@ -124,7 +124,7 @@ PATH := $(HOME)/.krew/bin:$(PATH)
 export PATH
 
 YTT_RELEASES := https://github.com/k14s/ytt/releases
-YTT_VERSION := 0.25.0
+YTT_VERSION := 0.27.1
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
 YTT_URL := https://github.com/k14s/ytt/releases/download/v$(YTT_VERSION)/ytt-$(platform)-amd64
 YTT := $(LOCAL_BIN)/$(YTT_BIN)
@@ -277,7 +277,7 @@ lke-sanitize: $(POPEYE) lke-config-hint
 	$(POPEYE)
 
 # https://github.com/kubernetes/ingress-nginx/releases
-NGINX_INGRESS_VERSION := 0.28.0
+NGINX_INGRESS_VERSION := 0.30.0
 NGINX_INGRESS_NAMESPACE := ingress-nginx
 .PHONY: lke-nginx-ingress
 lke-nginx-ingress: lke-ctx
@@ -297,7 +297,7 @@ lke-nginx-ingress-logs: lke-ctx
 	$(KUBECTL) logs deployments/nginx-ingress-controller --namespace $(NGINX_INGRESS_NAMESPACE) --follow
 
 # https://github.com/jetstack/cert-manager/releases
-CERT_MANAGER_VERSION := 0.13.0
+CERT_MANAGER_VERSION := 0.14.2
 CERT_MANAGER_NAMESPACE := cert-manager
 .PHONY: lke-cert-manager
 lke-cert-manager: lke-ctx
