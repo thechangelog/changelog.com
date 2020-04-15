@@ -49,7 +49,7 @@ defmodule Changelog.Mixfile do
       {:arc_ecto, "~> 0.11.1"},
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
-      {:bamboo_smtp, "~> 1.7.0"},
+      {:bamboo_smtp, "~> 2.1.0"},
       {:httpoison, "~> 1.0", override: true},
       {:jason, "~> 1.0"},
       {:con_cache, "~> 0.13.0"},
@@ -67,9 +67,9 @@ defmodule Changelog.Mixfile do
       {:rollbax, "~> 0.8.2"},
       {:html_entities, "~> 0.3"},
       {:algolia, "~> 0.8.0"},
-      {:tzdata, "~> 0.5.20"},
+      {:tzdata, "~> 1.0.3"},
       {:icalendar, "~> 1.0"},
-      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.3.2", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
    ]

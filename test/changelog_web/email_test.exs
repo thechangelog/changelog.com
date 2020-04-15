@@ -1,8 +1,6 @@
 defmodule ChangelogWeb.EmailTest do
-  use ExUnit.Case
+  use Changelog.SchemaCase
   use Bamboo.Test
-
-  import Changelog.Factory
 
   alias Changelog.Newsletters
   alias ChangelogWeb.Email
@@ -57,7 +55,7 @@ defmodule ChangelogWeb.EmailTest do
   end
 
   test "guest thanks", %{person: person} do
-    episode = build(:published_episode)
+    episode = insert(:published_episode)
     email = Email.guest_thanks(person, episode)
 
     assert email.to == person
