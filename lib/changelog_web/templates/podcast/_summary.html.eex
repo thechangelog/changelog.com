@@ -14,18 +14,18 @@
           <%= render("_subscribe_tooltip.html", conn: @conn, podcast: @podcast) %>
         <% end %>
       </div>
-      <%= @podcast.description |> md_to_html |> raw %>
+      <%= @podcast.description |> md_to_html() |> raw() %>
     <%= if Enum.any?(@podcast.hosts) do %>
       <h3>Hosted by:</h3>
       <ul class="show_list-shows-item-content-hosts">
       <%= if length(@podcast.hosts) > 3 do %>
         <%= for person <- Enum.take_random(@podcast.hosts, 3) do %>
-          <li><%= link(person.name, to: PersonView.external_url(person)) %></li>
+          <li><%= link(person.name, to: person_path(@conn, :show, person.handle)) %></li>
         <% end %>
           <li><%= link("and more...", to: podcast_path(@conn, :show, @podcast.slug)) %></li>
       <% else %>
         <%= for person <- @podcast.hosts do %>
-          <li><%= link(person.name, to: PersonView.external_url(person)) %></li>
+          <li><%= link(person.name, to: person_path(@conn, :show, person.handle)) %></li>
         <% end %>
       <% end %>
       </ul>

@@ -129,28 +129,28 @@ defmodule Changelog.StringKitTest do
     end
 
     test "it replaces one mention with the appropriate markdown-style link" do
-      kball = %{handle: "kball", website: "https://zendev.com"}
+      kball = %{handle: "kball"}
 
       raw = """
       @kball representing the JS Party community in Amsterdam?! Yes please.
       """
 
       linkified = """
-      [@kball](https://zendev.com) representing the JS Party community in Amsterdam?! Yes please.
+      [@kball](/person/kball) representing the JS Party community in Amsterdam?! Yes please.
       """
       assert StringKit.mentions_linkify(raw, [kball]) == linkified
     end
 
     test "it replaces multiple mentions with the appropriate markdown-style link" do
-      jerodsanto = %{handle: "jerodsanto", website: "https://jerodsanto.net"}
-      adamstac = %{handle: "adamstac", website: "https://adamstacoviak.com"}
+      jerodsanto = %{handle: "jerodsanto"}
+      adamstac = %{handle: "adamstac"}
 
       raw = """
       Well that is awesome @adamstac @jerodsanto, thanks!
       """
 
       linkified = """
-      Well that is awesome [@adamstac](https://adamstacoviak.com) [@jerodsanto](https://jerodsanto.net), thanks!
+      Well that is awesome [@adamstac](/person/adamstac) [@jerodsanto](/person/jerodsanto), thanks!
       """
 
       assert StringKit.mentions_linkify(raw, [jerodsanto, adamstac]) == linkified

@@ -1,6 +1,6 @@
 defmodule Changelog.StringKit do
 
-  alias ChangelogWeb.PersonView
+  alias ChangelogWeb.{Endpoint, Router}
 
   def dasherize(string) do
     string
@@ -45,7 +45,7 @@ defmodule Changelog.StringKit do
   def mentions_linkify(string, people) do
     Enum.reduce(people, string, fn(person, string) ->
       mention = "@#{person.handle}"
-      url = PersonView.external_url(person)
+      url = Router.Helpers.person_path(Endpoint, :show, person.handle)
       String.replace(string, "#{mention}", "[#{mention}](#{url})")
     end)
   end

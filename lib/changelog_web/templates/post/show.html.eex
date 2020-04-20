@@ -2,7 +2,7 @@
   <article class="news_item">
     <header class="news_item-header">
       <p class="news_item-source">
-        <%= link to: PersonView.external_url(@post.author), title: @post.author.name, rel: "external", class: "news_item-source-image" do %>
+        <%= link to: person_path(@conn, :show, @post.author.handle), title: @post.author.name, rel: "external", class: "news_item-source-image" do %>
           <%= maybe_lazy_image(@conn, PersonView.avatar_url(@post.author), @post.author.name) %>
         <% end %>
         <!-- TODO: Make this a 'kicker' -->

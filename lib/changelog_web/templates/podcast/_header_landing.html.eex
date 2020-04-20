@@ -38,7 +38,7 @@
       <%= if Enum.any?(@podcast.hosts) do %>
       <div class="show-header-hosts avatar_list <%= if length(@podcast.hosts) < 4, do: 'avatar_list--full' %>">
       <%= for person <- @podcast.hosts do %>
-        <%= link to: PersonView.external_url(person), class: "avatar_list-item", title: person.name, rel: "external" do %>
+        <%= link to: person_path(@conn, :show, person.handle), class: "avatar_list-item", title: person.name do %>
           <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
           <%= if length(@podcast.hosts) < 4 do %>
             <p><%= person.name %></p>

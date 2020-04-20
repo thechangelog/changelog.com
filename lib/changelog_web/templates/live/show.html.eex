@@ -20,7 +20,7 @@
         <div class="live-info-guests live-info-guests--<%= length(participants) %>">
         <%= for person <- participants do %>
           <article class="live-info-guests-item">
-            <%= link(to: PersonView.external_url(person), title: "More Info", target: "_blank") do %>
+            <%= link(to: person_path(@conn, :show, person.handle), title: "More Info", target: "_blank") do %>
               <%= lazy_image(PersonView.avatar_url(person), String.at(person.name, 0), class: "live-info-guests-item-image", width: 150, height: 150) %>
               <h2 class="live-info-guests-item-title"><%= if Enum.any?(@episode.guests), do: host_or_guest(@episode, person) %></h2>
               <h1 class="live-info-guests-item-name"><%= person.name %></h1>
