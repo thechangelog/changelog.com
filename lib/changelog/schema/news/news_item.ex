@@ -16,6 +16,7 @@ defmodule Changelog.NewsItem do
     field :story, :string
     field :image, Files.Image.Type
     field :object_id, :string
+    field :object, :map, virtual: true
 
     field :pinned, :boolean, default: false
     field :published_at, :utc_datetime

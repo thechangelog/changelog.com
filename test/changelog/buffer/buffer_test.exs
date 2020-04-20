@@ -3,7 +3,7 @@ defmodule Changelog.Buffer.BufferTest do
 
   import Mock
 
-  alias Changelog.{Buffer, NewsItem}
+  alias Changelog.{Buffer, Episode, NewsItem}
 
   describe "profiles_for_topics/1" do
     test "returns @jsparty on matching topics" do
@@ -27,7 +27,8 @@ defmodule Changelog.Buffer.BufferTest do
 
   describe "queue/1" do
     test "calls episode functions and Client.create when gotime audio news item" do
-      item = %NewsItem{type: :audio, object_id: "gotime:45"}
+      episode = insert(:episode)
+      item = %NewsItem{type: :audio, object_id: Episode.object_id(episode)}
 
       with_mocks([
         {Buffer.Content, [], [episode_text: fn(_) -> "text" end]},
@@ -49,6 +50,7 @@ defmodule Changelog.Buffer.BufferTest do
     end
 
     test "calls post functions and Client.create when news item with post object" do
+      insert(:published_post, slug: "this-is-one")
       item = %NewsItem{type: :link, object_id: "posts:this-is-one"}
 
       with_mocks([

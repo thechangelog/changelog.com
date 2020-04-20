@@ -22,7 +22,7 @@ defmodule Changelog.Buffer do
 
   # this returns a single profile, but they're stored as lists so it actually
   # returns a list of one
-  def profiles_for_podcast(slug) do
+  def profiles_for_podcast(%{slug: slug}) do
     cond do
       String.starts_with?(slug, "afk") -> @afk
       String.starts_with?(slug, "brainscience") -> @brainscience
@@ -50,21 +50,22 @@ defmodule Changelog.Buffer do
   def queue(item) do
     item
     |> NewsItem.preload_all()
+    |> NewsItem.load_object()
     |> queue_item()
   end
 
   # an episode news item
-  defp queue_item(item = %NewsItem{type: :audio, object_id: slug}) when is_binary(slug) do
+  defp queue_item(item = %NewsItem{type: :audio, object: episode}) when is_map(episode) do
     link = Content.episode_link(item)
     text = Content.episode_text(item)
-    profiles = profiles_for_podcast(slug)
+    profiles = profiles_for_podcast(episode.podcast)
     Client.create(with_shared(profiles), text, [link: link])
   end
   # an episode news item with no attached object
   defp queue_item(%NewsItem{type: :audio}), do: false
-  defp queue_item(%NewsItem{type: :audio, object_id: nil}), do: false
+  defp queue_item(%NewsItem{type: :audio, object: nil}), do: false
   # a post news item
-  defp queue_item(item = %NewsItem{object_id: id}) when is_binary(id) do
+  defp queue_item(item = %NewsItem{object: post}) when is_map(post) do
     brief = Content.post_brief(item)
     text = Content.post_text(item)
     link = Content.post_link(item)
