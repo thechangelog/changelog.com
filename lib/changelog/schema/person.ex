@@ -76,6 +76,7 @@ defmodule Changelog.Person do
   def never_signed_in(query \\ __MODULE__),       do: from(q in query, where: is_nil(q.signed_in_at))
   def faked(query \\ __MODULE__),                 do: from(q in query, where: q.name in ^Changelog.Faker.names())
   def with_handles(query \\ __MODULE__, handles), do: from(q in query, where: q.handle in ^handles)
+  def with_profile(query \\ __MODULE__),          do: from(q in query, where: q.name not in ^Changelog.Faker.names())
 
   def with_email(query \\ __MODULE__, email)
   def with_email(query, email) when is_list(email), do: from(q in query, where: q.email in ^email)

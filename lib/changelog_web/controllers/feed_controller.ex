@@ -3,7 +3,8 @@ defmodule ChangelogWeb.FeedController do
 
   require Logger
 
-  alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Podcast, Post, Topic}
+  alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Person, Podcast,
+                   Post, Topic}
 
   def news(conn, _params) do
     conn
@@ -93,6 +94,10 @@ defmodule ChangelogWeb.FeedController do
       |> Episode.preload_podcast()
       |> Repo.all()
 
+    people =
+      Person.with_profile()
+      |> Repo.all()
+
     podcasts =
       Podcast.public()
       |> Podcast.oldest_first()
@@ -114,6 +119,7 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:news_items, news_items)
     |> assign(:news_sources, news_sources)
     |> assign(:episodes, episodes)
+    |> assign(:people, people)
     |> assign(:podcasts, podcasts)
     |> assign(:posts, posts)
     |> assign(:topics, topics)

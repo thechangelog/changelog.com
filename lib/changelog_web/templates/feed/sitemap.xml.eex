@@ -24,6 +24,12 @@
   <url><loc><%= news_source_url(@conn, :show, source.slug) %></loc></url>
 <% end %>
 
+<%= for person <- @people do %>
+  <url><loc><%= person_url(@conn, :show, person.handle) %></loc></url>
+  <url><loc><%= person_url(@conn, :news, person.handle) %></loc></url>
+  <url><loc><%= person_url(@conn, :podcasts, person.handle) %></loc></url>
+<% end %>
+
   <url><loc><%= podcast_url(@conn, :index) %></loc></url>
 <%= for podcast <- @podcasts do %>
   <url><loc><%= podcast_url(@conn, :show, podcast.slug) %></loc></url>
