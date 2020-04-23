@@ -1,7 +1,6 @@
 defmodule Mix.Tasks.Changelog.News.Historic do
   use Mix.Task
 
-  import ChangelogWeb.Router.Helpers
   alias ChangelogWeb.Router.Helpers, as: Routes
 
   alias Changelog.{Episode, NewsItem, Person, Post, Repo, UrlKit}

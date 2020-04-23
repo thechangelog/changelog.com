@@ -1,6 +1,5 @@
 defmodule ChangelogWeb.Meta.Feeds do
 
-  import ChangelogWeb.Router.Helpers
   alias ChangelogWeb.Router.Helpers, as: Routes
 
   alias ChangelogWeb.{PostView}
