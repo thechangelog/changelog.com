@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Meta.Image do
   import ChangelogWeb.Router.Helpers, only: [static_url: 2]
+  alias ChangelogWeb.Router.Helpers, as: Routes
 
   alias ChangelogWeb.{Endpoint, NewsItemView, NewsSourceView, PageView,
                       PersonView, PodcastView, PostView, TopicView}
