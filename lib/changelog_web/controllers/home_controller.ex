@@ -25,7 +25,7 @@ defmodule ChangelogWeb.HomeController do
       {:ok, _person} ->
         conn
         |> put_flash(:success, "Your #{from} has been updated! ✨")
-        |> redirect(to: home_path(conn, :show))
+        |> redirect(to: Routes.home_path(conn, :show))
       {:error, changeset} ->
         conn
         |> put_flash(:error, "The was a problem updating your #{from}. 😢")
@@ -38,7 +38,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're subscribed! You'll get the next issue in your inbox 📥")
-    |> redirect(to: home_path(conn, :show, subscribed: newsletter_id))
+    |> redirect(to: Routes.home_path(conn, :show, subscribed: newsletter_id))
   end
   def subscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
@@ -52,7 +52,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
-    |> redirect(to: home_path(conn, :show, unsubscribed: newsletter_id))
+    |> redirect(to: Routes.home_path(conn, :show, unsubscribed: newsletter_id))
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
@@ -74,7 +74,7 @@ defmodule ChangelogWeb.HomeController do
     conn
     |> assign(:current_user, updated_user)
     |> put_flash(:success, flash)
-    |> redirect(to: home_path(conn, :show))
+    |> redirect(to: Routes.home_path(conn, :show))
   end
 
   def opt_out(conn, %{"token" => token, "type" => type, "id" => id}) do
@@ -93,7 +93,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You've muted this discussion. 🤐")
-    |> redirect(to: news_item_path(conn, :show, NewsItem.slug(item)))
+    |> redirect(to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
   end
 
   defp opt_out_podcast(conn, person, slug) do
@@ -102,7 +102,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're unsubscribed! Resubscribe any time 🤗")
-    |> redirect(to: podcast_path(conn, :show, podcast.slug))
+    |> redirect(to: Routes.podcast_path(conn, :show, podcast.slug))
   end
 
   defp opt_out_setting(conn, person, setting) do

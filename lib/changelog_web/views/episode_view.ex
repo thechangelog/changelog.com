@@ -8,7 +8,7 @@ defmodule ChangelogWeb.EpisodeView do
                       PodcastView, SponsorView, TimeView}
 
   def admin_edit_link(conn, %{admin: true}, episode) do
-    path = admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))
+    path = Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))
     content_tag(:span) do
       [
         link("(#{comma_separated(episode.reach_count)})", to: path, data: [turbolinks: false])
@@ -38,7 +38,7 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def audio_url(episode) do
-    static_url(Endpoint, audio_path(episode))
+    Routes.static_url(Endpoint, audio_path(episode))
   end
 
   def classy_highlight(episode) do
@@ -51,7 +51,7 @@ defmodule ChangelogWeb.EpisodeView do
   def embed_code(episode), do: embed_code(episode, episode.podcast)
   def embed_code(episode, podcast) do
     ~s{<audio data-theme="night" data-src="#{url(episode, :embed)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
-    ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
+    ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{Routes.root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
     ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
 
@@ -157,7 +157,7 @@ defmodule ChangelogWeb.EpisodeView do
       Map.put(info, :prev, %{
         number: prev.slug,
         title: prev.title,
-        location: episode_path(Endpoint, :play, podcast.slug, prev.slug),
+        location: Routes.episode_path(Endpoint, :play, podcast.slug, prev.slug),
         audio_url: audio_url(prev)
       })
     else
@@ -168,7 +168,7 @@ defmodule ChangelogWeb.EpisodeView do
       Map.put(info, :next, %{
         number: next.slug,
         title: next.title,
-        location: episode_path(Endpoint, :play, podcast.slug, next.slug),
+        location: Routes.episode_path(Endpoint, :play, podcast.slug, next.slug),
         audio_url: audio_url(next)
       })
     else
@@ -191,6 +191,6 @@ defmodule ChangelogWeb.EpisodeView do
 
   def url(episode, action) do
     episode = Episode.preload_podcast(episode)
-    episode_url(Endpoint, action, episode.podcast.slug, episode.slug)
+    Routes.episode_url(Endpoint, action, episode.podcast.slug, episode.slug)
   end
 end

@@ -5,9 +5,9 @@
 
       <div class="marketing-button_group" style="--max-width-group: 260px;">
       <%= if @current_user do %>
-        <%= link("Manage Subscriptions", to: home_path(@conn, :show), class: "button_large") %>
+        <%= link("Manage Subscriptions", to: Routes.home_path(@conn, :show), class: "button_large") %>
       <% else %>
-        <%= link("Subscribe", to: person_path(@conn, :subscribe, to: "nightly"), class: "button_large") %>
+        <%= link("Subscribe", to: Routes.person_path(@conn, :subscribe, to: "nightly"), class: "button_large") %>
       <% end %>
       </div>
     </header>
@@ -25,7 +25,7 @@
 
     <div class="image">
       <a href="http://nightly.changelog.com/2016/10/06/">
-        <%= lazy_image(static_url(@conn, "/images/content/changelog-nightly.jpg"), "Changelog Nightly") %>
+        <%= lazy_image(Routes.static_url(@conn, "/images/content/changelog-nightly.jpg"), "Changelog Nightly") %>
       </a>
     </div>
 
@@ -37,7 +37,7 @@
 
       <h4>Is my email address safe?</h4>
 
-      <p>Yes. <%= link "We're trustworthy.", to: page_path(@conn, :about) %></p>
+      <p>Yes. <%= link "We're trustworthy.", to: Routes.page_path(@conn, :about) %></p>
 
       <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
 
@@ -55,7 +55,7 @@
 
       <h4>Can I sponsor Changelog Nightly?</h4>
 
-      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: page_path(@conn, :sponsor) %>.</p>
+      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: Routes.page_path(@conn, :sponsor) %>.</p>
 
       <h4>Why do we require you to confirm your email address?</h4>
 

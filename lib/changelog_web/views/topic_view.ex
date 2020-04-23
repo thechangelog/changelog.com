@@ -6,7 +6,7 @@ defmodule ChangelogWeb.TopicView do
   alias Changelog.Files.Icon
 
   def admin_edit_link(conn, %{admin: true}, topic) do
-    link("[edit]", to: admin_topic_path(conn, :edit, topic.slug, next: current_path(conn)), data: [turbolinks: false])
+    link("[edit]", to: Routes.admin_topic_path(conn, :edit, topic.slug, next: current_path(conn)), data: [turbolinks: false])
   end
   def admin_edit_link(_, _, _), do: nil
 
@@ -19,7 +19,7 @@ defmodule ChangelogWeb.TopicView do
   def icon_url(topic), do: icon_url(topic, :small)
   def icon_url(topic, version) do
     if topic.icon do
-      static_url(Endpoint, icon_path(topic, version))
+      Routes.static_url(Endpoint, icon_path(topic, version))
     else
       "/images/defaults/avatar-topic.png"
     end

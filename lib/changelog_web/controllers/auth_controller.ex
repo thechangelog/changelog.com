@@ -16,7 +16,7 @@ defmodule ChangelogWeb.AuthController do
     else
       conn
       |> put_flash(:success, "You aren't in our system! No worries, it's free to join. 💚")
-      |> redirect(to: person_path(conn, :join, %{email: email}))
+      |> redirect(to: Routes.person_path(conn, :join, %{email: email}))
     end
   end
   def new(conn, _params) do
@@ -27,7 +27,7 @@ defmodule ChangelogWeb.AuthController do
     person = Person.get_by_encoded_auth(token)
 
     if person && Timex.before?(Timex.now, person.auth_token_expires_at) do
-      sign_in_and_redirect(conn, person, home_path(conn, :show))
+      sign_in_and_redirect(conn, person, Routes.home_path(conn, :show))
     else
       conn
       |> put_flash(:error, "Whoops!")
@@ -38,16 +38,16 @@ defmodule ChangelogWeb.AuthController do
   def delete(conn, _params) do
     conn
     |> clear_session()
-    |> redirect(to: root_path(conn, :index))
+    |> redirect(to: Routes.root_path(conn, :index))
   end
 
   def callback(conn = %{assigns: %{ueberauth_auth: auth}}, _params) do
     if person = Person.get_by_ueberauth(auth) do
-      sign_in_and_redirect(conn, person, home_path(conn, :show))
+      sign_in_and_redirect(conn, person, Routes.home_path(conn, :show))
     else
       conn
       |> put_flash(:success, "Almost there! Please complete your profile now.")
-      |> redirect(to: person_path(conn, :join, params_from_ueberauth(auth)))
+      |> redirect(to: Routes.person_path(conn, :join, params_from_ueberauth(auth)))
     end
   end
   def callback(conn = %{assigns: %{ueberauth_failure: _fails}}, _params) do

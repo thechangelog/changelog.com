@@ -1,6 +1,6 @@
 <%= link title: "Play Episode",
     to: EpisodeView.audio_url(@episode),
-    data: [play: episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
+    data: [play: Routes.episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)],
     role: "button",
     class: "news_item-toolbar-play_button" do %>
     <span>Play</span>

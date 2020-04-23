@@ -1,1 +1,1 @@
-<%= link("changelog.com/posts", to: post_path(@conn, :index), title: "Changelog Posts") %>
+<%= link("changelog.com/posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %>

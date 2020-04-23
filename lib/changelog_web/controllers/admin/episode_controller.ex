@@ -156,7 +156,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:ok, episode} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
+        |> redirect_next(params, Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -194,11 +194,11 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         handle_notes_push_to_github(episode)
         EpisodeNewsItem.update(episode)
         Cache.delete(episode)
-        params = replace_next_edit_path(params, admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
+        params = replace_next_edit_path(params, Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_podcast_episode_path(conn, :index, podcast.slug))
+        |> redirect_next(params, Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -221,7 +221,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
+    |> redirect(to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
   end
 
   def publish(conn, params = %{"id" => slug}, podcast) do
@@ -240,7 +240,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
+        |> redirect(to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -261,7 +261,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
+        |> redirect(to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -278,7 +278,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_podcast_episode_path(conn, :index, podcast.slug))
+    |> redirect(to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
   end
 
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do

@@ -6,9 +6,9 @@
       <th>Reach</th>
       <th class="center aligned">
         <div class="ui basic buttons">
-          <%= icon_link("eye", to: podcast_path(@conn, :show, @podcast.slug), title: "View Public") %>
-          <%= icon_link("list", to: admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
-          <%= icon_link("add", to: admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
+          <%= icon_link("eye", to: Routes.podcast_path(@conn, :show, @podcast.slug), title: "View Public") %>
+          <%= icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
+          <%= icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
         </div>
       </th>
     </tr>
@@ -21,9 +21,9 @@
       <td><%= reach_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic icon buttons">
-          <%= icon_link("line chart", to: admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug)) %>
-          <%= icon_link("eye", to: episode_path(@conn, :show, @podcast.slug, episode.slug)) %>
-          <%= icon_link("edit", to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug)) %>
+          <%= icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, @podcast.slug, episode.slug)) %>
+          <%= icon_link("eye", to: Routes.episode_path(@conn, :show, @podcast.slug, episode.slug)) %>
+          <%= icon_link("edit", to: Routes.admin_podcast_episode_path(@conn, :edit, @podcast.slug, episode.slug)) %>
         </div>
       </td>
     </tr>

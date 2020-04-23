@@ -2,9 +2,9 @@
 
 <article class="sponsor_story">
   <header class="sponsor_story-header">
-    <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: page_path(@conn, :sponsor) %> / Partner Story</div>
+    <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: Routes.page_path(@conn, :sponsor) %> / Partner Story</div>
 
-    <img class="sponsor_story-header-logo" src='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png' srcset='<%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png 1x, <%= static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
+    <img class="sponsor_story-header-logo" src='<%= Routes.static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png' srcset='<%= Routes.static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>.png 1x, <%= Routes.static_url(@conn, "/images/content/sponsors/#{@story.slug}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
 
     <blockquote class="sponsor_story-quote">
       <div class="sponsor_story-quote-body">
@@ -12,7 +12,7 @@
       </div>
       <%= if @story.quote.name != "" do %>
       <footer class="marketing_quote-footer">
-        <img src='<%= static_url(@conn, "/images/content/sponsors/#{@story.quote.image}") %>' alt="" width="50" height="50">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/#{@story.quote.image}") %>' alt="" width="50" height="50">
         <strong><%= @story.quote.name %></strong>
         <span class="quote-title"><%= @story.quote.title %></span>
       </footer>
@@ -59,7 +59,7 @@
 
     <p>Want to work with us to share your brand’s story with the developer community?</p>
     <p>
-      <%= link to: page_path(@conn, :sponsor) do %>
+      <%= link to: Routes.page_path(@conn, :sponsor) do %>
         Learn more about sponsoring our news and podcasts&nbsp;<span class="link_arrow">›</span>
       <% end %>
     </p>
@@ -68,7 +68,7 @@
 
 <section class="marketing-section marketing-section--map">
   <header class="marketing-section-header">
-    <i><img src='<%= static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
+    <i><img src='<%= Routes.static_url(@conn, "/images/brand/changelog-mark-only.svg") %>' alt="Changelog Logomark" width="60" height="60"></i>
     <h3>From San Francisco to Berlin and everywhere in between, developers around the world trust Changelog to deliver the best news and podcasts for developers. Our community and content is in every corner of the&nbsp;globe.</h3>
 
     <div class="marketing-button_group" style="--max-width-group: 200px;">
@@ -77,6 +77,6 @@
   </header>
 
   <div class="marketing-map">
-    <img src='<%= static_url(@conn, "/images/content/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
+    <img src='<%= Routes.static_url(@conn, "/images/content/community/map.png") %>' alt="World map with dots indicating approximate locations of Changelog community members.">
   </div>
 </section>

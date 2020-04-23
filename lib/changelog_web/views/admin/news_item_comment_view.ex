@@ -4,6 +4,6 @@ defmodule ChangelogWeb.Admin.NewsItemCommentView do
   alias ChangelogWeb.{NewsItemView, NewsItemCommentView, PersonView}
 
   def permalink(conn, comment) do
-    news_item_path(conn, :show, NewsItemView.slug(comment.news_item)) <> NewsItemCommentView.permalink_path(comment)
+    Routes.news_item_path(conn, :show, NewsItemView.slug(comment.news_item)) <> NewsItemCommentView.permalink_path(comment)
   end
 end

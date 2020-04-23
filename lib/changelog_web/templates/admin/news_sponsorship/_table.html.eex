@@ -17,7 +17,7 @@
     <%= for sponsorship <- @sponsorships do %>
       <tr>
         <td>
-          <%= link(sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, sponsorship.sponsor)) %>
+          <%= link(sponsorship.sponsor.name, to: Routes.admin_sponsor_path(@conn, :edit, sponsorship.sponsor)) %>
           <%= if sponsorship.name do %>
           &ndash; <%= sponsorship.name %>
           <% end %>
@@ -31,9 +31,9 @@
         <td><%= ts(sponsorship.updated_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link("eye", to: admin_news_sponsorship_path(@conn, :show, sponsorship)) %>
-            <%= icon_link("edit", to: admin_news_sponsorship_path(@conn, :edit, sponsorship)) %>
-            <%= icon_link("trash", to: admin_news_sponsorship_path(@conn, :delete, sponsorship), method: :delete, data: [confirm: "Are you sure?"]) %>
+            <%= icon_link("eye", to: Routes.admin_news_sponsorship_path(@conn, :show, sponsorship)) %>
+            <%= icon_link("edit", to: Routes.admin_news_sponsorship_path(@conn, :edit, sponsorship)) %>
+            <%= icon_link("trash", to: Routes.admin_news_sponsorship_path(@conn, :delete, sponsorship), method: :delete, data: [confirm: "Are you sure?"]) %>
           </div>
         </td>
       </tr>

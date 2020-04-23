@@ -23,7 +23,7 @@ defmodule Mix.Tasks.Changelog.News.Historic do
       |> Repo.all
 
     for episode <- episodes do
-      url = "https://changelog.com" <> episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)
+      url = "https://changelog.com" <> Routes.episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)
       topics = Enum.map(episode.episode_topics, &(Map.take(&1, [:position, :topic_id])))
 
       if Repo.count(NewsItem.with_url(url)) == 0 do
@@ -55,7 +55,7 @@ defmodule Mix.Tasks.Changelog.News.Historic do
       |> Repo.all
 
     for post <- posts do
-      url = "https://changelog.com" <> post_path(Endpoint, :show, post.slug)
+      url = "https://changelog.com" <> Routes.post_path(Endpoint, :show, post.slug)
       topics = Enum.map(post.post_topics, &(Map.take(&1, [:position, :topic_id])))
 
       if Repo.count(NewsItem.with_url(url)) == 0 do

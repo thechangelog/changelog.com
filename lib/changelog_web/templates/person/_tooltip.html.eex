@@ -2,7 +2,7 @@
   <div class="tooltip-arrow"></div>
   <div class="tooltip-wrap">
     <div class="profile_tooltip">
-      <%= link(to: person_path(@conn, :show, @person.handle), title: "View Profile", class: "profile_tooltip-header") do %>
+      <%= link(to: Routes.person_path(@conn, :show, @person.handle), title: "View Profile", class: "profile_tooltip-header") do %>
         <%= lazy_image(avatar_url(@person), @person.name, class: "profile_tooltip-header-avatar") %>
         <div class="profile_tooltip-header-info">
           <p class="profile_tooltip-header-info-name"><%= @person.name %></p>

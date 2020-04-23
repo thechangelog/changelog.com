@@ -16,7 +16,7 @@ defmodule ChangelogWeb.ApiController do
       |> Episode.published
       |> Repo.get_by!(slug: episode_slug)
 
-    embed_url = episode_url(conn, :embed, podcast.slug, episode.slug)
+    embed_url = Routes.episode_url(conn, :embed, podcast.slug, episode.slug)
 
     response = %{
       type: "rich",

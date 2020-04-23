@@ -1,7 +1,7 @@
 <article class="article">
   <div class="richtext">
     <h1>GopherCon 2017 / Changelog Films</h1>
-    <p>Like what you see here? <%= link "Hire us", to: page_path(@conn, :contact) %> to get creative for your conference.</p>
+    <p>Like what you see here? <%= link "Hire us", to: Routes.page_path(@conn, :contact) %> to get creative for your conference.</p>
 
     <hr>
 

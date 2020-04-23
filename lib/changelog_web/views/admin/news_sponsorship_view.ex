@@ -22,7 +22,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   def schedule_cell_content(focus_week, week, sponsorship) when is_nil(sponsorship) do
     cond do
       Timex.before?(week, focus_week) -> "None"
-      true -> link("Available", to: admin_news_sponsorship_path(Endpoint, :new, week: Date.to_string(week)))
+      true -> link("Available", to: Routes.admin_news_sponsorship_path(Endpoint, :new, week: Date.to_string(week)))
     end
   end
   def schedule_cell_content(_focus_week, _week, sponsorship) do

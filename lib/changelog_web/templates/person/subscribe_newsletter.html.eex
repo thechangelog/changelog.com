@@ -7,13 +7,13 @@
     <h1 class="signup-heading">You&rsquo;re subscribing to <%= @newsletter.name %></h1>
     <p class="signup-text"><%= @newsletter.description %></p>
   <%= if @current_user do %>
-    <%= link("Manage Subscriptions", to: home_path(@conn, :show), class: "button_large") %>
+    <%= link("Manage Subscriptions", to: Routes.home_path(@conn, :show), class: "button_large") %>
   <% else %>
     <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
   <% end %>
 
   <%= if @newsletter.slug == "weekly" do %>
-    <p class="signup-sign_in">1 email per week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
+    <p class="signup-sign_in">1 email per week — Delivered on Sundays - <%= link "Archive", to: Routes.page_path(@conn, :weekly_archive) %></p>
   <% else %>
     <p class="signup-sign_in">7 emails per week — Delivered daily at 10pm US Central</p>
   <% end %>

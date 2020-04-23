@@ -9,7 +9,7 @@ defmodule ChangelogWeb.LiveView do
       %ICalendar.Event{
         summary: "#{episode.podcast.name} Live",
         description: episode_title_with_subtitle(episode),
-        url: live_url(Endpoint, :show, Episode.hashid(episode)),
+        url: Routes.live_url(Endpoint, :show, Episode.hashid(episode)),
         dtstart: episode.recorded_at,
         dtend: Timex.shift(episode.recorded_at, minutes: 90),
       }

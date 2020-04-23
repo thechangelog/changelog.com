@@ -1,6 +1,6 @@
 <article class="auth">
   <h1 class="auth-header">Join the community</h1>
-  <%= form_for @changeset, person_path(@conn, :join), [class: "form form--full_width", multipart: true], fn f -> %>
+  <%= form_for @changeset, Routes.person_path(@conn, :join), [class: "form form--full_width", multipart: true], fn f -> %>
     <div class="form-element_wrap <%= error_class(f, :name) %>">
       <div class="form-element">
         <label>Name<span>*</span></label>
@@ -79,7 +79,7 @@
 
     <div class="form-submit">
       <div class="form-submit-note">
-        <div>Already a member? <em><%= link "Sign in", to: sign_in_path(@conn, :new), title: "" %></em></div>
+        <div>Already a member? <em><%= link "Sign in", to: Routes.sign_in_path(@conn, :new), title: "" %></em></div>
       </div>
       <input type="submit" value="Join Now">
     </div>

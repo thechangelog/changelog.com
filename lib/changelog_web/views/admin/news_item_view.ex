@@ -6,7 +6,7 @@ defmodule ChangelogWeb.Admin.NewsItemView do
   alias ChangelogWeb.Admin.NewsSponsorshipView
 
   def bookmarklet_code do
-    url = admin_news_item_url(Endpoint, :new, quick: true, url: "")
+    url = Routes.admin_news_item_url(Endpoint, :new, quick: true, url: "")
     ~s/javascript:(function() {window.open('#{url}'+location.href);})();/
   end
 
@@ -18,9 +18,9 @@ defmodule ChangelogWeb.Admin.NewsItemView do
 
   def show_or_preview_path(conn, item) do
     if NewsItem.is_published(item) do
-      news_item_path(conn, :show, NewsItem.slug(item))
+      Routes.news_item_path(conn, :show, NewsItem.slug(item))
     else
-      news_item_path(conn, :preview, item)
+      Routes.news_item_path(conn, :preview, item)
     end
   end
 

@@ -187,13 +187,13 @@
 <%= if NewsItem.is_published(f.data) || NewsItem.is_queued(f.data) do %>
   <div class="ui equal width stackable grid">
     <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
-    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn, admin_news_item_path(@conn, :index))) %></div>
+    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn, Routes.admin_news_item_path(@conn, :index))) %></div>
     <div class="column">
     <%= if NewsItem.is_queued(f.data) do %>
       <button class="ui green fluid basic button" type="submit" name="queue" value="publish">Publish</button>
     <% end %>
     <%= if NewsItem.is_published(f.data) do %>
-      <%= link("Unpublish", to: admin_news_item_path(@conn, :unpublish, f.data), class: "ui red fluid basic button", method: :post, data: [confirm: "Are you sure?"]) %>
+      <%= link("Unpublish", to: Routes.admin_news_item_path(@conn, :unpublish, f.data), class: "ui red fluid basic button", method: :post, data: [confirm: "Are you sure?"]) %>
     <% end %>
     </div>
   </div>

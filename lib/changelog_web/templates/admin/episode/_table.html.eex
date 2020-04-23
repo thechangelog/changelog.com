@@ -25,9 +25,9 @@
       <th class="center aligned">
       <%= if assigns[:actions] && assigns[:podcast] do %>
         <div class="ui basic buttons">
-          <%= icon_link("eye", to: podcast_path(@conn, :show, @podcast.slug), title: "View Public") %>
-          <%= icon_link("list", to: admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
-          <%= icon_link("add", to: admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
+          <%= icon_link("eye", to: Routes.podcast_path(@conn, :show, @podcast.slug), title: "View Public") %>
+          <%= icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
+          <%= icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
         </div>
     <% end %>
     <%= if assigns[:filter] && @status == :published do %>
@@ -44,14 +44,14 @@
     <%= if assigns[:podcast] do %>
       <td title="<%= episode.id %>"><%= episode.slug %></td>
     <% else %>
-      <td><%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
+      <td><%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
     <% end %>
       <td>
         <%= truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %>
       </td>
       <td>
       <%= for person <- Episode.participants(episode) do %>
-        <%= link to: admin_person_path(@conn, :show, person), title: person.name, data: [popup: true] do %>
+        <%= link to: Routes.admin_person_path(@conn, :show, person), title: person.name, data: [popup: true] do %>
           <img class="ui avatar image" src="<%= PersonView.avatar_url(person) %>">&nbsp;
         <% end %>
       <% end %>
@@ -67,13 +67,13 @@
       <td class="center aligned">
         <div class="ui small basic buttons">
         <%= if Episode.is_published(episode) do %>
-          <%= icon_link("line chart", to: admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug)) %>
-          <%= icon_link("refresh", to: admin_podcast_episode_path(@conn, :transcript, podcast.slug, episode.slug), method: :post, title: "Refresh Transcript") %>
+          <%= icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug)) %>
+          <%= icon_link("refresh", to: Routes.admin_podcast_episode_path(@conn, :transcript, podcast.slug, episode.slug), method: :post, title: "Refresh Transcript") %>
         <% end %>
-          <%= icon_link("eye", to: episode_path(@conn, show_or_preview(episode), podcast.slug, episode.slug)) %>
-          <%= icon_link("edit", to: admin_podcast_episode_path(@conn, :edit, podcast.slug, episode.slug)) %>
+          <%= icon_link("eye", to: Routes.episode_path(@conn, show_or_preview(episode), podcast.slug, episode.slug)) %>
+          <%= icon_link("edit", to: Routes.admin_podcast_episode_path(@conn, :edit, podcast.slug, episode.slug)) %>
         <%= if !Episode.is_published(episode) do %>
-          <%= icon_link("trash", to: admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= icon_link("trash", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
         <% end %>
         </div>
       </td>

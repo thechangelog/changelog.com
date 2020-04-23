@@ -49,7 +49,7 @@ defmodule ChangelogWeb.PersonController do
         end
     end
   end
-  def join(conn = %{method: "POST"}, _params), do: redirect(conn, to: person_path(conn, :join))
+  def join(conn = %{method: "POST"}, _params), do: redirect(conn, to: Routes.person_path(conn, :join))
 
   def show(conn, params = %{"handle" => handle}) do
     person = Repo.get_by!(Person, handle: handle)
@@ -146,7 +146,7 @@ defmodule ChangelogWeb.PersonController do
       |> assign(:podcast, podcast)
       |> render(:subscribe_podcast)
     else
-      redirect(conn, to: person_path(conn, :subscribe))
+      redirect(conn, to: Routes.person_path(conn, :subscribe))
     end
   end
   def subscribe(conn = %{method: "GET"}, _params) do
@@ -155,7 +155,7 @@ defmodule ChangelogWeb.PersonController do
   def subscribe(conn = %{method: "POST"}, %{"gotcha" => robo}) when byte_size(robo) > 0 do
     conn
     |> put_flash(:error, "Something smells fishy. 🤖")
-    |> redirect(to: person_path(conn, :subscribe))
+    |> redirect(to: Routes.person_path(conn, :subscribe))
   end
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
     subscribe_to = Map.get(params, "to", "weekly")
@@ -164,7 +164,7 @@ defmodule ChangelogWeb.PersonController do
       String.ends_with?(email, "qq.com") ->
         conn
         |> put_flash(:error, "qq.com emails temporarily not allowed due to abuse.")
-        |> redirect(to: person_path(conn, :subscribe))
+        |> redirect(to: Routes.person_path(conn, :subscribe))
       person = Repo.get_by(Person, email: email) ->
         welcome_subscriber(conn, person, subscribe_to)
       true ->
@@ -179,11 +179,11 @@ defmodule ChangelogWeb.PersonController do
           {:error, _changeset} ->
             conn
             |> put_flash(:error, "Something went wrong. 😭")
-            |> redirect(to: person_path(conn, :subscribe))
+            |> redirect(to: Routes.person_path(conn, :subscribe))
         end
     end
   end
-  def subscribe(conn = %{method: "POST"}, _params), do: redirect(conn, to: person_path(conn, :subscribe))
+  def subscribe(conn = %{method: "POST"}, _params), do: redirect(conn, to: Routes.person_path(conn, :subscribe))
 
   defp welcome_subscriber(conn, person, subscribe_to) do
     person = Person.refresh_auth_token(person)
@@ -195,7 +195,7 @@ defmodule ChangelogWeb.PersonController do
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
-    |> redirect(to: root_path(conn, :index))
+    |> redirect(to: Routes.root_path(conn, :index))
   end
 
   defp subscribe_to_newsletter(person, newsletter) do
@@ -225,6 +225,6 @@ defmodule ChangelogWeb.PersonController do
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
-    |> redirect(to: root_path(conn, :index))
+    |> redirect(to: Routes.root_path(conn, :index))
   end
 end

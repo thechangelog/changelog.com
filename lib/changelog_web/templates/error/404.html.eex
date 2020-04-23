@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Not Found | Changelog</title>
     <meta name="copyright" content="Changelog Media LLC">
-    <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
-    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>">
+    <script src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
     <%= render(ChangelogWeb.LayoutView, "_head_scripts.html", assigns) %>
   </head>
   <body class="error"><!--[if lt IE 8]>
@@ -19,7 +19,7 @@
           <h1>404</h1>
           <h3>Oops! The page you were looking for&nbsp;doesn’t exist.</h3>
           <p>You may have mistyped the address or the page may have moved.</p>
-          <%= link "Take Me Home", to: root_path(@conn, :index), class: "button" %>
+          <%= link "Take Me Home", to: Routes.root_path(@conn, :index), class: "button" %>
         </div>
       </article>
     </main>

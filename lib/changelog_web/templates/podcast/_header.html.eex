@@ -13,12 +13,12 @@
       <div class="show-header-buttons">
         <%= link("Learn More",
             title: "Learn More",
-            to: podcast_path(@conn, :show, @podcast.slug),
+            to: Routes.podcast_path(@conn, :show, @podcast.slug),
             role: "button",
             class: "show-header-buttons-item button_small") %>
         <%= link("Subscribe",
             title: "Subscribe",
-            to: podcast_path(@conn, :show, @podcast.slug),
+            to: Routes.podcast_path(@conn, :show, @podcast.slug),
             role: "button",
             class: "show-header-buttons-item button_small") %>
       </div>

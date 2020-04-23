@@ -24,10 +24,10 @@ defmodule ChangelogWeb.EmailView do
   end
 
   def news_item_url(%{type: :link, object: post}) when is_map(post) do
-    post_url(Endpoint, :show, post.slug)
+    Routes.post_url(Endpoint, :show, post.slug)
   end
   def news_item_url(item) do
-    news_item_url(Endpoint, :show, NewsItemView.slug(item))
+    Routes.news_item_url(Endpoint, :show, NewsItemView.slug(item))
   end
 
   def comment_url(item, comment) do

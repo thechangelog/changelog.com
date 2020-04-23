@@ -1,21 +1,21 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link @episode.podcast.name, to: admin_podcast_episode_path(@conn, :index, @episode.podcast.slug) %>
+    <%= link @episode.podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @episode.podcast.slug) %>
     &raquo;
-    <%= link @episode.slug, to: admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug) %>
+    <%= link @episode.slug, to: Routes.admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug) %>
 
     <div class="ui basic right floated buttons">
       <%= if @episode.published do %>
         <%= external_link "View Public",
-          to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
+          to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
           class: "ui button" %>
       <% else %>
         <%= external_link "Preview",
-          to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
+          to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
           class: "ui button" %>
       <% end %>
       <%= if @item do %>
-        <%= link("News Item", to: admin_news_item_path(@conn, :edit, @item), class: "ui button") %>
+        <%= link("News Item", to: Routes.admin_news_item_path(@conn, :edit, @item), class: "ui button") %>
       <% end %>
     </div>
 

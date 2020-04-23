@@ -14,7 +14,7 @@
   <%= for comment <- @comments do %>
     <tr>
       <td>
-        <%= link to: admin_person_path(@conn, :show, comment.author), title: "Author: #{comment.author.name}", data: [popup: true] do %>
+        <%= link to: Routes.admin_person_path(@conn, :show, comment.author), title: "Author: #{comment.author.name}", data: [popup: true] do %>
           <img class="ui avatar image" src="<%= PersonView.avatar_url(comment.author) %>">
         <% end %>
       </td>
@@ -25,8 +25,8 @@
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= icon_link("eye", to: permalink(@conn, comment)) %>
-          <%= icon_link("edit", to: admin_news_item_comment_path(@conn, :edit, comment)) %>
-          <%= icon_link("trash", to: admin_news_item_comment_path(@conn, :delete, comment), method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= icon_link("edit", to: Routes.admin_news_item_comment_path(@conn, :edit, comment)) %>
+          <%= icon_link("trash", to: Routes.admin_news_item_comment_path(@conn, :delete, comment), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>
     </tr>

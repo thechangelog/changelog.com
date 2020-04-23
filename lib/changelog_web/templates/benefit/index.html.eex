@@ -9,7 +9,7 @@
   <% else %>
     <p>Community members save $3,000+ with our trusted partners.</p>
 
-    <p><%= link "Join today", to: page_path(@conn, :community) %> to get access to the goods! It's FREE.</p>
+    <p><%= link "Join today", to: Routes.page_path(@conn, :community) %> to get access to the goods! It's FREE.</p>
   <% end %>
 
     <hr>

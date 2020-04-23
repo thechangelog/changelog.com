@@ -78,7 +78,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_person_path(conn, :edit, person))
+        |> redirect_next(params, Routes.admin_person_path(conn, :edit, person))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -98,7 +98,7 @@ defmodule ChangelogWeb.Admin.PersonController do
       {:ok, _person} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_person_path(conn, :index))
+        |> redirect_next(params, Routes.admin_person_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -111,7 +111,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_person_path(conn, :index))
+    |> redirect(to: Routes.admin_person_path(conn, :index))
   end
 
   def slack(conn = %{assigns: %{person: person}}, params) do
@@ -127,7 +127,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     conn
     |> put_flash(:result, flash)
-    |> redirect_next(params, admin_person_path(conn, :index))
+    |> redirect_next(params, Routes.admin_person_path(conn, :index))
   end
 
   defp assign_person(conn = %{params: %{"id" => id}}, _) do

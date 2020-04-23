@@ -30,7 +30,7 @@ defmodule ChangelogWeb.Admin.TopicController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_topic_path(conn, :edit, topic.slug))
+        |> redirect_next(params, Routes.admin_topic_path(conn, :edit, topic.slug))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -48,11 +48,11 @@ defmodule ChangelogWeb.Admin.TopicController do
 
     case Repo.update(changeset) do
       {:ok, topic} ->
-        params = replace_next_edit_path(params, admin_topic_path(conn, :edit, topic.slug))
+        params = replace_next_edit_path(params, Routes.admin_topic_path(conn, :edit, topic.slug))
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_topic_path(conn, :index))
+        |> redirect_next(params, Routes.admin_topic_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -65,7 +65,7 @@ defmodule ChangelogWeb.Admin.TopicController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_topic_path(conn, :index))
+    |> redirect(to: Routes.admin_topic_path(conn, :index))
   end
 
   defp assign_topic(conn = %{params: %{"id" => slug}}, _) do

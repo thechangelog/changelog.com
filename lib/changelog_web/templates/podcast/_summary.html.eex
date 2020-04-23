@@ -1,6 +1,6 @@
 <article class="show_list-shows-item">
   <div class="show_list-shows-item-wrap">
-    <%= link(to: podcast_path(@conn, :show, @podcast.slug), class: "show_list-shows-item-art", title: "View #{@podcast.name}") do %>
+    <%= link(to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "show_list-shows-item-art", title: "View #{@podcast.name}") do %>
       <%= lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 220, height: 220) %>
       <%= if @podcast.status == :soon do %>
         <div class="show_list-shows-item-art-status show_list-shows-item-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
@@ -8,7 +8,7 @@
     <% end %>
     <div class="show_list-shows-item-content">
       <div class="show_list-shows-item-content-heading">
-        <h2><a href="<%= podcast_path(@conn, :show, @podcast.slug) %>"><%= @podcast.name %></a></h2>
+        <h2><a href="<%= Routes.podcast_path(@conn, :show, @podcast.slug) %>"><%= @podcast.name %></a></h2>
         <%= if @podcast.status != :soon do %>
           <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Subscribe</button>
           <%= render("_subscribe_tooltip.html", conn: @conn, podcast: @podcast) %>
@@ -20,12 +20,12 @@
       <ul class="show_list-shows-item-content-hosts">
       <%= if length(@podcast.hosts) > 3 do %>
         <%= for person <- Enum.take_random(@podcast.hosts, 3) do %>
-          <li><%= link(person.name, to: person_path(@conn, :show, person.handle)) %></li>
+          <li><%= link(person.name, to: Routes.person_path(@conn, :show, person.handle)) %></li>
         <% end %>
-          <li><%= link("and more...", to: podcast_path(@conn, :show, @podcast.slug)) %></li>
+          <li><%= link("and more...", to: Routes.podcast_path(@conn, :show, @podcast.slug)) %></li>
       <% else %>
         <%= for person <- @podcast.hosts do %>
-          <li><%= link(person.name, to: person_path(@conn, :show, person.handle)) %></li>
+          <li><%= link(person.name, to: Routes.person_path(@conn, :show, person.handle)) %></li>
         <% end %>
       <% end %>
       </ul>

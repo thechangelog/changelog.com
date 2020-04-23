@@ -2,12 +2,12 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>We <em>just</em> published <%= link("a new episode of #{@episode.podcast.name}", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) %> with <%= comma_separated_names(EpisodeView.participants(@episode)) %>!</p>
+    <p>We <em>just</em> published <%= link("a new episode of #{@episode.podcast.name}", to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) %> with <%= comma_separated_names(EpisodeView.participants(@episode)) %>!</p>
 
     <blockquote><%= @episode.summary |> md_to_html() |> raw()  %></blockquote>
 
     <span class="btn-primary">
-      <%= link("Listen and discuss the episode", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %>
+      <%= link("Listen and discuss the episode", to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %>
     </span>
 
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>

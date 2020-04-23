@@ -6,7 +6,7 @@
 
   <div class="actions">
   <%= if Policies.Podcast.create(@current_user) do %>
-    <%= link to: admin_podcast_path(@conn, :new), class: "ui right floated primary basic button" do %>
+    <%= link to: Routes.admin_podcast_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="icon unmute"></i>
       Add Podcast
     <% end %>

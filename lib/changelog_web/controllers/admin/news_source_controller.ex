@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_source_path(conn, :edit, source))
+        |> redirect_next(params, Routes.admin_news_source_path(conn, :edit, source))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -49,7 +49,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
       {:ok, _source} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_source_path(conn, :index))
+        |> redirect_next(params, Routes.admin_news_source_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -62,7 +62,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_news_source_path(conn, :index))
+    |> redirect(to: Routes.admin_news_source_path(conn, :index))
   end
 
   defp assign_source(conn = %{params: %{"id" => id}}, _) do

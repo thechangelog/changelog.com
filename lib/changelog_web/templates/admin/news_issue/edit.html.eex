@@ -1,19 +1,19 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    <%= link "News", to: Routes.admin_news_item_path(@conn, :index) %>
     &raquo;
-    <%= link "Issues", to: admin_news_issue_path(@conn, :index) %>
+    <%= link "Issues", to: Routes.admin_news_issue_path(@conn, :index) %>
     &raquo; Edit
   <%= if @issue.published do %>
     <%= link "(View)",
-      to: news_issue_path(@conn, :show, @issue.slug),
+      to: Routes.news_issue_path(@conn, :show, @issue.slug),
       class: "view" %>
   <% else %>
     <%= external_link "(Preview)",
-      to: news_issue_path(@conn, :preview, @issue.slug),
+      to: Routes.news_issue_path(@conn, :preview, @issue.slug),
       class: "view" %>
   <% end %>
   </h1>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_news_issue_path(@conn, :update, @issue)) %>
+  <%= render("_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_news_issue_path(@conn, :update, @issue)) %>
 </div>

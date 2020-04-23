@@ -28,7 +28,7 @@ defmodule ChangelogWeb.EpisodeRequestController do
       {:ok, _request} ->
         conn
         |> put_flash(:success, "We received your episode request! Stay awesome 💚")
-        |> redirect(to: root_path(conn, :index))
+        |> redirect(to: Routes.root_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Something went wrong. 😭")

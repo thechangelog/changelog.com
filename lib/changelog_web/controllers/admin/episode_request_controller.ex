@@ -129,7 +129,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
   end
 
   defp redirect_next_or_index(conn, params, podcast) do
-    index_path = admin_podcast_episode_request_path(conn, :index, podcast.slug)
+    index_path = Routes.admin_podcast_episode_request_path(conn, :index, podcast.slug)
     redirect_next(conn, params, index_path)
   end
 end

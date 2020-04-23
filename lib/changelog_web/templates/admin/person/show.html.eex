@@ -1,6 +1,6 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("People", to: admin_person_path(@conn, :index)) %>
+    <%= link("People", to: Routes.admin_person_path(@conn, :index)) %>
     &raquo;
     <%= @person.name %> (<%= @person.handle %>)
     <div class="sub header">
@@ -16,8 +16,8 @@
 <div class="actions right">
   <div class="ui basic buttons">
     <%= @person |> list_of_links() |> raw() %>
-    <%= icon_link("slack", to: admin_person_path(@conn, :slack, @person, next: admin_person_path(@conn, :show, @person)), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
-    <%= link("Edit", to: admin_person_path(@conn, :edit, @person), class: "ui button") %>
+    <%= icon_link("slack", to: Routes.admin_person_path(@conn, :slack, @person, next: Routes.admin_person_path(@conn, :show, @person)), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+    <%= link("Edit", to: Routes.admin_person_path(@conn, :edit, @person), class: "ui button") %>
   </div>
 </div>
 

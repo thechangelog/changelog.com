@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <%= link "All Sources", to: news_source_path(@conn, :index), title: "View All Sources", class: "topic-header-back" %>
+    <%= link "All Sources", to: Routes.news_source_path(@conn, :index), title: "View All Sources", class: "topic-header-back" %>
   </header>
 
   <a id="feed" class="anchor"></a>

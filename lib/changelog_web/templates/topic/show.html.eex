@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <%= link "All Topics", to: topic_path(@conn, :index), title: "View All Topics", class: "topic-header-back" %>
+    <%= link "All Topics", to: Routes.topic_path(@conn, :index), title: "View All Topics", class: "topic-header-back" %>
   </header>
 
   <a id="feed" class="anchor"></a>

@@ -4,11 +4,11 @@
   <div class="richtext">
     <h1>Get in touch. Say hello 👋</h1>
 
-    <p><%= link("Request an episode", to: episode_request_path(@conn, :new)) %> of your favorite show.</p>
+    <p><%= link("Request an episode", to: Routes.episode_request_path(@conn, :new)) %> of your favorite show.</p>
 
-    <p><%= link("Submit news", to: news_item_path(@conn, :new)) %> for publishing consideration.</p>
+    <p><%= link("Submit news", to: Routes.news_item_path(@conn, :new)) %> for publishing consideration.</p>
 
-    <p><%= link("Start here", to: page_path(@conn, :sponsor)) %> for sponsorship opportunities.</p>
+    <p><%= link("Start here", to: Routes.page_path(@conn, :sponsor)) %> for sponsorship opportunities.</p>
 
     <p><a href="https://github.com/thechangelog/changelog.com/issues">Open an issue</a> with bug reports and feature requests.</p>
 

@@ -1,5 +1,5 @@
 <section class="search">
-  <form action="<%= search_path(@conn, :search) %>" method="get" class="search-form">
+  <form action="<%= Routes.search_path(@conn, :search) %>" method="get" class="search-form">
     <label class="visually_hidden" for="name">Search</label>
     <input name="q" type="text" placeholder="Search Changelog..." value="<%= @query %>" autofocus />
 

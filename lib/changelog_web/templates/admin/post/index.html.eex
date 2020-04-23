@@ -6,7 +6,7 @@
 
   <div class="actions">
   <%= if Policies.Post.new(@current_user) do %>
-    <%= link to: admin_post_path(@conn, :new), class: "ui right floated primary basic button" do %>
+    <%= link to: Routes.admin_post_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="add pencil alternate icon"></i>
       Add Post
     <% end %>
@@ -28,6 +28,6 @@
 <%= if Enum.any?(@posts) do %>
   <h2 class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
   <%= render("_table.html", Map.merge(assigns, %{conn: @conn, status: :published, posts: @posts})) %>
-  <%= pagination_links(@conn, @page, path: &admin_post_path/3) %>
+  <%= pagination_links(@conn, @page, path: &Routes.admin_post_path/3) %>
 <% end %>
 </div>

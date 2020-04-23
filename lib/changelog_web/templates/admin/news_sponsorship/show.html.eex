@@ -1,15 +1,15 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("News", to: admin_news_item_path(@conn, :index)) %>
+    <%= link("News", to: Routes.admin_news_item_path(@conn, :index)) %>
     &raquo;
-    <%= link("Sponsorships", to: admin_news_sponsorship_path(@conn, :schedule)) %>
+    <%= link("Sponsorships", to: Routes.admin_news_sponsorship_path(@conn, :schedule)) %>
     &raquo;
-    <%= link(@sponsorship.sponsor.name, to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor)) %>
+    <%= link(@sponsorship.sponsor.name, to: Routes.admin_sponsor_path(@conn, :edit, @sponsorship.sponsor)) %>
 
     <div class="ui basic right floated buttons">
       <button class="ui basic icon clipboard button" title="Copy Schedule Text" data-clipboard-text="<%= schedule_text(@sponsorship) %>"><i class="calendar icon"></i></button>
-      <%= link("Edit Sponsorship", to: admin_news_sponsorship_path(@conn, :edit, @sponsorship), class: "ui button") %>
-      <%= link("Edit Sponsor", to: admin_sponsor_path(@conn, :edit, @sponsorship.sponsor), class: "ui button") %>
+      <%= link("Edit Sponsorship", to: Routes.admin_news_sponsorship_path(@conn, :edit, @sponsorship), class: "ui button") %>
+      <%= link("Edit Sponsor", to: Routes.admin_sponsor_path(@conn, :edit, @sponsorship.sponsor), class: "ui button") %>
     </div>
 
     <div class="sub header"><%= pluralize(@sponsorship.ads, "ad", "ads") %> for <%= pluralize(@sponsorship.weeks, "week", "weeks") %></div>
@@ -74,7 +74,7 @@
         <td><%= ts(ad.inserted_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link("eye", to: news_sponsored_path(@conn, :show, NewsAdView.slug(ad))) %>
+            <%= icon_link("eye", to: Routes.news_sponsored_path(@conn, :show, NewsAdView.slug(ad))) %>
           </div>
         </td>
       </tr>

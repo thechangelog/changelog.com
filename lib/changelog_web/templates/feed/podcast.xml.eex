@@ -8,17 +8,17 @@
   <channel>
     <title><%= @podcast |> podcast_name_with_metadata() |> html_escape() |> safe_to_string() %></title>
     <copyright>All rights reserved</copyright>
-    <link><%= podcast_url(@conn, :show, @podcast.slug) %></link>
-    <atom:link href="<%= feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
-    <atom:link href="<%= feed_url(@conn, :podcast, @podcast.slug) %>" rel="first" type="application/rss+xml" />
-    <atom:link href="<%= feed_url(@conn, :podcast, @podcast.slug, page: @page.total_pages) %>" rel="last" type="application/rss+xml" />
+    <link><%= Routes.podcast_url(@conn, :show, @podcast.slug) %></link>
+    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
+    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug) %>" rel="first" type="application/rss+xml" />
+    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug, page: @page.total_pages) %>" rel="last" type="application/rss+xml" />
   <%= if @page.page_number > 1 do %>
-    <atom:link href="<%= feed_url(@conn, :podcast, @podcast.slug, page: @page.page_number - 1) %>" rel="previous" type="application/rss+xml" />
+    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug, page: @page.page_number - 1) %>" rel="previous" type="application/rss+xml" />
   <% end %>
   <%= if @page.page_number < @page.total_pages do %>
-    <atom:link href="<%= feed_url(@conn, :podcast, @podcast.slug, page: @page.page_number + 1) %>" rel="next" type="application/rss+xml" />
+    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug, page: @page.page_number + 1) %>" rel="next" type="application/rss+xml" />
   <% end %>
-    <atom:link href="<%= podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="text/html" />
+    <atom:link href="<%= Routes.podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="text/html" />
     <language>en-us</language>
     <description><%= md_to_text(@podcast.description) %> <%= @podcast.extended_description %></description>
     <itunes:author>Changelog Media</itunes:author>
@@ -37,7 +37,7 @@
     <%= for episode <- @episodes do %>
       <item>
         <title><%= episode_title(@podcast, episode) |> html_escape() |> safe_to_string() %></title>
-        <link><%= episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
+        <link><%= Routes.episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
         <enclosure url="<%= enclosure_url(episode) %>" length="<%= episode.bytes %>" type="audio/mpeg" />

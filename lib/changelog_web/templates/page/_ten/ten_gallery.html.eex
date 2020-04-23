@@ -1,38 +1,38 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
 <div class="ten-gallery">
-  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/photos/jerod-adam-quincy.jpg") %>' data-gallery="gallery" data-type="image">
-    <img class="ten-gallery-image ten-gallery-image--large" src='<%= static_url(@conn, "/images/content/ten/photos/jerod-adam-quincy-thumb.jpg") %>' alt="" />
+  <a class="js-lightbox" href='<%= Routes.static_url(@conn, "/images/content/ten/photos/jerod-adam-quincy.jpg") %>' data-gallery="gallery" data-type="image">
+    <img class="ten-gallery-image ten-gallery-image--large" src='<%= Routes.static_url(@conn, "/images/content/ten/photos/jerod-adam-quincy-thumb.jpg") %>' alt="" />
   </a>
-  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-13.jpg") %>' data-gallery="gallery" data-type="image">
-    <img class="ten-gallery-image" src='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-13-thumb.jpg") %>' alt="" />
+  <a class="js-lightbox" href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-13.jpg") %>' data-gallery="gallery" data-type="image">
+    <img class="ten-gallery-image" src='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-13-thumb.jpg") %>' alt="" />
   </a>
-  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-7.jpg") %>' data-gallery="gallery" data-type="image">
-    <img class="ten-gallery-image" src='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-7-thumb.jpg") %>' alt="" />
+  <a class="js-lightbox" href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-7.jpg") %>' data-gallery="gallery" data-type="image">
+    <img class="ten-gallery-image" src='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-7-thumb.jpg") %>' alt="" />
   </a>
-  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-2.jpg") %>' data-gallery="gallery" data-type="image">
-    <img class="ten-gallery-image" src='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-2-thumb.jpg") %>' alt="" />
+  <a class="js-lightbox" href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-2.jpg") %>' data-gallery="gallery" data-type="image">
+    <img class="ten-gallery-image" src='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-2-thumb.jpg") %>' alt="" />
   </a>
-  <a class="js-lightbox" href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-12.jpg") %>' data-gallery="gallery"  data-type="image">
-    <img class="ten-gallery-image" src='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-12-thumb.jpg") %>' alt="" />
+  <a class="js-lightbox" href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-12.jpg") %>' data-gallery="gallery"  data-type="image">
+    <img class="ten-gallery-image" src='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-12-thumb.jpg") %>' alt="" />
   </a>
   <%# Hidden photos that only appear in the gallery %>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-21.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery" data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-1.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-4.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-8.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-6.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-20.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-9.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-10.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-11.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-22.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-3.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-5.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-14.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-15.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-16.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-17.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-18.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
-  <a href='<%= static_url(@conn, "/images/content/ten/photos/ten-photo-19.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-21.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery" data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-1.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-4.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-8.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-6.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-20.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-9.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-10.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-11.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-22.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-3.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-5.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-14.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-15.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-16.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-17.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-18.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
+  <a href='<%= Routes.static_url(@conn, "/images/content/ten/photos/ten-photo-19.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
 </div>

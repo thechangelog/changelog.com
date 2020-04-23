@@ -4,7 +4,7 @@
 The transcript for <%= @episode.title %> is ready for you!
 
 
-Read it here: <%= episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) <> "#transcript" %>
+Read it here: <%= Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) <> "#transcript" %>
 
 
 💚, Logbot

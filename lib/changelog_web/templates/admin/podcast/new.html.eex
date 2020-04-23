@@ -1,8 +1,8 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link "Podcasts", to: admin_podcast_path(@conn, :index) %>
+    <%= link "Podcasts", to: Routes.admin_podcast_path(@conn, :index) %>
     &raquo; New
   </h1>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: admin_podcast_path(@conn, :create)) %>
+  <%= render("_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_podcast_path(@conn, :create)) %>
 </div>

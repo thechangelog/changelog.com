@@ -1,7 +1,7 @@
 <article class="article">
   <div class="richtext">
     <h1>Changelog Weekly &ndash; Archive</h1>
-    <p>This is the archive for Changelog Weekly, our editorialized take on this week in open source and software development. If you're not a subscriber, <%= link "subscribe here", to: page_path(@conn, :weekly) %>.</p>
+    <p>This is the archive for Changelog Weekly, our editorialized take on this week in open source and software development. If you're not a subscriber, <%= link "subscribe here", to: Routes.page_path(@conn, :weekly) %>.</p>
 
   <%= for {year, issues} <- @issues do %>
     <h2><%= year %></h2>

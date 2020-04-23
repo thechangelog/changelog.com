@@ -1,11 +1,11 @@
 <article class="article">
   <div class="richtext">
     <h1>Changelog Films</h1>
-    <p><%= link "Hire us", to: page_path(@conn, :contact) %> to cover your conference or work on your next big idea.</p>
+    <p><%= link "Hire us", to: Routes.page_path(@conn, :contact) %> to cover your conference or work on your next big idea.</p>
 
     <h3>GopherCon 2017 - Recap</h3>
 
-    <p>Here's the recap video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2017) %>.</p>
+    <p>Here's the recap video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: Routes.page_path(@conn, :films_gophercon_2017) %>.</p>
 
     <div class="wide-gutter-wrap">
       <script src="https://fast.wistia.com/embed/medias/hnle9fk14i.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_hnle9fk14i videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
@@ -25,7 +25,7 @@
 
     <h3>GopherCon 2016 - Recap</h3>
 
-    <p>Here's the recap video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2016) %>.</p>
+    <p>Here's the recap video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: Routes.page_path(@conn, :films_gophercon_2016) %>.</p>
 
     <div class="wide-gutter-wrap">
       <script src="https://fast.wistia.com/embed/medias/wmee2ytxqe.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_wmee2ytxqe videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
@@ -101,7 +101,7 @@
 
     <h3>GopherCon 2015</h3>
 
-    <p>This is the promo video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %>.</p>
+    <p>This is the promo video we shot for our friends at GopherCon &mdash; <%= link "Watch all the videos", to: Routes.page_path(@conn, :films_gophercon_2015) %>.</p>
 
     <div class="wide-gutter-wrap">
       <script src="//fast.wistia.com/embed/medias/k4osu01wgp.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:42.71% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_k4osu01wgp videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
@@ -119,7 +119,7 @@
       <script src="//fast.wistia.com/embed/medias/ozljuzk5yh.jsonp" async></script><script src="//fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_ozljuzk5yh videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div>
     </div>
 
-    <p><%= link "Watch all the videos", to: page_path(@conn, :films_gophercon_2015) %> we shot at GopherCon 2015.</p>
+    <p><%= link "Watch all the videos", to: Routes.page_path(@conn, :films_gophercon_2015) %> we shot at GopherCon 2015.</p>
 
     <hr>
 
