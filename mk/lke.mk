@@ -144,7 +144,7 @@ releases-ytt:
 	@$(OPEN) $(YTT_RELEASES)
 
 JB_RELEASES := https://github.com/jsonnet-bundler/jsonnet-bundler/releases
-JB_VERSION := 0.2.0
+JB_VERSION := 0.3.1
 JB_BIN := jb-$(JB_VERSION)-$(platform)-amd64
 JB_URL := https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v$(JB_VERSION)/jb-$(platform)-amd64
 JB := $(LOCAL_BIN)/$(JB_BIN)
@@ -154,8 +154,8 @@ $(JB): $(CURL)
 	&& $(CURL) --progress-bar --fail --location --output $(JB) "$(JB_URL)" \
 	&& touch $(JB) \
 	&& chmod +x $(JB) \
-	&& $(JB) --help 2>&1 \
-	   | grep "jsonnet package manager" \
+	&& $(JB) --version 2>&1 \
+	   | grep "$(JB_VERSION)" \
 	&& ln -sf $(JB) $(LOCAL_BIN)/jb
 .PHONY: jb
 jb: $(JB)
@@ -333,37 +333,55 @@ lke-monitoring-grafana: lke-ctx
 # https://github.com/coreos/kube-prometheus/blob/master/examples/prometheus-pvc.jsonnet
 # https://github.com/coreos/kube-prometheus/issues/98#issuecomment-491782065
 
-# coreos/kube-prometheus recommends using master - YOLO!
 .PHONY: lke-monitoring
-lke-monitoring: lke-ctx kube-prometheus
+lke-monitoring: | lke-ctx kube-prometheus
 	$(KUBECTL) apply --filename tmp/kube-prometheus/manifests/setup \
 	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests
+lke-provision:: lke-monitoring
 
+# https://github.com/coreos/kube-prometheus#compatibility
+KUBE_PROMETHEUS_VERSION := master
+ifeq ($(LKE_VERSION),1.16)
+KUBE_PROMETHEUS_VERSION := release-0.4
+endif
+ifneq ($(filter $(LKE_VERSION), 1.17 1.18),)
+KUBE_PROMETHEUS_VERSION := release-0.5
+endif
 .PHONY: kube-prometheus
-kube-prometheus: tmp/kube-prometheus $(JB)
-	cd tmp/kube-prometheus \
-	&& git fetch \
-	&& git reset --hard origin/master \
-	&& $(JB) install
+kube-prometheus: tmp/kube-prometheus/manifests
 
-# jb update fails - see https://github.com/coreos/kube-prometheus/issues/420
-#
-# GET https://github.com/prometheus/prometheus/archive/0e51cf65e78043fddd8ae8a8ea611b7f0f9ce39d.tar.gz 200
-# GET https://github.com/prometheus/node_exporter/archive/ef7c05816adcb0e8923defe34e97f6afcce0a939.tar.gz 200
-# GET https://github.com/ksonnet/ksonnet-lib/archive/0d2f82676817bbf9e4acf6495b2090205f323b9f.tar.gz 200
-# GET https://github.com/kubernetes-monitoring/kubernetes-mixin/archive/8e370046348970ac68bd0fcfd5a15184a6cbdf51.tar.gz 200
-# GET https://github.com/brancz/kubernetes-grafana/archive/23c20eb8df5047c4735d2d341d4a7bab6f87870b.tar.gz 200
-# GET https://github.com/coreos/prometheus-operator/archive/1aa773ddbbbd9b05405e9785e0190b975b1faadc.tar.gz 200
-# GET https://github.com/coreos/etcd/archive/8756286fe80e444c5e792e9cf5d42cf6ae816095.tar.gz 200
-# GET https://github.com/grafana/jsonnet-libs/archive/7ac7da1a0fe165b68cdb718b2521b560d51bd1f4.tar.gz 200
-# GET https://github.com/grafana/grafonnet-lib/archive/c459106d2d2b583dd3a83f6c75eb52abee3af764.tar.gz 200
-# GET https://github.com/kubernetes-monitoring/kubernetes-mixin/archive/8e370046348970ac68bd0fcfd5a15184a6cbdf51.tar.gz 200
-# GET https://github.com/metalmatze/slo-libsonnet/archive/437c402c5f3ad86c3c16db8471f1649284fef0ee.tar.gz 200
-# jb: error: failed to install packages: downloading: failed to create tmp dir: stat vendor/.tmp: no such file or directory
-#
-# jb version is v0.2.0 -> https://github.com/jsonnet-bundler/jsonnet-bundler/releases/tag/v0.2.0
+.PHONY: kube-prometheus-update
+kube-prometheus-update: | tmp/kube-prometheus/jsonnetfile.lock.json $(JB)
+	@printf "\n$(BOLD)Update kube-prometheus@$(KUBE_PROMETHEUS_VERSION) ...$(NORMAL)\n"
+	cd tmp/kube-prometheus \
+	&& $(JB) update
+
+tmp/kube-prometheus/manifests: k8s/kube-prometheus.jsonnet | tmp/kube-prometheus/jsonnetfile.lock.json $(JSONNET) $(LPASS)
+	@printf "\n$(BOLD)Generate kube-prometheus manifests ...$(NORMAL)\n"
+	cd tmp/kube-prometheus \
+	&& rm -fr manifests \
+	&& mkdir -p manifests/setup \
+	&& time $(JSONNET) \
+		  --jpath vendor \
+		  --multi manifests \
+		  --ext-str METRICS_GITHUB_OAUTH_APP_CLIENT_ID="$$($(LPASS) show --notes 6262503396338294422)" \
+		  --ext-str METRICS_GITHUB_OAUTH_APP_CLIENT_SECRET="$$($(LPASS) show --notes 6396745408918286971)" \
+		  $(CURDIR)/k8s/kube-prometheus.jsonnet \
+	&& /usr/bin/find manifests -type f -exec mv {} {}.json \;
+
+tmp/kube-prometheus/jsonnetfile.lock.json: | tmp/kube-prometheus/jsonnetfile.json $(JB)
+	@printf "\n$(BOLD)Install kube-prometheus@$(KUBE_PROMETHEUS_VERSION) ...$(NORMAL)\n"
+	cd tmp/kube-prometheus \
+	&& $(JB) install github.com/coreos/kube-prometheus/jsonnet/kube-prometheus@$(KUBE_PROMETHEUS_VERSION)
+
+tmp/kube-prometheus/jsonnetfile.json: | tmp/kube-prometheus $(JB)
+	@printf "\n$(BOLD)Initialize Jsonnet bundle ...$(NORMAL)\n"
+	cd tmp/kube-prometheus \
+	&& rm -fr * \
+	&& $(JB) init
+
 
 tmp/kube-prometheus:
-	git clone https://github.com/coreos/kube-prometheus.git tmp/kube-prometheus
+	mkdir -p $(@)
 
 include $(CURDIR)/mk/ten.mk
