@@ -29,7 +29,7 @@ local kp =
               // https://github.com/settings/tokens
               // curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" https://api.github.com/orgs/thechangelog/teams | view -c "set ft=json" -
               team_ids: 3796119,
-              allowed_organizations: thechangelog,
+              allowed_organizations: 'thechangelog',
             },
             security: {
               disable_initial_admin_creation: true,
@@ -38,7 +38,7 @@ local kp =
               enable_gzip: true,
             },
             users: {
-              auto_assign_org_role: Admin,
+              auto_assign_org_role: 'Admin',
             },
           },
         },
