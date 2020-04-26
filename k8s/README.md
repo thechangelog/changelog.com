@@ -55,25 +55,25 @@ as well as [Changelog.com is open source](https://changelog.com/posts/changelog-
 
 ## [Linode 2020 Roadmap](https://www.linode.com/2019/12/30/2019-a-year-in-review)
 
-Wanted roadmap items which are planned, sorted by interest (most interesting first):
+**Planned roadmap items in order of interest (most interesting first)**
 
 1. Cloud Firewall to control network traffic to your Linodes
 1. Per customer network VLAN
-1. Linode Kubernetes Engine global availability
+1. NodeBalancer PROXY protocol support
 
-Nice to have roadmap items which are planned, won't be too disappointed if they don't ship:
+**Wanted items which are missing from the 2020 roadmap**
 
-1. NodeBalancer PROXY protocol support - only if this can be configured from within K8S
-1. NodeBalancer automatic Let’s Encrypt support - only if this can be configured from within K8S, Traefik ingress feels sufficient
-1. Bare Metal machines with cloud infrastructure management - only if it improves K8S performance
-1. Anycast Network for improved routing - only if LKE & managed databases can be replicated
-1. Managed Databases for production-ready DBs - Crunchy Data PostgreSQL K8S Operator does the job
-
-Missing roadmap items:
-
+1. Upgrade to latest available K8S version - want v1.18, have v1.16
 1. Linode stack for Crossplane - especially in combination with the next item
-1. Customize default LKE deployment - Prometheus, Grafana, Loki, Harbor, etc.
-1. Latest K8S versions always available - currently want 1.17
-1. Containerd runtime alternative to Docker
+1. Customize default LKE deployment - Prometheus, Grafana, Loki, Harbor, etc. (easy with Crossplane they say)
 1. [Container-native load-balancing](https://cloud.google.com/kubernetes-engine/docs/how-to/container-native-load-balancing)
-1. NodeBalancer as K8S Ingress
+1. Object Storage custom resource
+1. Containerd instead of Docker
+
+**Nice to have**
+
+1. Managed Databases for production-ready DBs - Crunchy Data PostgreSQL K8S Operator feels sufficient
+1. NodeBalancer automatic Let’s Encrypt support - nginx-ingress with cert-manager feel sufficient
+1. Bare Metal machines with cloud infrastructure management - only if it improves K8S performance
+1. Linode Kubernetes Engine global availability
+1. Anycast Network for improved routing
