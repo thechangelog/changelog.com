@@ -1,23 +1,11 @@
 # https://www.linode.com/docs/kubernetes/deploy-and-manage-lke-cluster-with-api-a-tutorial/
-
 LKE_CONFIGS := $(CURDIR)/.kube/configs
-LKE_NAME ?= dev
+LKE_NAME ?= prod
 LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
-LKE_REGION := us-central
-LKE_VERSION := 1.16
+LKE_REGION := us-east
+LKE_VERSION := 1.17
 LKE_NODE_TYPE := g6-dedicated-2
 LKE_NODE_COUNT := 3
-define LKE_CLUSTER
-{ \
-  "label": "$(LKE_LABEL)", \
-  "region": "$(LKE_REGION)", \
-  "version": "$(LKE_VERSION)", \
-  "tags": ["$(USER)"], \
-  "node_pools": [ \
-    { "type": "$(LKE_NODE_TYPE)", "count": $(LKE_NODE_COUNT) } \
-  ] \
-}
-endef
 
 ifeq ($(PLATFORM),Darwin)
 # Use Python3 for all Python-based CLIs, such as linode-cli
@@ -164,34 +152,31 @@ releases-jb:
 	@$(OPEN) $(JB_RELEASES)
 
 .PHONY: kubectx
-kubectx: $(KUBECTX)
+kubectx: | $(KUBECTX)
 .PHONY: kubens
-kubens: $(KUBENS)
+kubens: | $(KUBENS)
 
 LINODE := $(LINODE_CLI) --no-defaults
 
 .PHONY: linode
-linode: $(LINODE_CLI) linode-cli-token
+linode: | $(LINODE_CLI) linode-cli-token
 
 .PHONY: linodes
-linodes: linode
+linodes: | linode
 	$(LINODE) linodes list
 
 .PHONY: nodebalancers
-nodebalancers: linode
+nodebalancers: | linode
 	$(LINODE) nodebalancers list
 
-# https://developers.linode.com/api/v4/lke-clusters/#post
 .PHONY: lke
-lke: $(CURL) linode-cli-token
-	@printf "Creating a new LKE cluster: \n$(BOLD)$(LKE_CLUSTER)$(NORMAL)\n" \
-	; $(CURL) --fail --request POST \
-	  --header "Content-Type: application/json" \
-	  --header "Authorization: Bearer $$LINODE_CLI_TOKEN" \
-	  --data '$(LKE_CLUSTER)' \
-	  https://api.linode.com/v4beta/lke/clusters \
-	&& printf "\n$(BOLD)$(GREEN)OK!$(NORMAL)\n" \
-	&& printf "\nTo see all available LKE clusters, run $(BOLD)$(MAKE) lke-ls$(NORMAL)"
+lke: | linode
+	$(LINODE) lke cluster-create \
+	    --label $(LKE_LABEL) \
+	    --region $(LKE_REGION) \
+	    --k8s_version $(LKE_VERSION) \
+	    --node_pools.type $(LKE_NODE_TYPE) \
+	    --node_pools.count $(LKE_NODE_COUNT)
 
 .PHONY: lke-provision
 lke-provision::
