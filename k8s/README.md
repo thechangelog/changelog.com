@@ -7,12 +7,11 @@ In this blog post we describe the entire setup, talk about why we made certain c
 Everything that we did for the changelog.com 2020 setup is available to you in a single command: `make changelog-2020` (add `--dry-run` if you only want to see what this command does, without actually running anything).
 This command will resolve all dependencies, provision a new Linode Kubernetes Engine, and finally deploy onto LKE everything that goes into building & running changelog.com:
 
-* container registry (Harbor)
-* continuous delivery (Argo/Flux)
-* monitoring, visualisation & logging (Prometheus, Grafana, Weave Scope & Loki)
-* highly-available database with disaster recovery (Crunchy Data PostgreSQL with pgBackRest & pgMonitor)
-* web app (Phoenix)
-* proxy (Traefik)
+- [x] DNS integration (external-dns)
+- [x] proxy (nginx-ingress with cert-manager)
+- [ ] **monitoring, visualisation & logging (Prometheus, Grafana, Weave Scope & Loki)**
+- [ ] highly-available database with disaster recovery (Crunchy Data PostgreSQL with pgBackRest & pgMonitor)
+- [ ] web app (Phoenix)
 
 If you have a domain that is managed by one of the DNS providers supported by [external-dns](https://github.com/kubernetes-sigs/external-dns), this setup will even manage DNS for you.
 For example, given a **gerhard.io** domain, it takes 1 command to get the entire Changelog setup running at https://changelog.gerhard.io.
