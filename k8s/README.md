@@ -9,7 +9,7 @@ This command will resolve all dependencies, provision a new Linode Kubernetes En
 
 - [x] DNS integration (external-dns)
 - [x] proxy (nginx-ingress with cert-manager)
-- [ ] **monitoring, visualisation & logging (Prometheus, Grafana, Weave Scope & Loki)**
+- [ ] **monitoring & logging (Prometheus, Grafana & Loki)**
 - [ ] highly-available database with disaster recovery (Crunchy Data PostgreSQL with pgBackRest & pgMonitor)
 - [ ] web app (Phoenix)
 
@@ -28,6 +28,10 @@ This post is a follow-up to [The new changelog.com setup for 2019](https://chang
 as well as [Changelog.com is open source](https://changelog.com/posts/changelog-is-open-source).
 
 ## Why K8S for 2020?
+
+## Links
+
+- https://diagrams.mingrammer.com/docs/getting-started/examples
 
 ---
 
