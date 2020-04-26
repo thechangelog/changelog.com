@@ -6,7 +6,6 @@ dns:
   domain: changelog.com
   record_owner: linode-kubernetes-engine
   log_level: info #! debug for extra info
-#! https://github.com/kubernetes-sigs/external-dns/releases
-image: registry.opensource.zalan.do/teapot/external-dns:v0.5.18
 #! provided just-in-time
+image:
 namespace:
