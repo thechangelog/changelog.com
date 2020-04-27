@@ -3,14 +3,14 @@
 
   <div class="account_ctas">
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <img class="account_ctas-item-icon" src='<%= Routes.static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
 
       <div class="account_ctas-item-info">
         <h3>Changelog Slack</h3>
         <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
 
         <div class="account_ctas-item-info-buttons">
-          <%= link "Request Invite", to: home_path(@conn, :slack), method: :post %>
+          <%= link "Request Invite", to: Routes.home_path(@conn, :slack), method: :post %>
           <%= link "Launch Slack", to: "https://changelog.slack.com", target: "_blank" %>
         </div>
       </div>
@@ -22,7 +22,7 @@
       <div class="account_subscriptions-item-info">
         <h3>Changelog Weekly</h3>
         <p>Our editorialized take covering this week in dev culture, software development, open source, building startups, creative work, and the people involved.</p>
-        <p class="account_subscriptions-item-info-meta">1 email per week — Delivered on Sundays - <%= link "Archive", to: page_path(@conn, :weekly_archive) %></p>
+        <p class="account_subscriptions-item-info-meta">1 email per week — Delivered on Sundays - <%= link "Archive", to: Routes.page_path(@conn, :weekly_archive) %></p>
       </div>
       <div class="account_subscriptions-item-button">
         <%= newsletter_link(Changelog.Newsletters.weekly(), assigns) %>

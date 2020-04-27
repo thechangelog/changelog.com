@@ -8,29 +8,29 @@
     <button class="ui basic icon clipboard button" title="Bookmarklet" data-clipboard-text="<%= bookmarklet_code() %>"><i class="book icon"></i></button>
 
     <div class="ui primary basic buttons">
-      <%= link("Items", to: admin_news_item_path(@conn, :index), class: "ui button") %>
-      <%= link to: admin_news_item_path(@conn, :new), class: "ui icon button" do %>
+      <%= link("Items", to: Routes.admin_news_item_path(@conn, :index), class: "ui button") %>
+      <%= link to: Routes.admin_news_item_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
 
   <%= if Policies.AdminsOnly.index(@current_user) do %>
     <div class="ui basic buttons">
-      <%= link("Sources", to: admin_news_source_path(@conn, :index), class: "ui button") %>
-      <%= link to: admin_news_source_path(@conn, :new), class: "ui icon button" do %>
+      <%= link("Sources", to: Routes.admin_news_source_path(@conn, :index), class: "ui button") %>
+      <%= link to: Routes.admin_news_source_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
 
     <div class="ui basic buttons">
-      <%= link("Issues", to: admin_news_issue_path(@conn, :index), class: "ui button") %>
-      <%= link to: admin_news_issue_path(@conn, :new), class: "ui icon button" do %>
+      <%= link("Issues", to: Routes.admin_news_issue_path(@conn, :index), class: "ui button") %>
+      <%= link to: Routes.admin_news_issue_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
 
     <div class="ui basic buttons">
-      <%= link("Comments", to: admin_news_item_comment_path(@conn, :index), class: "ui button") %>
+      <%= link("Comments", to: Routes.admin_news_item_comment_path(@conn, :index), class: "ui button") %>
     </div>
   <% end %>
   </div>
@@ -68,16 +68,16 @@
 
 <%= if Policies.AdminsOnly.index(@current_user) do %>
   <h2 id="sponsorships" class="ui header">
-    <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
+    <%= link "Sponsorships", to: Routes.admin_news_sponsorship_path(@conn, :index) %>
 
     <div class="ui right floated basic buttons">
-      <%= link to: admin_news_sponsorship_path(@conn, :index), class: "ui icon button", title: "View All" do %>
+      <%= link to: Routes.admin_news_sponsorship_path(@conn, :index), class: "ui icon button", title: "View All" do %>
         <i class="list icon"></i>
       <% end %>
-      <%= link to: admin_news_sponsorship_path(@conn, :schedule), class: "ui icon button", title: "Full Schedule" do %>
+      <%= link to: Routes.admin_news_sponsorship_path(@conn, :schedule), class: "ui icon button", title: "Full Schedule" do %>
         <i class="calendar icon"></i>
       <% end %>
-      <%= link to: admin_news_sponsorship_path(@conn, :new), class: "ui icon button" do %>
+      <%= link to: Routes.admin_news_sponsorship_path(@conn, :new), class: "ui icon button" do %>
         <i class="add icon"></i>
       <% end %>
     </div>
@@ -98,9 +98,9 @@
         <div class="content">
           <div class="summary">
           <%= if object.__struct__ == Topic do %>
-            The <%= link object.name, to: admin_topic_path(@conn, :edit, object.slug) %> topic
+            The <%= link object.name, to: Routes.admin_topic_path(@conn, :edit, object.slug) %> topic
           <% else %>
-            The <%= link object.name, to: admin_news_source_path(@conn, :edit, object) %> news source
+            The <%= link object.name, to: Routes.admin_news_source_path(@conn, :edit, object) %> news source
           <% end %>
             was <%= if is_edited(object), do: "edited", else: "added" %>
             <div class="date"><%= TimeView.ts(object.updated_at, "admin") %></div>
@@ -117,6 +117,6 @@
 <%= if Enum.any?(@published) do %>
   <h2 id="published" class="ui header">Published (<%= @page.total_entries |> comma_separated %>)</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :published, items: @published})) %>
-  <%= pagination_links(@conn, @page, path: &admin_news_item_path/3) %>
+  <%= pagination_links(@conn, @page, path: &Routes.admin_news_item_path/3) %>
 <% end %>
 </div>

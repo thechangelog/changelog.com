@@ -3,7 +3,7 @@
     <tr>
       <td width="60">
         <%= if @item.object do %>
-          <%= link to: episode_path(@conn, :show, @item.object.podcast.slug, @item.object.slug),
+          <%= link to: Routes.episode_path(@conn, :show, @item.object.podcast.slug, @item.object.slug),
             title: @item.object.title,
             class: "episodes_item-artwork",
             data: [news: true] do %>

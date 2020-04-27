@@ -2,7 +2,7 @@
 
 Your episode of <%= @podcast.name %> is now live! Here is the official link to share with your network of friends:
 
-<%= episode_url(Endpoint, :show, @podcast.slug, @episode.slug) %>
+<%= Routes.episode_url(Endpoint, :show, @podcast.slug, @episode.slug) %>
 
 
 And here’s an embed snippet to use on your website and/or blog post:

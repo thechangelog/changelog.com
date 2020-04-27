@@ -1,11 +1,11 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Podcasts", to: admin_podcast_path(@conn, :index)) %>
+    <%= link("Podcasts", to: Routes.admin_podcast_path(@conn, :index)) %>
     &raquo;
-    <%= link(@podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    <%= link(@podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
     &raquo;
     Subscriptions
-    <%= link("(View Public)", to: podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+    <%= link("(View Public)", to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "view") %>
   </h1>
 
   <div class="actions right">
@@ -51,7 +51,7 @@
     <%= for sub <- @subscriptions do %>
       <tr>
         <td>
-          <%= link to: admin_person_path(@conn, :show, sub.person) do %>
+          <%= link to: Routes.admin_person_path(@conn, :show, sub.person) do %>
             <%= if Changelog.Faker.name_fake?(sub.person.name) do %>
               <%= sub.person.email %>
             <% else %>
@@ -68,5 +68,5 @@
     </tbody>
   </table>
 
-  <%= pagination_links(@conn, @page, [@podcast.slug], path: &admin_podcast_subscription_path/4) %>
+  <%= pagination_links(@conn, @page, [@podcast.slug], path: &Routes.admin_podcast_subscription_path/4) %>
 <% end %>

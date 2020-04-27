@@ -13,8 +13,8 @@ Here are 3 ways you can help your submission make the grade:
 
 Don't want these notifications? Disable 'em[3]
 
-[1]: <%= news_item_url(Endpoint, :show, NewsItemView.hashid(@item)) %>
-[2]: <%= page_url(Endpoint, :weekly) %>
+[1]: <%= Routes.news_item_url(Endpoint, :show, NewsItemView.hashid(@item)) %>
+[2]: <%= Routes.page_url(Endpoint, :weekly) %>
 [3]: <%= PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_submitted_news") %>
 
 💚, Logbot

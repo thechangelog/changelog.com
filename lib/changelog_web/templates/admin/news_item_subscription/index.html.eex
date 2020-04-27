@@ -1,10 +1,10 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("News", to: admin_news_item_path(@conn, :index)) %>
+    <%= link("News", to: Routes.admin_news_item_path(@conn, :index)) %>
     &raquo;
-    <%= link(NewsItem.hashid(@item), to: admin_news_item_path(@conn, :edit, @item)) %>
+    <%= link(NewsItem.hashid(@item), to: Routes.admin_news_item_path(@conn, :edit, @item)) %>
     &raquo; Subscriptions
-    <%= link("(View Public)", to: news_item_path(@conn, :show, NewsItem.slug(@item)), class: "view") %>
+    <%= link("(View Public)", to: Routes.news_item_path(@conn, :show, NewsItem.slug(@item)), class: "view") %>
   </h1>
 
   <div class="actions right">
@@ -38,7 +38,7 @@
     <%= for sub <- @subscriptions do %>
       <tr>
         <td>
-          <%= link to: admin_person_path(@conn, :show, sub.person) do %>
+          <%= link to: Routes.admin_person_path(@conn, :show, sub.person) do %>
             <%= if Changelog.Faker.name_fake?(sub.person.name) do %>
               <%= sub.person.email %>
             <% else %>
@@ -55,6 +55,6 @@
     </tbody>
   </table>
 
-  <%= pagination_links(@conn, @page, [@item], path: &admin_news_item_subscription_path/4) %>
+  <%= pagination_links(@conn, @page, [@item], path: &Routes.admin_news_item_subscription_path/4) %>
 <% end %>
 </div>

@@ -8,7 +8,7 @@
     <div class="live-info">
       <header class="live-info-header">
         <h2 class="live-info-header-show">
-          <%= link(EpisodeView.podcast_name_and_number(@episode), to: podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank") %>
+          <%= link(EpisodeView.podcast_name_and_number(@episode), to: Routes.podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank") %>
         </h2>
         <h1 class="live-info-header-title js-title"><%= @episode.title %></h1>
       </header>
@@ -20,7 +20,7 @@
         <div class="live-info-guests live-info-guests--<%= length(participants) %>">
         <%= for person <- participants do %>
           <article class="live-info-guests-item">
-            <%= link(to: person_path(@conn, :show, person.handle), title: "More Info", target: "_blank") do %>
+            <%= link(to: Routes.person_path(@conn, :show, person.handle), title: "More Info", target: "_blank") do %>
               <%= lazy_image(PersonView.avatar_url(person), String.at(person.name, 0), class: "live-info-guests-item-image", width: 150, height: 150) %>
               <h2 class="live-info-guests-item-title"><%= if Enum.any?(@episode.guests), do: host_or_guest(@episode, person) %></h2>
               <h1 class="live-info-guests-item-name"><%= person.name %></h1>
@@ -30,15 +30,15 @@
         </div>
 
         <div class="live-info-cta">
-          <%= lazy_image(static_url(@conn, "/images/icons/icon-slack-white.svg"), "Slack Logo", class: "live-info-cta-icon", width: 25, height: 25) %>
+          <%= lazy_image(Routes.static_url(@conn, "/images/icons/icon-slack-white.svg"), "Slack Logo", class: "live-info-cta-icon", width: 25, height: 25) %>
         <%= if @podcast.slug == "gotime" do %>
           <p>Join the discussion in the Gophers <%= link(raw("#gotimefm&nbsp;Slack&nbsp;channel"), to: "https://gophers.slack.com/messages/gotimefm") %></p>
         <% else %>
           <%= if @current_user do %>
             <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{slack_channel(@podcast)}") %></p>
           <% else %>
-            <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: page_path(@conn, :community)) %></p>
-            <p><small>Not a member yet? <a href="<%= page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a></small></p>
+            <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: Routes.page_path(@conn, :community)) %></p>
+            <p><small>Not a member yet? <a href="<%= Routes.page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a></small></p>
           <% end %>
         <% end %>
         </div>
@@ -48,7 +48,7 @@
 
   <footer class="live-footer">
     <div class="live-footer-viewers">
-      <%= lazy_image(static_url(@conn, "/images/icons/icon-eye.svg"), "Viewers", class: "live-info-cta-icon", width: 37, height: 26) %>
+      <%= lazy_image(Routes.static_url(@conn, "/images/icons/icon-eye.svg"), "Viewers", class: "live-info-cta-icon", width: 37, height: 26) %>
       <span class="js-live-viewers">0</span>
     </div>
 

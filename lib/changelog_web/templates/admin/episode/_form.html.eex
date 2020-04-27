@@ -134,7 +134,7 @@
 
           <h4 class="ui sponsor header">
             #<span class="js-position-display"><%= i.data.position || i.params["position"] %></span> &mdash;
-            <%= external_link(sponsor.name, to: admin_sponsor_path(@conn, :show, sponsor)) %>
+            <%= external_link(sponsor.name, to: Routes.admin_sponsor_path(@conn, :show, sponsor)) %>
           </h4>
 
           <div class="fields">
@@ -260,7 +260,7 @@
   <div class="ui equal width stackable grid">
   <%= if !is_persisted(f.data) do %>
     <div class="column"><%= submit_button(:primary, "Create") %></div>
-    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, admin_podcast_episode_path(@conn, :index, @podcast.slug))) %></div>
+    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug))) %></div>
   <% else %>
     <div class="column"><%= submit_button(:primary, "Save", "edit") %></div>
     <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>

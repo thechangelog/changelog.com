@@ -6,7 +6,7 @@ defmodule ChangelogWeb.NewsSourceView do
   alias ChangelogWeb.{Endpoint, NewsItemView}
 
   def admin_edit_link(conn, %{admin: true}, source) do
-    path = admin_news_source_path(conn, :edit, source, next: current_path(conn))
+    path = Routes.admin_news_source_path(conn, :edit, source, next: current_path(conn))
     link("[edit]", to: path, data: [turbolinks: false])
   end
   def admin_edit_link(_, _, _), do: nil
@@ -20,7 +20,7 @@ defmodule ChangelogWeb.NewsSourceView do
   def icon_url(news_source), do: icon_url(news_source, :small)
   def icon_url(news_source, version) do
     if news_source.icon do
-      static_url(Endpoint, icon_path(news_source, version))
+      Routes.static_url(Endpoint, icon_path(news_source, version))
     else
       "/images/defaults/avatar-source.png"
     end

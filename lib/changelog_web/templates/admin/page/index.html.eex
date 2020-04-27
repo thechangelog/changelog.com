@@ -48,7 +48,7 @@
             <th>Metric</th>
             <th class="center aligned">
               <div class="ui basic buttons">
-                <%= icon_link("plus", to: admin_person_path(@conn, :new), title: "New Person") %>
+                <%= icon_link("plus", to: Routes.admin_person_path(@conn, :new), title: "New Person") %>
               </div>
             </th>
           </tr>
@@ -95,7 +95,7 @@
         <h3 class="ui center aligned header">
           <div class="content">
             <i class="sound icon"></i>
-            <%= link(podcast.name, to: admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
+            <%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
           </div>
         </h3>
         <%= render("_podcast_episodes_table.html", conn: @conn, podcast: podcast) %>

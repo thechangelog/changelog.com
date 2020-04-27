@@ -1,5 +1,5 @@
 <title><%= @post.title |> html_escape |> safe_to_string %></title>
 <dc:creator><%= @post.author.name %></dc:creator>
-<link><%= post_url(@conn, :show, @post.slug) %></link>
+<link><%= Routes.post_url(@conn, :show, @post.slug) %></link>
 <guid isPermaLink="false"><%= PostView.guid(@post) %></guid>
 <pubDate><%= TimeView.rss(@post.published_at) %></pubDate>

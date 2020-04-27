@@ -72,7 +72,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       {:ok, issue} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_issue_path(conn, :edit, issue))
+        |> redirect_next(params, Routes.admin_news_issue_path(conn, :edit, issue))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -92,7 +92,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       {:ok, _issue} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, admin_news_issue_path(conn, :index))
+        |> redirect_next(params, Routes.admin_news_issue_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -108,7 +108,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       {:ok, _issue} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect(to: admin_news_issue_path(conn, :index))
+        |> redirect(to: Routes.admin_news_issue_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -123,7 +123,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       {:ok, _issue} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect(to: admin_news_issue_path(conn, :index))
+        |> redirect(to: Routes.admin_news_issue_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -136,7 +136,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: admin_news_issue_path(conn, :index))
+    |> redirect(to: Routes.admin_news_issue_path(conn, :index))
   end
 
   defp assign_issue(conn = %{params: %{"id" => id}}, _) do

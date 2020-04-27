@@ -1,13 +1,13 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    <%= link "News", to: Routes.admin_news_item_path(@conn, :index) %>
     &raquo; Edit
   <%= if NewsItem.is_published(@item) do %>
-    <%= link "(View)", to: news_item_path(@conn, :show, NewsItem.slug(@item)), class: "view" %>
+    <%= link "(View)", to: Routes.news_item_path(@conn, :show, NewsItem.slug(@item)), class: "view" %>
   <% else %>
-    <%= external_link "(Preview)", to: news_item_path(@conn, :preview, @item), class: "view" %>
+    <%= external_link "(Preview)", to: Routes.news_item_path(@conn, :preview, @item), class: "view" %>
   <% end %>
   </h1>
 
-  <%= render("_form.html", Map.merge(assigns, %{action: admin_news_item_path(@conn, :update, @item), quick: false})) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_news_item_path(@conn, :update, @item), quick: false})) %>
 </div>

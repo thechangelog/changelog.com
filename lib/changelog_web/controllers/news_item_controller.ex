@@ -91,7 +91,7 @@ defmodule ChangelogWeb.NewsItemController do
       {:ok, _item} ->
         conn
         |> put_flash(:success, "We received your submission! Stay awesome 💚")
-        |> redirect(to: root_path(conn, :index))
+        |> redirect(to: Routes.root_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Something went wrong. 😭")
@@ -105,7 +105,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     cond do
       NewsItem.is_post(item) -> redirect(conn, to: NewsItemView.object_path(item))
-      slug == hashid -> redirect(conn, to: news_item_path(conn, :show, NewsItem.slug(item)))
+      slug == hashid -> redirect(conn, to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
       true ->
         item =
           item
@@ -175,7 +175,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     conn
     |> put_flash(:success, "We'll email you when folks comment 📥")
-    |> redirect(to: news_item_path(conn, :show, NewsItem.slug(item)))
+    |> redirect(to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
@@ -184,7 +184,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     conn
     |> put_flash(:success, "No more email notifications from now on 🤐")
-    |> redirect(to: news_item_path(conn, :show, NewsItem.slug(item)))
+    |> redirect(to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
   end
 
   defp get_ads do

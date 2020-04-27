@@ -13,7 +13,7 @@ defmodule ChangelogWeb.PersonView do
   def avatar_url(person), do: avatar_url(person, :small)
   def avatar_url(person, version) do
     if person.avatar do
-      static_url(Endpoint, avatar_path(person, version))
+      Routes.static_url(Endpoint, avatar_path(person, version))
     else
       gravatar_url(person.email, version)
     end
@@ -91,11 +91,11 @@ defmodule ChangelogWeb.PersonView do
 
   def opt_out_path(conn, person, type, id) do
     {:ok, encoded} = Person.encoded_id(person)
-    home_path(conn, :opt_out, encoded, type, id)
+    Routes.home_path(conn, :opt_out, encoded, type, id)
   end
 
   def opt_out_url(conn, person, type, id) do
     {:ok, encoded} = Person.encoded_id(person)
-    home_url(conn, :opt_out, encoded, type, id)
+    Routes.home_url(conn, :opt_out, encoded, type, id)
   end
 end

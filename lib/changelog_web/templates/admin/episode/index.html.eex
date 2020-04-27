@@ -1,16 +1,16 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Podcasts", to: admin_podcast_path(@conn, :index)) %>
+    <%= link("Podcasts", to: Routes.admin_podcast_path(@conn, :index)) %>
     &raquo;
     <%= @podcast.name %>
-    <%= link("(View)", to: podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+    <%= link("(View)", to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "view") %>
   </h1>
 
   <div class="actions right">
     <span class="ui calendar" data-scheduled="<%= Jason.encode!(Enum.map(@drafts, &(&1.recorded_at))) %>" >
       <button class="ui basic icon button" title="View Schedule"><i class="calendar icon"></i></button>
     </span>
-    <%= link to: admin_podcast_episode_path(@conn, :new, @podcast.slug), class: "ui right floated primary basic button" do %>
+    <%= link to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug), class: "ui right floated primary basic button" do %>
       <i class="icon unmute"></i>
       Add Episode
     <% end %>
@@ -33,7 +33,7 @@
 
 <%= if Enum.any?(@episode_requests) do %>
 <div class="ui basic segment">
-  <h2 class="ui header"><%= link("Requests", to: admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
+  <h2 class="ui header"><%= link("Requests", to: Routes.admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
   &raquo;
   Fresh
   </h2>
@@ -51,6 +51,6 @@
 
   <h2 class="ui header">Published</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :published, podcast: @podcast, episodes: @episodes, actions: false})) %>
-  <%= pagination_links @conn, @page, [@podcast.slug], path: &admin_podcast_episode_path/4 %>
+  <%= pagination_links @conn, @page, [@podcast.slug], path: &Routes.admin_podcast_episode_path/4 %>
 </div>
 <% end %>

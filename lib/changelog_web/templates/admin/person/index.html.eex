@@ -5,7 +5,7 @@
   </h1>
 
   <div class="actions">
-    <%= link to: admin_person_path(@conn, :new), class: "ui right floated primary basic button" do %>
+    <%= link to: Routes.admin_person_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="add user icon"></i>
       Add Person
     <% end %>
@@ -15,6 +15,6 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@people) do %>
   <%= render("_table.html", assigns) %>
-  <%= pagination_links(@conn, @page, path: &admin_person_path/3) %>
+  <%= pagination_links(@conn, @page, path: &Routes.admin_person_path/3) %>
 <% end %>
 </div>

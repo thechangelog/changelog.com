@@ -12,7 +12,7 @@ defmodule ChangelogWeb.SponsorView do
 
   def avatar_url(sponsor), do: avatar_url(sponsor, :small)
   def avatar_url(sponsor, version) do
-    static_url(Endpoint, avatar_path(sponsor, version))
+    Routes.static_url(Endpoint, avatar_path(sponsor, version))
   end
 
   def logo_url(sponsor, type, version) do

@@ -31,7 +31,7 @@ defmodule ChangelogWeb.PodcastView do
   def cover_url(podcast), do: cover_url(podcast, :original)
   def cover_url(podcast, version) do
     if podcast.cover do
-      static_url(Endpoint, cover_path(podcast, version))
+      Routes.static_url(Endpoint, cover_path(podcast, version))
     else
       "/images/defaults/black.png"
     end
@@ -45,7 +45,7 @@ defmodule ChangelogWeb.PodcastView do
 
   def subscribe_on_android_url(podcast) do
     feed_url_sans_protocol =
-      feed_url(Endpoint, :podcast, podcast.slug)
+      Routes.feed_url(Endpoint, :podcast, podcast.slug)
       |> String.replace(~r/\Ahttps?:\/\//, "")
     "https://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
   end
@@ -57,9 +57,9 @@ defmodule ChangelogWeb.PodcastView do
 
   def subscribe_via_email_path(conn, podcast) do
     if conn.assigns.current_user do
-      home_path(conn, :show) <> "#podcasts"
+      Routes.home_path(conn, :show) <> "#podcasts"
     else
-      person_path(conn, :subscribe, podcast.slug)
+      Routes.person_path(conn, :subscribe, podcast.slug)
     end
   end
 

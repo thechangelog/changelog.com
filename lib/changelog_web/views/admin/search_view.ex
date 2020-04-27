@@ -56,26 +56,26 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{id: topic.id,
       title: topic.name,
       image: TopicView.icon_url(topic),
-      url: admin_topic_path(Endpoint, :edit, topic.slug)}
+      url: Routes.admin_topic_path(Endpoint, :edit, topic.slug)}
   end
 
   defp news_item_result(news_item) do
     %{id: news_item.id,
       title: news_item.headline,
-      url: admin_news_item_path(Endpoint, :edit, news_item)}
+      url: Routes.admin_news_item_path(Endpoint, :edit, news_item)}
   end
 
   defp news_source_result(news_source) do
     %{id: news_source.id,
       title: news_source.name,
       image: NewsSourceView.icon_url(news_source),
-      url: admin_news_source_path(Endpoint, :edit, news_source)}
+      url: Routes.admin_news_source_path(Endpoint, :edit, news_source)}
   end
 
   defp episode_result(episode) do
     %{id: episode.id,
       title: EpisodeView.numbered_title(episode),
-      url: admin_podcast_episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)}
+      url: Routes.admin_podcast_episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)}
   end
 
   defp person_result(person) do
@@ -89,11 +89,11 @@ defmodule ChangelogWeb.Admin.SearchView do
       title: title,
       description: description,
       image: PersonView.avatar_url(person),
-      url: admin_person_path(Endpoint, :edit, person)}
+      url: Routes.admin_person_path(Endpoint, :edit, person)}
   end
 
   defp post_result(post) do
-    %{title: post.title, url: admin_post_path(Endpoint, :edit, post)}
+    %{title: post.title, url: Routes.admin_post_path(Endpoint, :edit, post)}
   end
 
   defp sponsor_result(sponsor) do
@@ -117,7 +117,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{id: sponsor.id,
       title: sponsor.name,
       image: SponsorView.avatar_url(sponsor, :small),
-      url: admin_sponsor_path(Endpoint, :show, sponsor),
+      url: Routes.admin_sponsor_path(Endpoint, :show, sponsor),
       extras: extras}
   end
 end

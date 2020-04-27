@@ -1,6 +1,6 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Sponsors", to: admin_sponsor_path(@conn, :index)) %>
+    <%= link("Sponsors", to: Routes.admin_sponsor_path(@conn, :index)) %>
     &raquo;
     <%= @sponsor.name %>
   </h1>
@@ -8,7 +8,7 @@
   <div class="actions right">
     <div class="ui basic buttons">
       <%= @sponsor |> list_of_links() |> raw() %>
-      <%= link("Edit", to: admin_sponsor_path(@conn, :edit, @sponsor), class: "ui button") %>
+      <%= link("Edit", to: Routes.admin_sponsor_path(@conn, :edit, @sponsor), class: "ui button") %>
     </div>
   </div>
 </div>
@@ -41,7 +41,7 @@
         <td><%= reach_count(episode) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link("eye", to: episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
+            <%= icon_link("eye", to: Routes.episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
             <button class="ui icon clipboard button" title="Copy Markdown" data-clipboard-text="<%= sponsorship.description %>"><i class="clipboard icon"></i></button>
           </div>
         </td>

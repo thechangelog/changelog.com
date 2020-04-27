@@ -1,8 +1,8 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link "Posts", to: admin_post_path(@conn, :index) %>
+    <%= link "Posts", to: Routes.admin_post_path(@conn, :index) %>
     &raquo; New
   </h1>
 
-  <%= render("_form.html", Map.merge(assigns, %{action: admin_post_path(@conn, :create)})) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_post_path(@conn, :create)})) %>
 </div>

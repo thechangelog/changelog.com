@@ -7,11 +7,11 @@
     <p class="section_heading-note">
   <%= cond do %>
   <% is_nil(@current_user) -> %>
-    <%= link("Sign in", to: sign_in_path(@conn, :new)) %> or <%= link("Join", to: person_path(@conn, :join)) %> to comment or subscribe
+    <%= link("Sign in", to: Routes.sign_in_path(@conn, :new)) %> or <%= link("Join", to: Routes.person_path(@conn, :join)) %> to comment or subscribe
   <% Subscription.is_subscribed(@current_user, @item) -> %>
-    <%= link("Unsubscribe 🔕", to: news_item_path(@conn, :unsubscribe, hashid(@item)), title: "Unsubscribe from this discussion") %>
+    <%= link("Unsubscribe 🔕", to: Routes.news_item_path(@conn, :unsubscribe, hashid(@item)), title: "Unsubscribe from this discussion") %>
   <% true -> %>
-    <%= link("Subscribe 🔔", to: news_item_path(@conn, :subscribe, hashid(@item)), title: "Get notified of new comments") %>
+    <%= link("Subscribe 🔔", to: Routes.news_item_path(@conn, :subscribe, hashid(@item)), title: "Get notified of new comments") %>
   <% end %>
     </p>
   </header>

@@ -62,7 +62,7 @@
       <h2 class="ten-section-heading">Highlighted Episodes</h2>
       <%= render("_ten/ten_episodes.html", assigns) %>
       <div class="ten-section-button">
-        <%= link("View All Episodes", to: podcast_path(@conn, :show, "master"), class: "ten-section-button-link") %>
+        <%= link("View All Episodes", to: Routes.podcast_path(@conn, :show, "master"), class: "ten-section-button-link") %>
       </div>
     </div>
   </section>

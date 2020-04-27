@@ -1,7 +1,7 @@
 <article class="article">
   <div class="richtext">
     <h1>The Team</h1>
-    <p><%= link "Become a member if you value our content.", to: page_path(@conn, :community) %></p>
+    <p><%= link "Become a member if you value our content.", to: Routes.page_path(@conn, :community) %></p>
 
     <ul>
       <li><a href="https://twitter.com/adamstac"><strong>Adam Stacoviak</strong></a> &mdash; Founder &amp; Editor-in-chief</li>

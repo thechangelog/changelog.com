@@ -2,35 +2,35 @@
   <nav class="footer-primary">
     <div class="footer-primary_wrap">
       <ul class="footer-primary-list footer-primary-list--company">
-        <li><%= link "About", to: page_path(@conn, :about) %></li>
-        <li><%= link "Contact", to: page_path(@conn, :contact) %></li>
+        <li><%= link "About", to: Routes.page_path(@conn, :about) %></li>
+        <li><%= link "Contact", to: Routes.page_path(@conn, :contact) %></li>
         <li><a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></li>
       </ul>
 
       <ul class="footer-primary-list footer-primary-list--social">
         <li>
           <a href="https://twitter.com/changelog" title="Changelog on Twitter">
-            <%= lazy_image(static_url(@conn, "/images/icons/icon-twitter-black.svg"), "Twitter Icon") %>
+            <%= lazy_image(Routes.static_url(@conn, "/images/icons/icon-twitter-black.svg"), "Twitter Icon") %>
           </a>
         </li>
         <li>
           <a href="https://github.com/thechangelog" title="Changelog on GitHub">
-            <%= lazy_image(static_url(@conn, "/images/icons/icon-github-black.svg"), "GitHub Icon") %>
+            <%= lazy_image(Routes.static_url(@conn, "/images/icons/icon-github-black.svg"), "GitHub Icon") %>
           </a>
         </li>
         <li>
           <a href="https://www.youtube.com/changelog" title="Changelog on YouTube">
-            <%= lazy_image(static_url(@conn, "/images/icons/icon-youtube-black.svg"), "YouTube Icon") %>
+            <%= lazy_image(Routes.static_url(@conn, "/images/icons/icon-youtube-black.svg"), "YouTube Icon") %>
           </a>
         </li>
         <li>
           <a href="https://www.instagram.com/changelog_" title="Changelog on Instagram">
-            <%= lazy_image(static_url(@conn, "/images/icons/icon-instagram-black.svg"), "Instagram Icon") %>
+            <%= lazy_image(Routes.static_url(@conn, "/images/icons/icon-instagram-black.svg"), "Instagram Icon") %>
           </a>
         </li>
         <li>
           <a href="https://www.twitch.tv/changelog_" title="Changelog on Twitch">
-            <%= lazy_image(static_url(@conn, "/images/icons/icon-twitch-black.svg"), "Twitch Icon") %>
+            <%= lazy_image(Routes.static_url(@conn, "/images/icons/icon-twitch-black.svg"), "Twitch Icon") %>
           </a>
         </li>
       </ul>
@@ -40,47 +40,47 @@
     <div class="footer-nav-list">
       <h4><a href="/" title="">News</a></h4>
       <ul>
-        <li><%= link("Subscribe", to: person_path(@conn, :subscribe), title: "Subscribe to Changelog News") %></li>
-        <li><%= link("Topics", to: topic_path(@conn, :index), title: "View all topics") %></li>
-        <li><%= link("Sources", to: news_source_path(@conn, :index), title: "View all sources") %></li>
+        <li><%= link("Subscribe", to: Routes.person_path(@conn, :subscribe), title: "Subscribe to Changelog News") %></li>
+        <li><%= link("Topics", to: Routes.topic_path(@conn, :index), title: "View all topics") %></li>
+        <li><%= link("Sources", to: Routes.news_source_path(@conn, :index), title: "View all sources") %></li>
         <li>---</li>
-        <li><%= link("Changelog Weekly", to: page_path(@conn, :weekly), title: "Changelog Weekly") %></li>
-        <li><%= link("Changelog Nightly", to: page_path(@conn, :nightly), title: "Changelog Nightly") %></li>
+        <li><%= link("Changelog Weekly", to: Routes.page_path(@conn, :weekly), title: "Changelog Weekly") %></li>
+        <li><%= link("Changelog Nightly", to: Routes.page_path(@conn, :nightly), title: "Changelog Nightly") %></li>
         <li>---</li>
-        <li><%= link("Fresh", to: news_item_path(@conn, :fresh), title: "Freshest news") %></li>
-        <li><%= link("Top", to: news_item_path(@conn, :top), title: "Top news") %></li>
-        <li><%= link("Submit", to: news_item_path(@conn, :new), title: "Submit news") %></li>
+        <li><%= link("Fresh", to: Routes.news_item_path(@conn, :fresh), title: "Freshest news") %></li>
+        <li><%= link("Top", to: Routes.news_item_path(@conn, :top), title: "Top news") %></li>
+        <li><%= link("Submit", to: Routes.news_item_path(@conn, :new), title: "Submit news") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
-      <h4><%= link("Podcasts", to: podcast_path(@conn, :index), title: "View all podcasts") %></h4>
+      <h4><%= link("Podcasts", to: Routes.podcast_path(@conn, :index), title: "View all podcasts") %></h4>
       <ul>
       <%= for podcast <- @podcasts do %>
-        <li><%= link(podcast.name, to: podcast_path(@conn, :show, podcast.slug), title: podcast.name) %></li>
+        <li><%= link(podcast.name, to: Routes.podcast_path(@conn, :show, podcast.slug), title: podcast.name) %></li>
       <% end %>
         <li>---</li>
-        <li><%= link("Master", to: podcast_path(@conn, :show, :master), title: "Master feed") %></li>
+        <li><%= link("Master", to: Routes.podcast_path(@conn, :show, :master), title: "Master feed") %></li>
         <li>---</li>
-        <li><%= link("Request Episode", to: episode_request_path(@conn, :new), title: "Request an episode") %></li>
+        <li><%= link("Request Episode", to: Routes.episode_request_path(@conn, :new), title: "Request an episode") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
       <h4><a href="/community" title="">Community</a></h4>
       <ul>
-        <li><%= link("Join the Community", to: page_path(@conn, :community), title: "Join the community") %></li>
-        <li><%= link("Listen Live", to: live_path(@conn, :index), title: "Listen live") %></li>
-        <li><%= link("Code of Conduct", to: page_path(@conn, :coc), title: "Read the code of conduct") %></li>
+        <li><%= link("Join the Community", to: Routes.page_path(@conn, :community), title: "Join the community") %></li>
+        <li><%= link("Listen Live", to: Routes.live_path(@conn, :index), title: "Listen live") %></li>
+        <li><%= link("Code of Conduct", to: Routes.page_path(@conn, :coc), title: "Read the code of conduct") %></li>
         <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
-        <li><%= link("Perks", to: page_path(@conn, :community), title: "Community perks") %></li>
+        <li><%= link("Perks", to: Routes.page_path(@conn, :community), title: "Community perks") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
       <h4>Etc.</h4>
       <ul>
-        <li><%= link("Ten Years", to: page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %></li>
-        <li><%= link("Sponsor", to: page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
-        <li><%= link("Search", to: search_path(@conn, :search), title: "Search Changelog") %></li>
-        <li><%= link("Posts", to: post_path(@conn, :index), title: "Changelog’s posts") %></li>
+        <li><%= link("Ten Years", to: Routes.page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %></li>
+        <li><%= link("Sponsor", to: Routes.page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
+        <li><%= link("Search", to: Routes.search_path(@conn, :search), title: "Search Changelog") %></li>
+        <li><%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog’s posts") %></li>
         <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
         <li><a href="https://github.com/thechangelog/changelog.com/issues">Report Issues</a></li>
         <li><a href="/terms">Terms &amp; Conditions</a></li>
@@ -94,25 +94,25 @@
       <div class="footer-sponsors-item">
         <a href="https://www.fastly.com/?utm_source=changelog" title="Visit Fastly.com">
           <p>Bandwidth provided by</p>
-          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-fastly.png"), "Fastly") %>
+          <%= lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-fastly.png"), "Fastly") %>
         </a>
       </div>
       <div class="footer-sponsors-item">
         <a href="https://www.linode.com/changelog" title="Visit Linode.com">
           <p>Hosting provided by</p>
-          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-linode.png"), "Linode") %>
+          <%= lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-linode.png"), "Linode") %>
         </a>
       </div>
       <div class="footer-sponsors-item">
         <a href="https://rollbar.com/changelog" title="Visit Rollbar.com">
           <p>Error monitoring by</p>
-          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-rollbar.png"), "Rollbar") %>
+          <%= lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-rollbar.png"), "Rollbar") %>
         </a>
       </div>
       <div class="footer-sponsors-item">
         <a href="https://tidelift.com/?utm_source=changelog.com&utm_medium=referral" title="Visit Tidelift.com">
           <p>Dependencies managed by</p>
-          <%= lazy_image(static_url(@conn, "/images/content/footer/sponsor-tidelift.png"), "Tidelift") %>
+          <%= lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-tidelift.png"), "Tidelift") %>
         </a>
       </div>
     </div>

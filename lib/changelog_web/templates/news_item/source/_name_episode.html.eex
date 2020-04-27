@@ -1,4 +1,4 @@
 <%= link(EpisodeView.podcast_name_and_number(@episode),
-  to: episode_path(@conn, :show, @episode.podcast.slug, @episode.slug),
+  to: Routes.episode_path(@conn, :show, @episode.podcast.slug, @episode.slug),
   title: EpisodeView.podcast_name_and_number(@episode),
   data: [news: true]) %>

@@ -6,13 +6,13 @@
         <%#= link("New", to: "/", title: "Recent News") %>
       </li> -->
       <li class="subnav-list-item <%= active_class(@conn, [~r/\Anews_item-top\z/, "news_item-top_week"]) %>">
-        <%= link("This Week", to: news_item_path(@conn, :top_week), title: "Top developer news this week") %>
+        <%= link("This Week", to: Routes.news_item_path(@conn, :top_week), title: "Top developer news this week") %>
       </li>
       <li class="subnav-list-item <%= active_class(@conn, "news_item-top_month") %>">
-        <%= link("This Month", to: news_item_path(@conn, :top_month), title: "Top developer news this month") %>
+        <%= link("This Month", to: Routes.news_item_path(@conn, :top_month), title: "Top developer news this month") %>
       </li>
       <li class="subnav-list-item <%= active_class(@conn, "news_item-top_all") %>">
-        <%= link("All Time", to: news_item_path(@conn, :top_all), title: "Top developer news all time") %>
+        <%= link("All Time", to: Routes.news_item_path(@conn, :top_all), title: "Top developer news all time") %>
       </li>
     </ul>
   </nav>

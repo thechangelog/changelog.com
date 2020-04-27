@@ -1,5 +1,5 @@
 defmodule ChangelogWeb.Meta.Image do
-  import ChangelogWeb.Router.Helpers, only: [static_url: 2]
+  alias ChangelogWeb.Router.Helpers, as: Routes
 
   alias ChangelogWeb.{Endpoint, NewsItemView, NewsSourceView, PageView,
                       PersonView, PodcastView, PostView, TopicView}
@@ -60,7 +60,7 @@ defmodule ChangelogWeb.Meta.Image do
   defp podcasts_image, do: static_image("/images/share/twitter-all-podcasts.png")
   defp post_image(post), do: PostView.image_url(post, :large)
   defp source_image(source), do: NewsSourceView.icon_url(source, :large)
-  defp static_image(path), do: static_url(Endpoint, path)
+  defp static_image(path), do: Routes.static_url(Endpoint, path)
   defp topic_image(topic), do: TopicView.icon_url(topic, :large)
 
   defp fb_summary_image, do: static_image("/images/share/fb-sitewide.png")

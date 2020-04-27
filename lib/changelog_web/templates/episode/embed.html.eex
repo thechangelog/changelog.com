@@ -7,14 +7,14 @@
     <title><%= page_title(assigns) %></title>
     <meta name="description" content="<%= description(assigns) %>">
     <meta name="copyright" content="Changelog Media LLC">
-    <link rel="stylesheet" href="<%= static_url(@conn, "/css/embed.css") %>">
+    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/embed.css") %>">
     <%= render(LayoutView, "_head_scripts.html", assigns) %>
   </head>
   <body class="embed embed--<%= @theme %> embed--<%= @source %>"><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <figure class="episode_player episode_player--<%= @podcast.slug %> js-player">
-      <%= link "Changelog", to: root_url(@conn, :index), class: "episode_player-site_link", title: "Visit Changelog.com", target: "_blank" %>
+      <%= link "Changelog", to: Routes.root_url(@conn, :index), class: "episode_player-site_link", title: "Visit Changelog.com", target: "_blank" %>
       <div class="episode_player-details_container">
         <div class="episode_player-details">
           <%= link to: audio_url(@episode), role: "button", class: "episode_player-details-button js-player-play-button",
@@ -25,13 +25,13 @@
 
           <div class="episode_player-details-vwrap">
             <p class="episode_player-details-podcast">
-              <%= link @podcast.name, to: podcast_url(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
+              <%= link @podcast.name, to: Routes.podcast_url(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank" %>
               <%= if number = number(@episode) do %>
-                <%= link "##{number}", to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank", class: "js-listen-link" %>
+                <%= link "##{number}", to: Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank", class: "js-listen-link" %>
               <% end %>
             </p>
             <h1 class="episode_player-details-title">
-              <%= link @episode.title, to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank", class: "js-listen-link" %>
+              <%= link @episode.title, to: Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug), title: "Listen on Changelog.com", target: "_blank", class: "js-listen-link" %>
             </h1>
             <h2 class="episode_player-details-subtitle">
               <%= @episode.subtitle %>
@@ -51,7 +51,7 @@
 
             <%= if @source == "twitter" do %>
               <%= link "Listen on Changelog.com",
-                  to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug),
+                  to: Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug),
                   target: "_blank",
                   class: "js-listen-link"
                   %>
@@ -66,23 +66,23 @@
         <nav class="episode_player-nav js-nav">
           <ul class="episode_player-nav-list">
             <li class="episode_player-nav-list-item episode_player-nav-list-item--show">
-              <%= link to: podcast_url(@conn, :show, @podcast.slug), title: "#{@podcast.name} on Changelog.com", alt: "#{@podcast.name} Podcast" do %>
+              <%= link to: Routes.podcast_url(@conn, :show, @podcast.slug), title: "#{@podcast.name} on Changelog.com", alt: "#{@podcast.name} Podcast" do %>
                 <img src="<%= PodcastView.cover_url(@podcast, :small) %>" alt="<%= @podcast.name %>" width="75" height="75">
               <% end %>
             </li>
             <li class="episode_player-nav-list-item">
               <%= link "Share",
                   title: "Share on Twitter",
-                  to: tweet_url(@episode.title, episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+                  to: tweet_url(@episode.title, Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
                   class: "js-share-popup",
                   target: "_blank",
-                  style: "background-image: url('#{static_url(@conn, "/images/icons/icon-share.svg")}')" %>
+                  style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-share.svg")}')" %>
             </li>
             <li class="episode_player-nav-list-item">
               <a
                 href="<%= audio_url(@episode) %>"
                 title="Download Episode"
-                style="background-image: url('<%= static_url(@conn, "/images/icons/icon-download.svg") %>')"
+                style="background-image: url('<%= Routes.static_url(@conn, "/images/icons/icon-download.svg") %>')"
                 download>
                 Download
               </a>
@@ -90,21 +90,21 @@
             <li class="episode_player-nav-list-item">
               <%= link "Subscribe",
                   title: "Subscribe to #{@podcast.name}",
-                  to: podcast_url(@conn, :index),
+                  to: Routes.podcast_url(@conn, :index),
                   target: "_blank",
-                  style: "background-image: url('#{static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
+                  style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
             </li>
             <li class="episode_player-nav-list-item episode_player-nav-list-item--listen-on">
               <%= link "Listen on Changelog.com",
-                  to: episode_url(@conn, :show, @episode.podcast.slug, @episode.slug),
+                  to: Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug),
                   target: "_blank",
                   class: "js-listen-link",
-                  style: "background-image: url('#{static_url(@conn, "/images/brand/podcasts.svg")}')" %>
+                  style: "background-image: url('#{Routes.static_url(@conn, "/images/brand/podcasts.svg")}')" %>
             </li>
           </ul>
         </nav>
       <% end %>
     </figure>
-    <script src="<%= static_url(@conn, "/js/embed.js") %>"></script>
+    <script src="<%= Routes.static_url(@conn, "/js/embed.js") %>"></script>
   </body>
 </html>

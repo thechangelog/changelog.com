@@ -1,12 +1,12 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    <%= link "News", to: Routes.admin_news_item_path(@conn, :index) %>
     &raquo;
-    <%= link "Sources", to: admin_news_source_path(@conn, :index) %>
+    <%= link "Sources", to: Routes.admin_news_source_path(@conn, :index) %>
     &raquo; Edit
 
-    <%= external_link("(View)", to: news_source_path(@conn, :show, @source.slug), class: "view") %>
+    <%= external_link("(View)", to: Routes.news_source_path(@conn, :show, @source.slug), class: "view") %>
   </h1>
 
-  <%= render "_form.html", conn: @conn, changeset: @changeset, action: admin_news_source_path(@conn, :update, @source) %>
+  <%= render "_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_news_source_path(@conn, :update, @source) %>
 </div>

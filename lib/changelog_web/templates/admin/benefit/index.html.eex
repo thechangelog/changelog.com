@@ -5,7 +5,7 @@
   </h1>
 
   <div class="actions">
-    <%= link to: admin_benefit_path(@conn, :new), class: "ui right floated primary basic button" do %>
+    <%= link to: Routes.admin_benefit_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="ticket icon"></i>
       Add Benefit
     <% end %>
@@ -15,6 +15,6 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@benefits) do %>
   <%= render("_table.html", conn: @conn, benefits: @benefits) %>
-  <%= pagination_links @conn, @page, path: &admin_benefit_path/3 %>
+  <%= pagination_links @conn, @page, path: &Routes.admin_benefit_path/3 %>
 <% end %>
 </div>

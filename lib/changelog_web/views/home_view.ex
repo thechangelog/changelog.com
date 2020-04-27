@@ -15,10 +15,10 @@ defmodule ChangelogWeb.HomeView do
   end
 
   def subscribe_link(conn, list) do
-    link("Subscribe", to: home_path(conn, :subscribe, id: list), method: :post)
+    link("Subscribe", to: Routes.home_path(conn, :subscribe, id: list), method: :post)
   end
 
   def unsubscribe_link(conn, list) do
-    link("Subscribed", to: home_path(conn, :unsubscribe, id: list), method: :post, class: "is-subscribed")
+    link("Subscribed", to: Routes.home_path(conn, :unsubscribe, id: list), method: :post, class: "is-subscribed")
   end
 end

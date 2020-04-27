@@ -2,10 +2,10 @@
   <%= render("_nav.html", conn: @conn) %>
 
   <div class="flash flash--inline flash--success">
-    <div class="flash-message"><p>Your <%= link("public profile", to: person_path(@conn, :show, @current_user.handle)) %> includes news you've contributed and podcasts you've been on.</p></div>
+    <div class="flash-message"><p>Your <%= link("public profile", to: Routes.person_path(@conn, :show, @current_user.handle)) %> includes news you've contributed and podcasts you've been on.</p></div>
   </div>
 
-  <%= form_for @changeset, home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
+  <%= form_for @changeset, Routes.home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
     <input type="hidden" name="from" value="profile">
 
     <div class="form-element_wrap form-element_wrap--2">

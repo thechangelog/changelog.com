@@ -5,7 +5,7 @@
     </header>
     <div class="topic_list-topics">
       <%= for source <- @sources do %>
-        <%= link to: news_source_path(@conn, :show, source.slug), title: "View #{source.name}", class: "topic_list-topics-item" do %>
+        <%= link to: Routes.news_source_path(@conn, :show, source.slug), title: "View #{source.name}", class: "topic_list-topics-item" do %>
           <div class="topic_list-topics-item-name">
             <!-- <img src="http://via.placeholder.com/60x60" alt=""> -->
             <h3><%= source.name %></h3>

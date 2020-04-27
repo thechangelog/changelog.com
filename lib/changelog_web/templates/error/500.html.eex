@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Server Error | Changelog</title>
     <meta name="copyright" content="Changelog Media LLC">
-    <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
-    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>">
+    <script src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
     <%= render(ChangelogWeb.LayoutView, "_head_scripts.html", assigns) %>
   </head>
   <body class="error"><!--[if lt IE 8]>
@@ -19,7 +19,7 @@
           <h1>Server Error</h1>
           <h3>Oops! Looks like the server had a hiccup.</h3>
           <p>You may want to try to reload the page to see if the issue has cleared up.</p>
-          <%= link "Take Me Home", to: root_path(@conn, :index), class: "btn btn--padded-bottom" %>
+          <%= link "Take Me Home", to: Routes.root_path(@conn, :index), class: "btn btn--padded-bottom" %>
         </div>
       </article>
     </main>

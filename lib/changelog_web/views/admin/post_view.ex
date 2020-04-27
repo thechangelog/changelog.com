@@ -16,9 +16,9 @@ defmodule ChangelogWeb.Admin.PostView do
 
   def show_or_preview_path(conn, post) do
     if Post.is_public(post) do
-      post_path(conn, :show, post.slug)
+      Routes.post_path(conn, :show, post.slug)
     else
-      post_path(conn, :preview, Post.hashid(post))
+      Routes.post_path(conn, :preview, Post.hashid(post))
     end
   end
 end

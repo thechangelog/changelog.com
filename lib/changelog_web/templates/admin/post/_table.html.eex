@@ -13,7 +13,7 @@
     <%= for post <- @posts do %>
       <tr>
         <td class="center aligned">
-          <%= link to: admin_person_path(@conn, :show, post.author) do %>
+          <%= link to: Routes.admin_person_path(@conn, :show, post.author) do %>
             <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(post.author) %>">
           <% end %>
         </td>
@@ -24,11 +24,11 @@
           <div class="ui small basic buttons">
             <%= icon_link("eye", to: show_or_preview_path(@conn, post)) %>
           <%= if Policies.Post.edit(@current_user, post) do %>
-            <%= icon_link("edit", to: admin_post_path(@conn, :edit, post)) %>
+            <%= icon_link("edit", to: Routes.admin_post_path(@conn, :edit, post)) %>
           <% end %>
           <%= if Policies.Post.delete(@current_user, post) do %>
             <%= icon_link("trash",
-                          to: admin_post_path(@conn, :delete, post),
+                          to: Routes.admin_post_path(@conn, :delete, post),
                           method: :delete,
                           data: [confirm: "Are you sure?"]) %>
           <% end %>

@@ -9,7 +9,7 @@
 
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
       <p class="button_note">Or call us at 888-974-CHLG (2454)</p>
     </header>
@@ -20,7 +20,7 @@
   <section class="marketing-section">
     <a id="how-it-works" class="anchor"></a>
     <header class="marketing-section-header">
-      <img src='<%= static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
+      <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
       <h2>How sponsorship works</h2>
       <p>Our primary focus is on developers, but people from every part of the software industry tune in to our podcasts and newsfeed to inform their next big idea. From CTOs and Directors of Engineering to Frontend Developers and Product Designers, our audience cares about the future of software, dev culture, tooling, team efficiency &mdash; and they're waiting to hear from you.</p>
     </header>
@@ -89,7 +89,7 @@
       <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>
@@ -130,43 +130,43 @@
       <div class="logo_grid logo_grid--dark margin-vertical_large">
         <div class="logo_grid-item">
           <p>Community Leader</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/linux-foundation-gray.png") %>' alt="Linux Foundation">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linux-foundation-gray.png") %>' alt="Linux Foundation">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Executive VP</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/microsoft-gray.png") %>' alt="Micrsoft">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/microsoft-gray.png") %>' alt="Micrsoft">
         </div>
         <div class="logo_grid-item">
           <p>SRE Engineer</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/google-gray.png") %>' alt="Google">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/google-gray.png") %>' alt="Google">
         </div>
         <div class="logo_grid-item">
           <p>Software Engineer</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/ibm-gray.png") %>' alt="IBM">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/ibm-gray.png") %>' alt="IBM">
         </div>
         <div class="logo_grid-item">
           <p>Systems Engineer</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/datadog-gray.png") %>' alt="Datadog">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/datadog-gray.png") %>' alt="Datadog">
         </div>
         <div class="logo_grid-item">
           <p>React Core</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/facebook-gray.png") %>' alt="Facebook">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/facebook-gray.png") %>' alt="Facebook">
         </div>
         <div class="logo_grid-item">
           <p>Distributed Systems</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/uber-gray.png") %>' alt="Uber">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/uber-gray.png") %>' alt="Uber">
         </div>
         <div class="logo_grid-item">
           <p>Engineering Director</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/slack-gray.png") %>' alt="Slack">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/slack-gray.png") %>' alt="Slack">
         </div>
         <div class="logo_grid-item">
           <p>JavaScript Engineer</p>
-          <img src='<%= static_url(@conn, "/images/content/sponsors/paypal-gray.png") %>' alt="PayPal">
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/paypal-gray.png") %>' alt="PayPal">
         </div>
       </div>
     </div>
@@ -175,7 +175,7 @@
       <p>Get in touch if you have more questions or would like to talk with someone.</p>
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>

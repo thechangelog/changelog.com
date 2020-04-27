@@ -3,6 +3,6 @@
   logged by <strong><%= external_link(PersonView.handle(@item.logger), to: twitter_url(@item.logger)) %></strong>
 <% end %>
 <%= if @item.submitter do %>
-  via <strong><%= link(PersonView.handle(@item.submitter), to: person_path(@conn, :show, @item.submitter.handle)) %></strong>
+  via <strong><%= link(PersonView.handle(@item.submitter), to: Routes.person_path(@conn, :show, @item.submitter.handle)) %></strong>
 <% end %>
 </span>

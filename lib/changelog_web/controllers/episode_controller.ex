@@ -111,9 +111,9 @@ defmodule ChangelogWeb.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     if item = Episode.get_news_item(episode) do
-      redirect(conn, to: news_item_path(conn, :show, NewsItem.slug(item)))
+      redirect(conn, to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
     else
-      redirect(conn, to: episode_path(conn, :show, podcast.slug, episode.slug))
+      redirect(conn, to: Routes.episode_path(conn, :show, podcast.slug, episode.slug))
     end
   end
 

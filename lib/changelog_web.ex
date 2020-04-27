@@ -11,7 +11,7 @@ defmodule ChangelogWeb do
       import Ecto
       import Ecto.Query
 
-      import ChangelogWeb.Router.Helpers
+      alias ChangelogWeb.Router.Helpers, as: Routes
       import ChangelogWeb.Plug.Conn
 
       plug ChangelogWeb.Plug.ResponseCache
@@ -51,7 +51,7 @@ defmodule ChangelogWeb do
       use Phoenix.HTML
       import Phoenix.Controller, only: [get_flash: 1,get_flash: 2, view_module: 1]
       import Scrivener.HTML
-      import ChangelogWeb.Router.Helpers
+      alias ChangelogWeb.Router.Helpers, as: Routes
       import ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
       alias Changelog.Policies
       alias ChangelogWeb.TimeView
@@ -63,7 +63,7 @@ defmodule ChangelogWeb do
       use Phoenix.View, root: "lib/changelog_web/templates", namespace: ChangelogWeb, pattern: "**/*"
       use Phoenix.HTML
       import Phoenix.Controller, only: [current_url: 1, get_flash: 1,get_flash: 2, view_module: 1]
-      import ChangelogWeb.Router.Helpers
+      alias ChangelogWeb.Router.Helpers, as: Routes
       import ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
       alias Changelog.Policies
       alias ChangelogWeb.{SharedView, TimeView}

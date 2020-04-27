@@ -3,14 +3,14 @@
   <channel>
     <title>Changelog</title>
     <copyright>All rights reserved</copyright>
-    <link><%= post_url(@conn, :index) %></link>
+    <link><%= Routes.post_url(@conn, :index) %></link>
     <language>en-us</language>
     <description>Changelog Posts</description>
   <%= for post <- @posts do %>
     <item>
       <title><%= post.title |> html_escape() |> safe_to_string() %></title>
       <dc:creator><%= post.author.name %></dc:creator>
-      <link><%= post_url(@conn, :show, post.slug) %></link>
+      <link><%= Routes.post_url(@conn, :show, post.slug) %></link>
       <guid isPermaLink="false"><%= PostView.guid(post) %></guid>
       <pubDate><%= TimeView.rss(post.published_at) %></pubDate>
       <description><![CDATA[<%= md_to_html(post.body) %>]]></description>

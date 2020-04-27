@@ -6,7 +6,7 @@
     <h1 class="signup-heading">You&rsquo;re subscribing to <%= @podcast.name %></h1>
     <p class="signup-text"><%= @podcast.description %></p>
   <%= if @current_user do %>
-    <%= link("Manage Subscriptions", to: home_path(@conn, :show) <> "#podcasts", class: "button_large") %>
+    <%= link("Manage Subscriptions", to: Routes.home_path(@conn, :show) <> "#podcasts", class: "button_large") %>
   <% else %>
     <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
   <% end %>

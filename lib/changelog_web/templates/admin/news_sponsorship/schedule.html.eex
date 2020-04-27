@@ -1,25 +1,25 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link "News", to: admin_news_item_path(@conn, :index) %>
+    <%= link "News", to: Routes.admin_news_item_path(@conn, :index) %>
     &raquo;
-    <%= link "Sponsorships", to: admin_news_sponsorship_path(@conn, :index) %>
+    <%= link "Sponsorships", to: Routes.admin_news_sponsorship_path(@conn, :index) %>
     &raquo;
      <%= @year %> Schedule
   </h1>
 
   <div class="actions">
-    <%= link to: admin_news_sponsorship_path(@conn, :new), class: "ui right floated primary basic button" do %>
+    <%= link to: Routes.admin_news_sponsorship_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="add icon"></i>
       Sponsorship
     <% end %>
 
     <div class="ui right floated basic buttons">
-      <%= link to: admin_news_sponsorship_path(@conn, :schedule, year: @year - 1), class: "ui button" do %>
+      <%= link to: Routes.admin_news_sponsorship_path(@conn, :schedule, year: @year - 1), class: "ui button" do %>
         <i class="angle double left icon"></i>
         <%= @year - 1 %>
       <% end %>
       <button class="ui button js-toggle-past">Hide Past</button>
-      <%= link to: admin_news_sponsorship_path(@conn, :schedule, year: @year + 1), class: "ui button" do %>
+      <%= link to: Routes.admin_news_sponsorship_path(@conn, :schedule, year: @year + 1), class: "ui button" do %>
         <%= @year + 1 %>
         <i class="angle double right icon"></i>
       <% end %>

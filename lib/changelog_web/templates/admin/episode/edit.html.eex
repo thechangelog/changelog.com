@@ -1,17 +1,17 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link @podcast.name, to: admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
+    <%= link @podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
     &raquo; Edit
   <%= if @episode.published do %>
     <%= external_link "(View)",
-      to: episode_path(@conn, :show, @podcast.slug, @episode.slug),
+      to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
       class: "view" %>
   <% else %>
     <%= external_link "(Preview)",
-      to: episode_path(@conn, :preview, @podcast.slug, @episode.slug),
+      to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
       class: "view" %>
   <% end %>
   </h1>
 
-  <%= render("_form.html", Map.merge(assigns, %{action: admin_podcast_episode_path(@conn, :update, @podcast.slug, @episode.slug)})) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_podcast_episode_path(@conn, :update, @podcast.slug, @episode.slug)})) %>
 </div>

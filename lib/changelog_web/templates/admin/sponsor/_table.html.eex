@@ -29,9 +29,9 @@
       <td><%= sponsorship_count(sponsor, :news) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= icon_link "eye", to: admin_sponsor_path(@conn, :show, sponsor) %>
-          <%= icon_link "edit", to: admin_sponsor_path(@conn, :edit, sponsor) %>
-          <%= icon_link "trash", to: admin_sponsor_path(@conn, :delete, sponsor), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= icon_link "eye", to: Routes.admin_sponsor_path(@conn, :show, sponsor) %>
+          <%= icon_link "edit", to: Routes.admin_sponsor_path(@conn, :edit, sponsor) %>
+          <%= icon_link "trash", to: Routes.admin_sponsor_path(@conn, :delete, sponsor), method: :delete, data: [confirm: "Are you sure?"] %>
         </div>
       </td>
     </tr>

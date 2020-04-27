@@ -40,7 +40,7 @@
       <%= if @podcast.slug == "gotime" do %>
         the <%= link("Gophers Slack", to: "https://gophers.slack.com/messages/gotimefm") %>
       <% else %>
-        our <%= link("Community Slack", to: page_path(@conn, :community)) %>.</li>
+        our <%= link("Community Slack", to: Routes.page_path(@conn, :community)) %>.</li>
       <% end %>
     <% end %>
       <li>Video optional! Feel free to opt out due to a slow connection or a bad hair day 📹</li>

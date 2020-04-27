@@ -3,11 +3,11 @@
 
 <%= unless @current_user do %>
   <div class="flash flash--inline flash--error">
-    <div class="flash-message"><p>Please <%= link("sign in", to: sign_in_path(@conn, :new)) %> / <%= link("up", to: person_path(@conn, :join)) %> to submit news. Your profile is used for attribution and notification.</p></div>
+    <div class="flash-message"><p>Please <%= link("sign in", to: Routes.sign_in_path(@conn, :new)) %> / <%= link("up", to: Routes.person_path(@conn, :join)) %> to submit news. Your profile is used for attribution and notification.</p></div>
   </div>
 <% end %>
 
-  <%= form_for @changeset, news_item_path(@conn, :create), fn f -> %>
+  <%= form_for @changeset, Routes.news_item_path(@conn, :create), fn f -> %>
     <div class="form-element_wrap">
       <div class="form-element <%= error_class(f, :url) %>">
         <label>URL<span>*</span></label>

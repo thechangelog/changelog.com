@@ -5,7 +5,7 @@
     <p>The transcript for <strong><%= @episode.title %></strong> is ready for you!</p>
 
     <span class="btn-primary">
-      <%= link("Read it here", to: episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) <> "#transcript", itemprop: "url") %>
+      <%= link("Read it here", to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) <> "#transcript", itemprop: "url") %>
     </span>
 
     <p>💚, Logbot</p>

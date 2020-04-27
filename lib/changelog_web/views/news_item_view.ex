@@ -8,22 +8,22 @@ defmodule ChangelogWeb.NewsItemView do
   def admin_edit_link(conn, %{admin: true}, item = %{type: :audio, object: episode}) when is_map(episode) do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
-        link("[#{item.click_count}/#{item.impression_count}]", to: admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false]),
-        link(" [#{comma_separated(episode.reach_count)}]", to: admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn)), data: [turbolinks: false])
+        link("[#{item.click_count}/#{item.impression_count}]", to: Routes.admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false]),
+        link(" [#{comma_separated(episode.reach_count)}]", to: Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn)), data: [turbolinks: false])
       ]
     end
   end
   def admin_edit_link(conn, %{admin: true}, item = %{type: :link, object: post}) when is_map(post) do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
-        link("[#{item.click_count}/#{item.impression_count}]", to: admin_post_path(conn, :edit, post, next: current_path(conn)), data: [turbolinks: false])
+        link("[#{item.click_count}/#{item.impression_count}]", to: Routes.admin_post_path(conn, :edit, post, next: current_path(conn)), data: [turbolinks: false])
       ]
     end
   end
   def admin_edit_link(conn, %{admin: true}, item) do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
-        link("[#{item.click_count}/#{item.impression_count}]", to: admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false])
+        link("[#{item.click_count}/#{item.impression_count}]", to: Routes.admin_news_item_path(conn, :edit, item, next: current_path(conn)), data: [turbolinks: false])
       ]
     end
   end
@@ -46,7 +46,7 @@ defmodule ChangelogWeb.NewsItemView do
      dev_relative("#{item.url}#discussion")
   end
   def discussion_path(conn, item = %NewsItem{}) do
-    item_path = news_item_path(conn, :show, slug(item))
+    item_path = Routes.news_item_path(conn, :show, slug(item))
     if item_path === conn.request_path do
       "#discussion"
     else
@@ -77,7 +77,7 @@ defmodule ChangelogWeb.NewsItemView do
   end
 
   def image_url(item, version) do
-    static_url(Endpoint, image_path(item, version))
+    Routes.static_url(Endpoint, image_path(item, version))
   end
 
   def items_with_ads(items, []), do: items
@@ -91,12 +91,12 @@ defmodule ChangelogWeb.NewsItemView do
   def object_path(%{object_id: nil}), do: nil
   def object_path(item = %{type: :audio}) do
     object = NewsItem.load_object(item).object
-    episode_path(Endpoint, :show, object.podcast.slug, object.slug)
+    Routes.episode_path(Endpoint, :show, object.podcast.slug, object.slug)
   end
   def object_path(%{object_id: object_id}), do: "/" <> String.replace(object_id, ":", "/")
 
   def permalink_path(conn, item) do
-    if item.object_id, do: dev_relative(item.url), else: news_item_path(conn, :show, slug(item))
+    if item.object_id, do: dev_relative(item.url), else: Routes.news_item_path(conn, :show, slug(item))
   end
 
   def permalink_data(item) do
@@ -177,7 +177,7 @@ defmodule ChangelogWeb.NewsItemView do
   end
 
   def topic_link(conn, topic) do
-    link("##{topic.slug}", to: topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
+    link("##{topic.slug}", to: Routes.topic_path(conn, :show, topic.slug), title: "View #{topic.name}")
   end
 
   def video_embed(item = %{type: :video}) do
