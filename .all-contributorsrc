@@ -294,8 +294,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "wojtekmach",
+      "name": "Wojtek Mach",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/76071?v=4",
+      "profile": "http://wojtekmach.pl",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
