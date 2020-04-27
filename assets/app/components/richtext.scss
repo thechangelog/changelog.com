@@ -41,6 +41,16 @@
     a {
       font-weight: 500;
     }
+
+    img {
+      float: left;
+      margin: 0 1em 1em 0;
+
+      @include breakpoint(tablet, 'max') { 
+        float: none;
+        margin: 1em auto;
+      }
+    }
   }
 
   p, li {
@@ -132,6 +142,11 @@
     height: auto;
     margin: 0 auto;
     max-width: 100%;
+
+    & + img {
+      margin-bottom: 1em;
+      margin-top: 1em;
+    }
   }
 
   // borders for images in posts
