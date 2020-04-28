@@ -105,7 +105,8 @@ endif
 # https://github.com/ahmetb/kubectl-tree
 KUBETREE := $(HOME)/.krew/bin/kubectl-tree
 $(KUBETREE): $(KUBECTL) $(KREW)
-	$(KUBECTL) krew install tree
+	$(KUBECTL) krew install tree \
+	&& touch $(@)
 
 # Make krew plugins available to kubectl
 PATH := $(HOME)/.krew/bin:$(PATH)
