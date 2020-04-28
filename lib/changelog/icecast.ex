@@ -4,7 +4,7 @@ defmodule Changelog.Icecast do
     defstruct type: :icecast, streaming: false, listeners: 0
   end
 
-  def host, do: "http://45.79.19.10:8000"
+  def host, do: "https://live.changelog.com"
 
   def live_url, do: "#{host()}/stream"
 
