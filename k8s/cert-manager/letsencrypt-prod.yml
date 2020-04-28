@@ -1,6 +1,6 @@
 # https://cert-manager.io/docs/configuration/acme/#creating-a-basic-acme-issuer
 # \- https://cert-manager.io/docs/tutorials/acme/ingress/#step-6-configure-let-s-encrypt-issuer
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
