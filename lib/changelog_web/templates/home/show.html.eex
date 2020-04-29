@@ -45,7 +45,7 @@
         <p>Get notified as soon as an episode is published. Subscribe to as many as you’d like.</p>
         <p class="account_subscriptions-item-info-meta">Delivered each time a new episode is published</p>
       </div>
-      <% podcasts_with_subs = Enum.map(@podcasts, fn(p) -> Map.put(p, :is_subscribed, is_subscribed(@current_user, p)) end) %>
+      <% podcasts_with_subs = Enum.map(@podcasts, fn(p) -> Map.put(p, :is_subscribed, PersonView.is_subscribed(@current_user, p)) end) %>
       <div class="account_subscriptions-item-button">
       <%= if Enum.any?(podcasts_with_subs, fn(p) -> !p.is_subscribed end) do %>
         <a href="javascript:void(0);" class="js-subscribe-all">Collect 'em all</a>

@@ -1,9 +1,8 @@
 defmodule ChangelogWeb.NewsItemCommentController do
   use ChangelogWeb, :controller
 
-  import ChangelogWeb.NewsItemCommentView, only: [transformed_content: 1]
-
   alias Changelog.{NewsItemComment, Notifier}
+  alias ChangelogWeb.NewsItemCommentView
 
   plug RequireUser, "before creating or previewing" when action in [:create, :preview]
 
@@ -47,7 +46,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
   end
 
   def preview(conn, %{"md" => markdown}) do
-    html(conn, transformed_content(markdown))
+    html(conn, NewsItemCommentView.transformed_content(markdown))
   end
 
   defp random_success_message do

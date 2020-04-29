@@ -1,24 +1,24 @@
 defmodule ChangelogWeb.NewstemViewTest do
   use ChangelogWeb.ConnCase, async: true
 
-  import ChangelogWeb.NewsItemView
+  alias ChangelogWeb.NewsItemView
 
   describe "object_path/1" do
     test "defaults to nil when object is nil" do
       item = build(:news_item, object_id: nil)
-      assert is_nil(object_path(item))
+      assert is_nil(NewsItemView.object_path(item))
     end
 
     test "reconstructs audio urls" do
       podcast = insert(:podcast, slug: "test1")
       episode = insert(:episode, podcast: podcast, slug: "test2")
       item = episode |> episode_news_item() |> insert()
-      assert object_path(item) == "/test1/test2"
+      assert NewsItemView.object_path(item) == "/test1/test2"
     end
 
     test "reconstructs post urls" do
       item = build(:news_item, object_id: "posts:oscon-2017-free-pass")
-      assert object_path(item) == "/posts/oscon-2017-free-pass"
+      assert NewsItemView.object_path(item) == "/posts/oscon-2017-free-pass"
     end
   end
 
@@ -26,13 +26,13 @@ defmodule ChangelogWeb.NewstemViewTest do
     test "leaves stories alone that are shorter than given words length" do
       item = %{story: ~s{A fun read, but does it fall pray to [Betteridge's Law of Headlines](https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines)? 😏}}
       tease = ~s{A fun read, but does it fall pray to <a href="https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines">Betteridge’s Law of Headlines</a>? 😏}
-      assert teaser(item) == tease
+      assert NewsItemView.teaser(item) == tease
     end
 
     test "shortens stories that are longer than given words length" do
       item = %{story: "Y'all know we like Awesome lists around these parts. What's better? _Meta-Awesome lists_."}
       tease = "Y’all know we like Awesome lists around these parts. What’s better? ..."
-      assert teaser(item, 11) == tease
+      assert NewsItemView.teaser(item, 11) == tease
     end
 
     test "replaces blockquotes with italics, removes paragraphs" do
@@ -47,16 +47,7 @@ defmodule ChangelogWeb.NewstemViewTest do
       """}
       tease = ~s{<i>A minimal subset of JSON for machine-to-machine communication</i> I didn’t know this problem existed: <i>JSON contains redundant syntax such as </i> ...}
 
-      assert teaser(item) == tease
-    end
-  end
-
-  describe "slug" do
-    test "downcases, removes non-alpha-numeric, converts spaces to dashes, appends hashid" do
-      assert slug(%{id: 1, headline: "Oh! Wow?"}) == "oh-wow-z4"
-      assert slug(%{id: 1, headline: "ZOMG 🙌 an ^emoJI@"}) == "zomg-an-emoji-z4"
-      assert slug(%{id: 1, headline: "The 4 best things EVAR"}) == "the-4-best-things-evar-z4"
-      assert slug(%{id: 1, headline: "🎮 An NES emulator written in Go 🎮"}) == "an-nes-emulator-written-in-go-z4"
+      assert NewsItemView.teaser(item) == tease
     end
   end
 end

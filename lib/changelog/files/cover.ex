@@ -1,12 +1,12 @@
 defmodule Changelog.Files.Cover do
   use Changelog.File, [:jpg, :png]
 
-  import ChangelogWeb.PodcastView, only: [dasherized_name: 1]
+  alias ChangelogWeb.PodcastView
 
   @versions [:original, :medium, :small]
 
   def storage_dir(_, _), do: expanded_dir("/covers")
-  def filename(version, {_, scope}), do: "#{dasherized_name(scope)}-#{version}"
+  def filename(version, {_, scope}), do: "#{PodcastView.dasherized_name(scope)}-#{version}"
 
   def transform(:original, _), do: :noaction
   def transform(version, {_file, _scope}) do

@@ -12,7 +12,7 @@
   <%= if @item do %>
     <%= link("Discuss",
         title: "Discuss this Episode",
-        to: Routes.news_item_path(@conn, :show, NewsItemView.slug(@item)),
+        to: Routes.news_item_path(@conn, :show, NewsItem.slug(@item)),
         class: "toolbar_item toolbar_item--button",
         style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-chat.svg")}')") %>
   <% end %>

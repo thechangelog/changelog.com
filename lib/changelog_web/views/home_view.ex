@@ -1,15 +1,14 @@
 defmodule ChangelogWeb.HomeView do
   use ChangelogWeb, :public_view
 
-  import ChangelogWeb.PersonView, only: [avatar_url: 1, is_subscribed: 2]
-  alias ChangelogWeb.{PodcastView}
+  alias ChangelogWeb.{PersonView, PodcastView}
 
   def newsletter_link(newsletter, assigns) do
     list = newsletter.list_id
     cond do
       assigns.subscribed == list -> unsubscribe_link(assigns.conn, list)
       assigns.unsubscribed == list -> subscribe_link(assigns.conn, list)
-      is_subscribed(assigns.current_user, newsletter) -> unsubscribe_link(assigns.conn, list)
+      PersonView.is_subscribed(assigns.current_user, newsletter) -> unsubscribe_link(assigns.conn, list)
       true -> subscribe_link(assigns.conn, list)
     end
   end

@@ -1,12 +1,12 @@
 defmodule Changelog.Files.Audio do
   use Changelog.File, [:mp3]
 
-  import ChangelogWeb.PodcastView, only: [dasherized_name: 1, cover_local_path: 1]
+  alias ChangelogWeb.PodcastView
 
   @versions [:original]
 
   def storage_dir(_, {_, episode}), do: expanded_dir("/#{episode.podcast.slug}/#{episode.slug}")
-  def filename(_, {_, episode}), do: "#{dasherized_name(episode.podcast)}-#{episode.slug}"
+  def filename(_, {_, episode}), do: "#{PodcastView.dasherized_name(episode.podcast)}-#{episode.slug}"
 
   def transform(:original, {_file, episode}) do
     {:ffmpeg,
@@ -14,7 +14,7 @@ defmodule Changelog.Files.Audio do
       [
         "-f", "mp3",
         "-i", input,
-        "-i", cover_local_path(episode.podcast), "-map", "0:0", "-map", "1:0",
+        "-i", PodcastView.cover_local_path(episode.podcast), "-map", "0:0", "-map", "1:0",
         "-acodec", "copy",
         "-metadata", "artist=Changelog Media",
         "-metadata", "publisher=Changelog Media",

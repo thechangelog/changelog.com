@@ -46,7 +46,7 @@ defmodule ChangelogWeb.NewsItemView do
      dev_relative("#{item.url}#discussion")
   end
   def discussion_path(conn, item = %NewsItem{}) do
-    item_path = Routes.news_item_path(conn, :show, slug(item))
+    item_path = Routes.news_item_path(conn, :show, NewsItem.slug(item))
     if item_path === conn.request_path do
       "#discussion"
     else
@@ -96,7 +96,7 @@ defmodule ChangelogWeb.NewsItemView do
   def object_path(%{object_id: object_id}), do: "/" <> String.replace(object_id, ":", "/")
 
   def permalink_path(conn, item) do
-    if item.object_id, do: dev_relative(item.url), else: Routes.news_item_path(conn, :show, slug(item))
+    if item.object_id, do: dev_relative(item.url), else: Routes.news_item_path(conn, :show, NewsItem.slug(item))
   end
 
   def permalink_data(item) do
@@ -158,8 +158,6 @@ defmodule ChangelogWeb.NewsItemView do
 
   def render_youtube_embed(nil), do: nil
   def render_youtube_embed(id), do: render("_youtube_embed.html", id: id)
-
-  def slug(item), do: NewsItem.slug(item)
 
   def teaser(item, max_words \\ 20) do
     item.story

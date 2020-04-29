@@ -4,8 +4,8 @@ defmodule ChangelogWeb.EpisodeView do
   import ChangelogWeb.Meta.{Title, Description}
 
   alias Changelog.{Episode, Files, Github, ListKit}
-  alias ChangelogWeb.{Endpoint, LayoutView, NewsItemView, PersonView,
-                      PodcastView, SponsorView, TimeView}
+  alias ChangelogWeb.{Endpoint, LayoutView, PersonView, PodcastView,
+                      SponsorView, TimeView}
 
   def admin_edit_link(conn, %{admin: true}, episode) do
     path = Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))

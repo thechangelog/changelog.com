@@ -1,9 +1,7 @@
 defmodule ChangelogWeb.NewsItemControllerTest do
   use ChangelogWeb.ConnCase
 
-  import ChangelogWeb.NewsItemView, only: [hashid: 1, slug: 1]
-
-  alias Changelog.{NewsItem, NewsQueue, Subscription}
+  alias Changelog.{NewsItem, NewsQueue, Post, Subscription}
 
   test "getting the index", %{conn: conn} do
     i1 = insert(:news_item)
@@ -28,22 +26,20 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   test "getting a published news item page via hashid", %{conn: conn} do
     item = insert(:published_news_item, headline: "Hash ID me!")
-    hashid = hashid(item)
-    conn = get(conn, Routes.news_item_path(conn, :show, hashid))
-    assert redirected_to(conn) == Routes.news_item_path(conn, :show, slug(item))
+    conn = get(conn, Routes.news_item_path(conn, :show, NewsItem.hashid(item)))
+    assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
   end
 
   test "getting a published news item page via full slug", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
-    conn = get(conn, Routes.news_item_path(conn, :show, slug(item)))
+    conn = get(conn, Routes.news_item_path(conn, :show, NewsItem.slug(item)))
     assert html_response(conn, 200) =~ item.headline
   end
 
   test "getting a published news item page of that has a post", %{conn: conn} do
     post = insert(:published_post)
     item = post |> post_news_item() |> insert()
-    hashid = hashid(item)
-    conn = get(conn, Routes.news_item_path(conn, :show, hashid))
+    conn = get(conn, Routes.news_item_path(conn, :show, Post.hashid(item)))
     assert redirected_to(conn) == Routes.post_path(conn, :show, post.slug)
   end
 
@@ -51,7 +47,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     item = insert(:news_item)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(conn, Routes.news_item_path(conn, :show, slug(item)))
+      get(conn, Routes.news_item_path(conn, :show, NewsItem.slug(item)))
     end
   end
 
@@ -70,7 +66,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   test "hitting the visit endpoint sans internal object uses html redirect", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
-    conn = get(conn, Routes.news_item_path(conn, :visit, hashid(item)))
+    conn = get(conn, Routes.news_item_path(conn, :visit, NewsItem.hashid(item)))
     assert html_response(conn, 200) =~ item.url
     item = Repo.get(NewsItem, item.id)
     assert item.click_count == 1
@@ -80,7 +76,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     podcast = insert(:podcast, slug: "ohai")
     episode = insert(:published_episode, podcast: podcast, slug: "okbai")
     item = episode |> episode_news_item() |> insert()
-    conn = get(conn, Routes.news_item_path(conn, :visit, hashid(item)))
+    conn = get(conn, Routes.news_item_path(conn, :visit, NewsItem.hashid(item)))
     assert redirected_to(conn) == "/ohai/okbai"
     item = Repo.get(NewsItem, item.id)
     assert item.click_count == 1
@@ -89,7 +85,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   @tag :as_admin
   test "hitting the visit endpoint as admin does not visit", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
-    conn = get(conn, Routes.news_item_path(conn, :visit, hashid(item)))
+    conn = get(conn, Routes.news_item_path(conn, :visit, NewsItem.hashid(item)))
     assert html_response(conn, 200) =~ item.url
     item = Repo.get(NewsItem, item.id)
     assert item.click_count == 0
@@ -98,7 +94,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   test "hitting the impress endpoint", %{conn: conn} do
     item1 = insert(:published_news_item, headline: "You gonna like this")
     item2 = insert(:published_news_item, headline: "You gonna like this too")
-    conn = post(conn, Routes.news_item_path(conn, :impress), ids: "#{hashid(item1)},#{hashid(item2)}")
+    conn = post(conn, Routes.news_item_path(conn, :impress), ids: "#{NewsItem.hashid(item1)},#{NewsItem.hashid(item2)}")
     assert conn.status == 204
     item1 = Repo.get(NewsItem, item1.id)
     item2 = Repo.get(NewsItem, item2.id)
@@ -109,7 +105,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   @tag :as_admin
   test "hitting the impress endpoint as admin does not impress", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
-    conn = post(conn, Routes.news_item_path(conn, :impress), ids: "#{hashid(item)}")
+    conn = post(conn, Routes.news_item_path(conn, :impress), ids: "#{NewsItem.hashid(item)}")
     assert conn.status == 204
     item = Repo.get(NewsItem, item.id)
     assert item.impression_count == 0
@@ -149,7 +145,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   test "cannot subscribe with no user", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = get(conn, Routes.news_item_path(conn, :subscribe, hashid(item)))
+    conn = get(conn, Routes.news_item_path(conn, :subscribe, NewsItem.hashid(item)))
 
     assert redirected_to(conn) == Routes.sign_in_path(conn, :new)
   end
@@ -157,15 +153,15 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   @tag :as_inserted_user
   test "subscribes and redirects back to news item", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = get(conn, Routes.news_item_path(conn, :subscribe, hashid(item)))
+    conn = get(conn, Routes.news_item_path(conn, :subscribe, NewsItem.hashid(item)))
 
-    assert redirected_to(conn) == Routes.news_item_path(conn, :show, slug(item))
+    assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
     assert count(Subscription.subscribed) == 1
   end
 
   test "cannot unsubscribe with no user", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = get(conn, Routes.news_item_path(conn, :unsubscribe, hashid(item)))
+    conn = get(conn, Routes.news_item_path(conn, :unsubscribe, NewsItem.hashid(item)))
 
     assert redirected_to(conn) == Routes.sign_in_path(conn, :new)
   end
@@ -173,9 +169,9 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   @tag :as_inserted_user
   test "unsubscribes and redirects back to news item", %{conn: conn} do
     item = insert(:published_news_item)
-    conn = get(conn, Routes.news_item_path(conn, :unsubscribe, hashid(item)))
+    conn = get(conn, Routes.news_item_path(conn, :unsubscribe, NewsItem.hashid(item)))
 
-    assert redirected_to(conn) == Routes.news_item_path(conn, :show, slug(item))
+    assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
     assert count(Subscription.subscribed) == 0
     assert count(Subscription.unsubscribed) == 1
   end

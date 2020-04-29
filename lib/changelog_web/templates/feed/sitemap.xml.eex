@@ -16,7 +16,7 @@
   <url><loc><%= Routes.live_url(@conn, :index) %></loc></url>
 
 <%= for item <- @news_items do %>
-  <url><loc><%= Routes.news_item_url(@conn, :show, NewsItemView.slug(item)) %></loc></url>
+  <url><loc><%= Routes.news_item_url(@conn, :show, NewsItem.slug(item)) %></loc></url>
 <% end %>
 
   <url><loc><%= Routes.news_source_url(@conn, :index) %></loc></url>

@@ -31,7 +31,7 @@
       </div>
 
       <div class="form-element">
-        <%= maybe_lazy_image(@conn, avatar_url(@changeset.data), @changeset.data.name, width: 67, height: 67) %>
+        <%= maybe_lazy_image(@conn, PersonView.avatar_url(@changeset.data), @changeset.data.name, width: 67, height: 67) %>
         <p class="form-element-note"><%= if @changeset.data.avatar, do: "This image was uploaded to changelog.com", else: "This image is loaded from Gravatar" %>
       </div>
     </div>

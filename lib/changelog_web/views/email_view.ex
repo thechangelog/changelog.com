@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EmailView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.Faker
+  alias Changelog.{Faker, NewsItem}
   alias ChangelogWeb.{AuthView, Endpoint, EpisodeView, NewsItemView,
                       NewsItemCommentView, PersonView}
 
@@ -27,7 +27,7 @@ defmodule ChangelogWeb.EmailView do
     Routes.post_url(Endpoint, :show, post.slug)
   end
   def news_item_url(item) do
-    Routes.news_item_url(Endpoint, :show, NewsItemView.slug(item))
+    Routes.news_item_url(Endpoint, :show, NewsItem.slug(item))
   end
 
   def comment_url(item, comment) do
