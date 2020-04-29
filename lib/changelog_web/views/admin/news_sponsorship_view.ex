@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.NewsSponsorshipView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{ListKit, NewsSponsorship, Sponsor}
+  alias Changelog.{ListKit, NewsAd, NewsSponsorship, Sponsor}
   alias ChangelogWeb.{Endpoint, TimeView}
   alias ChangelogWeb.Admin.{NewsAdView}
 

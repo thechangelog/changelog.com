@@ -23,7 +23,11 @@
           <% end %>
         </td>
         <td><%= length(sponsorship.weeks) %></td>
-        <td><%= length(sponsorship.ads) %></td>
+        <td>
+          <%= for {ad, index} <- Enum.with_index(sponsorship.ads) do %>
+            <%= link(index + 1, to: Routes.news_sponsored_path(@conn, :show, NewsAd.slug(ad)), title: ad.headline) %>&nbsp;
+          <% end %>
+        </td>
         <td><%= sponsorship.click_count %> / <%= sponsorship.impression_count %></td>
         <td><%= ctr(sponsorship) %></td>
         <td><%= sponsorship.weeks |> List.first() |> TimeView.pretty_date() %></td>

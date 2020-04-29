@@ -14,8 +14,6 @@ defmodule ChangelogWeb.NewsAdView do
   end
   def admin_edit_link(_, _, _), do: nil
 
-  def hashid(ad), do: NewsAd.hashid(ad)
-
   def image_link(ad, version \\ :large) do
     if ad.image do
       content_tag :div, class: "news_item-image" do
@@ -35,12 +33,4 @@ defmodule ChangelogWeb.NewsAdView do
   def image_url(ad, version), do: Routes.static_url(Endpoint, image_path(ad, version))
 
   def render_toolbar_button(_conn, _ad), do: nil
-
-  def slug(ad) do
-    ad.headline
-    |> String.downcase
-    |> String.replace(~r/[^a-z0-9\s]/, "")
-    |> String.replace(~r/\s+/, "-")
-    |> Kernel.<>("-#{hashid(ad)}")
-  end
 end

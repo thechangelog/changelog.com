@@ -55,6 +55,14 @@ defmodule Changelog.NewsAd do
 
   def has_no_issues(ad), do: preload_issues(ad).issues |> Enum.empty?
 
+  def slug(ad) do
+    ad.headline
+    |> String.downcase()
+    |> String.replace(~r/[^a-z0-9\s]/, "")
+    |> String.replace(~r/\s+/, "-")
+    |> Kernel.<>("-#{hashid(ad)}")
+  end
+
   def track_click(ad) do
     ad
     |> change(%{click_count: ad.click_count + 1})
