@@ -3,7 +3,7 @@ defmodule ChangelogWeb.EpisodeView do
 
   import ChangelogWeb.Meta.{Title, Description}
 
-  alias Changelog.{Episode, Files, Github, ListKit}
+  alias Changelog.{Episode, Files, Github, ListKit, NewsItem}
   alias ChangelogWeb.{Endpoint, LayoutView, PersonView, PodcastView,
                       SponsorView, TimeView}
 
