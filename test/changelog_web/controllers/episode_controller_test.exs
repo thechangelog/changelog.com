@@ -10,10 +10,10 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     insert(:episode_host, episode: e)
     insert(:episode_sponsor, episode: e)
 
-    conn = get(conn, episode_path(conn, :show, p.slug, e.slug))
+    conn = get(conn, Routes.episode_path(conn, :show, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
 
-    conn = get(conn, episode_path(conn, :embed, p.slug, e.slug))
+    conn = get(conn, Routes.episode_path(conn, :embed, p.slug, e.slug))
     assert get_resp_header(conn, "x-frame-options") == []
     assert html_response(conn, 200) =~ e.title
   end
@@ -26,7 +26,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
 
     Episode.update_transcript(e, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n**Break:** Thanks to our Sponsors")
 
-    conn = get(conn, episode_path(conn, :show, p.slug, e.slug))
+    conn = get(conn, Routes.episode_path(conn, :show, p.slug, e.slug))
 
     assert conn.status == 200
     assert conn.resp_body =~ e.title
@@ -40,7 +40,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     e = insert(:scheduled_episode, podcast: p)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(conn, episode_path(conn, :show, p.slug, e.slug))
+      get(conn, Routes.episode_path(conn, :show, p.slug, e.slug))
     end
   end
 
@@ -49,7 +49,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     e = insert(:episode, podcast: p)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(conn, episode_path(conn, :show, p.slug, e.slug))
+      get(conn, Routes.episode_path(conn, :show, p.slug, e.slug))
     end
   end
 
@@ -57,7 +57,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     p = insert(:podcast)
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(conn, episode_path(conn, :show, p.slug, "bad-episode"))
+      get(conn, Routes.episode_path(conn, :show, p.slug, "bad-episode"))
     end
   end
 
@@ -68,7 +68,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     insert(:episode_guest, episode: e)
     insert(:episode_sponsor, episode: e)
 
-    conn = get(conn, episode_path(conn, :preview, p.slug, e.slug))
+    conn = get(conn, Routes.episode_path(conn, :preview, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
   end
 
@@ -77,7 +77,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       p = insert(:podcast)
       e = insert(:published_episode, podcast: p)
 
-      conn = get(conn, episode_path(conn, :play, p.slug, e.slug))
+      conn = get(conn, Routes.episode_path(conn, :play, p.slug, e.slug))
       assert conn.status == 200
       assert conn.resp_body =~ p.name
       assert conn.resp_body =~ e.title
@@ -89,7 +89,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       e = insert(:published_episode, podcast: p, slug: "2")
       next = insert(:published_episode, podcast: p, slug: "3")
 
-      conn = get(conn, episode_path(conn, :play, p.slug, e.slug))
+      conn = get(conn, Routes.episode_path(conn, :play, p.slug, e.slug))
       assert conn.status == 200
       assert conn.resp_body =~ prev.slug
       assert conn.resp_body =~ next.slug
@@ -101,7 +101,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       p = insert(:podcast)
       e = insert(:published_episode, podcast: p)
 
-      conn = get(conn, episode_path(conn, :share, p.slug, e.slug))
+      conn = get(conn, Routes.episode_path(conn, :share, p.slug, e.slug))
       assert conn.status == 200
       assert conn.resp_body =~ e.title
     end
@@ -113,9 +113,9 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       e = insert(:published_episode, podcast: p)
       i = e |> episode_news_item() |> insert()
 
-      conn = get(conn, episode_path(conn, :discuss, p.slug, e.slug))
+      conn = get(conn, Routes.episode_path(conn, :discuss, p.slug, e.slug))
 
-      assert redirected_to(conn) == news_item_path(conn, :show, NewsItem.slug(i))
+      assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(i))
     end
 
     test "redirects to episode when episode doesn't have one" do

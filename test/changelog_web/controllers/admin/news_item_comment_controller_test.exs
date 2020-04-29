@@ -8,7 +8,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
     c1 = insert(:news_item_comment)
     c2 = insert(:news_item_comment)
 
-    conn = get(conn, admin_news_item_comment_path(conn, :index))
+    conn = get(conn, Routes.admin_news_item_comment_path(conn, :index))
 
     assert html_response(conn, 200) =~ ~r/Comments/
     assert String.contains?(conn.resp_body, String.slice(c1.content, 0, 5))
@@ -19,7 +19,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
   test "renders form to edit comment", %{conn: conn} do
     comment = insert(:news_item_comment)
 
-    conn = get(conn, admin_news_item_comment_path(conn, :edit, comment))
+    conn = get(conn, Routes.admin_news_item_comment_path(conn, :edit, comment))
     assert html_response(conn, 200) =~ ~r/edit/i
   end
 
@@ -28,9 +28,9 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
     author = insert(:person)
     comment = insert(:news_item_comment)
 
-    conn = put(conn, admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{author_id: author.id, content: "bai!"})
+    conn = put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{author_id: author.id, content: "bai!"})
 
-    assert redirected_to(conn) == admin_news_item_comment_path(conn, :index)
+    assert redirected_to(conn) == Routes.admin_news_item_comment_path(conn, :index)
     assert Repo.get(NewsItemComment, comment.id).content == "bai!"
   end
 
@@ -38,7 +38,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
   test "does not update with invalid attributes", %{conn: conn} do
     comment = insert(:news_item_comment)
 
-    conn = put(conn, admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{content: ""})
+    conn = put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{content: ""})
 
     assert html_response(conn, 200) =~ ~r/error/
   end
@@ -47,9 +47,9 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
   test "deletes a comment and redirects", %{conn: conn} do
     comment = insert(:news_item_comment)
 
-    conn = delete(conn, admin_news_item_comment_path(conn, :delete, comment.id))
+    conn = delete(conn, Routes.admin_news_item_comment_path(conn, :delete, comment.id))
 
-    assert redirected_to(conn) == admin_news_item_comment_path(conn, :index)
+    assert redirected_to(conn) == Routes.admin_news_item_comment_path(conn, :index)
     assert count(NewsItemComment) == 0
   end
 
@@ -57,10 +57,10 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
     comment = insert(:news_item_comment)
 
     Enum.each([
-      get(conn, admin_news_item_comment_path(conn, :index)),
-      get(conn, admin_news_item_comment_path(conn, :edit, comment.id)),
-      put(conn, admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{}),
-      delete(conn, admin_news_item_comment_path(conn, :delete, comment.id)),
+      get(conn, Routes.admin_news_item_comment_path(conn, :index)),
+      get(conn, Routes.admin_news_item_comment_path(conn, :edit, comment.id)),
+      put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{}),
+      delete(conn, Routes.admin_news_item_comment_path(conn, :delete, comment.id)),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

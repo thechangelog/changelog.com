@@ -3,7 +3,7 @@ defmodule ChangelogWeb.BenefitControllerTest do
 
   test "renders the benefits sans details", %{conn: conn} do
     benefit = insert(:benefit, code: "ZOMG")
-    conn = get(conn, benefit_path(conn, :index))
+    conn = get(conn, Routes.benefit_path(conn, :index))
     assert conn.status == 200
     refute conn.resp_body =~ benefit.code
   end
@@ -11,7 +11,7 @@ defmodule ChangelogWeb.BenefitControllerTest do
   @tag :as_user
   test "renders the benefits with details", %{conn: conn} do
     benefit = insert(:benefit, code: "ZOMG")
-    conn = get(conn, benefit_path(conn, :index))
+    conn = get(conn, Routes.benefit_path(conn, :index))
     assert conn.status == 200
     assert conn.resp_body =~ benefit.code
   end

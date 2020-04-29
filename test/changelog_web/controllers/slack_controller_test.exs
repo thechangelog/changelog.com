@@ -11,13 +11,13 @@ defmodule ChangelogWeb.SlackControllerTest do
     end
 
     test "it works when no episode is found", %{conn: conn, podcast: podcast} do
-      conn = get(conn, slack_path(conn, :countdown, podcast.slug))
+      conn = get(conn, Routes.slack_path(conn, :countdown, podcast.slug))
       assert conn.status == 200
       assert conn.resp_body =~ "No live recordings scheduled"
     end
 
     test "it works with post requests", %{conn: conn, podcast: podcast} do
-      conn = post(conn, slack_path(conn, :countdown, podcast.slug))
+      conn = post(conn, Routes.slack_path(conn, :countdown, podcast.slug))
       assert conn.status == 200
       assert conn.resp_body =~ "No live recordings scheduled"
     end
@@ -25,7 +25,7 @@ defmodule ChangelogWeb.SlackControllerTest do
     test "it uses the closest upcoming episode", %{conn: conn, podcast: podcast} do
       insert(:live_episode, podcast: podcast, recorded_at: hours_from_now(3))
       insert(:live_episode, podcast: podcast, recorded_at: hours_from_now(24 * 3))
-      conn = get(conn, slack_path(conn, :countdown, podcast.slug))
+      conn = get(conn, Routes.slack_path(conn, :countdown, podcast.slug))
       assert conn.status == 200
       assert conn.resp_body =~ "There's only"
     end
@@ -33,7 +33,7 @@ defmodule ChangelogWeb.SlackControllerTest do
     test "it uses an episode that is currently recording", %{conn: conn, podcast: podcast} do
       insert(:live_episode, podcast: podcast, recorded_at: hours_ago(1))
       conn = with_mock Changelog.Icecast, [is_streaming: fn() -> true end] do
-        get(conn, slack_path(conn, :countdown, podcast.slug))
+        get(conn, Routes.slack_path(conn, :countdown, podcast.slug))
       end
       assert conn.status == 200
       assert conn.resp_body =~ "It's Go Time!"
@@ -41,7 +41,7 @@ defmodule ChangelogWeb.SlackControllerTest do
 
     test "it doesn't use episodes from other podcasts", %{conn: conn, podcast: podcast} do
       insert(:live_episode, recorded_at: hours_from_now(24 * 9))
-      conn = get(conn, slack_path(conn, :countdown, podcast.slug))
+      conn = get(conn, Routes.slack_path(conn, :countdown, podcast.slug))
       assert conn.status == 200
       assert conn.resp_body =~ "No live recordings scheduled"
     end
@@ -54,7 +54,7 @@ defmodule ChangelogWeb.SlackControllerTest do
     end
 
     test "it responds to verification challenge", %{conn: conn} do
-      conn = post(conn, slack_path(conn, :event), %{
+      conn = post(conn, Routes.slack_path(conn, :event), %{
         "type" => "url_verification",
         "token" => "Jhj5dZrVaK7ZwHHjRyZWjbDl",
         "challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"
@@ -72,7 +72,7 @@ defmodule ChangelogWeb.SlackControllerTest do
          [],
          [import_member_id: fn(_, _) -> nil end]}
       ]) do
-        conn = post(conn, slack_path(conn, :event), %{
+        conn = post(conn, Routes.slack_path(conn, :event), %{
             "type" => "event_callback",
             "event" => %{
               "type" => "team_join",
@@ -93,7 +93,7 @@ defmodule ChangelogWeb.SlackControllerTest do
     end
 
     test "it responds with method not allowed for unsupported events", %{conn: conn} do
-      conn = post(conn, slack_path(conn, :event), %{"type" => "event_callback", "event" => %{"type" => "channel_join"}})
+      conn = post(conn, Routes.slack_path(conn, :event), %{"type" => "event_callback", "event" => %{"type" => "channel_join"}})
 
       assert conn.status == 405
     end

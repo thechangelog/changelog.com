@@ -21,16 +21,16 @@ defmodule ChangelogWeb.ConnCase do
       use Phoenix.ConnTest
 
       alias Changelog.Repo
+      alias ChangelogWeb.Router.Helpers, as: Routes
+
       import Ecto
       import Ecto.Query, only: [from: 2]
       import Plug.Conn
-
-      defp count(query), do: Repo.count(query)
-
-      import ChangelogWeb.Router.Helpers
       import Changelog.TestCase
       import Changelog.Factory
       import ChangelogWeb.TimeView, only: [hours_from_now: 1, hours_ago: 1]
+
+      defp count(query), do: Repo.count(query)
 
       # The default endpoint for testing
       @endpoint ChangelogWeb.Endpoint

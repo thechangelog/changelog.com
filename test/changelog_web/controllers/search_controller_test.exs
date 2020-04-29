@@ -9,7 +9,7 @@ defmodule ChangelogWeb.SearchControllerTest do
 
   describe "without query" do
     test "getting the search" do
-      conn = get(build_conn(), search_path(build_conn(), :search))
+      conn = get(build_conn(), Routes.search_path(build_conn(), :search))
 
       assert conn.status == 200
     end
@@ -23,7 +23,7 @@ defmodule ChangelogWeb.SearchControllerTest do
       results = %{"hits" => [item_to_hit(item1)], "nbHits" => 1}
 
       with_mock(Algolia, [search: fn(_, _, _) -> {:ok, results} end]) do
-        conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
+        conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
 
         assert called(Algolia.search(:_, "phoenix", :_))
         assert conn.status == 200
@@ -43,7 +43,7 @@ defmodule ChangelogWeb.SearchControllerTest do
       }
 
       with_mock(Algolia, [search: fn(_, _, _) -> {:ok, results} end]) do
-        conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
+        conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
 
         assert called(Algolia.search(:_, "phoenix", :_))
         assert conn.status == 200
@@ -57,7 +57,7 @@ defmodule ChangelogWeb.SearchControllerTest do
       results = %{"hits" => [], "nbHits" => 1}
 
       with_mock(Algolia, [search: fn(_, _, _) -> {:ok, results} end]) do
-        conn = get(build_conn(), search_path(build_conn(), :search, q: "phoenix"))
+        conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
         assert called(Algolia.search(:_, "phoenix", :_))
         assert conn.status == 200
       end

@@ -32,7 +32,7 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       json = render("news_item.json", %{conn: endpoint, json_feed: news_item})
 
       assert json == %{
-        id: news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
+        id: Routes.news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
         title: news_item.headline,
         url: news_item.url,
         date_published: TimeView.rfc3339(news_item.published_at),
@@ -68,9 +68,9 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       json = render("news_item.json", %{conn: endpoint, json_feed: news_item})
 
       assert json == %{
-        id: news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
+        id: Routes.news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
         title: "#{episode.podcast.name} #{episode.title}",
-        url: episode_url(endpoint, :show, episode.podcast.slug, episode.slug),
+        url: Routes.episode_url(endpoint, :show, episode.podcast.slug, episode.slug),
         date_published: TimeView.rfc3339(episode.published_at),
         content_html: SharedHelpers.md_to_html(news_item.story),
         content_text: SharedHelpers.md_to_text(news_item.story),
@@ -96,10 +96,10 @@ defmodule ChangelogWeb.JsonFeedViewTest do
       json = render("news_item.json", %{conn: endpoint, json_feed: news_item})
 
       assert json == %{
-        id: news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
+        id: Routes.news_item_url(endpoint, :show, NewsItemView.hashid(news_item)),
         title: post.title,
         author: %{name: post.author.name},
-        url: post_url(endpoint, :show, post.slug),
+        url: Routes.post_url(endpoint, :show, post.slug),
         date_published: TimeView.rfc3339(post.published_at),
         content_html: SharedHelpers.md_to_html(news_item.story),
         content_text: SharedHelpers.md_to_text(news_item.story)

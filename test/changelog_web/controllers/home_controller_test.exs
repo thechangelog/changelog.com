@@ -5,39 +5,39 @@ defmodule ChangelogWeb.HomeControllerTest do
 
   @tag :as_user
   test "renders the home page", %{conn: conn} do
-    conn = get(conn, home_path(conn, :show))
+    conn = get(conn, Routes.home_path(conn, :show))
     assert html_response(conn, 200)
   end
 
   @tag :as_user
   test "renders the account form", %{conn: conn} do
-    conn = get(conn, home_path(conn, :account))
+    conn = get(conn, Routes.home_path(conn, :account))
     assert html_response(conn, 200) =~ "form"
   end
 
   @tag :as_user
   test "renders the profile form", %{conn: conn} do
-    conn = get(conn, home_path(conn, :profile))
+    conn = get(conn, Routes.home_path(conn, :profile))
     assert html_response(conn, 200) =~ "form"
   end
 
   @tag :as_inserted_user
   test "updates person and redirects to home page", %{conn: conn} do
-    conn = put(conn, home_path(conn, :update), from: "account", person: %{name: "New Name"})
+    conn = put(conn, Routes.home_path(conn, :update), from: "account", person: %{name: "New Name"})
 
-    assert redirected_to(conn) == home_path(conn, :show)
+    assert redirected_to(conn) == Routes.home_path(conn, :show)
   end
 
   @tag :as_inserted_user
   test "does not update with invalid attributes", %{conn: conn} do
-    conn = put(conn, home_path(conn, :update), from: "profile", person: %{name: ""})
+    conn = put(conn, Routes.home_path(conn, :update), from: "profile", person: %{name: ""})
     assert html_response(conn, 200) =~ ~r/problem/
   end
 
   test "opting out of notifications", %{conn: conn} do
     person = insert(:person)
     {:ok, token} = Person.encoded_id(person)
-    conn = get(conn, home_path(conn, :opt_out, token, "setting", "email_on_authored_news"))
+    conn = get(conn, Routes.home_path(conn, :opt_out, token, "setting", "email_on_authored_news"))
     assert conn.status == 200
     refute Repo.get(Person, person.id).settings.email_on_authored_news
   end
@@ -47,8 +47,8 @@ defmodule ChangelogWeb.HomeControllerTest do
     podcast = insert(:podcast)
     sub = insert(:subscription_on_podcast, person: person, podcast: podcast)
     {:ok, token} = Person.encoded_id(person)
-    conn = get(conn, home_path(conn, :opt_out, token, "podcast", podcast.slug))
-    assert redirected_to(conn) == podcast_path(conn, :show, podcast.slug)
+    conn = get(conn, Routes.home_path(conn, :opt_out, token, "podcast", podcast.slug))
+    assert redirected_to(conn) == Routes.podcast_path(conn, :show, podcast.slug)
     refute Subscription.is_subscribed(Repo.get(Subscription, sub.id))
   end
 
@@ -57,8 +57,8 @@ defmodule ChangelogWeb.HomeControllerTest do
     item = insert(:news_item)
     sub = insert(:subscription_on_podcast, person: person, item: item)
     {:ok, token} = Person.encoded_id(person)
-    conn = get(conn, home_path(conn, :opt_out, token, "news", item.id))
-    assert redirected_to(conn) == news_item_path(conn, :show, NewsItem.slug(item))
+    conn = get(conn, Routes.home_path(conn, :opt_out, token, "news", item.id))
+    assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
     refute Subscription.is_subscribed(Repo.get(Subscription, sub.id))
   end
 
@@ -66,15 +66,15 @@ defmodule ChangelogWeb.HomeControllerTest do
     person = insert(:person)
     item = insert(:news_item)
     {:ok, token} = Person.encoded_id(person)
-    conn = get(conn, home_path(conn, :opt_out, token, "news", item.id))
-    assert redirected_to(conn) == news_item_path(conn, :show, NewsItem.slug(item))
+    conn = get(conn, Routes.home_path(conn, :opt_out, token, "news", item.id))
+    assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
     assert Subscription.is_unsubscribed(person, item)
   end
 
   @tag :as_inserted_user
   test "subscribing to a podcast", %{conn: conn} do
     podcast = insert(:podcast)
-    conn = post(conn, home_path(conn, :subscribe, slug: podcast.slug))
+    conn = post(conn, Routes.home_path(conn, :subscribe, slug: podcast.slug))
     assert conn.status == 200
     assert count(Subscription.subscribed) == 1
   end
@@ -84,7 +84,7 @@ defmodule ChangelogWeb.HomeControllerTest do
     podcast = insert(:podcast)
     insert(:subscription_on_podcast, podcast: podcast, person: conn.assigns.current_user)
     assert count(Subscription.subscribed) == 1
-    conn = post(conn, home_path(conn, :unsubscribe, slug: podcast.slug))
+    conn = post(conn, Routes.home_path(conn, :unsubscribe, slug: podcast.slug))
     assert conn.status == 200
     assert count(Subscription.subscribed) == 0
   end
@@ -93,17 +93,17 @@ defmodule ChangelogWeb.HomeControllerTest do
   test "signed in and opting out of notifications", %{conn: conn} do
     person = conn.assigns.current_user
     {:ok, token} = Person.encoded_id(person)
-    conn = get(conn, home_path(conn, :opt_out, token, "setting", "email_on_submitted_news"))
+    conn = get(conn, Routes.home_path(conn, :opt_out, token, "setting", "email_on_submitted_news"))
     assert conn.status == 200
     refute Repo.get(Person, person.id).settings.email_on_submitted_news
   end
 
   test "requires user on all actions except email links", %{conn: conn} do
     Enum.each([
-      get(conn, home_path(conn, :show)),
-      get(conn, home_path(conn, :profile)),
-      get(conn, home_path(conn, :account)),
-      put(conn, home_path(conn, :update), person: %{}),
+      get(conn, Routes.home_path(conn, :show)),
+      get(conn, Routes.home_path(conn, :profile)),
+      get(conn, Routes.home_path(conn, :account)),
+      put(conn, Routes.home_path(conn, :update), person: %{}),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted

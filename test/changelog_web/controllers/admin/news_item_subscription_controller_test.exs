@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Admin.NewsItemSubscriptionControllerTest do
     insert(:subscription_on_item, item: item, person: p1)
     insert(:subscription_on_item, item: item, person: p2)
 
-    conn = get(conn, admin_news_item_subscription_path(conn, :index, item))
+    conn = get(conn, Routes.admin_news_item_subscription_path(conn, :index, item))
 
     assert html_response(conn, 200) =~ ~r/Subscriptions/
     assert String.contains?(conn.resp_body, p1.name)
@@ -21,7 +21,7 @@ defmodule ChangelogWeb.Admin.NewsItemSubscriptionControllerTest do
     insert(:subscription_on_item, item: item)
 
     Enum.each([
-      get(conn, admin_news_item_subscription_path(conn, :index, item)),
+      get(conn, Routes.admin_news_item_subscription_path(conn, :index, item)),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted()

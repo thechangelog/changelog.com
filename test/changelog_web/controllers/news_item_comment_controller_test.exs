@@ -7,7 +7,7 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
 
   @tag :as_user
   test "previewing a comment", %{conn: conn} do
-    conn = post(conn, news_item_comment_path(conn, :preview), md: "## Ohai!")
+    conn = post(conn, Routes.news_item_comment_path(conn, :preview), md: "## Ohai!")
     assert html_response(conn, 200) =~ "<h2>Ohai!</h2>"
   end
 
@@ -15,9 +15,9 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
     item = insert(:published_news_item)
     count_before = count(NewsItemComment)
 
-    conn = post(conn, news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id})
+    conn = post(conn, Routes.news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id})
 
-    assert redirected_to(conn) == sign_in_path(conn, :new)
+    assert redirected_to(conn) == Routes.sign_in_path(conn, :new)
     assert count(NewsItemComment) == count_before
   end
 
@@ -25,9 +25,9 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
   test "does not create with no item id", %{conn: conn} do
     count_before = count(NewsItemComment)
 
-    conn = post(conn, news_item_comment_path(conn, :create), news_item_comment: %{content: "yickie"})
+    conn = post(conn, Routes.news_item_comment_path(conn, :create), news_item_comment: %{content: "yickie"})
 
-    assert redirected_to(conn) == root_path(conn, :index)
+    assert redirected_to(conn) == Routes.root_path(conn, :index)
     assert count(NewsItemComment) == count_before
   end
 
@@ -36,9 +36,9 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
     item = insert(:published_news_item)
 
     with_mock(Notifier, [notify: fn(_) -> true end]) do
-      conn = post(conn, news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id})
+      conn = post(conn, Routes.news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id})
 
-      assert redirected_to(conn) == root_path(conn, :index)
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
       assert count(NewsItemComment) == 1
       assert called(Notifier.notify(:_))
     end
@@ -50,9 +50,9 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
     other = insert(:person)
 
     with_mock(Notifier, [notify: fn(_) -> true end]) do
-      conn = post(conn, news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id, author_id: other.id})
+      conn = post(conn, Routes.news_item_comment_path(conn, :create), news_item_comment: %{content: "how dare thee!", item_id: item.id, author_id: other.id})
 
-      assert redirected_to(conn) == root_path(conn, :index)
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
       comment = Repo.one(NewsItemComment)
       assert comment.author_id != other.id
       assert called(Notifier.notify(:_))

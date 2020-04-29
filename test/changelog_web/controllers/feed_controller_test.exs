@@ -17,7 +17,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     news_item = insert(:published_news_item)
     insert(:news_item_topic, news_item: news_item, topic: topic)
 
-    conn = get(conn, feed_path(conn, :sitemap))
+    conn = get(conn, Routes.feed_path(conn, :sitemap))
 
     assert conn.status == 200
     assert valid_xml(conn)
@@ -35,7 +35,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     episode = insert(:published_episode, summary: "zomg")
     episode |> episode_news_item() |> insert()
 
-    conn = get(conn, feed_path(conn, :news))
+    conn = get(conn, Routes.feed_path(conn, :news))
 
     assert conn.status == 200
     assert valid_xml(conn)
@@ -51,7 +51,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     episode = insert(:published_episode, summary: "zomg")
     episode |> episode_news_item() |> insert
 
-    conn = get(conn, feed_path(conn, :news_titles))
+    conn = get(conn, Routes.feed_path(conn, :news_titles))
 
     assert conn.status == 200
     assert valid_xml(conn)
@@ -65,7 +65,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
 
-    conn = get(conn, feed_path(conn, :podcast, p.slug))
+    conn = get(conn, Routes.feed_path(conn, :podcast, p.slug))
 
     assert conn.status == 200
     assert valid_xml(conn)
@@ -75,7 +75,7 @@ defmodule ChangelogWeb.FeedControllerTest do
   test "the backstage podcast feed doesn't exist", %{conn: conn} do
     insert(:podcast, slug: "backstage")
 
-    conn = get(conn, feed_path(conn, :podcast, "backstage"))
+    conn = get(conn, Routes.feed_path(conn, :podcast, "backstage"))
 
     assert conn.status == 404
   end
@@ -86,7 +86,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     p2 = insert(:podcast)
     e2 = insert(:published_episode, podcast: p2)
 
-    conn = get(conn, feed_path(conn, :podcast, "master"))
+    conn = get(conn, Routes.feed_path(conn, :podcast, "master"))
 
     assert conn.status == 200
     assert valid_xml(conn)
@@ -99,7 +99,7 @@ defmodule ChangelogWeb.FeedControllerTest do
     p2 = insert(:post)
     p3 = insert(:published_post)
 
-    conn = get(conn, feed_path(conn, :posts))
+    conn = get(conn, Routes.feed_path(conn, :posts))
 
     assert conn.status == 200
     assert valid_xml(conn)

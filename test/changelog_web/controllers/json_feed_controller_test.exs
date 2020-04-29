@@ -12,7 +12,7 @@ defmodule ChangelogWeb.JsonFeedControllerTest do
 
     conn = conn
     |> put_req_header("accept", "application/json")
-    |> get(json_feed_path(conn, :news))
+    |> get(Routes.json_feed_path(conn, :news))
 
     assert conn.status == 200
     assert conn.resp_body =~ post.title

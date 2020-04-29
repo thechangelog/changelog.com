@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionControllerTest do
     insert(:subscription_on_podcast, podcast: podcast, person: p1)
     insert(:subscription_on_podcast, podcast: podcast, person: p2)
 
-    conn = get(conn, admin_podcast_subscription_path(conn, :index, podcast.slug))
+    conn = get(conn, Routes.admin_podcast_subscription_path(conn, :index, podcast.slug))
 
     assert html_response(conn, 200) =~ ~r/Subscriptions/
     assert String.contains?(conn.resp_body, p1.name)
@@ -21,7 +21,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionControllerTest do
     insert(:subscription_on_podcast, podcast: podcast)
 
     Enum.each([
-      get(conn, admin_podcast_subscription_path(conn, :index, podcast.slug)),
+      get(conn, Routes.admin_podcast_subscription_path(conn, :index, podcast.slug)),
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted()

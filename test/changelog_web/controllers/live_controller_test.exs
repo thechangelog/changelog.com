@@ -10,7 +10,7 @@ defmodule ChangelogWeb.LiveControllerTest do
       episode1 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(24))
       episode2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(48))
 
-      conn = get(conn, live_path(conn, :index))
+      conn = get(conn, Routes.live_path(conn, :index))
 
       assert html_response(conn, 200) =~ episode1.title
       assert html_response(conn, 200) =~ episode2.title
@@ -20,14 +20,14 @@ defmodule ChangelogWeb.LiveControllerTest do
       episode1 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(1))
       episode2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(3))
 
-      conn = get(conn, live_path(conn, :index))
+      conn = get(conn, Routes.live_path(conn, :index))
 
       assert html_response(conn, 200) =~ episode1.title
       assert html_response(conn, 200) =~ episode2.title
     end
 
     test "with no episodes coming soon or live now", %{conn: conn} do
-      conn = get(conn, live_path(conn, :index))
+      conn = get(conn, Routes.live_path(conn, :index))
 
       assert html_response(conn, 200) =~ "No scheduled live shows. Check back soon."
     end
@@ -36,7 +36,7 @@ defmodule ChangelogWeb.LiveControllerTest do
   test "getting a live episode page", %{conn: conn} do
     episode = insert(:episode, recorded_live: true, recorded_at: hours_from_now(1))
 
-    conn = get(conn, live_path(conn, :show, Episode.hashid(episode)))
+    conn = get(conn, Routes.live_path(conn, :show, Episode.hashid(episode)))
 
     assert html_response(conn, 200) =~ episode.title
   end
@@ -45,7 +45,7 @@ defmodule ChangelogWeb.LiveControllerTest do
     episode = insert(:episode, recorded_live: false, recorded_at: hours_from_now(1))
 
     assert_raise Ecto.NoResultsError, fn ->
-      get(conn, live_path(conn, :show, Episode.hashid(episode)))
+      get(conn, Routes.live_path(conn, :show, Episode.hashid(episode)))
     end
   end
 
@@ -53,7 +53,7 @@ defmodule ChangelogWeb.LiveControllerTest do
     e1 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(1))
     e2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(2))
 
-    conn = get(conn, live_path(conn, :ical))
+    conn = get(conn, Routes.live_path(conn, :ical))
 
     assert conn.resp_body =~ e1.title
     assert conn.resp_body =~ e2.title
@@ -64,7 +64,7 @@ defmodule ChangelogWeb.LiveControllerTest do
     e1 = insert(:episode, podcast: podcast, recorded_live: true, recorded_at: hours_from_now(1))
     e2 = insert(:episode, recorded_live: true, recorded_at: hours_from_now(2))
 
-    conn = get(conn, live_path(conn, :ical, podcast.slug))
+    conn = get(conn, Routes.live_path(conn, :ical, podcast.slug))
 
     assert conn.resp_body =~ e1.title
     refute conn.resp_body =~ e2.title
@@ -73,7 +73,7 @@ defmodule ChangelogWeb.LiveControllerTest do
   describe "the live status" do
     test "is false when nothing is streaming", %{conn: conn} do
       with_mock(Icecast, [get_stats: fn() -> %Icecast.Stats{} end]) do
-        conn = get(conn, live_path(conn, :status))
+        conn = get(conn, Routes.live_path(conn, :status))
         response = json_response(conn, 200)
         refute response["streaming"]
         assert response["listeners"] == 0
@@ -82,7 +82,7 @@ defmodule ChangelogWeb.LiveControllerTest do
 
     test "is true when something is streaming", %{conn: conn} do
       with_mock(Icecast, [get_stats: fn() -> %Icecast.Stats{streaming: true, listeners: 14} end]) do
-        conn = get(conn, live_path(conn, :status))
+        conn = get(conn, Routes.live_path(conn, :status))
         response = json_response(conn, 200)
         assert response["streaming"]
         assert response["listeners"] == 14

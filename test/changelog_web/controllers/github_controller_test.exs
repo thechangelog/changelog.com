@@ -16,7 +16,7 @@ defmodule ChangelogWeb.GithubControllerTest do
         conn =
           conn
           |> put_req_header("x-github-event", "push")
-          |> post(github_path(conn, :event), %{
+          |> post(Routes.github_path(conn, :event), %{
               "repository" => %{"full_name" => "thechangelog/transcripts"},
               "commits" => [
                 %{"id" => "1", "added" => ["jsparty/js-party-14.md"], "modified" => ["rfc/rfc-1.md"]},
@@ -35,7 +35,7 @@ defmodule ChangelogWeb.GithubControllerTest do
         conn =
           conn
           |> put_req_header("x-github-event", "push")
-          |> post(github_path(conn, :event), %{
+          |> post(Routes.github_path(conn, :event), %{
               "repository" => %{"full_name" => "thechangelog/show-notes"},
               "commits" => [
                 %{"id" => "1", "added" => ["jsparty/js-party-14.md"], "modified" => ["rfc/rfc-1.md"]},
@@ -53,7 +53,7 @@ defmodule ChangelogWeb.GithubControllerTest do
       conn =
         conn
         |> put_req_header("x-github-event", "push")
-        |> post(github_path(conn, :event), %{
+        |> post(Routes.github_path(conn, :event), %{
             "repository" => %{"full_name" => "thechangelog/changelog.com"},
             "commits" => [%{"id" => "1"}, %{"id" => "2"}, %{"id" => "3"}]
           })
@@ -65,7 +65,7 @@ defmodule ChangelogWeb.GithubControllerTest do
       conn =
         conn
         |> put_req_header("x-github-event", "milestone")
-        |> post(github_path(conn, :event), %{})
+        |> post(Routes.github_path(conn, :event), %{})
 
       assert conn.status == 405
     end

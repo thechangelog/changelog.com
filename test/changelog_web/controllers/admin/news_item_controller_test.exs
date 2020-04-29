@@ -13,7 +13,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     i1 = insert(:published_news_item)
     i2 = insert(:news_item)
 
-    conn = get(conn, admin_news_item_path(conn, :index))
+    conn = get(conn, Routes.admin_news_item_path(conn, :index))
 
     assert html_response(conn, 200) =~ ~r/News/
     assert String.contains?(conn.resp_body, i1.headline)
@@ -22,17 +22,17 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
   @tag :as_admin
   test "renders form to create new item", %{conn: conn} do
-    conn = get(conn, admin_news_item_path(conn, :new))
+    conn = get(conn, Routes.admin_news_item_path(conn, :new))
     assert html_response(conn, 200) =~ ~r/new/
   end
 
   @tag :as_admin
   test "creates news item and leaves it as draft", %{conn: conn} do
     logger = insert(:person)
-    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "draft")
+    conn = post(conn, Routes.admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "draft")
 
     drafted = Repo.one(NewsItem.limit(1))
-    assert redirected_to(conn) == admin_news_item_path(conn, :edit, drafted)
+    assert redirected_to(conn) == Routes.admin_news_item_path(conn, :edit, drafted)
     assert count(NewsItem.drafted) == 1
     assert count(NewsItem.published) == 0
     assert count(NewsQueue) == 0
@@ -46,8 +46,8 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
       {Buffer, [], [queue: fn(_) -> true end]},
       {Algolia, [], [save_object: fn(_, _, _) -> true end]}
     ]) do
-      conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "publish")
-      assert redirected_to(conn) == admin_news_item_path(conn, :index)
+      conn = post(conn, Routes.admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "publish")
+      assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
       assert count(NewsItem.published) == 1
       assert called(Buffer.queue(:_))
       assert called(Algolia.save_object(:_, :_, :_))
@@ -57,9 +57,9 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   @tag :as_admin
   test "creates news item and queues it", %{conn: conn} do
     logger = insert(:person)
-    conn = post(conn, admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "append")
+    conn = post(conn, Routes.admin_news_item_path(conn, :create), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "append")
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
     assert count(NewsItem.published) == 0
     assert count(NewsQueue) == 1
@@ -68,7 +68,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   @tag :as_admin
   test "does not create with invalid attributes", %{conn: conn} do
     count_before = count(NewsItem)
-    conn = post(conn, admin_news_item_path(conn, :create), news_item: @invalid_attrs)
+    conn = post(conn, Routes.admin_news_item_path(conn, :create), news_item: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsItem) == count_before
@@ -78,7 +78,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   test "renders form to edit news item", %{conn: conn} do
     news_item = insert(:news_item)
 
-    conn = get(conn, admin_news_item_path(conn, :edit, news_item))
+    conn = get(conn, Routes.admin_news_item_path(conn, :edit, news_item))
     assert html_response(conn, 200) =~ ~r/edit/i
   end
 
@@ -87,9 +87,9 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     logger = insert(:person)
     news_item = insert(:news_item, logger: logger)
 
-    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, next: admin_news_item_path(conn, :index))
+    conn = put(conn, Routes.admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, next: Routes.admin_news_item_path(conn, :index))
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
   end
 
@@ -98,9 +98,9 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     logger = insert(:person)
     news_item = insert(:news_item, logger: logger)
 
-    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "append")
+    conn = put(conn, Routes.admin_news_item_path(conn, :update, news_item.id), news_item: %{@valid_attrs | logger_id: logger.id}, queue: "append")
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
     assert count(NewsItem.published) == 0
     assert count(NewsItem.drafted) == 0
@@ -112,7 +112,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     news_item = insert(:news_item)
     count_before = count(NewsItem)
 
-    conn = put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: @invalid_attrs)
+    conn = put(conn, Routes.admin_news_item_path(conn, :update, news_item.id), news_item: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsItem) == count_before
@@ -122,9 +122,9 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   test "deletes a news item and redirects", %{conn: conn} do
     news_item = insert(:news_item)
 
-    conn = delete(conn, admin_news_item_path(conn, :delete, news_item.id))
+    conn = delete(conn, Routes.admin_news_item_path(conn, :delete, news_item.id))
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
     assert count(NewsItem) == 0
   end
 
@@ -134,9 +134,9 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     assert count(NewsItem.published) == 1
 
     with_mock(Algolia, [delete_object: fn(_, _) -> true end]) do
-      conn = post(conn, admin_news_item_path(conn, :unpublish, news_item))
+      conn = post(conn, Routes.admin_news_item_path(conn, :unpublish, news_item))
 
-      assert redirected_to(conn) == admin_news_item_path(conn, :index)
+      assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
       assert count(NewsItem.published) == 0
       assert count(NewsItem.drafted) == 1
       assert called(Algolia.delete_object(:_, news_item.id))
@@ -147,9 +147,9 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   test "declines a news item and redirects", %{conn: conn} do
     news_item = insert(:news_item)
 
-    conn = delete(conn, admin_news_item_path(conn, :decline, news_item.id))
+    conn = delete(conn, Routes.admin_news_item_path(conn, :decline, news_item.id))
 
-    assert redirected_to(conn) == admin_news_item_path(conn, :index)
+    assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
     assert count(NewsItem.declined) == 1
   end
@@ -158,13 +158,13 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     news_item = insert(:news_item)
 
     Enum.each([
-      get(conn, admin_news_item_path(conn, :index)),
-      get(conn, admin_news_item_path(conn, :new)),
-      post(conn, admin_news_item_path(conn, :create), news_item: @valid_attrs),
-      get(conn, admin_news_item_path(conn, :edit, news_item.id)),
-      put(conn, admin_news_item_path(conn, :update, news_item.id), news_item: @valid_attrs),
-      delete(conn, admin_news_item_path(conn, :delete, news_item.id)),
-      delete(conn, admin_news_item_path(conn, :decline, news_item.id))
+      get(conn, Routes.admin_news_item_path(conn, :index)),
+      get(conn, Routes.admin_news_item_path(conn, :new)),
+      post(conn, Routes.admin_news_item_path(conn, :create), news_item: @valid_attrs),
+      get(conn, Routes.admin_news_item_path(conn, :edit, news_item.id)),
+      put(conn, Routes.admin_news_item_path(conn, :update, news_item.id), news_item: @valid_attrs),
+      delete(conn, Routes.admin_news_item_path(conn, :delete, news_item.id)),
+      delete(conn, Routes.admin_news_item_path(conn, :decline, news_item.id))
     ], fn conn ->
       assert html_response(conn, 302)
       assert conn.halted
