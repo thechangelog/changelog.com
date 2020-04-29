@@ -2,7 +2,6 @@ defmodule ChangelogWeb.NewsAdController do
   use ChangelogWeb, :controller
 
   alias Changelog.NewsAd
-  alias ChangelogWeb.NewsAdView
 
   def show(conn, %{"id" => slug}) do
     hashid = slug |> String.split("-") |> List.last()

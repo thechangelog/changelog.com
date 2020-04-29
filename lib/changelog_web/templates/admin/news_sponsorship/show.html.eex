@@ -74,7 +74,7 @@
         <td><%= ts(ad.inserted_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link("eye", to: Routes.news_sponsored_path(@conn, :show, NewsAdView.slug(ad))) %>
+            <%= icon_link("eye", to: Routes.news_sponsored_path(@conn, :show, NewsAd.slug(ad))) %>
           </div>
         </td>
       </tr>
