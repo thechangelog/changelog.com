@@ -30,6 +30,7 @@
 
     <%= if @current_user, do: render("_reply_form.html", Map.merge(assigns, %{parent: @comment})) %>
 
+    <%# TODO: Don't show comment-replies if empty %>
     <section class="comment-replies">
       <%= render_many(@comment.children, __MODULE__, "show.html", Map.merge(assigns, %{as: :comment})) %>
     </section>

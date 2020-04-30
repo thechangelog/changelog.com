@@ -1,19 +1,17 @@
 .comments {
   $condensedBreakpoint: 1000px;
   $horizontal-padding: 20px;
-  margin: 0 auto 15vmax;
-  padding: 0 $horizontal-padding;
+  margin: 10px auto $base-spacing;
+  padding: 45px $horizontal-padding 50px;
+  border: 2px solid $lightest-grey;
+  border-left: none;
+  border-right: none;
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
 
   @include breakpoint($condensedBreakpoint) {
-    padding: 0 30px;
-  }
-
-  &-rule {
-    border: none;
-    border-top: 2px solid $light-grey;
-    margin: 10px 0 40px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -30,7 +28,7 @@
   border-radius: 3px;
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: $base-spacing*1.5;
+  // margin-bottom: $base-spacing*1.5;
   min-height: 100px;
 
   &.is-hidden {
@@ -126,12 +124,12 @@
 }
 
 .comment {
-  margin: 0 0 $base-spacing;
+  margin: $base-spacing 0 0;
   position: relative;
 
   // Child comments
   .comment {
-    margin-bottom: $base-spacing/2;
+    margin-top: $base-spacing/2;
   }
 
   &.is-collapsed {
