@@ -1,0 +1,26 @@
+<div class="keyboard_shortcuts">
+  <div class="keyboard_shortcuts-list">
+    <%# NOTE: Purposely avoiding title tag since we're displaying tooltip text %>
+    <%# NOTE: use non-breaking spaces to define tooltip content width (width = max word or group of consecutive words length) %>
+    <a class="keyboard_shortcuts-list-item" href="#">
+      H
+      <span class="visually_hidden"> – Hit me up with something random</span>
+      <span class="keyboard_shortcuts-list-item-tooltip">hit&nbsp;me up&nbsp;with something random</span>
+    </a>
+    <a class="keyboard_shortcuts-list-item" href="#">
+      J
+      <span class="visually_hidden"> – Jump back</span>
+      <span class="keyboard_shortcuts-list-item-tooltip">jump forward</span>
+    </a>
+    <a class="keyboard_shortcuts-list-item" href="#">
+      K
+      <span class="visually_hidden"> – Keep going</span>
+      <span class="keyboard_shortcuts-list-item-tooltip">keep going</span>
+    </a>
+    <a class="keyboard_shortcuts-list-item" href="#">
+      L
+      <span class="visually_hidden"> – Like this but not</span>
+      <span class="keyboard_shortcuts-list-item-tooltip">like&nbsp;this but&nbsp;not</span>
+    </a>
+  </div>
+</div>

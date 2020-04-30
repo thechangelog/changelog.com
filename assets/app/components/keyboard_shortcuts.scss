@@ -1,0 +1,57 @@
+.keyboard_shortcuts {
+  $condensedBreakpoint: 1000px;
+  $horizontal-padding: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 35px $horizontal-padding;
+  border-top: 2px solid $lightest-grey;
+
+  @include breakpoint($condensedBreakpoint) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  &-list {
+    display: flex;
+    justify-content: center;
+
+    &-item {
+      position: relative;
+      margin-right: 1em;
+      padding: 0.5em 0.6em 0.325em;
+      border: 1px solid $light-grey;
+      border-radius: 4px;
+      font-family: $content;
+      font-size: 0.75em;
+      color: $black;
+      transition: background-color 0.1s linear, border-color 0.1s linear;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: $lightest-grey;
+        border-color: $medium-grey-alt;
+      }
+
+      &-tooltip {
+        display: none;
+        @include position(absolute, 100% null null 50%);
+        transform: translateX(-50%);
+        padding-top: 0.625em;
+        font-family: $code;
+        font-size: 0.675rem;
+        text-align: center;
+        line-height: 1.625;
+        color: $dark-grey;
+
+        .keyboard_shortcuts-list-item:hover &,
+        .keyboard_shortcuts-list-item:focus & {
+          display: block;
+        }
+      }
+    }
+  }
+}

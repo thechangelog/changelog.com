@@ -1,11 +1,9 @@
 .comments {
   $condensedBreakpoint: 1000px;
   $horizontal-padding: 20px;
-  margin: 10px auto $base-spacing;
+  margin: 10px auto;
   padding: 45px $horizontal-padding 50px;
-  border: 2px solid $lightest-grey;
-  border-left: none;
-  border-right: none;
+  border-top: 2px solid $lightest-grey;
   // Don't show indent border on first-level comments
   // & > .comment:before { content: none; }
 
