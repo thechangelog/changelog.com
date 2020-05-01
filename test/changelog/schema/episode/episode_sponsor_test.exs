@@ -5,7 +5,13 @@ defmodule Changelog.EpisodeSponsorTest do
 
   describe "changeset" do
     test "valid attributes" do
-      changeset = EpisodeSponsor.changeset(%EpisodeSponsor{}, %{position: 42, title: "some content", link_url: "http://apple.com"})
+      changeset =
+        EpisodeSponsor.changeset(%EpisodeSponsor{}, %{
+          position: 42,
+          title: "some content",
+          link_url: "http://apple.com"
+        })
+
       assert changeset.valid?
     end
 

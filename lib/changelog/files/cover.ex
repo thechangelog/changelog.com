@@ -9,11 +9,12 @@ defmodule Changelog.Files.Cover do
   def filename(version, {_, scope}), do: "#{PodcastView.dasherized_name(scope)}-#{version}"
 
   def transform(:original, _), do: :noaction
+
   def transform(version, {_file, _scope}) do
     {:convert, "-strip -resize #{dimensions(version)}"}
   end
 
   # defp dimensions(:original),  do: "3000x3000"
   defp dimensions(:medium), do: "440x440"
-  defp dimensions(:small),  do: "100x100"
+  defp dimensions(:small), do: "100x100"
 end

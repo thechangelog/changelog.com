@@ -30,7 +30,7 @@ defmodule Changelog.Policies.Default do
       defp is_admin_editor_or_host(nil), do: false
       defp is_admin_editor_or_host(actor), do: is_admin_or_host(actor) || is_editor(actor)
 
-      defoverridable [new: 1, create: 1, index: 1, show: 2, edit: 2, update: 2, delete: 2]
+      defoverridable new: 1, create: 1, index: 1, show: 2, edit: 2, update: 2, delete: 2
     end
   end
 end

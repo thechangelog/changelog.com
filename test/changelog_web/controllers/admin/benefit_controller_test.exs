@@ -28,7 +28,11 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
   test "creates benefit and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
 
-    conn = post(conn, Routes.admin_benefit_path(conn, :create), benefit: %{@valid_attrs | sponsor_id: sponsor.id}, next: Routes.admin_benefit_path(conn, :index))
+    conn =
+      post(conn, Routes.admin_benefit_path(conn, :create),
+        benefit: %{@valid_attrs | sponsor_id: sponsor.id},
+        next: Routes.admin_benefit_path(conn, :index)
+      )
 
     assert redirected_to(conn) == Routes.admin_benefit_path(conn, :index)
     assert count(Benefit) == 1
@@ -56,7 +60,10 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
     sponsor = insert(:sponsor)
     benefit = insert(:benefit, sponsor: sponsor)
 
-    conn = put(conn, Routes.admin_benefit_path(conn, :update, benefit.id), benefit: %{@valid_attrs | sponsor_id: sponsor.id})
+    conn =
+      put(conn, Routes.admin_benefit_path(conn, :update, benefit.id),
+        benefit: %{@valid_attrs | sponsor_id: sponsor.id}
+      )
 
     assert redirected_to(conn) == Routes.admin_benefit_path(conn, :index)
     assert count(Benefit) == 1
@@ -67,7 +74,8 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
     benefit = insert(:benefit)
     count_before = count(Benefit)
 
-    conn = put(conn, Routes.admin_benefit_path(conn, :update, benefit.id), benefit: @invalid_attrs)
+    conn =
+      put(conn, Routes.admin_benefit_path(conn, :update, benefit.id), benefit: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Benefit) == count_before
@@ -86,16 +94,19 @@ defmodule ChangelogWeb.Admin.BenefitControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     benefit = insert(:benefit)
 
-    Enum.each([
-      get(conn, Routes.admin_benefit_path(conn, :index)),
-      get(conn, Routes.admin_benefit_path(conn, :new)),
-      post(conn, Routes.admin_benefit_path(conn, :create), benefit: @valid_attrs),
-      get(conn, Routes.admin_benefit_path(conn, :edit, benefit.id)),
-      put(conn, Routes.admin_benefit_path(conn, :update, benefit.id), benefit: @valid_attrs),
-      delete(conn, Routes.admin_benefit_path(conn, :delete, benefit.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_benefit_path(conn, :index)),
+        get(conn, Routes.admin_benefit_path(conn, :new)),
+        post(conn, Routes.admin_benefit_path(conn, :create), benefit: @valid_attrs),
+        get(conn, Routes.admin_benefit_path(conn, :edit, benefit.id)),
+        put(conn, Routes.admin_benefit_path(conn, :update, benefit.id), benefit: @valid_attrs),
+        delete(conn, Routes.admin_benefit_path(conn, :delete, benefit.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

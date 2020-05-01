@@ -16,64 +16,71 @@ defmodule Mix.Tasks.Changelog.News.Historic do
 
   defp create_news_items_for_episodes do
     logbot = Repo.get_by!(Person, handle: "logbot")
+
     episodes =
-      Episode.published
-      |> Episode.preload_all
-      |> Repo.all
+      Episode.published()
+      |> Episode.preload_all()
+      |> Repo.all()
 
     for episode <- episodes do
-      url = "https://changelog.com" <> Routes.episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)
-      topics = Enum.map(episode.episode_topics, &(Map.take(&1, [:position, :topic_id])))
+      url =
+        "https://changelog.com" <>
+          Routes.episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)
+
+      topics = Enum.map(episode.episode_topics, &Map.take(&1, [:position, :topic_id]))
 
       if Repo.count(NewsItem.with_url(url)) == 0 do
-        changeset = NewsItem.insert_changeset(%NewsItem{}, %{
-          logger_id: logbot.id,
-          status: :published,
-          type: :audio,
-          url: url,
-          headline: episode.title,
-          story: episode.summary,
-          object_id: UrlKit.get_object_id("audio", url),
-          published_at: episode.published_at,
-          news_item_topics: topics
-        })
+        changeset =
+          NewsItem.insert_changeset(%NewsItem{}, %{
+            logger_id: logbot.id,
+            status: :published,
+            type: :audio,
+            url: url,
+            headline: episode.title,
+            story: episode.summary,
+            object_id: UrlKit.get_object_id("audio", url),
+            published_at: episode.published_at,
+            news_item_topics: topics
+          })
 
-        IO.puts "Inserting item for url: #{url}"
+        IO.puts("Inserting item for url: #{url}")
         Repo.insert(changeset)
       else
-        IO.puts "Skipping item for url: #{url}"
+        IO.puts("Skipping item for url: #{url}")
       end
     end
   end
 
   defp create_news_items_for_posts do
     logbot = Repo.get_by!(Person, handle: "logbot")
+
     posts =
-      Post.published
-      |> Post.preload_all
-      |> Repo.all
+      Post.published()
+      |> Post.preload_all()
+      |> Repo.all()
 
     for post <- posts do
       url = "https://changelog.com" <> Routes.post_path(Endpoint, :show, post.slug)
-      topics = Enum.map(post.post_topics, &(Map.take(&1, [:position, :topic_id])))
+      topics = Enum.map(post.post_topics, &Map.take(&1, [:position, :topic_id]))
 
       if Repo.count(NewsItem.with_url(url)) == 0 do
-        changeset = NewsItem.insert_changeset(%NewsItem{}, %{
-          logger_id: logbot.id,
-          status: :published,
-          type: :link,
-          url: url,
-          headline: post.title,
-          story: (post.tldr || post.body),
-          object_id: UrlKit.get_object_id("link", url),
-          published_at: post.published_at,
-          news_item_topics: topics
-        })
+        changeset =
+          NewsItem.insert_changeset(%NewsItem{}, %{
+            logger_id: logbot.id,
+            status: :published,
+            type: :link,
+            url: url,
+            headline: post.title,
+            story: post.tldr || post.body,
+            object_id: UrlKit.get_object_id("link", url),
+            published_at: post.published_at,
+            news_item_topics: topics
+          })
 
-        IO.puts "Inserting item for url: #{url}"
+        IO.puts("Inserting item for url: #{url}")
         Repo.insert(changeset)
       else
-        IO.puts "Skipping item for url: #{url}"
+        IO.puts("Skipping item for url: #{url}")
       end
     end
   end

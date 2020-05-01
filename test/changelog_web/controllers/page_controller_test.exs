@@ -2,21 +2,24 @@ defmodule ChangelogWeb.PageControllerTest do
   use ChangelogWeb.ConnCase
 
   test "static pages all render", %{conn: conn} do
-    Enum.each([
-      "/about",
-      "/contact",
-      "/films",
-      "/community",
-      "/nightly",
-      "/sponsor",
-      "/sponsor/pricing",
-      "/team",
-      "/weekly",
-      "/weekly/archive"
-    ], fn route ->
-      conn = get(conn, route)
-      assert conn.status == 200
-    end)
+    Enum.each(
+      [
+        "/about",
+        "/contact",
+        "/films",
+        "/community",
+        "/nightly",
+        "/sponsor",
+        "/sponsor/pricing",
+        "/team",
+        "/weekly",
+        "/weekly/archive"
+      ],
+      fn route ->
+        conn = get(conn, route)
+        assert conn.status == 200
+      end
+    )
   end
 
   describe "guest" do

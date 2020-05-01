@@ -49,7 +49,7 @@ defmodule Import2Alias do
           List.update_at(acc, line - 1, fn string ->
             if column do
               # the column in imported calls in captures is reported at "&" character
-              column = if String.at(string, column - 1) == "&", do: column + 1, else: column            
+              column = if String.at(string, column - 1) == "&", do: column + 1, else: column
               pre = String.slice(string, 0, column - 1)
               offset = column - 1 + String.length("#{name}")
               post = String.slice(string, offset, String.length(string))

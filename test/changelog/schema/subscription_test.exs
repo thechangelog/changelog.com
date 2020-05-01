@@ -132,7 +132,10 @@ defmodule Changelog.SubscriptionTest do
       {:ok, person: insert(:person), item: insert(:news_item)}
     end
 
-    test "creates an 'unsubscribed' sub when person has never subscribed", %{person: person, item: item} do
+    test "creates an 'unsubscribed' sub when person has never subscribed", %{
+      person: person,
+      item: item
+    } do
       Subscription.unsubscribe(person, item)
       assert Repo.count(Subscription) == 1
       assert Repo.count(Subscription.unsubscribed()) == 1
@@ -158,7 +161,10 @@ defmodule Changelog.SubscriptionTest do
       {:ok, person: insert(:person), podcast: insert(:podcast)}
     end
 
-    test "creates an 'unsubscribed' sub when person has never subscribed", %{person: person, podcast: podcast} do
+    test "creates an 'unsubscribed' sub when person has never subscribed", %{
+      person: person,
+      podcast: podcast
+    } do
       Subscription.unsubscribe(person, podcast)
       assert Repo.count(Subscription) == 1
       assert Repo.count(Subscription.unsubscribed()) == 1

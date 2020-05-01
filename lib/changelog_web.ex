@@ -37,7 +37,9 @@ defmodule ChangelogWeb do
       Useful in combination with `redirect_next` when schema changes (usually slug)
       affect the edit path being redirected to
       """
-      def replace_next_edit_path(params = %{"next" => "edit"}, path), do: Map.put(params, "next", path)
+      def replace_next_edit_path(params = %{"next" => "edit"}, path),
+        do: Map.put(params, "next", path)
+
       def replace_next_edit_path(params, _path), do: params
 
       defp is_admin?(user = %Changelog.Person{}), do: user.admin
@@ -49,7 +51,7 @@ defmodule ChangelogWeb do
     quote do
       use Phoenix.View, root: "lib/changelog_web/templates", namespace: ChangelogWeb
       use Phoenix.HTML
-      import Phoenix.Controller, only: [get_flash: 1,get_flash: 2, view_module: 1]
+      import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
       import Scrivener.HTML
       alias ChangelogWeb.Router.Helpers, as: Routes
       import ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
@@ -60,9 +62,16 @@ defmodule ChangelogWeb do
 
   def public_view do
     quote do
-      use Phoenix.View, root: "lib/changelog_web/templates", namespace: ChangelogWeb, pattern: "**/*"
+      use Phoenix.View,
+        root: "lib/changelog_web/templates",
+        namespace: ChangelogWeb,
+        pattern: "**/*"
+
       use Phoenix.HTML
-      import Phoenix.Controller, only: [current_url: 1, get_flash: 1,get_flash: 2, view_module: 1]
+
+      import Phoenix.Controller,
+        only: [current_url: 1, get_flash: 1, get_flash: 2, view_module: 1]
+
       alias ChangelogWeb.Router.Helpers, as: Routes
       import ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
       alias Changelog.Policies

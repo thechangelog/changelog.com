@@ -23,14 +23,16 @@ defmodule Changelog.NewsIssue do
     issue
     |> cast(attrs, ~w(slug teaser note published published_at)a)
     |> validate_required([:slug])
-    |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
+    |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
     |> validate_length(:teaser, max: 255)
     |> unique_constraint(:slug)
     |> cast_assoc(:news_issue_ads)
     |> cast_assoc(:news_issue_items)
   end
 
-  def with_numbered_slug(query \\ __MODULE__), do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
+  def with_numbered_slug(query \\ __MODULE__),
+    do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
+
   def published(query \\ __MODULE__), do: from(q in query, where: q.published == true)
   def unpublished(query \\ __MODULE__), do: from(q in query, where: q.published == false)
 
@@ -43,23 +45,25 @@ defmodule Changelog.NewsIssue do
 
   def preload_ads(query = %Ecto.Query{}) do
     query
-    |> Ecto.Query.preload(news_issue_ads: ^NewsIssueAd.by_position)
+    |> Ecto.Query.preload(news_issue_ads: ^NewsIssueAd.by_position())
     |> Ecto.Query.preload(ads: [sponsorship: [:sponsor]])
   end
+
   def preload_ads(issue) do
     issue
-    |> Repo.preload(news_issue_ads: {NewsIssueAd.by_position, :ad})
+    |> Repo.preload(news_issue_ads: {NewsIssueAd.by_position(), :ad})
     |> Repo.preload(ads: [sponsorship: [:sponsor]])
   end
 
   def preload_items(query = %Ecto.Query{}) do
     query
-    |> Ecto.Query.preload(news_issue_items: ^NewsIssueItem.by_position)
+    |> Ecto.Query.preload(news_issue_items: ^NewsIssueItem.by_position())
     |> Ecto.Query.preload(items: [:author, :logger, :source, :submitter, :topics])
   end
+
   def preload_items(issue) do
     issue
-    |> Repo.preload(news_issue_items: {NewsIssueItem.by_position, :item})
+    |> Repo.preload(news_issue_items: {NewsIssueItem.by_position(), :item})
     |> Repo.preload(items: [:author, :logger, :source, :submitter, :topics])
   end
 
@@ -81,6 +85,7 @@ defmodule Changelog.NewsIssue do
 
   defp slug_to_integer(slug, default \\ 0)
   defp slug_to_integer(nil, default), do: default
+
   defp slug_to_integer(slug, default) do
     case Integer.parse(slug) do
       {int, _remainder} -> int

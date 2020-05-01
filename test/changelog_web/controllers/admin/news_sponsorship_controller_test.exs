@@ -45,7 +45,11 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
   @tag :as_admin
   test "creates news sponsorship and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
-    conn = post(conn, Routes.admin_news_sponsorship_path(conn, :create), news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id})
+
+    conn =
+      post(conn, Routes.admin_news_sponsorship_path(conn, :create),
+        news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id}
+      )
 
     created = Repo.one(NewsSponsorship.limit(1))
     assert redirected_to(conn) == Routes.admin_news_sponsorship_path(conn, :edit, created)
@@ -55,7 +59,11 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
   @tag :as_admin
   test "does not create with invalid attributes", %{conn: conn} do
     count_before = count(NewsSponsorship)
-    conn = post(conn, Routes.admin_news_sponsorship_path(conn, :create), news_sponsorship: @invalid_attrs)
+
+    conn =
+      post(conn, Routes.admin_news_sponsorship_path(conn, :create),
+        news_sponsorship: @invalid_attrs
+      )
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsSponsorship) == count_before
@@ -73,7 +81,11 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
   test "updates news sponsorship and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
     news_sponsorship = insert(:news_sponsorship)
-    conn = put(conn, Routes.admin_news_sponsorship_path(conn, :update, news_sponsorship.id), news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id})
+
+    conn =
+      put(conn, Routes.admin_news_sponsorship_path(conn, :update, news_sponsorship.id),
+        news_sponsorship: %{@valid_attrs | sponsor_id: sponsor.id}
+      )
 
     assert redirected_to(conn) == Routes.admin_news_sponsorship_path(conn, :index)
     assert count(NewsSponsorship) == 1
@@ -84,7 +96,10 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
     news_sponsorship = insert(:news_sponsorship)
     count_before = count(NewsSponsorship)
 
-    conn = put(conn, Routes.admin_news_sponsorship_path(conn, :update, news_sponsorship.id), news_sponsorship: @invalid_attrs)
+    conn =
+      put(conn, Routes.admin_news_sponsorship_path(conn, :update, news_sponsorship.id),
+        news_sponsorship: @invalid_attrs
+      )
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsSponsorship) == count_before
@@ -93,16 +108,23 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     news_sponsorship = insert(:news_sponsorship)
 
-    Enum.each([
-      get(conn, Routes.admin_news_sponsorship_path(conn, :index)),
-      get(conn, Routes.admin_news_sponsorship_path(conn, :new)),
-      post(conn, Routes.admin_news_sponsorship_path(conn, :create), news_sponsorship: @valid_attrs),
-      get(conn, Routes.admin_news_sponsorship_path(conn, :edit, news_sponsorship.id)),
-      put(conn, Routes.admin_news_sponsorship_path(conn, :update, news_sponsorship.id), news_sponsorship: @valid_attrs),
-      delete(conn, Routes.admin_news_sponsorship_path(conn, :delete, news_sponsorship.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_news_sponsorship_path(conn, :index)),
+        get(conn, Routes.admin_news_sponsorship_path(conn, :new)),
+        post(conn, Routes.admin_news_sponsorship_path(conn, :create),
+          news_sponsorship: @valid_attrs
+        ),
+        get(conn, Routes.admin_news_sponsorship_path(conn, :edit, news_sponsorship.id)),
+        put(conn, Routes.admin_news_sponsorship_path(conn, :update, news_sponsorship.id),
+          news_sponsorship: @valid_attrs
+        ),
+        delete(conn, Routes.admin_news_sponsorship_path(conn, :delete, news_sponsorship.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

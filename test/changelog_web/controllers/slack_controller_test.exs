@@ -32,9 +32,12 @@ defmodule ChangelogWeb.SlackControllerTest do
 
     test "it uses an episode that is currently recording", %{conn: conn, podcast: podcast} do
       insert(:live_episode, podcast: podcast, recorded_at: hours_ago(1))
-      conn = with_mock Changelog.Icecast, [is_streaming: fn() -> true end] do
-        get(conn, Routes.slack_path(conn, :countdown, podcast.slug))
-      end
+
+      conn =
+        with_mock Changelog.Icecast, is_streaming: fn -> true end do
+          get(conn, Routes.slack_path(conn, :countdown, podcast.slug))
+        end
+
       assert conn.status == 200
       assert conn.resp_body =~ "It's Go Time!"
     end
@@ -54,25 +57,27 @@ defmodule ChangelogWeb.SlackControllerTest do
     end
 
     test "it responds to verification challenge", %{conn: conn} do
-      conn = post(conn, Routes.slack_path(conn, :event), %{
-        "type" => "url_verification",
-        "token" => "Jhj5dZrVaK7ZwHHjRyZWjbDl",
-        "challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"
-      })
+      conn =
+        post(conn, Routes.slack_path(conn, :event), %{
+          "type" => "url_verification",
+          "token" => "Jhj5dZrVaK7ZwHHjRyZWjbDl",
+          "challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"
+        })
 
-      assert json_response(conn, 200) == %{"challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"}
+      assert json_response(conn, 200) == %{
+               "challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P"
+             }
     end
 
-    test "it responds to the team_join event, importing id & sending welcome message", %{conn: conn} do
+    test "it responds to the team_join event, importing id & sending welcome message", %{
+      conn: conn
+    } do
       with_mocks([
-        {Client,
-         [],
-        [im: fn(_, _) -> nil end]},
-        {Tasks,
-         [],
-         [import_member_id: fn(_, _) -> nil end]}
+        {Client, [], [im: fn _, _ -> nil end]},
+        {Tasks, [], [import_member_id: fn _, _ -> nil end]}
       ]) do
-        conn = post(conn, Routes.slack_path(conn, :event), %{
+        conn =
+          post(conn, Routes.slack_path(conn, :event), %{
             "type" => "event_callback",
             "event" => %{
               "type" => "team_join",
@@ -86,14 +91,18 @@ defmodule ChangelogWeb.SlackControllerTest do
             }
           })
 
-        assert called Client.im("U2XU53R", Messages.welcome())
-        assert called Tasks.import_member_id("U2XU53R", "grace@hopper.com")
+        assert called(Client.im("U2XU53R", Messages.welcome()))
+        assert called(Tasks.import_member_id("U2XU53R", "grace@hopper.com"))
         assert conn.status == 200
       end
     end
 
     test "it responds with method not allowed for unsupported events", %{conn: conn} do
-      conn = post(conn, Routes.slack_path(conn, :event), %{"type" => "event_callback", "event" => %{"type" => "channel_join"}})
+      conn =
+        post(conn, Routes.slack_path(conn, :event), %{
+          "type" => "event_callback",
+          "event" => %{"type" => "channel_join"}
+        })
 
       assert conn.status == 405
     end

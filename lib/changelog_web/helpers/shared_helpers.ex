@@ -10,14 +10,17 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   action combo, or it could be a regular expression.
   """
   def active_class(conn, matchers, class_name \\ "is-active")
-  def active_class(conn, matchers, class_name) when is_binary(matchers), do: active_class(conn, [matchers], class_name)
+
+  def active_class(conn, matchers, class_name) when is_binary(matchers),
+    do: active_class(conn, [matchers], class_name)
+
   def active_class(conn, matchers, class_name) when is_list(matchers) do
     active_id = controller_action_combo(conn)
 
-    if Enum.any?(matchers, fn(x) ->
-      matcher = if Regex.regex?(x), do: x, else: ~r/#{x}/
-      String.match?(active_id, matcher)
-    end) do
+    if Enum.any?(matchers, fn x ->
+         matcher = if Regex.regex?(x), do: x, else: ~r/#{x}/
+         String.match?(active_id, matcher)
+       end) do
       class_name
     end
   end
@@ -34,14 +37,21 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
 
   def comma_separated_names(list)
-  def comma_separated_names([first]),                do: first.name
-  def comma_separated_names([first, second]),        do: "#{first.name} and #{second.name}"
-  def comma_separated_names([first, second, third]), do: "#{first.name}, #{second.name}, and #{third.name}"
-  def comma_separated_names([first | rest]),         do: "#{first.name}, #{comma_separated_names(rest)}"
-  def comma_separated_names(_unhandled),             do: ""
+  def comma_separated_names([first]), do: first.name
+  def comma_separated_names([first, second]), do: "#{first.name} and #{second.name}"
 
-  def controller_name(conn), do: Controller.controller_module(conn) |> Naming.resource_name("Controller")
-  def controller_action_combo(conn), do: [controller_name(conn), action_name(conn)] |> Enum.join("-")
+  def comma_separated_names([first, second, third]),
+    do: "#{first.name}, #{second.name}, and #{third.name}"
+
+  def comma_separated_names([first | rest]), do: "#{first.name}, #{comma_separated_names(rest)}"
+  def comma_separated_names(_unhandled), do: ""
+
+  def controller_name(conn),
+    do: Controller.controller_module(conn) |> Naming.resource_name("Controller")
+
+  def controller_action_combo(conn),
+    do: [controller_name(conn), action_name(conn)] |> Enum.join("-")
+
   def controller_action_combo_matches?(conn, list) when is_list(list) do
     combo = controller_action_combo(conn)
     Enum.any?(list, &(&1 == combo))
@@ -49,6 +59,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def ctr(%{impression_count: 0}), do: 0
   def ctr(%{click_count: 0}), do: 0
+
   def ctr(trackable) do
     Float.round(trackable.click_count / trackable.impression_count * 100, 1)
   end
@@ -57,7 +68,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def current_path(conn, params), do: Controller.current_path(conn, params)
 
   def dev_relative(url) do
-    if Mix.env == :dev do
+    if Mix.env() == :dev do
       parsed = URI.parse(url)
       [parsed.path, parsed.fragment] |> ListKit.compact_join("#")
     else
@@ -67,7 +78,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def domain_name(url) do
     url
-    |> URI.parse
+    |> URI.parse()
     |> Map.get(:host)
     |> String.replace(~r/\Awww\./, "")
   end
@@ -77,9 +88,10 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     "#{uri.scheme}://#{uri.host}"
   end
 
-  def external_link(text, opts), do: link(text, (opts ++ [rel: "external"]))
+  def external_link(text, opts), do: link(text, opts ++ [rel: "external"])
 
   def get_param(assigns, param, default \\ nil), do: Map.get(assigns.conn.params, param, default)
+
   def get_assigns_or_param(assigns, param, default \\ nil) do
     Map.get(assigns, String.to_atom(param)) || get_param(assigns, param, default)
   end
@@ -100,13 +112,13 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def linkedin_url(%{linkedin_handle: handle}), do: linkedin_url(handle)
   def linkedin_url(handle), do: "https://www.linkedin.com/in/#{handle}"
 
-  def is_future?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == 1
+  def is_future?(time = %DateTime{}, as_of \\ Timex.now()), do: Timex.compare(time, as_of) == 1
 
-  def is_past?(time = %DateTime{}, as_of \\ Timex.now), do: Timex.compare(time, as_of) == -1
+  def is_past?(time = %DateTime{}, as_of \\ Timex.now()), do: Timex.compare(time, as_of) == -1
 
   def lazy_image(src, alt, attrs \\ []) do
-    attrs = Keyword.merge(attrs, [data: [src: src], alt: alt, src: transparent_gif()])
-    attrs = Keyword.update(attrs, :class, "lazy", &("#{&1} lazy"))
+    attrs = Keyword.merge(attrs, data: [src: src], alt: alt, src: transparent_gif())
+    attrs = Keyword.update(attrs, :class, "lazy", &"#{&1} lazy")
     tag(:img, attrs)
   end
 
@@ -121,10 +133,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe, :smart, :hardbreaks])
 
   def md_to_html(nil), do: ""
+
   def md_to_html(md) when is_binary(md) do
     # special case for years stated on their own, which are technically parsed as ordered list items
     # but we don't want them to be. eg - "1997." or "98."
-    if String.match?(md, (~r/^\d{2,4}\.$/)) do
+    if String.match?(md, ~r/^\d{2,4}\.$/) do
       "<p>#{md}</p>"
     else
       Cmark.to_html(md, [:smart, :hardbreaks])
@@ -132,11 +145,15 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
 
   def md_to_text(nil), do: ""
-  def md_to_text(md) when is_binary(md), do: md |> md_to_html() |> HtmlSanitizeEx.strip_tags() |> sans_new_lines()
 
-  def percent(numerator, divisor), do: ((numerator / divisor) * 100) |> round()
+  def md_to_text(md) when is_binary(md),
+    do: md |> md_to_html() |> HtmlSanitizeEx.strip_tags() |> sans_new_lines()
 
-  def pluralize(list, singular, plural) when is_list(list), do: pluralize(length(list), singular, plural)
+  def percent(numerator, divisor), do: (numerator / divisor * 100) |> round()
+
+  def pluralize(list, singular, plural) when is_list(list),
+    do: pluralize(length(list), singular, plural)
+
   def pluralize(1, singular, _plural), do: "1 #{singular}"
   def pluralize(count, _singular, plural), do: "#{count} #{plural}"
 
@@ -144,7 +161,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def sans_new_lines(string), do: String.replace(string, "\n", " ")
 
-  def transparent_gif, do: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+  def transparent_gif,
+    do: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do
@@ -153,6 +171,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
       string
     end
   end
+
   def truncate(_string, _length), do: ""
 
   def twitter_url(nil), do: ""
@@ -162,7 +181,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def twitter_link(model, string \\ nil) do
     if model.twitter_handle do
-      external_link((string || model.twitter_handle), to: twitter_url(model.twitter_handle))
+      external_link(string || model.twitter_handle, to: twitter_url(model.twitter_handle))
     end
   end
 
@@ -173,6 +192,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
 
   def word_count(nil), do: 0
+
   def word_count(text) when is_binary(text) do
     text |> md_to_text() |> String.split() |> length()
   end

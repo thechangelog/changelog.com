@@ -1,7 +1,18 @@
 defmodule Changelog.AgentKit do
-  @known_agents ["Overcast", "PlayerFM", "Feedbin", "Feed Wrangler",
-                 "Inoreader", "NewsBlur", "Bloglovin", "NewsGator",
-                 "TheOldReader", "G2Reader", "Feedly", "BazQux"]
+  @known_agents [
+    "Overcast",
+    "PlayerFM",
+    "Feedbin",
+    "Feed Wrangler",
+    "Inoreader",
+    "NewsBlur",
+    "Bloglovin",
+    "NewsGator",
+    "TheOldReader",
+    "G2Reader",
+    "Feedly",
+    "BazQux"
+  ]
 
   @client_regexes [
     {"Apple TV", ~r/^AppleCoreMedia\/1\.(.*)Apple TV/},
@@ -15,10 +26,11 @@ defmodule Changelog.AgentKit do
   def get_podcast_client(ua) when is_binary(ua) do
     ua = URI.decode(ua)
 
-    name = case Enum.find(@client_regexes, fn({_, regex}) -> String.match?(ua, regex) end) do
-      {client, _} -> client
-      _else -> ua |> String.split("/") |> List.first()
-    end
+    name =
+      case Enum.find(@client_regexes, fn {_, regex} -> String.match?(ua, regex) end) do
+        {client, _} -> client
+        _else -> ua |> String.split("/") |> List.first()
+      end
 
     case name do
       "AndroidDownloadManager" -> "Android"
@@ -27,9 +39,11 @@ defmodule Changelog.AgentKit do
       _else -> name
     end
   end
+
   def get_podcast_client(_), do: "Unknown"
 
   def get_subscribers(nil), do: {:error, :no_ua_string}
+
   def get_subscribers(ua) do
     subscribers = extract_subscribers(ua)
     agent = extract_known_agent(ua)
@@ -37,7 +51,7 @@ defmodule Changelog.AgentKit do
   end
 
   defp extract_known_agent(ua) do
-    Enum.find(@known_agents, fn(x) -> String.match?(ua, ~r/#{x}/i) end)
+    Enum.find(@known_agents, fn x -> String.match?(ua, ~r/#{x}/i) end)
   end
 
   defp extract_subscribers(ua) do

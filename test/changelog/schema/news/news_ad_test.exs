@@ -5,7 +5,12 @@ defmodule Changelog.NewsAdTest do
 
   describe "changeset" do
     test "with valid attributes" do
-      changeset = NewsAd.changeset(%NewsAd{}, %{url: "https://github.com/blog/ohai-there", headline: "Big NEWS!"})
+      changeset =
+        NewsAd.changeset(%NewsAd{}, %{
+          url: "https://github.com/blog/ohai-there",
+          headline: "Big NEWS!"
+        })
+
       assert changeset.valid?
     end
 

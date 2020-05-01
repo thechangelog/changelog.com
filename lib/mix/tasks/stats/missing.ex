@@ -6,17 +6,17 @@ defmodule Mix.Tasks.Changelog.Stats.Missing do
   @shortdoc "Prints dates with no episode stats for each active podcast"
 
   def run(_args) do
-    Mix.Task.run "app.start"
+    Mix.Task.run("app.start")
 
     for podcast <- Repo.all(active_podcasts_query()) do
       if first_stat = Repo.one(first_stat_query(podcast)) do
-          IO.puts "#{podcast.name}'s first stat was on #{first_stat.date}"
+        IO.puts("#{podcast.name}'s first stat was on #{first_stat.date}")
 
-          for date <- day_interval(first_stat.date)  do
-            if !Repo.exists?(stat_on_date_query(podcast, date)) do
-              IO.puts "\tNo stats on ~D[#{Timex.to_date(date)}]"
-            end
+        for date <- day_interval(first_stat.date) do
+          if !Repo.exists?(stat_on_date_query(podcast, date)) do
+            IO.puts("\tNo stats on ~D[#{Timex.to_date(date)}]")
           end
+        end
       end
     end
   end

@@ -7,8 +7,10 @@ defmodule ChangelogWeb.NewsItemCommentView do
   def hashid(comment), do: NewsItemComment.hashid(comment)
 
   def modifier_classes(item, comment) do
-    [(if Enum.any?(comment.children), do: "comment--has_replies"),
-      (if item.author_id == comment.author_id, do: "is-author")]
+    [
+      if(Enum.any?(comment.children), do: "comment--has_replies"),
+      if(item.author_id == comment.author_id, do: "is-author")
+    ]
     |> ListKit.compact_join()
   end
 

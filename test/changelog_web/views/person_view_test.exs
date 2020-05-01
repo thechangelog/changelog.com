@@ -6,8 +6,12 @@ defmodule ChangelogWeb.PersonViewTest do
   test "external_url" do
     assert PersonView.external_url(build(:person)) == "#"
     assert PersonView.external_url(build(:person, website: "test.com")) == "test.com"
-    assert PersonView.external_url(build(:person, twitter_handle: "handle")) == "https://twitter.com/handle"
-    assert PersonView.external_url(build(:person, github_handle: "handle")) == "https://github.com/handle"
+
+    assert PersonView.external_url(build(:person, twitter_handle: "handle")) ==
+             "https://twitter.com/handle"
+
+    assert PersonView.external_url(build(:person, github_handle: "handle")) ==
+             "https://github.com/handle"
   end
 
   test "first_name" do

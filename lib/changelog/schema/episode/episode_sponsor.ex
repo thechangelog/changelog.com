@@ -21,7 +21,7 @@ defmodule Changelog.EpisodeSponsor do
     struct
     |> cast(params, ~w(position title link_url episode_id sponsor_id description delete)a)
     |> validate_required([:position, :title, :link_url])
-    |> validate_format(:link_url, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:link_url, Regexp.http(), message: Regexp.http_message())
     |> foreign_key_constraint(:episode_id)
     |> foreign_key_constraint(:sponsor_id)
     |> mark_for_deletion()

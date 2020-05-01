@@ -22,7 +22,7 @@ defmodule ChangelogWeb.SearchControllerTest do
 
       results = %{"hits" => [item_to_hit(item1)], "nbHits" => 1}
 
-      with_mock(Algolia, [search: fn(_, _, _) -> {:ok, results} end]) do
+      with_mock(Algolia, search: fn _, _, _ -> {:ok, results} end) do
         conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
 
         assert called(Algolia.search(:_, "phoenix", :_))
@@ -42,7 +42,7 @@ defmodule ChangelogWeb.SearchControllerTest do
         "nbHits" => 2
       }
 
-      with_mock(Algolia, [search: fn(_, _, _) -> {:ok, results} end]) do
+      with_mock(Algolia, search: fn _, _, _ -> {:ok, results} end) do
         conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
 
         assert called(Algolia.search(:_, "phoenix", :_))
@@ -56,7 +56,7 @@ defmodule ChangelogWeb.SearchControllerTest do
     test "getting the search without results" do
       results = %{"hits" => [], "nbHits" => 1}
 
-      with_mock(Algolia, [search: fn(_, _, _) -> {:ok, results} end]) do
+      with_mock(Algolia, search: fn _, _, _ -> {:ok, results} end) do
         conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
         assert called(Algolia.search(:_, "phoenix", :_))
         assert conn.status == 200

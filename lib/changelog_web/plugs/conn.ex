@@ -21,8 +21,7 @@ defmodule ChangelogWeb.Plug.Conn do
   """
   def referer_or_root_path(conn) do
     with {:ok, referer} <- extract_referer(conn),
-         {:ok, path} <- extract_local_path(conn, referer)
-    do
+         {:ok, path} <- extract_local_path(conn, referer) do
       path
     else
       _fail -> Router.Helpers.root_path(conn, :index)

@@ -6,7 +6,8 @@ defmodule Changelog.Search do
   alias Changelog.{NewsItem, Repo}
 
   def search(query, opts \\ []) do
-    opts = Keyword.merge(opts, [attributesToRetrieve: "ObjectID"])
+    opts = Keyword.merge(opts, attributesToRetrieve: "ObjectID")
+
     case Algolia.search(namespace(), query, opts) do
       {:ok, response} -> results_from(response)
       _else -> []
@@ -16,11 +17,13 @@ defmodule Changelog.Search do
   def save_item(item = %NewsItem{status: :published}) do
     Algolia.save_object(namespace(), indexed_attributes(item), item.id)
   end
+
   def save_item(_), do: false
 
   def update_item(item = %NewsItem{status: :published}) do
     Algolia.partial_update_object(namespace(), indexed_attributes(item), item.id)
   end
+
   def update_item(_), do: false
 
   def delete_item(item) do
@@ -31,14 +34,15 @@ defmodule Changelog.Search do
     item_ids =
       response
       |> Map.get("hits")
-      |> Enum.map(fn(x) -> Map.get(x, "objectID") end)
+      |> Enum.map(fn x -> Map.get(x, "objectID") end)
       |> Enum.map(&String.to_integer/1)
 
-    items = NewsItem
-    |> NewsItem.by_ids(item_ids)
-    |> NewsItem.preload_all
-    |> Repo.all
-    |> Enum.map(&NewsItem.load_object/1)
+    items =
+      NewsItem
+      |> NewsItem.by_ids(item_ids)
+      |> NewsItem.preload_all()
+      |> Repo.all()
+      |> Enum.map(&NewsItem.load_object/1)
 
     %Page{
       items: items,
@@ -48,7 +52,7 @@ defmodule Changelog.Search do
     }
   end
 
-  defp namespace, do: "#{Mix.env}_news_items"
+  defp namespace, do: "#{Mix.env()}_news_items"
 
   defp indexed_attributes(item) do
     %{

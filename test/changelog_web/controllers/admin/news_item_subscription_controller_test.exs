@@ -20,11 +20,14 @@ defmodule ChangelogWeb.Admin.NewsItemSubscriptionControllerTest do
     item = insert(:news_item)
     insert(:subscription_on_item, item: item)
 
-    Enum.each([
-      get(conn, Routes.admin_news_item_subscription_path(conn, :index, item)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted()
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_news_item_subscription_path(conn, :index, item))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted()
+      end
+    )
   end
 end

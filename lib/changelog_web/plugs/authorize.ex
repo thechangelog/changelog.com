@@ -5,7 +5,9 @@ defmodule ChangelogWeb.Plug.Authorize do
 
   def init(opts), do: opts
 
-  def call(conn, policy_module) when not is_list(policy_module), do: call(conn, [policy_module, nil])
+  def call(conn, policy_module) when not is_list(policy_module),
+    do: call(conn, [policy_module, nil])
+
   def call(conn, [policy_module, resource_name]) do
     user = conn.assigns.current_user
     resource = conn.assigns[resource_name]

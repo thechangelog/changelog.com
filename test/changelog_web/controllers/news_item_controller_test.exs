@@ -94,7 +94,12 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   test "hitting the impress endpoint", %{conn: conn} do
     item1 = insert(:published_news_item, headline: "You gonna like this")
     item2 = insert(:published_news_item, headline: "You gonna like this too")
-    conn = post(conn, Routes.news_item_path(conn, :impress), ids: "#{NewsItem.hashid(item1)},#{NewsItem.hashid(item2)}")
+
+    conn =
+      post(conn, Routes.news_item_path(conn, :impress),
+        ids: "#{NewsItem.hashid(item1)},#{NewsItem.hashid(item2)}"
+      )
+
     assert conn.status == 204
     item1 = Repo.get(NewsItem, item1.id)
     item2 = Repo.get(NewsItem, item2.id)
@@ -118,7 +123,11 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   test "does not create with no user", %{conn: conn} do
     count_before = count(NewsItem)
-    conn = post(conn, Routes.news_item_path(conn, :create), news_item: %{url: "https://ohai.me/x", headline: "dig it?"})
+
+    conn =
+      post(conn, Routes.news_item_path(conn, :create),
+        news_item: %{url: "https://ohai.me/x", headline: "dig it?"}
+      )
 
     assert redirected_to(conn) == Routes.sign_in_path(conn, :new)
     assert count(NewsItem) == count_before
@@ -126,18 +135,23 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   @tag :as_inserted_user
   test "creates news item and sets it as submitted", %{conn: conn} do
-    conn = post(conn, Routes.news_item_path(conn, :create), news_item: %{url: "https://ohai.me/x", headline: "dig it?"})
+    conn =
+      post(conn, Routes.news_item_path(conn, :create),
+        news_item: %{url: "https://ohai.me/x", headline: "dig it?"}
+      )
 
     assert redirected_to(conn) == Routes.root_path(conn, :index)
-    assert count(NewsItem.submitted) == 1
-    assert count(NewsItem.published) == 0
+    assert count(NewsItem.submitted()) == 1
+    assert count(NewsItem.published()) == 0
     assert count(NewsQueue) == 0
   end
 
   @tag :as_inserted_user
   test "does not create with invalid attributes", %{conn: conn} do
     count_before = count(NewsItem)
-    conn = post(conn, Routes.news_item_path(conn, :create), news_item: %{url: "https://just.this"})
+
+    conn =
+      post(conn, Routes.news_item_path(conn, :create), news_item: %{url: "https://just.this"})
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsItem) == count_before
@@ -156,7 +170,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     conn = get(conn, Routes.news_item_path(conn, :subscribe, NewsItem.hashid(item)))
 
     assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
-    assert count(Subscription.subscribed) == 1
+    assert count(Subscription.subscribed()) == 1
   end
 
   test "cannot unsubscribe with no user", %{conn: conn} do
@@ -172,7 +186,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     conn = get(conn, Routes.news_item_path(conn, :unsubscribe, NewsItem.hashid(item)))
 
     assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
-    assert count(Subscription.subscribed) == 0
-    assert count(Subscription.unsubscribed) == 1
+    assert count(Subscription.subscribed()) == 0
+    assert count(Subscription.unsubscribed()) == 1
   end
 end

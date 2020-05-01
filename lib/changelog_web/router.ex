@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Router do
 
   alias ChangelogWeb.Plug
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
@@ -60,9 +60,13 @@ defmodule ChangelogWeb.Router do
     resources "/topics", TopicController, except: [:show]
 
     get "/news", NewsItemController, :index
+
     resources "/news/items", NewsItemController, except: [:show] do
-      resources "/subscriptions", NewsItemSubscriptionController, as: :subscription, only: [:index]
+      resources "/subscriptions", NewsItemSubscriptionController,
+        as: :subscription,
+        only: [:index]
     end
+
     delete "/news/items/:id/decline", NewsItemController, :decline, as: :news_item
     post "/news/items/:id/unpublish", NewsItemController, :unpublish, as: :news_item
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
@@ -83,7 +87,10 @@ defmodule ChangelogWeb.Router do
       post "/episodes/:id/unpublish", EpisodeController, :unpublish, as: :episode
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode
       resources "/episode_requests", EpisodeRequestController
-      put "/episode_requests/:id/decline", EpisodeRequestController, :decline, as: :episode_request
+
+      put "/episode_requests/:id/decline", EpisodeRequestController, :decline,
+        as: :episode_request
+
       put "/episode_requests/:id/fail", EpisodeRequestController, :fail, as: :episode_request
       put "/episode_requests/:id/pend", EpisodeRequestController, :pend, as: :episode_request
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
@@ -254,6 +261,7 @@ defmodule ChangelogWeb.Router do
   defp handle_errors(_conn, %{reason: %Ecto.NoResultsError{}}), do: true
   defp handle_errors(_conn, %{reason: %Phoenix.Router.NoRouteError{}}), do: true
   defp handle_errors(_conn, %{reason: %Phoenix.NotAcceptableError{}}), do: true
+
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
     headers = Enum.into(conn.req_headers, %{})
     reason = Map.delete(reason, :assigns)

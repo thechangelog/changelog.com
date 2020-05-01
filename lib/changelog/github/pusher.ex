@@ -1,9 +1,9 @@
 defmodule Changelog.Github.Pusher do
-
   alias Changelog.Github.{Client, Source}
 
-  @spec push(Source.t, String.t) :: {:ok, String.t} | {:error, String.t}
+  @spec push(Source.t(), String.t()) :: {:ok, String.t()} | {:error, String.t()}
   def push(source, nil), do: {:error, "Cannot push empty content to #{source.path}"}
+
   def push(source, content) do
     if Client.file_exists?(source) do
       edit_file(source, content)

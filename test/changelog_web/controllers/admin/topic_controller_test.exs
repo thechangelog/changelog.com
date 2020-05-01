@@ -74,16 +74,19 @@ defmodule ChangelogWeb.Admin.TopicControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     topic = insert(:topic)
 
-    Enum.each([
-      get(conn, Routes.admin_topic_path(conn, :index)),
-      get(conn, Routes.admin_topic_path(conn, :new)),
-      post(conn, Routes.admin_topic_path(conn, :create), topic: @valid_attrs),
-      get(conn, Routes.admin_topic_path(conn, :edit, topic.slug)),
-      put(conn, Routes.admin_topic_path(conn, :update, topic.slug), topic: @valid_attrs),
-      delete(conn, Routes.admin_topic_path(conn, :delete, topic.slug)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_topic_path(conn, :index)),
+        get(conn, Routes.admin_topic_path(conn, :new)),
+        post(conn, Routes.admin_topic_path(conn, :create), topic: @valid_attrs),
+        get(conn, Routes.admin_topic_path(conn, :edit, topic.slug)),
+        put(conn, Routes.admin_topic_path(conn, :update, topic.slug), topic: @valid_attrs),
+        delete(conn, Routes.admin_topic_path(conn, :delete, topic.slug))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

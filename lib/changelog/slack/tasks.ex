@@ -15,9 +15,10 @@ defmodule Changelog.Slack.Tasks do
   end
 
   def import_member_id(id, email) do
-    query = from p in Person,
-      where: p.email == ^email,
-      where: is_nil(p.slack_id) or p.slack_id == "pending"
+    query =
+      from p in Person,
+        where: p.email == ^email,
+        where: is_nil(p.slack_id) or p.slack_id == "pending"
 
     if person = Repo.one(query) do
       Repo.update(Ecto.Changeset.change(person, slack_id: id))

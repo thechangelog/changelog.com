@@ -5,15 +5,16 @@ defmodule ChangelogWeb.LiveView do
   alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, PodcastView, TimeView}
 
   def render("ical.ics", %{episodes: episodes}) do
-    events = Enum.map(episodes, fn(episode) ->
-      %ICalendar.Event{
-        summary: "#{episode.podcast.name} Live",
-        description: episode_title_with_subtitle(episode),
-        url: Routes.live_url(Endpoint, :show, Episode.hashid(episode)),
-        dtstart: episode.recorded_at,
-        dtend: Timex.shift(episode.recorded_at, minutes: 90),
-      }
-    end)
+    events =
+      Enum.map(episodes, fn episode ->
+        %ICalendar.Event{
+          summary: "#{episode.podcast.name} Live",
+          description: episode_title_with_subtitle(episode),
+          url: Routes.live_url(Endpoint, :show, Episode.hashid(episode)),
+          dtstart: episode.recorded_at,
+          dtend: Timex.shift(episode.recorded_at, minutes: 90)
+        }
+      end)
 
     %ICalendar{events: events}
   end
@@ -43,7 +44,7 @@ defmodule ChangelogWeb.LiveView do
   end
 
   def should_be_live(episode) do
-     Timex.between?(episode.recorded_at, TimeView.hours_ago(2), Timex.now())
+    Timex.between?(episode.recorded_at, TimeView.hours_ago(2), Timex.now())
   end
 
   def slack_channel(podcast) do

@@ -1,14 +1,19 @@
 defmodule Craisin.Subscriber do
   import Craisin
 
-  def details(list_id, email), do: "/subscribers/#{list_id}?email=#{email}" |> get() |> local_handle()
-  def delete(list_id, email), do: "/subscribers/#{list_id}?email=#{email}" |> delete() |> local_handle()
+  def details(list_id, email),
+    do: "/subscribers/#{list_id}?email=#{email}" |> get() |> local_handle()
+
+  def delete(list_id, email),
+    do: "/subscribers/#{list_id}?email=#{email}" |> delete() |> local_handle()
 
   def subscribe(list_id, person, custom_fields \\ %{}) do
-    fields = %{"EmailAddress" => person.email,
-              "Name" => person.name,
-              "Resubscribe" => true,
-              "CustomFields" => mapped_custom_fields(custom_fields)}
+    fields = %{
+      "EmailAddress" => person.email,
+      "Name" => person.name,
+      "Resubscribe" => true,
+      "CustomFields" => mapped_custom_fields(custom_fields)
+    }
 
     "/subscribers/#{list_id}" |> post(Jason.encode!(fields)) |> local_handle()
   end
@@ -25,6 +30,6 @@ defmodule Craisin.Subscriber do
   defp not_in_list, do: %{"State" => "NotInList"}
 
   defp mapped_custom_fields(custom_fields) do
-    Enum.map(custom_fields, fn({k, v}) -> %{"Key" => k, "Value" => v} end)
+    Enum.map(custom_fields, fn {k, v} -> %{"Key" => k, "Value" => v} end)
   end
 end

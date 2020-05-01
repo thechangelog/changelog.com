@@ -41,7 +41,9 @@ defmodule Changelog.AgentKitTest do
     end
 
     test "returns :ok and tuple with agent/subs when count is there and agent is known" do
-      agent = "PlayerFM/1.0 Podcast Sync (5033 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+      agent =
+        "PlayerFM/1.0 Podcast Sync (5033 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+
       assert {:ok, {"PlayerFM", 5033}} = AgentKit.get_subscribers(agent)
     end
 

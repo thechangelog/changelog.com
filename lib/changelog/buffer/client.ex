@@ -26,12 +26,15 @@ defmodule Changelog.Buffer.Client do
 
   def create(profiles, text, media \\ [])
   def create(profiles, text, media) when is_binary(profiles), do: create([profiles], text, media)
+
   def create(profiles, text, media) when is_list(profiles) do
-    params = [
-      {"text", text},
-      profile_list_to_params(profiles),
-      media_list_to_params(media)
-    ] |> List.flatten()
+    params =
+      [
+        {"text", text},
+        profile_list_to_params(profiles),
+        media_list_to_params(media)
+      ]
+      |> List.flatten()
 
     "/updates/create" |> post({:form, params}) |> handle()
   end
@@ -40,12 +43,12 @@ defmodule Changelog.Buffer.Client do
 
   defp media_list_to_params(media) do
     media
-    |> Enum.reject(fn({_k, v}) -> is_nil(v) end)
-    |> Enum.map(fn({k, v}) -> {"media[#{k}]", v} end)
+    |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+    |> Enum.map(fn {k, v} -> {"media[#{k}]", v} end)
   end
 
   defp profile_list_to_params(profiles) do
-    profiles |> Enum.map(&({"profile_ids[]", &1}))
+    profiles |> Enum.map(&{"profile_ids[]", &1})
   end
 
   defp log(message) do

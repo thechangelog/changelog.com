@@ -5,8 +5,11 @@ defmodule ChangelogWeb.PodcastViewTest do
 
   describe "subscribe_on_overcast_url" do
     test "reformats the Apple URL as necessary" do
-      p = build(:podcast, apple_url: "https://itunes.apple.com/us/podcast/the-changelog/id341623264")
-      assert PodcastView.subscribe_on_overcast_url(p) == "https://overcast.fm/itunes341623264/the-changelog"
+      p =
+        build(:podcast, apple_url: "https://itunes.apple.com/us/podcast/the-changelog/id341623264")
+
+      assert PodcastView.subscribe_on_overcast_url(p) ==
+               "https://overcast.fm/itunes341623264/the-changelog"
     end
   end
 

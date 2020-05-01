@@ -72,7 +72,7 @@ defmodule ChangelogWeb.LiveControllerTest do
 
   describe "the live status" do
     test "is false when nothing is streaming", %{conn: conn} do
-      with_mock(Icecast, [get_stats: fn() -> %Icecast.Stats{} end]) do
+      with_mock(Icecast, get_stats: fn -> %Icecast.Stats{} end) do
         conn = get(conn, Routes.live_path(conn, :status))
         response = json_response(conn, 200)
         refute response["streaming"]
@@ -81,7 +81,7 @@ defmodule ChangelogWeb.LiveControllerTest do
     end
 
     test "is true when something is streaming", %{conn: conn} do
-      with_mock(Icecast, [get_stats: fn() -> %Icecast.Stats{streaming: true, listeners: 14} end]) do
+      with_mock(Icecast, get_stats: fn -> %Icecast.Stats{streaming: true, listeners: 14} end) do
         conn = get(conn, Routes.live_path(conn, :status))
         response = json_response(conn, 200)
         assert response["streaming"]

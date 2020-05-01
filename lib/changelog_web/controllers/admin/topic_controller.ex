@@ -11,7 +11,7 @@ defmodule ChangelogWeb.Admin.TopicController do
     topics =
       Topic
       |> order_by([q], asc: q.name)
-      |> Repo.all
+      |> Repo.all()
 
     render(conn, :index, topics: topics)
   end
@@ -31,6 +31,7 @@ defmodule ChangelogWeb.Admin.TopicController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_topic_path(conn, :edit, topic.slug))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -53,6 +54,7 @@ defmodule ChangelogWeb.Admin.TopicController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_topic_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

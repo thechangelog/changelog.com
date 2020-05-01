@@ -7,9 +7,11 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
 
   @shortdoc "Imports people and subscriptions from CSV"
 
-  def run([import_file]), do: run([import_file, "you subscribed way back in the day (pre-launch)"])
+  def run([import_file]),
+    do: run([import_file, "you subscribed way back in the day (pre-launch)"])
+
   def run([import_file, context]) do
-    Mix.Task.run "app.start"
+    Mix.Task.run("app.start")
 
     podcast =
       import_file
@@ -20,8 +22,8 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
     import_file
     |> File.read!()
     |> CSV.parse_string()
-    |> Enum.map(fn([name, email]) -> [String.trim(name), String.trim(email)] end)
-    |> Enum.each(fn([name, email]) ->
+    |> Enum.map(fn [name, email] -> [String.trim(name), String.trim(email)] end)
+    |> Enum.each(fn [name, email] ->
       email
       |> find_or_insert_person(name)
       |> subscribe_if_not_already(podcast, context)
@@ -43,11 +45,12 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
   end
 
   defp insert_person(email, name) do
-    person = if name == "" do
-      Person.with_fake_data()
-    else
-      %Person{name: name, handle: Faker.handle(name)}
-    end
+    person =
+      if name == "" do
+        Person.with_fake_data()
+      else
+        %Person{name: name, handle: Faker.handle(name)}
+      end
 
     person
     |> Person.insert_changeset(%{email: email})

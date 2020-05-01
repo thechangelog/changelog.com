@@ -25,7 +25,10 @@ defmodule ChangelogWeb.SlackController do
     json(conn, %{challenge: challenge})
   end
 
-  def event(conn, %{"type" => "event_callback", "event" => %{"type" => "team_join", "user" => member}}) do
+  def event(conn, %{
+        "type" => "event_callback",
+        "event" => %{"type" => "team_join", "user" => member}
+      }) do
     id = Map.get(member, "id")
     email = get_in(member, ["profile", "email"]) || ""
     Client.im(id, Messages.welcome())
@@ -35,6 +38,7 @@ defmodule ChangelogWeb.SlackController do
 
   def event(conn, params) do
     Logger.info("Slack: Unhandled event #{inspect(params)}")
+
     conn
     |> put_resp_header("x-slack-no-retry", "1")
     |> send_resp(:method_not_allowed, "")

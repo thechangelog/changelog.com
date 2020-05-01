@@ -48,20 +48,26 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   @tag :as_admin
   test "creates person, sends generic welcome, and redirects", %{conn: conn} do
-    conn = post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs, welcome: "generic", next: Routes.admin_person_path(conn, :index))
+    conn =
+      post(conn, Routes.admin_person_path(conn, :create),
+        person: @valid_attrs,
+        welcome: "generic",
+        next: Routes.admin_person_path(conn, :index)
+      )
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
-    assert_delivered_email ChangelogWeb.Email.community_welcome(person)
+    assert_delivered_email(ChangelogWeb.Email.community_welcome(person))
     assert redirected_to(conn) == Routes.admin_person_path(conn, :index)
     assert count(Person) == 1
   end
 
   @tag :as_admin
   test "creates person, sends guest welcome, and redirects", %{conn: conn} do
-    conn = post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs, welcome: "guest")
+    conn =
+      post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs, welcome: "guest")
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
-    assert_delivered_email ChangelogWeb.Email.guest_welcome(person)
+    assert_delivered_email(ChangelogWeb.Email.guest_welcome(person))
     assert redirected_to(conn) == Routes.admin_person_path(conn, :edit, person)
     assert count(Person) == 1
   end
@@ -117,27 +123,30 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   test "invites to slack", %{conn: conn} do
     person = insert(:person)
 
-    with_mock(Slack.Client, [invite: fn(_) -> %{"ok" => true} end]) do
+    with_mock(Slack.Client, invite: fn _ -> %{"ok" => true} end) do
       conn = post(conn, Routes.admin_person_path(conn, :slack, person))
 
       assert redirected_to(conn) == Routes.admin_person_path(conn, :index)
-      assert called Slack.Client.invite(person.email)
+      assert called(Slack.Client.invite(person.email))
     end
   end
 
   test "requires user auth on all actions", %{conn: conn} do
     person = insert(:person)
 
-    Enum.each([
-      get(conn, Routes.admin_person_path(conn, :index)),
-      get(conn, Routes.admin_person_path(conn, :new)),
-      post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs),
-      get(conn, Routes.admin_person_path(conn, :edit, person.id)),
-      put(conn, Routes.admin_person_path(conn, :update, person.id), person: @valid_attrs),
-      delete(conn, Routes.admin_person_path(conn, :delete, person.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_person_path(conn, :index)),
+        get(conn, Routes.admin_person_path(conn, :new)),
+        post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs),
+        get(conn, Routes.admin_person_path(conn, :edit, person.id)),
+        put(conn, Routes.admin_person_path(conn, :update, person.id), person: @valid_attrs),
+        delete(conn, Routes.admin_person_path(conn, :delete, person.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

@@ -10,7 +10,11 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
 
   test "does not create with no user", %{conn: conn} do
     count_before = count(EpisodeRequest)
-    conn = post(conn, Routes.episode_request_path(conn, :create), episode_request: %{pitch: "this is gonna be good", podcast_id: 1})
+
+    conn =
+      post(conn, Routes.episode_request_path(conn, :create),
+        episode_request: %{pitch: "this is gonna be good", podcast_id: 1}
+      )
 
     assert redirected_to(conn) == Routes.sign_in_path(conn, :new)
     assert count(EpisodeRequest) == count_before
@@ -19,10 +23,14 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
   @tag :as_inserted_user
   test "creates request and sets it as fresh", %{conn: conn} do
     podcast = insert(:podcast)
-    conn = post(conn, Routes.episode_request_path(conn, :create), episode_request: %{pitch: "pretty please!", podcast_id: podcast.id})
+
+    conn =
+      post(conn, Routes.episode_request_path(conn, :create),
+        episode_request: %{pitch: "pretty please!", podcast_id: podcast.id}
+      )
 
     assert redirected_to(conn) == Routes.root_path(conn, :index)
-    assert count(EpisodeRequest.fresh) == 1
+    assert count(EpisodeRequest.fresh()) == 1
   end
 
   @tag :as_inserted_user

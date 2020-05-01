@@ -23,32 +23,49 @@ defmodule Changelog.Slack.CountdownTest do
 
     test "when the upcoming recording is < 24 hours away" do
       less_than_24 = hours_from_now(14)
-      response = Countdown.live(%{recorded_at: less_than_24, podcast: %{name: "JS Party"}, title: ""})
+
+      response =
+        Countdown.live(%{recorded_at: less_than_24, podcast: %{name: "JS Party"}, title: ""})
+
       assert response.text =~ "There's only"
       assert response.data == less_than_24
     end
 
     test "when the upcoming recording is < 2 hours away" do
       less_than_2 = hours_from_now(1)
-      response = Countdown.live(%{recorded_at: less_than_2, podcast: %{name: "Backstage"}, title: ""})
+
+      response =
+        Countdown.live(%{recorded_at: less_than_2, podcast: %{name: "Backstage"}, title: ""})
+
       assert response.text =~ "There's just"
       assert response.data == less_than_2
     end
 
     test "when the upcoming recording is in session and stream is live" do
       less_than_1 = hours_ago(1)
-      response = with_mock Icecast, [is_streaming: fn() -> true end] do
-        Countdown.live(%{id: 1, recorded_at: less_than_1, podcast: %{name: "Go Time"}, title: ""})
-      end
+
+      response =
+        with_mock Icecast, is_streaming: fn -> true end do
+          Countdown.live(%{
+            id: 1,
+            recorded_at: less_than_1,
+            podcast: %{name: "Go Time"},
+            title: ""
+          })
+        end
+
       assert response.text =~ "It's Go Time!"
       assert response.data == less_than_1
     end
 
     test "when the upcoming recording is in session but stream is not live" do
       less_than_1 = hours_ago(1)
-      response = with_mock Icecast, [is_streaming: fn() -> false end] do
-        Countdown.live(%{recorded_at: less_than_1, podcast: %{name: "Go Time"}, title: ""})
-      end
+
+      response =
+        with_mock Icecast, is_streaming: fn -> false end do
+          Countdown.live(%{recorded_at: less_than_1, podcast: %{name: "Go Time"}, title: ""})
+        end
+
       assert response.text =~ "Go Time _should_ be live"
       assert response.data == less_than_1
     end

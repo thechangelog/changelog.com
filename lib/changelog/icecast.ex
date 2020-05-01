@@ -24,7 +24,7 @@ defmodule Changelog.Icecast do
       |> get_in(["icestats", "source"])
       |> source_stats()
     rescue
-      HTTPoison.Error    -> %Stats{}
+      HTTPoison.Error -> %Stats{}
       Jason.DecodeError -> %Stats{}
     end
   end

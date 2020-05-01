@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeStatTest do
 
   alias Changelog.EpisodeStat
 
-  @valid_attrs %{date: Timex.today, episode_id: 1, podcast_id: 1}
+  @valid_attrs %{date: Timex.today(), episode_id: 1, podcast_id: 1}
   @invalid_attrs %{}
   @demo Jason.decode!(File.read!("#{fixtures_path()}/demographics.json"))
 
@@ -50,11 +50,22 @@ defmodule Changelog.EpisodeStatTest do
     test "when passed multiple stats, it returns downloads sorted by country" do
       stat1 = build(:episode_stat, date: ~D[2016-01-01], demographics: @demo)
       stat2 = build(:episode_stat, date: ~D[2016-01-02], demographics: @demo)
-      stat3 = build(:episode_stat, date: ~D[2016-01-03], demographics: %{"countries" => %{"JS" => 6666.6}})
+
+      stat3 =
+        build(:episode_stat,
+          date: ~D[2016-01-03],
+          demographics: %{"countries" => %{"JS" => 6666.6}}
+        )
 
       by_country = EpisodeStat.downloads_by_country([stat1, stat2, stat3])
 
-      assert Enum.take(by_country, 4) == [{"JS", 6666.6}, {"US", 5160.06}, {"GB", 780.7}, {"DE", 577.9}]
+      assert Enum.take(by_country, 4) == [
+               {"JS", 6666.6},
+               {"US", 5160.06},
+               {"GB", 780.7},
+               {"DE", 577.9}
+             ]
+
       assert Enum.take(by_country, -2) == [{"AW", 0.0}, {"NP", 0.0}]
     end
   end
@@ -65,7 +76,12 @@ defmodule Changelog.EpisodeStatTest do
 
       by_agent = EpisodeStat.downloads_by_client(stat)
 
-      assert Enum.take(by_agent, 3) == [{"Overcast", 1819.94}, {"Apple Podcasts", 1191.42}, {"Pocket Casts", 889.2}]
+      assert Enum.take(by_agent, 3) == [
+               {"Overcast", 1819.94},
+               {"Apple Podcasts", 1191.42},
+               {"Pocket Casts", 889.2}
+             ]
+
       assert List.last(by_agent) == {"itunesstored", 0.0}
     end
 
@@ -75,7 +91,11 @@ defmodule Changelog.EpisodeStatTest do
 
       by_agent = EpisodeStat.downloads_by_client([stat1, stat2])
 
-      assert Enum.take(by_agent, 3) == [{"Overcast", 3639.88}, {"Apple Podcasts", 2382.84}, {"Pocket Casts", 1778.4}]
+      assert Enum.take(by_agent, 3) == [
+               {"Overcast", 3639.88},
+               {"Apple Podcasts", 2382.84},
+               {"Pocket Casts", 1778.4}
+             ]
     end
   end
 

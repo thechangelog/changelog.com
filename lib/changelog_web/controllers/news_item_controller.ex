@@ -60,11 +60,12 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.top_clicked_first()
       |> NewsItem.preload_all()
 
-    query = case filter do
-      "week" -> NewsItem.published_since(query, Timex.shift(Timex.now, weeks: -1))
-      "month" -> NewsItem.published_since(query, Timex.shift(Timex.now, months: -1))
-      _else -> query
-    end
+    query =
+      case filter do
+        "week" -> NewsItem.published_since(query, Timex.shift(Timex.now(), weeks: -1))
+        "month" -> NewsItem.published_since(query, Timex.shift(Timex.now(), months: -1))
+        _else -> query
+      end
 
     page = Repo.paginate(query, Map.put(params, :page_size, 20))
     items = Enum.map(page.entries, &NewsItem.load_object/1)
@@ -76,6 +77,7 @@ defmodule ChangelogWeb.NewsItemController do
     |> assign(:page, page)
     |> render(:top)
   end
+
   def top(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))
 
   def new(conn, _params) do
@@ -92,6 +94,7 @@ defmodule ChangelogWeb.NewsItemController do
         conn
         |> put_flash(:success, "We received your submission! Stay awesome 💚")
         |> redirect(to: Routes.root_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Something went wrong. 😭")
@@ -101,11 +104,15 @@ defmodule ChangelogWeb.NewsItemController do
 
   def show(conn, %{"id" => slug}) do
     hashid = slug |> String.split("-") |> List.last()
-    item = item_from_hashid(hashid, NewsItem.published)
+    item = item_from_hashid(hashid, NewsItem.published())
 
     cond do
-      NewsItem.is_post(item) -> redirect(conn, to: NewsItemView.object_path(item))
-      slug == hashid -> redirect(conn, to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
+      NewsItem.is_post(item) ->
+        redirect(conn, to: NewsItemView.object_path(item))
+
+      slug == hashid ->
+        redirect(conn, to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
+
       true ->
         item =
           item
@@ -125,11 +132,13 @@ defmodule ChangelogWeb.NewsItemController do
   end
 
   def impress(conn, %{"items" => hashids}), do: impress(conn, %{"ids" => hashids})
+
   def impress(conn = %{assigns: %{current_user: user}}, %{"ids" => hashids}) do
     hashids
     |> String.split(",")
-    |> Enum.each(fn(hashid) ->
+    |> Enum.each(fn hashid ->
       item = item_from_hashid(hashid)
+
       if should_track?(user, item) do
         NewsItem.track_impression(item)
       end

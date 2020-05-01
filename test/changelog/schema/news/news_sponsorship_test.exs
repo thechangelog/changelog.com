@@ -30,7 +30,7 @@ defmodule Changelog.NewsSponsorshipTest do
       ad1 = insert(:news_ad, sponsorship: sponsorship)
       ad2 = insert(:news_ad, sponsorship: sponsorship)
       found = NewsSponsorship.ad_for_index(sponsorship)
-      assert Enum.any?([ad1.id, ad2.id], fn(x) -> x == found.id end)
+      assert Enum.any?([ad1.id, ad2.id], fn x -> x == found.id end)
     end
 
     test "or returns nil if no ads" do
@@ -70,7 +70,7 @@ defmodule Changelog.NewsSponsorshipTest do
       ad1 = insert(:news_ad, sponsorship: sponsorship)
       ad2 = insert(:news_ad, sponsorship: sponsorship)
       found = NewsSponsorship.ad_for_issue(sponsorship)
-      assert Enum.any?([ad1.id, ad2.id], fn(x) -> x == found.id end)
+      assert Enum.any?([ad1.id, ad2.id], fn x -> x == found.id end)
     end
 
     test "or returns nil if no ads" do

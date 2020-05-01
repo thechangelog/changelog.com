@@ -9,5 +9,6 @@ defmodule ChangelogWeb.Meta.Apple do
       |> String.replace_leading("id", "")
     end
   end
+
   def apple_podcasts_id(_), do: nil
 end

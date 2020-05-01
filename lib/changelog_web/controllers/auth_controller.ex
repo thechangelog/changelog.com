@@ -7,11 +7,10 @@ defmodule ChangelogWeb.AuthController do
   plug RequireGuest, "before signing in" when action in [:new, :create]
   plug Ueberauth
 
-  def new(conn, %{"auth" =>  %{"email" => email}}) do
-
+  def new(conn, %{"auth" => %{"email" => email}}) do
     if person = Repo.get_by(Person, email: email) do
       person = Person.refresh_auth_token(person)
-      Email.sign_in(person) |> Mailer.deliver_later
+      Email.sign_in(person) |> Mailer.deliver_later()
       render(conn, "new.html", person: person)
     else
       conn
@@ -19,6 +18,7 @@ defmodule ChangelogWeb.AuthController do
       |> redirect(to: Routes.person_path(conn, :join, %{email: email}))
     end
   end
+
   def new(conn, _params) do
     render(conn, "new.html", person: nil)
   end
@@ -26,7 +26,7 @@ defmodule ChangelogWeb.AuthController do
   def create(conn, %{"token" => token}) do
     person = Person.get_by_encoded_auth(token)
 
-    if person && Timex.before?(Timex.now, person.auth_token_expires_at) do
+    if person && Timex.before?(Timex.now(), person.auth_token_expires_at) do
       sign_in_and_redirect(conn, person, Routes.home_path(conn, :show))
     else
       conn
@@ -50,6 +50,7 @@ defmodule ChangelogWeb.AuthController do
       |> redirect(to: Routes.person_path(conn, :join, params_from_ueberauth(auth)))
     end
   end
+
   def callback(conn = %{assigns: %{ueberauth_failure: _fails}}, _params) do
     conn
     |> put_flash(:error, "Something went wrong. 😭")
@@ -59,6 +60,7 @@ defmodule ChangelogWeb.AuthController do
   defp params_from_ueberauth(%{provider: :github, info: info}) do
     %{name: info.name, handle: info.nickname, github_handle: info.nickname}
   end
+
   defp params_from_ueberauth(%{provider: :twitter, info: info}) do
     %{name: info.name, handle: info.nickname, twitter_handle: info.nickname}
   end

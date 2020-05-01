@@ -10,13 +10,15 @@ defmodule ChangelogWeb.Admin.NewsIssueView do
   def icon(%NewsAd{} = ad) do
     if ad.image, do: content_tag(:i, "", class: "image icon")
   end
+
   def icon(%NewsItem{} = item) do
-    icon_class = cond do
-      item.image -> "image"
-      NewsItem.is_audio(item) -> "volume up"
-      NewsItem.is_video(item) -> "film"
-      true -> nil
-    end
+    icon_class =
+      cond do
+        item.image -> "image"
+        NewsItem.is_audio(item) -> "volume up"
+        NewsItem.is_video(item) -> "film"
+        true -> nil
+      end
 
     if icon_class, do: content_tag(:i, "", class: "#{icon_class} icon")
   end

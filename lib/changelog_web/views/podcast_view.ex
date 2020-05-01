@@ -6,6 +6,7 @@ defmodule ChangelogWeb.PodcastView do
   alias Changelog.Files.Cover
 
   def cover_path(%{slug: "master"}, version), do: "/images/podcasts/master-#{version}.png"
+
   def cover_path(podcast, version) do
     {podcast.cover, podcast}
     |> Cover.url(version)
@@ -17,7 +18,7 @@ defmodule ChangelogWeb.PodcastView do
       podcast
       |> cover_path(:original)
       |> String.split("?")
-      |> List.first
+      |> List.first()
 
     arc_dir = Application.get_env(:arc, :storage_dir)
 
@@ -29,6 +30,7 @@ defmodule ChangelogWeb.PodcastView do
   end
 
   def cover_url(podcast), do: cover_url(podcast, :original)
+
   def cover_url(podcast, version) do
     if podcast.cover do
       Routes.static_url(Endpoint, cover_path(podcast, version))
@@ -47,11 +49,14 @@ defmodule ChangelogWeb.PodcastView do
     feed_url_sans_protocol =
       Routes.feed_url(Endpoint, :podcast, podcast.slug)
       |> String.replace(~r/\Ahttps?:\/\//, "")
+
     "https://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
   end
 
   def subscribe_on_overcast_url(podcast) do
-    %{"id" => id, "name" => name} = Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.apple_url)
+    %{"id" => id, "name" => name} =
+      Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.apple_url)
+
     "https://overcast.fm/itunes#{id}/#{name}"
   end
 

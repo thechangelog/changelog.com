@@ -13,10 +13,10 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     page =
       case filter do
-        "admin"  -> Person.admins()
-        "host"   -> Person.hosts()
+        "admin" -> Person.admins()
+        "host" -> Person.hosts()
         "editor" -> Person.editors()
-        _else    -> Person
+        _else -> Person
       end
       |> Person.newest_first()
       |> Repo.paginate(params)
@@ -79,6 +79,7 @@ defmodule ChangelogWeb.Admin.PersonController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_person_path(conn, :edit, person))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -99,6 +100,7 @@ defmodule ChangelogWeb.Admin.PersonController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_person_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -115,15 +117,19 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   def slack(conn = %{assigns: %{person: person}}, params) do
-    flash = case Slack.Client.invite(person.email) do
-      %{"ok" => true} ->
-        set_slack_id_to_pending(person)
-        "success"
-      %{"ok" => false, "error" => "already_in_team"} ->
-        set_slack_id_to_pending(person)
-        "success"
-      _else -> "failure"
-    end
+    flash =
+      case Slack.Client.invite(person.email) do
+        %{"ok" => true} ->
+          set_slack_id_to_pending(person)
+          "success"
+
+        %{"ok" => false, "error" => "already_in_team"} ->
+          set_slack_id_to_pending(person)
+          "success"
+
+        _else ->
+          "failure"
+      end
 
     conn
     |> put_flash(:result, flash)
@@ -136,6 +142,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   defp set_slack_id_to_pending(person = %{slack_id: id}) when not is_nil(id), do: person
+
   defp set_slack_id_to_pending(person) do
     {:ok, person} = Repo.update(Person.slack_changes(person, "pending"))
     person
@@ -148,12 +155,14 @@ defmodule ChangelogWeb.Admin.PersonController do
       _else -> false
     end
   end
+
   defp handle_generic_welcome_email(person) do
     person = Person.refresh_auth_token(person)
-    Email.community_welcome(person) |> Mailer.deliver_later
+    Email.community_welcome(person) |> Mailer.deliver_later()
   end
+
   defp handle_guest_welcome_email(person) do
     person = Person.refresh_auth_token(person)
-    Email.guest_welcome(person) |> Mailer.deliver_later
+    Email.guest_welcome(person) |> Mailer.deliver_later()
   end
 end

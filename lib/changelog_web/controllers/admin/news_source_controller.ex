@@ -8,9 +8,10 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
   plug :scrub_params, "news_source" when action in [:create, :update]
 
   def index(conn, params) do
-    page = NewsSource
-    |> order_by([s], desc: s.id)
-    |> Repo.paginate(params)
+    page =
+      NewsSource
+      |> order_by([s], desc: s.id)
+      |> Repo.paginate(params)
 
     render(conn, :index, sources: page.entries, page: page)
   end
@@ -30,6 +31,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_source_path(conn, :edit, source))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -50,6 +52,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_source_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

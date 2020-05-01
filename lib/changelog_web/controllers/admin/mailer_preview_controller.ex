@@ -8,9 +8,9 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     previews =
       :functions
       |> __MODULE__.__info__()
-      |> Enum.map(fn({name, _arity}) -> Atom.to_string(name) end)
-      |> Enum.filter(fn(name) -> String.match?(name, ~r/_email/) end)
-      |> Enum.map(fn(name) -> String.replace(name, "_email", "") end)
+      |> Enum.map(fn {name, _arity} -> Atom.to_string(name) end)
+      |> Enum.filter(fn name -> String.match?(name, ~r/_email/) end)
+      |> Enum.map(fn name -> String.replace(name, "_email", "") end)
 
     render(conn, :index, previews: previews)
   end

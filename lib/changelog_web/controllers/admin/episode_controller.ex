@@ -1,9 +1,20 @@
 defmodule ChangelogWeb.Admin.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, EpisodeNewsItem, EpisodeTopic, EpisodeGuest,
-                   EpisodeHost, EpisodeRequest, EpisodeStat, Github, NewsItem,
-                   NewsQueue, Podcast}
+  alias Changelog.{
+    Cache,
+    Episode,
+    EpisodeNewsItem,
+    EpisodeTopic,
+    EpisodeGuest,
+    EpisodeHost,
+    EpisodeRequest,
+    EpisodeStat,
+    Github,
+    NewsItem,
+    NewsQueue,
+    Podcast
+  }
 
   plug :assign_podcast
   plug Authorize, [Policies.Episode, :podcast]
@@ -21,10 +32,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     page =
       case filter do
-        "full"    -> Episode.full(episodes)
-        "bonus"   -> Episode.bonus(episodes)
+        "full" -> Episode.full(episodes)
+        "bonus" -> Episode.bonus(episodes)
         "trailer" -> Episode.trailer(episodes)
-        _else     -> episodes
+        _else -> episodes
       end
       |> Episode.published()
       |> Episode.newest_first()
@@ -53,12 +64,12 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     performance =
       page.entries
-      |> Enum.filter(fn(ep) ->
+      |> Enum.filter(fn ep ->
         ep.type == :full &&
-        Timex.compare(ep.published_at, Timex.shift(Timex.today(), days: -7)) == -1
+          Timex.compare(ep.published_at, Timex.shift(Timex.today(), days: -7)) == -1
       end)
       |> Enum.reverse()
-      |> Enum.map(fn(ep) ->
+      |> Enum.map(fn ep ->
         start_date = Timex.to_date(ep.published_at)
         end_date = Timex.shift(start_date, days: 7)
 
@@ -72,7 +83,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
         {ep.slug, reach, ep.title, ep.reach_count}
       end)
-      |> Enum.reject(fn({_, reach, _, _}) -> reach == 0 end)
+      |> Enum.reject(fn {_, reach, _, _} -> reach == 0 end)
 
     conn
     |> assign(:episodes, page.entries)
@@ -137,7 +148,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         episode_hosts: default_hosts,
         recorded_live: podcast.recorded_live,
         request_id: params["request_id"],
-        slug: default_slug)
+        slug: default_slug
+      )
       |> Episode.admin_changeset()
 
     conn
@@ -156,7 +168,11 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:ok, episode} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
+        |> redirect_next(
+          params,
+          Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug)
+        )
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -187,18 +203,25 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all()
 
-    changeset = Episode.admin_changeset(episode, Map.merge(episode_params, %{"episode_request" => %{}}))
+    changeset =
+      Episode.admin_changeset(episode, Map.merge(episode_params, %{"episode_request" => %{}}))
 
     case Repo.update(changeset) do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
         EpisodeNewsItem.update(episode)
         Cache.delete(episode)
-        params = replace_next_edit_path(params, Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug))
+
+        params =
+          replace_next_edit_path(
+            params,
+            Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, episode.slug)
+          )
 
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -241,6 +264,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         conn
         |> put_flash(:result, "success")
         |> redirect(to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -262,6 +286,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         conn
         |> put_flash(:result, "success")
         |> redirect(to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -282,7 +307,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
-    podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts
+    podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts()
     assign(conn, :podcast, podcast)
   end
 
@@ -294,6 +319,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> List.wrap()
     |> Kernel.++(episode_requests(episode.podcast))
   end
+
   defp episode_requests(podcast) do
     podcast
     |> assoc(:episode_requests)
@@ -309,6 +335,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> EpisodeNewsItem.insert(conn.assigns.current_user)
     |> NewsQueue.append()
   end
+
   defp handle_news_item(_, _), do: false
 
   defp handle_notes_push_to_github(episode) do
@@ -327,16 +354,18 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     then = now |> Timex.shift(years: -1)
 
     Cache.get_or_store("stats-reach-#{podcast.slug}-#{now}", fn ->
-      %{as_of: Timex.now(),
-        now_7:   EpisodeStat.date_range_reach(podcast, now, days: -7),
-        now_30:  EpisodeStat.date_range_reach(podcast, now, days: -30),
-        now_90:  EpisodeStat.date_range_reach(podcast, now, days: -90),
-        prev_7:  EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -7), days: -7),
+      %{
+        as_of: Timex.now(),
+        now_7: EpisodeStat.date_range_reach(podcast, now, days: -7),
+        now_30: EpisodeStat.date_range_reach(podcast, now, days: -30),
+        now_90: EpisodeStat.date_range_reach(podcast, now, days: -90),
+        prev_7: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -7), days: -7),
         prev_30: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -30), days: -30),
         prev_90: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -90), days: -90),
-        then_7:  EpisodeStat.date_range_reach(podcast, then, days: -7),
+        then_7: EpisodeStat.date_range_reach(podcast, then, days: -7),
         then_30: EpisodeStat.date_range_reach(podcast, then, days: -30),
-        then_90: EpisodeStat.date_range_reach(podcast, then, days: -90)}
+        then_90: EpisodeStat.date_range_reach(podcast, then, days: -90)
+      }
     end)
   end
 

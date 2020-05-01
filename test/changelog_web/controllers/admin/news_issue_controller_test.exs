@@ -55,7 +55,11 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
   @tag :as_admin
   test "updates news issue and redirects", %{conn: conn} do
     news_issue = insert(:news_issue)
-    conn = put(conn, Routes.admin_news_issue_path(conn, :update, news_issue.id), news_issue: @valid_attrs)
+
+    conn =
+      put(conn, Routes.admin_news_issue_path(conn, :update, news_issue.id),
+        news_issue: @valid_attrs
+      )
 
     assert redirected_to(conn) == Routes.admin_news_issue_path(conn, :index)
     assert count(NewsIssue) == 1
@@ -66,7 +70,10 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
     news_issue = insert(:news_issue)
     count_before = count(NewsIssue)
 
-    conn = put(conn, Routes.admin_news_issue_path(conn, :update, news_issue.id), news_issue: @invalid_attrs)
+    conn =
+      put(conn, Routes.admin_news_issue_path(conn, :update, news_issue.id),
+        news_issue: @invalid_attrs
+      )
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsIssue) == count_before
@@ -79,7 +86,7 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
     conn = post(conn, Routes.admin_news_issue_path(conn, :publish, news_issue))
 
     assert redirected_to(conn) == Routes.admin_news_issue_path(conn, :index)
-    assert count(NewsIssue.published) == 1
+    assert count(NewsIssue.published()) == 1
   end
 
   @tag :as_admin
@@ -89,22 +96,27 @@ defmodule ChangelogWeb.Admin.NewsIssueControllerTest do
     conn = post(conn, Routes.admin_news_issue_path(conn, :unpublish, news_issue))
 
     assert redirected_to(conn) == Routes.admin_news_issue_path(conn, :index)
-    assert count(NewsIssue.published) == 0
+    assert count(NewsIssue.published()) == 0
   end
 
   test "requires user auth on all actions", %{conn: conn} do
     news_issue = insert(:published_news_issue)
 
-    Enum.each([
-      get(conn, Routes.admin_news_issue_path(conn, :index)),
-      get(conn, Routes.admin_news_issue_path(conn, :new)),
-      post(conn, Routes.admin_news_issue_path(conn, :create), news_issue: @valid_attrs),
-      get(conn, Routes.admin_news_issue_path(conn, :edit, news_issue.id)),
-      put(conn, Routes.admin_news_issue_path(conn, :update, news_issue.id), news_issue: @valid_attrs),
-      delete(conn, Routes.admin_news_issue_path(conn, :delete, news_issue.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_news_issue_path(conn, :index)),
+        get(conn, Routes.admin_news_issue_path(conn, :new)),
+        post(conn, Routes.admin_news_issue_path(conn, :create), news_issue: @valid_attrs),
+        get(conn, Routes.admin_news_issue_path(conn, :edit, news_issue.id)),
+        put(conn, Routes.admin_news_issue_path(conn, :update, news_issue.id),
+          news_issue: @valid_attrs
+        ),
+        delete(conn, Routes.admin_news_issue_path(conn, :delete, news_issue.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

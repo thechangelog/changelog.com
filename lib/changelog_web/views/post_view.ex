@@ -8,6 +8,7 @@ defmodule ChangelogWeb.PostView do
     path = Routes.admin_post_path(conn, :edit, post, next: current_path(conn))
     link("[edit]", to: path, data: [turbolinks: false])
   end
+
   def admin_edit_link(_, _, _), do: nil
 
   def guid(post), do: post.guid || "changelog.com/posts/#{post.id}"

@@ -10,12 +10,13 @@ defmodule ChangelogWeb.Admin.NewsletterView do
   def subscribers(newsletter, period), do: NewsletterView.subscribers(newsletter, period)
 
   def unsubscribers(newsletter, period, fallback \\ 0) do
-    field = case period do
-      :daily   -> "UnsubscribesToday"
-      :weekly  -> "UnsubscribesThisWeek"
-      :monthly -> "UnsubscribesThisMonth"
-      _else    -> "TotalUnsubscribes"
-    end
+    field =
+      case period do
+        :daily -> "UnsubscribesToday"
+        :weekly -> "UnsubscribesThisWeek"
+        :monthly -> "UnsubscribesThisMonth"
+        _else -> "TotalUnsubscribes"
+      end
 
     Map.get(newsletter.stats, field, fallback)
   end

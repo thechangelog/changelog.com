@@ -22,7 +22,10 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
     render(conn, :edit, changeset: changeset)
   end
 
-  def update(conn = %{assigns: %{comment: comment}}, params = %{"news_item_comment" => comment_params}) do
+  def update(
+        conn = %{assigns: %{comment: comment}},
+        params = %{"news_item_comment" => comment_params}
+      ) do
     comment = NewsItemComment.preload_all(comment)
     changeset = NewsItemComment.update_changeset(comment, comment_params)
 
@@ -31,6 +34,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_item_comment_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

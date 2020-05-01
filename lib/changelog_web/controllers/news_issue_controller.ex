@@ -34,13 +34,13 @@ defmodule ChangelogWeb.NewsIssueController do
   defp ads_for_issue(issue) do
     issue
     |> Map.get(:news_issue_ads)
-    |> Enum.map(fn(a) -> apply_image_setting(a.ad, a.image) end)
+    |> Enum.map(fn a -> apply_image_setting(a.ad, a.image) end)
   end
 
   defp items_for_issue(issue) do
     issue
     |> Map.get(:news_issue_items)
-    |> Enum.map(fn(i) -> apply_image_setting(i.item, i.image) end)
+    |> Enum.map(fn i -> apply_image_setting(i.item, i.image) end)
     |> Enum.map(&NewsItem.load_object/1)
   end
 

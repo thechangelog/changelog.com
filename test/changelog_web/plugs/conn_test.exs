@@ -8,6 +8,7 @@ defmodule ChangelogWeb.ConnTest do
       build_conn()
       |> bypass_through(Router, :browser)
       |> get("/")
+
     {:ok, %{conn: conn}}
   end
 

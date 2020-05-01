@@ -3,7 +3,9 @@ defmodule Changelog.Slack.Messages do
 
   def new_comment(comment) do
     ~s"""
-    New comment by *#{comment.author.name}* on _#{comment.news_item.headline}_ https://changelog.com/news/#{NewsItemView.hashid(comment.news_item)}
+    New comment by *#{comment.author.name}* on _#{comment.news_item.headline}_ https://changelog.com/news/#{
+      NewsItemView.hashid(comment.news_item)
+    }
     """
   end
 
@@ -31,5 +33,6 @@ defmodule Changelog.Slack.Messages do
     """
   end
 
-  defp celebrate_emoji, do: ~w(:tada: :gift: :muscle: :raised_hands: :parrot: :dancer:) |> Enum.random()
+  defp celebrate_emoji,
+    do: ~w(:tada: :gift: :muscle: :raised_hands: :parrot: :dancer:) |> Enum.random()
 end

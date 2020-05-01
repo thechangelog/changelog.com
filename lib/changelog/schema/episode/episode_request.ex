@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeRequest do
 
   alias Changelog.{Episode, Podcast, Person}
 
-  defenum Status, declined: -1, fresh: 0, pending: 1, failed: 2
+  defenum(Status, declined: -1, fresh: 0, pending: 1, failed: 2)
 
   schema "episode_requests" do
     field :status, Status, default: :fresh
@@ -22,14 +22,17 @@ defmodule Changelog.EpisodeRequest do
     timestamps()
   end
 
-  def fresh(query \\ __MODULE__),        do: from(q in query, where: q.status == ^:fresh)
-  def active(query \\ __MODULE__),       do: from(q in query, where: q.status in [^:fresh, ^:pending])
-  def pending(query \\ __MODULE__),      do: from(q in query, where: q.status == ^:pending)
-  def declined(query \\ __MODULE__),     do: from(q in query, where: q.status == ^:declined)
-  def failed(query \\ __MODULE__),       do: from(q in query, where: q.status == ^:failed)
+  def fresh(query \\ __MODULE__), do: from(q in query, where: q.status == ^:fresh)
+  def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:fresh, ^:pending])
+  def pending(query \\ __MODULE__), do: from(q in query, where: q.status == ^:pending)
+  def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
+  def failed(query \\ __MODULE__), do: from(q in query, where: q.status == ^:failed)
 
-  def with_episode(query \\ __MODULE__), do: from(q in query, join: e in Episode, on: q.id == e.request_id)
-  def sans_episode(query \\ __MODULE__), do: from(q in query, left_join: e in Episode, on: q.id == e.request_id, where: is_nil(e.id))
+  def with_episode(query \\ __MODULE__),
+    do: from(q in query, join: e in Episode, on: q.id == e.request_id)
+
+  def sans_episode(query \\ __MODULE__),
+    do: from(q in query, left_join: e in Episode, on: q.id == e.request_id, where: is_nil(e.id))
 
   def submission_changeset(struct, params \\ %{}) do
     struct

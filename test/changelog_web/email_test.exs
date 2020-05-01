@@ -6,7 +6,7 @@ defmodule ChangelogWeb.EmailTest do
   alias ChangelogWeb.Email
 
   setup do
-    person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now)
+    person = build(:person, auth_token: "54321", auth_token_expires_at: Timex.now())
     {:ok, person: person}
   end
 

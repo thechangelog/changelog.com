@@ -18,21 +18,21 @@ defmodule Changelog.File do
 
       def mime_type(file) do
         case file_type(file) do
-          :jpg  -> "image/jpg"
+          :jpg -> "image/jpg"
           :jpeg -> "image/jpg"
-          :png  -> "image/png"
-          :gif  -> "image/gif"
-          :mp3  -> "audio/mpeg"
-          :svg  -> "image/svg+xml"
+          :png -> "image/png"
+          :gif -> "image/gif"
+          :mp3 -> "audio/mpeg"
+          :svg -> "image/svg+xml"
         end
       end
 
       defp file_type(file) do
         file.file_name
-        |> Path.extname
+        |> Path.extname()
         |> String.replace(".", "")
-        |> String.downcase
-        |> String.to_existing_atom
+        |> String.downcase()
+        |> String.to_existing_atom()
       end
 
       defp hashed(id), do: Changelog.Hashid.encode(id)

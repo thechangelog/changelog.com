@@ -5,16 +5,19 @@ defmodule Changelog.UrlKit do
   def get_author(url), do: Person.get_by_website(url)
 
   def get_html(nil), do: ""
+
   def get_html(url) do
     try do
-      case HTTPoison.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
+      case HTTPoison.get!(url, [], follow_redirect: true, max_redirect: 5) do
         %{status_code: 200, headers: headers, body: body} ->
           case List.keyfind(headers, "Content-Encoding", 0) do
             {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
             {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
             _else -> body
           end
-        _else -> ""
+
+        _else ->
+          ""
       end
     rescue
       HTTPoison.Error -> ""
@@ -22,7 +25,10 @@ defmodule Changelog.UrlKit do
   end
 
   def get_object_id(type, url) when is_nil(type) or is_nil(url), do: nil
-  def get_object_id(type, url) when is_binary(type), do: get_object_id(String.to_existing_atom(type), url)
+
+  def get_object_id(type, url) when is_binary(type),
+    do: get_object_id(String.to_existing_atom(type), url)
+
   def get_object_id(_type, url) do
     if is_self_hosted(url) do
       String.split(url, "/") |> Enum.take(-2) |> Enum.join(":")
@@ -35,10 +41,11 @@ defmodule Changelog.UrlKit do
   def get_source(url), do: NewsSource.get_by_url(url)
 
   def get_type(nil), do: :link
+
   def get_type(url) do
     cond do
-      Enum.any?(project_regexes(), fn(r) -> Regex.match?(r, url) end) -> :project
-      Enum.any?(video_regexes(), fn(r) -> Regex.match?(r, url) end) -> :video
+      Enum.any?(project_regexes(), fn r -> Regex.match?(r, url) end) -> :project
+      Enum.any?(video_regexes(), fn r -> Regex.match?(r, url) end) -> :video
       true -> :link
     end
   end
@@ -50,18 +57,22 @@ defmodule Changelog.UrlKit do
         |> Map.get(:query)
         |> URI.decode_query()
         |> Map.get("v")
+
       String.match?(url, List.last(youtube_regexes())) ->
         url
         |> String.split("/")
-        |> List.last
-      true -> nil
+        |> List.last()
+
+      true ->
+        nil
     end
   end
 
   def is_youtube(nil), do: false
-  def is_youtube(url), do: Enum.any?(youtube_regexes(), &(String.match?(url, &1)))
+  def is_youtube(url), do: Enum.any?(youtube_regexes(), &String.match?(url, &1))
 
   def normalize_url(nil), do: nil
+
   def normalize_url(url) do
     parsed = URI.parse(url)
     query = normalize_query_string(parsed.query)
@@ -77,6 +88,7 @@ defmodule Changelog.UrlKit do
   defp is_self_hosted(url), do: String.contains?(url, "changelog.com")
 
   defp normalize_query_string(nil), do: nil
+
   defp normalize_query_string(query) do
     normalized =
       query

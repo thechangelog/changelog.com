@@ -15,21 +15,34 @@ defmodule Changelog.Subscription do
   end
 
   def subscribed(query \\ __MODULE__), do: from(q in query, where: is_nil(q.unsubscribed_at))
+
   def subscribed(query \\ __MODULE__, start_time, end_time) do
     from(q in query,
       where: is_nil(q.unsubscribed_at),
-      where: q.inserted_at < ^start_time, where: q.inserted_at >= ^end_time)
-  end
-  def unsubscribed(query \\ __MODULE__), do: from(q in query, where: not(is_nil(q.unsubscribed_at)))
-  def unsubscribed(query \\ __MODULE__, start_time, end_time) do
-    from(q in query,
-      where: not(is_nil(q.unsubscribed_at)),
-      where: q.unsubscribed_at < ^start_time, where: q.unsubscribed_at >= ^end_time)
+      where: q.inserted_at < ^start_time,
+      where: q.inserted_at >= ^end_time
+    )
   end
 
-  def for_person(query \\ __MODULE__, person), do: from(q in query, where: q.person_id == ^person.id)
+  def unsubscribed(query \\ __MODULE__),
+    do: from(q in query, where: not is_nil(q.unsubscribed_at))
+
+  def unsubscribed(query \\ __MODULE__, start_time, end_time) do
+    from(q in query,
+      where: not is_nil(q.unsubscribed_at),
+      where: q.unsubscribed_at < ^start_time,
+      where: q.unsubscribed_at >= ^end_time
+    )
+  end
+
+  def for_person(query \\ __MODULE__, person),
+    do: from(q in query, where: q.person_id == ^person.id)
+
   def on_item(query \\ __MODULE__, item), do: from(q in query, where: q.item_id == ^item.id)
-  def on_podcast(query \\ __MODULE__, podcast), do: from(q in query, where: q.podcast_id == ^podcast.id)
+
+  def on_podcast(query \\ __MODULE__, podcast),
+    do: from(q in query, where: q.podcast_id == ^podcast.id)
+
   def on_subject(query, item = %NewsItem{}), do: on_item(query, item)
   def on_subject(query, podcast = %Podcast{}), do: on_podcast(query, podcast)
 
@@ -81,6 +94,7 @@ defmodule Changelog.Subscription do
     |> subscribed()
     |> Repo.count()
   end
+
   def subscribed_count(subject, start_time, end_time) do
     __MODULE__
     |> on_subject(subject)
@@ -94,6 +108,7 @@ defmodule Changelog.Subscription do
     |> unsubscribed()
     |> Repo.count()
   end
+
   def unsubscribed_count(subject, start_time, end_time) do
     __MODULE__
     |> on_subject(subject)
@@ -105,7 +120,10 @@ defmodule Changelog.Subscription do
   def subscribed_to(%{podcast_id: id}) when not is_nil(id), do: Repo.get(Podcast, id)
 
   def unsubscribe(nil), do: false
-  def unsubscribe(sub = %__MODULE__{}), do: sub |> change(unsubscribed_at: now_in_seconds()) |> Repo.update()
+
+  def unsubscribe(sub = %__MODULE__{}),
+    do: sub |> change(unsubscribed_at: now_in_seconds()) |> Repo.update()
+
   def unsubscribe(person = %Person{}, subject) do
     get_or_initialize_by(person, subject)
     |> change(unsubscribed_at: now_in_seconds())
@@ -113,10 +131,11 @@ defmodule Changelog.Subscription do
   end
 
   defp get_or_initialize_by(person = %Person{}, subject) do
-    attrs = case subject do
-      %NewsItem{id: id} -> %{person_id: person.id, item_id: id}
-      %Podcast{id: id} -> %{person_id: person.id, podcast_id: id}
-    end
+    attrs =
+      case subject do
+        %NewsItem{id: id} -> %{person_id: person.id, item_id: id}
+        %Podcast{id: id} -> %{person_id: person.id, podcast_id: id}
+      end
 
     case Repo.get_by(__MODULE__, attrs) do
       nil -> Map.merge(%__MODULE__{}, attrs)

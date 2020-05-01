@@ -39,8 +39,10 @@ defmodule Changelog.NewsSponsorship do
     |> preload_sponsor()
   end
 
-  def preload_ads(query = %Ecto.Query{}), do: Ecto.Query.preload(query, ads: ^NewsAd.active_first)
-  def preload_ads(sponsorship), do: Repo.preload(sponsorship, ads: NewsAd.active_first)
+  def preload_ads(query = %Ecto.Query{}),
+    do: Ecto.Query.preload(query, ads: ^NewsAd.active_first())
+
+  def preload_ads(sponsorship), do: Repo.preload(sponsorship, ads: NewsAd.active_first())
 
   def preload_sponsor(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :sponsor)
   def preload_sponsor(sponsorship), do: Repo.preload(sponsorship, :sponsor)
@@ -59,7 +61,7 @@ defmodule Changelog.NewsSponsorship do
     sponsorship
     |> preload_ads()
     |> Map.get(:ads, [])
-    |> Enum.filter(&(&1.active))
+    |> Enum.filter(& &1.active)
     |> select_ad_for_index()
     |> ad_with_sponsorship_loaded(sponsorship)
     |> ad_with_sponsor_loaded(sponsorship)
@@ -69,7 +71,7 @@ defmodule Changelog.NewsSponsorship do
     sponsorship
     |> preload_ads()
     |> Map.get(:ads, [])
-    |> Enum.filter(&(&1.active))
+    |> Enum.filter(& &1.active)
     |> select_ad_for_issue()
     |> ad_with_sponsor_loaded(sponsorship)
   end
@@ -78,10 +80,11 @@ defmodule Changelog.NewsSponsorship do
   defp select_ad_for_index(ads), do: Enum.random(ads)
 
   defp select_ad_for_issue([]), do: nil
+
   defp select_ad_for_issue(ads) do
-    Enum.find(ads, fn(x) -> x.newsletter end) ||
-    Enum.find(ads, fn(x) -> NewsAd.has_no_issues(x) end) ||
-    Enum.random(ads)
+    Enum.find(ads, fn x -> x.newsletter end) ||
+      Enum.find(ads, fn x -> NewsAd.has_no_issues(x) end) ||
+      Enum.random(ads)
   end
 
   defp ad_with_sponsorship_loaded(nil, _sponsorship), do: nil
@@ -92,7 +95,7 @@ defmodule Changelog.NewsSponsorship do
 
   defp validate_beginning_of_weeks(changeset) do
     weeks = get_field(changeset, :weeks) || []
-    invalid = Enum.find(weeks, fn(week) -> Timex.beginning_of_week(week) != week end)
+    invalid = Enum.find(weeks, fn week -> Timex.beginning_of_week(week) != week end)
 
     if invalid do
       add_error(changeset, :weeks, "#{invalid} is not a Monday")

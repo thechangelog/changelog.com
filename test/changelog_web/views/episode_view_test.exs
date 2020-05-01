@@ -96,8 +96,15 @@ defmodule ChangelogWeb.EpisodeViewTest do
     end
 
     test "it returns the title and podcast aside when not a trailer" do
-      episode = %{title: "This is JS Party", slug: "123", subtitle: nil, podcast: %{name: "JS Party"}}
-      assert "This is JS Party (JS Party #123)" == title_with_guest_focused_subtitle_and_podcast_aside(episode)
+      episode = %{
+        title: "This is JS Party",
+        slug: "123",
+        subtitle: nil,
+        podcast: %{name: "JS Party"}
+      }
+
+      assert "This is JS Party (JS Party #123)" ==
+               title_with_guest_focused_subtitle_and_podcast_aside(episode)
     end
   end
 end

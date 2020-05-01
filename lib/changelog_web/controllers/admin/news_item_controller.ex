@@ -20,13 +20,13 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       NewsQueue.queued()
       |> NewsQueue.preload_all()
       |> Repo.all()
-      |> Enum.map(&(&1.item))
+      |> Enum.map(& &1.item)
 
     scheduled =
       NewsQueue.scheduled()
       |> NewsQueue.preload_all()
       |> Repo.all()
-      |> Enum.map(&(&1.item))
+      |> Enum.map(& &1.item)
 
     submitted =
       NewsItem.submitted()
@@ -56,7 +56,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     activity =
       (topic_activity ++ source_activity)
-      |> Enum.sort(&(Timex.after?(&1.updated_at, &2.updated_at)))
+      |> Enum.sort(&Timex.after?(&1.updated_at, &2.updated_at))
       |> Enum.chunk_every(activity_count)
 
     conn
@@ -81,7 +81,8 @@ defmodule ChangelogWeb.Admin.NewsItemController do
         headline: String.capitalize(HtmlKit.get_title(html)),
         source: UrlKit.get_source(url),
         type: UrlKit.get_type(url),
-        author: UrlKit.get_author(url))
+        author: UrlKit.get_author(url)
+      )
       |> NewsItem.insert_changeset()
 
     conn
@@ -103,6 +104,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
         conn
         |> put_flash(:result, "success")
         |> redirect(to: determine_redirect(conn, item, params))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -132,6 +134,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, determine_redirect(conn, item, params))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -182,12 +185,13 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   defp detect_object_id(item_params = %{"type" => type, "url" => url}) do
     Map.put_new(item_params, "object_id", UrlKit.get_object_id(type, url))
   end
+
   defp detect_object_id(item_params), do: item_params
 
   defp determine_redirect(conn, item, params) do
     case Map.get(params, "queue", "draft") do
       "draft" -> Routes.admin_news_item_path(conn, :edit, item)
-      _else   -> Routes.admin_news_item_path(conn, :index)
+      _else -> Routes.admin_news_item_path(conn, :index)
     end
   end
 
@@ -195,22 +199,27 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     case Map.get(params, "queue", "draft") do
       "publish" -> NewsQueue.publish(item)
       "prepend" -> NewsQueue.prepend(item)
-      "append"  -> NewsQueue.append(item)
-      "draft"   -> true
+      "append" -> NewsQueue.append(item)
+      "draft" -> true
     end
   end
 
   defp handle_search_update(item), do: Task.start_link(fn -> Search.update_item(item) end)
 
   defp similar_items(nil), do: []
-  defp similar_items(%Ecto.Changeset{changes: %{url: url}}) when is_binary(url), do: similar_items(url)
+
+  defp similar_items(%Ecto.Changeset{changes: %{url: url}}) when is_binary(url),
+    do: similar_items(url)
+
   defp similar_items(%Ecto.Changeset{}), do: []
+
   defp similar_items(url) when is_binary(url) do
     url
     |> NewsItem.similar_url()
     |> NewsItem.preload_all()
     |> Repo.all()
   end
+
   defp similar_items(item = %NewsItem{}) do
     if NewsItem.is_published(item) do
       []

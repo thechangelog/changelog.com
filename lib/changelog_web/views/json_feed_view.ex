@@ -25,7 +25,7 @@ defmodule ChangelogWeb.JsonFeedView do
       date_published: TimeView.rfc3339(item.published_at),
       author: %{name: item.logger.name},
       content_html: md_to_html(item.story),
-      content_text: md_to_text(item.story),
+      content_text: md_to_text(item.story)
     }
 
     if item.image do
@@ -38,7 +38,10 @@ defmodule ChangelogWeb.JsonFeedView do
   def render("news_item.json", %{conn: conn, json_feed: item = %{object: episode = %Episode{}}}) do
     %{
       id: Routes.news_item_url(conn, :show, NewsItemView.hashid(item)),
-      title: episode.podcast.name <> " " <> EpisodeView.numbered_title(episode, "") |> html_escape |> safe_to_string,
+      title:
+        (episode.podcast.name <> " " <> EpisodeView.numbered_title(episode, ""))
+        |> html_escape
+        |> safe_to_string,
       url: Routes.episode_url(conn, :show, episode.podcast.slug, episode.slug),
       date_published: TimeView.rfc3339(episode.published_at),
       content_html: md_to_html(item.story),

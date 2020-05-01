@@ -14,8 +14,7 @@ defmodule Changelog.Github.Client do
   def process_request_headers(headers) do
     auth = Application.get_env(:changelog, :github_api_token)
 
-    [{"Accept", "application/vnd.github.v3+json"},
-     {"Authorization", "token #{auth}"} | headers]
+    [{"Accept", "application/vnd.github.v3+json"}, {"Authorization", "token #{auth}"} | headers]
   end
 
   def get_user_repos(username), do: get("/users/#{username}/repos")

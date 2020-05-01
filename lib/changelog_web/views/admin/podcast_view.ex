@@ -11,7 +11,7 @@ defmodule ChangelogWeb.Admin.PodcastView do
     |> Ecto.assoc(:episode_stats)
     |> EpisodeStat.newest_first()
     |> EpisodeStat.limit(1)
-    |> Repo.one
+    |> Repo.one()
   end
 
   def position_options do
@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Admin.PodcastView do
 
   def status_options do
     Podcast.Status.__enum_map__()
-    |> Enum.map(fn({k, _v}) -> {String.capitalize(Atom.to_string(k)), k} end)
+    |> Enum.map(fn {k, _v} -> {String.capitalize(Atom.to_string(k)), k} end)
   end
 
   def vanity_link(podcast) do

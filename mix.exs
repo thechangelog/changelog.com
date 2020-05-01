@@ -6,13 +6,13 @@ defmodule Changelog.Mixfile do
       app: :changelog,
       version: "0.0.1",
       elixir: "~> 1.6",
-      elixirc_paths: elixirc_paths(Mix.env),
+      elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
       preferred_cli_env: [coveralls: :test, "coveralls.circle": :test],
-      test_coverage: [tool: ExCoveralls],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -20,14 +20,12 @@ defmodule Changelog.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Changelog.Application, []},
-      extra_applications: [:logger, :runtime_tools]
-    ]
+    [mod: {Changelog.Application, []}, extra_applications: [:logger, :runtime_tools]]
   end
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -72,7 +70,7 @@ defmodule Changelog.Mixfile do
       {:credo, "~> 1.3.2", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
-   ]
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

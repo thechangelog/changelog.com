@@ -35,7 +35,11 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
 
   @tag :as_admin
   test "creates sponsor and redirects", %{conn: conn} do
-    conn = post(conn, Routes.admin_sponsor_path(conn, :create), sponsor: @valid_attrs, next: Routes.admin_sponsor_path(conn, :index))
+    conn =
+      post(conn, Routes.admin_sponsor_path(conn, :create),
+        sponsor: @valid_attrs,
+        next: Routes.admin_sponsor_path(conn, :index)
+      )
 
     assert redirected_to(conn) == Routes.admin_sponsor_path(conn, :index)
     assert count(Sponsor) == 1
@@ -83,7 +87,7 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
   test "deletes a sponsor and redirects", %{conn: conn} do
     sponsor = insert(:sponsor)
 
-    conn = delete conn, Routes.admin_sponsor_path(conn, :delete, sponsor.id)
+    conn = delete(conn, Routes.admin_sponsor_path(conn, :delete, sponsor.id))
 
     assert redirected_to(conn) == Routes.admin_sponsor_path(conn, :index)
     assert count(Sponsor) == 0
@@ -92,16 +96,19 @@ defmodule ChangelogWeb.Admin.SponsorControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     sponsor = insert(:sponsor)
 
-    Enum.each([
-      get(conn, Routes.admin_sponsor_path(conn, :index)),
-      get(conn, Routes.admin_sponsor_path(conn, :new)),
-      post(conn, Routes.admin_sponsor_path(conn, :create), sponsor: @valid_attrs),
-      get(conn, Routes.admin_sponsor_path(conn, :edit, sponsor.id)),
-      put(conn, Routes.admin_sponsor_path(conn, :update, sponsor.id), sponsor: @valid_attrs),
-      delete(conn, Routes.admin_sponsor_path(conn, :delete, sponsor.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_sponsor_path(conn, :index)),
+        get(conn, Routes.admin_sponsor_path(conn, :new)),
+        post(conn, Routes.admin_sponsor_path(conn, :create), sponsor: @valid_attrs),
+        get(conn, Routes.admin_sponsor_path(conn, :edit, sponsor.id)),
+        put(conn, Routes.admin_sponsor_path(conn, :update, sponsor.id), sponsor: @valid_attrs),
+        delete(conn, Routes.admin_sponsor_path(conn, :delete, sponsor.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

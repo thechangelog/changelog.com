@@ -28,7 +28,7 @@ defmodule Changelog.Transcripts.ParserTest do
 
     people_ids =
       parsed
-      |> Enum.map(&(&1["person_id"]))
+      |> Enum.map(& &1["person_id"])
       |> Enum.uniq()
       |> Enum.reject(&is_nil/1)
 
@@ -36,14 +36,14 @@ defmodule Changelog.Transcripts.ParserTest do
 
     titles =
       parsed
-      |> Enum.map(&(&1["title"]))
+      |> Enum.map(& &1["title"])
       |> Enum.uniq()
 
     assert titles == ["Adam Stacoviak", "Jerod Santo", "Raquel Vélez", "Break"]
   end
 
   test "JS Party 1" do
-    alex   = %Person{id: 1, name: "Alex Sexton"}
+    alex = %Person{id: 1, name: "Alex Sexton"}
     mikeal = %Person{id: 2, name: "Mikeal Rogers"}
     rachel = %Person{id: 3, name: "Rachel White"}
 
@@ -55,7 +55,7 @@ defmodule Changelog.Transcripts.ParserTest do
 
     people_ids =
       parsed
-      |> Enum.map(&(&1["person_id"]))
+      |> Enum.map(& &1["person_id"])
       |> Enum.uniq()
       |> Enum.reject(&is_nil/1)
 
@@ -63,7 +63,7 @@ defmodule Changelog.Transcripts.ParserTest do
 
     titles =
       parsed
-      |> Enum.map(&(&1["title"]))
+      |> Enum.map(& &1["title"])
       |> Enum.uniq()
 
     assert titles == ["Mikeal Rogers", "Alex Sexton", "Rachel White", "Break"]
