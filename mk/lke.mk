@@ -57,7 +57,7 @@ krew: $(KREW)
 
 JSONNET := /usr/local/bin/jsonnet
 $(JSONNET):
-	brew install jsonnet
+	brew install go-jsonnet
 
 YQ := /usr/local/bin/yq
 $(YQ):
@@ -95,7 +95,7 @@ $(KREW):
 
 JSONNET ?= /usr/bin/jsonnet
 $(JSONNET):
-	$(error Please install jsonnet: https://github.com/google/jsonnet#packages)
+	$(error Please install go-jsonnet: https://github.com/google/go-jsonnet)
 
 YQ ?= /usr/bin/yq
 $(YQ):
@@ -151,6 +151,26 @@ jb: $(JB)
 .PHONY: releases-jb
 releases-jb:
 	@$(OPEN) $(JB_RELEASES)
+
+YQ_RELEASES := https://github.com/mikefarah/yq/releases
+YQ_VERSION := 3.3.0
+YQ_BIN := yq_$(platform)_amd64
+YQ_URL := https://github.com/mikefarah/yq/releases/download/$(YQ_VERSION)/$(YQ_BIN)
+YQ := $(LOCAL_BIN)/$(YQ_BIN)
+$(YQ): $(CURL)
+	@mkdir -p $(LOCAL_BIN) \
+	&& cd $(LOCAL_BIN) \
+	&& $(CURL) --progress-bar --fail --location --output $(YQ) "$(YQ_URL)" \
+	&& touch $(YQ) \
+	&& chmod +x $(YQ) \
+	&& $(YQ) --version 2>&1 \
+	   | grep "$(YQ_VERSION)" \
+	&& ln -sf $(YQ) $(LOCAL_BIN)/yq
+.PHONY: yq
+yq: $(YQ)
+.PHONY: releases-yq
+releases-yq:
+	@$(OPEN) $(YQ_RELEASES)
 
 .PHONY: kubectx
 kubectx: | $(KUBECTX)
@@ -258,7 +278,7 @@ lke-browse: $(OCTANT) lke-config-hint
 # https://github.com/derailed/k9s
 .PHONY: lke-cli
 lke-cli: $(K9S) lke-config-hint
-	$(K9S)
+	$(K9S) --all-namespaces
 
 # https://github.com/derailed/popeye
 .PHONY: lke-sanitize
@@ -314,19 +334,18 @@ lke-cert-manager-verify-clean: lke-ctx
 lke-cert-manager-logs: lke-ctx
 	$(KUBECTL) logs deployments/cert-manager --namespace $(CERT_MANAGER_NAMESPACE) --follow
 
-.PHONY: lke-monitoring-grafana
-lke-monitoring-grafana: lke-ctx
-	$(KUBECTL) --namespace monitoring port-forward svc/grafana 3000
-
-# https://github.com/openshift/cluster-monitoring-operator/blob/947f882593badbc3946853201ef6a82c9627f7de/jsonnet/grafana.jsonnet#L33
-# https://github.com/coreos/kube-prometheus/blob/master/examples/prometheus-pvc.jsonnet
-# https://github.com/coreos/kube-prometheus/issues/98#issuecomment-491782065
-
-.PHONY: lke-monitoring
-lke-monitoring: | lke-ctx kube-prometheus
+# k delete -f tmp/kube-prometheus/manifests
+# If deleting namespace gets stuck: https://github.com/kubernetes/kubernetes/issues/60807#issuecomment-572615776
+METRICS_NAMESPACE := metrics
+.PHONY: lke-metrics
+lke-metrics: | lke-ctx kube-prometheus $(YTT)
 	$(KUBECTL) apply --filename tmp/kube-prometheus/manifests/setup \
-	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests
-lke-provision:: lke-monitoring
+	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests \
+	&& $(YTT) \
+	    --data-value namespace=$(METRICS_NAMESPACE) \
+	    --file $(CURDIR)/k8s/metrics-changelog > $(CURDIR)/k8s/metrics-changelog.yml \
+	&& $(KUBECTL) apply --filename k8s/metrics-changelog.yml
+lke-provision:: lke-metrics
 
 # https://github.com/coreos/kube-prometheus#compatibility
 KUBE_PROMETHEUS_VERSION := master
@@ -345,18 +364,28 @@ kube-prometheus-update: | tmp/kube-prometheus/jsonnetfile.lock.json $(JB)
 	cd tmp/kube-prometheus \
 	&& $(JB) update
 
-tmp/kube-prometheus/manifests: k8s/kube-prometheus.jsonnet | tmp/kube-prometheus/jsonnetfile.lock.json $(JSONNET) $(LPASS)
+METRICS_GITHUB_ORG := thechangelog
+# http://fabian-kostadinov.github.io/2015/01/16/how-to-find-a-github-team-id/
+# https://github.com/settings/tokens
+# curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" https://api.github.com/orgs/thechangelog/teams | view -c "set ft=json" -
+METRICS_GITHUB_TEAM_ID := 3796119
+METRICS_ROOT_URL := https://metrics.changelog.com
+tmp/kube-prometheus/manifests: k8s/kube-prometheus.jsonnet | tmp/kube-prometheus/jsonnetfile.lock.json $(JSONNET) $(LPASS) $(YQ)
 	@printf "\n$(BOLD)Generate kube-prometheus manifests ...$(NORMAL)\n"
 	cd tmp/kube-prometheus \
 	&& rm -fr manifests \
 	&& mkdir -p manifests/setup \
-	&& time $(JSONNET) \
+	&& $(JSONNET) \
 		  --jpath vendor \
 		  --multi manifests \
-		  --ext-str METRICS_GITHUB_OAUTH_APP_CLIENT_ID="$$($(LPASS) show --notes 6262503396338294422)" \
-		  --ext-str METRICS_GITHUB_OAUTH_APP_CLIENT_SECRET="$$($(LPASS) show --notes 6396745408918286971)" \
+		  --ext-str NAMESPACE="$(METRICS_NAMESPACE)" \
+		  --ext-str GITHUB_OAUTH_APP_CLIENT_ID="$$($(LPASS) show --notes 6262503396338294422)" \
+		  --ext-str GITHUB_OAUTH_APP_CLIENT_SECRET="$$($(LPASS) show --notes 6396745408918286971)" \
+		  --ext-str GITHUB_ORG=$(METRICS_GITHUB_ORG) \
+		  --ext-str GITHUB_TEAM_ID=$(METRICS_GITHUB_TEAM_ID) \
+		  --ext-str ROOT_URL=$(METRICS_ROOT_URL) \
 		  $(CURDIR)/k8s/kube-prometheus.jsonnet \
-	&& /usr/bin/find manifests -type f -exec mv {} {}.json \;
+	   | while read file; do $(YQ) read --prettyPrint $$file > $$file.yml && rm $$file; done
 
 tmp/kube-prometheus/jsonnetfile.lock.json: | tmp/kube-prometheus/jsonnetfile.json $(JB)
 	@printf "\n$(BOLD)Install kube-prometheus@$(KUBE_PROMETHEUS_VERSION) ...$(NORMAL)\n"

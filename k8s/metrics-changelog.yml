@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grafana-storage-chown
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: grafana-storage-chown
+        command:
+        - /bin/sh
+        - -c
+        args:
+        - set -x; ls -lah /var/lib/grafana; chown -R 65534:65534 /var/lib/grafana;
+          ls -lah /var/lib/grafana; mount; df -h;
+        image: busybox:latest
+        volumeMounts:
+        - name: grafana-storage
+          mountPath: /var/lib/grafana
+      volumes:
+      - name: grafana-storage
+        persistentVolumeClaim:
+          claimName: grafana-storage
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: metrics-changelog
+  namespace: metrics
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+  - hosts:
+    - metrics.changelog.com
+    secretName: metrics-changelog-acme-tls
+  rules:
+  - host: metrics.changelog.com
+    http:
+      paths:
+      - backend:
+          serviceName: grafana
+          servicePort: http
