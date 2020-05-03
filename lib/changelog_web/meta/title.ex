@@ -1,5 +1,4 @@
 defmodule ChangelogWeb.Meta.Title do
-  import ChangelogWeb.Helpers.SharedHelpers, only: [comma_separated_names: 1]
 
   alias ChangelogWeb.{
     AuthView,
@@ -13,6 +12,7 @@ defmodule ChangelogWeb.Meta.Title do
     PodcastView,
     PostView,
     TopicView,
+    Helpers.SharedHelpers,
     SearchView
   }
 

@@ -1,10 +1,8 @@
 defmodule ChangelogWeb.JsonFeedView do
   use ChangelogWeb, :public_view
 
-  import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_html: 1, md_to_text: 1]
-
   alias Changelog.{Episode, Post}
-  alias ChangelogWeb.{EpisodeView, NewsItemView, TimeView}
+  alias ChangelogWeb.{EpisodeView, NewsItemView, Helpers.SharedHelpers, TimeView}
 
   def render("news.json", %{conn: conn, items: items}) do
     %{
