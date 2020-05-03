@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= page_title(assigns) %></title>
-    <meta name="description" content="<%= description(assigns) %>">
+    <title><%= Title.page_title(assigns) %></title>
+    <meta name="description" content="<%= Description.description(assigns) %>">
     <meta name="copyright" content="Changelog Media LLC">
     <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/embed.css") %>">
     <%= render(LayoutView, "_head_scripts.html", assigns) %>

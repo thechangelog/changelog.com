@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.LayoutView do
   use ChangelogWeb, :public_view
 
-  import ChangelogWeb.Meta.{
+  alias ChangelogWeb.Meta.{
     AdminTitle,
     Apple,
     CanonicalUrl,
