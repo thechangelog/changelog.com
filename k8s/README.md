@@ -9,8 +9,8 @@ This command will resolve all dependencies, provision a new Linode Kubernetes En
 
 - [x] DNS integration (external-dns)
 - [x] proxy (nginx-ingress with cert-manager)
-- [ ] **monitoring & logging (Prometheus, Grafana & Loki)**
-- [ ] highly-available database with disaster recovery (Crunchy Data PostgreSQL with pgBackRest & pgMonitor)
+- [x] monitoring (Prometheus & Grafana)
+- [ ] **highly-available database with disaster recovery (Crunchy Data PostgreSQL with pgBackRest & pgMonitor)**
 - [ ] web app (Phoenix)
 
 If you have a domain that is managed by one of the DNS providers supported by [external-dns](https://github.com/kubernetes-sigs/external-dns), this setup will even manage DNS for you.
