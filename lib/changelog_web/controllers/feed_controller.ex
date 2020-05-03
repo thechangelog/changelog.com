@@ -52,7 +52,7 @@ defmodule ChangelogWeb.FeedController do
   end
 
   defp log_subscribers(conn, podcast) do
-    ua = get_agent(conn)
+    ua = ChangelogWeb.Plug.Conn.get_agent(conn)
 
     case AgentKit.get_subscribers(ua) do
       {:ok, {agent, subs}} -> Podcast.update_subscribers(podcast, agent, subs)

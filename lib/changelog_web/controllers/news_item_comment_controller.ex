@@ -30,7 +30,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         else
           conn
           |> put_flash(:success, random_success_message())
-          |> redirect(to: referer_or_root_path(conn))
+          |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
         end
 
       {:error, _changeset} ->
@@ -41,7 +41,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         else
           conn
           |> put_flash(:error, "Something went wrong")
-          |> redirect(to: referer_or_root_path(conn))
+          |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
         end
     end
   end

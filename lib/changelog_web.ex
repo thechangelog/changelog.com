@@ -12,7 +12,6 @@ defmodule ChangelogWeb do
       import Ecto.Query
 
       alias ChangelogWeb.Router.Helpers, as: Routes
-      import ChangelogWeb.Plug.Conn
 
       plug ChangelogWeb.Plug.ResponseCache
       alias ChangelogWeb.Plug.ResponseCache
