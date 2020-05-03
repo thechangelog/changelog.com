@@ -60,7 +60,6 @@
     <%= render("_header.html", assigns) %>
 
     <main class="main">
-      <h1>HI I'M OWEN</h1>
       <%= render(@view_module, @view_template, assigns) %>
     </main>
     <%= render("_overlay.html", assigns) %>
