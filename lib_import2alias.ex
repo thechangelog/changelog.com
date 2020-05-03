@@ -40,32 +40,29 @@ end
 defmodule Import2Alias do
   def import2alias(alias, entries) do
     for {file, entries} <- entries do
-      if String.match?(file, ~r/description.ex/) do
-        # IO.inspect(entries)
-
-        # Stream the file contents into a map using line numbers as keys.
-        file_map = File.stream!(file)
+      # Stream the file contents into a map using line numbers as keys.
+      file_map =
+        File.stream!(file)
         |> Stream.with_index(1)
         |> Stream.map(fn {line, index} -> {index, line} end)
         |> Enum.into(%{})
 
-        # Apply changes from each entry to the file_map.
-        modified_lines = entries
-        |> Enum.reduce(file_map, &(handle_entry(&1, &2, alias)))
+      # Apply changes from each entry to the file_map.
+      modified_lines =
+        entries
+        |> Enum.reduce(file_map, &handle_entry(&1, &2, alias))
         |> Enum.into([])
         |> List.keysort(0)
-        |> Enum.map(&(elem(&1, 1)))
+        |> Enum.map(&elem(&1, 1))
         |> Enum.join()
 
-        File.write!(file, modified_lines)
-      end
-
+      File.write!(file, modified_lines)
     end
   end
 
   defp handle_entry({line, column, module, function, arity} = entry, file_map, alias) do
     file_map
-    |> Map.update!(line, &(update_string(&1, entry, alias)))
+    |> Map.update!(line, &update_string(&1, entry, alias))
   end
 
   defp update_string(string, {line, column, module, function, arity} = entry, alias) do
@@ -75,5 +72,4 @@ defmodule Import2Alias do
       string
     end
   end
-
 end
