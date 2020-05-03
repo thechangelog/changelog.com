@@ -42,9 +42,9 @@ defmodule ChangelogWeb.PersonView do
   def external_url(person) do
     cond do
       person.website -> person.website
-      person.twitter_handle -> twitter_url(person.twitter_handle)
-      person.github_handle -> github_url(person.github_handle)
-      person.linkedin_handle -> linkedin_url(person.linkedin_handle)
+      person.twitter_handle -> SharedHelpers.twitter_url(person.twitter_handle)
+      person.github_handle -> SharedHelpers.github_url(person.github_handle)
+      person.linkedin_handle -> SharedHelpers.linkedin_url(person.linkedin_handle)
       true -> "#"
     end
   end
@@ -86,12 +86,12 @@ defmodule ChangelogWeb.PersonView do
 
   def list_of_links(person, separator \\ ", ") do
     [
-      %{value: person.twitter_handle, text: "Twitter", url: twitter_url(person.twitter_handle)},
-      %{value: person.github_handle, text: "GitHub", url: github_url(person.github_handle)},
+      %{value: person.twitter_handle, text: "Twitter", url: SharedHelpers.twitter_url(person.twitter_handle)},
+      %{value: person.github_handle, text: "GitHub", url: SharedHelpers.github_url(person.github_handle)},
       %{
         value: person.linkedin_handle,
         text: "LinkedIn",
-        url: linkedin_url(person.linkedin_handle)
+        url: SharedHelpers.linkedin_url(person.linkedin_handle)
       },
       %{value: person.website, text: "Website", url: person.website}
     ]

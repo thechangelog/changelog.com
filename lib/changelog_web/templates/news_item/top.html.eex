@@ -5,13 +5,13 @@
       <!-- <li class="subnav-list-item">
         <%#= link("New", to: "/", title: "Recent News") %>
       </li> -->
-      <li class="subnav-list-item <%= active_class(@conn, [~r/\Anews_item-top\z/, "news_item-top_week"]) %>">
+      <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, [~r/\Anews_item-top\z/, "news_item-top_week"]) %>">
         <%= link("This Week", to: Routes.news_item_path(@conn, :top_week), title: "Top developer news this week") %>
       </li>
-      <li class="subnav-list-item <%= active_class(@conn, "news_item-top_month") %>">
+      <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "news_item-top_month") %>">
         <%= link("This Month", to: Routes.news_item_path(@conn, :top_month), title: "Top developer news this month") %>
       </li>
-      <li class="subnav-list-item <%= active_class(@conn, "news_item-top_all") %>">
+      <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "news_item-top_all") %>">
         <%= link("All Time", to: Routes.news_item_path(@conn, :top_all), title: "Top developer news all time") %>
       </li>
     </ul>

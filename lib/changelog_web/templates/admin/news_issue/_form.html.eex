@@ -1,29 +1,29 @@
 <%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
   <div class="two fields">
-    <div class="two wide field required <%= error_class(f, :slug) %>">
+    <div class="two wide field required <%= AdminHelpers.error_class(f, :slug) %>">
       <%= label(f, :slug) %>
       <%= text_input(f, :slug, placeholder: "183", readonly: f.data.published) %>
-      <%= error_message(f, :slug) %>
+      <%= AdminHelpers.error_message(f, :slug) %>
     </div>
 
     <div class="fourteen wide field">
       <%= label(f, :teaser) %>
       <%= text_input(f, :teaser, placeholder: "Cool, Stuff, You, Want, To, Read") %>
-      <%= error_message(f, :teaser) %>
+      <%= AdminHelpers.error_message(f, :teaser) %>
     </div>
   </div>
 
-  <div class="field <%= error_class(f, :note) %>">
+  <div class="field <%= AdminHelpers.error_class(f, :note) %>">
     <%= label(f, :note) %>
     <%= textarea(f, :note, placeholder: "Markdown enabled.", rows: 3) %>
-    <%= error_message(f, :note) %>
+    <%= AdminHelpers.error_message(f, :note) %>
   </div>
 
 <%= if NewsIssue.is_published(@changeset.data) do %>
-  <div class="field <%= error_class(f, :published_at) %>">
+  <div class="field <%= AdminHelpers.error_class(f, :published_at) %>">
     <%= label(f, :published_at, "Publish Time") %>
-    <%= semantic_calendar_field(f, :published_at) %>
-    <%= error_message(f, :published_at) %>
+    <%= AdminHelpers.semantic_calendar_field(f, :published_at) %>
+    <%= AdminHelpers.error_message(f, :published_at) %>
   </div>
 <% end %>
 
@@ -32,8 +32,8 @@
 
     <div class="ui very relaxed large ordered divided list js-items">
     <%= inputs_for f, :news_issue_items, fn i -> %>
-      <% item = load_from_form(i, NewsItem, :item) %>
-      <div class="item <%= if is_persisted(i.data), do: "persisted" %>" style="background: white;">
+      <% item = AdminHelpers.load_from_form(i, NewsItem, :item) %>
+      <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>" style="background: white;">
         <%= hidden_input(i, :item_id) %>
         <%= hidden_input(i, :position, class: "js-position") %>
 
@@ -49,10 +49,10 @@
           <%= hidden_input(i, :delete) %>
         </div>
         <div class="content" style="margin-left: 6px;">
-          <%= link("#{item.headline} (#{ctr(item)}%)", to: item.url, class: "header") %>
+          <%= link("#{item.headline} (#{SharedHelpers.ctr(item)}%)", to: item.url, class: "header") %>
           <div class="description" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             <%= icon(item) %>
-            <%= item.story |> md_to_text() %>
+            <%= item.story |> SharedHelpers.md_to_text() %>
           </div>
         </div>
       </div>
@@ -67,8 +67,8 @@
 
     <div class="ui very relaxed large ordered divided list js-ads">
     <%= inputs_for f, :news_issue_ads, fn i -> %>
-      <% ad = load_from_form(i, NewsAd, :ad) %>
-      <div class="item <%= if is_persisted(i.data), do: "persisted" %>" style="background: white;">
+      <% ad = AdminHelpers.load_from_form(i, NewsAd, :ad) %>
+      <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>" style="background: white;">
         <%= hidden_input(i, :ad_id) %>
         <%= hidden_input(i, :position, class: "js-position") %>
 
@@ -82,10 +82,10 @@
           <div class="ui tiny basic icon button js-move"><i class="move icon"></i></div>
         </div>
         <div class="content" style="margin-left: 6px;">
-          <%= link("#{ad.headline} (#{ctr(ad)}%)", to: ad.url, class: "header") %>
+          <%= link("#{ad.headline} (#{SharedHelpers.ctr(ad)}%)", to: ad.url, class: "header") %>
           <div class="description" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             <%= icon(ad) %>
-            <%= ad.story |> md_to_text() %>
+            <%= ad.story |> SharedHelpers.md_to_text() %>
           </div>
         </div>
       </div>
@@ -96,12 +96,12 @@
   <div class="ui hidden divider"></div>
 
   <div class="ui equal width stackable grid">
-  <%= if !is_persisted(f.data) do %>
-    <div class="column"><%= submit_button(:primary, "Create") %></div>
-    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, Routes.admin_news_issue_path(@conn, :index))) %></div>
+  <%= if !AdminHelpers.is_persisted(f.data) do %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_news_issue_path(@conn, :index))) %></div>
   <% else %>
-    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
-    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn, Routes.admin_news_issue_path(@conn, :index))) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn, Routes.admin_news_issue_path(@conn, :index))) %></div>
   <% end %>
   <% end %>
   <div class="column">

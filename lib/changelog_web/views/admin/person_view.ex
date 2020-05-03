@@ -11,12 +11,12 @@ defmodule ChangelogWeb.Admin.PersonView do
   def list_of_links(person) do
     [
       %{value: person.email, icon: "envelope", url: "mailto:#{person.email}"},
-      %{value: person.twitter_handle, icon: "twitter", url: twitter_url(person.twitter_handle)},
-      %{value: person.github_handle, icon: "github", url: github_url(person.github_handle)},
+      %{value: person.twitter_handle, icon: "twitter", url: SharedHelpers.twitter_url(person.twitter_handle)},
+      %{value: person.github_handle, icon: "github", url: SharedHelpers.github_url(person.github_handle)},
       %{
         value: person.linkedin_handle,
         icon: "linkedin",
-        url: linkedin_url(person.linkedin_handle)
+        url: SharedHelpers.linkedin_url(person.linkedin_handle)
       },
       %{value: person.website, icon: "share", url: person.website}
     ]

@@ -73,7 +73,7 @@
             <li class="episode_player-nav-list-item">
               <%= link "Share",
                   title: "Share on Twitter",
-                  to: tweet_url(@episode.title, Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+                  to: PublicHelpers.tweet_url(@episode.title, Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
                   class: "js-share-popup",
                   target: "_blank",
                   style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-share.svg")}')" %>

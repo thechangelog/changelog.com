@@ -56,9 +56,9 @@
       <dt>Format:</dt>
     <%= case @format do %>
     <% "html" -> %>
-      <dd>HTML [<a href="<%= current_path(@conn, %{format: "text"}) %>">see text</a>]</dd>
+      <dd>HTML [<a href="<%= SharedHelpers.current_path(@conn, %{format: "text"}) %>">see text</a>]</dd>
     <% "text" -> %>
-      <dd>Text [<a href="<%= current_path(@conn, %{format: "html"}) %>">see html</a>]</dd>
+      <dd>Text [<a href="<%= SharedHelpers.current_path(@conn, %{format: "html"}) %>">see html</a>]</dd>
     <% end %>
       <dt>From:</dt>
       <dd><%= format_email_address(@email.from) %></dd>

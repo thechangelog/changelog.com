@@ -20,13 +20,13 @@ defmodule ChangelogWeb.NewsItemView do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
-          to: Routes.admin_news_item_path(conn, :edit, item, next: current_path(conn)),
+          to: Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
           data: [turbolinks: false]
         ),
-        link(" [#{comma_separated(episode.reach_count)}]",
+        link(" [#{SharedHelpers.comma_separated(episode.reach_count)}]",
           to:
             Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug,
-              next: current_path(conn)
+              next: SharedHelpers.current_path(conn)
             ),
           data: [turbolinks: false]
         )
@@ -39,7 +39,7 @@ defmodule ChangelogWeb.NewsItemView do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
-          to: Routes.admin_post_path(conn, :edit, post, next: current_path(conn)),
+          to: Routes.admin_post_path(conn, :edit, post, next: SharedHelpers.current_path(conn)),
           data: [turbolinks: false]
         )
       ]
@@ -50,7 +50,7 @@ defmodule ChangelogWeb.NewsItemView do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
-          to: Routes.admin_news_item_path(conn, :edit, item, next: current_path(conn)),
+          to: Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
           data: [turbolinks: false]
         )
       ]
@@ -73,7 +73,7 @@ defmodule ChangelogWeb.NewsItemView do
   end
 
   def discussion_path(_conn, item = %{type: :link, object: post}) when is_map(post) do
-    dev_relative("#{item.url}#discussion")
+    SharedHelpers.dev_relative("#{item.url}#discussion")
   end
 
   def discussion_path(conn, item = %NewsItem{}) do
@@ -132,7 +132,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   def permalink_path(conn, item) do
     if item.object_id,
-      do: dev_relative(item.url),
+      do: SharedHelpers.dev_relative(item.url),
       else: Routes.news_item_path(conn, :show, NewsItem.slug(item))
   end
 
@@ -219,10 +219,10 @@ defmodule ChangelogWeb.NewsItemView do
 
   def teaser(item, max_words \\ 20) do
     item.story
-    |> md_to_html
+    |> SharedHelpers.md_to_html
     |> prepare_html
     |> String.split()
-    |> truncate(word_count(item.story), max_words)
+    |> truncate(SharedHelpers.word_count(item.story), max_words)
     |> Enum.join(" ")
   end
 

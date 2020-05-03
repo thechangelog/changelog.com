@@ -4,17 +4,17 @@
 
 <nav class="subnav">
   <ul class="subnav-list">
-    <li class="subnav-list-item <%= active_class(@conn, "show") %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "show") %>">
       <%= link("Recent", to: Routes.podcast_path(@conn, :show, @podcast.slug) <> "#feed", title: "Recent episodes of #{@podcast.name}") %>
     </li>
-    <li class="subnav-list-item <%= active_class(@conn, "recommended") %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "recommended") %>">
       <%= link("Recommended", to: Routes.podcast_path(@conn, :recommended, @podcast.slug) <> "#feed", title: "Recommended episodes of #{@podcast.name}") %>
     </li>
-    <li class="subnav-list-item <%= active_class(@conn, "popular") %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "popular") %>">
       <%= link("Popular", to: Routes.podcast_path(@conn, :popular, @podcast.slug) <> "#feed", title: "Popular episodes of #{@podcast.name}") %>
     </li>
   <%= if @podcast.status != :retired do %>
-    <!--<li class="subnav-list-item <%= active_class(@conn, "upcoming") %>">
+    <!--<li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "upcoming") %>">
       <%= link "Upcoming", to: Routes.podcast_path(@conn, :upcoming, @podcast.slug) <> "#feed" %>
     </li>-->
   <% end %>
@@ -25,7 +25,7 @@
 </nav>
 
 <%= if Enum.any?(@items) do %>
-  <%= if controller_action_combo(@conn) == "podcast-upcoming" do %>
+  <%= if SharedHelpers.controller_action_combo(@conn) == "podcast-upcoming" do %>
     <%= render_many(@items, NewsItemView, "_summary_upcoming.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
   <% else %>
     <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>

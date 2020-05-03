@@ -1,9 +1,9 @@
 <%= greeting(@person) %>
 
 
-We just published a new episode of <%= @episode.podcast.name %> with <%= comma_separated_names(EpisodeView.participants(@episode)) %>!
+We just published a new episode of <%= @episode.podcast.name %> with <%= SharedHelpers.comma_separated_names(EpisodeView.participants(@episode)) %>!
 
-> <%= @episode.summary |> md_to_text()  %>
+> <%= @episode.summary |> SharedHelpers.md_to_text()  %>
 
 Listen and discuss here: <%= Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) %>
 

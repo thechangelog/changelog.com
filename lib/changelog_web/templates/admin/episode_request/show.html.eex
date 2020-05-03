@@ -13,7 +13,7 @@
   <div class="ui text container">
     <h4 class="ui block header">Submitter</h4>
 
-    <p><%= @request.submitter.name %> (<%= submitter_name(@request) %>) on <%= ts(@request.inserted_at) %></p>
+    <p><%= @request.submitter.name %> (<%= submitter_name(@request) %>) on <%= AdminHelpers.ts(@request.inserted_at) %></p>
 
     <h4 class="ui block header">Guests</h4>
 
@@ -29,7 +29,7 @@
 
     <h4 class="ui block header">Pitch</h4>
 
-    <p><%= @request.pitch |> md_to_html() |> raw() %></p>
+    <p><%= @request.pitch |> SharedHelpers.md_to_html() |> raw() %></p>
   </div>
 </div>
 

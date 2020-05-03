@@ -53,13 +53,14 @@
     <script defer src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
     <%= render("_head_scripts.html", assigns) %>
   </head>
-  <body class="page-<%= controller_action_combo(@conn) %>">
+  <body class="page-<%= SharedHelpers.controller_action_combo(@conn) %>">
     <!--[if lt IE 8]>
       <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <%= render("_header.html", assigns) %>
 
     <main class="main">
+      <h1>HI I'M OWEN</h1>
       <%= render(@view_module, @view_template, assigns) %>
     </main>
     <%= render("_overlay.html", assigns) %>

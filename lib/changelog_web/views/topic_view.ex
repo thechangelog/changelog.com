@@ -7,7 +7,7 @@ defmodule ChangelogWeb.TopicView do
 
   def admin_edit_link(conn, %{admin: true}, topic) do
     link("[edit]",
-      to: Routes.admin_topic_path(conn, :edit, topic.slug, next: current_path(conn)),
+      to: Routes.admin_topic_path(conn, :edit, topic.slug, next: SharedHelpers.current_path(conn)),
       data: [turbolinks: false]
     )
   end

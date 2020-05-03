@@ -9,7 +9,7 @@
       <th>Posts</th>
       <th>Episodes</th>
       <th>
-        <%= if assigns[:filter], do: filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
+        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
       </th>
     </tr>
   </thead>
@@ -26,17 +26,17 @@
         <% end %>
       </td>
       <td><div class="ui basic icon buttons"><%= person |> list_of_links() |> raw() %></div></td>
-      <td><%= ts(person.inserted_at) %></td>
-      <td><%= ts(person.joined_at) %></td>
-      <td><%= ts(person.signed_in_at) %></td>
+      <td><%= AdminHelpers.ts(person.inserted_at) %></td>
+      <td><%= AdminHelpers.ts(person.joined_at) %></td>
+      <td><%= AdminHelpers.ts(person.signed_in_at) %></td>
       <td><%= post_count(person) %></td>
       <td><%= episode_count(person) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= icon_link("eye", to: Routes.admin_person_path(@conn, :show, person)) %>
-          <%= icon_link("edit", to: Routes.admin_person_path(@conn, :edit, person)) %>
-          <%= icon_link("slack", to: Routes.admin_person_path(@conn, :slack, person), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
-          <%= icon_link("trash", to: Routes.admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= AdminHelpers.icon_link("eye", to: Routes.admin_person_path(@conn, :show, person)) %>
+          <%= AdminHelpers.icon_link("edit", to: Routes.admin_person_path(@conn, :edit, person)) %>
+          <%= AdminHelpers.icon_link("slack", to: Routes.admin_person_path(@conn, :slack, person), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+          <%= AdminHelpers.icon_link("trash", to: Routes.admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>
     </tr>

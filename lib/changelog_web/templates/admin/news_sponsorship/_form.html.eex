@@ -1,34 +1,34 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="two fields">
-    <div class="field required <%= error_class(f, :sponsor_id) %>">
+    <div class="field required <%= AdminHelpers.error_class(f, :sponsor_id) %>">
       <%= label(f, :sponsor_id, "Sponsor") %>
       <div class="ui fluid remote sponsor search selection dropdown">
         <%= hidden_input(f, :sponsor_id) %>
         <i class="dropdown icon"></i>
-        <% sponsor = load_from_form(f, Sponsor, :sponsor) %>
+        <% sponsor = AdminHelpers.load_from_form(f, Sponsor, :sponsor) %>
         <%= if sponsor do %>
           <div class="selected text"><%= sponsor.name %></div>
         <% else %>
           <div class="default text">Select Sponsor</div>
         <% end %>
       </div>
-      <%= error_message(f, :sponsor_id) %>
+      <%= AdminHelpers.error_message(f, :sponsor_id) %>
     </div>
 
-    <div class="field <%= error_class(f, :name) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :name) %>">
       <%= label(f, :name, "Campaign Name") %>
       <%= text_input(f, :name, placeholder: "Fall, 2018") %>
     </div>
   </div>
 
-  <div class="field required <%= error_class(f, :weeks) %>">
+  <div class="field required <%= AdminHelpers.error_class(f, :weeks) %>">
     <%= label(f, :weeks, "Weeks") %>
     <input type="hidden" name="news_sponsorship[weeks]" value="">
     <div
       class="ui labels js-weeks"
       data-weeks="<%= Jason.encode!(f.params["weeks"] || f.data.weeks) %>"
     ></div>
-    <%= error_message(f, :weeks) %>
+    <%= AdminHelpers.error_message(f, :weeks) %>
 
     <div class="ui basic icon button js-add-weeks"><i class="add icon"></i></div>
   </div>
@@ -40,14 +40,14 @@
 
     <div class="js-ads">
       <%= inputs_for f, :ads, fn i -> %>
-        <div class="ui basic segment <%= if is_persisted(i.data), do: "persisted" %>">
+        <div class="ui basic segment <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input(i, :delete) %>
 
           <div class="two fields">
-            <div class="fourteen wide field required <%= error_class(i, :url) %>">
+            <div class="fourteen wide field required <%= AdminHelpers.error_class(i, :url) %>">
               <%= label(i, :url, "URL") %>
               <%= text_input(i, :url) %>
-              <%= error_message(i, :url) %>
+              <%= AdminHelpers.error_message(i, :url) %>
             </div>
 
             <div class="two wide field">
@@ -56,30 +56,30 @@
             </div>
           </div>
 
-          <div class="field required <%= error_class(i, :headline) %>">
+          <div class="field required <%= AdminHelpers.error_class(i, :headline) %>">
             <%= label(i, :headline, "Headline") %>
             <%= text_input(i, :headline, placeholder: "10 Best Blog Post Titles") %>
-            <%= error_message(i, :headline) %>
+            <%= AdminHelpers.error_message(i, :headline) %>
           </div>
 
-          <div class="field <%= error_class(i, :story) %>">
+          <div class="field <%= AdminHelpers.error_class(i, :story) %>">
             <%= label(i, :story) %>
             <%= textarea(i, :story, placeholder: "Markdown enabled.", rows: 3)%>
-            <%= error_message(i, :story) %>
+            <%= AdminHelpers.error_message(i, :story) %>
           </div>
 
-        <%= if is_persisted(i.data) do %>
+        <%= if AdminHelpers.is_persisted(i.data) do %>
           <div class="field">
             <label for="image">
               Image
-              <%= help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
+              <%= AdminHelpers.help_icon("GIF, PNG, or JPG. Ideally >= 600px wide.") %>
             </label>
 
             <%= if i.data.image do %>
               <img src="<%= NewsAdView.image_url(i.data, :large) %>" style="width: 100%; background: black;">
             <% end %>
             <br/>
-            <%= error_message(i, :image) %>
+            <%= AdminHelpers.error_message(i, :image) %>
             <%= file_input(i, :image) %>
           </div>
         <% end %>
@@ -94,7 +94,7 @@
               <%= checkbox(i, :newsletter, class: "hidden") %>
               <label for="newsletter">
                 In Newsletter
-                <%= help_icon("Force newsletter use (one per campaign)") %>
+                <%= AdminHelpers.help_icon("Force newsletter use (one per campaign)") %>
               </label>
             </div>
           </div>
@@ -109,12 +109,12 @@
 
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
-  <%= if !is_persisted(f.data) do %>
-    <div class="column"><%= submit_button(:primary, "Create") %></div>
-    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, Routes.admin_news_sponsorship_path(@conn, :index))) %></div>
+  <%= if !AdminHelpers.is_persisted(f.data) do %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_news_sponsorship_path(@conn, :index))) %></div>
   <% else %>
-    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
-    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
   <% end %>
     <div class="column"></div>
   </div>

@@ -163,7 +163,7 @@ defmodule ChangelogWeb.Meta.Title do
 
   defp get(%{view_module: PodcastView, podcast: podcast}) do
     if Enum.any?(podcast.hosts) do
-      "#{podcast.name} Podcast with #{comma_separated_names(podcast.hosts)}"
+      "#{podcast.name} Podcast with #{SharedHelpers.comma_separated_names(podcast.hosts)}"
     else
       podcast.name
     end

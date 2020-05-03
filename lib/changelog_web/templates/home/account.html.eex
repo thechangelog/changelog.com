@@ -5,10 +5,10 @@
     <input type="hidden" name="from" value="account">
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :email) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :email) %>">
         <label>Email</label>
         <%= text_input(f, :email) %>
-        <%= error_message(f, :email) %>
+        <%= PublicHelpers.error_message(f, :email) %>
       </div>
     </div>
 
@@ -16,7 +16,7 @@
     <div class="form-checklist">
       <label>Email Settings</label>
 
-      <div class="form-checklist-item <%= error_class(f, :email_on_submitted_news) %>">
+      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :email_on_submitted_news) %>">
         <label>
           <%= checkbox(i, :email_on_submitted_news) %>
           <span class="form-checklist-item-box"></span>
@@ -24,7 +24,7 @@
         </label>
       </div>
 
-      <div class="form-checklist-item <%= error_class(f, :email_on_authored_news) %>">
+      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :email_on_authored_news) %>">
         <label>
           <%= checkbox(i, :email_on_authored_news) %>
           <span class="form-checklist-item-box"></span>
@@ -32,7 +32,7 @@
         </label>
       </div>
 
-      <div class="form-checklist-item <%= error_class(f, :email_on_comment_replies) %>">
+      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :email_on_comment_replies) %>">
         <label>
           <%= checkbox(i, :email_on_comment_replies) %>
           <span class="form-checklist-item-box"></span>
@@ -40,7 +40,7 @@
         </label>
       </div>
 
-      <div class="form-checklist-item <%= error_class(f, :email_on_comment_mentions) %>">
+      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :email_on_comment_mentions) %>">
         <label>
           <%= checkbox(i, :email_on_comment_mentions) %>
           <span class="form-checklist-item-box"></span>
@@ -52,7 +52,7 @@
     <div class="form-checklist">
       <label>Subscription Settings</label>
 
-      <div class="form-checklist-item <%= error_class(f, :subscribe_to_contributed_news) %>">
+      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :subscribe_to_contributed_news) %>">
         <label>
           <%= checkbox(i, :subscribe_to_contributed_news) %>
           <span class="form-checklist-item-box"></span>
@@ -60,7 +60,7 @@
         </label>
       </div>
 
-      <div class="form-checklist-item <%= error_class(f, :subscribe_to_participated_episodes) %>">
+      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :subscribe_to_participated_episodes) %>">
         <label>
           <%= checkbox(i, :subscribe_to_participated_episodes) %>
           <span class="form-checklist-item-box"></span>

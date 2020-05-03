@@ -17,9 +17,9 @@
         <th class="center aligned">
         <%= if @status == :draft do %>
           <div class="ui basic buttons">
-            <%= if Policies.NewsItem.new(@current_user), do: icon_link("add", to: Routes.admin_news_item_path(@conn, :new), title: "New Item") %>
-            <%= if Policies.AdminsOnly.new(@current_user), do: icon_link("rss", to: Routes.admin_news_source_path(@conn, :new), title: "New Source") %>
-            <%= if Policies.AdminsOnly.new(@current_user), do: icon_link("newspaper", to: Routes.admin_news_issue_path(@conn, :new), title: "New Issue") %>
+            <%= if Policies.NewsItem.new(@current_user), do: AdminHelpers.icon_link("add", to: Routes.admin_news_item_path(@conn, :new), title: "New Item") %>
+            <%= if Policies.AdminsOnly.new(@current_user), do: AdminHelpers.icon_link("rss", to: Routes.admin_news_source_path(@conn, :new), title: "New Source") %>
+            <%= if Policies.AdminsOnly.new(@current_user), do: AdminHelpers.icon_link("newspaper", to: Routes.admin_news_issue_path(@conn, :new), title: "New Issue") %>
           </div>
         <% end %>
         </th>
@@ -34,17 +34,17 @@
     <%= for item <- @items do %>
       <tr data-id="<%= item.id %>">
         <td class="center aligned">
-        <%= if is_loaded(item.submitter) && item.submitter != item.author do %>
+        <%= if AdminHelpers.is_loaded(item.submitter) && item.submitter != item.author do %>
           <%= link to: Routes.admin_person_path(@conn, :show, item.submitter), title: "Submitter: #{item.submitter.name}", data: [popup: true] do %>
             <img class="ui avatar image" src="<%= PersonView.avatar_url(item.submitter) %>">
           <% end %>
         <% end %>
-        <%= if is_loaded(item.author) do %>
+        <%= if AdminHelpers.is_loaded(item.author) do %>
           <%= link to: Routes.admin_person_path(@conn, :show, item.author), title: "Author: #{item.author.name}", data: [popup: true] do %>
             <img class="ui avatar image" src="<%= PersonView.avatar_url(item.author) %>">
           <% end %>
         <% end %>
-        <%= if is_loaded(item.logger) && item.logger != item.author do %>
+        <%= if AdminHelpers.is_loaded(item.logger) && item.logger != item.author do %>
           <%= link to: Routes.admin_person_path(@conn, :show, item.logger), title: "Logger: #{item.logger.name}", data: [popup: true] do %>
             <img class="ui avatar image" src="<%= PersonView.avatar_url(item.logger) %>">
           <% end %>
@@ -53,7 +53,7 @@
         <td><%= item.type %></td>
         <td>
           <%= if item.image do %><i class="image icon"></i><% end %>
-          <%= link(truncate(item.headline, 50), to: item.url) %>
+          <%= link(SharedHelpers.truncate(item.headline, 50), to: item.url) %>
         </td>
         <td>
         <%= for topic <- item.topics do %>
@@ -62,27 +62,27 @@
         </td>
       <%= if @status == :published do %>
         <td><%= item.click_count %> / <%= item.impression_count %></td>
-        <td><%= ctr(item) %>%</td>
+        <td><%= SharedHelpers.ctr(item) %>%</td>
       <% else %>
-        <td><%= ts(item.inserted_at) %></td>
+        <td><%= AdminHelpers.ts(item.inserted_at) %></td>
       <% end %>
       <%= if Enum.member?([:published, :scheduled], @status) do %>
-        <td><%= ts(item.published_at) %></td>
+        <td><%= AdminHelpers.ts(item.published_at) %></td>
       <% end %>
         <td class="center aligned">
           <div class="ui small basic buttons">
           <%= if @status == :queued do %>
-            <%= icon_link("move", to: Routes.admin_news_item_path(@conn, :edit, item)) %>
+            <%= AdminHelpers.icon_link("move", to: Routes.admin_news_item_path(@conn, :edit, item)) %>
           <% end %>
-            <%= icon_link("eye", to: show_or_preview_path(@conn, item)) %>
+            <%= AdminHelpers.icon_link("eye", to: show_or_preview_path(@conn, item)) %>
           <%= if @status == :published do %>
-            <%= icon_link("rss", to: Routes.admin_news_item_subscription_path(@conn, :index, item), title: "Subscriptions") %>
+            <%= AdminHelpers.icon_link("rss", to: Routes.admin_news_item_subscription_path(@conn, :index, item), title: "Subscriptions") %>
           <% end %>
-            <%= if Policies.NewsItem.edit(@current_user, item), do: icon_link("edit", to: Routes.admin_news_item_path(@conn, :edit, item)) %>
+            <%= if Policies.NewsItem.edit(@current_user, item), do: AdminHelpers.icon_link("edit", to: Routes.admin_news_item_path(@conn, :edit, item)) %>
           <%= if @status == :submitted do %>
-            <%= icon_link("thumbs down", to: Routes.admin_news_item_path(@conn, :decline, item), method: :delete, data: [confirm: "Decline this item?"]) %>
+            <%= AdminHelpers.icon_link("thumbs down", to: Routes.admin_news_item_path(@conn, :decline, item), method: :delete, data: [confirm: "Decline this item?"]) %>
           <% else %>
-            <%= if Policies.NewsItem.delete(@current_user, item), do: icon_link("trash", to: Routes.admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
+            <%= if Policies.NewsItem.delete(@current_user, item), do: AdminHelpers.icon_link("trash", to: Routes.admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
           <% end %>
           </div>
         </td>

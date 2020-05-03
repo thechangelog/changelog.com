@@ -9,7 +9,7 @@
       </a>
 
       <%= if @page.total_entries > 0 do %>
-        <p class="search-form-footer-results">We found <%= pluralize(@page.total_entries, "result", "results") %>.</p>
+        <p class="search-form-footer-results">We found <%= SharedHelpers.pluralize(@page.total_entries, "result", "results") %>.</p>
       <% else %>
         <%= if String.length(@query) != 0 do %>
           <p class="search-form-footer-results">

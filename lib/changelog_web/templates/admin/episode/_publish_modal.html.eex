@@ -8,7 +8,7 @@
       <div class="inline field">
         <div class="ui toggle checkbox">
           <input type="checkbox" name="news" class="hidden" value="1" checked>
-          <label>Post to Changelog News <%= help_icon("Disable to publish to audio feed only.") %></label>
+          <label>Post to Changelog News <%= AdminHelpers.help_icon("Disable to publish to audio feed only.") %></label>
         </div>
       </div>
 
@@ -19,7 +19,7 @@
         <% else %>
           <input type="checkbox" class="hidden" value="0" disabled>
         <% end %>
-          <label>Send "Thank You" email <%= help_icon("Each guest will receive one (requires news item).") %></label>
+          <label>Send "Thank You" email <%= AdminHelpers.help_icon("Each guest will receive one (requires news item).") %></label>
         </div>
       </div>
     <% end %>

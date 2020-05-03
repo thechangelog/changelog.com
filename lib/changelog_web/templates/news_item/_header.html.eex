@@ -2,7 +2,7 @@
   <p class="news_item-source">
     <%= render_source_image(@conn, @item) %>
     <%= render_source_name(@conn, @item) %>
-    <%= if controller_action_combo(@conn) == "news_item-index" && @item.pinned do %>
+    <%= if SharedHelpers.controller_action_combo(@conn) == "news_item-index" && @item.pinned do %>
     &nbsp;–&nbsp;Pinned
     <% end %>
   </p>

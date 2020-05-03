@@ -9,12 +9,12 @@ defmodule ChangelogWeb.EpisodeView do
   def admin_edit_link(conn, %{admin: true}, episode) do
     path =
       Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug,
-        next: current_path(conn)
+        next: SharedHelpers.current_path(conn)
       )
 
     content_tag(:span) do
       [
-        link("(#{comma_separated(episode.reach_count)})", to: path, data: [turbolinks: false])
+        link("(#{SharedHelpers.comma_separated(episode.reach_count)})", to: path, data: [turbolinks: false])
       ]
     end
   end
@@ -49,8 +49,8 @@ defmodule ChangelogWeb.EpisodeView do
 
   def classy_highlight(episode) do
     episode.highlight
-    |> no_widowed_words
-    |> with_smart_quotes
+    |> PublicHelpers.no_widowed_words
+    |> PublicHelpers.with_smart_quotes
     |> raw
   end
 
@@ -199,10 +199,10 @@ defmodule ChangelogWeb.EpisodeView do
 
     %{
       url: url,
-      twitter: tweet_url(episode.title, url),
-      hackernews: hackernews_url(episode.title, url),
-      reddit: reddit_url(episode.title, url),
-      facebook: facebook_url(url),
+      twitter: PublicHelpers.tweet_url(episode.title, url),
+      hackernews: PublicHelpers.hackernews_url(episode.title, url),
+      reddit: PublicHelpers.reddit_url(episode.title, url),
+      facebook: PublicHelpers.facebook_url(url),
       embed: embed_code(episode)
     }
   end

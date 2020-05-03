@@ -15,7 +15,7 @@
 
 <%= if Enum.any?(@episode_sponsorships) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Sponsored Episodes (<%= @episode_sponsorships |> length() |> comma_separated() %>)</h2>
+  <h2 class="ui header">Sponsored Episodes (<%= @episode_sponsorships |> length() |> SharedHelpers.comma_separated() %>)</h2>
 
   <table class="ui celled striped table">
     <thead>
@@ -36,12 +36,12 @@
         <td><%= EpisodeView.podcast_name_and_number(episode) %></td>
         <td><%= sponsorship.title %></td>
         <td>
-          <%= truncate(sponsorship.description, 100) %>
+          <%= SharedHelpers.truncate(sponsorship.description, 100) %>
         </td>
-        <td><%= reach_count(episode) %></td>
+        <td><%= AdminHelpers.reach_count(episode) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link("eye", to: Routes.episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
+            <%= AdminHelpers.icon_link("eye", to: Routes.episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>
             <button class="ui icon clipboard button" title="Copy Markdown" data-clipboard-text="<%= sponsorship.description %>"><i class="clipboard icon"></i></button>
           </div>
         </td>
@@ -55,7 +55,7 @@
 
 <%= if Enum.any?(@news_sponsorships) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Sponsored News (<%= @news_sponsorships |> length() |> comma_separated() %>)</h2>
+  <h2 class="ui header">Sponsored News (<%= @news_sponsorships |> length() |> SharedHelpers.comma_separated() %>)</h2>
 
   <%= render(Admin.NewsSponsorshipView, "_table.html", conn: @conn, sponsorships: @news_sponsorships) %>
 </div>

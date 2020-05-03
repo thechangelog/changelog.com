@@ -7,7 +7,7 @@
       to: Routes.post_path(@conn, :show, @post.slug),
       class: "view" %>
   <% else %>
-    <%= external_link "(Preview)",
+    <%= SharedHelpers.external_link "(Preview)",
       to: Routes.post_path(@conn, :preview, Post.hashid(@post)),
       class: "view" %>
   <% end %>

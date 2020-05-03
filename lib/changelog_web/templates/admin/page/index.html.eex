@@ -33,7 +33,7 @@
           <%= for period <- [:daily, :weekly, :monthly] do %>
             <td><i class="caret up icon"></i><%= NewsletterView.subscribers(newsletter, period) %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= NewsletterView.unsubscribers(newsletter, period) %></td>
           <% end %>
-            <td><%= NewsletterView.subscribers(newsletter, :all) |> comma_separated %></td>
+            <td><%= NewsletterView.subscribers(newsletter, :all) |> SharedHelpers.comma_separated %></td>
           </tr>
         <% end %>
         </tbody>
@@ -48,7 +48,7 @@
             <th>Metric</th>
             <th class="center aligned">
               <div class="ui basic buttons">
-                <%= icon_link("plus", to: Routes.admin_person_path(@conn, :new), title: "New Person") %>
+                <%= AdminHelpers.icon_link("plus", to: Routes.admin_person_path(@conn, :new), title: "New Person") %>
               </div>
             </th>
           </tr>
@@ -56,19 +56,19 @@
         <tbody>
           <tr>
             <td>Members today</td>
-            <td><%= @members[:today] |> comma_separated %></td>
+            <td><%= @members[:today] |> SharedHelpers.comma_separated %></td>
           </tr>
           <tr>
             <td>Members in Slack</td>
-            <td><%= @members[:slack] |> comma_separated %></td>
+            <td><%= @members[:slack] |> SharedHelpers.comma_separated %></td>
           </tr>
           <tr>
             <td>Members in total</td>
-            <td><%= @members[:total] |> comma_separated %></td>
+            <td><%= @members[:total] |> SharedHelpers.comma_separated %></td>
           </tr>
           <tr>
             <td>People in total</td>
-            <td><%= Repo.count(Changelog.Person) |> comma_separated %></td>
+            <td><%= Repo.count(Changelog.Person) |> SharedHelpers.comma_separated %></td>
           </tr>
         </tbody>
       </table>

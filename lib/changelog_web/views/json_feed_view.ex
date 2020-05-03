@@ -24,8 +24,8 @@ defmodule ChangelogWeb.JsonFeedView do
       url: item.url,
       date_published: TimeView.rfc3339(item.published_at),
       author: %{name: item.logger.name},
-      content_html: md_to_html(item.story),
-      content_text: md_to_text(item.story)
+      content_html: SharedHelpers.md_to_html(item.story),
+      content_text: SharedHelpers.md_to_text(item.story)
     }
 
     if item.image do
@@ -44,8 +44,8 @@ defmodule ChangelogWeb.JsonFeedView do
         |> safe_to_string,
       url: Routes.episode_url(conn, :show, episode.podcast.slug, episode.slug),
       date_published: TimeView.rfc3339(episode.published_at),
-      content_html: md_to_html(item.story),
-      content_text: md_to_text(item.story),
+      content_html: SharedHelpers.md_to_html(item.story),
+      content_text: SharedHelpers.md_to_text(item.story),
       attachments: [audio_attachment(episode)]
     }
   end
@@ -57,8 +57,8 @@ defmodule ChangelogWeb.JsonFeedView do
       author: %{name: post.author.name},
       url: Routes.post_url(conn, :show, post.slug),
       date_published: TimeView.rfc3339(post.published_at),
-      content_html: md_to_html(item.story),
-      content_text: md_to_text(item.story)
+      content_html: SharedHelpers.md_to_html(item.story),
+      content_text: SharedHelpers.md_to_text(item.story)
     }
   end
 

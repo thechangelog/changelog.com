@@ -54,7 +54,7 @@ defmodule ChangelogWeb do
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
       import Scrivener.HTML
       alias ChangelogWeb.Router.Helpers, as: Routes
-      import ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
+      alias ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
       alias Changelog.Policies
       alias ChangelogWeb.TimeView
     end
@@ -73,7 +73,7 @@ defmodule ChangelogWeb do
         only: [current_url: 1, get_flash: 1, get_flash: 2, view_module: 1]
 
       alias ChangelogWeb.Router.Helpers, as: Routes
-      import ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
+      alias ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
       alias Changelog.Policies
       alias ChangelogWeb.{SharedView, TimeView}
     end

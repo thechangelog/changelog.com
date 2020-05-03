@@ -8,7 +8,7 @@
   </p>
   <h2 class="news_item-title"><%= link(@ad.headline, to: @ad.url) %></h2>
   <div class="news_item-content">
-    <%= @ad.story |> md_to_html() |> raw() %>
+    <%= @ad.story |> SharedHelpers.md_to_html() |> raw() %>
     <%= if @ad.image do %>
       <p>
         <%= link to: @ad.url do %>

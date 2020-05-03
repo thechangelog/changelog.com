@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
   end
 
   def pitch_preview(%{pitch: pitch}, count \\ 80) do
-    pitch |> md_to_text() |> truncate(count)
+    pitch |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(count)
   end
 
   def submitter_name(%{pronunciation: pronunciation}) do

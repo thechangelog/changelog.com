@@ -14,7 +14,7 @@
       <% end %>
         <li><%= link("Android", to: subscribe_on_android_url(@podcast)) %></li>
       <%= if @podcast.twitter_handle do %>
-        <li><%= link("Twitter", to: twitter_url(@podcast.twitter_handle)) %></li>
+        <li><%= link("Twitter", to: SharedHelpers.twitter_url(@podcast.twitter_handle)) %></li>
       <% end %>
         <li><%= link("Email", to: subscribe_via_email_path(@conn, @podcast), title: "Subscribe via Email") %></li>
     <% else %>

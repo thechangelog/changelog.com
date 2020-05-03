@@ -25,7 +25,7 @@
 
     <div class="image">
       <a href="http://nightly.changelog.com/2016/10/06/">
-        <%= lazy_image(Routes.static_url(@conn, "/images/content/changelog-nightly.jpg"), "Changelog Nightly") %>
+        <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/changelog-nightly.jpg"), "Changelog Nightly") %>
       </a>
     </div>
 

@@ -15,17 +15,17 @@
       <tr>
         <td>
           <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(source) %>">
-          <%= external_link(source.name, to: source.website) %>
+          <%= SharedHelpers.external_link(source.name, to: source.website) %>
         </td>
         <td><%= link(source.slug, to: Routes.news_source_path(@conn, :show, source.slug)) %></td>
-        <td><%= twitter_link(source) %></td>
+        <td><%= SharedHelpers.twitter_link(source) %></td>
         <td><%= source.regex %></td>
-        <td><%= ts(source.updated_at) %></td>
+        <td><%= AdminHelpers.ts(source.updated_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link "eye", to: Routes.news_source_path(@conn, :show, source.slug) %>
-            <%= icon_link "edit", to: Routes.admin_news_source_path(@conn, :edit, source) %>
-            <%= icon_link "trash", to: Routes.admin_news_source_path(@conn, :delete, source), method: :delete, data: [confirm: "Are you sure?"] %>
+            <%= AdminHelpers.icon_link "eye", to: Routes.news_source_path(@conn, :show, source.slug) %>
+            <%= AdminHelpers.icon_link "edit", to: Routes.admin_news_source_path(@conn, :edit, source) %>
+            <%= AdminHelpers.icon_link "trash", to: Routes.admin_news_source_path(@conn, :delete, source), method: :delete, data: [confirm: "Are you sure?"] %>
           </div>
         </td>
       </tr>

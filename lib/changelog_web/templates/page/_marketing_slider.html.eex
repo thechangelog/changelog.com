@@ -33,7 +33,7 @@
 
       <div class="sponsor_grid-item-content">
         <h4><%= story.sponsor %></h4>
-        <p><%= truncate(story.quote.content, 140) %></p>
+        <p><%= SharedHelpers.truncate(story.quote.content, 140) %></p>
       </div>
     <% end %>
   <% end %>

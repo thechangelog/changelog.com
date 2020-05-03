@@ -1,6 +1,4 @@
 defmodule ChangelogWeb.Meta.Description do
-  import ChangelogWeb.Helpers.SharedHelpers,
-    only: [md_to_text: 1, truncate: 2]
 
   alias ChangelogWeb.{
     EpisodeView,
@@ -11,16 +9,17 @@ defmodule ChangelogWeb.Meta.Description do
     PersonView,
     PodcastView,
     PostView,
+    Helpers.SharedHelpers,
     TopicView
   }
 
   def description(assigns), do: get(assigns)
 
   defp get(%{view_module: EpisodeView, episode: episode}),
-    do: episode.summary |> md_to_text() |> truncate(320)
+    do: episode.summary |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
 
   defp get(%{view_module: NewsItemView, item: item}),
-    do: item.story |> md_to_text() |> truncate(320)
+    do: item.story |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
 
   defp get(%{view_module: NewsSourceView, source: source}), do: source.description
   defp get(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_summary()
@@ -30,7 +29,7 @@ defmodule ChangelogWeb.Meta.Description do
 
   defp get(%{view_module: PostView, post: post}) do
     if post.tldr do
-      post.tldr |> md_to_text() |> truncate(320)
+      post.tldr |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
     else
       post.title
     end
@@ -49,7 +48,7 @@ defmodule ChangelogWeb.Meta.Description do
   end
 
   defp get(%{view_module: PersonView, person: %{bio: bio}}) when is_binary(bio) do
-    bio |> md_to_text() |> truncate(320)
+    bio |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
   end
 
   defp get(%{view_module: TopicView, topic: topic}), do: topic.description

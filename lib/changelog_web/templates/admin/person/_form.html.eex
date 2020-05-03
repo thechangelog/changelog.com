@@ -1,41 +1,41 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="three fields">
-    <div class="field required <%= error_class(f, :name) %>">
+    <div class="field required <%= AdminHelpers.error_class(f, :name) %>">
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "Grace Hopper") %>
-      <%= error_message(f, :name) %>
+      <%= AdminHelpers.error_message(f, :name) %>
     </div>
 
-    <div class="field required <%= error_class(f, :email) %>">
+    <div class="field required <%= AdminHelpers.error_class(f, :email) %>">
       <%= label(f, :email, "Email") %>
       <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
-      <%= error_message(f, :email) %>
+      <%= AdminHelpers.error_message(f, :email) %>
     </div>
 
-    <div class="field required <%= error_class(f, :handle) %>">
+    <div class="field required <%= AdminHelpers.error_class(f, :handle) %>">
       <%= label(f, :handle, "Handle") %>
       <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
-      <%= error_message(f, :handle) %>
+      <%= AdminHelpers.error_message(f, :handle) %>
     </div>
   </div>
 
   <div class="three fields">
-    <div class="field <%= error_class(f, :github_handle) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :github_handle) %>">
       <%= label(f, :github_handle, "GitHub Handle") %>
       <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-      <%= error_message(f, :github_handle) %>
+      <%= AdminHelpers.error_message(f, :github_handle) %>
     </div>
 
-    <div class="field <%= error_class(f, :twitter_handle) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :twitter_handle) %>">
       <%= label(f, :twitter_handle, "Twitter Handle") %>
       <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-      <%= error_message(f, :twitter_handle) %>
+      <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
 
-    <div class="field <%= error_class(f, :linkedin_handle) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :linkedin_handle) %>">
       <%= label(f, :linkedin_handle, "LinkedIn Handle") %>
       <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-      <%= error_message(f, :linkedin_handle) %>
+      <%= AdminHelpers.error_message(f, :linkedin_handle) %>
     </div>
   </div>
 
@@ -43,15 +43,15 @@
     <div class="fourteen wide field">
       <label for="avatar">
         Avatar
-        <%= help_icon("Ideal size is 600px by 600px") %>
-        <%= file_toggle_buttons() %>
+        <%= AdminHelpers.help_icon("Ideal size is 600px by 600px") %>
+        <%= AdminHelpers.file_toggle_buttons() %>
       </label>
       <%= file_input(f, :avatar) %>
-      <%= error_message(f, :avatar) %>
+      <%= AdminHelpers.error_message(f, :avatar) %>
     </div>
 
     <div class="two wide field">
-      <%= if is_persisted(f.data) do %>
+      <%= if AdminHelpers.is_persisted(f.data) do %>
         <img
           src="<%= ChangelogWeb.PersonView.avatar_url(f.data, :small) %>"
           data-popup=true
@@ -68,23 +68,23 @@
   </div>
 
   <div class="two fields">
-    <div class="field <%= error_class(f, :website) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :website) %>">
       <%= label(f, :website) %>
       <%= text_input(f, :website, placeholder: "https://en.wikipedia.org/wiki/Grace_Hopper", autocapitalize: "none") %>
-      <%= error_message(f, :website) %>
+      <%= AdminHelpers.error_message(f, :website) %>
     </div>
 
-    <div class="field <%= error_class(f, :location) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :location) %>">
       <%= label(f, :location) %>
       <%= text_input(f, :location, placeholder: "New York, New York") %>
-      <%= error_message(f, :location) %>
+      <%= AdminHelpers.error_message(f, :location) %>
     </div>
   </div>
 
-  <div class="field <%= error_class(f, :bio) %>">
+  <div class="field <%= AdminHelpers.error_class(f, :bio) %>">
     <%= label(f, :bio) %>
     <%= textarea f, :bio %>
-    <%= error_message(f, :bio) %>
+    <%= AdminHelpers.error_message(f, :bio) %>
   </div>
 
   <div class="ui horizontal divider">Roles</div>
@@ -164,26 +164,26 @@
   </div>
 <% end %>
 
-<%= if !is_persisted(f.data) do %>
+<%= if !AdminHelpers.is_persisted(f.data) do %>
   <div class="ui horizontal divider">Welcome Email</div>
 
   <div class="fields">
     <div class="field">
-      <label>Nope <%= help_icon("Useful for News authors because they'll get an email when their news gets published instead.") %></label>
+      <label>Nope <%= AdminHelpers.help_icon("Useful for News authors because they'll get an email when their news gets published instead.") %></label>
       <div class="ui toggle radio checkbox">
         <input type="radio" name="welcome" value="" checked>
       </div>
     </div>
 
     <div class="field">
-      <label>Generic <%= help_icon("This is the email all new community members get when they sign up. Use this if you're creating an account on someone's behalf.") %></label>
+      <label>Generic <%= AdminHelpers.help_icon("This is the email all new community members get when they sign up. Use this if you're creating an account on someone's behalf.") %></label>
       <div class="ui toggle radio checkbox">
         <input type="radio" name="welcome" value="generic">
       </div>
     </div>
 
     <div class="field">
-      <label>Guest <%= help_icon("This welcome email is written with guests in mind. Use this if you're creating a person to be a show guest.") %></label>
+      <label>Guest <%= AdminHelpers.help_icon("This welcome email is written with guests in mind. Use this if you're creating a person to be a show guest.") %></label>
       <div class="ui toggle radio checkbox">
         <input type="radio" name="welcome" value="guest">
       </div>
@@ -193,13 +193,13 @@
 
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
-  <%= if !is_persisted(f.data) do %>
-    <div class="column"><%= submit_button(:primary, "Create") %></div>
-    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, Routes.admin_person_path(@conn, :index))) %></div>
+  <%= if !AdminHelpers.is_persisted(f.data) do %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_person_path(@conn, :index))) %></div>
     <div class="column"></div>
   <% else %>
-    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
-    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
     <div class="column"><%= link("Delete", to: Routes.admin_person_path(@conn, :delete, f.data), class: "ui red fluid basic button", method: :delete, data: [confirm: "Are you sure?"]) %></div>
   <% end %>
   </div>

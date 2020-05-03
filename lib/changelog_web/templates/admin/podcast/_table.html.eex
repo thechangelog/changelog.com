@@ -9,8 +9,8 @@
       <th>Twitter</th>
       <th>Subscribers</th>
       <th>Episodes</th>
-      <th>Downloads <%= help_icon("Bytes downloaded / bytes per episode") %></th>
-      <th>Reach <%= help_icon("Unique IPs per day") %></th>
+      <th>Downloads <%= AdminHelpers.help_icon("Bytes downloaded / bytes per episode") %></th>
+      <th>Reach <%= AdminHelpers.help_icon("Unique IPs per day") %></th>
       <th></th>
     </tr>
   </thead>
@@ -29,25 +29,25 @@
       <td><%= podcast.position %></td>
     <% end %>
       <td><%= status_label(podcast) %></td>
-      <td><%= twitter_link(podcast) %></td>
+      <td><%= SharedHelpers.twitter_link(podcast) %></td>
       <td>
-        <strong>Email:</strong> <%= link(comma_separated(Podcast.subscription_count(podcast)), to: Routes.admin_podcast_subscription_path(@conn, :index, podcast.slug)) %><br/>
+        <strong>Email:</strong> <%= link(SharedHelpers.comma_separated(Podcast.subscription_count(podcast)), to: Routes.admin_podcast_subscription_path(@conn, :index, podcast.slug)) %><br/>
       <%= for {client, count} <- (podcast.subscribers || %{}) do %>
-        <strong><%= client %>:</strong> <%= comma_separated(count) %><br/>
+        <strong><%= client %>:</strong> <%= SharedHelpers.comma_separated(count) %><br/>
       <% end %>
       </td>
       <td><%= episode_count(podcast) %></td>
-      <td><%= download_count(podcast) %></td>
-      <td><%= reach_count(podcast) %></td>
+      <td><%= AdminHelpers.download_count(podcast) %></td>
+      <td><%= AdminHelpers.reach_count(podcast) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= icon_link("eye", to: Routes.podcast_path(@conn, :show, podcast.slug)) %>
+          <%= AdminHelpers.icon_link("eye", to: Routes.podcast_path(@conn, :show, podcast.slug)) %>
         <%= if Policies.Podcast.edit(@current_user, podcast) do %>
-          <%= icon_link("edit", to: Routes.admin_podcast_path(@conn, :edit, podcast.slug)) %>
+          <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_path(@conn, :edit, podcast.slug)) %>
         <% end %>
-          <%= icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
+          <%= AdminHelpers.icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
         <%= if Policies.Episode.new(@current_user, podcast) do %>
-          <%= icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug)) %>
+          <%= AdminHelpers.icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug)) %>
         <% end %>
         </div>
       </td>

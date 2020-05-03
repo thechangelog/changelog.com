@@ -9,52 +9,52 @@
 
   <%= form_for @changeset, Routes.episode_request_path(@conn, :create), fn f -> %>
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :podcast_id) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :podcast_id) %>">
         <label>This request is for...</label>
         <%= select(f, :podcast_id, Enum.map(@podcasts, &{&1.name, &1.id})) %>
-        <%= error_message(f, :podcast_id) %>
+        <%= PublicHelpers.error_message(f, :podcast_id) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :guests) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :guests) %>">
         <label>I would love to hear...</label>
-        <%= text_input(f, :guests, user_required_options(@current_user, placeholder: "possible guest name(s)")) %>
-        <%= error_message(f, :guests) %>
+        <%= text_input(f, :guests, PublicHelpers.user_required_options(@current_user, placeholder: "possible guest name(s)")) %>
+        <%= PublicHelpers.error_message(f, :guests) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :hosts) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :hosts) %>">
         <label>talk to...</label>
-        <%= text_input(f, :hosts, user_required_options(@current_user, placeholder: "other guest or specific host(s)")) %>
-        <%= error_message(f, :hosts) %>
+        <%= text_input(f, :hosts, PublicHelpers.user_required_options(@current_user, placeholder: "other guest or specific host(s)")) %>
+        <%= PublicHelpers.error_message(f, :hosts) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :topics) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :topics) %>">
         <label>all about...</label>
-        <%= text_input(f, :topics, user_required_options(@current_user, placeholder: "topic(s) to be discussed")) %>
-        <%= error_message(f, :topics) %>
+        <%= text_input(f, :topics, PublicHelpers.user_required_options(@current_user, placeholder: "topic(s) to be discussed")) %>
+        <%= PublicHelpers.error_message(f, :topics) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :pitch) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :pitch) %>">
         <label>because...</label>
 
-        <%= textarea(f, :pitch, user_required_options(@current_user, placeholder: "proverbial elevator pitch...", required: true)) %>
-        <%= error_message(f, :pitch) %>
+        <%= textarea(f, :pitch, PublicHelpers.user_required_options(@current_user, placeholder: "proverbial elevator pitch...", required: true)) %>
+        <%= PublicHelpers.error_message(f, :pitch) %>
         <p class="form-element-note">Markdown supported</p>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :pronunciation) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :pronunciation) %>">
         <label>my name is pronounced...</label>
-        <%= text_input(f, :pronunciation, user_required_options(@current_user, placeholder: "leave blank and we'll keep you anon")) %>
-        <%= error_message(f, :pronunciation) %>
+        <%= text_input(f, :pronunciation, PublicHelpers.user_required_options(@current_user, placeholder: "leave blank and we'll keep you anon")) %>
+        <%= PublicHelpers.error_message(f, :pronunciation) %>
       </div>
     </div>
 

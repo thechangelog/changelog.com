@@ -8,7 +8,7 @@
       <div class="inline field">
         <div class="ui toggle checkbox">
           <input type="checkbox" name="news" class="hidden" value="1" checked readonly>
-          <label>Post to Changelog News <%= help_icon("This isn't really an option") %></label>
+          <label>Post to Changelog News <%= AdminHelpers.help_icon("This isn't really an option") %></label>
         </div>
       </div>
     <% end %>

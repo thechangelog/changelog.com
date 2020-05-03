@@ -3,12 +3,12 @@
   <div class="show-header-inner">
 
     <div class="show-header-art">
-      <%= lazy_image(cover_url(@podcast, :original), "#{@podcast.name} Artwork", width: 490, height: 490) %>
+      <%= SharedHelpers.lazy_image(cover_url(@podcast, :original), "#{@podcast.name} Artwork", width: 490, height: 490) %>
     </div>
 
     <div class="show-header-content">
       <div class="show-header-description">
-        <h3><%= (@podcast.welcome || @podcast.description) |> no_widowed_words() |> raw() %></h3>
+        <h3><%= (@podcast.welcome || @podcast.description) |> PublicHelpers.no_widowed_words() |> raw() %></h3>
       </div>
       <div class="show-header-buttons">
         <%= link("Learn More",

@@ -45,7 +45,7 @@
     <hr>
 
     <div class="sponsor_story-content richtext">
-      <%= @story.content_md |> md_to_html |> raw %>
+      <%= @story.content_md |> SharedHelpers.md_to_html |> raw %>
     </div>
   <% end %>
 

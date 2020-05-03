@@ -13,11 +13,11 @@
 
 <div class="ui basic segment">
   <div class="ui horizontal statistic">
-    <div class="value"><%= @item |> Subscription.subscribed_count() |> comma_separated() %></div>
+    <div class="value"><%= @item |> Subscription.subscribed_count() |> SharedHelpers.comma_separated() %></div>
     <div class="label">Subscribed</div>
   </div>
   <div class="ui horizontal statistic">
-    <div class="value"><%= @item |> Subscription.unsubscribed_count() |> comma_separated() %></div>
+    <div class="value"><%= @item |> Subscription.unsubscribed_count() |> SharedHelpers.comma_separated() %></div>
     <div class="label">Unsubscribed</div>
   </div>
 </div>
@@ -48,8 +48,8 @@
         <% end %>
         </td>
         <td><%= sub.context |> String.replace_leading("you", "") %></td>
-        <td><%= ts(sub.inserted_at) %></td>
-        <td><%= ts(sub.unsubscribed_at) %></td>
+        <td><%= AdminHelpers.ts(sub.inserted_at) %></td>
+        <td><%= AdminHelpers.ts(sub.unsubscribed_at) %></td>
       </tr>
     <% end %>
     </tbody>

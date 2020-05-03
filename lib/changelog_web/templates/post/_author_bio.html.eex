@@ -1,6 +1,6 @@
 <div class="post_footer-author">
   <%= link to: Routes.person_path(@conn, :show, @person.handle), title: @person.name, rel: "external" do %>
-    <%= lazy_image(PersonView.avatar_url(@person), @person.name, class: "post_footer-author-image", width: 50, height: 50) %>
+    <%= SharedHelpers.lazy_image(PersonView.avatar_url(@person), @person.name, class: "post_footer-author-image", width: 50, height: 50) %>
   <% end %>
 
   <div class="post_footer-author-bio">

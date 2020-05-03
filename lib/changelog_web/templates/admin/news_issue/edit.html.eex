@@ -9,7 +9,7 @@
       to: Routes.news_issue_path(@conn, :show, @issue.slug),
       class: "view" %>
   <% else %>
-    <%= external_link "(Preview)",
+    <%= SharedHelpers.external_link "(Preview)",
       to: Routes.news_issue_path(@conn, :preview, @issue.slug),
       class: "view" %>
   <% end %>
