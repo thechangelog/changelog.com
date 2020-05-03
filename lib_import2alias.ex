@@ -40,33 +40,40 @@ end
 defmodule Import2Alias do
   def import2alias(alias, entries) do
     for {file, entries} <- entries do
-      lines = File.read!(file) |> String.split("\n")
+      if String.match?(file, ~r/description.ex/) do
+        # IO.inspect(entries)
 
-      lines =
-        Enum.reduce(entries, lines, fn entry, acc ->
-          {line, column, module, name, arity} = entry
+        # Stream the file contents into a map using line numbers as keys.
+        file_map = File.stream!(file)
+        |> Stream.with_index(1)
+        |> Stream.map(fn {line, index} -> {index, line} end)
+        |> Enum.into(%{})
 
-          List.update_at(acc, line - 1, fn string ->
-            if column do
-              # the column in imported calls in captures is reported at "&" character
-              column = if String.at(string, column - 1) == "&", do: column + 1, else: column
-              pre = String.slice(string, 0, column - 1)
-              offset = column - 1 + String.length("#{name}")
-              post = String.slice(string, offset, String.length(string))
-              pre <> "#{inspect(alias)}.#{name}" <> post
-            else
-              file = Path.relative_to(file, File.cwd!())
+        # Apply changes from each entry to the file_map.
+        modified_lines = entries
+        |> Enum.reduce(file_map, &(handle_entry(&1, &2, alias)))
+        |> Enum.into([])
+        |> List.keysort(0)
+        |> Enum.map(&(elem(&1, 1)))
+        |> Enum.join()
 
-              IO.puts(
-                "skipping #{file}:#{line} #{inspect(module)}.#{name}/#{arity}: no column info"
-              )
+        File.write!(file, modified_lines)
+      end
 
-              string
-            end
-          end)
-        end)
-
-      File.write!(file, Enum.join(lines, "\n"))
     end
   end
+
+  defp handle_entry({line, column, module, function, arity} = entry, file_map, alias) do
+    file_map
+    |> Map.update!(line, &(update_string(&1, entry, alias)))
+  end
+
+  defp update_string(string, {line, column, module, function, arity} = entry, alias) do
+    if column do
+      String.replace(string, "#{function}", "#{inspect(alias)}.#{function}")
+    else
+      string
+    end
+  end
+
 end
