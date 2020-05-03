@@ -37,7 +37,7 @@ defmodule ChangelogWeb.PodcastController do
     |> assign(:items, items)
     |> assign(:trailer, trailer)
     |> assign(:page, page)
-    |> cache_public(:timer.minutes(5))
+    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render(:show)
   end
 

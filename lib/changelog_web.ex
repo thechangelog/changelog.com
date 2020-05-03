@@ -15,7 +15,7 @@ defmodule ChangelogWeb do
       import ChangelogWeb.Plug.Conn
 
       plug ChangelogWeb.Plug.ResponseCache
-      import ChangelogWeb.Plug.ResponseCache, only: [cache_public: 1, cache_public: 2]
+      alias ChangelogWeb.Plug.ResponseCache
 
       def log_request(conn, prefix \\ "REQUEST DETAILS") do
         details =

@@ -9,7 +9,7 @@ defmodule ChangelogWeb.JsonFeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/json")
-    |> cache_public(:timer.minutes(5))
+    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render("news.json", items: NewsItem.latest_news_items())
   end
 end

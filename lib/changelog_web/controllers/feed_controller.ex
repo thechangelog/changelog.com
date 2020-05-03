@@ -10,7 +10,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("news.xml")
   end
 
@@ -19,7 +19,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("news_titles.xml")
   end
 
@@ -47,7 +47,7 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:page, page)
     |> assign(:podcast, podcast)
     |> assign(:episodes, page.entries)
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("podcast.xml")
   end
 
@@ -73,7 +73,7 @@ defmodule ChangelogWeb.FeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("posts.xml", posts: posts)
   end
 
@@ -123,7 +123,7 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:podcasts, podcasts)
     |> assign(:posts, posts)
     |> assign(:topics, topics)
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("sitemap.xml")
   end
 

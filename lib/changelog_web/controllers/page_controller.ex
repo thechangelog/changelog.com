@@ -43,7 +43,7 @@ defmodule ChangelogWeb.PageController do
     |> assign(:active, active)
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
-    |> cache_public()
+    |> ResponseCache.cache_public()
     |> render(:guest)
   end
 
