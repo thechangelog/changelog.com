@@ -1,4 +1,8 @@
 local k = import 'ksonnet/ksonnet.beta.4/k.libsonnet';
+local pvc = k.core.v1.persistentVolumeClaim;
+local statefulSet = k.apps.v1.statefulSet;
+local container = statefulSet.mixin.spec.template.spec.containersType;
+local resourceRequirements = container.mixin.resourcesType;
 local kp =
   (import 'kube-prometheus/kube-prometheus.libsonnet')
   // Uncomment the following imports to enable its patches
@@ -69,13 +73,36 @@ local kp =
       },
     },
     storage:
-      local pvc = k.core.v1.persistentVolumeClaim;
       pvc.new()
       + pvc.mixin.metadata.withNamespace($._config.namespace)
       + pvc.mixin.metadata.withName("grafana-storage")
       + pvc.mixin.spec.withAccessModes('ReadWriteOnce')
       + pvc.mixin.spec.resources.withRequests({ storage: '10Gi' })
       + pvc.mixin.spec.withStorageClassName('linode-block-storage-retain'),
+    },
+
+    // https://github.com/coreos/kube-prometheus/blob/master/examples/prometheus-pvc.jsonnet
+    prometheus+:: {
+      prometheus+: {
+        // https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
+        spec+: {
+           // If a value isn't specified for 'retention', then by default the '--storage.tsdb.retention=24h' arg will be passed to prometheus by prometheus-operator.
+          retention: '30d',
+          retentionSize: '8GB',
+          resources:
+            resourceRequirements.new()
+            + resourceRequirements.withRequests({ cpu: '500m', memory: '500Mi' })
+            + resourceRequirements.withLimits({ cpu: '1', memory: '1000Mi' }),
+          storage: {  // https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#storagespec
+            volumeClaimTemplate:
+              pvc.new()  // http://g.bryan.dev.hepti.center/core/v1/persistentVolumeClaim/#core.v1.persistentVolumeClaim.new
+              + pvc.mixin.spec.withAccessModes('ReadWriteOnce')
+              + pvc.mixin.spec.resources.withRequests({ storage: '10Gi' })
+              // A StorageClass of the following name (which can be seen via `kubectl get storageclass` from a node in the given K8s cluster) must exist prior to kube-prometheus being deployed.
+              + pvc.mixin.spec.withStorageClassName('linode-block-storage-retain'),
+          },
+        },
+      },
     },
 
 // https://github.com/coreos/kube-prometheus/blob/master/examples/prometheus-pvc.jsonnet
