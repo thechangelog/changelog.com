@@ -2,6 +2,7 @@ defmodule ChangelogWeb.EpisodeView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, Files, Github, ListKit, NewsItem}
+
   alias ChangelogWeb.{
     Endpoint,
     LayoutView,
@@ -21,7 +22,10 @@ defmodule ChangelogWeb.EpisodeView do
 
     content_tag(:span) do
       [
-        link("(#{SharedHelpers.comma_separated(episode.reach_count)})", to: path, data: [turbolinks: false])
+        link("(#{SharedHelpers.comma_separated(episode.reach_count)})",
+          to: path,
+          data: [turbolinks: false]
+        )
       ]
     end
   end
@@ -56,8 +60,8 @@ defmodule ChangelogWeb.EpisodeView do
 
   def classy_highlight(episode) do
     episode.highlight
-    |> PublicHelpers.no_widowed_words
-    |> PublicHelpers.with_smart_quotes
+    |> PublicHelpers.no_widowed_words()
+    |> PublicHelpers.with_smart_quotes()
     |> raw
   end
 

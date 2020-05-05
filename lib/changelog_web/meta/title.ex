@@ -1,5 +1,4 @@
 defmodule ChangelogWeb.Meta.Title do
-
   alias ChangelogWeb.{
     AuthView,
     EpisodeView,

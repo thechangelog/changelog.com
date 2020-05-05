@@ -1,5 +1,4 @@
 defmodule ChangelogWeb.Meta.Description do
-
   alias ChangelogWeb.{
     EpisodeView,
     LiveView,

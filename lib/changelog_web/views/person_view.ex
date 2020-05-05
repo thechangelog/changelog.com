@@ -86,8 +86,16 @@ defmodule ChangelogWeb.PersonView do
 
   def list_of_links(person, separator \\ ", ") do
     [
-      %{value: person.twitter_handle, text: "Twitter", url: SharedHelpers.twitter_url(person.twitter_handle)},
-      %{value: person.github_handle, text: "GitHub", url: SharedHelpers.github_url(person.github_handle)},
+      %{
+        value: person.twitter_handle,
+        text: "Twitter",
+        url: SharedHelpers.twitter_url(person.twitter_handle)
+      },
+      %{
+        value: person.github_handle,
+        text: "GitHub",
+        url: SharedHelpers.github_url(person.github_handle)
+      },
       %{
         value: person.linkedin_handle,
         text: "LinkedIn",

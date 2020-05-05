@@ -20,7 +20,8 @@ defmodule ChangelogWeb.NewsItemView do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
-          to: Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
+          to:
+            Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
           data: [turbolinks: false]
         ),
         link(" [#{SharedHelpers.comma_separated(episode.reach_count)}]",
@@ -50,7 +51,8 @@ defmodule ChangelogWeb.NewsItemView do
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
-          to: Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
+          to:
+            Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
           data: [turbolinks: false]
         )
       ]
@@ -219,7 +221,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   def teaser(item, max_words \\ 20) do
     item.story
-    |> SharedHelpers.md_to_html
+    |> SharedHelpers.md_to_html()
     |> prepare_html
     |> String.split()
     |> truncate(SharedHelpers.word_count(item.story), max_words)

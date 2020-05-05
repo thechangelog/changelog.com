@@ -6,7 +6,9 @@ defmodule ChangelogWeb.NewsAdView do
 
   def admin_edit_link(conn, %{admin: true}, ad) do
     path =
-      Routes.admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: SharedHelpers.current_path(conn))
+      Routes.admin_news_sponsorship_path(conn, :edit, ad.sponsorship,
+        next: SharedHelpers.current_path(conn)
+      )
 
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
