@@ -303,6 +303,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "type1fool",
+      "name": "Owen Bickford",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/13895134?v=4",
+      "profile": "https://github.com/type1fool",
+      "contributions": [
+        "code",
+        "blog"
+      ]
     }
   ],
   "repoType": "github",
