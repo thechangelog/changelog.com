@@ -33,7 +33,7 @@
 
     <div class="image">
       <a href="https://email.changelog.com/t/t-70253FB1820F8A66" title="Preview Changelog Weekly">
-        <%= lazy_image(Routes.static_url(@conn, "/images/content/changelog-weekly.jpg"), "Changelog Weekly Preview") %>
+        <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/changelog-weekly.jpg"), "Changelog Weekly Preview") %>
       </a>
     </div>
 

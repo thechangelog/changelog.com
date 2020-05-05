@@ -1,8 +1,18 @@
 defmodule Changelog.Person do
   use Changelog.Schema
 
-  alias Changelog.{EpisodeHost, EpisodeGuest, Faker, Files, NewsItem,
-                   NewsItemComment, PodcastHost, Post, Regexp, Subscription}
+  alias Changelog.{
+    EpisodeHost,
+    EpisodeGuest,
+    Faker,
+    Files,
+    NewsItem,
+    NewsItemComment,
+    PodcastHost,
+    Post,
+    Regexp,
+    Subscription
+  }
 
   defmodule Settings do
     use Changelog.Schema
@@ -26,6 +36,7 @@ defmodule Changelog.Person do
       |> Enum.map(&Atom.to_string/1)
       |> Enum.any?(&(&1 == name))
     end
+
     def is_valid(_), do: false
   end
 
@@ -67,23 +78,27 @@ defmodule Changelog.Person do
     timestamps()
   end
 
-  def admins(query \\ __MODULE__),  do: from(q in query, where: q.admin)
-  def editors(query \\ __MODULE__),  do: from(q in query, where: q.editor)
-  def hosts(query \\ __MODULE__),  do: from(q in query, where: q.host)
+  def admins(query \\ __MODULE__), do: from(q in query, where: q.admin)
+  def editors(query \\ __MODULE__), do: from(q in query, where: q.editor)
+  def hosts(query \\ __MODULE__), do: from(q in query, where: q.host)
 
-  def in_slack(query \\ __MODULE__),              do: from(q in query, where: not(is_nil(q.slack_id)))
-  def joined(query \\ __MODULE__),                do: from(a in query, where: not(is_nil(a.joined_at)))
-  def never_signed_in(query \\ __MODULE__),       do: from(q in query, where: is_nil(q.signed_in_at))
-  def faked(query \\ __MODULE__),                 do: from(q in query, where: q.name in ^Changelog.Faker.names())
-  def with_handles(query \\ __MODULE__, handles), do: from(q in query, where: q.handle in ^handles)
-  def with_profile(query \\ __MODULE__),          do: from(q in query, where: q.name not in ^Changelog.Faker.names())
+  def in_slack(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.slack_id))
+  def joined(query \\ __MODULE__), do: from(a in query, where: not is_nil(a.joined_at))
+  def never_signed_in(query \\ __MODULE__), do: from(q in query, where: is_nil(q.signed_in_at))
+  def faked(query \\ __MODULE__), do: from(q in query, where: q.name in ^Changelog.Faker.names())
+
+  def with_handles(query \\ __MODULE__, handles),
+    do: from(q in query, where: q.handle in ^handles)
+
+  def with_profile(query \\ __MODULE__),
+    do: from(q in query, where: q.name not in ^Changelog.Faker.names())
 
   def with_email(query \\ __MODULE__, email)
   def with_email(query, email) when is_list(email), do: from(q in query, where: q.email in ^email)
   def with_email(query, email), do: from(q in query, where: q.email == ^email)
 
   def joined_today(query \\ __MODULE__) do
-    today = Timex.subtract(Timex.now, Timex.Duration.from_days(1))
+    today = Timex.subtract(Timex.now(), Timex.Duration.from_days(1))
     from(p in query, where: p.joined_at > ^today)
   end
 
@@ -104,9 +119,11 @@ defmodule Changelog.Person do
   def get_by_ueberauth(%{provider: :twitter, info: %{nickname: handle}}) do
     Repo.get_by(__MODULE__, twitter_handle: handle)
   end
+
   def get_by_ueberauth(%{provider: :github, info: %{nickname: handle}}) do
     Repo.get_by(__MODULE__, github_handle: handle)
   end
+
   def get_by_ueberauth(_), do: nil
 
   def get_by_website(url) do
@@ -119,10 +136,13 @@ defmodule Changelog.Person do
     end
   end
 
-  def auth_changeset(person, attrs \\ %{}), do: cast(person, attrs, ~w(auth_token auth_token_expires_at)a)
+  def auth_changeset(person, attrs \\ %{}),
+    do: cast(person, attrs, ~w(auth_token auth_token_expires_at)a)
 
   def admin_insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor)a
+    allowed =
+      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor)a
+
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
@@ -132,10 +152,13 @@ defmodule Changelog.Person do
     |> file_changeset(attrs)
   end
 
-  def file_changeset(person, attrs \\ %{}), do: cast_attachments(person, attrs, [:avatar], allow_urls: true)
+  def file_changeset(person, attrs \\ %{}),
+    do: cast_attachments(person, attrs, [:avatar], allow_urls: true)
 
   def insert_changeset(person, attrs \\ %{}) do
-    allowed = ~w(name email handle github_handle linkedin_handle twitter_handle bio website location)a
+    allowed =
+      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location)a
+
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
 
@@ -169,7 +192,7 @@ defmodule Changelog.Person do
       auth_token: nil,
       auth_token_expires_at: nil,
       signed_in_at: now_in_seconds(),
-      joined_at: (person.joined_at || now_in_seconds())
+      joined_at: person.joined_at || now_in_seconds()
     })
   end
 
@@ -179,8 +202,11 @@ defmodule Changelog.Person do
 
   def refresh_auth_token(person, expires_in \\ 60 * 24) do
     auth_token = Base.encode16(:crypto.strong_rand_bytes(8))
-    expires_at = Timex.add(Timex.now, Timex.Duration.from_minutes(expires_in))
-    changeset = auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})
+    expires_at = Timex.add(Timex.now(), Timex.Duration.from_minutes(expires_in))
+
+    changeset =
+      auth_changeset(person, %{auth_token: auth_token, auth_token_expires_at: expires_at})
+
     {:ok, person} = Repo.update(changeset)
     person
   end
@@ -202,8 +228,18 @@ defmodule Changelog.Person do
   end
 
   def participating_episode_ids(person) do
-    hostings = person |> Repo.preload(:episode_hosts) |> Map.get(:episode_hosts) |> Enum.map(&(&1.episode_id))
-    guestings = person |> Repo.preload(:episode_guests) |> Map.get(:episode_guests) |> Enum.map(&(&1.episode_id))
+    hostings =
+      person
+      |> Repo.preload(:episode_hosts)
+      |> Map.get(:episode_hosts)
+      |> Enum.map(& &1.episode_id)
+
+    guestings =
+      person
+      |> Repo.preload(:episode_guests)
+      |> Map.get(:episode_guests)
+      |> Enum.map(& &1.episode_id)
+
     hostings ++ guestings
   end
 
@@ -222,7 +258,7 @@ defmodule Changelog.Person do
 
   def sans_fake_data(person) do
     if Faker.name_fake?(person.name) do
-     %{person | name: nil, handle: nil}
+      %{person | name: nil, handle: nil}
     else
       person
     end

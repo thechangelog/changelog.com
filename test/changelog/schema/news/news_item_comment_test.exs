@@ -5,7 +5,13 @@ defmodule Changelog.NewsItemCommentTest do
 
   describe "insert_changeset" do
     test "with valid attributes" do
-      changeset = NewsItemComment.insert_changeset(%NewsItemComment{}, %{content: "ohai", item_id: 1, author_id: 2})
+      changeset =
+        NewsItemComment.insert_changeset(%NewsItemComment{}, %{
+          content: "ohai",
+          item_id: 1,
+          author_id: 2
+        })
+
       assert changeset.valid?
     end
 
@@ -36,7 +42,10 @@ defmodule Changelog.NewsItemCommentTest do
       p1 = insert(:person, handle: "joeblow")
       p2 = insert(:person, handle: "janeblow")
       p3 = insert(:person, handle: "aliceblow")
-      comment = build(:news_item_comment, content: "zomg @joeblow & @janeblow this is rad @aliceblow!")
+
+      comment =
+        build(:news_item_comment, content: "zomg @joeblow & @janeblow this is rad @aliceblow!")
+
       assert NewsItemComment.mentioned_people(comment) == [p1, p2, p3]
     end
   end

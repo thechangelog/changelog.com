@@ -27,7 +27,7 @@ defmodule Changelog.Factory do
 
   def episode_stat_factory do
     %Changelog.EpisodeStat{
-      date: Timex.today,
+      date: Timex.today(),
       episode: build(:episode),
       podcast: build(:podcast),
       downloads: 0.0,
@@ -56,7 +56,7 @@ defmodule Changelog.Factory do
     %Changelog.EpisodeRequest{
       pitch: "You gotta do this!",
       podcast: build(:podcast),
-      submitter: build(:person),
+      submitter: build(:person)
     }
   end
 
@@ -136,7 +136,14 @@ defmodule Changelog.Factory do
 
   def episode_news_item(episode) do
     object_id = Changelog.Episode.object_id(episode)
-    %{published_news_item_factory() | type: :audio, headline: episode.title, url: "https://changelog.com/episodes/#{episode.slug}", object_id: object_id}
+
+    %{
+      published_news_item_factory()
+      | type: :audio,
+        headline: episode.title,
+        url: "https://changelog.com/episodes/#{episode.slug}",
+        object_id: object_id
+    }
   end
 
   def episode_news_item_with_story(episode, story) do
@@ -145,7 +152,13 @@ defmodule Changelog.Factory do
 
   def post_news_item(post) do
     object_id = Changelog.Post.object_id(post)
-    %{published_news_item_factory() | headline: post.title, url: "https://changelog.com/posts/#{post.slug}", object_id: object_id}
+
+    %{
+      published_news_item_factory()
+      | headline: post.title,
+        url: "https://changelog.com/posts/#{post.slug}",
+        object_id: object_id
+    }
   end
 
   def post_news_item_with_story(post, story) do
@@ -169,7 +182,7 @@ defmodule Changelog.Factory do
 
   def news_queue_factory do
     %Changelog.NewsQueue{
-      position: sequence(:position, &(&1)),
+      position: sequence(:position, & &1),
       item: build(:news_item)
     }
   end
@@ -191,7 +204,7 @@ defmodule Changelog.Factory do
   end
 
   def active_news_sponsorship_factory do
-    week = Timex.beginning_of_week(Timex.today)
+    week = Timex.beginning_of_week(Timex.today())
     %Changelog.NewsSponsorship{news_sponsorship_factory() | weeks: [week]}
   end
 

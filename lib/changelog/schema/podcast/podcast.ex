@@ -1,12 +1,21 @@
 defmodule Changelog.Podcast do
   use Changelog.Schema
 
-  alias Changelog.{Episode, EpisodeRequest, EpisodeStat, Files, NewsItem,
-                   PodcastTopic, PodcastHost, Regexp, Subscription}
+  alias Changelog.{
+    Episode,
+    EpisodeRequest,
+    EpisodeStat,
+    Files,
+    NewsItem,
+    PodcastTopic,
+    PodcastHost,
+    Regexp,
+    Subscription
+  }
 
   require Logger
 
-  defenum Status, draft: 0, soon: 1, published: 2, retired: 3
+  defenum(Status, draft: 0, soon: 1, published: 2, retired: 3)
 
   schema "podcasts" do
     field :name, :string
@@ -63,12 +72,15 @@ defmodule Changelog.Podcast do
 
   def insert_changeset(podcast, attrs \\ %{}) do
     podcast
-    |> cast(attrs, ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords twitter_handle apple_url spotify_url recorded_live partner position)a)
+    |> cast(
+      attrs,
+      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords twitter_handle apple_url spotify_url recorded_live partner position)a
+    )
     |> validate_required([:name, :slug, :status])
-    |> validate_format(:vanity_domain, Regexp.http, message: Regexp.http_message)
-    |> validate_format(:apple_url, Regexp.http, message: Regexp.http_message)
-    |> validate_format(:spotify_url, Regexp.http, message: Regexp.http_message)
-    |> validate_format(:slug, Regexp.slug, message: Regexp.slug_message)
+    |> validate_format(:vanity_domain, Regexp.http(), message: Regexp.http_message())
+    |> validate_format(:apple_url, Regexp.http(), message: Regexp.http_message())
+    |> validate_format(:spotify_url, Regexp.http(), message: Regexp.http_message())
+    |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
     |> unique_constraint(:slug)
     |> cast_assoc(:podcast_topics)
     |> cast_assoc(:podcast_hosts)
@@ -82,13 +94,17 @@ defmodule Changelog.Podcast do
 
   def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published])
   def draft(query \\ __MODULE__), do: from(q in query, where: q.status == ^:draft)
-  def public(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published, ^:retired])
+
+  def public(query \\ __MODULE__),
+    do: from(q in query, where: q.status in [^:soon, ^:published, ^:retired])
+
   def retired(query \\ __MODULE__), do: from(q in query, where: q.status == ^:retired)
   def not_retired(query \\ __MODULE__), do: from(q in query, where: q.status != ^:retired)
   def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
   def retired_last(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.status])
 
   def get_by_slug!("master"), do: master()
+
   def get_by_slug!(slug) do
     public()
     |> Repo.get_by!(slug: slug)
@@ -98,8 +114,8 @@ defmodule Changelog.Podcast do
   def get_episodes(%{slug: "master"}), do: from(e in Episode)
   def get_episodes(podcast), do: assoc(podcast, :episodes)
 
-  def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio)
-  def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio, podcast.id)
+  def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio())
+  def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio(), podcast.id)
 
   def episode_count(podcast), do: podcast |> assoc(:episodes) |> Repo.count()
 
@@ -109,17 +125,18 @@ defmodule Changelog.Podcast do
 
   def is_master(podcast), do: podcast.slug == "master"
 
-  def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published)
+  def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published())
+
   def published_episode_count(podcast) do
     podcast
     |> assoc(:episodes)
-    |> Episode.published
-    |> Repo.count
+    |> Episode.published()
+    |> Repo.count()
   end
 
   def last_numbered_slug(podcast) do
     Repo.preload(podcast, :episodes).episodes
-    |> Enum.map(fn(x) ->
+    |> Enum.map(fn x ->
       case Integer.parse(x.slug) do
         {int, _remainder} -> int
         :error -> nil
@@ -132,10 +149,10 @@ defmodule Changelog.Podcast do
   def latest_episode(podcast) do
     podcast
     |> assoc(:episodes)
-    |> Episode.published
-    |> Episode.newest_first
-    |> Ecto.Query.first
-    |> Repo.one
+    |> Episode.published()
+    |> Episode.newest_first()
+    |> Ecto.Query.first()
+    |> Repo.one()
   end
 
   def preload_episode_stats(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :episode_stats)
@@ -143,23 +160,25 @@ defmodule Changelog.Podcast do
 
   def preload_hosts(query = %Ecto.Query{}) do
     query
-    |> Ecto.Query.preload(podcast_hosts: ^PodcastHost.by_position)
+    |> Ecto.Query.preload(podcast_hosts: ^PodcastHost.by_position())
     |> Ecto.Query.preload(:hosts)
   end
+
   def preload_hosts(podcast) do
     podcast
-    |> Repo.preload(podcast_hosts: {PodcastHost.by_position, :person})
+    |> Repo.preload(podcast_hosts: {PodcastHost.by_position(), :person})
     |> Repo.preload(:hosts)
   end
 
   def preload_topics(query = %Ecto.Query{}) do
     query
-    |> Ecto.Query.preload(podcast_topics: ^PodcastTopic.by_position)
+    |> Ecto.Query.preload(podcast_topics: ^PodcastTopic.by_position())
     |> Ecto.Query.preload(:topics)
   end
+
   def preload_topics(podcast) do
     podcast
-    |> Repo.preload(podcast_topics: {PodcastTopic.by_position, :topic})
+    |> Repo.preload(podcast_topics: {PodcastTopic.by_position(), :topic})
     |> Repo.preload(:topics)
   end
 
@@ -171,35 +190,37 @@ defmodule Changelog.Podcast do
 
     new_downloads =
       episodes
-      |> Enum.map(&(&1.download_count))
-      |> Enum.sum
+      |> Enum.map(& &1.download_count)
+      |> Enum.sum()
       |> Kernel./(1)
       |> Float.round(2)
 
     new_reach =
       episodes
-      |> Enum.map(&(&1.reach_count))
-      |> Enum.sum
+      |> Enum.map(& &1.reach_count)
+      |> Enum.sum()
 
     podcast
     |> change(%{download_count: new_downloads, reach_count: new_reach})
-    |> Repo.update!
+    |> Repo.update!()
   end
 
   def update_subscribers(%{slug: "master"}, client, count) do
     podcast = get_by_slug!("backstage")
     update_subscribers(podcast, client, count)
   end
+
   def update_subscribers(podcast = %{subscribers: nil}, client, count) do
     podcast
     |> Map.put(:subscribers, %{})
     |> update_subscribers(client, count)
   end
+
   def update_subscribers(podcast, client, count) do
     new_subscribers = Map.put(podcast.subscribers, client, count)
 
     podcast
     |> change(%{subscribers: new_subscribers})
-    |> Repo.update!
+    |> Repo.update!()
   end
 end

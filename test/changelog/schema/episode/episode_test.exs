@@ -21,8 +21,8 @@ defmodule Changelog.EpisodeTest do
       podcast = insert(:podcast, slug: "gotime")
 
       with_mocks([
-        {PodcastView, [], [cover_local_path: fn(_) -> "#{fixtures_path()}/avatar600x600.png" end]},
-        {PodcastView, [], [dasherized_name: fn(_) -> "ohai" end]}
+        {PodcastView, [], [cover_local_path: fn _ -> "#{fixtures_path()}/avatar600x600.png" end]},
+        {PodcastView, [], [dasherized_name: fn _ -> "ohai" end]}
       ]) do
         episode = insert(:published_episode, title: "ohai", podcast: podcast)
 
@@ -36,7 +36,7 @@ defmodule Changelog.EpisodeTest do
 
         {:ok, episode} = Repo.update(changeset)
         audio_path = EpisodeView.audio_local_path(episode)
-        {result, 0} = System.cmd "ffprobe", [audio_path], stderr_to_stdout: true
+        {result, 0} = System.cmd("ffprobe", [audio_path], stderr_to_stdout: true)
         assert result =~ ~r/title\s+:\s+ohai/
         assert result =~ ~r/artist\s+:\s+Changelog\sMedia/
       end
@@ -44,15 +44,15 @@ defmodule Changelog.EpisodeTest do
   end
 
   test "with_numbered_slug" do
-    insert :episode, slug: "bonus-episode-dont-find-me"
+    insert(:episode, slug: "bonus-episode-dont-find-me")
 
-    yes1 = insert :episode, slug: "204"
-    yes2 = insert :episode, slug: "99"
+    yes1 = insert(:episode, slug: "204")
+    yes2 = insert(:episode, slug: "99")
 
     found_titles =
-      Episode.with_numbered_slug
-      |> Repo.all
-      |> Enum.map(&(&1.title))
+      Episode.with_numbered_slug()
+      |> Repo.all()
+      |> Enum.map(& &1.title)
 
     assert found_titles == [yes1.title, yes2.title]
   end
@@ -114,16 +114,29 @@ defmodule Changelog.EpisodeTest do
 
   describe "search" do
     setup do
-      {:ok, phoenix: insert(:published_episode, slug: "phoenix-episode", title: "Phoenix", summary: "A web framework for Elixir", notes: "Chris McCord"),
-            rails: insert(:published_episode, slug: "rails-episode", title: "Rails", summary: "A web framework for Ruby", notes: "DHH") }
+      {:ok,
+       phoenix:
+         insert(:published_episode,
+           slug: "phoenix-episode",
+           title: "Phoenix",
+           summary: "A web framework for Elixir",
+           notes: "Chris McCord"
+         ),
+       rails:
+         insert(:published_episode,
+           slug: "rails-episode",
+           title: "Rails",
+           summary: "A web framework for Ruby",
+           notes: "DHH"
+         )}
     end
 
     test "finds episode by matching title" do
       episode_titles =
         Episode
         |> Episode.search("Rails")
-        |> Repo.all
-        |> Enum.map(&(&1.title))
+        |> Repo.all()
+        |> Enum.map(& &1.title)
 
       assert episode_titles == ["Rails"]
     end
@@ -132,8 +145,8 @@ defmodule Changelog.EpisodeTest do
       episode_titles =
         Episode
         |> Episode.search("Elixir")
-        |> Repo.all
-        |> Enum.map(&(&1.title))
+        |> Repo.all()
+        |> Enum.map(& &1.title)
 
       assert episode_titles == ["Phoenix"]
     end
@@ -142,8 +155,8 @@ defmodule Changelog.EpisodeTest do
       episode_titles =
         Episode
         |> Episode.search("McCord")
-        |> Repo.all
-        |> Enum.map(&(&1.title))
+        |> Repo.all()
+        |> Enum.map(& &1.title)
 
       assert episode_titles == ["Phoenix"]
     end

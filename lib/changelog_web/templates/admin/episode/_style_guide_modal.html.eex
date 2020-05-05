@@ -27,7 +27,7 @@
     - Code Cartoons, Rust, WebAssembly
     - Curl turns 20, HTTP/2, QUIC
   - Phone a friend! The best titles are often created collaboratively. We love working together to 'birth' a great title.
-  """ |> md_to_html() |> raw() %>
+  """ |> SharedHelpers.md_to_html() |> raw() %>
   </div>
 </div>
 
@@ -52,6 +52,6 @@
   - In the case where the episode title includes 'with', use 'featuring' in the subtitle
     - Untangle your GitHub notifications with Octobox... featuring Andrew Nesbitt and Ben Nickolls
     - Finding success with AI in the enterprise... featuring Susan Etlinger
-  """ |> md_to_html() |> raw() %>
+  """ |> SharedHelpers.md_to_html() |> raw() %>
   </div>
 </div>

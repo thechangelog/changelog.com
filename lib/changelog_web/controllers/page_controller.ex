@@ -10,18 +10,19 @@ defmodule ChangelogWeb.PageController do
   # all others simply render the template of the same name
   def action(conn, _) do
     case action_name(conn) do
-      :guest           -> guest(conn, Map.get(conn.params, "slug"))
-      :home            -> home(conn, conn.params)
-      :sponsor         -> sponsor(conn, conn.params)
+      :guest -> guest(conn, Map.get(conn.params, "slug"))
+      :home -> home(conn, conn.params)
+      :sponsor -> sponsor(conn, conn.params)
       :sponsor_pricing -> sponsor_pricing(conn, conn.params)
-      :sponsor_story   -> sponsor_story(conn, Map.get(conn.params, "slug"))
-      :weekly          -> weekly(conn, conn.params)
-      :weekly_archive  -> weekly_archive(conn, conn.params)
-      name             -> render(conn, name)
+      :sponsor_story -> sponsor_story(conn, Map.get(conn.params, "slug"))
+      :weekly -> weekly(conn, conn.params)
+      :weekly_archive -> weekly_archive(conn, conn.params)
+      name -> render(conn, name)
     end
   end
 
   def guest(conn, slug) when is_nil(slug), do: guest(conn, "podcast")
+
   def guest(conn, slug) do
     active =
       Podcast.active()
@@ -29,6 +30,7 @@ defmodule ChangelogWeb.PageController do
       |> Repo.all()
 
     podcast = Podcast.get_by_slug!(slug)
+
     episode =
       Podcast.get_episodes(podcast)
       |> Episode.published()
@@ -41,7 +43,7 @@ defmodule ChangelogWeb.PageController do
     |> assign(:active, active)
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
-    |> cache_public()
+    |> ResponseCache.cache_public()
     |> render(:guest)
   end
 
@@ -67,7 +69,7 @@ defmodule ChangelogWeb.PageController do
 
   def sponsor_pricing(conn, _params) do
     weekly = Newsletters.weekly() |> Newsletters.get_stats()
-    weeks = Timex.today |> TimeView.closest_monday_to() |> TimeView.weeks(12)
+    weeks = Timex.today() |> TimeView.closest_monday_to() |> TimeView.weeks(12)
     render(conn, :sponsor_pricing, weekly: weekly, weeks: weeks)
   end
 
@@ -84,7 +86,7 @@ defmodule ChangelogWeb.PageController do
   def weekly_archive(conn, _params) do
     issues_by_year =
       get_weekly_issues()
-      |> Enum.group_by(fn(c) -> String.slice(c["SentDate"], 0..3) end)
+      |> Enum.group_by(fn c -> String.slice(c["SentDate"], 0..3) end)
       |> Enum.reverse()
 
     conn
@@ -95,8 +97,8 @@ defmodule ChangelogWeb.PageController do
   defp get_weekly_issues do
     Cache.get_or_store("weekly_archive", :timer.hours(24), fn ->
       Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
-      |> Enum.filter(fn(c) -> String.starts_with?(c["Name"], "Weekly") end)
-      |> Enum.filter(fn(c) -> String.match?(c["Name"], ~r/Issue \#\d+\z/) end)
+      |> Enum.filter(fn c -> String.starts_with?(c["Name"], "Weekly") end)
+      |> Enum.filter(fn c -> String.match?(c["Name"], ~r/Issue \#\d+\z/) end)
     end)
   end
 end

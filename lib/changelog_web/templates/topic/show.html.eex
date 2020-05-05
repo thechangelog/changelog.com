@@ -2,7 +2,7 @@
   <header class="topic-header">
     <div class="topic-header-wrap">
       <div class="topic-header-avatar">
-        <%= lazy_image(icon_url(@topic), "#{@topic.name} Icon", width: 80, height: 80) %>
+        <%= SharedHelpers.lazy_image(icon_url(@topic), "#{@topic.name} Icon", width: 80, height: 80) %>
       </div>
 
       <h2 class="topic-header-title"><%= @topic.name %></h2>
@@ -13,7 +13,7 @@
       </div>
 
       <div class="topic-header-meta">
-        <%= pluralize(news_count(@topic), "Story", "Stories") %>
+        <%= SharedHelpers.pluralize(news_count(@topic), "Story", "Stories") %>
       </div>
     </div>
 

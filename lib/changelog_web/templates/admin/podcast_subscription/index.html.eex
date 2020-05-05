@@ -61,8 +61,8 @@
         <% end %>
         </td>
         <td><%= sub.context |> String.replace_leading("you", "") %></td>
-        <td><%= ts(sub.inserted_at) %></td>
-        <td><%= ts(sub.unsubscribed_at) %></td>
+        <td><%= AdminHelpers.ts(sub.inserted_at) %></td>
+        <td><%= AdminHelpers.ts(sub.unsubscribed_at) %></td>
       </tr>
     <% end %>
     </tbody>

@@ -40,7 +40,7 @@ defmodule ChangelogWeb.LiveController do
 
     conn
     |> assign(:episodes, episodes)
-    |> cache_public(:timer.minutes(5))
+    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render("ical.ics")
   end
 

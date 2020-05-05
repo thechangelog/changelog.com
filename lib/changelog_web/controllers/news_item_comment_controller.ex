@@ -8,7 +8,8 @@ defmodule ChangelogWeb.NewsItemCommentController do
 
   def create(conn = %{assigns: %{current_user: user}}, %{"news_item_comment" => comment_params}) do
     comment = %NewsItemComment{author_id: user.id}
-    comment_params = Map.delete(comment_params, "author_id") # no sneaky sneaky
+    # no sneaky sneaky
+    comment_params = Map.delete(comment_params, "author_id")
     changeset = NewsItemComment.insert_changeset(comment, comment_params)
 
     case Repo.insert(changeset) do
@@ -29,10 +30,10 @@ defmodule ChangelogWeb.NewsItemCommentController do
         else
           conn
           |> put_flash(:success, random_success_message())
-          |> redirect(to: referer_or_root_path(conn))
+          |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
         end
-      {:error, _changeset} ->
 
+      {:error, _changeset} ->
         if get_format(conn) == "js" do
           conn
           |> put_flash(:error, "Something went wrong")
@@ -40,7 +41,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         else
           conn
           |> put_flash(:error, "Something went wrong")
-          |> redirect(to: referer_or_root_path(conn))
+          |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
         end
     end
   end
@@ -57,6 +58,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
       "The hottest of hot takes 🔥",
       "Where do you get all those wonderful words? 🤔",
       "👏👏👏👏👏"
-    ] |> Enum.random()
+    ]
+    |> Enum.random()
   end
 end

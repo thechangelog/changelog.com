@@ -1,11 +1,12 @@
 defmodule ChangelogWeb.Plug.Authorize do
   import Plug.Conn
   import Phoenix.Controller
-  import ChangelogWeb.Plug.Conn, only: [referer_or_root_path: 1]
 
   def init(opts), do: opts
 
-  def call(conn, policy_module) when not is_list(policy_module), do: call(conn, [policy_module, nil])
+  def call(conn, policy_module) when not is_list(policy_module),
+    do: call(conn, [policy_module, nil])
+
   def call(conn, [policy_module, resource_name]) do
     user = conn.assigns.current_user
     resource = conn.assigns[resource_name]
@@ -15,7 +16,7 @@ defmodule ChangelogWeb.Plug.Authorize do
     else
       conn
       |> put_flash(:result, "failure")
-      |> redirect(to: referer_or_root_path(conn))
+      |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
       |> halt()
     end
   end

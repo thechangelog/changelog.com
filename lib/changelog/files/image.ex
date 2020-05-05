@@ -7,6 +7,7 @@ defmodule Changelog.Files.Image do
   def filename(version, _), do: version
 
   def transform(:original, _), do: :noaction
+
   def transform(version, {file, _scope}) do
     case file_type(file) do
       :gif -> :noaction

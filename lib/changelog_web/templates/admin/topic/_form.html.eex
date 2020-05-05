@@ -1,49 +1,49 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="two fields">
-    <div class="field required <%= error_class(f, :name) %>">
+    <div class="field required <%= AdminHelpers.error_class(f, :name) %>">
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "Ruby on Rails") %>
-      <%= error_message(f, :name) %>
+      <%= AdminHelpers.error_message(f, :name) %>
     </div>
 
-    <div class="field required <%= error_class(f, :slug) %>">
+    <div class="field required <%= AdminHelpers.error_class(f, :slug) %>">
       <%= label(f, :slug, "Slug") %>
       <%= text_input(f, :slug, placeholder: "ror", readonly: f.data.id) %>
-      <%= error_message(f, :slug) %>
+      <%= AdminHelpers.error_message(f, :slug) %>
     </div>
   </div>
 
   <div class="two fields">
-    <div class="field <%= error_class(f, :twitter_handle) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :twitter_handle) %>">
       <%= label(f, :twitter_handle, "Twitter Handle") %>
       <%= text_input(f, :twitter_handle, placeholder: "RubyOnRails") %>
-      <%= error_message(f, :twitter_handle) %>
+      <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
 
-    <div class="field <%= error_class(f, :website) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :website) %>">
       <%= label(f, :website, "Website") %>
       <%= text_input(f, :website, placeholder: "https://www.rubyonrails.org") %>
-      <%= error_message(f, :website) %>
+      <%= AdminHelpers.error_message(f, :website) %>
     </div>
   </div>
 
-  <div class="field <%= error_class(f, :description) %>">
+  <div class="field <%= AdminHelpers.error_class(f, :description) %>">
     <label for="description">
       Description
-      <%= help_icon("140 characters or less.") %>
+      <%= AdminHelpers.help_icon("140 characters or less.") %>
     </label>
     <%= textarea(f, :description, placeholder: "Ruby on Rails (Rails) is a web application framework written in Ruby. It is meant to help simplify the building of complex websites.", rows: 2) %>
-    <%= error_message(f, :description) %>
+    <%= AdminHelpers.error_message(f, :description) %>
   </div>
 
   <div class="two fields">
     <div class="fourteen wide field">
       <label for="icon">
         Icon
-        <%= help_icon("Ideal size is 600px by 600px") %>
-        <%= file_toggle_buttons() %>
+        <%= AdminHelpers.help_icon("Ideal size is 600px by 600px") %>
+        <%= AdminHelpers.file_toggle_buttons() %>
       </label>
-      <%= error_message(f, :icon) %>
+      <%= AdminHelpers.error_message(f, :icon) %>
       <%= file_input f, :icon %>
     </div>
 
@@ -54,12 +54,12 @@
 
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
-  <%= if !is_persisted(f.data) do %>
-    <div class="column"><%= submit_button(:primary, "Create") %></div>
-    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, Routes.admin_topic_path(@conn, :index))) %></div>
+  <%= if !AdminHelpers.is_persisted(f.data) do %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_topic_path(@conn, :index))) %></div>
   <% else %>
-    <div class="column"><%= submit_button(:primary, "Save", "edit") %></div>
-    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", "edit") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
   <% end %>
     <div class="column"></div>
   </div>

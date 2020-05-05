@@ -14,7 +14,8 @@ defmodule Changelog.PostNewsItem do
       published_at: post.published_at,
       logger_id: logger.id,
       author_id: post.author_id,
-      news_item_topics: post_topics(post)}
+      news_item_topics: post_topics(post)
+    }
     |> NewsItem.insert_changeset()
     |> Repo.insert!()
   end
@@ -27,7 +28,8 @@ defmodule Changelog.PostNewsItem do
         headline: post.title,
         story: post.tldr,
         url: PostView.url(post, :show),
-        news_item_topics: post_topics(post)})
+        news_item_topics: post_topics(post)
+      })
       |> Repo.update!()
       |> update_search()
     end
@@ -43,7 +45,7 @@ defmodule Changelog.PostNewsItem do
     post
     |> Post.preload_topics()
     |> Map.get(:post_topics)
-    |> Enum.map(fn(t) -> Map.take(t, [:topic_id, :position]) end)
+    |> Enum.map(fn t -> Map.take(t, [:topic_id, :position]) end)
   end
 
   defp update_search(item) do

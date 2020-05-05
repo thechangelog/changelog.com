@@ -12,7 +12,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     page =
       NewsSponsorship
       |> order_by([s], desc: s.id)
-      |> NewsSponsorship.preload_all
+      |> NewsSponsorship.preload_all()
       |> Repo.paginate(params)
 
     render(conn, :index, sponsorships: page.entries, page: page)
@@ -23,10 +23,11 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   end
 
   def schedule(conn, params) do
-    year = case Map.fetch(params, "year") do
-      {:ok, value} -> String.to_integer(value)
-      :error -> Timex.today.year
-    end
+    year =
+      case Map.fetch(params, "year") do
+        {:ok, value} -> String.to_integer(value)
+        :error -> Timex.today().year
+      end
 
     {:ok, start} = Date.new(year, 1, 1)
     start = TimeView.closest_monday_to(start)
@@ -37,10 +38,11 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   def new(conn, params) do
     start_week = Map.get(params, "week", "")
 
-    sponsorship = case Date.from_iso8601(start_week) do
-      {:ok, date} -> %NewsSponsorship{weeks: [date]}
-      {:error, _} -> %NewsSponsorship{}
-    end
+    sponsorship =
+      case Date.from_iso8601(start_week) do
+        {:ok, date} -> %NewsSponsorship{weeks: [date]}
+        {:error, _} -> %NewsSponsorship{}
+      end
 
     changeset = NewsSponsorship.admin_changeset(sponsorship)
     render(conn, :new, changeset: changeset)
@@ -54,6 +56,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_sponsorship_path(conn, :edit, sponsorship))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -66,7 +69,10 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
     render(conn, :edit, sponsorship: sponsorship, changeset: changeset)
   end
 
-  def update(conn = %{assigns: %{sponsorship: sponsorship}}, params = %{"news_sponsorship" => sponsorship_params}) do
+  def update(
+        conn = %{assigns: %{sponsorship: sponsorship}},
+        params = %{"news_sponsorship" => sponsorship_params}
+      ) do
     changeset = NewsSponsorship.admin_changeset(sponsorship, sponsorship_params)
 
     case Repo.update(changeset) do
@@ -74,6 +80,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_sponsorship_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

@@ -5,9 +5,10 @@ defmodule ChangelogWeb.PostView do
   alias ChangelogWeb.{Endpoint, NewsItemView, PersonView}
 
   def admin_edit_link(conn, %{admin: true}, post) do
-    path = Routes.admin_post_path(conn, :edit, post, next: current_path(conn))
+    path = Routes.admin_post_path(conn, :edit, post, next: SharedHelpers.current_path(conn))
     link("[edit]", to: path, data: [turbolinks: false])
   end
+
   def admin_edit_link(_, _, _), do: nil
 
   def guid(post), do: post.guid || "changelog.com/posts/#{post.id}"
@@ -25,7 +26,7 @@ defmodule ChangelogWeb.PostView do
   def paragraph_count(post) do
     post
     |> Map.get(:body, "")
-    |> md_to_html()
+    |> SharedHelpers.md_to_html()
     |> String.split("<p>")
     |> ListKit.compact()
     |> length()

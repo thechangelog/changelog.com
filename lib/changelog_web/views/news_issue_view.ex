@@ -6,11 +6,12 @@ defmodule ChangelogWeb.NewsIssueView do
 
   def items_with_ads(items, []), do: items
   def items_with_ads(items, ads), do: items_with_ads(items, ads, 3)
+
   def items_with_ads(items, ads, every) do
     items
     |> Enum.chunk_every(every)
     |> Enum.with_index()
-    |> Enum.map(fn{items, index} ->
+    |> Enum.map(fn {items, index} ->
       case Enum.at(ads, index) do
         nil -> items
         ad -> items ++ [ad]
@@ -22,11 +23,13 @@ defmodule ChangelogWeb.NewsIssueView do
   def render_item_or_ad(ad = %NewsAd{}, assigns) do
     render("_ad.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsorship.sponsor}))
   end
+
   def render_item_or_ad(item = %NewsItem{}, assigns) do
-    template = case item.type do
-      :audio -> "_item_audio.html"
-      _else -> "_item.html"
-    end
+    template =
+      case item.type do
+        :audio -> "_item_audio.html"
+        _else -> "_item.html"
+      end
 
     render(template, Map.merge(assigns, %{item: item}))
   end

@@ -23,6 +23,6 @@
 
   - We don't log tutorials unless they are super-opinionated or have a big picture takeaway.
   - We don't flame or call out people or projects. Healthy skepticism and concerns are legit, but we don't use destructive language or tone.
-  """ |> md_to_html() |> raw() %>
+  """ |> SharedHelpers.md_to_html() |> raw() %>
   </div>
 </div>

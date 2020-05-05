@@ -24,11 +24,14 @@ defmodule Changelog.HtmlKitTest do
       | Crafting web and mobile software based in Holland, Michigan
       </title>
       """
+
       assert HtmlKit.get_title(html) == "GraphQL + Relay Modern + Rails //"
     end
 
     test "when there are multiple title tags" do
-      html = "<title>Are holograms the future of how we capture memories?</title><title>Part Deux</title."
+      html =
+        "<title>Are holograms the future of how we capture memories?</title><title>Part Deux</title."
+
       assert HtmlKit.get_title(html) == "Are holograms the future of how we capture memories?"
     end
   end
@@ -51,6 +54,7 @@ defmodule Changelog.HtmlKitTest do
         </body>
       </html>
       """
+
       assert HtmlKit.get_images(html) == ["/test/example.jpg"]
     end
 
@@ -61,7 +65,13 @@ defmodule Changelog.HtmlKitTest do
       <img src="https://blech.com/test.svg">
       <img class=crazy src=/blech/test.png>
       """
-      assert HtmlKit.get_images(html) == ["/test/example.jpg", "http://example.com/test.png", "https://blech.com/test.svg", "/blech/test.png"]
+
+      assert HtmlKit.get_images(html) == [
+               "/test/example.jpg",
+               "http://example.com/test.png",
+               "https://blech.com/test.svg",
+               "/blech/test.png"
+             ]
     end
   end
 end

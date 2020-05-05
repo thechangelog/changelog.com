@@ -1,19 +1,19 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
-  <div class="field required <%= error_class(f, :name) %>">
+  <div class="field required <%= AdminHelpers.error_class(f, :name) %>">
     <%= label f, :name, "Name" %>
     <%= text_input f, :name, placeholder: "Apple, Inc." %>
-    <%= error_message(f, :name) %>
+    <%= AdminHelpers.error_message(f, :name) %>
   </div>
 
   <div class="two fields">
     <div class="fourteen wide field">
       <label for="avatar">
         Avatar
-        <%= help_icon "Ideal size is 600px by 600px." %>
-        <%= file_toggle_buttons() %>
+        <%= AdminHelpers.help_icon "Ideal size is 600px by 600px." %>
+        <%= AdminHelpers.file_toggle_buttons() %>
       </label>
       <%= file_input(f, :avatar) %>
-      <%= error_message(f, :avatar) %>
+      <%= AdminHelpers.error_message(f, :avatar) %>
     </div>
 
     <div class="two wide field">
@@ -25,11 +25,11 @@
     <div class="fourteen wide field">
       <label for="dark_logo">
         Dark Logo
-        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
-        <%= file_toggle_buttons() %>
+        <%= AdminHelpers.help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+        <%= AdminHelpers.file_toggle_buttons() %>
       </label>
       <%= file_input(f, :dark_logo) %>
-      <%= error_message(f, :dark_logo) %>
+      <%= AdminHelpers.error_message(f, :dark_logo) %>
     </div>
 
     <div class="two wide field">
@@ -41,11 +41,11 @@
     <div class="fourteen wide field">
       <label for="color_logo">
         Color Logo
-        <%= help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
-        <%= file_toggle_buttons() %>
+        <%= AdminHelpers.help_icon "SVG is ideal. If PNG, best size is 800px by 800px." %>
+        <%= AdminHelpers.file_toggle_buttons() %>
       </label>
       <%= file_input(f, :color_logo) %>
-      <%= error_message(f, :color_logo) %>
+      <%= AdminHelpers.error_message(f, :color_logo) %>
     </div>
 
     <div class="two wide field">
@@ -54,39 +54,39 @@
   </div>
 
   <div class="three fields">
-    <div class="field <%= error_class(f, :website) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :website) %>">
       <%= label f, :website %>
       <%= text_input f, :website, placeholder: "https://apple.com" %>
-      <%= error_message(f, :website) %>
+      <%= AdminHelpers.error_message(f, :website) %>
     </div>
 
-    <div class="field <%= error_class(f, :github_handle) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :github_handle) %>">
       <%= label f, :github_handle, "On GitHub" %>
       <%= text_input f, :github_handle, placeholder: "apple" %>
-      <%= error_message(f, :github_handle) %>
+      <%= AdminHelpers.error_message(f, :github_handle) %>
     </div>
 
-    <div class="field <%= error_class(f, :twitter_handle) %>">
+    <div class="field <%= AdminHelpers.error_class(f, :twitter_handle) %>">
       <%= label f, :twitter_handle, "On Twitter" %>
       <%= text_input f, :twitter_handle, placeholder: "apple" %>
-      <%= error_message(f, :twitter_handle) %>
+      <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
   </div>
 
-  <div class="field <%= error_class(f, :description) %>">
+  <div class="field <%= AdminHelpers.error_class(f, :description) %>">
     <%= label f, :description %>
     <%= text_input f, :description, placeholder: "Apple leads the world in innovation with iPhone, iPad, Mac, Apple Watch and Apple TV." %>
-    <%= error_message(f, :description) %>
+    <%= AdminHelpers.error_message(f, :description) %>
   </div>
 
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
-  <%= if !is_persisted(f.data) do %>
-    <div class="column"><%= submit_button(:primary, "Create") %></div>
-    <div class="column"><%= submit_button(:secondary, "Create and Close", next_param(@conn, Routes.admin_sponsor_path(@conn, :index))) %></div>
+  <%= if !AdminHelpers.is_persisted(f.data) do %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_sponsor_path(@conn, :index))) %></div>
   <% else %>
-    <div class="column"><%= submit_button(:primary, "Save", current_path(@conn)) %></div>
-    <div class="column"><%= submit_button(:secondary, "Save and Close", next_param(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
   <% end %>
     <div class="column"></div>
   </div>

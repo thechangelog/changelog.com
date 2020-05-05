@@ -14,10 +14,10 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
   end
 
   def total_subscribed_count(podcast) do
-    podcast |> Subscription.subscribed_count() |> comma_separated()
+    podcast |> Subscription.subscribed_count() |> SharedHelpers.comma_separated()
   end
 
   def total_unsubscribed_count(podcast) do
-    podcast |> Subscription.unsubscribed_count() |> comma_separated()
+    podcast |> Subscription.unsubscribed_count() |> SharedHelpers.comma_separated()
   end
 end

@@ -9,10 +9,13 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
 
-  setup_with_mocks([
-    {Github.Pusher, [], [push: fn(_, _) -> {:ok, "success"} end]},
-    {Github.Puller, [], [update: fn(_, _) -> true end]}
-  ], assigns) do
+  setup_with_mocks(
+    [
+      {Github.Pusher, [], [push: fn _, _ -> {:ok, "success"} end]},
+      {Github.Puller, [], [update: fn _, _ -> true end]}
+    ],
+    assigns
+  ) do
     assigns
   end
 
@@ -56,7 +59,10 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   @tag :as_admin
   test "creates episode and redirects", %{conn: conn} do
     p = insert(:podcast)
-    conn = post(conn, Routes.admin_podcast_episode_path(conn, :create, p.slug), episode: @valid_attrs)
+
+    conn =
+      post(conn, Routes.admin_podcast_episode_path(conn, :create, p.slug), episode: @valid_attrs)
+
     e = Repo.one(Episode)
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :edit, p.slug, e.slug)
@@ -67,7 +73,9 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   test "does not create with invalid attributes", %{conn: conn} do
     p = insert(:podcast)
     count_before = count(Episode)
-    conn = post(conn, Routes.admin_podcast_episode_path(conn, :create, p.slug), episode: @invalid_attrs)
+
+    conn =
+      post(conn, Routes.admin_podcast_episode_path(conn, :create, p.slug), episode: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Episode) == count_before
@@ -87,9 +95,12 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    conn = put(conn, Routes.admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @valid_attrs)
+    conn =
+      put(conn, Routes.admin_podcast_episode_path(conn, :update, p.slug, e.slug),
+        episode: @valid_attrs
+      )
 
-    refute called Github.Pusher.push()
+    refute called(Github.Pusher.push())
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode) == 1
   end
@@ -99,9 +110,12 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
 
-    conn = put(conn, Routes.admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @valid_attrs)
+    conn =
+      put(conn, Routes.admin_podcast_episode_path(conn, :update, p.slug, e.slug),
+        episode: @valid_attrs
+      )
 
-    assert called Github.Pusher.push(:_, e.notes)
+    assert called(Github.Pusher.push(:_, e.notes))
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
   end
 
@@ -110,9 +124,12 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    conn = put(conn, Routes.admin_podcast_episode_path(conn, :update, p.slug, e.slug), episode: @invalid_attrs)
+    conn =
+      put(conn, Routes.admin_podcast_episode_path(conn, :update, p.slug, e.slug),
+        episode: @invalid_attrs
+      )
 
-    refute called Github.Pusher.push()
+    refute called(Github.Pusher.push())
     assert html_response(conn, 200) =~ ~r/error/
   end
 
@@ -121,7 +138,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)
 
-    conn = delete conn, Routes.admin_podcast_episode_path(conn, :delete, p.slug, e.slug)
+    conn = delete(conn, Routes.admin_podcast_episode_path(conn, :delete, p.slug, e.slug))
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode) == 0
@@ -146,20 +163,20 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published()) == 1
-    assert called Github.Pusher.push(:_, e.notes)
+    assert called(Github.Pusher.push(:_, e.notes))
   end
 
   @tag :as_admin
   test "schedules an episode for publishing", %{conn: conn} do
     p = insert(:podcast)
-    e = insert(:publishable_episode, podcast: p, published_at: Timex.end_of_week(Timex.now))
+    e = insert(:publishable_episode, podcast: p, published_at: Timex.end_of_week(Timex.now()))
 
     conn = post(conn, Routes.admin_podcast_episode_path(conn, :publish, p.slug, e.slug))
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published()) == 0
-    assert count(Episode.scheduled) == 1
-    assert called Github.Pusher.push(:_, e.notes)
+    assert count(Episode.scheduled()) == 1
+    assert called(Github.Pusher.push(:_, e.notes))
   end
 
   @tag :as_admin
@@ -171,13 +188,16 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     eg1 = insert(:episode_guest, episode: e, person: g1, thanks: false)
     eg2 = insert(:episode_guest, episode: e, person: g2, thanks: false)
 
-    conn = post(conn, Routes.admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{"thanks" => "true"})
+    conn =
+      post(conn, Routes.admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{
+        "thanks" => "true"
+      })
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published()) == 1
     assert Repo.get(EpisodeGuest, eg1.id).thanks
     assert Repo.get(EpisodeGuest, eg2.id).thanks
-    assert called Github.Pusher.push(:_, e.notes)
+    assert called(Github.Pusher.push(:_, e.notes))
   end
 
   @tag :as_admin
@@ -202,7 +222,10 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p)
 
-    conn = post(conn, Routes.admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{"news" => "1"})
+    conn =
+      post(conn, Routes.admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{
+        "news" => "1"
+      })
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published()) == 1
@@ -244,26 +267,33 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     conn = post(conn, Routes.admin_podcast_episode_path(conn, :transcript, p.slug, e.slug))
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
-    assert called Github.Puller.update(:_, :_)
+    assert called(Github.Puller.update(:_, :_))
   end
 
   test "requires user auth on all actions", %{conn: conn} do
     podcast = insert(:podcast)
 
-    Enum.each([
-      get(conn, Routes.admin_podcast_episode_path(conn, :index, podcast.slug)),
-      get(conn, Routes.admin_podcast_episode_path(conn, :new, podcast.slug)),
-      get(conn, Routes.admin_podcast_episode_path(conn, :show, podcast.slug, "2")),
-      post(conn, Routes.admin_podcast_episode_path(conn, :create, podcast.slug), episode: @valid_attrs),
-      get(conn, Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, "123")),
-      put(conn, Routes.admin_podcast_episode_path(conn, :update, podcast.slug, "123"), episode: @valid_attrs),
-      delete(conn, Routes.admin_podcast_episode_path(conn, :delete, podcast.slug, "123")),
-      post(conn, Routes.admin_podcast_episode_path(conn, :publish, podcast.slug, "123")),
-      post(conn, Routes.admin_podcast_episode_path(conn, :unpublish, podcast.slug, "123")),
-      post(conn, Routes.admin_podcast_episode_path(conn, :transcript, podcast.slug, "123"))
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_podcast_episode_path(conn, :index, podcast.slug)),
+        get(conn, Routes.admin_podcast_episode_path(conn, :new, podcast.slug)),
+        get(conn, Routes.admin_podcast_episode_path(conn, :show, podcast.slug, "2")),
+        post(conn, Routes.admin_podcast_episode_path(conn, :create, podcast.slug),
+          episode: @valid_attrs
+        ),
+        get(conn, Routes.admin_podcast_episode_path(conn, :edit, podcast.slug, "123")),
+        put(conn, Routes.admin_podcast_episode_path(conn, :update, podcast.slug, "123"),
+          episode: @valid_attrs
+        ),
+        delete(conn, Routes.admin_podcast_episode_path(conn, :delete, podcast.slug, "123")),
+        post(conn, Routes.admin_podcast_episode_path(conn, :publish, podcast.slug, "123")),
+        post(conn, Routes.admin_podcast_episode_path(conn, :unpublish, podcast.slug, "123")),
+        post(conn, Routes.admin_podcast_episode_path(conn, :transcript, podcast.slug, "123"))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

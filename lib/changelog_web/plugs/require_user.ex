@@ -7,6 +7,7 @@ defmodule ChangelogWeb.Plug.RequireUser do
   def init(opts), do: opts
 
   def call(conn = %{assigns: %{current_user: user}}, _opts) when not is_nil(user), do: conn
+
   def call(conn, _opts) do
     conn
     |> put_flash(:error, "Please sign in first. ✊")

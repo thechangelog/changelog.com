@@ -24,8 +24,8 @@ defmodule Changelog.Faker do
   def name_fake?(name), do: Enum.member?(names(), name)
 
   def handle(name) do
-    name = name |> String.downcase |> String.replace(" ", "-")
-    salt = Timex.now |> DateTime.to_unix |> Kernel.+(random_number()) |> Hashid.encode
+    name = name |> String.downcase() |> String.replace(" ", "-")
+    salt = Timex.now() |> DateTime.to_unix() |> Kernel.+(random_number()) |> Hashid.encode()
     "#{name}-#{salt}"
   end
 

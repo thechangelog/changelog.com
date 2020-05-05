@@ -55,6 +55,7 @@ defmodule Changelog.StringKitTest do
       raw = """
       [When Donald Fischer said](https://changelog.com/founderstalk/58#transcript-73)...
       """
+
       assert StringKit.md_linkify(raw) == raw
     end
 
@@ -138,6 +139,7 @@ defmodule Changelog.StringKitTest do
       linkified = """
       [@kball](/person/kball) representing the JS Party community in Amsterdam?! Yes please.
       """
+
       assert StringKit.mentions_linkify(raw, [kball]) == linkified
     end
 

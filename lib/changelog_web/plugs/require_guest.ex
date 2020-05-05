@@ -12,5 +12,6 @@ defmodule ChangelogWeb.Plug.RequireGuest do
     |> redirect(to: Helpers.home_path(conn, :show))
     |> halt()
   end
+
   def call(conn, _opts), do: conn
 end

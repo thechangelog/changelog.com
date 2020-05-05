@@ -9,7 +9,7 @@ defmodule Changelog.NotifierTest do
 
   describe "notify/1 with news item comment" do
     setup_with_mocks([
-      {Slack.Client, [], [message: fn(_, _) -> true end]}
+      {Slack.Client, [], [message: fn _, _ -> true end]}
     ]) do
       :ok
     end
@@ -18,7 +18,7 @@ defmodule Changelog.NotifierTest do
       comment = insert(:news_item_comment)
       Notifier.notify(comment)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#news-comments", :_)
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment has subscriber who is also commenter" do
@@ -28,7 +28,7 @@ defmodule Changelog.NotifierTest do
       comment = insert(:news_item_comment, news_item: item, author: commenter)
       Notifier.notify(comment)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#news-comments", :_)
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment has no parent but 2 subscribers" do
@@ -37,9 +37,9 @@ defmodule Changelog.NotifierTest do
       sub2 = insert(:subscription_on_item, item: item)
       comment = insert(:news_item_comment, news_item: item)
       Notifier.notify(comment)
-      assert_delivered_email Email.comment_subscription(sub1, comment)
-      assert_delivered_email Email.comment_subscription(sub2, comment)
-      assert called Slack.Client.message("#news-comments", :_)
+      assert_delivered_email(Email.comment_subscription(sub1, comment))
+      assert_delivered_email(Email.comment_subscription(sub2, comment))
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment has no parents but 2 muted subscribers" do
@@ -51,7 +51,7 @@ defmodule Changelog.NotifierTest do
       Subscription.unsubscribe(sub2.person, item)
       Notifier.notify(comment)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#news-comments", :_)
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when a comment mentions 3 people, 1 of which has mention notifications disabled" do
@@ -60,17 +60,17 @@ defmodule Changelog.NotifierTest do
       p3 = insert(:person, handle: "p3", settings: %{email_on_comment_mentions: false})
       comment = insert(:news_item_comment, content: "Yo @p1 @p2 and @p3 what up!")
       Notifier.notify(comment)
-      assert_delivered_email Email.comment_mention(p1, comment)
-      assert_delivered_email Email.comment_mention(p2, comment)
-      refute_delivered_email Email.comment_mention(p3, comment)
+      assert_delivered_email(Email.comment_mention(p1, comment))
+      assert_delivered_email(Email.comment_mention(p2, comment))
+      refute_delivered_email(Email.comment_mention(p3, comment))
     end
 
     test "when comment is a reply and author has notifications enabled" do
       comment = insert(:news_item_comment)
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
       Notifier.notify(reply)
-      assert_delivered_email Email.comment_reply(reply.parent.author, reply)
-      assert called Slack.Client.message("#news-comments", :_)
+      assert_delivered_email(Email.comment_reply(reply.parent.author, reply))
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent is also subscribed" do
@@ -80,9 +80,9 @@ defmodule Changelog.NotifierTest do
       comment = insert(:news_item_comment, news_item: item, author: parent)
       reply = insert(:news_item_comment, news_item: item, parent: comment)
       Notifier.notify(reply)
-      assert_delivered_email Email.comment_reply(parent, reply)
-      refute_delivered_email Email.comment_subscription(sub, reply)
-      assert called Slack.Client.message("#news-comments", :_)
+      assert_delivered_email(Email.comment_reply(parent, reply))
+      refute_delivered_email(Email.comment_subscription(sub, reply))
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent is subscribed and 2 mentions" do
@@ -91,13 +91,20 @@ defmodule Changelog.NotifierTest do
       item = insert(:news_item)
       sub = insert(:subscription_on_item, person: parent, item: item)
       comment = insert(:news_item_comment, news_item: item, author: parent)
-      reply = insert(:news_item_comment, news_item: item, parent: comment, content: "Thanks @person1 @person2!")
+
+      reply =
+        insert(:news_item_comment,
+          news_item: item,
+          parent: comment,
+          content: "Thanks @person1 @person2!"
+        )
+
       Notifier.notify(reply)
-      assert_delivered_email Email.comment_reply(parent, reply)
-      assert_delivered_email Email.comment_mention(mentioned, reply)
-      refute_delivered_email Email.comment_mention(parent, reply)
-      refute_delivered_email Email.comment_subscription(sub, reply)
-      assert called Slack.Client.message("#news-comments", :_)
+      assert_delivered_email(Email.comment_reply(parent, reply))
+      assert_delivered_email(Email.comment_mention(mentioned, reply))
+      refute_delivered_email(Email.comment_mention(parent, reply))
+      refute_delivered_email(Email.comment_subscription(sub, reply))
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent has notifications enabled but discussion muted" do
@@ -108,7 +115,7 @@ defmodule Changelog.NotifierTest do
       reply = insert(:news_item_comment, news_item: item, parent: comment)
       Notifier.notify(reply)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#news-comments", :_)
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent author has notifications disabled" do
@@ -117,22 +124,25 @@ defmodule Changelog.NotifierTest do
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
       Notifier.notify(reply)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#news-comments", :_)
+      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply to own comment" do
       person = insert(:person)
       comment = insert(:news_item_comment, author: person)
-      reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment, author: person)
+
+      reply =
+        insert(:news_item_comment, news_item: comment.news_item, parent: comment, author: person)
+
       Notifier.notify(reply)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#news-comments", :_)
+      assert called(Slack.Client.message("#news-comments", :_))
     end
   end
 
   describe "notify/1 with episode item" do
     setup_with_mocks([
-      {Slack.Client, [], [message: fn(_, _) -> true end]}
+      {Slack.Client, [], [message: fn _, _ -> true end]}
     ]) do
       :ok
     end
@@ -142,7 +152,7 @@ defmodule Changelog.NotifierTest do
       item = episode |> episode_news_item() |> insert()
       Notifier.notify(item)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#main", :_)
+      assert called(Slack.Client.message("#main", :_))
     end
 
     test "when episode has guests but none of them have 'thanks' set" do
@@ -155,7 +165,7 @@ defmodule Changelog.NotifierTest do
 
       Notifier.notify(item)
       assert_no_emails_delivered()
-      assert called Slack.Client.message("#main", :_)
+      assert called(Slack.Client.message("#main", :_))
     end
 
     test "when episode has guests and some of them have 'thanks' set" do
@@ -169,9 +179,9 @@ defmodule Changelog.NotifierTest do
       item = episode |> episode_news_item() |> insert()
 
       Notifier.notify(item)
-      assert_delivered_email Email.guest_thanks(g2, episode)
-      assert_delivered_email Email.guest_thanks(g3, episode)
-      assert called Slack.Client.message("#main", :_)
+      assert_delivered_email(Email.guest_thanks(g2, episode))
+      assert_delivered_email(Email.guest_thanks(g3, episode))
+      assert called(Slack.Client.message("#main", :_))
     end
 
     test "when podcast has subscriptions" do
@@ -181,8 +191,8 @@ defmodule Changelog.NotifierTest do
       episode = insert(:published_episode, podcast: podcast)
       item = episode |> episode_news_item() |> insert()
       Notifier.notify(item)
-      assert_delivered_email Email.episode_published(s1, episode)
-      assert_delivered_email Email.episode_published(s2, episode)
+      assert_delivered_email(Email.episode_published(s1, episode))
+      assert_delivered_email(Email.episode_published(s2, episode))
     end
   end
 
@@ -197,7 +207,7 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person)
       Notifier.notify(item)
-      assert_delivered_email Email.submitted_news_published(person, item)
+      assert_delivered_email(Email.submitted_news_published(person, item))
     end
 
     test "when submitter has email notifications disabled" do
@@ -211,15 +221,15 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person, author: person)
       Notifier.notify(item)
-      assert_delivered_email Email.submitted_news_published(person, item)
-      refute_delivered_email Email.authored_news_published(person, item)
+      assert_delivered_email(Email.submitted_news_published(person, item))
+      refute_delivered_email(Email.authored_news_published(person, item))
     end
 
     test "when author has email notifications enabled" do
       person = insert(:person, settings: %{email_on_authored_news: true})
       item = insert(:news_item, author: person)
       Notifier.notify(item)
-      assert_delivered_email Email.authored_news_published(person, item)
+      assert_delivered_email(Email.authored_news_published(person, item))
     end
 
     test "when author has email notifications disabled" do
@@ -234,8 +244,8 @@ defmodule Changelog.NotifierTest do
       author = insert(:person, settings: %{email_on_authored_news: true})
       item = insert(:news_item, author: author, submitter: submitter)
       Notifier.notify(item)
-      assert_delivered_email Email.authored_news_published(author, item)
-      assert_delivered_email Email.submitted_news_published(submitter, item)
+      assert_delivered_email(Email.authored_news_published(author, item))
+      assert_delivered_email(Email.submitted_news_published(submitter, item))
     end
   end
 
@@ -244,7 +254,7 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, email: "jerod@changelog.com")
       episode = insert(:episode)
       Notifier.notify(episode)
-      assert_delivered_email Email.episode_transcribed(person, episode)
+      assert_delivered_email(Email.episode_transcribed(person, episode))
     end
   end
 end

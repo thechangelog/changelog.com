@@ -1,5 +1,5 @@
 <div id="overlay" class="overlay overlay--share" data-turbolinks-permanent>
-  <button class="overlay-close js-overlay-close"><%= lazy_image(Routes.static_url(@conn, "/images/icons/overlay-close.svg"), "Hide Overlay") %></button>
+  <button class="overlay-close js-overlay-close"><%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/overlay-close.svg"), "Hide Overlay") %></button>
   <div class="overlay-curtain js-overlay-close"></div>
   <div class="overlay-scroll_wrap">
     <div class="overlay-wrap js-overlay-content"></div>

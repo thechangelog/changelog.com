@@ -2,15 +2,23 @@ defmodule ChangelogWeb.EmailView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Faker, NewsItem}
-  alias ChangelogWeb.{AuthView, Endpoint, EpisodeView, NewsItemView,
-                      NewsItemCommentView, PersonView}
+
+  alias ChangelogWeb.{
+    AuthView,
+    Endpoint,
+    EpisodeView,
+    NewsItemView,
+    NewsItemCommentView,
+    PersonView
+  }
 
   def greeting(person) do
-    label = if Faker.name_fake?(person.name) do
-      "there"
-    else
-      PersonView.first_name(person)
-    end
+    label =
+      if Faker.name_fake?(person.name) do
+        "there"
+      else
+        PersonView.first_name(person)
+      end
 
     "Hey #{label},"
   end
@@ -26,6 +34,7 @@ defmodule ChangelogWeb.EmailView do
   def news_item_url(%{type: :link, object: post}) when is_map(post) do
     Routes.post_url(Endpoint, :show, post.slug)
   end
+
   def news_item_url(item) do
     Routes.news_item_url(Endpoint, :show, NewsItem.slug(item))
   end

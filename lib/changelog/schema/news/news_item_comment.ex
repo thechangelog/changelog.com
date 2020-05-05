@@ -17,7 +17,7 @@ defmodule Changelog.NewsItemComment do
     timestamps()
   end
 
-  def replies(query \\ __MODULE__), do: from(q in query, where: not(is_nil(q.parent_id)))
+  def replies(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.parent_id))
 
   def insert_changeset(struct, attrs \\ %{}) do
     struct
@@ -33,6 +33,7 @@ defmodule Changelog.NewsItemComment do
   end
 
   def mentioned_people(%__MODULE__{content: content}), do: mentioned_people(content)
+
   def mentioned_people(content) do
     content
     |> StringKit.extract_mentions()
@@ -40,6 +41,7 @@ defmodule Changelog.NewsItemComment do
   end
 
   defp get_mentioned_people([]), do: []
+
   defp get_mentioned_people(handles) do
     handles
     |> Person.with_handles()
@@ -49,12 +51,13 @@ defmodule Changelog.NewsItemComment do
   # Expects newest comments first
   def nested(nil), do: []
   def nested([]), do: []
+
   def nested(comments) do
     comments
-    |> Enum.map(&(Map.put(&1, :children, [])))
-    |> Enum.reduce(%{}, fn(comment, map) ->
+    |> Enum.map(&Map.put(&1, :children, []))
+    |> Enum.reduce(%{}, fn comment, map ->
       comment = %{comment | children: Map.get(map, comment.id, [])}
-      Map.update(map, comment.parent_id, [comment], fn(comments) -> [comment | comments] end)
+      Map.update(map, comment.parent_id, [comment], fn comments -> [comment | comments] end)
     end)
     |> Map.get(nil)
   end

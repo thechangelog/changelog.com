@@ -26,7 +26,11 @@ defmodule ChangelogWeb.Admin.PodcastControllerTest do
 
   @tag :as_admin
   test "creates podcast and redirects", %{conn: conn} do
-    conn = post(conn, Routes.admin_podcast_path(conn, :create), podcast: @valid_attrs, next: Routes.admin_podcast_path(conn, :index))
+    conn =
+      post(conn, Routes.admin_podcast_path(conn, :create),
+        podcast: @valid_attrs,
+        next: Routes.admin_podcast_path(conn, :index)
+      )
 
     assert redirected_to(conn) == Routes.admin_podcast_path(conn, :index)
     assert count(Podcast) == 1
@@ -53,7 +57,8 @@ defmodule ChangelogWeb.Admin.PodcastControllerTest do
   test "updates podcast and redirects", %{conn: conn} do
     podcast = insert(:podcast)
 
-    conn = put(conn, Routes.admin_podcast_path(conn, :update, podcast.slug), podcast: @valid_attrs)
+    conn =
+      put(conn, Routes.admin_podcast_path(conn, :update, podcast.slug), podcast: @valid_attrs)
 
     assert redirected_to(conn) == Routes.admin_podcast_path(conn, :index)
     assert count(Podcast) == 1
@@ -64,7 +69,8 @@ defmodule ChangelogWeb.Admin.PodcastControllerTest do
     podcast = insert(:podcast)
     count_before = count(Podcast)
 
-    conn = put(conn, Routes.admin_podcast_path(conn, :update, podcast.slug), podcast: @invalid_attrs)
+    conn =
+      put(conn, Routes.admin_podcast_path(conn, :update, podcast.slug), podcast: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Podcast) == count_before
@@ -73,15 +79,18 @@ defmodule ChangelogWeb.Admin.PodcastControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     podcast = insert(:podcast)
 
-    Enum.each([
-      get(conn, Routes.admin_podcast_path(conn, :index)),
-      get(conn, Routes.admin_podcast_path(conn, :new)),
-      post(conn, Routes.admin_podcast_path(conn, :create), podcast: @valid_attrs),
-      get(conn, Routes.admin_podcast_path(conn, :edit, podcast.slug)),
-      put(conn, Routes.admin_podcast_path(conn, :update, podcast.slug), podcast: @valid_attrs)
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_podcast_path(conn, :index)),
+        get(conn, Routes.admin_podcast_path(conn, :new)),
+        post(conn, Routes.admin_podcast_path(conn, :create), podcast: @valid_attrs),
+        get(conn, Routes.admin_podcast_path(conn, :edit, podcast.slug)),
+        put(conn, Routes.admin_podcast_path(conn, :update, podcast.slug), podcast: @valid_attrs)
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

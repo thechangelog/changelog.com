@@ -1,1 +1,1 @@
-<%= external_link(domain_name(@item.url), to: @item.url, title: domain_name(@item.url)) %>
+<%= SharedHelpers.external_link(SharedHelpers.domain_name(@item.url), to: @item.url, title: SharedHelpers.domain_name(@item.url)) %>

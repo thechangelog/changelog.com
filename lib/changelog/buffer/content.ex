@@ -6,6 +6,7 @@ defmodule Changelog.Buffer.Content do
   def episode_link(item), do: item.url
 
   def episode_text(nil), do: ""
+
   def episode_text(item) do
     item =
       item
@@ -15,11 +16,13 @@ defmodule Changelog.Buffer.Content do
     episode = item.object
     people = Episode.participants(episode)
 
-    meta = [
-      title_meta(episode),
-      featuring_meta(people),
-      topic_meta(item.topics)
-    ] |> Enum.reject(&is_nil/1)
+    meta =
+      [
+        title_meta(episode),
+        featuring_meta(people),
+        topic_meta(item.topics)
+      ]
+      |> Enum.reject(&is_nil/1)
 
     if Enum.any?(meta) do
       """
@@ -38,8 +41,10 @@ defmodule Changelog.Buffer.Content do
   end
 
   def news_item_brief(nil), do: ""
+
   def news_item_brief(item) do
     item = NewsItem.preload_all(item)
+
     [news_item_headline(item), twitter_list(item.topics)]
     |> ListKit.compact_join(" ")
   end
@@ -49,11 +54,13 @@ defmodule Changelog.Buffer.Content do
   def news_item_image(item), do: NewsItemView.image_url(item, :original)
 
   def news_item_link(nil), do: nil
+
   def news_item_link(item) do
     Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
   end
 
   def news_item_text(nil), do: ""
+
   def news_item_text(item) do
     item = NewsItem.preload_all(item)
 
@@ -85,20 +92,25 @@ defmodule Changelog.Buffer.Content do
   defp news_item_headline(item = %{type: :video}), do: "#{video_emoji()} #{item.headline}"
   defp news_item_headline(item), do: item.headline
 
-  defp news_item_byline(%{author: author, source: source}) when is_map(author) and is_map(source) do
+  defp news_item_byline(%{author: author, source: source})
+       when is_map(author) and is_map(source) do
     "#{author_emoji()} by #{twitterized(author)} via #{twitterized(source)}"
   end
+
   defp news_item_byline(%{author: author}) when is_map(author) do
     "#{author_emoji()} by #{twitterized(author)}"
   end
+
   defp news_item_byline(_item), do: nil
 
   defp news_item_meta(item) do
-    meta = [
-      author_meta(item),
-      source_meta(item),
-      topic_meta(item.topics)
-    ] |> Enum.reject(&is_nil/1)
+    meta =
+      [
+        author_meta(item),
+        source_meta(item),
+        topic_meta(item.topics)
+      ]
+      |> Enum.reject(&is_nil/1)
 
     if Enum.any?(meta) do
       Enum.join(meta, "\n")
@@ -107,13 +119,13 @@ defmodule Changelog.Buffer.Content do
     end
   end
 
-  defp author_emoji,    do: ~w(✍ 🖋 📝 🗣) |> Enum.random()
-  defp episode_emoji,   do: ~w(🙌 🎉 📢 🔥 🎧 🎁 💥) |> Enum.random()
+  defp author_emoji, do: ~w(✍ 🖋 📝 🗣) |> Enum.random()
+  defp episode_emoji, do: ~w(🙌 🎉 📢 🔥 🎧 🎁 💥) |> Enum.random()
   defp featuring_emoji, do: ~w(🌟 🎙 ✨ ⚡️ 💫) |> Enum.random()
-  defp source_emoji,    do: ~w(📨 📡 📢 🔊) |> Enum.random()
-  defp title_emoji,     do: ~w(🗣 💬) |> Enum.random()
-  defp topic_emoji,     do: ~w(🏷 💭 🗂 ) |> Enum.random()
-  defp video_emoji,     do: ~w(🎞 📽 🎬 🍿) |> Enum.random()
+  defp source_emoji, do: ~w(📨 📡 📢 🔊) |> Enum.random()
+  defp title_emoji, do: ~w(🗣 💬) |> Enum.random()
+  defp topic_emoji, do: ~w(🏷 💭 🗂 ) |> Enum.random()
+  defp video_emoji, do: ~w(🎞 📽 🎬 🍿) |> Enum.random()
 
   defp author_meta(%{author: nil}), do: nil
   defp author_meta(%{author: %{twitter_handle: nil}}), do: nil
@@ -129,6 +141,7 @@ defmodule Changelog.Buffer.Content do
   defp title_meta(episode), do: "#{title_emoji()} #{episode.title}"
 
   defp topic_meta([]), do: nil
+
   defp topic_meta(topics) do
     "#{topic_emoji()} #{twitter_list(topics)}"
   end
@@ -140,7 +153,10 @@ defmodule Changelog.Buffer.Content do
   end
 
   defp twitterized(%{slug: "go"}), do: "#golang"
-  defp twitterized(%{twitter_handle: nil, slug: slug}) when is_binary(slug), do: "#" <> String.replace(slug, "-", "")
+
+  defp twitterized(%{twitter_handle: nil, slug: slug}) when is_binary(slug),
+    do: "#" <> String.replace(slug, "-", "")
+
   defp twitterized(%{twitter_handle: handle}) when is_binary(handle), do: "@" <> handle
   defp twitterized(%{name: name}), do: name
 end

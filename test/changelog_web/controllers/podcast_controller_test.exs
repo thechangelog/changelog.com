@@ -14,6 +14,7 @@ defmodule ChangelogWeb.PodcastControllerTest do
 
   test "getting a draft podcast page", %{conn: conn} do
     p = insert(:podcast, status: :draft)
+
     assert_raise Ecto.NoResultsError, fn ->
       get(conn, Routes.podcast_path(conn, :show, p.slug))
     end
@@ -36,7 +37,7 @@ defmodule ChangelogWeb.PodcastControllerTest do
 
   test "getting a podcast page that doesn't exist", %{conn: conn} do
     assert_raise Ecto.NoResultsError, fn ->
-      get conn, Routes.podcast_path(conn, :show, "bad-show")
+      get(conn, Routes.podcast_path(conn, :show, "bad-show"))
     end
   end
 end

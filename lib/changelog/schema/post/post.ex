@@ -28,11 +28,15 @@ defmodule Changelog.Post do
     timestamps()
   end
 
-  def file_changeset(post, attrs \\ %{}), do: cast_attachments(post, attrs, [:image], allow_urls: true)
+  def file_changeset(post, attrs \\ %{}),
+    do: cast_attachments(post, attrs, [:image], allow_urls: true)
 
   def insert_changeset(post, attrs \\ %{}) do
     post
-    |> cast(attrs, ~w(title subtitle slug canonical_url author_id editor_id published published_at body tldr)a)
+    |> cast(
+      attrs,
+      ~w(title subtitle slug canonical_url author_id editor_id published published_at body tldr)a
+    )
     |> validate_required([:title, :slug, :author_id])
     |> validate_format(:canonical_url, Regexp.http(), message: Regexp.http_message())
     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
@@ -49,13 +53,21 @@ defmodule Changelog.Post do
     |> file_changeset(attrs)
   end
 
-  def authored_by(query \\ __MODULE__, person), do: from(q in query, where: q.author_id == ^person.id)
-  def published(query \\ __MODULE__),           do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now)
-  def scheduled(query \\ __MODULE__),           do: from(q in query, where: q.published, where: q.published_at > ^Timex.now)
-  def search(query \\ __MODULE__, term),        do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
-  def unpublished(query \\ __MODULE__),         do: from(q in query, where: not(q.published))
+  def authored_by(query \\ __MODULE__, person),
+    do: from(q in query, where: q.author_id == ^person.id)
 
-  def is_public(post, as_of \\ Timex.now) do
+  def published(query \\ __MODULE__),
+    do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now())
+
+  def scheduled(query \\ __MODULE__),
+    do: from(q in query, where: q.published, where: q.published_at > ^Timex.now())
+
+  def search(query \\ __MODULE__, term),
+    do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
+
+  def unpublished(query \\ __MODULE__), do: from(q in query, where: not q.published)
+
+  def is_public(post, as_of \\ Timex.now()) do
     post.published && Timex.before?(post.published_at, as_of)
   end
 
@@ -85,12 +97,13 @@ defmodule Changelog.Post do
 
   def preload_topics(query = %Ecto.Query{}) do
     query
-    |> Ecto.Query.preload(post_topics: ^PostTopic.by_position)
+    |> Ecto.Query.preload(post_topics: ^PostTopic.by_position())
     |> Ecto.Query.preload(:topics)
   end
+
   def preload_topics(post) do
     post
-    |> Repo.preload(post_topics: {PostTopic.by_position, :topic})
+    |> Repo.preload(post_topics: {PostTopic.by_position(), :topic})
     |> Repo.preload(:topics)
   end
 

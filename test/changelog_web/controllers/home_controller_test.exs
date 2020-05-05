@@ -23,7 +23,8 @@ defmodule ChangelogWeb.HomeControllerTest do
 
   @tag :as_inserted_user
   test "updates person and redirects to home page", %{conn: conn} do
-    conn = put(conn, Routes.home_path(conn, :update), from: "account", person: %{name: "New Name"})
+    conn =
+      put(conn, Routes.home_path(conn, :update), from: "account", person: %{name: "New Name"})
 
     assert redirected_to(conn) == Routes.home_path(conn, :show)
   end
@@ -76,37 +77,43 @@ defmodule ChangelogWeb.HomeControllerTest do
     podcast = insert(:podcast)
     conn = post(conn, Routes.home_path(conn, :subscribe, slug: podcast.slug))
     assert conn.status == 200
-    assert count(Subscription.subscribed) == 1
+    assert count(Subscription.subscribed()) == 1
   end
 
   @tag :as_inserted_user
   test "unsubscribing to a podcast", %{conn: conn} do
     podcast = insert(:podcast)
     insert(:subscription_on_podcast, podcast: podcast, person: conn.assigns.current_user)
-    assert count(Subscription.subscribed) == 1
+    assert count(Subscription.subscribed()) == 1
     conn = post(conn, Routes.home_path(conn, :unsubscribe, slug: podcast.slug))
     assert conn.status == 200
-    assert count(Subscription.subscribed) == 0
+    assert count(Subscription.subscribed()) == 0
   end
 
   @tag :as_inserted_user
   test "signed in and opting out of notifications", %{conn: conn} do
     person = conn.assigns.current_user
     {:ok, token} = Person.encoded_id(person)
-    conn = get(conn, Routes.home_path(conn, :opt_out, token, "setting", "email_on_submitted_news"))
+
+    conn =
+      get(conn, Routes.home_path(conn, :opt_out, token, "setting", "email_on_submitted_news"))
+
     assert conn.status == 200
     refute Repo.get(Person, person.id).settings.email_on_submitted_news
   end
 
   test "requires user on all actions except email links", %{conn: conn} do
-    Enum.each([
-      get(conn, Routes.home_path(conn, :show)),
-      get(conn, Routes.home_path(conn, :profile)),
-      get(conn, Routes.home_path(conn, :account)),
-      put(conn, Routes.home_path(conn, :update), person: %{}),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.home_path(conn, :show)),
+        get(conn, Routes.home_path(conn, :profile)),
+        get(conn, Routes.home_path(conn, :account)),
+        put(conn, Routes.home_path(conn, :update), person: %{})
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

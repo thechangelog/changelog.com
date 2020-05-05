@@ -15,10 +15,12 @@ defmodule Changelog.Policies.NewsItem do
       _else -> is_admin(actor)
     end
   end
+
   def delete(actor, _), do: is_admin(actor)
 
   defp is_logger(nil, _item), do: false
   defp is_logger(_actor, %{logger: nil}), do: false
+
   defp is_logger(actor, item) do
     item
     |> Map.get(:logger, nil)

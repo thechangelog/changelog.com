@@ -6,7 +6,7 @@
 
     <header class="comment-header">
       <button class="comment-author has-tooltip">
-        <%= lazy_image(PersonView.avatar_url(@comment.author), @comment.author.name, class: "comment-author-image") %>
+        <%= SharedHelpers.lazy_image(PersonView.avatar_url(@comment.author), @comment.author.name, class: "comment-author-image") %>
         <p class="comment-author-name"><%= @comment.author.handle %></p>
       </button>
       <%= render(PersonView, "_tooltip.html", Map.merge(assigns, %{person: @comment.author})) %>

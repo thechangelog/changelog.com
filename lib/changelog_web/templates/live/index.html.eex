@@ -23,7 +23,7 @@
     <%= link to: Routes.live_path(@conn, :show, Episode.hashid(episode)), title: "View Live Details", class: "live_upcoming-grid-item live_upcoming-grid-item--live" do %>
       <div class="live_upcoming-grid-item-image">
         <div class="image_border_hack">
-          <%= lazy_image(PodcastView.cover_url(episode.podcast, :medium), "#{episode.podcast.name} Artwork", width: 120, height: 120) %>
+          <%= SharedHelpers.lazy_image(PodcastView.cover_url(episode.podcast, :medium), "#{episode.podcast.name} Artwork", width: 120, height: 120) %>
         </div>
       </div>
 

@@ -43,7 +43,10 @@ defmodule Changelog.UrlKitTest do
     end
 
     test "returns post and slug when hosted" do
-      assert UrlKit.get_object_id(:announcement, "https://changelog.com/posts/oscon-2017-free-pass") == "posts:oscon-2017-free-pass"
+      assert UrlKit.get_object_id(
+               :announcement,
+               "https://changelog.com/posts/oscon-2017-free-pass"
+             ) == "posts:oscon-2017-free-pass"
     end
 
     test "returns nil when type has no known objects" do
@@ -99,7 +102,8 @@ defmodule Changelog.UrlKitTest do
     end
 
     test "returns video with a YouTube, Vimeo, or Twitch" do
-      for url <- ~w(https://www.youtube.com/watch?v=dQw4w9WgXcQ https://vimeo.com/226379658 https://go.twitch.tv/videos/92287997) do
+      for url <-
+            ~w(https://www.youtube.com/watch?v=dQw4w9WgXcQ https://vimeo.com/226379658 https://go.twitch.tv/videos/92287997) do
         assert UrlKit.get_type(url) == :video
       end
     end
@@ -132,8 +136,12 @@ defmodule Changelog.UrlKitTest do
     end
 
     test "removes UTM params" do
-      url = "https://www.theverge.com/2017/11/7/16613234/next-level-ar-vr-memories-holograms-8i-actress-shoah-foundation?utm_campaign=theverge"
-      normalized = "https://www.theverge.com/2017/11/7/16613234/next-level-ar-vr-memories-holograms-8i-actress-shoah-foundation"
+      url =
+        "https://www.theverge.com/2017/11/7/16613234/next-level-ar-vr-memories-holograms-8i-actress-shoah-foundation?utm_campaign=theverge"
+
+      normalized =
+        "https://www.theverge.com/2017/11/7/16613234/next-level-ar-vr-memories-holograms-8i-actress-shoah-foundation"
+
       assert UrlKit.normalize_url(url) == normalized
     end
   end

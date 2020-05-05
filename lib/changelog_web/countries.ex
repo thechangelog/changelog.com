@@ -243,7 +243,8 @@ defmodule ChangelogWeb.Countries do
     "YE" => "Yemen",
     "ZM" => "Zambia",
     "ZW" => "Zimbabwe",
-    ""   => "Unknown"}
+    "" => "Unknown"
+  }
 
   def name(code) do
     Map.get(@map, code)

@@ -2,16 +2,16 @@
   <%= render("_header.html", assigns) %>
   <%= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
   <div class="news_item-content richtext">
-    <%= @item.story |> md_to_html() |> raw() %>
+    <%= @item.story |> SharedHelpers.md_to_html() |> raw() %>
     <%= video_embed(@item) %>
   </div>
   <%= image_link(@item) %>
 
-<%= if controller_action_combo(@conn) != "news_item-show" do %>
+<%= if SharedHelpers.controller_action_combo(@conn) != "news_item-show" do %>
   <footer class="news_item-footer">
   <%= if NewsItem.is_post(@item) do %>
     <span class="news_item-footer-item">
-      <%= link("Continue reading " <> pluralize(PostView.paragraph_count(@item.object), "paragraph", "paragraphs"), to: permalink_path(@conn, @item)) %>
+      <%= link("Continue reading " <> SharedHelpers.pluralize(PostView.paragraph_count(@item.object), "paragraph", "paragraphs"), to: permalink_path(@conn, @item)) %>
     </span>
   <% else %>
     <span class="news_item-footer-item">

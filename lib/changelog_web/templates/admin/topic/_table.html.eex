@@ -19,17 +19,17 @@
         <img class="ui avatar image" style="border-radius: 0" src="<%= icon_url(topic) %>">
         <%= topic.name %> (<%= topic.slug %>)
       </td>
-      <td><%= twitter_link(topic) %></td>
-      <td><%= website_link(topic) %></td>
-      <td><%= truncate(topic.description, 50) %></td>
+      <td><%= SharedHelpers.twitter_link(topic) %></td>
+      <td><%= SharedHelpers.website_link(topic) %></td>
+      <td><%= SharedHelpers.truncate(topic.description, 50) %></td>
       <td><%= news_count(topic) %></td>
       <td><%= episode_count(topic) %></td>
       <td><%= post_count(topic) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= icon_link("eye", to: Routes.topic_path(@conn, :show, topic.slug)) %>
-          <%= icon_link("edit", to: Routes.admin_topic_path(@conn, :edit, topic.slug)) %>
-          <%= icon_link("trash", to: Routes.admin_topic_path(@conn, :delete, topic.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= AdminHelpers.icon_link("eye", to: Routes.topic_path(@conn, :show, topic.slug)) %>
+          <%= AdminHelpers.icon_link("edit", to: Routes.admin_topic_path(@conn, :edit, topic.slug)) %>
+          <%= AdminHelpers.icon_link("trash", to: Routes.admin_topic_path(@conn, :delete, topic.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>
     </tr>

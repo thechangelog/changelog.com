@@ -5,7 +5,15 @@ defmodule Changelog.NewsItemTest do
 
   describe "insert_changeset" do
     test "with valid attributes" do
-      changeset = NewsItem.insert_changeset(%NewsItem{}, %{status: :queued, type: :link, url: "https://github.com/blog/ohai-there", headline: "Big NEWS!", logger_id: 1})
+      changeset =
+        NewsItem.insert_changeset(%NewsItem{}, %{
+          status: :queued,
+          type: :link,
+          url: "https://github.com/blog/ohai-there",
+          headline: "Big NEWS!",
+          logger_id: 1
+        })
+
       assert changeset.valid?
     end
 
@@ -19,8 +27,12 @@ defmodule Changelog.NewsItemTest do
     test "downcases, removes non-alpha-numeric, converts spaces to dashes, appends hashid" do
       assert NewsItem.slug(%{id: 1, headline: "Oh! Wow?"}) == "oh-wow-z4"
       assert NewsItem.slug(%{id: 1, headline: "ZOMG 🙌 an ^emoJI@"}) == "zomg-an-emoji-z4"
-      assert NewsItem.slug(%{id: 1, headline: "The 4 best things EVAR"}) == "the-4-best-things-evar-z4"
-      assert NewsItem.slug(%{id: 1, headline: "🎮 An NES emulator written in Go 🎮"}) == "an-nes-emulator-written-in-go-z4"
+
+      assert NewsItem.slug(%{id: 1, headline: "The 4 best things EVAR"}) ==
+               "the-4-best-things-evar-z4"
+
+      assert NewsItem.slug(%{id: 1, headline: "🎮 An NES emulator written in Go 🎮"}) ==
+               "an-nes-emulator-written-in-go-z4"
     end
   end
 
@@ -29,7 +41,10 @@ defmodule Changelog.NewsItemTest do
       host = insert(:person, handle: "letterman")
       guest1 = insert(:person, handle: "madonna")
       guest2 = insert(:person, handle: "dennis")
-      guest3 = insert(:person, handle: "leary", settings: %{subscribe_to_participated_episodes: false})
+
+      guest3 =
+        insert(:person, handle: "leary", settings: %{subscribe_to_participated_episodes: false})
+
       episode = insert(:published_episode)
       insert(:episode_host, person: host, episode: episode)
       insert(:episode_guest, person: guest1, episode: episode)
@@ -38,7 +53,7 @@ defmodule Changelog.NewsItemTest do
       item = episode |> episode_news_item() |> insert()
 
       NewsItem.subscribe_participants(item)
-      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(&(&1.person_id))
+      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(& &1.person_id)
 
       assert Subscription.subscribed_count(item) == 3
       assert Enum.member?(subscribed_ids, host.id)
@@ -53,7 +68,7 @@ defmodule Changelog.NewsItemTest do
       item = insert(:news_item, submitter: fred, author: fred, logger: wilma)
 
       NewsItem.subscribe_participants(item)
-      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(&(&1.person_id))
+      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(& &1.person_id)
 
       assert Subscription.subscribed_count(item) == 2
       assert Enum.member?(subscribed_ids, fred.id)
@@ -66,7 +81,7 @@ defmodule Changelog.NewsItemTest do
       item = insert(:news_item, submitter: fred, author: fred, logger: wilma)
 
       NewsItem.subscribe_participants(item)
-      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(&(&1.person_id))
+      subscribed_ids = item |> Subscription.on_item() |> Repo.all() |> Enum.map(& &1.person_id)
 
       assert Subscription.subscribed_count(item) == 0
       refute Enum.member?(subscribed_ids, fred.id)

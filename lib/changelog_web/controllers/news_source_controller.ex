@@ -6,9 +6,9 @@ defmodule ChangelogWeb.NewsSourceController do
   def index(conn, params) do
     page =
       NewsSource
-      |> NewsSource.with_news_items
+      |> NewsSource.with_news_items()
       |> order_by([q], asc: q.name)
-      |> NewsSource.preload_news_items
+      |> NewsSource.preload_news_items()
       |> Repo.paginate(Map.put(params, :page_size, 1000))
 
     render(conn, :index, sources: page.entries, page: page)
@@ -20,9 +20,9 @@ defmodule ChangelogWeb.NewsSourceController do
     page =
       NewsItem
       |> NewsItem.with_source(source)
-      |> NewsItem.published
-      |> NewsItem.newest_first
-      |> NewsItem.preload_all
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
       |> Repo.paginate(params)
 
     items =

@@ -54,6 +54,7 @@ defmodule ChangelogWeb.Admin.SponsorController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_sponsor_path(conn, :edit, sponsor))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -74,6 +75,7 @@ defmodule ChangelogWeb.Admin.SponsorController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_sponsor_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

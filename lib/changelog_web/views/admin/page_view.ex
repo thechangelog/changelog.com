@@ -3,14 +3,14 @@ defmodule ChangelogWeb.Admin.PageView do
 
   alias Changelog.{Episode, Repo}
   alias ChangelogWeb.TimeView
-  alias ChangelogWeb.Admin.{EpisodeView, EpisodeRequestView, NewsItemView, NewsletterView,}
+  alias ChangelogWeb.Admin.{EpisodeView, EpisodeRequestView, NewsItemView, NewsletterView}
 
   def recent_episodes(podcast, limit \\ 5) do
     podcast
     |> Ecto.assoc(:episodes)
-    |> Episode.published
-    |> Episode.newest_first
+    |> Episode.published()
+    |> Episode.newest_first()
     |> Episode.limit(limit)
-    |> Repo.all
+    |> Repo.all()
   end
 end

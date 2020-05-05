@@ -23,17 +23,19 @@ defmodule Changelog.NewsSource do
     from(q in query,
       distinct: true,
       left_join: i in assoc(q, :news_items),
-      where: not(is_nil(i.id)))
+      where: not is_nil(i.id)
+    )
   end
 
-  def file_changeset(source, attrs \\ %{}), do: cast_attachments(source, attrs, [:icon], allow_urls: true)
+  def file_changeset(source, attrs \\ %{}),
+    do: cast_attachments(source, attrs, [:icon], allow_urls: true)
 
   def insert_changeset(source, attrs \\ %{}) do
     source
     |> cast(attrs, ~w(name slug website twitter_handle description regex feed)a)
     |> validate_required([:name, :slug, :website])
-    |> validate_format(:website, Regexp.http, message: Regexp.http_message)
-    |> validate_format(:feed, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:website, Regexp.http(), message: Regexp.http_message())
+    |> validate_format(:feed, Regexp.http(), message: Regexp.http_message())
     |> unique_constraint(:slug)
     |> unique_constraint(:twitter_handle)
   end
@@ -59,5 +61,9 @@ defmodule Changelog.NewsSource do
 
   def matching(url), do: from(s in __MODULE__, where: fragment("? ~* regex", ^url))
 
-  def news_count(source), do: Repo.count(from(q in NewsItem, where: q.source_id == ^source.id, where: q.status == ^:published))
+  def news_count(source),
+    do:
+      Repo.count(
+        from(q in NewsItem, where: q.source_id == ^source.id, where: q.status == ^:published)
+      )
 end

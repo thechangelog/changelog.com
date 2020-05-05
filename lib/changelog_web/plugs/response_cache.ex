@@ -13,10 +13,15 @@ defmodule ChangelogWeb.Plug.ResponseCache do
   alias Changelog.Cache
 
   plug :cached_response
-  def cached_response(conn = %{assigns: %{current_user: user}}, _opts) when not is_nil(user), do: conn
+
+  def cached_response(conn = %{assigns: %{current_user: user}}, _opts) when not is_nil(user),
+    do: conn
+
   def cached_response(conn, _opts) do
     case Cache.get(key(conn)) do
-      nil -> conn
+      nil ->
+        conn
+
       result ->
         conn
         |> put_resp_content_type(result.type, nil)

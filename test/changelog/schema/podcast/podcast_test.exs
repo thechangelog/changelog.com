@@ -5,7 +5,13 @@ defmodule Changelog.PodcastTest do
 
   describe "insert_changeset" do
     test "with valid attributes" do
-      changeset = Podcast.insert_changeset(%Podcast{}, %{slug: "the-bomb-show", name: "The Bomb Show", status: :draft})
+      changeset =
+        Podcast.insert_changeset(%Podcast{}, %{
+          slug: "the-bomb-show",
+          name: "The Bomb Show",
+          status: :draft
+        })
+
       assert changeset.valid?
     end
 
@@ -16,18 +22,18 @@ defmodule Changelog.PodcastTest do
   end
 
   test "episode_count returns count of associated eps" do
-    podcast = insert :podcast
+    podcast = insert(:podcast)
     assert Podcast.episode_count(podcast) == 0
-    insert :published_episode, podcast: podcast
-    insert :episode, podcast: podcast
+    insert(:published_episode, podcast: podcast)
+    insert(:episode, podcast: podcast)
     assert Podcast.episode_count(podcast) == 2
   end
 
   test "published_episode_count returns count of associated published eps" do
-    podcast = insert :podcast
+    podcast = insert(:podcast)
     assert Podcast.published_episode_count(podcast) == 0
-    insert :published_episode, podcast: podcast
-    insert :episode, podcast: podcast
+    insert(:published_episode, podcast: podcast)
+    insert(:episode, podcast: podcast)
     assert Podcast.published_episode_count(podcast) == 1
   end
 

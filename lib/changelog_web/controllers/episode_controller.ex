@@ -22,7 +22,7 @@ defmodule ChangelogWeb.EpisodeController do
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
     |> assign(:item, episode.news_item)
-    |> cache_public(:timer.minutes(5))
+    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render(:show)
   end
 
@@ -42,7 +42,7 @@ defmodule ChangelogWeb.EpisodeController do
     |> assign(:episode, episode)
     |> assign(:theme, theme)
     |> assign(:source, source)
-    |> cache_public(:infinity)
+    |> ResponseCache.cache_public(:infinity)
     |> render(:embed)
   end
 

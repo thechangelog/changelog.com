@@ -4,11 +4,11 @@
     &raquo;
     <%= @person.name %> (<%= @person.handle %>)
     <div class="sub header">
-      created: <%= ts(@person.inserted_at) %>
+      created: <%= AdminHelpers.ts(@person.inserted_at) %>
       &nbsp;&bull;&nbsp;
-      joined: <%= if @person.joined_at, do: ts(@person.joined_at), else: "never" %>
+      joined: <%= if @person.joined_at, do: AdminHelpers.ts(@person.joined_at), else: "never" %>
       &nbsp;&bull;&nbsp;
-      last signed in: <%= if @person.signed_in_at, do: ts(@person.signed_in_at), else: "never" %>
+      last signed in: <%= if @person.signed_in_at, do: AdminHelpers.ts(@person.signed_in_at), else: "never" %>
     </div>
   </h1>
 </div>
@@ -16,7 +16,7 @@
 <div class="actions right">
   <div class="ui basic buttons">
     <%= @person |> list_of_links() |> raw() %>
-    <%= icon_link("slack", to: Routes.admin_person_path(@conn, :slack, @person, next: Routes.admin_person_path(@conn, :show, @person)), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+    <%= AdminHelpers.icon_link("slack", to: Routes.admin_person_path(@conn, :slack, @person, next: Routes.admin_person_path(@conn, :show, @person)), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
     <%= link("Edit", to: Routes.admin_person_path(@conn, :edit, @person), class: "ui button") %>
   </div>
 </div>

@@ -5,9 +5,9 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   alias ChangelogWeb.TimeView
   alias ChangelogWeb.Helpers.SharedHelpers
 
-  def error_class(form, field), do: if form.errors[field], do: "error", else: ""
+  def error_class(form, field), do: if(form.errors[field], do: "error", else: "")
 
-  def hidden_class(condition), do: if condition, do: "hidden", else: ""
+  def hidden_class(condition), do: if(condition, do: "hidden", else: "")
 
   def error_message(form, field) do
     case form.errors[field] do
@@ -15,7 +15,9 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
         content_tag :div, class: "ui pointing red basic label" do
           message
         end
-      nil -> ""
+
+      nil ->
+        ""
     end
   end
 
@@ -23,20 +25,28 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     content_tag(:span) do
       [
         content_tag(:a, "(use url)", href: "javascript:void(0);", class: "field-action use-url"),
-        content_tag(:a, "(use file)", href: "javascript:void(0);", class: "field-action use-file", style: "display: none;"),
+        content_tag(:a, "(use file)",
+          href: "javascript:void(0);",
+          class: "field-action use-file",
+          style: "display: none;"
+        )
       ]
     end
   end
 
-  def filter_select(filter, options) when is_binary(filter), do: filter_select(String.to_atom(filter), options)
+  def filter_select(filter, options) when is_binary(filter),
+    do: filter_select(String.to_atom(filter), options)
+
   def filter_select(filter, options) do
     content_tag(:select, class: "ui fluid selection dropdown js-filter") do
-      Enum.map(options, fn({value, label}) ->
-        args = if filter == value do
-          [value: value, selected: true]
-        else
-          [value: value]
-        end
+      Enum.map(options, fn {value, label} ->
+        args =
+          if filter == value do
+            [value: value, selected: true]
+          else
+            [value: value]
+          end
+
         content_tag(:option, label, args)
       end)
     end
@@ -47,6 +57,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>
     """
   end
+
   def info_icon(info_text) do
     ~e"""
     <i class="info circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= info_text %>"></i>
@@ -66,16 +77,21 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   def label_with_clear(attr, text) do
     content_tag(:label, for: attr) do
-      [content_tag(:span, text),
-       content_tag(:a, "(clear)", href: "javascript:void(0);", class: "field-action js-clear")]
+      [
+        content_tag(:span, text),
+        content_tag(:a, "(clear)", href: "javascript:void(0);", class: "field-action js-clear")
+      ]
     end
   end
+
   # Attempts to load an associated record on a form. Starts with direct
   # relationship on form data, then tries querying Repo.
   def load_from_form(form, module, relationship) do
     form_data = Map.get(form.data, relationship)
     foreign_key = "#{relationship}_id"
-    record_id = Map.get(form.data, String.to_existing_atom(foreign_key)) || form.params[foreign_key]
+
+    record_id =
+      Map.get(form.data, String.to_existing_atom(foreign_key)) || form.params[foreign_key]
 
     cond do
       is_loaded(form_data) -> form_data
@@ -86,7 +102,8 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   def next_param(conn, default \\ nil), do: Map.get(conn.params, "next", default)
 
-  def download_count(ep_or_pod), do: ep_or_pod.download_count |> round() |> SharedHelpers.comma_separated()
+  def download_count(ep_or_pod),
+    do: ep_or_pod.download_count |> round() |> SharedHelpers.comma_separated()
 
   def reach_count(ep_or_pod) do
     if ep_or_pod.reach_count > ep_or_pod.download_count do
@@ -109,7 +126,12 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   end
 
   def submit_button(type, text, next \\ "") do
-    content_tag(:button, text, class: "ui #{type} fluid basic button", type: "submit", name: "next", value: next)
+    content_tag(:button, text,
+      class: "ui #{type} fluid basic button",
+      type: "submit",
+      name: "next",
+      value: next
+    )
   end
 
   def ts(ts), do: TimeView.ts(ts)

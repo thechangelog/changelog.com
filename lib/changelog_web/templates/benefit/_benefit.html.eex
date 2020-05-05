@@ -5,6 +5,6 @@
 <%= if @benefit.code do %>
   Use code <code><%= @benefit.code %></code>.
 <% end %>
-  <%= @benefit.notes |> md_to_html |> sans_p_tags |> raw %>
+  <%= @benefit.notes |> SharedHelpers.md_to_html |> SharedHelpers.sans_p_tags |> raw %>
 </p>
 <% end %>

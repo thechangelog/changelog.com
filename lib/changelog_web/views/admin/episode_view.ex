@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
   def featured_label(episode) do
     if episode.featured do
-      content_tag :span, "Recommended", class: "ui tiny blue basic label"
+      content_tag(:span, "Recommended", class: "ui tiny blue basic label")
     end
   end
 
@@ -23,7 +23,9 @@ defmodule ChangelogWeb.Admin.EpisodeView do
       stat = %{} ->
         {:ok, result} = Timex.format(stat.date, "{Mshort} {D}")
         result
-      nil -> ""
+
+      nil ->
+        ""
     end
   end
 
@@ -31,14 +33,20 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     data = %{
       title: "Episode Performance",
       series: [
-        %{name: "Launch",
-          data: Enum.map(stats, fn({slug, reach, title, _reach}) ->
-            %{x: slug, y: reach, title: title}
-          end)},
-        %{name: "Total",
-          data: Enum.map(stats, fn({slug, _reach, title, reach}) ->
-            %{x: slug, y: reach, title: title}
-          end)}
+        %{
+          name: "Launch",
+          data:
+            Enum.map(stats, fn {slug, reach, title, _reach} ->
+              %{x: slug, y: reach, title: title}
+            end)
+        },
+        %{
+          name: "Total",
+          data:
+            Enum.map(stats, fn {slug, _reach, title, reach} ->
+              %{x: slug, y: reach, title: title}
+            end)
+        }
       ]
     }
 
@@ -48,34 +56,36 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def line_chart_data(stats) when is_list(stats) do
     stats = Enum.reverse(stats)
 
-    data = case length(stats) do
-      l when l <= 45  -> get_chart_data(stats)
-      l when l <= 365 -> get_chart_data_grouped_by(:week, stats)
-      l when l <= 730 -> get_chart_data_grouped_by(:month, stats)
-      _else -> get_chart_data_grouped_by(:year, stats)
-    end
+    data =
+      case length(stats) do
+        l when l <= 45 -> get_chart_data(stats)
+        l when l <= 365 -> get_chart_data_grouped_by(:week, stats)
+        l when l <= 730 -> get_chart_data_grouped_by(:month, stats)
+        _else -> get_chart_data_grouped_by(:year, stats)
+      end
 
     Jason.encode!(data)
   end
 
   defp get_chart_data_grouped_by(interval, stats) do
-    {title, grouper} = case interval do
-      :week -> {"Week Chart", &Timex.beginning_of_week/1}
-      :month -> {"Month Chart", &Timex.beginning_of_month/1}
-      :year -> {"Year Chart", &Timex.beginning_of_year/1}
-    end
+    {title, grouper} =
+      case interval do
+        :week -> {"Week Chart", &Timex.beginning_of_week/1}
+        :month -> {"Month Chart", &Timex.beginning_of_month/1}
+        :year -> {"Year Chart", &Timex.beginning_of_year/1}
+      end
 
     stats
-    |> Enum.map(fn(stat) -> Map.put(stat, :date, grouper.(stat.date)) end)
-    |> Enum.group_by(&(&1.date))
-    |> Enum.map(fn({date, list}) ->
+    |> Enum.map(fn stat -> Map.put(stat, :date, grouper.(stat.date)) end)
+    |> Enum.group_by(& &1.date)
+    |> Enum.map(fn {date, list} ->
       %{
         date: date,
-        downloads: list |> Enum.map(&(&1.downloads)) |> Enum.sum(),
-        uniques: list |> Enum.map(&(&1.uniques)) |> Enum.sum()
+        downloads: list |> Enum.map(& &1.downloads) |> Enum.sum(),
+        uniques: list |> Enum.map(& &1.uniques) |> Enum.sum()
       }
     end)
-    |> Enum.sort(&(Timex.before?(&1.date, &2.date)))
+    |> Enum.sort(&Timex.before?(&1.date, &2.date))
     |> get_chart_data(title)
   end
 
@@ -84,8 +94,8 @@ defmodule ChangelogWeb.Admin.EpisodeView do
       title: title,
       categories: Enum.map(stats, &stat_chart_date/1),
       series: [
-        %{name: "Reach", data: Enum.map(stats, &(&1.uniques))},
-        %{name: "Downloads", data: Enum.map(stats, &(Float.round(&1.downloads)))}
+        %{name: "Reach", data: Enum.map(stats, & &1.uniques)},
+        %{name: "Downloads", data: Enum.map(stats, &Float.round(&1.downloads))}
       ]
     }
   end
@@ -96,22 +106,22 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   end
 
   def request_options(requests) do
-    Enum.map(requests, fn(request) ->
+    Enum.map(requests, fn request ->
       {EpisodeRequestView.description(request), request.id}
     end)
   end
 
   def round_and_filter(stats) do
     stats
-    |> Enum.map(fn({key, value}) -> {key, round(value)} end)
-    |> Enum.reject(fn({_key, value}) -> value == 0 end)
+    |> Enum.map(fn {key, value} -> {key, round(value)} end)
+    |> Enum.reject(fn {_key, value} -> value == 0 end)
   end
 
   def status_label(episode) do
     if episode.published do
-      content_tag :span, "Published", class: "ui tiny green basic label"
+      content_tag(:span, "Published", class: "ui tiny green basic label")
     else
-      content_tag :span, "Draft", class: "ui tiny yellow basic label"
+      content_tag(:span, "Draft", class: "ui tiny yellow basic label")
     end
   end
 
@@ -124,6 +134,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   end
 
   def stat_date(nil), do: "never"
+
   def stat_date(stat) do
     {:ok, result} = Timex.format(stat.date, "{WDshort}, {M}/{D}")
     result
@@ -131,6 +142,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
   def type_options do
     Episode.Type.__enum_map__()
-    |> Enum.map(fn({k, _v}) -> {String.capitalize(Atom.to_string(k)), k} end)
+    |> Enum.map(fn {k, _v} -> {String.capitalize(Atom.to_string(k)), k} end)
   end
 end

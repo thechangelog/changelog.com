@@ -7,7 +7,7 @@
 
       <h2 class="topic-header-title"><%= @person.name %></h2>
 
-      <div class="topic-header-description"><%= @person.bio |> md_to_html() |> raw() %></div>
+      <div class="topic-header-description"><%= @person.bio |> SharedHelpers.md_to_html() |> raw() %></div>
 
       <div class="topic-header-meta">
       <%= if @person.location do %>

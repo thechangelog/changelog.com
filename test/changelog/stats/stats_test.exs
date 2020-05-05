@@ -8,12 +8,12 @@ defmodule ChangelogStatsTest do
   defp log_fixtures(date) do
     file_dir = "#{fixtures_path()}/logs/#{date}"
     {:ok, files} = File.ls(file_dir)
-     Enum.map(files, fn(file) -> File.read!("#{file_dir}/#{file}") end)
+    Enum.map(files, fn file -> File.read!("#{file_dir}/#{file}") end)
   end
 
   describe "process" do
     test_with_mock "it processes known logs from 2016-10-10", Stats.S3,
-      [get_logs: fn(date, _slug) -> log_fixtures(date) end] do
+      get_logs: fn date, _slug -> log_fixtures(date) end do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "223", bytes: 80_743_303)
@@ -31,7 +31,7 @@ defmodule ChangelogStatsTest do
     end
 
     test_with_mock "it processes known logs from 2016-10-11", Stats.S3,
-      [get_logs: fn(date, _slug) -> log_fixtures(date) end] do
+      get_logs: fn date, _slug -> log_fixtures(date) end do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "114", bytes: 26_238_621)
@@ -139,12 +139,13 @@ defmodule ChangelogStatsTest do
     end
 
     defp get_stat(stats, episode) do
-      Enum.find(stats, fn(x) -> x.episode_id == episode.id end)
+      Enum.find(stats, fn x -> x.episode_id == episode.id end)
     end
 
     defp refreshed_download_count(%Episode{id: id}) do
       Repo.get(Episode, id).download_count
     end
+
     defp refreshed_download_count(%Podcast{id: id}) do
       Repo.get(Podcast, id).download_count
     end
@@ -152,6 +153,7 @@ defmodule ChangelogStatsTest do
     defp refreshed_reach_count(%Episode{id: id}) do
       Repo.get(Episode, id).reach_count
     end
+
     defp refreshed_reach_count(%Podcast{id: id}) do
       Repo.get(Podcast, id).reach_count
     end

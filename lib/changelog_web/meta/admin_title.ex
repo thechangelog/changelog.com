@@ -1,5 +1,4 @@
 defmodule ChangelogWeb.Meta.AdminTitle do
-
   alias ChangelogWeb.Admin.{PageView, PersonView}
 
   @suffix "Changelog Admin"
@@ -10,9 +9,11 @@ defmodule ChangelogWeb.Meta.AdminTitle do
   defp put_suffix(title), do: "#{title} |> #{@suffix}"
 
   defp get(%{view_module: PageView}), do: nil
+
   defp get(%{view_module: PersonView, view_template: template}) do
     "People |> #{get_template_name(template)}"
   end
+
   defp get(%{view_module: view, view_template: template}) do
     "#{get_view_name(view)}s |> #{get_template_name(template)}"
   end
@@ -21,8 +22,8 @@ defmodule ChangelogWeb.Meta.AdminTitle do
 
   defp get_view_name(view) do
     view
-    |> Module.split
-    |> List.last
+    |> Module.split()
+    |> List.last()
     |> String.replace("View", "")
     |> String.split(~r/(?=[A-Z])/)
     |> Enum.join(" ")
@@ -31,6 +32,6 @@ defmodule ChangelogWeb.Meta.AdminTitle do
   defp get_template_name(template) do
     template
     |> String.replace(".html", "")
-    |> String.capitalize
+    |> String.capitalize()
   end
 end

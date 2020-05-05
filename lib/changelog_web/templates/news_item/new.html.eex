@@ -9,26 +9,26 @@
 
   <%= form_for @changeset, Routes.news_item_path(@conn, :create), fn f -> %>
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :url) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :url) %>">
         <label>URL<span>*</span></label>
-        <%= text_input(f, :url, user_required_options(@current_user, placeholder: "https://example.com", type: "url", required: true)) %>
-        <%= error_message(f, :url) %>
+        <%= text_input(f, :url, PublicHelpers.user_required_options(@current_user, placeholder: "https://example.com", type: "url", required: true)) %>
+        <%= PublicHelpers.error_message(f, :url) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :headline) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :headline) %>">
         <label>Title<span>*</span></label>
-        <%= text_input(f, :headline, user_required_options(@current_user, placeholder: "Project/Article title...", required: true)) %>
-        <%= error_message(f, :headline) %>
+        <%= text_input(f, :headline, PublicHelpers.user_required_options(@current_user, placeholder: "Project/Article title...", required: true)) %>
+        <%= PublicHelpers.error_message(f, :headline) %>
       </div>
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= error_class(f, :story) %>">
+      <div class="form-element <%= PublicHelpers.error_class(f, :story) %>">
         <label>What's interesting about it?</label>
-        <%= textarea(f, :story, user_required_options(@current_user, placeholder: "Proverbial elevator pitch...")) %>
-        <%= error_message(f, :story) %>
+        <%= textarea(f, :story, PublicHelpers.user_required_options(@current_user, placeholder: "Proverbial elevator pitch...")) %>
+        <%= PublicHelpers.error_message(f, :story) %>
         <p class="form-element-note">Markdown supported</p>
       </div>
     </div>

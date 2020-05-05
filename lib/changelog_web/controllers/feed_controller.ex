@@ -3,15 +3,14 @@ defmodule ChangelogWeb.FeedController do
 
   require Logger
 
-  alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Person, Podcast,
-                   Post, Topic}
+  alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Person, Podcast, Post, Topic}
 
   def news(conn, _params) do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("news.xml")
   end
 
@@ -20,13 +19,14 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("news_titles.xml")
   end
 
   def podcast(conn, %{"slug" => "backstage"}) do
     send_resp(conn, :not_found, "")
   end
+
   def podcast(conn, params = %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
 
@@ -47,12 +47,12 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:page, page)
     |> assign(:podcast, podcast)
     |> assign(:episodes, page.entries)
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("podcast.xml")
   end
 
   defp log_subscribers(conn, podcast) do
-    ua = get_agent(conn)
+    ua = ChangelogWeb.Plug.Conn.get_agent(conn)
 
     case AgentKit.get_subscribers(ua) do
       {:ok, {agent, subs}} -> Podcast.update_subscribers(podcast, agent, subs)
@@ -73,7 +73,7 @@ defmodule ChangelogWeb.FeedController do
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("posts.xml", posts: posts)
   end
 
@@ -103,7 +103,7 @@ defmodule ChangelogWeb.FeedController do
       |> Podcast.oldest_first()
       |> Podcast.preload_hosts()
       |> Repo.all()
-      |> Kernel.++([Podcast.master])
+      |> Kernel.++([Podcast.master()])
 
     posts =
       Post.published()
@@ -123,7 +123,7 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:podcasts, podcasts)
     |> assign(:posts, posts)
     |> assign(:topics, topics)
-    |> cache_public(cache_duration())
+    |> ResponseCache.cache_public(cache_duration())
     |> render("sitemap.xml")
   end
 

@@ -18,10 +18,10 @@ defmodule ChangelogWeb.Admin.PostController do
       Post.scheduled()
       |> Post.newest_first()
       |> preload(:author)
-      |> Repo.all
+      |> Repo.all()
 
     drafts =
-      (if me.admin, do: Post, else: Post.authored_by(me))
+      if(me.admin, do: Post, else: Post.authored_by(me))
       |> Post.unpublished()
       |> Post.newest_first(:inserted_at)
       |> preload(:author)
@@ -50,6 +50,7 @@ defmodule ChangelogWeb.Admin.PostController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_post_path(conn, :edit, post))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -75,6 +76,7 @@ defmodule ChangelogWeb.Admin.PostController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_post_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -102,6 +104,7 @@ defmodule ChangelogWeb.Admin.PostController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_post_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -119,6 +122,7 @@ defmodule ChangelogWeb.Admin.PostController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_post_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

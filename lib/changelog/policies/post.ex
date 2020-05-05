@@ -13,6 +13,7 @@ defmodule Changelog.Policies.Post do
 
   defp is_author(nil, _post), do: false
   defp is_author(_actor, %{author: nil}), do: false
+
   defp is_author(actor, post) do
     post
     |> Map.get(:author, nil)

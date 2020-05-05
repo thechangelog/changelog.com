@@ -11,6 +11,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewView do
 
   def format_email_address(address) when is_binary(address), do: address
   def format_email_address({nil, address}), do: address
+
   def format_email_address({name, address}) do
     "#{name} <#{address}>"
   end

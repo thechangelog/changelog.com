@@ -30,7 +30,7 @@ defmodule Changelog.Sponsor do
     sponsor
     |> cast(attrs, ~w(name description website github_handle twitter_handle)a)
     |> validate_required([:name])
-    |> validate_format(:website, Regexp.http, message: Regexp.http_message)
+    |> validate_format(:website, Regexp.http(), message: Regexp.http_message())
     |> unique_constraint(:name)
   end
 
@@ -40,6 +40,9 @@ defmodule Changelog.Sponsor do
     |> file_changeset(attrs)
   end
 
-  def sponsorship_count(sponsor, :episode), do: Repo.count(from(q in EpisodeSponsor, where: q.sponsor_id == ^sponsor.id))
-  def sponsorship_count(sponsor, :news), do: Repo.count(from(q in NewsSponsorship, where: q.sponsor_id == ^sponsor.id))
+  def sponsorship_count(sponsor, :episode),
+    do: Repo.count(from(q in EpisodeSponsor, where: q.sponsor_id == ^sponsor.id))
+
+  def sponsorship_count(sponsor, :news),
+    do: Repo.count(from(q in NewsSponsorship, where: q.sponsor_id == ^sponsor.id))
 end

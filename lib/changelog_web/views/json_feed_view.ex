@@ -1,10 +1,8 @@
 defmodule ChangelogWeb.JsonFeedView do
   use ChangelogWeb, :public_view
 
-  import ChangelogWeb.Helpers.SharedHelpers, only: [md_to_html: 1, md_to_text: 1]
-
   alias Changelog.{Episode, Post}
-  alias ChangelogWeb.{EpisodeView, NewsItemView, TimeView}
+  alias ChangelogWeb.{EpisodeView, NewsItemView, Helpers.SharedHelpers, TimeView}
 
   def render("news.json", %{conn: conn, items: items}) do
     %{
@@ -24,8 +22,8 @@ defmodule ChangelogWeb.JsonFeedView do
       url: item.url,
       date_published: TimeView.rfc3339(item.published_at),
       author: %{name: item.logger.name},
-      content_html: md_to_html(item.story),
-      content_text: md_to_text(item.story),
+      content_html: SharedHelpers.md_to_html(item.story),
+      content_text: SharedHelpers.md_to_text(item.story)
     }
 
     if item.image do
@@ -38,11 +36,14 @@ defmodule ChangelogWeb.JsonFeedView do
   def render("news_item.json", %{conn: conn, json_feed: item = %{object: episode = %Episode{}}}) do
     %{
       id: Routes.news_item_url(conn, :show, NewsItemView.hashid(item)),
-      title: episode.podcast.name <> " " <> EpisodeView.numbered_title(episode, "") |> html_escape |> safe_to_string,
+      title:
+        (episode.podcast.name <> " " <> EpisodeView.numbered_title(episode, ""))
+        |> html_escape
+        |> safe_to_string,
       url: Routes.episode_url(conn, :show, episode.podcast.slug, episode.slug),
       date_published: TimeView.rfc3339(episode.published_at),
-      content_html: md_to_html(item.story),
-      content_text: md_to_text(item.story),
+      content_html: SharedHelpers.md_to_html(item.story),
+      content_text: SharedHelpers.md_to_text(item.story),
       attachments: [audio_attachment(episode)]
     }
   end
@@ -54,8 +55,8 @@ defmodule ChangelogWeb.JsonFeedView do
       author: %{name: post.author.name},
       url: Routes.post_url(conn, :show, post.slug),
       date_published: TimeView.rfc3339(post.published_at),
-      content_html: md_to_html(item.story),
-      content_text: md_to_text(item.story)
+      content_html: SharedHelpers.md_to_html(item.story),
+      content_text: SharedHelpers.md_to_text(item.story)
     }
   end
 

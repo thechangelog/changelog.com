@@ -3,24 +3,51 @@ defmodule ChangelogWeb.Admin.SearchView do
 
   alias Changelog.{EpisodeSponsor, Faker, NewsItem, Repo}
   alias ChangelogWeb.Endpoint
-  alias ChangelogWeb.Admin.{TopicView, EpisodeView, NewsItemView, NewsSourceView,
-                            PersonView, PostView, SponsorView}
+
+  alias ChangelogWeb.Admin.{
+    TopicView,
+    EpisodeView,
+    NewsItemView,
+    NewsSourceView,
+    PersonView,
+    PostView,
+    SponsorView
+  }
 
   @limit 3
 
   def render("all.json", _params = %{results: results, query: query}) do
-    response = %{results: %{
-      topics: %{name: "Topics", results: process_results(results.topics, &topic_result/1)},
-      episodes: %{name: "Episodes", results: process_results(results.episodes, &episode_result/1)},
-      news_items: %{name: "News", results: process_results(results.news_items, &news_item_result/1)},
-      news_sources: %{name: "Sources", results: process_results(results.news_sources, &news_source_result/1)},
-      people: %{name: "People", results: process_results(results.people, &person_result/1)},
-      posts: %{name: "Posts", results: process_results(results.posts, &post_result/1)},
-      sponsors: %{name: "Sponsors", results: process_results(results.sponsors, &sponsor_result/1)}}}
+    response = %{
+      results: %{
+        topics: %{name: "Topics", results: process_results(results.topics, &topic_result/1)},
+        episodes: %{
+          name: "Episodes",
+          results: process_results(results.episodes, &episode_result/1)
+        },
+        news_items: %{
+          name: "News",
+          results: process_results(results.news_items, &news_item_result/1)
+        },
+        news_sources: %{
+          name: "Sources",
+          results: process_results(results.news_sources, &news_source_result/1)
+        },
+        people: %{name: "People", results: process_results(results.people, &person_result/1)},
+        posts: %{name: "Posts", results: process_results(results.posts, &post_result/1)},
+        sponsors: %{
+          name: "Sponsors",
+          results: process_results(results.sponsors, &sponsor_result/1)
+        }
+      }
+    }
 
-    counts = Enum.map(results, fn({_type, results}) -> Enum.count(results) end)
-    if Enum.any?(counts, fn(count) -> count > @limit end) do
-      Map.put(response, :action, %{url: "/admin/search?q=#{query}", text: "View all #{Enum.sum(counts)} results"})
+    counts = Enum.map(results, fn {_type, results} -> Enum.count(results) end)
+
+    if Enum.any?(counts, fn count -> count > @limit end) do
+      Map.put(response, :action, %{
+        url: "/admin/search?q=#{query}",
+        text: "View all #{Enum.sum(counts)} results"
+      })
     else
       response
     end
@@ -53,43 +80,54 @@ defmodule ChangelogWeb.Admin.SearchView do
   end
 
   defp topic_result(topic) do
-    %{id: topic.id,
+    %{
+      id: topic.id,
       title: topic.name,
       image: TopicView.icon_url(topic),
-      url: Routes.admin_topic_path(Endpoint, :edit, topic.slug)}
+      url: Routes.admin_topic_path(Endpoint, :edit, topic.slug)
+    }
   end
 
   defp news_item_result(news_item) do
-    %{id: news_item.id,
+    %{
+      id: news_item.id,
       title: news_item.headline,
-      url: Routes.admin_news_item_path(Endpoint, :edit, news_item)}
+      url: Routes.admin_news_item_path(Endpoint, :edit, news_item)
+    }
   end
 
   defp news_source_result(news_source) do
-    %{id: news_source.id,
+    %{
+      id: news_source.id,
       title: news_source.name,
       image: NewsSourceView.icon_url(news_source),
-      url: Routes.admin_news_source_path(Endpoint, :edit, news_source)}
+      url: Routes.admin_news_source_path(Endpoint, :edit, news_source)
+    }
   end
 
   defp episode_result(episode) do
-    %{id: episode.id,
+    %{
+      id: episode.id,
       title: EpisodeView.numbered_title(episode),
-      url: Routes.admin_podcast_episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)}
+      url: Routes.admin_podcast_episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)
+    }
   end
 
   defp person_result(person) do
-    {title, description} = if Enum.member?(Faker.names(), person.name) do
-      {person.email, "(profile incomplete)"}
-    else
-      {person.name,"(#{person.handle})"}
-    end
+    {title, description} =
+      if Enum.member?(Faker.names(), person.name) do
+        {person.email, "(profile incomplete)"}
+      else
+        {person.name, "(#{person.handle})"}
+      end
 
-    %{id: person.id,
+    %{
+      id: person.id,
       title: title,
       description: description,
       image: PersonView.avatar_url(person),
-      url: Routes.admin_person_path(Endpoint, :edit, person)}
+      url: Routes.admin_person_path(Endpoint, :edit, person)
+    }
   end
 
   defp post_result(post) do
@@ -104,20 +142,19 @@ defmodule ChangelogWeb.Admin.SearchView do
       |> Ecto.Query.first()
       |> Repo.one()
 
-    extras = if latest do
-       %{title: latest.title,
-         link_url: latest.link_url,
-         description: latest.description}
-    else
-      %{title: sponsor.name,
-        link_url: sponsor.website,
-        description: sponsor.description}
-    end
+    extras =
+      if latest do
+        %{title: latest.title, link_url: latest.link_url, description: latest.description}
+      else
+        %{title: sponsor.name, link_url: sponsor.website, description: sponsor.description}
+      end
 
-    %{id: sponsor.id,
+    %{
+      id: sponsor.id,
       title: sponsor.name,
       image: SponsorView.avatar_url(sponsor, :small),
       url: Routes.admin_sponsor_path(Endpoint, :show, sponsor),
-      extras: extras}
+      extras: extras
+    }
   end
 end

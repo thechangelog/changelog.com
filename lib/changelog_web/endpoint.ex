@@ -2,7 +2,8 @@ defmodule ChangelogWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :changelog
 
   socket "/socket", ChangelogWeb.UserSocket,
-    websocket: true # or list of options
+    # or list of options
+    websocket: true
 
   plug(ChangelogWeb.Plug.HealthCheck)
 
@@ -11,21 +12,28 @@ defmodule ChangelogWeb.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :changelog, gzip: true,
+    at: "/",
+    from: :changelog,
+    gzip: true,
     only_matching: ~w(css fonts images js android-chrome apple-touch
       browserconfig favicon manifest mstile robots safari-pinned-tab version build)
 
   # In dev environment, serve uploaded files from "priv/uploads".
   #
   # Nginx will serve these in production.
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     plug Plug.Static,
-      at: "/uploads", from: {:changelog, "priv/uploads"}, gzip: false, headers: %{"Accept-Ranges" => "bytes"}
+      at: "/uploads",
+      from: {:changelog, "priv/uploads"},
+      gzip: false,
+      headers: %{"Accept-Ranges" => "bytes"}
   end
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
+    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
+    plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
   end
 

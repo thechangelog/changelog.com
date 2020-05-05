@@ -13,7 +13,7 @@
       <link><%= Routes.post_url(@conn, :show, post.slug) %></link>
       <guid isPermaLink="false"><%= PostView.guid(post) %></guid>
       <pubDate><%= TimeView.rss(post.published_at) %></pubDate>
-      <description><![CDATA[<%= md_to_html(post.body) %>]]></description>
+      <description><![CDATA[<%= SharedHelpers.md_to_html(post.body) %>]]></description>
     </item>
   <% end %>
   </channel>

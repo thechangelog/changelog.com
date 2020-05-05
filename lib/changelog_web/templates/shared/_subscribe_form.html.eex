@@ -1,5 +1,5 @@
 <%= form_tag Routes.person_path(@conn, :subscribe), class: "signup-form" do %>
-  <input name="to" type="hidden" value="<%= get_assigns_or_param(assigns, "to", "weekly") %>">
+  <input name="to" type="hidden" value="<%= SharedHelpers.get_assigns_or_param(assigns, "to", "weekly") %>">
   <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
   <noscript>
     <input name="gotcha" class="signup-form-input" value="Delete this if you're human"/>

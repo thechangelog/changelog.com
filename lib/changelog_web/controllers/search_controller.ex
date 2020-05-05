@@ -6,7 +6,7 @@ defmodule ChangelogWeb.SearchController do
   require Logger
 
   def search(conn, params = %{"q" => query}) do
-    page = Search.search(query, [hitsPerPage: 30, page: page_param(params)])
+    page = Search.search(query, hitsPerPage: 30, page: page_param(params))
     render(conn, :search, items: page.items, page: page, query: params["q"])
   end
 
@@ -16,7 +16,7 @@ defmodule ChangelogWeb.SearchController do
 
   defp page_param(params) do
     try do
-      params |> Map.get("page", 0) |> String.to_integer
+      params |> Map.get("page", 0) |> String.to_integer()
     rescue
       _e in ArgumentError -> 0
     end

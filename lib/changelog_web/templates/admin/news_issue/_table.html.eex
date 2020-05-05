@@ -19,14 +19,14 @@
         </td>
         <td><%= item_count(issue) %></td>
         <td><%= ad_count(issue) %></td>
-        <td><%= ts(issue.inserted_at) %></td>
-        <td><%= ts(issue.updated_at) %></td>
-        <td><%= ts(issue.published_at) %></td>
+        <td><%= AdminHelpers.ts(issue.inserted_at) %></td>
+        <td><%= AdminHelpers.ts(issue.updated_at) %></td>
+        <td><%= AdminHelpers.ts(issue.published_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link("eye", to: Routes.news_issue_path(@conn, show_or_preview(issue), issue.slug)) %>
-            <%= icon_link("edit", to: Routes.admin_news_issue_path(@conn, :edit, issue)) %>
-            <%= icon_link("trash", to: Routes.admin_news_issue_path(@conn, :delete, issue), method: :delete, data: [confirm: "Are you sure?"]) %>
+            <%= AdminHelpers.icon_link("eye", to: Routes.news_issue_path(@conn, show_or_preview(issue), issue.slug)) %>
+            <%= AdminHelpers.icon_link("edit", to: Routes.admin_news_issue_path(@conn, :edit, issue)) %>
+            <%= AdminHelpers.icon_link("trash", to: Routes.admin_news_issue_path(@conn, :delete, issue), method: :delete, data: [confirm: "Are you sure?"]) %>
           </div>
         </td>
       </tr>

@@ -81,7 +81,8 @@ defmodule Changelog.Buffer.ContentTest do
 
     test "calls NewsItemView.image_url when item has image" do
       item = %{image: "yes"}
-      with_mock(NewsItemView, [image_url: fn(_, _) -> "url" end]) do
+
+      with_mock(NewsItemView, image_url: fn _, _ -> "url" end) do
         assert Content.news_item_image(item) == "url"
         assert called(NewsItemView.image_url(item, :original))
       end
@@ -95,7 +96,9 @@ defmodule Changelog.Buffer.ContentTest do
 
     test "returns news item permalink" do
       item = insert(:news_item, story: "ohai here is a story")
-      assert Content.news_item_link(item) == Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
+
+      assert Content.news_item_link(item) ==
+               Router.Helpers.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
     end
   end
 

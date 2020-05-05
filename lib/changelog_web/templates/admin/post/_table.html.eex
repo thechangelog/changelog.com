@@ -17,17 +17,17 @@
             <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(post.author) %>">
           <% end %>
         </td>
-        <td><%= truncate(post.title, 100) %></td>
-        <td><%= ts(post.inserted_at) %></td>
-        <td><%= ts(post.published_at) %></td>
+        <td><%= SharedHelpers.truncate(post.title, 100) %></td>
+        <td><%= AdminHelpers.ts(post.inserted_at) %></td>
+        <td><%= AdminHelpers.ts(post.published_at) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
-            <%= icon_link("eye", to: show_or_preview_path(@conn, post)) %>
+            <%= AdminHelpers.icon_link("eye", to: show_or_preview_path(@conn, post)) %>
           <%= if Policies.Post.edit(@current_user, post) do %>
-            <%= icon_link("edit", to: Routes.admin_post_path(@conn, :edit, post)) %>
+            <%= AdminHelpers.icon_link("edit", to: Routes.admin_post_path(@conn, :edit, post)) %>
           <% end %>
           <%= if Policies.Post.delete(@current_user, post) do %>
-            <%= icon_link("trash",
+            <%= AdminHelpers.icon_link("trash",
                           to: Routes.admin_post_path(@conn, :delete, post),
                           method: :delete,
                           data: [confirm: "Are you sure?"]) %>

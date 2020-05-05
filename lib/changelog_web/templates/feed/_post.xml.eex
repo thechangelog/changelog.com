@@ -1,4 +1,4 @@
 <%= render("_post_title.xml", assigns) %>
 <description><![CDATA[
-<%= md_to_html(@post.body) %>
+<%= SharedHelpers.md_to_html(@post.body) %>
 <%= discussion_link(@post) %>]]></description>

@@ -20,11 +20,14 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionControllerTest do
     podcast = insert(:podcast)
     insert(:subscription_on_podcast, podcast: podcast)
 
-    Enum.each([
-      get(conn, Routes.admin_podcast_subscription_path(conn, :index, podcast.slug)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted()
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_podcast_subscription_path(conn, :index, podcast.slug))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted()
+      end
+    )
   end
 end

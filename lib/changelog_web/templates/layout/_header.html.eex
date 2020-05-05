@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header-container">
     <div class="header-wrap">
-      <%= if controller_action_combo(@conn) == "news_item-index" do %>
+      <%= if SharedHelpers.controller_action_combo(@conn) == "news_item-index" do %>
         <h1 class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></h1>
       <% else %>
         <p class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></p>
@@ -10,24 +10,24 @@
       <nav class="header-nav">
         <div class="header-nav-wrap">
           <ul class="header-nav-primary header-nav-list">
-            <li class="header-nav-list-item <%= active_class(@conn, ["news_item", "news_ad"]) %>">
+            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["news_item", "news_ad"]) %>">
               <%= link("News", to: Routes.root_path(@conn, :index), title: "Changelog News") %>
             </li>
-            <li class="header-nav-list-item <%= active_class(@conn, ["podcast"]) %>">
+            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["podcast"]) %>">
               <%= link("Podcasts", to: Routes.podcast_path(@conn, :index), title: "Changelog Podcasts") %>
             </li>
-            <li class="header-nav-list-item <%= active_class(@conn, ["post"]) %>">
+            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["post"]) %>">
               <%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %>
             </li>
-            <li class="header-nav-list-item <%= active_class(@conn, ["page-community", "person-join"]) %>">
+            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["page-community", "person-join"]) %>">
               <%= link("Community", to: Routes.page_path(@conn, :community), title: "Changelog Community") %>
             </li>
           <%= if !@current_user do %>
-            <li class="header-nav-list-item <%= active_class(@conn, ["person-subscribe"]) %>">
+            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["person-subscribe"]) %>">
               <%= link("Subscribe", to: Routes.person_path(@conn, :subscribe)) %>
             </li>
           <% end %>
-          <%= if controller_action_combo(@conn) != "page-ten" do %>
+          <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
             <li class="header-nav-list-item header-nav-list-item--ten">
               <%= link("Ten Years", to: Routes.page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %>
             </li>
@@ -36,7 +36,7 @@
 
           <div class="header-nav-secondary">
             <ul class="header-nav-list">
-              <li class="header-nav-list-item header-nav-list-item--live is-hidden <%= active_class(@conn, ["live"]) %> js-live-indicator">
+              <li class="header-nav-list-item header-nav-list-item--live is-hidden <%= SharedHelpers.active_class(@conn, ["live"]) %> js-live-indicator">
                 <%= link("Live", to: Routes.live_path(@conn, :index), title: "Listen Live") %>
               </li>
               <li class="header-nav-list-item is-desktop_only">
@@ -102,7 +102,7 @@
           <li class="mobile_nav-list-item"><%= link("Subscribe", to: Routes.person_path(@conn, :subscribe)) %></li>
         <% end %>
         <li class="mobile_nav-list-item"><%= link("Submit News", to: Routes.news_item_path(@conn, :new)) %></li>
-        <%= if controller_action_combo(@conn) != "page-ten" do %>
+        <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
           <li class="mobile_nav-list-item"><%= link("Ten Years", to: Routes.page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %></li>
         <% end %>
         </ul>

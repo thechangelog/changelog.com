@@ -7,7 +7,7 @@ defmodule Craisin.List do
   def stats(list_id), do: "/lists/#{list_id}/stats" |> get() |> handle()
 
   defp get_paginated(path, page \\ 1, results \\ []) do
-    response = "#{path}?page=#{page}"|> get() |> handle()
+    response = "#{path}?page=#{page}" |> get() |> handle()
     results = [response["Results"] | results]
 
     if response["NumberOfPages"] > page do

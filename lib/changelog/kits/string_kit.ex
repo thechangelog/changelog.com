@@ -1,10 +1,9 @@
 defmodule Changelog.StringKit do
-
   alias ChangelogWeb.{Endpoint, Router}
 
   def dasherize(string) do
     string
-    |> String.downcase
+    |> String.downcase()
     |> String.replace(~r/[^\w\s]/, "")
     |> String.replace(" ", "-")
   end
@@ -42,8 +41,9 @@ defmodule Changelog.StringKit do
   Converts 'bare' mentions to Markdown-style links for further processing
   """
   def mentions_linkify(string, []), do: string
+
   def mentions_linkify(string, people) do
-    Enum.reduce(people, string, fn(person, string) ->
+    Enum.reduce(people, string, fn person, string ->
       mention = "@#{person.handle}"
       url = Router.Helpers.person_path(Endpoint, :show, person.handle)
       String.replace(string, "#{mention}", "[#{mention}](#{url})")

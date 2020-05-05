@@ -4,7 +4,7 @@
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
 use Mix.Config
-Code.load_file("config/docker_secret.exs")
+Code.compile_file("config/docker_secret.exs")
 
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
@@ -12,8 +12,7 @@ config :changelog, ChangelogWeb.Endpoint,
   root: Path.dirname(__DIR__),
   secret_key_base: "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi",
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Changelog.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Changelog.PubSub, adapter: Phoenix.PubSub.PG2]
 
 config :changelog,
   ecto_repos: [Changelog.Repo],
@@ -23,8 +22,7 @@ config :changelog,
   slack_invite_api_token: DockerSecret.get("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN")
 
-config :changelog, Changelog.Mailer,
-  adapter: Bamboo.LocalAdapter
+config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -32,8 +30,7 @@ config :logger, :console,
 
 config :phoenix, :json_library, Jason
 
-config :phoenix, :format_encoders,
-  ics: ICalendar
+config :phoenix, :format_encoders, ics: ICalendar
 
 config :phoenix, :generators,
   migration: true,
@@ -69,4 +66,4 @@ config :mime, :types, %{"application/javascript" => ["js"], "application/xml" =>
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

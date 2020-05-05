@@ -22,7 +22,9 @@ defmodule ChangelogWeb.SharedHelpersTest do
     assert comma_separated_names([p1]) == "The Gangsta"
     assert comma_separated_names([p1, p2]) == "The Gangsta and The Killa"
     assert comma_separated_names([p1, p2, p3]) == "The Gangsta, The Killa, and The Dope Dealer"
-    assert comma_separated_names([p1, p2, p3, p4]) == "The Gangsta, The Killa, The Dope Dealer, and You"
+
+    assert comma_separated_names([p1, p2, p3, p4]) ==
+             "The Gangsta, The Killa, The Dope Dealer, and You"
   end
 
   describe "domain_name" do

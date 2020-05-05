@@ -6,11 +6,11 @@
 
     <div class="ui basic right floated buttons">
       <%= if @episode.published do %>
-        <%= external_link "View Public",
+        <%= SharedHelpers.external_link "View Public",
           to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
           class: "ui button" %>
       <% else %>
-        <%= external_link "Preview",
+        <%= SharedHelpers.external_link "Preview",
           to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
           class: "ui button" %>
       <% end %>
@@ -49,12 +49,12 @@
     <div class="ui four wide column">
       <div class="ui horizontal statistics">
         <div class="statistic">
-          <div class="value"><%= reach_count(@episode) %></div>
+          <div class="value"><%= AdminHelpers.reach_count(@episode) %></div>
           <div class="label">Reach</div>
         </div>
 
         <div class="statistic">
-          <div class="value"><%= download_count(@episode) %></div>
+          <div class="value"><%= AdminHelpers.download_count(@episode) %></div>
           <div class="label">Downloads</div>
         </div>
 
@@ -92,7 +92,7 @@
             <tr>
               <td><%= index + 1 %>) <%= ChangelogWeb.Countries.name(country) %></td>
               <td><%= downloads %></td>
-              <td><%= percent(downloads, countries_downloads) %>%</td>
+              <td><%= SharedHelpers.percent(downloads, countries_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -110,7 +110,7 @@
                   <td><%= index + 1 %></td>
                   <td><%= ChangelogWeb.Countries.name(country) %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent(downloads, countries_downloads) %>%</td>
+                  <td><%= SharedHelpers.percent(downloads, countries_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>
@@ -138,7 +138,7 @@
             <tr>
               <td><%= index + 1 %>) <%= client %></td>
               <td><%= downloads %></td>
-              <td><%= percent(downloads, clients_downloads) %>%</td>
+              <td><%= SharedHelpers.percent(downloads, clients_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -155,7 +155,7 @@
                 <tr>
                   <td><%= index + 1 %>) <%= client %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent(downloads, clients_downloads) %>%</td>
+                  <td><%= SharedHelpers.percent(downloads, clients_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>
@@ -183,7 +183,7 @@
             <tr>
               <td><%= index + 1 %>) <%= browser %></td>
               <td><%= downloads %></td>
-              <td><%= percent(downloads, browsers_downloads) %>%</td>
+              <td><%= SharedHelpers.percent(downloads, browsers_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -201,7 +201,7 @@
                 <tr>
                   <td><%= index + 1 %>) <%= elem(browser, 0) %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent(downloads, browsers_downloads) %>%</td>
+                  <td><%= SharedHelpers.percent(downloads, browsers_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>
@@ -229,7 +229,7 @@
             <tr>
               <td><%= index + 1 %>) <%= os %></td>
               <td><%= downloads %></td>
-              <td><%= percent(downloads, oses_downloads) %>%</td>
+              <td><%= SharedHelpers.percent(downloads, oses_downloads) %>%</td>
             </tr>
           <% end %>
           </tbody>
@@ -246,7 +246,7 @@
                 <tr>
                   <td><%= index + 1 %>) <%= os %></td>
                   <td><%= downloads %></td>
-                  <td><%= percent(downloads, oses_downloads) %>%</td>
+                  <td><%= SharedHelpers.percent(downloads, oses_downloads) %>%</td>
                 </tr>
               <% end %>
               </tbody>

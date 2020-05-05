@@ -43,7 +43,11 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
   @tag :as_admin
   test "creates post and redirects", %{conn: conn} do
     author = insert(:person)
-    conn = post(conn, Routes.admin_post_path(conn, :create), post: %{@valid_attrs | author_id: author.id})
+
+    conn =
+      post(conn, Routes.admin_post_path(conn, :create),
+        post: %{@valid_attrs | author_id: author.id}
+      )
 
     created = Repo.one(Post.limit(1))
     assert redirected_to(conn) == Routes.admin_post_path(conn, :edit, created)
@@ -72,7 +76,10 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
     author = insert(:person)
     post = insert(:post, author: author)
 
-    conn = put(conn, Routes.admin_post_path(conn, :update, post.id), post: %{@valid_attrs | author_id: author.id})
+    conn =
+      put(conn, Routes.admin_post_path(conn, :update, post.id),
+        post: %{@valid_attrs | author_id: author.id}
+      )
 
     assert redirected_to(conn) == Routes.admin_post_path(conn, :index)
     assert count(Post) == 1
@@ -112,16 +119,19 @@ defmodule ChangelogWeb.Admin.PostControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     post = insert(:post)
 
-    Enum.each([
-      get(conn, Routes.admin_post_path(conn, :index)),
-      get(conn, Routes.admin_post_path(conn, :new)),
-      post(conn, Routes.admin_post_path(conn, :create), post: @valid_attrs),
-      get(conn, Routes.admin_post_path(conn, :edit, post.id)),
-      put(conn, Routes.admin_post_path(conn, :update, post.id), post: @valid_attrs),
-      delete(conn, Routes.admin_post_path(conn, :delete, post.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_post_path(conn, :index)),
+        get(conn, Routes.admin_post_path(conn, :new)),
+        post(conn, Routes.admin_post_path(conn, :create), post: @valid_attrs),
+        get(conn, Routes.admin_post_path(conn, :edit, post.id)),
+        put(conn, Routes.admin_post_path(conn, :update, post.id), post: @valid_attrs),
+        delete(conn, Routes.admin_post_path(conn, :delete, post.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

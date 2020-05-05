@@ -5,8 +5,8 @@ defmodule Changelog.Stats.S3 do
     ExAws.S3.list_objects(bucket, prefix: date)
     |> ExAws.request!()
     |> get_in([:body, :contents])
-    |> Task.async_stream(fn(%{key: key}) -> get_log(bucket, key) end)
-    |> Enum.map(fn({:ok, log}) -> log end)
+    |> Task.async_stream(fn %{key: key} -> get_log(bucket, key) end)
+    |> Enum.map(fn {:ok, log} -> log end)
   end
 
   defp get_log(bucket, key) do

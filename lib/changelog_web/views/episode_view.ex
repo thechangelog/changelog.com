@@ -1,20 +1,31 @@
 defmodule ChangelogWeb.EpisodeView do
   use ChangelogWeb, :public_view
 
-  import ChangelogWeb.Meta.{Title, Description}
-
   alias Changelog.{Episode, Files, Github, ListKit, NewsItem}
-  alias ChangelogWeb.{Endpoint, LayoutView, PersonView, PodcastView,
-                      SponsorView, TimeView}
+  alias ChangelogWeb.{
+    Endpoint,
+    LayoutView,
+    PersonView,
+    PodcastView,
+    SponsorView,
+    TimeView,
+    Meta.Title,
+    Meta.Description
+  }
 
   def admin_edit_link(conn, %{admin: true}, episode) do
-    path = Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: current_path(conn))
+    path =
+      Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug,
+        next: SharedHelpers.current_path(conn)
+      )
+
     content_tag(:span) do
       [
-        link("(#{comma_separated(episode.reach_count)})", to: path, data: [turbolinks: false])
+        link("(#{SharedHelpers.comma_separated(episode.reach_count)})", to: path, data: [turbolinks: false])
       ]
     end
   end
+
   def admin_edit_link(_, _, _), do: nil
 
   def audio_filename(episode) do
@@ -24,14 +35,16 @@ defmodule ChangelogWeb.EpisodeView do
   def audio_local_path(episode) do
     {episode.audio_file.file_name, episode}
     |> Files.Audio.url(:original)
-    |> String.replace_leading("/priv", "priv") # remove Arc's "/" when storage is priv
+    # remove Arc's "/" when storage is priv
+    |> String.replace_leading("/priv", "priv")
   end
 
   def audio_path(episode) do
     if episode.audio_file do
       episode
       |> audio_local_path
-      |> String.replace_leading("priv", "") # ensure relative reference is removed
+      # ensure relative reference is removed
+      |> String.replace_leading("priv", "")
     else
       "/california.mp3"
     end
@@ -43,16 +56,19 @@ defmodule ChangelogWeb.EpisodeView do
 
   def classy_highlight(episode) do
     episode.highlight
-    |> no_widowed_words
-    |> with_smart_quotes
+    |> PublicHelpers.no_widowed_words
+    |> PublicHelpers.with_smart_quotes
     |> raw
   end
 
   def embed_code(episode), do: embed_code(episode, episode.podcast)
+
   def embed_code(episode, podcast) do
     ~s{<audio data-theme="night" data-src="#{url(episode, :embed)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
-    ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{Routes.root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
-    ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
+      ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{
+        Routes.root_url(Endpoint, :index)
+      }">Changelog.com</a></p>} <>
+      ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
 
   def embed_iframe(episode, theme) do
@@ -70,9 +86,10 @@ defmodule ChangelogWeb.EpisodeView do
   def is_subtitle_guest_focused(%{subtitle: nil}), do: false
   def is_subtitle_guest_focused(%{guests: nil}), do: false
   def is_subtitle_guest_focused(%{guests: []}), do: false
+
   def is_subtitle_guest_focused(%{subtitle: subtitle}) do
     String.starts_with?(subtitle, "with ") ||
-    String.starts_with?(subtitle, "featuring ")
+      String.starts_with?(subtitle, "featuring ")
   end
 
   def megabytes(episode) do
@@ -115,7 +132,7 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def sponsorships_with_dark_logo(episode) do
-    Enum.reject(episode.episode_sponsors, fn(s) -> is_nil(s.sponsor.dark_logo) end)
+    Enum.reject(episode.episode_sponsors, fn s -> is_nil(s.sponsor.dark_logo) end)
   end
 
   def show_notes_source_url(episode) do
@@ -126,16 +143,20 @@ defmodule ChangelogWeb.EpisodeView do
     [
       episode.title,
       podcast_aside(episode)
-    ] |> ListKit.compact_join(" ")
+    ]
+    |> ListKit.compact_join(" ")
   end
 
-  def title_with_guest_focused_subtitle_and_podcast_aside(episode = %{type: :trailer}), do: episode.title
+  def title_with_guest_focused_subtitle_and_podcast_aside(episode = %{type: :trailer}),
+    do: episode.title
+
   def title_with_guest_focused_subtitle_and_podcast_aside(episode) do
     [
       episode.title,
       guest_focused_subtitle(episode),
-      "(#{podcast_name_and_number((episode))})"
-    ] |> ListKit.compact_join(" ")
+      "(#{podcast_name_and_number(episode)})"
+    ]
+    |> ListKit.compact_join(" ")
   end
 
   def transcript_source_url(episode) do
@@ -153,27 +174,29 @@ defmodule ChangelogWeb.EpisodeView do
       share_url: url(episode, :show)
     }
 
-    info = if prev do
-      Map.put(info, :prev, %{
-        number: prev.slug,
-        title: prev.title,
-        location: Routes.episode_path(Endpoint, :play, podcast.slug, prev.slug),
-        audio_url: audio_url(prev)
-      })
-    else
-      info
-    end
+    info =
+      if prev do
+        Map.put(info, :prev, %{
+          number: prev.slug,
+          title: prev.title,
+          location: Routes.episode_path(Endpoint, :play, podcast.slug, prev.slug),
+          audio_url: audio_url(prev)
+        })
+      else
+        info
+      end
 
-    info = if next do
-      Map.put(info, :next, %{
-        number: next.slug,
-        title: next.title,
-        location: Routes.episode_path(Endpoint, :play, podcast.slug, next.slug),
-        audio_url: audio_url(next)
-      })
-    else
-      info
-    end
+    info =
+      if next do
+        Map.put(info, :next, %{
+          number: next.slug,
+          title: next.title,
+          location: Routes.episode_path(Endpoint, :play, podcast.slug, next.slug),
+          audio_url: audio_url(next)
+        })
+      else
+        info
+      end
 
     info
   end
@@ -181,12 +204,14 @@ defmodule ChangelogWeb.EpisodeView do
   def render("share.json", %{podcast: _podcast, episode: episode}) do
     url = url(episode, :show)
 
-    %{url: url,
-      twitter: tweet_url(episode.title, url),
-      hackernews: hackernews_url(episode.title, url),
-      reddit: reddit_url(episode.title, url),
-      facebook: facebook_url(url),
-      embed: embed_code(episode)}
+    %{
+      url: url,
+      twitter: PublicHelpers.tweet_url(episode.title, url),
+      hackernews: PublicHelpers.hackernews_url(episode.title, url),
+      reddit: PublicHelpers.reddit_url(episode.title, url),
+      facebook: PublicHelpers.facebook_url(url),
+      embed: embed_code(episode)
+    }
   end
 
   def url(episode, action) do

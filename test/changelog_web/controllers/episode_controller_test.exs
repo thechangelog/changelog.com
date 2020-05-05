@@ -24,7 +24,10 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     insert(:episode_host, episode: e)
     insert(:episode_guest, episode: e)
 
-    Episode.update_transcript(e, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n**Break:** Thanks to our Sponsors")
+    Episode.update_transcript(
+      e,
+      "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n**Break:** Thanks to our Sponsors"
+    )
 
     conn = get(conn, Routes.episode_path(conn, :show, p.slug, e.slug))
 

@@ -1,14 +1,14 @@
 <nav class="subnav">
   <ul class="subnav-list">
-    <li class="subnav-list-item <%= active_class(@conn, ["home-show"]) %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, ["home-show"]) %>">
       <%= link "Subscriptions", to: Routes.home_path(@conn, :show) %>
     </li>
-    <li class="subnav-list-item <%= active_class(@conn, ["home-profile"]) %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, ["home-profile"]) %>">
       <%= link to: Routes.home_path(@conn, :profile) do %>
         Profile
       <% end %>
     </li>
-    <li class="subnav-list-item <%= active_class(@conn, ["home-account"]) %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, ["home-account"]) %>">
       <%= link "Account", to: Routes.home_path(@conn, :account) %>
     </li>
   </ul>

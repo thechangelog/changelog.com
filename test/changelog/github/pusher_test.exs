@@ -14,7 +14,7 @@ defmodule Changelog.Github.PusherTest do
       source = source_for_path("gotime/go-time-1.md")
       content = "these are my show notes"
 
-      with_mock(Client, [file_exists?: fn(_) -> true end, edit_file: fn(_, _, _) -> %{} end]) do
+      with_mock(Client, file_exists?: fn _ -> true end, edit_file: fn _, _, _ -> %{} end) do
         Pusher.push(source, content)
         assert called(Client.file_exists?(source))
         assert called(Client.edit_file(source, content, "Update The Changelog #12"))
@@ -25,7 +25,7 @@ defmodule Changelog.Github.PusherTest do
       source = source_for_path("gotime/go-time-1.md")
       content = "these are my show notes"
 
-      with_mock(Client, [file_exists?: fn(_) -> false end, create_file: fn(_, _, _) -> %{} end]) do
+      with_mock(Client, file_exists?: fn _ -> false end, create_file: fn _, _, _ -> %{} end) do
         Pusher.push(source, content)
         assert called(Client.file_exists?(source))
         assert called(Client.create_file(source, content, "Add The Changelog #12"))

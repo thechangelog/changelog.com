@@ -5,13 +5,16 @@ defmodule ChangelogWeb.NewsAdView do
   alias ChangelogWeb.{Endpoint, SponsorView}
 
   def admin_edit_link(conn, %{admin: true}, ad) do
-    path = Routes.admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: current_path(conn))
+    path =
+      Routes.admin_news_sponsorship_path(conn, :edit, ad.sponsorship, next: SharedHelpers.current_path(conn))
+
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
         link("(#{ad.click_count}/#{ad.impression_count})", to: path, data: [turbolinks: false])
       ]
     end
   end
+
   def admin_edit_link(_, _, _), do: nil
 
   def image_link(ad, version \\ :large) do

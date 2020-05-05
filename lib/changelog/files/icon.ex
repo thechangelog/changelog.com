@@ -7,6 +7,7 @@ defmodule Changelog.Files.Icon do
   def filename(version, _), do: "icon_#{version}"
 
   def transform(:original, _), do: :noaction
+
   def transform(version, {file, _scope}) do
     if file_type(file) == :svg do
       :noaction

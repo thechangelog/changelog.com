@@ -28,7 +28,10 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
     author = insert(:person)
     comment = insert(:news_item_comment)
 
-    conn = put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{author_id: author.id, content: "bai!"})
+    conn =
+      put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id),
+        news_item_comment: %{author_id: author.id, content: "bai!"}
+      )
 
     assert redirected_to(conn) == Routes.admin_news_item_comment_path(conn, :index)
     assert Repo.get(NewsItemComment, comment.id).content == "bai!"
@@ -38,7 +41,10 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
   test "does not update with invalid attributes", %{conn: conn} do
     comment = insert(:news_item_comment)
 
-    conn = put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{content: ""})
+    conn =
+      put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id),
+        news_item_comment: %{content: ""}
+      )
 
     assert html_response(conn, 200) =~ ~r/error/
   end
@@ -56,14 +62,19 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     comment = insert(:news_item_comment)
 
-    Enum.each([
-      get(conn, Routes.admin_news_item_comment_path(conn, :index)),
-      get(conn, Routes.admin_news_item_comment_path(conn, :edit, comment.id)),
-      put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id), news_item_comment: %{}),
-      delete(conn, Routes.admin_news_item_comment_path(conn, :delete, comment.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_news_item_comment_path(conn, :index)),
+        get(conn, Routes.admin_news_item_comment_path(conn, :edit, comment.id)),
+        put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id),
+          news_item_comment: %{}
+        ),
+        delete(conn, Routes.admin_news_item_comment_path(conn, :delete, comment.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

@@ -16,7 +16,7 @@ defmodule ChangelogStatsParserTest do
     test "it creates a list with all the entries for the list of logs given" do
       entries = Parser.parse([File.read!(@file1), File.read!(@file2)])
       # actually 73 lines, but 26 of them have 0 byte entries
-      assert length(entries) == (73 - 26)
+      assert length(entries) == 73 - 26
     end
 
     test "it creates a list with one entry when log has one line in it" do
@@ -27,69 +27,75 @@ defmodule ChangelogStatsParserTest do
     test "it creates a list with many entries when log has many lines in it" do
       entries = Parser.parse(File.read!(@file2))
       # actually 73 lines, but 26 of them have 0 byte entries and 1 is a 301 redirect
-      assert length(entries) == (73 - 26 - 1)
+      assert length(entries) == 73 - 26 - 1
     end
   end
 
   describe "parse_line" do
     test "it parses log1 into a value Entry" do
       assert Parser.parse_line(@log1) == %Entry{
-        ip: "142.169.78.110",
-        episode: "145",
-        bytes: 2,
-        status: 206,
-        agent: "AppleCoreMedia/1.0.0.14A403 (iPhone; U; CPU OS 10_0_1 like Mac OS X; en_ca)",
-        latitude: 45.5,
-        longitude: -73.583,
-        city_name: "Unknown",
-        continent_code: "NA",
-        country_code: "CA",
-        country_name: "Canada"}
+               ip: "142.169.78.110",
+               episode: "145",
+               bytes: 2,
+               status: 206,
+               agent:
+                 "AppleCoreMedia/1.0.0.14A403 (iPhone; U; CPU OS 10_0_1 like Mac OS X; en_ca)",
+               latitude: 45.5,
+               longitude: -73.583,
+               city_name: "Unknown",
+               continent_code: "NA",
+               country_code: "CA",
+               country_name: "Canada"
+             }
     end
 
     test "it parses log2 in to a valid Entry" do
       assert Parser.parse_line(@log2) == %Entry{
-        ip: "78.35.187.78",
-        episode: "219",
-        bytes: 262_144,
-        status: 200,
-        agent: "Mozilla/5.0 (Linux; Android 6.0.1; HUAWEI RIO-L01 Build/HuaweiRIO-L01) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36",
-        latitude: 50.933,
-        longitude: 6.950,
-        city_name: "Köln",
-        continent_code: "EU",
-        country_code: "DE",
-        country_name: "Germany"}
+               ip: "78.35.187.78",
+               episode: "219",
+               bytes: 262_144,
+               status: 200,
+               agent:
+                 "Mozilla/5.0 (Linux; Android 6.0.1; HUAWEI RIO-L01 Build/HuaweiRIO-L01) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36",
+               latitude: 50.933,
+               longitude: 6.950,
+               city_name: "Köln",
+               continent_code: "EU",
+               country_code: "DE",
+               country_name: "Germany"
+             }
     end
 
     test "it parses log3 (which contains double quotes in the user agent) in to a valid Entry" do
       assert Parser.parse_line(@log3) == %Entry{
-        ip: "122.163.200.110",
-        episode: "204",
-        bytes: 13_132_042,
-        status: 206,
-        agent: "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0",
-        latitude: 26.850,
-        longitude: 80.917,
-        city_name: "Lucknow",
-        continent_code: "AS",
-        country_code: "IN",
-        country_name: "India"}
+               ip: "122.163.200.110",
+               episode: "204",
+               bytes: 13_132_042,
+               status: 206,
+               agent: "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0",
+               latitude: 26.850,
+               longitude: 80.917,
+               city_name: "Lucknow",
+               continent_code: "AS",
+               country_code: "IN",
+               country_name: "India"
+             }
     end
 
     test "it parses log5 (which has a blank user agent) in to a valid Entry" do
       assert Parser.parse_line(@log5) == %Entry{
-        ip: "178.189.150.213",
-        episode: "19",
-        bytes: 328_417,
-        status: 200,
-        agent: "",
-        latitude: 47.100,
-        longitude: 15.933,
-        city_name: "Ilz",
-        continent_code: "EU",
-        country_code: "AT",
-        country_name: "Austria"}
+               ip: "178.189.150.213",
+               episode: "19",
+               bytes: 328_417,
+               status: 200,
+               agent: "",
+               latitude: 47.100,
+               longitude: 15.933,
+               city_name: "Ilz",
+               continent_code: "EU",
+               country_code: "AT",
+               country_name: "Austria"
+             }
     end
 
     test "it rescues CSV parse errors and returns a 0 byte entry otherwise" do

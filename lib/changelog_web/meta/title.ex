@@ -1,9 +1,20 @@
 defmodule ChangelogWeb.Meta.Title do
-  import ChangelogWeb.Helpers.SharedHelpers, only: [comma_separated_names: 1]
 
-  alias ChangelogWeb.{AuthView, EpisodeView, EpisodeRequestView, LiveView,
-                      NewsItemView, NewsSourceView, PageView, PersonView,
-                      PodcastView, PostView, TopicView, SearchView}
+  alias ChangelogWeb.{
+    AuthView,
+    EpisodeView,
+    EpisodeRequestView,
+    LiveView,
+    NewsItemView,
+    NewsSourceView,
+    PageView,
+    PersonView,
+    PodcastView,
+    PostView,
+    TopicView,
+    Helpers.SharedHelpers,
+    SearchView
+  }
 
   @default "News and podcasts for developers"
 
@@ -14,14 +25,18 @@ defmodule ChangelogWeb.Meta.Title do
   end
 
   # no need for the suffix on these
-  def share_title(assigns), do:  get(assigns) || @default
+  def share_title(assigns), do: get(assigns) || @default
 
   # Search views
   defp get(%{view_module: SearchView, view_template: "search.html", query: ""}), do: "Search"
-  defp get(%{view_module: SearchView, view_template: "search.html", query: query}), do: "Search results for #{query}"
+
+  defp get(%{view_module: SearchView, view_template: "search.html", query: query}),
+    do: "Search results for #{query}"
 
   # Live page
-  defp get(%{view_module: LiveView, podcast: podcast, episode: episode}), do: "#{podcast.name} Live! #{episode.title}"
+  defp get(%{view_module: LiveView, podcast: podcast, episode: episode}),
+    do: "#{podcast.name} Live! #{episode.title}"
+
   defp get(%{view_module: LiveView}), do: "Live and upcoming shows"
 
   # News item - show
@@ -31,11 +46,12 @@ defmodule ChangelogWeb.Meta.Title do
 
   # News item - top
   defp get(%{view_module: NewsItemView, view_template: "top.html", filter: filter}) do
-    suffix = case filter do
-      "week" -> "this week"
-      "month" -> "this month"
-      "all" -> "of all time"
-    end
+    suffix =
+      case filter do
+        "week" -> "this week"
+        "month" -> "this month"
+        "all" -> "of all time"
+      end
 
     "Top developer news #{suffix}"
   end
@@ -44,7 +60,8 @@ defmodule ChangelogWeb.Meta.Title do
   defp get(%{view_module: NewsItemView, view_template: "new.html"}), do: "Submit news"
 
   # Sign up - subscribe
-  defp get(%{view_module: PersonView, view_template: "subscribe.html"}), do: "Subscribe to Changelog"
+  defp get(%{view_module: PersonView, view_template: "subscribe.html"}),
+    do: "Subscribe to Changelog"
 
   # Sign up - join community
   defp get(%{view_module: PersonView, view_template: "join.html"}), do: "Join the community"
@@ -67,9 +84,11 @@ defmodule ChangelogWeb.Meta.Title do
   defp get(%{view_module: TopicView, topic: topic, tab: "news"}) do
     "Developer news about #{topic.name}"
   end
+
   defp get(%{view_module: TopicView, topic: topic, tab: "podcasts"}) do
     "Developer podcasts about #{topic.name}"
   end
+
   defp get(%{view_module: TopicView, topic: topic}) do
     "Developer news and podcasts about #{topic.name}"
   end
@@ -78,9 +97,11 @@ defmodule ChangelogWeb.Meta.Title do
   defp get(%{view_module: PersonView, person: person, tab: "news"}) do
     "News contributed by #{person.name}"
   end
+
   defp get(%{view_module: PersonView, person: person, tab: "podcasts"}) do
     "Podcast episodes featuring #{person.name}"
   end
+
   defp get(%{view_module: PersonView, person: person}) do
     "#{person.name} on Changelog"
   end
@@ -97,42 +118,64 @@ defmodule ChangelogWeb.Meta.Title do
   # Pages
   defp get(%{view_module: PageView, view_template: template}) do
     case template do
-      "community.html"     -> "Changelog developer community"
-      "coc.html"           -> "Code of conduct"
-      "home.html"          -> nil
-      "weekly.html"        -> "Subscribe to Changelog Weekly"
-      "nightly.html"       -> "Subscribe to Changelog Nightly"
-      "sponsor_story.html" -> "Partner story"
-      "ten.html"           -> "Celebrating ten years of Changelog"
+      "community.html" ->
+        "Changelog developer community"
+
+      "coc.html" ->
+        "Code of conduct"
+
+      "home.html" ->
+        nil
+
+      "weekly.html" ->
+        "Subscribe to Changelog Weekly"
+
+      "nightly.html" ->
+        "Subscribe to Changelog Nightly"
+
+      "sponsor_story.html" ->
+        "Partner story"
+
+      "ten.html" ->
+        "Celebrating ten years of Changelog"
+
       _else ->
         template
         |> String.replace(".html", "")
         |> String.split("_")
-        |> Enum.map(fn(s) -> String.capitalize(s) end)
+        |> Enum.map(fn s -> String.capitalize(s) end)
         |> Enum.join(" ")
     end
   end
 
   # Podcasts index
-  defp get(%{view_module: PodcastView, view_template: "index.html"}), do: "Podcasts for developers"
+  defp get(%{view_module: PodcastView, view_template: "index.html"}),
+    do: "Podcasts for developers"
 
   # Podcast homepages
   defp get(%{view_module: PodcastView, podcast: podcast, tab: "popular"}) do
     "Popular episodes of #{podcast.name}"
   end
+
   defp get(%{view_module: PodcastView, podcast: podcast, tab: "recommended"}) do
     "Recommended episodes of #{podcast.name}"
   end
+
   defp get(%{view_module: PodcastView, podcast: podcast}) do
     if Enum.any?(podcast.hosts) do
-      "#{podcast.name} Podcast with #{comma_separated_names(podcast.hosts)}"
+      "#{podcast.name} Podcast with #{SharedHelpers.comma_separated_names(podcast.hosts)}"
     else
       podcast.name
     end
   end
 
   # Episode page
-  defp get(%{view_module: EpisodeView, view_template: "show.html", podcast: _podcast, episode: episode}) do
+  defp get(%{
+         view_module: EpisodeView,
+         view_template: "show.html",
+         podcast: _podcast,
+         episode: episode
+       }) do
     EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode)
   end
 
@@ -140,6 +183,7 @@ defmodule ChangelogWeb.Meta.Title do
   defp get(%{view_module: EpisodeRequestView, view_template: "new.html", podcast: podcast}) do
     "Request an episode of #{podcast.name}"
   end
+
   defp get(%{view_module: EpisodeRequestView, view_template: "new.html"}) do
     "Request an episode"
   end

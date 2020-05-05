@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= page_title(assigns) %></title>
-    <meta name="description" content="<%= description(assigns) %>">
+    <title><%= Title.page_title(assigns) %></title>
+    <meta name="description" content="<%= Description.description(assigns) %>">
     <meta name="copyright" content="Changelog Media LLC">
     <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/embed.css") %>">
     <%= render(LayoutView, "_head_scripts.html", assigns) %>
@@ -73,7 +73,7 @@
             <li class="episode_player-nav-list-item">
               <%= link "Share",
                   title: "Share on Twitter",
-                  to: tweet_url(@episode.title, Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
+                  to: PublicHelpers.tweet_url(@episode.title, Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
                   class: "js-share-popup",
                   target: "_blank",
                   style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-share.svg")}')" %>

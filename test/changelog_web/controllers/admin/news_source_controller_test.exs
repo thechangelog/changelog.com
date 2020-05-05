@@ -51,7 +51,11 @@ defmodule ChangelogWeb.Admin.NewsSourceControllerTest do
   @tag :as_admin
   test "updates news source and redirects", %{conn: conn} do
     news_source = insert(:news_source)
-    conn = put(conn, Routes.admin_news_source_path(conn, :update, news_source.id), news_source: @valid_attrs)
+
+    conn =
+      put(conn, Routes.admin_news_source_path(conn, :update, news_source.id),
+        news_source: @valid_attrs
+      )
 
     assert redirected_to(conn) == Routes.admin_news_source_path(conn, :index)
     assert count(NewsSource) == 1
@@ -62,7 +66,10 @@ defmodule ChangelogWeb.Admin.NewsSourceControllerTest do
     news_source = insert(:news_source)
     count_before = count(NewsSource)
 
-    conn = put(conn, Routes.admin_news_source_path(conn, :update, news_source.id), news_source: @invalid_attrs)
+    conn =
+      put(conn, Routes.admin_news_source_path(conn, :update, news_source.id),
+        news_source: @invalid_attrs
+      )
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(NewsSource) == count_before
@@ -71,16 +78,21 @@ defmodule ChangelogWeb.Admin.NewsSourceControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     news_source = insert(:news_source)
 
-    Enum.each([
-      get(conn, Routes.admin_news_source_path(conn, :index)),
-      get(conn, Routes.admin_news_source_path(conn, :new)),
-      post(conn, Routes.admin_news_source_path(conn, :create), news_source: @valid_attrs),
-      get(conn, Routes.admin_news_source_path(conn, :edit, news_source.id)),
-      put(conn, Routes.admin_news_source_path(conn, :update, news_source.id), news_source: @valid_attrs),
-      delete(conn, Routes.admin_news_source_path(conn, :delete, news_source.id)),
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.admin_news_source_path(conn, :index)),
+        get(conn, Routes.admin_news_source_path(conn, :new)),
+        post(conn, Routes.admin_news_source_path(conn, :create), news_source: @valid_attrs),
+        get(conn, Routes.admin_news_source_path(conn, :edit, news_source.id)),
+        put(conn, Routes.admin_news_source_path(conn, :update, news_source.id),
+          news_source: @valid_attrs
+        ),
+        delete(conn, Routes.admin_news_source_path(conn, :delete, news_source.id))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

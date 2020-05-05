@@ -24,7 +24,7 @@ defmodule ChangelogWeb.AuthControllerTest do
 
     assert html_response(conn, 200) =~ "Check your email"
     assert person.auth_token != nil
-    assert_delivered_email ChangelogWeb.Email.sign_in(person)
+    assert_delivered_email(ChangelogWeb.Email.sign_in(person))
   end
 
   test "submitting the form with unknown email sends you to join", %{conn: conn} do
@@ -36,10 +36,11 @@ defmodule ChangelogWeb.AuthControllerTest do
   test "following a valid auth token signs you in", %{conn: conn} do
     person = insert(:person)
 
-    changeset = Person.auth_changeset(person, %{
-      auth_token: "12345",
-      auth_token_expires_at: hours_from_now(0.25)
-    })
+    changeset =
+      Person.auth_changeset(person, %{
+        auth_token: "12345",
+        auth_token_expires_at: hours_from_now(0.25)
+      })
 
     {:ok, person} = Repo.update(changeset)
     {:ok, encoded} = Person.encoded_auth(person)
@@ -60,10 +61,11 @@ defmodule ChangelogWeb.AuthControllerTest do
   test "following an expired auth token doesn't sign you in", %{conn: conn} do
     person = insert(:person)
 
-    changeset = Person.auth_changeset(person, %{
-      auth_token: "12345",
-      auth_token_expires_at: hours_ago(0.25)
-    })
+    changeset =
+      Person.auth_changeset(person, %{
+        auth_token: "12345",
+        auth_token_expires_at: hours_ago(0.25)
+      })
 
     {:ok, person} = Repo.update(changeset)
     {:ok, encoded} = Person.encoded_auth(person)
@@ -90,10 +92,18 @@ defmodule ChangelogWeb.AuthControllerTest do
     test "successful auth on new person sends you to join", %{conn: conn} do
       conn =
         conn
-        |> assign(:ueberauth_auth, %{provider: :github, info: %{name: "Joe Blow", nickname: "joeblow"}})
+        |> assign(:ueberauth_auth, %{
+          provider: :github,
+          info: %{name: "Joe Blow", nickname: "joeblow"}
+        })
         |> get("/auth/github/callback")
 
-      assert redirected_to(conn) == Routes.person_path(conn, :join, %{name: "Joe Blow", handle: "joeblow", github_handle: "joeblow"})
+      assert redirected_to(conn) ==
+               Routes.person_path(conn, :join, %{
+                 name: "Joe Blow",
+                 handle: "joeblow",
+                 github_handle: "joeblow"
+               })
     end
 
     test "failed auth doesn't sign you in", %{conn: conn} do
@@ -123,10 +133,18 @@ defmodule ChangelogWeb.AuthControllerTest do
     test "successful twitter auth on new person sends you to join", %{conn: conn} do
       conn =
         conn
-        |> assign(:ueberauth_auth, %{provider: :twitter, info: %{name: "Joe Blow", nickname: "joeblow"}})
+        |> assign(:ueberauth_auth, %{
+          provider: :twitter,
+          info: %{name: "Joe Blow", nickname: "joeblow"}
+        })
         |> get("/auth/github/callback")
 
-      assert redirected_to(conn) == Routes.person_path(conn, :join, %{name: "Joe Blow", handle: "joeblow", twitter_handle: "joeblow"})
+      assert redirected_to(conn) ==
+               Routes.person_path(conn, :join, %{
+                 name: "Joe Blow",
+                 handle: "joeblow",
+                 twitter_handle: "joeblow"
+               })
     end
 
     test "failed twitter auth doesn't sign you in", %{conn: conn} do

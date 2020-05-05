@@ -3,7 +3,7 @@
   <div class="show-header-inner">
 
     <div class="show-header-art">
-      <%= lazy_image(cover_url(@podcast, :original), "#{@podcast.name} Artwork", width: 490, height: 490) %>
+      <%= SharedHelpers.lazy_image(cover_url(@podcast, :original), "#{@podcast.name} Artwork", width: 490, height: 490) %>
     <%= if @podcast.status != :published do %>
       <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
     <% end %>
@@ -31,15 +31,15 @@
     <% end %>
 
       <div class="show-header-description">
-        <h3><%= (@podcast.welcome || @podcast.description) |> no_widowed_words() |> raw() %></h3>
-        <%= @podcast.schedule_note |> md_to_html() |> raw() %>
+        <h3><%= (@podcast.welcome || @podcast.description) |> PublicHelpers.no_widowed_words() |> raw() %></h3>
+        <%= @podcast.schedule_note |> SharedHelpers.md_to_html() |> raw() %>
       </div>
 
       <%= if Enum.any?(@podcast.hosts) do %>
       <div class="show-header-hosts avatar_list <%= if length(@podcast.hosts) < 4, do: 'avatar_list--full' %>">
       <%= for person <- @podcast.hosts do %>
         <%= link to: Routes.person_path(@conn, :show, person.handle), class: "avatar_list-item", title: person.name do %>
-          <%= lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
+          <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
           <%= if length(@podcast.hosts) < 4 do %>
             <p><%= person.name %></p>
           <% else %>

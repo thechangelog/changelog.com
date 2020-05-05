@@ -2,15 +2,15 @@ defmodule Changelog.Buffer do
   alias Changelog.NewsItem
   alias Changelog.Buffer.{Client, Content}
 
-  @shared       ~w(506b005149bbd8223400006b 5d27885cb3e9832ca87111a8)
+  @shared ~w(506b005149bbd8223400006b 5d27885cb3e9832ca87111a8)
 
-  @afk          ~w(5af9b7a28bae46d01ead92d3)
+  @afk ~w(5af9b7a28bae46d01ead92d3)
   @brainscience ~w(5d49c7410eb4bb4992040a42)
-  @changelog    ~w(4f3ad7c8512f7ef962000004)
+  @changelog ~w(4f3ad7c8512f7ef962000004)
   @founderstalk ~w(5b23f65f772894a723424ec5)
-  @gotime       ~w(5734d7fc1b14578733224a70)
-  @jsparty      ~w(58b47fd78d23761f5f19ca89)
-  @practicalai  ~w(5ac3c64b3fda312b116ca788)
+  @gotime ~w(5734d7fc1b14578733224a70)
+  @jsparty ~w(58b47fd78d23761f5f19ca89)
+  @practicalai ~w(5ac3c64b3fda312b116ca788)
 
   @topics %{
     @founderstalk => ~w(startups leadership product-development vc),
@@ -37,13 +37,13 @@ defmodule Changelog.Buffer do
   # this can return multiple profile lists if they all match the given topics
   # so we flatten them at the end to make one final list
   def profiles_for_topics(topics) do
-    slugs = Enum.map(topics, &(&1.slug))
+    slugs = Enum.map(topics, & &1.slug)
 
     @topics
-    |> Enum.filter(fn({_profile_list, topic_list}) ->
-      Enum.any?(slugs, fn(slug) -> slug in topic_list end)
+    |> Enum.filter(fn {_profile_list, topic_list} ->
+      Enum.any?(slugs, fn slug -> slug in topic_list end)
     end)
-    |> Enum.map(fn({profile_list, _topic_list}) -> profile_list end)
+    |> Enum.map(fn {profile_list, _topic_list} -> profile_list end)
     |> List.flatten()
   end
 
@@ -59,8 +59,9 @@ defmodule Changelog.Buffer do
     link = Content.episode_link(item)
     text = Content.episode_text(item)
     profiles = profiles_for_podcast(episode.podcast)
-    Client.create(with_shared(profiles), text, [link: link])
+    Client.create(with_shared(profiles), text, link: link)
   end
+
   # an episode news item with no attached object
   defp queue_item(%NewsItem{type: :audio}), do: false
   defp queue_item(%NewsItem{type: :audio, object: nil}), do: false
@@ -71,13 +72,14 @@ defmodule Changelog.Buffer do
     link = Content.post_link(item)
 
     # network-wide gets full text
-    Client.create(with_shared(@changelog), text, [link: link])
+    Client.create(with_shared(@changelog), text, link: link)
 
     # topic-specific profiles get brief version
     for profile <- profiles_for_topics(item.topics) do
-      Client.create(profile, brief, [link: link])
+      Client.create(profile, brief, link: link)
     end
   end
+
   # all other 'normal' news items
   defp queue_item(item = %NewsItem{}) do
     image = Content.news_item_image(item)
@@ -86,11 +88,11 @@ defmodule Changelog.Buffer do
     link = Content.news_item_link(item)
 
     # network-wide gets full text
-    Client.create(with_shared(@changelog), text, [link: link, photo: image])
+    Client.create(with_shared(@changelog), text, link: link, photo: image)
 
     # topic-specific profiles get brief version
     for profile <- profiles_for_topics(item.topics) do
-      Client.create(profile, brief, [link: link, photo: image])
+      Client.create(profile, brief, link: link, photo: image)
     end
   end
 

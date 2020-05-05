@@ -42,9 +42,9 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       |> Repo.all()
 
     items =
-     (episodes ++ news)
-     |> Enum.with_index(1)
-     |> Enum.map(&NewsIssueItem.build_and_preload/1)
+      (episodes ++ news)
+      |> Enum.with_index(1)
+      |> Enum.map(&NewsIssueItem.build_and_preload/1)
 
     ads =
       Timex.today()
@@ -56,11 +56,12 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       |> Enum.with_index(1)
       |> Enum.map(&NewsIssueAd.build_and_preload/1)
 
-    changeset = NewsIssue.admin_changeset(%NewsIssue{
-      news_issue_items: items,
-      news_issue_ads: ads,
-      slug: NewsIssue.next_slug(last_issue)
-    })
+    changeset =
+      NewsIssue.admin_changeset(%NewsIssue{
+        news_issue_items: items,
+        news_issue_ads: ads,
+        slug: NewsIssue.next_slug(last_issue)
+      })
 
     render(conn, :new, changeset: changeset)
   end
@@ -73,6 +74,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_issue_path(conn, :edit, issue))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -93,6 +95,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_issue_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -109,6 +112,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
         conn
         |> put_flash(:result, "success")
         |> redirect(to: Routes.admin_news_issue_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -124,6 +128,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
         conn
         |> put_flash(:result, "success")
         |> redirect(to: Routes.admin_news_issue_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")

@@ -16,13 +16,25 @@ defmodule Changelog.Github.SourceTest do
 
   test "html_url and raw_url for a Go Time episode" do
     source = Source.new("transcripts", %{slug: "51", podcast: %{name: "Go Time", slug: "gotime"}})
-    assert source.html_url == "https://github.com/thechangelog/transcripts/blob/master/gotime/go-time-51.md"
-    assert source.raw_url == "https://raw.githubusercontent.com/thechangelog/transcripts/master/gotime/go-time-51.md"
+
+    assert source.html_url ==
+             "https://github.com/thechangelog/transcripts/blob/master/gotime/go-time-51.md"
+
+    assert source.raw_url ==
+             "https://raw.githubusercontent.com/thechangelog/transcripts/master/gotime/go-time-51.md"
   end
 
   test "html_url and raw_url for an RFC episode" do
-    source = Source.new("transcripts", %{slug: "bonus", podcast: %{name: "Request For Commits", slug: "rfc"}})
-    assert source.html_url == "https://github.com/thechangelog/transcripts/blob/master/rfc/request-for-commits-bonus.md"
-    assert source.raw_url == "https://raw.githubusercontent.com/thechangelog/transcripts/master/rfc/request-for-commits-bonus.md"
+    source =
+      Source.new("transcripts", %{
+        slug: "bonus",
+        podcast: %{name: "Request For Commits", slug: "rfc"}
+      })
+
+    assert source.html_url ==
+             "https://github.com/thechangelog/transcripts/blob/master/rfc/request-for-commits-bonus.md"
+
+    assert source.raw_url ==
+             "https://raw.githubusercontent.com/thechangelog/transcripts/master/rfc/request-for-commits-bonus.md"
   end
 end

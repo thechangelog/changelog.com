@@ -1,20 +1,20 @@
 <div class="ui stackable centered three column grid">
   <div class="ui column">
     <h3 class="ui dividing header">7 day reach</h3>
-    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_7], @reach[:then_7]) %>">
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@reach[:now_7], @reach[:then_7]) %>">
       <div class="statistic">
-        <div class="value"><%= @reach[:now_7] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:now_7] |> SharedHelpers.comma_separated() %></div>
         <div class="label">current</div>
-        <div style="display: none;"><%= ts(@reach[:as_of]) %></div>
+        <div style="display: none;"><%= AdminHelpers.ts(@reach[:as_of]) %></div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:prev_7] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:prev_7] |> SharedHelpers.comma_separated() %></div>
         <div class="label">previous</div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:then_7] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:then_7] |> SharedHelpers.comma_separated() %></div>
         <div class="label">last year</div>
       </div>
     </div>
@@ -22,19 +22,19 @@
 
   <div class="ui column">
     <h3 class="ui dividing header">30 day reach</h3>
-    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_30], @reach[:then_30]) %>">
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@reach[:now_30], @reach[:then_30]) %>">
       <div class="statistic">
-        <div class="value"><%= @reach[:now_30] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:now_30] |> SharedHelpers.comma_separated() %></div>
         <div class="label">current</div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:prev_30] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:prev_30] |> SharedHelpers.comma_separated() %></div>
         <div class="label">previous</div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:then_30] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:then_30] |> SharedHelpers.comma_separated() %></div>
         <div class="label">last year</div>
       </div>
     </div>
@@ -42,19 +42,19 @@
 
   <div class="ui column">
     <h3 class="ui dividing header">90 day reach</h3>
-    <div class="ui mini horizontal statistics <%= up_or_down_class(@reach[:now_90], @reach[:then_90]) %>">
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@reach[:now_90], @reach[:then_90]) %>">
       <div class="statistic">
-        <div class="value"><%= @reach[:now_90] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:now_90] |> SharedHelpers.comma_separated() %></div>
         <div class="label">current</div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:prev_90] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:prev_90] |> SharedHelpers.comma_separated() %></div>
         <div class="label">previous</div>
       </div>
 
       <div class="statistic">
-        <div class="value"><%= @reach[:then_90] |> comma_separated() %></div>
+        <div class="value"><%= @reach[:then_90] |> SharedHelpers.comma_separated() %></div>
         <div class="label">last year</div>
       </div>
     </div>

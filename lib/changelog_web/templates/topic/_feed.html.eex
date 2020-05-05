@@ -1,12 +1,12 @@
 <nav class="subnav">
   <ul class="subnav-list">
-    <li class="subnav-list-item <%= active_class(@conn, "show") %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "show") %>">
       <%= link("All", to: Routes.topic_path(@conn, :show, @topic.slug) <> "#feed", title: "News and Podcasts about #{@topic.name}") %>
     </li>
-    <li class="subnav-list-item <%= active_class(@conn, "news") %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "news") %>">
       <%= link("News", to: Routes.topic_path(@conn, :news, @topic.slug) <> "#feed", title: "#{@topic.name} News") %>
     </li>
-    <li class="subnav-list-item <%= active_class(@conn, "podcasts") %>">
+    <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "podcasts") %>">
       <%= link("Podcasts", to: Routes.topic_path(@conn, :podcasts, @topic.slug) <> "#feed", title: "Podcasts about #{@topic.name}") %>
     </li>
   </ul>

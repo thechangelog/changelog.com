@@ -3,7 +3,7 @@
     <header class="news_item-header">
       <p class="news_item-source">
         <%= link to: Routes.person_path(@conn, :show, @post.author.handle), title: @post.author.name, rel: "external", class: "news_item-source-image" do %>
-          <%= maybe_lazy_image(@conn, PersonView.avatar_url(@post.author), @post.author.name) %>
+          <%= SharedHelpers.maybe_lazy_image(@conn, PersonView.avatar_url(@post.author), @post.author.name) %>
         <% end %>
         <!-- TODO: Make this a 'kicker' -->
         <%= link("changelog.com/posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %>
@@ -15,7 +15,7 @@
     </header>
     <%= if @item, do: render(NewsItemView, "_toolbar.html", Map.put(assigns, :style, "date")) %>
     <div class="news_item-content richtext">
-      <%= @post.body |> md_to_html() |> raw() %>
+      <%= @post.body |> SharedHelpers.md_to_html() |> raw() %>
     </div>
   </article>
 

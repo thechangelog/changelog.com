@@ -37,7 +37,7 @@ defmodule ChangelogWeb.PodcastController do
     |> assign(:items, items)
     |> assign(:trailer, trailer)
     |> assign(:page, page)
-    |> cache_public(:timer.minutes(5))
+    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render(:show)
   end
 
@@ -47,7 +47,8 @@ defmodule ChangelogWeb.PodcastController do
     page =
       Podcast.get_episodes(podcast)
       |> Episode.published()
-      |> Episode.newer_than(~D[2016-10-10]) # modern era
+      # modern era
+      |> Episode.newer_than(~D[2016-10-10])
       |> Episode.top_reach_first()
       |> Episode.exclude_transcript()
       |> Episode.preload_podcast()
@@ -56,7 +57,7 @@ defmodule ChangelogWeb.PodcastController do
     # this is handled differently than 'recommended' because 'popular'
     # is an ordering whereas 'recommended' is a filter
     items =
-      Enum.map(page.entries, fn(episode) ->
+      Enum.map(page.entries, fn episode ->
         episode
         |> NewsItem.with_episode()
         |> NewsItem.preload_all()
@@ -113,11 +114,13 @@ defmodule ChangelogWeb.PodcastController do
 
     items =
       page.entries
-      |> Enum.map(fn(episode) ->
+      |> Enum.map(fn episode ->
         item = %NewsItem{
           type: :audio,
           headline: episode.title,
-          topics: episode.topics}
+          topics: episode.topics
+        }
+
         Map.put(item, :object, episode)
       end)
 
