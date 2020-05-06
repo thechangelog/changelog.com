@@ -243,33 +243,6 @@ lke-nodes: lke-ctx
 lke-show-all: lke-ctx
 	$(KUBECTL) get all --all-namespaces
 
-# https://github.com/kubernetes-sigs/external-dns/releases
-EXTERNAL_DNS_VERSION := v0.7.1
-EXTERNAL_DNS_IMAGE := us.gcr.io/k8s-artifacts-prod/external-dns/external-dns:$(EXTERNAL_DNS_VERSION)
-EXTERNAL_DNS_DEPLOYMENT := external-dns
-EXTERNAL_DNS_NAMESPACE := $(EXTERNAL_DNS_DEPLOYMENT)
-EXTERNAL_DNS_TREE := $(KUBETREE) deployments $(EXTERNAL_DNS_DEPLOYMENT) --namespace $(EXTERNAL_DNS_NAMESPACE)
-.PHONY: lke-external-dns
-lke-external-dns: lke-ctx dnsimple-creds $(YTT) $(KUBETREE)
-	$(YTT) \
-	  --data-value namespace=$(EXTERNAL_DNS_NAMESPACE) \
-	  --data-value image=$(EXTERNAL_DNS_IMAGE) \
-	  --file $(CURDIR)/k8s/external-dns > $(CURDIR)/k8s/external-dns.yml \
-	&& $(KUBECTL) apply --filename $(CURDIR)/k8s/external-dns.yml \
-	&& $(KUBECTL) create secret generic dnsimple \
-	    --from-literal=token="$(DNSIMPLE_TOKEN)" --dry-run --output json \
-	   | $(KUBECTL) apply --namespace $(EXTERNAL_DNS_NAMESPACE) --filename - \
-	&& $(KUBETREE) deployments $(EXTERNAL_DNS_DEPLOYMENT) --namespace $(EXTERNAL_DNS_NAMESPACE)
-lke-provision:: lke-external-dns
-
-.PHONY: lke-external-dns-tree
-lke-external-dns-tree: lke-ctx $(KUBETREE)
-	$(EXTERNAL_DNS_TREE)
-
-.PHONY: lke-external-dns-logs
-lke-external-dns-logs: lke-ctx
-	$(KUBECTL) logs deployments/$(EXTERNAL_DNS_DEPLOYMENT) --namespace $(EXTERNAL_DNS_NAMESPACE) --follow
-
 # https://octant.dev/
 .PHONY: lke-browse
 lke-browse: $(OCTANT) lke-config-hint
@@ -285,121 +258,8 @@ lke-cli: $(K9S) lke-config-hint
 lke-sanitize: $(POPEYE) lke-config-hint
 	$(POPEYE)
 
-# https://github.com/kubernetes/ingress-nginx/releases
-NGINX_INGRESS_VERSION := 0.30.0
-NGINX_INGRESS_NAMESPACE := ingress-nginx
-.PHONY: lke-nginx-ingress
-lke-nginx-ingress: lke-ctx
-	$(KUBECTL) apply \
-	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-$(NGINX_INGRESS_VERSION)/deploy/static/mandatory.yaml \
-	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-$(NGINX_INGRESS_VERSION)/deploy/static/provider/cloud-generic.yaml \
-	&& $(KUBECTL) scale --replicas=$(LKE_NODE_COUNT) deployment/nginx-ingress-controller --namespace $(NGINX_INGRESS_NAMESPACE) \
-	&& $(KUBETREE) deployments nginx-ingress-controller --namespace $(NGINX_INGRESS_NAMESPACE)
-lke-provision:: lke-nginx-ingress
-
-.PHONY: lke-nginx-ingress-verify
-lke-nginx-ingress-verify: lke-ctx
-	 $(KUBECTL) get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx --watch
-
-.PHONY: lke-nginx-ingress-logs
-lke-nginx-ingress-logs: lke-ctx
-	$(KUBECTL) logs deployments/nginx-ingress-controller --namespace $(NGINX_INGRESS_NAMESPACE) --follow
-
-# https://github.com/jetstack/cert-manager/releases
-CERT_MANAGER_VERSION := 0.14.2
-CERT_MANAGER_NAMESPACE := cert-manager
-.PHONY: lke-cert-manager
-lke-cert-manager: lke-ctx
-	$(KUBECTL) apply \
-	  --filename https://raw.githubusercontent.com/jetstack/cert-manager/v$(CERT_MANAGER_VERSION)/deploy/manifests/01-namespace.yaml \
-	  --filename https://github.com/jetstack/cert-manager/releases/download/v$(CERT_MANAGER_VERSION)/cert-manager.yaml \
-	&& $(KUBECTL) apply --filename $(CURDIR)/k8s/cert-manager/letsencrypt-staging.yml \
-	&& $(KUBECTL) apply --filename $(CURDIR)/k8s/cert-manager/letsencrypt-prod.yml
-lke-provision:: lke-cert-manager
-
-# https://kubernetes.io/docs/reference/kubectl/jsonpath/
-.PHONY: lke-cert-manager-verify
-lke-cert-manager-verify: lke-ctx
-	$(KUBECTL) apply \
-	   --filename $(CURDIR)/k8s/cert-manager/test-resources.yml \
-	&& $(KUBECTL) get certificate --namespace cert-manager-test --output=jsonpath='$(BOLD){"\n"}{.items[0].status.conditions[0].message}{"\n\n"}$(NORMAL)' \
-	&& $(KUBECTL) get certificate --namespace cert-manager-test --output=yaml
-
-.PHONY: lke-cert-manager-verify-clean
-lke-cert-manager-verify-clean: lke-ctx
-	$(KUBECTL) delete \
-	   --filename $(CURDIR)/k8s/cert-manager/test-resources.yml
-
-.PHONY: lke-cert-manager-logs
-lke-cert-manager-logs: lke-ctx
-	$(KUBECTL) logs deployments/cert-manager --namespace $(CERT_MANAGER_NAMESPACE) --follow
-
-# k delete -f tmp/kube-prometheus/manifests
-# If deleting namespace gets stuck: https://github.com/kubernetes/kubernetes/issues/60807#issuecomment-572615776
-METRICS_NAMESPACE := metrics
-.PHONY: lke-metrics
-lke-metrics: | lke-ctx kube-prometheus $(YTT)
-	$(KUBECTL) apply --filename tmp/kube-prometheus/manifests/setup \
-	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests \
-	&& $(YTT) \
-	    --data-value namespace=$(METRICS_NAMESPACE) \
-	    --file $(CURDIR)/k8s/metrics-changelog > $(CURDIR)/k8s/metrics-changelog.yml \
-	&& $(KUBECTL) apply --filename k8s/metrics-changelog.yml
-lke-provision:: lke-metrics
-
-# https://github.com/coreos/kube-prometheus#compatibility
-KUBE_PROMETHEUS_VERSION := master
-ifeq ($(LKE_VERSION),1.16)
-KUBE_PROMETHEUS_VERSION := release-0.4
-endif
-ifneq ($(filter $(LKE_VERSION), 1.17 1.18),)
-KUBE_PROMETHEUS_VERSION := release-0.5
-endif
-.PHONY: kube-prometheus
-kube-prometheus: tmp/kube-prometheus/manifests
-
-.PHONY: kube-prometheus-update
-kube-prometheus-update: | tmp/kube-prometheus/jsonnetfile.lock.json $(JB)
-	@printf "\n$(BOLD)Update kube-prometheus@$(KUBE_PROMETHEUS_VERSION) ...$(NORMAL)\n"
-	cd tmp/kube-prometheus \
-	&& $(JB) update
-
-METRICS_GITHUB_ORG := thechangelog
-# http://fabian-kostadinov.github.io/2015/01/16/how-to-find-a-github-team-id/
-# https://github.com/settings/tokens
-# curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" https://api.github.com/orgs/thechangelog/teams | view -c "set ft=json" -
-METRICS_GITHUB_TEAM_ID := 3796119
-METRICS_ROOT_URL := https://metrics.changelog.com
-tmp/kube-prometheus/manifests: k8s/kube-prometheus.jsonnet | tmp/kube-prometheus/jsonnetfile.lock.json $(JSONNET) $(LPASS) $(YQ)
-	@printf "\n$(BOLD)Generate kube-prometheus manifests ...$(NORMAL)\n"
-	cd tmp/kube-prometheus \
-	&& rm -fr manifests \
-	&& mkdir -p manifests/setup \
-	&& $(JSONNET) \
-		  --jpath vendor \
-		  --multi manifests \
-		  --ext-str NAMESPACE="$(METRICS_NAMESPACE)" \
-		  --ext-str GITHUB_OAUTH_APP_CLIENT_ID="$$($(LPASS) show --notes 6262503396338294422)" \
-		  --ext-str GITHUB_OAUTH_APP_CLIENT_SECRET="$$($(LPASS) show --notes 6396745408918286971)" \
-		  --ext-str GITHUB_ORG=$(METRICS_GITHUB_ORG) \
-		  --ext-str GITHUB_TEAM_ID=$(METRICS_GITHUB_TEAM_ID) \
-		  --ext-str ROOT_URL=$(METRICS_ROOT_URL) \
-		  $(CURDIR)/k8s/kube-prometheus.jsonnet \
-	   | while read file; do $(YQ) read --prettyPrint $$file > $$file.yml && rm $$file; done
-
-tmp/kube-prometheus/jsonnetfile.lock.json: | tmp/kube-prometheus/jsonnetfile.json $(JB)
-	@printf "\n$(BOLD)Install kube-prometheus@$(KUBE_PROMETHEUS_VERSION) ...$(NORMAL)\n"
-	cd tmp/kube-prometheus \
-	&& $(JB) install github.com/coreos/kube-prometheus/jsonnet/kube-prometheus@$(KUBE_PROMETHEUS_VERSION)
-
-tmp/kube-prometheus/jsonnetfile.json: | tmp/kube-prometheus $(JB)
-	@printf "\n$(BOLD)Initialize Jsonnet bundle ...$(NORMAL)\n"
-	cd tmp/kube-prometheus \
-	&& rm -fr * \
-	&& $(JB) init
-
-
-tmp/kube-prometheus:
-	mkdir -p $(@)
-
+include $(CURDIR)/mk/external-dns.mk
+include $(CURDIR)/mk/cert-manager.mk
+include $(CURDIR)/mk/nginx-ingress.mk
+include $(CURDIR)/mk/kube-prometheus.mk
 include $(CURDIR)/mk/ten.mk
