@@ -35,6 +35,18 @@ defmodule Changelog.SponsorStyle do
         duration: 96
       },
       %{
+        type: "Endorsement",
+        name: "Retool, Product overview",
+        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020-002.mp3",
+        duration: 90
+      },
+      %{
+        type: "Endorsement",
+        name: "Mux, Product overview",
+        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/mux-2020-001.mp3",
+        duration: 83
+      },
+      %{
         type: "Insider",
         name: "Vettery, Talent executive",
         audio:
