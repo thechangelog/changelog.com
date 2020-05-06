@@ -3,23 +3,36 @@ defmodule Changelog.SponsorStyle do
     [
       %{
         type: "Endorsement",
-        name: "Linode, Zeus-like power",
+        name: "Linode, Keep it fast.",
         audio:
-          "https://changelog-assets.s3.amazonaws.com/partner-stories/linode-zeus-like-power.mp3",
-        duration: 30
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-preroll--keep-it-fast.mp3",
+        duration: 21
       },
       %{
         type: "Endorsement",
-        name: "Digital Ocean, Simplicity",
+        name: "Pluralsight, Stay home. Skill up.",
         audio:
-          "https://changelog-assets.s3.amazonaws.com/partner-stories/digitalocean-simplicity-3.mp3",
-        duration: 51
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/pluralsight-2020-001.mp3",
+        duration: 38
       },
       %{
         type: "Endorsement",
-        name: "Raygun, APM for .NET",
-        audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/raygun-apm-1.mp3",
+        name: "Digital Ocean, Launch in the Cloud",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/digital-ocean-2020-002.mp3",
+        duration: 37
+      },
+      %{
+        type: "Endorsement",
+        name: "Algolia, Together against COVID-19",
+        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/algolia-2020-001--covid-19.mp3",
         duration: 72
+      },
+      %{
+        type: "Customer Story",
+        name: "Retool, Doordash story",
+        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020--doordash.mp3",
+        duration: 96
       },
       %{
         type: "Insider",
