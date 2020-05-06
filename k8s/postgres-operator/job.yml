@@ -1,0 +1,185 @@
+#@ load("@ytt:data", "data")
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pgo-deploy
+  namespace: #@ data.values.namespace
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      name: pgo-deploy
+    spec:
+      serviceAccountName: pgo-deployer-sa
+      restartPolicy: Never
+      containers:
+      - name: pgo-deploy
+        command: ["/pgo-deploy.sh"]
+        image: #@ data.values.image + ":centos7-" + data.values.version
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ANSIBLE_CONFIG
+            value: "/ansible/ansible.cfg"
+          - name: ARCHIVE_MODE
+            value: "true"
+          - name: ARCHIVE_TIMEOUT
+            value: "60"
+          - name: BACKREST
+            value: "true"
+          - name: BADGER
+            value: "false"
+          - name: CRUNCHY_DEBUG
+            value: "false"
+          - name: CREATE_RBAC
+            value: "true"
+          - name: CCP_IMAGE_PREFIX
+            value: "registry.developers.crunchydata.com/crunchydata"
+          - name: CCP_IMAGE_TAG
+            value: #@ "centos7-12.2-" + data.values.version
+          - name: DB_PASSWORD_LENGTH
+            value: "24"
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_REPLICAS
+            value: "0"
+          - name: DB_USER
+            value: "testuser"
+          - name: DEFAULT_INSTANCE_MEMORY
+            value: "128Mi"
+          - name: DEFAULT_PGBACKREST_MEMORY
+            value: ""
+          - name: DEFAULT_PGBOUNCER_MEMORY
+            value: ""
+          - name: DEPLOY_ACTION
+            value: "install"
+          - name: DISABLE_AUTO_FAILOVER
+            value: "false"
+          - name: EXPORTERPORT
+            value: "9187"
+          - name: HOME
+            value: "/tmp"
+          - name: METRICS
+            value: #@ str(data.values.metrics).lower()
+          - name: NAMESPACE
+            value: #@ data.values.namespace
+          - name: NAMESPACE_MODE
+            value: "dynamic"
+          - name: PGBADGERPORT
+            value: "10000"
+          - name: PGO_ADMIN_PASSWORD
+            value: "password"
+          - name: PGO_ADMIN_PERMS
+            value: "*"
+          - name: PGO_ADMIN_ROLE_NAME
+            value: "pgoadmin"
+          - name: PGO_ADMIN_USERNAME
+            value: "admin"
+          - name: PGO_CLIENT_VERSION
+            value: #@ "v" + data.values.version
+          - name: PGO_IMAGE_PREFIX
+            value: "registry.developers.crunchydata.com/crunchydata"
+          - name: PGO_IMAGE_TAG
+            value: #@ "centos7-" + data.values.version
+          - name: PGO_INSTALLATION_NAME
+            value: "devtest"
+          - name: PGO_OPERATOR_NAMESPACE
+            value: #@ data.values.namespace
+          - name: SCHEDULER_TIMEOUT
+            value: "3600"
+          - name: BACKREST_STORAGE
+            value: "hostpathstorage"
+          - name: BACKUP_STORAGE
+            value: "hostpathstorage"
+          - name: PRIMARY_STORAGE
+            value: "hostpathstorage"
+          - name: REPLICA_STORAGE
+            value: "hostpathstorage"
+          - name: WAL_STORAGE
+            value: ""
+          - name: STORAGE1_NAME
+            value: "hostpathstorage"
+          - name: STORAGE1_ACCESS_MODE
+            value: "ReadWriteMany"
+          - name: STORAGE1_SIZE
+            value: "1G"
+          - name: STORAGE1_TYPE
+            value: "create"
+          - name: STORAGE2_NAME
+            value: "replicastorage"
+          - name: STORAGE2_ACCESS_MODE
+            value: "ReadWriteMany"
+          - name: STORAGE2_SIZE
+            value: "700M"
+          - name: STORAGE2_TYPE
+            value: "create"
+          - name: STORAGE3_NAME
+            value: "nfsstorage"
+          - name: STORAGE3_ACCESS_MODE
+            value: "ReadWriteMany"
+          - name: STORAGE3_SIZE
+            value: "1G"
+          - name: STORAGE3_TYPE
+            value: "create"
+          - name: STORAGE3_SUPPLEMENTAL_GROUPS
+            value: "65534"
+          - name: STORAGE4_NAME
+            value: "nfsstoragered"
+          - name: STORAGE4_ACCESS_MODE
+            value: "ReadWriteMany"
+          - name: STORAGE4_MATCH_LABEL
+            value: "crunchyzone=red"
+          - name: STORAGE4_TYPE
+            value: "create"
+          - name: STORAGE4_SUPPLEMENTAL_GROUPS
+            value: "65534"
+          - name: STORAGE5_NAME
+            value: "storageos"
+          - name: STORAGE5_ACCESS_MODE
+            value: "ReadWriteOnce"
+          - name: STORAGE5_SIZE
+            value: #@ data.values.storage_size
+          - name: STORAGE5_TYPE
+            value: "dynamic"
+          - name: STORAGE5_CLASS
+            value: #@ data.values.storage_class
+          - name: STORAGE6_NAME
+            value: "primarysite"
+          - name: STORAGE6_ACCESS_MODE
+            value: "ReadWriteOnce"
+          - name: STORAGE6_SIZE
+            value: "4G"
+          - name: STORAGE6_TYPE
+            value: "dynamic"
+          - name: STORAGE6_CLASS
+            value: "primarysite"
+          - name: STORAGE7_NAME
+            value: "alternatesite"
+          - name: STORAGE7_ACCESS_MODE
+            value: "ReadWriteOnce"
+          - name: STORAGE7_SIZE
+            value: "4G"
+          - name: STORAGE7_TYPE
+            value: "dynamic"
+          - name: STORAGE7_CLASS
+            value: "alternatesite"
+          - name: STORAGE8_NAME
+            value: "gce"
+          - name: STORAGE8_ACCESS
+            value: "ReadWriteOnce"
+          - name: STORAGE8_SIZE
+            value: "300M"
+          - name: STORAGE8_TYPE
+            value: "dynamic"
+          - name: STORAGE8_CLASS
+            value: "standard"
+          - name: STORAGE9_NAME
+            value: "rook"
+          - name: STORAGE9_ACCESS_MODE
+            value: "ReadWriteOnce"
+          - name: STORAGE9_SIZE
+            value: "1Gi"
+          - name: STORAGE9_TYPE
+            value: "dynamic"
+          - name: STORAGE9_CLASS
+            value: "rook-ceph-block"

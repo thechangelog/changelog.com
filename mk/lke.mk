@@ -262,4 +262,5 @@ include $(CURDIR)/mk/external-dns.mk
 include $(CURDIR)/mk/cert-manager.mk
 include $(CURDIR)/mk/nginx-ingress.mk
 include $(CURDIR)/mk/kube-prometheus.mk
+include $(CURDIR)/mk/postgres.mk
 include $(CURDIR)/mk/ten.mk
