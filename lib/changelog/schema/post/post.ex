@@ -56,6 +56,9 @@ defmodule Changelog.Post do
   def authored_by(query \\ __MODULE__, person),
     do: from(q in query, where: q.author_id == ^person.id)
 
+  def contributed_by(query \\ __MODULE__, person),
+    do: from(q in query, where: q.author_id == ^person.id or q.editor_id == ^person.id)
+
   def published(query \\ __MODULE__),
     do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now())
 

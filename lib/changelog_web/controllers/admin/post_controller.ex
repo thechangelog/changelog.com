@@ -21,10 +21,11 @@ defmodule ChangelogWeb.Admin.PostController do
       |> Repo.all()
 
     drafts =
-      if(me.admin, do: Post, else: Post.authored_by(me))
+      if(me.admin, do: Post, else: Post.contributed_by(me))
       |> Post.unpublished()
       |> Post.newest_first(:inserted_at)
       |> preload(:author)
+      |> preload(:editor)
       |> Repo.all()
 
     conn

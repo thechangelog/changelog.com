@@ -128,12 +128,16 @@
     <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_post_path(@conn, :index))) %></div>
   <% else %>
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
-    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
+    <div class="column">
+    <%= if Policies.Post.index(@current_user) do %>
+      <%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %>
+    <% end %>
+    </div>
   <% end %>
   <% end %>
     <div class="column">
-      <%= if Policies.Post.publish(@current_user, @changeset.data) do %>
-        <%= render("_publish_buttons.html", assigns) %>
-      <% end %>
+    <%= if Policies.Post.publish(@current_user, @changeset.data) do %>
+      <%= render("_publish_buttons.html", assigns) %>
+    <% end %>
     </div>
   </div>
