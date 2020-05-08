@@ -11,7 +11,6 @@
   }
 
   &-item {
-    flex: 0 1 180px;
     position: relative;
     width: 60px;
     margin: 5px 5px 23px;
@@ -22,6 +21,7 @@
     }
 
     .avatar_list--full & {
+      flex: 0 1 180px;
       display: flex;
       align-items: center;
       width: auto;
