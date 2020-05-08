@@ -45,6 +45,14 @@
   <div id="guidelines" class="richtext richtext--small">
     <hr>
     <h3>Submission Guidelines</h3>
+    <p>Here's a short list of things that we aren't interested in 🙅‍♂️
+      <ol>
+        <li> How-to's and tutorials. e.g. - Configure Nginx on Ubuntu Linux 18.04</li>
+        <li>Commercial products and services. There is a <%= link("proper channel", to: Routes.page_path(@conn, :sponsor_pricing)) %> to promote such things.
+        <li>Medium posts and reader-hostile sites. We consider the entire <%= link("reading experience", to: "https://www.youtube.com/watch?v=7UG8JxTEhAk") %>.
+        <li>Podcast episode suggestions. Please use <%= link("this form", to: Routes.episode_request_path(@conn, :new)) %> instead.
+      </ol>
+    </p>
     <p>Submitting your own stuff is encouraged. Submitting other people's stuff is also encouraged.</p>
     <p>The golden rule: <mark>if your fellow devs will find it interesting, submit it.</mark></p>
     <p>That being said... we get <em>a lot</em> of submissions. Do your best to convince us why something is newsworthy.</p>
