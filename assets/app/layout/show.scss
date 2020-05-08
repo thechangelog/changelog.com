@@ -225,12 +225,15 @@
     &-subscribe {
 
       &-buttons {
+        margin-left: -8px;
+        margin-right: -8px;
         display: flex;
+        align-items: center;
         flex-wrap: wrap;
 
         &-item {
           height: 20px;
-          margin: 0 15px 12px 0;
+          margin: 0 8px 12px;
           padding: 4px 0 0 30px;
           background-size: 20px 20px;
           background-repeat: no-repeat;
