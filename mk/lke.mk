@@ -108,6 +108,13 @@ $(KUBETREE): $(KUBECTL) $(KREW)
 	$(KUBECTL) krew install tree \
 	&& touch $(@)
 
+# https://github.com/kubectl-plus/kcf
+KUBEFLEET := $(HOME)/.krew/bin/kubectl-fleet
+$(KUBEFLEET): $(KUBECTL) $(KREW)
+	$(KUBECTL) krew install fleet \
+	&& touch $(@)
+kubefleet: $(KUBEFLEET)
+
 # Make krew plugins available to kubectl
 PATH := $(HOME)/.krew/bin:$(PATH)
 export PATH
@@ -257,6 +264,11 @@ lke-cli: $(K9S) lke-config-hint
 .PHONY: lke-sanitize
 lke-sanitize: $(POPEYE) lke-config-hint
 	$(POPEYE)
+
+# https://github.com/kubectl-plus/kcf
+.PHONY: lke-details
+lke-details: $(KUBEFLEET) lke-config-hint
+	$(KUBEFLEET) details $$($(KUBECTL) config current-context | awk -F"-ctx" '{ print $$1 }')
 
 include $(CURDIR)/mk/external-dns.mk
 include $(CURDIR)/mk/cert-manager.mk
