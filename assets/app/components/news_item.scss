@@ -143,7 +143,9 @@
     margin: 0 0 1em;
 
     .page_news_item--post & {
-      font-size: 1.5em;
+      font-size: 1.25em;
+      font-weight: 500;
+      color: $medium-grey;
     }
   }
 
