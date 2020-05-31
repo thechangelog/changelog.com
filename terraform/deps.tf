@@ -1,5 +1,5 @@
 provider "linode" {
-  token = "${var.linode_token}"
+  token = var.linode_token
   version = "~> 1.3"
 }
 

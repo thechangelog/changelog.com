@@ -53,3 +53,6 @@ npm-debug.log*
 
 # Local binaries
 /bin
+
+# Local config files, host-specific
+.config

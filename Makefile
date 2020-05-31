@@ -115,17 +115,6 @@ ifeq ($(PLATFORM),Linux)
 endif
 
 ifeq ($(PLATFORM),Darwin)
-OPENSSL := /usr/local/opt/openssl/bin/openssl
-$(OPENSSL):
-	@brew install openssl
-endif
-ifeq ($(PLATFORM),Linux)
-OPENSSL := /usr/bin/openssl
-$(OPENSSL):
-	@sudo apt-get update && sudo apt-get install openssl
-endif
-
-ifeq ($(PLATFORM),Darwin)
 WATCH := /usr/local/bin/watch
 $(WATCH):
 	@brew install watch
@@ -147,7 +136,7 @@ endif
 SECRETS := $(LPASS) ls "Shared-changelog/secrets"
 
 TF := cd terraform && $(TERRAFORM)
-TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8038492725192048930)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7748004306557989540 && cat terraform/dhparams.pem)"
+TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8995604957212378446)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7865439845556655715 && cat terraform/dhparams.pem)"
 
 # Enable Terraform debugging if make runs in debug mode
 ifneq (,$(findstring d,$(MFLAGS)))
@@ -163,6 +152,7 @@ endif
 
 include $(CURDIR)/mk/inspect.mk
 include $(CURDIR)/mk/images.mk
+include $(CURDIR)/mk/ssl.mk
 
 MIGRATE_FROM := core@2019i.changelog.com
 include $(CURDIR)/mk/migrate.mk
@@ -394,10 +384,6 @@ iaas: linode-token dnsimple-creds terraform/dhparams.pem init validate apply ## 
 .PHONY: i
 i: iaas
 
-# https://www.linode.com/docs/platform/nodebalancer/nodebalancer-reference-guide/#diffie-hellman-parameters
-terraform/dhparams.pem: $(OPENSSL)
-	@$(OPENSSL) dhparam -out terraform/dhparams.pem 2048
-
 .PHONY: init
 init: $(TERRAFORM)
 	@$(TF) init
@@ -528,12 +514,6 @@ secrets: $(LPASS) ## s   | List all LastPass secrets
 	@$(SECRETS)
 .PHONY: s
 s: secrets
-
-.PHONY: ssl-report
-ssl-report: ## ssl | Run an SSL report via SSL Labs
-	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(HOSTNAME)&latest"
-.PHONY: ssl
-ssl: ssl-report
 
 .PHONY: test
 test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
