@@ -117,6 +117,18 @@ defmodule Changelog.Podcast do
   def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio())
   def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio(), podcast.id)
 
+  def get_news_item_episode_ids!(podcast) do
+    podcast
+    |> get_news_items()
+    |> Ecto.Query.select([:object_id])
+    |> Repo.all()
+    |> Enum.map(fn(i) ->
+      i.object_id
+      |> String.split(":")
+      |> List.last()
+    end)
+  end
+
   def episode_count(podcast), do: podcast |> assoc(:episodes) |> Repo.count()
 
   def subscription_count(podcast), do: podcast |> assoc(:subscriptions) |> Repo.count()

@@ -47,9 +47,9 @@ defmodule ChangelogWeb.FeedControllerTest do
 
   test "the news feed with just titles", %{conn: conn} do
     post = insert(:published_post, body: "zomg")
-    post |> post_news_item() |> insert
+    post |> post_news_item() |> insert()
     episode = insert(:published_episode, summary: "zomg")
-    episode |> episode_news_item() |> insert
+    episode |> episode_news_item() |> insert()
 
     conn = get(conn, Routes.feed_path(conn, :news_titles))
 
@@ -64,6 +64,7 @@ defmodule ChangelogWeb.FeedControllerTest do
   test "the podcast feed", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
+    e |> episode_news_item() |> insert()
 
     conn = get(conn, Routes.feed_path(conn, :podcast, p.slug))
 
@@ -83,8 +84,11 @@ defmodule ChangelogWeb.FeedControllerTest do
   test "the master podcast feed", %{conn: conn} do
     p1 = insert(:podcast)
     e1 = insert(:published_episode, podcast: p1)
+    e1 |> episode_news_item_feed_only() |> insert()
+
     p2 = insert(:podcast)
     e2 = insert(:published_episode, podcast: p2)
+    e2 |> episode_news_item() |> insert()
 
     conn = get(conn, Routes.feed_path(conn, :podcast, "master"))
 

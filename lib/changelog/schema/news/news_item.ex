@@ -16,7 +16,7 @@ defmodule Changelog.NewsItem do
     UrlKit
   }
 
-  defenum(Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3)
+  defenum(Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3, feed_only: 4)
   defenum(Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4)
 
   schema "news_items" do

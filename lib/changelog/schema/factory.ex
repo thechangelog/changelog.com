@@ -146,6 +146,19 @@ defmodule Changelog.Factory do
     }
   end
 
+  def episode_news_item_feed_only(episode) do
+    object_id = Changelog.Episode.object_id(episode)
+
+    %{
+      published_news_item_factory()
+      | type: :audio,
+        status: :feed_only,
+        headline: episode.title,
+        url: "https://changelog.com/episodes/#{episode.slug}",
+        object_id: object_id
+    }
+  end
+
   def episode_news_item_with_story(episode, story) do
     %{episode_news_item(episode) | story: story}
   end
