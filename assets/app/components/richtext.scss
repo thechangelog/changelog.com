@@ -97,6 +97,10 @@
     padding: .15em 0 .15em 1em;
     color: $black;
 
+    blockquote {
+      border-left-color: $light-grey;
+    }
+
     p {
       color: $black;
       max-width: 680px;
