@@ -2,6 +2,9 @@ defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, NewsItem, Podcast}
+  alias ChangelogWeb.Plug.ResponseCache
+
+  plug ResponseCache
 
   def index(conn, _params) do
     render(conn, :index)

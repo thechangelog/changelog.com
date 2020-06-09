@@ -4,6 +4,9 @@ defmodule ChangelogWeb.FeedController do
   require Logger
 
   alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Person, Podcast, Post, Topic}
+  alias ChangelogWeb.Plug.ResponseCache
+
+  plug ResponseCache
 
   def news(conn, _params) do
     conn

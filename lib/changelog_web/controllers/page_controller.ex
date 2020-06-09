@@ -3,8 +3,10 @@ defmodule ChangelogWeb.PageController do
 
   alias Changelog.{Cache, Episode, Newsletters, NewsSponsorship, Podcast}
   alias ChangelogWeb.TimeView
+  alias ChangelogWeb.Plug.ResponseCache
 
   plug RequireGuest, "before joining" when action in [:join]
+  plug ResponseCache
 
   # pages that need special treatment get their own matched function
   # all others simply render the template of the same name

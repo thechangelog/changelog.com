@@ -13,9 +13,6 @@ defmodule ChangelogWeb do
 
       alias ChangelogWeb.Router.Helpers, as: Routes
 
-      plug ChangelogWeb.Plug.ResponseCache
-      alias ChangelogWeb.Plug.ResponseCache
-
       def log_request(conn, prefix \\ "REQUEST DETAILS") do
         details =
           conn

@@ -2,7 +2,9 @@ defmodule ChangelogWeb.EpisodeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, NewsItem, Podcast}
+  alias ChangelogWeb.Plug.ResponseCache
 
+  plug ResponseCache
   plug :assign_podcast
 
   def action(conn, _) do

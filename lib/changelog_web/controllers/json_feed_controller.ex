@@ -2,8 +2,11 @@ defmodule ChangelogWeb.JsonFeedController do
   use ChangelogWeb, :controller
 
   alias Changelog.NewsItem
+  alias ChangelogWeb.Plug.ResponseCache
 
   require Logger
+
+  plug ResponseCache
 
   def news(conn, _params) do
     conn

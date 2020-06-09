@@ -3,6 +3,9 @@ defmodule ChangelogWeb.LiveController do
 
   alias Changelog.{Episode, Icecast}
   alias ChangelogWeb.TimeView
+  alias ChangelogWeb.Plug.ResponseCache
+
+  plug ResponseCache
 
   def index(conn, _params) do
     episodes =
