@@ -4,7 +4,7 @@ defmodule Changelog.Cache do
   """
   require Logger
 
-  alias Changelog.{Episode, Podcast, Post, Repo}
+  alias Changelog.{Episode, NewsItem, Podcast, Post, Repo}
 
   def cache_name, do: :app_cache
 
@@ -13,10 +13,21 @@ defmodule Changelog.Cache do
   def delete(episode = %Episode{}) do
     episode = Episode.preload_podcast(episode)
     delete_prefix("/#{episode.podcast.slug}/#{episode.slug}")
+
+    if Episode.is_public(episode) do
+      delete_prefix("#{episode.podcast.slug}/feed")
+    end
   end
 
-  def delete(_podcast = %Podcast{}) do
+  def delete(item = %NewsItem{}) do
+    item = NewsItem.load_object(item)
+    delete_prefix("/news/#{NewsItem.slug(item)}")
+    delete(item.object)
+  end
+
+  def delete(podcast = %Podcast{}) do
     delete("podcasts")
+    delete_prefix("/#{podcast.slug}")
   end
 
   def delete(post = %Post{}) do
