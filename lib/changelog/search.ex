@@ -14,6 +14,8 @@ defmodule Changelog.Search do
     end
   end
 
+  def save_item(item = %NewsItem{feed_only: :true}), do: false
+
   def save_item(item = %NewsItem{status: :published}) do
     Algolia.save_object(namespace(), indexed_attributes(item), item.id)
   end

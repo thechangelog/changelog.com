@@ -13,6 +13,8 @@ defmodule Changelog.Notifier do
 
   alias ChangelogWeb.Email
 
+  def notify(%NewsItem{feed_only: true}), do: false
+
   def notify(item = %NewsItem{type: :audio}) do
     episode =
       item

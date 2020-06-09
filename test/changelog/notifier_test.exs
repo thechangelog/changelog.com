@@ -249,6 +249,14 @@ defmodule Changelog.NotifierTest do
     end
   end
 
+  describe "notify/1 with feed-only item" do
+    test "nobody is notified" do
+      item = insert(:news_item, feed_only: true)
+      Notifier.notify(item)
+      assert_no_emails_delivered()
+    end
+  end
+
   describe "notify/1 with an episode" do
     test "when episode has no transcript subscriptions (bc they aren't a thing yet" do
       person = insert(:person, email: "jerod@changelog.com")
