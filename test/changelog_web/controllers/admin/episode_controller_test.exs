@@ -154,7 +154,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     end
   end
 
-  @tag :as_admin
+  @tag :as_inserted_admin
   test "publishes an episode", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p)
@@ -166,7 +166,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert called(Github.Pusher.push(:_, e.notes))
   end
 
-  @tag :as_admin
+  @tag :as_inserted_admin
   test "schedules an episode for publishing", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p, published_at: Timex.end_of_week(Timex.now()))
@@ -179,7 +179,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert called(Github.Pusher.push(:_, e.notes))
   end
 
-  @tag :as_admin
+  @tag :as_inserted_admin
   test "publishes an episode, optionally setting guest 'thanks' to true", %{conn: conn} do
     g1 = insert(:person)
     g2 = insert(:person)
@@ -200,7 +200,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert called(Github.Pusher.push(:_, e.notes))
   end
 
-  @tag :as_admin
+  @tag :as_inserted_admin
   test "publishes an episode, optionally not setting guest thanks to 'true'", %{conn: conn} do
     g1 = insert(:person)
     g2 = insert(:person)
@@ -218,7 +218,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_inserted_admin
-  test "publishes an episode, optionally creating an associated news item", %{conn: conn} do
+  test "publishes an episode, optionally creating a normal news item", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p)
 
@@ -236,7 +236,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_inserted_admin
-  test "publishes an episode, optionally not creating an associated news item", %{conn: conn} do
+  test "publishes an episode, optionally creating a feed-only news item", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p)
 
@@ -244,8 +244,8 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published()) == 1
-    assert count(NewsItem) == 0
-    assert count(NewsQueue) == 0
+    assert count(NewsItem.feed_only()) == 1
+    assert count(NewsQueue) == 1
   end
 
   @tag :as_admin

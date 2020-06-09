@@ -172,6 +172,12 @@ defmodule Changelog.Episode do
     |> Repo.one()
   end
 
+  def has_news_item(episode) do
+    episode
+    |> NewsItem.with_episode()
+    |> Repo.exists?()
+  end
+
   def load_news_item(episode) do
     item = episode |> get_news_item() |> NewsItem.load_object(episode)
     Map.put(episode, :news_item, item)

@@ -16,7 +16,7 @@ defmodule Changelog.NewsItem do
     UrlKit
   }
 
-  defenum(Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3, feed_only: 4)
+  defenum(Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3)
   defenum(Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4)
 
   schema "news_items" do
@@ -30,7 +30,9 @@ defmodule Changelog.NewsItem do
     field :object_id, :string
     field :object, :map, virtual: true
 
+    field :feed_only, :boolean, default: false
     field :pinned, :boolean, default: false
+
     field :published_at, :utc_datetime
     field :refreshed_at, :utc_datetime
 
@@ -61,6 +63,9 @@ defmodule Changelog.NewsItem do
   def by_ids(query \\ __MODULE__, ids),
     do:
       from(q in query, where: q.id in ^ids, order_by: fragment("array_position(?, ?)", ^ids, q.id))
+
+  def feed_only(query \\ __MODULE__), do: from(q in query, where: q.feed_only)
+  def non_feed_only(query \\ __MODULE__), do: from(q in query, where: not(q.feed_only))
 
   def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
   def drafted(query \\ __MODULE__), do: from(q in query, where: q.status == ^:draft)
@@ -282,7 +287,7 @@ defmodule Changelog.NewsItem do
       item
       |> change(%{
         status: :published,
-        published_at: now_in_seconds(),
+        published_at: item.published_at || now_in_seconds(),
         refreshed_at: now_in_seconds()
       })
       |> Repo.update!()

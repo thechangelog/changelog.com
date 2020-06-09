@@ -152,7 +152,7 @@ defmodule Changelog.Factory do
     %{
       published_news_item_factory()
       | type: :audio,
-        status: :feed_only,
+        feed_only: true,
         headline: episode.title,
         url: "https://changelog.com/episodes/#{episode.slug}",
         object_id: object_id

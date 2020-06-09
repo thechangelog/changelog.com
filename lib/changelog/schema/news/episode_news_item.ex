@@ -4,9 +4,12 @@ defmodule Changelog.EpisodeNewsItem do
   alias Changelog.{Episode, NewsItem, Search}
   alias ChangelogWeb.EpisodeView
 
-  def insert(episode, logger) do
+  def insert(episode, logger), do: insert(episode, logger, false)
+
+  def insert(episode, logger, feed_only) do
     %NewsItem{
       type: :audio,
+      feed_only: feed_only,
       object_id: Episode.object_id(episode),
       url: EpisodeView.url(episode, :show),
       headline: episode.title,

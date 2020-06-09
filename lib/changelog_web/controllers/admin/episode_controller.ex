@@ -330,13 +330,20 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> Repo.all()
   end
 
+  # if the "news" param exists, it's a regular news item.
   defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do
+    logger = conn.assigns.current_user
     episode
-    |> EpisodeNewsItem.insert(conn.assigns.current_user)
+    |> EpisodeNewsItem.insert(logger)
     |> NewsQueue.append()
   end
-
-  defp handle_news_item(_, _), do: false
+  # Otherwise we want a feed-only news item
+  defp handle_news_item(conn, episode) do
+    logger = conn.assigns.current_user
+    episode
+    |> EpisodeNewsItem.insert(logger, true)
+    |> NewsQueue.append()
+  end
 
   defp handle_notes_push_to_github(episode) do
     if Episode.is_published(episode) do
