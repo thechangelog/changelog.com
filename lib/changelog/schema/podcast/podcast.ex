@@ -122,7 +122,7 @@ defmodule Changelog.Podcast do
     |> get_news_items()
     |> Ecto.Query.select([:object_id])
     |> Repo.all()
-    |> Enum.map(fn(i) ->
+    |> Enum.map(fn i ->
       i.object_id
       |> String.split(":")
       |> List.last()

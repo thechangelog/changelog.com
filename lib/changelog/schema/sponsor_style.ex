@@ -25,25 +25,29 @@ defmodule Changelog.SponsorStyle do
       %{
         type: "Endorsement",
         name: "Algolia, Together against COVID-19",
-        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/algolia-2020-001--covid-19.mp3",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/algolia-2020-001--covid-19.mp3",
         duration: 72
       },
       %{
         type: "Customer Story",
         name: "Retool, Doordash story",
-        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020--doordash.mp3",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020--doordash.mp3",
         duration: 96
       },
       %{
         type: "Endorsement",
         name: "Retool, Product overview",
-        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020-002.mp3",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020-002.mp3",
         duration: 90
       },
       %{
         type: "Endorsement",
         name: "Mux, Product overview",
-        audio: "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/mux-2020-001.mp3",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/mux-2020-001.mp3",
         duration: 83
       },
       %{

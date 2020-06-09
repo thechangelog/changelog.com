@@ -65,7 +65,7 @@ defmodule Changelog.NewsItem do
       from(q in query, where: q.id in ^ids, order_by: fragment("array_position(?, ?)", ^ids, q.id))
 
   def feed_only(query \\ __MODULE__), do: from(q in query, where: q.feed_only)
-  def non_feed_only(query \\ __MODULE__), do: from(q in query, where: not(q.feed_only))
+  def non_feed_only(query \\ __MODULE__), do: from(q in query, where: not q.feed_only)
 
   def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
   def drafted(query \\ __MODULE__), do: from(q in query, where: q.status == ^:draft)

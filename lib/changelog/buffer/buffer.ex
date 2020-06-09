@@ -63,6 +63,7 @@ defmodule Changelog.Buffer do
     profiles = profiles_for_podcast(episode.podcast)
     Client.create(with_shared(profiles), text, link: link)
   end
+
   # an episode news item with no attached object
   defp queue_item(%NewsItem{type: :audio}), do: false
   defp queue_item(%NewsItem{type: :audio, object: nil}), do: false

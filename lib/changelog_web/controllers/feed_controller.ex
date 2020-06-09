@@ -59,8 +59,10 @@ defmodule ChangelogWeb.FeedController do
     case AgentKit.get_subscribers(ua) do
       {:ok, {agent, subs}} ->
         Logger.info("Known agent reporting: #{slug}, #{agent}, #{subs}")
+
       {:error, :unknown_agent} ->
         Logger.info("Unknown agent reporting: #{ua}")
+
       {:error, _message} ->
         false
     end

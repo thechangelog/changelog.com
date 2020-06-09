@@ -333,13 +333,16 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   # if the "news" param exists, it's a regular news item.
   defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do
     logger = conn.assigns.current_user
+
     episode
     |> EpisodeNewsItem.insert(logger)
     |> NewsQueue.append()
   end
+
   # Otherwise we want a feed-only news item
   defp handle_news_item(conn, episode) do
     logger = conn.assigns.current_user
+
     episode
     |> EpisodeNewsItem.insert(logger, true)
     |> NewsQueue.append()

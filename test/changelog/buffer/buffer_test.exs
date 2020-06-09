@@ -31,9 +31,9 @@ defmodule Changelog.Buffer.BufferTest do
       item = %NewsItem{type: :audio, object_id: Episode.object_id(episode)}
 
       with_mocks([
-        {Buffer.Content, [], [episode_text: fn(_) -> "text" end]},
-        {Buffer.Content, [], [episode_link: fn(_) -> "url1" end]},
-        {Buffer.Client, [], [create: fn(_, _, _) -> true end]}
+        {Buffer.Content, [], [episode_text: fn _ -> "text" end]},
+        {Buffer.Content, [], [episode_link: fn _ -> "url1" end]},
+        {Buffer.Client, [], [create: fn _, _, _ -> true end]}
       ]) do
         Buffer.queue(item)
         assert called(Buffer.Client.create(:_, "text", link: "url1"))
@@ -43,7 +43,7 @@ defmodule Changelog.Buffer.BufferTest do
     test "is a no-op when news item is feed-only" do
       item = %NewsItem{feed_only: true}
 
-      with_mock(Buffer.Client, create: fn(_, _, _) -> true end) do
+      with_mock(Buffer.Client, create: fn _, _, _ -> true end) do
         Buffer.queue(item)
         refute called(Buffer.Client.create())
       end
@@ -52,7 +52,7 @@ defmodule Changelog.Buffer.BufferTest do
     test "is a no-op when sent other audio news item" do
       item = %NewsItem{type: :audio}
 
-      with_mock(Buffer.Client, create: fn(_, _, _) -> true end) do
+      with_mock(Buffer.Client, create: fn _, _, _ -> true end) do
         Buffer.queue(item)
         refute called(Buffer.Client.create())
       end
@@ -63,10 +63,10 @@ defmodule Changelog.Buffer.BufferTest do
       item = %NewsItem{type: :link, object_id: "posts:this-is-one"}
 
       with_mocks([
-        {Buffer.Content, [], [post_brief: fn(_) -> "brief" end]},
-        {Buffer.Content, [], [post_text: fn(_) -> "text" end]},
-        {Buffer.Content, [], [post_link: fn(_) -> "url1" end]},
-        {Buffer.Client, [], [create: fn(_, _, _) -> true end]}
+        {Buffer.Content, [], [post_brief: fn _ -> "brief" end]},
+        {Buffer.Content, [], [post_text: fn _ -> "text" end]},
+        {Buffer.Content, [], [post_link: fn _ -> "url1" end]},
+        {Buffer.Client, [], [create: fn _, _, _ -> true end]}
       ]) do
         Buffer.queue(item)
         assert called(Buffer.Client.create(:_, "text", link: "url1"))
@@ -77,11 +77,11 @@ defmodule Changelog.Buffer.BufferTest do
       item = %NewsItem{type: :link}
 
       with_mocks([
-        {Buffer.Content, [], [news_item_brief: fn(_) -> "brief" end]},
-        {Buffer.Content, [], [news_item_text: fn(_) -> "text" end]},
-        {Buffer.Content, [], [news_item_link: fn(_) -> "url1" end]},
-        {Buffer.Content, [], [news_item_image: fn(_) -> "url2" end]},
-        {Buffer.Client, [], [create: fn(_, _, _) -> true end]}
+        {Buffer.Content, [], [news_item_brief: fn _ -> "brief" end]},
+        {Buffer.Content, [], [news_item_text: fn _ -> "text" end]},
+        {Buffer.Content, [], [news_item_link: fn _ -> "url1" end]},
+        {Buffer.Content, [], [news_item_image: fn _ -> "url2" end]},
+        {Buffer.Client, [], [create: fn _, _, _ -> true end]}
       ]) do
         Buffer.queue(item)
         assert called(Buffer.Client.create(:_, "text", link: "url1", photo: "url2"))
@@ -94,11 +94,11 @@ defmodule Changelog.Buffer.BufferTest do
       insert(:news_item_topic, news_item: item, topic: topic)
 
       with_mocks([
-        {Buffer.Content, [], [news_item_brief: fn(_) -> "brief" end]},
-        {Buffer.Content, [], [news_item_text: fn(_) -> "text" end]},
-        {Buffer.Content, [], [news_item_link: fn(_) -> "url1" end]},
-        {Buffer.Content, [], [news_item_image: fn(_) -> "url2" end]},
-        {Buffer.Client, [], [create: fn(_, _, _) -> true end]}
+        {Buffer.Content, [], [news_item_brief: fn _ -> "brief" end]},
+        {Buffer.Content, [], [news_item_text: fn _ -> "text" end]},
+        {Buffer.Content, [], [news_item_link: fn _ -> "url1" end]},
+        {Buffer.Content, [], [news_item_image: fn _ -> "url2" end]},
+        {Buffer.Client, [], [create: fn _, _, _ -> true end]}
       ]) do
         Buffer.queue(item)
         assert called(Buffer.Client.create(:_, "text", link: "url1", photo: "url2"))

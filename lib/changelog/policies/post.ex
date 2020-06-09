@@ -17,6 +17,7 @@ defmodule Changelog.Policies.Post do
 
   defp is_post_author(nil, _post), do: false
   defp is_post_author(_actor, %{author: nil}), do: false
+
   defp is_post_author(actor, post) do
     post
     |> Map.get(:author, nil)
@@ -25,6 +26,7 @@ defmodule Changelog.Policies.Post do
 
   defp is_post_editor(nil, _post), do: false
   defp is_post_editor(_actor, %{editor: nil}), do: false
+
   defp is_post_editor(actor, post) do
     post
     |> Map.get(:editor, nil)
