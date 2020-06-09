@@ -17,6 +17,7 @@ defmodule ChangelogWeb.PodcastController do
       podcast
       |> Podcast.get_news_items()
       |> NewsItem.published()
+      |> NewsItem.non_feed_only()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 30))

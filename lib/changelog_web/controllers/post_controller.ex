@@ -5,8 +5,9 @@ defmodule ChangelogWeb.PostController do
 
   def index(conn, params) do
     page =
-      NewsItem.published()
-      |> NewsItem.with_object_prefix("posts")
+      NewsItem.with_object_prefix("posts")
+      |> NewsItem.published()
+      |> NewsItem.non_feed_only()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 15))

@@ -11,6 +11,7 @@ defmodule ChangelogWeb.NewsItemController do
     pinned =
       NewsItem
       |> NewsItem.published()
+      |> NewsItem.non_feed_only()
       |> NewsItem.pinned()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()
@@ -20,6 +21,7 @@ defmodule ChangelogWeb.NewsItemController do
     page =
       NewsItem
       |> NewsItem.published()
+      |> NewsItem.non_feed_only()
       |> NewsItem.unpinned()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()
@@ -39,6 +41,7 @@ defmodule ChangelogWeb.NewsItemController do
     page =
       NewsItem
       |> NewsItem.published()
+      |> NewsItem.non_feed_only()
       |> NewsItem.freshest_first()
       |> NewsItem.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
@@ -56,6 +59,7 @@ defmodule ChangelogWeb.NewsItemController do
     query =
       NewsItem
       |> NewsItem.published()
+      |> NewsItem.non_feed_only()
       |> NewsItem.sans_object()
       |> NewsItem.top_clicked_first()
       |> NewsItem.preload_all()
