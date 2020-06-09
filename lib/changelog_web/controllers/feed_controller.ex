@@ -6,6 +6,7 @@ defmodule ChangelogWeb.FeedController do
   alias Changelog.{AgentKit, Episode, NewsItem, NewsSource, Person, Podcast, Post, Topic}
   alias ChangelogWeb.Plug.ResponseCache
 
+  plug :log_subscribers, "log podcast subscribers" when action in [:podcast]
   plug ResponseCache
 
   def news(conn, _params) do
@@ -43,8 +44,6 @@ defmodule ChangelogWeb.FeedController do
       |> Episode.preload_all()
       |> Repo.all()
 
-    log_subscribers(conn, podcast)
-
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
@@ -54,14 +53,19 @@ defmodule ChangelogWeb.FeedController do
     |> render("podcast.xml")
   end
 
-  defp log_subscribers(conn, podcast) do
+  defp log_subscribers(conn = %{params: %{"slug" => slug}}, _) do
     ua = ChangelogWeb.Plug.Conn.get_agent(conn)
 
     case AgentKit.get_subscribers(ua) do
-      {:ok, {agent, subs}} -> Podcast.update_subscribers(podcast, agent, subs)
-      {:error, :unknown_agent} -> Logger.info("Unknown agent reporting: #{ua}")
-      {:error, _message} -> false
+      {:ok, {agent, subs}} ->
+        Logger.info("Known agent reporting: #{slug}, #{agent}, #{subs}")
+      {:error, :unknown_agent} ->
+        Logger.info("Unknown agent reporting: #{ua}")
+      {:error, _message} ->
+        false
     end
+
+    conn
   end
 
   def posts(conn, _params) do
