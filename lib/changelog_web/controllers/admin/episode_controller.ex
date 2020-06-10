@@ -259,7 +259,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         handle_guest_thanks(params, episode)
         handle_news_item(conn, episode)
         handle_notes_push_to_github(episode)
-        Cache.delete(episode)
 
         conn
         |> put_flash(:result, "success")
