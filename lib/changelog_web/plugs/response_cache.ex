@@ -45,8 +45,8 @@ defmodule ChangelogWeb.Plug.ResponseCache do
   defp cache_response(conn = %{resp_body: body}) do
     type = conn |> get_resp_header("content-type") |> hd()
     ttl = conn |> Map.get(:cache_ttl)
-    item = %{type: type, value: body, ttl: ttl}
-    Cache.put(key(conn), item)
+    item = %{type: type, value: body}
+    Cache.put(key(conn), item, ttl)
     conn
   end
 

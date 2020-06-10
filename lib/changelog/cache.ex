@@ -67,6 +67,11 @@ defmodule Changelog.Cache do
 
   def put(key, item), do: ConCache.put(cache_name(), key, item)
 
+  def put(key, item, ttl) do
+    item = %ConCache.Item{value: item, ttl: ttl}
+    put(key, item)
+  end
+
   def keys do
     cache_name()
     |> ConCache.ets()
