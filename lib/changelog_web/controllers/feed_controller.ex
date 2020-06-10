@@ -31,24 +31,34 @@ defmodule ChangelogWeb.FeedController do
     send_resp(conn, :not_found, "")
   end
 
-  def podcast(conn, %{"slug" => slug}) do
+  def podcast(conn, params = %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
 
-    episodes =
+    page =
       podcast
-      |> Podcast.get_news_item_episode_ids!()
-      |> Episode.with_ids()
+      |> Podcast.get_episodes()
       |> Episode.published()
       |> Episode.newest_first()
       |> Episode.exclude_transcript()
       |> Episode.preload_all()
-      |> Repo.all()
+      |> Repo.paginate(Map.put(params, :page_size, 100))
+
+    # episodes =
+    #   podcast
+    #   |> Podcast.get_news_item_episode_ids!()
+    #   |> Episode.with_ids()
+    #   |> Episode.published()
+    #   |> Episode.newest_first()
+    #   |> Episode.exclude_transcript()
+    #   |> Episode.preload_all()
+    #   |> Repo.all()
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:podcast, podcast)
-    |> assign(:episodes, episodes)
+    |> assign(:page, page)
+    |> assign(:episodes, page.entries)
     |> ResponseCache.cache_public()
     |> render("podcast.xml")
   end
