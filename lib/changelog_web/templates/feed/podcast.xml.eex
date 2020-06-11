@@ -10,14 +10,6 @@
     <copyright>All rights reserved</copyright>
     <link><%= Routes.podcast_url(@conn, :show, @podcast.slug) %></link>
     <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
-    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug) %>" rel="first" type="application/rss+xml" />
-    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug, page: @page.total_pages) %>" rel="last" type="application/rss+xml" />
-  <%= if @page.page_number > 1 do %>
-    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug, page: @page.page_number - 1) %>" rel="previous" type="application/rss+xml" />
-  <% end %>
-  <%= if @page.page_number < @page.total_pages do %>
-    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug, page: @page.page_number + 1) %>" rel="next" type="application/rss+xml" />
-  <% end %>
     <atom:link href="<%= Routes.podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="text/html" />
     <language>en-us</language>
     <description><%= SharedHelpers.md_to_text(@podcast.description) %> <%= @podcast.extended_description %></description>
