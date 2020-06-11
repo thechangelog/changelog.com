@@ -15,14 +15,14 @@ defmodule Changelog.Repo.Migrations.AddImageBooleanToNewsIssueItems do
 
     flush()
 
-    for item <- Repo.all(NewsItem.with_image()) do
+    for item <- NewsItem.with_image() |> select([:id]) |> Repo.all() do
       from(i in "news_issue_items",
         update: [set: [image: true]],
         where: i.item_id == ^item.id)
       |> Repo.update_all([])
     end
 
-    for ad <- Repo.all(NewsAd.with_image()) do
+    for ad <- NewsAd.with_image() |> select([:id]) |> Repo.all() do
       from(a in "news_issue_ads",
         update: [set: [image: true]],
         where: a.ad_id == ^ad.id)

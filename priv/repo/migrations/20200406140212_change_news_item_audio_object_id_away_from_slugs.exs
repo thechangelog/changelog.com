@@ -1,10 +1,11 @@
 defmodule Changelog.Repo.Migrations.ChangeNewsItemAudioObjectIdAwayFromSlugs do
   use Ecto.Migration
+  import Ecto.Query
 
   alias Changelog.{Episode, NewsItem, Repo}
 
   def up do
-    for item <- NewsItem.audio() |> Repo.all() do
+    for item <- NewsItem.audio() |> select([:object_id]) |> Repo.all() do
       [podcast_slug, episode_slug] = String.split(item.object_id, ":")
 
       # only operate on object that are currently using slugs
@@ -25,7 +26,7 @@ defmodule Changelog.Repo.Migrations.ChangeNewsItemAudioObjectIdAwayFromSlugs do
   end
 
   def down do
-    for item <- NewsItem.audio() |> Repo.all() do
+    for item <- NewsItem.audio() |> select([:object_id]) |> Repo.all() do
       [podcast_id, episode_id] = String.split(item.object_id, ":")
 
       # only operate on object that are currently using integer ids
