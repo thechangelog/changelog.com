@@ -217,9 +217,13 @@ defmodule Changelog.Podcast do
     |> Repo.update!()
   end
 
-  def update_subscribers(%{slug: "master"}, client, count) do
-    podcast = get_by_slug!("backstage")
+  def update_subscribers(slug, client, count) when is_binary(slug) do
+    podcast = get_by_slug!(slug)
     update_subscribers(podcast, client, count)
+  end
+
+  def update_subscribers(%{slug: "master"}, client, count) do
+    update_subscribers("backstage", client, count)
   end
 
   def update_subscribers(podcast = %{subscribers: nil}, client, count) do
