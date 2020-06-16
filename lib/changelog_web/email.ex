@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Email do
   use Bamboo.Phoenix, view: ChangelogWeb.EmailView
 
-  alias Changelog.NewsItem
+  alias Changelog.{EpisodeRequest, NewsItem}
   alias ChangelogWeb.EpisodeView
 
   def authored_news_published(person, item) do
@@ -72,6 +72,19 @@ defmodule ChangelogWeb.Email do
     |> assign(:person, subscription.person)
     |> assign(:episode, episode)
     |> render(:episode_published)
+  end
+
+  def episode_request_published(request) do
+    request = EpisodeRequest.preload_all(request)
+
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Episode Request")
+    |> to(request.submitter)
+    |> subject("Your requested episode is a thing!")
+    |> assign(:person, request.submitter)
+    |> assign(:episode, request.episode)
+    |> assign(:podcast, request.podcast)
+    |> render(:episode_request_published)
   end
 
   def episode_transcribed(person, episode) do

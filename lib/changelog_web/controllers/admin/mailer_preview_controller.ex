@@ -1,7 +1,16 @@
 defmodule ChangelogWeb.Admin.MailerPreviewController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, NewsItemComment, Person, Repo, Subscription}
+  alias Changelog.{
+    Episode,
+    EpisodeRequest,
+    NewsItem,
+    NewsItemComment,
+    Person,
+    Repo,
+    Subscription
+  }
+
   alias ChangelogWeb.Email
 
   def index(conn, _params) do
@@ -91,6 +100,17 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
 
   def episode_published_email do
     Email.episode_published(known_subscription(), known_episode())
+  end
+
+  def episode_request_published_email do
+    request =
+      EpisodeRequest
+      |> EpisodeRequest.limit(1)
+      |> EpisodeRequest.with_episode()
+      |> EpisodeRequest.preload_all()
+      |> Repo.one()
+
+      Email.episode_request_published(request)
   end
 
   def episode_transcribed_email do

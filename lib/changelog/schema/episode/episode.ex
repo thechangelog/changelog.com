@@ -201,6 +201,7 @@ defmodule Changelog.Episode do
     |> preload_guests()
     |> preload_hosts()
     |> preload_sponsors()
+    |> preload_episode_request()
   end
 
   def preload_episode_request(query = %Ecto.Query{}),

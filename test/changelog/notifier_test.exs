@@ -184,6 +184,17 @@ defmodule Changelog.NotifierTest do
       assert called(Slack.Client.message("#main", :_))
     end
 
+    test "when episode was requested" do
+      podcast = insert(:podcast)
+      submitter = insert(:person)
+      request = insert(:episode_request, podcast: podcast, submitter: submitter)
+      episode = insert(:published_episode, podcast: podcast, episode_request: request)
+      item = episode |> episode_news_item() |> insert()
+
+      Notifier.notify(item)
+      assert_delivered_email(Email.episode_request_published(request))
+    end
+
     test "when podcast has subscriptions" do
       podcast = insert(:podcast)
       s1 = insert(:subscription_on_podcast, podcast: podcast)

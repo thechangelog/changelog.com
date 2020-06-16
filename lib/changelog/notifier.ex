@@ -23,6 +23,7 @@ defmodule Changelog.Notifier do
       |> Episode.preload_all()
 
     deliver_episode_guest_thanks_emails(episode)
+    deliver_episode_request_email(episode)
     deliver_podcast_subscription_emails(episode)
     deliver_slack_new_episode_message(episode, item.url)
   end
@@ -119,6 +120,14 @@ defmodule Changelog.Notifier do
       |> Email.guest_thanks(episode)
       |> Mailer.deliver_later()
     end
+  end
+
+  defp deliver_episode_request_email(%{episode_request: nil}), do: false
+
+  defp deliver_episode_request_email(%{episode_request: request}) do
+    request
+    |> Email.episode_request_published()
+    |> Mailer.deliver_later()
   end
 
   defp deliver_episode_transcribed_email(person, episode) do

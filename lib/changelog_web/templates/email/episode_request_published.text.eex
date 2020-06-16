@@ -1,0 +1,12 @@
+<%= greeting(@person) %>
+
+
+The episode of <%= @podcast.name %> that you requested is now live!
+
+Listen and discuss here: <%= Routes.episode_url(Endpoint, :show, @podcast.slug, @episode.slug) %>
+
+We'd love to hear what you think!
+
+Thanks for the great suggestion.
+
+💚, Logbot
