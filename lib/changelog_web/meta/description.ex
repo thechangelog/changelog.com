@@ -54,6 +54,6 @@ defmodule ChangelogWeb.Meta.Description do
   defp get(_), do: "News and podcasts for developers"
 
   defp podcasts_summary do
-    "Weekly shows about developer culture, software development, open source, building startups, artificial intelligence, and the people involved"
+    "Weekly shows about software development, developer culture, open source, building startups, artificial intelligence, brain science, and the people involved."
   end
 end

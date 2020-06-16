@@ -24,7 +24,7 @@
   <section class="show_list" id="podcasts">
     <header class="show_list-header">
       <h2>Podcasts from Changelog</h2>
-      <p>Weekly shows about developer culture, software development, open source, building startups, artificial intelligence, and the people involved.</p>
+      <p>Weekly shows about software development, developer culture, open source, building startups, artificial intelligence, brain science, and the people involved.</p>
     </header>
     <div class="show_list-shows">
       <%= render_many(@podcasts ++ [Podcast.master], PodcastView, "_summary.html", assigns) %>

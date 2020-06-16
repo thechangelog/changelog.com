@@ -2,7 +2,7 @@
   <section class="show_list">
     <header class="show_list-header">
       <h2>Podcasts from Changelog</h2>
-      <p>Weekly shows about developer culture, software development, open source, building startups, artificial intelligence, and the people involved.</p>
+      <p>Weekly shows about software development, developer culture, open source, building startups, artificial intelligence, brain science, and the people involved.</p>
       <p class="show_list-header-master_cta"><a href="/master"><strong>Subscribe to the master feed</strong> to get all of our shows (~5 episodes/wk + exclusive master only content)</a></p>
     </header>
     <div class="show_list-shows">
