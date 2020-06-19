@@ -30,7 +30,7 @@ defmodule Craisin do
   def handle({:error, %{reason: reason}}), do: log(reason)
 
   defp log(message) do
-    Logger.debug(fn -> "Craisin: #{message}" end)
+    Logger.info(fn -> "Craisin: #{message}" end)
     %{}
   end
 end
