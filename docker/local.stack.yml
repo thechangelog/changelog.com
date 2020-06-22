@@ -13,9 +13,7 @@ volumes:
 
 # https://docs.docker.com/engine/swarm/secrets/#defining-and-using-secrets-in-compose-files
 secrets:
-  CM_API_TOKEN:
-    external: true
-  CM_API_TOKEN:
+  CM_API_TOKEN_2:
     external: true
   CM_SMTP_TOKEN:
     external: true
@@ -44,8 +42,6 @@ secrets:
   COVERALLS_REPO_TOKEN:
     external: true
   ALGOLIA_APPLICATION_ID:
-    external: true
-  ALGOLIA_API_KEY:
     external: true
   ALGOLIA_API_KEY2:
     external: true
@@ -161,7 +157,6 @@ services:
       URL_STATIC_HOST: *host
       ROLLBAR_ENVIRONMENT: local
     secrets:
-      - CM_API_TOKEN
       - CM_API_TOKEN_2
       - CM_SMTP_TOKEN
       - GITHUB_API_TOKEN
@@ -177,7 +172,6 @@ services:
       - BUFFER_TOKEN_3
       - COVERALLS_REPO_TOKEN
       - ALGOLIA_APPLICATION_ID
-      - ALGOLIA_API_KEY
       - ALGOLIA_API_KEY2
     depends_on:
       - db
