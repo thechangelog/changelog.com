@@ -227,18 +227,18 @@ DONE := $(YELLOW)(press any key when done)$(NORMAL)
 .PHONY: howto-rotate-secret
 howto-rotate-secret:
 	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
-	@printf " 1/10. Add new secret to our vault by running e.g. $(BOLD)make add-secret SECRET=ALGOLIA_API_KEY2$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf " 1/10. Add new secret to our vault by running e.g. $(BOLD)make add-secret SECRET=ALGOLIA_API_KEY_2$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 2/10. Update secret reference in $(BOLD)Makefile$(NORMAL) (search for e.g. ALGOLIA_API_KEY) and ensure that it works by running e.g. $(BOLD)make algolia$(NORMAL)\n       If last comamnd fails, manually sync vault state by running $(BOLD)make sync-secrets$(NORMAL) and repeat\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 3/10. Add new secret to production by running $(BOLD)make create-docker-secrets$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 4/10. Add new secret reference to $(BOLD)docker/$(DOCKER_STACK).stack.yml$(NORMAL) as a new entry under $(BOLD)secrets:$(NORMAL) as well as $(BOLD)services: > app: > secrets:$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 5/10. Maybe repeat the previous step for $(BOLD)docker/local.stack.yml$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 6/10. Commit & push all changes to GitHub\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 7/10. Apply the stack modifications by running $(BOLD)make bootstrap-docker$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
-	@printf "\n 8/10. After the previous command succeeds, ensure the new secret is available in the $(BOLD)$(DOCKER_STACK)_app$(NORMAL) service\n       Run $(BOLD)make ctop > select running $(DOCKER_STACK)_app instance & ENTER > exec shell$(NORMAL), then run e.g. $(BOLD)cat /var/run/secrets/ALGOLIA_API_KEY2$(NORMAL) inside the container\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 8/10. After the previous command succeeds, ensure the new secret is available in the $(BOLD)$(DOCKER_STACK)_app$(NORMAL) service\n       Run $(BOLD)make ctop > select running $(DOCKER_STACK)_app instance & ENTER > exec shell$(NORMAL), then run e.g. $(BOLD)cat /var/run/secrets/ALGOLIA_API_KEY_2$(NORMAL) inside the container\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 9/10. Modify app to use new secret reference in either $(BOLD)config/config.exs$(NORMAL) or $(BOLD)config/prod.exs$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n10/10. Commit & push to GitHub\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n$(BOLD)$(GREEN)I know, that was really long & convoluted... BUT YOU DID IT!\nWhen the new app instance starts, it will use the new secret 🙌🏻 $(NORMAL)\n"
-	@printf "To double-check, search for e.g. $(BOLD)ALGOLIA_API_KEY$(NORMAL) in the app's logs in Papertrail\n"
+	@printf "To double-check, search for e.g. $(BOLD)ALGOLIA_API_KEY_2$(NORMAL) in the app's logs in Papertrail\n"
 
 .PHONY: create-dirs-mounted-as-volumes
 create-dirs-mounted-as-volumes:
