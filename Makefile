@@ -48,6 +48,9 @@ else
 OPEN := xdg-open
 endif
 
+XDG_CONFIG_HOME := $(CURDIR)/.config
+export XDG_CONFIG_HOME
+
 
 
 ### DEPS ###
@@ -133,7 +136,7 @@ ifeq ($(PLATFORM),Linux)
 	$(error $(RED)Please install $(BOLD)bats-core$(NORMAL) in $(BATS): https://github.com/bats-core/bats-core#installation)
 endif
 
-SECRETS := $(LPASS) ls "Shared-changelog/secrets"
+SECRETS := mkdir -p $(XDG_CONFIG_HOME)/.config && $(LPASS) ls "Shared-changelog/secrets"
 
 TF := cd terraform && $(TERRAFORM)
 TF_VAR := export TF_VAR_ssl_key="$$(lpass show --notes 8995604957212378446)" && export TF_VAR_ssl_cert="$$(lpass show --notes 7865439845556655715 && cat terraform/dhparams.pem)"
@@ -550,6 +553,8 @@ This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
     PATH_add script
     PATH_add bin
+
+    export XDG_CONFIG_HOME=$$(expand_path .config)
 
     export CIRCLE_TOKEN=
     export TF_VAR_linode_token=
