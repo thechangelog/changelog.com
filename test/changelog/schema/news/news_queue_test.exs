@@ -3,9 +3,9 @@ defmodule Changelog.NewsQueueTest do
 
   import Mock
 
-  alias Changelog.{Buffer, NewsItem, NewsQueue, Notifier}
+  alias Changelog.{Buffer, HN, NewsItem, NewsQueue, Notifier}
 
-  describe "append" do
+  describe "append/1" do
     test "when queue is empty" do
       assert Repo.count(NewsQueue) == 0
 
@@ -33,7 +33,7 @@ defmodule Changelog.NewsQueueTest do
     end
   end
 
-  describe "move" do
+  describe "move/2" do
     setup do
       i1 = insert(:news_item)
       i2 = insert(:news_item)
@@ -80,7 +80,7 @@ defmodule Changelog.NewsQueueTest do
     end
   end
 
-  describe "prepend" do
+  describe "prepend/1" do
     test "when queue is empty" do
       assert Repo.count(NewsQueue) == 0
 
@@ -124,7 +124,8 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]}
+        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish_next()
 
@@ -158,7 +159,8 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]}
+        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish_scheduled()
 
@@ -175,20 +177,22 @@ defmodule Changelog.NewsQueueTest do
     end
   end
 
-  describe "publish" do
+  describe "publish/1" do
     test "it publishes the given item and buffers it even if it's not in the queue" do
       item = insert(:news_item)
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
         {Notifier, [], [notify: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]}
+        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish(item)
         assert Repo.count(NewsItem.published()) == 1
         assert called(Buffer.queue(:_))
         assert called(Notifier.notify(:_))
         assert called(Algolia.save_object(:_, :_, :_))
+        assert called(HN.submit(:_))
       end
     end
 
@@ -205,11 +209,13 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]}
+        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish(i2)
         assert called(Buffer.queue(:_))
         assert called(Algolia.save_object(:_, :_, :_))
+        assert called(HN.submit(:_))
         published = Repo.all(NewsItem.published())
         assert Enum.map(published, & &1.id) == [i2.id]
         assert Repo.count(NewsQueue) == 2
