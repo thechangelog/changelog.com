@@ -622,6 +622,10 @@ github: $(LPASS)
 	@echo "export GITHUB_CLIENT_ID=$$($(LPASS) show --notes 6311620502443842879)" && \
 	echo "export GITHUB_CLIENT_SECRET=$$($(LPASS) show --notes 6962532309857955032)" && \
 	echo "export GITHUB_API_TOKEN=$$($(LPASS) show --notes Shared-changelog/secrets/GITHUB_API_TOKEN2)"
+.PHONY: hn
+hn: $(LPASS)
+	@echo "export HN_USER=$$($(LPASS) show --notes Shared-changelog/secrets/HN_USER_1)" && \
+	echo "export HN_PASS=$$($(LPASS) show --notes Shared-changelog/secrets/HN_PASS_1)"
 .PHONY: aws
 aws: $(LPASS)
 	@echo "export AWS_ACCESS_KEY_ID=$$($(LPASS) show --notes 5523519094417729320)" && \

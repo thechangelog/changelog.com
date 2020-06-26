@@ -23,6 +23,10 @@ secrets:
     external: true
   GITHUB_CLIENT_SECRET:
     external: true
+  HN_USER_1:
+    external: true
+  HN_PASS_1:
+    external: true
   TWITTER_CONSUMER_KEY:
     external: true
   TWITTER_CONSUMER_SECRET:
@@ -162,6 +166,8 @@ services:
       - GITHUB_API_TOKEN
       - GITHUB_CLIENT_ID
       - GITHUB_CLIENT_SECRET
+      - HN_USER_1
+      - HN_PASS_1
       - TWITTER_CONSUMER_KEY
       - TWITTER_CONSUMER_SECRET
       - SECRET_KEY_BASE
