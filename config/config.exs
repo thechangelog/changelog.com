@@ -18,6 +18,8 @@ config :changelog,
   ecto_repos: [Changelog.Repo],
   buffer_token: DockerSecret.get("BUFFER_TOKEN_3"),
   github_api_token: DockerSecret.get("GITHUB_API_TOKEN2"),
+  hn_user: DockerSecret.get("HN_USER_1"),
+  hn_pass: DockerSecret.get("HN_PASS_1"),
   cm_api_token: Base.encode64("#{DockerSecret.get("CM_API_TOKEN_2")}:x"),
   slack_invite_api_token: DockerSecret.get("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN")
