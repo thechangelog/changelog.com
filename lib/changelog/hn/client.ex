@@ -35,8 +35,10 @@ defmodule Changelog.HN.Client do
 
     headers
     |> Enum.find(
-      {"", ""}, # default for no cookie will result in `nil` at end of pipeline
-      fn({key, _}) -> String.match?(key, ~r/\Aset-cookie\z/i) end)
+      # default for no cookie will result in `nil` at end of pipeline
+      {"", ""},
+      fn {key, _} -> String.match?(key, ~r/\Aset-cookie\z/i) end
+    )
     |> elem(1)
     |> String.split(";")
     |> Changelog.ListKit.compact()

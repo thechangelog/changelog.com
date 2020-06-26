@@ -110,7 +110,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
       |> EpisodeRequest.preload_all()
       |> Repo.one()
 
-      Email.episode_request_published(request)
+    Email.episode_request_published(request)
   end
 
   def episode_transcribed_email do
