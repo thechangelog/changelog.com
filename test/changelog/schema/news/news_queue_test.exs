@@ -124,8 +124,9 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
         {HN, [], [submit: fn _ -> true end]}
+
       ]) do
         NewsQueue.publish_next()
 
@@ -159,7 +160,7 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
         {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish_scheduled()
@@ -184,7 +185,7 @@ defmodule Changelog.NewsQueueTest do
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
         {Notifier, [], [notify: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
         {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish(item)
@@ -209,7 +210,7 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Algolia, [], [save_object: fn _, _, _ -> true end]},
+        {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
         {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish(i2)

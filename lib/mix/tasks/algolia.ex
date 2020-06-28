@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Changelog.Algolia do
 
     for item <- items do
       IO.puts("indexing ##{item.id} - #{item.headline}")
-      Search.update_item(item)
+      Search.save_item(item)
     end
   end
 end

@@ -6,6 +6,11 @@
 
 This is the CMS behind [changelog.com](https://changelog.com). It's an [Elixir](http://elixir-lang.org) application built with the [Phoenix](http://www.phoenixframework.org) web framework, [PostgreSQL](https://www.postgresql.org), and [many](https://github.com/thechangelog/changelog.com/blob/master/mix.exs#L33) [other](https://github.com/thechangelog/changelog.com/blob/master/assets/package.json) great open source efforts.
 
+## Dependencies
+
+- Elixir 1.8.2
+- Erlang/OTP 21
+
 ## Why is it open source?
 
 A few reasons:

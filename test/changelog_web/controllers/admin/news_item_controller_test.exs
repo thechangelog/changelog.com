@@ -54,7 +54,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
     with_mocks([
       {Buffer, [], [queue: fn _ -> true end]},
-      {Algolia, [], [save_object: fn _, _, _ -> true end]}
+      {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]}
     ]) do
       conn =
         post(conn, Routes.admin_news_item_path(conn, :create),
@@ -164,7 +164,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     news_item = insert(:published_news_item)
     assert count(NewsItem.published()) == 1
 
-    with_mock(Algolia, delete_object: fn _, _ -> true end) do
+    with_mock(Algolia, delete_object: fn _, _ -> {:ok, %{}} end) do
       conn = post(conn, Routes.admin_news_item_path(conn, :unpublish, news_item))
 
       assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)

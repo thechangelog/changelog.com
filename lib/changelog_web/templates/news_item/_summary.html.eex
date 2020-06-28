@@ -3,6 +3,10 @@
   <%= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
   <div class="news_item-content richtext">
     <%= @item.story |> SharedHelpers.md_to_html() |> raw() %>
+    <%= if assigns[:highlight] do %>
+      <p>...</p>
+      <div class="search-highlight"><%= @highlight |> SharedHelpers.md_to_html() |> raw() %></div>
+    <% end %>
     <%= video_embed(@item) %>
   </div>
   <%= image_link(@item) %>
