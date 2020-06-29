@@ -7,7 +7,7 @@ defmodule Changelog.HN.Client do
 
   def submit(title, url) do
     username = Application.get_env(:changelog, :hn_user)
-    password = Application.get_env(:changelog, :hn_password)
+    password = Application.get_env(:changelog, :hn_pass)
     cookie = auth(username, password)
     submit(title, url, cookie)
   end
