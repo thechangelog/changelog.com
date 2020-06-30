@@ -70,7 +70,7 @@ defmodule ChangelogWeb.PersonController do
     do: redirect(conn, to: Routes.person_path(conn, :join))
 
   def show(conn, params = %{"handle" => handle}) do
-    person = Repo.get_by!(Person, handle: handle)
+    person = Repo.get_by!(Person, handle: handle, public_profile: true)
 
     episodes =
       person

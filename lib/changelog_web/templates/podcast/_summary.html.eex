@@ -20,12 +20,12 @@
       <ul class="show_list-shows-item-content-hosts">
       <%= if length(@podcast.hosts) > 3 do %>
         <%= for person <- Enum.take_random(@podcast.hosts, 3) do %>
-          <li><%= link(person.name, to: Routes.person_path(@conn, :show, person.handle)) %></li>
+          <li><%= link(person.name, to: PersonView.profile_path(person)) %></li>
         <% end %>
           <li><%= link("and more...", to: Routes.podcast_path(@conn, :show, @podcast.slug)) %></li>
       <% else %>
         <%= for person <- @podcast.hosts do %>
-          <li><%= link(person.name, to: Routes.person_path(@conn, :show, person.handle)) %></li>
+          <li><%= link(person.name, to: PersonView.profile_path(person)) %></li>
         <% end %>
       <% end %>
       </ul>

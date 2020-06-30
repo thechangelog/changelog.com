@@ -61,6 +61,8 @@ defmodule Changelog.Person do
     field :host, :boolean, default: false
     field :editor, :boolean, default: false
 
+    field :public_profile, :boolean, default: true
+
     embeds_one :settings, Settings, on_replace: :update
 
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
@@ -90,8 +92,8 @@ defmodule Changelog.Person do
   def with_handles(query \\ __MODULE__, handles),
     do: from(q in query, where: q.handle in ^handles)
 
-  def with_profile(query \\ __MODULE__),
-    do: from(q in query, where: q.name not in ^Changelog.Faker.names())
+  def with_public_profile(query \\ __MODULE__),
+    do: from(q in query, where: q.public_profile, where: q.name not in ^Changelog.Faker.names())
 
   def with_email(query \\ __MODULE__, email)
   def with_email(query, email) when is_list(email), do: from(q in query, where: q.email in ^email)
@@ -141,7 +143,7 @@ defmodule Changelog.Person do
 
   def admin_insert_changeset(person, attrs \\ %{}) do
     allowed =
-      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor)a
+      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor public_profile)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
@@ -157,7 +159,7 @@ defmodule Changelog.Person do
 
   def insert_changeset(person, attrs \\ %{}) do
     allowed =
-      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location)a
+      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location public_profile)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)
   end

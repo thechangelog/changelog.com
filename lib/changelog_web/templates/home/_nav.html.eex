@@ -5,7 +5,7 @@
     </li>
     <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, ["home-profile"]) %>">
       <%= link to: Routes.home_path(@conn, :profile) do %>
-        Profile
+        Profile <%= if !@current_user.public_profile, do: "🤫" %>
       <% end %>
     </li>
     <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, ["home-account"]) %>">

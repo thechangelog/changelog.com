@@ -1,5 +1,5 @@
 <div class="page_basic">
-  <%= render("_nav.html", conn: @conn) %>
+  <%= render("_nav.html", assigns) %>
 
   <%= form_for @changeset, Routes.home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
     <input type="hidden" name="from" value="account">

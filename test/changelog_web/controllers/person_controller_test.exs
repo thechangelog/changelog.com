@@ -12,6 +12,14 @@ defmodule ChangelogWeb.PersonControllerTest do
     assert html_response(conn, 200) =~ p.name
   end
 
+  test "getting a person's page whose profile is private", %{conn: conn} do
+    p = insert(:person, public_profile: false)
+
+    assert_raise Ecto.NoResultsError, fn ->
+      get(conn, Routes.person_path(conn, :show, p.handle))
+    end
+  end
+
   describe "joining" do
     test "getting the form", %{conn: conn} do
       conn = get(conn, Routes.person_path(conn, :join))

@@ -2,7 +2,7 @@
   <article class="news_item">
     <header class="news_item-header">
       <p class="news_item-source">
-        <%= link to: Routes.person_path(@conn, :show, @post.author.handle), title: @post.author.name, rel: "external", class: "news_item-source-image" do %>
+        <%= link to: PersonView.profile_path(@post.author), title: @post.author.name, rel: "external", class: "news_item-source-image" do %>
           <%= SharedHelpers.maybe_lazy_image(@conn, PersonView.avatar_url(@post.author), @post.author.name) %>
         <% end %>
         <!-- TODO: Make this a 'kicker' -->

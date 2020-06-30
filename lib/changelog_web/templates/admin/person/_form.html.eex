@@ -87,6 +87,17 @@
     <%= AdminHelpers.error_message(f, :bio) %>
   </div>
 
+  <div class="ui horizontal divider">Profile</div>
+
+  <div class="fields">
+    <div class="field">
+      <%= label(f, :public_profile) %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :public_profile, class: "hidden") %>
+      </div>
+    </div>
+  </div>
+
   <div class="ui horizontal divider">Roles</div>
 
   <div class="fields">

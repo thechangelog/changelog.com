@@ -105,7 +105,7 @@ defmodule ChangelogWeb.FeedController do
       |> Repo.all()
 
     people =
-      Person.with_profile()
+      Person.with_public_profile()
       |> Repo.all()
 
     podcasts =

@@ -20,7 +20,7 @@
         <h4 class="visually_hidden">Featuring</h4>
         <div class="avatar_list">
           <%= for person <- participants do %>
-            <%= link to: Routes.person_path(@conn, :show, person.handle), class: "avatar_list-item", title: person.name do %>
+            <%= link to: PersonView.profile_path(person), class: "avatar_list-item", title: person.name do %>
               <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
               <p><%= person.name |> String.split(" ") |> List.first() %></p>
             <% end %>
@@ -138,7 +138,7 @@
               <div class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
                 <%= if speaker do %>
                   <div class="transcript-item-speaker">
-                    <%= link to: Routes.person_path(@conn, :show, speaker.handle), title: speaker.name do %>
+                    <%= link to: PersonView.profile_path(speaker), title: speaker.name do %>
                       <%= SharedHelpers.lazy_image(PersonView.avatar_url(speaker), "#{speaker.name} Says", class: "transcript-item-speaker-image", width: 36, height: 36) %>
                     <% end %>
                     <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>

@@ -117,4 +117,10 @@ defmodule ChangelogWeb.PersonView do
     {:ok, encoded} = Person.encoded_id(person)
     Routes.home_url(conn, :opt_out, encoded, type, id)
   end
+
+  def profile_path(person = %{public_profile: true}) do
+    Routes.person_path(Endpoint, :show, person.handle)
+  end
+
+  def profile_path(person), do: external_url(person)
 end

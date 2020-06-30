@@ -1,8 +1,14 @@
 <div class="page_basic">
-  <%= render("_nav.html", conn: @conn) %>
+  <%= render("_nav.html", assigns) %>
 
   <div class="flash flash--inline flash--success">
-    <div class="flash-message"><p>Your <%= link("public profile", to: Routes.person_path(@conn, :show, @current_user.handle)) %> includes news you've contributed and podcasts you've been on.</p></div>
+    <div class="flash-message">
+  <%= if @current_user.public_profile do %>
+    <p>Your <%= link("public profile", to: PersonView.profile_path(@current_user)) %> page shows news you've contributed and podcasts you've been on.</p>
+  <% else %>
+    <p>Profiles pages show news you've contributed and podcasts you've been on. Your profile is private.</p>
+  <% end %>
+    </div>
   </div>
 
   <%= form_for @changeset, Routes.home_path(@conn, :update), [class: "form", multipart: true], fn f -> %>
@@ -85,6 +91,16 @@
         <%= textarea(f, :bio) %>
         <%= PublicHelpers.error_message(f, :bio) %>
         <p class="form-element-note">Try some Markdown. It *may* work.</p>
+      </div>
+    </div>
+
+    <div class="form-checklist">
+      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :public_profile) %>">
+        <label>
+          <%= checkbox(f, :public_profile) %>
+          <span class="form-checklist-item-box"></span>
+          <span class="form-checklist-item-text">I want a public profile page.</span>
+        </label>
       </div>
     </div>
 
