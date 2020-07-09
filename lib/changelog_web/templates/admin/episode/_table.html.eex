@@ -18,7 +18,7 @@
     <%= if @status == :published do %>
       <th>
         Reach
-        <%= if assigns[:podcast], do: AdminHelpers.info_icon("last updated #{TimeView.pretty_date(PodcastView.last_stat(@podcast).date)}") %>
+        <%= if assigns[:podcast], do: AdminHelpers.info_icon("as of #{last_stat_date(@podcast)}") %>
       </th>
     <% end %>
     <% end %>
