@@ -6,7 +6,7 @@ defmodule ChangelogWeb.SearchController do
   require Logger
 
   def search(conn, params = %{"q" => query}) do
-    page = Search.search(query, hitsPerPage: 30, page: page_param(params))
+    page = Search.search_with_highlights(query, hitsPerPage: 30, page: page_param(params))
     render(conn, :search, items: page.items, page: page, query: params["q"])
   end
 

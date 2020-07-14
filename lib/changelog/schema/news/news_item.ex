@@ -204,6 +204,16 @@ defmodule Changelog.NewsItem do
   def load_object(nil, _object), do: nil
   def load_object(item, object), do: Map.put(item, :object, object)
 
+  def load_object_with_transcript(item = %{object_id: object_id}) do
+    [_podcast_id, episode_id] = String.split(object_id, ":")
+
+    episode =
+      Episode
+      |> Repo.get(episode_id)
+
+    load_object(item, episode)
+  end
+
   defp get_episode_object(object_id) when is_nil(object_id), do: nil
 
   defp get_episode_object(object_id) do

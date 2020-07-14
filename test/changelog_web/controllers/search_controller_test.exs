@@ -4,7 +4,7 @@ defmodule ChangelogWeb.SearchControllerTest do
   import Mock
 
   def item_to_hit(item) do
-    %{"objectID" => Integer.to_string(item.id)}
+    %{"id" => Integer.to_string(item.id)}
   end
 
   describe "without query" do
@@ -19,7 +19,6 @@ defmodule ChangelogWeb.SearchControllerTest do
     test "getting the search with one result" do
       item1 = insert(:published_news_item, headline: "Phoenix", story: "oh my")
       item2 = insert(:published_news_item, headline: "Rails", story: "my oh")
-
       results = %{"hits" => [item_to_hit(item1)], "nbHits" => 1}
 
       with_mock(Algolia, search: fn _, _, _ -> {:ok, results} end) do
