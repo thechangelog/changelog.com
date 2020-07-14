@@ -1,0 +1,33 @@
+name: mix test
+on:
+  push: {branches: master}
+  pull_request: {branches: master}
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:9.5
+        env:
+          POSTGRES_USER: "postgres"
+          POSTGRES_DB: changelog_test
+          POSTGRES_PASSWORD: "postgres"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    container:
+      image: thechangelog/runtime:2019-11-27T16.20.17Z
+      env:
+        MIX_ENV: test
+        DB_URL: "ecto://postgres:postgres@postgres:5432/changelog_test"
+    steps:
+      - uses: actions/checkout@v2
+      - run: mix do local.rebar --force, local.hex --force
+      - run: mix deps.get
+      - run: mix deps.compile
+      - run: cd assets && yarn install --frozen-lockfile
+      - run: mix test
+      - run: mix format --check-formatted
