@@ -175,6 +175,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="http://choly.ca"><img src="https://avatars1.githubusercontent.com/u/943597?v=4" width="100px;" alt=""/><br /><sub><b>Ilia Choly</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=icholy" title="Code">💻</a></td>
     <td align="center"><a href="http://wojtekmach.pl"><img src="https://avatars0.githubusercontent.com/u/76071?v=4" width="100px;" alt=""/><br /><sub><b>Wojtek Mach</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=wojtekmach" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/type1fool"><img src="https://avatars3.githubusercontent.com/u/13895134?v=4" width="100px;" alt=""/><br /><sub><b>Owen Bickford</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=type1fool" title="Code">💻</a> <a href="#blog-type1fool" title="Blogposts">📝</a></td>
+    <td align="center"><a href="http://underjord.io"><img src="https://avatars1.githubusercontent.com/u/1971237?v=4" width="100px;" alt=""/><br /><sub><b>Lars Wikman</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=lawik" title="Code">💻</a></td>
   </tr>
 </table>
 
