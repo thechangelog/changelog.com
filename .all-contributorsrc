@@ -313,6 +313,15 @@
         "code",
         "blog"
       ]
+    },
+    {
+      "login": "lawik",
+      "name": "Lars Wikman",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1971237?v=4",
+      "profile": "http://underjord.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
