@@ -23,6 +23,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
       stat = %{} ->
         {:ok, result} = Timex.format(stat.date, "{Mshort} {D}")
         result
+
       nil ->
         "never"
     end

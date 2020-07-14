@@ -83,34 +83,53 @@ defmodule Changelog.EpisodeTest do
     end
   end
 
-  # TODO I can't make these tests pass with `Task.start_link/1` even though
-  # they pass when I use `Task.async` and `Task.await`
-  #
-  # describe "update_transcript/2" do
-  #   test "it calls the Notifier when transcript is first set" do
-  #     with_mock(Changelog.Notifier, [notify: fn(_) -> true end]) do
-  #       episode = insert(:episode)
-  #       Episode.update_transcript(episode, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n")
-  #       assert called(Changelog.Notifier.notify(:_))
-  #     end
-  #   end
+  describe "update_transcript/2" do
+    test "it calls the Notifier when transcript is first set" do
+      with_mocks([
+        {Changelog.Notifier, [], [notify: fn _ -> true end]},
+        {Changelog.Search, [], [save_item: fn _ -> true end]}
+      ]) do
+        episode = insert(:episode)
+        Episode.update_transcript(episode, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n")
+        # wait out the async race condition
+        :timer.sleep(100)
+        assert called(Changelog.Notifier.notify(:_))
+        assert called(Changelog.Search.save_item(:_))
+      end
+    end
 
-  #   test "it does not call the Notifier when transcript is updated" do
-  #     with_mock(Changelog.Notifier, [notify: fn(_) -> true end]) do
-  #       episode = insert(:episode, transcript: [%{"title" => "Host", "person_id" => nil, "text" => "Welcome!"}])
-  #       Episode.update_transcript(episode, "**Host:** Welcome!")
-  #       refute called(Changelog.Notifier.notify(:_))
-  #     end
-  #   end
+    test "it does not call the Notifier when transcript is updated" do
+      with_mocks([
+        {Changelog.Notifier, [], [notify: fn _ -> true end]},
+        {Changelog.Search, [], [save_item: fn _ -> true end]}
+      ]) do
+        episode =
+          insert(:episode,
+            transcript: [%{"title" => "Host", "person_id" => nil, "text" => "Welcome!"}]
+          )
 
-  #   test "it does not call the Notifier when transcript is not set" do
-  #     with_mock(Changelog.Notifier, [notify: fn(_) -> true end]) do
-  #       episode = insert(:episode)
-  #       Episode.update_transcript(episode, "")
-  #       refute called(Changelog.Notifier.notify(:_))
-  #     end
-  #   end
-  # end
+        Episode.update_transcript(episode, "**Host:** Welcome!")
+        # wait out the async race condition
+        :timer.sleep(100)
+        assert called(Changelog.Search.save_item(:_))
+        refute called(Changelog.Notifier.notify(:_))
+      end
+    end
+
+    test "it does not call the Notifier when transcript is not set" do
+      with_mocks([
+        {Changelog.Notifier, [], [notify: fn _ -> true end]},
+        {Changelog.Search, [], [save_item: fn _ -> true end]}
+      ]) do
+        episode = insert(:episode)
+        Episode.update_transcript(episode, "")
+        # wait out the async race condition
+        :timer.sleep(100)
+        assert called(Changelog.Search.save_item(:_))
+        refute called(Changelog.Notifier.notify(:_))
+      end
+    end
+  end
 
   describe "search" do
     setup do

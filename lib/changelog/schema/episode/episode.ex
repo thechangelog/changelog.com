@@ -13,6 +13,7 @@ defmodule Changelog.Episode do
     Notifier,
     Podcast,
     Regexp,
+    Search,
     Transcripts
   }
 
@@ -299,6 +300,8 @@ defmodule Changelog.Episode do
     if !has_transcript(episode) && has_transcript(updated) do
       Task.start_link(fn -> Notifier.notify(updated) end)
     end
+
+    Task.start_link(fn -> Search.save_item(updated) end)
 
     updated
   end

@@ -126,7 +126,6 @@ defmodule Changelog.NewsQueueTest do
         {Buffer, [], [queue: fn _ -> true end]},
         {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
         {HN, [], [submit: fn _ -> true end]}
-
       ]) do
         NewsQueue.publish_next()
 

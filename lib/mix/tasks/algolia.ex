@@ -7,7 +7,13 @@ defmodule Mix.Tasks.Changelog.Algolia do
 
   def run(_) do
     Mix.Task.run("app.start")
-    items = Repo.all(NewsItem.newest_last(NewsItem.published()))
+
+    items =
+      NewsItem
+      |> NewsItem.published()
+      |> NewsItem.non_feed_only()
+      |> NewsItem.newest_last()
+      |> Repo.all()
 
     for item <- items do
       IO.puts("indexing ##{item.id} - #{item.headline}")

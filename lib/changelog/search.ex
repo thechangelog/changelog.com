@@ -3,7 +3,7 @@ defmodule Changelog.Search do
     defstruct items: [], total_entries: 0, page_number: 0, total_pages: 1
   end
 
-  alias Changelog.{NewsItem, Repo}
+  alias Changelog.{Episode, NewsItem, Repo}
   # Algolia legacy plan allows 20 Kb for record size
   # Algolia does not count the size of the JSON payload the same as we do
   @margin 1024
@@ -53,6 +53,12 @@ defmodule Changelog.Search do
           {:error, :other_error, other}
       end
     end)
+  end
+
+  def save_item(episode = %Episode{}) do
+    episode
+    |> Episode.get_news_item()
+    |> save_item()
   end
 
   def save_item(_), do: false
