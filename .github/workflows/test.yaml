@@ -31,3 +31,4 @@ jobs:
       - run: cd assets && yarn install --frozen-lockfile
       - run: mix test
       - run: mix format --check-formatted
+        continue-on-error: true
