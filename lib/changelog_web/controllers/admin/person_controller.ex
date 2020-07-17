@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Episode, EpisodeRequest, NewsItem, Person, Slack}
+  alias Changelog.{Mailer, Episode, EpisodeRequest, NewsItem, Person, Slack, Subscription}
   alias ChangelogWeb.Email
 
   plug :assign_person when action in [:edit, :update, :delete, :slack]
@@ -32,15 +32,25 @@ defmodule ChangelogWeb.Admin.PersonController do
     person = Repo.get!(Person, id)
 
     episodes =
-      assoc(person, :guest_episodes)
+      person
+      |> assoc(:guest_episodes)
       |> Episode.published()
       |> Episode.newest_first()
       |> Episode.preload_all()
       |> Repo.all()
 
     episode_requests =
-      assoc(person, :episode_requests)
+      person
+      |> assoc(:episode_requests)
       |> EpisodeRequest.preload_all()
+      |> Repo.all()
+
+    subscriptions =
+      person
+      |> assoc(:subscriptions)
+      |> Subscription.subscribed()
+      |> Subscription.to_podcast()
+      |> Subscription.preload_podcast()
       |> Repo.all()
 
     published =
@@ -63,6 +73,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> assign(:person, person)
     |> assign(:episodes, episodes)
     |> assign(:episode_requests, episode_requests)
+    |> assign(:subscriptions, subscriptions)
     |> assign(:published, published)
     |> assign(:declined, declined)
     |> render(:show)

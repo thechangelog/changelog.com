@@ -21,6 +21,15 @@
   </div>
 </div>
 
+<%= if Enum.any?(@subscriptions) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Subscribed To</h2>
+<%= for subscription <- @subscriptions do %>
+  <span class="ui large label"><%= subscription.podcast.name %></span>
+<% end %>
+</div>
+<% end %>
+
 <%= if Enum.any?(@published) do %>
 <div class="ui basic segment">
   <h2 class="ui header">News Items</h2>

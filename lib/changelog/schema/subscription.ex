@@ -35,16 +35,18 @@ defmodule Changelog.Subscription do
     )
   end
 
-  def for_person(query \\ __MODULE__, person),
-    do: from(q in query, where: q.person_id == ^person.id)
+  def for_person(query \\ __MODULE__, person), do: from(q in query, where: q.person_id == ^person.id)
 
   def on_item(query \\ __MODULE__, item), do: from(q in query, where: q.item_id == ^item.id)
 
-  def on_podcast(query \\ __MODULE__, podcast),
-    do: from(q in query, where: q.podcast_id == ^podcast.id)
+  def on_podcast(query \\ __MODULE__, podcast), do: from(q in query, where: q.podcast_id == ^podcast.id)
 
   def on_subject(query, item = %NewsItem{}), do: on_item(query, item)
   def on_subject(query, podcast = %Podcast{}), do: on_podcast(query, podcast)
+
+  def to_item(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.item_id))
+
+  def to_podcast(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.podcast_id))
 
   def is_subscribed(%__MODULE__{unsubscribed_at: ts}), do: is_nil(ts)
   def is_subscribed(_), do: false
