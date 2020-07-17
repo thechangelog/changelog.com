@@ -41,3 +41,10 @@
   <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @episodes, status: :published})) %>
 </div>
 <% end %>
+
+<%= if Enum.any?(@episode_requests) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Episode Requests</h2>
+  <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests})) %>
+</div>
+<% end %>

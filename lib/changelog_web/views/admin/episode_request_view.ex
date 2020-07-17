@@ -17,6 +17,15 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
     pitch |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(count)
   end
 
+  def status_label(request) do
+    case request.status do
+      :fresh -> content_tag(:span, "Fresh", class: "ui tiny green basic label")
+      :declined -> content_tag(:span, "Declined", class: "ui tiny gray basic label")
+      :pending -> content_tag(:span, "Pending", class: "ui tiny yellow basic label")
+      :failed -> content_tag(:span, "Failed", class: "ui tiny basic label")
+    end
+  end
+
   def submitter_name(%{pronunciation: pronunciation}) do
     case pronunciation do
       nil -> "Anon"

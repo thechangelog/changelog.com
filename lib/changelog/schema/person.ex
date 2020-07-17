@@ -4,6 +4,7 @@ defmodule Changelog.Person do
   alias Changelog.{
     EpisodeHost,
     EpisodeGuest,
+    EpisodeRequest,
     Faker,
     Files,
     NewsItem,
@@ -67,6 +68,7 @@ defmodule Changelog.Person do
 
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
+    has_many :episode_requests, EpisodeRequest, foreign_key: :submitter_id
     has_many :host_episodes, through: [:episode_hosts, :episode]
     has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
     has_many :guest_episodes, through: [:episode_guests, :episode]
