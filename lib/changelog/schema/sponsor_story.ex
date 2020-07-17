@@ -36,7 +36,7 @@ defmodule Changelog.SponsorStory do
       },
       examples: [
         %{
-          type: "Partner pre-roll",
+          type: "Partner preroll",
           name: "Move fast and fix things",
           audio:
             "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-partner-preroll-move-fast-and-fix-things.mp3",
@@ -196,10 +196,31 @@ defmodule Changelog.SponsorStory do
       examples: [
         %{
           type: "Endorsement",
-          name: "Move fast and fix things",
+          name: "Keep it fast. Keep it simple.",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3",
-          duration: 33
+            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-preroll--keep-it-fast.mp3",
+          duration: 21
+        },
+        %{
+          type: "Partner preroll",
+          name: "We're hosted on Linode cloud servers",
+          audio:
+            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-partner-preroll.mp3",
+          duration: 5
+        },
+        %{
+          type: "Endorsement",
+          name: "Independent open cloud",
+          audio:
+            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-preroll--independent-open-cloud.mp3",
+          duration: 40
+        },
+        %{
+          type: "Endorsement",
+          name: "Object store",
+          audio:
+            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-midroll--object-store.mp3",
+          duration: 30
         }
       ],
       content_md: """
@@ -244,14 +265,14 @@ defmodule Changelog.SponsorStory do
       quote: %{
         name: "Elaine Greenburg",
         content:
-          "Wow! Fastly gets to be the content delivery backbone Changelog builds everything upon. Plus, the Fastly brand and core value add can be heard in the pre-roll of every podcast episode. We couldn't have asked for a better partner to help us reach the developer community.",
+          "Wow! Fastly gets to be the content delivery backbone Changelog builds everything upon. Plus, the Fastly brand and core value add can be heard in the preroll of every podcast episode. We couldn't have asked for a better partner to help us reach the developer community.",
         image: "elaine-greenburg.jpg",
         title: "Senior Communications Manager at Fastly"
       },
       examples: [
         %{
-          type: "Partner Pre-roll",
-          name: "Networkwide pre-roll sponsorship",
+          type: "Partner preroll",
+          name: "Networkwide preroll sponsorship",
           audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/fastly-preroll.mp3",
           duration: 06
         }
