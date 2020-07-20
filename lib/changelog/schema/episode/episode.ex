@@ -42,8 +42,12 @@ defmodule Changelog.Episode do
     field :recorded_live, :boolean, default: false
 
     field :audio_file, Files.Audio.Type
-    field :bytes, :integer
-    field :duration, :integer
+    field :audio_bytes, :integer
+    field :audio_duration, :integer
+
+    field :plusplus_file, Files.PlusPlus.Type
+    field :plusplus_bytes, :integer
+    field :plusplus_duration, :integer
 
     field :download_count, :float
     field :import_count, :float
@@ -155,7 +159,7 @@ defmodule Changelog.Episode do
       :guid,
       :type
     ])
-    |> cast_attachments(params, [:audio_file])
+    |> cast_attachments(params, [:audio_file, :plusplus_file])
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
     |> validate_published_has_published_at()
@@ -164,7 +168,8 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_guests)
     |> cast_assoc(:episode_sponsors)
     |> cast_assoc(:episode_topics)
-    |> derive_bytes_and_duration()
+    |> derive_audio_bytes_and_duration()
+    |> derive_plusplus_bytes_and_duration()
   end
 
   def get_news_item(episode) do
@@ -306,22 +311,37 @@ defmodule Changelog.Episode do
     updated
   end
 
-  defp derive_bytes_and_duration(changeset) do
-    if new_audio_file = get_change(changeset, :audio_file) do
-      tagged_file = EpisodeView.audio_local_path(%{changeset.data | audio_file: new_audio_file})
+  defp derive_audio_bytes_and_duration(changeset = %{changes: %{audio_file: _}}) do
+    new_file = get_change(changeset, :audio_file)
+    tagged_file = EpisodeView.audio_local_path(%{changeset.data | audio_file: new_file})
 
-      case File.stat(tagged_file) do
-        {:ok, stats} ->
-          seconds = extract_duration_seconds(tagged_file)
-          change(changeset, bytes: stats.size, duration: seconds)
+    case File.stat(tagged_file) do
+      {:ok, stats} ->
+        seconds = extract_duration_seconds(tagged_file)
+        change(changeset, audio_bytes: stats.size, audio_duration: seconds)
 
-        {:error, _} ->
-          changeset
-      end
-    else
-      changeset
+      {:error, _} ->
+        changeset
     end
   end
+
+  defp derive_audio_bytes_and_duration(changeset), do: changeset
+
+  defp derive_plusplus_bytes_and_duration(changeset = %{changes: %{plusplus_file: _}}) do
+    new_file = get_change(changeset, :plusplus_file)
+    tagged_file = EpisodeView.plusplus_local_path(%{changeset.data | plusplus_file: new_file})
+
+    case File.stat(tagged_file) do
+      {:ok, stats} ->
+        seconds = extract_duration_seconds(tagged_file)
+        change(changeset, plusplus_bytes: stats.size, plusplus_duration: seconds)
+
+      {:error, _} ->
+        changeset
+    end
+  end
+
+  defp derive_plusplus_bytes_and_duration(changeset), do: changeset
 
   defp extract_duration_seconds(path) do
     try do

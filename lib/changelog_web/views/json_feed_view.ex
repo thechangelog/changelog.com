@@ -64,8 +64,8 @@ defmodule ChangelogWeb.JsonFeedView do
     %{
       url: EpisodeView.audio_url(episode),
       mime_type: "audio/mpeg",
-      size_in_bytes: episode.bytes,
-      duration_in_seconds: episode.duration
+      size_in_bytes: episode.audio_bytes,
+      duration_in_seconds: episode.audio_duration
     }
   end
 

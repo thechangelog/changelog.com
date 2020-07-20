@@ -18,7 +18,7 @@
       <div class="episode_player-details_container">
         <div class="episode_player-details">
           <%= link to: audio_url(@episode), role: "button", class: "episode_player-details-button js-player-play-button",
-            data: [podcast: @podcast.name, title: @episode.title, duration: @episode.duration] do %>
+            data: [podcast: @podcast.name, title: @episode.title, duration: @episode.audio_duration] do %>
             <div class="episode_player-details-button-bg"></div>
             <div class="episode_player-details-button-icon">Play</div>
           <% end %>
@@ -43,11 +43,11 @@
       <form class="episode_player-slider">
         <div class="range_slider">
           <div class="range_slider-range_wrap">
-            <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="<%= @episode.duration %>"/>
+            <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="<%= @episode.audio_duration %>"/>
             <div class="range_slider-range-track js-player-track"></div>
           </div>
           <span class="range_slider-below">
-            <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= TimeView.duration(@episode.duration) %></span></output>
+            <output><b class="js-player-current">0:00</b> / <span class="js-player-duration"><%= TimeView.duration(@episode.audio_duration) %></span></output>
 
             <%= if @source == "twitter" do %>
               <%= link "Listen on Changelog.com",

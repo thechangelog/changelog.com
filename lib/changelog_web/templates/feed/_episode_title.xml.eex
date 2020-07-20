@@ -2,4 +2,4 @@
 <link><%= Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug) %></link>
 <guid isPermaLink="false"><%= EpisodeView.guid(@episode) %></guid>
 <pubDate><%= TimeView.rss(@episode.published_at) %></pubDate>
-<enclosure url="<%= EpisodeView.audio_url(@episode) %>" length="<%= @episode.bytes %>" type="audio/mpeg" />
+<enclosure url="<%= EpisodeView.audio_url(@episode) %>" length="<%= @episode.audio_bytes %>" type="audio/mpeg" />

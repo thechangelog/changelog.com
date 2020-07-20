@@ -58,7 +58,7 @@ defmodule Changelog.Stats do
               episode_id: episode.id,
               podcast_id: podcast.id,
               date: date,
-              episode_bytes: episode.bytes
+              episode_bytes: episode.audio_bytes
             }
 
           found ->

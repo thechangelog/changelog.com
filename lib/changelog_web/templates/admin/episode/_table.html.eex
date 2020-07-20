@@ -61,7 +61,7 @@
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
     <% else %>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
-      <td><%= TimeView.duration(episode.duration) %></td>
+      <td><%= TimeView.duration(episode.audio_duration) %></td>
       <td><%= AdminHelpers.reach_count(episode) %></td>
     <% end %>
       <td class="center aligned">

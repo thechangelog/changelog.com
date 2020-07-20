@@ -6,10 +6,13 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   alias ChangelogWeb.Admin.{EpisodeRequestView, PodcastView}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
+  def plusplus_filename(episode), do: EpisodeView.plusplus_filename(episode)
   def audio_url(episode), do: EpisodeView.audio_url(episode)
+  def plusplus_url(episode), do: EpisodeView.plusplus_url(episode)
   def embed_code(episode), do: EpisodeView.embed_code(episode)
   def embed_iframe(episode, theme), do: EpisodeView.embed_iframe(episode, theme)
   def megabytes(episode), do: EpisodeView.megabytes(episode)
+  def megabytes(episode, type), do: EpisodeView.megabytes(episode, type)
   def numbered_title(episode), do: EpisodeView.numbered_title(episode)
 
   def featured_label(episode) do

@@ -20,7 +20,7 @@ defmodule Changelog.Factory do
     %Changelog.Episode{
       title: sequence(:title, &"Best Show Evar! #{&1}"),
       slug: sequence(:slug, &"best-show-evar-#{&1}"),
-      bytes: 42,
+      audio_bytes: 42,
       podcast: build(:podcast)
     }
   end

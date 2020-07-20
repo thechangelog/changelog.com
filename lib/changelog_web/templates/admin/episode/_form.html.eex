@@ -221,7 +221,7 @@
             </div>
             <p class="description">
               Currently &mdash; a <span class="emphasis"><%= megabytes(f.data) %> MB</span> file,
-              runs <span class="emphasis"><%= TimeView.duration(f.data.duration) %></span>,
+              runs <span class="emphasis"><%= TimeView.duration(f.data.audio_duration) %></span>,
               last updated <span class="emphasis"><%= AdminHelpers.ts(f.data.audio_file.updated_at) %></span>
             </p>
           </div>
@@ -230,6 +230,31 @@
     <% end %>
 
     <%= file_input(f, :audio_file) %>
+  </div>
+
+  <div class="field">
+    <%= label(f, :plusplus_file) do %>
+      ++ File <%= AdminHelpers.help_icon("Upload after Slug, Publish Time, and Title are finalized so correct ID3 tags get written.") %>
+    <% end %>
+
+    <%= if f.data.plusplus_file  do %>
+      <div class="ui raised segment items js-audio-file">
+        <div class="ui item">
+          <div class="content">
+            <div class="header">
+            <%= link(plusplus_filename(f.data), to: plusplus_url(f.data)) %>
+            </div>
+            <p class="description">
+              Currently &mdash; a <span class="emphasis"><%= megabytes(f.data, :plusplus) %> MB</span> file,
+              runs <span class="emphasis"><%= TimeView.duration(f.data.plusplus_duration) %></span>,
+              last updated <span class="emphasis"><%= AdminHelpers.ts(f.data.plusplus_file.updated_at) %></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= file_input(f, :plusplus_file) %>
   </div>
 
   <div class="inline field">

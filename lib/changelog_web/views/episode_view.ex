@@ -36,6 +36,10 @@ defmodule ChangelogWeb.EpisodeView do
     Files.Audio.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
   end
 
+  def plusplus_filename(episode) do
+    Files.PlusPlus.filename(:original, {episode.plusplus_file.file_name, episode}) <> ".mp3"
+  end
+
   def audio_local_path(episode) do
     {episode.audio_file.file_name, episode}
     |> Files.Audio.url(:original)
@@ -43,10 +47,28 @@ defmodule ChangelogWeb.EpisodeView do
     |> String.replace_leading("/priv", "priv")
   end
 
+  def plusplus_local_path(episode) do
+    {episode.plusplus_file.file_name, episode}
+    |> Files.PlusPlus.url(:original)
+    # remove Arc's "/" when storage is priv
+    |> String.replace_leading("/priv", "priv")
+  end
+
   def audio_path(episode) do
     if episode.audio_file do
       episode
-      |> audio_local_path
+      |> audio_local_path()
+      # ensure relative reference is removed
+      |> String.replace_leading("priv", "")
+    else
+      "/california.mp3"
+    end
+  end
+
+  def plusplus_path(episode) do
+    if episode.plusplus_file do
+      episode
+      |> plusplus_local_path()
       # ensure relative reference is removed
       |> String.replace_leading("priv", "")
     else
@@ -56,6 +78,10 @@ defmodule ChangelogWeb.EpisodeView do
 
   def audio_url(episode) do
     Routes.static_url(Endpoint, audio_path(episode))
+  end
+
+  def plusplus_url(episode) do
+    Routes.static_url(Endpoint, plusplus_path(episode))
   end
 
   def classy_highlight(episode) do
@@ -96,8 +122,9 @@ defmodule ChangelogWeb.EpisodeView do
       String.starts_with?(subtitle, "featuring ")
   end
 
-  def megabytes(episode) do
-    round((episode.bytes || 0) / 1000 / 1000)
+  def megabytes(episode, type \\ "audio") do
+    bytes = Map.get(episode, String.to_existing_atom("#{type}_bytes"), 0)
+    round(bytes / 1000 / 1000)
   end
 
   def number(episode) do
@@ -172,7 +199,7 @@ defmodule ChangelogWeb.EpisodeView do
       podcast: podcast.name,
       title: episode.title,
       number: number(episode),
-      duration: episode.duration,
+      duration: episode.audio_duration,
       art_url: PodcastView.cover_url(podcast, :small),
       audio_url: audio_url(episode),
       share_url: url(episode, :show)

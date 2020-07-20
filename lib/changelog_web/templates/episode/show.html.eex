@@ -57,7 +57,7 @@
       </div>
 
       <ul class="episode-body-summary-meta">
-        <li><%= TimeView.rounded_minutes(@episode.duration) %> minutes</li>
+        <li><%= TimeView.rounded_minutes(@episode.audio_duration) %> minutes</li>
       <%= if @episode.recorded_at do %>
         <li>Recorded <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.recorded_at) %></time></li>
       <% end %>

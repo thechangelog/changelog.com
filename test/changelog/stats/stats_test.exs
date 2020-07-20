@@ -16,7 +16,7 @@ defmodule ChangelogStatsTest do
       get_logs: fn date, _slug -> log_fixtures(date) end do
       podcast = insert(:podcast)
 
-      e1 = insert(:episode, podcast: podcast, slug: "223", bytes: 80_743_303)
+      e1 = insert(:episode, podcast: podcast, slug: "223", audio_bytes: 80_743_303)
 
       stats = Stats.process(~D[2016-10-10], podcast)
 
@@ -34,22 +34,22 @@ defmodule ChangelogStatsTest do
       get_logs: fn date, _slug -> log_fixtures(date) end do
       podcast = insert(:podcast)
 
-      e1 = insert(:episode, podcast: podcast, slug: "114", bytes: 26_238_621)
-      e2 = insert(:episode, podcast: podcast, slug: "181", bytes: 59_310_792)
-      e3 = insert(:episode, podcast: podcast, slug: "182", bytes: 56_304_828)
-      e4 = insert(:episode, podcast: podcast, slug: "183", bytes: 63_723_737)
-      e5 = insert(:episode, podcast: podcast, slug: "202", bytes: 79_743_350)
-      e6 = insert(:episode, podcast: podcast, slug: "204", bytes: 70_867_090)
-      e7 = insert(:episode, podcast: podcast, slug: "205", bytes: 112_042_496)
-      e8 = insert(:episode, podcast: podcast, slug: "207", bytes: 77_737_571)
-      e9 = insert(:episode, podcast: podcast, slug: "216", bytes: 81_286_241)
-      e10 = insert(:episode, podcast: podcast, slug: "217", bytes: 86_659_297)
-      e11 = insert(:episode, podcast: podcast, slug: "218", bytes: 84_495_463)
-      e12 = insert(:episode, podcast: podcast, slug: "219", bytes: 62_733_067)
-      e13 = insert(:episode, podcast: podcast, slug: "220", bytes: 87_270_178)
-      e14 = insert(:episode, podcast: podcast, slug: "221", bytes: 77_652_463)
-      e15 = insert(:episode, podcast: podcast, slug: "222", bytes: 81_563_934)
-      e16 = insert(:episode, podcast: podcast, slug: "223", bytes: 80_743_303)
+      e1 = insert(:episode, podcast: podcast, slug: "114", audio_bytes: 26_238_621)
+      e2 = insert(:episode, podcast: podcast, slug: "181", audio_bytes: 59_310_792)
+      e3 = insert(:episode, podcast: podcast, slug: "182", audio_bytes: 56_304_828)
+      e4 = insert(:episode, podcast: podcast, slug: "183", audio_bytes: 63_723_737)
+      e5 = insert(:episode, podcast: podcast, slug: "202", audio_bytes: 79_743_350)
+      e6 = insert(:episode, podcast: podcast, slug: "204", audio_bytes: 70_867_090)
+      e7 = insert(:episode, podcast: podcast, slug: "205", audio_bytes: 112_042_496)
+      e8 = insert(:episode, podcast: podcast, slug: "207", audio_bytes: 77_737_571)
+      e9 = insert(:episode, podcast: podcast, slug: "216", audio_bytes: 81_286_241)
+      e10 = insert(:episode, podcast: podcast, slug: "217", audio_bytes: 86_659_297)
+      e11 = insert(:episode, podcast: podcast, slug: "218", audio_bytes: 84_495_463)
+      e12 = insert(:episode, podcast: podcast, slug: "219", audio_bytes: 62_733_067)
+      e13 = insert(:episode, podcast: podcast, slug: "220", audio_bytes: 87_270_178)
+      e14 = insert(:episode, podcast: podcast, slug: "221", audio_bytes: 77_652_463)
+      e15 = insert(:episode, podcast: podcast, slug: "222", audio_bytes: 81_563_934)
+      e16 = insert(:episode, podcast: podcast, slug: "223", audio_bytes: 80_743_303)
 
       stats = Stats.process(~D[2016-10-11], podcast)
       assert length(stats) == 16
