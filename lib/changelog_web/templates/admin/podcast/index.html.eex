@@ -14,6 +14,10 @@
   </div>
 </div>
 
+<div class="ui basic segment">
+  <h2 class="ui header">Global impact</h2>
+  <%= render(EpisodeView, "_reach.html", assigns) %>
+</div>
 
 <%= if Enum.any?(@active) do %>
 <div class="ui basic segment">

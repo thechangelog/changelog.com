@@ -69,7 +69,7 @@ defmodule ChangelogWeb.Admin.PageController do
     }
   end
 
-  defp reach do
+  def reach do
     now = Timex.today() |> Timex.shift(days: -1)
     then = now |> Timex.shift(years: -1)
 
