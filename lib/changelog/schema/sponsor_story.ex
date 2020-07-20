@@ -235,7 +235,7 @@ defmodule Changelog.SponsorStory do
         </footer>
       </blockquote>
 
-      ## Who are you and what do you do at Rollbar?
+      ## Who are you and what do you do at Linode?
 
       Hello, I'm Tyler Van Fossen. I lead our growth and partner marketing here at Linode. I help to define and deploy growth and marketing strategies, meet with partners, review what's working and what's not, and do what I can to enable our partners to help us reach new customers.
 
