@@ -13,6 +13,7 @@
     iframe.setAttribute("height", "220");
     iframe.setAttribute("scrolling", "no");
     iframe.setAttribute("frameborder", "no");
+    iframe.setAttribute("title", "Changelog Podcast");
     element.parentNode.replaceChild(iframe, element);
 
     this.id = +new Date;
@@ -24,7 +25,9 @@
     data.context = "player.js";
     data.version = "0.0.11";
     data.listener = player.id;
-    player.iframe.contentWindow.postMessage(JSON.stringify(data), origin);
+    try {
+      player.iframe.contentWindow.postMessage(JSON.stringify(data), origin);
+    } catch(e) {}
   }
 
   var receive = function(event) {
