@@ -5,5 +5,9 @@ export default class Log {
     } else {
       ga("send", "event", category, action, label);
     }
+
+    if (typeof plausible !== "undefined") {
+      plausible(category);
+    }
   }
 }
