@@ -4,7 +4,7 @@
   <div class="news_item-content richtext">
     <%= @item.story |> SharedHelpers.md_to_html() |> raw() %>
     <%= if assigns[:highlight] do %>
-      <p>...</p>
+      <p><strong>Matched from the episode's <%= link("transcript", to: @item.url <> "#transcript") %> 👇</strong></p>
       <div class="search-highlight"><%= @highlight |> SharedHelpers.md_to_html() |> raw() %></div>
     <% end %>
     <%= video_embed(@item) %>
