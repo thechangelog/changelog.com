@@ -22,7 +22,8 @@ config :changelog,
   hn_pass: DockerSecret.get("HN_PASS_1"),
   cm_api_token: Base.encode64("#{DockerSecret.get("CM_API_TOKEN_2")}:x"),
   slack_invite_api_token: DockerSecret.get("SLACK_INVITE_API_TOKEN"),
-  slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN")
+  slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN"),
+  plusplus_slug: DockerSecret.get("PLUSPLUS_SLUG_1")
 
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
 

@@ -37,7 +37,7 @@ defmodule ChangelogWeb.FeedController do
   end
 
   def plusplus(conn, %{"slug" => slug}) do
-    if System.get_env("PLUSPLUS_SLUG_1") == slug do
+    if Application.get_env(:changelog, :plusplus_slug) == slug do
       podcast = Podcast.get_by_slug!("master")
       render_feed_for_podcast(conn, podcast, "plusplus")
     else

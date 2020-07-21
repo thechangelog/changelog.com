@@ -74,13 +74,13 @@ defmodule ChangelogWeb.FeedControllerTest do
   end
 
   test "the plusplus feed with incorrect slug doesn't exist", %{conn: conn} do
-    System.put_env("PLUSPLUS_SLUG", "8675309")
+    Application.put_env(:changelog, :plusplus_slug, "8675309")
     conn = get(conn, Routes.feed_path(conn, :plusplus, "justguessing"))
     assert conn.status == 404
   end
 
   test "the plusplus feed with correct slug", %{conn: conn} do
-    System.put_env("PLUSPLUS_SLUG_1", "8675309")
+    Application.put_env(:changelog, :plusplus_slug, "8675309")
 
     p1 = insert(:podcast)
     e1 = insert(:published_episode, podcast: p1)
