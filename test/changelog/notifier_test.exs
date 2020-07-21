@@ -4,7 +4,7 @@ defmodule Changelog.NotifierTest do
 
   import Mock
 
-  alias Changelog.{Notifier, Slack, Subscription}
+  alias Changelog.{Notifier, Slack, Subscription, NewsItem, EpisodeRequest}
   alias ChangelogWeb.Email
 
   describe "notify/1 with news item comment" do
@@ -228,6 +228,14 @@ defmodule Changelog.NotifierTest do
       assert_no_emails_delivered()
     end
 
+    test "when submitter has news item declined" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      item = insert(:news_item, submitter: person)
+      item = NewsItem.decline!(item, "decline reason")
+      Notifier.notify(item)
+      assert_delivered_email(Email.submitted_news_declined(person, item))
+    end
+
     test "when submitter and author are same person, notifications enabled" do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person, author: person)
@@ -274,6 +282,16 @@ defmodule Changelog.NotifierTest do
       episode = insert(:episode)
       Notifier.notify(episode)
       assert_delivered_email(Email.episode_transcribed(person, episode))
+    end
+  end
+
+  describe "notify/1 with an episode request" do
+    test "when requester has episode request declined" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      item = insert(:episode_request, submitter: person)
+      item = EpisodeRequest.decline!(item, "decline reason")
+      Notifier.notify(item)
+      assert_delivered_email(Email.episode_request_declined(person, item))
     end
   end
 end

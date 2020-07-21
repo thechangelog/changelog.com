@@ -67,6 +67,15 @@
               title: "Decline",
               method: :put,
               data: [confirm: "Decline this request?"]) %>
+
+          <%= AdminHelpers.modal_icon_button(
+                  ChangelogWeb.Admin.EpisodeRequestView,
+                  "file text",
+                  "Decline with message",
+                  "decline",
+                  %{request: request, conn: @conn, podcast: podcast},
+                  request.id
+                ) %>
         <% end %>
 
         <%= if Changelog.EpisodeRequest.is_active(request) && Policies.EpisodeRequest.fail(@current_user, podcast) do %>

@@ -41,4 +41,52 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
     assert html_response(conn, 200) =~ ~r/error/
     assert count(EpisodeRequest) == count_before
   end
+
+  @tag :as_admin
+  test "declines an episode request and redirects", %{conn: conn} do
+    request = insert(:episode_request)
+
+    conn =
+      put(
+        conn,
+        Routes.admin_podcast_episode_request_path(
+          conn,
+          :decline,
+          request.podcast.slug,
+          request.id
+        )
+      )
+
+    assert redirected_to(conn) ==
+             Routes.admin_podcast_episode_request_path(conn, :index, request.podcast.slug)
+
+    assert count(EpisodeRequest) == 1
+    assert count(EpisodeRequest.declined()) == 1
+  end
+
+  @tag :as_admin
+  test "declines a news item with a message and redirects", %{conn: conn} do
+    request = insert(:episode_request)
+
+    conn =
+      put(
+        conn,
+        Routes.admin_podcast_episode_request_path(
+          conn,
+          :decline,
+          request.podcast.slug,
+          request.id
+        ),
+        %{"message" => "declined because reason"}
+      )
+
+    assert redirected_to(conn) ==
+             Routes.admin_podcast_episode_request_path(conn, :index, request.podcast.slug)
+
+    assert count(EpisodeRequest) == 1
+    assert count(EpisodeRequest.declined()) == 1
+
+    assert %{decline_message: "declined because reason", status: :declined} =
+             Changelog.Repo.get(EpisodeRequest, request.id, [])
+  end
 end

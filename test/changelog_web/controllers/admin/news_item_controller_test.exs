@@ -185,6 +185,18 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     assert count(NewsItem.declined()) == 1
   end
 
+  @tag :as_admin
+  test "declines a news item with a message and redirects", %{conn: conn} do
+    news_item = insert(:news_item)
+
+    conn = delete(conn, Routes.admin_news_item_path(conn, :decline, news_item.id), %{"message" => "declined because reason"})
+
+    assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
+    assert count(NewsItem) == 1
+    assert count(NewsItem.declined()) == 1
+    assert %{decline_message: "declined because reason", status: :declined} = Changelog.Repo.get(NewsItem, news_item.id, [])
+  end
+
   test "requires user auth on all actions", %{conn: conn} do
     news_item = insert(:news_item)
 

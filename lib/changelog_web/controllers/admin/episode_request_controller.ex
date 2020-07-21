@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.EpisodeRequestController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{EpisodeRequest, Podcast}
+  alias Changelog.{EpisodeRequest, Podcast, Notifier}
 
   plug :assign_podcast
   plug Authorize, [Policies.EpisodeRequest, :podcast]
@@ -84,13 +84,25 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
     |> redirect_next_or_index(params, podcast)
   end
 
-  def decline(conn, params = %{"id" => id}, podcast) do
+  def decline(conn, params = %{"id" => id, "message" => message}, podcast) do
     request =
       podcast
       |> assoc(:episode_requests)
       |> Repo.get!(id)
+      |> EpisodeRequest.decline!(message)
 
-    EpisodeRequest.decline!(request)
+    Task.start_link(fn -> Notifier.notify(request) end)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect_next_or_index(params, podcast)
+  end
+
+  def decline(conn, params = %{"id" => id}, podcast) do
+    podcast
+    |> assoc(:episode_requests)
+    |> Repo.get!(id)
+    |> EpisodeRequest.decline!()
 
     conn
     |> put_flash(:result, "success")

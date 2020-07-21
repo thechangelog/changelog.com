@@ -8,7 +8,8 @@ defmodule Changelog.Notifier do
     Podcast,
     Repo,
     Subscription,
-    Slack
+    Slack,
+    EpisodeRequest
   }
 
   alias ChangelogWeb.Email
@@ -31,11 +32,22 @@ defmodule Changelog.Notifier do
   def notify(item = %NewsItem{}) do
     item = NewsItem.preload_all(item)
 
-    if item.submitter == item.author do
-      deliver_submitter_email(item.submitter, item)
+    cond do
+      item.status == :declined ->
+        deliver_submitter_decline_email(item.submitter, item)
+      item.submitter == item.author ->
+        deliver_submitter_email(item.submitter, item)
+      true ->
+        deliver_author_email(item.author, item)
+        deliver_submitter_email(item.submitter, item)
+    end
+  end
+
+  def notify(request = %EpisodeRequest{}) do
+    if request.status == :declined do
+      request = EpisodeRequest.preload_all(request)
+      deliver_request_decline_email(request.submitter, request)
     else
-      deliver_author_email(item.author, item)
-      deliver_submitter_email(item.submitter, item)
     end
   end
 
@@ -163,5 +175,17 @@ defmodule Changelog.Notifier do
       |> Email.submitted_news_published(item)
       |> Mailer.deliver_later()
     end
+  end
+
+  defp deliver_submitter_decline_email(person, item) do
+    person
+    |> Email.submitted_news_declined(item)
+    |> Mailer.deliver_later()
+  end
+
+  defp deliver_request_decline_email(person, request) do
+    person
+    |> Email.episode_request_declined(request)
+    |> Mailer.deliver_later()
   end
 end

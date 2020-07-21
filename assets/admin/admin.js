@@ -6,6 +6,7 @@ import newsIssueView from "views/newsIssueView";
 import newsItemView from "views/newsItemView";
 import newsItemCommentView from "views/newsItemCommentView";
 import newsSponsorshipView from "views/newsSponsorshipView";
+import pageView from "views/pageView";
 import personView from "views/personView";
 import podcastView from "views/podcastView";
 import postView from "views/postView";
@@ -21,6 +22,7 @@ let views = {
   "NewsItemCommentView": newsItemCommentView,
   "NewsIssueView": newsIssueView,
   "NewsSponsorshipView": newsSponsorshipView,
+  "PageView": pageView,
   "PersonView": personView,
   "PodcastView": podcastView,
   "PostView": postView,
