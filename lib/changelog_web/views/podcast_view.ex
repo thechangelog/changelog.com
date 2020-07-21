@@ -6,6 +6,7 @@ defmodule ChangelogWeb.PodcastView do
   alias Changelog.Files.Cover
 
   def cover_path(%{slug: "master"}, version), do: "/images/podcasts/master-#{version}.png"
+  def cover_path(%{slug: "plusplus"}, version), do: "/images/podcasts/plusplus-#{version}.png"
 
   def cover_path(podcast, version) do
     {podcast.cover, podcast}

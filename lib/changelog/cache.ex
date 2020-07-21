@@ -17,6 +17,7 @@ defmodule Changelog.Cache do
     if Episode.is_public(episode) do
       delete_prefix(episode.podcast.slug)
       delete_prefix("/master")
+      delete_prefix("/plusplus")
     end
   end
 

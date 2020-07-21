@@ -73,6 +73,31 @@ defmodule ChangelogWeb.FeedControllerTest do
     assert conn.resp_body =~ e.title
   end
 
+  test "the plusplus feed with incorrect slug doesn't exist", %{conn: conn} do
+    System.put_env("PLUSPLUS_SLUG", "8675309")
+    conn = get(conn, Routes.feed_path(conn, :plusplus, "justguessing"))
+    assert conn.status == 404
+  end
+
+  test "the plusplus feed with correct slug", %{conn: conn} do
+    System.put_env("PLUSPLUS_SLUG_1", "8675309")
+
+    p1 = insert(:podcast)
+    e1 = insert(:published_episode, podcast: p1)
+    e1 |> episode_news_item_feed_only() |> insert()
+
+    p2 = insert(:podcast)
+    e2 = insert(:published_episode, podcast: p2)
+    e2 |> episode_news_item() |> insert()
+
+    conn = get(conn, Routes.feed_path(conn, :plusplus, "8675309"))
+
+    assert conn.status == 200
+    assert valid_xml(conn)
+    assert conn.resp_body =~ e1.title
+    assert conn.resp_body =~ e2.title
+  end
+
   test "the backstage podcast feed doesn't exist", %{conn: conn} do
     insert(:podcast, slug: "backstage")
 

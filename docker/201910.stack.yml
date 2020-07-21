@@ -67,6 +67,8 @@ secrets:
     external: true
   SLACK_DEPLOY_WEBHOOK:
     external: true
+  PLUSPLUS_SLUG_1:
+    external: true
 
 services:
   log:
@@ -204,6 +206,7 @@ services:
       - ALGOLIA_API_KEY2
       - DB_URL
       - SLACK_DEPLOY_WEBHOOK
+      - PLUSPLUS_SLUG_1
     depends_on:
       - db
     image: thechangelog/changelog.com

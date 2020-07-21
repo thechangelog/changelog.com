@@ -659,3 +659,5 @@ coveralls: $(LPASS)
 algolia: $(LPASS)
 	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
 	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes Shared-changelog/secrets/ALGOLIA_API_KEY2)"
+plusplus: $(LPASS)
+	@echo "export PLUSPLUS_SLUG_1=$$($(LPASS) show --notes Shared-changelog/secrets/PLUSPLUS_SLUG_1)"

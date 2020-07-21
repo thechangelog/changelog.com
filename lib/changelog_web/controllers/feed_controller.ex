@@ -33,7 +33,19 @@ defmodule ChangelogWeb.FeedController do
 
   def podcast(conn, %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
+    render_feed_for_podcast(conn, podcast)
+  end
 
+  def plusplus(conn, %{"slug" => slug}) do
+    if System.get_env("PLUSPLUS_SLUG_1") == slug do
+      podcast = Podcast.get_by_slug!("master")
+      render_feed_for_podcast(conn, podcast, "plusplus")
+    else
+      send_resp(conn, :not_found, "")
+    end
+  end
+
+  defp render_feed_for_podcast(conn, podcast, template \\ "podcast") do
     episodes =
       podcast
       |> Podcast.get_news_item_episode_ids!()
@@ -50,7 +62,7 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:podcast, podcast)
     |> assign(:episodes, episodes)
     |> ResponseCache.cache_public()
-    |> render("podcast.xml")
+    |> render("#{template}.xml")
   end
 
   defp log_subscribers(conn = %{params: %{"slug" => slug}}, _) do
