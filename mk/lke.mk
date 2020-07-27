@@ -125,7 +125,7 @@ YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
 YTT_URL := https://github.com/k14s/ytt/releases/download/v$(YTT_VERSION)/ytt-$(platform)-amd64
 YTT := $(LOCAL_BIN)/$(YTT_BIN)
 $(YTT): $(CURL)
-	@mkdir -p $(LOCAL_BIN) \
+	mkdir -p $(LOCAL_BIN) \
 	&& cd $(LOCAL_BIN) \
 	&& $(CURL) --progress-bar --fail --location --output $(YTT) "$(YTT_URL)" \
 	&& touch $(YTT) \
@@ -145,7 +145,7 @@ JB_BIN := jb-$(JB_VERSION)-$(platform)-amd64
 JB_URL := https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v$(JB_VERSION)/jb-$(platform)-amd64
 JB := $(LOCAL_BIN)/$(JB_BIN)
 $(JB): $(CURL)
-	@mkdir -p $(LOCAL_BIN) \
+	mkdir -p $(LOCAL_BIN) \
 	&& cd $(LOCAL_BIN) \
 	&& $(CURL) --progress-bar --fail --location --output $(JB) "$(JB_URL)" \
 	&& touch $(JB) \
@@ -165,7 +165,7 @@ YQ_BIN := yq_$(platform)_amd64
 YQ_URL := https://github.com/mikefarah/yq/releases/download/$(YQ_VERSION)/$(YQ_BIN)
 YQ := $(LOCAL_BIN)/$(YQ_BIN)
 $(YQ): $(CURL)
-	@mkdir -p $(LOCAL_BIN) \
+	mkdir -p $(LOCAL_BIN) \
 	&& cd $(LOCAL_BIN) \
 	&& $(CURL) --progress-bar --fail --location --output $(YQ) "$(YQ_URL)" \
 	&& touch $(YQ) \
@@ -215,7 +215,7 @@ lke-ls: linode
 	$(LKE_LS)
 
 $(LKE_CONFIGS):
-	@mkdir -p $(LKE_CONFIGS)
+	mkdir -p $(LKE_CONFIGS)
 
 .PHONY: lke-configs
 lke-configs: linode $(LKE_CONFIGS)
