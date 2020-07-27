@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+data:
+  use-forwarded-headers: "true"
+  enable-real-ip: "true"
+  proxy-real-ip-cidr: "192.168.255.0/24"
+  # TODO: https://github.com/linode/linode-cloud-controller-manager/issues/74

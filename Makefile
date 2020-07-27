@@ -553,6 +553,7 @@ This is an $(BOLD).envrc$(NORMAL) template that you can use as a starting point:
 
     PATH_add script
     PATH_add bin
+    PATH_add ~/.krew/bin
 
     export XDG_CONFIG_HOME=$$(expand_path .config)
 

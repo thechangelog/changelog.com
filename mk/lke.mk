@@ -115,6 +115,13 @@ $(KUBEFLEET): $(KUBECTL) $(KREW)
 	&& touch $(@)
 kubefleet: $(KUBEFLEET)
 
+# https://github.com/eldadru/ksniff
+KSNIFF := $(HOME)/.krew/bin/kubectl-sniff
+$(KSNIFF): $(KUBECTL) $(KREW)
+	$(KUBECTL) krew install sniff \
+	&& touch $(@)
+ksniff: $(KSNIFF)
+
 # Make krew plugins available to kubectl
 PATH := $(HOME)/.krew/bin:$(PATH)
 export PATH
@@ -272,7 +279,7 @@ lke-details: $(KUBEFLEET) lke-config-hint
 
 include $(CURDIR)/mk/external-dns.mk
 include $(CURDIR)/mk/cert-manager.mk
-include $(CURDIR)/mk/nginx-ingress.mk
+include $(CURDIR)/mk/ingress-nginx.mk
 include $(CURDIR)/mk/kube-prometheus.mk
 include $(CURDIR)/mk/postgres.mk
 include $(CURDIR)/mk/ten.mk
