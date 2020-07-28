@@ -1,11 +1,11 @@
-var webpack = require("webpack");
-var merge = require("webpack-merge");
-var TerserPlugin = require("terser-webpack-plugin");
-var CopyWebpackPlugin = require("copy-webpack-plugin");
-var MiniCssExtractPlugin = require("mini-css-extract-plugin");
-var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+let webpack = require("webpack");
+let { merge } = require("webpack-merge");
+let TerserPlugin = require("terser-webpack-plugin");
+let CopyWebpackPlugin = require("copy-webpack-plugin");
+let MiniCssExtractPlugin = require("mini-css-extract-plugin");
+let OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-var common = {
+let common = {
   module: {
     rules: [
       {
@@ -64,7 +64,7 @@ module.exports = [
       ]
     },
     plugins: [
-      new CopyWebpackPlugin([{ from: __dirname + "/static"}]),
+      new CopyWebpackPlugin({patterns: [{from: __dirname + "/static"}]}),
       new MiniCssExtractPlugin({filename: "css/app.css"})
     ]
   }),
