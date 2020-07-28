@@ -127,7 +127,7 @@ PATH := $(HOME)/.krew/bin:$(PATH)
 export PATH
 
 YTT_RELEASES := https://github.com/k14s/ytt/releases
-YTT_VERSION := 0.27.1
+YTT_VERSION := 0.28.0
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
 YTT_URL := https://github.com/k14s/ytt/releases/download/v$(YTT_VERSION)/ytt-$(platform)-amd64
 YTT := $(LOCAL_BIN)/$(YTT_BIN)
@@ -147,7 +147,7 @@ releases-ytt:
 	@$(OPEN) $(YTT_RELEASES)
 
 JB_RELEASES := https://github.com/jsonnet-bundler/jsonnet-bundler/releases
-JB_VERSION := 0.3.1
+JB_VERSION := 0.4.0
 JB_BIN := jb-$(JB_VERSION)-$(platform)-amd64
 JB_URL := https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v$(JB_VERSION)/jb-$(platform)-amd64
 JB := $(LOCAL_BIN)/$(JB_BIN)
@@ -167,7 +167,7 @@ releases-jb:
 	@$(OPEN) $(JB_RELEASES)
 
 YQ_RELEASES := https://github.com/mikefarah/yq/releases
-YQ_VERSION := 3.3.0
+YQ_VERSION := 3.3.2
 YQ_BIN := yq_$(platform)_amd64
 YQ_URL := https://github.com/mikefarah/yq/releases/download/$(YQ_VERSION)/$(YQ_BIN)
 YQ := $(LOCAL_BIN)/$(YQ_BIN)
