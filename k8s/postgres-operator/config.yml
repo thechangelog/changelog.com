@@ -2,10 +2,14 @@
 #! https://github.com/k14s/ytt/blob/master/examples/data-values/values.yml
 #! If necessary, these values can be overwritten in a number of ways: https://github.com/k14s/ytt/blob/master/docs/ytt-data-values.md
 ---
-image: registry.developers.crunchydata.com/crunchydata/pgo-deployer
-metrics: true
-storage_size: 10Gi
-storage_class: linode-block-storage-retain
+#! https://access.crunchydata.com/documentation/postgres-operator/4.4.0/installation/postgres-operator/#configuration-postgres-operator-yml
+action: install
+#! action: uninstall
 #! provided just-in-time
 namespace:
 version:
+#! https://github.com/k14s/ytt/issues/177
+metrics: true
+storage_size: 10Gi
+storage_class: linode-block-storage-retain
+storage_name: linode
