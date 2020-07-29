@@ -4,7 +4,7 @@ LKE_NAME ?= prod
 LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
 LKE_REGION := us-east
 LKE_VERSION := 1.17
-LKE_NODE_TYPE := g6-dedicated-2
+LKE_NODE_TYPE := g6-dedicated-8
 LKE_NODE_COUNT := 3
 
 ifeq ($(PLATFORM),Darwin)
@@ -213,6 +213,20 @@ lke: | linode
 	    --node_pools.type $(LKE_NODE_TYPE) \
 	    --node_pools.count $(LKE_NODE_COUNT)
 
+define LKE_CLUSTER_ID
+$(LKE_LS) --json | $(JQ) '.[] | select(.label == "$(LKE_LABEL)") | .id'
+endef
+.PHONY: lke-pool
+lke-pool: | linode $(JQ)
+	$(LINODE) lke pool-create \
+	    --type $(LKE_NODE_TYPE) \
+	    --count $(LKE_NODE_COUNT) \
+	    $$($(LKE_CLUSTER_ID))
+
+.PHONY: lke-pool-ls
+lke-pool-ls: | linode $(JQ)
+	$(LINODE) --all lke pools-list $$($(LKE_CLUSTER_ID))
+
 .PHONY: lke-provision
 lke-provision::
 
@@ -225,7 +239,7 @@ $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
 
 .PHONY: lke-configs
-lke-configs: linode $(LKE_CONFIGS)
+lke-configs: | linode $(LKE_CONFIGS) $(JQ)
 	@$(LKE_LS) --json \
 	  | $(JQ) --raw-output --compact-output '.[] | [.id, .label] | join(" ")' \
 	  | while read -r lke_id lke_name \
