@@ -3,13 +3,19 @@
 #! If necessary, these values can be overwritten in a number of ways: https://github.com/k14s/ytt/blob/master/docs/ytt-data-values.md
 ---
 #! https://access.crunchydata.com/documentation/postgres-operator/4.4.0/installation/postgres-operator/#configuration-postgres-operator-yml
-action: install
-#! action: uninstall
+action: update
+metrics: "true"
+storage:
+  persistentretain:
+    type: linode-block-storage-retain
+    size: 10Gi
+  persistent:
+    type: linode-block-storage
+    size: 10Gi
+  local:
+    type: local-storage
+    size: 10Gi
 #! provided just-in-time
 namespace:
+managed_namespaces:
 version:
-#! https://github.com/k14s/ytt/issues/177
-metrics: true
-storage_size: 10Gi
-storage_class: linode-block-storage-retain
-storage_name: linode
