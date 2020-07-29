@@ -20,9 +20,9 @@ lke-postgres-operator: lke-ctx $(YTT)
 	  --file $(CURDIR)/k8s/postgres-operator > $(CURDIR)/k8s/postgres-operator.yml \
 	&& ( $(KUBECTL) apply --filename $(CURDIR)/k8s/postgres-operator.yml \
 	     || $(KUBECTL) auth reconcile --filename $(CURDIR)/k8s/postgres-operator.yml ) \
-	&& echo "$(BOLD)$(YELLOW)Waiting up to $(POSTGRES_OPERATOR_INSTALL_TIMEOUT) for PostgreSQL Operator to install...$(NORMAL)" \
+	&& printf "$(BOLD)$(YELLOW)Waiting up to $(POSTGRES_OPERATOR_INSTALL_TIMEOUT) for PostgreSQL Operator to install...$(NORMAL)\n" \
 	&& $(KUBECTL) wait --namespace $(POSTGRES_OPERATOR_NAMESPACE) --for=condition=complete job/pgo-deploy --timeout=$(POSTGRES_OPERATOR_INSTALL_TIMEOUT) \
-	&& echo "$(BOLD)$(YELLOW)Running PostgreSQL Operator post-install cleanup...$(NORMAL)" \
+	&& printf "$(BOLD)$(YELLOW)Running PostgreSQL Operator post-install cleanup...$(NORMAL)\n" \
 	&& $(KUBECTL) delete --namespace $(POSTGRES_OPERATOR_NAMESPACE) \
 	    serviceaccounts/pgo-deployer-sa \
 	    clusterrole/pgo-deployer-cr \
