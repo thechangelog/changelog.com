@@ -217,24 +217,39 @@ lke: | linode
 	    --node_pools.type $(LKE_NODE_TYPE) \
 	    --node_pools.count $(LKE_NODE_COUNT)
 
+# Append target for configuring the base add-ons required by changelog.com
+.PHONY: lke-provision
+lke-provision::
+
+.PHONY: lke-update
+lke-update: | linode $(JQ)
+	$(LKE_POOL_LS) --json \
+	| $(JQ) --raw-output --compact-output 'unique_by(.id) | .[].id' \
+	| while read -r lke_pool_id \
+	  ; do \
+	    printf "\n$(YELLOW)Initiating node pool update $(BOLD)$$lke_pool_id$(NORMAL) $(YELLOW)in cluster $(BOLD)$(LKE_LABEL)$(NORMAL)..." \
+	    ; $(LINODE) lke pool-recycle $(LKE_CLUSTER_ID) $$lke_pool_id \
+	  ; done \
+	&& printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n"
+
+LKE_POOL_LS = $(LINODE) --all lke pools-list $(LKE_CLUSTER_ID)
 define LKE_CLUSTER_ID
-$(LKE_LS) --json | $(JQ) '.[] | select(.label == "$(LKE_LABEL)") | .id'
+$$($(LKE_LS) --json \
+| $(JQ) '.[] | select(.label == "$(LKE_LABEL)") | .id')
 endef
+
 .PHONY: lke-pool
 lke-pool: | linode $(JQ)
 	$(LINODE) lke pool-create \
 	    --type $(LKE_NODE_TYPE) \
 	    --count $(LKE_NODE_COUNT) \
-	    $$($(LKE_CLUSTER_ID))
+	    $(LKE_CLUSTER_ID)
 
 .PHONY: lke-pool-ls
 lke-pool-ls: | linode $(JQ)
-	$(LINODE) --all lke pools-list $$($(LKE_CLUSTER_ID))
+	$(LKE_POOL_LS)
 
-.PHONY: lke-provision
-lke-provision::
-
-LKE_LS := $(LINODE) --all lke clusters-list
+LKE_LS = $(LINODE) --all lke clusters-list
 .PHONY: lke-ls
 lke-ls: linode
 	$(LKE_LS)
