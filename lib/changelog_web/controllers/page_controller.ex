@@ -19,6 +19,8 @@ defmodule ChangelogWeb.PageController do
       :sponsor_story -> sponsor_story(conn, Map.get(conn.params, "slug"))
       :weekly -> weekly(conn, conn.params)
       :weekly_archive -> weekly_archive(conn, conn.params)
+      :++ -> plusplus(conn, conn.params)
+      :plusplus -> plusplus(conn, conn.params)
       name -> render(conn, name)
     end
   end
@@ -83,6 +85,10 @@ defmodule ChangelogWeb.PageController do
   def weekly(conn, _params) do
     latest = get_weekly_issues() |> List.first()
     render(conn, :weekly, latest: latest)
+  end
+
+  def plusplus(conn, _params) do
+    redirect(conn, external: "https://changelog.supercast.tech")
   end
 
   def weekly_archive(conn, _params) do

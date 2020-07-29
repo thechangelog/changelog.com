@@ -36,6 +36,18 @@ defmodule ChangelogWeb.PageControllerTest do
     end
   end
 
+  describe "plusplus" do
+    test "it redirects to supercast from /++", %{conn: conn} do
+      conn = get(conn, "/++")
+      assert redirected_to(conn) == "https://changelog.supercast.tech"
+    end
+
+    test "it redirects to supercast from /plusplus", %{conn: conn} do
+      conn = get(conn, "/plusplus")
+      assert redirected_to(conn) == "https://changelog.supercast.tech"
+    end
+  end
+
   describe "sponsor stories" do
     test "it renders for all known sponsor stories", %{conn: conn} do
       for story <- Changelog.SponsorStory.all() do
