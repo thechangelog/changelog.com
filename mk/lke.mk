@@ -196,6 +196,10 @@ LINODE := $(LINODE_CLI) --no-defaults
 .PHONY: linode
 linode: | $(LINODE_CLI) linode-cli-token
 
+.PHONY: regions
+regions: | linode
+	$(LINODE) regions list
+
 .PHONY: linodes
 linodes: | linode
 	$(LINODE) linodes list
