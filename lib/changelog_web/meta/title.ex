@@ -191,7 +191,7 @@ defmodule ChangelogWeb.Meta.Title do
   defp get(%{view_module: PostView, view_template: "index.html"}), do: "Blog"
 
   # Post show page
-  defp get(%{view_module: PostView, post: post}), do: post.title
+  defp get(%{view_module: PostView, post: post}), do: PostView.escaped_title(post)
 
   defp get(_), do: nil
 end
