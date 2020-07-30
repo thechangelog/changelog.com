@@ -29,7 +29,7 @@
           <% end %>
           <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
             <li class="header-nav-list-item header-nav-list-item--ten">
-              <%= link("Ten Years", to: Routes.page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %>
+              <%= link("Changelog++", to: Routes.page_path(@conn, :++), title: "Join Changelog++") %>
             </li>
           <% end %>
           </ul>

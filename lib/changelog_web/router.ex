@@ -234,7 +234,7 @@ defmodule ChangelogWeb.Router do
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms
 
-    get "/++", PageController, :plusplus
+    get "/++", PageController, :++
     get "/plusplus", PageController, :plusplus
 
     get "/nightly", PageController, :nightly
