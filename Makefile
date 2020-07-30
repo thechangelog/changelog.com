@@ -378,7 +378,7 @@ update-app-service-local: $(DOCKER)
 uasl: update-app-service-local
 
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github aws backups_aws twitter app slack rollbar buffer coveralls algolia ## es  | Print secrets stored in LastPass as env vars
+env-secrets: postgres campaignmonitor github hackernews aws backups_aws twitter app slack rollbar buffer coveralls algolia plusplus ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
 es: env-secrets
 
@@ -614,51 +614,178 @@ sync-secrets: $(LPASS)
 .PHONY: postgres
 postgres: $(LPASS)
 	@echo "export PG_DOTCOM_PASS=$$($(LPASS) show --notes 7298637973371173308)"
+
 .PHONY: campaignmonitor
+CM_SMTP_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/CM_SMTP_TOKEN)"
+CM_API_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/CM_API_TOKEN_2)"
 campaignmonitor: $(LPASS)
-	@echo "export CM_SMTP_TOKEN=$$($(LPASS) show --notes 4518157498237793892)" && \
-	echo "export CM_API_TOKEN=$$($(LPASS) show --notes Shared-changelog/secrets/CM_API_TOKEN_2)"
+	@echo "export CM_SMTP_TOKEN=$(CM_SMTP_TOKEN)" && \
+	echo "export CM_API_TOKEN=$(CM_API_TOKEN)"
+.PHONY: campaignmonitor-lke-secret
+campaignmonitor-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic campaignmonitor \
+	  --from-literal=smtp_token=$(CM_SMTP_TOKEN) \
+	  --from-literal=api_token=$(CM_API_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+GITHUB_CLIENT_ID := "$$($(LPASS) show --notes Shared-changelog/secrets/GITHUB_CLIENT_ID)"
+GITHUB_CLIENT_SECRET := "$$($(LPASS) show --notes Shared-changelog/secrets/GITHUB_CLIENT_SECRET)"
+GITHUB_API_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/GITHUB_API_TOKEN2)"
 .PHONY: github
 github: $(LPASS)
-	@echo "export GITHUB_CLIENT_ID=$$($(LPASS) show --notes 6311620502443842879)" && \
-	echo "export GITHUB_CLIENT_SECRET=$$($(LPASS) show --notes 6962532309857955032)" && \
-	echo "export GITHUB_API_TOKEN=$$($(LPASS) show --notes Shared-changelog/secrets/GITHUB_API_TOKEN2)"
-.PHONY: hn
-hn: $(LPASS)
-	@echo "export HN_USER=$$($(LPASS) show --notes Shared-changelog/secrets/HN_USER_1)" && \
-	echo "export HN_PASS=$$($(LPASS) show --notes Shared-changelog/secrets/HN_PASS_1)"
+	@echo "export GITHUB_CLIENT_ID=$(GITHUB_CLIENT_ID)" && \
+	echo "export GITHUB_CLIENT_SECRET=$(GITHUB_CLIENT_SECRET)" && \
+	echo "export GITHUB_API_TOKEN=$(GITHUB_API_TOKEN)"
+.PHONY: github-lke-secret
+github-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic github \
+	  --from-literal=client_id=$(GITHUB_CLIENT_ID) \
+	  --from-literal=client_secret=$(GITHUB_CLIENT_SECRET) \
+	  --from-literal=api_token=$(GITHUB_API_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+HACKERNEWS_USER := "$$($(LPASS) show --notes Shared-changelog/secrets/HN_USER_1)"
+HACKERNEWS_PASS := "$$($(LPASS) show --notes Shared-changelog/secrets/HN_PASS_1)"
+.PHONY: hackernews
+hackernews: $(LPASS)
+	@echo "export HN_USER=$(HACKERNEWS_USER)" && \
+	echo "export HN_PASS=$(HACKERNEWS_PASS)"
+.PHONY: hackernews-lke-secret
+hackernews-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic hackernews \
+	  --from-literal=user=$(HACKERNEWS_USER) \
+	  --from-literal=pass=$(HACKERNEWS_PASS) \
+	| $(KUBECTL) apply --filename -
+
+AWS_ACCESS_KEY_ID := "$$($(LPASS) show --notes Shared-changelog/secrets/AWS_ACCESS_KEY_ID)"
+AWS_SECRET_ACCESS_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/AWS_SECRET_ACCESS_KEY)"
 .PHONY: aws
 aws: $(LPASS)
-	@echo "export AWS_ACCESS_KEY_ID=$$($(LPASS) show --notes 5523519094417729320)" && \
-	echo "export AWS_SECRET_ACCESS_KEY=$$($(LPASS) show --notes 1520570655547620905)"
+	@echo "export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)" && \
+	echo "export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)"
+.PHONY: aws-lke-secret
+aws-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic aws \
+	  --from-literal=access_key_id=$(AWS_ACCESS_KEY_ID) \
+	  --from-literal=secret_access_key=$(AWS_SECRET_ACCESS_KEY) \
+	| $(KUBECTL) apply --filename -
+
+BACKUPS_AWS_ACCESS_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/BACKUPS_AWS_ACCESS_KEY)"
+BACKUPS_AWS_SECRET_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/BACKUPS_AWS_SECRET_KEY)"
 .PHONY: backups_aws
 backups_aws: $(LPASS)
-	@echo "export BACKUPS_AWS_ACCESS_KEY=$$($(LPASS) show --notes 2383382642830769087)" && \
-	echo "export BACKUPS_AWS_SECRET_KEY=$$($(LPASS) show --notes 4892015361959119196)"
+	@echo "export BACKUPS_AWS_ACCESS_KEY=$(BACKUPS_AWS_ACCESS_KEY)" && \
+	echo "export BACKUPS_AWS_SECRET_KEY=$(BACKUPS_AWS_SECRET_KEY)"
+.PHONY: backups-aws-lke-secret
+backups-aws-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic backups-aws \
+	  --from-literal=access_key_id=$(BACKUPS_AWS_SECRET_KEY) \
+	  --from-literal=secret_access_key=$(BACKUPS_AWS_SECRET_KEY) \
+	| $(KUBECTL) apply --filename -
+
+TWITTER_CONSUMER_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/TWITTER_CONSUMER_KEY)"
+TWITTER_CONSUMER_SECRET := "$$($(LPASS) show --notes Shared-changelog/secrets/TWITTER_CONSUMER_SECRET)"
 .PHONY: twitter
 twitter: $(LPASS)
-	@echo "export TWITTER_CONSUMER_KEY=$$($(LPASS) show --notes 1932439368993537002)" && \
-	echo "export TWITTER_CONSUMER_SECRET=$$($(LPASS) show --notes 5671723614506961548)"
+	@echo "export TWITTER_CONSUMER_KEY=$(TWITTER_CONSUMER_KEY)" && \
+	echo "export TWITTER_CONSUMER_SECRET=$(TWITTER_CONSUMER_SECRET)"
+.PHONY: twitter-lke-secret
+twitter-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic twitter \
+	  --from-literal=consumer_key=$(TWITTER_CONSUMER_KEY) \
+	  --from-literal=consumer_secret=$(TWITTER_CONSUMER_SECRET) \
+	| $(KUBECTL) apply --filename -
+
+SECRET_KEY_BASE := "$$($(LPASS) show --notes Shared-changelog/secrets/SECRET_KEY_BASE)"
+SIGNING_SALT := "$$($(LPASS) show --notes Shared-changelog/secrets/SIGNING_SALT)"
 .PHONY: app
 app: $(LPASS)
-	@echo "export SECRET_KEY_BASE=$$($(LPASS) show --notes 7272253808960291967)" && \
-	echo "export SIGNING_SALT=$$($(LPASS) show --notes 8954230056631744101)"
+	@echo "export SECRET_KEY_BASE=$(SECRET_KEY_BASE)" && \
+	echo "export SIGNING_SALT=$(SIGNING_SALT)"
+.PHONY: app-lke-secret
+app-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic app \
+	  --from-literal=secret_key_base=$(SECRET_KEY_BASE) \
+	  --from-literal=signing_salt=$(SIGNING_SALT) \
+	| $(KUBECTL) apply --filename -
+
+SLACK_INVITE_API_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/SLACK_INVITE_API_TOKEN)"
+SLACK_APP_API_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/SLACK_APP_API_TOKEN)"
+SLACK_DEPLOY_WEBHOOK := "$$($(LPASS) show --notes Shared-changelog/secrets/SLACK_DEPLOY_WEBHOOK)"
 .PHONY: slack
 slack: $(LPASS)
-	@echo "export SLACK_INVITE_API_TOKEN=$$($(LPASS) show --notes 3107315517561229870)" && \
-	echo "export SLACK_APP_API_TOKEN=$$($(LPASS) show --notes 1152178239154303913)"
+	@echo "export SLACK_INVITE_API_TOKEN=$(SLACK_INVITE_API_TOKEN)" && \
+	echo "export SLACK_APP_API_TOKEN=$(SLACK_APP_API_TOKEN)"
+.PHONY: slack-lke-secret
+slack-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic slack \
+	  --from-literal=app_api_token=$(SLACK_APP_API_TOKEN) \
+	  --from-literal=deploy_webhook=$(SLACK_DEPLOY_WEBHOOK) \
+	  --from-literal=invite_api_token=$(SLACK_INVITE_API_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+ROLLBAR_ACCESS_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/ROLLBAR_ACCESS_TOKEN)"
 .PHONY: rollbar
 rollbar: $(LPASS)
-	@echo "export ROLLBAR_ACCESS_TOKEN=$$($(LPASS) show --notes 5433360937426957091)"
+	@echo "export ROLLBAR_ACCESS_TOKEN=$(ROLLBAR_ACCESS_TOKEN)"
+.PHONY: rollbar-lke-secret
+rollbar-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic rollbar \
+	  --from-literal=access_token=$(ROLLBAR_ACCESS_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+BUFFER_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/BUFFER_TOKEN_3)"
 .PHONY: buffer
 buffer: $(LPASS)
-	@echo "export BUFFER_TOKEN=$$($(LPASS) show --notes Shared-changelog/secrets/BUFFER_TOKEN_3)"
+	@echo "export BUFFER_TOKEN=$(BUFFER_TOKEN)"
+.PHONY: buffer-lke-secret
+buffer-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic buffer \
+	  --from-literal=token=$(BUFFER_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+COVERALLS_REPO_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/COVERALLS_REPO_TOKEN)"
 .PHONY: coveralls
 coveralls: $(LPASS)
-	@echo "export COVERALLS_REPO_TOKEN=$$($(LPASS) show --notes 8654919576068551356)"
+	@echo "export COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN)"
+.PHONY: coveralls-lke-secret
+coveralls-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic coveralls \
+	  --from-literal=repo_token=$(COVERALLS_REPO_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+ALGOLIA_APPLICATION_ID := "$$($(LPASS) show --notes Shared-changelog/secrets/ALGOLIA_APPLICATION_ID)"
+ALGOLIA_API_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/ALGOLIA_API_KEY2)"
 .PHONY: algolia
 algolia: $(LPASS)
-	@echo "export ALGOLIA_APPLICATION_ID=$$($(LPASS) show --notes 5418916921816895235)" && \
-	echo "export ALGOLIA_API_KEY=$$($(LPASS) show --notes Shared-changelog/secrets/ALGOLIA_API_KEY2)"
+	@echo "export ALGOLIA_APPLICATION_ID=$(ALGOLIA_APPLICATION_ID)" && \
+	echo "export ALGOLIA_API_KEY=$(ALGOLIA_API_KEY)"
+.PHONY: algolia-lke-secret
+algolia-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic algolia \
+	  --from-literal=application_id=$(ALGOLIA_APPLICATION_ID) \
+	  --from-literal=api_key=$(ALGOLIA_API_KEY) \
+	| $(KUBECTL) apply --filename -
+
+PLUSPLUS_SLUG := "$$($(LPASS) show --notes Shared-changelog/secrets/PLUSPLUS_SLUG_1)"
+.PHONY: plusplus
 plusplus: $(LPASS)
-	@echo "export PLUSPLUS_SLUG_1=$$($(LPASS) show --notes Shared-changelog/secrets/PLUSPLUS_SLUG_1)"
+	@echo "export PLUSPLUS_SLUG_1=$(PLUSPLUS_SLUG)"
+.PHONY: plusplus-lke-secret
+plusplus-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic plusplus \
+	  --from-literal=slug=$(PLUSPLUS_SLUG) \
+	| $(KUBECTL) apply --filename -
