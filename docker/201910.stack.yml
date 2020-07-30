@@ -144,7 +144,7 @@ services:
       - db
     environment:
       # https://www.postgresql.org/docs/9.5/libpq-envars.html
-      PGHOST: &ph_host db
+      PGHOST: &pg_host db
       PGUSER: *pg_user
       PGDATABASE: *pg_db
       AWS_REGION: "us-east-1"
