@@ -17,8 +17,6 @@ secrets:
     external: true
   CM_SMTP_TOKEN:
     external: true
-  GITHUB_API_TOKEN:
-    external: true
   GITHUB_API_TOKEN2:
     external: true
   GITHUB_CLIENT_ID:
@@ -61,9 +59,11 @@ secrets:
     external: true
   ALGOLIA_API_KEY2:
     external: true
-  DB_URL:
+  DB_PASS:
     external: true
   DB_PASSWORD:
+    external: true
+  DB_URL:
     external: true
   SLACK_DEPLOY_WEBHOOK:
     external: true
@@ -144,7 +144,7 @@ services:
       - db
     environment:
       # https://www.postgresql.org/docs/9.5/libpq-envars.html
-      PGHOST: db
+      PGHOST: &ph_host db
       PGUSER: *pg_user
       PGDATABASE: *pg_db
       AWS_REGION: "us-east-1"
@@ -173,6 +173,9 @@ services:
       retries: 4
       start_period: 120s
     environment:
+      DB_HOST: *pg_host
+      DB_NAME: *pg_db
+      DB_USER: *pg_user
       MAKEFILE: Makefile.201910
       NODE: "${HOSTNAME}"
       PORT: 4000
@@ -184,7 +187,6 @@ services:
     secrets:
       - CM_API_TOKEN_2
       - CM_SMTP_TOKEN
-      - GITHUB_API_TOKEN
       - GITHUB_API_TOKEN2
       - GITHUB_CLIENT_ID
       - GITHUB_CLIENT_SECRET
@@ -199,12 +201,12 @@ services:
       - SLACK_INVITE_API_TOKEN
       - SLACK_APP_API_TOKEN
       - ROLLBAR_ACCESS_TOKEN
-      - BUFFER_TOKEN_2
       - BUFFER_TOKEN_3
       - COVERALLS_REPO_TOKEN
       - ALGOLIA_APPLICATION_ID
       - ALGOLIA_API_KEY2
       - DB_URL
+      - DB_PASS
       - SLACK_DEPLOY_WEBHOOK
       - PLUSPLUS_SLUG_1
     depends_on:

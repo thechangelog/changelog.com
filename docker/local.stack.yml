@@ -17,7 +17,7 @@ secrets:
     external: true
   CM_SMTP_TOKEN:
     external: true
-  GITHUB_API_TOKEN:
+  GITHUB_API_TOKEN2:
     external: true
   GITHUB_CLIENT_ID:
     external: true
@@ -156,6 +156,9 @@ services:
       MAKEFILE: Makefile.201910
       NODE: "${HOSTNAME}"
       DB_URL: "ecto://postgres@db:5432/changelog"
+      DB_HOST: db
+      DB_NAME: *pg_db
+      DB_USER: *pg_user
       PORT: 4000
       URL_HOST: &host "changelog.localhost"
       URL_PORT: 80
@@ -165,7 +168,7 @@ services:
     secrets:
       - CM_API_TOKEN_2
       - CM_SMTP_TOKEN
-      - GITHUB_API_TOKEN
+      - GITHUB_API_TOKEN2
       - GITHUB_CLIENT_ID
       - GITHUB_CLIENT_SECRET
       - HN_USER_1
