@@ -63,8 +63,6 @@ secrets:
     external: true
   DB_PASSWORD:
     external: true
-  DB_URL:
-    external: true
   SLACK_DEPLOY_WEBHOOK:
     external: true
   PLUSPLUS_SLUG_1:
@@ -205,7 +203,6 @@ services:
       - COVERALLS_REPO_TOKEN
       - ALGOLIA_APPLICATION_ID
       - ALGOLIA_API_KEY2
-      - DB_URL
       - DB_PASS
       - SLACK_DEPLOY_WEBHOOK
       - PLUSPLUS_SLUG_1

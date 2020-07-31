@@ -155,7 +155,6 @@ services:
     environment:
       MAKEFILE: Makefile.201910
       NODE: "${HOSTNAME}"
-      DB_URL: "ecto://postgres@db:5432/changelog"
       DB_HOST: db
       DB_NAME: *pg_db
       DB_USER: *pg_user

@@ -520,7 +520,7 @@ s: secrets
 
 .PHONY: test
 test: $(COMPOSE) ## t   | Run tests as they run on CircleCI
-	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_URL=ecto://postgres@db:5432/changelog_test app mix test
+	@$(COMPOSE) run --rm -e MIX_ENV=test -e DB_NAME=changelog_test app mix test
 .PHONY: t
 t: test
 

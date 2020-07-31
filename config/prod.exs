@@ -11,11 +11,11 @@ config :changelog, ChangelogWeb.Endpoint,
     rewrite_on: [:x_forwarded_proto],
     exclude: ["127.0.0.1", "localhost", "changelog.localhost"]
   ],
-  secret_key_base: DockerSecret.get("SECRET_KEY_BASE"),
+  secret_key_base: SecretOrEnv.get("SECRET_KEY_BASE"),
   static_url: [
-    scheme: System.get_env("URL_SCHEME") || "https",
-    host: System.get_env("URL_STATIC_HOST") || "cdn.changelog.com",
-    port: System.get_env("URL_PORT") || 443
+    scheme: SecretOrEnv.get("URL_SCHEME", "https"),
+    host: SecretOrEnv.get("URL_STATIC_HOST", "cdn.changelog.com"),
+    port: SecretOrEnv.get("URL_PORT", 443)
   ],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
@@ -26,17 +26,20 @@ config :arc,
   storage_dir: "/uploads"
 
 config :changelog, Changelog.Repo,
-  url: DockerSecret.get("DB_URL"),
   adapter: Ecto.Adapters.Postgres,
+  database: SecretOrEnv.get("DB_NAME", "changelog"),
+  hostname: SecretOrEnv.get("DB_HOST", "db"),
+  password: SecretOrEnv.get("DB_PASS"),
   pool_size: 20,
-  timeout: 60000
+  timeout: 60000,
+  username: SecretOrEnv.get("DB_USER", "postgres")
 
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.api.createsend.com",
   port: 587,
-  username: DockerSecret.get("CM_SMTP_TOKEN"),
-  password: DockerSecret.get("CM_SMTP_TOKEN")
+  username: SecretOrEnv.get("CM_SMTP_TOKEN"),
+  password: SecretOrEnv.get("CM_SMTP_TOKEN")
 
 config :changelog, Changelog.Scheduler,
   global: true,
@@ -48,5 +51,5 @@ config :changelog, Changelog.Scheduler,
   ]
 
 config :rollbax,
-  access_token: DockerSecret.get("ROLLBAR_ACCESS_TOKEN"),
+  access_token: SecretOrEnv.get("ROLLBAR_ACCESS_TOKEN"),
   environment: "production"

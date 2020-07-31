@@ -15,8 +15,11 @@ config :changelog, Changelog.Mailer, adapter: Bamboo.TestAdapter
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
+  database: SecretOrEnv.get("DB_NAME", "changelog_test"),
+  hostname: SecretOrEnv.get("DB_HOST", "localhost"),
+  password: SecretOrEnv.get("DB_PASS"),
   pool: Ecto.Adapters.SQL.Sandbox,
-  url: System.get_env("DB_URL") || "ecto://postgres:postgres@localhost:5432/changelog_test"
+  username: SecretOrEnv.get("DB_USER", "postgres")
 
 config :arc,
   storage_dir: "priv/uploads"

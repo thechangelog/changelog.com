@@ -7,13 +7,20 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :changelog, ChangelogWeb.Endpoint,
-  http: [port: 4000],
-  static_url: [host: System.get_env("HOST") || "localhost", port: 4000],
+  http: [
+    port: 4000
+  ],
+  static_url: [
+    host: System.get_env("HOST") || "localhost",
+    port: 4000
+  ],
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,
   check_origin: false,
-  watchers: [yarn: ["start", cd: Path.expand("../assets", __DIR__)]]
+  watchers: [
+    yarn: ["start", cd: Path.expand("../assets", __DIR__)]
+  ]
 
 # Watch static and templates for browser reloading.
 config :changelog, ChangelogWeb.Endpoint,
@@ -38,8 +45,11 @@ config :phoenix, :plug_init_mode, :runtime
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
+  database: SecretOrEnv.get("DB_NAME", "changelog_dev"),
+  hostname: SecretOrEnv.get("DB_HOST", "localhost"),
+  password: SecretOrEnv.get("DB_PASS"),
   pool_size: 10,
-  url: System.get_env("DB_URL") || "ecto://postgres@localhost:5432/changelog_dev"
+  username: SecretOrEnv.get("DB_USER", "postgres")
 
 config :arc,
   storage_dir: "priv/uploads"

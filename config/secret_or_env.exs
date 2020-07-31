@@ -1,5 +1,9 @@
-defmodule DockerSecret do
+defmodule SecretOrEnv do
   def get(secret) do
+    get(secret, "")
+  end
+
+  def get(secret, default_value) do
     path = "/run/secrets/#{secret}"
 
     case File.read(path) do
@@ -9,7 +13,7 @@ defmodule DockerSecret do
 
       _ ->
         IO.puts("#{secret} read from environment")
-        System.get_env(secret)
+        System.get_env(secret) || default_value
     end
   end
 end

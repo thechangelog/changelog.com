@@ -4,7 +4,7 @@
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
 use Mix.Config
-Code.compile_file("config/docker_secret.exs")
+Code.compile_file("config/secret_or_env.exs")
 
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
@@ -16,14 +16,14 @@ config :changelog, ChangelogWeb.Endpoint,
 
 config :changelog,
   ecto_repos: [Changelog.Repo],
-  buffer_token: DockerSecret.get("BUFFER_TOKEN_3"),
-  github_api_token: DockerSecret.get("GITHUB_API_TOKEN2"),
-  hn_user: DockerSecret.get("HN_USER_1"),
-  hn_pass: DockerSecret.get("HN_PASS_1"),
-  cm_api_token: Base.encode64("#{DockerSecret.get("CM_API_TOKEN_2")}:x"),
-  slack_invite_api_token: DockerSecret.get("SLACK_INVITE_API_TOKEN"),
-  slack_app_api_token: DockerSecret.get("SLACK_APP_API_TOKEN"),
-  plusplus_slug: DockerSecret.get("PLUSPLUS_SLUG_1")
+  buffer_token: SecretOrEnv.get("BUFFER_TOKEN_3"),
+  github_api_token: SecretOrEnv.get("GITHUB_API_TOKEN2"),
+  hn_user: SecretOrEnv.get("HN_USER_1"),
+  hn_pass: SecretOrEnv.get("HN_PASS_1"),
+  cm_api_token: Base.encode64("#{SecretOrEnv.get("CM_API_TOKEN_2")}:x"),
+  slack_invite_api_token: SecretOrEnv.get("SLACK_INVITE_API_TOKEN"),
+  slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
+  plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG_1")
 
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
 
@@ -44,8 +44,8 @@ config :scrivener_html,
   view_style: :semantic
 
 config :ex_aws,
-  access_key_id: DockerSecret.get("AWS_ACCESS_KEY_ID"),
-  secret_access_key: DockerSecret.get("AWS_SECRET_ACCESS_KEY")
+  access_key_id: SecretOrEnv.get("AWS_ACCESS_KEY_ID"),
+  secret_access_key: SecretOrEnv.get("AWS_SECRET_ACCESS_KEY")
 
 config :ueberauth, Ueberauth,
   providers: [
@@ -54,16 +54,16 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id: DockerSecret.get("GITHUB_CLIENT_ID"),
-  client_secret: DockerSecret.get("GITHUB_CLIENT_SECRET")
+  client_id: SecretOrEnv.get("GITHUB_CLIENT_ID"),
+  client_secret: SecretOrEnv.get("GITHUB_CLIENT_SECRET")
 
 config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
-  consumer_key: DockerSecret.get("TWITTER_CONSUMER_KEY"),
-  consumer_secret: DockerSecret.get("TWITTER_CONSUMER_SECRET")
+  consumer_key: SecretOrEnv.get("TWITTER_CONSUMER_KEY"),
+  consumer_secret: SecretOrEnv.get("TWITTER_CONSUMER_SECRET")
 
 config :algolia,
-  application_id: DockerSecret.get("ALGOLIA_APPLICATION_ID"),
-  api_key: DockerSecret.get("ALGOLIA_API_KEY2")
+  application_id: SecretOrEnv.get("ALGOLIA_APPLICATION_ID"),
+  api_key: SecretOrEnv.get("ALGOLIA_API_KEY2")
 
 config :mime, :types, %{"application/javascript" => ["js"], "application/xml" => ["xml"]}
 
