@@ -684,7 +684,7 @@ backups_aws: $(LPASS)
 backups-aws-lke-secret: | lke-ctx $(LPASS)
 	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
 	  create secret generic backups-aws \
-	  --from-literal=access_key_id=$(BACKUPS_AWS_SECRET_KEY) \
+	  --from-literal=access_key_id=$(BACKUPS_AWS_ACCESS_KEY) \
 	  --from-literal=secret_access_key=$(BACKUPS_AWS_SECRET_KEY) \
 	| $(KUBECTL) apply --filename -
 
