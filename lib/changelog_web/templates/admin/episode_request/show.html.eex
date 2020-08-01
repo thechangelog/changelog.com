@@ -30,6 +30,12 @@
     <h4 class="ui block header">Pitch</h4>
 
     <p><%= @request.pitch |> SharedHelpers.md_to_html() |> raw() %></p>
+
+    <%= if @request.status == :declined and @request.decline_message do %>
+    <h4 class="ui block header">Declined with message</h4>
+
+    <p><%= @request.decline_message %></p>
+    <% end %>
   </div>
 </div>
 

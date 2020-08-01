@@ -13,6 +13,7 @@ defmodule Changelog.EpisodeRequest do
     field :topics, :string
     field :pitch, :string
     field :pronunciation, :string
+    field :decline_message, :string, default: ""
 
     belongs_to :podcast, Podcast
     belongs_to :submitter, Person
@@ -62,6 +63,13 @@ defmodule Changelog.EpisodeRequest do
   def is_pendable(%{status: status}), do: Enum.member?(~w(fresh)a, status)
 
   def decline!(request), do: update_status!(request, :declined)
+  def decline!(request, ""), do: decline!(request)
+  def decline!(request, message) do
+    request
+    |> change(%{decline_message: message})
+    |> update_status!(:declined)
+  end
+
   def fail!(request), do: update_status!(request, :failed)
   def pend!(request), do: update_status!(request, :pending)
 

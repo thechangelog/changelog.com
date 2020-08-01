@@ -69,6 +69,19 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     link(content_tag(:i, "", class: "#{icon_name} icon"), options)
   end
 
+  def modal_icon_button(view_module, icon_name, title, modal_name, assigns, id) do
+    button_classes = "ui icon button modal-button #{modal_name}"
+    icon_classes = "#{icon_name} icon"
+    icon = content_tag(:i, "", class: icon_classes)
+    button_id = "#{modal_name}-button-#{id}"
+    modal_id = "#{modal_name}-modal-#{id}"
+    modal = Phoenix.View.render(view_module, "_#{modal_name}_modal.html", Map.put(assigns, :id, modal_id))
+    ~e"""
+    <button type="button" id="<%= button_id %>" data-target="#<%= modal_id %>" class="<%= button_classes %>" title="<%= title %>"><%= icon %></button>
+    <%= modal %>
+    """
+  end
+
   def is_persisted(struct), do: is_integer(struct.id)
 
   def is_loaded(nil), do: false

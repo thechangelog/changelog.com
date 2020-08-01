@@ -7,6 +7,11 @@ import Clipboard from "clipboard";
 
 export default class newsItemView {
   index() {
+    $(".modal-button").each(function () {
+      let modalIdSelector = $(this).attr("data-target");
+      let buttonId = $(this).attr("id");
+      new Modal(`#${buttonId}`, modalIdSelector);
+    });
     let $queue = $(".js-queue");
 
     if ($queue.length) {

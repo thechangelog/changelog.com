@@ -39,6 +39,8 @@ defmodule Changelog.NewsItem do
     field :impression_count, :integer, default: 0
     field :click_count, :integer, default: 0
 
+    field :decline_message, :string, default: ""
+
     belongs_to :author, Person
     belongs_to :logger, Person
     belongs_to :submitter, Person
@@ -290,6 +292,9 @@ defmodule Changelog.NewsItem do
   end
 
   def decline!(item), do: item |> change(%{status: :declined}) |> Repo.update!()
+  def decline!(item, ""), do: decline!(item)
+  def decline!(item, message), do: item |> change(%{status: :declined, decline_message: message}) |> Repo.update!()
+
   def queue!(item), do: item |> change(%{status: :queued}) |> Repo.update!()
 
   def publish!(item),
