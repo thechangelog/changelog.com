@@ -28,13 +28,14 @@ spec:
         - --source=service
         - --source=ingress
         - --registry=txt
+        - --events
         env:
         - name: EXTERNAL_DNS_DOMAIN_FILTER
           value: changelog.com
         - name: EXTERNAL_DNS_TXT_OWNER_ID
           value: linode-kubernetes-engine
         - name: EXTERNAL_DNS_LOG_LEVEL
-          value: info
+          value: debug
         - name: DNSIMPLE_OAUTH
           valueFrom:
             secretKeyRef:

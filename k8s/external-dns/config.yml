@@ -5,7 +5,7 @@
 dns:
   domain: changelog.com
   record_owner: linode-kubernetes-engine
-  log_level: info #! debug for extra info
+  log_level: debug #! debug for extra info
 #! provided just-in-time
 image:
 namespace:

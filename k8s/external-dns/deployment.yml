@@ -27,6 +27,7 @@ spec:
         - --source=service
         - --source=ingress
         - --registry=txt
+        - --events
         env:
         - name: EXTERNAL_DNS_DOMAIN_FILTER
           value: #@ data.values.dns.domain
