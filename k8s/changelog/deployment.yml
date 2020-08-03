@@ -1,0 +1,242 @@
+#@ load("@ytt:data", "data")
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: #@ data.values.app.name
+  namespace: #@ data.values.namespace
+  labels:
+    app: #@ data.values.app.name
+spec:
+  replicas: #@ data.values.app.replicas
+  selector:
+    matchLabels:
+      app: #@ data.values.app.name
+  template:
+    metadata:
+      labels:
+        app: #@ data.values.app.name
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - #@ data.values.app.name
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+        #! - name: db-restore
+        #!   image: thechangelog/db_backup:201910
+        #!   command:
+        #!     - /bin/bash
+        #!     - -c
+        #!   args:
+        #!     - while true; do sleep 3600; done
+        #!   env:
+        #!     - name: AWS_ACCESS_KEY
+        #!       valueFrom:
+        #!         secretKeyRef:
+        #!           name: backups-aws
+        #!           key: access_key_id
+        #!     - name: AWS_SECRET_KEY
+        #!       valueFrom:
+        #!         secretKeyRef:
+        #!           name: backups-aws
+        #!           key: secret_access_key
+        #!     - name: AWS_REGION
+        #!       value: us-east-1
+        #!     - name: AWS_S3_BUCKET
+        #!       value: changelog-com-backups
+        #!     - name: PGHOST
+        #!       value: db
+        #!     - name: PGDATABASE
+        #!       value: db
+        #!     - name: PGPASSWORD
+        #!       valueFrom:
+        #!         secretKeyRef:
+        #!           name: db-postgres-secret
+        #!           key: password
+        #!     - name: PGUSER
+        #!       valueFrom:
+        #!         secretKeyRef:
+        #!           name: db-postgres-secret
+        #!           key: username
+        - env:
+            - name: ALGOLIA_APPLICATION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: algolia
+                  key: application_id
+            - name: ALGOLIA_API_KEY2
+              valueFrom:
+                secretKeyRef:
+                  name: algolia
+                  key: api_key
+            #! - name: AWS_ACCESS_KEY_ID
+            #!   valueFrom:
+            #!     secretKeyRef:
+            #!       name: aws
+            #!       key: access_key_id
+            #! - name: AWS_SECRET_ACCESS_KEY
+            #!   valueFrom:
+            #!     secretKeyRef:
+            #!       name: aws
+            #!       key: secret_access_key
+            #! - name: BUFFER_TOKEN_3
+            #!   valueFrom:
+            #!     secretKeyRef:
+            #!       name: buffer
+            #!       key: token
+            - name: CM_API_TOKEN_2
+              valueFrom:
+                secretKeyRef:
+                  name: campaignmonitor
+                  key: api_token
+            - name: CM_SMTP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: campaignmonitor
+                  key: smtp_token
+            - name: COVERALLS_REPO_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: coveralls
+                  key: repo_token
+            - name: DB_HOST
+              value: db
+            - name: DB_NAME
+              value: db
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-postgres-secret
+                  key: password
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-postgres-secret
+                  key: username
+            - name: GITHUB_API_TOKEN2
+              valueFrom:
+                secretKeyRef:
+                  name: github
+                  key: api_token
+            - name: GITHUB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: github
+                  key: client_id
+            - name: GITHUB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: github
+                  key: client_secret
+            #! - name: HN_USER_1
+            #!   valueFrom:
+            #!     secretKeyRef:
+            #!       name: hackernews
+            #!       key: user
+            #! - name: HN_PASS_1
+            #!   valueFrom:
+            #!     secretKeyRef:
+            #!       name: hackernews
+            #!       key: pass
+            - name: MAKEFILE
+              value: #@ data.values.app.makefile
+            - name: PLUSPLUS_SLUG_1
+              valueFrom:
+                secretKeyRef:
+                  name: plusplus
+                  key: slug
+            - name: PORT
+              value: #@ str(data.values.app.http_port)
+            - name: ROLLBAR_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: rollbar
+                  key: access_token
+            - name: ROLLBAR_ENVIRONMENT
+              value: #@ data.values.app.environment
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app
+                  key: secret_key_base
+            - name: SIGNING_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: app
+                  key: signing_salt
+            - name: SLACK_APP_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: slack
+                  key: app_api_token
+            - name: SLACK_DEPLOY_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: slack
+                  key: deploy_webhook
+            - name: SLACK_INVITE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: slack
+                  key: invite_api_token
+            #! - name: TWITTER_CONSUMER_KEY
+            #!   valueFrom:
+            #!     secretKeyRef:
+            #!       name: twitter
+            #!       key: consumer_key
+            #! - name: TWITTER_CONSUMER_SECRET
+            #!   valueFrom:
+            #!     secretKeyRef:
+            #!       name: twitter
+            #!       key: consumer_secret
+            - name: URL_HOST
+              value: #@ data.values.fqdn
+            - name: URL_PORT
+              value: #@ str(data.values.app.https_port)
+            - name: URL_SCHEME
+              value: #@ data.values.app.url_scheme
+            - name: URL_STATIC_HOST
+              value: #@ data.values.cdn
+          image: #@ data.values.app.image
+          ports:
+            - name: phoenix
+              containerPort: #@ data.values.app.http_port
+          name: #@ data.values.app.name
+          resources:
+            limits:
+              cpu: #@ data.values.app.cpu_max
+              memory: #@ data.values.app.mem_max
+            requests:
+              cpu: #@ data.values.app.cpu_min
+              memory: #@ data.values.app.mem_min
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: phoenix
+              httpHeaders:
+                - name: Host
+                  value: 127.0.0.1
+            periodSeconds: 15
+            timeoutSeconds: 14
+          startupProbe:
+            httpGet:
+              path: /health
+              port: phoenix
+              httpHeaders:
+                - name: Host
+                  value: 127.0.0.1
+            failureThreshold: 30
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: "/uploads"
+              name: uploads
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: uploads

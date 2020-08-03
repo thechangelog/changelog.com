@@ -1,0 +1,23 @@
+#@data/values
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/values.yml
+#! If necessary, these values can be overwritten in a number of ways: https://github.com/k14s/ytt/blob/master/docs/ytt-data-values.md
+---
+app:
+  cpu_min: 2
+  cpu_max: 4
+  environment: production
+  http_port: 4000
+  https_port: 443
+  image: thechangelog/changelog.com:latest
+  #! provided just-in-time
+  name:
+  makefile: Makefile.201910
+  mem_min: 2Gi
+  mem_max: 4Gi
+  replicas: 1
+  uploads_volume_size: 100Gi
+  url_scheme: https
+cdn: cdn.changelog.com
+fqdn: 2020.changelog.com
+#! provided just-in-time
+namespace:

@@ -104,20 +104,20 @@ endif
 
 # https://github.com/ahmetb/kubectl-tree
 KUBETREE := $(HOME)/.krew/bin/kubectl-tree
-$(KUBETREE): $(KUBECTL) $(KREW)
+$(KUBETREE): | $(KUBECTL) $(KREW)
 	$(KUBECTL) krew install tree \
 	&& touch $(@)
 
 # https://github.com/kubectl-plus/kcf
 KUBEFLEET := $(HOME)/.krew/bin/kubectl-fleet
-$(KUBEFLEET): $(KUBECTL) $(KREW)
+$(KUBEFLEET): | $(KUBECTL) $(KREW)
 	$(KUBECTL) krew install fleet \
 	&& touch $(@)
 kubefleet: $(KUBEFLEET)
 
 # https://github.com/eldadru/ksniff
 KSNIFF := $(HOME)/.krew/bin/kubectl-sniff
-$(KSNIFF): $(KUBECTL) $(KREW)
+$(KSNIFF): | $(KUBECTL) $(KREW)
 	$(KUBECTL) krew install sniff \
 	&& touch $(@)
 ksniff: $(KSNIFF)
@@ -316,3 +316,4 @@ include $(CURDIR)/mk/ingress-nginx.mk
 include $(CURDIR)/mk/kube-prometheus.mk
 include $(CURDIR)/mk/postgres.mk
 include $(CURDIR)/mk/ten.mk
+include $(CURDIR)/mk/changelog.mk
