@@ -35,18 +35,28 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     |> render(:show)
   end
 
-  def authored_news_published_email do
-    item =
-      NewsItem.published()
-      |> NewsItem.with_author()
-      |> NewsItem.newest_first()
-      |> NewsItem.limit(1)
-      |> NewsItem.preload_all()
-      |> Repo.one()
-
-    Email.authored_news_published(item.author, item)
+  # Welcome emails
+  def community_welcome_email do
+    latest_person()
+    |> Person.refresh_auth_token()
+    |> Email.community_welcome()
   end
 
+  def guest_welcome_email do
+    latest_person()
+    |> Person.refresh_auth_token()
+    |> Email.guest_welcome()
+  end
+
+  def subscriber_welcome_email do
+    subscription = known_subscription()
+
+    subscription.person()
+    |> Person.refresh_auth_token()
+    |> Email.subscriber_welcome(subscription.podcast)
+  end
+
+  #Comment related emails
   def comment_mention_email do
     comment =
       NewsItemComment.newest_first()
@@ -92,12 +102,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.comment_subscription(subscription, comment)
   end
 
-  def community_welcome_email do
-    latest_person()
-    |> Person.refresh_auth_token()
-    |> Email.community_welcome()
-  end
-
+  # Podcast related emails
   def episode_published_email do
     Email.episode_published(known_subscription(), known_episode())
   end
@@ -129,24 +134,34 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.episode_transcribed(latest_person(), known_episode())
   end
 
-  def guest_welcome_email do
-    latest_person()
-    |> Person.refresh_auth_token()
-    |> Email.guest_welcome()
-  end
-
   def guest_thanks_email do
     ep = known_episode()
     guest = List.first(ep.guests)
     Email.guest_thanks(guest, ep)
   end
 
-  def subscriber_welcome_email do
-    subscription = known_subscription()
+  # News related emails
+  def authored_news_published_email do
+    item =
+      NewsItem.published()
+      |> NewsItem.with_author()
+      |> NewsItem.newest_first()
+      |> NewsItem.limit(1)
+      |> NewsItem.preload_all()
+      |> Repo.one()
 
-    subscription.person()
-    |> Person.refresh_auth_token()
-    |> Email.subscriber_welcome(subscription.podcast)
+    Email.authored_news_published(item)
+  end
+
+  def submitted_news_declined_email do
+    item =
+      NewsItem
+      |> NewsItem.declined()
+      |> NewsItem.limit(1)
+      |> NewsItem.preload_all()
+      |> Repo.one()
+
+      Email.submitted_news_declined(item)
   end
 
   defp latest_person do

@@ -29,17 +29,22 @@ defmodule Changelog.Notifier do
     deliver_slack_new_episode_message(episode, item.url)
   end
 
+  def notify(item = %NewsItem{status: :declined}) do
+    if item.decline_message && item.decline_message != "" do
+      item
+      |> NewsItem.preload_all()
+      |> deliver_submitter_decline_email()
+    end
+  end
+
   def notify(item = %NewsItem{}) do
     item = NewsItem.preload_all(item)
 
-    cond do
-      item.status == :declined ->
-        deliver_submitter_decline_email(item.submitter, item)
-      item.submitter == item.author ->
-        deliver_submitter_email(item.submitter, item)
-      true ->
-        deliver_author_email(item.author, item)
-        deliver_submitter_email(item.submitter, item)
+    if item.submitter == item.author do
+      deliver_submitter_email(item.submitter, item)
+    else
+      deliver_author_email(item.author, item)
+      deliver_submitter_email(item.submitter, item)
     end
   end
 
@@ -122,8 +127,8 @@ defmodule Changelog.Notifier do
 
   defp deliver_author_email(person, item) do
     if person.settings.email_on_authored_news do
-      person
-      |> Email.authored_news_published(item)
+      item
+      |> Email.authored_news_published()
       |> Mailer.deliver_later()
     end
   end
@@ -173,15 +178,15 @@ defmodule Changelog.Notifier do
 
   defp deliver_submitter_email(person, item) do
     if person.settings.email_on_submitted_news do
-      person
-      |> Email.submitted_news_published(item)
+      item
+      |> Email.submitted_news_published()
       |> Mailer.deliver_later()
     end
   end
 
-  defp deliver_submitter_decline_email(person, item) do
-    person
-    |> Email.submitted_news_declined(item)
+  defp deliver_submitter_decline_email(item) do
+    item
+    |> Email.submitted_news_declined()
     |> Mailer.deliver_later()
   end
 

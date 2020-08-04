@@ -218,7 +218,7 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person)
       Notifier.notify(item)
-      assert_delivered_email(Email.submitted_news_published(person, item))
+      assert_delivered_email(Email.submitted_news_published(item))
     end
 
     test "when submitter has email notifications disabled" do
@@ -228,27 +228,35 @@ defmodule Changelog.NotifierTest do
       assert_no_emails_delivered()
     end
 
-    test "when submitter has news item declined" do
+    test "when submitter has news item declined with message" do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person)
       item = NewsItem.decline!(item, "decline reason")
       Notifier.notify(item)
-      assert_delivered_email(Email.submitted_news_declined(person, item))
+      assert_delivered_email(Email.submitted_news_declined(item))
+    end
+
+    test "when submitter has news item declined sans message" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      item = insert(:news_item, submitter: person)
+      item = NewsItem.decline!(item, "")
+      Notifier.notify(item)
+      assert_no_emails_delivered()
     end
 
     test "when submitter and author are same person, notifications enabled" do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person, author: person)
       Notifier.notify(item)
-      assert_delivered_email(Email.submitted_news_published(person, item))
-      refute_delivered_email(Email.authored_news_published(person, item))
+      assert_delivered_email(Email.submitted_news_published(item))
+      refute_delivered_email(Email.authored_news_published(item))
     end
 
     test "when author has email notifications enabled" do
       person = insert(:person, settings: %{email_on_authored_news: true})
       item = insert(:news_item, author: person)
       Notifier.notify(item)
-      assert_delivered_email(Email.authored_news_published(person, item))
+      assert_delivered_email(Email.authored_news_published(item))
     end
 
     test "when author has email notifications disabled" do
@@ -263,8 +271,8 @@ defmodule Changelog.NotifierTest do
       author = insert(:person, settings: %{email_on_authored_news: true})
       item = insert(:news_item, author: author, submitter: submitter)
       Notifier.notify(item)
-      assert_delivered_email(Email.authored_news_published(author, item))
-      assert_delivered_email(Email.submitted_news_published(submitter, item))
+      assert_delivered_email(Email.authored_news_published(item))
+      assert_delivered_email(Email.submitted_news_published(item))
     end
   end
 

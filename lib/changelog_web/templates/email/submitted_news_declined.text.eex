@@ -1,8 +1,14 @@
 <%= greeting(@person) %>
 
 
-Your submission[1] was declined for this reason:
+Sadly, your Changelog News submission was declined. Here's a message from the team with more on the decision:
+
+---
 
 <%= @item.decline_message %>
+
+---
+
+If there's more to say or our message requested a response, feel free to reply.
 
 💚, Logbot

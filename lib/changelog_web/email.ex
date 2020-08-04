@@ -4,16 +4,7 @@ defmodule ChangelogWeb.Email do
   alias Changelog.{EpisodeRequest, NewsItem}
   alias ChangelogWeb.EpisodeView
 
-  def authored_news_published(person, item) do
-    styled_email()
-    |> put_header("X-CMail-GroupName", "Authored News")
-    |> to(person)
-    |> subject("You're on Changelog News!")
-    |> assign(:person, person)
-    |> assign(:item, item)
-    |> render(:authored_news_published)
-  end
-
+  # Comment related emails
   def comment_mention(person, comment) do
     item = NewsItem.load_object(comment.news_item)
 
@@ -54,6 +45,7 @@ defmodule ChangelogWeb.Email do
     |> render(:comment_subscription)
   end
 
+  # Welcome emails
   def community_welcome(person) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Community Welcome")
@@ -63,6 +55,35 @@ defmodule ChangelogWeb.Email do
     |> render(:community_welcome)
   end
 
+  def guest_welcome(person) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Guest Welcome")
+    |> to(person)
+    |> subject("Thanks for guesting on a Changelog show!")
+    |> assign(:person, person)
+    |> render(:guest_welcome)
+  end
+
+  def subscriber_welcome(person, subscribed_to) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Subscriber Welcome")
+    |> to(person)
+    |> subject("Welcome! Confirm your address")
+    |> assign(:person, person)
+    |> assign(:subscribed_to, subscribed_to)
+    |> render(:subscriber_welcome)
+  end
+
+  def sign_in(person) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Sign In")
+    |> to(person)
+    |> subject("Your magic link")
+    |> assign(:person, person)
+    |> render(:sign_in)
+  end
+
+  # Podcast related emails
   def episode_published(subscription, episode) do
     styled_email()
     |> put_header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug}")
@@ -118,50 +139,33 @@ defmodule ChangelogWeb.Email do
     |> render(:guest_thanks)
   end
 
-  def guest_welcome(person) do
+  # News related emails
+  def authored_news_published(item) do
     styled_email()
-    |> put_header("X-CMail-GroupName", "Guest Welcome")
-    |> to(person)
-    |> subject("Thanks for guesting on a Changelog show!")
-    |> assign(:person, person)
-    |> render(:guest_welcome)
+    |> put_header("X-CMail-GroupName", "Authored News")
+    |> to(item.author)
+    |> subject("You're on Changelog News!")
+    |> assign(:person, item.author)
+    |> assign(:item, item)
+    |> render(:authored_news_published)
   end
 
-  def sign_in(person) do
-    styled_email()
-    |> put_header("X-CMail-GroupName", "Sign In")
-    |> to(person)
-    |> subject("Your magic link")
-    |> assign(:person, person)
-    |> render(:sign_in)
-  end
-
-  def subscriber_welcome(person, subscribed_to) do
-    styled_email()
-    |> put_header("X-CMail-GroupName", "Subscriber Welcome")
-    |> to(person)
-    |> subject("Welcome! Confirm your address")
-    |> assign(:person, person)
-    |> assign(:subscribed_to, subscribed_to)
-    |> render(:subscriber_welcome)
-  end
-
-  def submitted_news_published(person, item) do
+  def submitted_news_published(item) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Submitted News")
-    |> to(person)
+    |> to(item.submitter)
     |> subject("Your submission is on Changelog News!")
-    |> assign(:person, person)
+    |> assign(:person, item.submitter)
     |> assign(:item, item)
     |> render(:submitted_news_published)
   end
 
-  def submitted_news_declined(person, item) do
+  def submitted_news_declined(item) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Declined News")
-    |> to(person)
-    |> subject("Your submission to Changelog News was declined")
-    |> assign(:person, person)
+    |> to(item.submitter)
+    |> subject("Your submission to Changelog News")
+    |> assign(:person, item.submitter)
     |> assign(:item, item)
     |> render(:submitted_news_declined)
   end

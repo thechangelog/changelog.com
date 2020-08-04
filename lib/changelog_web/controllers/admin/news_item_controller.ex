@@ -142,17 +142,10 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     end
   end
 
-  def decline(conn = %{assigns: %{item: item}}, %{"message" => message}) do
+  def decline(conn = %{assigns: %{item: item}}, params) do
+    message = Map.get(params, "message", "")
     item = NewsItem.decline!(item, message)
     Task.start_link(fn -> Notifier.notify(item) end)
-
-    conn
-    |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_news_item_path(conn, :index))
-  end
-
-  def decline(conn = %{assigns: %{item: item}}, _params) do
-    NewsItem.decline!(item)
 
     conn
     |> put_flash(:result, "success")
