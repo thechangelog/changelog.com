@@ -3,6 +3,21 @@
 
   <div class="account_ctas">
     <div class="account_ctas-item">
+    <img class="account_ctas-item-icon" src='<%= Routes.static_url(@conn, "/images/podcasts/plusplus.png") %>' width="50" height="50" alt="Changelog++ Art"></i>
+
+    <div class="account_ctas-item-info">
+      <h3>Join Changelog++</h3>
+      <p>The <em>best way</em> to directly support the podcasts, news, videos, & other awesome stuff we create. We'll take you <em>closer to the metal</em> with no ads, extended episodes, outtakes, bonus content, a deep discount in our merch store (soon), and more to come.</p>
+
+      <p><strong>Become a founding member and save 40% during the month of August!</strong></p>
+
+      <div class="account_ctas-item-info-buttons">
+      <%= link("Check it Out", to: "https://changelog.com/++", target: "_blank") %>
+      </div>
+    </div>
+    </div>
+
+    <div class="account_ctas-item">
       <img class="account_ctas-item-icon" src='<%= Routes.static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
 
       <div class="account_ctas-item-info">
@@ -10,8 +25,8 @@
         <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
 
         <div class="account_ctas-item-info-buttons">
-          <%= link "Request Invite", to: Routes.home_path(@conn, :slack), method: :post %>
-          <%= link "Launch Slack", to: "https://changelog.slack.com", target: "_blank" %>
+          <%= link("Request Invite", to: Routes.home_path(@conn, :slack), method: :post) %>
+          <%= link("Launch Slack", to: "https://changelog.slack.com", target: "_blank") %>
         </div>
       </div>
     </div>
