@@ -1,10 +1,10 @@
-<div id="<%= @id %>" class="ui small decline modal">
+<div id="<%= @modal_id %>" class="ui small decline modal">
   <i class="close icon"></i>
   <div class="header">
     Decline with message: <em><%= @request.guests %></em>
   </div>
   <div class="content">
-    <%= form_tag Routes.admin_podcast_episode_request_path(@conn, :decline, @podcast.slug, @request), method: "PUT", id: "decline", class: "ui small form" do %>
+    <%= form_tag Routes.admin_podcast_episode_request_path(@conn, :decline, @podcast.slug, @request), id: @form_id, method: "PUT", class: "ui small form" do %>
       <div class="field">
         <div class="ui">
           <textarea name="message" placeholder="Reason for declining, sent by email to submitter"></textarea>
@@ -13,7 +13,7 @@
     <% end %>
   </div>
   <div class="actions">
-    <input type="submit" form="decline" name="decline" class="ui primary basic button" value="Decline">
+    <input type="submit" form="<%= @form_id %>" name="decline" class="ui primary basic button" value="Decline">
     <div class="ui basic cancel button">Cancel</div>
   </div>
 </div>

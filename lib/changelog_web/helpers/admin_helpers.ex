@@ -70,14 +70,18 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   end
 
   def modal_icon_button(view_module, icon_name, title, modal_name, assigns, id) do
-    button_classes = "ui icon button modal-button #{modal_name}"
-    icon_classes = "#{icon_name} icon"
-    icon = content_tag(:i, "", class: icon_classes)
-    button_id = "#{modal_name}-button-#{id}"
     modal_id = "#{modal_name}-modal-#{id}"
-    modal = Phoenix.View.render(view_module, "_#{modal_name}_modal.html", Map.put(assigns, :id, modal_id))
+    form_id = "#{modal_name}-form-#{id}"
+    assigns = Map.merge(assigns, %{modal_id: modal_id, form_id: form_id})
+    modal = Phoenix.View.render(view_module, "_#{modal_name}_modal.html", assigns)
     ~e"""
-    <button type="button" id="<%= button_id %>" data-target="#<%= modal_id %>" class="<%= button_classes %>" title="<%= title %>"><%= icon %></button>
+    <button
+      type="button"
+      data-modal="#<%= modal_id %>"
+      class="ui icon button js-modal"
+      title="<%= title %>">
+        <i class="<%= icon_name %> icon"></i>
+    </button>
     <%= modal %>
     """
   end

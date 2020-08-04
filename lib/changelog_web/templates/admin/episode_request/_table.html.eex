@@ -64,7 +64,7 @@
         <%= if Changelog.EpisodeRequest.is_active(request) && Policies.EpisodeRequest.decline(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("thumbs down",
               to: Routes.admin_podcast_episode_request_path(@conn, :decline, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
-              title: "Decline",
+              title: "Decline silently",
               method: :put,
               data: [confirm: "Decline this request?"]) %>
 
