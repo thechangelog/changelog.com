@@ -286,12 +286,20 @@ defmodule Changelog.NotifierTest do
   end
 
   describe "notify/1 with an episode request" do
-    test "when requester has episode request declined" do
+    test "when episode request is declined with a message" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      request = insert(:episode_request, submitter: person)
+      request = EpisodeRequest.decline!(request, "decline reason")
+      Notifier.notify(request)
+      assert_delivered_email(Email.episode_request_declined(request))
+    end
+
+    test "when episode request is declined without a message" do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:episode_request, submitter: person)
-      item = EpisodeRequest.decline!(item, "decline reason")
+      item = EpisodeRequest.decline!(item, "")
       Notifier.notify(item)
-      assert_delivered_email(Email.episode_request_declined(person, item))
+      assert_no_emails_delivered()
     end
   end
 end

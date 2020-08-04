@@ -87,6 +87,16 @@ defmodule ChangelogWeb.Email do
     |> render(:episode_request_published)
   end
 
+  def episode_request_declined(request) do
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Declined Episode Request")
+    |> to(request.submitter)
+    |> subject("Your episode request of #{request.podcast.name}")
+    |> assign(:person, request.submitter)
+    |> assign(:request, request)
+    |> render(:episode_request_declined)
+  end
+
   def episode_transcribed(person, episode) do
     styled_email()
     |> put_header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug} Transcribed")
@@ -154,16 +164,6 @@ defmodule ChangelogWeb.Email do
     |> assign(:person, person)
     |> assign(:item, item)
     |> render(:submitted_news_declined)
-  end
-
-  def episode_request_declined(person, request) do
-    styled_email()
-    |> put_header("X-CMail-GroupName", "Declined Episode Request")
-    |> to(person)
-    |> subject("Your submission to #{request.podcast.name} was declined")
-    |> assign(:person, person)
-    |> assign(:request, request)
-    |> render(:episode_request_declined)
   end
 
   defp email_from_logbot do

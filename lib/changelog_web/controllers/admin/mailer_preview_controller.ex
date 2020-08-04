@@ -113,6 +113,18 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.episode_request_published(request)
   end
 
+  def episode_request_declined_email do
+    request =
+      EpisodeRequest
+      |> EpisodeRequest.declined()
+      |> EpisodeRequest.newest_first()
+      |> EpisodeRequest.limit(1)
+      |> EpisodeRequest.preload_all()
+      |> Repo.one()
+
+    Email.episode_request_declined(request)
+  end
+
   def episode_transcribed_email do
     Email.episode_transcribed(latest_person(), known_episode())
   end

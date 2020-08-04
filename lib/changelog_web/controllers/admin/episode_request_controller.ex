@@ -84,7 +84,8 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
     |> redirect_next_or_index(params, podcast)
   end
 
-  def decline(conn, params = %{"id" => id, "message" => message}, podcast) do
+  def decline(conn, params = %{"id" => id}, podcast) do
+    message = Map.get(params, "message", "")
     request =
       podcast
       |> assoc(:episode_requests)
@@ -92,17 +93,6 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
       |> EpisodeRequest.decline!(message)
 
     Task.start_link(fn -> Notifier.notify(request) end)
-
-    conn
-    |> put_flash(:result, "success")
-    |> redirect_next_or_index(params, podcast)
-  end
-
-  def decline(conn, params = %{"id" => id}, podcast) do
-    podcast
-    |> assoc(:episode_requests)
-    |> Repo.get!(id)
-    |> EpisodeRequest.decline!()
 
     conn
     |> put_flash(:result, "success")

@@ -43,13 +43,15 @@ defmodule Changelog.Notifier do
     end
   end
 
-  def notify(request = %EpisodeRequest{}) do
-    if request.status == :declined do
-      request = EpisodeRequest.preload_all(request)
-      deliver_request_decline_email(request.submitter, request)
-    else
+  def notify(request = %EpisodeRequest{status: :declined, decline_message: message}) when is_binary(message) do
+    if message != "" do
+      request
+      |> EpisodeRequest.preload_all()
+      |> deliver_request_decline_email()
     end
   end
+
+  def notify(%EpisodeRequest{}), do: false
 
   def notify(comment = %NewsItemComment{}) do
     comment = NewsItemComment.preload_all(comment)
@@ -183,9 +185,9 @@ defmodule Changelog.Notifier do
     |> Mailer.deliver_later()
   end
 
-  defp deliver_request_decline_email(person, request) do
-    person
-    |> Email.episode_request_declined(request)
+  defp deliver_request_decline_email(request) do
+    request
+    |> Email.episode_request_declined()
     |> Mailer.deliver_later()
   end
 end

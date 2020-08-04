@@ -2,9 +2,9 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>Your episode request was declined for this reason:</p>
+    <p>Sadly, your request was <strong>declined</strong>. Here's a message from the team with more on the decision:</p>
 
-    <p><%= @request.decline_message %></p>
+    <p><blockquote><%= @request.decline_message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
 
   </td>
 </tr>

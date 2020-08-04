@@ -65,7 +65,7 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
   end
 
   @tag :as_admin
-  test "declines a news item with a message and redirects", %{conn: conn} do
+  test "declines an episode request with a message and redirects", %{conn: conn} do
     request = insert(:episode_request)
 
     conn =

@@ -1,8 +1,12 @@
 <%= greeting(@person) %>
 
 
-Your submission[1] was declined for this reason:
+Sadly, your request was declined. Here's a message from the team with more on the decision:
+
+---
 
 <%= @request.decline_message %>
+
+---
 
 💚, Logbot
