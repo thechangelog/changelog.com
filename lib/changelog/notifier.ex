@@ -48,7 +48,8 @@ defmodule Changelog.Notifier do
     end
   end
 
-  def notify(request = %EpisodeRequest{status: :declined, decline_message: message}) when is_binary(message) do
+  def notify(request = %EpisodeRequest{status: :declined, decline_message: message})
+      when is_binary(message) do
     if message != "" do
       request
       |> EpisodeRequest.preload_all()

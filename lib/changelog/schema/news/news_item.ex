@@ -293,7 +293,9 @@ defmodule Changelog.NewsItem do
 
   def decline!(item), do: item |> change(%{status: :declined}) |> Repo.update!()
   def decline!(item, ""), do: decline!(item)
-  def decline!(item, message), do: item |> change(%{status: :declined, decline_message: message}) |> Repo.update!()
+
+  def decline!(item, message),
+    do: item |> change(%{status: :declined, decline_message: message}) |> Repo.update!()
 
   def queue!(item), do: item |> change(%{status: :queued}) |> Repo.update!()
 

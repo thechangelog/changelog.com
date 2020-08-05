@@ -86,6 +86,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
 
   def decline(conn, params = %{"id" => id}, podcast) do
     message = Map.get(params, "message", "")
+
     request =
       podcast
       |> assoc(:episode_requests)

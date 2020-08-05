@@ -74,6 +74,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     form_id = "#{modal_name}-form-#{id}"
     assigns = Map.merge(assigns, %{modal_id: modal_id, form_id: form_id})
     modal = Phoenix.View.render(view_module, "_#{modal_name}_modal.html", assigns)
+
     ~e"""
     <button
       type="button"

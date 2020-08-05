@@ -64,6 +64,7 @@ defmodule Changelog.EpisodeRequest do
 
   def decline!(request), do: update_status!(request, :declined)
   def decline!(request, ""), do: decline!(request)
+
   def decline!(request, message) do
     request
     |> change(%{decline_message: message})

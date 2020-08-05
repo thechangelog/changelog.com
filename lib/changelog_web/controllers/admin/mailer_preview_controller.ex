@@ -56,7 +56,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     |> Email.subscriber_welcome(subscription.podcast)
   end
 
-  #Comment related emails
+  # Comment related emails
   def comment_mention_email do
     comment =
       NewsItemComment.newest_first()
@@ -161,7 +161,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
       |> NewsItem.preload_all()
       |> Repo.one()
 
-      Email.submitted_news_declined(item)
+    Email.submitted_news_declined(item)
   end
 
   defp latest_person do
