@@ -10,9 +10,9 @@ jobs:
       postgres:
         image: postgres:9.5
         env:
-          POSTGRES_USER: "postgres"
+          POSTGRES_USER: postgres
           POSTGRES_DB: changelog_test
-          POSTGRES_PASSWORD: "postgres"
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -22,7 +22,10 @@ jobs:
       image: thechangelog/runtime:2019-11-27T16.20.17Z
       env:
         MIX_ENV: test
-        DB_URL: "ecto://postgres:postgres@postgres:5432/changelog_test"
+        DB_NAME: changelog_test
+        DB_HOST: postgres
+        DB_USER: postgres
+        DB_PASS: postgres
     steps:
       - uses: actions/checkout@v2
       - run: mix do local.rebar --force, local.hex --force
