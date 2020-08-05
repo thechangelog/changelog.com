@@ -1,0 +1,6 @@
+<footer class="news_item-footer">
+  <span class="news_item-footer-item">
+    <%= link("Read On", to: permalink_path(@conn, @item)) %> &bull;
+    <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
+  </span>
+</footer>

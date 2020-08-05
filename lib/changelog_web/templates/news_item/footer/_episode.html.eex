@@ -1,0 +1,7 @@
+<%= if SharedHelpers.controller_action_combo(@conn) != "news_item-show" do %>
+<footer class="news_item-footer">
+  <span class="news_item-footer-item">
+    <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
+  </span>
+</footer>
+<% end %>

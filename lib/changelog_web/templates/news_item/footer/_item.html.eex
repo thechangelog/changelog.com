@@ -1,0 +1,8 @@
+<footer class="news_item-footer">
+  <span class="news_item-footer-item">
+    <%= SharedHelpers.external_link("Source", to: @item.url, data: [news: true]) %>
+  <%= if SharedHelpers.controller_action_combo(@conn) != "news_item-show" do %>
+    &bull; <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
+  <% end %>
+  </span>
+</footer>

@@ -11,17 +11,5 @@
   </div>
   <%= image_link(@item) %>
 
-<%= if SharedHelpers.controller_action_combo(@conn) != "news_item-show" do %>
-  <footer class="news_item-footer">
-  <%= if NewsItem.is_post(@item) do %>
-    <span class="news_item-footer-item">
-      <%= link("Continue reading " <> SharedHelpers.pluralize(PostView.paragraph_count(@item.object), "paragraph", "paragraphs"), to: permalink_path(@conn, @item)) %>
-    </span>
-  <% else %>
-    <span class="news_item-footer-item">
-      <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
-    </span>
-  <% end %>
-  </footer>
-<% end %>
+  <%= render_footer(@conn, @item) %>
 </article>

@@ -1,1 +1,1 @@
-<%= link @item.headline, to: SharedHelpers.dev_relative(@item.url), data: [news: true] %>
+<%= link(@item.headline, to: SharedHelpers.dev_relative(@item.url), data: [news: true]) %>

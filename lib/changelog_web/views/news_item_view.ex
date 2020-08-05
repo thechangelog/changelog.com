@@ -11,8 +11,7 @@ defmodule ChangelogWeb.NewsItemView do
     EpisodeView,
     PersonView,
     TopicView,
-    PodcastView,
-    PostView
+    PodcastView
   }
 
   def admin_edit_link(conn, %{admin: true}, item = %{type: :audio, object: episode})
@@ -140,6 +139,18 @@ defmodule ChangelogWeb.NewsItemView do
 
   def permalink_data(item) do
     if item.object_id, do: [news: true], else: []
+  end
+
+  def render_footer(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
+    render("footer/_episode.html", conn: conn, item: item, episode: episode)
+  end
+
+  def render_footer(conn, item = %{type: :link, object: post}) when is_map(post) do
+    render("footer/_post.html", conn: conn, item: item, post: post)
+  end
+
+  def render_footer(conn, item) do
+    render("footer/_item.html", conn: conn, item: item)
   end
 
   def render_item_summary_or_ad(item = %NewsItem{}, assigns),
