@@ -37,7 +37,6 @@ defmodule Changelog.NewsItemCommentTest do
       assert NewsItemComment.mentioned_people(comment) == [person]
     end
 
-    @tag skip: "this test is racey and fails intermittently"
     test "returns many people when they are mentioned" do
       p1 = insert(:person, handle: "joeblow")
       p2 = insert(:person, handle: "janeblow")

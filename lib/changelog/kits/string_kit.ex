@@ -14,7 +14,7 @@ defmodule Changelog.StringKit do
   def extract_mentions(string) do
     regex = ~r/
     @([a-z|0-9|_|-]+) # capture @ followed by valid username chars
-    (?!\.)            # negative look ahead: a period, which indicates email address
+    (?!\.\w)          # negative look ahead: a period followed by a word char, which indicates email address
     \W                # lastly a non-word char, indicating the end of mention
     /x
 
