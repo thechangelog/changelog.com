@@ -14,7 +14,7 @@ services:
     # Keep this in lock-step with docker/Dockerfile.production
     image: thechangelog/runtime:2019-11-27T16.20.17Z
     working_dir: /app
-    command: bash -exec "&& mix deps.get && ( if (mix deps | grep 'mix deps.compile' 1>/dev/null); then mix deps.compile; fi ) && (cd assets && yarn install) && mix do ecto.create, ecto.migrate, phx.server"
+    command: bash -exec "mix deps.get && ( if (mix deps | grep 'mix deps.compile' 1>/dev/null); then mix deps.compile; fi ) && (cd assets && yarn install) && mix do ecto.create, ecto.migrate, phx.server"
     environment:
       DB_HOST: db
       DB_NAME: changelog_dev
