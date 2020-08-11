@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.SearchController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, NewsSource, Person, Sponsor, Post, Topic}
+  alias Changelog.{Episode, NewsItem, NewsSource, Person, Podcast, Sponsor, Post, Topic}
 
   plug :assign_type when action in [:one]
   plug Authorize, [Policies.Search, :type]
@@ -13,6 +13,7 @@ defmodule ChangelogWeb.Admin.SearchController do
         news_items: search_news_items(query),
         news_sources: search_news_sources(query),
         people: search_people(query),
+        podcasts: search_podcasts(query),
         posts: search_posts(query),
         sponsors: search_sponsors(query),
         topics: search_topics(query)
@@ -28,6 +29,7 @@ defmodule ChangelogWeb.Admin.SearchController do
         "news_item" -> search_news_items(query)
         "news_source" -> search_news_sources(query)
         "person" -> search_people(query)
+        "podcast" -> search_podcasts(query)
         "post" -> search_posts(query)
         "sponsor" -> search_sponsors(query)
         "topic" -> search_topics(query)
@@ -65,6 +67,9 @@ defmodule ChangelogWeb.Admin.SearchController do
     )
     |> Repo.all()
   end
+
+  defp search_podcasts(""), do: []
+  defp search_podcasts(q), do: Repo.all(from(q in Podcast, where: ilike(q.name, ^"%#{q}%")))
 
   defp search_posts(""), do: []
 

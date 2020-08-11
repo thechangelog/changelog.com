@@ -48,14 +48,14 @@
     </div>
 
     <div class="two wide field">
-      <img src="<%= PodcastView.cover_url(f.data, :small) %>" height=66>
+      <img src="<%= cover_url(f.data, :small) %>" height=66>
     </div>
   </div>
 
   <div class="required field">
     <%= label(f, :hosts) %>
 
-    <div class="ui middle aligned selection list js-hosts">
+    <div class="ui middle aligned selection list js-podcast_hosts">
       <%= inputs_for f, :podcast_hosts, fn i -> %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
           <%= hidden_input i, :person_id %>
@@ -85,7 +85,7 @@
   <div class="field">
     <%= label(f, :topics) %>
 
-    <div class="ui horizontal selection list js-topics">
+    <div class="ui horizontal selection list js-podcast_topics">
       <%= inputs_for f, :podcast_topics, fn i -> %>
         <% topic = AdminHelpers.load_from_form(i, Topic, :topic) %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">

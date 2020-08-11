@@ -2,6 +2,7 @@ import "phoenix_html";
 
 import benefitView from "views/benefitView";
 import episodeView from "views/episodeView";
+import metacastView from "views/metacastView";
 import newsIssueView from "views/newsIssueView";
 import newsItemView from "views/newsItemView";
 import newsItemCommentView from "views/newsItemCommentView";
@@ -18,6 +19,7 @@ import FormUI from "components/formUI";
 let views = {
   "BenefitView": benefitView,
   "EpisodeView": episodeView,
+  "MetacastView": metacastView,
   "NewsItemView": newsItemView,
   "NewsItemCommentView": newsItemCommentView,
   "NewsIssueView": newsIssueView,

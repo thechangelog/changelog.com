@@ -40,7 +40,7 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
-  def dasherized_name(podcast), do: StringKit.dasherize(podcast.name)
+  def dasherized_name(%{name: name}), do: StringKit.dasherize(name)
 
   def is_master(podcast), do: Podcast.is_master(podcast)
   def episode_count(podcast), do: Podcast.episode_count(podcast)

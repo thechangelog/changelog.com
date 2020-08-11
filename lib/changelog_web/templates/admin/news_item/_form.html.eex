@@ -108,7 +108,7 @@
       <% end %>
     </div>
   <% else %>
-    <div class="ui horizontal selection list js-topics">
+    <div class="ui horizontal selection list js-news_item_topics">
       <%= inputs_for f, :news_item_topics, fn i -> %>
         <% topic = AdminHelpers.load_from_form(i, Topic, :topic) %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">

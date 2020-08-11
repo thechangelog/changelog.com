@@ -1,0 +1,8 @@
+<div class="ui basic segment text container">
+  <h1 class="ui dividing header">
+    <%= link "Metacasts", to: Routes.admin_metacast_path(@conn, :index) %>
+    &raquo; Edit
+  </h1>
+
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_metacast_path(@conn, :update, @metacast)})) %>
+</div>

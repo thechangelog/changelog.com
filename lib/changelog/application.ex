@@ -21,7 +21,9 @@ defmodule Changelog.Application do
           global_ttl: :timer.seconds(60)
         ]
       ]),
-      worker(Changelog.Scheduler, [])
+      worker(Changelog.Scheduler, []),
+      worker(Changelog.EpisodeTracker, []),
+      worker(Changelog.Metacasts.Filterer.Cache, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

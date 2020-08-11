@@ -58,7 +58,7 @@
   <div class="required field">
     <%= label(f, :hosts) %>
 
-    <div class="ui middle aligned selection list js-hosts">
+    <div class="ui middle aligned selection list js-episode_hosts">
       <%= inputs_for f, :episode_hosts, fn i -> %>
         <% host = AdminHelpers.load_from_form(i, Person, :person) %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
@@ -89,7 +89,7 @@
   <div class="field">
     <%= label(f, :guests) %>
 
-    <div class="ui middle aligned selection list js-guests">
+    <div class="ui middle aligned selection list js-episode_guests">
       <%= inputs_for f, :episode_guests, fn i -> %>
         <% guest = AdminHelpers.load_from_form(i, Person, :person) %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
@@ -120,7 +120,7 @@
   <div class="field">
     <%= label(f, :sponsors) %>
 
-    <div class="ui middle aligned selection list js-sponsors">
+    <div class="ui middle aligned selection list js-episode_sponsors">
       <%= inputs_for f, :episode_sponsors, fn i -> %>
         <% sponsor = AdminHelpers.load_from_form(i, Sponsor, :sponsor) %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
@@ -170,7 +170,7 @@
   <div class="field">
     <%= label(f, :topics) %>
 
-    <div class="ui horizontal selection list js-topics">
+    <div class="ui horizontal selection list js-topics js-episode_topics">
       <%= inputs_for f, :episode_topics, fn i -> %>
         <% topic = AdminHelpers.load_from_form(i, Topic, :topic) %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
