@@ -11,9 +11,13 @@
 
 <div class="ui basic segment">
   <div class="ui text container">
-    <h4 class="ui block header">Submitter</h4>
+    <h4 class="ui block header">Submitted By</h4>
 
-    <p><%= @request.submitter.name %> (<%= submitter_name(@request) %>) on <%= AdminHelpers.ts(@request.inserted_at) %></p>
+    <p><%= @request.submitter.name %> (<a href="mailto:<%= @request.submitter.email %>">contact via email</a>) on <%= AdminHelpers.ts(@request.inserted_at) %></p>
+
+    <h4 class="ui block header">On-air Credit</h4>
+
+    <p><%= credit(@request) %></p>
 
     <h4 class="ui block header">Guests</h4>
 

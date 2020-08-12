@@ -1,6 +1,10 @@
 defmodule Changelog.StringKit do
   alias ChangelogWeb.{Endpoint, Router}
 
+  def blank?(nil), do: true
+
+  def blank?(string), do: String.trim(string) == ""
+
   def dasherize(string) do
     string
     |> String.downcase()
@@ -49,4 +53,6 @@ defmodule Changelog.StringKit do
       String.replace(string, "#{mention}", "[#{mention}](#{url})")
     end)
   end
+
+  def present?(string), do: !blank?(string)
 end

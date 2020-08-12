@@ -1,7 +1,16 @@
 defmodule ChangelogWeb.Admin.EpisodeRequestView do
   use ChangelogWeb, :admin_view
 
+  alias Changelog.StringKit
   alias ChangelogWeb.{PersonView}
+
+  def credit(%{pronunciation: pronunciation}) do
+    if StringKit.present?(pronunciation) do
+      "Name is pronounced: #{pronunciation}"
+    else
+      "Submitter would like to remain anonymous"
+    end
+  end
 
   def description(request) do
     {:ok, date} = Timex.format(request.inserted_at, "{M}/{D}")
@@ -27,10 +36,10 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
   end
 
   def submitter_name(%{pronunciation: pronunciation}) do
-    case pronunciation do
-      nil -> "Anon"
-      "" -> "Anon"
-      _else -> pronunciation
+    if StringKit.present?(pronunciation) do
+      pronunciation
+    else
+      "Anon"
     end
   end
 end

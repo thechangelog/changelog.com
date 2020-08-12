@@ -3,6 +3,20 @@ defmodule Changelog.StringKitTest do
 
   alias Changelog.StringKit
 
+  test "blank?/1" do
+    assert StringKit.blank?(nil)
+    assert StringKit.blank?("")
+    assert StringKit.blank?("     ")
+    refute StringKit.blank?("stuff")
+  end
+
+  test "present?/1" do
+    refute StringKit.present?(nil)
+    refute StringKit.present?("")
+    refute StringKit.present?("     ")
+    assert StringKit.present?("stuff")
+  end
+
   test "dasherize/1" do
     assert StringKit.dasherize("The Changelog") == "the-changelog"
     assert StringKit.dasherize("Go Time") == "go-time"
