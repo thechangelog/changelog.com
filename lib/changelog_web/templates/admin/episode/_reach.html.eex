@@ -1,4 +1,4 @@
-<div class="ui stackable centered three column grid">
+<div class="ui stackable centered four column grid">
   <div class="ui column">
     <h3 class="ui dividing header">7 day reach</h3>
     <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@reach[:now_7], @reach[:then_7]) %>">
@@ -56,6 +56,21 @@
       <div class="statistic">
         <div class="value"><%= @reach[:then_90] |> SharedHelpers.comma_separated() %></div>
         <div class="label">last year</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui column">
+    <h3 class="ui dividing header">1 year reach</h3>
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@reach[:now_year], @reach[:prev_year]) %>">
+      <div class="statistic">
+        <div class="value"><%= @reach[:now_year] |> SharedHelpers.comma_separated() %></div>
+        <div class="label">current</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= @reach[:prev_year] |> SharedHelpers.comma_separated() %></div>
+        <div class="label">previous</div>
       </div>
     </div>
   </div>

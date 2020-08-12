@@ -79,9 +79,11 @@ defmodule ChangelogWeb.Admin.PageController do
         now_7: EpisodeStat.date_range_reach(now, days: -7),
         now_30: EpisodeStat.date_range_reach(now, days: -30),
         now_90: EpisodeStat.date_range_reach(now, days: -90),
+        now_year: EpisodeStat.date_range_reach(now, years: -1),
         prev_7: EpisodeStat.date_range_reach(Timex.shift(now, days: -7), days: -7),
         prev_30: EpisodeStat.date_range_reach(Timex.shift(now, days: -30), days: -30),
         prev_90: EpisodeStat.date_range_reach(Timex.shift(now, days: -90), days: -90),
+        prev_year: EpisodeStat.date_range_reach(Timex.shift(now, years: -1), years: -1),
         then_7: EpisodeStat.date_range_reach(then, days: -7),
         then_30: EpisodeStat.date_range_reach(then, days: -30),
         then_90: EpisodeStat.date_range_reach(then, days: -90)

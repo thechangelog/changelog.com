@@ -368,9 +368,11 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         now_7: EpisodeStat.date_range_reach(podcast, now, days: -7),
         now_30: EpisodeStat.date_range_reach(podcast, now, days: -30),
         now_90: EpisodeStat.date_range_reach(podcast, now, days: -90),
+        now_year: EpisodeStat.date_range_reach(podcast, now, years: -1),
         prev_7: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -7), days: -7),
         prev_30: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -30), days: -30),
         prev_90: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -90), days: -90),
+        prev_year: EpisodeStat.date_range_reach(podcast, Timex.shift(now, years: -1), years: -1),
         then_7: EpisodeStat.date_range_reach(podcast, then, days: -7),
         then_30: EpisodeStat.date_range_reach(podcast, then, days: -30),
         then_90: EpisodeStat.date_range_reach(podcast, then, days: -90)
