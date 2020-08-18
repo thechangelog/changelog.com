@@ -1,11 +1,7 @@
 defmodule Changelog.MetacastsTest do
   use Changelog.SchemaCase
 
-  alias Changelog.Episode
   alias Changelog.EpisodeTracker
-  alias Changelog.Metacasts.Filterer
-
-  @statement_limit 256
 
   setup do
     gotime = insert(:podcast, slug: "gotime")
@@ -32,18 +28,9 @@ defmodule Changelog.MetacastsTest do
             )
         ]
     }
-end
-
-  test "flatten episodes and filter them" do
-    assert {:ok, episodes} = Episode.flatten_for_filtering()
-    assert length(episodes) == 2
-
-    assert [_] = Filterer.filter!(episodes, "only podcast: podcast") |> Enum.to_list()
-    assert [] = Filterer.filter!(episodes, "only podcast: gotime") |> Enum.to_list()
-    assert [_, _] = Filterer.filter!(episodes, "except topic: react") |> Enum.to_list()
   end
 
-  test "filter via EpisodeTracker" do
+  test "filter" do
     EpisodeTracker.refresh()
     assert {:ok, [%{slug: "rails-episode"}]} = EpisodeTracker.filter("only podcast: podcast")
     assert {:ok, ["rails-episode"]} = EpisodeTracker.filter(
@@ -54,11 +41,20 @@ end
     assert {:ok, [2]} = EpisodeTracker.get_episodes_as_ids("only podcast: podcast")
   end
 
-  test "filter statement abuse limit" do
-    too_many_statements = Enum.reduce(0..@statement_limit, "except ", fn num, query ->
-      query <> " podcast: podcast-#{num}"
-    end)
-
-    assert {:error, :too_many_statements} = Filterer.compile(too_many_statements)
+  test "track new episode then untrack", %{podcasts: [_, changelog, _]} do
+    EpisodeTracker.refresh()
+    episode = insert(:published_episode,
+        id: 3,
+        slug: "django-episode",
+        title: "Django",
+        summary: "A web framework for Python",
+        notes: "?",
+        podcast: changelog
+    )
+    assert {:ok, [%{slug: "rails-episode"}]} = EpisodeTracker.filter("only podcast: podcast")
+    EpisodeTracker.track(episode)
+    assert {:ok, [%{slug: "django-episode"}, %{slug: "rails-episode"}]} = EpisodeTracker.filter("only podcast: podcast")
+    EpisodeTracker.untrack(episode.id)
+    assert {:ok, [%{slug: "rails-episode"}]} = EpisodeTracker.filter("only podcast: podcast")
   end
 end

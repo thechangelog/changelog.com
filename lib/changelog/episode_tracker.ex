@@ -32,6 +32,14 @@ defmodule Changelog.EpisodeTracker do
         GenServer.cast(__MODULE__, :refresh)
     end
 
+    def track(episode) do
+        GenServer.cast(__MODULE__, {:track, episode})
+    end
+
+    def untrack(episode_id) do
+        GenServer.cast(__MODULE__, {:untrack, episode_id})
+    end
+
     @impl true
     def init(_) do
         episodes = refresh_episodes()
@@ -70,6 +78,29 @@ defmodule Changelog.EpisodeTracker do
     def handle_cast(:refresh, _episodes) do
         episodes = refresh_episodes()
         {:noreply, episodes}
+    end
+
+    @impl true
+    def handle_cast({:track, episode}, episodes) do
+        %{id: id} = flat = Episode.flatten_episode_for_filtering(episode)
+        # Remove episode if already in episode list
+        episodes = untrack(episodes, id)
+
+        # Add the flattened episode, episode tracked
+        {:noreply, [flat | episodes]}
+    end
+
+    @impl true
+    def handle_cast({:untrack, episode_id}, episodes) do
+        episodes = untrack(episodes, episode_id)
+        {:noreply, episodes}
+    end
+
+    defp untrack(episodes, id) do
+        # Remove episode if already in episode list
+        Enum.reject(episodes, fn episode ->
+            episode.id == id
+        end)
     end
 
     defp refresh_episodes do
