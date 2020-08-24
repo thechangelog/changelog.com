@@ -12,6 +12,7 @@
     <language>en-us</language>
     <description>Thank you for subscribing to Changelog++!</description>
     <itunes:author>Changelog Media</itunes:author>
+    <itunes:block>yes</itunes:block>
     <itunes:summary>Thank you for subscribing to Changelog++!</itunes:summary>
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= Routes.static_url(@conn,"/images/podcasts/plusplus.png") %>"/>
