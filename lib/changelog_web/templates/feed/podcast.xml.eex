@@ -34,7 +34,7 @@
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
         <enclosure url="<%= enclosure_url(episode) %>" length="<%= episode.audio_bytes %>" type="audio/mpeg" />
         <description><%= SharedHelpers.md_to_text(episode.summary) %></description>
-        <content:encoded><%= render("_show_notes.xml", episode: episode) %></content:encoded>
+        <content:encoded><%= render("_show_notes.xml", episode: episode, plusplus: false) %></content:encoded>
 
         <itunes:episodeType><%= episode.type %></itunes:episodeType>
       <%= if episode.type == :full do %>

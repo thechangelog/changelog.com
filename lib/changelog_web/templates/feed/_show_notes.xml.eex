@@ -1,5 +1,9 @@
 <![CDATA[<%= SharedHelpers.md_to_html(@episode.summary) %>
 <%= discussion_link(@episode) %>
+<%= if !@plusplus do %>
+<p>Thank you for supporting us with a Changelog++ membership! 🤗</p>
+<% else %>
+<p><a href="<%= Routes.page_url(Endpoint, :++) %>" rel="payment">Join Changelog++</a> to support our work, get closer to the metal, and make the ads disappear!</p>
 <%= if Enum.any?(@episode.sponsors) do %>
 <p>Sponsors</p>
 <p>
@@ -11,6 +15,7 @@
   <% end %>
   </ul>
 </p>
+<% end %>
 <% end %>
 <% participants = EpisodeView.participants(@episode) %>
 <%= if Enum.any?(participants) do %>
