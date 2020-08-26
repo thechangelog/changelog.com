@@ -789,3 +789,14 @@ plusplus-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic plusplus \
 	  --from-literal=slug=$(PLUSPLUS_SLUG) \
 	| $(KUBECTL) apply --filename -
+
+FASTLY_API_TOKEN := "$$($(LPASS) show --notes Shared-changelog/secrets/FASTLY_API_TOKEN)"
+.PHONY: fastly
+fastly: $(LPASS)
+	@echo "export FASTLY_API_TOKEN=$(FASTLY_API_TOKEN)"
+.PHONY: fastly-lke-secret
+fastly-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic fastly \
+	  --from-literal=token=$(FASTLY_API_TOKEN) \
+	| $(KUBECTL) apply --filename -

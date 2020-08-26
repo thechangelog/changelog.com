@@ -33,6 +33,10 @@ bin/kubectl: $(KUBECTL)
 	mkdir -p $(LOCAL_BIN) \
 	&& ln -sf $(KUBECTL) $(LOCAL_BIN)/kubectl
 
+HELM := /usr/local/bin/helm
+$(HELM):
+	brew install helm
+
 KUBECTX := /usr/local/bin/kubectx
 KUBENS := /usr/local/bin/kubens
 $(KUBECTX) $(KUBENS):
@@ -71,6 +75,10 @@ $(LINODE_CLI):
 KUBECTL ?= /usr/bin/kubectl
 $(KUBECTL):
 	$(error Please install kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl)
+
+HELM ?= /usr/bin/helm
+$(HELM):
+	$(error Please install helm 3: https://helm.sh/docs/intro/install/)
 
 KUBECTX ?= /usr/bin/kubectx
 KUBENS ?= /usr/bin/kubens
