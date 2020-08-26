@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+# shellcheck source=docker/load_db_restore_secrets
+source load_db_restore_secrets
+
+echo "
+Select backup to restore ${PGDATABASE:?must be set} db from:"
+select DB_BACKUP in $(db_backups_s3 | awk '/changelog-20/ { print $5 }' | sort --reverse | head -n 10)
+do
+  export DB_BACKUP
+  break
+done
+
+read -rp "
+Do you want to restore $PGDATABASE db from $DB_BACKUP ? (y|n) " -n 1
+echo
+if ! [[ $REPLY =~ ^[Yy]$ ]]
+then
+  echo "ABORT - $PGDATABASE was not restored from backup"
+  exit 0
+fi
+
+echo "
+Restoring $PGDATABASE db from $DB_BACKUP ..."
+
+aws s3 cp "s3://${AWS_S3_BUCKET:?must be set}/$DB_BACKUP" - \
+| gunzip --stdout \
+| psql
+
+echo "
+SUCCESS! $PGDATABASE db was restored from $DB_BACKUP"

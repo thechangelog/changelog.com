@@ -90,42 +90,47 @@ spec:
                       - #@ data.values.app.name
               topologyKey: "kubernetes.io/hostname"
       containers:
-        #! - name: db-restore
-        #!   image: thechangelog/db_backup:201910
-        #!   command:
-        #!     - /bin/bash
-        #!     - -c
-        #!   args:
-        #!     - while true; do sleep 3600; done
-        #!   env:
-        #!     - name: AWS_ACCESS_KEY
-        #!       valueFrom:
-        #!         secretKeyRef:
-        #!           name: backups-aws
-        #!           key: access_key_id
-        #!     - name: AWS_SECRET_KEY
-        #!       valueFrom:
-        #!         secretKeyRef:
-        #!           name: backups-aws
-        #!           key: secret_access_key
-        #!     - name: AWS_REGION
-        #!       value: us-east-1
-        #!     - name: AWS_S3_BUCKET
-        #!       value: changelog-com-backups
-        #!     - name: PGHOST
-        #!       value: db
-        #!     - name: PGDATABASE
-        #!       value: db
-        #!     - name: PGPASSWORD
-        #!       valueFrom:
-        #!         secretKeyRef:
-        #!           name: db-postgres-secret
-        #!           key: password
-        #!     - name: PGUSER
-        #!       valueFrom:
-        #!         secretKeyRef:
-        #!           name: db-postgres-secret
-        #!           key: username
+        - name: db-restore
+          image: thechangelog/db_backup:202008
+          imagePullPolicy: Always
+          command:
+            - /bin/bash
+            - -c
+            - |-
+              echo "I'm here in case someone needs to restore the db from backup..."
+              while true
+              do
+                sleep 3600
+              done
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: secret_access_key
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_S3_BUCKET
+              value: changelog-com-backups
+            - name: PGHOST
+              value: db
+            - name: PGDATABASE
+              value: db
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-postgres-secret
+                  key: password
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: db-postgres-secret
+                  key: username
         - env:
             - name: ALGOLIA_APPLICATION_ID
               valueFrom:
@@ -266,6 +271,7 @@ spec:
             - name: URL_STATIC_HOST
               value: #@ data.values.cdn
           image: #@ data.values.app.image
+          imagePullPolicy: Always
           #! command:
           #!   - iex
           #!   - --sname

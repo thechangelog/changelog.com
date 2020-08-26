@@ -22,7 +22,8 @@ lke-changelog-tree: | lke-ctx $(KUBETREE)
 
 .PHONY: lke-changelog-db-restore
 lke-changelog-db-restore: | lke-ctx
-	$(KUBECTL) exec -it deployments/$(CHANGELOG_DEPLOYMENT) -c db-restore -- bash
+	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c db-restore -- bash
 
 .PHONY: lke-changelog-tls-sync-fastly
 lke-changelog-tls-sync-fastly: | lke-ctx

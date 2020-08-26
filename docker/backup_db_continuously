@@ -3,11 +3,8 @@
 set -e
 set -o pipefail
 
-if [ -r /run/secrets/DB_PASSWORD ]
-then
-  PGPASSWORD="$(cat /run/secrets/DB_PASSWORD)"
-  export PGPASSWORD
-fi
+# shellcheck source=docker/load_db_restore_secrets
+source load_db_restore_secrets
 
 echo "Will backup ${PGDATABASE:?must be set} db every ${BACKUP_DB_EVERY_N_SECONDS:?must be set} seconds"
 while true

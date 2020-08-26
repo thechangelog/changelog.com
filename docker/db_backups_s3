@@ -1,21 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -r /run/secrets/BACKUPS_AWS_ACCESS_KEY ]
-then
-  AWS_ACCESS_KEY="$(cat /run/secrets/BACKUPS_AWS_ACCESS_KEY)"
-fi
+# shellcheck source=docker/load_db_restore_secrets
+source load_db_restore_secrets
 
-if [ -r /run/secrets/BACKUPS_AWS_SECRET_KEY ]
-then
-  AWS_SECRET_KEY="$(cat /run/secrets/BACKUPS_AWS_SECRET_KEY)"
-fi
-
-s3cmd \
-  --ssl --check-certificate --check-hostname \
-  --progress --stats --stop-on-error \
-  --region="${AWS_REGION:?must be set}"  \
-  --access_key="${AWS_ACCESS_KEY:?must be set}" \
-  --secret_key="${AWS_SECRET_KEY:?must be set}" \
-  ls "s3://${AWS_S3_BUCKET:?must be set}" \
-| awk '/changelog-com-backups\/changelog-20/ { print $0 }' \
-| sort --reverse
+aws s3 ls --human-readable --summarize "s3://${AWS_S3_BUCKET:?must be set}"
