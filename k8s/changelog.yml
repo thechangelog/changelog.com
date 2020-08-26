@@ -264,11 +264,10 @@ spec:
                 }
               }
               EOF
-              curl --verbose \
+              curl --verbose --silent \
                 --header "Accept: application/vnd.api+json" \
                 --header "Content-Type: application/vnd.api+json" \
                 --header "Fastly-Key: $FASTLY_API_TOKEN" \
-                --request POST \
                 --data @/tmp/key.json \
                 https://api.fastly.com/tls/private_keys
 
@@ -284,7 +283,7 @@ spec:
                 }
               }
               EOF
-              curl --verbose \
+              curl --verbose --silent \
                 --header "Accept: application/vnd.api+json" \
                 --header "Content-Type: application/vnd.api+json" \
                 --header "Fastly-Key: $FASTLY_API_TOKEN" \
