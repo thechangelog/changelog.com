@@ -3,7 +3,16 @@ defmodule Changelog.NewsQueue do
 
   require Logger
 
-  alias Changelog.{Buffer, Cache, HN, NewsItem, NewsQueue, Notifier, Search}
+  alias Changelog.{
+    Buffer,
+    Cache,
+    EpisodeTracker,
+    HN,
+    NewsItem,
+    NewsQueue,
+    Notifier,
+    Search
+  }
 
   schema "news_queue" do
     field :position, :float
@@ -153,6 +162,7 @@ defmodule Changelog.NewsQueue do
     Task.start_link(fn -> Buffer.queue(item) end)
     Task.start_link(fn -> Notifier.notify(item) end)
     Task.start_link(fn -> HN.submit(item) end)
+    Task.start_link(fn -> EpisodeTracker.track(item) end)
     Cache.delete(item)
     Logger.info("News: Published ##{item.id}")
     true

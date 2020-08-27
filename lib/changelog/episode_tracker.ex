@@ -1,8 +1,11 @@
 defmodule Changelog.EpisodeTracker do
     use GenServer
 
-    alias Changelog.Episode
+    alias Changelog.{Episode, NewsItem}
     alias Changelog.Metacasts.Filterer.Cache
+
+    # 3 hour reset, to make sure this doesn't end up out of sync accidentally
+    @reset_period_timeout 3 * 60 * 60 * 1000
 
     def start_link do
         GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -32,8 +35,17 @@ defmodule Changelog.EpisodeTracker do
         GenServer.cast(__MODULE__, :refresh)
     end
 
+    def track(%{type: type, object_id: _object_id} = item) do
+      if type == :audio do
+        %{object: episode} = NewsItem.load_object(item)
+        track(episode)
+      end
+    end
+
     def track(episode) do
-        GenServer.cast(__MODULE__, {:track, episode})
+        if Episode.is_public(episode) do
+            GenServer.cast(__MODULE__, {:track, episode})
+        end
     end
 
     def untrack(episode_id) do
@@ -43,6 +55,7 @@ defmodule Changelog.EpisodeTracker do
     @impl true
     def init(_) do
         episodes = refresh_episodes()
+        schedule_reset()
         {:ok, episodes}
     end
 
@@ -96,6 +109,12 @@ defmodule Changelog.EpisodeTracker do
         {:noreply, episodes}
     end
 
+    @impl true
+    def handle_info(:periodic_reset, episodes) do
+        schedule_reset()
+        handle_cast(:refresh, episodes)
+    end
+
     defp untrack(episodes, id) do
         # Remove episode if already in episode list
         Enum.reject(episodes, fn episode ->
@@ -107,4 +126,6 @@ defmodule Changelog.EpisodeTracker do
         {:ok, episodes} = Episode.flatten_for_filtering()
         episodes
     end
+
+    defp schedule_reset, do: Process.send_after(self(), :periodic_reset, @reset_period_timeout)
 end

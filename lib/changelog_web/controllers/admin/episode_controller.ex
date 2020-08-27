@@ -167,7 +167,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.insert(changeset) do
       {:ok, episode} ->
-        EpisodeTracker.track(episode)
 
         conn
         |> put_flash(:result, "success")
@@ -211,7 +210,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
-        EpisodeTracker.track(episode)
         handle_notes_push_to_github(episode)
         EpisodeNewsItem.update(episode)
         Cache.delete(episode)

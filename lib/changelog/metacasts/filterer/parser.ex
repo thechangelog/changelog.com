@@ -62,10 +62,6 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     %{repr | statements: Enum.reverse(statements)}
   end
 
-  def generate_stream_filters(representation) do
-    IO.puts(length(representation.statements))
-  end
-
   defp parse_token("only", nil, %{start: nil} = repr) do
     {nil, %{repr | start: :only}}
   end
