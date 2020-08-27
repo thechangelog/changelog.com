@@ -1,5 +1,4 @@
 define RSYNC_UPLOADS
-  sudo --preserve-env --shell \
     rsync --archive --delete --update --inplace --verbose --progress --human-readable \
       $(MIGRATE_FROM):/uploads/ /uploads/
 endef
@@ -10,7 +9,7 @@ ifndef MIGRATE_FROM
 	&& echo "e.g. core@2019i.changelog.com" \
 	&& exit 1
 endif
-	@ssh -t $(HOST_SSH_USER)@$(HOST) "$(RSYNC_UPLOADS)"
+	@ssh -t $(HOST_SSH_USER)@$(HOST) "sudo --preserve-env --shell $(RSYNC_UPLOADS)"
 .PHONY: ru
 ru: rsync-uploads
 

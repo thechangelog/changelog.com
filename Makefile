@@ -157,7 +157,7 @@ include $(CURDIR)/mk/inspect.mk
 include $(CURDIR)/mk/images.mk
 include $(CURDIR)/mk/ssl.mk
 
-MIGRATE_FROM := core@2019i.changelog.com
+MIGRATE_FROM := core@201910i.changelog.com
 include $(CURDIR)/mk/migrate.mk
 
 include $(CURDIR)/mk/lke.mk

@@ -128,7 +128,8 @@ spec:
             secretKeyRef:
               name: db-postgres-secret
               key: username
-      - env:
+      - name: app
+        env:
         - name: ALGOLIA_APPLICATION_ID
           valueFrom:
             secretKeyRef:
@@ -237,7 +238,6 @@ spec:
         ports:
         - name: phoenix
           containerPort: 4000
-        name: app
         resources:
           limits:
             cpu: 4

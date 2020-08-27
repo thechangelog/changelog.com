@@ -25,6 +25,12 @@ lke-changelog-db-restore: | lke-ctx
 	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
 	  deployments/$(CHANGELOG_DEPLOYMENT) -c db-restore -- bash
 
+.PHONY: lke-changelog-uploads-sync
+lke-changelog-uploads-sync: | lke-ctx
+	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c app -- \
+	  bash -c "apt update && apt install rsync && $(RSYNC_UPLOADS)"
+
 .PHONY: lke-changelog-tls-sync-fastly
 lke-changelog-tls-sync-fastly: | lke-ctx
 	$(KUBECTL) create job --namespace $(CHANGELOG_NAMESPACE) \
