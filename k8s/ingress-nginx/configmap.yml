@@ -6,6 +6,11 @@ metadata:
   namespace: ingress-nginx
 data:
   use-forwarded-headers: "true"
+
+  # TODO: https://github.com/linode/linode-cloud-controller-manager/issues/74
   enable-real-ip: "true"
   proxy-real-ip-cidr: "192.168.255.0/24"
-  # TODO: https://github.com/linode/linode-cloud-controller-manager/issues/74
+
+  proxy-buffering: "off"
+  # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#proxy-body-size
+  proxy-body-size: "256m"
