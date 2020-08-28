@@ -436,7 +436,7 @@ $(CHANGELOG_SERVICES_SEPARATOR)
 $(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)DockerHub$(NORMAL)                | https://hub.docker.com/u/thechangelog                     |
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)CircleCI$(NORMAL)                 | https://circleci.com/gh/thechangelog/changelog.com        |
+| $(BOLD)$(GREEN)CircleCI$(NORMAL)                 | https://app.circleci.com/pipelines/github/thechangelog    |
 $(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(GREEN)GitHub$(NORMAL)                   | https://github.com/thechangelog/changelog.com             |
 $(CHANGELOG_SERVICES_SEPARATOR)
