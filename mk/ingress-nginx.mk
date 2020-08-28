@@ -9,7 +9,7 @@ lke-ingress-nginx: lke-ctx
 	&& $(KUBECTL) apply --filename $(CURDIR)/k8s/ingress-nginx \
 	&& $(KUBECTL) scale --replicas=$(LKE_NODE_COUNT) deployment/ingress-nginx-controller --namespace $(NGINX_INGRESS_NAMESPACE) \
 	&& $(KUBETREE) deployments ingress-nginx-controller --namespace $(NGINX_INGRESS_NAMESPACE) \
-	&& $(KUBECTL) delete job ingress-nginx-admission-create ingress-nginx-admission-patch
+	&& $(KUBECTL) delete job ingress-nginx-admission-create ingress-nginx-admission-patch --namespace $(NGINX_INGRESS_NAMESPACE)
 lke-provision:: lke-ingress-nginx
 
 .PHONY: lke-ingress-nginx-verify
