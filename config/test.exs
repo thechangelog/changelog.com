@@ -21,9 +21,6 @@ config :changelog, Changelog.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   username: SecretOrEnv.get("DB_USER", "postgres")
 
-config :arc,
-  storage_dir: "priv/uploads"
-
 config :rollbax,
   access_token: "",
   environment: "test",

@@ -7,7 +7,6 @@ docker
 import
 nginx
 priv/db
-priv/uploads
 script
 terraform
 test

@@ -7,6 +7,15 @@ defmodule ChangelogWeb.Endpoint do
 
   plug(ChangelogWeb.Plug.HealthCheck)
 
+  plug Plug.Static,
+    at: "/uploads",
+    from: {:changelog, "priv/uploads"},
+    gzip: false,
+    headers: %{
+      "accept-ranges" => "bytes",
+      "surrogate-control" => 'max-age=3600, stale-if-error=86400'
+    }
+
   # Legacy assets that will exist in production & may exist in dev
   plug Plug.Static,
     at: "/wp-content",
@@ -26,17 +35,6 @@ defmodule ChangelogWeb.Endpoint do
     gzip: true,
     only_matching: ~w(css fonts images js android-chrome apple-touch
       browserconfig favicon manifest mstile robots safari-pinned-tab version build)
-
-  # In dev environment, serve uploaded files from "priv/uploads".
-  #
-  # Nginx will serve these in production.
-  if Mix.env() == :dev do
-    plug Plug.Static,
-      at: "/uploads",
-      from: {:changelog, "priv/uploads"},
-      gzip: false,
-      headers: %{"Accept-Ranges" => "bytes"}
-  end
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

@@ -17,6 +17,15 @@ app:
   replicas: 1
   uploads_volume_size: 100Gi
   url_scheme: https
+  https:
+    domains:
+    - '*.changelog.com'
+    - 'changelog.com'
+image:
+  pull_policy: Always
+db:
+  restore:
+    image: thechangelog/db_backup:202008
 fastly:
   #! https://manage.fastly.com/network/certificates
   certificate_id: 1LA0UjkMfnnMwzglSLdAc

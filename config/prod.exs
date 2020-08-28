@@ -23,7 +23,7 @@ config :logger, level: :info
 # config :logger, :console, level: :debug, format: "[$level] $message\n"
 
 config :arc,
-  storage_dir: "/uploads"
+  storage_dir: SecretOrEnv.get("UPLOADS_PATH", "/uploads")
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,

@@ -225,6 +225,8 @@ spec:
             secretKeyRef:
               name: slack
               key: invite_api_token
+        - name: UPLOADS_PATH
+          value: priv/uploads
         - name: URL_HOST
           value: 2020.changelog.com
         - name: URL_PORT
@@ -264,7 +266,7 @@ spec:
           failureThreshold: 30
           periodSeconds: 10
         volumeMounts:
-        - mountPath: /uploads
+        - mountPath: /app/priv/uploads
           name: uploads
       volumes:
       - name: uploads

@@ -51,9 +51,6 @@ config :changelog, Changelog.Repo,
   pool_size: 10,
   username: SecretOrEnv.get("DB_USER", "postgres")
 
-config :arc,
-  storage_dir: "priv/uploads"
-
 config :rollbax,
   access_token: "",
   environment: "development",
