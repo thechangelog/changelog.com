@@ -7,6 +7,15 @@ defmodule ChangelogWeb.Endpoint do
 
   plug(ChangelogWeb.Plug.HealthCheck)
 
+  # Legacy assets that will exist in production & may exist in dev
+  plug Plug.Static,
+    at: "/wp-content",
+    from: {:changelog, "priv/wp-content"},
+    gzip: false,
+    headers: %{
+      "cache-control" => "max-age=315360000, public"
+    }
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest

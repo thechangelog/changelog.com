@@ -1,8 +1,11 @@
+FROM thechangelog/legacy_assets AS legacy_assets
 FROM thechangelog/runtime:2019-11-27T16.20.17Z
 
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
+
+COPY --from=legacy_assets /var/www/wp-content /app/priv/wp-content
 
 ENV MIX_ENV=prod
 ENV TERM=xterm
