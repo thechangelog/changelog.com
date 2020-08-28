@@ -31,6 +31,9 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :arc,
+  storage_dir: SecretOrEnv.get("UPLOADS_PATH", "priv/uploads")
+
 config :phoenix, :json_library, Jason
 
 config :phoenix, :format_encoders, ics: ICalendar
