@@ -50,6 +50,14 @@ build-image-local: $(DOCKER)
 .PHONY: bil
 bil: build-image-local
 
+.PHONY: legacy-assets
+legacy-assets: $(DOCKER)
+	@echo "$(YELLOW)This is a secret target that is only meant to be executed if legacy assets are present locally$(NORMAL)" && \
+	echo "$(YELLOW)If this runs with an incorrect $(BOLD)./nginx/www/wp-content$(NORMAL)$(YELLOW), the resulting Docker image will miss relevant files$(NORMAL)" && \
+	read -rp "Are you sure that you want to continue? (y|n) " -n 1 && ([[ $$REPLY =~ ^[Yy]$$ ]] || exit) && \
+	cd nginx && $(DOCKER) build --tag thechangelog/legacy_assets --file Dockerfile.legacy_assets . && \
+	$(DOCKER) push thechangelog/legacy_assets
+
 .PHONY: proxy-image
 proxy-image: build-proxy-image publish-proxy-image ## pi  | Build & publish thechangelog/proxy Docker image
 .PHONY: pi
