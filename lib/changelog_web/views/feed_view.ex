@@ -61,7 +61,7 @@ defmodule ChangelogWeb.FeedView do
 
   def render_item(item = %{object: episode = %Episode{}}, assigns) do
     episode = episode |> Episode.preload_all() |> Map.put(:news_item, item)
-    render("_episode.xml", Map.put(assigns, :episode, episode))
+    render("_episode.xml", Map.merge(assigns, %{episode: episode, plusplus: false}))
   end
 
   def render_item(item = %{object: post = %Post{}}, assigns) do
