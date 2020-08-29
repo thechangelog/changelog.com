@@ -1,0 +1,23 @@
+helmProvider:
+  version: v3
+
+notificationLeveL: debug
+debug: true
+
+service:
+  enabled: true
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: keel.changelog.com
+      paths:
+        - /
+  tls:
+    - hosts:
+        - keel.changelog.com
+      secretName: keel-acme-tls
