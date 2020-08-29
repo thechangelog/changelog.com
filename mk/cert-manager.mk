@@ -34,7 +34,7 @@ lke-cert-manager-logs: lke-ctx
 CERT_MANAGER_DNSIMPLE_VERSION := 0.0.4
 define CERT_MANAGER_DNSIMPLE
 cert-manager-webhook-dnsimple \
-  --namespace $(CERT_MANAGER_NAMESPACE) \
+  --namespace $(CERT_MANAGER_NAMESPACE) ----create-namespace \
   --set dnsimple.account=$(DNSIMPLE_ACCOUNT) \
   --set dnsimple.token=$(DNSIMPLE_TOKEN) \
   --set clusterIssuer.production.enabled=true \
@@ -49,8 +49,8 @@ endef
 .PHONY: lke-cert-manager-dnsimple
 lke-cert-manager-dnsimple: | lke-ctx $(HELM) dnsimple-creds
 	$(HELM) repo add neoskop https://charts.neoskop.dev \
-	&& ( $(HELM) install $(CERT_MANAGER_DNSIMPLE) \
-	     || $(HELM) upgrade $(CERT_MANAGER_DNSIMPLE) )
+	&& $(HELM) repo update \
+	&& $(HELM) upgrade --install $(CERT_MANAGER_DNSIMPLE)
 lke-provision:: lke-cert-manager-dnsimple
 
 .PHONY: lke-cert-manager-dnsimple-info
