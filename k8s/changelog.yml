@@ -67,6 +67,7 @@ metadata:
   labels:
     app: app
     keel.sh/policy: force
+    keel.sh/match-tag: "true"
 spec:
   replicas: 1
   selector:

@@ -67,7 +67,9 @@ metadata:
   namespace: #@ data.values.namespace
   labels:
     app: #@ data.values.app.name
+    #! https://keel.sh/docs/#policies
     keel.sh/policy: force
+    keel.sh/match-tag: "true"
 spec:
   replicas: #@ data.values.app.replicas
   selector:
