@@ -67,6 +67,7 @@ metadata:
   namespace: #@ data.values.namespace
   labels:
     app: #@ data.values.app.name
+    keel.sh/policy: force
 spec:
   replicas: #@ data.values.app.replicas
   selector:

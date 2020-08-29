@@ -66,6 +66,7 @@ metadata:
   namespace: prod-2020-07
   labels:
     app: app
+    keel.sh/policy: force
 spec:
   replicas: 1
   selector:
