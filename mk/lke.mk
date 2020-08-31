@@ -2,10 +2,10 @@
 LKE_CONFIGS := $(CURDIR)/.kube/configs
 LKE_NAME ?= prod
 LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
-LKE_REGION := us-east
-LKE_VERSION := 1.17
-LKE_NODE_TYPE := g6-dedicated-8
-LKE_NODE_COUNT := 3
+LKE_REGION ?= us-east
+LKE_VERSION ?= 1.17
+LKE_NODE_TYPE ?= g6-dedicated-8
+LKE_NODE_COUNT ?= 3
 
 ifeq ($(PLATFORM),Darwin)
 # Use Python3 for all Python-based CLIs, such as linode-cli

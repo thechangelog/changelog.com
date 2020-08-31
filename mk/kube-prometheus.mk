@@ -1,23 +1,30 @@
 # k delete -f tmp/kube-prometheus/manifests
 # If deleting namespace gets stuck: https://github.com/kubernetes/kubernetes/issues/60807#issuecomment-572615776
 METRICS_NAMESPACE := metrics
-.PHONY: lke-metrics
-lke-metrics: | lke-ctx kube-prometheus $(YTT)
+METRICS_NAME := $(METRICS_NAMESPACE)-changelog
+METRICS_FQDN := grafana.changelog.com
+.PHONY: lke-grafana
+lke-grafana: | lke-ctx kube-prometheus $(YTT)
 	$(KUBECTL) apply --filename tmp/kube-prometheus/manifests/setup \
 	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests \
 	&& $(YTT) \
 	    --data-value namespace=$(METRICS_NAMESPACE) \
-	    --file $(CURDIR)/k8s/metrics-changelog > $(CURDIR)/k8s/metrics-changelog.yml \
-	&& $(KUBECTL) apply --filename k8s/metrics-changelog.yml
-lke-provision:: lke-metrics
+	    --data-value name=$(METRICS_NAME) \
+	    --data-value fqdn=$(METRICS_FQDN) \
+	    --file $(CURDIR)/k8s/$(METRICS_NAME) > $(CURDIR)/k8s/$(METRICS_NAME).yml \
+	&& $(KUBECTL) apply --filename k8s/$(METRICS_NAME).yml
+lke-provision:: lke-grafana
 
 # https://github.com/coreos/kube-prometheus#compatibility
 KUBE_PROMETHEUS_VERSION := master
-ifeq ($(LKE_VERSION),1.16)
+ifneq ($(filter $(LKE_VERSION), 1.16 1.17),)
 KUBE_PROMETHEUS_VERSION := release-0.4
 endif
-ifneq ($(filter $(LKE_VERSION), 1.17 1.18),)
-KUBE_PROMETHEUS_VERSION := release-0.5
+ifneq ($(filter $(LKE_VERSION), 1.18),)
+KUBE_PROMETHEUS_VERSION := release-0.6
+endif
+ifeq ($(filter $(LKE_VERSION), 1.16 1.17 1.18),)
+  $(error K8S version $(LKE_VERSION) is not currently supported by prometheus-operator: https://github.com/coreos/kube-prometheus#compatibility)
 endif
 .PHONY: kube-prometheus
 kube-prometheus: tmp/kube-prometheus/manifests
@@ -33,7 +40,7 @@ METRICS_GITHUB_ORG := thechangelog
 # https://github.com/settings/tokens
 # curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" https://api.github.com/orgs/thechangelog/teams | view -c "set ft=json" -
 METRICS_GITHUB_TEAM_ID := 3796119
-METRICS_ROOT_URL := https://metrics.changelog.com
+METRICS_ROOT_URL := https://$(METRICS_FQDN)
 tmp/kube-prometheus/manifests: k8s/kube-prometheus.jsonnet | tmp/kube-prometheus/jsonnetfile.lock.json $(JSONNET) $(LPASS) $(YQ)
 	@printf "\n$(BOLD)Generate kube-prometheus manifests ...$(NORMAL)\n"
 	cd tmp/kube-prometheus \

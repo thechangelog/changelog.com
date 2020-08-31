@@ -2,7 +2,7 @@
 #! https://github.com/k14s/ytt/blob/master/examples/data-values/values.yml
 #! If necessary, these values can be overwritten in a number of ways: https://github.com/k14s/ytt/blob/master/docs/ytt-data-values.md
 ---
-fqdn: metrics.changelog.com
-name: metrics-changelog
 #! provided just-in-time
 namespace:
+fqdn:
+name:
