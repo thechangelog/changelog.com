@@ -1,5 +1,5 @@
 define RSYNC_UPLOADS
-    rsync --archive --delete --update --inplace --verbose --progress --human-readable \
+    rsync --archive --update --inplace --verbose --progress --human-readable \
       $(MIGRATE_FROM):/uploads/ /uploads/
 endef
 .PHONY: rsync-uploads

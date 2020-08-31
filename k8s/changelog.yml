@@ -89,14 +89,14 @@ spec:
                 - app
             topologyKey: kubernetes.io/hostname
       containers:
-      - name: db-restore
+      - name: backup-restore
         image: thechangelog/db_backup:202008
         imagePullPolicy: Always
         command:
         - /bin/bash
         - -c
         - |-
-          echo "I'm here in case someone needs to restore the db from backup..."
+          echo "I'm here in case someone needs to backup or restore the db or uploads..."
           while true
           do
             sleep 3600
@@ -130,6 +130,9 @@ spec:
             secretKeyRef:
               name: db-postgres-secret
               key: username
+        volumeMounts:
+        - mountPath: /uploads
+          name: uploads
       - name: app
         env:
         - name: ALGOLIA_APPLICATION_ID

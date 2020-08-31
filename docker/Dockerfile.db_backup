@@ -9,7 +9,7 @@ RUN pg_dump --version | grep "pg_dump.*12.3" \
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt update \
-    && apt install --no-install-recommends -y curl unzip ca-certificates groff \
+    && apt install --no-install-recommends -y curl unzip ca-certificates groff rsync openssh-client \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
     && ./aws/install \
@@ -25,7 +25,7 @@ ENV AWS_S3_STORAGE_CLASS=${AWS_S3_STORAGE_CLASS}
 ARG STACK_VERSION
 ENV STACK_VERSION=$STACK_VERSION
 
-COPY backup_db_continuously db_backups_s3 clean_db load_db_restore_secrets restore_db_from_backup upload_stdin_s3 /usr/local/bin/
-RUN cd /usr/local/bin && chmod +x backup_db_continuously db_backups_s3 clean_db load_db_restore_secrets restore_db_from_backup upload_stdin_s3
+COPY backup_db_continuously backup_uploads_to_s3 db_backups_s3 clean_db load_db_restore_secrets restore_db_from_backup upload_stdin_s3 /usr/local/bin/
+RUN cd /usr/local/bin && chmod +x backup_db_continuously backup_uploads_to_s3 db_backups_s3 clean_db load_db_restore_secrets restore_db_from_backup upload_stdin_s3
 
 ENTRYPOINT ["/usr/local/bin/backup_db_continuously"]

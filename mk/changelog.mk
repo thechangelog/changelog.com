@@ -23,13 +23,24 @@ lke-changelog-tree: | lke-ctx $(KUBETREE)
 .PHONY: lke-changelog-db-restore
 lke-changelog-db-restore: | lke-ctx
 	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
-	  deployments/$(CHANGELOG_DEPLOYMENT) -c db-restore -- bash
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- bash
+
+# ^^^ Within the db-restore container run:
+#
+# 	clean_db
+# 	restore_db_from_backup
 
 .PHONY: lke-changelog-uploads-sync
 lke-changelog-uploads-sync: | lke-ctx
 	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
-	  deployments/$(CHANGELOG_DEPLOYMENT) -c app -- \
-	  bash -c "apt update && apt install rsync && $(RSYNC_UPLOADS)"
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- \
+	  bash -c "$(RSYNC_UPLOADS)"
+
+.PHONY: lke-changelog-uploads-backup
+lke-changelog-uploads-backup: | lke-ctx
+	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- \
+	  bash -c "backup_uploads_to_s3"
 
 .PHONY: lke-changelog-tls-sync-fastly
 lke-changelog-tls-sync-fastly: | lke-ctx
