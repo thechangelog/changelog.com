@@ -7,15 +7,29 @@ metadata:
   namespace: #@ data.values.namespace
   annotations:
     kubernetes.io/ingress.class: nginx
-    #! cert-manager.io/cluster-issuer: letsencrypt-staging
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: cert-manager-webhook-dnsimple-production
+    external-dns.alpha.kubernetes.io/ttl: "60"
 spec:
   tls:
     - hosts:
         - #@ data.values.fqdn
-      secretName: #@ data.values.app.name + "-acme-tls"
+        - www.changelog.com
+        - 2020.changelog.com
+      secretName: wildcard-acme-tls
   rules:
     - host: #@ data.values.fqdn
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
+    - host: www.changelog.com
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
+    - host: 2020.changelog.com
       http:
         paths:
           - backend:
@@ -40,6 +54,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: uploads
+  namespace: #@ data.values.namespace
 spec:
   accessModes:
   - ReadWriteOnce
@@ -147,21 +162,21 @@ spec:
                 secretKeyRef:
                   name: algolia
                   key: api_key
-            #! - name: AWS_ACCESS_KEY_ID
-            #!   valueFrom:
-            #!     secretKeyRef:
-            #!       name: aws
-            #!       key: access_key_id
-            #! - name: AWS_SECRET_ACCESS_KEY
-            #!   valueFrom:
-            #!     secretKeyRef:
-            #!       name: aws
-            #!       key: secret_access_key
-            #! - name: BUFFER_TOKEN_3
-            #!   valueFrom:
-            #!     secretKeyRef:
-            #!       name: buffer
-            #!       key: token
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: secret_access_key
+            - name: BUFFER_TOKEN_3
+              valueFrom:
+                secretKeyRef:
+                  name: buffer
+                  key: token
             - name: CM_API_TOKEN_2
               valueFrom:
                 secretKeyRef:
@@ -206,16 +221,16 @@ spec:
                 secretKeyRef:
                   name: github
                   key: client_secret
-            #! - name: HN_USER_1
-            #!   valueFrom:
-            #!     secretKeyRef:
-            #!       name: hackernews
-            #!       key: user
-            #! - name: HN_PASS_1
-            #!   valueFrom:
-            #!     secretKeyRef:
-            #!       name: hackernews
-            #!       key: pass
+            - name: HN_USER_1
+              valueFrom:
+                secretKeyRef:
+                  name: hackernews
+                  key: user
+            - name: HN_PASS_1
+              valueFrom:
+                secretKeyRef:
+                  name: hackernews
+                  key: pass
             - name: MAKEFILE
               value: #@ data.values.app.makefile
             - name: PLUSPLUS_SLUG_1
@@ -257,16 +272,16 @@ spec:
                 secretKeyRef:
                   name: slack
                   key: invite_api_token
-            #! - name: TWITTER_CONSUMER_KEY
-            #!   valueFrom:
-            #!     secretKeyRef:
-            #!       name: twitter
-            #!       key: consumer_key
-            #! - name: TWITTER_CONSUMER_SECRET
-            #!   valueFrom:
-            #!     secretKeyRef:
-            #!       name: twitter
-            #!       key: consumer_secret
+            - name: TWITTER_CONSUMER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: twitter
+                  key: consumer_key
+            - name: TWITTER_CONSUMER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: twitter
+                  key: consumer_secret
             - name: UPLOADS_PATH
               value: priv/uploads
             - name: URL_HOST

@@ -30,7 +30,7 @@ fastly:
   #! https://manage.fastly.com/network/certificates
   certificate_id: 1LA0UjkMfnnMwzglSLdAc
 cdn: cdn.changelog.com
-fqdn: 2020.changelog.com
+fqdn: changelog.com
 #! provided just-in-time
 namespace:
 debug:

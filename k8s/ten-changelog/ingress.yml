@@ -9,6 +9,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     #! cert-manager.io/cluster-issuer: letsencrypt-staging
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/ttl: "60"
 spec:
   tls:
     - hosts:
