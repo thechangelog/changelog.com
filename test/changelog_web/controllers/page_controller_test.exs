@@ -11,7 +11,6 @@ defmodule ChangelogWeb.PageControllerTest do
         "/nightly",
         "/sponsor",
         "/sponsor/pricing",
-        "/team",
         "/weekly",
         "/weekly/archive"
       ],

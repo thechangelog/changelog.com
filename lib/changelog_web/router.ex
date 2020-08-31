@@ -229,7 +229,6 @@ defmodule ChangelogWeb.Router do
     get "/sponsor/styles", PageController, :sponsor_styles
     get "/sponsor/details", PageController, :sponsor_details
     get "/sponsor/stories/:slug", PageController, :sponsor_story
-    get "/team", PageController, :team
     get "/ten", PageController, :ten
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms
@@ -249,7 +248,6 @@ defmodule ChangelogWeb.Router do
     post "/request", EpisodeRequestController, :create, as: :episode_request
 
     get "/podcasts", PodcastController, :index, as: :podcast
-    get "/:slug", PodcastController, :show, as: :podcast
     get "/:slug/popular", PodcastController, :popular, as: :podcast
     get "/:slug/recommended", PodcastController, :recommended, as: :podcast
     get "/:slug/upcoming", PodcastController, :upcoming, as: :podcast
@@ -260,6 +258,7 @@ defmodule ChangelogWeb.Router do
     get "/:podcast/:slug/play", EpisodeController, :play, as: :episode
     get "/:podcast/:slug/share", EpisodeController, :share, as: :episode
     get "/:podcast/:slug/discuss", EpisodeController, :discuss, as: :episode
+    get "/:slug", PodcastController, :show, as: :podcast
   end
 
   defp handle_errors(_conn, %{reason: %Ecto.NoResultsError{}}), do: true

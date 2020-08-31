@@ -40,4 +40,10 @@ defmodule ChangelogWeb.PodcastControllerTest do
       get(conn, Routes.podcast_path(conn, :show, "bad-show"))
     end
   end
+
+  test "getting a podcast page that is actually an old post", %{conn: conn} do
+    p = insert(:published_post)
+    conn = get(conn, Routes.podcast_path(conn, :show, p.slug))
+    assert redirected_to(conn) == Routes.post_path(conn, :show, p.slug)
+  end
 end

@@ -8,7 +8,6 @@
   <url><loc><%= Routes.page_url(@conn, :community) %></loc></url>
   <url><loc><%= Routes.page_url(@conn, :sponsor) %></loc></url>
   <url><loc><%= Routes.page_url(@conn, :sponsor_pricing) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :team) %></loc></url>
   <url><loc><%= Routes.page_url(@conn, :weekly) %></loc></url>
   <url><loc><%= Routes.page_url(@conn, :nightly) %></loc></url>
   <url><loc><%= Routes.person_url(@conn, :join) %></loc></url>

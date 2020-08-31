@@ -64,5 +64,5 @@ defmodule ChangelogWeb.Endpoint do
     signing_salt: System.get_env("SIGNING_SALT") || "8bAOekZm",
     extra: "SameSite=Lax"
 
-  plug ChangelogWeb.Router
+  plug ChangelogWeb.Redirector
 end

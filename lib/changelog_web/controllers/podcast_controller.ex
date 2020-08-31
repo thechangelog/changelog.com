@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, Podcast}
+  alias Changelog.{Episode, NewsItem, Podcast, Post}
   alias ChangelogWeb.Plug.ResponseCache
 
   plug ResponseCache
@@ -10,9 +10,20 @@ defmodule ChangelogWeb.PodcastController do
     render(conn, :index)
   end
 
+  # front the "actual" show function with this one that tries to fetch a
+  # podcast, then falls back to find a (legacy) post and redirect appropriately
   def show(conn, params = %{"slug" => slug}) do
-    podcast = Podcast.get_by_slug!(slug)
+    try do
+      podcast = Podcast.get_by_slug!(slug)
+      show(conn, params, podcast)
+    rescue
+      _e in Ecto.NoResultsError ->
+        post = Post.published() |> Repo.get_by!(slug: slug)
+        redirect(conn, to: Routes.post_path(conn, :show, post.slug))
+    end
+  end
 
+  def show(conn, params, podcast) do
     page =
       podcast
       |> Podcast.get_news_items()
