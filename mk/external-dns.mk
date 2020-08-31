@@ -1,5 +1,5 @@
 # https://github.com/kubernetes-sigs/external-dns/releases
-EXTERNAL_DNS_VERSION := v0.7.1
+EXTERNAL_DNS_VERSION := v0.7.3
 EXTERNAL_DNS_IMAGE := us.gcr.io/k8s-artifacts-prod/external-dns/external-dns:$(EXTERNAL_DNS_VERSION)
 EXTERNAL_DNS_DEPLOYMENT := external-dns
 EXTERNAL_DNS_NAMESPACE := $(EXTERNAL_DNS_DEPLOYMENT)
