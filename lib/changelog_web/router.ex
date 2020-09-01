@@ -36,6 +36,7 @@ defmodule ChangelogWeb.Router do
 
   pipeline :public do
     plug Plug.LoadPodcasts
+    plug Plug.VanityDomains
   end
 
   scope "/auth", ChangelogWeb do
