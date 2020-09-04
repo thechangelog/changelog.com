@@ -29,8 +29,6 @@ spec:
         - --registry=txt
         - --events
         env:
-        - name: EXTERNAL_DNS_DOMAIN_FILTER
-          value: #@ data.values.dns.domain
         - name: EXTERNAL_DNS_TXT_OWNER_ID
           value: #@ data.values.dns.record_owner
         - name: EXTERNAL_DNS_LOG_LEVEL
