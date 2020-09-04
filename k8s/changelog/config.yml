@@ -13,7 +13,7 @@ app:
   name:
   makefile: Makefile.201910
   mem_min: 2Gi
-  mem_max: 4Gi
+  mem_max: 8Gi
   replicas: 1
   uploads_volume_size: 100Gi
   url_scheme: https
