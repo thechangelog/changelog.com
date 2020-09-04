@@ -14,6 +14,9 @@ spec:
     - www.changelog.com
     - 2020.changelog.com
     secretName: wildcard-acme-tls
+  - hosts:
+    - jsparty.fm
+    secretName: jsparty-fm-acme-tls
   rules:
   - host: changelog.com
     http:
@@ -28,6 +31,12 @@ spec:
           serviceName: app
           servicePort: 4000
   - host: 2020.changelog.com
+    http:
+      paths:
+      - backend:
+          serviceName: app
+          servicePort: 4000
+  - host: jsparty.fm
     http:
       paths:
       - backend:

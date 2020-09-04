@@ -16,6 +16,9 @@ spec:
         - www.changelog.com
         - 2020.changelog.com
       secretName: wildcard-acme-tls
+    - hosts:
+        - jsparty.fm
+      secretName: jsparty-fm-acme-tls
   rules:
     - host: #@ data.values.fqdn
       http:
@@ -30,6 +33,12 @@ spec:
               serviceName: #@ data.values.app.name
               servicePort: #@ data.values.app.http_port
     - host: 2020.changelog.com
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
+    - host: jsparty.fm
       http:
         paths:
           - backend:
