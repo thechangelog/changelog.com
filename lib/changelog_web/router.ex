@@ -35,6 +35,7 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :public do
+    plug Plug.Redirects
     plug Plug.LoadPodcasts
     plug Plug.VanityDomains
   end

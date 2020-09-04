@@ -3,6 +3,8 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   Handles all redirects of podcast vanity domains to their appropriate place.
   """
   alias ChangelogWeb.PodcastView
+  alias ChangelogWeb.RedirectController, as: Redirect
+  import ChangelogWeb.Plug.Conn
 
   def init(opts), do: opts
 
@@ -39,18 +41,12 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     end
 
     conn
-    |> Phoenix.Controller.redirect(external: destination)
+    |> Redirect.call(external: destination)
     |> Plug.Conn.halt()
   end
 
   defp changelog_destination(podcast, parts) do
     path = Enum.join([podcast.slug] ++ parts, "/")
     "https://changelog.com/#{path}"
-  end
-
-  defp get_host(conn) do
-    conn
-    |> Plug.Conn.get_req_header("host")
-    |> List.first()
   end
 end

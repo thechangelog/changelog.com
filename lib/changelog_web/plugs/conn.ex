@@ -17,6 +17,15 @@ defmodule ChangelogWeb.Plug.Conn do
   end
 
   @doc """
+  Extracts the host from a connection's headers
+  """
+  def get_host(conn) do
+    conn
+    |> get_req_header("host")
+    |> List.first()
+  end
+
+  @doc """
   Extracts and returns the request referer, falling back to the root path
   """
   def referer_or_root_path(conn) do
