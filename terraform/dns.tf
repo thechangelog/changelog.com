@@ -88,14 +88,6 @@ resource "dnsimple_record" "monitoring_changelog_com" {
   ttl = 60
 }
 
-resource "dnsimple_record" "apex-changelog_fm" {
-  domain = "changelog.fm"
-  name = ""
-  value = "45.79.247.77"
-  type = "A"
-  ttl = 60
-}
-
 resource "dnsimple_record" "apex-changelog_fm_ipv6" {
   domain = "changelog.fm"
   name = ""
@@ -104,32 +96,16 @@ resource "dnsimple_record" "apex-changelog_fm_ipv6" {
   ttl = 60
 }
 
-resource "dnsimple_record" "apex-gotime_fm" {
-  domain = "gotime.fm"
-  name = ""
-  value = "45.79.247.77"
-  type = "A"
-  ttl = 60
-}
-
-resource "dnsimple_record" "apex-gotime_fm_ipv6" {
-  domain = "gotime.fm"
+resource "dnsimple_record" "apex-jsparty_fm_ipv6" {
+  domain = "jsparty.fm"
   name = ""
   value = "2600:3c03:1::2d4f:f74d"
   type = "AAAA"
   ttl = 60
 }
 
-resource "dnsimple_record" "apex-rfc_fm" {
-  domain = "rfc.fm"
-  name = ""
-  value = "45.79.247.77"
-  type = "A"
-  ttl = 60
-}
-
-resource "dnsimple_record" "apex-rfc_fm_ipv6" {
-  domain = "rfc.fm"
+resource "dnsimple_record" "apex-gotime_fm_ipv6" {
+  domain = "gotime.fm"
   name = ""
   value = "2600:3c03:1::2d4f:f74d"
   type = "AAAA"

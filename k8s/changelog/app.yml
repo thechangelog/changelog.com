@@ -17,6 +17,12 @@ spec:
         - 2020.changelog.com
       secretName: wildcard-acme-tls
     - hosts:
+        - changelog.fm
+      secretName: changelog-fm-acme-tls
+    - hosts:
+        - gotime.fm
+      secretName: gotime-fm-acme-tls
+    - hosts:
         - jsparty.fm
       secretName: jsparty-fm-acme-tls
   rules:
@@ -33,6 +39,18 @@ spec:
               serviceName: #@ data.values.app.name
               servicePort: #@ data.values.app.http_port
     - host: 2020.changelog.com
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
+    - host: changelog.fm
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
+    - host: gotime.fm
       http:
         paths:
           - backend:
