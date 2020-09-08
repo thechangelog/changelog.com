@@ -15,14 +15,23 @@ spec:
     - 2020.changelog.com
     secretName: wildcard-acme-tls
   - hosts:
+    - brainscience.fm
+    secretName: brainscience-fm-acme-tls
+  - hosts:
     - changelog.fm
     secretName: changelog-fm-acme-tls
+  - hosts:
+    - founderstalk.fm
+    secretName: founderstalk-fm-acme-tls
   - hosts:
     - gotime.fm
     secretName: gotime-fm-acme-tls
   - hosts:
     - jsparty.fm
     secretName: jsparty-fm-acme-tls
+  - hosts:
+    - practicalai.fm
+    secretName: practicalai-fm-acme-tls
   rules:
   - host: changelog.com
     http:
@@ -42,7 +51,19 @@ spec:
       - backend:
           serviceName: app
           servicePort: 4000
+  - host: brainscience.fm
+    http:
+      paths:
+      - backend:
+          serviceName: app
+          servicePort: 4000
   - host: changelog.fm
+    http:
+      paths:
+      - backend:
+          serviceName: app
+          servicePort: 4000
+  - host: founderstalk.fm
     http:
       paths:
       - backend:
@@ -55,6 +76,12 @@ spec:
           serviceName: app
           servicePort: 4000
   - host: jsparty.fm
+    http:
+      paths:
+      - backend:
+          serviceName: app
+          servicePort: 4000
+  - host: practicalai.fm
     http:
       paths:
       - backend:

@@ -17,14 +17,23 @@ spec:
         - 2020.changelog.com
       secretName: wildcard-acme-tls
     - hosts:
+        - brainscience.fm
+      secretName: brainscience-fm-acme-tls
+    - hosts:
         - changelog.fm
       secretName: changelog-fm-acme-tls
+    - hosts:
+        - founderstalk.fm
+      secretName: founderstalk-fm-acme-tls
     - hosts:
         - gotime.fm
       secretName: gotime-fm-acme-tls
     - hosts:
         - jsparty.fm
       secretName: jsparty-fm-acme-tls
+    - hosts:
+        - practicalai.fm
+      secretName: practicalai-fm-acme-tls
   rules:
     - host: #@ data.values.fqdn
       http:
@@ -44,7 +53,19 @@ spec:
           - backend:
               serviceName: #@ data.values.app.name
               servicePort: #@ data.values.app.http_port
+    - host: brainscience.fm
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
     - host: changelog.fm
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
+    - host: founderstalk.fm
       http:
         paths:
           - backend:
@@ -57,6 +78,12 @@ spec:
               serviceName: #@ data.values.app.name
               servicePort: #@ data.values.app.http_port
     - host: jsparty.fm
+      http:
+        paths:
+          - backend:
+              serviceName: #@ data.values.app.name
+              servicePort: #@ data.values.app.http_port
+    - host: practicalai.fm
       http:
         paths:
           - backend:
