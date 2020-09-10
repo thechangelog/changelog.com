@@ -13,28 +13,32 @@ defmodule Changelog.Buffer.Content do
       |> NewsItem.preload_all()
       |> NewsItem.load_object()
 
-    episode = item.object
-    people = Episode.participants(episode)
+    episode =
+      item.object
+      |> Episode.preload_all()
 
     meta =
       [
         title_meta(episode),
-        featuring_meta(people),
+        guest_meta(episode.guests),
+        host_meta(episode.hosts),
         topic_meta(item.topics)
       ]
       |> Enum.reject(&is_nil/1)
 
     if Enum.any?(meta) do
+      episode_emoj = episode_emoji()
       """
-      #{episode_emoji()} New episode of #{episode.podcast.name}!
+      #{episode_emoj} New episode of #{episode.podcast.name}! #{episode_emoj}
 
       #{Enum.join(meta, "\n")}
 
       💚 #{episode_link(item)}
       """
     else
+      episode_emoj = episode_emoji()
       """
-      #{episode_emoji()} New episode of #{episode.podcast.name}!
+      #{episode_emoj} New episode of #{episode.podcast.name}! #{episode_emoj}
       💚 #{episode_link(item)}
       """
     end
@@ -120,19 +124,29 @@ defmodule Changelog.Buffer.Content do
   end
 
   defp author_emoji, do: ~w(✍ 🖋 📝 🗣) |> Enum.random()
-  defp episode_emoji, do: ~w(🙌 🎉 📢 🔥 🎧 🎁 💥) |> Enum.random()
-  defp featuring_emoji, do: ~w(🌟 🎙 ✨ ⚡️ 💫) |> Enum.random()
+  defp episode_emoji, do: ~w(🙌 🎉 🔥 🎧 💥 🚢 🚀) |> Enum.random()
+  defp guest_emoji, do: ~w(🌟 ✨ 💫 🤩 😎) |> Enum.random()
+  defp host_emoji, do: ~w(🎙 ⚡️ 🎤) |> Enum.random()
   defp source_emoji, do: ~w(📨 📡 📢 🔊) |> Enum.random()
-  defp title_emoji, do: ~w(🗣 💬) |> Enum.random()
-  defp topic_emoji, do: ~w(🏷 💭 🗂 ) |> Enum.random()
+  defp title_emoji, do: ~w(🗣 💬 💡 💭 📌) |> Enum.random()
+  defp topic_emoji, do: ~w(🏷 🗂 🗃️ 🗄️) |> Enum.random()
   defp video_emoji, do: ~w(🎞 📽 🎬 🍿) |> Enum.random()
 
   defp author_meta(%{author: nil}), do: nil
   defp author_meta(%{author: %{twitter_handle: nil}}), do: nil
   defp author_meta(%{author: %{twitter_handle: handle}}), do: "#{author_emoji()} by @#{handle}"
 
-  defp featuring_meta([]), do: nil
-  defp featuring_meta(people), do: "#{featuring_emoji()} #{twitter_list(people, " ")}"
+  defp guest_meta([]), do: nil
+  defp guest_meta(guests), do: "#{guest_emoji()} #{guest_intro(guests)} #{twitter_list(guests)}"
+
+  defp guest_intro([_guest]), do: ["our guest", "with guest", "special guest", "featuring"] |> Enum.random()
+  defp guest_intro(_guests), do: ["our guests", "with guests", "special guests", "featuring"] |> Enum.random()
+
+  defp host_meta([]), do: nil
+  defp host_meta(hosts), do: "#{host_emoji()} #{host_intro(hosts)} #{twitter_list(hosts)}"
+
+  defp host_intro([_host]), do: ["hosted by", "your host"] |> Enum.random()
+  defp host_intro(_hosts), do: ["hosted by", "with hosts", "your hosts"] |> Enum.random()
 
   defp source_meta(%{source: nil}), do: nil
   defp source_meta(%{source: %{twitter_handle: nil}}), do: nil
@@ -142,9 +156,10 @@ defmodule Changelog.Buffer.Content do
 
   defp topic_meta([]), do: nil
 
-  defp topic_meta(topics) do
-    "#{topic_emoji()} #{twitter_list(topics)}"
-  end
+  defp topic_meta(topics), do: "#{topic_emoji()} #{topic_intro(topics)} #{twitter_list(topics)}"
+
+  defp topic_intro([_topic]), do: ["topic", "tagged"]
+  defp topic_intro(_topics), do: ["topics", "tagged"]
 
   defp twitter_list(list, delimiter \\ " ") when is_list(list) do
     list

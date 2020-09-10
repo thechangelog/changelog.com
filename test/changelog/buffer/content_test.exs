@@ -25,7 +25,7 @@ defmodule Changelog.Buffer.ContentTest do
       refute Content.episode_text(item1) =~ "Evar!"
     end
 
-    test "includes participant twitter handles and falls back to names" do
+    test "includes guest/host twitter handles and falls back to names" do
       g1 = insert(:person, twitter_handle: "janedoe")
       g2 = insert(:person, name: "John Doe")
       h1 = insert(:person, twitter_handle: "v_cool")
@@ -34,7 +34,8 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:episode_guest, episode: ep, person: g2, position: 2)
       insert(:episode_host, episode: ep, person: h1)
       item = ep |> episode_news_item() |> insert
-      assert Content.episode_text(item) =~ "@janedoe John Doe @v_cool"
+      assert Content.episode_text(item) =~ "@janedoe John Doe"
+      assert Content.episode_text(item) =~ "@v_cool"
     end
 
     test "includes topic tags and twitter handles" do
