@@ -158,8 +158,8 @@ defmodule Changelog.Buffer.Content do
 
   defp topic_meta(topics), do: "#{topic_emoji()} #{topic_intro(topics)} #{twitter_list(topics)}"
 
-  defp topic_intro([_topic]), do: ["topic", "tagged"]
-  defp topic_intro(_topics), do: ["topics", "tagged"]
+  defp topic_intro([_topic]), do: ["topic", "tagged"] |> Enum.random()
+  defp topic_intro(_topics), do: ["topics", "tagged"] |> Enum.random()
 
   defp twitter_list(list, delimiter \\ " ") when is_list(list) do
     list
