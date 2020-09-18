@@ -88,6 +88,15 @@ defmodule ChangelogWeb.VanityDomainsTest do
     assert_vanity_redirect(conn, "/jsparty/subscribe")
   end
 
+  test "vanity redirects for jsparty ff form" do
+    conn =
+      build_conn_with_host_and_path("jsparty.fm", "/ff")
+      |> assign_podcasts([@gotime, @jsparty])
+      |> Plug.VanityDomains.call([])
+
+    assert_vanity_redirect(conn, "https://changelog.typeform.com/to/lfyUE3s9")
+  end
+
   test "it no-ops for changelog.com host" do
     conn =
       build_conn_with_host_and_path("changelog.com", "/")

@@ -30,7 +30,19 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   defp vanity_redirect(nil, conn), do: conn
 
   defp vanity_redirect(podcast, conn = %{path_info: parts}) do
-    destination = case parts do
+    destination = determine_destination(podcast, parts)
+
+    conn
+    |> Redirect.call(external: destination)
+    |> Plug.Conn.halt()
+  end
+
+  defp determine_destination(%{slug: "jsparty"}, ["ff"]) do
+    "https://changelog.typeform.com/to/lfyUE3s9"
+  end
+
+  defp determine_destination(podcast, parts) do
+    case parts do
       ["apple"] -> podcast.apple_url
       ["android"] -> PodcastView.subscribe_on_android_url(podcast)
       ["spotify"] -> podcast.spotify_url
@@ -39,10 +51,6 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["email"] -> changelog_destination(podcast, ["subscribe"])
       _else -> changelog_destination(podcast, parts)
     end
-
-    conn
-    |> Redirect.call(external: destination)
-    |> Plug.Conn.halt()
   end
 
   defp changelog_destination(podcast, parts) do
