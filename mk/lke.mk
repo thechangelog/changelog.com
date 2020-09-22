@@ -262,6 +262,10 @@ LKE_LS = $(LINODE) --all lke clusters-list
 lke-ls: linode
 	$(LKE_LS)
 
+.PHONY: lke-versions
+lke-versions: linode
+	$(LINODE) --all lke versions-list
+
 $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
 

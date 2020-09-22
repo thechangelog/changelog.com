@@ -16,14 +16,24 @@ lke-changelog: | lke-ctx $(KUBETREE) $(YTT)
 	&& $(KUBECTL) apply --filename $(CURDIR)/k8s/changelog.yml \
 	&& $(CHANGELOG_TREE)
 
+.PHONY: lke-changelog-update
+lke-changelog-update: | lke-ctx
+	$(KUBECTL) rollout restart deployments/$(CHANGELOG_DEPLOYMENT) --namespace $(CHANGELOG_NAMESPACE) \
+	&& $(KUBECTL) rollout status --watch deployments/$(CHANGELOG_DEPLOYMENT) --namespace $(CHANGELOG_NAMESPACE)
+
+.PHONY: lke-changelog-sh
+lke-changelog-sh: | lke-ctx
+	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c app -- bash --login
+
 .PHONY: lke-changelog-tree
 lke-changelog-tree: | lke-ctx $(KUBETREE)
 	$(CHANGELOG_TREE)
 
 .PHONY: lke-changelog-db-restore
 lke-changelog-db-restore: | lke-ctx
-	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
-	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- bash
+	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- bash --login
 
 # ^^^ Within the db-restore container run:
 #

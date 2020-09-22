@@ -16,14 +16,14 @@ config :changelog, ChangelogWeb.Endpoint,
 
 config :changelog,
   ecto_repos: [Changelog.Repo],
-  buffer_token: SecretOrEnv.get("BUFFER_TOKEN_3"),
-  github_api_token: SecretOrEnv.get("GITHUB_API_TOKEN2"),
-  hn_user: SecretOrEnv.get("HN_USER_1"),
-  hn_pass: SecretOrEnv.get("HN_PASS_1"),
-  cm_api_token: Base.encode64("#{SecretOrEnv.get("CM_API_TOKEN_2")}:x"),
+  buffer_token: SecretOrEnv.get("BUFFER_TOKEN"),
+  github_api_token: SecretOrEnv.get("GITHUB_API_TOKEN"),
+  hn_user: SecretOrEnv.get("HN_USER"),
+  hn_pass: SecretOrEnv.get("HN_PASS"),
+  cm_api_token: Base.encode64("#{SecretOrEnv.get("CM_API_TOKEN")}:x"),
   slack_invite_api_token: SecretOrEnv.get("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
-  plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG_1")
+  plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG")
 
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
 
@@ -66,7 +66,7 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
 
 config :algolia,
   application_id: SecretOrEnv.get("ALGOLIA_APPLICATION_ID"),
-  api_key: SecretOrEnv.get("ALGOLIA_API_KEY2")
+  api_key: SecretOrEnv.get("ALGOLIA_API_KEY")
 
 config :mime, :types, %{"application/javascript" => ["js"], "application/xml" => ["xml"]}
 

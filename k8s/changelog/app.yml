@@ -216,6 +216,11 @@ spec:
                 secretKeyRef:
                   name: algolia
                   key: api_key
+            - name: ALGOLIA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: algolia
+                  key: api_key
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -231,7 +236,17 @@ spec:
                 secretKeyRef:
                   name: buffer
                   key: token
+            - name: BUFFER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: buffer
+                  key: token
             - name: CM_API_TOKEN_2
+              valueFrom:
+                secretKeyRef:
+                  name: campaignmonitor
+                  key: api_token
+            - name: CM_API_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: campaignmonitor
@@ -265,6 +280,11 @@ spec:
                 secretKeyRef:
                   name: github
                   key: api_token
+            - name: GITHUB_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github
+                  key: api_token
             - name: GITHUB_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -280,7 +300,17 @@ spec:
                 secretKeyRef:
                   name: hackernews
                   key: user
+            - name: HN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: hackernews
+                  key: user
             - name: HN_PASS_1
+              valueFrom:
+                secretKeyRef:
+                  name: hackernews
+                  key: pass
+            - name: HN_PASS
               valueFrom:
                 secretKeyRef:
                   name: hackernews
@@ -288,6 +318,11 @@ spec:
             - name: MAKEFILE
               value: #@ data.values.app.makefile
             - name: PLUSPLUS_SLUG_1
+              valueFrom:
+                secretKeyRef:
+                  name: plusplus
+                  key: slug
+            - name: PLUSPLUS_SLUG
               valueFrom:
                 secretKeyRef:
                   name: plusplus
