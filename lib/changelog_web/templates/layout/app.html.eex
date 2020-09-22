@@ -12,8 +12,9 @@
   <% twitter_card_type = Twitter.twitter_card_type(assigns) %>
     <meta name="twitter:card" content="<%= twitter_card_type %>">
     <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:title" content="<%= Title.share_title(assigns) %>">
-    <meta name="twitter:description" content="<%= Description.description(assigns) %>">
+    <meta name="twitter:title" content="<%= assigns |> Title.share_title() |> escaped()
+ %>">
+    <meta name="twitter:description" content="<%= assigns |> Description.description() |> escaped() %>">
   <%= if twitter_card_type == "player" do %>
     <meta name="twitter:player" content="<%= Twitter.twitter_player_url(assigns) %>">
     <meta name="twitter:player:width" content="300">
@@ -28,7 +29,7 @@
   <% end %>
     <meta property="og:url" content="<%= current_url(@conn) %>">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<%= Title.share_title(assigns) %>">
+    <meta property="og:title" content="<%= assigns |> Title.share_title() |> escaped() %>">
   <%= if fb_image = Image.fb_image(assigns) do %>
     <meta property="og:image" content="<%= fb_image %>">
   <% end %>
@@ -38,7 +39,7 @@
   <%= if fb_image_height = Image.fb_image_height(assigns) do %>
     <meta property="og:image:height" content="<%= fb_image_height %>">
   <% end %>
-    <meta property="og:description" content="<%= Description.description(assigns) %>">
+    <meta property="og:description" content="<%= assigns |> Description.description() |> escaped() %>">
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
   <%= if apple_id = Apple.apple_podcasts_id(assigns) do %>

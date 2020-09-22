@@ -29,7 +29,7 @@
       <% bytes = if episode.plusplus_file, do: episode.plusplus_bytes, else: episode.audio_bytes %>
       <% duration = if episode.plusplus_file, do: episode.plusplus_duration, else: episode.audio_duration %>
       <item>
-        <title><%= episode_title(@podcast, episode) |> html_escape() |> safe_to_string() %></title>
+        <title><%= episode_title(@podcast, episode) |> escaped() %></title>
         <link><%= Routes.episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
@@ -44,7 +44,7 @@
         <itunes:image href="<%= PodcastView.cover_url(episode.podcast) %>"/>
         <itunes:duration><%= TimeView.duration(duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
-        <itunes:subtitle><%= episode.subtitle |> html_escape() |> safe_to_string() %></itunes:subtitle>
+        <itunes:subtitle><%= escaped(episode.subtitle) %></itunes:subtitle>
         <itunes:summary><%= SharedHelpers.md_to_text(episode.summary) %></itunes:summary>
 
       <%= if Enum.any?(episode.hosts) do %>

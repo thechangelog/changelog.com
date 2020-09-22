@@ -11,8 +11,6 @@ defmodule ChangelogWeb.PostView do
 
   def admin_edit_link(_, _, _), do: nil
 
-  def escaped_title(post), do: post.title |> html_escape() |> safe_to_string()
-
   def guid(post), do: post.guid || "changelog.com/posts/#{post.id}"
 
   def image_mime_type(post), do: Files.Image.mime_type(post.image)

@@ -6,7 +6,7 @@
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
 >
   <channel>
-    <title><%= @podcast |> podcast_name_with_metadata() |> html_escape() |> safe_to_string() %></title>
+    <title><%= @podcast |> podcast_name_with_metadata() |> escaped() %></title>
     <copyright>All rights reserved</copyright>
     <link><%= Routes.podcast_url(@conn, :show, @podcast.slug) %></link>
     <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
@@ -28,7 +28,7 @@
     </itunes:category>
     <%= for episode <- @episodes do %>
       <item>
-        <title><%= episode_title(@podcast, episode) |> html_escape() |> safe_to_string() %></title>
+        <title><%= episode_title(@podcast, episode) |> escaped() %></title>
         <link><%= Routes.episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
         <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
         <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
@@ -44,7 +44,7 @@
         <itunes:duration><%= TimeView.duration(episode.audio_duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:keywords><%= episode.podcast.keywords %></itunes:keywords>
-        <itunes:subtitle><%= episode.subtitle |> html_escape() |> safe_to_string() %></itunes:subtitle>
+        <itunes:subtitle><%= escaped(episode.subtitle) %></itunes:subtitle>
         <itunes:summary><%= SharedHelpers.md_to_text(episode.summary) %></itunes:summary>
 
       <%= if Enum.any?(episode.hosts) do %>

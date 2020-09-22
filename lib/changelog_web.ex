@@ -68,6 +68,10 @@ defmodule ChangelogWeb do
       import Phoenix.Controller,
         only: [current_url: 1, get_flash: 1, get_flash: 2, view_module: 1]
 
+      def escaped(string) do
+        string |> html_escape() |> safe_to_string()
+      end
+
       alias ChangelogWeb.Router.Helpers, as: Routes
       alias ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
       alias Changelog.Policies

@@ -8,7 +8,7 @@
     <description>Changelog Posts</description>
   <%= for post <- @posts do %>
     <item>
-      <title><%= post.title |> html_escape() |> safe_to_string() %></title>
+      <title><%= escaped(post.title) %></title>
       <dc:creator><%= post.author.name %></dc:creator>
       <link><%= Routes.post_url(@conn, :show, post.slug) %></link>
       <guid isPermaLink="false"><%= PostView.guid(post) %></guid>

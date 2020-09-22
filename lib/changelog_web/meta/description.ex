@@ -30,7 +30,7 @@ defmodule ChangelogWeb.Meta.Description do
     if post.tldr do
       post.tldr |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
     else
-      PostView.escaped_title(post)
+      post.title
     end
   end
 
