@@ -39,14 +39,15 @@ defmodule Changelog.Slack.Client do
   end
 
   def message(channel, message) do
+    text = URI.encode_www_form(message)
     token = Application.get_env(:changelog, :slack_app_api_token)
-    form = ~s(token=#{token}&channel=#{channel}&as_user=true&text=#{message})
+    form = ~s(token=#{token}&channel=#{channel}&as_user=true&text=#{text})
     "/chat.postMessage" |> post(form) |> handle()
   end
 
   defp open_im(user_id) do
     token = Application.get_env(:changelog, :slack_app_api_token)
     form = ~s(token=#{token}&user=#{user_id})
-    "/im.open" |> post(form) |> handle()
+    "/conversations.open" |> post(form) |> handle()
   end
 end
