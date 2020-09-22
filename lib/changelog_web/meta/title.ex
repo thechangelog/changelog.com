@@ -85,11 +85,11 @@ defmodule ChangelogWeb.Meta.Title do
   end
 
   defp get(%{view_module: TopicView, topic: topic, tab: "podcasts"}) do
-    "Developer podcasts about #{topic.name}"
+    "#{topic.name} podcasts for developers"
   end
 
   defp get(%{view_module: TopicView, topic: topic}) do
-    "Developer news and podcasts about #{topic.name}"
+    "#{topic.name} news and podcasts for developers"
   end
 
   # Person show pages
@@ -98,7 +98,7 @@ defmodule ChangelogWeb.Meta.Title do
   end
 
   defp get(%{view_module: PersonView, person: person, tab: "podcasts"}) do
-    "Podcast episodes featuring #{person.name}"
+    "#{person.name}'s podcast episodes On Changelog"
   end
 
   defp get(%{view_module: PersonView, person: person}) do
