@@ -1,6 +1,0 @@
-#@ load("@ytt:data", "data")
-#! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: #@ data.values.namespace

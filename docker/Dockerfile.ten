@@ -1,7 +1,0 @@
-# https://hub.docker.com/_/nginx?tab=tags
-# https://nginx.org/en/CHANGES
-FROM nginx:1.17
-
-COPY ./tmp/changelog-ten.html /usr/share/nginx/html/index.html
-COPY ./assets/static/favicon.ico /usr/share/nginx/html/favicon.ico
-RUN mkdir /usr/share/nginx/html/live && touch /usr/share/nginx/html/live/status
