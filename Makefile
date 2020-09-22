@@ -226,8 +226,6 @@ define CHANGELOG_SERVICES
 
                                                                         $(BOLD)$(RED)Private$(NORMAL)   $(BOLD)$(GREEN)Public$(NORMAL)
 $(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Papertrail$(NORMAL)               | https://papertrailapp.com/dashboard                       |
-$(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Fastly$(NORMAL)                   | https://manage.fastly.com/services/all                    |
 $(CHANGELOG_SERVICES_SEPARATOR)
 | $(BOLD)$(RED)Linode$(NORMAL)                   | https://cloud.linode.com/dashboard                        |
