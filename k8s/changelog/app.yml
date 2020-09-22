@@ -211,11 +211,6 @@ spec:
                 secretKeyRef:
                   name: algolia
                   key: application_id
-            - name: ALGOLIA_API_KEY2
-              valueFrom:
-                secretKeyRef:
-                  name: algolia
-                  key: api_key
             - name: ALGOLIA_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -231,21 +226,11 @@ spec:
                 secretKeyRef:
                   name: aws
                   key: secret_access_key
-            - name: BUFFER_TOKEN_3
-              valueFrom:
-                secretKeyRef:
-                  name: buffer
-                  key: token
             - name: BUFFER_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: buffer
                   key: token
-            - name: CM_API_TOKEN_2
-              valueFrom:
-                secretKeyRef:
-                  name: campaignmonitor
-                  key: api_token
             - name: CM_API_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -275,11 +260,6 @@ spec:
                 secretKeyRef:
                   name: db-postgres-secret
                   key: username
-            - name: GITHUB_API_TOKEN2
-              valueFrom:
-                secretKeyRef:
-                  name: github
-                  key: api_token
             - name: GITHUB_API_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -295,33 +275,16 @@ spec:
                 secretKeyRef:
                   name: github
                   key: client_secret
-            - name: HN_USER_1
-              valueFrom:
-                secretKeyRef:
-                  name: hackernews
-                  key: user
             - name: HN_USER
               valueFrom:
                 secretKeyRef:
                   name: hackernews
                   key: user
-            - name: HN_PASS_1
-              valueFrom:
-                secretKeyRef:
-                  name: hackernews
-                  key: pass
             - name: HN_PASS
               valueFrom:
                 secretKeyRef:
                   name: hackernews
                   key: pass
-            - name: MAKEFILE
-              value: #@ data.values.app.makefile
-            - name: PLUSPLUS_SLUG_1
-              valueFrom:
-                secretKeyRef:
-                  name: plusplus
-                  key: slug
             - name: PLUSPLUS_SLUG
               valueFrom:
                 secretKeyRef:
