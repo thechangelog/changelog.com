@@ -1,4 +1,0 @@
-#!/bin/bash -ex
-
-mix ecto.create
-mix ecto.migrate

@@ -1,7 +1,0 @@
-#!/bin/bash -ex
-
-cd assets
-
-yarn install
-
-yarn run compile
