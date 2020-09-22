@@ -3,9 +3,6 @@ terraform {
     dnsimple = {
       source = "terraform-providers/dnsimple"
     }
-    linode = {
-      source = "terraform-providers/linode"
-    }
     null = {
       source = "hashicorp/null"
     }

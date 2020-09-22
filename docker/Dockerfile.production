@@ -9,8 +9,7 @@ COPY --from=legacy_assets /var/www/wp-content /app/priv/wp-content
 
 ENV MIX_ENV=prod
 ENV TERM=xterm
-ENV MAKEFILE=Makefile
 
 EXPOSE 4000
 
-CMD make -f "$MAKEFILE" report-deploy ; mix do ecto.create, ecto.migrate, phx.server
+CMD mix do ecto.create, ecto.migrate, phx.server

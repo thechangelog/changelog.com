@@ -1,8 +1,3 @@
-provider "linode" {
-  token = var.linode_token
-  version = "~> 1.3"
-}
-
 provider "dnsimple" {
   version = "~> 0.1"
 }

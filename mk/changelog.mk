@@ -30,12 +30,6 @@ lke-changelog-db-restore: | lke-ctx
 # 	clean_db
 # 	restore_db_from_backup
 
-.PHONY: lke-changelog-uploads-sync
-lke-changelog-uploads-sync: | lke-ctx
-	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
-	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- \
-	  bash -c "$(RSYNC_UPLOADS)"
-
 .PHONY: lke-changelog-uploads-backup
 lke-changelog-uploads-backup: | lke-ctx
 	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
