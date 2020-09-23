@@ -91,11 +91,31 @@
   ul { @include list; }
   ol { @include list(ol); }
 
+  .preamble {
+    font-size: 1.2em;
+    margin-bottom:1.75em;
+    padding-bottom: 1.75em;
+    border-bottom: 2px solid $border-color;
+
+    p:last-child {margin-bottom: 0;}
+  }
+
   blockquote {
     border-left: 4px solid $green;
     margin: 1.25rem 0 1.5rem 0;
     padding: .15em 0 .15em 1em;
     color: $black;
+
+    &.float--right,
+    &.float--left {
+      font-style: italic;
+      width: 50%;
+
+      p {
+        font-size: 1.25em;
+        font-weight: 900;
+      }
+    }
 
     blockquote {
       border-left-color: $light-grey;
@@ -167,6 +187,9 @@
     color: $body-copy-color;
     &.grey-background {
       background-color: $lightest-grey;
+    }
+    &.green {
+      background-color: $light-green;
     }
   }
 
