@@ -20,7 +20,8 @@ defmodule ChangelogWeb.Plug.Redirects do
     "/store" => "/community",
     "/sponsorship" => "/sponsor",
     "/soundcheck" => "/guest",
-    "/submit" => "/news/submit"
+    "/submit" => "/news/submit",
+    "blog" => "/posts"
   }
 
   def init(opts), do: opts
