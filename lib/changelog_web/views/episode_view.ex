@@ -190,6 +190,10 @@ defmodule ChangelogWeb.EpisodeView do
     |> ListKit.compact_join(" ")
   end
 
+  def transcript_url(episode) do
+    Routes.episode_url(Endpoint, :show, episode.podcast.slug, episode.slug) <> "#transcript"
+  end
+
   def transcript_source_url(episode) do
     Github.Source.new("transcripts", episode).html_url
   end

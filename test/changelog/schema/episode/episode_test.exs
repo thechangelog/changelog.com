@@ -84,9 +84,10 @@ defmodule Changelog.EpisodeTest do
   end
 
   describe "update_transcript/2" do
-    test "it calls the Notifier when transcript is first set" do
+    test "it calls the Notifier and HN when transcript is first set" do
       with_mocks([
         {Changelog.Notifier, [], [notify: fn _ -> true end]},
+        {Changelog.HN, [], [submit: fn _ -> true end]},
         {Changelog.Search, [], [save_item: fn _ -> true end]}
       ]) do
         episode = insert(:episode)
@@ -94,6 +95,7 @@ defmodule Changelog.EpisodeTest do
         # wait out the async race condition
         :timer.sleep(100)
         assert called(Changelog.Notifier.notify(:_))
+        assert called(Changelog.HN.submit(:_))
         assert called(Changelog.Search.save_item(:_))
       end
     end
