@@ -106,13 +106,27 @@
     padding: .15em 0 .15em 1em;
     color: $black;
 
+    @media (min-width: $desktop) {
+      &.float--right,
+      &.float--left {
+        font-style: italic;
+        width: 50%;
+  
+        p {
+          font-size: 1.25em;
+          font-weight: 900;
+        }
+      }
+    }
+
     &.float--right,
     &.float--left {
-      font-style: italic;
-      width: 50%;
+      float: none;
+      margin-left: 0;
+      width: 100%;
 
       p {
-        font-size: 1.25em;
+        font-size: 1.15em;
         font-weight: 900;
       }
     }
