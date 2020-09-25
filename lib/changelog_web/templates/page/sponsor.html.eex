@@ -22,7 +22,7 @@
     <header class="marketing-section-header">
       <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
       <h2>How sponsorship works</h2>
-      <p>Our primary focus is on developers, but people from every part of the software industry tune in to our podcasts and newsfeed to inform their next big idea. From CTOs and Directors of Engineering to Frontend Developers and Product Designers, our audience cares about the future of software, dev culture, tooling, team efficiency &mdash; and they're waiting to hear from you.</p>
+      <p>Our primary focus is on developers, but people from all areas of the software industry tune in to our developer podcast network and our newsfeed and newsletter to inform their next big idea. From CTOs and Directors of Engineering to Frontend Developers and Product Designers, our audience cares about the future of software development, cloud infrastructure, dev culture, services, tooling, mental health &mdash; and they're waiting to hear from you.</p>
     </header>
 
     <div class="step_markers_wrap">
@@ -42,7 +42,7 @@
       </div>
       <div class="marketing-section-grid-item">
         <h3>2. Plan your activation</h3>
-        <p>Once we have an understanding of who you are and how we can help you, we'll begin to shape what to say, how to say it, and where. Our team has years of growth and marketing experience to develop a campaign focused your goals.</p>
+        <p>Once we have an understanding of who you are and how we can help you, we'll begin to shape what to say, how to say it, and where. Our team has years of growth and marketing experience to develop a campaign focused on your goals.</p>
       </div>
       <div class="marketing-section-grid-item">
         <h3>3. Build your following</h3>
