@@ -108,6 +108,21 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     date
   end
 
+  def reach_link(label, assigns = %{reach: reach, conn: conn, current_user: user}) do
+    count = SharedHelpers.comma_separated(reach[label])
+    podcast = Map.get(assigns, :podcast)
+
+    if Policies.Podcast.reach(user) do
+      if podcast do
+        link(count, to: Routes.admin_page_path(conn, :reach, range: label, podcast: podcast.slug))
+      else
+        link(count, to: Routes.admin_page_path(conn, :reach, range: label))
+      end
+    else
+      count
+    end
+  end
+
   def request_options(requests) do
     Enum.map(requests, fn request ->
       {EpisodeRequestView.description(request), request.id}

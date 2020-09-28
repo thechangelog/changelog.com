@@ -1,0 +1,50 @@
+<div class="ui basic segment">
+  <h2>Reach breakdown
+  for <%= if @podcast, do: @podcast.name, else: "all podcasts" %>
+  from <%= TimeView.pretty_date(elem(@dates, 0)) %> to <%= TimeView.pretty_date(elem(@dates, 1)) %>
+  </h2>
+
+<table class="ui celled striped unstackable table">
+  <thead>
+    <tr>
+    <%= if !assigns[:podcast] do %>
+      <th>Podcast</th>
+    <% end %>
+      <th>Slug</th>
+      <th>Title</th>
+      <th>Publish Date</th>
+      <th>Duration</th>
+      <th>Focused Reach</th>
+      <th>Total</th>
+      <th class="center aligned">
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for episode <- @episodes do %>
+    <% podcast = assigns[:podcast] || episode.podcast %>
+    <tr>
+    <%= if !assigns[:podcast] do %>
+      <td><%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
+    <% end %>
+      <td title="<%= episode.id %>"><%= episode.slug %></td>
+      <td>
+        <%= SharedHelpers.truncate(episode.title, 50) %>
+      </td>
+      <td><%= TimeView.pretty_date(episode.published_at) %></td>
+      <td><%= TimeView.duration(episode.audio_duration) %></td>
+      <td><%= SharedHelpers.comma_separated(episode.focused_reach) %></td>
+      <td><%= AdminHelpers.reach_count(episode) %></td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= AdminHelpers.icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug)) %>
+          <%= AdminHelpers.icon_link("eye", to: Routes.episode_path(@conn, :show, podcast.slug, episode.slug)) %>
+          <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_episode_path(@conn, :edit, podcast.slug, episode.slug)) %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+</div>

@@ -1,7 +1,16 @@
 defmodule ChangelogWeb.Admin.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, EpisodeRequest, EpisodeStat, NewsItem, Newsletters, Person}
+  alias Changelog.{
+    Cache,
+    Episode,
+    EpisodeRequest,
+    EpisodeStat,
+    NewsItem,
+    Newsletters,
+    Person,
+    Podcast
+  }
 
   plug Authorize, Policies.Admin
 
@@ -35,6 +44,30 @@ defmodule ChangelogWeb.Admin.PageController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: Routes.admin_page_path(conn, :index))
+  end
+
+  def reach(conn, params) do
+    podcast = Repo.get_by(Podcast, slug: Map.get(params, "podcast", "nope"))
+    range = params |> Map.get("range", "now_7") |> String.to_existing_atom()
+    dates = EpisodeStat.reach_dates(range)
+    minimum = Map.get(params, "min", "10") |> String.to_integer()
+
+    episodes = if podcast do
+      EpisodeStat.date_range_episode_reach(podcast, dates, minimum)
+    else
+      EpisodeStat.date_range_episode_reach(dates, minimum)
+    end |> Enum.map(fn(stat) ->
+      Episode
+      |> Repo.get(stat.episode_id)
+      |> Episode.preload_podcast()
+      |> Map.put(:focused_reach, stat.reach)
+    end)
+
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:dates, dates)
+    |> assign(:episodes, episodes)
+    |> render(:reach)
   end
 
   defp episode_drafts do
@@ -71,22 +104,21 @@ defmodule ChangelogWeb.Admin.PageController do
 
   def reach do
     now = Timex.today() |> Timex.shift(days: -1)
-    then = now |> Timex.shift(years: -1)
 
     Cache.get_or_store("stats-reach-#{now}", fn ->
       %{
         as_of: Timex.now(),
-        now_7: EpisodeStat.date_range_reach(now, days: -7),
-        now_30: EpisodeStat.date_range_reach(now, days: -30),
-        now_90: EpisodeStat.date_range_reach(now, days: -90),
-        now_year: EpisodeStat.date_range_reach(now, years: -1),
-        prev_7: EpisodeStat.date_range_reach(Timex.shift(now, days: -7), days: -7),
-        prev_30: EpisodeStat.date_range_reach(Timex.shift(now, days: -30), days: -30),
-        prev_90: EpisodeStat.date_range_reach(Timex.shift(now, days: -90), days: -90),
-        prev_year: EpisodeStat.date_range_reach(Timex.shift(now, years: -1), years: -1),
-        then_7: EpisodeStat.date_range_reach(then, days: -7),
-        then_30: EpisodeStat.date_range_reach(then, days: -30),
-        then_90: EpisodeStat.date_range_reach(then, days: -90)
+        now_7: EpisodeStat.date_range_reach(:now_7),
+        now_30: EpisodeStat.date_range_reach(:now_30),
+        now_90: EpisodeStat.date_range_reach(:now_90),
+        now_year: EpisodeStat.date_range_reach(:now_year),
+        prev_7: EpisodeStat.date_range_reach(:prev_7),
+        prev_30: EpisodeStat.date_range_reach(:prev_30),
+        prev_90: EpisodeStat.date_range_reach(:prev_90),
+        prev_year: EpisodeStat.date_range_reach(:prev_year),
+        then_7: EpisodeStat.date_range_reach(:then_7),
+        then_30: EpisodeStat.date_range_reach(:then_30),
+        then_90: EpisodeStat.date_range_reach(:then_90)
       }
     end)
   end

@@ -363,22 +363,21 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
   defp reach(podcast) do
     now = Timex.today() |> Timex.shift(days: -1)
-    then = now |> Timex.shift(years: -1)
 
     Cache.get_or_store("stats-reach-#{podcast.slug}-#{now}", fn ->
       %{
         as_of: Timex.now(),
-        now_7: EpisodeStat.date_range_reach(podcast, now, days: -7),
-        now_30: EpisodeStat.date_range_reach(podcast, now, days: -30),
-        now_90: EpisodeStat.date_range_reach(podcast, now, days: -90),
-        now_year: EpisodeStat.date_range_reach(podcast, now, years: -1),
-        prev_7: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -7), days: -7),
-        prev_30: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -30), days: -30),
-        prev_90: EpisodeStat.date_range_reach(podcast, Timex.shift(now, days: -90), days: -90),
-        prev_year: EpisodeStat.date_range_reach(podcast, Timex.shift(now, years: -1), years: -1),
-        then_7: EpisodeStat.date_range_reach(podcast, then, days: -7),
-        then_30: EpisodeStat.date_range_reach(podcast, then, days: -30),
-        then_90: EpisodeStat.date_range_reach(podcast, then, days: -90)
+        now_7: EpisodeStat.date_range_reach(podcast, :now_7),
+        now_30: EpisodeStat.date_range_reach(podcast, :now_30),
+        now_90: EpisodeStat.date_range_reach(podcast, :now_90),
+        now_year: EpisodeStat.date_range_reach(podcast, :now_year),
+        prev_7: EpisodeStat.date_range_reach(podcast, :prev_7),
+        prev_30: EpisodeStat.date_range_reach(podcast, :prev_30),
+        prev_90: EpisodeStat.date_range_reach(podcast, :prev_90),
+        prev_year: EpisodeStat.date_range_reach(podcast, :prev_year),
+        then_7: EpisodeStat.date_range_reach(podcast, :then_7),
+        then_30: EpisodeStat.date_range_reach(podcast, :then_30),
+        then_90: EpisodeStat.date_range_reach(podcast, :then_90)
       }
     end)
   end

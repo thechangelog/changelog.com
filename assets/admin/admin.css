@@ -30,6 +30,10 @@
   font-size: 1.5rem;
 }
 
+.statistic .value a {
+  color: inherit;
+}
+
 .js-image-options {
   overflow-y: auto;
   white-space: nowrap;

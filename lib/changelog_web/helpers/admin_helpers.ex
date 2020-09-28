@@ -120,8 +120,11 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   def next_param(conn, default \\ nil), do: Map.get(conn.params, "next", default)
 
-  def download_count(ep_or_pod),
-    do: ep_or_pod.download_count |> round() |> SharedHelpers.comma_separated()
+  def download_count(ep_or_pod) do
+    ep_or_pod.download_count
+    |> round()
+    |> SharedHelpers.comma_separated()
+  end
 
   def reach_count(ep_or_pod) do
     if ep_or_pod.reach_count > ep_or_pod.download_count do

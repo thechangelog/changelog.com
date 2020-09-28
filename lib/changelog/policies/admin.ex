@@ -3,4 +3,5 @@ defmodule Changelog.Policies.Admin do
 
   def index(actor), do: is_admin(actor) || is_editor(actor) || is_host(actor)
   def purge(actor), do: is_admin(actor)
+  def reach(actor), do: is_admin(actor)
 end
