@@ -128,6 +128,11 @@ defmodule ChangelogWeb.TimeView do
     "#{pretty_start} - #{pretty_end}"
   end
 
+  def url_date(date) do
+    {:ok, result} = Timex.format(date, "{YYYY}/{0M}/{0D}")
+    result
+  end
+
   defp to_seconds(:hours, str), do: string_to_rounded_integer(str) * 3600
   defp to_seconds(:minutes, str), do: string_to_rounded_integer(str) * 60
   defp to_seconds(str), do: string_to_rounded_integer(str)

@@ -18,7 +18,7 @@ defmodule Changelog.Newsletters do
       name: "Changelog Nightly",
       slug: "nightly",
       description:
-        "Our automated nightly email powered by GitHub Archive that unearths the hottest new repos trending on GitHub before they blow up.",
+        "Our automated nightly email powered by GH Archive that unearths the hottest new repos trending on GitHub before they blow up.",
       list_id: "95a8fbc221a2240ac7469d661bac650a",
       web_id: "82E49C221D20C4F7"
     }

@@ -15,16 +15,11 @@
 
   <div class="marketing-section">
     <div class="richtext">
-      <p>Every night @ 10pm US Central we ship this email to unearth top new and starred repositories on GitHub before they blow up. No fluff, just repos. No spam!</p>
-
-      <hr>
-
-      <p>Need a sneak peek? <a href="http://nightly.changelog.com/2016/10/06/">Check out the email for October 6, 2016</a>.</p>
-
+      <p>Every night @ 10pm US Central we ship this email that unearths the <mark>top new and top starred</mark> projects on GitHub before they blow up. No fluff, just repos. Peep <a href="https://nightly.changelog.com/<%= Timex.today() |> Timex.shift(days: -1) |> TimeView.url_date() %>/"> yesterday's issue</a> to get an idea of what to expect. 👀</p>
     </div>
 
     <div class="image">
-      <a href="http://nightly.changelog.com/2016/10/06/">
+      <a href="https://nightly.changelog.com/2016/10/06/">
         <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/changelog-nightly.jpg"), "Changelog Nightly") %>
       </a>
     </div>
@@ -37,9 +32,7 @@
 
       <h4>Is my email address safe?</h4>
 
-      <p>Yes. <%= link "We're trustworthy.", to: Routes.page_path(@conn, :about) %></p>
-
-      <p>We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
+      <p>Yes. <%= link "We're trustworthy.", to: Routes.page_path(@conn, :about) %>. We take the security and safety of our subscribers very seriously. Our subscriber email addresses are stored securely by our email partner <a href="https://www.campaignmonitor.com/?utm_source=changelog">Campaign Monitor</a> and will never be sold, rented, or otherwise shared with any third party. <em>Ever.</em></p>
 
       <h4>How does it work?</h4>
 
@@ -47,7 +40,9 @@
 
       <h4>Is there an archive of past issues?</h4>
 
-      <p>There's no official archive yet, but you can directly access a specific night's issue by typing <code>http://nightly.changelog.com/YYYY/MM/DD</code> in your browser's address bar.</p>
+      <p>There's no official archive yet, but you can directly access a specific night's issue by typing <code>https://nightly.changelog.com/YYYY/MM/DD</code> in your browser's address bar.</p>
+
+      <p><mark>If you're interested in building a cool, browseable archive for fun and/or profit, get in touch!</mark></p>
 
       <h4>Is there a light color version of the email?</h4>
 
@@ -56,10 +51,6 @@
       <h4>Can I sponsor Changelog Nightly?</h4>
 
       <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: Routes.page_path(@conn, :sponsor) %>.</p>
-
-      <h4>Why do we require you to confirm your email address?</h4>
-
-      <p>We believe requiring a double opt-in to subscribe to our emails will help us keep our subscribers safe from accidentally subscribing or being subscribed by someone else. By explicitly asking our subscribers to confirm their email address, we ensure the subscriber is, in fact, the owner of the email address we will send our emails to, and that they are explicitly opting in to receive our emails.</p>
     </div>
   </div>
 </article>
