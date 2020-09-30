@@ -89,9 +89,8 @@
                   %{item: item, conn: @conn},
                   item.id
                 ) %>
-          <% else %>
-            <%= if Policies.NewsItem.delete(@current_user, item), do: AdminHelpers.icon_link("trash", to: Routes.admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
           <% end %>
+          <%= if Policies.NewsItem.delete(@current_user, item), do: AdminHelpers.icon_link("trash", to: Routes.admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
           </div>
         </td>
       </tr>
