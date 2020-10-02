@@ -106,28 +106,24 @@
     padding: .15em 0 .15em 1em;
     color: $black;
 
-    // Desktop
-    @media (min-width: $desktop) {
-      &.float--right,
-      &.float--left {
-        font-style: italic;
-        width: 50%;
-  
-        p {
-          font-size: 1.25em;
-        }
-      }
+    &.right {
+      float: right;
+      margin: 0 0 1rem 1rem;
+    }
+    &.left {
+      float: left;
+      margin: 0 0 1rem 0;
     }
 
-    // Mobile
-    &.float--right,
-    &.float--left {
-      float: none;
-      margin-left: 0;
-      width: 100%;
-
+    &.right, &.left {
+      width: 50%;
+      padding: 0 0 0 1em;
+      @include breakpoint(mobile, max) {
+        display: none;
+      }
       p {
-        font-size: 1.15em;
+        font-size: 1.25em;
+        font-style: italic;
         font-weight: 900;
       }
     }
