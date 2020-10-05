@@ -40,11 +40,12 @@ lke-changelog-db-restore: | lke-ctx
 # 	clean_db
 # 	restore_db_from_backup
 
+PGDATABASE ?= changelog_dev
+export PGDATABASE
 .PHONY: lke-changelog-db-restore-local
 lke-changelog-db-restore-local: | $(AWS)
 	cd docker \
 	&& export PATH=$$(PWD):$$PATH \
-	&& export PGDATABASE=db \
 	&& export AWS_ACCESS_KEY_ID=$(BACKUPS_AWS_ACCESS_KEY) \
 	&& export AWS_SECRET_ACCESS_KEY=$(BACKUPS_AWS_SECRET_KEY) \
 	&& export AWS_S3_BUCKET=changelog-com-backups \
