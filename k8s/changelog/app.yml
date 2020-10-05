@@ -9,6 +9,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: cert-manager-webhook-dnsimple-production
     external-dns.alpha.kubernetes.io/ttl: "60"
+    service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol: v2
 spec:
   tls:
     - hosts:
