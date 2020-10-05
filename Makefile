@@ -105,7 +105,7 @@ ifeq ($(PLATFORM),Darwin)
 	@brew install terraform
 endif
 ifeq ($(PLATFORM),Linux)
-	$(error $(RED)Please install $(BOLD)terraform v0.12$(NORMAL) in $(TERRAFORM): https://www.terraform.io/downloads.html)
+	$(error $(RED)Please install $(BOLD)Terraform v0.13$(NORMAL) in $(TERRAFORM): https://www.terraform.io/downloads.html)
 endif
 
 ifeq ($(PLATFORM),Darwin)
