@@ -2,8 +2,8 @@
 
 set -e
 
-# shellcheck source=docker/load_db_restore_secrets
-source load_db_restore_secrets
+# shellcheck source=docker/load_backups_secrets
+source load_backups_secrets
 
 aws s3 cp \
   --acl private \

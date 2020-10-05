@@ -31,7 +31,14 @@ lke-postgres-operator: lke-ctx $(YTT)
 	    job/pgo-deploy
 lke-provision:: lke-postgres-operator
 
-# pgo create cluster db --replica-count=1 --memory=2Gi --memory-limit=4Gi --cpu=2.0 --cpu-limit=4.0 -n prod-2020-07
+# Command that was used to create the db cluster:
+# 	pgo create cluster db --replica-count=1 --memory=2Gi --memory-limit=4Gi --cpu=2.0 --cpu-limit=4.0 --namespace prod-2020-07
+#
+# List all db clusters:
+# 	pgo show cluster --all --namespace prod-2020-07
+#
+# Show db cluster status:
+# 	pgo status --namespace prod-2020-07
 .PHONY: pgo
 pgo: | lke-ctx
-	$(KUBECTL) exec --tty --stdin --namespace $(POSTGRES_OPERATOR_NAMESPACE) deploy/pgo-client -- bash
+	$(KUBECTL) exec --tty --stdin --namespace $(POSTGRES_OPERATOR_NAMESPACE) deploy/pgo-client -- bash --login

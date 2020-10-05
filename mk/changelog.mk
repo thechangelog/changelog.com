@@ -33,18 +33,37 @@ lke-changelog-tree: | lke-ctx $(KUBETREE)
 .PHONY: lke-changelog-db-restore
 lke-changelog-db-restore: | lke-ctx
 	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
-	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- bash --login
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c db-backup -- bash --login
 
 # ^^^ Within the db-restore container run:
 #
 # 	clean_db
 # 	restore_db_from_backup
 
+.PHONY: lke-changelog-db-restore-local
+lke-changelog-db-restore-local: | $(AWS)
+	cd docker \
+	&& export PATH=$$(PWD):$$PATH \
+	&& export PGDATABASE=db \
+	&& export AWS_ACCESS_KEY_ID=$(BACKUPS_AWS_ACCESS_KEY) \
+	&& export AWS_SECRET_ACCESS_KEY=$(BACKUPS_AWS_SECRET_KEY) \
+	&& export AWS_S3_BUCKET=changelog-com-backups \
+	&& ./restore_db_from_backup
+
+.PHONY: lke-changelog-db-backup
+lke-changelog-db-backup: | lke-ctx
+	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c db-backup -- backup_db_to_s3
+
+.PHONY: lke-changelog-backups
+lke-changelog-backups: | lke-ctx
+	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c db-backup -- s3_backups
+
 .PHONY: lke-changelog-uploads-backup
 lke-changelog-uploads-backup: | lke-ctx
-	$(KUBECTL) exec --namespace $(CHANGELOG_NAMESPACE) --stdin=true --tty=true \
-	  deployments/$(CHANGELOG_DEPLOYMENT) -c backup-restore -- \
-	  bash -c "backup_uploads_to_s3"
+	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
+	  deployments/$(CHANGELOG_DEPLOYMENT) -c uploads-backup -- backup_uploads_to_s3
 
 .PHONY: lke-changelog-tls-sync-fastly
 lke-changelog-tls-sync-fastly: | lke-ctx

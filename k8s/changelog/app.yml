@@ -160,18 +160,10 @@ spec:
                       - #@ data.values.app.name
               topologyKey: "kubernetes.io/hostname"
       containers:
-        - name: backup-restore
+        - name: db-backup
           image: #@ data.values.db.restore.image
           imagePullPolicy: #@ data.values.image.pull_policy
-          command:
-            - /bin/bash
-            - -c
-            - |-
-              echo "I'm here in case someone needs to backup or restore the db or uploads..."
-              while true
-              do
-                sleep 3600
-              done
+          command: ["/usr/local/bin/backup_db_continuously"]
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -201,6 +193,27 @@ spec:
                 secretKeyRef:
                   name: db-postgres-secret
                   key: username
+        - name: uploads-backup
+          image: #@ data.values.db.restore.image
+          imagePullPolicy: #@ data.values.image.pull_policy
+          command: ["/usr/local/bin/backup_uploads_continuously"]
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: secret_access_key
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_S3_BUCKET
+              value: changelog-com-backups
+            - name: UPLOADS_PATH
+              value: "/uploads"
           volumeMounts:
             - mountPath: "/uploads"
               name: uploads

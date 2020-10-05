@@ -14,26 +14,26 @@ lazydocker:
 .PHONY: ld
 ld: lazydocker
 
-.PHONY: db-backup-image
-db-backup-image: build-db-backup-image publish-db-backup-image
-.PHONY: dbi
-dbi: db-backup-image
+.PHONY: backups-image
+backups-image: build-backups-image publish-backups-image
+.PHONY: bi
+bi: backups-image
 
-.PHONY: build-db-backup-image
-build-db-backup-image: $(DOCKER)
+.PHONY: build-backups-image
+build-backups-image: $(DOCKER)
 	@cd docker && \
 	$(DOCKER) build \
 	  --build-arg STACK_VERSION=$(STACK_VERSION) \
-	  --tag thechangelog/db_backup:$(BUILD_VERSION) \
-	  --tag thechangelog/db_backup:$(STACK_VERSION) \
-	  --file Dockerfile.db_backup .
-.PHONY: bdbi
-bdbi: build-db-backup-image
+	  --tag thechangelog/backups:$(BUILD_VERSION) \
+	  --tag thechangelog/backups:$(STACK_VERSION) \
+	  --file Dockerfile.backups .
+.PHONY: bbi
+bbi: build-backups-image
 
-.PHONY: publish-db-backup-image
-publish-db-backup-image: $(DOCKER)
-	@$(DOCKER) push thechangelog/db_backup:$(BUILD_VERSION) && \
-	$(DOCKER) push thechangelog/db_backup:$(STACK_VERSION)
+.PHONY: publish-backups-image
+publish-backups-image: $(DOCKER)
+	@$(DOCKER) push thechangelog/backups:$(BUILD_VERSION) && \
+	$(DOCKER) push thechangelog/backups:$(STACK_VERSION)
 
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image
