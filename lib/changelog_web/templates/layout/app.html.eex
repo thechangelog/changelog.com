@@ -61,7 +61,7 @@
     <%= render("_header.html", assigns) %>
 
     <main class="main">
-      <%= render(@view_module, @view_template, assigns) %>
+      <%= @inner_content %>
     </main>
     <%= render("_overlay.html", assigns) %>
     <%= render("_footer.html", assigns) %>

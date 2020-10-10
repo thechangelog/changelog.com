@@ -18,14 +18,13 @@ defmodule ChangelogWeb.ConnCase do
   using do
     quote do
       # Import conveniences for testing with connections
-      use Phoenix.ConnTest
-
       alias Changelog.Repo
       alias ChangelogWeb.Router.Helpers, as: Routes
 
       import Ecto
       import Ecto.Query, only: [from: 2]
       import Plug.Conn
+      import Phoenix.ConnTest
       import Changelog.TestCase
       import Changelog.Factory
       import ChangelogWeb.TimeView, only: [hours_from_now: 1, hours_ago: 1]

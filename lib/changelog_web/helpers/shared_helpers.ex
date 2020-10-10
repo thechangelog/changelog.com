@@ -130,7 +130,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   end
 
   def md_to_safe_html(nil), do: ""
-  def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:safe, :smart, :hardbreaks])
+  def md_to_safe_html(md) when is_binary(md), do: Cmark.to_html(md, [:smart, :hardbreaks])
 
   def md_to_html(nil), do: ""
 
@@ -140,7 +140,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     if String.match?(md, ~r/^\d{2,4}\.$/) do
       "<p>#{md}</p>"
     else
-      Cmark.to_html(md, [:smart, :hardbreaks])
+      Cmark.to_html(md, [:unsafe, :smart, :hardbreaks])
     end
   end
 

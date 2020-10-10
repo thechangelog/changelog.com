@@ -233,7 +233,7 @@
             <td class="content-wrap">
               <meta itemprop="name" content="Confirm Email"/>
               <table width="100%" cellpadding="0" cellspacing="0">
-                <%= render(@view_module, @view_template, assigns) %>
+                <%= @inner_content %>
               </table>
             </td>
           </tr>

@@ -32,15 +32,15 @@ defmodule Changelog.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.0"},
-      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix, "~> 1.5.5"},
+      {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},
-      {:scrivener_html, "~> 1.7", github: "jerodsanto/scrivener_html", branch: "phx-1-4"},
+      {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-5-5"},
       {:cmark, "~> 0.6"},
       {:html_sanitize_ex, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
@@ -55,7 +55,7 @@ defmodule Changelog.Mixfile do
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_s3, "~> 2.0"},
-      {:nimble_csv, "~> 0.4"},
+      {:nimble_csv, "~> 1.1.0"},
       {:sweet_xml, "~> 0.6"},
       {:user_agent_parser, "~> 1.0"},
       {:quantum, ">= 2.1.0"},
@@ -68,7 +68,7 @@ defmodule Changelog.Mixfile do
       {:algolia, "~> 0.8.0"},
       {:tzdata, "~> 1.0.3"},
       {:icalendar, "~> 1.0"},
-      {:credo, "~> 1.3.2", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.4.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
     ]

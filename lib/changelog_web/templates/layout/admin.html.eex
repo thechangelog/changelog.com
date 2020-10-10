@@ -78,7 +78,7 @@
     </div>
 
     <div class="ui very padded basic segment">
-      <%= render(@view_module, @view_template, assigns) %>
+      <%= @inner_content %>
     </div>
 
     <script src="<%= Routes.static_url(@conn, "/js/admin.js") %>"></script>
