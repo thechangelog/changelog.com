@@ -7,12 +7,15 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :changelog, ChangelogWeb.Endpoint,
+  url: [host: System.get_env("HOST") || "localhost"],
   http: [
     port: 4000
   ],
-  static_url: [
-    host: System.get_env("HOST") || "localhost",
-    port: 4000
+  https: [
+    port: 4001,
+    cipher_suite: :strong,
+    certfile: "priv/cert/selfsigned.pem",
+    keyfile: "priv/cert/selfsigned_key.pem"
   ],
   debug_errors: true,
   code_reloader: true,
