@@ -4,6 +4,7 @@ defmodule ChangelogWeb.PersonController do
   alias Changelog.{
     Cache,
     Episode,
+    Captcha,
     Mailer,
     NewsItem,
     Newsletters,
@@ -29,28 +30,14 @@ defmodule ChangelogWeb.PersonController do
     render(conn, :join, changeset: Person.insert_changeset(person), person: nil)
   end
 
-  def join(conn = %{method: "POST"}, %{"person" => person_params, "gotcha" => robo})
-      when byte_size(robo) > 0 do
-    changeset = Person.insert_changeset(%Person{}, person_params)
+  def join(conn = %{method: "POST"}, params = %{"person" => person_params}) do
+    captcha = Map.get(params, "h-captcha-response")
+    email = Map.get(person_params, "email")
 
-    conn
-    |> put_flash(:error, "Something smells fishy. 🤖")
-    |> render(:join, changeset: changeset, person: nil)
-  end
-
-  def join(conn = %{method: "POST"}, %{"person" => person_params = %{"email" => email}}) do
-    cond do
-      String.ends_with?(email, "qq.com") ->
-        changeset = Person.insert_changeset(%Person{}, person_params)
-
-        conn
-        |> put_flash(:error, "qq.com emails temporarily not allowed due to abuse.")
-        |> render(:join, changeset: changeset, person: nil)
-
-      person = Repo.get_by(Person, email: email) ->
+    if Captcha.verify(captcha) do
+      if person = Repo.get_by(Person, email: email) do
         welcome_community(conn, person)
-
-      true ->
+      else
         changeset = Person.insert_changeset(%Person{}, person_params)
 
         case Repo.insert(changeset) do
@@ -63,11 +50,19 @@ defmodule ChangelogWeb.PersonController do
             |> put_flash(:error, "Something went wrong. 😭")
             |> render(:join, changeset: changeset, person: nil)
         end
+      end
+    else
+      changeset = Person.insert_changeset(%Person{}, person_params)
+
+      conn
+      |> put_flash(:error, "No domo arigato mr. roboto 🤖")
+      |> render(:join, changeset: changeset, person: nil)
     end
   end
 
-  def join(conn = %{method: "POST"}, _params),
-    do: redirect(conn, to: Routes.person_path(conn, :join))
+  def join(conn = %{method: "POST"}, _params) do
+    redirect(conn, to: Routes.person_path(conn, :join))
+  end
 
   def show(conn, params = %{"handle" => handle}) do
     person = Repo.get_by!(Person, handle: handle, public_profile: true)
@@ -173,25 +168,14 @@ defmodule ChangelogWeb.PersonController do
     render(conn, :subscribe)
   end
 
-  def subscribe(conn = %{method: "POST"}, %{"gotcha" => robo}) when byte_size(robo) > 0 do
-    conn
-    |> put_flash(:error, "Something smells fishy. 🤖")
-    |> redirect(to: Routes.person_path(conn, :subscribe))
-  end
-
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
     subscribe_to = Map.get(params, "to", "weekly")
+    captcha = Map.get(params, "h-captcha-response")
 
-    cond do
-      String.ends_with?(email, "qq.com") ->
-        conn
-        |> put_flash(:error, "qq.com emails temporarily not allowed due to abuse.")
-        |> redirect(to: Routes.person_path(conn, :subscribe))
-
-      person = Repo.get_by(Person, email: email) ->
+    if Captcha.verify(captcha) do
+      if person = Repo.get_by(Person, email: email) do
         welcome_subscriber(conn, person, subscribe_to)
-
-      true ->
+      else
         changeset =
           Person.with_fake_data()
           |> Person.insert_changeset(params)
@@ -206,11 +190,17 @@ defmodule ChangelogWeb.PersonController do
             |> put_flash(:error, "Something went wrong. 😭")
             |> redirect(to: Routes.person_path(conn, :subscribe))
         end
+      end
+    else
+      conn
+      |> put_flash(:error, "No domo arigato mr. roboto 🤖")
+      |> redirect(to: Routes.person_path(conn, :subscribe))
     end
   end
 
-  def subscribe(conn = %{method: "POST"}, _params),
-    do: redirect(conn, to: Routes.person_path(conn, :subscribe))
+  def subscribe(conn = %{method: "POST"}, _params) do
+    redirect(conn, to: Routes.person_path(conn, :subscribe))
+  end
 
   defp welcome_subscriber(conn, person, subscribe_to) do
     person = Person.refresh_auth_token(person)
