@@ -32,6 +32,15 @@ howto-rotate-secret:
 	@printf "\n 2/3. Add new secret to production by running $(BOLD)make lke-changelog-secrets$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 3/3. Restart the app so that it picks up the new secret by running $(BOLD)make lke-changelog-update$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 
+.PHONY: howto-add-secret
+howto-add-secret:
+	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
+	@printf " 1/5. Add new secret to LastPass by running e.g. $(BOLD)make add-secret SECRET=CAPTCHA_API_KEY$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 2/5. Add new *-lke-secret target to $(BOLD)mk/secrets.mk$(NORMAL), and add it as a dependency to $(BOLD)env-secrets$(NORMAL) target\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 3/5. Define the new target as a lke-changelog-secrets dependency in $(BOLD)mk/changelog.mk$(NORMAL), then run $(BOLD)make lke-changelog-secrets$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 4/5. Add reference to new secret in $(BOLD)k8s/changelog/app.yml$(NORMAL), then run $(BOLD)make lke-changelog$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 5/5. Commit and push all changes, including the app changes to read the new secret from environment variables. The pipeline will take care of the rest 😉\n" ; read -rp " $(DONE)" -n 1
+
 CIRCLE_CI_ADD_ENV_VAR_URL = https://circleci.com/api/v1.1/project/github/thechangelog/changelog.com/envvar?circle-token=$(CIRCLE_TOKEN)
 .PHONY: configure-ci-secrets
 configure-ci-secrets: configure-ci-docker-secret configure-ci-coveralls-secret ## ccs | Configure CircleCI secrets
