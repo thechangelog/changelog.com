@@ -57,7 +57,7 @@ configure-ci-coveralls-secret: $(LPASS) $(JQ) $(CURL) circle-token
 cccs: configure-ci-coveralls-secret
 
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github hackernews aws backups_aws twitter app slack rollbar buffer coveralls algolia plusplus ## es  | Print secrets stored in LastPass as env vars
+env-secrets: postgres campaignmonitor github hcaptcha hackernews aws backups_aws twitter app slack rollbar buffer coveralls algolia plusplus ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
 es: env-secrets
 
@@ -155,6 +155,17 @@ github-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=client_id=$(GITHUB_CLIENT_ID) \
 	  --from-literal=client_secret=$(GITHUB_CLIENT_SECRET) \
 	  --from-literal=api_token=$(GITHUB_API_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+HCAPTCHA_SECRET_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/HCAPTCHA_SECRET_KEY)"
+.PHONY: hcaptcha
+hcaptcha: $(LPASS)
+	@echo "export HCAPTCHA_SECRET_KEY=$(HCAPTCHA_SECRET_KEY)"
+.PHONY: hcaptcha-lke-secret
+hcaptcha-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+		create secret generic hcaptcha \
+		--from-literal=secret_key=$(HCAPTCHA_SECRET_KEY) \
 	| $(KUBECTL) apply --filename -
 
 HACKERNEWS_USER := "$$($(LPASS) show --notes Shared-changelog/secrets/HN_USER_1)"

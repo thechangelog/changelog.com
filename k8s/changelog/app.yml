@@ -289,6 +289,11 @@ spec:
                 secretKeyRef:
                   name: github
                   key: client_secret
+            - name: HCAPTCHA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hcaptcha
+                  key: secret_key
             - name: HN_USER
               valueFrom:
                 secretKeyRef:
