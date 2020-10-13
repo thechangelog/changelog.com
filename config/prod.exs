@@ -41,6 +41,8 @@ config :changelog, Changelog.Mailer,
   username: SecretOrEnv.get("CM_SMTP_TOKEN"),
   password: SecretOrEnv.get("CM_SMTP_TOKEN")
 
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
 config :changelog, Changelog.Scheduler,
   global: true,
   timezone: "US/Central",
