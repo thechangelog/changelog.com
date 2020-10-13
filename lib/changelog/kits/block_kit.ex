@@ -5,6 +5,7 @@ defmodule Changelog.BlockKit do
       watch-greenland-2020-online
       the-social-dilemma-2020
       watch-khaali-peeli-movie-online
+      watch-ava-2020-online
       )
   end
 end
