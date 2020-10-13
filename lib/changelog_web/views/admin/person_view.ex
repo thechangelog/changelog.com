@@ -8,6 +8,8 @@ defmodule ChangelogWeb.Admin.PersonView do
   def avatar_url(person), do: PersonView.avatar_url(person)
   def episode_count(person), do: Person.episode_count(person)
 
+  def is_subscribed(person, thing), do: PersonView.is_subscribed(person, thing)
+
   def list_of_links(person) do
     [
       %{value: person.email, icon: "envelope", url: "mailto:#{person.email}"},
