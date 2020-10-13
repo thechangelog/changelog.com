@@ -16,6 +16,12 @@ defmodule Changelog.PersonTest do
     refute changeset.valid?
   end
 
+  test "insert_changeset with blocked handle" do
+    blocked_handle = Enum.random(Changelog.BlockKit.handles())
+    changeset = Person.insert_changeset(%Person{}, Map.merge(@valid_attrs, %{handle: blocked_handle}))
+    refute changeset.valid?
+  end
+
   test "admin_update_changeset with a local file path image URL attribute" do
     person = insert(:person)
     local_file_path = File.cwd!() <> "/test/fixtures/avatar600x600.png"

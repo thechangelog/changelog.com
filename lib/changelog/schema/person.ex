@@ -184,11 +184,22 @@ defmodule Changelog.Person do
     |> validate_format(:github_handle, Regexp.social(), message: Regexp.social_message())
     |> validate_format(:linkedin_handle, Regexp.social(), message: Regexp.social_message())
     |> validate_format(:twitter_handle, Regexp.social(), message: Regexp.social_message())
+    |> validate_handle_allowed()
     |> unique_constraint(:email)
     |> unique_constraint(:handle)
     |> unique_constraint(:github_handle)
     |> unique_constraint(:linkedin_handle)
     |> unique_constraint(:twitter_handle)
+  end
+
+  defp validate_handle_allowed(changeset) do
+    handle = get_field(changeset, :handle)
+
+    if Enum.member?(Changelog.BlockKit.handles(), handle) do
+      add_error(changeset, :handle, "not allowed")
+    else
+      changeset
+    end
   end
 
   def sign_in_changes(person) do
