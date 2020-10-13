@@ -1,0 +1,28 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cover</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for metacast <- @metacasts do %>
+    <tr>
+      <td><%= metacast.name %></td>
+      <td class="center aligned">
+        <h2 class="ui image header">
+          <img src="<%= MetacastView.cover_url(metacast, :small) %>" class="ui image" />
+        </h2>
+      </td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= AdminHelpers.icon_link("edit", to: Routes.admin_metacast_path(@conn, :edit, metacast)) %>
+          <%= AdminHelpers.icon_link("trash", to: Routes.admin_metacast_path(@conn, :delete, metacast), method: :delete, data: [confirm: "Are you sure?"]) %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

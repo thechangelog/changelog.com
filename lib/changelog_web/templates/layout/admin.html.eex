@@ -24,6 +24,12 @@
       <% end %>
     <% end %>
 
+    <%= if Policies.Podcast.index(@current_user) do %>
+      <%= link(to: Routes.admin_metacast_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, ["metacast"], "active")}") do %>
+        <i class="mute icon"></i>Metacasts
+      <% end %>
+    <% end %>
+
     <%= if Policies.NewsItem.index(@current_user) do %>
       <%= link(to: Routes.admin_news_item_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, ["news_item", "news_source"], "active")}") do %>
         <i class="newspaper icon"></i>News</a>

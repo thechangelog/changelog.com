@@ -2,8 +2,8 @@ import Sortable from "sortablejs";
 import linkItem from "templates/linkItem.hbs";
 
 export default class ListWidget {
-  constructor(parentType, relationType) {
-    let $members = $(`.js-${relationType}`);
+  constructor(parentType, attrName) {
+    let $members = $(`.js-${attrName}`);
     let $add = $members.siblings(".js-add");
 
     let setPositions = function() {
@@ -21,7 +21,7 @@ export default class ListWidget {
       let index = $members.find(".item").length;
       let context = {
         parentType: parentType,
-        relationType: relationType,
+        attrName: attrName,
         index: index,
         position: index + 1
       }

@@ -6,6 +6,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Episode,
     EpisodeNewsItem,
     EpisodeTopic,
+    EpisodeTracker,
     EpisodeGuest,
     EpisodeHost,
     EpisodeRequest,
@@ -166,6 +167,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.insert(changeset) do
       {:ok, episode} ->
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(
@@ -239,6 +241,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     Repo.delete!(episode)
+    EpisodeTracker.untrack(episode.id)
     EpisodeNewsItem.delete(episode)
     Cache.delete(episode)
 

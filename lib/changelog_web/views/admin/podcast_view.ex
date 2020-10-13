@@ -5,7 +5,12 @@ defmodule ChangelogWeb.Admin.PodcastView do
   alias ChangelogWeb.{PodcastView}
   alias ChangelogWeb.Admin.EpisodeView
 
+  def cover_url(podcast), do: PodcastView.cover_url(podcast)
+  def cover_url(podcast, version), do: PodcastView.cover_url(podcast, version)
+
   def episode_count(podcast), do: PodcastView.episode_count(podcast)
+
+  def download_count(podcast), do: podcast.download_count |> round()
 
   def last_stat(podcast) do
     podcast

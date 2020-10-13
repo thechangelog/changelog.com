@@ -313,6 +313,29 @@ defmodule Changelog.Episode do
     updated
   end
 
+  def flatten_for_filtering(query \\ __MODULE__) do
+    query
+    |> exclude_transcript()
+    |> published()
+    |> to_stream()
+    |> flatten_stream()
+  end
+
+  def flatten_episode_for_filtering(episode) do
+      episode = Repo.preload(episode, [:podcast, :hosts, :guests, :topics])
+      %{
+        id: episode.id,
+        slug: episode.slug,
+        title: episode.title,
+        type: episode.type,
+        published_at: episode.published_at,
+        podcast: episode.podcast.slug,
+        host: Enum.map(episode.hosts, fn host -> host.name end),
+        guest: Enum.map(episode.guests, fn guest -> guest.name end),
+        topic: Enum.map(episode.topics, fn topic -> topic.slug end)
+      }
+  end
+
   defp derive_audio_bytes_and_duration(changeset = %{changes: %{audio_file: _}}) do
     new_file = get_change(changeset, :audio_file)
     tagged_file = EpisodeView.audio_local_path(%{changeset.data | audio_file: new_file})
@@ -353,6 +376,20 @@ defmodule Changelog.Episode do
     catch
       _all -> 0
     end
+  end
+
+  defp flatten_stream(stream) do
+    stream = Stream.map(stream, fn episode ->
+      flatten_episode_for_filtering(episode)
+    end)
+
+    Repo.transaction(fn () ->
+      Enum.to_list(stream)
+    end)
+  end
+
+  defp to_stream(query) do
+    Repo.stream(query)
   end
 
   defp validate_published_has_published_at(changeset) do

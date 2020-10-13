@@ -1,6 +1,6 @@
 <div class="item">
-  <input name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][sponsor_id]" type="hidden" value="{{id}}">
-  <input class="js-position" name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][position]" type="hidden">
+  <input name="{{parentType}}[{{attrName}}][{{index}}][sponsor_id]" type="hidden" value="{{id}}">
+  <input class="js-position" name="{{parentType}}[{{attrName}}][{{index}}][position]" type="hidden">
 
   <div class="right floated content">
     <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
@@ -15,7 +15,7 @@
     <div class="required field six wide">
       <label>Title</label>
       <input
-        name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][title]"
+        name="{{parentType}}[{{attrName}}][{{index}}][title]"
         value="{{extras.title}}"
       >
     </div>
@@ -23,7 +23,7 @@
     <div class="required field ten wide">
       <label>Link</label>
       <input
-        name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][link_url]"
+        name="{{parentType}}[{{attrName}}][{{index}}][link_url]"
         value="{{extras.link_url}}"
       >
     </div>
@@ -32,7 +32,7 @@
   <div class="field">
     <label>Description</label>
     <textarea
-      name="{{parentType}}[{{parentType}}_{{relationType}}][{{index}}][description]"
+      name="{{parentType}}[{{attrName}}][{{index}}][description]"
       value=""
       placeholder="Markdown enabled."
       rows="1"

@@ -6,7 +6,7 @@ defmodule Changelog.Files.Cover do
   @versions [:original, :medium, :small]
 
   def storage_dir(_, _), do: expanded_dir("/covers")
-  def filename(version, {_, scope}), do: "#{PodcastView.dasherized_name(scope)}-#{version}"
+  def filename(version, {_, %{name: _} = scope}), do: "#{PodcastView.dasherized_name(scope)}-#{version}"
 
   def transform(:original, _), do: :noaction
 

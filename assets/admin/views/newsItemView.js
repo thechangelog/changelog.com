@@ -33,7 +33,7 @@ export default class newsItemView {
   }
 
   new() {
-    new SearchWidget("topic", "news_item", "topics");
+    new SearchWidget("topic", "news_item", "news_item_topics");
     new BelongsToWidget("logger", "person");
     new BelongsToWidget("author", "person");
     new BelongsToWidget("source", "news_source");

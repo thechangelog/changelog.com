@@ -56,7 +56,7 @@
   <div class="field">
     <%= label f, :topics %>
 
-    <div class="ui horizontal selection list js-topics">
+    <div class="ui horizontal selection list js-post_topics">
       <%= inputs_for f, :post_topics, fn i -> %>
         <% topic = AdminHelpers.load_from_form(i, Topic, :topic) %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">

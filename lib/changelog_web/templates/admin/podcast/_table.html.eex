@@ -21,7 +21,7 @@
       <td class="center aligned">
         <%= link to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug) do %>
         <h2 class="ui image header">
-          <img src="<%= PodcastView.cover_url(podcast, :small) %>" class="ui image" />
+          <img src="<%= cover_url(podcast, :small) %>" class="ui image" />
         </h2>
         <% end %>
       </td>
