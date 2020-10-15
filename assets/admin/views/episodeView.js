@@ -120,7 +120,7 @@ export default class EpisodeView {
     new SearchWidget("person", "episode", "episode_hosts");
     new SearchWidget("person", "episode", "episode_guests");
     new SearchWidget("sponsor", "episode", "episode_sponsors");
-    new SearchWidget("topic", "episode", "topics");
+    new SearchWidget("topic", "episode", "episode_topics");
     new CalendarField(".ui.calendar");
     new Modal(".js-title-guide-modal", ".title-guide.modal");
     new Modal(".js-subtitle-guide-modal", ".subtitle-guide.modal");
