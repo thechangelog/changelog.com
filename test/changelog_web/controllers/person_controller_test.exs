@@ -42,6 +42,7 @@ defmodule ChangelogWeb.PersonControllerTest do
 
     test "submission with missing data re-renders with errors", %{conn: conn} do
       count_before = count(Person)
+
       conn =
         with_mock(Changelog.Captcha, verify: fn _ -> true end) do
           post(conn, Routes.person_path(conn, :join), person: %{email: "nope"})
@@ -53,6 +54,7 @@ defmodule ChangelogWeb.PersonControllerTest do
 
     test "submission with failed captcha re-renders with errors", %{conn: conn} do
       count_before = count(Person)
+
       conn =
         with_mock(Changelog.Captcha, verify: fn _ -> false end) do
           post(conn, Routes.person_path(conn, :join), person: %{email: "nope"})
@@ -89,7 +91,7 @@ defmodule ChangelogWeb.PersonControllerTest do
       conn =
         with_mocks([
           {Changelog.Captcha, [], [verify: fn _ -> true end]},
-          {Craisin.Subscriber, [], [subscribe: fn _, _, _ -> nil end] }
+          {Craisin.Subscriber, [], [subscribe: fn _, _, _ -> nil end]}
         ]) do
           post(conn, Routes.person_path(conn, :join),
             person: %{email: existing.email, name: "Joe Blow", handle: "joeblow"}
@@ -156,7 +158,9 @@ defmodule ChangelogWeb.PersonControllerTest do
       end
     end
 
-    test "with existing email subscribes, sends email, redirects, but doesn't create person", %{conn: conn} do
+    test "with existing email subscribes, sends email, redirects, but doesn't create person", %{
+      conn: conn
+    } do
       with_mocks([
         {Changelog.Captcha, [], [verify: fn _ -> true end]},
         {Craisin.Subscriber, [], [subscribe: fn _, _ -> nil end]}
@@ -196,7 +200,8 @@ defmodule ChangelogWeb.PersonControllerTest do
         podcast = insert(:podcast)
         count_before = count(Person)
 
-        conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com", to: podcast.slug)
+        conn =
+          post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com", to: podcast.slug)
 
         person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
 
@@ -207,16 +212,19 @@ defmodule ChangelogWeb.PersonControllerTest do
       end
     end
 
-    test "with existing email subscribes, sends email, redirects, but doesn't create person", %{conn: conn} do
+    test "with existing email subscribes, sends email, redirects, but doesn't create person", %{
+      conn: conn
+    } do
       podcast = insert(:podcast)
       existing = insert(:person)
       count_before = count(Person)
 
-      conn = with_mocks([
-        {Changelog.Captcha, [], [verify: fn _ -> true end]},
-      ]) do
-        post(conn, Routes.person_path(conn, :subscribe), email: existing.email, to: podcast.slug)
-      end
+      conn =
+        with_mocks([
+          {Changelog.Captcha, [], [verify: fn _ -> true end]}
+        ]) do
+          post(conn, Routes.person_path(conn, :subscribe), email: existing.email, to: podcast.slug)
+        end
 
       existing = Repo.one(from p in Person, where: p.email == ^existing.email)
 

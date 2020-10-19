@@ -4,7 +4,6 @@ defmodule Changelog.Metacasts.Filterer.ParserTest do
 
   alias Changelog.Metacasts.Filterer
   alias Changelog.Metacasts.Filterer.Parser
-  
 
   @except """
   except
@@ -95,127 +94,128 @@ defmodule Changelog.Metacasts.Filterer.ParserTest do
 
   test "only" do
     assert {:ok,
-    %Filterer.Representation{
-      start: :only,
-      statements: [
-        %Filterer.FacetStatement{
-          items: ["gotime", "rfc", "afk"],
-          logic: :and,
-          repr: :podcast
-        },
-        %Filterer.FacetStatement{
-          items: ["react", "react-native", "typescript"],
-          logic: :or,
-          repr: :topic
-        },
-        %Filterer.FacetStatement{
-          items: ["Jason Fried", "Steve Jobs"],
-          logic: :or,
-          repr: :guest
-        },
-        %Filterer.FacetStatement{items: ["jsparty"], logic: :and, repr: :podcast},
-        {:sub_facet_start, :unless},
-        {:sub_facet_logic, :or},
-        %Filterer.FacetStatement{items: ["Suz Hinton", "KBall"], logic: :or, repr: :host},
-        {:sub_facet_start, :if},
-        {:sub_facet_logic, :or},
-        %Filterer.FacetStatement{
-          items: ["webrtc", "streaming"],
-          logic: :or,
-          repr: :topic
-        },
-        %Filterer.FacetStatement{items: ["golf"], logic: :and, repr: :topic},
-        %Filterer.FacetStatement{items: ["code"], logic: :and, repr: :topic},
-        :sub_facet_end,
-        %Filterer.FacetStatement{items: ["svelte"], logic: :and, repr: :topic},
-        %Filterer.FacetStatement{
-          items: ["phoenix", "liveview"],
-          logic: :and,
-          repr: :topic
-        },
-        :sub_facet_end,
-        %Filterer.FacetStatement{items: ["changelog"], logic: :and, repr: :podcast}
-      ]
-    }} = Parser.parse(@only)
+            %Filterer.Representation{
+              start: :only,
+              statements: [
+                %Filterer.FacetStatement{
+                  items: ["gotime", "rfc", "afk"],
+                  logic: :and,
+                  repr: :podcast
+                },
+                %Filterer.FacetStatement{
+                  items: ["react", "react-native", "typescript"],
+                  logic: :or,
+                  repr: :topic
+                },
+                %Filterer.FacetStatement{
+                  items: ["Jason Fried", "Steve Jobs"],
+                  logic: :or,
+                  repr: :guest
+                },
+                %Filterer.FacetStatement{items: ["jsparty"], logic: :and, repr: :podcast},
+                {:sub_facet_start, :unless},
+                {:sub_facet_logic, :or},
+                %Filterer.FacetStatement{items: ["Suz Hinton", "KBall"], logic: :or, repr: :host},
+                {:sub_facet_start, :if},
+                {:sub_facet_logic, :or},
+                %Filterer.FacetStatement{
+                  items: ["webrtc", "streaming"],
+                  logic: :or,
+                  repr: :topic
+                },
+                %Filterer.FacetStatement{items: ["golf"], logic: :and, repr: :topic},
+                %Filterer.FacetStatement{items: ["code"], logic: :and, repr: :topic},
+                :sub_facet_end,
+                %Filterer.FacetStatement{items: ["svelte"], logic: :and, repr: :topic},
+                %Filterer.FacetStatement{
+                  items: ["phoenix", "liveview"],
+                  logic: :and,
+                  repr: :topic
+                },
+                :sub_facet_end,
+                %Filterer.FacetStatement{items: ["changelog"], logic: :and, repr: :podcast}
+              ]
+            }} = Parser.parse(@only)
   end
 
   test "inline" do
     assert {:ok,
-    %Filterer.Representation{
-      start: :only,
-      statements: [
-        %Filterer.FacetStatement{
-          items: ["gotime", "rfc", "afk"],
-          logic: :and,
-          repr: :podcast
-        },
-        %Filterer.FacetStatement{
-          items: ["react", "react-native", "typescript"],
-          logic: :or,
-          repr: :topic
-        },
-        %Filterer.FacetStatement{
-          items: ["Jason Fried", "Steve Jobs"],
-          logic: :or,
-          repr: :guest
-        },
-        %Filterer.FacetStatement{items: ["jsparty"], logic: :and, repr: :podcast},
-        {:sub_facet_start, :unless},
-        {:sub_facet_logic, :or},
-        %Filterer.FacetStatement{items: ["Suz Hinton", "KBall"], logic: :or, repr: :host},
-        %Filterer.FacetStatement{items: ["svelte"], logic: :and, repr: :topic},
-        %Filterer.FacetStatement{
-          items: ["phoenix", "liveview"],
-          logic: :and,
-          repr: :topic
-        },
-        :sub_facet_end,
-        %Filterer.FacetStatement{items: ["changelog"], logic: :and, repr: :podcast}
-      ]
-    }} = Parser.parse(@inline)
+            %Filterer.Representation{
+              start: :only,
+              statements: [
+                %Filterer.FacetStatement{
+                  items: ["gotime", "rfc", "afk"],
+                  logic: :and,
+                  repr: :podcast
+                },
+                %Filterer.FacetStatement{
+                  items: ["react", "react-native", "typescript"],
+                  logic: :or,
+                  repr: :topic
+                },
+                %Filterer.FacetStatement{
+                  items: ["Jason Fried", "Steve Jobs"],
+                  logic: :or,
+                  repr: :guest
+                },
+                %Filterer.FacetStatement{items: ["jsparty"], logic: :and, repr: :podcast},
+                {:sub_facet_start, :unless},
+                {:sub_facet_logic, :or},
+                %Filterer.FacetStatement{items: ["Suz Hinton", "KBall"], logic: :or, repr: :host},
+                %Filterer.FacetStatement{items: ["svelte"], logic: :and, repr: :topic},
+                %Filterer.FacetStatement{
+                  items: ["phoenix", "liveview"],
+                  logic: :and,
+                  repr: :topic
+                },
+                :sub_facet_end,
+                %Filterer.FacetStatement{items: ["changelog"], logic: :and, repr: :podcast}
+              ]
+            }} = Parser.parse(@inline)
   end
 
   test "inline tight parens" do
     assert {:ok,
-    %Filterer.Representation{
-      start: :only,
-      statements: [
-        %Filterer.FacetStatement{
-          items: ["gotime", "rfc", "afk"],
-          logic: :and,
-          repr: :podcast
-        },
-        %Filterer.FacetStatement{
-          items: ["react", "react-native", "typescript"],
-          logic: :or,
-          repr: :topic
-        },
-        %Filterer.FacetStatement{
-          items: ["Jason Fried", "Steve Jobs"],
-          logic: :or,
-          repr: :guest
-        },
-        %Filterer.FacetStatement{items: ["jsparty"], logic: :and, repr: :podcast},
-        {:sub_facet_start, :unless},
-        {:sub_facet_logic, :or},
-        %Filterer.FacetStatement{items: ["Suz Hinton", "KBall"], logic: :or, repr: :host},
-        %Filterer.FacetStatement{items: ["svelte"], logic: :and, repr: :topic},
-        %Filterer.FacetStatement{
-          items: ["phoenix", "liveview"],
-          logic: :and,
-          repr: :topic
-        },
-        :sub_facet_end,
-        %Filterer.FacetStatement{items: ["changelog"], logic: :and, repr: :podcast}
-      ]
-    }} = Parser.parse(@inline_tight_parens)
+            %Filterer.Representation{
+              start: :only,
+              statements: [
+                %Filterer.FacetStatement{
+                  items: ["gotime", "rfc", "afk"],
+                  logic: :and,
+                  repr: :podcast
+                },
+                %Filterer.FacetStatement{
+                  items: ["react", "react-native", "typescript"],
+                  logic: :or,
+                  repr: :topic
+                },
+                %Filterer.FacetStatement{
+                  items: ["Jason Fried", "Steve Jobs"],
+                  logic: :or,
+                  repr: :guest
+                },
+                %Filterer.FacetStatement{items: ["jsparty"], logic: :and, repr: :podcast},
+                {:sub_facet_start, :unless},
+                {:sub_facet_logic, :or},
+                %Filterer.FacetStatement{items: ["Suz Hinton", "KBall"], logic: :or, repr: :host},
+                %Filterer.FacetStatement{items: ["svelte"], logic: :and, repr: :topic},
+                %Filterer.FacetStatement{
+                  items: ["phoenix", "liveview"],
+                  logic: :and,
+                  repr: :topic
+                },
+                :sub_facet_end,
+                %Filterer.FacetStatement{items: ["changelog"], logic: :and, repr: :podcast}
+              ]
+            }} = Parser.parse(@inline_tight_parens)
   end
 
   test "minimal" do
-    assert {:ok, %Filterer.Representation{
-      start: :except,
-      statements: []
-    }} = Parser.parse(@minimal)
+    assert {:ok,
+            %Filterer.Representation{
+              start: :except,
+              statements: []
+            }} = Parser.parse(@minimal)
   end
 
   test "empty" do

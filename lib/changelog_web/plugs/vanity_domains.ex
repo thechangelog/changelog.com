@@ -17,8 +17,8 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       conn
     else
       podcasts
-      |> Enum.reject(fn(p) -> is_nil(p.vanity_domain) end)
-      |> Enum.find(fn(p) -> URI.parse(p.vanity_domain).host == host end)
+      |> Enum.reject(fn p -> is_nil(p.vanity_domain) end)
+      |> Enum.find(fn p -> URI.parse(p.vanity_domain).host == host end)
       |> vanity_redirect(conn)
     end
   end

@@ -18,7 +18,10 @@ defmodule Changelog.PersonTest do
 
   test "insert_changeset with blocked handle" do
     blocked_handle = Enum.random(Changelog.BlockKit.handles())
-    changeset = Person.insert_changeset(%Person{}, Map.merge(@valid_attrs, %{handle: blocked_handle}))
+
+    changeset =
+      Person.insert_changeset(%Person{}, Map.merge(@valid_attrs, %{handle: blocked_handle}))
+
     refute changeset.valid?
   end
 

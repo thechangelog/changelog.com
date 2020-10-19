@@ -3,8 +3,16 @@ defmodule ChangelogWeb.VanityDomainsTest do
 
   alias ChangelogWeb.{Plug}
 
-  @jsparty %{vanity_domain: "https://jsparty.fm", slug: "jsparty", apple_url: "https://podcasts.apple.com/us/podcast/js-party/id1209616598"}
-  @gotime %{vanity_domain: "https://gotime.fm", slug: "gotime", spotify_url: "https://spotify.com"}
+  @jsparty %{
+    vanity_domain: "https://jsparty.fm",
+    slug: "jsparty",
+    apple_url: "https://podcasts.apple.com/us/podcast/js-party/id1209616598"
+  }
+  @gotime %{
+    vanity_domain: "https://gotime.fm",
+    slug: "gotime",
+    spotify_url: "https://spotify.com"
+  }
 
   def assert_vanity_redirect(conn, path_or_url) do
     location = conn |> get_resp_header("location") |> List.first()

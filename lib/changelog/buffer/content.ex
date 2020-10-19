@@ -28,6 +28,7 @@ defmodule Changelog.Buffer.Content do
 
     if Enum.any?(meta) do
       episode_emoj = episode_emoji()
+
       """
       #{episode_emoj} New episode of #{episode.podcast.name}! #{episode_emoj}
 
@@ -37,6 +38,7 @@ defmodule Changelog.Buffer.Content do
       """
     else
       episode_emoj = episode_emoji()
+
       """
       #{episode_emoj} New episode of #{episode.podcast.name}! #{episode_emoj}
       💚 #{episode_link(item)}
@@ -139,8 +141,11 @@ defmodule Changelog.Buffer.Content do
   defp guest_meta([]), do: nil
   defp guest_meta(guests), do: "#{guest_emoji()} #{guest_intro(guests)} #{twitter_list(guests)}"
 
-  defp guest_intro([_guest]), do: ["our guest", "with guest", "special guest", "featuring"] |> Enum.random()
-  defp guest_intro(_guests), do: ["our guests", "with guests", "special guests", "featuring"] |> Enum.random()
+  defp guest_intro([_guest]),
+    do: ["our guest", "with guest", "special guest", "featuring"] |> Enum.random()
+
+  defp guest_intro(_guests),
+    do: ["our guests", "with guests", "special guests", "featuring"] |> Enum.random()
 
   defp host_meta([]), do: nil
   defp host_meta(hosts), do: "#{host_emoji()} #{host_intro(hosts)} #{twitter_list(hosts)}"

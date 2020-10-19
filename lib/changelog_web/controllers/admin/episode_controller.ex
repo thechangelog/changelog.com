@@ -167,7 +167,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.insert(changeset) do
       {:ok, episode} ->
-
         conn
         |> put_flash(:result, "success")
         |> redirect_next(

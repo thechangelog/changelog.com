@@ -3,7 +3,18 @@ defmodule ChangelogWeb.FeedController do
 
   require Logger
 
-  alias Changelog.{AgentKit, Episode, Metacast, NewsItem, NewsSource, Person, Podcast, Post, Topic}
+  alias Changelog.{
+    AgentKit,
+    Episode,
+    Metacast,
+    NewsItem,
+    NewsSource,
+    Person,
+    Podcast,
+    Post,
+    Topic
+  }
+
   alias ChangelogWeb.Plug.ResponseCache
 
   plug :log_subscribers, "log podcast subscribers" when action in [:podcast]
@@ -47,6 +58,7 @@ defmodule ChangelogWeb.FeedController do
 
   def metacast(conn, %{"slug" => slug}) do
     metacast = Metacast.get_by_slug!(slug)
+
     if metacast.is_official do
       render_feed_for_metacast(conn, metacast)
     else

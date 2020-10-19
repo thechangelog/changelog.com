@@ -32,6 +32,7 @@ defmodule ChangelogWeb.Admin.MetacastController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_metacast_path(conn, :edit, metacast))
+
       {:error, changeset} ->
         conn
         |> put_flash(:result, "failure")
@@ -55,6 +56,7 @@ defmodule ChangelogWeb.Admin.MetacastController do
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_metacast_path(conn, :index))
+
       {:error, changeset} ->
         render(conn, :edit, metacast: metacast, changeset: changeset)
     end

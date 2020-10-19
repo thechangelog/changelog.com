@@ -10,8 +10,10 @@ defmodule ChangelogWeb.RedirectsTest do
     cond do
       location == path_or_url ->
         assert true
+
       String.starts_with?(path_or_url, "http") ->
         assert location == path_or_url
+
       true ->
         assert location == "https://changelog.com#{path_or_url}"
     end

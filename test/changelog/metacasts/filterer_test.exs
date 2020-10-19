@@ -10,27 +10,27 @@ defmodule Changelog.Metacasts.FiltererTest do
     gotime = insert(:podcast, slug: "gotime")
     changelog = insert(:podcast, slug: "podcast")
     jsparty = insert(:podcast, slug: "jsparty")
+
     {:ok,
-    podcasts: [gotime, changelog, jsparty],
-    episodes: [
-            insert(:published_episode,
-                id: 1,
-                slug: "phoenix-liveview-episode",
-                title: "Phoenix LiveView",
-                summary: "A web framework for Elixir",
-                notes: "Chris McCord",
-                podcast: jsparty
-            ),
-            insert(:published_episode,
-                id: 2,
-                slug: "rails-episode",
-                title: "Rails",
-                summary: "A web framework for Ruby",
-                notes: "DHH",
-                podcast: changelog
-            )
-        ]
-    }
+     podcasts: [gotime, changelog, jsparty],
+     episodes: [
+       insert(:published_episode,
+         id: 1,
+         slug: "phoenix-liveview-episode",
+         title: "Phoenix LiveView",
+         summary: "A web framework for Elixir",
+         notes: "Chris McCord",
+         podcast: jsparty
+       ),
+       insert(:published_episode,
+         id: 2,
+         slug: "rails-episode",
+         title: "Rails",
+         summary: "A web framework for Ruby",
+         notes: "DHH",
+         podcast: changelog
+       )
+     ]}
   end
 
   test "flatten episodes and filter them" do
@@ -43,9 +43,10 @@ defmodule Changelog.Metacasts.FiltererTest do
   end
 
   test "filter statement abuse limit" do
-    too_many_statements = Enum.reduce(0..@statement_limit, "except ", fn num, query ->
-      query <> " podcast: podcast-#{num}"
-    end)
+    too_many_statements =
+      Enum.reduce(0..@statement_limit, "except ", fn num, query ->
+        query <> " podcast: podcast-#{num}"
+      end)
 
     assert {:error, :too_many_statements} = Filterer.compile(too_many_statements)
   end

@@ -29,7 +29,11 @@ defmodule ChangelogWeb.Admin.MetacastControllerTest do
 
   @tag :as_admin
   test "creates metacast and redirects", %{conn: conn} do
-    conn = post(conn, Helpers.admin_metacast_path(conn, :create), metacast: valid_attrs("creates-metacast-and-redirects"), next: Helpers.admin_metacast_path(conn, :index))
+    conn =
+      post(conn, Helpers.admin_metacast_path(conn, :create),
+        metacast: valid_attrs("creates-metacast-and-redirects"),
+        next: Helpers.admin_metacast_path(conn, :index)
+      )
 
     assert redirected_to(conn) == Helpers.admin_metacast_path(conn, :index)
     assert count(Metacast) == 1
@@ -56,7 +60,10 @@ defmodule ChangelogWeb.Admin.MetacastControllerTest do
   test "updates metacast and redirects", %{conn: conn} do
     metacast = insert(:metacast, slug: "updates-metacast-and-redirects")
 
-    conn = put(conn, Helpers.admin_metacast_path(conn, :update, metacast), metacast: valid_attrs("updates-metacast-and-redirects"))
+    conn =
+      put(conn, Helpers.admin_metacast_path(conn, :update, metacast),
+        metacast: valid_attrs("updates-metacast-and-redirects")
+      )
 
     assert redirected_to(conn) == Helpers.admin_metacast_path(conn, :index)
     assert count(Metacast) == 1
@@ -67,7 +74,8 @@ defmodule ChangelogWeb.Admin.MetacastControllerTest do
     metacast = insert(:metacast, slug: "does-not-update-with-invalid-attributes")
     count_before = count(Metacast)
 
-    conn = put(conn, Helpers.admin_metacast_path(conn, :update, metacast), metacast: @invalid_attrs)
+    conn =
+      put(conn, Helpers.admin_metacast_path(conn, :update, metacast), metacast: @invalid_attrs)
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Metacast) == count_before
@@ -76,15 +84,22 @@ defmodule ChangelogWeb.Admin.MetacastControllerTest do
   test "requires user auth on all actions", %{conn: conn} do
     metacast = insert(:metacast, slug: "requires-user-auth-on-all-actions")
 
-    Enum.each([
-      get(conn, Helpers.admin_metacast_path(conn, :index)),
-      get(conn, Helpers.admin_metacast_path(conn, :new)),
-      post(conn, Helpers.admin_metacast_path(conn, :create), metacast: valid_attrs("requires-user-auth-1")),
-      get(conn, Helpers.admin_metacast_path(conn, :edit, metacast)),
-      put(conn, Helpers.admin_metacast_path(conn, :update, metacast), metacast: valid_attrs("requires-user-auth-2"))
-    ], fn conn ->
-      assert html_response(conn, 302)
-      assert conn.halted
-    end)
+    Enum.each(
+      [
+        get(conn, Helpers.admin_metacast_path(conn, :index)),
+        get(conn, Helpers.admin_metacast_path(conn, :new)),
+        post(conn, Helpers.admin_metacast_path(conn, :create),
+          metacast: valid_attrs("requires-user-auth-1")
+        ),
+        get(conn, Helpers.admin_metacast_path(conn, :edit, metacast)),
+        put(conn, Helpers.admin_metacast_path(conn, :update, metacast),
+          metacast: valid_attrs("requires-user-auth-2")
+        )
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 end

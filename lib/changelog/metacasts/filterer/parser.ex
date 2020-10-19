@@ -13,7 +13,8 @@ defmodule Changelog.Metacasts.Filterer.Parser do
   @sub_facet_logics ["any", "all"]
 
   def parse(filter_string) do
-    representation = filter_string
+    representation =
+      filter_string
       |> loosen_tight_parens()
       |> normalize_whitespace()
       |> String.trim()
@@ -22,6 +23,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
       |> parse_tokens()
 
     errors = Enum.filter(representation.statements, &match?({:error, _}, &1))
+
     cond do
       length(errors) > 0 -> {:error, errors}
       is_nil(representation.start) -> {:error, :no_start}
@@ -91,6 +93,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
         true ->
           %{current | mode: :closable, items: [token | items]}
       end
+
     parsed(repr, current)
   end
 
@@ -99,6 +102,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
       # Capture closer for list, such as "or", okay if a single item
       length(items) == 1 and token in @list_closers ->
         parsed(repr, %{current | mode: :closing, logic: list_closer(token)})
+
       # No closer found to turn single into two-item list, closing and reparsing token
       true ->
         # Update representation
@@ -109,17 +113,24 @@ defmodule Changelog.Metacasts.Filterer.Parser do
   end
 
   defp parse_token(token, %FacetStatement{mode: :closable, items: items} = current, repr) do
-    current = cond do
-      # Capture closer for list, such as "or", okay if a single item without comma or list of commad items
-      length(items) > 0 and token in @list_closers ->
-        %{current | mode: :closing, logic: list_closer(token)}
-      # No closer found to turn single into two-item list, closing
-      true ->
-        {:error, "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{current.repr}, type: #{current.type}: #{inspect(items)}"}
-    end
+    current =
+      cond do
+        # Capture closer for list, such as "or", okay if a single item without comma or list of commad items
+        length(items) > 0 and token in @list_closers ->
+          %{current | mode: :closing, logic: list_closer(token)}
+
+        # No closer found to turn single into two-item list, closing
+        true ->
+          {:error,
+           "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{
+             current.repr
+           }, type: #{current.type}: #{inspect(items)}"}
+      end
 
     case current do
-      %FacetStatement{} -> parsed(repr, current)
+      %FacetStatement{} ->
+        parsed(repr, current)
+
       {:error, _} ->
         repr
         |> add_statement(current)
@@ -138,11 +149,20 @@ defmodule Changelog.Metacasts.Filterer.Parser do
 
   defp parse_token(token, %FacetStatement{} = current, repr) do
     repr
-    |> add_statement({:error, "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{current.repr}, type: #{current.type}: #{inspect(current.items)}"})
+    |> add_statement(
+      {:error,
+       "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{
+         current.repr
+       }, type: #{current.type}: #{inspect(current.items)}"}
+    )
     |> parsed(nil)
   end
 
-  defp parse_token("unless" = token, nil, %{statements: [%FacetStatement{mode: :closed} | _]} = repr) do
+  defp parse_token(
+         "unless" = token,
+         nil,
+         %{statements: [%FacetStatement{mode: :closed} | _]} = repr
+       ) do
     repr
     |> add_statement(Statements.sub_facet_start(token))
     |> parsed(nil)
@@ -173,24 +193,18 @@ defmodule Changelog.Metacasts.Filterer.Parser do
 
   defp parse_token("unless", _, repr) do
     repr
-    |> add_statement(
-      {:error,
-        "Unexpected unless, should follow on a facet filter."}
-    )
+    |> add_statement({:error, "Unexpected unless, should follow on a facet filter."})
     |> parsed(nil)
   end
 
   defp parse_token("if", _, repr) do
     repr
-    |> add_statement(
-      {:error,
-        "Unexpected if, should follow on a facet filter."}
-    )
+    |> add_statement({:error, "Unexpected if, should follow on a facet filter."})
     |> parsed(nil)
   end
 
   defp parse_token(token, nil, %{statements: [{:sub_facet_start, _} | _]} = repr)
-        when token in @sub_facet_logics do
+       when token in @sub_facet_logics do
     repr
     |> add_statement(Statements.sub_facet_logic(token))
     |> parsed(nil)
@@ -203,7 +217,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     repr
     |> add_statement(
       {:error,
-        "Unexpected '(' not after sub facet logic marker, should follow 'unless any', 'if any', 'unless all' or 'if all'."}
+       "Unexpected '(' not after sub facet logic marker, should follow 'unless any', 'if any', 'unless all' or 'if all'."}
     )
     |> parsed(current)
   end

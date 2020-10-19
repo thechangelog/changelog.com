@@ -4,26 +4,26 @@ defmodule Changelog.Metacasts.Filterer.CacheTest do
   alias Changelog.Metacasts.Filterer.Cache
 
   @episodes [
-      %{
-        id: 1,
-        podcast: "rfc",
-        host: [],
-        guest: [],
-        topic: []
+    %{
+      id: 1,
+      podcast: "rfc",
+      host: [],
+      guest: [],
+      topic: []
     },
     %{
-        id: 2,
-        podcast: "afk",
-        host: [],
-        guest: [],
-        topic: []
+      id: 2,
+      podcast: "afk",
+      host: [],
+      guest: [],
+      topic: []
     },
     %{
-        id: 3,
-        podcast: "gotime",
-        host: [],
-        guest: [],
-        topic: []
+      id: 3,
+      podcast: "gotime",
+      host: [],
+      guest: [],
+      topic: []
     }
   ]
 
@@ -40,6 +40,4 @@ defmodule Changelog.Metacasts.Filterer.CacheTest do
     assert [%{id: 2}, %{id: 3}] = Cache.filter!(@episodes, second_filter) |> Enum.to_list()
     assert %{"only podcast: rfc" => _, "except podcast: rfc" => _} = Cache.stat()
   end
-
-  
 end

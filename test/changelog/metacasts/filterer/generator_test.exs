@@ -198,38 +198,41 @@ defmodule Changelog.Metacasts.Filterer.GeneratorTest do
 
   test "except" do
     stream_filter = Generator.generate_stream_filters(@except)
+
     assert [
-      :weird_one,
-      :weird_two,
-      :jsparty_suz_webrtc,
-      :jsparty_kball_golf,
-      :jsparty_svelte,
-      :jsparty_svelte_angular,
-      :jsparty_phoenix_liveview,
-      :kubernetes_only
-    ] = filter_to_ids(@samples, stream_filter)
+             :weird_one,
+             :weird_two,
+             :jsparty_suz_webrtc,
+             :jsparty_kball_golf,
+             :jsparty_svelte,
+             :jsparty_svelte_angular,
+             :jsparty_phoenix_liveview,
+             :kubernetes_only
+           ] = filter_to_ids(@samples, stream_filter)
   end
 
   test "only" do
     stream_filter = Generator.generate_stream_filters(@only)
+
     assert [
-      :jobs_only,
-      :jsparty_only,
-      :jsparty_jerod_only,
-      :jsparty_suz_only,
-      :jsparty_phoenix_only
-    ] = filter_to_ids(@samples, stream_filter)
+             :jobs_only,
+             :jsparty_only,
+             :jsparty_jerod_only,
+             :jsparty_suz_only,
+             :jsparty_phoenix_only
+           ] = filter_to_ids(@samples, stream_filter)
   end
 
   test "kubernetes, end-to-end" do
-    stream_filter = "only topic: kubernetes"
-    |> Parser.parse()
-    |> elem(1)
-    |> Generator.generate_stream_filters()
+    stream_filter =
+      "only topic: kubernetes"
+      |> Parser.parse()
+      |> elem(1)
+      |> Generator.generate_stream_filters()
 
     assert [
-      :kubernetes_only
-    ] = filter_to_ids(@samples, stream_filter)
+             :kubernetes_only
+           ] = filter_to_ids(@samples, stream_filter)
   end
 
   test "minimal" do

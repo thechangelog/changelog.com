@@ -52,16 +52,18 @@ defmodule ChangelogWeb.Admin.PageController do
     dates = EpisodeStat.reach_dates(range)
     minimum = Map.get(params, "min", "10") |> String.to_integer()
 
-    episodes = if podcast do
-      EpisodeStat.date_range_episode_reach(podcast, dates, minimum)
-    else
-      EpisodeStat.date_range_episode_reach(dates, minimum)
-    end |> Enum.map(fn(stat) ->
-      Episode
-      |> Repo.get(stat.episode_id)
-      |> Episode.preload_podcast()
-      |> Map.put(:focused_reach, stat.reach)
-    end)
+    episodes =
+      if podcast do
+        EpisodeStat.date_range_episode_reach(podcast, dates, minimum)
+      else
+        EpisodeStat.date_range_episode_reach(dates, minimum)
+      end
+      |> Enum.map(fn stat ->
+        Episode
+        |> Repo.get(stat.episode_id)
+        |> Episode.preload_podcast()
+        |> Map.put(:focused_reach, stat.reach)
+      end)
 
     conn
     |> assign(:podcast, podcast)

@@ -19,14 +19,16 @@ defmodule Changelog.EpisodeStat do
 
   def between(query \\ __MODULE__, start_date, end_date),
     do: from(q in query, where: q.date < ^end_date, where: q.date >= ^start_date)
+
   def on_date(query \\ __MODULE__, date), do: from(q in query, where: q.date == ^date)
   def sum_reach(query \\ __MODULE__), do: from(q in query, select: sum(q.uniques))
 
-  def sum_episode_reach(query \\ __MODULE__)  do
+  def sum_episode_reach(query \\ __MODULE__) do
     from(q in query,
-    group_by: q.episode_id,
-    select: %{episode_id: q.episode_id, reach: fragment("sum(?) as reach", q.uniques)},
-    order_by: [desc: fragment("reach")])
+      group_by: q.episode_id,
+      select: %{episode_id: q.episode_id, reach: fragment("sum(?) as reach", q.uniques)},
+      order_by: [desc: fragment("reach")]
+    )
   end
 
   def sum_downloads(query \\ __MODULE__), do: from(q in query, select: sum(q.downloads))
@@ -131,7 +133,7 @@ defmodule Changelog.EpisodeStat do
     |> between(older_date, newer_date)
     |> sum_episode_reach()
     |> Repo.all()
-    |> Enum.reject(fn(%{reach: reach}) -> reach < minimum end)
+    |> Enum.reject(fn %{reach: reach} -> reach < minimum end)
   end
 
   def date_range_episode_reach(podcast = %Podcast{}, {older_date, newer_date}, minimum) do
@@ -140,7 +142,7 @@ defmodule Changelog.EpisodeStat do
     |> between(older_date, newer_date)
     |> sum_episode_reach()
     |> Repo.all()
-    |> Enum.reject(fn(%{reach: reach}) -> reach < minimum end)
+    |> Enum.reject(fn %{reach: reach} -> reach < minimum end)
   end
 
   # returns a tuple to be used in 'between' queries and the like
@@ -151,30 +153,40 @@ defmodule Changelog.EpisodeStat do
     case label do
       :now_7 ->
         {Timex.shift(now, days: -7), now}
+
       :now_30 ->
         {Timex.shift(now, days: -30), now}
+
       :now_90 ->
         {Timex.shift(now, days: -90), now}
+
       :now_year ->
         {Timex.shift(now, years: -1), now}
+
       :prev_7 ->
         prev = Timex.shift(now, days: -7)
         {Timex.shift(prev, days: -7), prev}
+
       :prev_30 ->
         prev = Timex.shift(now, days: -30)
         {Timex.shift(prev, days: -30), prev}
+
       :prev_90 ->
         prev = Timex.shift(now, days: -90)
         {Timex.shift(prev, days: -90), prev}
+
       :prev_year ->
         prev = Timex.shift(now, years: -1)
         {Timex.shift(prev, years: -1), prev}
+
       :then_7 ->
         then = Timex.shift(now, years: -1)
         {Timex.shift(then, days: -7), then}
+
       :then_30 ->
         then = Timex.shift(now, years: -1)
         {Timex.shift(then, days: -30), then}
+
       :then_90 ->
         then = Timex.shift(now, years: -1)
         {Timex.shift(then, days: -90), then}

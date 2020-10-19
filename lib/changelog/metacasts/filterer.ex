@@ -21,14 +21,18 @@ defmodule Changelog.Metacasts.Filterer do
 
   def compile(filter_string) do
     case Parser.parse(filter_string) do
-      {:ok, representation} -> 
+      {:ok, representation} ->
         if length(representation.statements) > @statement_limit do
           {:error, :too_many_statements}
         else
           {:ok, Generator.generate_stream_filters(representation)}
         end
-      {:error, error} -> {:error, error}
-      error -> error
+
+      {:error, error} ->
+        {:error, error}
+
+      error ->
+        error
     end
   end
 
@@ -50,7 +54,8 @@ defmodule Changelog.Metacasts.Filterer do
     end
   end
 
-  def filter(items, stream_filter) when is_function(stream_filter), do: {:ok, stream_filter.(items)}
+  def filter(items, stream_filter) when is_function(stream_filter),
+    do: {:ok, stream_filter.(items)}
 
   def statement_limit, do: @statement_limit
 end

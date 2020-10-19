@@ -27,6 +27,7 @@ defmodule ChangelogWeb.MetacastView do
   end
 
   def cover_url(metacast), do: cover_url(metacast, :original)
+
   def cover_url(metacast, version) do
     if metacast.cover do
       Routes.static_url(Endpoint, cover_path(metacast, version))

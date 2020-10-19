@@ -34,7 +34,10 @@ defmodule ChangelogWeb.Admin.SearchView do
           results: process_results(results.news_sources, &news_source_result/1)
         },
         people: %{name: "People", results: process_results(results.people, &person_result/1)},
-        podcasts: %{name: "Podcasts", results: process_results(results.podcasts, &podcast_result/1)},
+        podcasts: %{
+          name: "Podcasts",
+          results: process_results(results.podcasts, &podcast_result/1)
+        },
         posts: %{name: "Posts", results: process_results(results.posts, &post_result/1)},
         sponsors: %{
           name: "Sponsors",
@@ -56,14 +59,15 @@ defmodule ChangelogWeb.Admin.SearchView do
   end
 
   def render(json_template, _params = %{results: results, query: _query}) do
-    process_fn = case json_template do
-      "news_item.json" -> &news_item_result/1
-      "news_source.json" -> &news_source_result/1
-      "person.json" -> &person_result/1
-      "podcast.json" -> &podcast_result/1
-      "sponsor.json" -> &sponsor_result/1
-      "topic.json" -> &topic_result/1
-    end
+    process_fn =
+      case json_template do
+        "news_item.json" -> &news_item_result/1
+        "news_source.json" -> &news_source_result/1
+        "person.json" -> &person_result/1
+        "podcast.json" -> &podcast_result/1
+        "sponsor.json" -> &sponsor_result/1
+        "topic.json" -> &topic_result/1
+      end
 
     %{results: Enum.map(results, process_fn)}
   end

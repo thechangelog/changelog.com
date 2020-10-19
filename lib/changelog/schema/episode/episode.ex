@@ -322,18 +322,19 @@ defmodule Changelog.Episode do
   end
 
   def flatten_episode_for_filtering(episode) do
-      episode = Repo.preload(episode, [:podcast, :hosts, :guests, :topics])
-      %{
-        id: episode.id,
-        slug: episode.slug,
-        title: episode.title,
-        type: episode.type,
-        published_at: episode.published_at,
-        podcast: episode.podcast.slug,
-        host: Enum.map(episode.hosts, fn host -> host.name end),
-        guest: Enum.map(episode.guests, fn guest -> guest.name end),
-        topic: Enum.map(episode.topics, fn topic -> topic.slug end)
-      }
+    episode = Repo.preload(episode, [:podcast, :hosts, :guests, :topics])
+
+    %{
+      id: episode.id,
+      slug: episode.slug,
+      title: episode.title,
+      type: episode.type,
+      published_at: episode.published_at,
+      podcast: episode.podcast.slug,
+      host: Enum.map(episode.hosts, fn host -> host.name end),
+      guest: Enum.map(episode.guests, fn guest -> guest.name end),
+      topic: Enum.map(episode.topics, fn topic -> topic.slug end)
+    }
   end
 
   defp derive_audio_bytes_and_duration(changeset = %{changes: %{audio_file: _}}) do
@@ -379,11 +380,12 @@ defmodule Changelog.Episode do
   end
 
   defp flatten_stream(stream) do
-    stream = Stream.map(stream, fn episode ->
-      flatten_episode_for_filtering(episode)
-    end)
+    stream =
+      Stream.map(stream, fn episode ->
+        flatten_episode_for_filtering(episode)
+      end)
 
-    Repo.transaction(fn () ->
+    Repo.transaction(fn ->
       Enum.to_list(stream)
     end)
   end
