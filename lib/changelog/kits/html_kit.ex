@@ -25,4 +25,18 @@ defmodule Changelog.HtmlKit do
         "Couldn't parse title. Report to Jerod!"
     end
   end
+
+  def put_no_follow({:safe, html}), do: put_no_follow(html)
+
+  def put_no_follow(html) do
+    case Floki.parse_document(html) do
+      {:ok, document} ->
+        document
+        |> Floki.attr("a", "rel", fn _ -> "nofollow" end)
+        |> Floki.raw_html()
+
+      {:error, _string} ->
+        html
+    end
+  end
 end

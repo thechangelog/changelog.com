@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemCommentView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{ListKit, NewsItemComment, StringKit}
+  alias Changelog.{ListKit, HtmlKit, NewsItemComment, StringKit}
   alias ChangelogWeb.{LayoutView, PersonView, TimeView}
 
   def hashid(comment), do: NewsItemComment.hashid(comment)
@@ -23,5 +23,6 @@ defmodule ChangelogWeb.NewsItemCommentView do
     |> StringKit.mentions_linkify(mentioned)
     |> StringKit.md_linkify()
     |> SharedHelpers.md_to_safe_html()
+    |> HtmlKit.put_no_follow()
   end
 end

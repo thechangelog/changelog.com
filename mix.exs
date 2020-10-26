@@ -42,6 +42,7 @@ defmodule Changelog.Mixfile do
       {:scrivener_ecto, "~> 2.0"},
       {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-5-5"},
       {:cmark, "~> 0.6"},
+      {:floki, "~> 0.29.0"},
       {:html_sanitize_ex, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},

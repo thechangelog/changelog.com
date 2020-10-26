@@ -11,7 +11,7 @@
       </a>
       <% end %>
       <div class="profile_tooltip-info">
-        <p><%= @person.bio |> SharedHelpers.md_to_safe_html() |> raw() %></p>
+        <p><%= @person |> bio_as_html() |> raw() %></p>
         <ul class="profile_tooltip-info-links">
         <%= if @person.website do %>
           <li><%= SharedHelpers.external_link("Website", to: @person.website) %></li>

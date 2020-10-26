@@ -3,7 +3,7 @@ defmodule Changelog.HtmlKitTest do
 
   alias Changelog.HtmlKit
 
-  describe "get_title" do
+  describe "get_title/1" do
     test "defaults to empty string" do
       assert HtmlKit.get_title(nil) == ""
       assert HtmlKit.get_title("") == ""
@@ -36,7 +36,7 @@ defmodule Changelog.HtmlKitTest do
     end
   end
 
-  describe "get_images" do
+  describe "get_images/1" do
     test "defaults to empty list" do
       assert HtmlKit.get_images(nil) == []
     end
@@ -72,6 +72,24 @@ defmodule Changelog.HtmlKitTest do
                "https://blech.com/test.svg",
                "/blech/test.png"
              ]
+    end
+  end
+
+  describe "put_no_follow/1" do
+    test "does nothing if there are no anchors" do
+      assert HtmlKit.put_no_follow("<html></html>") == "<html></html>"
+    end
+
+    test "it adds rel=nofollow to a single anchor" do
+      a = ~s(<div><h1><a href="test.com">ohai</a></h1></div>)
+      b = ~s(<div><h1><a rel="nofollow" href="test.com">ohai</a></h1></div>)
+      assert HtmlKit.put_no_follow(a) == b
+    end
+
+    test "it adds rel=nofollow to multiple anchors" do
+      a = ~s(<a href="">ohai there</a>  <a href="">obai there</a>)
+      b = ~s(<a rel="nofollow" href="">ohai there</a><a rel="nofollow" href="">obai there</a>)
+      assert HtmlKit.put_no_follow(a) == b
     end
   end
 end

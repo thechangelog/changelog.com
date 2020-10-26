@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PersonView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, NewsItem, Person, Podcast}
+  alias Changelog.{Files, HtmlKit, NewsItem, Person, Podcast}
   alias ChangelogWeb.{Endpoint, NewsItemView, SharedView, PodcastView}
 
   def avatar_path(person, version) do
@@ -18,6 +18,12 @@ defmodule ChangelogWeb.PersonView do
     else
       gravatar_url(person.email, version)
     end
+  end
+
+  def bio_as_html(person) do
+    person.bio
+    |> SharedHelpers.md_to_safe_html()
+    |> HtmlKit.put_no_follow()
   end
 
   defp gravatar_url(email, version) do
