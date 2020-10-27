@@ -31,7 +31,7 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :admin do
-    plug :put_layout, {ChangelogWeb.LayoutView, :admin}
+    plug Plug.AdminLayoutPlug
   end
 
   pipeline :public do
