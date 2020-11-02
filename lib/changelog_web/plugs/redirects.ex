@@ -32,6 +32,7 @@ defmodule ChangelogWeb.Plug.Redirects do
     case get_host(conn) do
       "changelog.com" -> changelog_redirects(conn)
       "2020.changelog.com" -> domain_redirects(conn)
+      "www.changelog.com" -> domain_redirects(conn)
       _else -> conn
     end
   end
