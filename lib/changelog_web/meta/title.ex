@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Meta.Title do
   @default "News and podcasts for developers"
 
   def page_title(assigns) do
-    [get(assigns), @default, "Changelog"]
+    [get(assigns) || @default, "Changelog"]
     |> Enum.reject(&is_nil/1)
     |> Enum.join(" |> ")
   end
