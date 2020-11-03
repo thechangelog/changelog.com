@@ -132,6 +132,18 @@
           </header>
 
           <div class="transcript">
+            <div  class="transcript-item transcript-item--break">
+              <div class="transcript-item-speaker">
+                <%= link to: Routes.page_path(@conn, :about), title: "Changelog Media" do %>
+                  <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
+                <% end %>
+                <p class="transcript-item-speaker-name">Changelog</p>
+              </div>
+              <div class="transcript-item-text">
+                <p><%= link("Click here", to: audio_url(@episode),
+                data: [play: Routes.episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)]) %> to listen along while you enjoy the transcript. 🎧</p>
+              </div>
+            </div>
             <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
               <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
               <a id="transcript-<%= index %>" class="anchor"></a>
