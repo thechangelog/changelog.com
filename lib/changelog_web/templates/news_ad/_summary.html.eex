@@ -2,7 +2,7 @@
   <%= render("_header.html", assigns) %>
   <%= render("_toolbar.html", assigns) %>
   <div class="news_item-content richtext">
-    <%= @ad.story |> SharedHelpers.md_to_html() |> raw() %>
+    <%= @ad |> story_as_html() |> raw() %>
   </div>
   <%= image_link(@ad) %>
 </article>

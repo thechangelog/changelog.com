@@ -1,6 +1,6 @@
 <span class="news_item-toolbar-meta-item">
 <%= if @item.logger do %>
-  logged by <strong><%= SharedHelpers.external_link(PersonView.handle(@item.logger), to: SharedHelpers.twitter_url(@item.logger)) %></strong>
+  logged by <strong><%= link(PersonView.handle(@item.logger), to: PersonView.profile_path(@item.logger)) %></strong>
 <% end %>
 <%= if @item.submitter do %>
   via <strong><%= link(PersonView.handle(@item.submitter), to: PersonView.profile_path(@item.submitter)) %></strong>

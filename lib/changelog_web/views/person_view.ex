@@ -23,7 +23,7 @@ defmodule ChangelogWeb.PersonView do
   def bio_as_html(person) do
     person.bio
     |> SharedHelpers.md_to_safe_html()
-    |> HtmlKit.put_no_follow()
+    |> HtmlKit.put_ugc()
   end
 
   defp gravatar_url(email, version) do
@@ -110,7 +110,7 @@ defmodule ChangelogWeb.PersonView do
       %{value: person.website, text: "Website", url: person.website}
     ]
     |> Enum.reject(fn x -> x.value == nil end)
-    |> Enum.map(fn x -> ~s{<a href="#{x.url}">#{x.text}</a>} end)
+    |> Enum.map(fn x -> ~s{<a href="#{x.url}" rel="external ugc">#{x.text}</a>} end)
     |> Enum.join(separator)
   end
 

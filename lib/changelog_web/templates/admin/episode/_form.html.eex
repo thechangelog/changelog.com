@@ -134,7 +134,7 @@
 
           <h4 class="ui sponsor header">
             #<span class="js-position-display"><%= i.data.position || i.params["position"] %></span> &mdash;
-            <%= SharedHelpers.external_link(sponsor.name, to: Routes.admin_sponsor_path(@conn, :show, sponsor)) %>
+            <%= link(sponsor.name, to: Routes.admin_sponsor_path(@conn, :show, sponsor), rel: "external") %>
           </h4>
 
           <div class="fields">

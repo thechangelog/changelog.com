@@ -14,16 +14,16 @@
         <p><%= @person |> bio_as_html() |> raw() %></p>
         <ul class="profile_tooltip-info-links">
         <%= if @person.website do %>
-          <li><%= SharedHelpers.external_link("Website", to: @person.website) %></li>
+          <li><%= link("Website", to: @person.website, rel: "external ugc") %></li>
         <% end %>
         <%= if @person.twitter_handle do %>
-          <li><%= SharedHelpers.external_link("Twitter", to: SharedHelpers.twitter_url(@person)) %></li>
+          <li><%= link("Twitter", to: SharedHelpers.twitter_url(@person), rel: "external ugc") %></li>
         <% end %>
         <%= if @person.github_handle do %>
-          <li><%= SharedHelpers.external_link("GitHub", to: SharedHelpers.github_url(@person)) %></li>
+          <li><%= link("GitHub", to: SharedHelpers.github_url(@person), rel: "external ugc") %></li>
         <% end %>
         <%= if @person.linkedin_handle do %>
-          <li><%= SharedHelpers.external_link("LinkedIn", to: SharedHelpers.linkedin_url(@person)) %></li>
+          <li><%= link("LinkedIn", to: SharedHelpers.linkedin_url(@person), rel: "external ugc") %></li>
         <% end %>
         </ul>
       </div>

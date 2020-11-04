@@ -3,13 +3,15 @@
     <%= link @podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
     &raquo; Edit
   <%= if @episode.published do %>
-    <%= SharedHelpers.external_link "(View)",
+    <%= link("(View)",
       to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
-      class: "view" %>
+      rel: "external",
+      class: "view") %>
   <% else %>
-    <%= SharedHelpers.external_link "(Preview)",
+    <%= link("(Preview)",
       to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
-      class: "view" %>
+      rel: "external",
+      class: "view") %>
   <% end %>
   </h1>
 

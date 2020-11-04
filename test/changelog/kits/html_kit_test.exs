@@ -75,21 +75,21 @@ defmodule Changelog.HtmlKitTest do
     end
   end
 
-  describe "put_no_follow/1" do
+  describe "put_a_rel/1" do
     test "does nothing if there are no anchors" do
-      assert HtmlKit.put_no_follow("<html></html>") == "<html></html>"
+      assert HtmlKit.put_a_rel("<html></html>", "nofollow") == "<html></html>"
     end
 
-    test "it adds rel=nofollow to a single anchor" do
+    test "it adds rel='external sponsored' to a single anchor" do
       a = ~s(<div><h1><a href="test.com">ohai</a></h1></div>)
-      b = ~s(<div><h1><a rel="nofollow" href="test.com">ohai</a></h1></div>)
-      assert HtmlKit.put_no_follow(a) == b
+      b = ~s(<div><h1><a rel="external sponsored" href="test.com">ohai</a></h1></div>)
+      assert HtmlKit.put_a_rel(a, "external sponsored") == b
     end
 
-    test "it adds rel=nofollow to multiple anchors" do
+    test "it adds rel='ugc' to multiple anchors" do
       a = ~s(<a href="">ohai there</a>  <a href="">obai there</a>)
-      b = ~s(<a rel="nofollow" href="">ohai there</a><a rel="nofollow" href="">obai there</a>)
-      assert HtmlKit.put_no_follow(a) == b
+      b = ~s(<a rel="ugc" href="">ohai there</a><a rel="ugc" href="">obai there</a>)
+      assert HtmlKit.put_a_rel(a, "ugc") == b
     end
   end
 end

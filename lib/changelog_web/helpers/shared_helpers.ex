@@ -88,8 +88,6 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     "#{uri.scheme}://#{uri.host}"
   end
 
-  def external_link(text, opts), do: link(text, opts ++ [rel: "external"])
-
   def get_param(assigns, param, default \\ nil), do: Map.get(assigns.conn.params, param, default)
 
   def get_assigns_or_param(assigns, param, default \\ nil) do
@@ -103,7 +101,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def github_link(model) do
     if model.github_handle do
-      external_link(model.github_handle, to: github_url(model.github_handle))
+      link(model.github_handle, to: github_url(model.github_handle), rel: "external")
     end
   end
 
@@ -181,13 +179,13 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def twitter_link(model, string \\ nil) do
     if model.twitter_handle do
-      external_link(string || model.twitter_handle, to: twitter_url(model.twitter_handle))
+      link(string || model.twitter_handle, to: twitter_url(model.twitter_handle), rel: "external")
     end
   end
 
   def website_link(model) do
     if model.website do
-      external_link(domain_name(model.website), to: model.website)
+      link(domain_name(model.website), to: model.website, rel: "external")
     end
   end
 

@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EpisodeView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, Github, ListKit, NewsItem}
+  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem}
 
   alias ChangelogWeb.{
     Endpoint,

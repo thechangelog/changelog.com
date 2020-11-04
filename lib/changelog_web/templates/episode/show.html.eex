@@ -44,7 +44,7 @@
           <h3>Brought to you by</h3>
           <div class="episode-body-summary-sponsors-list">
           <%= for episode_sponsor <- dark_logo_sponsorships do %>
-            <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name do %>
+            <%= link to: episode_sponsor.link_url, title: episode_sponsor.sponsor.name, rel: "sponsored" do %>
               <%= SharedHelpers.lazy_image(SponsorView.logo_url(episode_sponsor.sponsor, :dark_logo, :small), "#{episode_sponsor.sponsor.name} Logo") %>
             <% end %>
           <% end %>
@@ -103,7 +103,7 @@
           <div class="richtext richtext--small">
             <%= for sponsor <- @episode.episode_sponsors do %>
               <p>
-                <strong><%= link sponsor.title, to: sponsor.link_url %></strong> – <%= sponsor.description |> SharedHelpers.md_to_html |> SharedHelpers.sans_p_tags |> raw %>
+                <strong><%= link(sponsor.title, to: sponsor.link_url, rel: "sponsored") %></strong> – <%= sponsor.description |> SharedHelpers.md_to_html() |> HtmlKit.put_sponsored() |> SharedHelpers.sans_p_tags() |> raw() %>
               </p>
             <% end %>
           </div>
@@ -115,10 +115,10 @@
           <a id="notes" class="anchor"></a>
           <header class="section_heading">
             <h3 class="section_heading-text">Notes &amp; Links</h3>
-            <p class="section_heading-note"><%= SharedHelpers.external_link("Edit on GitHub", to: show_notes_source_url(@episode), title: "View notes source on GitHub") %></p>
+            <p class="section_heading-note"><%= link("📝 Edit Notes", to: show_notes_source_url(@episode), title: "Edit the show notes on GitHub", rel: "external") %></p>
           </header>
           <div class="richtext richtext--small">
-            <%= @episode.notes |> SharedHelpers.md_to_html |> raw %>
+            <%= @episode.notes |> SharedHelpers.md_to_html() |> raw() %>
           </div>
         </section>
       <% end %>
@@ -128,7 +128,7 @@
           <a id="transcript" class="anchor"></a>
           <header class="section_heading">
             <h3 class="section_heading-text">Transcript</h3>
-            <p class="section_heading-note"><%= SharedHelpers.external_link("Edit on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub") %></p>
+            <p class="section_heading-note"><%= link("📝 Edit Transcript", to: transcript_source_url(@episode), title: "Edit the transcript on GitHub", rel: "external") %></p>
           </header>
 
           <div class="transcript">

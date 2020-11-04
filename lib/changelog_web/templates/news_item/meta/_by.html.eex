@@ -1,3 +1,3 @@
 <span class="news_item-toolbar-meta-item">
-  by <strong><%= SharedHelpers.external_link(@post.author.name, to: SharedHelpers.twitter_url(@post.author)) %></strong>
+  by <strong><%= link(@post.author.name, to: PersonView.profile_path(@post.author)) %></strong>
 </span>

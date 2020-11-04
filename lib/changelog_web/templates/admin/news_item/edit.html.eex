@@ -5,7 +5,7 @@
   <%= if NewsItem.is_published(@item) do %>
     <%= link "(View)", to: Routes.news_item_path(@conn, :show, NewsItem.slug(@item)), class: "view" %>
   <% else %>
-    <%= SharedHelpers.external_link "(Preview)", to: Routes.news_item_path(@conn, :preview, @item), class: "view" %>
+    <%= link("(Preview)", to: Routes.news_item_path(@conn, :preview, @item), rel: "external", class: "view") %>
   <% end %>
   </h1>
 

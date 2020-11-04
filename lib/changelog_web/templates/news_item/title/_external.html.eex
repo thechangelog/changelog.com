@@ -1,7 +1,7 @@
 <%=
 if SharedHelpers.controller_action_combo(@conn) == "news_item-show" do
-  SharedHelpers.external_link(raw(@item.headline <> "&nbsp;&nbsp;↦"), to: @item.url, data: [news: true])
+  link(raw(@item.headline <> "&nbsp;&nbsp;↦"), to: @item.url, rel: "external", data: [news: true])
 else
-  SharedHelpers.external_link(@item.headline, to: @item.url, data: [news: true])
+  link(@item.headline, to: @item.url, rel: "external", data: [news: true])
 end
 %>

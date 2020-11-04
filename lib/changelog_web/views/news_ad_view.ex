@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsAdView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Files, NewsAd}
+  alias Changelog.{Files, HtmlKit, NewsAd}
   alias ChangelogWeb.{Endpoint, SponsorView}
 
   def admin_edit_link(conn, %{admin: true}, ad) do
@@ -38,4 +38,10 @@ defmodule ChangelogWeb.NewsAdView do
   def image_url(ad, version), do: Routes.static_url(Endpoint, image_path(ad, version))
 
   def render_toolbar_button(_conn, _ad), do: nil
+
+  def story_as_html(ad) do
+    ad.story
+    |> SharedHelpers.md_to_html()
+    |> HtmlKit.put_sponsored()
+  end
 end

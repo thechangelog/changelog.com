@@ -6,13 +6,15 @@
 
     <div class="ui basic right floated buttons">
       <%= if @episode.published do %>
-        <%= SharedHelpers.external_link "View Public",
+        <%= link("View Public",
           to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
-          class: "ui button" %>
+          rel: "external",
+          class: "ui button") %>
       <% else %>
-        <%= SharedHelpers.external_link "Preview",
+        <%= link("Preview",
           to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
-          class: "ui button" %>
+          rel: "external",
+          class: "ui button") %>
       <% end %>
       <%= if @item do %>
         <%= link("News Item", to: Routes.admin_news_item_path(@conn, :edit, @item), class: "ui button") %>

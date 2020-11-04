@@ -9,9 +9,10 @@
       to: Routes.news_issue_path(@conn, :show, @issue.slug),
       class: "view" %>
   <% else %>
-    <%= SharedHelpers.external_link "(Preview)",
+    <%= link("(Preview)",
       to: Routes.news_issue_path(@conn, :preview, @issue.slug),
-      class: "view" %>
+      rel: "external",
+      class: "view") %>
   <% end %>
   </h1>
 

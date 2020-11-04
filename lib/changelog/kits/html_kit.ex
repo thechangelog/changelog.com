@@ -26,17 +26,23 @@ defmodule Changelog.HtmlKit do
     end
   end
 
-  def put_no_follow({:safe, html}), do: put_no_follow(html)
-
-  def put_no_follow(html) do
+  def put_a_rel(html, value) do
     case Floki.parse_document(html) do
       {:ok, document} ->
         document
-        |> Floki.attr("a", "rel", fn _ -> "nofollow" end)
+        |> Floki.attr("a", "rel", fn _ -> value end)
         |> Floki.raw_html()
 
       {:error, _string} ->
         html
     end
   end
+
+  def put_ugc({:safe, html}), do: put_ugc(html)
+
+  def put_ugc(html), do: put_a_rel(html, "ugc")
+
+  def put_sponsored({:safe, html}), do: put_sponsored(html)
+
+  def put_sponsored(html), do: put_a_rel(html, "sponsored")
 end

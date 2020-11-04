@@ -23,6 +23,6 @@ defmodule ChangelogWeb.NewsItemCommentView do
     |> StringKit.mentions_linkify(mentioned)
     |> StringKit.md_linkify()
     |> SharedHelpers.md_to_safe_html()
-    |> HtmlKit.put_no_follow()
+    |> HtmlKit.put_ugc()
   end
 end
