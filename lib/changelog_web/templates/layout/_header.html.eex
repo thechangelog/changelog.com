@@ -1,11 +1,7 @@
 <header class="header">
   <div class="header-container">
     <div class="header-wrap">
-      <%= if SharedHelpers.controller_action_combo(@conn) == "news_item-index" do %>
-        <h1 class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></h1>
-      <% else %>
-        <p class="header-logo"><%= link("Changelog", to: "/", title: "Go $home") %></p>
-      <% end %>
+      <p class="header-logo"><%= link("Changelog", to: "/", title: "Go $HOME") %></p>
 
       <nav class="header-nav">
         <div class="header-nav-wrap">
@@ -93,7 +89,7 @@
   <div class="mobile_nav-inner">
     <div class="mobile_nav-main">
       <div class="mobile_nav-main-inner">
-        <h1 class="mobile_nav-logo"><%= link "Changelog", to: "/", title: "Go $home" %></h1>
+        <p class="mobile_nav-logo"><%= link("Changelog", to: "/", title: "Go $HOME") %></p>
         <ul class="mobile_nav-list">
           <li class="mobile_nav-list-item"><%= link("News", to: Routes.root_path(@conn, :index)) %></li>
           <li class="mobile_nav-list-item"><%= link("Podcasts", to: Routes.podcast_path(@conn, :index)) %></li>
