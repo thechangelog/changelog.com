@@ -102,7 +102,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> assign_podcasts([@gotime, @jsparty])
       |> Plug.VanityDomains.call([])
 
-    assert_vanity_redirect(conn, "https://changelog.typeform.com/to/lfyUE3s9")
+    assert_vanity_redirect(conn, "https://changelog.typeform.com/to/wTCcQHGQ")
   end
 
   test "it no-ops for changelog.com host" do
