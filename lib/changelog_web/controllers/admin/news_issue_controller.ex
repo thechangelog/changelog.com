@@ -35,14 +35,21 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
       |> NewsItem.top_ctr_first()
       |> Repo.all()
 
+    posts =
+      NewsItem.published_since(last_issue)
+      |> NewsItem.post()
+      |> NewsItem.top_ctr_first()
+      |> Repo.all()
+
     news =
       NewsItem.published_since(last_issue)
       |> NewsItem.non_audio()
+      |> NewsItem.non_post()
       |> NewsItem.top_ctr_first()
       |> Repo.all()
 
     items =
-      (episodes ++ news)
+      (episodes ++ posts ++ news)
       |> Enum.with_index(1)
       |> Enum.map(&NewsIssueItem.build_and_preload/1)
 

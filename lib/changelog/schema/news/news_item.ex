@@ -67,13 +67,16 @@ defmodule Changelog.NewsItem do
       from(q in query, where: q.id in ^ids, order_by: fragment("array_position(?, ?)", ^ids, q.id))
 
   def feed_only(query \\ __MODULE__), do: from(q in query, where: q.feed_only)
-  def non_feed_only(query \\ __MODULE__), do: from(q in query, where: not q.feed_only)
+  def non_feed_only(query \\ __MODULE__), do: from(q in query, where: not(q.feed_only))
 
   def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
   def drafted(query \\ __MODULE__), do: from(q in query, where: q.status == ^:draft)
 
   def logged_by(query \\ __MODULE__, person),
     do: from(q in query, where: q.logger_id == ^person.id)
+
+  def post(query \\ __MODULE__), do: from(q in query, where: like(q.object_id, ^"posts:%"))
+  def non_post(query \\ __MODULE__), do: from(q in query, where: fragment("? is null or ? not like 'posts:%'", q.object_id, q.object_id))
 
   def published(query \\ __MODULE__),
     do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now())
