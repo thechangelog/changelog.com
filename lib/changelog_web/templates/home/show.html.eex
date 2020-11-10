@@ -9,8 +9,6 @@
       <h3>Join Changelog++</h3>
       <p>The <em>best way</em> to directly support the podcasts, news, videos, & other awesome stuff we create. We'll take you <em>closer to the metal</em> with no ads, extended episodes, outtakes, bonus content, a deep discount in our merch store (soon), and more to come.</p>
 
-      <p><strong>Become a founding member and save 40% during the month of August!</strong></p>
-
       <div class="account_ctas-item-info-buttons">
       <%= link("Check it Out", to: "https://changelog.com/++", target: "_blank") %>
       </div>
