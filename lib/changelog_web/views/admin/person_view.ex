@@ -6,7 +6,6 @@ defmodule ChangelogWeb.Admin.PersonView do
   alias ChangelogWeb.Admin.{EpisodeView, EpisodeRequestView, NewsItemView}
 
   def avatar_url(person), do: PersonView.avatar_url(person)
-  def episode_count(person), do: Person.episode_count(person)
 
   def is_subscribed(person, thing), do: PersonView.is_subscribed(person, thing)
 
@@ -36,6 +35,4 @@ defmodule ChangelogWeb.Admin.PersonView do
     end)
     |> Enum.join("")
   end
-
-  def post_count(person), do: Person.post_count(person)
 end

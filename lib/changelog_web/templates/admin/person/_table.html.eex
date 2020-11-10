@@ -4,10 +4,9 @@
       <th>Person</th>
       <th>Links</th>
       <th>Created</th>
-      <th>Joined</th>
       <th>Last Seen</th>
-      <th>Posts</th>
-      <th>Episodes</th>
+      <th>In Slack</th>
+      <th>Subs</th>
       <th>
         <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
       </th>
@@ -24,13 +23,15 @@
         <%= if person.admin do %>
           <div class="ui tiny blue basic label">Admin</div>
         <% end %>
+        <%= if String.length(person.bio || "") > 500 do %>%
+          <div class="ui tiny yellow basic label">Long Bio</div>
+        <% end %>
       </td>
       <td><div class="ui basic icon buttons"><%= person |> list_of_links() |> raw() %></div></td>
       <td><%= AdminHelpers.ts(person.inserted_at) %></td>
-      <td><%= AdminHelpers.ts(person.joined_at) %></td>
       <td><%= AdminHelpers.ts(person.signed_in_at) %></td>
-      <td><%= post_count(person) %></td>
-      <td><%= episode_count(person) %></td>
+      <td><%= if person.slack_id, do: "Yes" %></td>
+      <td><%= Person.subscription_count(person) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: Routes.admin_person_path(@conn, :show, person)) %>

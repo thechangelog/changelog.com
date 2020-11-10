@@ -265,6 +265,10 @@ defmodule Changelog.Person do
   def preload_subscriptions(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :subscriptions)
   def preload_subscriptions(person), do: Repo.preload(person, :subscriptions)
 
+  def subscription_count(person) do
+    Repo.count(from(s in Subscription, where: s.person_id == ^person.id))
+  end
+
   def with_fake_data(person \\ %__MODULE__{}) do
     fake_name = Faker.name()
     fake_handle = Faker.handle(fake_name)

@@ -3,6 +3,12 @@
     <%= link("People", to: Routes.admin_person_path(@conn, :index)) %>
     &raquo;
     <%= @person.name %> (<%= @person.handle %>)
+    <div class="ui basic right floated buttons">
+      <%= link("View Public",
+            to: Routes.person_path(@conn, :show, @person.handle),
+            rel: "external",
+            class: "ui button") %>
+    </div>
     <div class="sub header">
       created: <%= AdminHelpers.ts(@person.inserted_at) %>
       &nbsp;&bull;&nbsp;
