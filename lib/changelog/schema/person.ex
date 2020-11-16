@@ -258,16 +258,19 @@ defmodule Changelog.Person do
     hostings ++ guestings
   end
 
+  def podcast_subscription_count(person) do
+    Subscription
+    |> Subscription.for_person(person)
+    |> Subscription.to_podcast()
+    |> Repo.count()
+  end
+
   def post_count(person) do
     Repo.count(from(p in Post, where: p.author_id == ^person.id))
   end
 
   def preload_subscriptions(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :subscriptions)
   def preload_subscriptions(person), do: Repo.preload(person, :subscriptions)
-
-  def subscription_count(person) do
-    Repo.count(from(s in Subscription, where: s.person_id == ^person.id))
-  end
 
   def with_fake_data(person \\ %__MODULE__{}) do
     fake_name = Faker.name()

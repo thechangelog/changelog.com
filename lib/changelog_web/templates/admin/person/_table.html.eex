@@ -31,7 +31,7 @@
       <td><%= AdminHelpers.ts(person.inserted_at) %></td>
       <td><%= AdminHelpers.ts(person.signed_in_at) %></td>
       <td><%= if person.slack_id, do: "Yes" %></td>
-      <td><%= Person.subscription_count(person) %></td>
+      <td><%= Person.podcast_subscription_count(person) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: Routes.admin_person_path(@conn, :show, person)) %>
