@@ -60,7 +60,7 @@ defmodule ChangelogWeb.PersonControllerTest do
           post(conn, Routes.person_path(conn, :join), person: %{email: "nope"})
         end
 
-      assert html_response(conn, 200) =~ ~r/roboto/i
+      assert html_response(conn, 200) =~ ~r/robot/i
       assert count(Person) == count_before
     end
 

@@ -55,7 +55,7 @@ defmodule ChangelogWeb.PersonController do
       changeset = Person.insert_changeset(%Person{}, person_params)
 
       conn
-      |> put_flash(:error, "No domo arigato mr. roboto 🤖")
+      |> put_flash(:error, "CAPTCHA fail. Are you blocking scripts? Are you a robot? 🤖")
       |> render(:join, changeset: changeset, person: nil)
     end
   end
