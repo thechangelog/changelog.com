@@ -5,6 +5,7 @@ defmodule Changelog.PodcastHost do
 
   schema "podcast_hosts" do
     field :position, :integer
+    field :retired, :boolean, default: false
     field :delete, :boolean, virtual: true
 
     belongs_to :person, Person
@@ -15,7 +16,7 @@ defmodule Changelog.PodcastHost do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(position podcast_id person_id delete)a)
+    |> cast(params, ~w(position retired podcast_id person_id delete)a)
     |> validate_required([:position])
     |> foreign_key_constraint(:person_id)
     |> foreign_key_constraint(:podcast_id)

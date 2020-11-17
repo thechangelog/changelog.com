@@ -128,10 +128,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     podcast =
       podcast
       |> Podcast.preload_topics()
-      |> Podcast.preload_hosts()
+      |> Podcast.preload_active_hosts()
 
     default_hosts =
-      podcast.hosts
+      podcast.active_hosts
       |> Enum.with_index(1)
       |> Enum.map(&EpisodeHost.build_and_preload/1)
 

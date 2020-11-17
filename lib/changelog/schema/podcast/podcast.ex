@@ -45,8 +45,16 @@ defmodule Changelog.Podcast do
     has_many :episode_requests, EpisodeRequest, on_delete: :delete_all
     has_many :podcast_topics, PodcastTopic, on_delete: :delete_all
     has_many :topics, through: [:podcast_topics, :topic]
+
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
     has_many :hosts, through: [:podcast_hosts, :person]
+
+    has_many :active_podcast_hosts, PodcastHost, where: [retired: false]
+    has_many :active_hosts, through: [:active_podcast_hosts, :person]
+
+    has_many :retired_podcast_hosts, PodcastHost, where: [retired: true]
+    has_many :retired_hosts, through: [:retired_podcast_hosts, :person]
+
     has_many :episode_stats, EpisodeStat
     has_many :subscriptions, Subscription, where: [unsubscribed_at: nil]
 
@@ -64,7 +72,9 @@ defmodule Changelog.Podcast do
       apple_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
       spotify_url: "https://open.spotify.com/show/0S1h5K7jm2YvOcM7y1ZMXY",
       cover: true,
-      hosts: []
+      hosts: [],
+      active_hosts: [],
+      retired_hosts: []
     }
   end
 
@@ -108,7 +118,8 @@ defmodule Changelog.Podcast do
   def get_by_slug!(slug) do
     public()
     |> Repo.get_by!(slug: slug)
-    |> preload_hosts()
+    |> preload_active_hosts()
+    |> preload_retired_hosts()
   end
 
   def get_episodes(%{slug: "master"}), do: from(e in Episode)
@@ -180,6 +191,30 @@ defmodule Changelog.Podcast do
     podcast
     |> Repo.preload(podcast_hosts: {PodcastHost.by_position(), :person})
     |> Repo.preload(:hosts)
+  end
+
+  def preload_active_hosts(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(active_podcast_hosts: ^PodcastHost.by_position())
+    |> Ecto.Query.preload(:active_hosts)
+  end
+
+  def preload_active_hosts(podcast) do
+    podcast
+    |> Repo.preload(active_podcast_hosts: {PodcastHost.by_position(), :person})
+    |> Repo.preload(:active_hosts)
+  end
+
+  def preload_retired_hosts(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(retired_podcast_hosts: ^PodcastHost.by_position())
+    |> Ecto.Query.preload(:retired_hosts)
+  end
+
+  def preload_retired_hosts(podcast) do
+    podcast
+    |> Repo.preload(retired_podcast_hosts: {PodcastHost.by_position(), :person})
+    |> Repo.preload(:retired_hosts)
   end
 
   def preload_topics(query = %Ecto.Query{}) do

@@ -95,13 +95,26 @@ export default class SearchWidget {
       let $member = $clicked.closest(".item");
 
       if ($member.hasClass("persisted")) {
-        $clicked.siblings("input").val(true);
+        $clicked.children("input").val(true);
         $member.hide();
       } else {
         $member.remove();
       }
 
       setPositions();
+    }).on("click", ".js-retire", function(event) {
+      let $clicked = $(this);
+      let $member = $clicked.closest(".item");
+
+      if ($clicked.hasClass("positive")) {
+        $clicked.children("input").val(true);
+        $clicked.removeClass("positive").addClass("negative");
+        $clicked.children("i").addClass("slash");
+      } else {
+        $clicked.children("input").val(false);
+        $clicked.removeClass("negative").addClass("positive");
+        $clicked.children("i").removeClass("slash");
+      }
     })
   }
 }

@@ -35,12 +35,12 @@
         <%= @podcast.schedule_note |> SharedHelpers.md_to_html() |> raw() %>
       </div>
 
-      <%= if Enum.any?(@podcast.hosts) do %>
-      <div class="show-header-hosts avatar_list <%= if length(@podcast.hosts) < 4, do: 'avatar_list--full' %>">
-      <%= for person <- @podcast.hosts do %>
+      <%= if Enum.any?(@podcast.active_hosts) do %>
+      <div class="show-header-hosts avatar_list <%= if length(@podcast.active_hosts) < 4, do: 'avatar_list--full' %>">
+      <%= for person <- @podcast.active_hosts do %>
         <%= link to: PersonView.profile_path(person), class: "avatar_list-item", title: person.name do %>
           <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>
-          <%= if length(@podcast.hosts) < 4 do %>
+          <%= if length(@podcast.active_hosts) < 4 do %>
             <p><%= person.name %></p>
           <% else %>
             <p><%= PersonView.first_name(person) %></p>

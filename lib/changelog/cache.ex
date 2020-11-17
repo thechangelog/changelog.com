@@ -90,7 +90,8 @@ defmodule Changelog.Cache do
     get_or_store("podcasts", :infinity, fn ->
       Podcast.active()
       |> Podcast.by_position()
-      |> Podcast.preload_hosts()
+      |> Podcast.preload_active_hosts()
+      |> Podcast.preload_retired_hosts()
       |> Repo.all()
     end)
   end

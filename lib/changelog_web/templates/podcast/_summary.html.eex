@@ -15,16 +15,16 @@
         <% end %>
       </div>
       <%= @podcast.description |> SharedHelpers.md_to_html() |> raw() %>
-    <%= if Enum.any?(@podcast.hosts) do %>
+    <%= if Enum.any?(@podcast.active_hosts) do %>
       <h3>Hosted by:</h3>
       <ul class="show_list-shows-item-content-hosts">
-      <%= if length(@podcast.hosts) > 3 do %>
-        <%= for person <- Enum.take_random(@podcast.hosts, 3) do %>
+      <%= if length(@podcast.active_hosts) > 3 do %>
+        <%= for person <- Enum.take_random(@podcast.active_hosts, 3) do %>
           <li><%= link(person.name, to: PersonView.profile_path(person)) %></li>
         <% end %>
           <li><%= link("and more...", to: Routes.podcast_path(@conn, :show, @podcast.slug)) %></li>
       <% else %>
-        <%= for person <- @podcast.hosts do %>
+        <%= for person <- @podcast.active_hosts do %>
           <li><%= link(person.name, to: PersonView.profile_path(person)) %></li>
         <% end %>
       <% end %>

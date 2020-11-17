@@ -67,8 +67,22 @@
           </div>
 
           <div class="right floated content">
-            <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
-            <%= hidden_input i, :delete %>
+          <%= if i.data.retired do %>
+            <div class="ui tiny icon negative button js-retire">
+              <i class="microphone slash icon"></i>
+              <%= hidden_input(i, :retired) %>
+            </div>
+          <% else %>
+            <div class="ui tiny icon positive button js-retire">
+              <i class="microphone icon"></i>
+              <%= hidden_input(i, :retired) %>
+            </div>
+          <% end %>
+
+            <div class="ui tiny icon button js-remove">
+              <i class="remove icon"></i>
+              <%= hidden_input(i, :delete) %>
+            </div>
           </div>
         </div>
       <% end %>
