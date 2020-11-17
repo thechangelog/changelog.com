@@ -266,6 +266,10 @@ lke-ls: linode
 lke-versions: linode
 	$(LINODE) --all lke versions-list
 
+.PHONY: lke-node-types
+lke-node-types: | linode
+	$(LINODE) linodes types
+
 $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
 
