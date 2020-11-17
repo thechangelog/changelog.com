@@ -5,12 +5,11 @@ defmodule ChangelogWeb.Plug.Redirects do
   alias ChangelogWeb.RedirectController, as: Redirect
   import ChangelogWeb.Plug.Conn
 
-  @sponsors %{
-    "/datadog" =>
-      "https://www.datadoghq.com/lpgs/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=ChangelogPodcast-Tshirt",
+  @external %{
+    "/datadog" => "https://www.datadoghq.com/lpgs/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=ChangelogPodcast-Tshirt",
     "/sentry" => "https://sentry.io/from/changelog/",
-    "/codacy" =>
-      "https://codacy.com/product?utm_source=Changelog&utm_medium=cpm&utm_campaign=Changelog-Podcast"
+    "/codacy" => "https://codacy.com/product?utm_source=Changelog&utm_medium=cpm&utm_campaign=Changelog-Podcast",
+    "/reactpodcast" => "https://reactpodcast.simplecast.com"
   }
 
   @internal %{
@@ -41,7 +40,7 @@ defmodule ChangelogWeb.Plug.Redirects do
     conn
     |> internal_redirect()
     |> podcast_redirect()
-    |> sponsor_redirect()
+    |> external_redirect()
   end
 
   defp domain_redirects(conn = %{request_path: path}) do
@@ -70,10 +69,10 @@ defmodule ChangelogWeb.Plug.Redirects do
     end
   end
 
-  defp sponsor_redirect(conn = %{halted: true}), do: conn
+  defp external_redirect(conn = %{halted: true}), do: conn
 
-  defp sponsor_redirect(conn = %{request_path: path}) do
-    if destination = Map.get(@sponsors, path, false) do
+  defp external_redirect(conn = %{request_path: path}) do
+    if destination = Map.get(@external, path, false) do
       conn |> Redirect.call(external: destination) |> Plug.Conn.halt()
     else
       conn
