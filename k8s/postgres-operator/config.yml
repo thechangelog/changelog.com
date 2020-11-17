@@ -3,7 +3,9 @@
 #! If necessary, these values can be overwritten in a number of ways: https://github.com/k14s/ytt/blob/master/docs/ytt-data-values.md
 ---
 #! https://access.crunchydata.com/documentation/postgres-operator/4.4.0/installation/postgres-operator/#configuration-postgres-operator-yml
-action: update
+#! Certificates will only be created if action is install.
+#! Change to update if already installed.
+action: install
 metrics: "true"
 storage:
   persistentretain:
