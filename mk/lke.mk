@@ -333,3 +333,4 @@ include $(CURDIR)/mk/kube-prometheus.mk
 include $(CURDIR)/mk/postgres.mk
 include $(CURDIR)/mk/changelog.mk
 include $(CURDIR)/mk/keel.mk
+include $(CURDIR)/mk/grafana-cloud.mk
