@@ -3,7 +3,13 @@
   <div class="show-header-inner">
 
     <div class="show-header-art">
-      <%= SharedHelpers.lazy_image(cover_url(@podcast, :original), "#{@podcast.name} Artwork", width: 490, height: 490) %>
+      <img
+        src="<%= cover_url(@podcast, :original) %>"
+        srcset="<%= cover_url(@podcast, :original) %> 3000w, <%= cover_url(@podcast, :medium) %> 440w, <%= cover_url(@podcast, :small) %> 100w"
+        sizes="490vw"
+        loading="lazy"
+        alt="<%= @podcast.name %> Artwork"
+      >
     <%= if @podcast.status != :published do %>
       <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
     <% end %>
