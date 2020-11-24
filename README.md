@@ -180,6 +180,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://marceloandrader.github.io/"><img src="https://avatars0.githubusercontent.com/u/57552?v=4" width="100px;" alt=""/><br /><sub><b>Marcelo Andrade</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=marceloandrader" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/axelson"><img src="https://avatars1.githubusercontent.com/u/9973?v=4" width="100px;" alt=""/><br /><sub><b>Jason Axelson</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=axelson" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://akoutmos.com/"><img src="https://avatars0.githubusercontent.com/u/4753634?v=4" width="100px;" alt=""/><br /><sub><b>Alexander Koutmos</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=akoutmos" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
