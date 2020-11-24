@@ -65,6 +65,7 @@ export default class SearchWidget {
 
         switch (type) {
           case "person":
+            context.parentIsPodcast = (parentType == "podcast");
             $list.append(personItem(context));
             break;
           case "podcast":
