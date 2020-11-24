@@ -7,7 +7,7 @@ export default class FormUI {
       content: "Read-only because danger. Use the console if you really need to edit this.",
       variation: "very wide"
     });
-    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown:not(.link)").dropdown();
     $(".ui.checkbox").checkbox();
     $(".ui.button, [data-popup=true]").popup();
     $(".use-url").on("click", function() {
@@ -41,7 +41,7 @@ export default class FormUI {
   static refresh() {
     autosize($("textarea:not(.scroll)"));
     $("input[readonly]").popup("refresh");
-    $(".ui.dropdown").dropdown("refresh");
+    $(".ui.dropdown:not(.link)").dropdown("refresh");
     $(".ui.checkbox").checkbox("refresh");
     $(".ui.button, [data-popup=true]").popup("refresh");
   }

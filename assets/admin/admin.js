@@ -36,6 +36,7 @@ FormUI.init();
 
 $("a[rel=external]").attr("target", "_blank");
 $(".ui.modal").modal();
+$(".ui.dropdown.link").dropdown({action: "nothing"});
 
 $(".js-modal").on("click", function() {
   const modalSelector = $(this).data("modal");
