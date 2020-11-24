@@ -71,8 +71,10 @@
           </div>
 
           <div class="right floated content">
-            <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
-            <%= hidden_input(i, :delete) %>
+            <div class="ui tiny icon button js-remove">
+              <i class="remove icon"></i>
+              <%= hidden_input(i, :delete) %>
+            </div>
           </div>
         </div>
       <% end %>
@@ -102,8 +104,10 @@
           </div>
 
           <div class="right floated content">
-            <div class="ui tiny icon button js-remove"><i class="remove icon"></i></div>
-            <%= hidden_input(i, :delete) %>
+            <div class="ui tiny icon button js-remove">
+              <i class="remove icon"></i>
+              <%= hidden_input(i, :delete) %>
+            </div>
           </div>
         </div>
       <% end %>
