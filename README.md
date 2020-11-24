@@ -56,7 +56,8 @@ app_1    | Webpack is watching the files…
 ...
 ```
 
-You can now access a dev copy of changelog.com locally, at http://localhost:4000
+You can now access a dev copy of changelog.com locally, at `http://localhost:4000` or at `https://localhost:4001` if you
+would like to access the HTTPS version.
 
 When you want to stop all Docker containers, press both `CTRL` and `c` keys at the same time (`Ctrl+C`).
 

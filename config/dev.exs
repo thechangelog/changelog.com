@@ -50,9 +50,10 @@ config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: SecretOrEnv.get("DB_NAME", "changelog_dev"),
   hostname: SecretOrEnv.get("DB_HOST", "localhost"),
-  password: SecretOrEnv.get("DB_PASS"),
-  pool_size: 10,
-  username: SecretOrEnv.get("DB_USER", "postgres")
+  username: SecretOrEnv.get("DB_USER", "postgres"),
+  password: SecretOrEnv.get("DB_PASS", "postgres"),
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
 
 config :rollbax,
   access_token: "",
