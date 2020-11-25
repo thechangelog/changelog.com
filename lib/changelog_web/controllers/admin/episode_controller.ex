@@ -87,7 +87,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Enum.reject(fn {_, reach, _, _} -> reach == 0 end)
 
     conn
-    |> assign(:podcasts, Cache.podcasts())
     |> assign(:episodes, page.entries)
     |> assign(:episode_requests, episode_requests)
     |> assign(:scheduled, scheduled)

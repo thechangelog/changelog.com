@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
 
   alias Changelog.StringKit
   alias ChangelogWeb.{PersonView}
+  alias ChangelogWeb.Admin.{PodcastView}
 
   def credit(%{pronunciation: pronunciation}) do
     if StringKit.present?(pronunciation) do

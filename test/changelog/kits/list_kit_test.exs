@@ -14,4 +14,26 @@ defmodule Changelog.ListKitTest do
       assert joined == "ohai-there"
     end
   end
+
+  describe "exclude/2" do
+    test "it excludes by id matching when thing is a map with an id" do
+      list = [%{id: 1, name: "1st"}, %{id: 2, name: "2nd"}, %{id: 3, name: "3rd"}]
+      assert ListKit.exclude(list, %{id: 2}) == [%{id: 1, name: "1st"}, %{id: 3, name: "3rd"}]
+    end
+
+    test "it excludes a single thing from a list" do
+      list = [1,2,3]
+      assert ListKit.exclude(list, 2) == [1,3]
+    end
+
+    test "it excludes nothing when thing is nil" do
+      list = [1,2,3]
+      assert ListKit.exclude(list, nil) == [1,2,3]
+    end
+
+    test "it excludes a list of things from a list" do
+      list = [1,2,3,4,5]
+      assert ListKit.exclude(list, [2,4]) == [1,3,5]
+    end
+  end
 end

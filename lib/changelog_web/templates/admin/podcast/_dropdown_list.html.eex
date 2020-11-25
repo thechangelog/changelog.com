@@ -1,0 +1,14 @@
+<% linkable = Changelog.Cache.podcasts() |> Changelog.ListKit.exclude(@podcast) %>
+
+<%= if Enum.any?(linkable) do %>
+<div class="ui inline link dropdown">
+  <div class="text">&raquo;</div>
+  <div class="menu">
+  <%= for podcast <- linkable do %>
+    <%= if Policies.Podcast.show(@current_user, podcast) do %>
+      <%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug), class: "item") %>
+    <% end %>
+  <% end %>
+  </div>
+</div>
+<% end %>
