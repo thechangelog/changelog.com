@@ -9,7 +9,7 @@ defmodule Changelog.Policies.Podcast do
 
   defp is_host(actor, podcast) do
     podcast
-    |> Map.get(:hosts, [])
+    |> Map.get(:active_hosts, [])
     |> Enum.member?(actor)
   end
 end

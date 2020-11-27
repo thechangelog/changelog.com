@@ -19,7 +19,7 @@ defmodule Changelog.Policies.PodcastTest do
       refute apply(Policies.Podcast, policy, [@user, %{}])
       refute apply(Policies.Podcast, policy, [@editor, %{}])
       refute apply(Policies.Podcast, policy, [@host, %{}])
-      refute apply(Policies.Podcast, policy, [@host, %{hosts: [@host]}])
+      refute apply(Policies.Podcast, policy, [@host, %{active_hosts: [@host]}])
       assert apply(Policies.Podcast, policy, [@admin, %{}])
     end
   end
@@ -38,6 +38,6 @@ defmodule Changelog.Policies.PodcastTest do
     refute Policies.Podcast.show(@editor, %{})
     refute Policies.Podcast.show(@host, %{})
     assert Policies.Podcast.show(@admin, %{})
-    assert Policies.Podcast.show(@host, %{hosts: [@host]})
+    assert Policies.Podcast.show(@host, %{active_hosts: [@host]})
   end
 end
