@@ -308,7 +308,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
-    podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_hosts()
+    podcast = Repo.get_by!(Podcast, slug: slug) |> Podcast.preload_active_hosts()
     assign(conn, :podcast, podcast)
   end
 

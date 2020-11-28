@@ -9,7 +9,7 @@ defmodule Changelog.Policies.EpisodeTest do
     refute Policies.Episode.new(@editor, %{})
     refute Policies.Episode.new(@host, %{})
     assert Policies.Episode.create(@admin, %{})
-    assert Policies.Episode.create(@host, %{hosts: [@host]})
+    assert Policies.Episode.create(@host, %{active_hosts: [@host]})
   end
 
   test "only admins and podcast hosts can get the index" do
@@ -18,7 +18,7 @@ defmodule Changelog.Policies.EpisodeTest do
     refute Policies.Episode.index(@editor, %{})
     refute Policies.Episode.index(@host, %{})
     assert Policies.Episode.index(@admin, %{})
-    assert Policies.Episode.index(@host, %{hosts: [@host]})
+    assert Policies.Episode.index(@host, %{active_hosts: [@host]})
   end
 
   test "only admins and podcast hosts can show" do
@@ -27,7 +27,7 @@ defmodule Changelog.Policies.EpisodeTest do
     refute Policies.Episode.show(@editor, %{})
     refute Policies.Episode.show(@host, %{})
     assert Policies.Episode.show(@admin, %{})
-    assert Policies.Episode.show(@host, %{hosts: [@host]})
+    assert Policies.Episode.show(@host, %{active_hosts: [@host]})
   end
 
   test "only admins and podcast hosts can edit/update" do
@@ -36,7 +36,7 @@ defmodule Changelog.Policies.EpisodeTest do
     refute Policies.Episode.update(@editor, %{})
     refute Policies.Episode.edit(@host, %{})
     assert Policies.Episode.update(@admin, %{})
-    assert Policies.Episode.edit(@host, %{hosts: [@host]})
+    assert Policies.Episode.edit(@host, %{active_hosts: [@host]})
   end
 
   test "only admins can delete/publish/unpublish" do
