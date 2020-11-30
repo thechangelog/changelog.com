@@ -93,7 +93,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> assign_podcasts([@gotime, @jsparty])
       |> Plug.VanityDomains.call([])
 
-    assert_vanity_redirect(conn, "/jsparty/subscribe")
+    assert_vanity_redirect(conn, "/subscribe/jsparty")
   end
 
   test "vanity redirects for jsparty ff form" do

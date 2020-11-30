@@ -47,14 +47,15 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["android"] -> PodcastView.subscribe_on_android_url(podcast)
       ["spotify"] -> podcast.spotify_url
       ["overcast"] -> PodcastView.subscribe_on_overcast_url(podcast)
-      ["rss"] -> changelog_destination(podcast, ["feed"])
-      ["email"] -> changelog_destination(podcast, ["subscribe"])
-      _else -> changelog_destination(podcast, parts)
+      ["rss"] -> changelog_destination([podcast.slug, "feed"])
+      ["email"] -> changelog_destination(["subscribe", podcast.slug])
+      ["subscribe"] -> changelog_destination(["subscribe", podcast.slug])
+      _else -> changelog_destination([podcast.slug, parts])
     end
   end
 
-  defp changelog_destination(podcast, parts) do
-    path = Enum.join([podcast.slug] ++ parts, "/")
+  defp changelog_destination(parts) do
+    path = parts |> List.flatten() |> Enum.join("/")
     "https://changelog.com/#{path}"
   end
 end
