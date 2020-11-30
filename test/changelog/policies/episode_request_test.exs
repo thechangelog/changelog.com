@@ -9,7 +9,7 @@ defmodule Changelog.Policies.EpisodeRequestTest do
     refute Policies.EpisodeRequest.index(@editor, %{})
     refute Policies.EpisodeRequest.index(@host, %{})
     assert Policies.EpisodeRequest.index(@admin, %{})
-    assert Policies.EpisodeRequest.index(@host, %{hosts: [@host]})
+    assert Policies.EpisodeRequest.index(@host, %{active_hosts: [@host]})
   end
 
   test "only admins and podcast hosts can show" do
@@ -18,7 +18,7 @@ defmodule Changelog.Policies.EpisodeRequestTest do
     refute Policies.EpisodeRequest.show(@editor, %{})
     refute Policies.EpisodeRequest.show(@host, %{})
     assert Policies.EpisodeRequest.show(@admin, %{})
-    assert Policies.EpisodeRequest.show(@host, %{hosts: [@host]})
+    assert Policies.EpisodeRequest.show(@host, %{active_hosts: [@host]})
   end
 
   test "only admins and podcast hosts can edit/update/decline/fail/pend" do
@@ -28,10 +28,10 @@ defmodule Changelog.Policies.EpisodeRequestTest do
     refute Policies.EpisodeRequest.edit(@host, %{})
     refute Policies.EpisodeRequest.decline(@host, %{})
     assert Policies.EpisodeRequest.update(@admin, %{})
-    assert Policies.EpisodeRequest.edit(@host, %{hosts: [@host]})
-    assert Policies.EpisodeRequest.decline(@host, %{hosts: [@host]})
+    assert Policies.EpisodeRequest.edit(@host, %{active_hosts: [@host]})
+    assert Policies.EpisodeRequest.decline(@host, %{active_hosts: [@host]})
     refute Policies.EpisodeRequest.fail(@host, %{})
-    assert Policies.EpisodeRequest.fail(@host, %{hosts: [@host]})
+    assert Policies.EpisodeRequest.fail(@host, %{active_hosts: [@host]})
     refute Policies.EpisodeRequest.pend(@host, %{})
     assert Policies.EpisodeRequest.pend(@admin, %{})
   end
