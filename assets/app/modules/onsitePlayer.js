@@ -209,7 +209,7 @@ export default class OnsitePlayer {
   }
 
   log(action) {
-    Log.track("Onsite Player", action, this.episode.title());
+    Log.track("Onsite Player", {action: action, episode: this.episode.title()});
   }
 
   resetUI() {

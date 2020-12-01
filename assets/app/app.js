@@ -173,7 +173,7 @@ u(document).handle("click", ".js-share-popup", function(event) {
   h = 300;
   left = (screen.width / 2) - (w / 2);
   top = (screen.height / 2) - (h / 2);
-  Log.track("Social", "share", href);
+  Log.track("Social", {action: "share", url: href});
   shareWindow = window.open(href, "Changelog", `location=1,status=1,scrollbars=1,width=${w},height=${h},top=${top},left=${left}`);
   shareWindow.opener = null;
 });

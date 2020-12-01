@@ -106,7 +106,7 @@ export default class LivePlayer {
     this.audio.src = this.streamSrc;
     this.audio.load();
     this.play();
-    Log.track("Live Player", "Play", this.title.text());
+    Log.track("Live Player", { action: "Play", episode: this.title.text()});
   }
 
   loadFailed(event) {

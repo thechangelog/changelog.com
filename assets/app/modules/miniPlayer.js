@@ -79,7 +79,7 @@ export default class MiniPlayer {
   }
 
   log(action) {
-    Log.track("Mini Player", action, this.title);
+    Log.track("Mini Player", {action: action, audio: this.title});
   }
 
   reset() {

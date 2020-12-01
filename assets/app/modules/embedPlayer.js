@@ -65,7 +65,7 @@ export default class EmbedPlayer {
 
   log(action) {
     let source = (gup("source") == "twitter") ? "Twitter" : "Embed";
-    Log.track(`${source} Player`, action, this.episode.title());
+    Log.track(`${source} Player`, {action: action, episode: this.episode.title()});
   }
 
   isPlaying() {

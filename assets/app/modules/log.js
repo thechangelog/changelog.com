@@ -1,11 +1,10 @@
 export default class Log {
-  static track(category, action, label) {
+  static track(event, props) {
     if (typeof plausible !== "undefined") {
-      // plausible does not yet support extra event data like ga did
-      // ga("send", "event", category, action, label);
-      plausible(category);
+      // ga("send", "event", event, props.action, props.label);
+      plausible(category, {props: props});
     } else {
-      console.log("[TRACK]", {category: category, action: action, label: label});
+      console.log("[TRACK]", event, props);
     }
   }
 }
