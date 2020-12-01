@@ -381,13 +381,13 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     end)
   end
 
-  defp set_guest_thanks(episode, should_thank) do
-    episode = Episode.preload_guests(episode)
+  defp set_guest_thanks(episode, true), do: set_guest_thanks(episode, &EpisodeGuest.thanks/1)
+  defp set_guest_thanks(episode, false), do: set_guest_thanks(episode, &EpisodeGuest.no_thanks/1)
 
-    for guest <- episode.episode_guests do
-      guest
-      |> EpisodeGuest.changeset(%{thanks: should_thank})
-      |> Repo.update()
-    end
+  defp set_guest_thanks(episode, setFn) when is_function(setFn) do
+    episode
+    |> Episode.preload_guests()
+    |> Map.get(:episode_guests)
+    |> Enum.each(setFn)
   end
 end

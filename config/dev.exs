@@ -1,21 +1,9 @@
 use Mix.Config
 
-# For development, we disable any cache and enable
-# debugging and code reloading.
-#
-# The watchers configuration can be used to run external
-# watchers to your application. For example, we use it
-# with brunch.io to recompile .js and .css sources.
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: System.get_env("HOST") || "localhost"],
   http: [
     port: 4000
-  ],
-  https: [
-    port: 4001,
-    cipher_suite: :strong,
-    certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
   ],
   debug_errors: true,
   code_reloader: true,
@@ -24,6 +12,17 @@ config :changelog, ChangelogWeb.Endpoint,
   watchers: [
     yarn: ["start", cd: Path.expand("../assets", __DIR__)]
   ]
+
+# Sometimes we need HTTPS, like when futzing with captchas
+if System.get_env("HTTPS") do
+  config :changelog, ChangelogWeb.Endpoint,
+    https: [
+      port: 4001,
+      cipher_suite: :strong,
+      certfile: "priv/cert/selfsigned.pem",
+      keyfile: "priv/cert/selfsigned_key.pem"
+    ]
+end
 
 # Watch static and templates for browser reloading.
 config :changelog, ChangelogWeb.Endpoint,

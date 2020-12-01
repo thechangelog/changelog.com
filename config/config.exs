@@ -45,6 +45,11 @@ config :scrivener_html,
   routes_helper: ChangelogWeb.Router.Helpers,
   view_style: :semantic
 
+config :shopify,
+  shop_name: "changelog",
+  api_key: SecretOrEnv.get("SHOPIFY_API_KEY"),
+  password: SecretOrEnv.get("SHOPIFY_API_PASSWORD")
+
 config :ex_aws,
   access_key_id: SecretOrEnv.get("AWS_ACCESS_KEY_ID"),
   secret_access_key: SecretOrEnv.get("AWS_SECRET_ACCESS_KEY")

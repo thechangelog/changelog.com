@@ -69,6 +69,7 @@ defmodule Changelog.Mixfile do
       {:algolia, "~> 0.8.0"},
       {:tzdata, "~> 1.0.3"},
       {:icalendar, "~> 1.0"},
+      {:shopify, "~> 0.4"},
       {:credo, "~> 1.4.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
