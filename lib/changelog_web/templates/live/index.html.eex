@@ -7,13 +7,13 @@
     <ul class="live_upcoming-header-subscribe_links">
       <li>Subcribe via iCal: </li>
       <li>
-        <a href="https://changelog.com/live/ical" title="iCal feed for all shows">All Shows</a>
+        <a href="webcal://changelog.com/live/ical" title="iCal feed for all shows">All Shows</a>
       </li>
       <li>
-        <a href="https://changelog.com/live/ical/gotime" title="iCal feed for Go Time">Go Time</a>
+        <a href="webcal://changelog.com/live/ical/gotime" title="iCal feed for Go Time">Go Time</a>
       </li>
       <li>
-        <a href="https://changelog.com/live/ical/jsparty" title="iCal feed for JS Party">JS Party</a>
+        <a href="webcal://changelog.com/live/ical/jsparty" title="iCal feed for JS Party">JS Party</a>
       </li>
     </ul>
   </header>
