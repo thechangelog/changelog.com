@@ -66,7 +66,7 @@ configure-ci-coveralls-secret: $(LPASS) $(JQ) $(CURL) circle-token
 cccs: configure-ci-coveralls-secret
 
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github hcaptcha hackernews aws backups_aws twitter app slack rollbar buffer coveralls algolia plusplus ## es  | Print secrets stored in LastPass as env vars
+env-secrets: postgres campaignmonitor github hcaptcha hackernews aws backups_aws shopify twitter app slack rollbar buffer coveralls algolia plusplus ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
 es: env-secrets
 
@@ -217,6 +217,20 @@ backups-aws-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic backups-aws \
 	  --from-literal=access_key_id=$(BACKUPS_AWS_ACCESS_KEY) \
 	  --from-literal=secret_access_key=$(BACKUPS_AWS_SECRET_KEY) \
+	| $(KUBECTL) apply --filename -
+
+SHOPIFY_API_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/SHOPIFY_API_KEY)"
+SHOPIFY_API_PASSWORD := "$$($(LPASS) show --notes Shared-changelog/secrets/SHOPIFY_API_PASSWORD)"
+.PHONY: shopify
+shopify: $(LPASS)
+	@echo "export SHOPIFY_API_KEY=$(SHOPIFY_API_KEY)" && \
+	echo "export SHOPIFY_API_PASSWORD=$(SHOPIFY_API_PASSWORD)"
+.PHONY: shopify-key-secret
+shopify-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+		create secret generic shopify \
+		--from-literal=consumer_key=$(SHOPIFY_API_KEY) \
+		--from-literal=consumer_secret=$(SHOPIFY_API_PASSWORD) \
 	| $(KUBECTL) apply --filename -
 
 TWITTER_CONSUMER_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/TWITTER_CONSUMER_KEY)"

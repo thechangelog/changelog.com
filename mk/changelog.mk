@@ -77,6 +77,7 @@ lke-changelog-secrets:: github-lke-secret
 lke-changelog-secrets:: hackernews-lke-secret
 lke-changelog-secrets:: aws-lke-secret
 lke-changelog-secrets:: backups-aws-lke-secret
+lke-changelog-secrets:: shopify-lke-secret
 lke-changelog-secrets:: twitter-lke-secret
 lke-changelog-secrets:: app-lke-secret
 lke-changelog-secrets:: slack-lke-secret

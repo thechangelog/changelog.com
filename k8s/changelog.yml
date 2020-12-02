@@ -324,6 +324,16 @@ spec:
             secretKeyRef:
               name: app
               key: secret_key_base
+        - name: SHOPIFY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: shopify
+              key: api_key
+        - name: SHOPIFY_API_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: shopify
+              key: api_password
         - name: SIGNING_SALT
           valueFrom:
             secretKeyRef:
