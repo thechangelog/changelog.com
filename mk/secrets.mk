@@ -225,12 +225,12 @@ SHOPIFY_API_PASSWORD := "$$($(LPASS) show --notes Shared-changelog/secrets/SHOPI
 shopify: $(LPASS)
 	@echo "export SHOPIFY_API_KEY=$(SHOPIFY_API_KEY)" && \
 	echo "export SHOPIFY_API_PASSWORD=$(SHOPIFY_API_PASSWORD)"
-.PHONY: shopify-key-secret
+.PHONY: shopify-lke-secret
 shopify-lke-secret: | lke-ctx $(LPASS)
 	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
 		create secret generic shopify \
-		--from-literal=consumer_key=$(SHOPIFY_API_KEY) \
-		--from-literal=consumer_secret=$(SHOPIFY_API_PASSWORD) \
+		--from-literal=api_key=$(SHOPIFY_API_KEY) \
+		--from-literal=api_password=$(SHOPIFY_API_PASSWORD) \
 	| $(KUBECTL) apply --filename -
 
 TWITTER_CONSUMER_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/TWITTER_CONSUMER_KEY)"
