@@ -22,18 +22,18 @@ defmodule Changelog.ListKitTest do
     end
 
     test "it excludes a single thing from a list" do
-      list = [1,2,3]
-      assert ListKit.exclude(list, 2) == [1,3]
+      list = [1, 2, 3]
+      assert ListKit.exclude(list, 2) == [1, 3]
     end
 
     test "it excludes nothing when thing is nil" do
-      list = [1,2,3]
-      assert ListKit.exclude(list, nil) == [1,2,3]
+      list = [1, 2, 3]
+      assert ListKit.exclude(list, nil) == [1, 2, 3]
     end
 
     test "it excludes a list of things from a list" do
-      list = [1,2,3,4,5]
-      assert ListKit.exclude(list, [2,4]) == [1,3,5]
+      list = [1, 2, 3, 4, 5]
+      assert ListKit.exclude(list, [2, 4]) == [1, 3, 5]
     end
   end
 end

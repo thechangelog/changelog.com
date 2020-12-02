@@ -6,9 +6,11 @@ defmodule ChangelogWeb.Plug.Redirects do
   import ChangelogWeb.Plug.Conn
 
   @external %{
-    "/datadog" => "https://www.datadoghq.com/lpgs/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=ChangelogPodcast-Tshirt",
+    "/datadog" =>
+      "https://www.datadoghq.com/lpgs/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=ChangelogPodcast-Tshirt",
     "/sentry" => "https://sentry.io/from/changelog/",
-    "/codacy" => "https://codacy.com/product?utm_source=Changelog&utm_medium=cpm&utm_campaign=Changelog-Podcast",
+    "/codacy" =>
+      "https://codacy.com/product?utm_source=Changelog&utm_medium=cpm&utm_campaign=Changelog-Podcast",
     "/reactpodcast" => "https://reactpodcast.simplecast.com"
   }
 

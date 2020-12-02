@@ -188,7 +188,8 @@ defmodule ChangelogWeb.Meta.Title do
   end
 
   # Posts index (blog)
-  defp get(%{view_module: PostView, view_template: "index.html"}), do: "Solid takes from Changelog contributors"
+  defp get(%{view_module: PostView, view_template: "index.html"}),
+    do: "Solid takes from Changelog contributors"
 
   # Post show page
   defp get(%{view_module: PostView, post: post}), do: post.title

@@ -254,11 +254,13 @@ defmodule ChangelogWeb.Router do
     post "/request", EpisodeRequestController, :create, as: :episode_request
 
     get "/podcasts", PodcastController, :index, as: :podcast
+
     for subpage <- ~w(popular recommended upcoming)a do
       get "/:slug/#{subpage}", PodcastController, subpage, as: :podcast
     end
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
+
     for subpage <- ~w(embed preview play share discuss)a do
       get "/:podcast/:slug/#{subpage}", EpisodeController, subpage, as: :episode
     end

@@ -13,7 +13,7 @@ defmodule Changelog.ListKit do
 
   def exclude(list, things) when is_list(things), do: list -- things
 
-  def exclude(list, %{id: id}), do: list |> Enum.reject(fn(i) -> i.id == id end)
+  def exclude(list, %{id: id}), do: list |> Enum.reject(fn i -> i.id == id end)
   def exclude(list, nil), do: list
   def exclude(list, thing), do: list -- [thing]
 end

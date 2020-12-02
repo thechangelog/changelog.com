@@ -40,7 +40,10 @@ defmodule ChangelogWeb.Admin.PodcastView do
 
   def vanity_link(podcast) do
     if podcast.vanity_domain do
-      link(SharedHelpers.domain_name(podcast.vanity_domain), to: podcast.vanity_domain, rel: "external")
+      link(SharedHelpers.domain_name(podcast.vanity_domain),
+        to: podcast.vanity_domain,
+        rel: "external"
+      )
     end
   end
 end
