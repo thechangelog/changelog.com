@@ -136,8 +136,8 @@ defmodule Changelog.Notifier do
 
   defp deliver_episode_guest_thanks_emails(episode) do
     for eg <- Enum.filter(episode.episode_guests, & &1.thanks) do
-      eg.person
-      |> Email.guest_thanks(episode)
+      eg
+      |> Email.guest_thanks()
       |> Mailer.deliver_later()
     end
   end

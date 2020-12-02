@@ -1,24 +1,46 @@
 <%= greeting(@person) %>
 
-Your episode of <%= @podcast.name %> is now live! Here is the official link to share with your network of friends:
+Your episode of <%= @podcast.name %> is now live! Here's where it lives on the web:
 
 <%= Routes.episode_url(Endpoint, :show, @podcast.slug, @episode.slug) %>
 
+And here's what's next.
 
-And here’s an embed snippet to use on your website and/or blog post:
+
+#### 1. You get free merch ####
+
+This is our gift to you as a thanks for your time and all you do for the community.
+
+- Visit our Merch Store (https://merch.changelog.com)
+- Pick a shirt you want (or anything really)
+- Use coupon code <%= @discount_code %> at checkout
+- Keep your order at $0 for free shipping!
+
+
+#### 2. Please share the episode ####
+
+If you have a website and/or blog where you can link to the show, we'd greatly appreciate you taking the time to do so. Here’s an embed snippet you can use so folks can listen to the episode without leaving your site:
 
 <%= EpisodeView.embed_code(@episode) %>
 
-
 (You can see it in action on the HashiCorp blog: https://www.hashicorp.com/blog/vault-on-the-changelog-podcast.html)
 
-You’re part of the Changelog family now. If there is _any way_ that we can help you in the future, don’t hesitate to contact us.
 
-We'd also love to send you a Changelog tee as a thanks for your time and all you do for the community. Please reply with your t-shirt size and mailing address so we can get it sent out. Visit this page to see the sizing info for our shirts so we can send you one that fits well:
+#### 3. Recommend a guest ####
 
-http://www.sizecharter.com/brands/americapparel
+Over the years we've learned that the best guests are often recommended to us from past guests like yourself. Do you know someone who you think would be great on <%= @podcast.name %>? Hit reply and let us know. They'll thank you later... and we'll thank you right away.
 
-Finally, people love keeping up by following Changelog News (check it out if you haven't yet). Use [this form](https://changelog.com/submit) to let us know when you have future news/announcements. We'd be happy to help you spread the word.
+
+#### 4. Plug in to Changelog News ####
+
+Are you aware of Changelog News? It's our editorialized take on what's important in the software world (and why). Submit here (https://changelog.com/submit) when you have future news/announcements. We'd be happy to help you spread the word.
+
+Oh, and get it in your inbox weekly right here (https://changelog.com/weekly).
+
+---
+
+That's all we have. You’re part of the Changelog family now. If there is any way that we can help you in the future, don’t hesitate to contact us.
+
 
 Thanks again!
 

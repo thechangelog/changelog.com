@@ -174,13 +174,13 @@ defmodule Changelog.NotifierTest do
       g3 = insert(:person)
       episode = insert(:published_episode)
       insert(:episode_guest, episode: episode, person: g1, thanks: false)
-      insert(:episode_guest, episode: episode, person: g2, thanks: true)
-      insert(:episode_guest, episode: episode, person: g3, thanks: true)
+      eg1 = insert(:episode_guest, episode: episode, person: g2, thanks: true)
+      eg2 = insert(:episode_guest, episode: episode, person: g3, thanks: true)
       item = episode |> episode_news_item() |> insert()
 
       Notifier.notify(item)
-      assert_delivered_email(Email.guest_thanks(g2, episode))
-      assert_delivered_email(Email.guest_thanks(g3, episode))
+      assert_delivered_email(Email.guest_thanks(eg1))
+      assert_delivered_email(Email.guest_thanks(eg2))
       assert called(Slack.Client.message("#main", :_))
     end
 

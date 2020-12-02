@@ -24,6 +24,18 @@ defmodule Changelog.EpisodeGuest do
     |> mark_for_deletion()
   end
 
+  def preload_all(episode_guest) do
+    episode_guest
+    |> preload_episode()
+    |> preload_person()
+  end
+
+  def preload_episode(query = %Ecto.Query{}), do: Ecto.Query.preload(query, episode: :podcast)
+  def preload_episode(episode_guest), do: Repo.preload(episode_guest, episode: :podcast)
+
+  def preload_person(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :person)
+  def preload_person(episode_guest), do: Repo.preload(episode_guest, :person)
+
   def no_thanks(episode_guest) do
     episode_guest
     |> changeset(%{thanks: false})

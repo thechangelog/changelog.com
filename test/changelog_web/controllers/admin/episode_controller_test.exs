@@ -12,7 +12,8 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   setup_with_mocks(
     [
       {Github.Pusher, [], [push: fn _, _ -> {:ok, "success"} end]},
-      {Github.Puller, [], [update: fn _, _ -> true end]}
+      {Github.Puller, [], [update: fn _, _ -> true end]},
+      {Changelog.Merch, [], [create_discount: fn _, _ -> {:ok, %{code: "yup"}} end]}
     ],
     assigns
   ) do

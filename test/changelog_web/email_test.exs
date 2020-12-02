@@ -54,12 +54,12 @@ defmodule ChangelogWeb.EmailTest do
     assert email.html_body =~ ~r/guest/i
   end
 
-  test "guest thanks", %{person: person} do
-    episode = insert(:published_episode)
-    email = Email.guest_thanks(person, episode)
+  test "guest thanks", _ do
+    eg = insert(:episode_guest)
+    email = Email.guest_thanks(eg)
 
-    assert email.to == person
-    assert email.html_body =~ ~r/#{episode.title}/i
+    assert email.to == eg.person
+    assert email.html_body =~ ~r/#{eg.episode.title}/i
   end
 
   test "sign in", %{person: person} do

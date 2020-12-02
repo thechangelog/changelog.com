@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Email do
   use Bamboo.Phoenix, view: ChangelogWeb.EmailView
 
-  alias Changelog.{EpisodeRequest, NewsItem}
+  alias Changelog.{EpisodeGuest, EpisodeRequest, NewsItem}
   alias ChangelogWeb.EpisodeView
 
   # Comment related emails
@@ -128,14 +128,17 @@ defmodule ChangelogWeb.Email do
     |> render(:episode_transcribed)
   end
 
-  def guest_thanks(person, episode) do
+  def guest_thanks(episode_guest) do
+    episode_guest = EpisodeGuest.preload_all(episode_guest)
+
     personal_email()
     |> put_header("X-CMail-GroupName", "Guest Thanks")
-    |> to(person)
-    |> subject("You're on #{episode.podcast.name}!")
-    |> assign(:person, person)
-    |> assign(:episode, episode)
-    |> assign(:podcast, episode.podcast)
+    |> to(episode_guest.person)
+    |> subject("You're on #{episode_guest.episode.podcast.name}!")
+    |> assign(:person, episode_guest.person)
+    |> assign(:episode, episode_guest.episode)
+    |> assign(:discount_code, episode_guest.discount_code)
+    |> assign(:podcast, episode_guest.episode.podcast)
     |> render(:guest_thanks)
   end
 
