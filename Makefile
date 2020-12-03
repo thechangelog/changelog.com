@@ -30,6 +30,9 @@ GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 GIT_BRANCH ?= master
 
 LOCAL_BIN := $(CURDIR)/bin
+$(LOCAL_BIN):
+	mkdir -p $@
+
 PATH := $(LOCAL_BIN):$(PATH)
 export PATH
 
