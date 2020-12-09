@@ -20,7 +20,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionController do
   end
 
   defp assign_podcast(conn = %{params: %{"podcast_id" => slug}}, _) do
-    podcast = Podcast |> Repo.get_by!(slug: slug) |> Podcast.preload_hosts()
+    podcast = Podcast |> Repo.get_by!(slug: slug) |> Podcast.preload_active_hosts()
     assign(conn, :podcast, podcast)
   end
 end
