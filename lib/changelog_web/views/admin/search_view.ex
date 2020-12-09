@@ -17,7 +17,7 @@ defmodule ChangelogWeb.Admin.SearchView do
 
   @limit 3
 
-  def render("all.json", _params = %{results: results, query: query}) do
+  def render("all.json", %{results: results, query: query}) do
     response = %{
       results: %{
         topics: %{name: "Topics", results: process_results(results.topics, &topic_result/1)},
@@ -58,19 +58,23 @@ defmodule ChangelogWeb.Admin.SearchView do
     end
   end
 
-  def render(json_template, _params = %{results: results, query: _query}) do
-    process_fn =
-      case json_template do
-        "news_item.json" -> &news_item_result/1
-        "news_source.json" -> &news_source_result/1
-        "person.json" -> &person_result/1
-        "podcast.json" -> &podcast_result/1
-        "sponsor.json" -> &sponsor_result/1
-        "topic.json" -> &topic_result/1
-      end
+  def render("news_item.json", %{results: results, query: _query}),
+    do: %{results: Enum.map(results, &news_item_result/1)}
 
-    %{results: Enum.map(results, process_fn)}
-  end
+  def render("news_source.json", %{results: results, query: _query}),
+    do: %{results: Enum.map(results, &news_source_result/1)}
+
+  def render("person.json", %{results: results, query: _query}),
+    do: %{results: Enum.map(results, &person_result/1)}
+
+  def render("podcast.json", %{results: results, query: _query}),
+    do: %{results: Enum.map(results, &podcast_result/1)}
+
+  def render("sponsor.json", %{results: results, query: _query}),
+    do: %{results: Enum.map(results, &sponsor_result/1)}
+
+  def render("topic.json", %{results: results, query: _query}),
+    do: %{results: Enum.map(results, &topic_result/1)}
 
   defp process_results(records, process_fn) do
     records

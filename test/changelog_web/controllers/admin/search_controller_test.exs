@@ -2,6 +2,26 @@ defmodule ChangelogWeb.Admin.SearchControllerTest do
   use ChangelogWeb.ConnCase
 
   @tag :as_admin
+  test "searching all", %{conn: conn} do
+    person = insert(:person, name: "Safari Fan")
+    episode = insert(:published_episode, title: "Safari Show")
+    topic = insert(:topic, name: "Safari")
+    news = insert(:published_news_item, headline: "Safari wins")
+    sponsor = insert(:sponsor, name: "Safari People")
+    post = insert(:post, title: "Safari is cool bc")
+
+    conn = get(conn, "/admin/search/?q=Safari")
+
+    assert conn.status == 200
+    assert conn.resp_body =~ person.name
+    assert conn.resp_body =~ episode.title
+    assert conn.resp_body =~ topic.name
+    assert conn.resp_body =~ news.headline
+    assert conn.resp_body =~ sponsor.name
+    assert conn.resp_body =~ post.title
+  end
+
+  @tag :as_admin
   test "searching news items", %{conn: conn} do
     insert(:published_news_item, headline: "This is a goodie")
     insert(:news_item, headline: "Goodie but not published")
