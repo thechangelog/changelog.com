@@ -29,6 +29,7 @@ services:
       DB_NAME: changelog_dev
       DB_USER: postgres
       DB_PASS: postgres
+      HTTPS: 'true'
       VIRTUAL_HOST: &host "${HOST:-localhost}"
       HOST: *host
     # https://docs.docker.com/compose/compose-file/#ports

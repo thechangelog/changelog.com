@@ -56,6 +56,7 @@ defmodule Changelog.Person do
     field :auth_token_expires_at, :utc_datetime
     field :joined_at, :utc_datetime
     field :signed_in_at, :utc_datetime
+    field :approved_commentator, :boolean, default: false
     field :avatar, Files.Avatar.Type
 
     field :admin, :boolean, default: false
@@ -170,6 +171,14 @@ defmodule Changelog.Person do
     person
     |> insert_changeset(attrs)
     |> file_changeset(attrs)
+  end
+
+  def approve_commentator_changeset(person) do
+    change(person, approved_commentator: true)
+  end
+
+  def revoke_commentator_changeset(person) do
+    change(person, approved_commentator: false)
   end
 
   defp changeset_with_allowed_attrs(person, attrs, allowed) do

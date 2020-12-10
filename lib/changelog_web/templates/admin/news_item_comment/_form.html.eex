@@ -19,6 +19,13 @@
     <%= AdminHelpers.error_message(f, :content) %>
   </div>
 
+  <%= unless f.data.approved do %>
+    <div class="field <%= AdminHelpers.error_class(f, :approved) %>">
+      <%= label(f, :approved, "Approved") %>
+      <%= select(f, :approved, ["True": "true", "False": "false"]) %>
+    </div>
+  <% end %>
+
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>

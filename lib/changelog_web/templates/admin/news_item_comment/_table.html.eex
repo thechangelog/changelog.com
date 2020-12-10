@@ -6,6 +6,7 @@
       <th>Excerpt</th>
       <th>Create Time</th>
       <th>Edit Time</th>
+      <th>Approved</th>
       <th></th>
     </tr>
   </thead>
@@ -26,6 +27,13 @@
       <td><%= comment.content |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(50) %></td>
       <td><%= AdminHelpers.ts(comment.inserted_at) %></td>
       <td><%= AdminHelpers.ts(comment.edited_at) %></td>
+      <td class="center aligned">
+        <%= if comment.approved do %>
+          <i class="green check icon"></i>
+        <% else %>
+          <i class="red close icon"></i>
+        <% end %>
+      </td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: permalink(@conn, comment)) %>

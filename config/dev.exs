@@ -14,7 +14,7 @@ config :changelog, ChangelogWeb.Endpoint,
   ]
 
 # Sometimes we need HTTPS, like when futzing with captchas
-if System.get_env("HTTPS") do
+if System.get_env("HTTPS") == "true" do
   config :changelog, ChangelogWeb.Endpoint,
     https: [
       port: 4001,

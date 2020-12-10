@@ -6,6 +6,8 @@ defmodule Changelog.NewsItemComment do
   schema "news_item_comments" do
     field :content, :string
 
+    field :approved, :boolean, default: false
+
     field :edited_at, :utc_datetime
     field :deleted_at, :utc_datetime
 
@@ -21,7 +23,7 @@ defmodule Changelog.NewsItemComment do
 
   def insert_changeset(struct, attrs \\ %{}) do
     struct
-    |> cast(attrs, ~w(content author_id item_id parent_id)a)
+    |> cast(attrs, ~w(content author_id item_id parent_id approved)a)
     |> validate_required([:content, :author_id, :item_id])
     |> foreign_key_constraint(:author_id)
     |> foreign_key_constraint(:item_id)
@@ -60,6 +62,10 @@ defmodule Changelog.NewsItemComment do
       Map.update(map, comment.parent_id, [comment], fn comments -> [comment | comments] end)
     end)
     |> Map.get(nil)
+    # TODO: This should be part of an Ecto Query instead
+    |> Enum.filter(fn %__MODULE__{approved: approved} ->
+      approved
+    end)
   end
 
   def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
