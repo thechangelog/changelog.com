@@ -124,7 +124,7 @@ defmodule ChangelogWeb.PersonControllerTest do
       ]) do
         conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com")
         assert called(Changelog.Captcha.verify(:_))
-        assert redirected_to(conn) == Routes.person_path(conn, :subscribe)
+        assert redirected_to(conn) == Routes.person_path(conn, :subscribe, "weekly")
       end
     end
   end

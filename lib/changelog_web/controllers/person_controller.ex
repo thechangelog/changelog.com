@@ -188,13 +188,13 @@ defmodule ChangelogWeb.PersonController do
           {:error, _changeset} ->
             conn
             |> put_flash(:error, "Something went wrong. 😭")
-            |> redirect(to: Routes.person_path(conn, :subscribe))
+            |> redirect(to: Routes.person_path(conn, :subscribe, subscribe_to))
         end
       end
     else
       conn
-      |> put_flash(:error, "No domo arigato mr. roboto 🤖")
-      |> redirect(to: Routes.person_path(conn, :subscribe))
+      |> put_flash(:error, "CAPTCHA fail. Are you blocking scripts? Are you a robot? 🤖")
+      |> redirect(to: Routes.person_path(conn, :subscribe, subscribe_to))
     end
   end
 
