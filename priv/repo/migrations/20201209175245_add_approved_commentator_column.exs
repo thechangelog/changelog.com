@@ -3,7 +3,7 @@ defmodule Changelog.Repo.Migrations.AddApprovedCommentatorColumn do
 
   def change do
     alter table(:people) do
-      add(:approved_commentator, :boolean, default: true)
+      add(:approved, :boolean, default: true)
     end
 
     alter table(:news_item_comments) do

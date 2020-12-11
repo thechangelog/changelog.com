@@ -385,6 +385,8 @@ defmodule Changelog.Episode do
         flatten_episode_for_filtering(episode)
       end)
 
+    # TODO: This is causing some very slow start up times
+    # Probably needs some investigation and optimization
     Repo.transaction(fn ->
       Enum.to_list(stream)
     end)

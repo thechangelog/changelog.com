@@ -1,0 +1,13 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p>Hello Admin,</p>
+
+    <p><strong><%= PersonView.handle(@comment.author) %></strong> has commented on <%= link("on Changelog News", to: news_item_url(@item)) %> for the first time saying:</p>
+
+    <blockquote><pre><%= @comment.content %></pre></blockquote>
+
+    <p>To handle the comment, go to the news comments <%= link("admin dashboard", to: admin_news_item_comment_url(@comment)) %></p>
+
+    <p>💚, Logbot</p>
+  </td>
+</tr>

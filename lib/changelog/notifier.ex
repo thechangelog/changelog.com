@@ -59,7 +59,19 @@ defmodule Changelog.Notifier do
 
   def notify(%EpisodeRequest{}), do: false
 
-  def notify(comment = %NewsItemComment{}) do
+  def notify(comment = %NewsItemComment{approved: false}) do
+    comment = NewsItemComment.preload_all(comment)
+    admin_recipients = ~w(jerod@changelog.com)
+
+    admin_recipients
+    |> Enum.each(fn admin_recipient ->
+      Email
+      |> apply(:unapproved_commentator, [admin_recipient, comment])
+      |> Mailer.deliver_later()
+    end)
+  end
+
+  def notify(comment = %NewsItemComment{approved: true}) do
     comment = NewsItemComment.preload_all(comment)
 
     deliver_slack_new_comment_message(comment)

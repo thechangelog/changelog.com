@@ -1,0 +1,9 @@
+Hello Admin,
+
+<%= PersonView.handle(@comment.author) %> has commented for the first time saying:
+
+<%= @comment.content %>
+
+To handle the comment by this new commentator, go to the admin new comments dashboard: <%= admin_news_item_comment_url(@comment) %>
+
+💚, Logbot

@@ -22,7 +22,17 @@
   <%= unless f.data.approved do %>
     <div class="field <%= AdminHelpers.error_class(f, :approved) %>">
       <%= label(f, :approved, "Approved") %>
-      <%= select(f, :approved, ["True": "true", "False": "false"]) %>
+
+      <div class="ui fluid selection dropdown">
+        <%= hidden_input(f, :approved, value: "false") %>
+        <i class="dropdown icon"></i>
+        <div class="text">False</div>
+
+        <div class="menu">
+          <div class="item" data-value="true">True</div>
+          <div class="item selected" data-value="false">False</div>
+        </div>
+      </div>
     </div>
   <% end %>
 
