@@ -17,7 +17,7 @@ config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: SecretOrEnv.get("DB_NAME", "changelog_test"),
   hostname: SecretOrEnv.get("DB_HOST", "localhost"),
-  password: SecretOrEnv.get("DB_PASS"),
+  password: SecretOrEnv.get("DB_PASS", "postgres"),
   pool: Ecto.Adapters.SQL.Sandbox,
   username: SecretOrEnv.get("DB_USER", "postgres")
 
