@@ -51,3 +51,13 @@ publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
+.PHONY: howto-upgrade-elixir
+howto-upgrade-elixir:
+	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
+	@printf "Pick an image with node (required by the asset pipeline) from $(BOLD)$(BLUE)https://hub.docker.com/r/circleci/elixir/tags?page=1&ordering=last_updated$(NORMAL)\n\n"
+	@printf " 1/5. Update $(BOLD)docker/Dockerfile.runtime$(NORMAL) to use an image from the URL above, then run $(BOLD)make runtime-image$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 2/5. Update $(BOLD)docker/Dockerfile.production$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 3/5. Update $(BOLD)docker-compose.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 4/5. Commit and push everything\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 5/5. Watch the pipeline succeed and publish an app container image with the updated version of Elixir $(BOLD)$(BLUE)https://app.circleci.com/pipelines/github/thechangelog/changelog.com$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\nIf the pipeline succeeded, the git version of the app will be promoted to live within about a minute, you can watch this with $(BOLD)watch make check-deployed-version$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
