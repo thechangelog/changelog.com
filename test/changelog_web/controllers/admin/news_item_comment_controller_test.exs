@@ -1,7 +1,9 @@
 defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.NewsItemComment
+  import Mock
+
+  alias Changelog.{NewsItemComment, Notifier}
 
   @tag :as_admin
   test "lists all comments on index", %{conn: conn} do
@@ -35,6 +37,25 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
 
     assert redirected_to(conn) == Routes.admin_news_item_comment_path(conn, :index)
     assert Repo.get(NewsItemComment, comment.id).content == "bai!"
+  end
+
+  @tag :as_admin
+  test "updates comment, redirects, and notified if the comment was approved", %{conn: conn} do
+    author = insert(:person)
+    comment = insert(:news_item_comment, approved: false)
+
+    with_mock(Notifier, notify: fn %NewsItemComment{approved: true} -> true end) do
+      conn =
+        put(conn, Routes.admin_news_item_comment_path(conn, :update, comment.id),
+          news_item_comment: %{author_id: author.id, content: "bai!", approved: true}
+        )
+
+      assert redirected_to(conn) == Routes.admin_news_item_comment_path(conn, :index)
+      assert Repo.get(NewsItemComment, comment.id).content == "bai!"
+      assert Repo.get(NewsItemComment, comment.id).approved == true
+
+      assert called(Notifier.notify(:_))
+    end
   end
 
   @tag :as_admin
