@@ -38,10 +38,26 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
   end
 
   @tag :as_inserted_user
-  test "creates comment and notifies", %{conn: conn} do
+  test "creates comment and notifies if the commentator is approved", %{conn: conn} do
     item = insert(:published_news_item)
 
-    with_mock(Notifier, notify: fn _ -> true end) do
+    with_mock(Notifier, notify: fn %NewsItemComment{approved: true} -> true end) do
+      conn =
+        post(conn, Routes.news_item_comment_path(conn, :create),
+          news_item_comment: %{content: "how dare thee!", item_id: item.id}
+        )
+
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
+      assert count(NewsItemComment) == 1
+      assert called(Notifier.notify(:_))
+    end
+  end
+
+  @tag :as_unapproved_user
+  test "creates comment but does not notify if user is unapproved", %{conn: conn} do
+    item = insert(:published_news_item)
+
+    with_mock(Notifier, notify: fn %NewsItemComment{approved: false} -> true end) do
       conn =
         post(conn, Routes.news_item_comment_path(conn, :create),
           news_item_comment: %{content: "how dare thee!", item_id: item.id}
