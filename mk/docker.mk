@@ -60,4 +60,4 @@ howto-upgrade-elixir:
 	@printf "\n 3/5. Update $(BOLD)docker-compose.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 4/5. Commit and push everything\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 5/5. Watch the pipeline succeed and publish an app container image with the updated version of Elixir $(BOLD)$(BLUE)https://app.circleci.com/pipelines/github/thechangelog/changelog.com$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
-	@printf "\nIf the pipeline succeeded, the git version of the app will be promoted to live within about a minute, you can watch this with $(BOLD)watch make check-deployed-version$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\nIf the pipeline succeeded, the git version of the app will be promoted to live within about a minute, you can watch this with $(BOLD)watch -c make check-deployed-version$(NORMAL)\n"
