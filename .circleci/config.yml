@@ -4,12 +4,12 @@ jobs:
   deps:
     working_directory: &dir /app
     docker:
-      - image: &runtime thechangelog/runtime:2019-11-27T16.20.17Z
+      - image: &runtime thechangelog/runtime:2020-12-14T20.59.58Z
     steps:
       - checkout
       - restore_cache: &deps_cache
           name: Restore cached deps
-          key: &deps_key deps-{{ checksum "mix.lock" }}
+          key: &deps_key deps-{{ checksum "mix.lock" }}-{{ checksum "docker/Dockerfile.runtime" }}
       - run:
           name: Update deps
           command: mix deps.get
