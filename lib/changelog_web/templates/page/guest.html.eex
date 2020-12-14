@@ -35,15 +35,17 @@
 
     <ul>
     <%= if @podcast.recorded_live do %>
-      <li><mark>This show records live</mark>.</li>
+      <li><mark>This show records live</mark> on <a href="https://youtube.com/changelog" title="Changelog's YouTube">our YouTube channel</a>. 📺</li>
+      <li>We only produce the audio, but your video will be streamed live as well. 📹</li>
       <li>You can interact with listeners in
       <%= if @podcast.slug == "gotime" do %>
         the <%= link("Gophers Slack", to: "https://gophers.slack.com/messages/gotimefm") %>
       <% else %>
         our <%= link("Community Slack", to: Routes.page_path(@conn, :community)) %>.</li>
       <% end %>
-    <% end %>
+    <%= else %>
       <li>Video optional! Feel free to opt out due to a slow connection or a bad hair day 📹</li>
+    <% end %>
       <li>Put your mobile device(s) on Airplane Mode 📳</li>
       <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome 🚰</li>
       <li>Relax. Have fun. Bring your opinions 💯</li>
@@ -68,7 +70,7 @@
     </ul>
 
   <%= if @episode do %>
-    <p>The email you receive will also include a <mark>snippet you can use so people can listen to your show without leaving your site</mark>. Here's a preview of what it looks like:</p>
+    <p>The email you receive will also include <mark>a snippet you can use</mark> so people can listen to your show without leaving your site. Here's a preview of what it looks like:</p>
 
     <h4>Night Theme</h4>
     <%= EpisodeView.embed_iframe(@episode, "night") |> raw %>
