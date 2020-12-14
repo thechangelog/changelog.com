@@ -13,7 +13,7 @@ services:
 
   app:
     # Keep this in lock-step with docker/Dockerfile.production
-    image: thechangelog/runtime:2019-11-27T16.20.17Z
+    image: thechangelog/runtime:2020-12-14T20.59.58Z
     working_dir: /app
     command: >
       /bin/sh -c 'apt-get update && apt-get install -y inotify-tools &&
