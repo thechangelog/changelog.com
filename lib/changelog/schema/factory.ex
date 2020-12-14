@@ -234,6 +234,7 @@ defmodule Changelog.Factory do
       email: sequence(:email, &"joe-#{&1}@email.com"),
       handle: sequence(:handle, &"joeblow-#{&1}"),
       settings: %Changelog.Person.Settings{},
+      approved: true,
       admin: false
     }
   end
