@@ -15,7 +15,7 @@ jobs:
           command: mix deps.get
       - restore_cache: &build_cache
           name: Restore cached build
-          key: &build_key build-{{ checksum "mix.lock" }}
+          key: &build_key build-{{ checksum "mix.lock" }}-{{ checksum "docker/Dockerfile.runtime" }}
       - run:
           name: Build test deps
           command: |
