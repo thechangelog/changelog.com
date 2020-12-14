@@ -60,6 +60,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     drafts =
       episodes
       |> Episode.unpublished()
+      |> Episode.newest_first(:published_at)
       |> Episode.newest_first(:recorded_at)
       |> Repo.all()
 
