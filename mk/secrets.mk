@@ -66,7 +66,7 @@ configure-ci-coveralls-secret: $(LPASS) $(JQ) $(CURL) circle-token
 cccs: configure-ci-coveralls-secret
 
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github hcaptcha hackernews aws backups_aws shopify twitter app slack rollbar buffer coveralls algolia plusplus ## es  | Print secrets stored in LastPass as env vars
+env-secrets: postgres campaignmonitor github hcaptcha hackernews aws backups_aws shopify twitter app slack rollbar buffer coveralls algolia plusplus fastly grafana ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
 es: env-secrets
 
@@ -143,7 +143,7 @@ campaignmonitor: $(LPASS)
 	echo "export CM_API_TOKEN=$(CM_API_TOKEN)"
 .PHONY: campaignmonitor-lke-secret
 campaignmonitor-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic campaignmonitor \
 	  --from-literal=smtp_token=$(CM_SMTP_TOKEN) \
 	  --from-literal=api_token=$(CM_API_TOKEN) \
@@ -159,7 +159,7 @@ github: $(LPASS)
 	echo "export GITHUB_API_TOKEN=$(GITHUB_API_TOKEN)"
 .PHONY: github-lke-secret
 github-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic github \
 	  --from-literal=client_id=$(GITHUB_CLIENT_ID) \
 	  --from-literal=client_secret=$(GITHUB_CLIENT_SECRET) \
@@ -172,7 +172,7 @@ hcaptcha: $(LPASS)
 	@echo "export HCAPTCHA_SECRET_KEY=$(HCAPTCHA_SECRET_KEY)"
 .PHONY: hcaptcha-lke-secret
 hcaptcha-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 		create secret generic hcaptcha \
 		--from-literal=secret_key=$(HCAPTCHA_SECRET_KEY) \
 	| $(KUBECTL) apply --filename -
@@ -185,7 +185,7 @@ hackernews: $(LPASS)
 	echo "export HN_PASS=$(HACKERNEWS_PASS)"
 .PHONY: hackernews-lke-secret
 hackernews-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic hackernews \
 	  --from-literal=user=$(HACKERNEWS_USER) \
 	  --from-literal=pass=$(HACKERNEWS_PASS) \
@@ -199,7 +199,7 @@ aws: $(LPASS)
 	echo "export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)"
 .PHONY: aws-lke-secret
 aws-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic aws \
 	  --from-literal=access_key_id=$(AWS_ACCESS_KEY_ID) \
 	  --from-literal=secret_access_key=$(AWS_SECRET_ACCESS_KEY) \
@@ -213,7 +213,7 @@ backups_aws: $(LPASS)
 	echo "export BACKUPS_AWS_SECRET_KEY=$(BACKUPS_AWS_SECRET_KEY)"
 .PHONY: backups-aws-lke-secret
 backups-aws-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic backups-aws \
 	  --from-literal=access_key_id=$(BACKUPS_AWS_ACCESS_KEY) \
 	  --from-literal=secret_access_key=$(BACKUPS_AWS_SECRET_KEY) \
@@ -227,7 +227,7 @@ shopify: $(LPASS)
 	echo "export SHOPIFY_API_PASSWORD=$(SHOPIFY_API_PASSWORD)"
 .PHONY: shopify-lke-secret
 shopify-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 		create secret generic shopify \
 		--from-literal=api_key=$(SHOPIFY_API_KEY) \
 		--from-literal=api_password=$(SHOPIFY_API_PASSWORD) \
@@ -241,7 +241,7 @@ twitter: $(LPASS)
 	echo "export TWITTER_CONSUMER_SECRET=$(TWITTER_CONSUMER_SECRET)"
 .PHONY: twitter-lke-secret
 twitter-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic twitter \
 	  --from-literal=consumer_key=$(TWITTER_CONSUMER_KEY) \
 	  --from-literal=consumer_secret=$(TWITTER_CONSUMER_SECRET) \
@@ -255,7 +255,7 @@ app: $(LPASS)
 	echo "export SIGNING_SALT=$(SIGNING_SALT)"
 .PHONY: app-lke-secret
 app-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic app \
 	  --from-literal=secret_key_base=$(SECRET_KEY_BASE) \
 	  --from-literal=signing_salt=$(SIGNING_SALT) \
@@ -270,7 +270,7 @@ slack: $(LPASS)
 	echo "export SLACK_APP_API_TOKEN=$(SLACK_APP_API_TOKEN)"
 .PHONY: slack-lke-secret
 slack-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic slack \
 	  --from-literal=app_api_token=$(SLACK_APP_API_TOKEN) \
 	  --from-literal=deploy_webhook=$(SLACK_DEPLOY_WEBHOOK) \
@@ -283,7 +283,7 @@ rollbar: $(LPASS)
 	@echo "export ROLLBAR_ACCESS_TOKEN=$(ROLLBAR_ACCESS_TOKEN)"
 .PHONY: rollbar-lke-secret
 rollbar-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic rollbar \
 	  --from-literal=access_token=$(ROLLBAR_ACCESS_TOKEN) \
 	| $(KUBECTL) apply --filename -
@@ -294,7 +294,7 @@ buffer: $(LPASS)
 	@echo "export BUFFER_TOKEN=$(BUFFER_TOKEN)"
 .PHONY: buffer-lke-secret
 buffer-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic buffer \
 	  --from-literal=token=$(BUFFER_TOKEN) \
 	| $(KUBECTL) apply --filename -
@@ -305,7 +305,7 @@ coveralls: $(LPASS)
 	@echo "export COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN)"
 .PHONY: coveralls-lke-secret
 coveralls-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic coveralls \
 	  --from-literal=repo_token=$(COVERALLS_REPO_TOKEN) \
 	| $(KUBECTL) apply --filename -
@@ -318,7 +318,7 @@ algolia: $(LPASS)
 	echo "export ALGOLIA_API_KEY=$(ALGOLIA_API_KEY)"
 .PHONY: algolia-lke-secret
 algolia-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic algolia \
 	  --from-literal=application_id=$(ALGOLIA_APPLICATION_ID) \
 	  --from-literal=api_key=$(ALGOLIA_API_KEY) \
@@ -330,7 +330,7 @@ plusplus: $(LPASS)
 	@echo "export PLUSPLUS_SLUG_1=$(PLUSPLUS_SLUG)"
 .PHONY: plusplus-lke-secret
 plusplus-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic plusplus \
 	  --from-literal=slug=$(PLUSPLUS_SLUG) \
 	| $(KUBECTL) apply --filename -
@@ -341,7 +341,18 @@ fastly: $(LPASS)
 	@echo "export FASTLY_API_TOKEN=$(FASTLY_API_TOKEN)"
 .PHONY: fastly-lke-secret
 fastly-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic fastly \
 	  --from-literal=token=$(FASTLY_API_TOKEN) \
+	| $(KUBECTL) apply --filename -
+
+GRAFANA_API_KEY := "$$($(LPASS) show --notes Shared-changelog/secrets/GRAFANA_API_KEY)"
+.PHONY: grafana
+grafana: $(LPASS)
+	@echo "export GRAFANA_API_KEY=$(GRAFANA_API_KEY)"
+.PHONY: grafana-lke-secret
+grafana-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
+	  create secret generic grafana \
+	  --from-literal=api_key=$(GRAFANA_API_KEY) \
 	| $(KUBECTL) apply --filename -
