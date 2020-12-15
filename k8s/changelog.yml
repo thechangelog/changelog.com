@@ -374,6 +374,15 @@ spec:
           value: https
         - name: URL_STATIC_HOST
           value: cdn.changelog.com
+        - name: GRAFANA_URL
+          value: https://changelog.grafana.net/
+        - name: GRAFANA_DATASOURCE_ID
+          value: grafanacloud-changelog-prom
+        - name: GRAFANA_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: grafana
+              key: api_key
         image: thechangelog/changelog.com:latest
         imagePullPolicy: Always
         ports:

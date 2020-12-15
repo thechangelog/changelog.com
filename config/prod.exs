@@ -61,7 +61,7 @@ config :changelog, Changelog.PromEx,
   drop_metrics_groups: [],
   grafana: [
     host: SecretOrEnv.get("GRAFANA_URL"),
-    auth_token: SecretOrEnv.get("GRAFANA_API_TOKEN"),
+    auth_token: SecretOrEnv.get("GRAFANA_API_KEY"),
     datasource_id: SecretOrEnv.get("GRAFANA_DATASOURCE_ID", "prometheus")
   ],
   metrics_server: :disabled
