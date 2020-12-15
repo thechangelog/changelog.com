@@ -1,46 +1,4 @@
 defmodule Changelog.PromEx do
-  @moduledoc """
-  Be sure to add the following to finish setting up PromEx:
-
-  1. Update your configuration (config.exs, dev.exs, prod.exs, releases.exs, etc) to
-  configure the necessary bit of PromEx. Be sure to check out `PromEx.Config` for
-  more details regarding configuring PromEx:
-  ```
-    config :changelog, Changelog.PromEx,
-      manual_metrics_start_delay: :no_delay,
-      drop_metrics_groups: [],
-      grafana: :disabled,
-      metrics_server: :disabled
-  ```
-
-  2. Add this module to your application supervision tree:
-  ```
-  def start(_type, _args) do
-    children = [
-      ...
-
-      Changelog.PromEx
-    ]
-
-    ...
-  end
-  ```
-
-  3. Update your `endpoint.ex` file to expose your metrics (or configure a standalone
-  server using the `:metrics_server` config options):
-  ```
-  defmodule ChangelogWeb.Endpoint do
-    use Phoenix.Endpoint, otp_app: :changelog
-
-    ...
-
-    plug PromEx.Plug, prom_ex_module: Changelog.PromEx
-
-    ...
-  end
-  ```
-  """
-
   use PromEx, otp_app: :changelog
 
   @impl true
