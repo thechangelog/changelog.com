@@ -7,6 +7,8 @@ defmodule Changelog.Application do
     import Supervisor.Spec, warn: false
 
     children = [
+      # PromEx uses the new Supervisor child specification
+      Changelog.PromEx,
       # Start the endpoint when the application starts
       supervisor(ChangelogWeb.Endpoint, []),
       # Start the Ecto repository
