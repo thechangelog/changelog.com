@@ -37,6 +37,8 @@ defmodule Changelog.Mixfile do
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
+      # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
+      {:prom_ex, "~> 0.1.10-alpha"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},

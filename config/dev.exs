@@ -44,7 +44,6 @@ config :phoenix, :stacktrace_depth, 20
 
 config :phoenix, :plug_init_mode, :runtime
 
-# Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: SecretOrEnv.get("DB_NAME", "changelog_dev"),
@@ -58,3 +57,15 @@ config :rollbax,
   access_token: "",
   environment: "development",
   enabled: :log
+
+config :changelog, Changelog.PromEx,
+  manual_metrics_start_delay: :no_delay,
+  drop_metrics_groups: [],
+  grafana: [
+    host: SecretOrEnv.get("GRAFANA_URL", "http://localhost:3000"),
+    # This API Key will need to be created manually, most probably via http://localhost:3000/org/apikeys
+    auth_token: SecretOrEnv.get("GRAFANA_API_TOKEN"),
+    # This can default to Prometheus, PromEx expects it to be all in lowercase
+    datasource_id: SecretOrEnv.get("GRAFANA_DATASOURCE_ID", "prometheus")
+  ],
+  metrics_server: :disabled

@@ -55,3 +55,13 @@ config :changelog, Changelog.Scheduler,
 config :rollbax,
   access_token: SecretOrEnv.get("ROLLBAR_ACCESS_TOKEN"),
   environment: "production"
+
+config :changelog, Changelog.PromEx,
+  manual_metrics_start_delay: :no_delay,
+  drop_metrics_groups: [],
+  grafana: [
+    host: SecretOrEnv.get("GRAFANA_URL"),
+    auth_token: SecretOrEnv.get("GRAFANA_API_TOKEN"),
+    datasource_id: SecretOrEnv.get("GRAFANA_DATASOURCE_ID", "prometheus")
+  ],
+  metrics_server: :disabled
