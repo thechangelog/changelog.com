@@ -53,6 +53,7 @@ defmodule ChangelogWeb.ConnCase do
         tags[:as_inserted_editor] -> Changelog.Factory.insert(:person, editor: true)
         tags[:as_user] -> Changelog.Factory.build(:person, admin: false)
         tags[:as_inserted_user] -> Changelog.Factory.insert(:person, admin: false)
+        tags[:as_unapproved_user] -> Changelog.Factory.insert(:person, approved: false)
         true -> nil
       end
 

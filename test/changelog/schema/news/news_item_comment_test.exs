@@ -51,8 +51,8 @@ defmodule Changelog.NewsItemCommentTest do
 
   describe "nested/1" do
     test "nests comments appropriately" do
-      parent = %{id: 1, parent_id: nil, content: "ohai"}
-      reply = %{id: 2, parent_id: 1, content: "bai now"}
+      parent = %NewsItemComment{id: 1, parent_id: nil, content: "ohai", approved: true}
+      reply = %NewsItemComment{id: 2, parent_id: 1, content: "bai now", approved: true}
 
       nested = NewsItemComment.nested([reply, parent])
 

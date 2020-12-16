@@ -19,6 +19,23 @@
     <%= AdminHelpers.error_message(f, :content) %>
   </div>
 
+  <%= unless f.data.approved do %>
+    <div class="field <%= AdminHelpers.error_class(f, :approved) %>">
+      <%= label(f, :approved, "Approved") %>
+
+      <div class="ui fluid selection dropdown">
+        <%= hidden_input(f, :approved, value: "false") %>
+        <i class="dropdown icon"></i>
+        <div class="text">False</div>
+
+        <div class="menu">
+          <div class="item" data-value="true">True</div>
+          <div class="item selected" data-value="false">False</div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>

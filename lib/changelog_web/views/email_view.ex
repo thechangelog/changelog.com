@@ -42,4 +42,8 @@ defmodule ChangelogWeb.EmailView do
   def comment_url(item, comment) do
     news_item_url(item) <> NewsItemCommentView.permalink_path(comment)
   end
+
+  def admin_news_item_comment_url(comment) do
+    Routes.admin_news_item_comment_url(Endpoint, :edit, comment.id)
+  end
 end

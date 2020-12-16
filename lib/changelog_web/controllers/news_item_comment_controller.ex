@@ -7,14 +7,20 @@ defmodule ChangelogWeb.NewsItemCommentController do
   plug RequireUser, "before creating or previewing" when action in [:create, :preview]
 
   def create(conn = %{assigns: %{current_user: user}}, %{"news_item_comment" => comment_params}) do
-    comment = %NewsItemComment{author_id: user.id}
-    # no sneaky sneaky
-    comment_params = Map.delete(comment_params, "author_id")
+    comment = %NewsItemComment{author_id: user.id, approved: user.approved}
+
+    # Removed fields that users should not be able to override
+    comment_params = Map.drop(comment_params, ["author_id", "approved"])
+
     changeset = NewsItemComment.insert_changeset(comment, comment_params)
 
     case Repo.insert(changeset) do
       {:ok, comment} ->
         Task.start_link(fn -> NewsItemComment.refresh_news_item(comment) end)
+
+        # Only send the normal notification out if the user is an approved commenter
+        # Else send only to admins for vetting. The notify/1 function validates the state
+        # of the comment and sends it to the appropriate recipients.
         Task.start_link(fn -> Notifier.notify(comment) end)
 
         if get_format(conn) == "js" do

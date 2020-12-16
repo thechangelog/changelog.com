@@ -60,3 +60,6 @@ npm-debug.log*
 
 # Local config files, host-specific
 .config
+
+# Postgres DB dump
+/db-*

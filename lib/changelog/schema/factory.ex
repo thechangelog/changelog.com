@@ -186,6 +186,7 @@ defmodule Changelog.Factory do
 
   def news_item_comment_factory do
     %Changelog.NewsItemComment{
+      approved: true,
       news_item: build(:news_item),
       author: build(:person),
       content: "Oh noes you di'int!"
@@ -233,6 +234,7 @@ defmodule Changelog.Factory do
       email: sequence(:email, &"joe-#{&1}@email.com"),
       handle: sequence(:handle, &"joeblow-#{&1}"),
       settings: %Changelog.Person.Settings{},
+      approved: true,
       admin: false
     }
   end

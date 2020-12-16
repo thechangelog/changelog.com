@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Admin.NewsItemCommentController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItemComment}
+  alias Changelog.{NewsItemComment, Notifier, Person}
+  alias Ecto.Changeset
 
   plug :assign_comment when action in [:edit, :update, :delete]
   plug Authorize, [Policies.AdminsOnly, :comment]
@@ -27,10 +28,13 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
         params = %{"news_item_comment" => comment_params}
       ) do
     comment = NewsItemComment.preload_all(comment)
+
     changeset = NewsItemComment.update_changeset(comment, comment_params)
 
     case Repo.update(changeset) do
-      {:ok, _comment} ->
+      {:ok, comment} ->
+        approved_comment_actions(changeset, comment)
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_news_item_comment_path(conn, :index))
@@ -54,4 +58,16 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
     comment = Repo.get!(NewsItemComment, id)
     assign(conn, :comment, comment)
   end
+
+  defp approved_comment_actions(%Changeset{changes: %{approved: true}}, comment) do
+    # Update author to be an approved commenter so we don't need to do this again
+    %Person{id: comment.author_id}
+    |> Person.approve_commenter_changeset()
+    |> Repo.update()
+
+    # Send the notification out now that the comment is approved
+    Task.start_link(fn -> Notifier.notify(comment) end)
+  end
+
+  defp approved_comment_actions(_, _), do: :noop
 end
