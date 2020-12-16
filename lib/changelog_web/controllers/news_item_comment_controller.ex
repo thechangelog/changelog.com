@@ -9,7 +9,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
   def create(conn = %{assigns: %{current_user: user}}, %{"news_item_comment" => comment_params}) do
     comment = %NewsItemComment{author_id: user.id, approved: user.approved}
 
-    # Removed fields that user's should be able to override
+    # Removed fields that users should not be able to override
     comment_params = Map.drop(comment_params, ["author_id", "approved"])
 
     changeset = NewsItemComment.insert_changeset(comment, comment_params)
