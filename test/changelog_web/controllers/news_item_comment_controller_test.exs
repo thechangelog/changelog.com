@@ -38,7 +38,7 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
   end
 
   @tag :as_inserted_user
-  test "creates comment and notifies if the commentator is approved", %{conn: conn} do
+  test "creates comment and notifies if the commenter is approved", %{conn: conn} do
     item = insert(:published_news_item)
 
     with_mock(Notifier, notify: fn %NewsItemComment{approved: true} -> true end) do

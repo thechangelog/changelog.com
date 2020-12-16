@@ -1,4 +1,4 @@
-defmodule Changelog.Repo.Migrations.AddApprovedCommentatorColumn do
+defmodule Changelog.Repo.Migrations.AddApprovedCommenterColumn do
   use Ecto.Migration
 
   def change do

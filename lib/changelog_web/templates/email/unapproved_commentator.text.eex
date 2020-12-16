@@ -4,6 +4,6 @@ Hello Admin,
 
 <%= @comment.content %>
 
-To handle the comment by this new commentator, go to the admin new comments dashboard: <%= admin_news_item_comment_url(@comment) %>
+To handle the comment by this new commenter, go to the admin new comments dashboard: <%= admin_news_item_comment_url(@comment) %>
 
 💚, Logbot

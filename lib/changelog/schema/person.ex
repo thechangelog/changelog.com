@@ -173,11 +173,11 @@ defmodule Changelog.Person do
     |> file_changeset(attrs)
   end
 
-  def approve_commentator_changeset(person) do
+  def approve_commenter_changeset(person) do
     change(person, approved: true)
   end
 
-  def revoke_commentator_changeset(person) do
+  def revoke_commenter_changeset(person) do
     change(person, approved: false)
   end
 

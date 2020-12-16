@@ -60,9 +60,9 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
   end
 
   defp approved_comment_actions(%Changeset{changes: %{approved: true}}, comment) do
-    # Update author to be an approved commentator so we don't need to do this again
+    # Update author to be an approved commenter so we don't need to do this again
     %Person{id: comment.author_id}
-    |> Person.approve_commentator_changeset()
+    |> Person.approve_commenter_changeset()
     |> Repo.update()
 
     # Send the notification out now that the comment is approved

@@ -66,7 +66,7 @@ defmodule Changelog.Notifier do
     admin_recipients
     |> Enum.each(fn admin_recipient ->
       Email
-      |> apply(:unapproved_commentator, [admin_recipient, comment])
+      |> apply(:unapproved_commenter, [admin_recipient, comment])
       |> Mailer.deliver_later()
     end)
   end

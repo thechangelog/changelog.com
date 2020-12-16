@@ -18,7 +18,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
       {:ok, comment} ->
         Task.start_link(fn -> NewsItemComment.refresh_news_item(comment) end)
 
-        # Only send the normal notification out if the user is an approved commentator
+        # Only send the normal notification out if the user is an approved commenter
         # Else send only to admins for vetting. The notify/1 function validates the state
         # of the comment and sends it to the appropriate recipients.
         Task.start_link(fn -> Notifier.notify(comment) end)

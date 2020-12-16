@@ -18,16 +18,16 @@ defmodule ChangelogWeb.Email do
     |> render(:comment_mention)
   end
 
-  def unapproved_commentator(admin_recipient, comment) do
+  def unapproved_commenter(admin_recipient, comment) do
     item = NewsItem.load_object(comment.news_item)
 
     styled_email()
-    |> put_header("X-CMail-GroupName", "Unapproved Commentator")
+    |> put_header("X-CMail-GroupName", "Unapproved Commenter")
     |> to(admin_recipient)
     |> subject("New unapproved comment on `#{comment.news_item.headline}`")
     |> assign(:comment, comment)
     |> assign(:item, item)
-    |> render(:unapproved_commentator)
+    |> render(:unapproved_commenter)
   end
 
   def comment_reply(person, reply) do
