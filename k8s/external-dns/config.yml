@@ -4,7 +4,7 @@
 ---
 dns:
   record_owner: linode-kubernetes-engine
-  log_level: debug #! debug for extra info
+  log_level: debug #! info is the default, but we want to know more...
 #! provided just-in-time
 image:
 namespace:
