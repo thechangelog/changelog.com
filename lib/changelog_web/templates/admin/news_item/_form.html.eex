@@ -118,8 +118,10 @@
           <div class="content">
             <a class="ui label">
               <%= topic.name %>
-              <i class="delete icon js-remove"></i>
-              <%= hidden_input(i, :delete) %>
+              <span class="js-remove">
+                <i class="delete icon"></i>
+                <%= hidden_input(i, :delete) %>
+              </span>
             </a>
           </div>
         </div>
