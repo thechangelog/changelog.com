@@ -40,7 +40,7 @@ $(KUBECTL): | $(CURL) $(LOCAL_BIN)
 kubectl: $(KUBECTL)
 
 HELM_RELEASES := https://github.com/helm/helm/releases
-HELM_VERSION := 3.4.1
+HELM_VERSION := 3.4.2
 HELM_BIN_DIR := helm-v$(HELM_VERSION)-$(platform)-amd64
 HELM_URL := https://get.helm.sh/$(HELM_BIN_DIR).tar.gz
 HELM := $(LOCAL_BIN)/$(HELM_BIN_DIR)/$(platform)-amd64/helm
@@ -348,8 +348,7 @@ lke-details: $(KUBEFLEET) lke-config-hint
 include $(CURDIR)/mk/external-dns.mk
 include $(CURDIR)/mk/cert-manager.mk
 include $(CURDIR)/mk/ingress-nginx.mk
-include $(CURDIR)/mk/kube-prometheus.mk
+include $(CURDIR)/mk/metrics-logs-traces.mk
 include $(CURDIR)/mk/postgres.mk
 include $(CURDIR)/mk/changelog.mk
 include $(CURDIR)/mk/keel.mk
-include $(CURDIR)/mk/grafana-cloud.mk

@@ -10,6 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: cert-manager-webhook-dnsimple-production
     external-dns.alpha.kubernetes.io/ttl: "60"
     service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol: v2
+    prometheus.io/scrape: "true"
 spec:
   tls:
     - hosts:
@@ -374,9 +375,9 @@ spec:
             - name: URL_STATIC_HOST
               value: #@ data.values.cdn
             - name: GRAFANA_URL
-              value: "https://changelog.grafana.net/"
+              value: "http://prometheus-grafana.kube-prometheus-stack.svc.cluster.local"
             - name: GRAFANA_DATASOURCE_ID
-              value: "grafanacloud-changelog-prom"
+              value: "Prometheus"
             - name: GRAFANA_API_KEY
               valueFrom:
                 secretKeyRef:
