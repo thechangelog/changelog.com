@@ -5,6 +5,7 @@ METRICS_NAME := $(METRICS_NAMESPACE)-changelog
 METRICS_FQDN := grafana.changelog.com
 .PHONY: lke-grafana
 lke-grafana: | lke-ctx kube-prometheus $(YTT)
+	@printf "\n$(BOLD)$(RED)TODO: Supersede kube-prometheus-stack via Helm with Grafana Cloud integration$(NORMAL)\n"
 	$(KUBECTL) apply --filename tmp/kube-prometheus/manifests/setup \
 	&& $(KUBECTL) apply --filename tmp/kube-prometheus/manifests \
 	&& $(YTT) \
@@ -71,3 +72,53 @@ tmp/kube-prometheus/jsonnetfile.json: | tmp/kube-prometheus $(JB)
 
 tmp/kube-prometheus:
 	mkdir -p $(@)
+
+GRAFANA_CLOUD_NAMESPACE := grafana-cloud
+
+.PHONY: lke-promtail
+lke-promtail: | lke-ctx $(CURL) $(LPASS)
+	curl -fsS https://raw.githubusercontent.com/grafana/loki/master/tools/promtail.sh \
+	| sh -s 8521 "$$($(LPASS) show --notes 1212835959730479797)" logs-prod-us-central1.grafana.net default | kubectl apply --namespace=default -f  -
+
+lke-provision:: lke-promtail
+
+# helm search repo --versions prometheus-community/kube-prometheus-stack
+# See k8s/kube--porometheus-stack/default-values.yml
+KUBE_PROMETHEUS_STACK_VERSION ?= 12.8.0
+KUBE_PROMETHEUS_STACK_NAMESPACE := kube-prometheus-stack
+GRAFANA_CLOUD_URL = https://prometheus-us-central1.grafana.net/api/prom/push
+.PHONY: kube-prometheus-stack
+kube-prometheus-stack: | lke-ctx grafana-cloud-lke-secret $(HELM)
+	$(HELM) repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	$(HELM) upgrade prometheus prometheus-community/$(@) \
+	  --install \
+	  --version $(KUBE_PROMETHEUS_STACK_VERSION) \
+	  --set defaultRules.rules.alertmanager=false \
+	  --set alertmanager.enabled=false \
+	  --set grafana.enabled=true \
+	  --set prometheus.prometheusSpec.scrapeInterval=15s \
+	  --set prometheus.prometheusSpec.retention=30d \
+	  --create-namespace \
+	  --namespace $(KUBE_PROMETHEUS_STACK_NAMESPACE)
+
+# TODO: enable metrics forwarding when @adamstac says that we are ready
+# --set prometheus.prometheusSpec.remoteWrite[0].name=grafana-cloud \
+# --set prometheus.prometheusSpec.remoteWrite[0].url=$(GRAFANA_CLOUD_URL) \
+# --set-string prometheus.prometheusSpec.remoteWrite[0].basicAuth.username.name=grafana-cloud \
+# --set-string prometheus.prometheusSpec.remoteWrite[0].basicAuth.username.key=username \
+# --set prometheus.prometheusSpec.remoteWrite[0].basicAuth.password.name=grafana-cloud \
+# --set prometheus.prometheusSpec.remoteWrite[0].basicAuth.password.key=password \
+
+lke-provision:: kube-prometheus-stack
+
+GRAFANA_CLOUD_USERNAME := "$$($(LPASS) show --notes Shared-changelog/secrets/GRAFANA_CLOUD_USERNAME)"
+GRAFANA_CLOUD_PASSWORD := "$$($(LPASS) show --notes Shared-changelog/secrets/GRAFANA_CLOUD_PASSWORD)"
+.PHONY: grafana-cloud
+.PHONY: grafana-cloud-lke-secret
+grafana-cloud-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(KUBE_PROMETHEUS_STACK_NAMESPACE) --dry-run --output=yaml \
+	  create secret generic grafana-cloud \
+	  --from-literal=username=$(GRAFANA_CLOUD_USERNAME) \
+	  --from-literal=password=$(GRAFANA_CLOUD_PASSWORD) \
+	| $(KUBECTL) apply --filename -
+
