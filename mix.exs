@@ -39,7 +39,7 @@ defmodule Changelog.Mixfile do
       {:plug_cowboy, "~> 2.0"},
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
-      {:prom_ex, "~> 0.1.10-alpha"},
+      {:prom_ex, "~> 0.1.11-alpha"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},
