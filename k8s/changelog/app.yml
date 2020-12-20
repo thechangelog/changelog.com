@@ -96,9 +96,6 @@ kind: Service
 metadata:
   name: #@ data.values.app.name
   namespace: #@ data.values.namespace
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "4000"
 spec:
   ports:
     - name: http
@@ -138,6 +135,9 @@ kind: Deployment
 metadata:
   name: #@ data.values.app.name
   namespace: #@ data.values.namespace
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "4000"
   labels:
     app: #@ data.values.app.name
     #! https://keel.sh/docs/#policies

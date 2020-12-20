@@ -94,9 +94,6 @@ kind: Service
 metadata:
   name: app
   namespace: prod-2020-07
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "4000"
 spec:
   ports:
   - name: http
@@ -138,6 +135,9 @@ kind: Deployment
 metadata:
   name: app
   namespace: prod-2020-07
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "4000"
   labels:
     app: app
     keel.sh/policy: force
