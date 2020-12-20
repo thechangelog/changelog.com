@@ -375,9 +375,9 @@ spec:
         - name: URL_STATIC_HOST
           value: cdn.changelog.com
         - name: GRAFANA_URL
-          value: https://changelog.grafana.net/
+          value: http://prometheus-grafana.kube-prometheus-stack.svc.cluster.local
         - name: GRAFANA_DATASOURCE_ID
-          value: grafanacloud-changelog-prom
+          value: Prometheus
         - name: GRAFANA_API_KEY
           valueFrom:
             secretKeyRef:
