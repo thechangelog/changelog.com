@@ -5,4 +5,10 @@
 #! provided just-in-time
 namespace:
 fqdn:
-name:
+grafana_cloud:
+  url:
+github:
+  allowed_organizations:
+  client_id:
+  client_secret:
+  team_ids:

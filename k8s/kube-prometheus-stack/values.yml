@@ -1,0 +1,71 @@
+#@ load("@ytt:data", "data")
+#! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
+defaultRules:
+  rules:
+    alertmanager: false
+
+alertmanager:
+  enabled: false
+
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 15s
+    retention: 30d
+    size: 10GB
+    resources:
+      requests:
+        cpu: 1
+        memory: 1Gi
+      limits:
+        cpu: 2
+        memory: 4Gi
+    #! TODO: enable metrics forwarding when @adamstac says that we are ready
+    #! remoteWrite:
+    #!  - name: grafana-cloud
+    #!    url: #@ data.values.grafana_cloud.url
+    #!    basicAuth:
+    #!      username:
+    #!        name: grafana-cloud
+    #!        key: username
+    #!      password:
+    #!        name: grafana-cloud
+    #!        key: password
+
+grafana:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: cert-manager-webhook-dnsimple-production
+      external-dns.alpha.kubernetes.io/ttl: "60"
+    hosts:
+      - #@ data.values.fqdn
+    tls:
+      - secretName: wildcard-acme-tls
+        hosts:
+          - #@ data.values.fqdn
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClassName: linode-block-storage
+  grafana.ini:
+    auth:
+      oauth_auto_login: true
+      disable_login_form: true
+    auth.anonymous:
+      enabled: false
+    auth.github:
+      allow_sign_up: true
+      allowed_organizations: #@ data.values.github.allowed_organizations
+      client_id: #@ data.values.github.client_id
+      client_secret: #@ data.values.github.client_secret
+      enabled: true
+      team_ids: #@ data.values.github.team_ids
+    security:
+      disable_initial_admin_creation: true
+    server:
+      enable_gzip: true
+      root_url: #@ "https://" + data.values.fqdn
+    users:
+      auto_assign_org_role: Admin

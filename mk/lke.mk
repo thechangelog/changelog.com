@@ -89,14 +89,6 @@ KREW := /usr/local/bin/kubectl-krew
 $(KREW):
 	brew install krew
 krew: $(KREW)
-
-JSONNET := /usr/local/bin/jsonnet
-$(JSONNET):
-	brew install go-jsonnet
-
-YQ := /usr/local/bin/yq
-$(YQ):
-	brew install yq
 endif
 ifeq ($(PLATFORM),Linux)
 LINODE_CLI ?= /usr/bin/linode-cli
@@ -119,14 +111,6 @@ $(POPEYE):
 KREW ?= /usr/bin/kubectl-krew
 $(KREW):
 	$(error Please install krew: https://github.com/kubernetes-sigs/krew#installation)
-
-JSONNET ?= /usr/bin/jsonnet
-$(JSONNET):
-	$(error Please install go-jsonnet: https://github.com/google/go-jsonnet)
-
-YQ ?= /usr/bin/yq
-$(YQ):
-	$(error Please install yq: https://github.com/mikefarah/yq#install)
 endif
 
 # https://github.com/ahmetb/kubectl-tree
@@ -172,46 +156,6 @@ ytt: $(YTT)
 .PHONY: releases-ytt
 releases-ytt:
 	@$(OPEN) $(YTT_RELEASES)
-
-JB_RELEASES := https://github.com/jsonnet-bundler/jsonnet-bundler/releases
-JB_VERSION := 0.4.0
-JB_BIN := jb-$(JB_VERSION)-$(platform)-amd64
-JB_URL := https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v$(JB_VERSION)/jb-$(platform)-amd64
-JB := $(LOCAL_BIN)/$(JB_BIN)
-$(JB): $(CURL)
-	mkdir -p $(LOCAL_BIN) \
-	&& cd $(LOCAL_BIN) \
-	&& $(CURL) --progress-bar --fail --location --output $(JB) "$(JB_URL)" \
-	&& touch $(JB) \
-	&& chmod +x $(JB) \
-	&& $(JB) --version 2>&1 \
-	   | grep "$(JB_VERSION)" \
-	&& ln -sf $(JB) $(LOCAL_BIN)/jb
-.PHONY: jb
-jb: $(JB)
-.PHONY: releases-jb
-releases-jb:
-	@$(OPEN) $(JB_RELEASES)
-
-YQ_RELEASES := https://github.com/mikefarah/yq/releases
-YQ_VERSION := 3.3.2
-YQ_BIN := yq_$(platform)_amd64
-YQ_URL := https://github.com/mikefarah/yq/releases/download/$(YQ_VERSION)/$(YQ_BIN)
-YQ := $(LOCAL_BIN)/$(YQ_BIN)
-$(YQ): $(CURL)
-	mkdir -p $(LOCAL_BIN) \
-	&& cd $(LOCAL_BIN) \
-	&& $(CURL) --progress-bar --fail --location --output $(YQ) "$(YQ_URL)" \
-	&& touch $(YQ) \
-	&& chmod +x $(YQ) \
-	&& $(YQ) --version 2>&1 \
-	   | grep "$(YQ_VERSION)" \
-	&& ln -sf $(YQ) $(LOCAL_BIN)/yq
-.PHONY: yq
-yq: $(YQ)
-.PHONY: releases-yq
-releases-yq:
-	@$(OPEN) $(YQ_RELEASES)
 
 .PHONY: kubectx
 kubectx: | $(KUBECTX)
