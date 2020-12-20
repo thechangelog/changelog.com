@@ -94,6 +94,9 @@ kind: Service
 metadata:
   name: app
   namespace: prod-2020-07
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "4000"
 spec:
   ports:
   - name: http
