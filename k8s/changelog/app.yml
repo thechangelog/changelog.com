@@ -10,7 +10,6 @@ metadata:
     cert-manager.io/cluster-issuer: cert-manager-webhook-dnsimple-production
     external-dns.alpha.kubernetes.io/ttl: "60"
     service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol: v2
-    prometheus.io/scrape: "true"
 spec:
   tls:
     - hosts:
@@ -97,6 +96,9 @@ kind: Service
 metadata:
   name: #@ data.values.app.name
   namespace: #@ data.values.namespace
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "4000"
 spec:
   ports:
     - name: http
