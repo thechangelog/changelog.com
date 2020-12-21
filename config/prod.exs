@@ -30,7 +30,7 @@ config :changelog, Changelog.Repo,
   database: SecretOrEnv.get("DB_NAME", "changelog"),
   hostname: SecretOrEnv.get("DB_HOST", "db"),
   password: SecretOrEnv.get("DB_PASS"),
-  pool_size: 20,
+  pool_size: 40,
   timeout: 60000,
   username: SecretOrEnv.get("DB_USER", "postgres")
 
