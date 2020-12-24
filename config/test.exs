@@ -21,6 +21,11 @@ config :changelog, Changelog.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   username: SecretOrEnv.get("DB_USER", "postgres")
 
+config :changelog, Oban,
+  crontab: false,
+  queues: false,
+  plugins: false
+
 config :rollbax,
   access_token: "",
   environment: "test",

@@ -40,6 +40,7 @@ defmodule Changelog.Mixfile do
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
       {:prom_ex, "~> 0.1.11-alpha"},
+      {:oban, "~> 2.3.4"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},

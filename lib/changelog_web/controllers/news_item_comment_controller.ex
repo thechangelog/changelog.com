@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.NewsItemCommentController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItemComment, Notifier}
+  alias Changelog.NewsItemComment
+  alias Changelog.ObanWorkers.CommentNotifier
   alias ChangelogWeb.NewsItemCommentView
 
   plug RequireUser, "before creating or previewing" when action in [:create, :preview]
@@ -21,7 +22,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         # Only send the normal notification out if the user is an approved commenter
         # Else send only to admins for vetting. The notify/1 function validates the state
         # of the comment and sends it to the appropriate recipients.
-        Task.start_link(fn -> Notifier.notify(comment) end)
+        CommentNotifier.schedule_notification(comment)
 
         if get_format(conn) == "js" do
           comment = NewsItemComment.preload_all(comment)

@@ -24,6 +24,11 @@ config :changelog,
   slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
   plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG")
 
+config :changelog, Oban,
+  repo: Changelog.Repo,
+  plugins: [Oban.Plugins.Pruner],
+  queues: [comment_notifier: 10]
+
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
 
 config :logger, :console,
