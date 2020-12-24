@@ -1,9 +1,11 @@
 defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
   use ChangelogWeb.ConnCase
+  use Oban.Testing, repo: Changelog.Repo
 
   import Mock
 
   alias Changelog.{NewsItemComment, Notifier}
+  alias Changelog.ObanWorkers.CommentNotifier
 
   @tag :as_admin
   test "lists all comments on index", %{conn: conn} do
@@ -53,6 +55,11 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
       assert redirected_to(conn) == Routes.admin_news_item_comment_path(conn, :index)
       assert Repo.get(NewsItemComment, comment.id).content == "bai!"
       assert Repo.get(NewsItemComment, comment.id).approved == true
+
+      assert_enqueued([worker: CommentNotifier, args: %{"comment_id" => comment.id}], 100)
+
+      assert %{success: 1, failure: 0} =
+               Oban.drain_queue(queue: :comment_notifier, with_scheduled: true)
 
       assert called(Notifier.notify(:_))
     end

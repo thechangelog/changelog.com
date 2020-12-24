@@ -1,9 +1,11 @@
 defmodule ChangelogWeb.NewsItemCommentControllerTest do
   use ChangelogWeb.ConnCase
+  use Oban.Testing, repo: Changelog.Repo
 
   import Mock
 
   alias Changelog.{NewsItemComment, Notifier}
+  alias Changelog.ObanWorkers.CommentNotifier
 
   @tag :as_user
   test "previewing a comment", %{conn: conn} do
@@ -47,8 +49,15 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
           news_item_comment: %{content: "how dare thee!", item_id: item.id}
         )
 
+      [%NewsItemComment{id: id}] = Repo.all(NewsItemComment)
+
       assert redirected_to(conn) == Routes.root_path(conn, :index)
       assert count(NewsItemComment) == 1
+      assert_enqueued([worker: CommentNotifier, args: %{"comment_id" => id}], 100)
+
+      assert %{success: 1, failure: 0} =
+               Oban.drain_queue(queue: :comment_notifier, with_scheduled: true)
+
       assert called(Notifier.notify(:_))
     end
   end
@@ -63,8 +72,15 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
           news_item_comment: %{content: "how dare thee!", item_id: item.id}
         )
 
+      [%NewsItemComment{id: id}] = Repo.all(NewsItemComment)
+
       assert redirected_to(conn) == Routes.root_path(conn, :index)
       assert count(NewsItemComment) == 1
+      assert_enqueued([worker: CommentNotifier, args: %{"comment_id" => id}], 100)
+
+      assert %{success: 1, failure: 0} =
+               Oban.drain_queue(queue: :comment_notifier, with_scheduled: true)
+
       assert called(Notifier.notify(:_))
     end
   end
@@ -80,8 +96,16 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
           news_item_comment: %{content: "how dare thee!", item_id: item.id, author_id: other.id}
         )
 
+      [%NewsItemComment{id: id}] = Repo.all(NewsItemComment)
+
       assert redirected_to(conn) == Routes.root_path(conn, :index)
       comment = Repo.one(NewsItemComment)
+
+      assert_enqueued([worker: CommentNotifier, args: %{"comment_id" => id}], 100)
+
+      assert %{success: 1, failure: 0} =
+               Oban.drain_queue(queue: :comment_notifier, with_scheduled: true)
+
       assert comment.author_id != other.id
       assert called(Notifier.notify(:_))
     end
