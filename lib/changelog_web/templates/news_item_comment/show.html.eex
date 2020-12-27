@@ -28,6 +28,10 @@
 
     <footer class="comment-footer">
       <p class="comment-actions">
+        <%= if SharedHelpers.can_edit_comment?(@current_user, @comment) do %>
+          <a href="" title="Edit your comment" class="js-comment-edit">edit</a>
+        <% end %>
+
         <a href="javascript:void(0)" title="Reply to this comment" class="js-comment-reply">reply</a>
       </p>
     </footer>

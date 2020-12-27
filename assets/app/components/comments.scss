@@ -218,6 +218,10 @@
 
     .comment-actions {
       margin-left: 0;
+
+      :after {
+        content: "";
+      }
     }
   }
 

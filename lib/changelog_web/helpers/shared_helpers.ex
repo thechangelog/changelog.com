@@ -194,4 +194,13 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def word_count(text) when is_binary(text) do
     text |> md_to_text() |> String.split() |> length()
   end
+
+  def can_edit_comment?(
+        %Changelog.Person{id: user_id},
+        %Changelog.NewsItemComment{author_id: author_id, inserted_at: comment_inserted_at}
+      ) do
+    time_since_post = NaiveDateTime.diff(NaiveDateTime.utc_now(), comment_inserted_at, :second)
+
+    user_id == author_id and time_since_post < 300
+  end
 end
