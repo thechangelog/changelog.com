@@ -143,6 +143,8 @@ metadata:
     #! https://keel.sh/docs/#policies
     keel.sh/policy: force
     keel.sh/match-tag: "true"
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "4000"
 spec:
   replicas: #@ data.values.app.replicas
   selector:

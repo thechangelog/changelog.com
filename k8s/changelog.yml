@@ -142,6 +142,8 @@ metadata:
     app: app
     keel.sh/policy: force
     keel.sh/match-tag: "true"
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "4000"
 spec:
   replicas: 1
   selector:
@@ -447,6 +449,12 @@ spec:
             - -c
             args:
             - |-
+              if [ -z "$DEBUG" ]
+              then
+                echo "Fail job on error..."
+                set -e
+              fi
+
               #! https://developer.fastly.com/reference/api/tls/custom-certs/private-keys/
               cat > /tmp/key.json <<EOF
               {
@@ -459,12 +467,12 @@ spec:
                 }
               }
               EOF
-              curl --verbose --silent \
+              curl --verbose --silent --fail --show-error \
                 --header "Accept: application/vnd.api+json" \
                 --header "Content-Type: application/vnd.api+json" \
                 --header "Fastly-Key: $FASTLY_API_TOKEN" \
                 --data @/tmp/key.json \
-                https://api.fastly.com/tls/private_keys
+                https://api.fastly.com/tls/private_keys 2>&1 | grep -v "$FASTLY_API_TOKEN"
 
               #! https://developer.fastly.com/reference/api/tls/custom-certs/certificates/
               cat > /tmp/crt.json <<EOF
@@ -478,13 +486,13 @@ spec:
                 }
               }
               EOF
-              curl --verbose --silent \
+              curl --verbose --silent --fail --show-error \
                 --header "Accept: application/vnd.api+json" \
                 --header "Content-Type: application/vnd.api+json" \
                 --header "Fastly-Key: $FASTLY_API_TOKEN" \
                 --request PATCH \
                 --data @/tmp/crt.json \
-                https://api.fastly.com/tls/certificates/1LA0UjkMfnnMwzglSLdAc
+                https://api.fastly.com/tls/certificates/1LA0UjkMfnnMwzglSLdAc 2>&1 | grep -v "$FASTLY_API_TOKEN"
 
               if [ -n "$DEBUG" ]
               then
