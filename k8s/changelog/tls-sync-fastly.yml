@@ -80,12 +80,12 @@ spec:
               - name: TLS_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: wildcard-acme-tls
+                    name: wildcard-acme-tls-pkcs8
                     key: tls.key
               - name: TLS_CRT
                 valueFrom:
                   secretKeyRef:
-                    name: wildcard-acme-tls
+                    name: wildcard-acme-tls-pkcs8
                     key: tls.crt
               - name: FASTLY_API_TOKEN
                 valueFrom:

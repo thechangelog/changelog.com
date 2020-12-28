@@ -14,7 +14,7 @@ spec:
     - changelog.com
     - www.changelog.com
     - 2020.changelog.com
-    secretName: wildcard-acme-tls
+    secretName: wildcard-acme-tls-pkcs8
   - hosts:
     - brainscience.fm
     secretName: brainscience-fm-acme-tls
@@ -119,16 +119,17 @@ spec:
 apiVersion: cert-manager.io/v1alpha3
 kind: Certificate
 metadata:
-  name: wildcard-acme-tls
+  name: wildcard-acme-tls-pkcs8
   namespace: prod-2020-07
 spec:
   dnsNames:
   - '*.changelog.com'
   - changelog.com
+  keyEncoding: pkcs8
   issuerRef:
     name: cert-manager-webhook-dnsimple-production
     kind: ClusterIssuer
-  secretName: wildcard-acme-tls
+  secretName: wildcard-acme-tls-pkcs8
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -504,12 +505,12 @@ spec:
             - name: TLS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: wildcard-acme-tls
+                  name: wildcard-acme-tls-pkcs8
                   key: tls.key
             - name: TLS_CRT
               valueFrom:
                 secretKeyRef:
-                  name: wildcard-acme-tls
+                  name: wildcard-acme-tls-pkcs8
                   key: tls.crt
             - name: FASTLY_API_TOKEN
               valueFrom:

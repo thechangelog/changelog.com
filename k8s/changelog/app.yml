@@ -16,7 +16,7 @@ spec:
         - #@ data.values.fqdn
         - www.changelog.com
         - 2020.changelog.com
-      secretName: wildcard-acme-tls
+      secretName: wildcard-acme-tls-pkcs8
     - hosts:
         - brainscience.fm
       secretName: brainscience-fm-acme-tls
@@ -121,14 +121,16 @@ spec:
 apiVersion: cert-manager.io/v1alpha3
 kind: Certificate
 metadata:
-  name: wildcard-acme-tls
+  name: wildcard-acme-tls-pkcs8
   namespace: #@ data.values.namespace
 spec:
   dnsNames: #@ data.values.app.https.domains
+  #! https://support.fastly.com/hc/en-us/requests/329710
+  keyEncoding: "pkcs8"
   issuerRef:
     name: cert-manager-webhook-dnsimple-production
     kind: ClusterIssuer
-  secretName: wildcard-acme-tls
+  secretName: wildcard-acme-tls-pkcs8
 ---
 apiVersion: apps/v1
 kind: Deployment

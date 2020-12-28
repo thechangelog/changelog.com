@@ -78,7 +78,7 @@ grafana:
     hosts:
       - #@ data.values.fqdn
     tls:
-      - secretName: wildcard-acme-tls
+      - secretName: wildcard-acme-tls-pkcs8
         hosts:
           - #@ data.values.fqdn
   persistence:
