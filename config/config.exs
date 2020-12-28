@@ -4,7 +4,6 @@
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
 use Mix.Config
-Code.compile_file("config/secret_or_env.exs")
 
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],

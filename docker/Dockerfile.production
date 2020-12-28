@@ -10,6 +10,14 @@ COPY --from=legacy_assets /var/www/wp-content /app/priv/wp-content
 ENV MIX_ENV=prod
 ENV TERM=xterm
 
+# Used by PromEx for annotations
+ARG APP_VERSION
+ARG GIT_SHA
+ARG GIT_AUTHOR
+ENV APP_VERSION=${APP_VERSION}
+ENV GIT_SHA=${GIT_SHA}
+ENV GIT_AUTHOR=${GIT_AUTHOR}
+
 EXPOSE 4000
 
 CMD mix do ecto.create, ecto.migrate, phx.server

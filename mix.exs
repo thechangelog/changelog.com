@@ -1,10 +1,11 @@
 defmodule Changelog.Mixfile do
   use Mix.Project
+  Code.compile_file("config/secret_or_env.exs")
 
   def project do
     [
       app: :changelog,
-      version: "0.0.1",
+      version: SecretOrEnv.get("APP_VERSION", "0.0.1"),
       elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),

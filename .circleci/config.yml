@@ -121,7 +121,13 @@ jobs:
       - run:
           name: Build and publish Docker image
           command: |
-            docker build --tag thechangelog/changelog.com:$CIRCLE_SHA1 --tag thechangelog/changelog.com:latest --file docker/Dockerfile.production .
+            docker build \
+              --build-arg APP_VERSION="$(date -u +'%y.%-m.%-d')+${CIRCLE_SHA1:0:7}" \
+              --build-arg GIT_SHA="$CIRCLE_SHA1" \
+              --build-arg GIT_AUTHOR="$CIRCLE_USERNAME" \
+              --tag thechangelog/changelog.com:$CIRCLE_SHA1 \
+              --tag thechangelog/changelog.com:latest \
+              --file docker/Dockerfile.production .
             docker login --username $DOCKER_USER --password $DOCKER_PASS
             docker push thechangelog/changelog.com:$CIRCLE_SHA1
             docker push thechangelog/changelog.com:latest
