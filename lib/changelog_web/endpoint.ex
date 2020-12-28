@@ -13,7 +13,7 @@ defmodule ChangelogWeb.Endpoint do
     gzip: false,
     headers: %{
       "accept-ranges" => "bytes",
-      "surrogate-control" => "max-age=3600, stale-if-error=86400"
+      "surrogate-control" => "max-age=604800, stale-if-error=604800"
     }
 
   # Legacy assets that will exist in production & may exist in dev
