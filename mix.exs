@@ -6,7 +6,7 @@ defmodule Changelog.Mixfile do
     [
       app: :changelog,
       version: SecretOrEnv.get("APP_VERSION", "0.0.1"),
-      elixir: "~> 1.6",
+      elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
