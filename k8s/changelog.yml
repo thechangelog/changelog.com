@@ -450,10 +450,13 @@ spec:
             - -c
             args:
             - |-
-              if [ -z "$DEBUG" ]
+              if [ -n "$DEBUG" ]
               then
+                CURL_OPTIONS="--verbose"
+              else
                 echo "Fail job on error..."
                 set -e
+                set -o pipefail
               fi
 
               #! https://developer.fastly.com/reference/api/tls/custom-certs/private-keys/
@@ -468,7 +471,10 @@ spec:
                 }
               }
               EOF
-              curl --verbose --silent --fail --show-error \
+              echo "But don't fail POST-ing private keys, as it's not idempotent"
+              echo "This Fastly support ticket has all the details: https://support.fastly.com/hc/en-us/requests/329710"
+              echo "TODO: What is the simplest way of checking that a private key exists?"
+              curl $CURL_OPTIONS --silent --show-error \
                 --header "Accept: application/vnd.api+json" \
                 --header "Content-Type: application/vnd.api+json" \
                 --header "Fastly-Key: $FASTLY_API_TOKEN" \
@@ -487,7 +493,7 @@ spec:
                 }
               }
               EOF
-              curl --verbose --silent --fail --show-error \
+              curl $CURL_OPTIONS --silent --fail --show-error \
                 --header "Accept: application/vnd.api+json" \
                 --header "Content-Type: application/vnd.api+json" \
                 --header "Fastly-Key: $FASTLY_API_TOKEN" \
