@@ -1443,7 +1443,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -1455,7 +1455,7 @@
     ]
   },
   "timezone": "",
-  "title": "PromEx - Phoenix - 2020.12.28",
+  "title": "PromEx - Phoenix",
   "uid": "eukTuixGz",
-  "version": 20201228
+  "version": 20210106
 }

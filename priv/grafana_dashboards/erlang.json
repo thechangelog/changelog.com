@@ -2459,7 +2459,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -2471,7 +2471,7 @@
     ]
   },
   "timezone": "",
-  "title": "PromEx - Erlang - 2020.12.28",
+  "title": "PromEx - Erlang",
   "uid": "F3fZlibGk",
-  "version": 20201228
+  "version": 20210106
 }

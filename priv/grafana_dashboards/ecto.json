@@ -46,8 +46,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 32,
-  "iteration": 1609179932529,
+  "id": 44,
+  "iteration": 1609674292670,
   "links": [],
   "panels": [
     {
@@ -540,7 +540,7 @@
       "id": 11,
       "legend": {
         "alignAsTable": true,
-        "avg": false,
+        "avg": true,
         "current": true,
         "hideEmpty": true,
         "hideZero": true,
@@ -548,7 +548,7 @@
         "min": false,
         "rightSide": true,
         "show": true,
-        "sideWidth": 300,
+        "sideWidth": 500,
         "sort": "max",
         "sortDesc": true,
         "total": false,
@@ -567,7 +567,7 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
@@ -597,6 +597,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:209",
           "decimals": null,
           "format": "ms",
           "label": "Response Time",
@@ -606,6 +607,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:210",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -645,7 +647,7 @@
       "id": 35,
       "legend": {
         "alignAsTable": true,
-        "avg": false,
+        "avg": true,
         "current": true,
         "hideEmpty": true,
         "hideZero": true,
@@ -653,10 +655,10 @@
         "min": false,
         "rightSide": true,
         "show": true,
-        "sideWidth": 300,
+        "sideWidth": 500,
         "sort": "max",
         "sortDesc": true,
-        "total": false,
+        "total": true,
         "values": true
       },
       "lines": true,
@@ -672,7 +674,7 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
@@ -689,7 +691,7 @@
       "title": "Operations Per Source",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "transformations": [],
@@ -703,6 +705,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:63",
           "format": "locale",
           "label": "Source Operations",
           "logBase": 1,
@@ -711,6 +714,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:64",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -750,7 +754,7 @@
       "id": 13,
       "legend": {
         "alignAsTable": true,
-        "avg": false,
+        "avg": true,
         "current": true,
         "hideEmpty": true,
         "hideZero": true,
@@ -758,10 +762,8 @@
         "min": false,
         "rightSide": true,
         "show": true,
-        "sideWidth": 300,
-        "sort": "max",
-        "sortDesc": true,
-        "total": false,
+        "sideWidth": 500,
+        "total": true,
         "values": true
       },
       "lines": true,
@@ -777,7 +779,7 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
@@ -794,7 +796,7 @@
       "title": "Operations Per Command",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "transformations": [],
@@ -808,6 +810,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:136",
           "format": "locale",
           "label": "Source Operations",
           "logBase": 1,
@@ -816,6 +819,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:137",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1001,10 +1005,9 @@
       {
         "allValue": null,
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "prod-2020-07",
+          "value": "prod-2020-07"
         },
         "datasource": "Prometheus",
         "definition": "label_values(changelog_prom_ex_prom_ex_status_info, kubernetes_namespace)",
@@ -1028,7 +1031,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -1040,7 +1043,7 @@
     ]
   },
   "timezone": "",
-  "title": "PromEx - Ecto - 2020.12.28",
+  "title": "PromEx - Ecto",
   "uid": "mB8B_ixMk",
-  "version": 20201228
+  "version": 20210106
 }

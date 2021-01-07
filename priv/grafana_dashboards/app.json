@@ -519,7 +519,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -531,7 +531,7 @@
     ]
   },
   "timezone": "",
-  "title": "PromEx - App - 2020.12.28",
+  "title": "PromEx - App",
   "uid": "TmnQykxMz",
-  "version": 20201228
+  "version": 20210106
 }
