@@ -1,6 +1,6 @@
 <%= form_for @changeset,
-  Routes.news_item_comment_path(@conn, :create),
-  [class: "comment_form js-comment-form is-hidden", data: [ajax: true, context: "edit"]],
+  Routes.news_item_comment_path(@conn, :update, @comment.id),
+  [class: "comment_form js-comment-form is-hidden", method: "patch", data: [ajax: true, context: "edit"]],
   fn(f) -> %>
 
   <%= hidden_input(f, :item_id, id: false) %>

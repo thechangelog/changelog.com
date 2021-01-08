@@ -4,6 +4,8 @@ defmodule ChangelogWeb.NewsItemCommentController do
   alias Changelog.NewsItemComment
   alias Changelog.ObanWorkers.CommentNotifier
   alias ChangelogWeb.NewsItemCommentView
+  alias ChangelogWeb.Helpers.SharedHelpers
+  alias Ecto.Changeset
 
   plug RequireUser, "before creating or previewing" when action in [:create, :preview]
 
@@ -55,6 +57,38 @@ defmodule ChangelogWeb.NewsItemCommentController do
 
   def preview(conn, %{"md" => markdown}) do
     html(conn, NewsItemCommentView.transformed_content(markdown))
+  end
+
+  def update(conn, %{"id" => id, "news_item_comment" => %{"content" => updated_content}}) do
+    with comment = %NewsItemComment{} <- NewsItemComment.get_by_id(id),
+         true <- SharedHelpers.can_edit_comment?(conn.assigns.current_user, comment),
+         changeset = %Changeset{valid?: true} <- update_comment(comment, updated_content),
+         {:ok, comment = %NewsItemComment{}} <- Repo.update(changeset) do
+      comment = NewsItemComment.preload_all(comment)
+      item = comment.news_item
+
+      conn
+      |> put_flash(:success, "Your comment has been updated")
+      |> assign(:item, item)
+      |> assign(:comment, comment)
+      |> assign(:changeset, changeset)
+      |> render("create_success.js")
+    else
+      error ->
+        conn
+        |> put_flash(:error, "Unable to update the selected comment!")
+        |> render("create_failure.js")
+    end
+  end
+
+  def update(conn, _) do
+    conn
+    |> put_flash(:error, "Unable to update the selected comment!")
+    |> render("create_failure.js")
+  end
+
+  defp update_comment(comment = %NewsItemComment{}, updated_content) do
+    NewsItemComment.update_changeset(comment, %{content: updated_content})
   end
 
   defp random_success_message do

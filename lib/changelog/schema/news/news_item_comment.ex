@@ -34,6 +34,18 @@ defmodule Changelog.NewsItemComment do
     insert_changeset(struct, attrs)
   end
 
+  def get_by_id(id) do
+    __MODULE__
+    |> Repo.get_by(id: id)
+    |> case do
+      news_item_comment = %__MODULE__{} ->
+        news_item_comment
+
+      _ ->
+        {:error, :not_found}
+    end
+  end
+
   def mentioned_people(%__MODULE__{content: content}), do: mentioned_people(content)
 
   def mentioned_people(content) do

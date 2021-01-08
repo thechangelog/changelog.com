@@ -124,8 +124,6 @@ export default class Comment {
 
   // Edit form related functions
   toggleEditForm() {
-    console.log(this.editForm)
-
     if (!this.editForm.length) {
       //Turbolinks.visit('/in')
     } else if (this.editForm.hasClass('is-hidden')) {
