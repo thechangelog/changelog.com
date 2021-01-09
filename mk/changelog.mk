@@ -89,3 +89,36 @@ lke-changelog-secrets:: plusplus-lke-secret
 lke-changelog-secrets:: fastly-lke-secret
 lke-changelog-secrets:: hcaptcha-lke-secret
 lke-changelog-secrets:: grafana-lke-secret
+
+ARKADE_RELEASES := https://github.com/alexellis/arkade/releases
+ARKADE_VERSION := 0.6.35
+ARKADE_BIN := arkade-v$(ARKADE_VERSION)-$(platform)
+ARKADE_URL := https://github.com/alexellis/arkade/releases/download/$(ARKADE_VERSION)/arkade-$(platform)
+ARKADE := $(LOCAL_BIN)/$(ARKADE_BIN)
+$(ARKADE): | $(CURL) $(LOCAL_BIN)
+	$(CURL) --progress-bar --fail --location --output $(ARKADE) "$(ARKADE_URL)"
+	touch $(ARKADE)
+	chmod +x $(ARKADE)
+	$(ARKADE) version | grep $(ARKADE_VERSION)
+	ln -sf $(ARKADE) $(LOCAL_BIN)/arkade
+.PHONY: arkade
+arkade: $(ARKADE)
+.PHONY: releases-arkade
+releases-arkade:
+	@$(OPEN) $(ARKADE_RELEASES)
+
+# https://github.com/openfaas/faas-netes/releases
+FAAS_NETES_VERSION ?= 0.12.12
+# helm search repo --versions openfaas/openfaas
+OPENFAAS_VERSION ?= 7.0.0
+OPENFAAS_NAMESPACE := openfaas
+.PHONY: openfaas
+openfaas: | lke-ctx $(HELM)
+	$(HELM) repo add openfaas https://openfaas.github.io/faas-netes/
+	$(HELM) upgrade openfaas openfaas/openfaas \
+	  --install \
+	  --version $(OPENFAAS_VERSION) \
+	  --set functionNamespace=$(CHANGELOG_NAMESPACE) \
+	  --set generateBasicAuth=true \
+	  --create-namespace \
+	  --namespace $(OPENFAAS_NAMESPACE)

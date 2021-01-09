@@ -66,6 +66,7 @@ config :changelog, Changelog.PromEx,
     # This API Key will need to be created manually, most probably via http://localhost:3000/org/apikeys
     auth_token: SecretOrEnv.get("GRAFANA_API_KEY"),
     # This can default to Prometheus, PromEx uses this lowercase value for the built-in dashboards
-    datasource_id: SecretOrEnv.get("GRAFANA_DATASOURCE_ID", "prometheus")
+    datasource_id: SecretOrEnv.get("GRAFANA_DATASOURCE_ID", "prometheus"),
+    annotate_app_lifecycle: true
   ],
   metrics_server: :disabled

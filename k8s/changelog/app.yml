@@ -1,5 +1,12 @@
 #@ load("@ytt:data", "data")
 #! https://github.com/k14s/ytt/blob/master/examples/data-values/config.yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ data.values.namespace
+  annotations:
+    openfaas: "1"
+---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -16,7 +23,7 @@ spec:
         - #@ data.values.fqdn
         - www.changelog.com
         - 2020.changelog.com
-      secretName: wildcard-acme-tls
+      secretName: wildcard-acme-tls-pkcs8
     - hosts:
         - brainscience.fm
       secretName: brainscience-fm-acme-tls
@@ -121,14 +128,16 @@ spec:
 apiVersion: cert-manager.io/v1alpha3
 kind: Certificate
 metadata:
-  name: wildcard-acme-tls
+  name: wildcard-acme-tls-pkcs8
   namespace: #@ data.values.namespace
 spec:
   dnsNames: #@ data.values.app.https.domains
+  #! https://support.fastly.com/hc/en-us/requests/329710
+  keyEncoding: "pkcs8"
   issuerRef:
     name: cert-manager-webhook-dnsimple-production
     kind: ClusterIssuer
-  secretName: wildcard-acme-tls
+  secretName: wildcard-acme-tls-pkcs8
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -143,6 +152,8 @@ metadata:
     #! https://keel.sh/docs/#policies
     keel.sh/policy: force
     keel.sh/match-tag: "true"
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "4000"
 spec:
   replicas: #@ data.values.app.replicas
   selector:

@@ -1,11 +1,12 @@
 defmodule Changelog.Mixfile do
   use Mix.Project
+  Code.compile_file("config/secret_or_env.exs")
 
   def project do
     [
       app: :changelog,
-      version: "0.0.1",
-      elixir: "~> 1.6",
+      version: SecretOrEnv.get("APP_VERSION", "0.0.1"),
+      elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -39,8 +40,8 @@ defmodule Changelog.Mixfile do
       {:plug_cowboy, "~> 2.0"},
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
-      {:prom_ex, "~> 0.1.11-alpha"},
       {:oban, "~> 2.3.4"},
+      {:prom_ex, "~> 0.1.12-beta"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},

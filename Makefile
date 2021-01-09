@@ -151,6 +151,7 @@ include $(CURDIR)/mk/docker.mk
 
 include $(CURDIR)/mk/secrets.mk
 include $(CURDIR)/mk/lke.mk
+include $(CURDIR)/mk/local.mk
 
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"

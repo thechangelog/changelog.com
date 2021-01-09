@@ -13,7 +13,7 @@ defmodule ChangelogWeb.Endpoint do
     gzip: false,
     headers: %{
       "accept-ranges" => "bytes",
-      "surrogate-control" => "max-age=3600, stale-if-error=86400"
+      "surrogate-control" => "max-age=604800, stale-if-error=604800"
     }
 
   # Legacy assets that will exist in production & may exist in dev
@@ -65,7 +65,8 @@ defmodule ChangelogWeb.Endpoint do
     encryption_salt: System.get_env("ENCRYPTION_SALT") || "8675309",
     max_age: 31_536_000,
     signing_salt: System.get_env("SIGNING_SALT") || "8bAOekZm",
-    extra: "SameSite=Lax"
+    extra: "SameSite=Lax",
+    domain: ".changelog.com"
 
   plug ChangelogWeb.Router
 end
