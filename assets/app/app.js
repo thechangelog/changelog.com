@@ -247,8 +247,6 @@ u(document).on('click', 'a[href^=\\#t]', function (event) {
 u(document).on('submit', 'form', function (event) {
   event.preventDefault()
 
-  console.log('I came through here')
-
   let form = u(this)
   let submits = form.find('input[type=submit]')
   let optionalMethodOverride = form.children('input[name="_method"]')

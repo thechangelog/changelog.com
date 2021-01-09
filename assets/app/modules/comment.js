@@ -45,11 +45,20 @@ export default class Comment {
     this.previewButton.handle('click', (_) => {
       this.showPreview()
     })
+    this.editPreviewButton.handle('click', (_) => {
+      this.showEditPreview()
+    })
     this.previewArea.handle('click', (_) => {
       this.showWrite()
     })
     this.writeButton.handle('click', (_) => {
       this.showWrite()
+    })
+    this.editPreviewArea.handle('click', (_) => {
+      this.showEditWrite()
+    })
+    this.editWriteButton.handle('click', (_) => {
+      this.showEditWrite()
     })
   }
 
@@ -84,12 +93,33 @@ export default class Comment {
     })
   }
 
+  showEditPreview() {
+    let options = {
+      method: 'POST',
+      body: { md: this.editTextArea.value }
+    }
+
+    ajax('/news/comments/preview', options, (_err, resp) => {
+      this.editPreviewArea.html(resp)
+      Prism.highlightAllUnder(this.editPreviewArea.first())
+      this.editForm.addClass('comment_form--preview')
+    })
+  }
+
   showWrite() {
     let endPosition = this.replyTextArea.value.length
     this.previewArea.html('')
     this.replyForm.removeClass('comment_form--preview')
     this.replyTextArea.focus()
     this.replyTextArea.setSelectionRange(endPosition, endPosition)
+  }
+
+  showEditWrite() {
+    let endPosition = this.editTextArea.value.length
+    this.editPreviewArea.html('')
+    this.editForm.removeClass('comment_form--preview')
+    this.editTextArea.focus()
+    this.editTextArea.setSelectionRange(endPosition, endPosition)
   }
 
   // Reply form related functions

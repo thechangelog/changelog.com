@@ -1,13 +1,11 @@
 <%= form_for @changeset,
-  Routes.news_item_comment_path(@conn, :update, @comment.id),
+  Routes.news_item_comment_path(@conn, :update, hashid(@comment.id)),
   [class: "comment_form js-comment-form is-hidden", method: "patch", data: [ajax: true, context: "edit"]],
   fn(f) -> %>
 
   <%= hidden_input(f, :item_id, id: false) %>
   <%= hidden_input(f, :comment_id, id: false, value: @comment.id) %>
-  <textarea class="comment_form-write" name="<%= input_name(f, :content) %>" rows="1">
-    <%= @comment.content %>
-  </textarea>
+  <textarea class="comment_form-write" name="<%= input_name(f, :content) %>" rows="2"><%= @comment.content %></textarea>
 
   <div class="comment_form-preview richtext richtext--comment js-comment-preview-area"></div>
 

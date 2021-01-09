@@ -60,7 +60,8 @@ defmodule ChangelogWeb.NewsItemCommentController do
   end
 
   def update(conn, %{"id" => id, "news_item_comment" => %{"content" => updated_content}}) do
-    with comment = %NewsItemComment{} <- NewsItemComment.get_by_id(id),
+    with id <- Changelog.Hashid.decode(id),
+         comment = %NewsItemComment{} <- NewsItemComment.get_by_id(id),
          true <- SharedHelpers.can_edit_comment?(conn.assigns.current_user, comment),
          changeset = %Changeset{valid?: true} <- update_comment(comment, updated_content),
          {:ok, comment = %NewsItemComment{}} <- Repo.update(changeset) do
@@ -72,7 +73,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
       |> assign(:item, item)
       |> assign(:comment, comment)
       |> assign(:changeset, changeset)
-      |> render("create_success.js")
+      |> render("create_update.js")
     else
       error ->
         conn
