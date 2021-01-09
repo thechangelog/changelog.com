@@ -78,6 +78,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
       error ->
         conn
         |> put_flash(:error, "Unable to update the selected comment!")
+        |> put_status(:not_found)
         |> render("create_failure.js")
     end
   end
@@ -85,6 +86,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
   def update(conn, _) do
     conn
     |> put_flash(:error, "Unable to update the selected comment!")
+    |> put_status(:unprocessable_entity)
     |> render("create_failure.js")
   end
 
