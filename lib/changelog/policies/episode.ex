@@ -7,7 +7,7 @@ defmodule Changelog.Policies.Episode do
   def index(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def show(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def update(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
-  def delete(actor, _), do: is_admin(actor)
+  def delete(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
 
   def publish(actor, _), do: is_admin(actor)
   def unpublish(actor, podcast), do: publish(actor, podcast)
