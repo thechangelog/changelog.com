@@ -7,7 +7,7 @@ defmodule Changelog.NewsQueue do
     Buffer,
     Cache,
     EpisodeTracker,
-    HN,
+    # HN,
     NewsItem,
     NewsQueue,
     Notifier,
