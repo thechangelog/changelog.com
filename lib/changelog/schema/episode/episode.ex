@@ -88,7 +88,9 @@ defmodule Changelog.Episode do
     do: from(q in query, where: q.recorded_at <= ^start_time, where: q.end_time < ^end_time)
 
   def recorded_future_to(query, time), do: from(q in query, where: q.recorded_at > ^time)
-  def recorded_live(query \\ __MODULE__), do: from(q in query, where: q.recorded_live == true)
+
+  def recorded_live(query \\ __MODULE__),
+    do: from(q in query, where: q.recorded_live == true)
 
   def scheduled(query \\ __MODULE__),
     do: from(q in query, where: q.published, where: q.published_at > ^Timex.now())
@@ -97,7 +99,10 @@ defmodule Changelog.Episode do
     do: from(q in query, where: fragment("search_vector @@ plainto_tsquery('english', ?)", ^term))
 
   def unpublished(query \\ __MODULE__), do: from(q in query, where: not q.published)
-  def top_reach_first(query \\ __MODULE__), do: from(q in query, order_by: [desc: :reach_count])
+
+  def top_reach_first(query \\ __MODULE__),
+    do: from(q in query, order_by: [desc: :reach_count])
+
   def with_ids(query \\ __MODULE__, ids), do: from(q in query, where: q.id in ^ids)
 
   def with_numbered_slug(query \\ __MODULE__),
@@ -132,7 +137,8 @@ defmodule Changelog.Episode do
 
   def is_publishable(episode) do
     validated =
-      change(episode, %{})
+      episode
+      |> change(%{})
       |> validate_required([:slug, :title, :published_at, :summary, :audio_file])
       |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
       |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
@@ -314,16 +320,33 @@ defmodule Changelog.Episode do
   end
 
   def flatten_for_filtering(query \\ __MODULE__) do
-    query
-    |> exclude_transcript()
-    |> published()
-    |> to_stream()
-    |> flatten_stream()
+    query =
+      from episode in query,
+        left_join: podcast in assoc(episode, :podcast),
+        left_join: hosts in assoc(episode, :hosts),
+        left_join: guests in assoc(episode, :guests),
+        left_join: topics in assoc(episode, :topics),
+        preload: [podcast: podcast, hosts: hosts, guests: guests, topics: topics]
+
+    result =
+      query
+      |> published()
+      |> exclude_transcript()
+      |> Repo.all()
+      |> Enum.map(fn episode ->
+        extract_episode_fields(episode)
+      end)
+
+    {:ok, result}
   end
 
   def flatten_episode_for_filtering(episode) do
-    episode = Repo.preload(episode, [:podcast, :hosts, :guests, :topics])
+    episode
+    |> Repo.preload([:podcast, :hosts, :guests, :topics])
+    |> extract_episode_fields()
+  end
 
+  defp extract_episode_fields(episode) do
     %{
       id: episode.id,
       slug: episode.slug,
@@ -377,23 +400,6 @@ defmodule Changelog.Episode do
     catch
       _all -> 0
     end
-  end
-
-  defp flatten_stream(stream) do
-    stream =
-      Stream.map(stream, fn episode ->
-        flatten_episode_for_filtering(episode)
-      end)
-
-    # TODO: This is causing some very slow start up times
-    # Probably needs some investigation and optimization
-    Repo.transaction(fn ->
-      Enum.to_list(stream)
-    end)
-  end
-
-  defp to_stream(query) do
-    Repo.stream(query)
   end
 
   defp validate_published_has_published_at(changeset) do
