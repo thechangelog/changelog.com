@@ -46,7 +46,10 @@ defmodule Changelog.MetacastsTest do
   end
 
   test "track new episode then untrack", %{podcasts: [_, changelog, _]} do
+    # Calling :sys.get_state in order to ensure that the handle_cast occurs before the
+    # DB insert in order to make the test deterministic
     EpisodeTracker.refresh()
+    _ = :sys.get_state(EpisodeTracker)
 
     episode =
       insert(:published_episode,
@@ -58,29 +61,7 @@ defmodule Changelog.MetacastsTest do
         podcast: changelog
       )
 
-    assert {:ok,
-            [
-              %{
-                slug: "rails-episode",
-                guest: [],
-                host: [],
-                id: 2,
-                podcast: "podcast",
-                title: "Rails",
-                topic: [],
-                type: :full
-              },
-              %{
-                guest: [],
-                host: [],
-                id: 3,
-                podcast: "podcast",
-                slug: "django-episode",
-                title: "Django",
-                topic: [],
-                type: :full
-              }
-            ]} = EpisodeTracker.filter("only podcast: podcast")
+    assert {:ok, [%{slug: "rails-episode"}]} = EpisodeTracker.filter("only podcast: podcast")
 
     EpisodeTracker.track(episode)
 
