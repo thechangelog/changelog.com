@@ -16,6 +16,13 @@ defmodule Changelog.PromEx do
   end
 
   @impl true
+  def dashboard_assigns do
+    [
+      datasource_id: "prometheus"
+    ]
+  end
+
+  @impl true
   def dashboards do
     [
       # PromEx built in dashboard definitions. Remove dashboards that you do not need
