@@ -18,7 +18,7 @@ defmodule Changelog.PromEx do
   @impl true
   def dashboard_assigns do
     [
-      datasource_id: "prometheus"
+      datasource_id: "Prometheus"
     ]
   end
 
