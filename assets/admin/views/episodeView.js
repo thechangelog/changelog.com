@@ -46,37 +46,40 @@ export default class EpisodeView {
 
     let chartOptions = this.chartOptions;
 
-    $(".launch-chart").each(function(index) {
-      let data = $(this).data("chart");
+    $(".performance-chart").each(function(_index) {
+      let container = this;
 
-      let options = $.extend(chartOptions, {
-        series: data.series,
-        title: {
-          text: data.title
-        },
-        legend: {
-          position: "top",
-          horizontalAlign: "center",
-          floating: true
-        },
-        xaxis: {
-          tooltip: {
-            enabled: false
-          }
-        },
-        tooltip: {
-          x: {
-            formatter: function(value, {_series, seriesIndex, dataPointIndex, _w}) {
-              let title = data.series[seriesIndex].data[dataPointIndex].title;
-              return `${value}: ${title}`;
+      $.getJSON($(container).data("source"), function(data) {
+        let options = $.extend(chartOptions, {
+          series: data.series,
+          title: {
+            text: data.title
+          },
+          legend: {
+            position: "top",
+            horizontalAlign: "center",
+            floating: true
+          },
+          xaxis: {
+            tooltip: {
+              enabled: false
             }
           },
-          marker: {show: false}
-        }
-      });
+          tooltip: {
+            x: {
+              formatter: function(value, {_series, seriesIndex, dataPointIndex, _w}) {
+                let title = data.series[seriesIndex].data[dataPointIndex].title;
+                let slug = data.series[seriesIndex].data[dataPointIndex].x;
+                return `${slug}: ${title}`;
+              }
+            },
+            marker: {show: false}
+          }
+        });
 
-      let chart = new ApexCharts(this, options);
-      chart.render();
+        let chart = new ApexCharts(container, options);
+        chart.render();
+      });
     });
   }
 

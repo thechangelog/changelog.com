@@ -52,10 +52,10 @@
 
 <%= if Enum.any?(@episodes) do %>
 <div class="ui basic segment">
-  <div class="launch-chart" data-chart="<%= performance_data(@performance) %>"></div>
+  <div class="performance-chart" data-source="<%= Routes.admin_podcast_performance_path(@conn, :performance, @podcast.slug, ids: Enum.map(@episodes, &(&1.id))) %>"></div>
 
   <h2 class="ui header">Published</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :published, podcast: @podcast, episodes: @episodes, actions: false})) %>
-  <%= pagination_links @conn, @page, [@podcast.slug], path: &Routes.admin_podcast_episode_path/4 %>
+  <%= pagination_links(@conn, @page, [@podcast.slug], path: &Routes.admin_podcast_episode_path/4) %>
 </div>
 <% end %>

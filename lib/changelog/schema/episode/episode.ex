@@ -81,8 +81,10 @@ defmodule Changelog.Episode do
   def previous_to(query \\ __MODULE__, episode),
     do: from(q in query, where: q.published_at < ^episode.published_at)
 
-  def published(query \\ __MODULE__),
-    do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now())
+  def published(query \\ __MODULE__), do: published(query, Timex.now())
+
+  def published(query, as_of),
+    do: from(q in query, where: q.published, where: q.published_at <= ^Timex.to_datetime(as_of))
 
   def recorded_between(query, start_time, end_time),
     do: from(q in query, where: q.recorded_at <= ^start_time, where: q.end_time < ^end_time)
