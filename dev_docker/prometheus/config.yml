@@ -1,0 +1,15 @@
+# Global Configurations
+global:
+  scrape_interval:     5s
+  evaluation_interval: 5s
+
+# Targets to scrape
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'changelog_app'
+    static_configs:
+      - targets:
+        - 'changelog_app:4000'

@@ -1,0 +1,71 @@
+version: '3.3'
+
+services:
+  changelog_app:
+    image: thechangelog/runtime:2020-12-14T20.59.58Z
+    command: >
+      /bin/sh -c 'apt-get update && apt-get install -y inotify-tools &&
+      mix local.hex --force &&
+      mix local.rebar --force &&
+      mix deps.get &&
+      (cd assets && yarn install --frozen-lockfile) &&
+      mix ecto.setup &&
+      mix phx.gen.cert &&
+      mix phx.server'
+    ports:
+      - '4000:4000'
+      - '4001:4001'
+    depends_on:
+      - postgres
+      - grafana
+    working_dir: /app
+    environment:
+      DB_HOST: postgres
+      DB_NAME: changelog_dev
+      DB_USER: postgres
+      DB_PASS: postgres
+      HTTPS: 'true'
+      VIRTUAL_HOST: &host "${HOST:-localhost}"
+      HOST: *host
+      GIT_SHA: "0fa5476"
+      GIT_AUTHOR: "Alex Koutmos"
+      GRAFANA_URL: "http://grafana:3000"
+      GRAFANA_API_KEY: "<GRAFANA_INSTANCE_API_KEY>"
+      GRAFANA_DATASOURCE: "prometheus"
+    volumes:
+      - ../assets/admin/:/app/assets/admin:ro
+      - ../assets/app/:/app/assets/app:ro
+      - ../assets/email/:/app/assets/email:ro
+      - ../assets/semantic/:/app/assets/semantic:ro
+      - ../assets/shared/:/app/assets/shared:ro
+      - ../assets/static/:/app/assets/static:ro
+      - ../assets/.babelrc:/app/assets/.babelrc:ro
+      - ../assets/embedder.js:/app/assets/embedder.js:ro
+      - ../assets/package.json:/app/assets/package.json:ro
+      - ../assets/postcss.config.js:/app/assets/postcss.config.js:ro
+      - ../assets/webpack.config.js:/app/assets/webpack.config.js:ro
+      - ../assets/yarn.lock:/app/assets/yarn.lock:ro
+
+      - ../config:/app/config:ro
+      - ../lib:/app/lib:ro
+
+      - ../.formatter.exs:/app/formatter.exs:ro
+      - ../mix.exs:/app/mix.exs:ro
+      - ../mix.lock:/app/mix.lock:ro
+
+      - ../priv/grafana_dashboards:/app/priv/grafana_dashboards:ro
+      - ../priv/repo:/app/priv/repo:ro
+      - ../priv/uploads:/app/priv/uploads:ro
+
+      - changelog_app_cert:/app/priv/cert
+      - changelog_app_static:/app/priv/static
+      - changelog_app_deps:/app/deps/
+      - changelog_app_build:/app/_build/
+      - changelog_app_npm_deps:/app/assets/node_modules/
+
+volumes:
+  changelog_app_deps: {}
+  changelog_app_build: {}
+  changelog_app_static: {}
+  changelog_app_cert: {}
+  changelog_app_npm_deps: {}
