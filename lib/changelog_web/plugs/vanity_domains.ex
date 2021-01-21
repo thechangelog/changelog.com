@@ -49,6 +49,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["overcast"] -> PodcastView.subscribe_on_overcast_url(podcast)
       ["rss"] -> changelog_destination([podcast.slug, "feed"])
       ["email"] -> changelog_destination(["subscribe", podcast.slug])
+      ["request"] -> changelog_destination(["request", podcast.slug])
       ["subscribe"] -> changelog_destination(["subscribe", podcast.slug])
       _else -> changelog_destination([podcast.slug, parts])
     end
