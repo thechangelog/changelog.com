@@ -18,6 +18,7 @@ defmodule Changelog.ObanWorkers.CommentNotifier do
   end
 
   @doc """
+  Schedules the notification to be sent out 5 mins in the future
   """
   def schedule_notification(%NewsItemComment{id: id}) do
     %{comment_id: id}

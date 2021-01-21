@@ -25,7 +25,7 @@ config :changelog,
 
 config :changelog, Oban,
   repo: Changelog.Repo,
-  plugins: [Oban.Plugins.Pruner],
+  plugins: [Oban.Plugins.Pruner, Oban.Plugins.Stager],
   queues: [comment_notifier: 10]
 
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
