@@ -42,3 +42,32 @@ lke-provision:: lke-postgres-operator
 .PHONY: pgo
 pgo: | lke-ctx
 	$(KUBECTL) exec --tty --stdin --namespace $(POSTGRES_OPERATOR_NAMESPACE) deploy/pgo-client -- bash --login
+
+ZALANDO_POSTGRES_OPERATOR_VERSION := 1.6.0
+ZALANDO_POSTGRES_OPERATOR_DIR := $(CURDIR)/tmp/zalando-postgres-operator-$(ZALANDO_POSTGRES_OPERATOR_VERSION)
+ZALANDO_POSTGRES_OPERATOR_NAMESPACE := postgres-operator
+
+$(ZALANDO_POSTGRES_OPERATOR_DIR):
+	git clone \
+	  --branch v$(ZALANDO_POSTGRES_OPERATOR_VERSION) --single-branch --depth 1 \
+	  https://github.com/zalando/postgres-operator.git $(ZALANDO_POSTGRES_OPERATOR_DIR)
+tmp/zalando-postgres-operator: $(ZALANDO_POSTGRES_OPERATOR_DIR)
+
+# TODO: configLogicalBackup
+lke-zalando-postgres-operator: | lke-ctx $(HELM)
+	$(HELM) upgrade postgres-operator \
+	  $(ZALANDO_POSTGRES_OPERATOR_DIR)/charts/postgres-operator \
+	  --install \
+	  --values $(ZALANDO_POSTGRES_OPERATOR_DIR)/charts/postgres-operator/values-crd.yaml \
+	  --set configKubernetes.enable_pod_antiaffinity=true \
+	  --namespace $(ZALANDO_POSTGRES_OPERATOR_NAMESPACE) \
+	  --create-namespace
+lke-provision:: lke-zalando-postgres-operator
+
+lke-zalando-postgres-operator-ui: | lke-ctx $(HELM)
+	$(HELM) upgrade postgres-operator-ui \
+	  $(ZALANDO_POSTGRES_OPERATOR_DIR)/charts/postgres-operator-ui \
+	  --install \
+	  --namespace $(ZALANDO_POSTGRES_OPERATOR_NAMESPACE) \
+	  --create-namespace
+lke-provision:: lke-zalando-postgres-operator-ui

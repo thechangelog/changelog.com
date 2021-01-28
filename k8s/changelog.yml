@@ -436,6 +436,33 @@ spec:
         persistentVolumeClaim:
           claimName: uploads
 ---
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: changelog-db
+  namespace: prod-2020-07
+spec:
+  teamId: changelog
+  users:
+    changelog:
+    - superuser
+    - createdb
+  volume:
+    size: 10Gi
+    storageClass: linode-block-storage
+  numberOfInstances: 2
+  databases:
+    db: changelog
+  postgresql:
+    version: "13"
+  resources:
+    requests:
+      cpu: "1"
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 4Gi
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
