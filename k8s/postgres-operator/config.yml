@@ -5,18 +5,18 @@
 #! https://access.crunchydata.com/documentation/postgres-operator/4.4.0/installation/postgres-operator/#configuration-postgres-operator-yml
 #! Certificates will only be created if action is install.
 #! Change to update if already installed.
-action: install
+action: update
 metrics: "true"
 storage:
   persistentretain:
     type: linode-block-storage-retain
-    size: 10Gi
+    size: 100Gi
   persistent:
     type: linode-block-storage
-    size: 10Gi
+    size: 100Gi
   local:
     type: local-storage
-    size: 10Gi
+    size: 100Gi
 #! provided just-in-time
 namespace:
 managed_namespaces:

@@ -237,17 +237,17 @@ data:
     storage4_supplemental_groups: "65534"
     storage5_name: "persistentretain"
     storage5_access_mode: "ReadWriteOnce"
-    storage5_size: "10Gi"
+    storage5_size: "100Gi"
     storage5_type: "dynamic"
     storage5_class: "linode-block-storage-retain"
     storage6_name: "persistent"
     storage6_access_mode: "ReadWriteOnce"
-    storage6_size: "10Gi"
+    storage6_size: "100Gi"
     storage6_type: "dynamic"
     storage6_class: "linode-block-storage"
     storage7_name: "local"
     storage7_access_mode: "ReadWriteOnce"
-    storage7_size: "10Gi"
+    storage7_size: "100Gi"
     storage7_type: "dynamic"
     storage7_class: "local-storage"
     storage8_name: "gce"
@@ -293,7 +293,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: DEPLOY_ACTION
-          value: install
+          value: update
         volumeMounts:
         - name: deployer-conf
           mountPath: /conf

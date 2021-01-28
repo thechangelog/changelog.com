@@ -32,7 +32,7 @@ lke-postgres-operator: lke-ctx $(YTT)
 lke-provision:: lke-postgres-operator
 
 # Command that was used to create the db cluster:
-# 	pgo create cluster db --replica-count=1 --memory=2Gi --memory-limit=4Gi --cpu=2.0 --cpu-limit=4.0 --namespace prod-2020-07
+# 	pgo create cluster db2 --replica-count=1 --memory=2Gi --memory-limit=4Gi --cpu=2.0 --cpu-limit=4.0 --namespace prod-2020-07
 #
 # List all db clusters:
 # 	pgo show cluster --all --namespace prod-2020-07
