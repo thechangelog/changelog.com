@@ -63,11 +63,3 @@ lke-zalando-postgres-operator: | lke-ctx $(HELM)
 	  --namespace $(ZALANDO_POSTGRES_OPERATOR_NAMESPACE) \
 	  --create-namespace
 lke-provision:: lke-zalando-postgres-operator
-
-lke-zalando-postgres-operator-ui: | lke-ctx $(HELM)
-	$(HELM) upgrade postgres-operator-ui \
-	  $(ZALANDO_POSTGRES_OPERATOR_DIR)/charts/postgres-operator-ui \
-	  --install \
-	  --namespace $(ZALANDO_POSTGRES_OPERATOR_NAMESPACE) \
-	  --create-namespace
-lke-provision:: lke-zalando-postgres-operator-ui
