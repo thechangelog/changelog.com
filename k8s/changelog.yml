@@ -179,6 +179,8 @@ spec:
         command:
         - /usr/local/bin/backup_db_continuously
         env:
+        - name: BACKUP_EVERY_N_SECONDS
+          value: "21600"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
