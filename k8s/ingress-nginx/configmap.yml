@@ -14,3 +14,6 @@ data:
   proxy-buffering: "off"
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#proxy-body-size
   proxy-body-size: "256m"
+
+  # http://nginx.org/en/docs/varindex.html
+  log-format-upstream: '$remote_addr - $remote_user [$time_local] host=$host status=$status "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_length $request_time [$proxy_upstream_name] [$proxy_alternative_upstream_name] $upstream_addr $upstream_response_length $upstream_response_time $upstream_status $req_id'
