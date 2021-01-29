@@ -11,7 +11,6 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   # should be called after the LoadPodcasts plug for data access
   def call(conn = %{assigns: %{podcasts: podcasts}}, _opts) do
     host = get_host(conn)
-
     # short-circut because most requests will hit this
     if host == "changelog.com" do
       conn
@@ -19,6 +18,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       podcasts
       |> Enum.reject(fn p -> is_nil(p.vanity_domain) end)
       |> Enum.find(fn p -> URI.parse(p.vanity_domain).host == host end)
+      |> capture_redirect_telemetry(conn)
       |> vanity_redirect(conn)
     end
   end
@@ -35,6 +35,20 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     conn
     |> Redirect.call(external: destination)
     |> Plug.Conn.halt()
+  end
+
+  defp capture_redirect_telemetry(nil, _conn) do
+    execute_telemetry("Unknown")
+    nil
+  end
+
+  defp capture_redirect_telemetry(podcast, _conn) do
+    execute_telemetry(podcast.name)
+    podcast
+  end
+
+  defp execute_telemetry(podcast_name) do
+    :telemetry.execute([:changelog, :vanity_redirects], %{}, %{podcast: podcast_name})
   end
 
   defp determine_destination(%{slug: "jsparty"}, ["ff"]) do
