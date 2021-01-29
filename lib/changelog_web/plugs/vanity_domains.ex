@@ -1,4 +1,5 @@
 defmodule ChangelogWeb.Plug.VanityDomains do
+  require Logger
   @moduledoc """
   Handles all redirects of podcast vanity domains to their appropriate place.
   """
@@ -15,6 +16,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     if host == "changelog.com" do
       conn
     else
+      Logger.info("Vanity Redirect: #{host}")
       podcasts
       |> Enum.reject(fn p -> is_nil(p.vanity_domain) end)
       |> Enum.find(fn p -> URI.parse(p.vanity_domain).host == host end)
