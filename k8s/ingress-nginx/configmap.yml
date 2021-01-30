@@ -36,7 +36,11 @@ data:
     "http_referrer": "$http_referer",
     "http_user_agent": "$http_user_agent",
     "upstream_addr": "$upstream_addr",
-    "upstream_response_length": $upstream_response_length,
+    "upstream_connect_time": $upstream_connect_time,
     "upstream_response_time": $upstream_response_time,
-    "upstream_status": $upstream_status
+    "upstream_response_length": $upstream_response_length,
+    "upstream_bytes_sent": $upstream_bytes_sent,
+    "upstream_bytes_received": $upstream_bytes_received,
+    "upstream_status": $upstream_status,
+    "upstream_cache_status": "$upstream_cache_status"
     }
