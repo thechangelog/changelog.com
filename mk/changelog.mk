@@ -30,6 +30,9 @@ lke-changelog-sh: | lke-ctx
 lke-changelog-tree: | lke-ctx $(KUBETREE)
 	$(CHANGELOG_TREE)
 
+.PHONY: lke-changelog-db-shell
+lke-changelog-db-shell: lke-changelog-db-restore
+
 .PHONY: lke-changelog-db-restore
 lke-changelog-db-restore: | lke-ctx
 	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
