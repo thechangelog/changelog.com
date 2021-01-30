@@ -16,9 +16,9 @@ spec:
     storageClass: linode-block-storage
   numberOfInstances: 2
   databases:
-    db: changelog
+    db: db
   postgresql:
-    version: "13"
+    version: "12"
   resources:
     requests:
       cpu: "1"

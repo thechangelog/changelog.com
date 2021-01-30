@@ -60,6 +60,8 @@ lke-zalando-postgres-operator: | lke-ctx $(HELM)
 	  --install \
 	  --values $(ZALANDO_POSTGRES_OPERATOR_DIR)/charts/postgres-operator/values-crd.yaml \
 	  --set configKubernetes.enable_pod_antiaffinity=true \
+	  --set configKubernetes.pod_environment_configmap=$(ZALANDO_POSTGRES_OPERATOR_NAMESPACE)/postgres-pod-environment \
 	  --namespace $(ZALANDO_POSTGRES_OPERATOR_NAMESPACE) \
 	  --create-namespace
+	$(KUBECTL) apply --filename $(CURDIR)/k8s/postgres-pod-config.yml --namespace $(ZALANDO_POSTGRES_OPERATOR_NAMESPACE)
 lke-provision:: lke-zalando-postgres-operator
