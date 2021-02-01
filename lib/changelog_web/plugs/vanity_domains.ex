@@ -1,11 +1,12 @@
 defmodule ChangelogWeb.Plug.VanityDomains do
-  require Logger
   @moduledoc """
   Handles all redirects of podcast vanity domains to their appropriate place.
   """
   alias ChangelogWeb.PodcastView
   alias ChangelogWeb.RedirectController, as: Redirect
   import ChangelogWeb.Plug.Conn
+
+  require Logger
 
   def init(opts), do: opts
 
@@ -16,11 +17,11 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     if host == "changelog.com" do
       conn
     else
-      Logger.info("Vanity Redirect: #{host}")
+      Logger.info("Vanity Redirect: #{host}#{conn.request_path}")
+
       podcasts
       |> Enum.reject(fn p -> is_nil(p.vanity_domain) end)
       |> Enum.find(fn p -> URI.parse(p.vanity_domain).host == host end)
-      |> capture_redirect_telemetry(conn)
       |> vanity_redirect(conn)
     end
   end
@@ -37,20 +38,6 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     conn
     |> Redirect.call(external: destination)
     |> Plug.Conn.halt()
-  end
-
-  defp capture_redirect_telemetry(nil, _conn) do
-    execute_telemetry("Unknown")
-    nil
-  end
-
-  defp capture_redirect_telemetry(podcast, _conn) do
-    execute_telemetry(podcast.name)
-    podcast
-  end
-
-  defp execute_telemetry(podcast_name) do
-    :telemetry.execute([:changelog, :vanity_redirects], %{}, %{podcast: podcast_name})
   end
 
   defp determine_destination(%{slug: "jsparty"}, ["ff"]) do
