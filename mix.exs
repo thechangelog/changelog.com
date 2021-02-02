@@ -40,7 +40,7 @@ defmodule Changelog.Mixfile do
       {:plug_cowboy, "~> 2.0"},
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
-      {:oban, "~> 2.3.4"},
+      {:oban, "~> 2.4.2"},
       {:prom_ex, "~> 0.1.12-beta"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
