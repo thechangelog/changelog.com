@@ -95,7 +95,7 @@ defmodule Changelog.EpisodeTest do
         # wait out the async race condition
         :timer.sleep(100)
         assert called(Changelog.Notifier.notify(:_))
-        assert called(Changelog.HN.submit(:_))
+        # assert called(Changelog.HN.submit(:_))
         assert called(Changelog.Search.save_item(:_))
       end
     end

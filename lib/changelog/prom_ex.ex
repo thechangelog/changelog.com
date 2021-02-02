@@ -9,9 +9,15 @@ defmodule Changelog.PromEx do
       PromEx.Plugins.Beam,
       {PromEx.Plugins.Phoenix, router: ChangelogWeb.Router},
       {PromEx.Plugins.Ecto, otp_app: :changelog, repos: [Changelog.Repo]}
-
       # Add your own PromEx metrics plugins
       # Changelog.Users.PromEx
+    ]
+  end
+
+  @impl true
+  def dashboard_assigns do
+    [
+      datasource_id: "Prometheus"
     ]
   end
 

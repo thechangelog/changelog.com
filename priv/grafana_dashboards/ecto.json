@@ -762,6 +762,8 @@
         "rightSide": true,
         "show": true,
         "sideWidth": 500,
+        "sort": "max",
+        "sortDesc": true,
         "total": true,
         "values": true
       },
@@ -1044,5 +1046,5 @@
   "timezone": "",
   "title": "PromEx - Ecto",
   "uid": "mB8B_ixMk",
-  "version": 20210106
+  "version": 20210117
 }

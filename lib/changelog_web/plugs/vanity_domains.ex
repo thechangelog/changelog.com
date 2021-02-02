@@ -6,16 +6,19 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   alias ChangelogWeb.RedirectController, as: Redirect
   import ChangelogWeb.Plug.Conn
 
+  require Logger
+
   def init(opts), do: opts
 
   # should be called after the LoadPodcasts plug for data access
   def call(conn = %{assigns: %{podcasts: podcasts}}, _opts) do
     host = get_host(conn)
-
     # short-circut because most requests will hit this
     if host == "changelog.com" do
       conn
     else
+      Logger.info("Vanity Redirect: #{host}#{conn.request_path}")
+
       podcasts
       |> Enum.reject(fn p -> is_nil(p.vanity_domain) end)
       |> Enum.find(fn p -> URI.parse(p.vanity_domain).host == host end)
@@ -49,6 +52,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["overcast"] -> PodcastView.subscribe_on_overcast_url(podcast)
       ["rss"] -> changelog_destination([podcast.slug, "feed"])
       ["email"] -> changelog_destination(["subscribe", podcast.slug])
+      ["request"] -> changelog_destination(["request", podcast.slug])
       ["subscribe"] -> changelog_destination(["subscribe", podcast.slug])
       _else -> changelog_destination([podcast.slug, parts])
     end

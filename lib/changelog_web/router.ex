@@ -88,6 +88,7 @@ defmodule ChangelogWeb.Router do
 
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
+      get "/performance", EpisodeController, :performance, as: :performance
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
       post "/episodes/:id/unpublish", EpisodeController, :unpublish, as: :episode
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode

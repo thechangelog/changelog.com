@@ -40,8 +40,9 @@ defmodule Changelog.Stats do
       S3.get_logs(date, podcast.slug)
       |> Parser.parse()
       |> Enum.group_by(& &1.episode)
-      |> Task.async_stream(fn {slug, entries} -> process_episode(date, podcast, slug, entries) end)
-      |> Enum.map(fn {:ok, stat} -> stat end)
+      |> Enum.map(fn {slug, entries} ->
+        process_episode(date, podcast, slug, entries)
+      end)
 
     Podcast.update_stat_counts(podcast)
     Logger.info("Stats: Finished Processing #{podcast.name}")

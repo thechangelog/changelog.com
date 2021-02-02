@@ -30,6 +30,9 @@ lke-changelog-sh: | lke-ctx
 lke-changelog-tree: | lke-ctx $(KUBETREE)
 	$(CHANGELOG_TREE)
 
+.PHONY: lke-changelog-db-shell
+lke-changelog-db-shell: lke-changelog-db-restore
+
 .PHONY: lke-changelog-db-restore
 lke-changelog-db-restore: | lke-ctx
 	$(KUBECTL) exec --stdin=true --tty=true --namespace $(CHANGELOG_NAMESPACE) \
@@ -107,10 +110,8 @@ arkade: $(ARKADE)
 releases-arkade:
 	@$(OPEN) $(ARKADE_RELEASES)
 
-# https://github.com/openfaas/faas-netes/releases
-FAAS_NETES_VERSION ?= 0.12.12
-# helm search repo --versions openfaas/openfaas
-OPENFAAS_VERSION ?= 7.0.0
+# m openfaas-find-latest
+OPENFAAS_VERSION ?= 7.0.2
 OPENFAAS_NAMESPACE := openfaas
 .PHONY: openfaas
 openfaas: | lke-ctx $(HELM)
@@ -122,3 +123,7 @@ openfaas: | lke-ctx $(HELM)
 	  --set generateBasicAuth=true \
 	  --create-namespace \
 	  --namespace $(OPENFAAS_NAMESPACE)
+
+openfaas-find-latest: | $(HELM)
+	$(HELM) repo update
+	$(HELM) search repo openfaas/openfaas

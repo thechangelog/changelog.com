@@ -64,17 +64,30 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Episode.newest_first(:recorded_at)
       |> Repo.all()
 
-    performance =
-      page.entries
-      |> Enum.filter(fn ep ->
-        ep.type == :full &&
-          Timex.compare(ep.published_at, Timex.shift(Timex.today(), days: -7)) == -1
-      end)
+    conn
+    |> assign(:episodes, page.entries)
+    |> assign(:episode_requests, episode_requests)
+    |> assign(:scheduled, scheduled)
+    |> assign(:drafts, drafts)
+    |> assign(:filter, filter)
+    |> assign(:page, page)
+    |> assign(:reach, reach(podcast))
+    |> render(:index)
+  end
+
+  def performance(conn, %{"ids" => ids}, podcast) do
+    stats =
+      podcast
+      |> assoc(:episodes)
+      |> Episode.with_ids(ids)
+      |> Episode.full()
+      |> Episode.newest_first()
+      |> Episode.published(Timex.shift(Timex.today(), days: -7))
+      |> Repo.all()
       |> Enum.reverse()
       |> Enum.map(fn ep ->
         start_date = Timex.to_date(ep.published_at)
         end_date = Timex.shift(start_date, days: 7)
-
         reach =
           ep
           |> assoc(:episode_stats)
@@ -88,15 +101,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Enum.reject(fn {_, reach, _, _} -> reach == 0 end)
 
     conn
-    |> assign(:episodes, page.entries)
-    |> assign(:episode_requests, episode_requests)
-    |> assign(:scheduled, scheduled)
-    |> assign(:drafts, drafts)
-    |> assign(:filter, filter)
-    |> assign(:page, page)
-    |> assign(:reach, reach(podcast))
-    |> assign(:performance, performance)
-    |> render(:index)
+    |> assign(:stats, stats)
+    |> render("performance.json")
   end
 
   def show(conn, %{"id" => slug}, podcast) do

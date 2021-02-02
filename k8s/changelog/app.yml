@@ -180,6 +180,8 @@ spec:
           imagePullPolicy: #@ data.values.image.pull_policy
           command: ["/usr/local/bin/backup_db_continuously"]
           env:
+            - name: BACKUP_EVERY_N_SECONDS
+              value: "21600"
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -195,24 +197,26 @@ spec:
             - name: AWS_S3_BUCKET
               value: changelog-com-backups
             - name: PGHOST
-              value: db
+              value: changelog-db
             - name: PGDATABASE
               value: db
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-postgres-secret
+                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
                   key: password
             - name: PGUSER
               valueFrom:
                 secretKeyRef:
-                  name: db-postgres-secret
+                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
                   key: username
         - name: uploads-backup
           image: #@ data.values.db.restore.image
           imagePullPolicy: #@ data.values.image.pull_policy
           command: ["/usr/local/bin/backup_uploads_continuously"]
           env:
+            - name: BACKUP_EVERY_N_SECONDS
+              value: "21600"
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -275,18 +279,18 @@ spec:
                   name: coveralls
                   key: repo_token
             - name: DB_HOST
-              value: db
+              value: changelog-db
             - name: DB_NAME
               value: db
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: db-postgres-secret
+                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
                   key: password
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: db-postgres-secret
+                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
                   key: username
             - name: GITHUB_API_TOKEN
               valueFrom:

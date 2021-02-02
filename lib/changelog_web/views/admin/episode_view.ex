@@ -32,30 +32,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     end
   end
 
-  def performance_data(stats) when is_list(stats) do
-    data = %{
-      title: "Episode Performance",
-      series: [
-        %{
-          name: "Launch",
-          data:
-            Enum.map(stats, fn {slug, reach, title, _reach} ->
-              %{x: slug, y: reach, title: title}
-            end)
-        },
-        %{
-          name: "Total",
-          data:
-            Enum.map(stats, fn {slug, _reach, title, reach} ->
-              %{x: slug, y: reach, title: title}
-            end)
-        }
-      ]
-    }
-
-    Jason.encode!(data)
-  end
-
   def line_chart_data(stats) when is_list(stats) do
     stats = Enum.reverse(stats)
 
@@ -121,6 +97,28 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     else
       count
     end
+  end
+
+  def render("performance.json", %{stats: stats}) do
+    %{
+      title: "Episode Performance",
+      series: [
+        %{
+          name: "Launch",
+          data:
+            Enum.map(stats, fn {slug, reach, title, _reach} ->
+              %{x: slug, y: reach, title: title}
+            end)
+        },
+        %{
+          name: "Total",
+          data:
+            Enum.map(stats, fn {slug, _reach, title, reach} ->
+              %{x: slug, y: reach, title: title}
+            end)
+        }
+      ]
+    }
   end
 
   def request_options(requests) do

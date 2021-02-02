@@ -7,7 +7,7 @@ defmodule Changelog.NewsQueue do
     Buffer,
     Cache,
     EpisodeTracker,
-    HN,
+    # HN,
     NewsItem,
     NewsQueue,
     Notifier,
@@ -161,7 +161,7 @@ defmodule Changelog.NewsQueue do
     Task.start_link(fn -> Search.save_item(item) end)
     Task.start_link(fn -> Buffer.queue(item) end)
     Task.start_link(fn -> Notifier.notify(item) end)
-    Task.start_link(fn -> HN.submit(item) end)
+    # Task.start_link(fn -> HN.submit(item) end)
     Task.start_link(fn -> EpisodeTracker.track(item) end)
     Cache.delete(item)
     Logger.info("News: Published ##{item.id}")
