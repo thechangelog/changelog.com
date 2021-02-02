@@ -6,12 +6,14 @@ defmodule ChangelogWeb.VanityDomainsTest do
   @jsparty %{
     vanity_domain: "https://jsparty.fm",
     slug: "jsparty",
-    apple_url: "https://podcasts.apple.com/us/podcast/js-party/id1209616598"
+    apple_url: "https://podcasts.apple.com/us/podcast/js-party/id1209616598",
+    name: "JS Party"
   }
   @gotime %{
     vanity_domain: "https://gotime.fm",
     slug: "gotime",
-    spotify_url: "https://spotify.com"
+    spotify_url: "https://spotify.com",
+    name: "Go Time"
   }
 
   def assert_vanity_redirect(conn, path_or_url) do

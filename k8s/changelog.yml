@@ -179,6 +179,8 @@ spec:
         command:
         - /usr/local/bin/backup_db_continuously
         env:
+        - name: BACKUP_EVERY_N_SECONDS
+          value: "21600"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
@@ -194,18 +196,18 @@ spec:
         - name: AWS_S3_BUCKET
           value: changelog-com-backups
         - name: PGHOST
-          value: db
+          value: changelog-db
         - name: PGDATABASE
           value: db
         - name: PGPASSWORD
           valueFrom:
             secretKeyRef:
-              name: db-postgres-secret
+              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
               key: password
         - name: PGUSER
           valueFrom:
             secretKeyRef:
-              name: db-postgres-secret
+              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
               key: username
       - name: uploads-backup
         image: thechangelog/backups:202008
@@ -213,6 +215,8 @@ spec:
         command:
         - /usr/local/bin/backup_uploads_continuously
         env:
+        - name: BACKUP_EVERY_N_SECONDS
+          value: "21600"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
@@ -275,18 +279,18 @@ spec:
               name: coveralls
               key: repo_token
         - name: DB_HOST
-          value: db
+          value: changelog-db
         - name: DB_NAME
           value: db
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
-              name: db-postgres-secret
+              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
               key: password
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: db-postgres-secret
+              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
               key: username
         - name: GITHUB_API_TOKEN
           valueFrom:
@@ -433,6 +437,33 @@ spec:
       - name: uploads
         persistentVolumeClaim:
           claimName: uploads
+---
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: changelog-db
+  namespace: prod-2020-07
+spec:
+  teamId: changelog
+  users:
+    changelog:
+    - superuser
+    - createdb
+  volume:
+    size: 10Gi
+    storageClass: linode-block-storage
+  numberOfInstances: 2
+  databases:
+    db: db
+  postgresql:
+    version: "12"
+  resources:
+    requests:
+      cpu: "1"
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 4Gi
 ---
 apiVersion: batch/v1beta1
 kind: CronJob

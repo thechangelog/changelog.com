@@ -161,6 +161,12 @@ defmodule Changelog.SubscriptionTest do
       {:ok, person: insert(:person), podcast: insert(:podcast)}
     end
 
+    test "is a no-op when person is nil", %{person: _p, podcast: podcast} do
+      Subscription.unsubscribe(nil, podcast)
+      assert Repo.count(Subscription) == 0
+      assert Repo.count(Subscription.unsubscribed()) == 0
+    end
+
     test "creates an 'unsubscribed' sub when person has never subscribed", %{
       person: person,
       podcast: podcast

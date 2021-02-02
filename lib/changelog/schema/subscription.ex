@@ -128,6 +128,8 @@ defmodule Changelog.Subscription do
   def unsubscribe(sub = %__MODULE__{}),
     do: sub |> change(unsubscribed_at: now_in_seconds()) |> Repo.update()
 
+  def unsubscribe(nil, _subject), do: false
+
   def unsubscribe(person = %Person{}, subject) do
     get_or_initialize_by(person, subject)
     |> change(unsubscribed_at: now_in_seconds())
