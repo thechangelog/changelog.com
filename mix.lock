@@ -87,7 +87,7 @@
   "ueberauth": {:hex, :ueberauth, "0.6.3", "d42ace28b870e8072cf30e32e385579c57b9cc96ec74fa1f30f30da9c14f3cc0", [:mix], [{:plug, "~> 1.5", [hex: :plug, repo: "hexpm", optional: false]}], "hexpm", "afc293d8a1140d6591b53e3eaf415ca92842cb1d32fad3c450c6f045f7f91b60"},
   "ueberauth_github": {:hex, :ueberauth_github, "0.8.0", "2216c8cdacee0de6245b422fb397921b64a29416526985304e345dab6a799d17", [:mix], [{:oauth2, "~> 1.0 or ~> 2.0", [hex: :oauth2, repo: "hexpm", optional: false]}, {:ueberauth, "~> 0.6.0", [hex: :ueberauth, repo: "hexpm", optional: false]}], "hexpm", "b65ccc001a7b0719ba069452f3333d68891f4613ae787a340cce31e2a43307a3"},
   "ueberauth_twitter": {:git, "https://github.com/jerodsanto/ueberauth_twitter.git", "4ed9135fd5fd09ee40d079ebc194ff79e6bc6dab", []},
-  "unicode_util_compat": {:hex, :unicode_util_compat, "0.5.0", "8516502659002cec19e244ebd90d312183064be95025a319a6c7e89f4bccd65b", [:rebar3], [], "hexpm", "d48d002e15f5cc105a696cf2f1bbb3fc72b4b770a184d8420c8db20da2674b38"},
+  "unicode_util_compat": {:hex, :unicode_util_compat, "0.7.0", "bc84380c9ab48177092f43ac89e4dfa2c6d62b40b8bd132b1059ecc7232f9a78", [:rebar3], [], "hexpm", "25eee6d67df61960cf6a794239566599b09e17e668d3700247bc498638152521"},
   "unplug": {:hex, :unplug, "0.2.1", "c70e8cb28b75c7bb40f89930fbb22aad56a9d701b886fa02b80483bfe6908948", [:mix], [{:plug, "~> 1.8", [hex: :plug, repo: "hexpm", optional: false]}], "hexpm", "00e32ff0310bf0b8b6c205f5fcfa32b51acd915f95061f544ace0c7dfe168c2f"},
   "user_agent_parser": {:hex, :user_agent_parser, "1.0.1", "ea4e9dd99f59628b46082eb7fe3738d2e4e2e027a5ab6301fbc23b582886f67e", [:mix], [], "hexpm", "ba049dfe5d9c611a0ba3ac13c9ef0d17ea49e8bdfab68c54e7415423f32aa74f"},
 }
