@@ -10,6 +10,7 @@ scrape_configs:
       - targets: ['localhost:9090']
 
   - job_name: 'changelog_app'
+    bearer_token: 'super_secret_metrics'
     static_configs:
       - targets:
         - 'changelog_app:4000'

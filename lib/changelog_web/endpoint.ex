@@ -50,7 +50,9 @@ defmodule ChangelogWeb.Endpoint do
     if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},
     do: Plug.Logger
 
-  plug PromEx.Plug, prom_ex_module: Changelog.PromEx
+  plug Unplug,
+    if: ChangelogWeb.Plugs.MetricsPredicate,
+    do: {PromEx.Plug, prom_ex_module: Changelog.PromEx}
 
   plug Unplug,
     if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},

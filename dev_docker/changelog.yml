@@ -32,6 +32,7 @@ services:
       GRAFANA_URL: "http://grafana:3000"
       GRAFANA_API_KEY: "<GRAFANA_INSTANCE_API_KEY>"
       GRAFANA_DATASOURCE: "prometheus"
+      PROMETHEUS_AUTHORIZATION: "super_secret_metrics"
     volumes:
       - ../assets/admin/:/app/assets/admin:ro
       - ../assets/app/:/app/assets/app:ro
