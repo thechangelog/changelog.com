@@ -60,11 +60,13 @@ defmodule Changelog.Repo.Migrations.AddingNewsItemIndexes do
             1000
         END +
         CASE
-          WHEN ARRAY_AGG(DISTINCT topics.slug) @> (SELECT tags FROM original_news_item) THEN
+          WHEN ARRAY_AGG(DISTINCT topics.slug) = (SELECT tags FROM original_news_item) THEN
             2250
           WHEN ARRAY_AGG(DISTINCT topics.slug) <@ (SELECT tags FROM original_news_item) THEN
             1250
-        ELSE
+          WHEN ARRAY_AGG(DISTINCT topics.slug) && (SELECT tags FROM original_news_item) THEN
+            750
+          ELSE
             0
         END +
         CASE
