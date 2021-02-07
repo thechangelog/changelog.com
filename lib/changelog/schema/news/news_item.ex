@@ -1,6 +1,8 @@
 defmodule Changelog.NewsItem do
   use Changelog.Schema, default_sort: :published_at
 
+  require Logger
+
   alias Changelog.{
     Episode,
     Files,
@@ -369,5 +371,45 @@ defmodule Changelog.NewsItem do
     |> limit(50)
     |> Repo.all()
     |> Enum.map(&load_object/1)
+  end
+
+  def recommend_additional_news_items(original_news_item = %__MODULE__{}, num_recommendations) do
+    recommend_additional_news_items(original_news_item.id, num_recommendations)
+  end
+
+  def recommend_additional_news_items(original_news_item_id, num_recommendations) do
+    ConCache.fetch_or_store(
+      :news_item_recommendations,
+      {original_news_item_id, num_recommendations},
+      fn ->
+        query_recommend_additional_news_items(original_news_item_id, num_recommendations)
+      end
+    )
+  end
+
+  defp query_recommend_additional_news_items(original_news_item_id, num_recommendations) do
+    try do
+      "select * from item_recommendation($1::integer, $2::integer)"
+      |> Changelog.Repo.query([original_news_item_id, num_recommendations])
+      |> case do
+        {:ok, %Postgrex.Result{columns: columns, rows: rows}} ->
+          results =
+            Enum.map(rows, fn row ->
+              columns
+              |> Enum.zip(row)
+              |> Map.new()
+            end)
+
+          {:ok, results}
+
+        error ->
+          Logger.warn("Failed to fetch recommended news items: #{inspect(error)}")
+          {:error, error}
+      end
+    rescue
+      error ->
+        Logger.warn("Failed to fetch recommended news items: #{inspect(error)}")
+        {:error, error}
+    end
   end
 end

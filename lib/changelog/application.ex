@@ -16,13 +16,17 @@ defmodule Changelog.Application do
       # Here you could define other workers and supervisors as children
       worker(UA.Parser, []),
       # worker(Changelog.Worker, [arg1, arg2, arg3]),
-      worker(ConCache, [
-        [
-          name: :app_cache,
-          ttl_check_interval: :timer.seconds(1),
-          global_ttl: :timer.seconds(60)
-        ]
-      ]),
+      con_cache_child_spec(
+        :app_cache,
+        ttl_check_interval: :timer.seconds(1),
+        global_ttl: :timer.seconds(60)
+      ),
+      con_cache_child_spec(
+        :news_item_recommendations,
+        ttl_check_interval: :timer.seconds(30),
+        global_ttl: :timer.minutes(5),
+        touch_on_read: false
+      ),
       worker(Changelog.Scheduler, []),
       worker(Changelog.EpisodeTracker, []),
       worker(Changelog.Metacasts.Filterer.Cache, [])
@@ -39,5 +43,15 @@ defmodule Changelog.Application do
   def config_change(changed, _new, removed) do
     ChangelogWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp con_cache_child_spec(name, opts) do
+    Supervisor.child_spec(
+      {
+        ConCache,
+        Keyword.put(opts, :name, name)
+      },
+      id: {ConCache, name}
+    )
   end
 end
