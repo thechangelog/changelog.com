@@ -39,9 +39,9 @@ defmodule Changelog.Repo.Migrations.AddingNewsItemIndexes do
         GROUP BY news_items.id
       )
       SELECT DISTINCT
-        (SELECT id FROM original_news_item),
+        (SELECT id FROM original_news_item)::BIGINT,
         (SELECT tags FROM original_news_item),
-        news_items.id,
+        news_items.id::BIGINT,
         news_items.headline,
         news_items.click_count,
         ARRAY_AGG(DISTINCT topics.slug) AS tags,
