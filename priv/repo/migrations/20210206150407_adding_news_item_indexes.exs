@@ -15,9 +15,9 @@ defmodule Changelog.Repo.Migrations.AddingNewsItemIndexes do
     execute("""
     CREATE OR REPLACE FUNCTION item_recommendation(news_item_id INTEGER, num_recommendations INTEGER)
     RETURNS TABLE (
-      original_id INTEGER,
+      original_id BIGINT,
       original_tags VARCHAR[],
-      id INTEGER,
+      id BIGINT,
       headline VARCHAR,
       click_count INTEGER,
       tags VARCHAR[],
