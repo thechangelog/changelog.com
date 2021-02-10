@@ -203,4 +203,8 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
     user_id == author_id and time_since_post < 300
   end
+
+  def can_edit_comment?(_, _) do
+    false
+  end
 end
