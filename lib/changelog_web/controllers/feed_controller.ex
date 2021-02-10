@@ -79,6 +79,7 @@ defmodule ChangelogWeb.FeedController do
 
     conn
     |> put_layout(false)
+    |> put_resp_header("access-control-allow-origin", "*")
     |> put_resp_content_type("application/xml")
     |> assign(:podcast, podcast)
     |> assign(:episodes, episodes)

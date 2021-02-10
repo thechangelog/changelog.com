@@ -31,7 +31,7 @@ If you have questions about any of the code, holler [@Changelog](https://twitter
 
 ## How can I contribute?
 
-Assuming that you have [Docker](https://docs.docker.com/install/) running locally and `docker-compose` available, all that you have to do is run `docker-compose up` in your terminal.
+Assuming that you have [Docker](https://docs.docker.com/install/) running locally and `docker-compose` available, all that you have to do is run `./start_dev_stack up` in your terminal.
 
 When you run this command for the first time, it will take around 7 minutes to pull all Docker images, build the app image and start the app and db containers.
 Depending on your internet connection and CPUs used for compiling various artefacts, this can easily take 30 minutes or more.
@@ -40,19 +40,28 @@ Next time you run this command, since all Docker images will be cached, you can 
 When all containers are up and running, you should see the following output in your terminal session:
 
 ```
-Starting changelogcom_db_1    ... done
-Recreating changelogcom_app_1 ... done
-Attaching to changelogcom_db_1, changelogcom_app_1
+Starting dev_docker_postgres_1   ... done
+Starting dev_docker_prometheus_1 ... done
+Starting dev_docker_grafana_1    ... done
+Starting dev_docker_changelog_app_1 ... done
+Attaching to dev_docker_prometheus_1, dev_docker_postgres_1, dev_docker_grafana_1, dev_docker_changelog_app_1
 ...
-db_1     | LOG:  autovacuum launcher started
-db_1     | LOG:  database system is ready to accept connections
+grafana_1        | t=2021-02-03T20:53:58+0000 lvl=info msg="Starting Grafana" logger=server version=7.1.3 commit=5723d951af branch=HEAD compiled=2020-08-06T08:44:32+0000
+grafana_1        | t=2021-02-03T20:53:58+0000 lvl=info msg="Config loaded from" logger=settings file=/usr/share/grafana/conf/defaults.ini
+grafana_1        | t=2021-02-03T20:53:58+0000 lvl=info msg="Config loaded from" logger=settings file=/etc/grafana/grafana.ini
 ...
-app_1    | [info] Running ChangelogWeb.Endpoint with Cowboy using http://0.0.0.0:4000
-app_1    | yarn run v1.6.0
-app_1    | warning package.json: No license field
-app_1    | $ webpack --mode=development --watch-stdin --color
-app_1    |
-app_1    | Webpack is watching the files…
+prometheus_1     | level=info ts=2021-02-03T20:53:58.108Z caller=main.go:308 msg="No time or size retention was set so using the default time retention" duration=15d
+prometheus_1     | level=info ts=2021-02-03T20:53:58.109Z caller=main.go:343 msg="Starting Prometheus" version="(version=2.20.1, branch=HEAD, revision=983ebb4a513302315a8117932ab832815f85e3d2)"
+...
+postgres_1         | LOG:  autovacuum launcher started
+postgres_1         | LOG:  database system is ready to accept connections
+...
+changelog_app_1    | [info] Running ChangelogWeb.Endpoint with Cowboy using http://0.0.0.0:4000
+changelog_app_1    | yarn run v1.6.0
+changelog_app_1    | warning package.json: No license field
+changelog_app_1    | $ webpack --mode=development --watch-stdin --color
+changelog_app_1    |
+changelog_app_1    | Webpack is watching the files…
 ...
 ```
 

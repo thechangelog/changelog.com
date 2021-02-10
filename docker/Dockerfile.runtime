@@ -1,5 +1,5 @@
 # https://hub.docker.com/r/circleci/elixir/tags?page=1&ordering=last_updated
-FROM circleci/elixir:1.9-node
+FROM circleci/elixir:1.11-node
 
 USER root
 
