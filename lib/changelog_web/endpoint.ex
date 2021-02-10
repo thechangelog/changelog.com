@@ -45,10 +45,18 @@ defmodule ChangelogWeb.Endpoint do
   end
 
   plug Plug.RequestId
-  plug Plug.Logger
 
-  plug PromEx.Plug, prom_ex_module: Changelog.PromEx
-  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
+  plug Unplug,
+    if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},
+    do: Plug.Logger
+
+  plug Unplug,
+    if: ChangelogWeb.Plugs.MetricsPredicate,
+    do: {PromEx.Plug, prom_ex_module: Changelog.PromEx}
+
+  plug Unplug,
+    if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},
+    do: {Plug.Telemetry, event_prefix: [:phoenix, :endpoint]}
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
