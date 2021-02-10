@@ -62,7 +62,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
   def update(conn, %{"id" => id, "news_item_comment" => %{"content" => updated_content}}) do
     with id <- Changelog.Hashid.decode(id),
          comment = %NewsItemComment{} <- NewsItemComment.get_by_id(id),
-         true <- SharedHelpers.can_edit_comment?(conn.assigns.current_user, comment),
+         true <- Policies.NewsItemComment.update(conn.assigns.current_user, comment),
          changeset = %Changeset{valid?: true} <- update_comment(comment, updated_content),
          {:ok, comment = %NewsItemComment{}} <- Repo.update(changeset) do
       comment = NewsItemComment.preload_all(comment)

@@ -28,7 +28,7 @@
 
     <footer class="comment-footer">
       <p class="comment-actions">
-        <%= if SharedHelpers.can_edit_comment?(@current_user, @comment) do %>
+        <%= if Policies.NewsItemComment.update(@current_user, @comment) do %>
           <a href="javascript:void(0)" title="Edit your comment" class="js-comment-edit">edit</a>
         <% end %>
 
@@ -37,7 +37,7 @@
     </footer>
 
     <%= if @current_user, do: render("_reply_form.html", Map.merge(assigns, %{parent: @comment})) %>
-    <%= if SharedHelpers.can_edit_comment?(@current_user, @comment), do: render("_edit_form.html", Map.merge(assigns, %{comment: @comment})) %>
+    <%= if Policies.NewsItemComment.update(@current_user, @comment), do: render("_edit_form.html", Map.merge(assigns, %{comment: @comment})) %>
 
     <section class="comment-replies">
       <%= render_many(@comment.children, __MODULE__, "show.html", Map.merge(assigns, %{as: :comment})) %>
