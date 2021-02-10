@@ -28,9 +28,7 @@
       <itunes:category text="Tech News"/>
     </itunes:category>
     <podcast:funding url="https://changelog.com/++">Support our work by joining Changelog++</podcast:funding>
-  <%= for person <- @podcast.active_hosts do %>
-    <podcast:person img="<%= PersonView.avatar_url(person, :large) %>" href="<%= PersonView.profile_path(person) %>"><%= person.name %></podcast:person>
-  <% end %>
+    <%= render_many(@podcast.active_hosts, __MODULE__, "_person.xml", as: :person, role: "host") %>
   <%= for episode <- @episodes do %>
     <item>
       <title><%= episode_title(@podcast, episode) |> escaped() %></title>
@@ -53,14 +51,8 @@
       <itunes:summary><%= SharedHelpers.md_to_text(episode.summary) %></itunes:summary>
       <dc:creator>Changelog Media</dc:creator>
       <itunes:author>Changelog Media</itunes:author>
-
-    <%= for person <- episode.hosts do %>
-      <podcast:person img="<%= PersonView.avatar_url(person, :large) %>" href="<%= PersonView.profile_path(person) %>"><%= person.name %></podcast:person>
-    <% end %>
-
-    <%= for person <- episode.guests do %>
-      <podcast:person role="guest" img="<%= PersonView.avatar_url(person, :large) %>" href="<%= PersonView.profile_path(person) %>"><%= person.name %></podcast:person>
-    <% end %>
+      <%= render_many(episode.hosts, __MODULE__, "_person.xml", as: :person, role: "host") %>
+      <%= render_many(episode.guests, __MODULE__, "_person.xml", as: :person, role: "guest") %>
     </item>
   <% end %>
   </channel>
