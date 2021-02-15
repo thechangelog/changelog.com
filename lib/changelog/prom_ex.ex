@@ -34,6 +34,7 @@ defmodule Changelog.PromEx do
       {:prom_ex, "beam.json"},
       {:prom_ex, "ecto.json"},
       {:prom_ex, "phoenix.json"},
+      {:prom_ex, "oban.json"},
 
       # Add your dashboard definitions here with the format: {:otp_app, "path_in_priv"}
       {:changelog, "/grafana_dashboards/app.json"},
