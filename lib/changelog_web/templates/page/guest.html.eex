@@ -43,7 +43,7 @@
       <% else %>
         our <%= link("Community Slack", to: Routes.page_path(@conn, :community)) %>.</li>
       <% end %>
-    <%= else %>
+    <% else %>
       <li>Video optional! Feel free to opt out due to a slow connection or a bad hair day 📹</li>
     <% end %>
       <li>Put your mobile device(s) on Airplane Mode 📳</li>

@@ -9,7 +9,7 @@ config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi",
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Changelog.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Changelog.PubSub
 
 config :changelog,
   ecto_repos: [Changelog.Repo],

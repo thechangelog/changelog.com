@@ -55,6 +55,10 @@ defmodule Changelog.Episode do
 
     field :transcript, {:array, :map}
 
+    # this exists merely to satisfy the compiler
+    # see load_news_item/1 and get_news_item/1 for actual use
+    field :news_item, :map, virtual: true
+
     belongs_to :podcast, Podcast
     belongs_to :episode_request, EpisodeRequest, foreign_key: :request_id
 

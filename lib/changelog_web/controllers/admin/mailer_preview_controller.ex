@@ -51,7 +51,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
   def subscriber_welcome_email do
     subscription = known_subscription()
 
-    subscription.person()
+    subscription.person
     |> Person.refresh_auth_token()
     |> Email.subscriber_welcome(subscription.podcast)
   end

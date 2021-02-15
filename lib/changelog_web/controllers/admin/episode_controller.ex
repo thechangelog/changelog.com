@@ -88,6 +88,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Enum.map(fn ep ->
         start_date = Timex.to_date(ep.published_at)
         end_date = Timex.shift(start_date, days: 7)
+
         reach =
           ep
           |> assoc(:episode_stats)

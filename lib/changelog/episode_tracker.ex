@@ -7,7 +7,7 @@ defmodule Changelog.EpisodeTracker do
   # 3 hour reset, to make sure this doesn't end up out of sync accidentally
   @reset_period_timeout 3 * 60 * 60 * 1000
 
-  def start_link do
+  def start_link(_args) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 

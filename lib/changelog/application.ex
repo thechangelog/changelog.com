@@ -7,29 +7,21 @@ defmodule Changelog.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      # PromEx uses the new Supervisor child specification
       Changelog.PromEx,
-      # Start the endpoint when the application starts
-      supervisor(ChangelogWeb.Endpoint, []),
-      # Start the Ecto repository
-      worker(Changelog.Repo, []),
-      # Here you could define other workers and supervisors as children
+      ChangelogWeb.Endpoint,
+      {Phoenix.PubSub, [name: Changelog.PubSub, adapter: Phoenix.PubSub.PG2]},
+      Changelog.Repo,
+      # UA.Parser doesn't yet support new Supervisor child specification
       worker(UA.Parser, []),
-      # worker(Changelog.Worker, [arg1, arg2, arg3]),
-      worker(ConCache, [
-        [
-          name: :app_cache,
-          ttl_check_interval: :timer.seconds(1),
-          global_ttl: :timer.seconds(60)
-        ]
-      ]),
-      worker(Changelog.Scheduler, []),
-      worker(Changelog.EpisodeTracker, []),
-      worker(Changelog.Metacasts.Filterer.Cache, []),
+      {ConCache,
+       name: :app_cache, ttl_check_interval: :timer.seconds(1), global_ttl: :timer.seconds(60)},
+      Changelog.Scheduler,
+      Changelog.EpisodeTracker,
+      Changelog.Metacasts.Filterer.Cache,
       {Oban, oban_config()}
     ]
 
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Changelog.Supervisor]
     Supervisor.start_link(children, opts)

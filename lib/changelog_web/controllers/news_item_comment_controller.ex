@@ -4,7 +4,6 @@ defmodule ChangelogWeb.NewsItemCommentController do
   alias Changelog.NewsItemComment
   alias Changelog.ObanWorkers.CommentNotifier
   alias ChangelogWeb.NewsItemCommentView
-  alias ChangelogWeb.Helpers.SharedHelpers
   alias Ecto.Changeset
 
   plug RequireUser, "before creating or previewing" when action in [:create, :preview]
@@ -75,7 +74,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
       |> assign(:changeset, changeset)
       |> render("create_update.js")
     else
-      error ->
+      _error ->
         conn
         |> put_flash(:error, "Unable to update the selected comment!")
         |> put_status(:not_found)

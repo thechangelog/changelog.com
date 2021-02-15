@@ -32,7 +32,7 @@ defmodule ChangelogWeb.Plug.ResponseCache do
   end
 
   defp put_resp_headers(conn, headers) do
-    Enum.reduce(headers, conn, fn({key, value}, c) -> put_resp_header(c, key, value) end)
+    Enum.reduce(headers, conn, fn {key, value}, c -> put_resp_header(c, key, value) end)
   end
 
   def cache_public(conn = %{assigns: %{current_user: user}}) when not is_nil(user), do: conn
