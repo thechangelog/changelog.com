@@ -3,17 +3,20 @@ defmodule Changelog.PromEx do
 
   @impl true
   def plugins do
-    [
-      # PromEx built in plugins
-      {PromEx.Plugins.Application, otp_app: :changelog},
-      PromEx.Plugins.Beam,
-      {PromEx.Plugins.Phoenix, router: ChangelogWeb.Router},
-      {PromEx.Plugins.Ecto, otp_app: :changelog, repos: [Changelog.Repo]},
-      PromEx.Plugins.Oban
-
-      # Add your own PromEx metrics plugins
-      # Changelog.Users.PromEx
-    ]
+    if Mix.env() != :test do
+      [
+        # PromEx built in plugins
+        {PromEx.Plugins.Application, otp_app: :changelog},
+        PromEx.Plugins.Beam,
+        {PromEx.Plugins.Phoenix, router: ChangelogWeb.Router},
+        {PromEx.Plugins.Ecto, otp_app: :changelog, repos: [Changelog.Repo]},
+        PromEx.Plugins.Oban
+        # Add your own PromEx metrics plugins
+        # Changelog.Users.PromEx
+      ]
+    else
+      []
+    end
   end
 
   @impl true
