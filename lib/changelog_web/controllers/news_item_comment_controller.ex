@@ -1,8 +1,11 @@
 defmodule ChangelogWeb.NewsItemCommentController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItemComment, Notifier}
+  alias Changelog.NewsItemComment
+  alias Changelog.ObanWorkers.CommentNotifier
   alias ChangelogWeb.NewsItemCommentView
+  alias ChangelogWeb.Helpers.SharedHelpers
+  alias Ecto.Changeset
 
   plug RequireUser, "before creating or previewing" when action in [:create, :preview]
 
@@ -21,7 +24,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         # Only send the normal notification out if the user is an approved commenter
         # Else send only to admins for vetting. The notify/1 function validates the state
         # of the comment and sends it to the appropriate recipients.
-        Task.start_link(fn -> Notifier.notify(comment) end)
+        CommentNotifier.schedule_notification(comment)
 
         if get_format(conn) == "js" do
           comment = NewsItemComment.preload_all(comment)
@@ -54,6 +57,41 @@ defmodule ChangelogWeb.NewsItemCommentController do
 
   def preview(conn, %{"md" => markdown}) do
     html(conn, NewsItemCommentView.transformed_content(markdown))
+  end
+
+  def update(conn, %{"id" => id, "news_item_comment" => %{"content" => updated_content}}) do
+    with id <- Changelog.Hashid.decode(id),
+         comment = %NewsItemComment{} <- NewsItemComment.get_by_id(id),
+         true <- Policies.NewsItemComment.update(conn.assigns.current_user, comment),
+         changeset = %Changeset{valid?: true} <- update_comment(comment, updated_content),
+         {:ok, comment = %NewsItemComment{}} <- Repo.update(changeset) do
+      comment = NewsItemComment.preload_all(comment)
+      item = comment.news_item
+
+      conn
+      |> put_flash(:success, "Your comment has been updated")
+      |> assign(:item, item)
+      |> assign(:comment, comment)
+      |> assign(:changeset, changeset)
+      |> render("create_update.js")
+    else
+      error ->
+        conn
+        |> put_flash(:error, "Unable to update the selected comment!")
+        |> put_status(:not_found)
+        |> render("create_failure.js")
+    end
+  end
+
+  def update(conn, _) do
+    conn
+    |> put_flash(:error, "Unable to update the selected comment!")
+    |> put_status(:unprocessable_entity)
+    |> render("create_failure.js")
+  end
+
+  defp update_comment(comment = %NewsItemComment{}, updated_content) do
+    NewsItemComment.update_changeset(comment, %{content: updated_content})
   end
 
   defp random_success_message do

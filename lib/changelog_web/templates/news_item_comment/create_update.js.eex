@@ -1,0 +1,9 @@
+var content = "<%= javascript_escape(render("show.html", assigns)) %>";
+
+var original_comment = u(".js-comment[data-id='<%= hashid(@comment.id) %>']");
+
+var original_content = original_comment.find(".comment-body")
+var new_content = u(content).find(".comment-body");
+
+original_comment.first().comment.closeEditForm();
+original_content.replace(new_content);

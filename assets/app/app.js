@@ -58,11 +58,13 @@ window.App = {
   },
 
   detachFlash() {
-    u(".js-flash").each(el => { el.flash.remove(); });
+    u(".js-flash").each(el => {
+      el.flash.remove();
+    });
   },
 
   deepLink(href) {
-    let linkTime = parseTime(gup("t", (href || location.href), "#"));
+    let linkTime = parseTime(gup("t", href || location.href, "#"));
     if (!linkTime) return false;
 
     if (this.player.isPlaying()) {
@@ -91,19 +93,19 @@ window.App = {
 
   isExternalLink(a) {
     let href = a.attr("href");
-    return (a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname)));
+    return a.attr("rel") == "external" || (href[0] != "/" && !href.match(location.hostname));
   }
-}
+};
 
 // Hide tooltips when clicking anywhere else
-u(document).on("click", function(event) {
+u(document).on("click", function (event) {
   const target = u(event.target);
-  if ((!target.closest('.has-tooltip').length) && (!target.closest('.tooltip').length) && (!target.hasClass('has-tooltip'))) {
+  if (!target.closest(".has-tooltip").length && !target.closest(".tooltip").length && !target.hasClass("has-tooltip")) {
     u(".tooltip").removeClass("is-visible");
   }
 });
 
-u(document).handle("click", ".js-toggle-nav", function(event) {
+u(document).handle("click", ".js-toggle-nav", function (event) {
   u("body").toggleClass("nav-open");
 
   setTimeout(() => {
@@ -112,28 +114,30 @@ u(document).handle("click", ".js-toggle-nav", function(event) {
 });
 
 // Toggle podcast subscriptions via ajax
-u(document).on("change", ".js-toggle-subscription", function(event) {
+u(document).on("change", ".js-toggle-subscription", function (event) {
   let checkBox = u(event.target);
   let slug = checkBox.data("slug");
   let action = checkBox.is(":checked") ? "subscribe" : "unsubscribe";
-  ajax(`~/${action}`, {method: "POST", body: {"slug": slug}});
+  ajax(`~/${action}`, { method: "POST", body: { slug: slug } });
 });
 
-u(document).handle("click", ".js-subscribe-all", function(event) {
+u(document).handle("click", ".js-subscribe-all", function (event) {
   u(event.target).remove();
-  u(".js-toggle-subscription:not(:checked)").each(el => { el.click(); });
+  u(".js-toggle-subscription:not(:checked)").each(el => {
+    el.click();
+  });
 });
 
-u(document).handle("click", ".js-toggle_element", function(event) {
+u(document).handle("click", ".js-toggle_element", function (event) {
   const href = u(event.target).attr("href");
   u(href).toggleClass("is-hidden");
 });
 
-u(document).handle("click", ".podcast-summary-widget_toggle", function(event) {
+u(document).handle("click", ".podcast-summary-widget_toggle", function (event) {
   u(event.target).siblings(".podcast-summary-widget_menu").toggleClass("podcast-summary-widget_menu--is-open");
 });
 
-u(document).on("click", "[data-play]", function(event) {
+u(document).on("click", "[data-play]", function (event) {
   if (App.player.canPlay()) {
     event.preventDefault();
 
@@ -153,45 +157,49 @@ u(document).on("click", "[data-play]", function(event) {
   }
 });
 
-u(document).handle("click", "[data-image]", function(event) {
+u(document).handle("click", "[data-image]", function (event) {
   new ImageButton(this);
 });
 
-u(document).handle("click", "[data-youtube]", function(event) {
+u(document).handle("click", "[data-youtube]", function (event) {
   new YouTubeButton(this);
 });
 
-u(document).handle("click", "[data-share]", function(event) {
+u(document).handle("click", "[data-share]", function (event) {
   new Share(App.overlay).load(u(this).data("share"));
 });
 
 // open share dialogs in their own window (order matters or next rule will apply)
-u(document).handle("click", ".js-share-popup", function(event) {
+u(document).handle("click", ".js-share-popup", function (event) {
   var h, href, left, shareWindow, top, w;
   href = u(event.target).attr("href");
   w = 600;
   h = 300;
-  left = (screen.width / 2) - (w / 2);
-  top = (screen.height / 2) - (h / 2);
-  Log.track("Social", {action: "share", url: href});
-  shareWindow = window.open(href, "Changelog", `location=1,status=1,scrollbars=1,width=${w},height=${h},top=${top},left=${left}`);
+  left = screen.width / 2 - w / 2;
+  top = screen.height / 2 - h / 2;
+  Log.track("Social", { action: "share", url: href });
+  shareWindow = window.open(
+    href,
+    "Changelog",
+    `location=1,status=1,scrollbars=1,width=${w},height=${h},top=${top},left=${left}`
+  );
   shareWindow.opener = null;
 });
 
 // track news impressions
-const observer = new IntersectionObserver(function(entries) {
+const observer = new IntersectionObserver(function (entries) {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     let el = u(entry.target);
     let type = el.data("news-type");
     let id = el.data("news-id");
-    ajax(`/${type}/impress`, {method: "POST", body: {"ids": id}});
+    ajax(`/${type}/impress`, { method: "POST", body: { ids: id } });
     observer.unobserve(entry.target);
   });
 });
 
 // track news clicks
-u(document).on("mousedown", "[data-news]", function(event) {
+u(document).on("mousedown", "[data-news]", function (event) {
   let clicked = u(this);
   let type = clicked.closest("[data-news-type]").data("news-type");
   let id = clicked.closest("[data-news-id]").data("news-id");
@@ -201,7 +209,7 @@ u(document).on("mousedown", "[data-news]", function(event) {
 });
 
 // open external links in new window when player is doing its thing
-u(document).on("click", "a[href^=http]", function(event) {
+u(document).on("click", "a[href^=http]", function (event) {
   if (App.player.isActive()) {
     let clicked = u(this);
 
@@ -214,36 +222,42 @@ u(document).on("click", "a[href^=http]", function(event) {
 });
 
 // hide subscribe CTA
-u(document).handle("click", ".js-hide-subscribe-cta", function(event) {
+u(document).handle("click", ".js-hide-subscribe-cta", function (event) {
   Cookies.set("hide_subscribe_cta", "true");
   u(".js-subscribe_cta").remove();
 });
 
 // hide subscribe banner
-u(document).handle("click", ".js-hide-subscribe-banner", function(event) {
+u(document).handle("click", ".js-hide-subscribe-banner", function (event) {
   Cookies.set("hide_subscribe_banner", "true");
   u(".js-subscribe_banner").remove();
 });
 
 // hijack audio deep links
-u(document).on("click", "a[href^=\\#t]", function(event) {
+u(document).on("click", "a[href^=\\#t]", function (event) {
   let href = u(event.target).attr("href");
 
   if (App.deepLink(href)) {
     event.preventDefault();
     history.replaceState({}, document.title, href);
-  };
+  }
 });
 
 // submit forms with Turbolinks
-u(document).on("submit", "form", function(event) {
+u(document).on("submit", "form", function (event) {
   event.preventDefault();
 
   let form = u(this);
   let submits = form.find("input[type=submit]");
+  let optionalMethodOverride = form.children('input[name="_method"]');
   let action = form.attr("action");
   let method = form.attr("method");
   let referrer = location.href;
+
+  // Override the default form action if form has hidden input generated for form_for/3
+  if (optionalMethodOverride.length) {
+    method = optionalMethodOverride.first().getAttribute("value");
+  }
 
   if (method == "get") {
     return Turbolinks.visit(`${action}?${form.serialize()}`);
@@ -252,17 +266,21 @@ u(document).on("submit", "form", function(event) {
   let options = {
     method: method,
     body: new FormData(form.first()),
-    headers: {"Turbolinks-Referrer": referrer}
+    headers: { "Turbolinks-Referrer": referrer }
   };
 
   if (form.data("ajax")) {
     options.headers["Accept"] = "application/javascript";
   }
 
-  submits.each(el => { el.setAttribute("disabled", true); });
+  submits.each(el => {
+    el.setAttribute("disabled", true);
+  });
 
-  let andThen = function(err, resp, req) {
-    submits.each(el => { el.removeAttribute("disabled"); });
+  let andThen = function (err, resp, req) {
+    submits.each(el => {
+      el.removeAttribute("disabled");
+    });
 
     if (req.getResponseHeader("content-type").match(/javascript/)) {
       eval(resp);
@@ -270,30 +288,32 @@ u(document).on("submit", "form", function(event) {
     } else {
       let snapshot = Turbolinks.Snapshot.wrap(resp);
       Turbolinks.controller.cache.put(referrer, snapshot);
-      Turbolinks.visit(referrer, {action: "restore"});
+      Turbolinks.visit(referrer, { action: "restore" });
     }
-  }
+  };
 
   ajax(action, options, andThen);
 });
 
-window.onhashchange = function() {
+window.onhashchange = function () {
   App.deepLink();
-}
+};
 
-u(document).on("turbolinks:before-cache", function() {
+u(document).on("turbolinks:before-cache", function () {
   u("body").removeClass("nav-open");
   App.overlay.hide();
   App.detachFlash();
 });
 
 // on page load
-u(document).on("turbolinks:load", function() {
+u(document).on("turbolinks:load", function () {
   Prism.highlightAll();
   App.lazy.observe();
   App.player.attach();
   App.live.check();
-  u(".js-track-news").each(el => { observer.observe(el) });
+  u(".js-track-news").each(el => {
+    observer.observe(el);
+  });
   autosize(document.querySelectorAll("textarea"));
   App.attachComments();
   App.attachFlash();
@@ -303,7 +323,7 @@ u(document).on("turbolinks:load", function() {
   App.deepLink();
 });
 
-u(document).on("ajax:load", function() {
+u(document).on("ajax:load", function () {
   App.attachComments();
   App.attachFlash();
   App.attachTooltips();
