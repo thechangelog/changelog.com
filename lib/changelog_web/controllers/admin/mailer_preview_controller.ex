@@ -57,6 +57,18 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
   end
 
   # Comment related emails
+  def comment_approval_email do
+    comment =
+      NewsItemComment.newest_first()
+      |> NewsItemComment.limit(1)
+      |> NewsItemComment.preload_all()
+      |> Repo.one()
+
+    person = latest_person()
+
+    Email.comment_approval(person, comment)
+  end
+
   def comment_mention_email do
     comment =
       NewsItemComment.newest_first()
