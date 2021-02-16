@@ -373,24 +373,49 @@ defmodule Changelog.NewsItem do
     |> Enum.map(&load_object/1)
   end
 
-  def recommend_additional_news_items(original_news_item = %__MODULE__{}, num_recommendations) do
-    recommend_additional_news_items(original_news_item.id, num_recommendations)
-  end
+  def recommend_podcasts(episode = %Episode{}, num_recommendations) do
+    recommendation_query = "SELECT * FROM query_related_podcast($1::integer, $2::integer)"
+    query_args = [episode.id, num_recommendations]
 
-  def recommend_additional_news_items(original_news_item_id, num_recommendations) do
     ConCache.fetch_or_store(
       :news_item_recommendations,
-      {original_news_item_id, num_recommendations},
+      {:podcast, episode.id, num_recommendations},
       fn ->
-        query_recommend_additional_news_items(original_news_item_id, num_recommendations)
+        query_recommendations(recommendation_query, query_args)
       end
     )
   end
 
-  defp query_recommend_additional_news_items(original_news_item_id, num_recommendations) do
+  def recommend_news_items(news_item = %__MODULE__{}, num_recommendations) do
+    recommendation_query = "SELECT * FROM query_related_news_item($1::integer, $2::integer)"
+    query_args = [news_item.id, num_recommendations]
+
+    ConCache.fetch_or_store(
+      :news_item_recommendations,
+      {:news_item, news_item.id, num_recommendations},
+      fn ->
+        query_recommendations(recommendation_query, query_args)
+      end
+    )
+  end
+
+  def recommend_posts(news_item = %__MODULE__{}, num_recommendations) do
+    recommendation_query = "SELECT * FROM query_related_post($1::integer, $2::integer)"
+    query_args = [news_item.id, num_recommendations]
+
+    ConCache.fetch_or_store(
+      :news_item_recommendations,
+      {:post, news_item.id, num_recommendations},
+      fn ->
+        query_recommendations(recommendation_query, query_args)
+      end
+    )
+  end
+
+  defp query_recommendations(query, args) do
     try do
-      "select * from item_recommendation($1::integer, $2::integer)"
-      |> Changelog.Repo.query([original_news_item_id, num_recommendations])
+      query
+      |> Changelog.Repo.query(args)
       |> case do
         {:ok, %Postgrex.Result{columns: columns, rows: rows}} ->
           results =
@@ -403,12 +428,12 @@ defmodule Changelog.NewsItem do
           {:ok, results}
 
         error ->
-          Logger.warn("Failed to fetch recommended news items: #{inspect(error)}")
+          Logger.warn("Failed to fetch recommended items: #{inspect(error)}")
           {:error, error}
       end
     rescue
       error ->
-        Logger.warn("Failed to fetch recommended news items: #{inspect(error)}")
+        Logger.warn("Failed to fetch recommended items: #{inspect(error)}")
         {:error, error}
     end
   end
