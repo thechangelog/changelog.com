@@ -44,18 +44,29 @@ defmodule ChangelogWeb.Admin.SearchController do
 
   defp search_episodes(""), do: []
 
-  defp search_episodes(q),
-    do:
-      Repo.all(Episode.published(from q in Episode, where: ilike(q.title, ^"%#{q}%")))
-      |> Repo.preload(:podcast)
+  defp search_episodes(q) do
+    from(q in Episode, where: ilike(q.title, ^"%#{q}%"))
+    |> Episode.published()
+    |> Episode.preload_podcast()
+    |> Repo.all()
+  end
 
   defp search_news_items(""), do: []
 
-  defp search_news_items(q),
-    do: Repo.all(NewsItem.published(from q in NewsItem, where: ilike(q.headline, ^"%#{q}%")))
+  defp search_news_items(q) do
+    from(q in NewsItem, where: ilike(q.headline, ^"%#{q}%"))
+    |> NewsItem.published()
+    |> NewsItem.non_audio()
+    |> NewsItem.non_post()
+    |> Repo.all()
+  end
 
   defp search_news_sources(""), do: []
-  defp search_news_sources(q), do: Repo.all(from q in NewsSource, where: ilike(q.name, ^"%#{q}%"))
+
+  defp search_news_sources(q) do
+    from(q in NewsSource, where: ilike(q.name, ^"%#{q}%"))
+    |> Repo.all()
+  end
 
   defp search_people(""), do: []
 
@@ -69,23 +80,36 @@ defmodule ChangelogWeb.Admin.SearchController do
   end
 
   defp search_podcasts(""), do: []
-  defp search_podcasts(q), do: Repo.all(from(q in Podcast, where: ilike(q.name, ^"%#{q}%")))
+
+  defp search_podcasts(q) do
+    from(q in Podcast, where: ilike(q.name, ^"%#{q}%"))
+    |> Repo.all()
+  end
 
   defp search_posts(""), do: []
 
-  defp search_posts(q),
-    do: Repo.all(from q in Post, where: ilike(q.title, ^"%#{q}%")) |> Repo.preload(:author)
+  defp search_posts(q) do
+    from(q in Post, where: ilike(q.title, ^"%#{q}%"))
+    |> Post.preload_author()
+    |> Repo.all()
+  end
 
   defp search_sponsors(""), do: []
-  defp search_sponsors(q), do: Repo.all(from q in Sponsor, where: ilike(q.name, ^"%#{q}%"))
+
+  defp search_sponsors(q) do
+    from(q in Sponsor, where: ilike(q.name, ^"%#{q}%"))
+    |> Repo.all()
+  end
 
   defp search_topics(""), do: []
 
-  defp search_topics(q),
-    do:
-      Repo.all(
-        from q in Topic, where: ilike(q.name, ^"%#{q}%"), or_where: ilike(q.slug, ^"%#{q}%")
-      )
+  defp search_topics(q) do
+    from(q in Topic,
+      where: ilike(q.name, ^"%#{q}%"),
+      or_where: ilike(q.slug, ^"%#{q}%")
+    )
+    |> Repo.all()
+  end
 
   defp with_format(view_name, "json"), do: "#{view_name}.json"
   defp with_format(view_name, _other), do: "#{view_name}.html"
