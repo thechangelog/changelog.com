@@ -29,7 +29,7 @@
     <%= if !assigns[:status] do %>
       <td><%= status_label(request) %></td>
     <% end %>
-      <td><%= TimeView.terse_date(request.inserted_at) %></td>
+      <td><%= AdminHelpers.ts(request.inserted_at, "relativeLong") %></td>
     <%= if !assigns[:person] do %>
       <td>
         <%= link to: Routes.admin_person_path(@conn, :show, request.submitter),

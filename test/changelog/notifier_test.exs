@@ -14,6 +14,13 @@ defmodule Changelog.NotifierTest do
       :ok
     end
 
+    test "when comment is not approved" do
+      admin = insert(:person, email: "jerod@changelog.com")
+      comment = insert(:news_item_comment, approved: false)
+      Notifier.notify(comment)
+      assert_delivered_email(Email.comment_approval(admin, comment))
+    end
+
     test "when comment has no parent or subscribers" do
       comment = insert(:news_item_comment)
       Notifier.notify(comment)

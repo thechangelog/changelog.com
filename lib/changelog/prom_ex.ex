@@ -3,15 +3,20 @@ defmodule Changelog.PromEx do
 
   @impl true
   def plugins do
-    [
-      # PromEx built in plugins
-      {PromEx.Plugins.Application, otp_app: :changelog},
-      PromEx.Plugins.Beam,
-      {PromEx.Plugins.Phoenix, router: ChangelogWeb.Router},
-      {PromEx.Plugins.Ecto, otp_app: :changelog, repos: [Changelog.Repo]}
-      # Add your own PromEx metrics plugins
-      # Changelog.Users.PromEx
-    ]
+    if Mix.env() != :test do
+      [
+        # PromEx built in plugins
+        {PromEx.Plugins.Application, otp_app: :changelog},
+        PromEx.Plugins.Beam,
+        {PromEx.Plugins.Phoenix, router: ChangelogWeb.Router},
+        {PromEx.Plugins.Ecto, otp_app: :changelog, repos: [Changelog.Repo]},
+        PromEx.Plugins.Oban
+        # Add your own PromEx metrics plugins
+        # Changelog.Users.PromEx
+      ]
+    else
+      []
+    end
   end
 
   @impl true
@@ -29,6 +34,7 @@ defmodule Changelog.PromEx do
       {:prom_ex, "beam.json"},
       {:prom_ex, "ecto.json"},
       {:prom_ex, "phoenix.json"},
+      {:prom_ex, "oban.json"},
 
       # Add your dashboard definitions here with the format: {:otp_app, "path_in_priv"}
       {:changelog, "/grafana_dashboards/app.json"},

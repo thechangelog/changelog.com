@@ -61,14 +61,11 @@ defmodule Changelog.Notifier do
 
   def notify(comment = %NewsItemComment{approved: false}) do
     comment = NewsItemComment.preload_all(comment)
-    admin_recipients = ~w(jerod@changelog.com)
+    moderators = ~w(jerod@changelog.com)
 
-    admin_recipients
-    |> Enum.each(fn admin_recipient ->
-      Email
-      |> apply(:unapproved_commenter, [admin_recipient, comment])
-      |> Mailer.deliver_later()
-    end)
+    for person <- moderators |> Person.with_email() |> Repo.all() do
+      person |> Email.comment_approval(comment) |> Mailer.deliver_later()
+    end
   end
 
   def notify(comment = %NewsItemComment{approved: true}) do

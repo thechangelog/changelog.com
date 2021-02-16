@@ -2,7 +2,7 @@
 <div class="js-comment">
   <%= form_for @changeset,
     Routes.news_item_comment_path(@conn, :create),
-    [class: "comment_form js-comment-form", data: [ajax: true]],
+    [class: "comment_form js-comment-form", data: [ajax: true, context: "new"]],
     fn(f) -> %>
 
     <%= hidden_input(f, :item_id, id: false) %>

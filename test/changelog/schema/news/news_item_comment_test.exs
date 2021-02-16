@@ -32,18 +32,18 @@ defmodule Changelog.NewsItemCommentTest do
     end
 
     test "returns one person when they are mentioned" do
-      person = insert(:person, handle: "joeblow")
-      comment = build(:news_item_comment, content: "zomg @joeblow this is rad")
+      person = insert(:person, handle: "joedev")
+      comment = build(:news_item_comment, content: "zomg @joedev this is rad")
       assert NewsItemComment.mentioned_people(comment) == [person]
     end
 
     test "returns many people when they are mentioned" do
-      p1 = insert(:person, handle: "joeblow")
-      p2 = insert(:person, handle: "janeblow")
-      p3 = insert(:person, handle: "aliceblow")
+      p1 = insert(:person, handle: "joedev")
+      p2 = insert(:person, handle: "janedev")
+      p3 = insert(:person, handle: "alicedev")
 
       comment =
-        build(:news_item_comment, content: "zomg @joeblow & @janeblow this is rad @aliceblow!")
+        build(:news_item_comment, content: "zomg @joedev & @janedev this is rad @alicedev!")
 
       assert NewsItemComment.mentioned_people(comment) == [p1, p2, p3]
     end

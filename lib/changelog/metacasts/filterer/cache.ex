@@ -3,7 +3,7 @@ defmodule Changelog.Metacasts.Filterer.Cache do
 
   alias Changelog.Metacasts.Filterer
 
-  def start_link do
+  def start_link(_args) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 

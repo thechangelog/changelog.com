@@ -4,6 +4,7 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+  xmlns:podcast="https://podcastindex.org/namespace/1.0"
 >
   <channel>
     <title><%= @podcast |> podcast_name_with_metadata() |> escaped() %></title>
@@ -26,35 +27,33 @@
       <itunes:category text="Software How-To"/>
       <itunes:category text="Tech News"/>
     </itunes:category>
-    <%= for episode <- @episodes do %>
-      <item>
-        <title><%= episode_title(@podcast, episode) |> escaped() %></title>
-        <link><%= Routes.episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
-        <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
-        <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
-        <enclosure url="<%= enclosure_url(episode) %>" length="<%= episode.audio_bytes %>" type="audio/mpeg" />
-        <description><%= SharedHelpers.md_to_text(episode.summary) %></description>
-        <content:encoded><%= render("_show_notes.xml", episode: episode, plusplus: false) %></content:encoded>
+    <podcast:funding url="https://changelog.com/++">Support our work by joining Changelog++</podcast:funding>
+    <%= render_many(@podcast.active_hosts, __MODULE__, "_person.xml", as: :person, role: "host") %>
+  <%= for episode <- @episodes do %>
+    <item>
+      <title><%= episode_title(@podcast, episode) |> escaped() %></title>
+      <link><%= Routes.episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></link>
+      <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
+      <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
+      <enclosure url="<%= enclosure_url(episode) %>" length="<%= episode.audio_bytes %>" type="audio/mpeg" />
+      <description><%= SharedHelpers.md_to_text(episode.summary) %></description>
+      <content:encoded><%= render("_show_notes.xml", episode: episode, plusplus: false) %></content:encoded>
 
-        <itunes:episodeType><%= episode.type %></itunes:episodeType>
-      <%= if episode.type == :full do %>
-        <itunes:episode><%= EpisodeView.number(episode) %></itunes:episode>
-      <% end %>
-        <itunes:image href="<%= PodcastView.cover_url(episode.podcast) %>"/>
-        <itunes:duration><%= TimeView.duration(episode.audio_duration) %></itunes:duration>
-        <itunes:explicit>no</itunes:explicit>
-        <itunes:keywords><%= episode.podcast.keywords %></itunes:keywords>
-        <itunes:subtitle><%= escaped(episode.subtitle) %></itunes:subtitle>
-        <itunes:summary><%= SharedHelpers.md_to_text(episode.summary) %></itunes:summary>
-
-      <%= if Enum.any?(episode.hosts) do %>
-        <dc:creator><%= SharedHelpers.comma_separated_names(episode.hosts) %></dc:creator>
-        <itunes:author><%= SharedHelpers.comma_separated_names(episode.hosts) %></itunes:author>
-      <% else %>
-        <dc:creator>Changelog Media</dc:creator>
-        <itunes:author>Changelog Media</itunes:author>
-      <% end %>
-      </item>
+      <itunes:episodeType><%= episode.type %></itunes:episodeType>
+    <%= if episode.type == :full do %>
+      <itunes:episode><%= EpisodeView.number(episode) %></itunes:episode>
     <% end %>
+      <itunes:image href="<%= PodcastView.cover_url(episode.podcast) %>"/>
+      <itunes:duration><%= TimeView.duration(episode.audio_duration) %></itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:keywords><%= episode.podcast.keywords %></itunes:keywords>
+      <itunes:subtitle><%= escaped(episode.subtitle) %></itunes:subtitle>
+      <itunes:summary><%= SharedHelpers.md_to_text(episode.summary) %></itunes:summary>
+      <dc:creator>Changelog Media</dc:creator>
+      <itunes:author>Changelog Media</itunes:author>
+      <%= render_many(episode.hosts, __MODULE__, "_person.xml", as: :person, role: "host") %>
+      <%= render_many(episode.guests, __MODULE__, "_person.xml", as: :person, role: "guest") %>
+    </item>
+  <% end %>
   </channel>
 </rss>

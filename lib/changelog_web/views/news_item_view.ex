@@ -157,7 +157,12 @@ defmodule ChangelogWeb.NewsItemView do
     do: render("_summary.html", Map.merge(assigns, %{item: item, style: "relativeShort"}))
 
   def render_item_summary_or_ad(ad = %NewsAd{}, assigns),
-    do: render(NewsAdView, "_summary.html", Map.merge(assigns, %{ad: ad, sponsor: ad.sponsor}))
+    do:
+      render(
+        NewsAdView,
+        "_summary.html",
+        Map.merge(assigns, %{ad: ad, sponsor: ad.sponsorship.sponsor})
+      )
 
   def render_meta_people(conn, item = %{type: :audio, object: episode}) when is_map(episode) do
     render("meta/_featuring.html", conn: conn, item: item, episode: episode)

@@ -19,6 +19,10 @@ defmodule Changelog.Post do
     field :published, :boolean, default: false
     field :published_at, :utc_datetime
 
+    # this exists merely to satisfy the compiler
+    # see load_news_item/1 and get_news_item/1 for actual use
+    field :news_item, :map, virtual: true
+
     belongs_to :author, Person
     belongs_to :editor, Person
 

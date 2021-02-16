@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Admin.NewsItemCommentController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItemComment, Notifier, Person}
+  alias Changelog.{NewsItemComment, Person}
+  alias Changelog.ObanWorkers.CommentNotifier
   alias Ecto.Changeset
 
   plug :assign_comment when action in [:edit, :update, :delete]
@@ -66,7 +67,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
     |> Repo.update()
 
     # Send the notification out now that the comment is approved
-    Task.start_link(fn -> Notifier.notify(comment) end)
+    CommentNotifier.schedule_notification(comment)
   end
 
   defp approved_comment_actions(_, _), do: :noop

@@ -23,6 +23,66 @@
         </div>
       </div>
     <% end %>
+    <div class="ui segment">
+      <h5 class="ui header">Pre-flight Check ✅</h5>
+      <table class="ui definition table">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td>Title</td>
+            <td><%= @changeset.data.title %></td>
+          </tr>
+          <tr>
+            <td>Subtitle</td>
+            <td><%= @changeset.data.subtitle %></td>
+          </tr>
+          <tr>
+            <td>Slug</td>
+            <td><%= @changeset.data.slug %></td>
+          </tr>
+          <tr>
+            <td>Publish Time</td>
+            <td><%= TimeView.ts(@changeset.data.published_at) %></td>
+          </tr>
+        <%= if !Enum.any?(@changeset.data.episode_hosts) do %>
+          <tr>
+            <td>Data Warning</td>
+            <td>No hosts for this episode?</td>
+          </tr>
+        <% end %>
+        <%= if !Enum.any?(@changeset.data.episode_guests) do %>
+          <tr>
+            <td>Data Warning</td>
+            <td>No guests for this episode?</td>
+          </tr>
+        <% end %>
+        <%= if !Enum.any?(@changeset.data.episode_sponsors) do %>
+          <tr>
+            <td>Data Warning</td>
+            <td>No sponsors for this episode?</td>
+          </tr>
+        <% end %>
+        <%= if !Enum.any?(@changeset.data.episode_topics) do %>
+          <tr>
+            <td>Data Warning</td>
+            <td>No topics for this episode?</td>
+          </tr>
+        <% end %>
+        <%= if Changelog.StringKit.blank?(@changeset.data.notes) do %>
+          <tr>
+            <td>Data Warning</td>
+            <td>No notes for this episode?</td>
+          </tr>
+        <% end %>
+        <%= if @changeset.data.audio_duration <= @changeset.data.plusplus_duration do %>
+          <tr>
+            <td>Audio Warning</td>
+            <td>The ++ file is longer (or same length as) the public file</td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="actions">
     <input type="submit" form="publish" name="publish" class="ui primary basic button" value="Publish">

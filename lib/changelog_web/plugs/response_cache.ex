@@ -25,9 +25,14 @@ defmodule ChangelogWeb.Plug.ResponseCache do
       result ->
         conn
         |> put_resp_content_type(result.type, nil)
-        |> send_resp(200, result.value)
+        |> put_resp_headers(result.value.headers)
+        |> send_resp(200, result.value.body)
         |> halt()
     end
+  end
+
+  defp put_resp_headers(conn, headers) do
+    Enum.reduce(headers, conn, fn {key, value}, c -> put_resp_header(c, key, value) end)
   end
 
   def cache_public(conn = %{assigns: %{current_user: user}}) when not is_nil(user), do: conn
@@ -42,10 +47,10 @@ defmodule ChangelogWeb.Plug.ResponseCache do
     |> register_before_send(&cache_response/1)
   end
 
-  defp cache_response(conn = %{resp_body: body}) do
+  defp cache_response(conn = %{resp_headers: headers, resp_body: body}) do
     type = conn |> get_resp_header("content-type") |> hd()
     ttl = conn |> Map.get(:cache_ttl)
-    item = %{type: type, value: body}
+    item = %{type: type, value: %{headers: headers, body: body}}
     Cache.put(key(conn), item, ttl)
     conn
   end

@@ -129,4 +129,10 @@ defmodule ChangelogWeb.PersonView do
   end
 
   def profile_path(person), do: external_url(person)
+
+  def profile_url(person = %{public_profile: true}) do
+    Routes.person_url(Endpoint, :show, person.handle)
+  end
+
+  def profile_url(person), do: external_url(person)
 end

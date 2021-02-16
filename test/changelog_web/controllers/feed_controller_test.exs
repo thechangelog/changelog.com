@@ -64,6 +64,10 @@ defmodule ChangelogWeb.FeedControllerTest do
   test "the podcast feed", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)
+    insert(:episode_host, episode: e)
+    insert(:episode_guest, episode: e)
+    insert(:episode_topic, episode: e)
+    insert(:episode_sponsor, episode: e)
     e |> episode_news_item() |> insert()
 
     conn = get(conn, Routes.feed_path(conn, :podcast, p.slug))

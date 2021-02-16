@@ -51,12 +51,24 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
   def subscriber_welcome_email do
     subscription = known_subscription()
 
-    subscription.person()
+    subscription.person
     |> Person.refresh_auth_token()
     |> Email.subscriber_welcome(subscription.podcast)
   end
 
   # Comment related emails
+  def comment_approval_email do
+    comment =
+      NewsItemComment.newest_first()
+      |> NewsItemComment.limit(1)
+      |> NewsItemComment.preload_all()
+      |> Repo.one()
+
+    person = latest_person()
+
+    Email.comment_approval(person, comment)
+  end
+
   def comment_mention_email do
     comment =
       NewsItemComment.newest_first()
