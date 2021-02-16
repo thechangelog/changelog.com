@@ -88,7 +88,7 @@ export default class Time {
   }
 
   adminStyle() {
-    return `${this.month()}/${this.day()}/${this.year()} – ${this.hours12()}${this.minutes("")}${this.amPm()}`;
+    return `${this.monthAbbrev()} ${this.day()} - ${this.hours12()}${this.minutes("")}${this.amPm()}`;
   }
 
   dateStyle() {
@@ -101,7 +101,7 @@ export default class Time {
 
 
   timeFirstStyle() {
-    return `${this.amPmStyle()} – ${this.dayAndDateStyle()}`;
+    return `${this.amPmStyle()} – ${this.dayAndDateStyle()}, ${this.fullYear()}`;
   }
 
   relativeLongStyle() {
