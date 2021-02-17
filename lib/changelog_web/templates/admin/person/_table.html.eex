@@ -8,7 +8,7 @@
       <th>In Slack</th>
       <th>Subs</th>
       <th>
-        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
+        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts", spam: "Spammy") %>
       </th>
     </tr>
   </thead>

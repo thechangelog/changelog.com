@@ -10,12 +10,14 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   def index(conn, params) do
     filter = Map.get(params, "filter", "all")
+    params = Map.put(params, :page_size, 50)
 
     page =
       case filter do
         "admin" -> Person.admins()
         "host" -> Person.hosts()
         "editor" -> Person.editors()
+        "spam" -> Person.spammy()
         _else -> Person
       end
       |> Person.newest_first()
