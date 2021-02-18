@@ -92,6 +92,7 @@ defmodule Changelog.Person do
     |> joined()
     |> not_in_slack()
     |> no_subs()
+    |> not_a_guest()
   end
 
   def in_slack(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.slack_id))
