@@ -127,12 +127,12 @@ defmodule ChangelogWeb.Admin.PersonController do
     end
   end
 
-  def delete(conn = %{assigns: %{person: person}}, _params) do
+  def delete(conn = %{assigns: %{person: person}}, params) do
     Repo.delete!(person)
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_person_path(conn, :index))
+    |> redirect_next(params, Routes.admin_person_path(conn, :index))
   end
 
   def slack(conn = %{assigns: %{person: person}}, params) do
