@@ -47,7 +47,17 @@
       <td><%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
     <% end %>
       <td>
-        <%= SharedHelpers.truncate(episode.title, 50) %>&nbsp;&nbsp;<%= featured_label(episode) %>
+        <%= SharedHelpers.truncate(episode.title, 50) %>
+      <%= if episode.featured do %>
+        &nbsp;&nbsp;
+        <span class="ui tiny blue basic label">Recommended</span>
+      <% end %>
+      <%= if episode.episode_request do %>
+        &nbsp;&nbsp;
+        <%= link("Requested",
+          to: Routes.admin_podcast_episode_request_path(@conn, :show, podcast.slug, episode.episode_request),
+          class: "ui tiny green basic icon label") %>
+      <% end %>
       </td>
       <td>
       <% {main_participants, additional_participants} = episode |> Episode.participants() |> Enum.split(5) %>

@@ -15,12 +15,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def megabytes(episode, type), do: EpisodeView.megabytes(episode, type)
   def numbered_title(episode), do: EpisodeView.numbered_title(episode)
 
-  def featured_label(episode) do
-    if episode.featured do
-      content_tag(:span, "Recommended", class: "ui tiny blue basic label")
-    end
-  end
-
   def last_stat_date(podcast) do
     case PodcastView.last_stat(podcast) do
       stat = %{} ->

@@ -29,7 +29,11 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
   def index(conn, params, podcast) do
     filter = Map.get(params, "filter", "all")
-    episodes = assoc(podcast, :episodes)
+
+    episodes =
+      podcast
+      |> assoc(:episodes)
+      |> Episode.preload_episode_request()
 
     page =
       case filter do
