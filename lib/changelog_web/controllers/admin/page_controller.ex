@@ -76,6 +76,7 @@ defmodule ChangelogWeb.Admin.PageController do
     Episode.unpublished()
     |> Episode.newest_last(:recorded_at)
     |> Episode.distinct_podcast()
+    |> Episode.preload_episode_request()
     |> Episode.preload_podcast()
     |> Repo.all()
   end
