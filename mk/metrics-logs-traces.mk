@@ -6,9 +6,8 @@ lke-promtail: | lke-ctx $(CURL) $(LPASS)
 
 lke-provision:: lke-promtail
 
-# helm search repo --versions prometheus-community/kube-prometheus-stack
 # See k8s/kube--porometheus-stack/default-values.yml
-KUBE_PROMETHEUS_STACK_VERSION ?= 12.8.0
+KUBE_PROMETHEUS_STACK_VERSION ?= 13.7.1
 KUBE_PROMETHEUS_STACK_NAMESPACE := kube-prometheus-stack
 GRAFANA_CLOUD_URL = https://prometheus-us-central1.grafana.net/api/prom/push
 GRAFANA_FQDN := grafana.changelog.com
@@ -39,6 +38,10 @@ kube-prometheus-stack: | lke-ctx grafana-cloud-lke-secret $(HELM) $(YTT)
 	  --values $(CURDIR)/tmp/kube-prometheus-stack.values.yml \
 	  --create-namespace \
 	  --namespace $(KUBE_PROMETHEUS_STACK_NAMESPACE)
+
+.PHONY: kube-prometheus-stack
+releases-kube-prometheus-stack: | $(HELM)
+	$(HELM) search repo --versions prometheus-community/kube-prometheus-stack
 
 lke-provision:: kube-prometheus-stack
 
