@@ -13,7 +13,6 @@ defmodule Changelog.Application do
       Changelog.Repo,
       # UA.Parser doesn't yet support new Supervisor child specification
       worker(UA.Parser, []),
-
       con_cache_child_spec(
         :app_cache,
         ttl_check_interval: :timer.seconds(1),
@@ -25,7 +24,6 @@ defmodule Changelog.Application do
         global_ttl: :timer.minutes(5),
         touch_on_read: false
       ),
-
       Changelog.Scheduler,
       Changelog.EpisodeTracker,
       Changelog.Metacasts.Filterer.Cache,

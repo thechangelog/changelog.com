@@ -1,5 +1,6 @@
 defmodule Changelog.Mixfile do
   use Mix.Project
+
   Code.compile_file("config/secret_or_env.exs")
 
   def project do
@@ -41,7 +42,7 @@ defmodule Changelog.Mixfile do
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
       {:oban, "~> 2.4.2"},
-      {:prom_ex, "~> 0.1.15-beta"},
+      {:prom_ex, "~> 1.0.0"},
       {:unplug, "~> 0.2.1"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
