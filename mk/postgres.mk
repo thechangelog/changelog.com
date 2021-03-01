@@ -9,7 +9,7 @@ $(ZALANDO_POSTGRES_OPERATOR_DIR):
 tmp/zalando-postgres-operator: $(ZALANDO_POSTGRES_OPERATOR_DIR)
 
 # TODO: configLogicalBackup
-lke-zalando-postgres-operator: | lke-ctx $(HELM)
+lke-zalando-postgres-operator: | $(ZALANDO_POSTGRES_OPERATOR_DIR) lke-ctx $(HELM)
 	$(HELM) upgrade postgres-operator \
 	  $(ZALANDO_POSTGRES_OPERATOR_DIR)/charts/postgres-operator \
 	  --install \
@@ -20,3 +20,6 @@ lke-zalando-postgres-operator: | lke-ctx $(HELM)
 	  --create-namespace
 	$(KUBECTL) apply --filename $(CURDIR)/k8s/postgres-pod-config.yml --namespace $(ZALANDO_POSTGRES_OPERATOR_NAMESPACE)
 lke-provision:: lke-zalando-postgres-operator
+
+releases-zalando-postgres-operator:
+	@$(OPEN) https://github.com/zalando/postgres-operator/releases
