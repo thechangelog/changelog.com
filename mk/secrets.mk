@@ -66,7 +66,7 @@ configure-ci-coveralls-secret: $(LPASS) $(JQ) $(CURL) circle-token
 cccs: configure-ci-coveralls-secret
 
 .PHONY: env-secrets
-env-secrets: postgres campaignmonitor github hcaptcha hackernews aws backups_aws shopify twitter app slack rollbar buffer coveralls algolia plusplus fastly grafana ## es  | Print secrets stored in LastPass as env vars
+env-secrets: postgres campaignmonitor github hcaptcha hackernews aws backups_aws shopify twitter app slack rollbar buffer coveralls algolia plusplus fastly grafana promex ## es  | Print secrets stored in LastPass as env vars
 .PHONY: es
 es: env-secrets
 
@@ -355,4 +355,19 @@ grafana-lke-secret: | lke-ctx $(LPASS)
 	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
 	  create secret generic grafana \
 	  --from-literal=api_key=$(GRAFANA_API_KEY) \
+	| $(KUBECTL) apply --filename -
+
+PROMETHEUS_BEARER_TOKEN_PROM_EX := "$$($(LPASS) show --notes Shared-changelog/secrets/PROMETHEUS_BEARER_TOKEN_PROM_EX)"
+.PHONY: promex
+promex: $(LPASS)
+	@echo "export PROMETHEUS_BEARER_TOKEN_PROM_EX=$(PROMETHEUS_BEARER_TOKEN_PROM_EX)"
+.PHONY: promex-lke-secret
+promex-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
+	  create secret generic promex \
+	  --from-literal=bearer_token=$(PROMETHEUS_BEARER_TOKEN_PROM_EX) \
+	| $(KUBECTL) apply --filename -
+	@$(KUBECTL) --namespace $(KUBE_PROMETHEUS_STACK_NAMESPACE) --dry-run --output=yaml \
+	  create secret generic promex \
+	  --from-literal=bearer_token=$(PROMETHEUS_BEARER_TOKEN_PROM_EX) \
 	| $(KUBECTL) apply --filename -

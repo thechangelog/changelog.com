@@ -101,6 +101,8 @@ kind: Service
 metadata:
   name: app
   namespace: prod-2020-07
+  labels:
+    app: app
 spec:
   ports:
   - name: http
@@ -143,15 +145,10 @@ kind: Deployment
 metadata:
   name: app
   namespace: prod-2020-07
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "4000"
   labels:
     app: app
     keel.sh/policy: force
     keel.sh/match-tag: "true"
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "4000"
 spec:
   replicas: 1
   selector:
@@ -400,6 +397,11 @@ spec:
             secretKeyRef:
               name: grafana
               key: api_key
+        - name: PROMETHEUS_BEARER_TOKEN_PROM_EX
+          valueFrom:
+            secretKeyRef:
+              name: promex
+              key: bearer_token
         image: thechangelog/changelog.com:latest
         imagePullPolicy: Always
         ports:
