@@ -1,3 +1,4 @@
+# TODO: https://github.com/zalando/postgres-operator/issues/1370
 ZALANDO_POSTGRES_OPERATOR_VERSION := 1.6.0
 ZALANDO_POSTGRES_OPERATOR_DIR := $(CURDIR)/tmp/zalando-postgres-operator-$(ZALANDO_POSTGRES_OPERATOR_VERSION)
 ZALANDO_POSTGRES_OPERATOR_NAMESPACE := postgres-operator
