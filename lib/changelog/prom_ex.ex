@@ -2,10 +2,13 @@ defmodule Changelog.PromEx do
   use PromEx, otp_app: :changelog
 
   def bearer_token do
-    Keyword.fetch!(
-      Application.fetch_env!(:changelog, Changelog.PromEx),
-      :prometheus_bearer_token
-    )
+    case Application.fetch_env(:changelog, Changelog.PromEx) do
+      {:ok, changelog_prom_ex_config} ->
+        Keyword.fetch!(changelog_prom_ex_config, :prometheus_bearer_token)
+
+      _error ->
+        ""
+    end
   end
 
   @impl true

@@ -11,7 +11,7 @@ defmodule ChangelogWeb.Plugs.MetricsPredicate do
     |> Plug.Conn.get_req_header("authorization")
     |> case do
       ["Bearer " <> token] ->
-        token == Changelog.PromEx.bearer_token
+        token == Changelog.PromEx.bearer_token()
 
       _ ->
         false

@@ -65,4 +65,5 @@ config :changelog, Changelog.PromEx,
     datasource_id: SecretOrEnv.get("GRAFANA_DATASOURCE_ID", "Prometheus"),
     annotate_app_lifecycle: true
   ],
-  metrics_server: :disabled
+  metrics_server: :disabled,
+  prometheus_bearer_token: SecretOrEnv.get("PROMETHEUS_BEARER_TOKEN_PROM_EX")

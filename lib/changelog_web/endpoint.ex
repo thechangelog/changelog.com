@@ -50,7 +50,7 @@ defmodule ChangelogWeb.Endpoint do
     if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},
     do: Plug.Logger
 
-  if Changelog.PromEx.bearer_token == "" do
+  if Changelog.PromEx.bearer_token() == "" do
     plug PromEx.Plug, prom_ex_module: Changelog.PromEx
   else
     plug Unplug,
