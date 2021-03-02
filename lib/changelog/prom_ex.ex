@@ -1,6 +1,13 @@
 defmodule Changelog.PromEx do
   use PromEx, otp_app: :changelog
 
+  def bearer_token do
+    Keyword.fetch!(
+      Application.fetch_env!(:changelog, Changelog.PromEx),
+      :prometheus_bearer_token
+    )
+  end
+
   @impl true
   def plugins do
     if Mix.env() != :test do

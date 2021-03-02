@@ -11,7 +11,7 @@ defmodule ChangelogWeb.Plugs.MetricsPredicate do
     |> Plug.Conn.get_req_header("authorization")
     |> case do
       ["Bearer " <> token] ->
-        token == System.get_env("PROMETHEUS_AUTHORIZATION")
+        token == Changelog.PromEx.bearer_token
 
       _ ->
         false
