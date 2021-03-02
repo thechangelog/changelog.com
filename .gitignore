@@ -57,6 +57,7 @@ npm-debug.log*
 
 # Local binaries
 /bin
+/2021/bin
 
 # Local config files, host-specific
 .config
