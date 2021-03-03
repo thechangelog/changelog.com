@@ -10,6 +10,14 @@ YELLOW := $(shell tput setaf 3)
 BOLD := $(shell tput bold)
 NORMAL := $(shell tput sgr0)
 
+MANIFESTS := $(CURDIR)/manifests
+
+define env_not_set
+@printf "$(RED)$(1)$(NORMAL) environment variable must be set\n"
+@printf 'Run $(BOLD)eval "$$(make env)"$(NORMAL)\n'
+exit 1
+endef
+
 include $(CURDIR)/deps.mk
-include $(CURDIR)/secrets.mk
 include $(CURDIR)/linode.mk
+include $(CURDIR)/external-dns.mk

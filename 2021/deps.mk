@@ -41,56 +41,26 @@ $(K9S): | $(CURL) $(LOCAL_BIN)
 	$(K9S) version | grep $(K9S_VERSION)
 	ln -sf $(K9S) $(LOCAL_BIN)/k9s
 
+YTT_RELEASES := https://github.com/vmware-tanzu/carvel-ytt/releases
+YTT_VERSION := 0.31.0
+YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
+YTT_URL := $(YTT_RELEASES)/download/v$(YTT_VERSION)/ytt-$(platform)-amd64
+YTT := $(LOCAL_BIN)/$(YTT_BIN)
+$(YTT): | $(CURL) $(LOCAL_BIN)
+	$(CURL) --progress-bar --fail --location --output $(YTT) "$(YTT_URL)"
+	touch $(YTT)
+	chmod +x $(YTT)
+	$(YTT) version | grep $(YTT_VERSION)
+	ln -sf $(YTT) $(LOCAL_BIN)/ytt
+.PHONY: ytt
+ytt: $(YTT)
+.PHONY: releases-ytt
+releases-ytt:
+	@$(OPEN) $(YTT_RELEASES)
+
 .PHONY: k9s
 k9s: | $(K9S) ## Interact with K8S via a terminal UI
 	$(K9S)
-
-KUBECTL_RELEASES := https://github.com/kubernetes/kubernetes/releases
-KUBECTL_VERSION := $(LKE_VERSION).8
-KUBECTL_BIN := kubectl-$(KUBECTL_VERSION)-$(platform)-amd64
-KUBECTL_URL := https://storage.googleapis.com/kubernetes-release/release/v$(KUBECTL_VERSION)/bin/$(platform)/amd64/kubectl
-KUBECTL := $(LOCAL_BIN)/$(KUBECTL_BIN)
-$(KUBECTL): | $(CURL) $(LOCAL_BIN)
-	$(CURL) --progress-bar --fail --location --output $(KUBECTL) "$(KUBECTL_URL)"
-	touch $(KUBECTL)
-	chmod +x $(KUBECTL)
-	$(KUBECTL) version | grep $(KUBECTL_VERSION)
-	ln -sf $(KUBECTL) $(LOCAL_BIN)/kubectl
-.PHONY: kubectl
-kubectl: $(KUBECTL)
-
-.PHONY: releases-kubectl
-releases-kubectl:
-	$(OPEN) $(KUBECTL_RELEASES)
-
-ifeq ($(PLATFORM),Darwin)
-# Use Python3 for all Python-based CLIs, such as linode-cli
-PATH := /usr/local/opt/python/libexec/bin:$(PATH)
-export PATH
-
-PIP := /usr/local/bin/pip3
-$(PIP):
-	brew install python3
-
-# https://github.com/linode/linode-cli
-LINODE_CLI := /usr/local/bin/linode-cli
-$(LINODE_CLI): $(PIP)
-	$(PIP) install linode-cli
-	touch $(@)
-
-
-linode-cli-upgrade: $(PIP)
-	$(PIP) install --upgrade linode-cli
-endif
-
-ifeq ($(PLATFORM),Linux)
-LINODE_CLI ?= /usr/bin/linode-cli
-$(LINODE_CLI):
-	$(error Please install linode-cli: https://github.com/linode/linode-cli)
-endif
-
-.PHONY: linode-cli
-linode-cli: $(LINODE_CLI)
 
 JQ_RELEASES := https://github.com/stedolan/jq/releases
 JQ_VERSION := 1.6
@@ -111,3 +81,14 @@ jq: $(JQ)
 .PHONY: releases-jq
 releases-jq:
 	$(OPEN) $(JQ_RELEASES)
+
+ifeq ($(PLATFORM),Darwin)
+LPASS := /usr/local/bin/lpass
+$(LPASS):
+	@brew install lastpass-cli
+endif
+ifeq ($(PLATFORM),Linux)
+LPASS := /usr/bin/lpass
+$(LPASS):
+	@sudo apt-get update && sudo apt-get install lastpass-cli
+endif
