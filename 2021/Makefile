@@ -21,3 +21,4 @@ endef
 include $(CURDIR)/deps.mk
 include $(CURDIR)/linode.mk
 include $(CURDIR)/external-dns.mk
+include $(CURDIR)/cert-manager.mk

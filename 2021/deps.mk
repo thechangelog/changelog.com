@@ -41,6 +41,10 @@ $(K9S): | $(CURL) $(LOCAL_BIN)
 	$(K9S) version | grep $(K9S_VERSION)
 	ln -sf $(K9S) $(LOCAL_BIN)/k9s
 
+.PHONY: releases-k9s
+releases-k9s:
+	$(OPEN) $(K9S_RELEASES)
+
 YTT_RELEASES := https://github.com/vmware-tanzu/carvel-ytt/releases
 YTT_VERSION := 0.31.0
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
@@ -56,7 +60,7 @@ $(YTT): | $(CURL) $(LOCAL_BIN)
 ytt: $(YTT)
 .PHONY: releases-ytt
 releases-ytt:
-	@$(OPEN) $(YTT_RELEASES)
+	$(OPEN) $(YTT_RELEASES)
 
 .PHONY: k9s
 k9s: | $(K9S) ## Interact with K8S via a terminal UI
@@ -92,3 +96,23 @@ LPASS := /usr/bin/lpass
 $(LPASS):
 	@sudo apt-get update && sudo apt-get install lastpass-cli
 endif
+
+HELM_RELEASES := https://github.com/helm/helm/releases
+HELM_VERSION := 3.5.2
+HELM_BIN_DIR := helm-v$(HELM_VERSION)-$(platform)-amd64
+HELM_URL := https://get.helm.sh/$(HELM_BIN_DIR).tar.gz
+HELM := $(LOCAL_BIN)/$(HELM_BIN_DIR)/$(platform)-amd64/helm
+$(HELM): | $(CURL) $(LOCAL_BIN)
+	$(CURL) --progress-bar --fail --location --output $(LOCAL_BIN)/$(HELM_BIN_DIR).tar.gz "$(HELM_URL)"
+	mkdir -p $(LOCAL_BIN)/$(HELM_BIN_DIR) && tar zxf $(LOCAL_BIN)/$(HELM_BIN_DIR).tar.gz -C $(LOCAL_BIN)/$(HELM_BIN_DIR)
+	touch $(HELM)
+	chmod +x $(HELM)
+	$(HELM) version | grep $(HELM_VERSION)
+	ln -sf $(HELM) $(LOCAL_BIN)/helm
+.PHONY: helm
+helm: $(HELM)
+
+
+.PHONY: releases-helm
+releases-helm:
+	$(OPEN) $(HELM_RELEASES)

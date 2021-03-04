@@ -124,6 +124,7 @@ lke-configs: | linode $(LKE_CONFIGS) $(JQ)
 	      ; $(LINODE) lke kubeconfig-view $$lke_id --no-headers --text \
 	      | base64 --decode \
 	      > $(LKE_CONFIGS)/$$lke_name.yml \
+	      ; chmod 600 $(LKE_CONFIGS)/$$lke_name.yml \
 	    ; done \
 	  && printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n" \
 	  && printf "\nTo use a specific config with $(BOLD)kubectl$(NORMAL), run e.g. $(BOLD)export KUBECONFIG=$(NORMAL)\n"
