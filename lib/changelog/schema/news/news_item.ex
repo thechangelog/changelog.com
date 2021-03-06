@@ -192,33 +192,24 @@ defmodule Changelog.NewsItem do
     |> file_changeset(attrs)
   end
 
-  def get_unpinned_non_feed_news_items(params) do
-    news_item_ids =
-      from(news_item in __MODULE__,
-        where: news_item.status == ^:published,
-        where: news_item.published_at <= ^Timex.now(),
-        where: not news_item.feed_only,
-        where: not news_item.pinned,
-        order_by: [desc: :published_at]
-      )
-      |> Repo.paginate(Map.put(params, :page_size, 20))
-      |> Map.get(:entries)
-      |> Enum.map(fn news_item ->
-        news_item.id
-      end)
-
+  def get_pinned_non_feed_news_items(params) do
     from(news_item in __MODULE__,
       left_join: author in assoc(news_item, :author),
+      left_join: comments in assoc(news_item, :comments),
       left_join: submitter in assoc(news_item, :submitter),
       left_join: topics in assoc(news_item, :topics),
       left_join: source in assoc(news_item, :source),
       left_join: logger in assoc(news_item, :logger),
       left_join: news_item_topics in assoc(news_item, :news_item_topics),
       left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
-      where: news_item.id in ^news_item_ids,
+      where: news_item.status == ^:published,
+      where: news_item.published_at <= ^Timex.now(),
+      where: not news_item.feed_only,
+      where: news_item.pinned,
       order_by: [desc: :published_at, asc: news_item_topics.position, asc: topics.id],
       preload: [
         author: author,
+        comments: comments,
         submitter: submitter,
         topics: topics,
         source: source,
@@ -227,6 +218,51 @@ defmodule Changelog.NewsItem do
       ]
     )
     |> Repo.all()
+  end
+
+  def get_unpinned_non_feed_news_items(params) do
+    page =
+      from(news_item in __MODULE__,
+        where: news_item.status == ^:published,
+        where: news_item.published_at <= ^Timex.now(),
+        where: not news_item.feed_only,
+        where: not news_item.pinned,
+        order_by: [desc: :published_at]
+      )
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    news_item_ids =
+      page
+      |> Map.get(:entries)
+      |> Enum.map(fn news_item ->
+        news_item.id
+      end)
+
+    results =
+      from(news_item in __MODULE__,
+        left_join: author in assoc(news_item, :author),
+        left_join: comments in assoc(news_item, :comments),
+        left_join: submitter in assoc(news_item, :submitter),
+        left_join: topics in assoc(news_item, :topics),
+        left_join: source in assoc(news_item, :source),
+        left_join: logger in assoc(news_item, :logger),
+        left_join: news_item_topics in assoc(news_item, :news_item_topics),
+        left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
+        where: news_item.id in ^news_item_ids,
+        order_by: [desc: :published_at, asc: news_item_topics.position, asc: topics.id],
+        preload: [
+          author: author,
+          comments: comments,
+          submitter: submitter,
+          topics: topics,
+          source: source,
+          logger: logger,
+          news_item_topics: {news_item_topics, topic: news_item_topics_topic}
+        ]
+      )
+      |> Repo.all()
+
+    {page, results}
   end
 
   def slug(item) do
@@ -283,8 +319,13 @@ defmodule Changelog.NewsItem do
     |> Repo.get_by!(slug: slug)
   end
 
-  def comment_count(item),
-    do: Repo.count(from(q in NewsItemComment, where: q.item_id == ^item.id))
+  def comment_count(item) do
+    if Ecto.assoc_loaded?(item.comments) do
+      length(item.comments)
+    else
+      Repo.count(from(q in NewsItemComment, where: q.item_id == ^item.id))
+    end
+  end
 
   def participants(item) do
     item = preload_all(item)

@@ -8,58 +8,70 @@ defmodule ChangelogWeb.NewsItemController do
   plug RequireUser, "before subscribing" when action in [:subscribe, :unsubscribe]
 
   def index(conn, params) do
-    pinned =
-      NewsItem
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.pinned()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> Repo.all()
-      |> Enum.map(&NewsItem.load_object/1)
-
-    # -------------------------------------------
-
     IO.inspect("OLD QUERIES")
 
-    {old_time, page} =
+    {old_time, old_conn} =
       :timer.tc(fn ->
-        NewsItem
-        |> NewsItem.published()
-        |> NewsItem.non_feed_only()
-        |> NewsItem.unpinned()
-        |> NewsItem.newest_first()
-        |> NewsItem.preload_all()
-        |> Repo.paginate(Map.put(params, :page_size, 20))
+        pinned =
+          NewsItem
+          |> NewsItem.published()
+          |> NewsItem.non_feed_only()
+          |> NewsItem.pinned()
+          |> NewsItem.newest_first()
+          |> NewsItem.preload_all()
+          |> Repo.all()
+          |> Enum.map(&NewsItem.load_object/1)
+
+        page =
+          NewsItem
+          |> NewsItem.published()
+          |> NewsItem.non_feed_only()
+          |> NewsItem.unpinned()
+          |> NewsItem.newest_first()
+          |> NewsItem.preload_all()
+          |> Repo.paginate(Map.put(params, :page_size, 20))
+
+        items = Enum.map(page.entries, &NewsItem.load_object/1)
+
+        conn
+        |> assign(:ads, get_ads())
+        |> assign(:pinned, pinned)
+        |> assign(:items, items)
+        |> assign(:page, page)
+        |> render(:index)
       end)
 
     IO.inspect("NEW QUERIES")
 
-    {new_time, new_page} =
+    {new_time, new_conn} =
       :timer.tc(fn ->
-        NewsItem.get_unpinned_non_feed_news_items(params)
+        pinned = NewsItem.get_pinned_non_feed_news_items(params)
+        {page, unpinned} = NewsItem.get_unpinned_non_feed_news_items(params)
+
+        items = Enum.map(unpinned, &NewsItem.load_object/1)
+
+        conn
+        |> assign(:ads, get_ads())
+        |> assign(:pinned, pinned)
+        |> assign(:items, items)
+        |> assign(:page, page)
+
+        # |> render(:index)
       end)
 
     IO.inspect(System.convert_time_unit(old_time, :native, :microsecond), label: "OLD TIME")
     IO.inspect(System.convert_time_unit(new_time, :native, :microsecond), label: "NEW TIME")
 
-    IO.inspect(Enum.map(page.entries, fn entry -> entry.id end), label: "OLD IDS", width: 200)
-    IO.inspect(Enum.map(new_page, fn entry -> entry.id end), label: "NEW IDS", width: 200)
+    #    IO.inspect(Enum.map(items, fn entry -> entry.id end), label: "OLD IDS", width: 200)
+    #    IO.inspect(Enum.map(new_page, fn entry -> entry.id end), label: "NEW IDS", width: 200)
+    #
+    #    IO.inspect(items == new_page, label: "----- TEST RESULTS -----")
+    #    IO.inspect(length(items), label: "page length")
+    #    IO.inspect(length(new_page), label: "new page length")
+    #    File.write("new_page", "#{inspect(new_page, pretty: true, limit: :infinity)}")
+    #    File.write("old_page", "#{inspect(items, pretty: true, limit: :infinity)}")
 
-    IO.inspect(page == new_page, label: "----- TEST RESULTS -----")
-    IO.inspect(length(page.entries), label: "page length")
-    IO.inspect(length(new_page), label: "new page length")
-    File.write("new_page", "#{inspect(new_page, pretty: true, limit: :infinity)}")
-    File.write("old_page", "#{inspect(page.entries, pretty: true, limit: :infinity)}")
-
-    items = Enum.map(page.entries, &NewsItem.load_object/1)
-
-    conn
-    |> assign(:ads, get_ads())
-    |> assign(:pinned, pinned)
-    |> assign(:items, items)
-    |> assign(:page, page)
-    |> render(:index)
+    old_conn
   end
 
   def fresh(conn, params) do
