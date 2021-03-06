@@ -18,24 +18,38 @@ defmodule ChangelogWeb.NewsItemController do
       |> Repo.all()
       |> Enum.map(&NewsItem.load_object/1)
 
-    page =
-      NewsItem
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.unpinned()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> IO.inspect(label: "Query")
-      |> Repo.paginate(Map.put(params, :page_size, 20))
+    # -------------------------------------------
 
-    new_page =
-      NewsItem.get_unpinned_non_feed_query()
-      |> Repo.paginate(Map.put(params, :page_size, 20))
+    IO.inspect("OLD QUERIES")
+
+    {old_time, page} =
+      :timer.tc(fn ->
+        NewsItem
+        |> NewsItem.published()
+        |> NewsItem.non_feed_only()
+        |> NewsItem.unpinned()
+        |> NewsItem.newest_first()
+        |> NewsItem.preload_all()
+        |> Repo.paginate(Map.put(params, :page_size, 20))
+      end)
+
+    IO.inspect("NEW QUERIES")
+
+    {new_time, new_page} =
+      :timer.tc(fn ->
+        NewsItem.get_unpinned_non_feed_news_items(params)
+      end)
+
+    IO.inspect(System.convert_time_unit(old_time, :native, :microsecond), label: "OLD TIME")
+    IO.inspect(System.convert_time_unit(new_time, :native, :microsecond), label: "NEW TIME")
+
+    IO.inspect(Enum.map(page.entries, fn entry -> entry.id end), label: "OLD IDS", width: 200)
+    IO.inspect(Enum.map(new_page, fn entry -> entry.id end), label: "NEW IDS", width: 200)
 
     IO.inspect(page == new_page, label: "----- TEST RESULTS -----")
     IO.inspect(length(page.entries), label: "page length")
-    IO.inspect(length(new_page.entries), label: "new page length")
-    File.write("new_page", "#{inspect(new_page.entries, pretty: true, limit: :infinity)}")
+    IO.inspect(length(new_page), label: "new page length")
+    File.write("new_page", "#{inspect(new_page, pretty: true, limit: :infinity)}")
     File.write("old_page", "#{inspect(page.entries, pretty: true, limit: :infinity)}")
 
     items = Enum.map(page.entries, &NewsItem.load_object/1)
