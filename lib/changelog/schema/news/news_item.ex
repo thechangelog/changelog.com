@@ -192,6 +192,31 @@ defmodule Changelog.NewsItem do
     |> file_changeset(attrs)
   end
 
+  def get_unpinned_non_feed_query do
+    from(news_item in __MODULE__,
+      join: author in assoc(news_item, :author),
+      left_join: submitter in assoc(news_item, :submitter),
+      left_join: topics in assoc(news_item, :topics),
+      left_join: source in assoc(news_item, :source),
+      left_join: logger in assoc(news_item, :logger),
+      left_join: news_item_topics in assoc(news_item, :news_item_topics),
+      left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
+      where: news_item.status == ^:published,
+      where: news_item.published_at <= ^Timex.now(),
+      where: not news_item.feed_only,
+      where: not news_item.pinned,
+      order_by: [desc: :inserted_at, asc: news_item_topics.position, asc: topics.updated_at],
+      preload: [
+        author: author,
+        submitter: submitter,
+        topics: topics,
+        source: source,
+        logger: logger,
+        news_item_topics: {news_item_topics, topic: news_item_topics_topic}
+      ]
+    )
+  end
+
   def slug(item) do
     item.headline
     |> String.downcase()

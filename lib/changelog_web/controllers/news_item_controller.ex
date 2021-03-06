@@ -25,7 +25,18 @@ defmodule ChangelogWeb.NewsItemController do
       |> NewsItem.unpinned()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()
+      |> IO.inspect(label: "Query")
       |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    new_page =
+      NewsItem.get_unpinned_non_feed_query()
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    IO.inspect(page == new_page, label: "----- TEST RESULTS -----")
+    IO.inspect(length(page.entries), label: "page length")
+    IO.inspect(length(new_page.entries), label: "new page length")
+    File.write("new_page", "#{inspect(new_page.entries, pretty: true, limit: :infinity)}")
+    File.write("old_page", "#{inspect(page.entries, pretty: true, limit: :infinity)}")
 
     items = Enum.map(page.entries, &NewsItem.load_object/1)
 
