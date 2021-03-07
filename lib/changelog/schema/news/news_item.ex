@@ -249,7 +249,7 @@ defmodule Changelog.NewsItem do
         left_join: news_item_topics in assoc(news_item, :news_item_topics),
         left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
         where: news_item.id in ^news_item_ids,
-        order_by: [desc: :published_at, asc: news_item_topics.position, asc: topics.id],
+        order_by: [desc: :published_at, asc: news_item_topics.position, desc: topics.id],
         preload: [
           author: author,
           comments: comments,
@@ -289,11 +289,13 @@ defmodule Changelog.NewsItem do
       from(episode in Episode.exclude_transcript(),
         left_join: podcast in assoc(episode, :podcast),
         left_join: episode_guests in assoc(episode, :episode_guests),
+        left_join: person in assoc(episode_guests, :person),
         left_join: guests in assoc(episode, :guests),
         where: episode.id in ^episode_ids,
+        order_by: [asc: episode_guests.position],
         preload: [
           podcast: podcast,
-          episode_guests: episode_guests,
+          episode_guests: {episode_guests, person: person},
           guests: guests
         ]
       )
@@ -335,11 +337,16 @@ defmodule Changelog.NewsItem do
 
         %{type: :audio, object_id: object_id} = result ->
           [_podcast_id, episode_id] = String.split(object_id, ":")
-          Enum.find(episode_data, fn episode -> episode.id == episode_id end)
+
+          object =
+            Enum.find(episode_data, fn episode -> Integer.to_string(episode.id) == episode_id end)
+
+          %{result | object: object}
 
         result ->
           [_, slug] = String.split(post.object_id, ":")
-          Enum.find(post_data, fn post -> post.slug == slug end)
+          object = Enum.find(post_data, fn post -> post.slug == slug end)
+          %{result | object: object}
       end)
 
     {page, results}

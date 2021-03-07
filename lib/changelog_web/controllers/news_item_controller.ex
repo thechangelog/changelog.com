@@ -10,7 +10,7 @@ defmodule ChangelogWeb.NewsItemController do
   def index(conn, params) do
     IO.inspect("OLD QUERIES")
 
-    {old_time, old_conn} =
+    {old_time, {old_conn, old_pinned, old_items}} =
       :timer.tc(fn ->
         pinned =
           NewsItem
@@ -33,26 +33,26 @@ defmodule ChangelogWeb.NewsItemController do
 
         items = Enum.map(page.entries, &NewsItem.load_object/1)
 
-        conn
-        |> assign(:ads, get_ads())
-        |> assign(:pinned, pinned)
-        |> assign(:items, items)
-        |> assign(:page, page)
-        |> render(:index)
+        {conn
+         |> assign(:ads, get_ads())
+         |> assign(:pinned, pinned)
+         |> assign(:items, items)
+         |> assign(:page, page)
+         |> render(:index), pinned, items}
       end)
 
     IO.inspect("NEW QUERIES")
 
-    {new_time, new_conn} =
+    {new_time, {new_conn, new_pinned, new_items}} =
       :timer.tc(fn ->
         pinned = NewsItem.get_pinned_non_feed_news_items(params)
         {page, unpinned} = NewsItem.get_unpinned_non_feed_news_items(params)
 
-        conn
-        |> assign(:ads, get_ads())
-        |> assign(:pinned, pinned)
-        |> assign(:items, unpinned)
-        |> assign(:page, page)
+        {conn
+         |> assign(:ads, get_ads())
+         |> assign(:pinned, pinned)
+         |> assign(:items, unpinned)
+         |> assign(:page, page), pinned, unpinned}
 
         # |> render(:index)
       end)
@@ -66,8 +66,8 @@ defmodule ChangelogWeb.NewsItemController do
     #    IO.inspect(items == new_page, label: "----- TEST RESULTS -----")
     #    IO.inspect(length(items), label: "page length")
     #    IO.inspect(length(new_page), label: "new page length")
-    #    File.write("new_page", "#{inspect(new_page, pretty: true, limit: :infinity)}")
-    #    File.write("old_page", "#{inspect(items, pretty: true, limit: :infinity)}")
+    File.write("new_page", "#{inspect(new_pinned ++ new_items, pretty: true, limit: :infinity)}")
+    File.write("old_page", "#{inspect(old_pinned ++ old_items, pretty: true, limit: :infinity)}")
 
     old_conn
   end
