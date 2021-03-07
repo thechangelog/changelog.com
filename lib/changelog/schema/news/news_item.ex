@@ -262,6 +262,86 @@ defmodule Changelog.NewsItem do
       )
       |> Repo.all()
 
+    {episodes, posts} =
+      Enum.split_with(results, fn news_item ->
+        news_item.type == :audio
+      end)
+
+    episode_ids =
+      episodes
+      |> Enum.map(fn
+        %{object_id: nil} ->
+          nil
+
+        %{object_id: object_id} ->
+          [_podcast_id, episode_id] = String.split(object_id, ":")
+          episode_id
+
+        _ ->
+          nil
+      end)
+      |> Enum.reject(fn
+        nil -> true
+        _ -> false
+      end)
+
+    episode_data =
+      from(episode in Episode.exclude_transcript(),
+        left_join: podcast in assoc(episode, :podcast),
+        left_join: episode_guests in assoc(episode, :episode_guests),
+        left_join: guests in assoc(episode, :guests),
+        where: episode.id in ^episode_ids,
+        preload: [
+          podcast: podcast,
+          episode_guests: episode_guests,
+          guests: guests
+        ]
+      )
+      |> Repo.all()
+
+    post_ids =
+      posts
+      |> Enum.map(fn
+        %{object_id: nil} ->
+          nil
+
+        %{object_id: object_id} ->
+          [_, slug] = String.split(object_id, ":")
+          slug
+
+        _ ->
+          nil
+      end)
+
+    post_data =
+      from post in Post.published(),
+        left_join: author in assoc(post, :author),
+        left_join: editor in assoc(post, :editor),
+        left_join: post_topics in assoc(post, :post_topics),
+        left_join: topics in assoc(post, :topics),
+        where: post.slug in ^post_ids,
+        preload: [
+          author: author,
+          editor: editor,
+          post_topics: post_topics,
+          topics: topics
+        ]
+
+    results =
+      results
+      |> Enum.map(fn
+        %{object_id: nil} = result ->
+          result
+
+        %{type: :audio, object_id: object_id} = result ->
+          [_podcast_id, episode_id] = String.split(object_id, ":")
+          Enum.find(episode_data, fn episode -> episode.id == episode_id end)
+
+        result ->
+          [_, slug] = String.split(post.object_id, ":")
+          Enum.find(post_data, fn post -> post.slug == slug end)
+      end)
+
     {page, results}
   end
 

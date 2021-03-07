@@ -48,12 +48,10 @@ defmodule ChangelogWeb.NewsItemController do
         pinned = NewsItem.get_pinned_non_feed_news_items(params)
         {page, unpinned} = NewsItem.get_unpinned_non_feed_news_items(params)
 
-        items = Enum.map(unpinned, &NewsItem.load_object/1)
-
         conn
         |> assign(:ads, get_ads())
         |> assign(:pinned, pinned)
-        |> assign(:items, items)
+        |> assign(:items, unpinned)
         |> assign(:page, page)
 
         # |> render(:index)
