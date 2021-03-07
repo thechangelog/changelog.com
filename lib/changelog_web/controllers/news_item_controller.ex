@@ -8,12 +8,17 @@ defmodule ChangelogWeb.NewsItemController do
   plug RequireUser, "before subscribing" when action in [:subscribe, :unsubscribe]
 
   def index(conn, params) do
-    pinned =
-      NewsItem.get_pinned_non_feed_news_items()
-      |> NewsItem.batch_load_objects()
-
     {page, unpinned} = NewsItem.get_unpinned_non_feed_news_items(params)
     unpinned = NewsItem.batch_load_objects(unpinned)
+
+    # Only load pinned items for the first page
+    pinned =
+      if page.page_number == 1 do
+        NewsItem.get_pinned_non_feed_news_items()
+        |> NewsItem.batch_load_objects()
+      else
+        []
+      end
 
     conn
     |> assign(:ads, get_ads())

@@ -289,6 +289,7 @@ defmodule Changelog.NewsItem do
         _ -> false
       end)
 
+    # Only hit the DB if there are episodes to resolve
     episode_data =
       if episode_ids == [] do
         []
@@ -298,12 +299,14 @@ defmodule Changelog.NewsItem do
           left_join: episode_guests in assoc(episode, :episode_guests),
           left_join: person in assoc(episode_guests, :person),
           left_join: guests in assoc(episode, :guests),
+          left_join: hosts in assoc(episode, :hosts),
           where: episode.id in ^episode_ids,
           order_by: [asc: episode_guests.position],
           preload: [
             podcast: podcast,
             episode_guests: {episode_guests, person: person},
-            guests: guests
+            guests: guests,
+            hosts: hosts
           ]
         )
         |> Repo.all()
@@ -323,6 +326,7 @@ defmodule Changelog.NewsItem do
           nil
       end)
 
+    # Only hit the DB if there are posts to resolve
     post_data =
       if post_ids == [] do
         []

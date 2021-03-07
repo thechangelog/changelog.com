@@ -205,9 +205,13 @@ defmodule Changelog.Episode do
 
   def participants(episode) do
     episode =
-      episode
-      |> preload_guests()
-      |> preload_hosts()
+      if Ecto.assoc_loaded?(episode.guests) and Ecto.assoc_loaded?(episode.hosts) do
+        episode
+      else
+        episode
+        |> preload_guests()
+        |> preload_hosts()
+      end
 
     episode.guests ++ episode.hosts
   end

@@ -6,7 +6,6 @@
 <div class="feed">
   <%#= render("_subnav.html", assigns) %>
 
-  <% # Should only query on the first page in this case %>
   <%= if @page.page_number == 1 do %>
     <%= for item <- @pinned, do: render_item_summary_or_ad(item, assigns) %>
   <% end %>
