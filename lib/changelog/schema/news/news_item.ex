@@ -192,7 +192,7 @@ defmodule Changelog.NewsItem do
     |> file_changeset(attrs)
   end
 
-  def get_pinned_non_feed_news_items(params) do
+  def get_pinned_non_feed_news_items do
     from(news_item in __MODULE__,
       left_join: author in assoc(news_item, :author),
       left_join: comments in assoc(news_item, :comments),
@@ -262,8 +262,12 @@ defmodule Changelog.NewsItem do
       )
       |> Repo.all()
 
+    {page, results}
+  end
+
+  def batch_load_objects(news_items) do
     {episodes, posts} =
-      Enum.split_with(results, fn news_item ->
+      Enum.split_with(news_items, fn news_item ->
         news_item.type == :audio
       end)
 
@@ -316,7 +320,7 @@ defmodule Changelog.NewsItem do
       end)
 
     post_data =
-      from post in Post.published(),
+      from(post in Post.published(),
         left_join: author in assoc(post, :author),
         left_join: editor in assoc(post, :editor),
         left_join: post_topics in assoc(post, :post_topics),
@@ -328,9 +332,11 @@ defmodule Changelog.NewsItem do
           post_topics: post_topics,
           topics: topics
         ]
+      )
+      |> Repo.all()
 
     results =
-      results
+      news_items
       |> Enum.map(fn
         %{object_id: nil} = result ->
           result
@@ -344,12 +350,12 @@ defmodule Changelog.NewsItem do
           %{result | object: object}
 
         result ->
-          [_, slug] = String.split(post.object_id, ":")
+          [_, slug] = String.split(result.object_id, ":")
           object = Enum.find(post_data, fn post -> post.slug == slug end)
           %{result | object: object}
       end)
 
-    {page, results}
+    results
   end
 
   def slug(item) do

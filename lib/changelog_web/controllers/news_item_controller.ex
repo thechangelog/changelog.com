@@ -45,8 +45,11 @@ defmodule ChangelogWeb.NewsItemController do
 
     {new_time, {new_conn, new_pinned, new_items}} =
       :timer.tc(fn ->
-        pinned = NewsItem.get_pinned_non_feed_news_items(params)
+        pinned = NewsItem.get_pinned_non_feed_news_items() |> NewsItem.batch_load_objects()
+
         {page, unpinned} = NewsItem.get_unpinned_non_feed_news_items(params)
+
+        unpinned = NewsItem.batch_load_objects(unpinned)
 
         {conn
          |> assign(:ads, get_ads())
