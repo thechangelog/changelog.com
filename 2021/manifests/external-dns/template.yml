@@ -95,13 +95,11 @@ subjects:
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: 2021.changelog.com
+  name: 21.changelog.com
   namespace: #@ data.values.namespace
 spec:
   endpoints:
-  - dnsName: 2021.changelog.com
+  - dnsName: 21.changelog.com
     recordTTL: 60
     recordType: A
-    targets:
-    - 45.56.96.219
-    #! hard-coded node-IP, just to test this out
+    targets: #@ data.values.public_ipv4s

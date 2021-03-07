@@ -31,7 +31,9 @@ ifndef DNSIMPLE_TOKEN
 	$(call env_not_set,DNSIMPLE_TOKEN)
 endif
 	$(HELM) repo add neoskop https://charts.neoskop.dev
-	$(HELM) upgrade --install cert-manager-webhook-dnsimple \
+	$(HELM) repo update
+	$(HELM) upgrade cert-manager-webhook-dnsimple neoskop/cert-manager-webhook-dnsimple \
+	  --install \
 	  --namespace $(CERT_MANAGER_NAMESPACE) --create-namespace \
 	  --set dnsimple.account=$(DNSIMPLE_ACCOUNT) \
 	  --set dnsimple.token=$(DNSIMPLE_TOKEN) \
@@ -39,9 +41,7 @@ endif
 	  --set clusterIssuer.staging.enabled=true \
 	  --set clusterIssuer.email=$(CERT_EMAIL) \
 	  --set groupName=$(CERT_DOMAIN) \
-	  --version $(CERT_MANAGER_DNSIMPLE_VERSION) \
-	  --wait \
-	  neoskop/cert-manager-webhook-dnsimple
+	  --version $(CERT_MANAGER_DNSIMPLE_VERSION)
 
 .PHONY: releases-cert-manager-dnsimple
 releases-cert-manager-dnsimple: | $(HELM)

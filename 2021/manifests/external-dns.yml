@@ -113,11 +113,11 @@ subjects:
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: 2021.changelog.com
+  name: 21.changelog.com
   namespace: external-dns
 spec:
   endpoints:
-  - dnsName: 2021.changelog.com
+  - dnsName: 21.changelog.com
     recordTTL: 60
     recordType: A
     targets:

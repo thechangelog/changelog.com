@@ -24,3 +24,4 @@ include $(CURDIR)/external-dns.mk
 include $(CURDIR)/cert-manager.mk
 include $(CURDIR)/ingress-nginx.mk
 include $(CURDIR)/postgres.mk
+include $(CURDIR)/keel.mk

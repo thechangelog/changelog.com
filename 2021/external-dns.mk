@@ -17,6 +17,7 @@ endif
 	$(YTT) \
 	  --data-value namespace=$(EXTERNAL_DNS_NAMESPACE) \
 	  --data-value image=$(EXTERNAL_DNS_IMAGE) \
+	  --data-value-yaml public_ipv4s=[$(LKE_POOL_PUBLIC_IPv4s)] \
 	  --file $(MANIFESTS)/external-dns/template.yml \
 	  --file $(MANIFESTS)/external-dns/values.yml > $(MANIFESTS)/external-dns.yml
 	$(KUBECTL) apply --filename $(MANIFESTS)/external-dns.yml

@@ -114,6 +114,21 @@ lke-pool: | linode $(JQ)
 lke-pool-ls: | linode $(JQ)
 	$(LKE_POOL_LS)
 
+define LKE_POOL_PUBLIC_IPv4s
+$$($(LKE_POOL_LS) --json \
+| $(JQ) --raw-output --compact-output '.[] | .nodes.instance_id' \
+| while read -r linode_id \
+  ; do \
+    $(LINODE) linodes ips-list $$linode_id --json \
+    | $(JQ) --raw-output --compact-output '.[] | .ipv4.public | .[] | .address' \
+  ; done \
+| tr '\n' ',' \
+| sed 's/,$$//')
+endef
+.PHONY: lke-pool-public-ipv4s
+lke-pool-public-ipv4s: | linode $(JQ)
+	@echo $(LKE_POOL_PUBLIC_IPv4s)
+
 .PHONY: lke-configs
 lke-configs: | linode $(LKE_CONFIGS) $(JQ)
 	@$(LKE_LS) --json \

@@ -1,12 +1,25 @@
 INGRESS_NGINX_RELEASES := https://github.com/kubernetes/ingress-nginx/releases
-INGRESS_NGINX_VERSION := v0.44.0
-INGRESS_NGINX_NAMESPACE := ingress-nginx
+INGRESS_NGINX_VERSION := 0.44.0
+INGRESS_NGINX_DIR := $(CURDIR)/tmp/ingress-nginx-$(INGRESS_NGINX_VERSION)
+
+$(INGRESS_NGINX_DIR):
+	git clone \
+	  --branch controller-v$(INGRESS_NGINX_VERSION) --single-branch --depth 1 \
+	  https://github.com/kubernetes/ingress-nginx.git $(INGRESS_NGINX_DIR)
+tmp/ingress-nginx: $(INGRESS_NGINX_DIR)
+
 .PHONY: lke-ingress-nginx
-lke-ingress-nginx: lke-ctx
-	$(KUBECTL) apply \
-	  --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-$(INGRESS_NGINX_VERSION)/deploy/static/provider/cloud/deploy.yaml
-	@printf "$(BOLD)Wait for the SSL certificate used by the admission webhook to be created...$(NORMAL)\n"
-	$(KUBECTL) wait --namespace $(INGRESS_NGINX_NAMESPACE) --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=120s
+lke-ingress-nginx: | $(INGRESS_NGINX_DIR) lke-ctx $(HELM)
+	$(HELM) upgrade ingress-nginx $(INGRESS_NGINX_DIR)/charts/ingress-nginx \
+	  --install \
+	  --namespace ingress-nginx --create-namespace \
+	  --values $(INGRESS_NGINX_DIR)/charts/ingress-nginx/values.yaml \
+	  --set controller.dnsPolicy=ClusterFirstWithHostNet \
+	  --set controller.hostNetwork=true \
+	  --set controller.kind=DaemonSet \
+	  --set controller.service.enabled=false \
+	  --set controller.publishService.enabled=false \
+	  --version $(INGRESS_NGINX_VERSION)
 	$(KUBECTL) apply --filename $(CURDIR)/manifests/ingress-nginx
 
 .PHONY: releases-ingress-nginx

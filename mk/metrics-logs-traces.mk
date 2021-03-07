@@ -32,6 +32,7 @@ lke-kube-prometheus-stack-values: | lke-ctx $(HELM)
 .PHONY: lke-kube-prometheus-stack
 lke-kube-prometheus-stack: | lke-ctx grafana-cloud-lke-secret $(HELM) $(YTT)
 	$(HELM) repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	$(HELM) repo update
 	$(YTT) \
 	  --data-value namespace=$(KUBE_PROMETHEUS_STACK_NAMESPACE) \
 	  --data-value fqdn=$(GRAFANA_FQDN) \
