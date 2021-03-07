@@ -290,20 +290,24 @@ defmodule Changelog.NewsItem do
       end)
 
     episode_data =
-      from(episode in Episode.exclude_transcript(),
-        left_join: podcast in assoc(episode, :podcast),
-        left_join: episode_guests in assoc(episode, :episode_guests),
-        left_join: person in assoc(episode_guests, :person),
-        left_join: guests in assoc(episode, :guests),
-        where: episode.id in ^episode_ids,
-        order_by: [asc: episode_guests.position],
-        preload: [
-          podcast: podcast,
-          episode_guests: {episode_guests, person: person},
-          guests: guests
-        ]
-      )
-      |> Repo.all()
+      if episode_ids == [] do
+        []
+      else
+        from(episode in Episode.exclude_transcript(),
+          left_join: podcast in assoc(episode, :podcast),
+          left_join: episode_guests in assoc(episode, :episode_guests),
+          left_join: person in assoc(episode_guests, :person),
+          left_join: guests in assoc(episode, :guests),
+          where: episode.id in ^episode_ids,
+          order_by: [asc: episode_guests.position],
+          preload: [
+            podcast: podcast,
+            episode_guests: {episode_guests, person: person},
+            guests: guests
+          ]
+        )
+        |> Repo.all()
+      end
 
     post_ids =
       posts
@@ -320,20 +324,24 @@ defmodule Changelog.NewsItem do
       end)
 
     post_data =
-      from(post in Post.published(),
-        left_join: author in assoc(post, :author),
-        left_join: editor in assoc(post, :editor),
-        left_join: post_topics in assoc(post, :post_topics),
-        left_join: topics in assoc(post, :topics),
-        where: post.slug in ^post_ids,
-        preload: [
-          author: author,
-          editor: editor,
-          post_topics: post_topics,
-          topics: topics
-        ]
-      )
-      |> Repo.all()
+      if post_ids == [] do
+        []
+      else
+        from(post in Post.published(),
+          left_join: author in assoc(post, :author),
+          left_join: editor in assoc(post, :editor),
+          left_join: post_topics in assoc(post, :post_topics),
+          left_join: topics in assoc(post, :topics),
+          where: post.slug in ^post_ids,
+          preload: [
+            author: author,
+            editor: editor,
+            post_topics: post_topics,
+            topics: topics
+          ]
+        )
+        |> Repo.all()
+      end
 
     results =
       news_items
