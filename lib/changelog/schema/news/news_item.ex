@@ -192,6 +192,184 @@ defmodule Changelog.NewsItem do
     |> file_changeset(attrs)
   end
 
+  def get_pinned_non_feed_news_items do
+    from(news_item in __MODULE__,
+      left_join: author in assoc(news_item, :author),
+      left_join: comments in assoc(news_item, :comments),
+      left_join: submitter in assoc(news_item, :submitter),
+      left_join: topics in assoc(news_item, :topics),
+      left_join: source in assoc(news_item, :source),
+      left_join: logger in assoc(news_item, :logger),
+      left_join: news_item_topics in assoc(news_item, :news_item_topics),
+      left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
+      where: news_item.status == ^:published,
+      where: news_item.published_at <= ^Timex.now(),
+      where: not news_item.feed_only,
+      where: news_item.pinned,
+      order_by: [desc: :published_at, asc: news_item_topics.position, asc: topics.id],
+      preload: [
+        author: author,
+        comments: comments,
+        submitter: submitter,
+        topics: topics,
+        source: source,
+        logger: logger,
+        news_item_topics: {news_item_topics, topic: news_item_topics_topic}
+      ]
+    )
+    |> Repo.all()
+  end
+
+  def get_unpinned_non_feed_news_items(params) do
+    page =
+      from(news_item in __MODULE__,
+        where: news_item.status == ^:published,
+        where: news_item.published_at <= ^Timex.now(),
+        where: not news_item.feed_only,
+        where: not news_item.pinned,
+        order_by: [desc: :published_at]
+      )
+      |> Repo.paginate(Map.put(params, :page_size, 20))
+
+    news_item_ids =
+      page
+      |> Map.get(:entries)
+      |> Enum.map(fn news_item ->
+        news_item.id
+      end)
+
+    results =
+      from(news_item in __MODULE__,
+        left_join: author in assoc(news_item, :author),
+        left_join: comments in assoc(news_item, :comments),
+        left_join: submitter in assoc(news_item, :submitter),
+        left_join: topics in assoc(news_item, :topics),
+        left_join: source in assoc(news_item, :source),
+        left_join: logger in assoc(news_item, :logger),
+        left_join: news_item_topics in assoc(news_item, :news_item_topics),
+        left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
+        where: news_item.id in ^news_item_ids,
+        order_by: [desc: :published_at, asc: news_item_topics.position, desc: topics.id],
+        preload: [
+          author: author,
+          comments: comments,
+          submitter: submitter,
+          topics: topics,
+          source: source,
+          logger: logger,
+          news_item_topics: {news_item_topics, topic: news_item_topics_topic}
+        ]
+      )
+      |> Repo.all()
+
+    {page, results}
+  end
+
+  def batch_load_objects(news_items) do
+    {episodes, posts} =
+      Enum.split_with(news_items, fn news_item ->
+        news_item.type == :audio
+      end)
+
+    episode_ids =
+      episodes
+      |> Enum.map(fn
+        %{object_id: nil} ->
+          nil
+
+        %{object_id: object_id} ->
+          [_podcast_id, episode_id] = String.split(object_id, ":")
+          episode_id
+
+        _ ->
+          nil
+      end)
+      |> Enum.reject(fn
+        nil -> true
+        _ -> false
+      end)
+
+    # Only hit the DB if there are episodes to resolve
+    episode_data =
+      if episode_ids == [] do
+        []
+      else
+        from(episode in Episode.exclude_transcript(),
+          left_join: podcast in assoc(episode, :podcast),
+          left_join: episode_guests in assoc(episode, :episode_guests),
+          left_join: person in assoc(episode_guests, :person),
+          left_join: guests in assoc(episode, :guests),
+          left_join: hosts in assoc(episode, :hosts),
+          where: episode.id in ^episode_ids,
+          order_by: [asc: episode_guests.position],
+          preload: [
+            podcast: podcast,
+            episode_guests: {episode_guests, person: person},
+            guests: guests,
+            hosts: hosts
+          ]
+        )
+        |> Repo.all()
+      end
+
+    post_ids =
+      posts
+      |> Enum.map(fn
+        %{object_id: nil} ->
+          nil
+
+        %{object_id: object_id} ->
+          [_, slug] = String.split(object_id, ":")
+          slug
+
+        _ ->
+          nil
+      end)
+
+    # Only hit the DB if there are posts to resolve
+    post_data =
+      if post_ids == [] do
+        []
+      else
+        from(post in Post.published(),
+          left_join: author in assoc(post, :author),
+          left_join: editor in assoc(post, :editor),
+          left_join: post_topics in assoc(post, :post_topics),
+          left_join: topics in assoc(post, :topics),
+          where: post.slug in ^post_ids,
+          preload: [
+            author: author,
+            editor: editor,
+            post_topics: post_topics,
+            topics: topics
+          ]
+        )
+        |> Repo.all()
+      end
+
+    results =
+      news_items
+      |> Enum.map(fn
+        %{object_id: nil} = result ->
+          result
+
+        %{type: :audio, object_id: object_id} = result ->
+          [_podcast_id, episode_id] = String.split(object_id, ":")
+
+          object =
+            Enum.find(episode_data, fn episode -> Integer.to_string(episode.id) == episode_id end)
+
+          %{result | object: object}
+
+        result ->
+          [_, slug] = String.split(result.object_id, ":")
+          object = Enum.find(post_data, fn post -> post.slug == slug end)
+          %{result | object: object}
+      end)
+
+    results
+  end
+
   def slug(item) do
     item.headline
     |> String.downcase()
@@ -246,8 +424,13 @@ defmodule Changelog.NewsItem do
     |> Repo.get_by!(slug: slug)
   end
 
-  def comment_count(item),
-    do: Repo.count(from(q in NewsItemComment, where: q.item_id == ^item.id))
+  def comment_count(item) do
+    if Ecto.assoc_loaded?(item.comments) do
+      length(item.comments)
+    else
+      Repo.count(from(q in NewsItemComment, where: q.item_id == ^item.id))
+    end
+  end
 
   def participants(item) do
     item = preload_all(item)
