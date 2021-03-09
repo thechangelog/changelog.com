@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Endpoint do
     # or list of options
     websocket: true
 
-  plug(ChangelogWeb.Plug.HealthCheck)
+  plug ChangelogWeb.Plug.HealthCheck
 
   plug Plug.Static,
     at: "/uploads",
