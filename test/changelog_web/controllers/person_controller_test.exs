@@ -78,6 +78,7 @@ defmodule ChangelogWeb.PersonControllerTest do
         end
 
       person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
+      refute person.public_profile
       assert_delivered_email(ChangelogWeb.Email.community_welcome(person))
       assert redirected_to(conn) == Routes.root_path(conn, :index)
       assert count(Person) == count_before + 1
@@ -146,7 +147,7 @@ defmodule ChangelogWeb.PersonControllerTest do
         conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com")
 
         person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
-
+        refute person.public_profile
         assert called(Craisin.Subscriber.subscribe(Newsletters.weekly().list_id, :_))
 
         assert_delivered_email(

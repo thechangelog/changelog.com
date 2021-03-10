@@ -311,7 +311,7 @@ defmodule Changelog.Person do
   def with_fake_data(person \\ %__MODULE__{}) do
     fake_name = Faker.name()
     fake_handle = Faker.handle(fake_name)
-    %{person | name: fake_name, handle: fake_handle}
+    %{person | name: fake_name, handle: fake_handle, public_profile: false}
   end
 
   def sans_fake_data(person) do

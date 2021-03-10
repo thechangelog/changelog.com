@@ -38,7 +38,7 @@ defmodule ChangelogWeb.PersonController do
       if person = Repo.get_by(Person, email: email) do
         welcome_community(conn, person)
       else
-        changeset = Person.insert_changeset(%Person{}, person_params)
+        changeset = Person.insert_changeset(%Person{public_profile: false}, person_params)
 
         case Repo.insert(changeset) do
           {:ok, person} ->
