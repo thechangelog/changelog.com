@@ -16,7 +16,8 @@ defmodule ChangelogWeb.Router do
     plug :put_secure_browser_headers
     plug Plug.Authenticate, repo: Changelog.Repo
     plug Plug.AllowFraming
-    plug Plug.CacheControl # must come after Plug.Authenticate
+    # must come after Plug.Authenticate
+    plug Plug.CacheControl
   end
 
   pipeline :feed do
