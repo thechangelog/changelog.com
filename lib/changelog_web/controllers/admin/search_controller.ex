@@ -48,6 +48,7 @@ defmodule ChangelogWeb.Admin.SearchController do
     from(q in Episode, where: ilike(q.title, ^"%#{q}%"))
     |> Episode.published()
     |> Episode.preload_podcast()
+    |> Episode.preload_episode_request()
     |> Repo.all()
   end
 

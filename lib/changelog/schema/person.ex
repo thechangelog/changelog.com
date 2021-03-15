@@ -87,9 +87,36 @@ defmodule Changelog.Person do
   def editors(query \\ __MODULE__), do: from(q in query, where: q.editor)
   def hosts(query \\ __MODULE__), do: from(q in query, where: q.host)
 
+  def spammy(query \\ __MODULE__) do
+    from(q in query, where: not is_nil(q.bio) or not is_nil(q.website))
+    |> joined()
+    |> not_in_slack()
+    |> no_subs()
+    |> not_a_guest()
+  end
+
   def in_slack(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.slack_id))
+  def not_in_slack(query \\ __MODULE__), do: from(q in query, where: is_nil(q.slack_id))
+
   def joined(query \\ __MODULE__), do: from(a in query, where: not is_nil(a.joined_at))
   def never_signed_in(query \\ __MODULE__), do: from(q in query, where: is_nil(q.signed_in_at))
+
+  def not_a_guest(query \\ __MODULE__) do
+    from(q in query,
+      left_join: g in EpisodeGuest,
+      on: [person_id: q.id],
+      where: is_nil(g.id)
+    )
+  end
+
+  def no_subs(query \\ __MODULE__) do
+    from(q in query,
+      left_join: s in Subscription,
+      on: [person_id: q.id],
+      where: is_nil(s.id)
+    )
+  end
+
   def faked(query \\ __MODULE__), do: from(q in query, where: q.name in ^Changelog.Faker.names())
 
   def with_handles(query \\ __MODULE__, handles),
@@ -284,7 +311,7 @@ defmodule Changelog.Person do
   def with_fake_data(person \\ %__MODULE__{}) do
     fake_name = Faker.name()
     fake_handle = Faker.handle(fake_name)
-    %{person | name: fake_name, handle: fake_handle}
+    %{person | name: fake_name, handle: fake_handle, public_profile: false}
   end
 
   def sans_fake_data(person) do

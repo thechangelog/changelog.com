@@ -8,7 +8,7 @@
       <th>In Slack</th>
       <th>Subs</th>
       <th>
-        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts") %>
+        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts", spam: "Spammy") %>
       </th>
     </tr>
   </thead>
@@ -27,7 +27,14 @@
           <div class="ui tiny yellow basic label">Long Bio</div>
         <% end %>
       </td>
-      <td><div class="ui basic icon buttons"><%= person |> list_of_links() |> raw() %></div></td>
+      <td>
+        <div class="ui basic icon buttons">
+          <%= person |> list_of_links() |> raw() %>
+        <%= if person.public_profile do %>
+          <%= AdminHelpers.icon_link("eye", to: Routes.person_path(@conn, :show, person.handle), title: "Public Profile") %>
+        <% end %>
+        </div>
+      </td>
       <td><%= AdminHelpers.ts(person.inserted_at) %></td>
       <td><%= AdminHelpers.ts(person.signed_in_at) %></td>
       <td><%= if person.slack_id, do: "Yes" %></td>
@@ -37,7 +44,7 @@
           <%= AdminHelpers.icon_link("eye", to: Routes.admin_person_path(@conn, :show, person)) %>
           <%= AdminHelpers.icon_link("edit", to: Routes.admin_person_path(@conn, :edit, person)) %>
           <%= AdminHelpers.icon_link("slack", to: Routes.admin_person_path(@conn, :slack, person), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
-          <%= AdminHelpers.icon_link("trash", to: Routes.admin_person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= AdminHelpers.icon_link("trash", to: Routes.admin_person_path(@conn, :delete, person, next: "back"), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>
     </tr>

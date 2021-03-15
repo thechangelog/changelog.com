@@ -1,0 +1,10 @@
+#@data/values
+---
+dns:
+  record_owner: linode-kubernetes-engine
+  log_level: debug #! info is the default, but we want to know more...
+  policy: upsert-only #! sync is the default one, but we don't want to delete DNS entries for now - there is a CURRENT_PROD external-dns instance
+#! provided just-in-time
+image:
+namespace:
+public_ipv4s:

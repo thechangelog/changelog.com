@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Endpoint do
     # or list of options
     websocket: true
 
-  plug(ChangelogWeb.Plug.HealthCheck)
+  plug ChangelogWeb.Plug.HealthCheck
 
   plug Plug.Static,
     at: "/uploads",
@@ -50,9 +50,13 @@ defmodule ChangelogWeb.Endpoint do
     if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},
     do: Plug.Logger
 
-  plug Unplug,
-    if: ChangelogWeb.Plugs.MetricsPredicate,
-    do: {PromEx.Plug, prom_ex_module: Changelog.PromEx}
+  if Changelog.PromEx.bearer_token() == "" do
+    plug PromEx.Plug, prom_ex_module: Changelog.PromEx
+  else
+    plug Unplug,
+      if: ChangelogWeb.Plugs.MetricsPredicate,
+      do: {PromEx.Plug, prom_ex_module: Changelog.PromEx}
+  end
 
   plug Unplug,
     if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},

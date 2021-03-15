@@ -14,8 +14,10 @@ defmodule ChangelogWeb.Router do
     plug Plug.Turbolinks
     plug :fetch_flash
     plug :put_secure_browser_headers
-    plug Plug.AllowFraming
     plug Plug.Authenticate, repo: Changelog.Repo
+    plug Plug.AllowFraming
+    # must come after Plug.Authenticate
+    plug Plug.CacheControl
   end
 
   pipeline :feed do

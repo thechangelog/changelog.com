@@ -18,4 +18,18 @@ defmodule ChangelogWeb.ConnTest do
       assert Plug.Conn.get_agent(conn) == "Bond, James Bond"
     end
   end
+
+  describe "get_local_referer/1" do
+    test "returns the refering path (not url) when its local", %{conn: conn} do
+      referer = "https://www.example.com/my/path?test=1#anchor"
+      conn = put_req_header(conn, "referer", referer)
+      assert Plug.Conn.get_local_referer(conn) == "/my/path?test=1#anchor"
+    end
+
+    test "returns nil when referer is not local", %{conn: conn} do
+      referer = "https://external.com/my/path"
+      conn = put_req_header(conn, "referer", referer)
+      assert is_nil(Plug.Conn.get_local_referer(conn))
+    end
+  end
 end

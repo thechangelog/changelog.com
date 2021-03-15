@@ -103,6 +103,8 @@ kind: Service
 metadata:
   name: #@ data.values.app.name
   namespace: #@ data.values.namespace
+  labels:
+    app: #@ data.values.app.name
 spec:
   ports:
     - name: http
@@ -144,16 +146,11 @@ kind: Deployment
 metadata:
   name: #@ data.values.app.name
   namespace: #@ data.values.namespace
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "4000"
   labels:
     app: #@ data.values.app.name
     #! https://keel.sh/docs/#policies
     keel.sh/policy: force
     keel.sh/match-tag: "true"
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "4000"
 spec:
   replicas: #@ data.values.app.replicas
   selector:
@@ -400,6 +397,11 @@ spec:
                 secretKeyRef:
                   name: grafana
                   key: api_key
+            - name: PROMETHEUS_BEARER_TOKEN_PROM_EX
+              valueFrom:
+                secretKeyRef:
+                  name: promex
+                  key: bearer_token
           image: #@ data.values.app.image
           imagePullPolicy: #@ data.values.image.pull_policy
           #! command:

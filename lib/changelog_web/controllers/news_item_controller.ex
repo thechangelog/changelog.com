@@ -8,31 +8,22 @@ defmodule ChangelogWeb.NewsItemController do
   plug RequireUser, "before subscribing" when action in [:subscribe, :unsubscribe]
 
   def index(conn, params) do
+    {page, unpinned} = NewsItem.get_unpinned_non_feed_news_items(params)
+    unpinned = NewsItem.batch_load_objects(unpinned)
+
+    # Only load pinned items for the first page
     pinned =
-      NewsItem
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.pinned()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> Repo.all()
-      |> Enum.map(&NewsItem.load_object/1)
-
-    page =
-      NewsItem
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.unpinned()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> Repo.paginate(Map.put(params, :page_size, 20))
-
-    items = Enum.map(page.entries, &NewsItem.load_object/1)
+      if page.page_number == 1 do
+        NewsItem.get_pinned_non_feed_news_items()
+        |> NewsItem.batch_load_objects()
+      else
+        []
+      end
 
     conn
     |> assign(:ads, get_ads())
     |> assign(:pinned, pinned)
-    |> assign(:items, items)
+    |> assign(:items, unpinned)
     |> assign(:page, page)
     |> render(:index)
   end

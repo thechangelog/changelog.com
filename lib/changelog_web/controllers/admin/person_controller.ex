@@ -10,12 +10,14 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   def index(conn, params) do
     filter = Map.get(params, "filter", "all")
+    params = Map.put(params, :page_size, 50)
 
     page =
       case filter do
         "admin" -> Person.admins()
         "host" -> Person.hosts()
         "editor" -> Person.editors()
+        "spam" -> Person.spammy()
         _else -> Person
       end
       |> Person.newest_first()
@@ -125,12 +127,12 @@ defmodule ChangelogWeb.Admin.PersonController do
     end
   end
 
-  def delete(conn = %{assigns: %{person: person}}, _params) do
+  def delete(conn = %{assigns: %{person: person}}, params) do
     Repo.delete!(person)
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_person_path(conn, :index))
+    |> redirect_next(params, Routes.admin_person_path(conn, :index))
   end
 
   def slack(conn = %{assigns: %{person: person}}, params) do

@@ -67,6 +67,18 @@ prometheus:
     #!        name: grafana-cloud
     #!        key: password
 
+    volumes:
+      - name: promex
+        secret:
+          secretName: promex
+    volumeMounts:
+      - name: promex
+        mountPath: /var/run/secrets/promex
+        readOnly: true
+
+    #! Enable custom ServiceMonitors: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack#prometheusioscrape
+    serviceMonitorSelectorNilUsesHelmValues: false
+
 grafana:
   enabled: true
   ingress:

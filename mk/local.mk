@@ -9,6 +9,11 @@ dev:
 	cd assets && yarn install
 	mix do ecto.create, ecto.migrate, phx.server
 
+.PHONY: format
+format:
+	mix format
+	MIX_ENV=test mix test
+
 PG_MAJOR ?= 12
 PG_INSTALL ?= /usr/local/opt/postgresql@$(PG_MAJOR)
 PG_DIR ?= $(CURDIR)/tmp/postgres@$(PG_MAJOR)

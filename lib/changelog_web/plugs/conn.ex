@@ -26,6 +26,26 @@ defmodule ChangelogWeb.Plug.Conn do
   end
 
   @doc """
+  Extracts the local referer (path) from a connection's headers. Useful for
+  redirecting back to previous page.
+  """
+  def get_local_referer(conn) do
+    referer =
+      conn
+      |> get_req_header("referer")
+      |> Enum.at(0, "")
+      |> URI.parse()
+
+    if referer.host == conn.host do
+      referer
+      |> Map.merge(%{authority: nil, host: nil, scheme: nil, port: nil})
+      |> URI.to_string()
+    else
+      nil
+    end
+  end
+
+  @doc """
   Extracts and returns the request referer, falling back to the root path
   """
   def referer_or_root_path(conn) do

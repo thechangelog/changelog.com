@@ -1,0 +1,105 @@
+#@ load("@ytt:data", "data")
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ data.values.namespace
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: #@ data.values.namespace
+spec:
+  selector:
+    matchLabels:
+      app: external-dns
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: external-dns
+    spec:
+      serviceAccountName: external-dns
+      containers:
+      - name: external-dns
+        image: #@ data.values.image
+        args:
+        - --provider=dnsimple #! Not configurable since the DNSimple API token secret is hard-coded
+        - --source=service
+        - --source=ingress
+        - --source=crd
+        - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+        - --crd-source-kind=DNSEndpoint
+        - --registry=txt
+        - --events
+        env:
+        - name: EXTERNAL_DNS_TXT_OWNER_ID
+          value: #@ data.values.dns.record_owner
+        - name: EXTERNAL_DNS_LOG_LEVEL
+          value: #@ data.values.dns.log_level
+        - name: EXTERNAL_DNS_POLICY
+          value: #@ data.values.dns.policy
+        - name: DNSIMPLE_OAUTH
+          valueFrom:
+            secretKeyRef:
+              name: dnsimple
+              key: token
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-dns
+  namespace: #@ data.values.namespace
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: external-dns
+  namespace: #@ data.values.namespace
+rules:
+- apiGroups: [""]
+  resources: ["services","endpoints","pods"]
+  verbs: ["get","watch","list"]
+- apiGroups: ["extensions"]
+  resources: ["ingresses"]
+  verbs: ["get","watch","list"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["list"]
+- apiGroups: ["externaldns.k8s.io"]
+  resources: ["dnsendpoints"]
+  verbs: ["get","watch","list"]
+- apiGroups: ["externaldns.k8s.io"]
+  resources: ["dnsendpoints/status"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: external-dns-viewer
+  namespace: #@ data.values.namespace
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns
+subjects:
+- kind: ServiceAccount
+  name: external-dns
+  namespace: #@ data.values.namespace
+---
+#! Only A & CNAME records are supported for now:
+#! https://github.com/kubernetes-sigs/external-dns/issues/1923#issue-787125385
+#! 🤔 https://github.com/kubernetes-sigs/external-dns/pull/1887#issuecomment-786489995
+#! 🧐 https://github.com/octodns/octodns
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: 21.changelog.com
+  namespace: #@ data.values.namespace
+spec:
+  endpoints:
+  - dnsName: 21.changelog.com
+    recordTTL: 60
+    recordType: A
+    targets: #@ data.values.public_ipv4s

@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   changelog_app:
-    image: thechangelog/runtime:2020-12-14T20.59.58Z
+    image: thechangelog/runtime:2021-02-09T18.04.59Z
     command: >
       /bin/sh -c 'apt-get update && apt-get install -y inotify-tools &&
       mix local.hex --force &&
@@ -32,7 +32,7 @@ services:
       GRAFANA_URL: "http://grafana:3000"
       GRAFANA_API_KEY: "<GRAFANA_INSTANCE_API_KEY>"
       GRAFANA_DATASOURCE: "prometheus"
-      PROMETHEUS_AUTHORIZATION: "super_secret_metrics"
+      PROMETHEUS_BEARER_TOKEN_PROM_EX: "super_secret_metrics"
     volumes:
       - ../assets/admin/:/app/assets/admin:ro
       - ../assets/app/:/app/assets/app:ro
