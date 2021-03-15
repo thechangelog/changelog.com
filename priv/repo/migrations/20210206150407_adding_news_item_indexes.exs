@@ -6,12 +6,10 @@ defmodule Changelog.Repo.Migrations.AddingNewsItemIndexes do
     execute("DROP FUNCTION query_related_podcast(integer, integer)")
     execute("DROP FUNCTION query_related_post(integer, integer)")
 
-    drop(index("news_items", [:published_at]))
     drop(index("news_items", [:click_count]))
   end
 
   def up do
-    create(index("news_items", [:published_at]))
     create(index("news_items", [:click_count]))
 
     execute(related_podcast_function())
