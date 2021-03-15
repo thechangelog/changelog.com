@@ -60,7 +60,8 @@ defmodule ChangelogWeb.PodcastController do
     podcast = Podcast.get_by_slug!(slug)
 
     page =
-      Podcast.get_episodes(podcast)
+      podcast
+      |> Podcast.get_episodes()
       |> Episode.published()
       # modern era
       |> Episode.newer_than(~D[2016-10-10])

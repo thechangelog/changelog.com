@@ -1,5 +1,6 @@
 defmodule Changelog.Mixfile do
   use Mix.Project
+
   Code.compile_file("config/secret_or_env.exs")
 
   def project do
@@ -58,7 +59,7 @@ defmodule Changelog.Mixfile do
       {:bamboo_smtp, "~> 2.1.0"},
       {:httpoison, "~> 1.0", override: true},
       {:jason, "~> 1.0"},
-      {:con_cache, "~> 0.13.0"},
+      {:con_cache, "~> 0.14.0"},
       {:exjsx, "~> 3.2.1 or ~> 4.0"},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_s3, "~> 2.0"},

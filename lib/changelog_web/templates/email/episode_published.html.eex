@@ -10,6 +10,18 @@
       <%= link("Listen and discuss the episode", to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %>
     </span>
 
+    <%= if @recommendations != [] do %>
+      <p>If you enjoyed this episode, you should also check out these:</p>
+
+      <ul>
+        <%= for recommendation <- @recommendations do %>
+          <li>
+            <a href="<%= recommendation["url"] %>"><%= recommendation["headline"] %></a>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>
 
     <p>💚, Logbot</p>

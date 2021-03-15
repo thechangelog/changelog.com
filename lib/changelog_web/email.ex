@@ -97,6 +97,16 @@ defmodule ChangelogWeb.Email do
 
   # Podcast related emails
   def episode_published(subscription, episode) do
+    # Fetch related podcasts
+    related_podcasts =
+      case NewsItem.recommend_podcasts(episode, 3) do
+        {:ok, results} ->
+          results
+
+        _ ->
+          []
+      end
+
     styled_email()
     |> put_header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug}")
     |> to(subscription.person)
@@ -104,6 +114,7 @@ defmodule ChangelogWeb.Email do
     |> assign(:subscription, subscription)
     |> assign(:person, subscription.person)
     |> assign(:episode, episode)
+    |> assign(:recommendations, related_podcasts)
     |> render(:episode_published)
   end
 

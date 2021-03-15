@@ -1,6 +1,8 @@
 defmodule Changelog.NewsItem do
   use Changelog.Schema, default_sort: :published_at
 
+  require Logger
+
   alias Changelog.{
     Episode,
     Files,
@@ -552,5 +554,70 @@ defmodule Changelog.NewsItem do
     |> limit(50)
     |> Repo.all()
     |> Enum.map(&load_object/1)
+  end
+
+  def recommend_podcasts(episode = %Episode{}, num_recommendations) do
+    recommendation_query = "SELECT * FROM query_related_podcast($1::integer, $2::integer)"
+    query_args = [episode.id, num_recommendations]
+
+    ConCache.fetch_or_store(
+      :news_item_recommendations,
+      {:podcast, episode.id, num_recommendations},
+      fn ->
+        query_recommendations(recommendation_query, query_args)
+      end
+    )
+  end
+
+  def recommend_news_items(news_item = %__MODULE__{}, num_recommendations) do
+    recommendation_query = "SELECT * FROM query_related_news_item($1::integer, $2::integer)"
+    query_args = [news_item.id, num_recommendations]
+
+    ConCache.fetch_or_store(
+      :news_item_recommendations,
+      {:news_item, news_item.id, num_recommendations},
+      fn ->
+        query_recommendations(recommendation_query, query_args)
+      end
+    )
+  end
+
+  def recommend_posts(news_item = %__MODULE__{}, num_recommendations) do
+    recommendation_query = "SELECT * FROM query_related_post($1::integer, $2::integer)"
+    query_args = [news_item.id, num_recommendations]
+
+    ConCache.fetch_or_store(
+      :news_item_recommendations,
+      {:post, news_item.id, num_recommendations},
+      fn ->
+        query_recommendations(recommendation_query, query_args)
+      end
+    )
+  end
+
+  defp query_recommendations(query, args) do
+    try do
+      query
+      |> Changelog.Repo.query(args)
+      |> case do
+        {:ok, %Postgrex.Result{columns: columns, rows: rows}} ->
+          results =
+            Enum.map(rows, fn row ->
+              columns
+              |> Enum.zip(row)
+              |> Map.new()
+            end)
+
+          {:ok, results}
+
+        error ->
+          Logger.warn("Failed to fetch recommended items: #{inspect(error)}")
+          {:error, error}
+      end
+    rescue
+      error ->
+        Logger.warn("Failed to fetch recommended items: #{inspect(error)}")
+        {:error, error}
+    end
   end
 end
