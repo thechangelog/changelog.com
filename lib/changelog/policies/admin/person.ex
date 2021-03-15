@@ -1,4 +1,4 @@
-defmodule Changelog.Policies.Person do
+defmodule Changelog.Policies.Admin.Person do
   use Changelog.Policies.Default
 
   def create(actor), do: is_admin(actor)

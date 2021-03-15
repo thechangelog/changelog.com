@@ -82,7 +82,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     count = SharedHelpers.comma_separated(reach[label])
     podcast = Map.get(assigns, :podcast)
 
-    if Policies.Admin.reach(user) do
+    if Policies.Admin.Page.reach(user) do
       if podcast do
         link(count, to: Routes.admin_page_path(conn, :reach, range: label, podcast: podcast.slug))
       else

@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
   alias Changelog.{Cache, Podcast}
 
   plug :assign_podcast when action in [:show, :edit, :update]
-  plug Authorize, [Policies.Podcast, :podcast]
+  plug Authorize, [Policies.Admin.Podcast, :podcast]
   plug :scrub_params, "podcast" when action in [:create, :update]
 
   def index(conn = %{assigns: %{current_user: user}}, _params) do
@@ -12,7 +12,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
       Podcast.draft()
       |> Podcast.preload_active_hosts()
       |> Repo.all()
-      |> Enum.filter(fn p -> Policies.Podcast.show(user, p) end)
+      |> Enum.filter(fn p -> Policies.Admin.Podcast.show(user, p) end)
 
     active =
       Podcast.active()
@@ -20,14 +20,14 @@ defmodule ChangelogWeb.Admin.PodcastController do
       |> Podcast.by_position()
       |> Podcast.preload_active_hosts()
       |> Repo.all()
-      |> Enum.filter(fn p -> Policies.Podcast.show(user, p) end)
+      |> Enum.filter(fn p -> Policies.Admin.Podcast.show(user, p) end)
 
     retired =
       Podcast.retired()
       |> Podcast.oldest_first()
       |> Podcast.preload_active_hosts()
       |> Repo.all()
-      |> Enum.filter(fn p -> Policies.Podcast.show(user, p) end)
+      |> Enum.filter(fn p -> Policies.Admin.Podcast.show(user, p) end)
 
     conn
     |> assign(:active, active)

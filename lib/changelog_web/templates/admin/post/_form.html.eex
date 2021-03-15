@@ -131,14 +131,14 @@
   <% else %>
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
     <div class="column">
-    <%= if Policies.Post.index(@current_user) do %>
+    <%= if Policies.Admin.Post.index(@current_user) do %>
       <%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %>
     <% end %>
     </div>
   <% end %>
   <% end %>
     <div class="column">
-    <%= if Policies.Post.publish(@current_user, @changeset.data) do %>
+    <%= if Policies.Admin.Post.publish(@current_user, @changeset.data) do %>
       <%= render("_publish_buttons.html", assigns) %>
     <% end %>
     </div>

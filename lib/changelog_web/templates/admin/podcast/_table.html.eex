@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th></th>
-    <%= if Policies.Podcast.create(@current_user) do %>
+    <%= if Policies.Admin.Podcast.create(@current_user) do %>
       <th>Position</th>
     <% end %>
       <th>Status</th>
@@ -25,7 +25,7 @@
         </h2>
         <% end %>
       </td>
-    <%= if Policies.Podcast.create(@current_user) do %>
+    <%= if Policies.Admin.Podcast.create(@current_user) do %>
       <td><%= podcast.position %></td>
     <% end %>
       <td><%= status_label(podcast) %></td>
@@ -42,11 +42,11 @@
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: Routes.podcast_path(@conn, :show, podcast.slug)) %>
-        <%= if Policies.Podcast.edit(@current_user, podcast) do %>
+        <%= if Policies.Admin.Podcast.edit(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_path(@conn, :edit, podcast.slug)) %>
         <% end %>
           <%= AdminHelpers.icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
-        <%= if Policies.Episode.new(@current_user, podcast) do %>
+        <%= if Policies.Admin.Episode.new(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug)) %>
         <% end %>
         </div>

@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.NewsIssueController do
   alias Changelog.{NewsIssue, NewsItem, NewsIssueAd, NewsIssueItem, NewsSponsorship}
 
   plug :assign_issue when action in [:edit, :update, :publish, :unpublish, :delete]
-  plug Authorize, [Policies.NewsIssue, :issue]
+  plug Authorize, [Policies.Admin.NewsIssue, :issue]
   plug :scrub_params, "news_issue" when action in [:create, :update]
 
   def index(conn, params) do

@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
   alias ChangelogWeb.TimeView
 
   plug :assign_sponsorship when action in [:show, :edit, :update, :delete]
-  plug Authorize, [Policies.NewsSponsorship, :sponsorship]
+  plug Authorize, [Policies.Admin.NewsSponsorship, :sponsorship]
   plug :scrub_params, "news_sponsorship" when action in [:create, :update]
 
   def index(conn, params) do

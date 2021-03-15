@@ -12,7 +12,7 @@ defmodule ChangelogWeb.Admin.PageController do
     Podcast
   }
 
-  plug Authorize, Policies.Admin
+  plug Authorize, Policies.Admin.Page
 
   def index(conn = %{assigns: %{current_user: me = %{admin: true}}}, _params) do
     newsletters =

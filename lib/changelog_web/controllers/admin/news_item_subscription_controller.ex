@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.NewsItemSubscriptionController do
   alias Changelog.{NewsItem, Subscription}
 
   plug :assign_item
-  plug Authorize, [Policies.Subscription, :item]
+  plug Authorize, [Policies.Admin.Subscription, :item]
 
   def index(conn = %{assigns: %{item: item}}, params) do
     page =

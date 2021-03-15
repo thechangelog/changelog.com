@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   alias ChangelogWeb.Email
 
   plug :assign_person when action in [:edit, :update, :delete, :slack]
-  plug Authorize, [Policies.Person, :person]
+  plug Authorize, [Policies.Admin.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
   def index(conn, params) do

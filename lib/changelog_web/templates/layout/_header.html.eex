@@ -48,7 +48,7 @@
               <div class="tooltip-arrow"></div>
               <div class="tooltip-wrap">
                 <ul class="tooltip-list">
-                  <%= if Policies.Admin.index(@current_user) do %>
+                  <%= if Policies.Admin.Page.index(@current_user) do %>
                     <li><%= link("Admin", to: Routes.admin_page_path(@conn, :index), data: [turbolinks: false]) %></li>
                   <% end %>
                 <%= if @current_user.public_profile do %>

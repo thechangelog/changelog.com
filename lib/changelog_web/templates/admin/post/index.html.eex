@@ -5,7 +5,7 @@
   </h1>
 
   <div class="actions">
-  <%= if Policies.Post.new(@current_user) do %>
+  <%= if Policies.Admin.Post.new(@current_user) do %>
     <%= link to: Routes.admin_post_path(@conn, :new), class: "ui right floated primary basic button" do %>
       <i class="add pencil alternate icon"></i>
       Add Post

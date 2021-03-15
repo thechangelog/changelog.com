@@ -1,5 +1,5 @@
 # Episode request policy is based on owner podcast, which is always available
-defmodule Changelog.Policies.EpisodeRequest do
+defmodule Changelog.Policies.Admin.EpisodeRequest do
   use Changelog.Policies.Default
 
   def index(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)

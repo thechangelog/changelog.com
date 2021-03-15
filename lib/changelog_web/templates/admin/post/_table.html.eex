@@ -23,10 +23,10 @@
         <td class="center aligned">
           <div class="ui small basic buttons">
             <%= AdminHelpers.icon_link("eye", to: show_or_preview_path(@conn, post)) %>
-          <%= if Policies.Post.edit(@current_user, post) do %>
+          <%= if Policies.Admin.Post.edit(@current_user, post) do %>
             <%= AdminHelpers.icon_link("edit", to: Routes.admin_post_path(@conn, :edit, post)) %>
           <% end %>
-          <%= if Policies.Post.delete(@current_user, post) do %>
+          <%= if Policies.Admin.Post.delete(@current_user, post) do %>
             <%= AdminHelpers.icon_link("trash",
                           to: Routes.admin_post_path(@conn, :delete, post),
                           method: :delete,

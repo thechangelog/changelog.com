@@ -44,26 +44,26 @@
       <td><%= pitch_preview(request, 60) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-        <%= if Policies.EpisodeRequest.show(@current_user, podcast) do %>
+        <%= if Policies.Admin.EpisodeRequest.show(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("eye",
               to: Routes.admin_podcast_episode_request_path(@conn, :show, podcast.slug, request),
               title: "View Details") %>
         <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Episode.create(@current_user, podcast) do %>
+        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.Episode.create(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("add",
               to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug, request_id: request.id),
               title: "Start Episode") %>
         <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_pendable(request) && Policies.EpisodeRequest.pend(@current_user, podcast) do %>
+        <%= if Changelog.EpisodeRequest.is_pendable(request) && Policies.Admin.EpisodeRequest.pend(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("hourglass half",
               to: Routes.admin_podcast_episode_request_path(@conn, :pend, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
               title: "Maybe Later",
               method: :put) %>
         <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.EpisodeRequest.decline(@current_user, podcast) do %>
+        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.decline(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("thumbs down",
               to: Routes.admin_podcast_episode_request_path(@conn, :decline, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
               title: "Decline silently",
@@ -80,7 +80,7 @@
                 ) %>
         <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.EpisodeRequest.fail(@current_user, podcast) do %>
+        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.fail(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("x",
               to: Routes.admin_podcast_episode_request_path(@conn, :fail, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
               title: "Failed",

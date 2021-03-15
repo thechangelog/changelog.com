@@ -17,7 +17,7 @@
         <th class="center aligned">
         <%= if @status == :draft do %>
           <div class="ui basic buttons">
-            <%= if Policies.NewsItem.new(@current_user), do: AdminHelpers.icon_link("add", to: Routes.admin_news_item_path(@conn, :new), title: "New Item") %>
+            <%= if Policies.Admin.NewsItem.new(@current_user), do: AdminHelpers.icon_link("add", to: Routes.admin_news_item_path(@conn, :new), title: "New Item") %>
             <%= if Policies.AdminsOnly.new(@current_user), do: AdminHelpers.icon_link("rss", to: Routes.admin_news_source_path(@conn, :new), title: "New Source") %>
             <%= if Policies.AdminsOnly.new(@current_user), do: AdminHelpers.icon_link("newspaper", to: Routes.admin_news_issue_path(@conn, :new), title: "New Issue") %>
           </div>
@@ -78,7 +78,7 @@
           <%= if @status == :published do %>
             <%= AdminHelpers.icon_link("rss", to: Routes.admin_news_item_subscription_path(@conn, :index, item), title: "Subscriptions") %>
           <% end %>
-            <%= if Policies.NewsItem.edit(@current_user, item), do: AdminHelpers.icon_link("edit", to: Routes.admin_news_item_path(@conn, :edit, item)) %>
+            <%= if Policies.Admin.NewsItem.edit(@current_user, item), do: AdminHelpers.icon_link("edit", to: Routes.admin_news_item_path(@conn, :edit, item)) %>
           <%= if @status == :submitted do %>
             <%= AdminHelpers.icon_link("thumbs down", to: Routes.admin_news_item_path(@conn, :decline, item), title: "Decline silently", method: :delete, data: [confirm: "Decline this item?"]) %>
             <%= AdminHelpers.modal_icon_button(
@@ -90,7 +90,7 @@
                   item.id
                 ) %>
           <% end %>
-          <%= if Policies.NewsItem.delete(@current_user, item), do: AdminHelpers.icon_link("trash", to: Routes.admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= if Policies.Admin.NewsItem.delete(@current_user, item), do: AdminHelpers.icon_link("trash", to: Routes.admin_news_item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"]) %>
           </div>
         </td>
       </tr>

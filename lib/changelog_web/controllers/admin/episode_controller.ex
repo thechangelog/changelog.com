@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   }
 
   plug :assign_podcast
-  plug Authorize, [Policies.Episode, :podcast]
+  plug Authorize, [Policies.Admin.Episode, :podcast]
   plug :scrub_params, "episode" when action in [:create, :update]
 
   # pass assigned podcast as a function arg

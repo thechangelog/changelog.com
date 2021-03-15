@@ -300,7 +300,7 @@
   <% end %>
   <% end %>
   <div class="column">
-  <%= if Policies.Episode.publish(@current_user, @changeset.data) do %>
+  <%= if Policies.Admin.Episode.publish(@current_user, @changeset.data) do %>
     <%= render("_publish_buttons.html", assigns) %>
   <% end %>
   </div>

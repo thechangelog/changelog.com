@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionController do
   alias Changelog.{Podcast, Subscription}
 
   plug :assign_podcast
-  plug Authorize, [Policies.Subscription, :podcast]
+  plug Authorize, [Policies.Admin.Subscription, :podcast]
 
   def index(conn = %{assigns: %{podcast: podcast}}, params) do
     page =

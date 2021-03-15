@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
   alias Changelog.{EpisodeRequest, Podcast, Notifier}
 
   plug :assign_podcast
-  plug Authorize, [Policies.EpisodeRequest, :podcast]
+  plug Authorize, [Policies.Admin.EpisodeRequest, :podcast]
 
   # pass assigned podcast as a function arg
   def action(conn, _) do

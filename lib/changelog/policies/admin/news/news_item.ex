@@ -1,4 +1,4 @@
-defmodule Changelog.Policies.NewsItem do
+defmodule Changelog.Policies.Admin.NewsItem do
   use Changelog.Policies.Default
 
   def create(actor), do: is_admin(actor) || is_editor(actor)

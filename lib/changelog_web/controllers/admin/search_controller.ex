@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.SearchController do
   alias Changelog.{Episode, NewsItem, NewsSource, Person, Podcast, Sponsor, Post, Topic}
 
   plug :assign_type when action in [:one]
-  plug Authorize, [Policies.Search, :type]
+  plug Authorize, [Policies.Admin.Search, :type]
 
   def all(conn, params = %{"q" => query}) do
     render(conn, with_format("all", params["f"]), %{
