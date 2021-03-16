@@ -1,4 +1,5 @@
 defmodule ChangelogWeb.Endpoint do
+  use Sentry.PlugCapture
   use Phoenix.Endpoint, otp_app: :changelog
 
   socket "/socket", ChangelogWeb.UserSocket,
@@ -68,6 +69,7 @@ defmodule ChangelogWeb.Endpoint do
     json_decoder: Phoenix.json_library(),
     length: 256_000_000
 
+  plug Sentry.PlugContext
   plug Plug.MethodOverride
   plug Plug.Head
 

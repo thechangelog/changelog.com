@@ -19,7 +19,10 @@ config :changelog, ChangelogWeb.Endpoint,
   ],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :logger, level: :info
+config :logger,
+  level: :info,
+  backends: [:console, Sentry.LoggerBackend]
+
 # config :logger, :console, level: :debug, format: "[$level] $message\n"
 
 config :arc,
