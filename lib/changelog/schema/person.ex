@@ -2,6 +2,7 @@ defmodule Changelog.Person do
   use Changelog.Schema
 
   alias Changelog.{
+    Episode,
     EpisodeHost,
     EpisodeGuest,
     EpisodeRequest,
@@ -281,7 +282,7 @@ defmodule Changelog.Person do
 
   def episode_count(person) do
     person
-    |> Person.participating_episode_ids()
+    |> participating_episode_ids()
     |> Episode.with_ids()
     |> Episode.published()
     |> Repo.count()

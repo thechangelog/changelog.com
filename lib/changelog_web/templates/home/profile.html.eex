@@ -96,11 +96,21 @@
 
     <div class="form-checklist">
       <div class="form-checklist-item <%= PublicHelpers.error_class(f, :public_profile) %>">
+      <%= if Changelog.Policies.Person.profile(@current_user, @current_user) do %>
         <label>
           <%= checkbox(f, :public_profile) %>
           <span class="form-checklist-item-box"></span>
           <span class="form-checklist-item-text">I want a public profile page.</span>
         </label>
+      <% else %>
+        <label>
+          <%= checkbox(f, :public_profile, disabled: true) %>
+          <span class="form-checklist-item-box"></span>
+          <span class="form-checklist-item-text">I want a public profile page.</span>
+        </label>
+
+        <p class="form-element-note">You have to publish something first. <%= link("Submit", to: Routes.news_item_path(@conn, :new)) %> some news or <%= link("request", to: Routes.episode_request_path(@conn, :new)) %> an episode to get started.</p>
+      <% end %>
       </div>
     </div>
 

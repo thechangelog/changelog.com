@@ -23,7 +23,12 @@ defmodule ChangelogWeb.HomeController do
   end
 
   def update(conn = %{assigns: %{current_user: me}}, %{"person" => person_params, "from" => from}) do
-    changeset = Person.update_changeset(me, person_params)
+    changeset =
+      if Changelog.Policies.Person.profile(me, me) do
+        Person.update_changeset(me, person_params)
+      else
+        Person.update_changeset(me, Map.delete(person_params, "public_profile"))
+      end
 
     case Repo.update(changeset) do
       {:ok, _person} ->
