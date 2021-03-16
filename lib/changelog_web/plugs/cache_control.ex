@@ -12,6 +12,6 @@ defmodule ChangelogWeb.Plug.CacheControl do
   def call(conn, _opts) do
     conn
     |> put_resp_header("cache-control", "no-store, must-revalidate")
-    |> put_resp_header("surrogate-control", "max-age=30, stale-while-revalidate=30, stale-if-error=604800")
+    |> put_resp_header("surrogate-control", "max-age=60, stale-while-revalidate=60, stale-if-error=604800")
   end
 end
