@@ -272,10 +272,26 @@ defmodule Changelog.Person do
     end
   end
 
+  def post_count(person) do
+    person
+    |> Post.authored_by()
+    |> Post.published()
+    |> Repo.count()
+  end
+
   def episode_count(person) do
-    host_count = Repo.count(from(e in EpisodeHost, where: e.person_id == ^person.id))
-    guest_count = Repo.count(from(e in EpisodeGuest, where: e.person_id == ^person.id))
-    host_count + guest_count
+    person
+    |> Person.participating_episode_ids()
+    |> Episode.with_ids()
+    |> Episode.published()
+    |> Repo.count()
+  end
+
+  def news_item_count(person) do
+    person
+    |> NewsItem.with_person()
+    |> NewsItem.published()
+    |> Repo.count()
   end
 
   def participating_episode_ids(person) do
@@ -299,10 +315,6 @@ defmodule Changelog.Person do
     |> Subscription.for_person(person)
     |> Subscription.to_podcast()
     |> Repo.count()
-  end
-
-  def post_count(person) do
-    Repo.count(from(p in Post, where: p.author_id == ^person.id))
   end
 
   def preload_subscriptions(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :subscriptions)

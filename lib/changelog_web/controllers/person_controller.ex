@@ -71,11 +71,13 @@ defmodule ChangelogWeb.PersonController do
       person
       |> Person.participating_episode_ids()
       |> Episode.with_ids()
+      |> Episode.published()
       |> Episode.exclude_transcript()
       |> Repo.all()
 
     page =
-      NewsItem.with_person_or_episodes(person, episodes)
+      person
+      |> NewsItem.with_person_or_episodes(episodes)
       |> NewsItem.published()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()

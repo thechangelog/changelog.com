@@ -7,7 +7,7 @@ defmodule Changelog.Policies.Default do
       def index(_actor), do: false
       def show(_actor, _resource), do: false
 
-      def edit(resource, actor), do: update(resource, actor)
+      def edit(actor, resource), do: update(actor, resource)
       def update(_actor, _resource), do: false
 
       def delete(_actor, _resource), do: false
