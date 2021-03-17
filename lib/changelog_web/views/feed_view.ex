@@ -35,10 +35,6 @@ defmodule ChangelogWeb.FeedView do
     |> safe_to_string()
   end
 
-  def enclosure_url(episode = %{podcast: %{slug: "podcast"}}) do
-    "https://chtbl.com/track/382DG4/" <> EpisodeView.audio_url(episode)
-  end
-
   def enclosure_url(episode), do: EpisodeView.audio_url(episode)
 
   def episode_title(%{slug: "master"}, episode), do: EpisodeView.title_with_podcast_aside(episode)
