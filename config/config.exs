@@ -81,7 +81,8 @@ config :mime, :types, %{"application/javascript" => ["js"], "application/xml" =>
 config :sentry,
   dsn: "https://2b1aed8f16f5404cb2bc79b855f2f92d@o546963.ingest.sentry.io/5668962",
   included_environments: [:prod],
-  environment_name: Mix.env()
+  environment_name: Mix.env(),
+  filter: Changelog.Sentry.EventFilter
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
