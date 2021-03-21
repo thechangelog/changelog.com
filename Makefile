@@ -132,13 +132,14 @@ ifneq (,$(findstring d,$(MFLAGS)))
   export TF_LOG
 endif
 
+ifeq ($(PLATFORM),Darwin)
 AWS := /usr/local/bin/aws
 $(AWS):
-ifeq ($(PLATFORM),Darwin)
 	@brew install awscli
 endif
 ifeq ($(PLATFORM),Linux)
 AWS := /usr/bin/aws
+$(AWS):
 	$(error $(RED)Please install $(BOLD)AWS CLI v2$(NORMAL): https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 endif
 
