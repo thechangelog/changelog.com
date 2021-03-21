@@ -27,6 +27,7 @@ STACK_VERSION ?= 202008
 HOSTNAME ?= 2020.changelog.com
 
 GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
+GIT_SHA ?= $(shell git rev-parse HEAD)
 GIT_BRANCH ?= master
 
 LOCAL_BIN := $(CURDIR)/bin
@@ -306,3 +307,13 @@ ssl-report: ## ssl | Run an SSL report via SSL Labs
 	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(HOSTNAME)&latest"
 .PHONY: ssl
 ssl: ssl-report
+
+.PHONY: on-app-start
+on-app-start: sentry-release
+
+.PHONY: sentry-release
+sentry-release: | $(CURL)
+	@$(CURL) --silent --fail --request POST --url https://sentry.io/api/0/organizations/changelog-media/releases/ \
+        	--header 'Authorization: Bearer $(SENTRY_AUTH_TOKEN)' \
+         	--header 'Content-type: application/json' \
+         	--data '{"version":"$(APP_VERSION)","ref":"$(GIT_SHA)","url":"$(GIT_REPOSITORY)/commit/$(GIT_SHA)","projects":["changelog-com"]}'

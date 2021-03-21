@@ -402,6 +402,11 @@ spec:
                 secretKeyRef:
                   name: promex
                   key: bearer_token
+            - name: SENTRY_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry
+                  key: auth_token
           image: #@ data.values.app.image
           imagePullPolicy: #@ data.values.image.pull_policy
           #! command:

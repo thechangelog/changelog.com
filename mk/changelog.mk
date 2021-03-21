@@ -93,6 +93,7 @@ lke-changelog-secrets:: fastly-lke-secret
 lke-changelog-secrets:: hcaptcha-lke-secret
 lke-changelog-secrets:: grafana-lke-secret
 lke-changelog-secrets:: promex-lke-secret
+lke-changelog-secrets:: sentry-lke-secret
 
 ARKADE_RELEASES := https://github.com/alexellis/arkade/releases
 ARKADE_VERSION := 0.6.35

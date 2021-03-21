@@ -20,4 +20,4 @@ ENV GIT_AUTHOR=${GIT_AUTHOR}
 
 EXPOSE 4000
 
-CMD mix do ecto.create, ecto.migrate, phx.server
+CMD make on-app-start; mix do ecto.create, ecto.migrate, phx.server
