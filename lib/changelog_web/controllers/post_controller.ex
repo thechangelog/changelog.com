@@ -4,15 +4,7 @@ defmodule ChangelogWeb.PostController do
   alias Changelog.{Post, NewsItem, NewsItemComment}
 
   def index(conn, params) do
-    page =
-      NewsItem.with_object_prefix("posts")
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> Repo.paginate(Map.put(params, :page_size, 15))
-
-    items = Enum.map(page.entries, &NewsItem.load_object/1)
+    {page, items} = NewsItem.get_post_news_items(params)
 
     conn
     |> assign(:page, page)

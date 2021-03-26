@@ -267,6 +267,52 @@ defmodule Changelog.NewsItem do
     {page, results}
   end
 
+  def get_post_news_items(params) do
+    page =
+      from(news_item in __MODULE__,
+        where: like(news_item.object_id, ^"posts:%"),
+        where: news_item.status == ^:published,
+        where: news_item.published_at <= ^Timex.now(),
+        where: not news_item.feed_only,
+        order_by: [desc: :inserted_at]
+      )
+      |> Repo.paginate(Map.put(params, :page_size, 15))
+
+    news_item_ids =
+      page
+      |> Map.get(:entries)
+      |> Enum.map(fn news_item ->
+        news_item.id
+      end)
+
+    results =
+      from(news_item in __MODULE__,
+        left_join: author in assoc(news_item, :author),
+        left_join: logger in assoc(news_item, :logger),
+        left_join: submitter in assoc(news_item, :submitter),
+        left_join: topics in assoc(news_item, :topics),
+        left_join: source in assoc(news_item, :source),
+        left_join: comments in assoc(news_item, :comments),
+        left_join: news_item_topics in assoc(news_item, :news_item_topics),
+        left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
+        where: news_item.id in ^news_item_ids,
+        order_by: [desc: :inserted_at, asc: news_item_topics.position, desc: topics.id],
+        preload: [
+          author: author,
+          comments: comments,
+          logger: logger,
+          submitter: submitter,
+          source: source,
+          topics: topics,
+          news_item_topics: {news_item_topics, topic: news_item_topics_topic}
+        ]
+      )
+      |> Repo.all()
+      |> batch_load_objects()
+
+    {page, results}
+  end
+
   def batch_load_objects(news_items) do
     {episodes, posts} =
       Enum.split_with(news_items, fn news_item ->
@@ -337,39 +383,38 @@ defmodule Changelog.NewsItem do
           left_join: author in assoc(post, :author),
           left_join: editor in assoc(post, :editor),
           left_join: post_topics in assoc(post, :post_topics),
+          left_join: post_topics_topic in assoc(post_topics, :topic),
           left_join: topics in assoc(post, :topics),
           where: post.slug in ^post_ids,
+          order_by: [asc: post_topics.position, asc: post_topics_topic.id],
           preload: [
             author: author,
             editor: editor,
-            post_topics: post_topics,
+            post_topics: {post_topics, topic: post_topics_topic},
             topics: topics
           ]
         )
         |> Repo.all()
       end
 
-    results =
-      news_items
-      |> Enum.map(fn
-        %{object_id: nil} = result ->
-          result
+    news_items
+    |> Enum.map(fn
+      %{object_id: nil} = result ->
+        result
 
-        %{type: :audio, object_id: object_id} = result ->
-          [_podcast_id, episode_id] = String.split(object_id, ":")
+      %{type: :audio, object_id: object_id} = result ->
+        [_podcast_id, episode_id] = String.split(object_id, ":")
 
-          object =
-            Enum.find(episode_data, fn episode -> Integer.to_string(episode.id) == episode_id end)
+        object =
+          Enum.find(episode_data, fn episode -> Integer.to_string(episode.id) == episode_id end)
 
-          %{result | object: object}
+        %{result | object: object}
 
-        result ->
-          [_, slug] = String.split(result.object_id, ":")
-          object = Enum.find(post_data, fn post -> post.slug == slug end)
-          %{result | object: object}
-      end)
-
-    results
+      result ->
+        [_, slug] = String.split(result.object_id, ":")
+        object = Enum.find(post_data, fn post -> post.slug == slug end)
+        %{result | object: object}
+    end)
   end
 
   def slug(item) do
