@@ -1,19 +1,27 @@
 <%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
   <div class="three fields">
     <div class="field required <%= AdminHelpers.error_class(f, :name) %>">
-      <%= label(f, :name, "Name") %>
+      <%= label(f, :name, "Full Name") %>
       <%= text_input(f, :name, placeholder: "Grace Hopper") %>
       <%= AdminHelpers.error_message(f, :name) %>
     </div>
 
     <div class="field required <%= AdminHelpers.error_class(f, :email) %>">
-      <%= label(f, :email, "Email") %>
+      <label for="email">
+        Email
+        <%= AdminHelpers.help_icon("Personal is preferred over work-related address", "required") %>
+      </label>
+
       <%= email_input(f, :email, placeholder: "grace@hopper.com", autocapitalize: "none") %>
       <%= AdminHelpers.error_message(f, :email) %>
     </div>
 
     <div class="field required <%= AdminHelpers.error_class(f, :handle) %>">
-      <%= label(f, :handle, "Handle") %>
+      <label for="handle">
+        Handle
+        <%= AdminHelpers.help_icon("Re-use social handle when applicable", "required") %>
+      </label>
+
       <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
       <%= AdminHelpers.error_message(f, :handle) %>
     </div>
@@ -87,6 +95,7 @@
     <%= AdminHelpers.error_message(f, :bio) %>
   </div>
 
+<%= if Policies.Admin.Person.roles(@current_user, f.data) do %>
   <div class="ui horizontal divider">Profile</div>
 
   <div class="fields">
@@ -181,6 +190,7 @@
     </div>
   </div>
 <% end %>
+<% end %>
 
 <%= if !AdminHelpers.is_persisted(f.data) do %>
   <div class="ui horizontal divider">Welcome Email</div>
@@ -218,7 +228,11 @@
   <% else %>
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
     <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
-    <div class="column"><%= link("Delete", to: Routes.admin_person_path(@conn, :delete, f.data), class: "ui red fluid basic button", method: :delete, data: [confirm: "Are you sure?"]) %></div>
+    <div class="column">
+    <%= if Policies.Admin.Person.delete(@current_user, f.data) do %>
+      <%= link("Delete", to: Routes.admin_person_path(@conn, :delete, f.data), class: "ui red fluid basic button", method: :delete, data: [confirm: "Are you sure?"]) %>
+    <% end %>
+    </div>
   <% end %>
   </div>
 <% end %>

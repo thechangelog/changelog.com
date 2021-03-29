@@ -3,35 +3,36 @@ defmodule Changelog.Policies.Admin.PersonTest do
 
   alias Changelog.Policies.Admin.Person
 
-  test "only admins can new/create" do
+  test "admins, editors, and hosts can new/create" do
     refute Person.create(@guest)
     refute Person.new(@user)
-    refute Person.new(@editor)
+    assert Person.new(@editor)
     assert Person.create(@admin)
-    refute Person.create(@host)
+    assert Person.create(@host)
   end
 
-  test "only admins can index" do
+  test "admins, editors, and hosts can index" do
     refute Person.index(@guest)
     refute Person.index(@user)
-    refute Person.index(@editor)
-    refute Person.index(@host)
+    assert Person.index(@editor)
+    assert Person.index(@host)
     assert Person.index(@admin)
   end
 
-  test "nobody can show" do
+  test "admins, editors, and hosts can show" do
     refute Person.show(@guest, %{})
     refute Person.show(@user, %{})
-    refute Person.show(@editor, %{})
-    refute Person.show(@host, %{})
-    refute Person.show(@admin, %{})
+    assert Person.show(@editor, %{})
+    assert Person.show(@host, %{})
+    assert Person.show(@admin, %{})
   end
 
-  describe "only admins can edit/update" do
+  describe "admins, editors, and hosts can edit/update" do
     refute Person.edit(@guest, %{})
     refute Person.update(@user, %{})
     assert Person.update(@admin, %{})
-    refute Person.edit(@host, %{})
+    assert Person.edit(@host, %{})
+    assert Person.edit(@editor, %{})
   end
 
   test "only admins can delete" do
@@ -40,5 +41,13 @@ defmodule Changelog.Policies.Admin.PersonTest do
     refute Person.delete(@editor, %{})
     refute Person.delete(@host, %{})
     assert Person.delete(@admin, %{})
+  end
+
+  test "only admins can set roles" do
+    refute Person.roles(@guest, %{})
+    refute Person.roles(@user, %{})
+    refute Person.roles(@editor, %{})
+    refute Person.roles(@host, %{})
+    assert Person.roles(@admin, %{})
   end
 end

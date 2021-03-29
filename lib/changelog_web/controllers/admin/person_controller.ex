@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   alias Changelog.{Mailer, Episode, EpisodeRequest, NewsItem, Person, Slack, Subscription}
   alias ChangelogWeb.Email
 
-  plug :assign_person when action in [:edit, :update, :delete, :slack]
+  plug :assign_person when action in [:show, :edit, :update, :delete, :slack]
   plug Authorize, [Policies.Admin.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
@@ -30,9 +30,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> render(:index)
   end
 
-  def show(conn, %{"id" => id}) do
-    person = Repo.get!(Person, id)
-
+  def show(conn = %{assigns: %{person: person}}, _params) do
     episodes =
       person
       |> assoc(:guest_episodes)
@@ -87,6 +85,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   def create(conn, params = %{"person" => person_params}) do
+    person_params = authorized_params(conn.assigns.current_user, nil, person_params)
     changeset = Person.admin_insert_changeset(%Person{}, person_params)
 
     case Repo.insert(changeset) do
@@ -112,6 +111,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   def update(conn = %{assigns: %{person: person}}, params = %{"person" => person_params}) do
+    person_params = authorized_params(conn.assigns.current_user, person, person_params)
     changeset = Person.admin_update_changeset(person, person_params)
 
     case Repo.update(changeset) do
@@ -158,6 +158,21 @@ defmodule ChangelogWeb.Admin.PersonController do
   defp assign_person(conn = %{params: %{"id" => id}}, _) do
     person = Repo.get!(Person, id)
     assign(conn, :person, person)
+  end
+
+  defp authorized_params(actor, resource, params) do
+    # if a person is created via the admin, it is assumed they are approved
+    # for commenting unless specified otherwise by their creator
+    params = Map.put_new(params, "approved", true)
+
+    if Policies.Admin.Person.roles(actor, resource) do
+      params
+    else
+      params
+      |> Map.delete("admin")
+      |> Map.delete("host")
+      |> Map.delete("editor")
+    end
   end
 
   defp set_slack_id_to_pending(person = %{slack_id: id}) when not is_nil(id), do: person

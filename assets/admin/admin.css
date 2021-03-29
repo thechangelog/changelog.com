@@ -86,3 +86,7 @@ input[type=file] {
 .chart {
   max-height: 400px;
 }
+
+.help.circle.icon.required {
+  float: right;
+}

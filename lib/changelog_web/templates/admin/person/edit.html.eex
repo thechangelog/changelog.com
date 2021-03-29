@@ -8,5 +8,5 @@
       class: "view" %>
   </h1>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_person_path(@conn, :update, @person)) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_person_path(@conn, :update, @person)})) %>
 </div>

@@ -52,9 +52,9 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     end
   end
 
-  def help_icon(help_text) do
+  def help_icon(help_text, classes \\ "") do
     ~e"""
-    <i class="help circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>
+    <i class="help circle icon fluid <%= classes %>" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>
     """
   end
 
