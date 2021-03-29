@@ -174,7 +174,7 @@ defmodule Changelog.Person do
 
   def admin_insert_changeset(person, attrs \\ %{}) do
     allowed =
-      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor public_profile)a
+      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor public_profile approved)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)
   end

@@ -96,6 +96,13 @@
         <%= checkbox(f, :public_profile, class: "hidden") %>
       </div>
     </div>
+
+    <div class="field">
+      <%= label(f, :approved, "Can comment") %>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :approved, class: "hidden") %>
+      </div>
+    </div>
   </div>
 
   <div class="ui horizontal divider">Roles</div>
