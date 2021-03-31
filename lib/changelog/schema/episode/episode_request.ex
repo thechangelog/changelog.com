@@ -35,6 +35,13 @@ defmodule Changelog.EpisodeRequest do
   def sans_episode(query \\ __MODULE__),
     do: from(q in query, left_join: e in Episode, on: q.id == e.request_id, where: is_nil(e.id))
 
+  def admin_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(podcast_id submitter_id hosts guests topics pitch pronunciation)a)
+    |> validate_required([:podcast_id, :submitter_id, :pitch])
+    |> foreign_key_constraint(:podcast_id)
+  end
+
   def submission_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(podcast_id submitter_id hosts guests topics pitch pronunciation)a)

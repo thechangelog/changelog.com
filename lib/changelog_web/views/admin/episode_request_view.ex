@@ -23,6 +23,10 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
       pitch_preview(request, 60)
   end
 
+  def podcast_options do
+    Changelog.Cache.podcasts() |> Enum.map(&{&1.name, &1.id})
+  end
+
   def pitch_preview(%{pitch: pitch}, count \\ 80) do
     pitch |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(count)
   end

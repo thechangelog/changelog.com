@@ -50,6 +50,12 @@
               title: "View Details") %>
         <% end %>
 
+        <%= if Policies.Admin.EpisodeRequest.edit(@current_user, podcast) do %>
+          <%= AdminHelpers.icon_link("edit",
+          to: Routes.admin_podcast_episode_request_path(@conn, :edit, podcast.slug, request),
+          title: "Edit Request") %>
+        <% end %>
+
         <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.Episode.create(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("add",
               to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug, request_id: request.id),

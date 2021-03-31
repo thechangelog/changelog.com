@@ -5,7 +5,12 @@
     <%= link(@podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
     &raquo;
     <%= link("Episode Requests", to: Routes.admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
-    <%= link("(View)", to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+    &raquo;
+    <%= @request.id %>
+
+  <%= if Policies.Admin.EpisodeRequest.edit(@current_user, @request.podcast) do %>
+    <%= link("(Edit)", to: Routes.admin_podcast_episode_request_path(@conn, :edit, @podcast.slug, @request), class: "view") %>
+  <% end %>
   </h1>
 </div>
 
@@ -42,4 +47,3 @@
     <% end %>
   </div>
 </div>
-

@@ -1,0 +1,63 @@
+<%= form_for @changeset, @action, [class: "ui form", multipart: true], fn f -> %>
+  <div class="three fields">
+    <div class="field required <%= AdminHelpers.error_class(f, :podcast_id) %>">
+      <%= label(f, :podcast_id, "Podcast") %>
+      <%= select(f, :podcast_id, podcast_options(), class: "ui fluid dropdown") %>
+      <%= AdminHelpers.error_message(f, :podcast_id) %>
+    </div>
+
+    <div class="field required <%= AdminHelpers.error_class(f, :submitter_id) %>">
+      <%= label(f, :submitter_id, "Submitter") %>
+      <div class="ui fluid remote submitter search selection dropdown">
+        <%= hidden_input(f, :submitter_id) %>
+        <i class="dropdown icon"></i>
+        <%= if AdminHelpers.is_loaded(f.data.submitter) do %>
+          <div class="selected text"><%= f.data.submitter.name %></div>
+        <% else %>
+          <div class="default text">Select Submitter</div>
+        <% end %>
+      </div>
+      <%= AdminHelpers.error_message(f, :submitter_id) %>
+    </div>
+
+    <div class="field <%= AdminHelpers.error_class(f, :pronunciation) %>">
+      <%= label(f, :pronunciation) %>
+      <%= text_input(f, :pronunciation) %>
+    </div>
+  </div>
+
+  <div class="field <%= AdminHelpers.error_class(f, :guests) %>">
+    <%= label(f, :guests) %>
+    <%= textarea(f, :guests, rows: 1) %>
+    <%= AdminHelpers.error_message(f, :guests) %>
+  </div>
+
+  <div class="field <%= AdminHelpers.error_class(f, :hosts) %>">
+    <%= label(f, :hosts) %>
+    <%= textarea(f, :hosts, rows: 1) %>
+    <%= AdminHelpers.error_message(f, :hosts) %>
+  </div>
+
+  <div class="field <%= AdminHelpers.error_class(f, :topics) %>">
+    <%= label(f, :topics) %>
+    <%= textarea(f, :topics, rows: 1) %>
+    <%= AdminHelpers.error_message(f, :topics) %>
+  </div>
+
+  <div class="field <%= AdminHelpers.error_class(f, :pitch) %>">
+    <%= label(f, :pitch) %>
+    <%= textarea(f, :pitch, rows: 1) %>
+    <%= AdminHelpers.error_message(f, :pitch) %>
+  </div>
+
+  <div class="ui hidden divider"></div>
+  <div class="ui equal width stackable grid">
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", "edit") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
+    <div class="column">
+    <%= if Changelog.Policies.Admin.EpisodeRequest.delete(@current_user, @request.podcast) do %>
+      <%= link("Delete", to: Routes.admin_podcast_episode_request_path(@conn, :delete, @podcast.slug, f.data), class: "ui red fluid basic button", method: :delete, data: [confirm: "Are you sure?"]) %>
+    <% end  %>
+    </div>
+  </div>
+<% end %>

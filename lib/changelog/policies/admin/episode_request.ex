@@ -4,7 +4,7 @@ defmodule Changelog.Policies.Admin.EpisodeRequest do
 
   def index(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def show(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
-  def update(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
+  def update(actor, _), do: is_admin(actor)
   def delete(actor, _), do: is_admin(actor)
 
   def decline(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)

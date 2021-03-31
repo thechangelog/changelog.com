@@ -12,6 +12,15 @@ defmodule Changelog.Policies.Admin.EpisodeRequestTest do
     assert EpisodeRequest.index(@host, %{active_hosts: [@host]})
   end
 
+  test "only admins can edit/update" do
+    refute EpisodeRequest.edit(@guest, %{})
+    refute EpisodeRequest.update(@user, %{})
+    refute EpisodeRequest.update(@editor, %{})
+    refute EpisodeRequest.edit(@host, %{})
+    refute EpisodeRequest.update(@host, %{active_hosts: [@host]})
+    assert EpisodeRequest.edit(@admin, %{})
+  end
+
   test "only admins and podcast hosts can show" do
     refute EpisodeRequest.show(@guest, %{})
     refute EpisodeRequest.show(@user, %{})
@@ -21,14 +30,10 @@ defmodule Changelog.Policies.Admin.EpisodeRequestTest do
     assert EpisodeRequest.show(@host, %{active_hosts: [@host]})
   end
 
-  test "only admins and podcast hosts can edit/update/decline/fail/pend" do
-    refute EpisodeRequest.edit(@guest, %{})
-    refute EpisodeRequest.update(@user, %{})
-    refute EpisodeRequest.update(@editor, %{})
-    refute EpisodeRequest.edit(@host, %{})
+  test "only admins and podcast hosts can decline/fail/pend" do
     refute EpisodeRequest.decline(@host, %{})
-    assert EpisodeRequest.update(@admin, %{})
-    assert EpisodeRequest.edit(@host, %{active_hosts: [@host]})
+    assert EpisodeRequest.decline(@admin, %{})
+    assert EpisodeRequest.fail(@host, %{active_hosts: [@host]})
     assert EpisodeRequest.decline(@host, %{active_hosts: [@host]})
     refute EpisodeRequest.fail(@host, %{})
     assert EpisodeRequest.fail(@host, %{active_hosts: [@host]})
