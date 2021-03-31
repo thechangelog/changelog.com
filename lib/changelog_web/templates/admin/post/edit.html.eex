@@ -1,7 +1,7 @@
-<div class="ui basic segment text container">
+<div class="ui basic segment">
   <h1 class="ui dividing header">
     <%= link "Posts", to: Routes.admin_post_path(@conn, :index) %>
-    &raquo; Edit
+    &raquo; Editing
   <%= if @post.published do %>
     <%= link "(View)",
       to: Routes.post_path(@conn, :show, @post.slug),
@@ -13,6 +13,8 @@
       class: "view") %>
   <% end %>
   </h1>
+</div>
 
+<div class="ui basic segment text container">
   <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_post_path(@conn, :update, @post)})) %>
 </div>

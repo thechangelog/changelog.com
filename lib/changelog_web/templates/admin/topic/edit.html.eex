@@ -1,10 +1,12 @@
-<div class="ui basic segment text container">
+<div class="ui basic segment">
   <h1 class="ui dividing header">
     <%= link "Topics", to: Routes.admin_topic_path(@conn, :index) %>
     &raquo; Edit
 
     <%= link("(View)", to: Routes.topic_path(@conn, :show, @topic.slug), rel: "external", class: "view") %>
   </h1>
+</div>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_topic_path(@conn, :update, @topic.slug)) %>
+<div class="ui basic segment text container">
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_topic_path(@conn, :update, @topic.slug)})) %>
 </div>

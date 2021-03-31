@@ -1,8 +1,15 @@
-<div class="ui basic segment text container">
+<div class="ui basic segment">
   <h1 class="ui dividing header">
     <%= link "Podcasts", to: Routes.admin_podcast_path(@conn, :index) %>
-    &raquo; Edit
-  </h1>
+    &raquo; Editing
+    &raquo; <%= @podcast.name %>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_podcast_path(@conn, :update, @podcast.slug)) %>
+    <%= link "(View)",
+    to: Routes.podcast_path(@conn, :show, @podcast.slug),
+    class: "view" %>
+  </h1>
+</div>
+
+<div class="ui basic segment text container">
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_podcast_path(@conn, :update, @podcast.slug)})) %>
 </div>

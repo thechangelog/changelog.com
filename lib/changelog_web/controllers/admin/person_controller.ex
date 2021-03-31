@@ -80,7 +80,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   def new(conn, _params) do
-    changeset = Person.admin_insert_changeset(%Person{})
+    changeset = Person.admin_insert_changeset(%Person{approved: true})
     render(conn, :new, changeset: changeset)
   end
 

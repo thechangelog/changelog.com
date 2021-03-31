@@ -1,12 +1,15 @@
-<div class="ui basic segment text container">
+<div class="ui basic segment">
   <h1 class="ui dividing header">
     <%= link "Sponsors", to: Routes.admin_sponsor_path(@conn, :index) %>
     &raquo; Edit
+    &raquo; <%= @sponsor.name %>
 
     <%= link "(View)",
       to: Routes.admin_sponsor_path(@conn, :show, @sponsor),
       class: "view" %>
   </h1>
+</div>
 
-  <%= render("_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_sponsor_path(@conn, :update, @sponsor)) %>
+<div class="ui basic segment text container">
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_sponsor_path(@conn, :update, @sponsor)})) %>
 </div>

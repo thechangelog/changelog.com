@@ -1,4 +1,4 @@
-<div class="ui basic segment text container">
+<div class="ui basic segment">
   <h1 class="ui dividing header">
     <%= link "People", to: Routes.admin_person_path(@conn, :index) %>
     &raquo; Edit
@@ -7,6 +7,8 @@
       to: Routes.admin_person_path(@conn, :show, @person),
       class: "view" %>
   </h1>
+</div>
 
+<div class="ui basic segment text container">
   <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_person_path(@conn, :update, @person)})) %>
 </div>

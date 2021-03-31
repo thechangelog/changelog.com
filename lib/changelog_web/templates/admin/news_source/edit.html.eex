@@ -1,12 +1,15 @@
-<div class="ui basic segment text container">
+<div class="ui basic segment">
   <h1 class="ui dividing header">
     <%= link "News", to: Routes.admin_news_item_path(@conn, :index) %>
     &raquo;
     <%= link "Sources", to: Routes.admin_news_source_path(@conn, :index) %>
-    &raquo; Edit
+    &raquo; Editing
+    &raquo; <%= @source.name %>
 
     <%= link("(View)", to: Routes.news_source_path(@conn, :show, @source.slug), rel: "external", class: "view") %>
   </h1>
+</div>
 
-  <%= render "_form.html", conn: @conn, changeset: @changeset, action: Routes.admin_news_source_path(@conn, :update, @source) %>
+<div class="ui basic segment text container">
+  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_news_source_path(@conn, :update, @source)})) %>
 </div>
