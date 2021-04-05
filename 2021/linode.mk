@@ -4,15 +4,18 @@ LKE_NAME ?= prod
 
 # This has been already created & will be enabled on: eval "$(make env)"
 env::
-	@echo 'export LKE_LABEL=prod-20210302'
+	@echo 'export LKE_LABEL=prod-20210331'
 
 LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
-# us-east is the only US region with all the bells & whistles in 2021.03:
-# Linodes, NodeBalancers, Block Storage, Object Storage, GPU Linodes, Kubernetes
-LKE_REGION ?= us-east
-LKE_VERSION ?= 1.19
-LKE_NODE_TYPE ?= g6-dedicated-16
-LKE_NODE_COUNT ?= 1
+# us-east, the only US region with all the bells & whistles in 2021.03,
+# Linodes, NodeBalancers, Block Storage, Object Storage, GPU Linodes,
+# Kubernetes, has mixed networking that MAY be the root cause for the high
+# inter-node latency that we've been experiencing. Switching to us-central to
+# check if networking improves.
+LKE_REGION ?= us-central
+LKE_VERSION ?= 1.20
+LKE_NODE_TYPE ?= g6-dedicated-4
+LKE_NODE_COUNT ?= 3
 
 $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
@@ -75,9 +78,16 @@ linodes: | linode
 linodes-types: | linode
 	$(LINODE) linodes types
 
-.PHONY: nodebalancers
-nodebalancers: | linode
+.PHONY: linode-balancers
+linode-balancers: | linode
 	$(LINODE) nodebalancers list
+
+.PHONY: linode-volumes
+linode-volumes: | linode
+	$(LINODE) volumes list
+
+.PHONY: linode-resources
+linode-resources: | linodes linode-volumes linode-balancers
 
 .PHONY: lke
 lke: | linode
@@ -89,8 +99,8 @@ lke: | linode
 	    --node_pools.count $(LKE_NODE_COUNT)
 
 LKE_LS = $(LINODE) --all lke clusters-list
-.PHONY: lke-ls
-lke-ls: | linode
+.PHONY: lkes
+lkes: | linode
 	$(LKE_LS)
 
 .PHONY: lke-versions
@@ -110,8 +120,8 @@ lke-pool: | linode $(JQ)
 	    --count $(LKE_NODE_COUNT) \
 	    $(LKE_CLUSTER_ID)
 
-.PHONY: lke-pool-ls
-lke-pool-ls: | linode $(JQ)
+.PHONY: lke-pools
+lke-pools: | linode $(JQ)
 	$(LKE_POOL_LS)
 
 define LKE_POOL_PUBLIC_IPv4s
@@ -156,7 +166,7 @@ ifneq ($(IS_KUBECONFIG_LKE_CONFIG), $(LKE_CONFIGS))
 endif
 
 KUBECTL_RELEASES := https://github.com/kubernetes/kubernetes/releases
-KUBECTL_VERSION = $(LKE_VERSION).8
+KUBECTL_VERSION = $(LKE_VERSION).5
 KUBECTL_BIN := kubectl-$(KUBECTL_VERSION)-$(platform)-amd64
 KUBECTL_URL := https://storage.googleapis.com/kubernetes-release/release/v$(KUBECTL_VERSION)/bin/$(platform)/amd64/kubectl
 KUBECTL := $(LOCAL_BIN)/$(KUBECTL_BIN)
@@ -175,3 +185,6 @@ releases-kubectl:
 
 .PHONY: lke-ctx
 lke-ctx: | $(KUBECTL) lke-config-hint
+
+.PHONY: lke-bootstrap
+lke-bootstrap:: | lke-ctx

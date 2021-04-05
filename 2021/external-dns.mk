@@ -17,13 +17,13 @@ endif
 	$(YTT) \
 	  --data-value namespace=$(EXTERNAL_DNS_NAMESPACE) \
 	  --data-value image=$(EXTERNAL_DNS_IMAGE) \
-	  --data-value-yaml public_ipv4s=[$(LKE_POOL_PUBLIC_IPv4s)] \
 	  --file $(MANIFESTS)/external-dns/template.yml \
 	  --file $(MANIFESTS)/external-dns/values.yml > $(MANIFESTS)/external-dns.yml
 	$(KUBECTL) apply --filename $(MANIFESTS)/external-dns.yml
 	$(KUBECTL) create secret generic dnsimple \
 	  --from-literal=token="$(DNSIMPLE_TOKEN)" --dry-run=client --output json \
 	| $(KUBECTL) apply --namespace $(EXTERNAL_DNS_NAMESPACE) --filename -
+lke-bootstrap:: lke-external-dns
 
 $(EXTERNAL_DNS_CRD_MANIFEST): | $(CURL)
 	$(CURL) --progress-bar --fail --location --output $(EXTERNAL_DNS_CRD_MANIFEST) $(EXTERNAL_DNS_CRD_MANIFEST_URL)

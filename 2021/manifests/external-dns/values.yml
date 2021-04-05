@@ -7,4 +7,3 @@ dns:
 #! provided just-in-time
 image:
 namespace:
-public_ipv4s:

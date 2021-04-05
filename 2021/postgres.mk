@@ -17,6 +17,7 @@ lke-postgres-operator: | $(POSTGRES_OPERATOR_DIR) lke-ctx $(HELM)
 	  --set configKubernetes.enable_pod_antiaffinity=true \
 	  --set configKubernetes.pod_environment_configmap=postgres-operator/postgres-pod-environment
 	$(KUBECTL) apply --filename $(CURDIR)/manifests/postgres-operator
+lke-bootstrap:: lke-postgres-operator
 
 releases-postgres-operator:
 	$(OPEN) $(POSTGRES_OPERATOR_RELEASES)

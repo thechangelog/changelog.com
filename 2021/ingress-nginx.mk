@@ -21,6 +21,7 @@ lke-ingress-nginx: | $(INGRESS_NGINX_DIR) lke-ctx $(HELM)
 	  --set controller.publishService.enabled=false \
 	  --version $(INGRESS_NGINX_VERSION)
 	$(KUBECTL) apply --filename $(CURDIR)/manifests/ingress-nginx
+lke-bootstrap:: lke-ingress-nginx
 
 .PHONY: releases-ingress-nginx
 releases-ingress-nginx:
