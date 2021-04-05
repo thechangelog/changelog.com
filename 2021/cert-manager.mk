@@ -24,8 +24,7 @@ lke-cert-manager-verify-clean: | lke-ctx
 	$(KUBECTL) delete --filename $(CURDIR)/manifests/cert-manager/test-resources.yml --ignore-not-found
 
 # https://github.com/neoskop/cert-manager-webhook-dnsimple/releases
-# Don't bump to 0.0.5, there are a few permission issues & a failure that crashes the pod
-CERT_MANAGER_DNSIMPLE_VERSION := 0.0.4
+CERT_MANAGER_DNSIMPLE_VERSION := 0.1.0
 .PHONY: lke-cert-manager-dnsimple
 lke-cert-manager-dnsimple: | lke-ctx $(HELM)
 	$(HELM) repo add neoskop https://charts.neoskop.dev
