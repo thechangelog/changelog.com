@@ -56,9 +56,7 @@ linode-cli: $(LINODE_CLI)
 .PHONY: linode
 linode: | $(LINODE_CLI)
 ifndef LINODE_CLI_TOKEN
-	@printf "$(RED)LINODE_CLI_TOKEN$(NORMAL) environment variable must be set\n"
-	@printf 'Run $(BOLD)eval "$$(make env)"$(NORMAL)\n'
-	exit 1
+	$(call env_not_set,LINODE_CLI_TOKEN)
 endif
 
 env:: | linode
