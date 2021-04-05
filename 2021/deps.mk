@@ -116,3 +116,23 @@ helm: $(HELM)
 .PHONY: releases-helm
 releases-helm:
 	$(OPEN) $(HELM_RELEASES)
+
+# We want to fail if variables are not set or empty.
+# The envsubst that comes with gettext does not support this,
+# using this Go version instead: https://github.com/a8m/envsubst#docs
+ENVSUBST_RELEASES := https://github.com/a8m/envsubst/releases
+ENVSUBST_VERSION := 1.2.0
+ENVSUBST_BIN := envsubst-$(ENVSUBST_VERSION)-$(PLATFORM)-x86_64
+ENVSUBST_URL := $(ENVSUBST_RELEASES)/download/v$(ENVSUBST_VERSION)/envsubst-$(PLATFORM)-x86_64
+ENVSUBST := $(LOCAL_BIN)/$(ENVSUBST_BIN)
+ENVSUBST_SAFE := $(ENVSUBST) -no-unset -no-empty
+$(ENVSUBST): | $(CURL) $(LOCAL_BIN)
+	$(CURL) --progress-bar --fail --location --output $(ENVSUBST) "$(ENVSUBST_URL)"
+	touch $(ENVSUBST)
+	chmod +x $(ENVSUBST)
+	ln -sf $(ENVSUBST) $(LOCAL_BIN)/envsubst
+.PHONY: envsubst
+envsubst: $(ENVSUBST)
+.PHONY: releases-envsubst
+releases-envsubst:
+	$(OPEN) $(ENVSUBST_RELEASES)
