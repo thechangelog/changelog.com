@@ -34,7 +34,7 @@ spec:
         - --events
         env:
         - name: EXTERNAL_DNS_TXT_OWNER_ID
-          value: linode-kubernetes-engine
+          value: lke-prod-20210331
         - name: EXTERNAL_DNS_LOG_LEVEL
           value: debug
         - name: EXTERNAL_DNS_POLICY
