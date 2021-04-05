@@ -14,7 +14,7 @@ MANIFESTS := $(CURDIR)/manifests
 
 define env_not_set
 @printf "$(RED)$(1)$(NORMAL) environment variable must be set\n"
-@printf 'Run $(BOLD)eval "$$(make env)"$(NORMAL)\n'
+@printf 'Run $(BOLD)make .env && source .env$(NORMAL)\n'
 exit 1
 endef
 
@@ -25,3 +25,17 @@ include $(CURDIR)/cert-manager.mk
 include $(CURDIR)/ingress-nginx.mk
 include $(CURDIR)/postgres.mk
 include $(CURDIR)/keel.mk
+
+define MAKE_TARGETS
+  awk -F':+' '/^[^.%\t_][0-9a-zA-Z._%-]*:+.*$$/ { printf "%s\n", $$1 }' $(MAKEFILE_LIST)
+endef
+
+define BASH_AUTOCOMPLETE
+complete -W \"$$($(MAKE_TARGETS) | sort | uniq)\" make gmake m
+endef
+
+env::
+	@echo "$(BASH_AUTOCOMPLETE)"
+
+.env:
+	$(MAKE) --no-print-directory env SILENT="1>/dev/null 2>&1" > .env

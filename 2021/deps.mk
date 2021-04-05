@@ -89,7 +89,7 @@ releases-jq:
 ifeq ($(PLATFORM),Darwin)
 LPASS := /usr/local/bin/lpass
 $(LPASS):
-	@brew install lastpass-cli
+	@brew install lastpass-cli $(SILENT)
 endif
 ifeq ($(PLATFORM),Linux)
 LPASS := /usr/bin/lpass

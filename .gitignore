@@ -44,6 +44,8 @@ npm-debug.log*
 .envrc
 # like .envrc, but for asdf
 .tool-versions
+# 2021 .envrc equivalent
+2021/.env
 
 # .terraform will contain large, platform-specific binaries
 .terraform

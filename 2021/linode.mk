@@ -27,13 +27,13 @@ export PATH
 
 PIP := /usr/local/bin/pip3
 $(PIP):
-	brew install python3
+	@brew install python3 $(SILENT)
 
 # https://github.com/linode/linode-cli
 LINODE_CLI := /usr/local/bin/linode-cli
 $(LINODE_CLI): $(PIP)
-	$(PIP) install linode-cli
-	touch $(@)
+	@$(PIP) install linode-cli $(SILENT)
+	@touch $(@) $(SILENT)
 
 
 linode-cli-upgrade: $(PIP)
