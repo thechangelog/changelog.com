@@ -28,16 +28,15 @@ lke-cert-manager-verify-clean: | lke-ctx
 CERT_MANAGER_DNSIMPLE_VERSION := 0.0.4
 .PHONY: lke-cert-manager-dnsimple
 lke-cert-manager-dnsimple: | lke-ctx $(HELM)
-ifndef DNSIMPLE_TOKEN
-	$(call env_not_set,DNSIMPLE_TOKEN)
-endif
 	$(HELM) repo add neoskop https://charts.neoskop.dev
 	$(HELM) repo update
+	DNSIMPLE_ACCOUNT="$$($(LPASS) show --notes Shared-changelog/secrets/DNSIMPLE_ACCOUNT)" \
+	DNSIMPLE_TOKEN="$$($(LPASS) show --notes Shared-changelog/secrets/DNSIMPLE_TOKEN)" \
 	$(HELM) upgrade cert-manager-webhook-dnsimple neoskop/cert-manager-webhook-dnsimple \
 	  --install \
 	  --namespace $(CERT_MANAGER_NAMESPACE) --create-namespace \
-	  --set dnsimple.account=$(DNSIMPLE_ACCOUNT) \
-	  --set dnsimple.token=$(DNSIMPLE_TOKEN) \
+	  --set dnsimple.account="$$DNSIMPLE_ACCOUNT" \
+	  --set dnsimple.token="$$DNSIMPLE_TOKEN" \
 	  --set clusterIssuer.production.enabled=true \
 	  --set clusterIssuer.staging.enabled=true \
 	  --set clusterIssuer.email=$(CERT_EMAIL) \
