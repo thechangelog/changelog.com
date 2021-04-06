@@ -12,6 +12,13 @@ data:
             enabled: true
             scrape_integration: true
             include_exporter_metrics: true
+        process_exporter:
+            enabled: true
+            scrape_integration: true
+            process_names:
+            - name: "{{.Comm}}"
+              cmdline:
+              - '.+'
         prometheus_remote_write:
           - basic_auth:
                 password: ${REMOTE_WRITE_PASSWORD}
