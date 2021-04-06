@@ -17,6 +17,7 @@
 
     <p>If you want to reach developers, <em>we can help you</em>.</p>
 
+    <a id="podcast" class="anchor"></a>
     <h2>The Changelog (Podcast)</h2>
 
     <p>A weekly conversation with the hackers, leaders, and innovators of software development.</p>
@@ -35,6 +36,7 @@
 
     <hr>
 
+    <a id="news" class="anchor"></a>
     <h2>Changelog News (Newsfeed + Newsletter)</h2>
 
     <p>Our realtime editorialized newsfeed and newsletter covering the latest news and podcasts for developers. It's what developers read to keep up.</p>
@@ -83,6 +85,7 @@
 
     <hr>
 
+    <a id="gotime" class="anchor"></a>
     <h2>Go Time</h2>
 
     <p>Each week a rotating panel of experts are joined by occasional special guests to discuss cloud infrastructure, distributed systems, microservices, Kubernetes...oh, and also Go!</p>
@@ -101,6 +104,7 @@
 
     <hr>
 
+    <a id="jsparty" class="anchor"></a>
     <h2>JS Party</h2>
 
     <p>Each week a rotating panel of experts are joined by occasional special guests to discuss the latest in JavaScript and the web platform.</p>
@@ -119,6 +123,7 @@
 
     <hr>
 
+    <a id="practicalai" class="anchor"></a>
     <h2>Practical AI</h2>
 
     <p>Journey into the world of artificial intelligence from the lens of expert AI practitioners. We're making artificial intelligence practical, productive, and accessible to developers.</p>
@@ -136,6 +141,7 @@
 
     <hr>
 
+    <a id="founderstalk" class="anchor"></a>
     <h2>Founders Talk</h2>
 
     <p>In-depth one-on-one conversations with founders, CEOs, and makers where we discuss their journey, lessons learned, and the struggles they go through to build and run their business.</p>
@@ -153,6 +159,7 @@
 
     <hr>
 
+    <a id="conferences" class="anchor"></a>
     <h2>Conference Partnering</h2>
 
     <p>We love to partner with conferences and community leaders! We have several options on how we can support and partner with you. We can come in as a media partner to help promote your event, bring a live show to the conference, speak with featured speakers on our podcasts, or other creative ways we can be involved.</p>
