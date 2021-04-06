@@ -12,6 +12,11 @@ data:
             enabled: true
             scrape_integration: true
             include_exporter_metrics: true
+        prometheus_remote_write:
+          - basic_auth:
+                password: ${REMOTE_WRITE_PASSWORD}
+                username: ${REMOTE_WRITE_USERNAME}
+            url: ${REMOTE_WRITE_URL}
     prometheus:
         configs:
           - host_filter: true

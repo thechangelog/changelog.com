@@ -1,28 +1,5 @@
 GRAFANA_CLOUD_NAMESPACE := grafana-cloud
 
-# TODO: Delete after we have confirmed that grafana-agent node_exporter works correctly
-# NODE_EXPORTER_RELEASES := https://github.com/prometheus-community/helm-charts/releases
-# NODE_EXPORTER_VERSION := 1.16.2
-# NODE_EXPORTER_DIR := $(CURDIR)/tmp/prometheus-node-exporter-$(NODE_EXPORTER_VERSION)
-
-# $(NODE_EXPORTER_DIR):
-# 	git clone \
-# 	  --branch prometheus-node-exporter-$(NODE_EXPORTER_VERSION) --single-branch --depth 1 \
-# 	  https://github.com/prometheus-community/helm-charts.git $(NODE_EXPORTER_DIR)
-
-# tmp/node-exporter: $(NODE_EXPORTER_DIR)
-
-# .PHONY: lke-node-exporter
-# lke-node-exporter: | lke-ctx $(HELM) $(NODE_EXPORTER_DIR)
-# 	$(HELM) upgrade node-exporter $(NODE_EXPORTER_DIR)/charts/prometheus-node-exporter \
-# 	  --install \
-# 	  --namespace $(GRAFANA_CLOUD_NAMESPACE) --create-namespace \
-# 	  --values $(NODE_EXPORTER_DIR)/charts/prometheus-node-exporter/values.yaml \
-# 	  --set service.listenOnAllInterfaces=false \
-# 	  --version $(NODE_EXPORTER_VERSION)
-
-# lke-bootstrap:: lke-node-exporter
-
 GRAFANA_AGENT_RELEASES := https://github.com/grafana/agent/releases
 #TODO: >0.13.0
 GRAFANA_AGENT_VERSION :=  0.13.0+pr.497
@@ -70,3 +47,5 @@ lke-grafana-agent-loki: | lke-ctx $(ENVSUBST) $(GRAFANA_AGENT_DIR)
 .PHONY: lke-grafana-cloud
 lke-grafana-cloud: lke-grafana-agent lke-grafana-agent-loki
 lke-bootstrap:: lke-grafana-cloud
+
+#TODO: combine metrics & logs grafana-agent into a single one
