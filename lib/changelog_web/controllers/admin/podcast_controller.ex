@@ -61,6 +61,10 @@ defmodule ChangelogWeb.Admin.PodcastController do
     end
   end
 
+  def show(conn = %{assigns: %{podcast: podcast}}, _params) do
+    redirect(conn, to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
+  end
+
   def edit(conn = %{assigns: %{podcast: podcast}}, _params) do
     podcast =
       podcast
