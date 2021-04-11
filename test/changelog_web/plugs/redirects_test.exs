@@ -15,7 +15,7 @@ defmodule ChangelogWeb.RedirectsTest do
         assert location == path_or_url
 
       true ->
-        assert location == "https://changelog.com#{path_or_url}"
+        assert location == "https://#{ChangelogWeb.Endpoint.host}#{path_or_url}"
     end
   end
 
@@ -23,36 +23,36 @@ defmodule ChangelogWeb.RedirectsTest do
     build_conn(:get, path) |> put_req_header("host", host)
   end
 
-  test "sponsor redirects for changelog.com host" do
+  test "sponsor redirects for default host" do
     conn =
-      build_conn_with_host_and_path("changelog.com", "/sentry")
+      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host, "/sentry")
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "https://sentry.io/from/changelog/")
   end
 
-  test "internal redirects for changelog.com host" do
+  test "internal redirects for default host" do
     conn =
-      build_conn_with_host_and_path("changelog.com", "/podcast/rss")
+      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host, "/podcast/rss")
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "/podcast/feed")
   end
 
-  test "podcast redirects for changelog.com host" do
+  test "podcast redirects for default host" do
     conn =
-      build_conn_with_host_and_path("changelog.com", "/1000?utm=yo")
+      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host, "/1000?utm=yo")
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "/podcast/1000?utm=yo")
   end
 
-  test "domain redirects for 2020" do
+  test "domain redirects for apex host" do
     conn =
-      build_conn_with_host_and_path("2020.changelog.com", "/jsparty/103")
+      build_conn_with_host_and_path("changelog.com", "/jsparty/103")
       |> Plug.Redirects.call([])
 
-    assert_redirect(conn, "https://changelog.com/jsparty/103", 301)
+    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/jsparty/103", 301)
   end
 
   test "it no-ops for other hosts" do
