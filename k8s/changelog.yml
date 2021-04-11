@@ -5,6 +5,32 @@ metadata:
   annotations:
     openfaas: "1"
 ---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: cdn.changelog.com
+  namespace: prod-2020-07
+spec:
+  endpoints:
+  - dnsName: cdn.changelog.com
+    recordTTL: 60
+    recordType: CNAME
+    targets:
+    - dualstack.changelog.map.fastly.net
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: www.changelog.com
+  namespace: prod-2020-07
+spec:
+  endpoints:
+  - dnsName: www.changelog.com
+    recordTTL: 60
+    recordType: CNAME
+    targets:
+    - dualstack.changelog.map.fastly.net
+---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -19,8 +45,8 @@ spec:
   tls:
   - hosts:
     - changelog.com
-    - www.changelog.com
     - 2020.changelog.com
+    - origin.changelog.com
     secretName: wildcard-acme-tls-pkcs8
   - hosts:
     - brainscience.fm
@@ -47,13 +73,13 @@ spec:
       - backend:
           serviceName: app
           servicePort: 4000
-  - host: www.changelog.com
+  - host: 2020.changelog.com
     http:
       paths:
       - backend:
           serviceName: app
           servicePort: 4000
-  - host: 2020.changelog.com
+  - host: origin.changelog.com
     http:
       paths:
       - backend:
@@ -381,7 +407,7 @@ spec:
         - name: UPLOADS_PATH
           value: priv/uploads
         - name: URL_HOST
-          value: changelog.com
+          value: www.changelog.com
         - name: URL_PORT
           value: "443"
         - name: URL_SCHEME

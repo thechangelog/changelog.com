@@ -103,15 +103,6 @@ $(LPASS):
 	@sudo apt-get update && sudo apt-get install lastpass-cli
 endif
 
-TERRAFORM := /usr/local/bin/terraform
-$(TERRAFORM):
-ifeq ($(PLATFORM),Darwin)
-	@brew install terraform
-endif
-ifeq ($(PLATFORM),Linux)
-	$(error $(RED)Please install $(BOLD)Terraform v0.13$(NORMAL) in $(TERRAFORM): https://www.terraform.io/downloads.html)
-endif
-
 ifeq ($(PLATFORM),Darwin)
 WATCH := /usr/local/bin/watch
 $(WATCH):
@@ -123,14 +114,6 @@ endif
 WATCH_MAKE_TARGET = $(WATCH) --color $(MAKE) --makefile $(MAKEFILE) --no-print-directory
 
 SECRETS := mkdir -p $(XDG_CONFIG_HOME)/.config && $(LPASS) ls "Shared-changelog/secrets"
-
-TF := cd terraform && $(TERRAFORM)
-
-# Enable Terraform debugging if make runs in debug mode
-ifneq (,$(findstring d,$(MFLAGS)))
-  TF_LOG ?= debug
-  export TF_LOG
-endif
 
 ifeq ($(PLATFORM),Darwin)
 AWS := /usr/local/bin/aws
@@ -215,27 +198,6 @@ cdv: check-deployed-version
 
 priv/db:
 	@mkdir -p priv/db
-
-.PHONY: iaas
-iaas: dnsimple-creds init validate apply
-.PHONY: i
-i: iaas
-
-.PHONY: init
-init: $(TERRAFORM)
-	@$(TF) init
-
-.PHONY: validate
-validate: $(TERRAFORM)
-	@$(TF) validate
-
-.PHONY: plan
-plan: $(TERRAFORM)
-	@$(TF) plan
-
-.PHONY: apply
-apply: $(TERRAFORM)
-	@$(TF) apply
 
 CHANGELOG_SERVICES_SEPARATOR := ----------------------------------------------------------------------------------------
 define CHANGELOG_SERVICES
