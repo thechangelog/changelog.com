@@ -8,6 +8,11 @@ defmodule ChangelogWeb.Router do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
+  pipeline :redirects do
+    plug Plug.Redirects
+    plug Plug.VanityDomains
+  end
+
   pipeline :browser do
     plug :accepts, ["html", "js"]
     plug :fetch_session
@@ -37,9 +42,7 @@ defmodule ChangelogWeb.Router do
   end
 
   pipeline :public do
-    plug Plug.Redirects
     plug Plug.LoadPodcasts
-    plug Plug.VanityDomains
   end
 
   scope "/auth", ChangelogWeb do
@@ -151,7 +154,7 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/", ChangelogWeb do
-    pipe_through [:browser, :public]
+    pipe_through [:redirects, :browser, :public]
 
     get "/join", PersonController, :join, as: :person
     post "/join", PersonController, :join, as: :person
