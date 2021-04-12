@@ -52,7 +52,7 @@ defmodule ChangelogWeb.RedirectsTest do
       build_conn_with_host_and_path("changelog.com", "/jsparty/103")
       |> Plug.Redirects.call([])
 
-    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/jsparty/103", 301)
+    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/jsparty/103", 302)
   end
 
   test "it no-ops for other hosts" do

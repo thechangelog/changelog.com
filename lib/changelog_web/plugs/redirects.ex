@@ -48,7 +48,7 @@ defmodule ChangelogWeb.Plug.Redirects do
 
   defp domain_redirects(conn = %{request_path: path}) do
     conn
-    |> Plug.Conn.put_status(301)
+    |> Plug.Conn.put_status(302)
     |> Redirect.call(external: "https://#{ChangelogWeb.Endpoint.host}" <> path)
   end
 
