@@ -47,7 +47,7 @@ defmodule Changelog.Slack.Client do
 
   defp open_im(user_id) do
     token = Application.get_env(:changelog, :slack_app_api_token)
-    form = ~s(token=#{token}&user=#{user_id})
+    form = ~s(token=#{token}&users=#{user_id})
     "/conversations.open" |> post(form) |> handle()
   end
 end
