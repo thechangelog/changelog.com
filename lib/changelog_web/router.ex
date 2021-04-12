@@ -8,9 +8,15 @@ defmodule ChangelogWeb.Router do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
-  pipeline :redirects do
+  # should be used before :browser pipeline to avoid auth and cache headers
+  pipeline :public do
+    plug Plug.LoadPodcasts
     plug Plug.Redirects
     plug Plug.VanityDomains
+  end
+
+  pipeline :admin do
+    plug Plug.AdminLayoutPlug
   end
 
   pipeline :browser do
@@ -37,16 +43,8 @@ defmodule ChangelogWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :admin do
-    plug Plug.AdminLayoutPlug
-  end
-
-  pipeline :public do
-    plug Plug.LoadPodcasts
-  end
-
   scope "/auth", ChangelogWeb do
-    pipe_through [:browser, :public]
+    pipe_through [:public, :browser]
 
     for provider <- ~w(github twitter) do
       get "/#{provider}", AuthController, :request, as: "#{provider}_auth"
@@ -56,7 +54,7 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/admin", ChangelogWeb.Admin, as: :admin do
-    pipe_through [:browser, :admin]
+    pipe_through [:admin, :browser]
 
     get "/", PageController, :index
     get "/purge", PageController, :purge
@@ -154,7 +152,7 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/", ChangelogWeb do
-    pipe_through [:redirects, :browser, :public]
+    pipe_through [:public, :browser]
 
     get "/join", PersonController, :join, as: :person
     post "/join", PersonController, :join, as: :person
