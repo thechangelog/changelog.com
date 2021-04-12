@@ -3,6 +3,7 @@ defmodule Changelog.Sentry do
     @behaviour Sentry.EventFilter
 
     def exclude_exception?(%Ecto.NoResultsError{}, :plug), do: true
+    def exclude_exception?(%Plug.Conn.AlreadySentError{}, :plug), do: true
     def exclude_exception?(%Plug.Static.InvalidPathError{}, :plug), do: true
     def exclude_exception?(%Phoenix.NotAcceptableError{}, :plug), do: true
     def exclude_exception?(%Phoenix.Router.NoRouteError{}, :plug), do: true
