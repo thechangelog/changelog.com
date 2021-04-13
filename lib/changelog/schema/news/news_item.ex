@@ -199,7 +199,6 @@ defmodule Changelog.NewsItem do
       left_join: author in assoc(news_item, :author),
       left_join: comments in assoc(news_item, :comments),
       left_join: submitter in assoc(news_item, :submitter),
-      left_join: topics in assoc(news_item, :topics),
       left_join: source in assoc(news_item, :source),
       left_join: logger in assoc(news_item, :logger),
       left_join: news_item_topics in assoc(news_item, :news_item_topics),
@@ -208,15 +207,14 @@ defmodule Changelog.NewsItem do
       where: news_item.published_at <= ^Timex.now(),
       where: not news_item.feed_only,
       where: news_item.pinned,
-      order_by: [desc: :published_at, asc: news_item_topics.position, asc: topics.id],
+      order_by: [desc: :published_at, asc: news_item_topics.position],
       preload: [
         author: author,
         comments: comments,
         submitter: submitter,
-        topics: topics,
+        topics: news_item_topics_topic,
         source: source,
-        logger: logger,
-        news_item_topics: {news_item_topics, topic: news_item_topics_topic}
+        logger: logger
       ]
     )
     |> Repo.all()
@@ -245,21 +243,19 @@ defmodule Changelog.NewsItem do
         left_join: author in assoc(news_item, :author),
         left_join: comments in assoc(news_item, :comments),
         left_join: submitter in assoc(news_item, :submitter),
-        left_join: topics in assoc(news_item, :topics),
         left_join: source in assoc(news_item, :source),
         left_join: logger in assoc(news_item, :logger),
         left_join: news_item_topics in assoc(news_item, :news_item_topics),
         left_join: news_item_topics_topic in assoc(news_item_topics, :topic),
         where: news_item.id in ^news_item_ids,
-        order_by: [desc: :published_at, asc: news_item_topics.position, desc: topics.id],
+        order_by: [desc: :published_at, asc: news_item_topics.position],
         preload: [
           author: author,
           comments: comments,
           submitter: submitter,
-          topics: topics,
+          topics: news_item_topics_topic,
           source: source,
-          logger: logger,
-          news_item_topics: {news_item_topics, topic: news_item_topics_topic}
+          logger: logger
         ]
       )
       |> Repo.all()
