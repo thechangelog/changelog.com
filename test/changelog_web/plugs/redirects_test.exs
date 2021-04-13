@@ -7,6 +7,12 @@ defmodule ChangelogWeb.RedirectsTest do
     location = conn |> get_resp_header("location") |> List.first()
     assert conn.status == status
 
+    cache_control = conn |> get_resp_header("cache-control")
+    assert cache_control == ["max-age=0, private, must-revalidate"]
+
+    surrogate_control = conn |> get_resp_header("surrogate-control")
+    assert surrogate_control == []
+
     cond do
       location == path_or_url ->
         assert true
@@ -48,6 +54,14 @@ defmodule ChangelogWeb.RedirectsTest do
   end
 
   test "domain redirects for apex host" do
+    conn =
+      build_conn_with_host_and_path("changelog.com", "/")
+      |> Plug.Redirects.call([])
+
+    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/", 302)
+  end
+
+  test "podcast redirects for apex host" do
     conn =
       build_conn_with_host_and_path("changelog.com", "/jsparty/103")
       |> Plug.Redirects.call([])
