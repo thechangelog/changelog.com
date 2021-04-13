@@ -1,12 +1,197 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${NAMESPACE}
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: grafana-agent-logs
+  name: grafana-agent
   namespace: ${NAMESPACE}
 ---
 apiVersion: v1
 data:
-  agent.yaml: |
+  agent.yml: |
+    integrations:
+        node_exporter:
+            enabled: true
+            scrape_integration: true
+            include_exporter_metrics: true
+        process_exporter:
+            enabled: true
+            scrape_integration: true
+            process_names:
+            - name: "{{.Comm}}"
+              cmdline:
+              - '.+'
+        prometheus_remote_write:
+            - basic_auth:
+                  password: ${REMOTE_WRITE_PASSWORD}
+                  username: ${REMOTE_WRITE_USERNAME}
+              url: ${REMOTE_WRITE_URL}
+    prometheus:
+        configs:
+          - host_filter: true
+            name: agent
+            remote_write:
+              - basic_auth:
+                    password: ${REMOTE_WRITE_PASSWORD}
+                    username: ${REMOTE_WRITE_USERNAME}
+                url: ${REMOTE_WRITE_URL}
+            scrape_configs:
+              - job_name: kubernetes-pods
+                kubernetes_sd_configs:
+                  - role: pod
+                relabel_configs:
+                  - action: drop
+                    regex: "false"
+                    source_labels:
+                      - __meta_kubernetes_pod_annotation_prometheus_io_scrape
+                  - action: keep
+                    regex: .*-metrics
+                    source_labels:
+                      - __meta_kubernetes_pod_container_port_name
+                  - action: replace
+                    regex: (https?)
+                    replacement: $1
+                    source_labels:
+                      - __meta_kubernetes_pod_annotation_prometheus_io_scheme
+                    target_label: __scheme__
+                  - action: replace
+                    regex: (.+)
+                    replacement: $1
+                    source_labels:
+                      - __meta_kubernetes_pod_annotation_prometheus_io_path
+                    target_label: __metrics_path__
+                  - action: replace
+                    regex: (.+?)(\:\d+)?;(\d+)
+                    replacement: $1:$3
+                    source_labels:
+                      - __address__
+                      - __meta_kubernetes_pod_annotation_prometheus_io_port
+                    target_label: __address__
+                  - action: drop
+                    regex: ""
+                    source_labels:
+                      - __meta_kubernetes_pod_label_name
+                  - action: replace
+                    replacement: $1
+                    separator: /
+                    source_labels:
+                      - __meta_kubernetes_namespace
+                      - __meta_kubernetes_pod_label_name
+                    target_label: job
+                  - action: replace
+                    source_labels:
+                      - __meta_kubernetes_namespace
+                    target_label: namespace
+                  - action: replace
+                    source_labels:
+                      - __meta_kubernetes_pod_name
+                    target_label: pod
+                  - action: replace
+                    source_labels:
+                      - __meta_kubernetes_pod_container_name
+                    target_label: container
+                  - action: replace
+                    separator: ':'
+                    source_labels:
+                      - __meta_kubernetes_pod_name
+                      - __meta_kubernetes_pod_container_name
+                      - __meta_kubernetes_pod_container_port_name
+                    target_label: instance
+                  - action: labelmap
+                    regex: __meta_kubernetes_pod_annotation_prometheus_io_param_(.+)
+                    replacement: __param_$1
+                  - action: drop
+                    regex: Succeeded|Failed
+                    source_labels:
+                      - __meta_kubernetes_pod_phase
+              - job_name: ${NAMESPACE}/kube-state-metrics
+                kubernetes_sd_configs:
+                  - namespaces:
+                        names:
+                          - ${NAMESPACE}
+                    role: pod
+                relabel_configs:
+                  - action: keep
+                    regex: kube-state-metrics
+                    source_labels:
+                      - __meta_kubernetes_pod_label_name
+                  - action: replace
+                    separator: ':'
+                    source_labels:
+                      - __meta_kubernetes_pod_name
+                      - __meta_kubernetes_pod_container_name
+                      - __meta_kubernetes_pod_container_port_name
+                    target_label: instance
+              - job_name: ${NAMESPACE}/node-exporter
+                kubernetes_sd_configs:
+                  - namespaces:
+                        names:
+                          - ${NAMESPACE}
+                    role: pod
+                relabel_configs:
+                  - action: keep
+                    regex: node-exporter
+                    source_labels:
+                      - __meta_kubernetes_pod_label_name
+                  - action: replace
+                    source_labels:
+                      - __meta_kubernetes_pod_node_name
+                    target_label: instance
+                  - action: replace
+                    source_labels:
+                      - __meta_kubernetes_namespace
+                    target_label: namespace
+              - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+                job_name: kube-system/kubelet
+                kubernetes_sd_configs:
+                  - role: node
+                relabel_configs:
+                  - replacement: kubernetes.default.svc.cluster.local:443
+                    target_label: __address__
+                  - replacement: https
+                    target_label: __scheme__
+                  - regex: (.+)
+                    replacement: /api/v1/nodes/${1}/proxy/metrics
+                    source_labels:
+                      - __meta_kubernetes_node_name
+                    target_label: __metrics_path__
+                tls_config:
+                    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                    insecure_skip_verify: false
+              - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+                job_name: kube-system/cadvisor
+                kubernetes_sd_configs:
+                  - role: node
+                metric_relabel_configs:
+                  - action: drop
+                    regex: container_([a-z_]+);
+                    source_labels:
+                      - __name__
+                      - image
+                  - action: drop
+                    regex: container_(network_tcp_usage_total|network_udp_usage_total|tasks_state|cpu_load_average_10s)
+                    source_labels:
+                      - __name__
+                relabel_configs:
+                  - replacement: kubernetes.default.svc.cluster.local:443
+                    target_label: __address__
+                  - regex: (.+)
+                    replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+                    source_labels:
+                      - __meta_kubernetes_node_name
+                    target_label: __metrics_path__
+                scheme: https
+                tls_config:
+                    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                    insecure_skip_verify: false
+        global:
+            scrape_interval: 15s
+        wal_directory: /var/lib/agent/data
+    server:
+        log_level: info
     loki:
         configs:
           - clients:
@@ -260,18 +445,57 @@ data:
                       - __meta_kubernetes_pod_container_name
                     target_label: __path__
         positions_directory: /tmp/positions
+kind: ConfigMap
+metadata:
+  name: grafana-agent
+  namespace: ${NAMESPACE}
+---
+apiVersion: v1
+data:
+  agent.yml: |
+    prometheus:
+        configs:
+          - host_filter: false
+            name: agent
+            remote_write:
+              - basic_auth:
+                    password: ${REMOTE_WRITE_PASSWORD}
+                    username: ${REMOTE_WRITE_USERNAME}
+                url: ${REMOTE_WRITE_URL}
+            scrape_configs:
+              - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+                job_name: default/kubernetes
+                kubernetes_sd_configs:
+                  - role: endpoints
+                metric_relabel_configs:
+                  - action: keep
+                    regex: workqueue_queue_duration_seconds_bucket|process_cpu_seconds_total|process_resident_memory_bytes|workqueue_depth|rest_client_request_duration_seconds_bucket|workqueue_adds_total|up|rest_client_requests_total|apiserver_request_total|go_goroutines
+                    source_labels:
+                      - __name__
+                relabel_configs:
+                  - action: keep
+                    regex: apiserver
+                    source_labels:
+                      - __meta_kubernetes_service_label_component
+                scheme: https
+                tls_config:
+                    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                    insecure_skip_verify: false
+                    server_name: kubernetes
+        global:
+            scrape_interval: 15s
+        wal_directory: /var/lib/agent/data
     server:
-        http_listen_port: 8080
         log_level: info
 kind: ConfigMap
 metadata:
-  name: grafana-agent-logs
+  name: grafana-agent-deployment
   namespace: ${NAMESPACE}
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: grafana-agent-logs
+  name: grafana-agent
 rules:
 - apiGroups:
   - ""
@@ -290,37 +514,38 @@ rules:
   verbs:
   - get
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: grafana-agent-logs
+  name: grafana-agent
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: grafana-agent-logs
+  name: grafana-agent
 subjects:
 - kind: ServiceAccount
-  name: grafana-agent-logs
+  name: grafana-agent
   namespace: ${NAMESPACE}
 ---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: grafana-agent-logs
+  name: grafana-agent
   namespace: ${NAMESPACE}
 spec:
   minReadySeconds: 10
   selector:
     matchLabels:
-      name: grafana-agent-logs
+      name: grafana-agent
   template:
     metadata:
       labels:
-        name: grafana-agent-logs
+        name: grafana-agent
     spec:
       containers:
       - args:
-        - -config.file=/etc/agent/agent.yaml
+        - -config.file=/etc/agent/agent.yml
+        - -prometheus.wal-directory=/tmp/agent/data
         command:
         - /bin/agent
         env:
@@ -328,18 +553,18 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-        image: grafana/agent:v0.13.0
+        image: grafana/agent:v${GRAFANA_AGENT_VERSION}
         imagePullPolicy: IfNotPresent
         name: agent
         ports:
-        - containerPort: 8080
+        - containerPort: 80
           name: http-metrics
         securityContext:
           privileged: true
           runAsUser: 0
         volumeMounts:
         - mountPath: /etc/agent
-          name: grafana-agent-logs
+          name: grafana-agent
         - mountPath: /var/log
           name: varlog
         - mountPath: /var/lib/docker/containers
@@ -348,14 +573,14 @@ spec:
         - mountPath: /etc/machine-id
           name: etcmachineid
           readOnly: true
-      serviceAccount: grafana-agent-logs
+      serviceAccount: grafana-agent
       tolerations:
       - effect: NoSchedule
         operator: Exists
       volumes:
       - configMap:
-          name: grafana-agent-logs
-        name: grafana-agent-logs
+          name: grafana-agent
+        name: grafana-agent
       - hostPath:
           path: /var/log
         name: varlog
@@ -367,3 +592,49 @@ spec:
         name: etcmachineid
   updateStrategy:
     type: RollingUpdate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-agent-deployment
+  namespace: ${NAMESPACE}
+spec:
+  minReadySeconds: 10
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: grafana-agent-deployment
+  template:
+    metadata:
+      labels:
+        name: grafana-agent-deployment
+    spec:
+      containers:
+      - args:
+        - -config.file=/etc/agent/agent.yml
+        - -prometheus.wal-directory=/tmp/agent/data
+        command:
+        - /bin/agent
+        env:
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        image: grafana/agent:v${GRAFANA_AGENT_VERSION}
+        imagePullPolicy: IfNotPresent
+        name: agent
+        ports:
+        - containerPort: 80
+          name: http-metrics
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        volumeMounts:
+        - mountPath: /etc/agent
+          name: grafana-agent-deployment
+      serviceAccount: grafana-agent
+      volumes:
+      - configMap:
+          name: grafana-agent-deployment
+        name: grafana-agent-deployment
