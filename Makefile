@@ -199,42 +199,6 @@ cdv: check-deployed-version
 priv/db:
 	@mkdir -p priv/db
 
-CHANGELOG_SERVICES_SEPARATOR := ----------------------------------------------------------------------------------------
-define CHANGELOG_SERVICES
-
-                                                                        $(BOLD)$(RED)Private$(NORMAL)   $(BOLD)$(GREEN)Public$(NORMAL)
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Fastly$(NORMAL)                   | https://manage.fastly.com/services/all                    |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Linode$(NORMAL)                   | https://cloud.linode.com/dashboard                        |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Pivotal Tracker$(NORMAL)          | https://www.pivotaltracker.com/n/projects/1650121         |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Rollbar Dashboard$(NORMAL)        | https://rollbar.com/changelogmedia/changelog.com/         |
-| $(BOLD)$(RED)Rollbar Deploys$(NORMAL)          | https://rollbar.com/changelogmedia/changelog.com/deploys/ |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(RED)Pingdom Uptime$(NORMAL)           | https://my.pingdom.com/reports/uptime                     |
-| $(BOLD)$(RED)Pingdom Page Speed$(NORMAL)       | https://my.pingdom.com/reports/rbc                        |
-| $(BOLD)$(RED)Pingdom Visitor Insights$(NORMAL) | https://my.pingdom.com/3/visitor-insights                 |
-| $(BOLD)$(GREEN)Pingdom Status$(NORMAL)           | http://status.changelog.com/                              |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)DockerHub$(NORMAL)                | https://hub.docker.com/u/thechangelog                     |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)CircleCI$(NORMAL)                 | https://app.circleci.com/pipelines/github/thechangelog    |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)GitHub$(NORMAL)                   | https://github.com/thechangelog/changelog.com             |
-$(CHANGELOG_SERVICES_SEPARATOR)
-| $(BOLD)$(GREEN)Slack$(NORMAL)                    | https://changelog.slack.com/                              |
-$(CHANGELOG_SERVICES_SEPARATOR)
-
-endef
-export CHANGELOG_SERVICES
-.PHONY: list-services
-list-services: ## ls  | List of all services used by changelog.com
-	@echo "$$CHANGELOG_SERVICES"
-.PHONY: ls
-ls: list-services
-
 .PHONY: preview-readme
 preview-readme: $(DOCKER) ## pre | Preview README & live reload on edit
 	@$(DOCKER) run --interactive --tty --rm --name changelog_md \
