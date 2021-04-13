@@ -14,7 +14,8 @@ defmodule ChangelogWeb.Endpoint do
     gzip: false,
     headers: %{
       "accept-ranges" => "bytes",
-      "surrogate-control" => "max-age=604800, stale-if-error=604800"
+      "surrogate-control" =>
+        Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
     }
 
   # Legacy assets that will exist in production & may exist in dev
@@ -23,7 +24,9 @@ defmodule ChangelogWeb.Endpoint do
     from: {:changelog, "priv/wp-content"},
     gzip: false,
     headers: %{
-      "cache-control" => "max-age=315360000, public"
+      "cache-control" => "max-age=#{3600 * 24 * 366}, public",
+      "surrogate-control" =>
+        Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
     }
 
   # Serve at "/" the static files from "priv/static" directory.

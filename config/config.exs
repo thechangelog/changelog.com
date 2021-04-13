@@ -9,7 +9,13 @@ config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi",
   render_errors: [accepts: ~w(html json)],
-  pubsub_server: Changelog.PubSub
+  pubsub_server: Changelog.PubSub,
+  cdn_static_cache: SecretOrEnv.get(
+    "CDN_STATIC_CACHE",
+    "max-age=#{3600*24*7}, stale-while-revalidate=3600, stale-if-error=#{3600*24*7}"),
+  cdn_app_cache: SecretOrEnv.get(
+    "CDN_APP_CACHE",
+    "max-age=60, stale-while-revalidate=60, stale-if-error=#{3600*24*7}")
 
 config :changelog,
   ecto_repos: [Changelog.Repo],
