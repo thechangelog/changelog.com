@@ -1,4 +1,5 @@
 // this script gets uploaded directly to Fastly for serving.
+// manually compress: uglifyjs assets/embedder.js --mangle --compress | sed "s/\"/'/g"
 (function(d) {
   var origin = "https://changelog.com";
   var embeds = d.getElementsByClassName("changelog-episode");

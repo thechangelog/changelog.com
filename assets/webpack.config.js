@@ -111,5 +111,12 @@ module.exports = [
       new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
       new MiniCssExtractPlugin({filename: "css/admin.css"})
     ]
-  })
+  }),
+  {
+    entry: [__dirname + "/embedder.js"],
+    output: {
+      path: __dirname + "/../priv/static",
+      filename: "embed.js"
+    }
+  }
 ];
