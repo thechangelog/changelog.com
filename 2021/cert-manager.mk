@@ -2,7 +2,7 @@ CERT_DOMAIN := changelog.com
 CERT_EMAIL := services@changelog.com
 
 CERT_MANAGER_RELEASES := https://github.com/jetstack/cert-manager/releases
-CERT_MANAGER_VERSION := 1.2.0
+CERT_MANAGER_VERSION := 1.3.0
 CERT_MANAGER_NAMESPACE := cert-manager
 .PHONY: lke-cert-manager
 lke-cert-manager: | lke-ctx

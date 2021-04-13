@@ -1,5 +1,5 @@
 INGRESS_NGINX_RELEASES := https://github.com/kubernetes/ingress-nginx/releases
-INGRESS_NGINX_VERSION := 3.26.0
+INGRESS_NGINX_VERSION := 3.29.0
 INGRESS_NGINX_DIR := $(CURDIR)/tmp/ingress-nginx-$(INGRESS_NGINX_VERSION)
 
 $(INGRESS_NGINX_DIR):
