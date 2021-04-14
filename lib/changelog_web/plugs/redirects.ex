@@ -33,7 +33,6 @@ defmodule ChangelogWeb.Plug.Redirects do
   def call(conn, _opts) do
     default_host = ChangelogWeb.Endpoint.host
     case get_host(conn) do
-      "changelog.com" -> domain_redirects(conn)
       ^default_host -> changelog_redirects(conn)
       _else -> conn
     end
@@ -44,12 +43,6 @@ defmodule ChangelogWeb.Plug.Redirects do
     |> internal_redirect()
     |> podcast_redirect()
     |> external_redirect()
-  end
-
-  defp domain_redirects(conn = %{request_path: path}) do
-    conn
-    |> Plug.Conn.put_status(302)
-    |> Redirect.call(external: "https://#{ChangelogWeb.Endpoint.host}" <> path)
   end
 
   defp internal_redirect(conn = %{halted: true}), do: conn

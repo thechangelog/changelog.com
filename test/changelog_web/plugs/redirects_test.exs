@@ -53,22 +53,6 @@ defmodule ChangelogWeb.RedirectsTest do
     assert_redirect(conn, "/podcast/1000?utm=yo")
   end
 
-  test "domain redirects for apex host" do
-    conn =
-      build_conn_with_host_and_path("changelog.com", "/")
-      |> Plug.Redirects.call([])
-
-    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/", 302)
-  end
-
-  test "podcast redirects for apex host" do
-    conn =
-      build_conn_with_host_and_path("changelog.com", "/jsparty/103")
-      |> Plug.Redirects.call([])
-
-    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/jsparty/103", 302)
-  end
-
   test "it no-ops for other hosts" do
     conn =
       :get
