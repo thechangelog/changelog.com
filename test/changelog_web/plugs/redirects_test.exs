@@ -61,4 +61,20 @@ defmodule ChangelogWeb.RedirectsTest do
 
     assert conn.status != 302
   end
+
+  test "www redirects" do
+    conn =
+      build_conn_with_host_and_path("www.changelog.com", "/")
+      |> Plug.Redirects.call([])
+
+    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/", 301)
+  end
+
+  test "podcast redirects for www" do
+    conn =
+      build_conn_with_host_and_path("www.changelog.com", "/jsparty/103")
+      |> Plug.Redirects.call([])
+
+    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/jsparty/103", 301)
+  end
 end
