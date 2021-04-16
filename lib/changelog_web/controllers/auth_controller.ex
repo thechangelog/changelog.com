@@ -69,7 +69,6 @@ defmodule ChangelogWeb.AuthController do
     person |> Person.sign_in_changes() |> Repo.update()
 
     conn
-    |> assign(:current_user, person)
     |> put_flash(:success, "Welcome to Changelog!")
     |> put_session("id", person.id)
     |> configure_session(renew: true)
