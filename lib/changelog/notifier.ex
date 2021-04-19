@@ -153,10 +153,14 @@ defmodule Changelog.Notifier do
 
   defp deliver_episode_request_email(%{episode_request: nil}), do: false
 
-  defp deliver_episode_request_email(%{episode_request: request}) do
-    request
-    |> Email.episode_request_published()
-    |> Mailer.deliver_later()
+  defp deliver_episode_request_email(%{episode_request: request, guests: guests}) do
+    request = EpisodeRequest.preload_submitter(request)
+
+    if !Enum.member?(guests, request.submitter) do
+      request
+      |> Email.episode_request_published()
+      |> Mailer.deliver_later()
+    end
   end
 
   defp deliver_episode_transcribed_email(person, episode) do

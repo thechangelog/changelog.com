@@ -202,6 +202,18 @@ defmodule Changelog.NotifierTest do
       assert_delivered_email(Email.episode_request_published(request))
     end
 
+    test "when episode was requested by a guest on the episode" do
+      podcast = insert(:podcast)
+      submitter = insert(:person)
+      request = insert(:episode_request, podcast: podcast, submitter: submitter)
+      episode = insert(:published_episode, podcast: podcast, episode_request: request)
+      insert(:episode_guest, episode: episode, person: submitter, thanks: false)
+      item = episode |> episode_news_item() |> insert()
+
+      Notifier.notify(item)
+      assert_no_emails_delivered()
+    end
+
     test "when podcast has subscriptions" do
       podcast = insert(:podcast)
       s1 = insert(:subscription_on_podcast, podcast: podcast)
