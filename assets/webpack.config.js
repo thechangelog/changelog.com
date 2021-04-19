@@ -43,6 +43,11 @@ let common = {
     new TerserPlugin(),
       new OptimizeCSSAssetsPlugin({})
     ]
+  },
+  devServer: {
+    watchOptions: {
+      ignored: /node_modules/
+    }
   }
 };
 
