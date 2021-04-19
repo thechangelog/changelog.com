@@ -120,7 +120,13 @@ defmodule Changelog.NewsItemTest do
           published_at: NaiveDateTime.utc_now()
         )
 
-      e3 = insert(:episode, podcast: podcast, slug: "182", audio_bytes: 56_304_828)
+      e3 =
+        insert(:episode,
+          podcast: podcast,
+          slug: "182",
+          audio_bytes: 56_304_828,
+          reach_count: 10_000
+        )
 
       i3 =
         insert(:news_item,
@@ -145,7 +151,7 @@ defmodule Changelog.NewsItemTest do
         )
 
       insert(:news_item_topic, news_item: i1, topic: t1)
-      insert(:news_item_topic, news_item: i2, topic: t2)
+      insert(:news_item_topic, news_item: i2, topic: t1)
       insert(:news_item_topic, news_item: i3, topic: t2)
       insert(:news_item_topic, news_item: i4, topic: t2)
 
