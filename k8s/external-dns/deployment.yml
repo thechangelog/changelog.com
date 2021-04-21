@@ -30,6 +30,7 @@ spec:
         - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
         - --crd-source-kind=DNSEndpoint
         - --registry=txt
+        - --txt-prefix=_external-dns.
         - --events
         env:
         - name: EXTERNAL_DNS_TXT_OWNER_ID
