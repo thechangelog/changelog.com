@@ -23,8 +23,8 @@ endif
 # https://tools.ietf.org/html/rfc3339 format - s/:/./g so that Docker tag is valid
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%dT%H.%M.%SZ')
 
-STACK_VERSION ?= 202008
-HOSTNAME ?= 2020.changelog.com
+STACK_VERSION ?= 202104
+HOSTNAME ?= 21.changelog.com
 
 GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
 GIT_SHA ?= $(shell git rev-parse HEAD)
