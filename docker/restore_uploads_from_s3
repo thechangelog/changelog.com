@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+# shellcheck source=docker/load_backups_secrets
+source load_backups_secrets
+
+aws s3 sync \
+  "s3://${AWS_S3_BUCKET:?must be set}/uploads" "${UPLOADS_PATH:?must be set}" 
+
+echo "
+SUCCESS! ${UPLOADS_PATH} was restored from s3://${AWS_S3_BUCKET}/uploads"
