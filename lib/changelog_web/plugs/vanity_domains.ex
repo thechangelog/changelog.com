@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   def call(conn = %{assigns: %{podcasts: podcasts}}, _opts) do
     host = get_host(conn)
     # short-circut because most requests will hit this
-    if host == ChangelogWeb.Endpoint.host do
+    if host == ChangelogWeb.Endpoint.host() do
       conn
     else
       Logger.info("Vanity Redirect: #{host}#{conn.request_path}")
@@ -61,6 +61,6 @@ defmodule ChangelogWeb.Plug.VanityDomains do
 
   defp changelog_destination(parts) do
     path = parts |> List.flatten() |> Enum.join("/")
-    "https://#{ChangelogWeb.Endpoint.host}/#{path}"
+    "https://#{ChangelogWeb.Endpoint.host()}/#{path}"
   end
 end

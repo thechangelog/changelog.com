@@ -21,7 +21,7 @@ defmodule ChangelogWeb.RedirectsTest do
         assert location == path_or_url
 
       true ->
-        assert location == "https://#{ChangelogWeb.Endpoint.host}#{path_or_url}"
+        assert location == "https://#{ChangelogWeb.Endpoint.host()}#{path_or_url}"
     end
   end
 
@@ -31,7 +31,7 @@ defmodule ChangelogWeb.RedirectsTest do
 
   test "sponsor redirects for default host" do
     conn =
-      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host, "/sentry")
+      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/sentry")
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "https://sentry.io/from/changelog/")
@@ -39,7 +39,7 @@ defmodule ChangelogWeb.RedirectsTest do
 
   test "internal redirects for default host" do
     conn =
-      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host, "/podcast/rss")
+      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/podcast/rss")
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "/podcast/feed")
@@ -47,7 +47,7 @@ defmodule ChangelogWeb.RedirectsTest do
 
   test "podcast redirects for default host" do
     conn =
-      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host, "/1000?utm=yo")
+      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/1000?utm=yo")
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "/podcast/1000?utm=yo")
@@ -67,7 +67,7 @@ defmodule ChangelogWeb.RedirectsTest do
       build_conn_with_host_and_path("www.changelog.com", "/")
       |> Plug.Redirects.call([])
 
-    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/", 301)
+    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host()}/", 301)
   end
 
   test "podcast redirects for www" do
@@ -75,6 +75,6 @@ defmodule ChangelogWeb.RedirectsTest do
       build_conn_with_host_and_path("www.changelog.com", "/jsparty/103")
       |> Plug.Redirects.call([])
 
-    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host}/jsparty/103", 301)
+    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host()}/jsparty/103", 301)
   end
 end

@@ -23,7 +23,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     if String.starts_with?(path_or_url, "http") do
       assert location == path_or_url
     else
-      assert location == "https://#{ChangelogWeb.Endpoint.host}#{path_or_url}"
+      assert location == "https://#{ChangelogWeb.Endpoint.host()}#{path_or_url}"
     end
   end
 
@@ -127,7 +127,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
 
   test "it no-ops for default host" do
     conn =
-      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host, "/")
+      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/")
       |> Plug.VanityDomains.call([])
 
     assert conn.status != 302
