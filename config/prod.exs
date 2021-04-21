@@ -12,32 +12,28 @@ config :changelog,
   plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG")
 
 config :changelog, ChangelogWeb.Endpoint,
-  http: [port: System.get_env("HTTP_PORT", 4000)],
+  http: [port: System.get_env("HTTP_PORT", "4000")],
   url: [
     scheme: System.get_env("URL_SCHEME", "https"),
     host: System.get_env("URL_HOST", "www.changelog.com"),
-    port: System.get_env("URL_PORT", 443)
+    port: System.get_env("URL_PORT", "443")
   ],
   force_ssl: [
     rewrite_on: [:x_forwarded_proto],
-    exclude:
-      String.split(
-        System.get_env("FORCE_SSL_EXCLUDE_HOSTS", "127.0.0.1, localhost"),
-        trim: true
-      )
+    exclude: String.split(System.get_env("FORCE_SSL_EXCLUDE_HOSTS", "127.0.0.1, localhost"))
   ],
   secret_key_base: SecretOrEnv.get("SECRET_KEY_BASE"),
   static_url: [
     scheme: System.get_env("STATIC_URL_SCHEME", "https"),
     host: System.get_env("STATIC_URL_HOST", "cdn.changelog.com"),
-    port: System.get_env("STATIC_URL_PORT", 443)
+    port: System.get_env("STATIC_URL_PORT", "443")
   ],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 if System.get_env("HTTPS") do
   config :changelog, ChangelogWeb.Endpoint,
     https: [
-      port: System.get_env("HTTPS_PORT", 443),
+      port: System.get_env("HTTPS_PORT", "443"),
       cipher_suite: :strong,
       otp_app: :changelog,
       certfile: System.get_env("HTTPS_CERTFILE"),
