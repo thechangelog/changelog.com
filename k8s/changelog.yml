@@ -352,6 +352,8 @@ spec:
               key: slug
         - name: PORT
           value: "4000"
+        - name: HTTP_PORT
+          value: "4000"
         - name: ROLLBAR_ACCESS_TOKEN
           valueFrom:
             secretKeyRef:
@@ -406,14 +408,6 @@ spec:
               key: consumer_secret
         - name: UPLOADS_PATH
           value: priv/uploads
-        - name: URL_HOST
-          value: www.changelog.com
-        - name: URL_PORT
-          value: "443"
-        - name: URL_SCHEME
-          value: https
-        - name: URL_STATIC_HOST
-          value: cdn.changelog.com
         - name: GRAFANA_URL
           value: http://prometheus-grafana.kube-prometheus-stack.svc.cluster.local
         - name: GRAFANA_DATASOURCE_ID

@@ -15,11 +15,11 @@ config :changelog, Changelog.Mailer, adapter: Bamboo.TestAdapter
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: SecretOrEnv.get("DB_NAME", "changelog_test"),
-  hostname: SecretOrEnv.get("DB_HOST", "localhost"),
-  password: SecretOrEnv.get("DB_PASS", "postgres"),
+  database: System.get_env("DB_NAME", "changelog_test"),
+  hostname: System.get_env("DB_HOST", "localhost"),
+  password: System.get_env("DB_PASS", "postgres"),
   pool: Ecto.Adapters.SQL.Sandbox,
-  username: SecretOrEnv.get("DB_USER", "postgres")
+  username: System.get_env("DB_USER", "postgres")
 
 config :changelog, Oban,
   crontab: false,

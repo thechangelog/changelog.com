@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :changelog, ChangelogWeb.Endpoint,
-  url: [host: System.get_env("HOST") || "localhost"],
+  url: [host: System.get_env("HOST", "localhost")],
   http: [
     port: 4000
   ],
@@ -14,7 +14,7 @@ config :changelog, ChangelogWeb.Endpoint,
   ]
 
 # Sometimes we need HTTPS, like when futzing with captchas
-if System.get_env("HTTPS") == "true" do
+if System.get_env("HTTPS") do
   config :changelog, ChangelogWeb.Endpoint,
     https: [
       port: 4001,
@@ -46,10 +46,10 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: SecretOrEnv.get("DB_NAME", "changelog_dev"),
-  hostname: SecretOrEnv.get("DB_HOST", "localhost"),
-  username: SecretOrEnv.get("DB_USER", "postgres"),
-  password: SecretOrEnv.get("DB_PASS", "postgres"),
+  database: System.get_env("DB_NAME", "changelog_dev"),
+  hostname: System.get_env("DB_HOST", "localhost"),
+  username: System.get_env("DB_USER", "postgres"),
+  password: System.get_env("DB_PASS", "postgres"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
@@ -62,11 +62,11 @@ config :changelog, Changelog.PromEx,
   manual_metrics_start_delay: :no_delay,
   drop_metrics_groups: [],
   grafana: [
-    host: SecretOrEnv.get("GRAFANA_URL", "http://localhost:3000"),
+    host: System.get_env("GRAFANA_URL", "http://localhost:3000"),
     # This API Key will need to be created manually, most probably via http://localhost:3000/org/apikeys
     auth_token: SecretOrEnv.get("GRAFANA_API_KEY"),
     # This can default to Prometheus, PromEx uses this lowercase value for the built-in dashboards
-    datasource_id: SecretOrEnv.get("GRAFANA_DATASOURCE_ID", "prometheus"),
+    datasource_id: System.get_env("GRAFANA_DATASOURCE_ID", "prometheus"),
     annotate_app_lifecycle: true
   ],
   metrics_server: :disabled,

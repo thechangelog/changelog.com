@@ -16,7 +16,6 @@ app:
   mem_max: 8Gi
   replicas: 1
   uploads_volume_size: 100Gi
-  url_scheme: https
   https:
     domains:
     - '*.changelog.com'
