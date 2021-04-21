@@ -52,7 +52,7 @@ jobs:
     working_directory: *dir
     docker:
       - image: *runtime
-      - image: circleci/postgres:12.3
+      - image: circleci/postgres:12.6
         environment:
           POSTGRES_USER: "postgres"
           POSTGRES_DB: changelog_test

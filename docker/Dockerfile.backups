@@ -1,10 +1,10 @@
 # Same minor version as db pod
-FROM postgres:12.3
+FROM postgres:12.6
 
 ENV SHELL=/bin/bash
 ENV TERM=xterm
 
-RUN pg_dump --version | grep "pg_dump.*12.3" \
+RUN pg_dump --version | grep "pg_dump.*12.6" \
     && bash --version | grep "bash.*5.0"
 
 RUN export DEBIAN_FRONTEND=noninteractive \
@@ -13,7 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
     && ./aws/install \
-    && aws --version | grep  "aws-cli.*2.0" \
+    && aws --version | grep  "aws-cli.*2." \
     && rm -rf /var/lib/apt/lists/* ./aws*
 
 ARG BACKUP_EVERY_N_SECONDS=86400
