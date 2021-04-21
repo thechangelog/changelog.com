@@ -6,8 +6,8 @@ defmodule Changelog.Mixfile do
   def project do
     [
       app: :changelog,
-      elixir: "~> 1.9",
       version: System.get_env("APP_VERSION", "0.0.1"),
+      elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
