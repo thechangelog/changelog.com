@@ -15,7 +15,7 @@ metadata:
 spec:
   endpoints:
   - dnsName: cdn.changelog.com
-    recordTTL: 60
+    recordTTL: 600
     recordType: CNAME
     targets:
       - dualstack.changelog.map.fastly.net
@@ -28,10 +28,36 @@ metadata:
 spec:
   endpoints:
   - dnsName: www.changelog.com
-    recordTTL: 60
+    recordTTL: 600
     recordType: CNAME
     targets:
       - dualstack.changelog.map.fastly.net
+#! ---
+#! ONLY THE FIRST TARGET IS ADDED in 0.7.3, and AAAA are missing,
+#! doing it manually for now
+#! apiVersion: externaldns.k8s.io/v1alpha1
+#! kind: DNSEndpoint
+#! metadata:
+#!   name: changelog.com
+#!   namespace: #@ data.values.namespace
+#! spec:
+#!   endpoints:
+#!   - dnsName: changelog.com
+#!     recordTTL: 600
+#!     recordType: A
+#!     targets:
+#!       - 151.101.1.162
+#!       - 151.101.65.162
+#!       - 151.101.129.162
+#!       - 151.101.193.162
+#!   - dnsName: changelog.com
+#!     recordTTL: 600
+#!     recordType: AAAA
+#!     targets:
+#!       - 2a04:4e42::418
+#!       - 2a04:4e42:200::418
+#!       - 2a04:4e42:400::418
+#!       - 2a04:4e42:600::418
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -41,14 +67,13 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: cert-manager-webhook-dnsimple-production
-    external-dns.alpha.kubernetes.io/ttl: "60"
+    external-dns.alpha.kubernetes.io/ttl: "600"
     service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol: v2
 spec:
   tls:
     - hosts:
-        - #@ data.values.fqdn
-        - 2020.changelog.com
         - origin.changelog.com
+        - 2020.changelog.com
       secretName: wildcard-acme-tls-pkcs8
     - hosts:
         - brainscience.fm
@@ -69,19 +94,13 @@ spec:
         - practicalai.fm
       secretName: practicalai-fm-acme-tls
   rules:
-    - host: #@ data.values.fqdn
+    - host: origin.changelog.com
       http:
         paths:
           - backend:
               serviceName: #@ data.values.app.name
               servicePort: #@ data.values.app.http_port
     - host: 2020.changelog.com
-      http:
-        paths:
-          - backend:
-              serviceName: #@ data.values.app.name
-              servicePort: #@ data.values.app.http_port
-    - host: origin.changelog.com
       http:
         paths:
           - backend:

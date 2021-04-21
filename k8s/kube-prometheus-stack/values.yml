@@ -86,7 +86,7 @@ grafana:
     annotations:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: cert-manager-webhook-dnsimple-production
-      external-dns.alpha.kubernetes.io/ttl: "60"
+      external-dns.alpha.kubernetes.io/ttl: "600"
     hosts:
       - #@ data.values.fqdn
     tls:
