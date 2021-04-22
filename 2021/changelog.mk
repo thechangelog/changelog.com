@@ -10,7 +10,7 @@ lke-changelog-%: | lke-ctx $(ENVSUBST)
 	; export DEBUG=$(WHO_IS_DEBUGGING) \
 	; cat $(CURDIR)/manifests/changelog/$(*).yml \
 	| $(ENVSUBST) -no-unset \
-	| $(KUBECTL) apply --filename -
+	| $(KUBECTL) $(K_CMD) --filename -
 
 .PHONY: lke-changelog
 lke-changelog: lke-changelog-db lke-changelog-app lke-changelog-lb lke-changelog-jobs

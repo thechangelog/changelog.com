@@ -6,17 +6,17 @@ EXTERNAL_DNS_CRD_MANIFEST := $(MANIFESTS)/external-dns/crd-manifest-$(EXTERNAL_D
 EXTERNAL_DNS_CRD_MANIFEST_URL := https://raw.githubusercontent.com/kubernetes-sigs/external-dns/$(EXTERNAL_DNS_VERSION)/docs/contributing/crd-source/crd-manifest.yaml
 .PHONY: lke-external-dns
 lke-external-dns: | lke-ctx $(YTT) $(EXTERNAL_DNS_CRD_MANIFEST)
-	$(KUBECTL) apply --filename $(EXTERNAL_DNS_CRD_MANIFEST)
+	$(KUBECTL) $(K_CMD) --filename $(EXTERNAL_DNS_CRD_MANIFEST)
 	$(YTT) \
 	  --data-value dns.record_owner=lke-$(LKE_LABEL) \
 	  --data-value namespace=$(EXTERNAL_DNS_NAMESPACE) \
 	  --data-value image=$(EXTERNAL_DNS_IMAGE) \
 	  --file $(MANIFESTS)/external-dns/template.yml \
 	  --file $(MANIFESTS)/external-dns/values.yml > $(MANIFESTS)/external-dns.yml
-	$(KUBECTL) apply --filename $(MANIFESTS)/external-dns.yml
+	$(KUBECTL) $(K_CMD) --filename $(MANIFESTS)/external-dns.yml
 	$(KUBECTL) create secret generic dnsimple \
 	  --from-literal=token="$$($(LPASS) show --notes Shared-changelog/secrets/DNSIMPLE_TOKEN)" --dry-run=client --output json \
-	| $(KUBECTL) apply --namespace $(EXTERNAL_DNS_NAMESPACE) --filename -
+	| $(KUBECTL) $(K_CMD) --namespace $(EXTERNAL_DNS_NAMESPACE) --filename -
 lke-bootstrap:: lke-external-dns
 
 $(EXTERNAL_DNS_CRD_MANIFEST): | $(CURL)

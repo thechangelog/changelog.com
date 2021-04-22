@@ -12,6 +12,8 @@ NORMAL := $(shell tput sgr0)
 
 MANIFESTS := $(CURDIR)/manifests
 
+K_CMD ?= apply
+
 define env_not_set
 @printf "$(RED)$(1)$(NORMAL) environment variable must be set\n"
 @printf 'Run $(BOLD)make .env && source .env$(NORMAL)\n'

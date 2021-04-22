@@ -15,7 +15,6 @@ releases-grafana-agent:
 
 GRAFANA_AGENT_REMOTE_WRITE_URL := https://prometheus-us-central1.grafana.net/api/prom/push
 GRAFANA_AGENT_LOKI_HOSTNAME := logs-prod-us-central1.grafana.net
-OP ?= apply
 .PHONY: lke-grafana-agent
 lke-grafana-agent: | lke-ctx $(ENVSUBST) $(GRAFANA_AGENT_DIR)
 	export NAMESPACE=$(GRAFANA_AGENT_NAMESPACE) \
@@ -28,4 +27,4 @@ lke-grafana-agent: | lke-ctx $(ENVSUBST) $(GRAFANA_AGENT_DIR)
 	; export LOKI_HOSTNAME=$(GRAFANA_AGENT_LOKI_HOSTNAME) \
 	; sed 's/$$1/$$$$1/g; s/$$3/$$$$3/g; s/$${1}/$$$${1}/g' $(CURDIR)/manifests/grafana-agent/agent+loki.yml \
 	| $(ENVSUBST_SAFE) \
-	| $(KUBECTL) $(OP) --filename -
+	| $(KUBECTL) $(K_CMD) --filename -

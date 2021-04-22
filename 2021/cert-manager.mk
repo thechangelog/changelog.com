@@ -6,7 +6,7 @@ CERT_MANAGER_VERSION := 1.3.1
 CERT_MANAGER_NAMESPACE := cert-manager
 .PHONY: lke-cert-manager
 lke-cert-manager: | lke-ctx
-	$(KUBECTL) apply --filename $(CERT_MANAGER_RELEASES)/download/v$(CERT_MANAGER_VERSION)/cert-manager.yaml
+	$(KUBECTL) $(K_CMD) --filename $(CERT_MANAGER_RELEASES)/download/v$(CERT_MANAGER_VERSION)/cert-manager.yaml
 lke-bootstrap:: lke-cert-manager
 
 releases-cert-manager:
@@ -14,7 +14,7 @@ releases-cert-manager:
 
 .PHONY: lke-cert-manager-verify
 lke-cert-manager-verify: | lke-ctx
-	$(KUBECTL) apply --filename $(CURDIR)/manifests/cert-manager/test-resources.yml
+	$(KUBECTL) $(K_CMD) --filename $(CURDIR)/manifests/cert-manager/test-resources.yml
 	$(KUBECTL) wait --namespace cert-manager-test --for=condition=ready certificate/selfsigned-cert --timeout=10s
 	$(KUBECTL) get certificate --namespace cert-manager-test --output=jsonpath='$(BOLD){"\n"}{.items[0].status.conditions[0].message}{"\n\n"}$(NORMAL)'
 	$(KUBECTL) get certificate --namespace cert-manager-test --output=yaml
