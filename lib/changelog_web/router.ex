@@ -33,10 +33,12 @@ defmodule ChangelogWeb.Router do
 
   pipeline :feed do
     plug :accepts, ["xml"]
+    plug Plug.CacheControl
   end
 
   pipeline :json_feed do
     plug :accepts, ["json"]
+    plug Plug.CacheControl
   end
 
   pipeline :api do
