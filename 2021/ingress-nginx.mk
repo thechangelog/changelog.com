@@ -8,6 +8,10 @@ $(INGRESS_NGINX_DIR):
 	  https://github.com/kubernetes/ingress-nginx.git $(INGRESS_NGINX_DIR)
 tmp/ingress-nginx: $(INGRESS_NGINX_DIR)
 
+INGRESS_NGINX_SERVICE = true
+ifneq ($(findstring k3s, $(KUBECONFIG)),)
+INGRESS_NGINX_SERVICE = false
+endif
 .PHONY: lke-ingress-nginx
 lke-ingress-nginx: | $(INGRESS_NGINX_DIR) lke-ctx $(HELM)
 	$(HELM) upgrade ingress-nginx $(INGRESS_NGINX_DIR)/charts/ingress-nginx \
@@ -17,6 +21,8 @@ lke-ingress-nginx: | $(INGRESS_NGINX_DIR) lke-ctx $(HELM)
 	  --set controller.dnsPolicy=ClusterFirstWithHostNet \
 	  --set controller.hostNetwork=true \
 	  --set controller.kind=DaemonSet \
+	  --set controller.service.enabled=$(INGRESS_NGINX_SERVICE) \
+	  --set controller.publishService.enabled=$(INGRESS_NGINX_SERVICE) \
 	  --version $(INGRESS_NGINX_VERSION)
 	$(KUBECTL) apply --filename $(CURDIR)/manifests/ingress-nginx
 lke-bootstrap:: lke-ingress-nginx

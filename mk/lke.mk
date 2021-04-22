@@ -295,5 +295,4 @@ include $(CURDIR)/mk/ingress-nginx.mk
 include $(CURDIR)/mk/postgres.mk
 include $(CURDIR)/mk/keel.mk
 include $(CURDIR)/mk/metrics-logs-traces.mk
-
 include $(CURDIR)/mk/changelog.mk

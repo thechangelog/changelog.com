@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: debug
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: debug
+  template:
+    metadata:
+      labels:
+        name: debug
+    spec:
+      hostNetwork: true
+      hostIPC: true
+      hostPID: true
+      containers:
+        - name: debian
+          image: debian:9
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+          command:
+            - /bin/sleep
+            - infinity
+          volumeMounts:
+            - mountPath: /host
+              name: host
+      volumes:
+        - name: host
+          hostPath:
+            path: /

@@ -20,12 +20,15 @@ endef
 
 include $(CURDIR)/deps.mk
 include $(CURDIR)/linode.mk
+include $(CURDIR)/secrets.mk
 include $(CURDIR)/grafana-agent.mk
 include $(CURDIR)/external-dns.mk
 include $(CURDIR)/cert-manager.mk
 include $(CURDIR)/ingress-nginx.mk
+include $(CURDIR)/local-path-provisioner.mk
 include $(CURDIR)/postgres.mk
 include $(CURDIR)/keel.mk
+include $(CURDIR)/changelog.mk
 
 define MAKE_TARGETS
   awk -F':+' '/^[^.%\t_][0-9a-zA-Z._%-]*:+.*$$/ { printf "%s\n", $$1 }' $(MAKEFILE_LIST)
