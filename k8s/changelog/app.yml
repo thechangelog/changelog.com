@@ -374,8 +374,6 @@ spec:
                 secretKeyRef:
                   name: plusplus
                   key: slug
-            - name: PORT
-              value: #@ str(data.values.app.http_port)
             - name: HTTP_PORT
               value: #@ str(data.values.app.http_port)
             - name: ROLLBAR_ACCESS_TOKEN

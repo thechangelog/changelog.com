@@ -348,8 +348,6 @@ spec:
             secretKeyRef:
               name: plusplus
               key: slug
-        - name: PORT
-          value: "4000"
         - name: HTTP_PORT
           value: "4000"
         - name: ROLLBAR_ACCESS_TOKEN
