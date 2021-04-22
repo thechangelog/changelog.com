@@ -45,7 +45,8 @@ defmodule Changelog.NewsItemCommentTest do
       comment =
         build(:news_item_comment, content: "zomg @joedev & @janedev this is rad @alicedev!")
 
-      assert NewsItemComment.mentioned_people(comment) == [p1, p2, p3]
+      assert Enum.sort_by(NewsItemComment.mentioned_people(comment), &Map.fetch(&1, :id)) ==
+               Enum.sort_by([p1, p2, p3], &Map.fetch(&1, :id))
     end
   end
 
