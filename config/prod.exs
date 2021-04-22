@@ -15,7 +15,7 @@ config :changelog, ChangelogWeb.Endpoint,
   http: [port: System.get_env("HTTP_PORT", "4000")],
   url: [
     scheme: System.get_env("URL_SCHEME", "https"),
-    host: System.get_env("URL_HOST", "www.changelog.com"),
+    host: System.get_env("URL_HOST", "changelog.com"),
     port: System.get_env("URL_PORT", "443")
   ],
   force_ssl: [
