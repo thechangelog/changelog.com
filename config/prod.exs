@@ -1,17 +1,5 @@
 use Mix.Config
 
-config :changelog,
-  buffer_token: SecretOrEnv.get("BUFFER_TOKEN"),
-  github_api_token: SecretOrEnv.get("GITHUB_API_TOKEN"),
-  hcaptcha_secret_key: SecretOrEnv.get("HCAPTCHA_SECRET_KEY"),
-  recaptcha_secret_key: SecretOrEnv.get("RECAPTCHA_SECRET_KEY"),
-  hn_user: SecretOrEnv.get("HN_USER"),
-  hn_pass: SecretOrEnv.get("HN_PASS"),
-  cm_api_token: Base.encode64("#{SecretOrEnv.get("CM_API_TOKEN")}:x"),
-  slack_invite_api_token: SecretOrEnv.get("SLACK_INVITE_API_TOKEN"),
-  slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
-  plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG")
-
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: System.get_env("HTTP_PORT", "4000")],
   url: [
@@ -24,7 +12,6 @@ config :changelog, ChangelogWeb.Endpoint,
     exclude:
       ["127.0.0.1", "localhost"] ++ String.split(System.get_env("FORCE_SSL_EXCLUDE_HOSTS", ""))
   ],
-  secret_key_base: SecretOrEnv.get("SECRET_KEY_BASE"),
   static_url: [
     scheme: System.get_env("STATIC_URL_SCHEME", "https"),
     host: System.get_env("STATIC_URL_HOST", "cdn.changelog.com"),
@@ -94,24 +81,3 @@ config :changelog, Changelog.PromEx,
   ],
   metrics_server: :disabled,
   prometheus_bearer_token: SecretOrEnv.get("PROMETHEUS_BEARER_TOKEN_PROM_EX")
-
-config :shopify,
-  shop_name: "changelog",
-  api_key: SecretOrEnv.get("SHOPIFY_API_KEY"),
-  password: SecretOrEnv.get("SHOPIFY_API_PASSWORD")
-
-config :ex_aws,
-  access_key_id: SecretOrEnv.get("AWS_ACCESS_KEY_ID"),
-  secret_access_key: SecretOrEnv.get("AWS_SECRET_ACCESS_KEY")
-
-config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id: SecretOrEnv.get("GITHUB_CLIENT_ID"),
-  client_secret: SecretOrEnv.get("GITHUB_CLIENT_SECRET")
-
-config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
-  consumer_key: SecretOrEnv.get("TWITTER_CONSUMER_KEY"),
-  consumer_secret: SecretOrEnv.get("TWITTER_CONSUMER_SECRET")
-
-config :algolia,
-  application_id: SecretOrEnv.get("ALGOLIA_APPLICATION_ID"),
-  api_key: SecretOrEnv.get("ALGOLIA_API_KEY")

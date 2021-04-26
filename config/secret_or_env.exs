@@ -1,4 +1,6 @@
 defmodule SecretOrEnv do
+  require Logger
+
   def get(secret) do
     get(secret, "")
   end
@@ -8,12 +10,18 @@ defmodule SecretOrEnv do
 
     case File.read(path) do
       {:ok, value} ->
-        IO.puts("#{secret} read from #{path}")
+        if Mix.env() == :prod do
+          Logger.info("#{secret} read from #{path}")
+        end
+
         String.trim(value)
 
       _ ->
-        IO.puts("#{secret} read from environment")
-        System.get_env(secret) || default_value
+        if Mix.env() == :prod do
+          Logger.info("#{secret} read from environment variable")
+        end
+
+        System.get_env(secret, default_value)
     end
   end
 end
