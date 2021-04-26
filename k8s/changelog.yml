@@ -212,18 +212,18 @@ spec:
         - name: AWS_S3_BUCKET
           value: changelog-com-backups
         - name: PGHOST
-          value: changelog-db
+          value: changelog-dbquickfix
         - name: PGDATABASE
           value: db
         - name: PGPASSWORD
           valueFrom:
             secretKeyRef:
-              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
+              name: changelog.changelog-dbquickfix.credentials.postgresql.acid.zalan.do
               key: password
         - name: PGUSER
           valueFrom:
             secretKeyRef:
-              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
+              name: changelog.changelog-dbquickfix.credentials.postgresql.acid.zalan.do
               key: username
       - name: uploads-backup
         image: thechangelog/backups:202008
@@ -295,18 +295,18 @@ spec:
               name: coveralls
               key: repo_token
         - name: DB_HOST
-          value: changelog-db
+          value: changelog-dbquickfix
         - name: DB_NAME
           value: db
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
-              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
+              name: changelog.changelog-dbquickfix.credentials.postgresql.acid.zalan.do
               key: password
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
+              name: changelog.changelog-dbquickfix.credentials.postgresql.acid.zalan.do
               key: username
         - name: GITHUB_API_TOKEN
           valueFrom:
@@ -478,6 +478,33 @@ spec:
   numberOfInstances: 2
   databases:
     db: db
+  postgresql:
+    version: "12"
+  resources:
+    requests:
+      cpu: "1"
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 4Gi
+---
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: changelog-dbquickfix
+  namespace: prod-2020-07
+spec:
+  teamId: changelog
+  users:
+    changelog:
+    - superuser
+    - createdb
+  volume:
+    size: 50Gi
+    storageClass: linode-block-storage
+  numberOfInstances: 1
+  databases:
+    db: changelog
   postgresql:
     version: "12"
   resources:
