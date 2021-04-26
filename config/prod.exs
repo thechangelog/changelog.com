@@ -21,7 +21,8 @@ config :changelog, ChangelogWeb.Endpoint,
   ],
   force_ssl: [
     rewrite_on: [:x_forwarded_proto],
-    exclude: String.split(System.get_env("FORCE_SSL_EXCLUDE_HOSTS", "127.0.0.1, localhost"))
+    exclude:
+      ["127.0.0.1", "localhost"] ++ String.split(System.get_env("FORCE_SSL_EXCLUDE_HOSTS", ""))
   ],
   secret_key_base: SecretOrEnv.get("SECRET_KEY_BASE"),
   static_url: [
