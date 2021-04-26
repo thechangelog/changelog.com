@@ -31,7 +31,7 @@ defmodule ChangelogWeb.PersonController do
   end
 
   def join(conn = %{method: "POST"}, params = %{"person" => person_params}) do
-    captcha = Map.get(params, "h-captcha-response")
+    captcha = Map.get(params, "g-recaptcha-response")
     email = Map.get(person_params, "email")
 
     if Captcha.verify(captcha) do
@@ -172,7 +172,7 @@ defmodule ChangelogWeb.PersonController do
 
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
     subscribe_to = Map.get(params, "to", "weekly")
-    captcha = Map.get(params, "h-captcha-response")
+    captcha = Map.get(params, "g-recaptcha-response")
 
     if Captcha.verify(captcha) do
       if person = Repo.get_by(Person, email: email) do

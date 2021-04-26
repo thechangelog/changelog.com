@@ -72,8 +72,8 @@
       <div class="form-submit-note">
         <div>Already a member? <em><%= link "Sign in", to: Routes.sign_in_path(@conn, :new), title: "" %></em></div>
       </div>
-      <script src="https://hcaptcha.com/1/api.js" async defer></script>
-      <input class="h-captcha" data-sitekey="6a28fd9d-f825-4e50-88b3-a1548094fb6a" data-callback="joinCaptcha" type="submit" value="Join Now">
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+      <input class="g-recaptcha" data-sitekey="6Lda3LoaAAAAAMoUFKUgxnxX91FQKzy9pY8t435v" data-callback="joinCaptcha" type="submit" value="Join Now">
       <script>function joinCaptcha() { document.getElementById("join").submit(); }</script>
     </div>
   <% end %>

@@ -2,8 +2,8 @@
   <input name="to" type="hidden" value="<%= SharedHelpers.get_assigns_or_param(assigns, "to", "weekly") %>">
   <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
   <div class="signup-form-submit">
-    <script src="https://hcaptcha.com/1/api.js" async defer></script>
-    <input class="signup-form-submit-button h-captcha" data-sitekey="6a28fd9d-f825-4e50-88b3-a1548094fb6a" data-callback="subscribeCaptcha" type="submit" value="Subscribe">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <input class="signup-form-submit-button g-recaptcha" data-sitekey="6a28fd9d-f825-4e50-88b3-a1548094fb6a" data-callback="subscribeCaptcha" type="submit" value="Subscribe">
     <script>function subscribeCaptcha() { document.getElementById("subscribe").submit(); }</script>
   </div>
 <% end %>

@@ -354,6 +354,11 @@ spec:
                 secretKeyRef:
                   name: hcaptcha
                   key: secret_key
+            - name: RECAPTCHA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: recaptcha
+                  key: secret_key
             - name: HN_USER
               valueFrom:
                 secretKeyRef:

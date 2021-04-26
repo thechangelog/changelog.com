@@ -91,6 +91,7 @@ lke-changelog-secrets:: algolia-lke-secret
 lke-changelog-secrets:: plusplus-lke-secret
 lke-changelog-secrets:: fastly-lke-secret
 lke-changelog-secrets:: hcaptcha-lke-secret
+lke-changelog-secrets:: recaptcha-lke-secret
 lke-changelog-secrets:: grafana-lke-secret
 lke-changelog-secrets:: promex-lke-secret
 lke-changelog-secrets:: sentry-lke-secret

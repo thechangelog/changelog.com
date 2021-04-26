@@ -179,6 +179,17 @@ hcaptcha-lke-secret: | lke-ctx $(LPASS)
 		--from-literal=secret_key=$(HCAPTCHA_SECRET_KEY) \
 	| $(KUBECTL) apply --filename -
 
+.PHONY: recaptcha
+recaptcha: $(LPASS)
+	@echo "export RECAPTCHA_SECRET_KEY=$(RECAPTCHA_SECRET_KEY)"
+env-secrets:: recaptcha
+.PHONY: recaptcha-lke-secret
+recaptcha-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run --output=yaml \
+		create secret generic recaptcha \
+		--from-literal=secret_key=$(RECAPTCHA_SECRET_KEY) \
+	| $(KUBECTL) apply --filename -
+
 HACKERNEWS_USER ?= "$$($(LPASS) show --notes Shared-changelog/secrets/HN_USER_1)"
 HACKERNEWS_PASS ?= "$$($(LPASS) show --notes Shared-changelog/secrets/HN_PASS_1)"
 .PHONY: hackernews
