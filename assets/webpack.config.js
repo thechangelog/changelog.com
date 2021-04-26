@@ -3,7 +3,7 @@ let { merge } = require("webpack-merge");
 let TerserPlugin = require("terser-webpack-plugin");
 let CopyWebpackPlugin = require("copy-webpack-plugin");
 let MiniCssExtractPlugin = require("mini-css-extract-plugin");
-let OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+let CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 let common = {
   module: {
@@ -18,31 +18,34 @@ let common = {
         loader: "handlebars-loader"
       },
       {
-        test: [/\.scss$/, /\.css$/],
+        test: /\.s?css$/,
         use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {publicPath: "/"}
+          },
+          {
+            loader: "css-loader",
+            options: {url: false}
+          },
           "postcss-loader",
           "sass-loader"
         ]
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        exclude: /fonts/,
-        loader: "file-loader?name=/images/[name].[ext]"
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        exclude: "/fonts/",
+        type: "asset/resource",
       },
       {
-        test: /\.(ttf|eot|svg|woff2?)$/,
-        exclude: /images/,
-        loader: "file-loader?name=/fonts/[name].[ext]",
+        test: /\.(woff|woff2|ttf|eot|otf)$/,
+        exclude: "/images/",
+        type: "asset/resource"
       }
     ]
   },
   optimization: {
-    minimizer: [
-    new TerserPlugin(),
-      new OptimizeCSSAssetsPlugin({})
-    ]
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin({})]
   },
   devServer: {
     watchOptions: {
@@ -114,6 +117,7 @@ module.exports = [
     },
     plugins: [
       new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
+      new CopyWebpackPlugin({ patterns: [{ from: __dirname + "/semantic/themes", to: "css/themes" }]}),
       new MiniCssExtractPlugin({filename: "css/admin.css"})
     ]
   }),
