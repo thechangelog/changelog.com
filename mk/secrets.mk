@@ -179,6 +179,7 @@ hcaptcha-lke-secret: | lke-ctx $(LPASS)
 		--from-literal=secret_key=$(HCAPTCHA_SECRET_KEY) \
 	| $(KUBECTL) apply --filename -
 
+RECAPTCHA_SECRET_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/RECAPTCHA_SECRET_KEY)"
 .PHONY: recaptcha
 recaptcha: $(LPASS)
 	@echo "export RECAPTCHA_SECRET_KEY=$(RECAPTCHA_SECRET_KEY)"
