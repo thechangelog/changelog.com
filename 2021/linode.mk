@@ -187,36 +187,3 @@ lke-ctx: | $(KUBECTL) lke-config-hint
 .PHONY: lke-bootstrap
 lke-bootstrap:: | lke-ctx
 
-LKE_LABEL = 20210420-k3s
-K3S_CHANNEL ?= v1.20
-define K3S_HOST
-$$($(LINODE) linodes list --json \
-| $(JQ) --raw-output --compact-output '.[] | select(.label == "$(LKE_LABEL)") | .ipv4 | .[0]')
-endef
-K3S_SSH_USER ?= root
-K3S_SSH_PRIVATE_KEY ?= ~/.ssh/focker_20181030_ed25519
-env::
-	@echo 'export LKE_LABEL=$(LKE_LABEL)'
-
-.PHONY:
-k3s: | $(K3SUP) linode-k3s $(LKE_CONFIGS)
-	$(K3SUP) install \
-	  --host $(K3S_HOST) \
-	  --user $(K3S_SSH_USER) \
-	  --ssh-key $(K3S_SSH_PRIVATE_KEY) \
-	  --local-path $(KUBECONFIG) \
-	  --k3s-channel $(K3S_CHANNEL) \
-	  --disable traefik \
-	  --disable servicelb
-
-.PHONY: linode-k3s
-linode-k3s: | linode $(JQ)
-	$(LINODE) linodes list --json \
-		| $(JQ) '.[] | select(.label == "$(LKE_LABEL)")' \
-	|| $(LINODE) linodes create \
-		--type $(LKE_NODE_TYPE) \
-		--region $(LKE_REGION) \
-		--image linode/debian10 \
-		--root_pass $(shell pwgen 20 1) \
-		--authorized_users gerhard-changelog \
-		--label 20210420-k3s

@@ -136,20 +136,3 @@ envsubst: $(ENVSUBST)
 .PHONY: releases-envsubst
 releases-envsubst:
 	$(OPEN) $(ENVSUBST_RELEASES)
-
-K3SUP_RELEASES := https://github.com/alexellis/k3sup/releases
-K3SUP_VERSION := 0.10.2
-K3SUP_BIN := k3sup-$(K3SUP_VERSION)-$(platform)-amd64
-K3SUP_URL := $(K3SUP_RELEASES)/download/$(K3SUP_VERSION)/k3sup-$(platform)
-K3SUP := $(LOCAL_BIN)/$(K3SUP_BIN)
-$(K3SUP): | $(CURL) $(LOCAL_BIN)
-	$(CURL) --progress-bar --fail --location --output $(K3SUP) "$(K3SUP_URL)"
-	touch $(K3SUP)
-	chmod +x $(K3SUP)
-	$(K3SUP) version | grep $(K3SUP_VERSION)
-	ln -sf $(K3SUP) $(LOCAL_BIN)/k3sup
-.PHONY: k3sup
-k3sup: $(K3SUP)
-.PHONY: releases-k3sup
-releases-k3sup:
-	$(OPEN) $(K3SUP_RELEASES)

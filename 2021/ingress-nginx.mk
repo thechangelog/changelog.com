@@ -8,10 +8,8 @@ $(INGRESS_NGINX_DIR):
 	  https://github.com/kubernetes/ingress-nginx.git $(INGRESS_NGINX_DIR)
 tmp/ingress-nginx: $(INGRESS_NGINX_DIR)
 
-INGRESS_NGINX_SERVICE = true
-ifneq ($(findstring k3s, $(KUBECONFIG)),)
-INGRESS_NGINX_SERVICE = false
-endif
+# Set to false if want the node public IP instead of a Node Balancer
+INGRESS_NGINX_SERVICE ?= true
 .PHONY: lke-ingress-nginx
 lke-ingress-nginx: | $(INGRESS_NGINX_DIR) lke-ctx $(HELM)
 	$(HELM) upgrade ingress-nginx $(INGRESS_NGINX_DIR)/charts/ingress-nginx \
