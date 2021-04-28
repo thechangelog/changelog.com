@@ -7,15 +7,12 @@ env::
 	@echo 'export LKE_LABEL=prod-20210331'
 
 LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
-# us-east, the only US region with all the bells & whistles in 2021.03,
-# Linodes, NodeBalancers, Block Storage, Object Storage, GPU Linodes,
-# Kubernetes, has mixed networking that MAY be the root cause for the high
-# inter-node latency that we've been experiencing. Switching to us-central to
-# check if networking improves.
-LKE_REGION ?= us-central
+# us-east, the only US region with all the bells & whistles in 2021.03:
+# Linodes, NodeBalancers, Block Storage, Object Storage, GPU Linodes, Kubernetes
+LKE_REGION ?= us-east
 LKE_VERSION ?= 1.20
-LKE_NODE_TYPE ?= g6-dedicated-8
-LKE_NODE_COUNT ?= 3
+LKE_NODE_TYPE ?= g6-dedicated-32
+LKE_NODE_COUNT ?= 1
 
 $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
@@ -184,6 +181,9 @@ releases-kubectl:
 .PHONY: lke-ctx
 lke-ctx: | $(KUBECTL) lke-config-hint
 
-.PHONY: lke-bootstrap
-lke-bootstrap:: | lke-ctx
+.PHONY: lke-debug
+lke-debug: | lke-ctx
+	$(KUBECTL) $(K_CMD) --filename $(CURDIR)/manifests/debug.yml
 
+.PHONY: lke-bootstrap
+lke-bootstrap:: | lke-debug

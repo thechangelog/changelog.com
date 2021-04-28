@@ -38,13 +38,16 @@ howto-rotate-secret:
 howto-add-secret:
 	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
 	@printf " 1/5. Add new secret to LastPass by running e.g. $(BOLD)make add-secret SECRET=CAPTCHA_API_KEY$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
-	@printf "\n 2/5. Add new *-lke-secret target to $(BOLD)mk/secrets.mk$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
-	@printf "\n 3/5. Define the new target as a lke-changelog-secrets dependency in $(BOLD)mk/changelog.mk$(NORMAL), then run $(BOLD)make lke-changelog-secrets$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 2/5. Add new *-lke-secret target to $(BOLD)mk/secrets.mk$(NORMAL) & remember to append it to $(BOLD)lke-changelog-secrets$(NORMAL) target\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 3/5. Run $(BOLD)make lke-changelog-secrets$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 4/5. Add reference to new secret in $(BOLD)k8s/changelog/app.yml$(NORMAL), then run $(BOLD)make lke-changelog$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 5/5. Commit and push all changes, including the app changes to read the new secret from environment variables. The pipeline will take care of the rest 😉\n" ; read -rp " $(DONE)" -n 1
 
 .PHONY: env-secrets
 env-secrets::
+
+.PHONY: lke-changelog-secrets
+lke-changelog-secrets::
 
 .PHONY: secrets
 secrets: $(LPASS) ## s   | List all LastPass secrets
@@ -75,6 +78,7 @@ campaignmonitor-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=smtp_token=$(CM_SMTP_TOKEN) \
 	  --from-literal=api_token=$(CM_API_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: campaignmonitor-lke-secret
 
 GITHUB_CLIENT_ID ?= "$$($(LPASS) show --notes Shared-changelog/secrets/GITHUB_CLIENT_ID)"
 GITHUB_CLIENT_SECRET ?= "$$($(LPASS) show --notes Shared-changelog/secrets/GITHUB_CLIENT_SECRET)"
@@ -93,6 +97,7 @@ github-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=client_secret=$(GITHUB_CLIENT_SECRET) \
 	  --from-literal=api_token=$(GITHUB_API_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: github-lke-secret
 
 HCAPTCHA_SECRET_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/HCAPTCHA_SECRET_KEY)"
 .PHONY: hcaptcha
@@ -105,6 +110,19 @@ hcaptcha-lke-secret: | lke-ctx $(LPASS)
 		create secret generic hcaptcha \
 		--from-literal=secret_key=$(HCAPTCHA_SECRET_KEY) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: hcaptcha-lke-secret
+
+.PHONY: recaptcha
+recaptcha: $(LPASS)
+	@echo "export RECAPTCHA_SECRET_KEY=$(RECAPTCHA_SECRET_KEY)"
+env-secrets:: recaptcha
+.PHONY: recaptcha-lke-secret
+recaptcha-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+		create secret generic recaptcha \
+		--from-literal=secret_key=$(RECAPTCHA_SECRET_KEY) \
+	| $(KUBECTL) apply --filename -
+lke-changelog-secrets:: recaptcha-lke-secret
 
 HACKERNEWS_USER ?= "$$($(LPASS) show --notes Shared-changelog/secrets/HN_USER_1)"
 HACKERNEWS_PASS ?= "$$($(LPASS) show --notes Shared-changelog/secrets/HN_PASS_1)"
@@ -120,6 +138,7 @@ hackernews-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=user=$(HACKERNEWS_USER) \
 	  --from-literal=pass=$(HACKERNEWS_PASS) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: hackernews-lke-secret
 
 AWS_ACCESS_KEY_ID ?= "$$($(LPASS) show --notes Shared-changelog/secrets/AWS_ACCESS_KEY_ID)"
 AWS_SECRET_ACCESS_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/AWS_SECRET_ACCESS_KEY)"
@@ -135,6 +154,7 @@ aws-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=access_key_id=$(AWS_ACCESS_KEY_ID) \
 	  --from-literal=secret_access_key=$(AWS_SECRET_ACCESS_KEY) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: aws-lke-secret
 
 BACKUPS_AWS_ACCESS_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/BACKUPS_AWS_ACCESS_KEY)"
 BACKUPS_AWS_SECRET_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/BACKUPS_AWS_SECRET_KEY)"
@@ -150,6 +170,7 @@ backups-aws-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=access_key_id=$(BACKUPS_AWS_ACCESS_KEY) \
 	  --from-literal=secret_access_key=$(BACKUPS_AWS_SECRET_KEY) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: backups-aws-lke-secret
 
 SHOPIFY_API_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SHOPIFY_API_KEY)"
 SHOPIFY_API_PASSWORD ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SHOPIFY_API_PASSWORD)"
@@ -165,6 +186,7 @@ shopify-lke-secret: | lke-ctx $(LPASS)
 		--from-literal=api_key=$(SHOPIFY_API_KEY) \
 		--from-literal=api_password=$(SHOPIFY_API_PASSWORD) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: shopify-lke-secret
 
 TWITTER_CONSUMER_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/TWITTER_CONSUMER_KEY)"
 TWITTER_CONSUMER_SECRET ?= "$$($(LPASS) show --notes Shared-changelog/secrets/TWITTER_CONSUMER_SECRET)"
@@ -180,6 +202,7 @@ twitter-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=consumer_key=$(TWITTER_CONSUMER_KEY) \
 	  --from-literal=consumer_secret=$(TWITTER_CONSUMER_SECRET) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: twitter-lke-secret
 
 SECRET_KEY_BASE ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SECRET_KEY_BASE)"
 SIGNING_SALT ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SIGNING_SALT)"
@@ -195,6 +218,7 @@ app-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=secret_key_base=$(SECRET_KEY_BASE) \
 	  --from-literal=signing_salt=$(SIGNING_SALT) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: app-lke-secret
 
 SLACK_INVITE_API_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SLACK_INVITE_API_TOKEN)"
 SLACK_APP_API_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SLACK_APP_API_TOKEN)"
@@ -212,6 +236,7 @@ slack-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=deploy_webhook=$(SLACK_DEPLOY_WEBHOOK) \
 	  --from-literal=invite_api_token=$(SLACK_INVITE_API_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: slack-lke-secret
 
 ROLLBAR_ACCESS_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/ROLLBAR_ACCESS_TOKEN)"
 .PHONY: rollbar
@@ -224,6 +249,7 @@ rollbar-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic rollbar \
 	  --from-literal=access_token=$(ROLLBAR_ACCESS_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: rollbar-lke-secret
 
 BUFFER_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/BUFFER_TOKEN_3)"
 .PHONY: buffer
@@ -236,6 +262,7 @@ buffer-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic buffer \
 	  --from-literal=token=$(BUFFER_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: buffer-lke-secret
 
 COVERALLS_REPO_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/COVERALLS_REPO_TOKEN)"
 .PHONY: coveralls
@@ -248,6 +275,7 @@ coveralls-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic coveralls \
 	  --from-literal=repo_token=$(COVERALLS_REPO_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: coveralls-lke-secret
 
 ALGOLIA_APPLICATION_ID ?= "$$($(LPASS) show --notes Shared-changelog/secrets/ALGOLIA_APPLICATION_ID)"
 ALGOLIA_API_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/ALGOLIA_API_KEY2)"
@@ -263,6 +291,7 @@ algolia-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=application_id=$(ALGOLIA_APPLICATION_ID) \
 	  --from-literal=api_key=$(ALGOLIA_API_KEY) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: algolia-lke-secret
 
 PLUSPLUS_SLUG ?= "$$($(LPASS) show --notes Shared-changelog/secrets/PLUSPLUS_SLUG_1)"
 .PHONY: plusplus
@@ -275,6 +304,7 @@ plusplus-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic plusplus \
 	  --from-literal=slug=$(PLUSPLUS_SLUG) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: plusplus-lke-secret
 
 FASTLY_API_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/FASTLY_API_TOKEN)"
 .PHONY: fastly
@@ -287,8 +317,9 @@ fastly-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic fastly \
 	  --from-literal=token=$(FASTLY_API_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: fastly-lke-secret
 
-GRAFANA_API_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/GRAFANA_CLOUD_PROMEX)"
+GRAFANA_API_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/GRAFANA_API_KEY)"
 .PHONY: grafana
 grafana: $(LPASS)
 	@echo "export GRAFANA_API_KEY=$(GRAFANA_API_KEY)"
@@ -299,6 +330,7 @@ grafana-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic grafana \
 	  --from-literal=api_key=$(GRAFANA_API_KEY) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: grafana-lke-secret
 
 PROMETHEUS_BEARER_TOKEN_PROM_EX := "$$($(LPASS) show --notes Shared-changelog/secrets/PROMETHEUS_BEARER_TOKEN_PROM_EX)"
 .PHONY: promex
@@ -315,6 +347,7 @@ promex-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic promex \
 	  --from-literal=bearer_token=$(PROMETHEUS_BEARER_TOKEN_PROM_EX) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: promex-lke-secret
 
 SENTRY_AUTH_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SENTRY_AUTH_TOKEN)"
 .PHONY: sentry
@@ -327,3 +360,13 @@ sentry-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic sentry \
 	  --from-literal=auth_token=$(SENTRY_AUTH_TOKEN) \
 	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: sentry-lke-secret
+
+POSTGRES_PASSWORD ?= "$$($(LPASS) show --notes Shared-changelog/secrets/POSTGRES_PASSWORD)"
+.PHONY: postgres-lke-secret
+postgres-lke-secret: | lke-ctx $(LPASS)
+	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
+	  create secret generic postgres \
+	  --from-literal=password=$(POSTGRES_PASSWORD) \
+	| $(KUBECTL) $(K_CMD) --filename -
+lke-changelog-secrets:: postgres-lke-secret

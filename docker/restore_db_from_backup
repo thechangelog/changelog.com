@@ -7,7 +7,7 @@ source load_backups_secrets
 
 echo "
 Which backup to restore database ${PGDATABASE:?must be set} from?"
-select DB_BACKUP in $(s3_backups | awk '/db-/ { print $5 }' | sort --reverse | head -n 10)
+select DB_BACKUP in $(s3_backups | sort --reverse | awk '/\.gz$/ { print $5 }' | head -n 10)
 do
   export DB_BACKUP
   break
@@ -23,11 +23,11 @@ then
 fi
 
 echo "
-Restoring $PGDATABASE db from $DB_BACKUP ..."
+Restoring $PGDATABASE database from $DB_BACKUP ..."
 
 aws s3 cp "s3://${AWS_S3_BUCKET:?must be set}/$DB_BACKUP" - \
 | gunzip --stdout \
 | psql
 
 echo "
-SUCCESS! $PGDATABASE db was restored from $DB_BACKUP"
+SUCCESS! $PGDATABASE database was restored from $DB_BACKUP"

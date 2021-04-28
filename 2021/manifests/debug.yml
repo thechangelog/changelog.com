@@ -24,6 +24,9 @@ spec:
           command:
             - /bin/sleep
             - infinity
+          env:
+            - name: LC_ALL
+              value: C.UTF-8
           volumeMounts:
             - mountPath: /host
               name: host

@@ -7,7 +7,7 @@ CERT_MANAGER_NAMESPACE := cert-manager
 .PHONY: lke-cert-manager
 lke-cert-manager: | lke-ctx
 	$(KUBECTL) $(K_CMD) --filename $(CERT_MANAGER_RELEASES)/download/v$(CERT_MANAGER_VERSION)/cert-manager.yaml
-lke-bootstrap:: lke-cert-manager
+lke-bootstrap:: | lke-cert-manager
 
 releases-cert-manager:
 	$(OPEN) $(CERT_MANAGER_RELEASES)
@@ -41,7 +41,7 @@ lke-cert-manager-dnsimple: | lke-ctx $(HELM)
 	  --set clusterIssuer.email=$(CERT_EMAIL) \
 	  --set groupName=$(CERT_DOMAIN) \
 	  --version $(CERT_MANAGER_DNSIMPLE_VERSION)
-lke-bootstrap:: lke-cert-manager-dnsimple
+lke-bootstrap:: | lke-cert-manager-dnsimple
 
 .PHONY: releases-cert-manager-dnsimple
 releases-cert-manager-dnsimple: | $(HELM)

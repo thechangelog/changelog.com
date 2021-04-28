@@ -5,12 +5,12 @@ set -e
 # shellcheck source=docker/load_backups_secrets
 source load_backups_secrets
 
-AWS_S3_DEST_FILE_PATH="${PGDATABASE:?must be set}-${STACK_VERSION:?must be set}-$(date -u +'%Y-%m-%dT%H.%M.%SZ').gz"
+AWS_S3_DEST_FILE_PATH="${PGDATABASE:?must be set}-$(date -u +'%Y-%m-%dT%H.%M.%SZ').sql.gz"
 export AWS_S3_DEST_FILE_PATH
 
 echo "--------------------------------------------"
-echo "Starting $PGDATABASE db backup..."
+echo "Starting $PGDATABASE database backup..."
 
 pg_dump --compress=9 | upload_stdin_s3
 
-echo "$PGDATABASE db backup succeeded at $(date)"
+echo "$PGDATABASE database backup succeeded at $(date)"

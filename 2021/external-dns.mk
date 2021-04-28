@@ -17,7 +17,7 @@ lke-external-dns: | lke-ctx $(YTT) $(EXTERNAL_DNS_CRD_MANIFEST)
 	$(KUBECTL) create secret generic dnsimple \
 	  --from-literal=token="$$($(LPASS) show --notes Shared-changelog/secrets/DNSIMPLE_TOKEN)" --dry-run=client --output json \
 	| $(KUBECTL) $(K_CMD) --namespace $(EXTERNAL_DNS_NAMESPACE) --filename -
-lke-bootstrap:: lke-external-dns
+lke-bootstrap:: | lke-external-dns
 
 $(EXTERNAL_DNS_CRD_MANIFEST): | $(CURL)
 	$(CURL) --progress-bar --fail --location --output $(EXTERNAL_DNS_CRD_MANIFEST) $(EXTERNAL_DNS_CRD_MANIFEST_URL)

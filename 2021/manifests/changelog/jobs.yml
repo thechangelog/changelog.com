@@ -1,8 +1,3 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: ${NAMESPACE}
----
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -101,6 +96,91 @@ spec:
             imagePullPolicy: IfNotPresent
             name: tls-sync-fastly
           restartPolicy: Never
-  schedule: 0 9 * * *
+  # https://crontab.guru/#0_0_*_*_*
+  schedule: 0 0 * * *
+  successfulJobsHistoryLimit: 3
+  suspend: false
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations: null
+  name: backup
+  namespace: ${NAMESPACE}
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+            - name: db
+              image: thechangelog/backups:202104
+              imagePullPolicy: Always
+              # command: ["/usr/local/bin/backup_db_to_s3"]
+              command: ["sleep", "infinity"]
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backups-aws
+                      key: access_key_id
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backups-aws
+                      key: secret_access_key
+                - name: AWS_REGION
+                  value: us-east-1
+                - name: AWS_S3_BUCKET
+                  value: changelog-com-backups
+                - name: PGHOST
+                  value: db
+                - name: PGDATABASE
+                  value: changelog
+                - name: PGUSER
+                  value: postgres
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres
+                      key: password
+            - name: uploads
+              image: thechangelog/backups:202104
+              imagePullPolicy: Always
+              # command: ["/usr/local/bin/backup_uploads_to_s3"]
+              command: ["sleep", "infinity"]
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backups-aws
+                      key: access_key_id
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backups-aws
+                      key: secret_access_key
+                - name: AWS_REGION
+                  value: us-east-1
+                - name: AWS_S3_BUCKET
+                  value: changelog-com-backups
+                - name: UPLOADS_PATH
+                  value: "/uploads"
+              volumeMounts:
+                - mountPath: "/uploads"
+                  name: uploads-local-ssd
+          restartPolicy: Never
+          volumes:
+            - name: uploads-local-ssd
+              persistentVolumeClaim:
+                claimName: uploads-local-ssd
+  # https://crontab.guru/#0_*/6_*_*_*
+  schedule: 0 */6 * * *
   successfulJobsHistoryLimit: 3
   suspend: false

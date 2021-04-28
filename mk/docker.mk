@@ -1,19 +1,3 @@
-# https://github.com/jesseduffield/lazydocker
-define LAZYDOCKER_CONTAINER
-docker pull lazyteam/lazydocker:latest && \
-docker run --rm --interactive --tty \
-  --cpus 0.5 --memory 128M \
-  --name lazydocker_$(USER) \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume lazydocker_$(USER):/.config/jesseduffield/lazydocker \
-  lazyteam/lazydocker:latest
-endef
-.PHONY: lazydocker
-lazydocker:
-	@$(LAZYDOCKER_CONTAINER)
-.PHONY: ld
-ld: lazydocker
-
 .PHONY: backups-image
 backups-image: build-backups-image publish-backups-image
 .PHONY: bi
@@ -23,7 +7,6 @@ bi: backups-image
 build-backups-image: $(DOCKER)
 	@cd docker && \
 	$(DOCKER) build \
-	  --build-arg STACK_VERSION=$(STACK_VERSION) \
 	  --tag thechangelog/backups:$(BUILD_VERSION) \
 	  --tag thechangelog/backups:$(STACK_VERSION) \
 	  --file Dockerfile.backups .

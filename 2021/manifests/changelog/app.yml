@@ -1,12 +1,7 @@
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: ${NAMESPACE}
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: uploads
+  name: uploads-local-ssd
   namespace: ${NAMESPACE}
 spec:
   accessModes:
@@ -14,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 200Gi
-  storageClassName: linode-block-storage-retain
+  storageClassName: local-path
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,51 +41,12 @@ spec:
                     values:
                       - app
               topologyKey: "kubernetes.io/hostname"
-      containers:
-        - name: db-backup
+      initContainers:
+        - name: restore-uploads
           image: thechangelog/backups:202104
           imagePullPolicy: Always
-          # command: ["/usr/local/bin/backup_db_continuously"]
-          command: ["sleep", "infinity"]
+          command: ["/usr/local/bin/restore_uploads_from_s3"]
           env:
-            - name: BACKUP_EVERY_N_SECONDS
-              value: "21600"
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: backups-aws
-                  key: access_key_id
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: backups-aws
-                  key: secret_access_key
-            - name: AWS_REGION
-              value: us-east-1
-            - name: AWS_S3_BUCKET
-              value: changelog-com-backups
-            - name: PGHOST
-              value: changelog-db
-            - name: PGDATABASE
-              value: db
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
-                  key: password
-            - name: PGUSER
-              valueFrom:
-                secretKeyRef:
-                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
-                  key: username
-        - name: uploads-backup
-          image: thechangelog/backups:202104
-          imagePullPolicy: Always
-          # command: ["/usr/local/bin/backup_uploads_continuously"]
-          command: ["sleep", "infinity"]
-          env:
-            - name: BACKUP_EVERY_N_SECONDS
-              value: "21600"
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -109,7 +65,62 @@ spec:
               value: "/uploads"
           volumeMounts:
             - mountPath: "/uploads"
-              name: uploads
+              name: uploads-local-ssd
+        - name: backup-uploads
+          image: thechangelog/backups:202104
+          imagePullPolicy: Always
+          command: ["/usr/local/bin/backup_uploads_to_s3"]
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: secret_access_key
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_S3_BUCKET
+              value: changelog-com-backups
+            - name: UPLOADS_PATH
+              value: "/uploads"
+          volumeMounts:
+            - mountPath: "/uploads"
+              name: uploads-local-ssd
+        - name: backup-db
+          image: thechangelog/backups:202104
+          imagePullPolicy: Always
+          command: ["/usr/local/bin/backup_db_to_s3"]
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: secret_access_key
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_S3_BUCKET
+              value: changelog-com-backups
+            - name: PGHOST
+              value: db
+            - name: PGDATABASE
+              value: changelog
+            - name: PGUSER
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+      containers:
         - name: app
           env:
             - name: ALGOLIA_APPLICATION_ID
@@ -153,19 +164,16 @@ spec:
                   name: coveralls
                   key: repo_token
             - name: DB_HOST
-              value: changelog-db
-            - name: DB_NAME
               value: db
+            - name: DB_NAME
+              value: changelog
+            - name: DB_USER
+              value: postgres
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
+                  name: postgres
                   key: password
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: changelog.changelog-db.credentials.postgresql.acid.zalan.do
-                  key: username
             - name: GITHUB_API_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -185,6 +193,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: hcaptcha
+                  key: secret_key
+            - name: RECAPTCHA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: recaptcha
                   key: secret_key
             - name: HN_USER
               valueFrom:
@@ -261,6 +274,8 @@ spec:
               value: 21.changelog.com
             - name: URL_PORT
               value: "443"
+            - name: FORCE_SSL_EXCLUDE_HOSTS
+              value: "21.changelog.com"
             - name: URL_SCHEME
               value: https
             - name: URL_STATIC_HOST
@@ -293,15 +308,17 @@ spec:
           #   - -S
           #   - mix
           #   - phx.server
+          # command: ["sleep", "infinity"]
           ports:
             - name: phoenix
               containerPort: 4000
           resources:
             requests:
-              cpu: "2"
-              memory: "2Gi"
+              cpu: 2
+              memory: 4Gi
             limits:
-              memory: "8Gi"
+              cpu: 2
+              memory: 4Gi
           readinessProbe:
             httpGet:
               path: /health
@@ -322,8 +339,8 @@ spec:
             periodSeconds: 10
           volumeMounts:
             - mountPath: "/app/priv/uploads"
-              name: uploads
+              name: uploads-local-ssd
       volumes:
-        - name: uploads
+        - name: uploads-local-ssd
           persistentVolumeClaim:
-            claimName: uploads
+            claimName: uploads-local-ssd

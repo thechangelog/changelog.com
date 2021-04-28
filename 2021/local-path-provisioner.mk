@@ -14,8 +14,9 @@ lke-local-path-provisioner: | $(LOCAL_PATH_PROVISIONER_DIR) lke-ctx $(HELM)
 	  --install \
 	  --namespace local-path-provisioner --create-namespace \
 	  --values $(LOCAL_PATH_PROVISIONER_DIR)/deploy/chart/values.yaml \
+	  --set storageClass.reclaimPolicy=Retain \
 	  --version $(LOCAL_PATH_PROVISIONER_VERSION)
-lke-bootstrap:: lke-local-path-provisioner
+lke-bootstrap:: | lke-local-path-provisioner
 
 .PHONY: releases-local-path-provisioner
 releases-local-path-provisioner:

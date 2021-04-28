@@ -23,7 +23,7 @@ lke-keel: | $(KEEL_DIR) lke-ctx $(HELM)
 	  --set ingress.annotations."kubernetes\.io/ingress\.class"=nginx \
 	  --set ingress.hosts[0].host=keel21.changelog.com \
 	  --set ingress.hosts[0].paths[0]=/
-lke-bootstrap:: lke-keel
+lke-bootstrap:: | lke-keel
 
 .PHONY: releases-keel
 releases-keel:

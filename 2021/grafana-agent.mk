@@ -28,3 +28,5 @@ lke-grafana-agent: | lke-ctx $(ENVSUBST) $(GRAFANA_AGENT_DIR)
 	; sed 's/$$1/$$$$1/g; s/$$3/$$$$3/g; s/$${1}/$$$${1}/g' $(CURDIR)/manifests/grafana-agent/agent+loki.yml \
 	| $(ENVSUBST_SAFE) \
 	| $(KUBECTL) $(K_CMD) --filename -
+
+lke-bootstrap:: | lke-grafana-agent
