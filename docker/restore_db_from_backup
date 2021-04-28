@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -e
+set -o pipefail
 
 # shellcheck source=docker/load_backups_secrets
 source load_backups_secrets
