@@ -72,8 +72,8 @@ metadata:
 spec:
   tls:
     - hosts:
-        - origin.changelog.com
-        - 2020.changelog.com
+        - "changelog.com"
+        - "*.changelog.com"
       secretName: wildcard-acme-tls-pkcs8
     - hosts:
         - brainscience.fm
