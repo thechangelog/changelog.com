@@ -21,6 +21,7 @@ defmodule ChangelogWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html", "js"]
+    plug Plug.FlocOff
     plug :fetch_session
     plug Plug.Turbolinks
     plug :fetch_flash
