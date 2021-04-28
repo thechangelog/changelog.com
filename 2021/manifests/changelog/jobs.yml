@@ -143,6 +143,8 @@ spec:
                   value: db
                 - name: PGDATABASE
                   value: changelog
+                - name: INSTANCE
+                  value: ${NAMESPACE}_
                 - name: PGUSER
                   value: postgres
                 - name: PGPASSWORD
