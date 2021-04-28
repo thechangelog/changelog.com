@@ -122,8 +122,8 @@ spec:
             - name: db
               image: thechangelog/backups:202104
               imagePullPolicy: Always
-              # command: ["/usr/local/bin/backup_db_to_s3"]
-              command: ["sleep", "infinity"]
+              command: ["/usr/local/bin/backup_db_to_s3"]
+              # command: ["sleep", "infinity"]
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
@@ -153,8 +153,8 @@ spec:
             - name: uploads
               image: thechangelog/backups:202104
               imagePullPolicy: Always
-              # command: ["/usr/local/bin/backup_uploads_to_s3"]
-              command: ["sleep", "infinity"]
+              command: ["/usr/local/bin/backup_uploads_to_s3"]
+              # command: ["sleep", "infinity"]
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
