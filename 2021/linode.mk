@@ -4,7 +4,7 @@ LKE_NAME ?= prod
 
 # This has been already created & will be enabled on: eval "$(make env)"
 env::
-	@echo 'export LKE_LABEL=prod-20210331'
+	@echo 'export LKE_LABEL=prod-20210428'
 
 LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
 # us-east, the only US region with all the bells & whistles in 2021.03:
@@ -13,6 +13,29 @@ LKE_REGION ?= us-east
 LKE_VERSION ?= 1.20
 LKE_NODE_TYPE ?= g6-dedicated-32
 LKE_NODE_COUNT ?= 1
+
+### HOW LONG DOES IT TAKE FOR EVERYTHING TO RESTORE IF THE VM GETS DELETED?
+#
+# - 00:00 Linode deleted
+# - 03:00 Linode boots
+# - 05:30 LKE node ready
+# - 07:10 Uploads restore started
+# - 07:12 PostgreSQL db init from backup started
+# - 08:20 PostgreSQL db init from backup finished (1')
+# - 21:00 Uploads restore finished (13')
+# - 21:16 PostgreSQL db backup started
+# - 21:52 PostgreSQL db backup finished
+# - 22:58 Sentry notify release
+# - 22:58 Compiling
+# - 23:27 App booting
+# - 23:29 Migrations running - noop
+# - 23:54 First HTTP request serviced (24')
+
+### HOW LONG DOES IT TAKE FOR EVERYTHING TO RESTORE IF THE VM GETS REBOOTED?
+#
+# - 00:00 Linode reboot initiated
+# - 01:37 Linode boots
+# - 03:12 First HTTP request serviced (3')
 
 $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
