@@ -10,8 +10,12 @@ AWS_S3_DEST_FILE_PATH="${INSTANCE}${PGDATABASE:?must be set}_$(date -u +'%Y-%m-%
 export AWS_S3_DEST_FILE_PATH
 
 echo "--------------------------------------------"
-echo "Starting $PGDATABASE database backup..."
+echo "$(date): Starting $PGDATABASE database backup..."
 
-pg_dump --compress=9 | upload_stdin_s3
+pg_dump --no-owner --no-privileges \
+| grep -v pg_stat_kcache \
+| grep -v set_user \
+| gzip --stdout -5 \
+| upload_stdin_s3
 
-echo "$PGDATABASE database ${AWS_S3_DEST_FILE_PATH:?must be set} backup succeeded at $(date)"
+echo "$(date) $PGDATABASE database ${AWS_S3_DEST_FILE_PATH:?must be set} backup succeeded"

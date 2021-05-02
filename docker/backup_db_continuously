@@ -9,9 +9,7 @@ source load_backups_secrets
 echo "Will backup ${PGDATABASE:?must be set} database every ${BACKUP_EVERY_N_SECONDS:?must be set} seconds"
 while true
 do
-
   backup_db_to_s3
-
   echo "Next backup in $((BACKUP_EVERY_N_SECONDS / 3600)) hours"
   sleep "$BACKUP_EVERY_N_SECONDS"
 done

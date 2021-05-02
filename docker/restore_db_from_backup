@@ -23,12 +23,12 @@ then
   exit 0
 fi
 
-echo "
-Restoring $PGDATABASE database from $DB_BACKUP ..."
+echo "--------------------------------------------"
+echo "$(date): Starting $PGDATABASE database restore from $DB_BACKUP ..."
 
 aws s3 cp "s3://${AWS_S3_BUCKET:?must be set}/$DB_BACKUP" - \
 | gunzip --stdout \
 | psql
 
 echo "
-SUCCESS! $PGDATABASE database was restored from $DB_BACKUP"
+$(date): $PGDATABASE database restored from $DB_BACKUP successfully"
