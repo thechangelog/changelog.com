@@ -12,9 +12,7 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-            - command:
-              - /bin/sh
-              - -c
+            - command: ["/bin/sh", "-c"]
               args:
               - |-
                 if [ -n "${DEBUG}" ]
@@ -99,7 +97,7 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: backup-db
+  name: backup
   namespace: ${NAMESPACE}
 spec:
   concurrencyPolicy: Forbid

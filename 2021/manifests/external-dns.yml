@@ -35,7 +35,7 @@ spec:
         - --events
         env:
         - name: EXTERNAL_DNS_TXT_OWNER_ID
-          value: lke-prod-20210331
+          value: lke-prod-20210428
         - name: EXTERNAL_DNS_LOG_LEVEL
           value: debug
         - name: EXTERNAL_DNS_POLICY

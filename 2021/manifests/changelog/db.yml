@@ -81,11 +81,11 @@ spec:
           image: postgres:12.6
           resources:
             requests:
-              cpu: 2
-              memory: 2Gi
+              cpu: 4
+              memory: 8Gi
             limits:
-              cpu: 2
-              memory: 2Gi
+              cpu: 4
+              memory: 8Gi
           ports:
             - containerPort: 5432
               name: postgres

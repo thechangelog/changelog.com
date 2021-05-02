@@ -316,11 +316,11 @@ spec:
               containerPort: 4000
           resources:
             requests:
-              cpu: 2
-              memory: 4Gi
+              cpu: 8
+              memory: 16Gi
             limits:
-              cpu: 2
-              memory: 4Gi
+              cpu: 8
+              memory: 16Gi
           readinessProbe:
             httpGet:
               path: /health
