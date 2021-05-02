@@ -24,7 +24,7 @@ image:
   pull_policy: Always
 db:
   restore:
-    image: thechangelog/backups:202008
+    image: thechangelog/backups:202104
 fastly:
   #! https://manage.fastly.com/network/certificates
   certificate_id: 1LA0UjkMfnnMwzglSLdAc

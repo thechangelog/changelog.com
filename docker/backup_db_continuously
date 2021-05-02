@@ -6,7 +6,7 @@ set -o pipefail
 # shellcheck source=docker/load_backups_secrets
 source load_backups_secrets
 
-echo "Will backup ${PGDATABASE:?must be set} db every ${BACKUP_EVERY_N_SECONDS:?must be set} seconds"
+echo "Will backup ${PGDATABASE:?must be set} database every ${BACKUP_EVERY_N_SECONDS:?must be set} seconds"
 while true
 do
 

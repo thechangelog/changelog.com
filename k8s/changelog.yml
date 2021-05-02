@@ -44,8 +44,8 @@ metadata:
 spec:
   tls:
   - hosts:
-    - origin.changelog.com
-    - 2020.changelog.com
+    - changelog.com
+    - '*.changelog.com'
     secretName: wildcard-acme-tls-pkcs8
   - hosts:
     - brainscience.fm
@@ -190,7 +190,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
       - name: db-backup
-        image: thechangelog/backups:202008
+        image: thechangelog/backups:202104
         imagePullPolicy: Always
         command:
         - /usr/local/bin/backup_db_continuously
@@ -215,6 +215,8 @@ spec:
           value: changelog-dbquickfix
         - name: PGDATABASE
           value: db
+        - name: INSTANCE
+          value: prod-2020-07_
         - name: PGPASSWORD
           valueFrom:
             secretKeyRef:
@@ -226,7 +228,7 @@ spec:
               name: changelog.changelog-dbquickfix.credentials.postgresql.acid.zalan.do
               key: username
       - name: uploads-backup
-        image: thechangelog/backups:202008
+        image: thechangelog/backups:202104
         imagePullPolicy: Always
         command:
         - /usr/local/bin/backup_uploads_continuously

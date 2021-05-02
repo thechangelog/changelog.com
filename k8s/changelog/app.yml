@@ -242,6 +242,8 @@ spec:
               value: changelog-dbquickfix
             - name: PGDATABASE
               value: db
+            - name: INSTANCE
+              value: #@ data.values.namespace + "_"
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
