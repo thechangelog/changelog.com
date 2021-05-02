@@ -19,7 +19,7 @@ lke-keel: | $(KEEL_DIR) lke-ctx $(HELM)
 	  --set service.enabled=true \
 	  --set service.type=ClusterIP \
 	  --set ingress.enabled=true \
-	  --set ingress.annotations."external\-dns\.alpha\.kubernetes\.io/ttl"=1m \
+	  --set ingress.annotations."external\-dns\.alpha\.kubernetes\.io/ttl"=10m \
 	  --set ingress.annotations."kubernetes\.io/ingress\.class"=nginx \
 	  --set ingress.hosts[0].host=keel21.changelog.com \
 	  --set ingress.hosts[0].paths[0]=/
