@@ -14,62 +14,62 @@ spec:
           containers:
             - command: ["/bin/sh", "-c"]
               args:
-              - |-
-                if [ -n "${DEBUG}" ]
-                then
-                  CURL_OPTIONS="--verbose"
-                else
-                  echo "Fail job on error..."
-                  set -e
-                  set -o pipefail
-                fi
+                - |-
+                  if [ -n "${DEBUG}" ]
+                  then
+                    CURL_OPTIONS="--verbose"
+                  else
+                    echo "Fail job on error..."
+                    set -e
+                    set -o pipefail
+                  fi
 
-                #! https://developer.fastly.com/reference/api/tls/custom-certs/private-keys/
-                cat > /tmp/key.json <<EOF
-                {
-                  "data": {
-                    "type": "tls_private_key",
-                    "attributes": {
-                      "key": "$$(echo "$$TLS_KEY" | awk '{ printf "%s\\n", $$0 }')",
-                      "name": "changelog.com"
+                  #! https://developer.fastly.com/reference/api/tls/custom-certs/private-keys/
+                  cat > /tmp/key.json <<EOF
+                  {
+                    "data": {
+                      "type": "tls_private_key",
+                      "attributes": {
+                        "key": "$$(echo "$$TLS_KEY" | awk '{ printf "%s\\n", $$0 }')",
+                        "name": "changelog.com"
+                      }
                     }
                   }
-                }
-                EOF
-                echo "But don't fail POST-ing private keys, as it's not idempotent"
-                echo "This Fastly support ticket has all the details: https://support.fastly.com/hc/en-us/requests/329710"
-                echo "TODO: What is the simplest way of checking that a private key exists?"
-                curl $$CURL_OPTIONS --silent --show-error \
-                  --header "Accept: application/vnd.api+json" \
-                  --header "Content-Type: application/vnd.api+json" \
-                  --header "Fastly-Key: $$FASTLY_API_TOKEN" \
-                  --data @/tmp/key.json \
-                  https://api.fastly.com/tls/private_keys 2>&1 | grep -v "$$FASTLY_API_TOKEN"
+                  EOF
+                  echo "But don't fail POST-ing private keys, as it's not idempotent"
+                  echo "This Fastly support ticket has all the details: https://support.fastly.com/hc/en-us/requests/329710"
+                  echo "TODO: What is the simplest way of checking that a private key exists?"
+                  curl $$CURL_OPTIONS --silent --show-error \
+                    --header "Accept: application/vnd.api+json" \
+                    --header "Content-Type: application/vnd.api+json" \
+                    --header "Fastly-Key: $$FASTLY_API_TOKEN" \
+                    --data @/tmp/key.json \
+                    https://api.fastly.com/tls/private_keys 2>&1 | grep -v "$$FASTLY_API_TOKEN"
 
-                #! https://developer.fastly.com/reference/api/tls/custom-certs/certificates/
-                cat > /tmp/crt.json <<EOF
-                {
-                  "data": {
-                    "type": "tls_certificate",
-                    "attributes": {
-                      "cert_blob": "$$(echo "$$TLS_CRT" | awk '{ printf "%s\\n", $$0 }')",
-                      "name": "changelog.com"
+                  #! https://developer.fastly.com/reference/api/tls/custom-certs/certificates/
+                  cat > /tmp/crt.json <<EOF
+                  {
+                    "data": {
+                      "type": "tls_certificate",
+                      "attributes": {
+                        "cert_blob": "$$(echo "$$TLS_CRT" | awk '{ printf "%s\\n", $$0 }')",
+                        "name": "changelog.com"
+                      }
                     }
                   }
-                }
-                EOF
-                curl $$CURL_OPTIONS --silent --fail --show-error \
-                  --header "Accept: application/vnd.api+json" \
-                  --header "Content-Type: application/vnd.api+json" \
-                  --header "Fastly-Key: $$FASTLY_API_TOKEN" \
-                  --request PATCH \
-                  --data @/tmp/crt.json \
-                  https://api.fastly.com/tls/certificates/1LA0UjkMfnnMwzglSLdAc 2>&1 | grep -v "$$FASTLY_API_TOKEN"
+                  EOF
+                  curl $$CURL_OPTIONS --silent --fail --show-error \
+                    --header "Accept: application/vnd.api+json" \
+                    --header "Content-Type: application/vnd.api+json" \
+                    --header "Fastly-Key: $$FASTLY_API_TOKEN" \
+                    --request PATCH \
+                    --data @/tmp/crt.json \
+                    https://api.fastly.com/tls/certificates/1LA0UjkMfnnMwzglSLdAc 2>&1 | grep -v "$$FASTLY_API_TOKEN"
 
-                if [ -n "${DEBUG}" ]
-                then
-                  sleep infinity
-                fi
+                  if [ -n "${DEBUG}" ]
+                  then
+                    sleep infinity
+                  fi
               env:
               - name: TLS_KEY
                 valueFrom:
@@ -111,7 +111,7 @@ spec:
             - name: db
               image: thechangelog/backups:202104
               imagePullPolicy: Always
-              command: ["/usr/local/bin/backup_db_to_s3"]
+              command: ["backup_db_to_s3"]
               # command: ["sleep", "infinity"]
               env:
                 - name: AWS_ACCESS_KEY_ID
@@ -144,7 +144,7 @@ spec:
             - name: uploads
               image: thechangelog/backups:202104
               imagePullPolicy: Always
-              command: ["/usr/local/bin/backup_uploads_to_s3"]
+              command: ["backup_uploads_to_s3"]
               # command: ["sleep", "infinity"]
               env:
                 - name: AWS_ACCESS_KEY_ID

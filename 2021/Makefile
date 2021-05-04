@@ -44,3 +44,12 @@ env::
 
 .env:
 	$(MAKE) --no-print-directory env SILENT="1>/dev/null 2>&1" > .env
+
+# - [x] Backup 2020 db
+# - [x] Restore 2020 db on 2021
+# - [x] Upate Fastly back-end to 21.changelog.com
+# - [x] IF REAL-TIME STATS DON'T LOOK HEALTHY, REVERT SERVICE CONFIG: https://manage.fastly.com/stats/real-time/services/7gKbcKSKGDyqU7IuDr43eG/datacenters/all
+# - [x] Stop 2020 external-dns
+# - [x] Configure 2021 external-dns to sync & linode-kubernetes-engine, so that other domains get updated
+# - [x] Stop keel in 2020 & remove DockerHub webhook
+# - [ ] After 24h, delete 2020 setup & cleanup old config

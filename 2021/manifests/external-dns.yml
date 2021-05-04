@@ -35,11 +35,11 @@ spec:
         - --events
         env:
         - name: EXTERNAL_DNS_TXT_OWNER_ID
-          value: lke-prod-20210428
+          value: linode-kubernetes-engine
         - name: EXTERNAL_DNS_LOG_LEVEL
           value: debug
         - name: EXTERNAL_DNS_POLICY
-          value: upsert-only
+          value: sync
         - name: DNSIMPLE_OAUTH
           valueFrom:
             secretKeyRef:

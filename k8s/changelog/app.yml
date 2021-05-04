@@ -32,32 +32,6 @@ spec:
     recordType: CNAME
     targets:
       - dualstack.changelog.map.fastly.net
-#! ---
-#! ONLY THE FIRST TARGET IS ADDED in 0.7.3, and AAAA are missing,
-#! doing it manually for now
-#! apiVersion: externaldns.k8s.io/v1alpha1
-#! kind: DNSEndpoint
-#! metadata:
-#!   name: changelog.com
-#!   namespace: #@ data.values.namespace
-#! spec:
-#!   endpoints:
-#!   - dnsName: changelog.com
-#!     recordTTL: 600
-#!     recordType: A
-#!     targets:
-#!       - 151.101.1.162
-#!       - 151.101.65.162
-#!       - 151.101.129.162
-#!       - 151.101.193.162
-#!   - dnsName: changelog.com
-#!     recordTTL: 600
-#!     recordType: AAAA
-#!     targets:
-#!       - 2a04:4e42::418
-#!       - 2a04:4e42:200::418
-#!       - 2a04:4e42:400::418
-#!       - 2a04:4e42:600::418
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress

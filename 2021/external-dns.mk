@@ -8,7 +8,6 @@ EXTERNAL_DNS_CRD_MANIFEST_URL := https://raw.githubusercontent.com/kubernetes-si
 lke-external-dns: | lke-ctx $(YTT) $(EXTERNAL_DNS_CRD_MANIFEST)
 	$(KUBECTL) $(K_CMD) --filename $(EXTERNAL_DNS_CRD_MANIFEST)
 	$(YTT) \
-	  --data-value dns.record_owner=lke-$(LKE_LABEL) \
 	  --data-value namespace=$(EXTERNAL_DNS_NAMESPACE) \
 	  --data-value image=$(EXTERNAL_DNS_IMAGE) \
 	  --file $(MANIFESTS)/external-dns/template.yml \
