@@ -7,11 +7,6 @@ config :changelog, ChangelogWeb.Endpoint,
     host: System.get_env("URL_HOST", "changelog.com"),
     port: System.get_env("URL_PORT", "443")
   ],
-  force_ssl: [
-    rewrite_on: [:x_forwarded_proto],
-    exclude:
-      ["127.0.0.1", "localhost"] ++ String.split(System.get_env("FORCE_SSL_EXCLUDE_HOSTS", ""))
-  ],
   static_url: [
     scheme: System.get_env("STATIC_URL_SCHEME", "https"),
     host: System.get_env("STATIC_URL_HOST", "cdn.changelog.com"),

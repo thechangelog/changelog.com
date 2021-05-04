@@ -272,14 +272,6 @@ spec:
                   key: consumer_secret
             - name: UPLOADS_PATH
               value: priv/uploads
-            - name: URL_HOST
-              value: 21.changelog.com
-            - name: URL_PORT
-              value: "443"
-            - name: FORCE_SSL_EXCLUDE_HOSTS
-              value: "21.changelog.com"
-            - name: URL_SCHEME
-              value: https
             - name: URL_STATIC_HOST
               value: cdn.changelog.com
             - name: GRAFANA_URL
