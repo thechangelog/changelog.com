@@ -12,16 +12,16 @@ defmodule ChangelogWeb.Plug.VanityDomains do
 
   # should be called after the LoadPodcasts plug for data access
   def call(conn = %{assigns: %{podcasts: podcasts}}, _opts) do
-    host = get_host(conn)
+    request_host = get_host(conn)
+    main_host = ChangelogWeb.Endpoint.host()
     # short-circut because most requests will hit this
-    if host == ChangelogWeb.Endpoint.host() do
+    if String.contains?(request_host, main_host) do
       conn
+      |> Plug.Conn.put_resp_header("x-changelog-vanity-redirect", "false")
     else
-      Logger.info("Vanity Redirect: #{host}#{conn.request_path}")
-
       podcasts
       |> Enum.reject(fn p -> is_nil(p.vanity_domain) end)
-      |> Enum.find(fn p -> URI.parse(p.vanity_domain).host == host end)
+      |> Enum.find(fn p -> URI.parse(p.vanity_domain).host == request_host end)
       |> vanity_redirect(conn)
     end
   end
@@ -36,6 +36,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     destination = determine_destination(podcast, parts)
 
     conn
+    |> Plug.Conn.put_resp_header("x-changelog-vanity-redirect", "true")
     |> Redirect.call(external: destination)
     |> Plug.Conn.halt()
   end

@@ -53,15 +53,6 @@ defmodule ChangelogWeb.RedirectsTest do
     assert_redirect(conn, "/podcast/1000?utm=yo")
   end
 
-  test "it no-ops for other hosts" do
-    conn =
-      :get
-      |> build_conn("")
-      |> Plug.Redirects.call([])
-
-    assert conn.status != 302
-  end
-
   test "www redirects" do
     conn =
       build_conn_with_host_and_path("www.changelog.com", "/")
@@ -76,5 +67,30 @@ defmodule ChangelogWeb.RedirectsTest do
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host()}/jsparty/103", 301)
+  end
+
+  test "no-ops for 2020.changelog.com" do
+    conn =
+      build_conn_with_host_and_path("2020.changelog.com", "/")
+      |> Plug.Redirects.call([])
+
+    assert conn.status == nil
+  end
+
+  test "no-ops for 21.changelog.com" do
+    conn =
+      build_conn_with_host_and_path("21.changelog.com", "/")
+      |> Plug.Redirects.call([])
+
+    assert conn.status == nil
+  end
+
+  test "it no-ops for other hosts" do
+    conn =
+      :get
+      |> build_conn("")
+      |> Plug.Redirects.call([])
+
+    assert conn.status == nil
   end
 end

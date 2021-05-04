@@ -125,12 +125,24 @@ defmodule ChangelogWeb.VanityDomainsTest do
     assert_vanity_redirect(conn, "https://changelog.typeform.com/to/wTCcQHGQ")
   end
 
-  test "it no-ops for default host" do
+  test "it does not vanity redirect for default host" do
     conn =
       build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/")
+      |> assign_podcasts([@gotime, @jsparty])
       |> Plug.VanityDomains.call([])
 
-    assert conn.status != 302
+    vanity_redirect = conn |> get_resp_header("x-changelog-vanity-redirect")
+    assert vanity_redirect == ["false"]
+  end
+
+  test "it does not vanity redirect for default host subdomain" do
+    conn =
+      build_conn_with_host_and_path("21.#{ChangelogWeb.Endpoint.host()}", "/")
+      |> assign_podcasts([@gotime, @jsparty])
+      |> Plug.VanityDomains.call([])
+
+    vanity_redirect = conn |> get_resp_header("x-changelog-vanity-redirect")
+    assert vanity_redirect == ["false"]
   end
 
   test "it no-ops for other hosts" do
@@ -139,6 +151,6 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> build_conn("")
       |> Plug.VanityDomains.call([])
 
-    assert conn.status != 302
+    assert conn.status == nil
   end
 end
