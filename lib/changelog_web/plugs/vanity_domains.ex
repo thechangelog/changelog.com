@@ -15,7 +15,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     request_host = get_host(conn)
     main_host = ChangelogWeb.Endpoint.host()
     # short-circut because most requests will hit this
-    if String.contains?(request_host, main_host) do
+    if String.contains?("#{request_host}", "#{main_host}") do
       conn
       |> Plug.Conn.put_resp_header("x-changelog-vanity-redirect", "false")
     else
