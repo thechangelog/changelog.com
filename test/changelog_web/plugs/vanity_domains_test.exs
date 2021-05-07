@@ -116,6 +116,15 @@ defmodule ChangelogWeb.VanityDomainsTest do
     assert_vanity_redirect(conn, "/community")
   end
 
+  test "vanity redirects for guest guide" do
+    conn =
+      build_conn_with_host_and_path("jsparty.fm", "/guest")
+      |> assign_podcasts([@gotime, @jsparty])
+      |> Plug.VanityDomains.call([])
+
+    assert_vanity_redirect(conn, "/guest/jsparty")
+  end
+
   test "vanity redirects for jsparty ff form" do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/ff")
