@@ -25,8 +25,3 @@ config :changelog, Oban,
   crontab: false,
   queues: false,
   plugins: false
-
-config :rollbax,
-  access_token: "",
-  environment: "test",
-  enabled: :log

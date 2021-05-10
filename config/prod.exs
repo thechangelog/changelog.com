@@ -61,10 +61,6 @@ config :changelog, Changelog.Scheduler,
     {"* * * * *", {Changelog.NewsQueue, :publish, []}}
   ]
 
-config :rollbax,
-  access_token: SecretOrEnv.get("ROLLBAR_ACCESS_TOKEN"),
-  environment: "production"
-
 config :changelog, Changelog.PromEx,
   manual_metrics_start_delay: :no_delay,
   drop_metrics_groups: [],

@@ -274,23 +274,4 @@ defmodule ChangelogWeb.Router do
 
     get "/:slug", PodcastController, :show, as: :podcast
   end
-
-  defp handle_errors(_conn, %{reason: %Ecto.NoResultsError{}}), do: true
-  defp handle_errors(_conn, %{reason: %Phoenix.Router.NoRouteError{}}), do: true
-  defp handle_errors(_conn, %{reason: %Phoenix.NotAcceptableError{}}), do: true
-
-  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
-    headers = Enum.into(conn.req_headers, %{})
-    reason = Map.delete(reason, :assigns)
-
-    Rollbax.report(kind, reason, stacktrace, %{}, %{
-      "request" => %{
-        "url" => "#{conn.scheme}://#{conn.host}#{conn.request_path}",
-        "user_ip" => Map.get(headers, "x-forwarded-for"),
-        "method" => conn.method,
-        "headers" => headers,
-        "params" => conn.params
-      }
-    })
-  end
 end

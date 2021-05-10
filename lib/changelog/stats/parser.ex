@@ -45,7 +45,6 @@ defmodule Changelog.Stats.Parser do
       exception ->
         Logger.info("Stats: Parse Error '#{exception.message}'\n#{line}")
         Sentry.capture_exception(exception)
-        Rollbax.report(:error, exception, __STACKTRACE__, %{line: line})
         %Entry{bytes: 0}
     end
   end

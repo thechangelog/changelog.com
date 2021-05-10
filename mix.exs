@@ -71,7 +71,6 @@ defmodule Changelog.Mixfile do
       {:ueberauth_github, "~> 0.4"},
       {:ueberauth_twitter, github: "jerodsanto/ueberauth_twitter"},
       {:ex_machina, "~> 2.0"},
-      {:rollbax, "~> 0.8.2"},
       {:sentry, "~> 8.0"},
       {:html_entities, "~> 0.3"},
       {:algolia, "~> 0.8.0"},

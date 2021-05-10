@@ -53,11 +53,6 @@ config :changelog, Changelog.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-config :rollbax,
-  access_token: "",
-  environment: "development",
-  enabled: :log
-
 config :changelog, Changelog.PromEx,
   manual_metrics_start_delay: :no_delay,
   drop_metrics_groups: [],
