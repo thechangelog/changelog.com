@@ -30,10 +30,6 @@
         color: #000;
         text-decoration: underline;
       }
-
-      .lazy {
-        text-indent: -9999px;
-      }
     }
   }
 
@@ -297,7 +293,7 @@
           text-decoration: none;
         }
 
-        .lazy {
+        img {
           background: $lightest-grey;
           border-radius: 2px;
           display: inline-flex;

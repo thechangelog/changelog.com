@@ -115,8 +115,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def is_past?(time = %DateTime{}, as_of \\ Timex.now()), do: Timex.compare(time, as_of) == -1
 
   def lazy_image(src, alt, attrs \\ []) do
-    attrs = Keyword.merge(attrs, data: [src: src], alt: alt, src: transparent_gif())
-    attrs = Keyword.update(attrs, :class, "lazy", &"#{&1} lazy")
+    attrs = Keyword.merge(attrs, src: src, alt: alt, loading: "lazy")
     tag(:img, attrs)
   end
 
@@ -158,9 +157,6 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 
   def sans_new_lines(string), do: String.replace(string, "\n", " ")
-
-  def transparent_gif,
-    do: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 
   def truncate(string, length) when is_binary(string) do
     if String.length(string) > length do

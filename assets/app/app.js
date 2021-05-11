@@ -21,11 +21,9 @@ import Flash from "modules/flash";
 import ts from "../shared/ts";
 import gup from "../shared/gup";
 import parseTime from "../shared/parseTime";
-import lozad from "lozad";
 
 window.u = u;
 window.App = {
-  lazy: lozad(".lazy"),
   live: new LivePlayer(".js-live"),
   overlay: new Overlay("#overlay"),
   player: new OnsitePlayer("#player"),
@@ -308,7 +306,6 @@ u(document).on("turbolinks:before-cache", function () {
 // on page load
 u(document).on("turbolinks:load", function () {
   Prism.highlightAll();
-  App.lazy.observe();
   App.player.attach();
   App.live.check();
   u(".js-track-news").each(el => {
@@ -328,7 +325,6 @@ u(document).on("ajax:load", function () {
   App.attachFlash();
   App.attachTooltips();
   App.formatTimes();
-  App.lazy.observe();
   autosize(document.querySelectorAll("textarea"));
 });
 
