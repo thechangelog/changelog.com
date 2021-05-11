@@ -1,7 +1,7 @@
 <header class="news_item-header">
   <p class="news_item-source">
     <%= link to: @ad.url, title: @sponsor.name, rel: "sponsored external", data: [news: true], class: "news_item-source-image" do %>
-      <%= SharedHelpers.lazy_image(SponsorView.avatar_url(@sponsor, :small), "#{@sponsor.name} Icon") %>
+      <%= SharedHelpers.lazy_image(SponsorView.avatar_url(@sponsor, :small), "#{@sponsor.name} Icon", width: 50, height: 50) %>
     <% end %>
 
     <%= link("#{@sponsor.name} – Sponsored", to: @ad.url, title: @sponsor.name, rel: "sponsored external", data: [news: true]) %>

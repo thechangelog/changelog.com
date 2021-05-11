@@ -6,7 +6,7 @@
   <% end %>
 <% end %>
 <%= if Enum.any?(additional_participants) do %>
-  <span class="has-tooltip"><%= SharedHelpers.maybe_lazy_image(@conn, Routes.static_url(@conn, "/images/icons/icon-plus.png"), "And more", style: "background: none;") %></span>
+  <span class="has-tooltip"><%= SharedHelpers.maybe_lazy_image(@conn, Routes.static_url(@conn, "/images/icons/icon-plus.png"), "And more", width: 24, height: 24, style: "background: none;") %></span>
   <div class="tooltip tooltip--topics">
     <div class="tooltip-arrow"></div>
     <div class="tooltip-wrap">

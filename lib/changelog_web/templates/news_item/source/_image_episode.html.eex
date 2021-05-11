@@ -1,5 +1,5 @@
 <%= link to: Routes.podcast_path(@conn, :show, @episode.podcast.slug),
    title: @episode.podcast.name,
    class: "news_item-source-image news_item-source-image--episode" do %>
-  <%= SharedHelpers.maybe_lazy_image(@conn, PodcastView.cover_url(@episode.podcast, :small), @episode.podcast.name, style: "background-color: #121921") %>
+  <%= SharedHelpers.maybe_lazy_image(@conn, PodcastView.cover_url(@episode.podcast, :small), @episode.podcast.name, width: 50, height: 50, style: "background-color: #121921") %>
 <% end %>

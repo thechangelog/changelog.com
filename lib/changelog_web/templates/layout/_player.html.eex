@@ -17,7 +17,7 @@
     </div>
     <div class="podcast_player-buttons">
       <button class="podcast_player-button podcast_player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
-        <span class="js-player-prev-number"></span><%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/podcast-arrow.svg"), "Previous Episode") %>
+        <span class="js-player-prev-number"></span><%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/podcast-arrow.svg"), "Previous Episode", width: 11, height: 20) %>
       </button>
       <button class="podcast_player-button podcast_player-button--back15 js-player-back-button" title="Seek back 15 seconds"></button>
 
@@ -25,7 +25,7 @@
 
       <button class="podcast_player-button podcast_player-button--forward15 js-player-forward-button" title="Seek forward 15 seconds"></button>
       <button class="podcast_player-button podcast_player-button--next_episode js-player-next-button" title="Listen to the next episode">
-        <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/podcast-arrow.svg"), "Next Episode", class: "flip-horizontal") %><span class="js-player-next-number"></span>
+        <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/podcast-arrow.svg"), "Next Episode", width: 11, height: 20, class: "flip-horizontal") %><span class="js-player-next-number"></span>
       </button>
     </div>
     <form class="podcast_player-slider">
