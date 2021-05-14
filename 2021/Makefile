@@ -52,4 +52,4 @@ env::
 # - [x] Stop 2020 external-dns
 # - [x] Configure 2021 external-dns to sync & linode-kubernetes-engine, so that other domains get updated
 # - [x] Stop keel in 2020 & remove DockerHub webhook
-# - [ ] After 24h, delete 2020 setup & cleanup old config
+# - [x] After 24h, delete 2020 setup & cleanup old config

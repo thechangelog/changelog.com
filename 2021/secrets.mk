@@ -38,7 +38,7 @@ howto-rotate-secret:
 howto-add-secret:
 	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
 	@printf " 1/5. Add new secret to LastPass by running e.g. $(BOLD)make add-secret SECRET=CAPTCHA_API_KEY$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
-	@printf "\n 2/5. Add new *-lke-secret target to $(BOLD)mk/secrets.mk$(NORMAL) & remember to append it to $(BOLD)lke-changelog-secrets$(NORMAL) target\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 2/5. Add new *-lke-secret target to $(BOLD)2021/secrets.mk$(NORMAL) & remember to append it to $(BOLD)lke-changelog-secrets$(NORMAL) target\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 3/5. Run $(BOLD)make lke-changelog-secrets$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 4/5. Add reference to new secret in $(BOLD)k8s/changelog/app.yml$(NORMAL), then run $(BOLD)make lke-changelog$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "\n 5/5. Commit and push all changes, including the app changes to read the new secret from environment variables. The pipeline will take care of the rest 😉\n" ; read -rp " $(DONE)" -n 1

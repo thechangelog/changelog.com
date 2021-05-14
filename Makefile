@@ -132,12 +132,6 @@ endif
 #
 .DEFAULT_GOAL := help
 
-include $(CURDIR)/mk/docker.mk
-
-include $(CURDIR)/mk/secrets.mk
-include $(CURDIR)/mk/lke.mk
-include $(CURDIR)/mk/local.mk
-
 colours:
 	@echo "$(BOLD)BOLD $(RED)RED $(GREEN)GREEN $(YELLOW)YELLOW $(NORMAL)"
 
@@ -244,3 +238,82 @@ sentry-release: | $(CURL)
         	--header 'Authorization: Bearer $(SENTRY_AUTH_TOKEN)' \
          	--header 'Content-type: application/json' \
          	--data '{"version":"$(APP_VERSION)","ref":"$(GIT_SHA)","url":"$(GIT_REPOSITORY)/commit/$(GIT_SHA)","projects":["changelog-com"]}'
+
+.PHONY: backups-image
+backups-image: build-backups-image publish-backups-image
+.PHONY: bi
+bi: backups-image
+
+.PHONY: build-backups-image
+build-backups-image: $(DOCKER)
+	@cd docker && \
+	$(DOCKER) build \
+	  --tag thechangelog/backups:$(BUILD_VERSION) \
+	  --tag thechangelog/backups:$(STACK_VERSION) \
+	  --file Dockerfile.backups .
+.PHONY: bbi
+bbi: build-backups-image
+
+.PHONY: publish-backups-image
+publish-backups-image: $(DOCKER)
+	@$(DOCKER) push thechangelog/backups:$(BUILD_VERSION) && \
+	$(DOCKER) push thechangelog/backups:$(STACK_VERSION)
+
+.PHONY: runtime-image
+runtime-image: build-runtime-image publish-runtime-image
+.PHONY: ri
+ri: runtime-image
+
+.PHONY: build-runtime-image
+build-runtime-image: $(DOCKER)
+	@$(DOCKER) build --no-cache --tag thechangelog/runtime:$(BUILD_VERSION) --tag thechangelog/runtime:latest --file docker/Dockerfile.runtime .
+.PHONY: bri
+bri: build-runtime-image
+
+.PHONY: publish-runtime-image
+publish-runtime-image: $(DOCKER)
+	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
+	$(DOCKER) push thechangelog/runtime:latest
+
+.PHONY: howto-upgrade-elixir
+howto-upgrade-elixir:
+	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
+	@printf "Pick an image with node (required by the asset pipeline) from $(BOLD)$(BLUE)https://hub.docker.com/r/circleci/elixir/tags?page=1&ordering=last_updated$(NORMAL)\n\n"
+	@printf " 1/7. Update $(BOLD)docker/Dockerfile.runtime$(NORMAL) to use an image from the URL above, then run $(BOLD)make runtime-image$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 2/7. Update $(BOLD)docker/Dockerfile.production$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 3/7. Update $(BOLD).circleci/config.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 4/7. Update $(BOLD).github/workflows/test.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 5/7. Update $(BOLD)docker_dev/changelog.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 6/7. Commit and push everything\n" ; read -rp " $(DONE)" -n 1
+	@printf "\n 7/7. Watch the pipeline succeed and publish an app container image with the updated version of Elixir $(BOLD)$(BLUE)https://app.circleci.com/pipelines/github/thechangelog/changelog.com$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\nIf the pipeline succeeded, the git version of the app will be promoted to live within about a minute, you can watch this with $(BOLD)watch -c make check-deployed-version$(NORMAL)\n"
+	@printf "\nYou may want to update the elixir version in $(BOLD)mix.exs$(NORMAL)\n"
+
+APP_VERSION ?= $(shell date -u +'%y.%-m.%-d')
+export APP_VERSION
+
+.PHONY: dev
+dev:
+	mix local.hex --force
+	mix local.rebar --force
+	mix deps.get
+	cd assets && yarn install
+	mix do ecto.create, ecto.migrate, phx.server
+
+.PHONY: format
+format:
+	mix format
+	MIX_ENV=test mix test
+
+PG_MAJOR ?= 12
+PG_INSTALL ?= /usr/local/opt/postgresql@$(PG_MAJOR)
+PG_DIR ?= $(CURDIR)/tmp/postgres@$(PG_MAJOR)
+
+$(PG_INSTALL):
+	brew install postgresql@$(PG_MAJOR)
+
+$(PG_DIR):
+	$(PG_INSTALL)/bin/pg_ctl -D $(PG_DIR) init
+
+db-ctl-%: $(PG_INSTALL) $(PG_DIR)
+	$(PG_INSTALL)/bin/pg_ctl $(*) -D $(PG_DIR)
