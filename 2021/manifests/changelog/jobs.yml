@@ -170,7 +170,7 @@ spec:
             - name: uploads-local-ssd
               persistentVolumeClaim:
                 claimName: uploads-local-ssd
-  # https://crontab.guru/#0_*/6_*_*_*
-  schedule: 0 */6 * * *
+  # https://crontab.guru/#0_*_*_*_*
+  schedule: 0 * * * *
   successfulJobsHistoryLimit: 4
   suspend: false
