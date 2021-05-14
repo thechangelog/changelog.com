@@ -12,6 +12,11 @@ data:
   # be explicit about http2 (on by default)
   use-http2: "true"
 
+  # increase tls session cache
+  # https://docs.nginx.com/nginx/admin-guide/security-controls/terminating-ssl-tcp/
+  ssl-session-cache-size: "20m"
+  ssl-session-timeout: "4h"
+
   # compress static files
   use-gzip: "true"
   gzip-level: "5"
