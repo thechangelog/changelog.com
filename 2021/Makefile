@@ -13,6 +13,10 @@ NORMAL := $(shell tput sgr0)
 MANIFESTS := $(CURDIR)/manifests
 
 K_CMD ?= apply
+# Dump all objects (do not apply) if DEBUG variable is set
+ifneq (,$(DEBUG))
+  K_CMD = create --dry-run=client --output=yaml
+endif
 
 define env_not_set
 @printf "$(RED)$(1)$(NORMAL) environment variable must be set\n" 1>&2
@@ -24,6 +28,7 @@ include $(CURDIR)/deps.mk
 include $(CURDIR)/linode.mk
 include $(CURDIR)/secrets.mk
 include $(CURDIR)/grafana-agent.mk
+include $(CURDIR)/metrics-server.mk
 include $(CURDIR)/external-dns.mk
 include $(CURDIR)/cert-manager.mk
 include $(CURDIR)/ingress-nginx.mk
