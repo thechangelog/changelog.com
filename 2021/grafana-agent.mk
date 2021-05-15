@@ -1,13 +1,13 @@
 GRAFANA_AGENT_NAMESPACE := grafana-agent
 
 GRAFANA_AGENT_RELEASES := https://github.com/grafana/agent/releases
-GRAFANA_AGENT_VERSION :=  0.14.0-rc.3
+GRAFANA_AGENT_VERSION := v0.14.0-rc.4
 GRAFANA_AGENT_DIR := $(CURDIR)/tmp/grafana-agent-$(GRAFANA_AGENT_VERSION)
 
 $(GRAFANA_AGENT_DIR):
 	git clone \
 	  --branch $(GRAFANA_AGENT_VERSION) --single-branch --depth 1 \
-	  https://github.com/grafana/agent.git $(GRAFANA_AGENT_DIR)
+	  https://github.com/grafana/agent $(GRAFANA_AGENT_DIR)
 tmp/grafana-agent: $(GRAFANA_AGENT_DIR)
 
 releases-grafana-agent:
