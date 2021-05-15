@@ -62,10 +62,6 @@ ytt: $(YTT)
 releases-ytt:
 	$(OPEN) $(YTT_RELEASES)
 
-.PHONY: k9s
-k9s: | $(K9S) ## Interact with K8S via a terminal UI
-	$(K9S)
-
 JQ_RELEASES := https://github.com/stedolan/jq/releases
 JQ_VERSION := 1.6
 JQ_BIN := jq-$(JQ_VERSION)-$(platform)-x86_64
@@ -96,6 +92,10 @@ LPASS := /usr/bin/lpass
 $(LPASS):
 	@sudo apt-get update && sudo apt-get install lastpass-cli
 endif
+
+# lastpass-cli requires this directory to exist for it to work properly
+env::
+	@mkdir -p $(XDG_CONFIG_HOME)/lpass
 
 HELM_RELEASES := https://github.com/helm/helm/releases
 HELM_VERSION := 3.5.4

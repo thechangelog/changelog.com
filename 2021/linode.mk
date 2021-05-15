@@ -3,10 +3,11 @@ LKE_CONFIGS := $(XDG_CONFIG_HOME)/.kube/configs
 LKE_NAME ?= prod
 
 # This has been already created & will be enabled on: eval "$(make env)"
-env::
-	@echo 'export LKE_LABEL=prod-20210428'
 
-LKE_LABEL ?= $(LKE_NAME)-$(shell date -u +'%Y%m%d')
+LKE_LABEL ?= $(LKE_NAME)-20210428
+export LKE_LABEL
+env::
+	@echo 'export LKE_LABEL=$(LKE_LABEL)'
 # us-east, the only US region with all the bells & whistles in 2021.03:
 # Linodes, NodeBalancers, Block Storage, Object Storage, GPU Linodes, Kubernetes
 LKE_REGION ?= us-east
@@ -40,8 +41,11 @@ LKE_NODE_COUNT ?= 1
 $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
 
+LINODE_CLI_TOKEN ?= $(shell $(LPASS) show --notes Shared-changelog/secrets/LINODE_CLI_TOKEN)
+export LINODE_CLI_TOKEN
 env:: | $(LPASS)
-	@echo 'export LINODE_CLI_TOKEN="$(shell $(LPASS) show --notes Shared-changelog/secrets/LINODE_CLI_TOKEN)"'
+	@$(LPASS) status --quiet || $(LPASS) login
+	@echo 'export LINODE_CLI_TOKEN="$(LINODE_CLI_TOKEN)"'
 
 ifeq ($(PLATFORM),Darwin)
 # Use Python3 for all Python-based CLIs, such as linode-cli
@@ -172,8 +176,14 @@ lke-configs: | linode $(LKE_CONFIGS) $(JQ)
 	  && printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n" \
 	  && printf "\nTo use a specific config with $(BOLD)kubectl$(NORMAL), run e.g. $(BOLD)export KUBECONFIG=$(NORMAL)\n"
 
+KUBECONFIG ?= $(LKE_CONFIGS)/$(LKE_LABEL).yml
+export KUBECONFIG
 env::
-	@echo 'export KUBECONFIG=$(LKE_CONFIGS)/$(LKE_LABEL).yml'
+	@echo 'export KUBECONFIG=$(KUBECONFIG)'
+
+.PHONY: k9s
+k9s: | $(K9S) lke-configs ## Interact with K8S via a terminal UI
+	$(K9S) --all-namespaces --headless --logoless
 
 IS_KUBECONFIG_LKE_CONFIG := $(findstring $(LKE_CONFIGS), $(KUBECONFIG))
 .PHONY: lke-config-hint

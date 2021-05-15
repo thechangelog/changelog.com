@@ -15,8 +15,8 @@ MANIFESTS := $(CURDIR)/manifests
 K_CMD ?= apply
 
 define env_not_set
-@printf "$(RED)$(1)$(NORMAL) environment variable must be set\n"
-@printf 'Run $(BOLD)make .env && source .env$(NORMAL)\n'
+@printf "$(RED)$(1)$(NORMAL) environment variable must be set\n" 1>&2
+@printf 'Run $(BOLD)make .env && source .env$(NORMAL) and then retry\n' 1>&2
 exit 1
 endef
 
@@ -44,6 +44,17 @@ env::
 
 .env:
 	$(MAKE) --no-print-directory env SILENT="1>/dev/null 2>&1" > .env
+
+.PHONY: clean
+clean:
+	rm -fr $(CURDIR)/{.config,.env,bin}
+	rm -fr $(CURDIR)/../{.config,.envrc,.kube,bin,tmp}
+
+.DEFAULT_GOAL := start
+.PHONY: start
+start: .env
+	@printf "\nIf you have state in this directory, or the parent (top-level directory),\n$(YELLOW)you may want to start from scratch by running:$(NORMAL) $(BOLD)make clean$(NORMAL)\n\n"
+	@printf "Otherwise just run $(BOLD)$(GREEN)source .env$(NORMAL) and carry on.\nmake shell completion will be configured afterwards\n\n"
 
 # - [x] Backup 2020 db
 # - [x] Restore 2020 db on 2021
