@@ -23,6 +23,9 @@ defmodule ChangelogWeb.Plug.Conn do
     conn
     |> get_req_header("host")
     |> List.first()
+    |> to_string
+    |> String.split(":")
+    |> List.first()
   end
 
   @doc """

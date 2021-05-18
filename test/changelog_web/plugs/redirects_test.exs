@@ -37,6 +37,14 @@ defmodule ChangelogWeb.RedirectsTest do
     assert_redirect(conn, "https://sentry.io/from/changelog/")
   end
 
+  test "rss redirects for default host with port" do
+    conn =
+      build_conn_with_host_and_path("#{ChangelogWeb.Endpoint.host()}:80", "/rss")
+      |> Plug.Redirects.call([])
+
+    assert_redirect(conn, "/feed")
+  end
+
   test "internal redirects for default host" do
     conn =
       build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/podcast/rss")
@@ -48,6 +56,14 @@ defmodule ChangelogWeb.RedirectsTest do
   test "podcast redirects for default host" do
     conn =
       build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/1000?utm=yo")
+      |> Plug.Redirects.call([])
+
+    assert_redirect(conn, "/podcast/1000?utm=yo")
+  end
+
+  test "podcast redirects for default host with port" do
+    conn =
+      build_conn_with_host_and_path("#{ChangelogWeb.Endpoint.host()}:4000", "/1000?utm=yo")
       |> Plug.Redirects.call([])
 
     assert_redirect(conn, "/podcast/1000?utm=yo")

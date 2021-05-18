@@ -12,6 +12,22 @@ defmodule ChangelogWeb.ConnTest do
     {:ok, %{conn: conn}}
   end
 
+  describe "get_host/1" do
+    test "no host header", %{conn: conn} do
+      assert Plug.Conn.get_host(conn) == ""
+    end
+
+    test "host with port", %{conn: conn} do
+      conn = put_req_header(conn, "host", "changelog.com:443")
+      assert Plug.Conn.get_host(conn) == "changelog.com"
+    end
+
+    test "regular host", %{conn: conn} do
+      conn = put_req_header(conn, "host", "changelog.com")
+      assert Plug.Conn.get_host(conn) == "changelog.com"
+    end
+  end
+
   describe "get_agent/1" do
     test "returns the user agent response header", %{conn: conn} do
       conn = put_req_header(conn, "user-agent", "Bond, James Bond")

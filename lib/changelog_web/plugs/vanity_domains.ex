@@ -6,8 +6,6 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   alias ChangelogWeb.RedirectController, as: Redirect
   import ChangelogWeb.Plug.Conn
 
-  require Logger
-
   def init(opts), do: opts
 
   # should be called after the LoadPodcasts plug for data access
