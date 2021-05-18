@@ -4,6 +4,7 @@ defmodule ChangelogWeb.Plug.Redirects do
   """
   alias ChangelogWeb.RedirectController, as: Redirect
   import ChangelogWeb.Plug.Conn
+  require Logger
 
   @external %{
     "/datadog" =>
@@ -33,9 +34,16 @@ defmodule ChangelogWeb.Plug.Redirects do
     default_host = ChangelogWeb.Endpoint.host()
 
     case get_host(conn) do
-      "www.changelog.com" -> domain_redirects(conn)
-      ^default_host -> changelog_redirects(conn)
-      _else -> conn
+      "www.changelog.com" ->
+        Logger.info("www.changelog.com redirects")
+        domain_redirects(conn)
+
+      ^default_host ->
+        Logger.info("#{default_host} redirects")
+        changelog_redirects(conn)
+
+      _else ->
+        conn
     end
   end
 
