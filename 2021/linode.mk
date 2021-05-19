@@ -183,7 +183,7 @@ env::
 
 .PHONY: k9s
 k9s: | $(K9S) lke-configs ## Interact with K8S via a terminal UI
-	$(K9S) --all-namespaces --headless --logoless
+	$(K9S) --all-namespaces --headless
 
 IS_KUBECONFIG_LKE_CONFIG := $(findstring $(LKE_CONFIGS), $(KUBECONFIG))
 .PHONY: lke-config-hint
