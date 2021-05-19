@@ -3,9 +3,41 @@ defmodule ChangelogWeb.RedirectsTest do
 
   alias ChangelogWeb.{Plug}
 
+  @default_host ChangelogWeb.Endpoint.host()
+
+  @changelog_hosts [
+    @default_host,
+    "#{@default_host}:4000",
+    "changelog.com",
+    "www.changelog.com",
+    "2020.changelog.com",
+    "21.changelog.com"
+  ]
+
+  @vanity_hosts [
+    "changelog.fm",
+    "gotime.fm",
+    "jsparty.fm"
+  ]
+
+  @redirects [
+    [
+      path: "/sentry",
+      location: "https://sentry.io/from/changelog/"
+    ],
+    [
+      path: "/1000?utm=yo",
+      location: "/podcast/1000?utm=yo"
+    ],
+    [
+      path: "/rss",
+      location: "/feed"
+    ]
+  ]
+
   def assert_redirect(conn, path_or_url, status \\ 302) do
     location = conn |> get_resp_header("location") |> List.first()
-    assert conn.status == status
+    assert conn.status == status, "Expected #{status} #{location}, got #{conn.status} instead"
 
     cache_control = conn |> get_resp_header("cache-control")
     assert cache_control == ["max-age=0, private, must-revalidate"]
@@ -25,88 +57,29 @@ defmodule ChangelogWeb.RedirectsTest do
     end
   end
 
-  def build_conn_with_host_and_path(host, path) do
-    build_conn(:get, path) |> put_req_header("host", host)
+  def http_conn(host, path) do
+    build_conn(:get, path)
+    |> put_req_header("host", host)
+    |> Plug.Redirects.call([])
   end
 
-  test "sponsor redirects for default host" do
-    conn =
-      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/sentry")
-      |> Plug.Redirects.call([])
+  test "changelog hosts" do
+    for redirect <- @redirects do
+      [path: path, location: location] = redirect
 
-    assert_redirect(conn, "https://sentry.io/from/changelog/")
+      for host <- @changelog_hosts do
+        assert_redirect(http_conn(host, path), location)
+      end
+    end
   end
 
-  test "rss redirects for default host with port" do
-    conn =
-      build_conn_with_host_and_path("#{ChangelogWeb.Endpoint.host()}:80", "/rss")
-      |> Plug.Redirects.call([])
+  test "vanity hosts" do
+    for redirect <- @redirects do
+      [path: path, location: _] = redirect
 
-    assert_redirect(conn, "/feed")
-  end
-
-  test "internal redirects for default host" do
-    conn =
-      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/podcast/rss")
-      |> Plug.Redirects.call([])
-
-    assert_redirect(conn, "/podcast/feed")
-  end
-
-  test "podcast redirects for default host" do
-    conn =
-      build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/1000?utm=yo")
-      |> Plug.Redirects.call([])
-
-    assert_redirect(conn, "/podcast/1000?utm=yo")
-  end
-
-  test "podcast redirects for default host with port" do
-    conn =
-      build_conn_with_host_and_path("#{ChangelogWeb.Endpoint.host()}:4000", "/1000?utm=yo")
-      |> Plug.Redirects.call([])
-
-    assert_redirect(conn, "/podcast/1000?utm=yo")
-  end
-
-  test "www redirects" do
-    conn =
-      build_conn_with_host_and_path("www.changelog.com", "/")
-      |> Plug.Redirects.call([])
-
-    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host()}/", 301)
-  end
-
-  test "podcast redirects for www" do
-    conn =
-      build_conn_with_host_and_path("www.changelog.com", "/jsparty/103")
-      |> Plug.Redirects.call([])
-
-    assert_redirect(conn, "https://#{ChangelogWeb.Endpoint.host()}/jsparty/103", 301)
-  end
-
-  test "no-ops for 2020.changelog.com" do
-    conn =
-      build_conn_with_host_and_path("2020.changelog.com", "/")
-      |> Plug.Redirects.call([])
-
-    assert conn.status == nil
-  end
-
-  test "no-ops for 21.changelog.com" do
-    conn =
-      build_conn_with_host_and_path("21.changelog.com", "/")
-      |> Plug.Redirects.call([])
-
-    assert conn.status == nil
-  end
-
-  test "it no-ops for other hosts" do
-    conn =
-      :get
-      |> build_conn("")
-      |> Plug.Redirects.call([])
-
-    assert conn.status == nil
+      for host <- @vanity_hosts do
+        assert_redirect(http_conn(host, path), nil, nil)
+      end
+    end
   end
 end

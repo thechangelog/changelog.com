@@ -25,35 +25,28 @@ defmodule ChangelogWeb.Plug.Redirects do
     "/sponsorship" => "/sponsor",
     "/soundcheck" => "/guest",
     "/submit" => "/news/submit",
-    "blog" => "/posts"
+    "/blog" => "/posts"
   }
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
+    host = get_host(conn)
     default_host = ChangelogWeb.Endpoint.host()
 
-    case get_host(conn) do
-      "www.changelog.com" ->
-        Logger.info("www.changelog.com redirects")
-        domain_redirects(conn)
+    cond do
+      String.contains?(host, "changelog.com") ->
+        redirects(conn)
 
-      ^default_host ->
-        Logger.info("#{default_host} redirects")
-        changelog_redirects(conn)
+      String.contains?(host, default_host) ->
+        redirects(conn)
 
-      _else ->
+      true ->
         conn
     end
   end
 
-  defp domain_redirects(conn = %{request_path: path}) do
-    conn
-    |> Plug.Conn.put_status(301)
-    |> Redirect.call(external: "https://#{ChangelogWeb.Endpoint.host()}" <> path)
-  end
-
-  defp changelog_redirects(conn) do
+  defp redirects(conn) do
     conn
     |> internal_redirect()
     |> podcast_redirect()
