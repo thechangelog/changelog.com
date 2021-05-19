@@ -4,7 +4,6 @@ defmodule ChangelogWeb.Plug.Redirects do
   """
   alias ChangelogWeb.RedirectController, as: Redirect
   import ChangelogWeb.Plug.Conn
-  require Logger
 
   @external %{
     "/datadog" =>
