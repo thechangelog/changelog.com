@@ -48,7 +48,7 @@ data:
                     source_labels:
                       - __meta_kubernetes_pod_annotation_prometheus_io_scrape
                   - action: keep
-                    regex: .*-metrics
+                    regex: ""
                     source_labels:
                       - __meta_kubernetes_pod_container_port_name
                   - action: replace

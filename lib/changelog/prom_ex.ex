@@ -32,7 +32,11 @@ defmodule Changelog.PromEx do
   @impl true
   def dashboard_assigns do
     [
-      datasource_id: "Prometheus"
+      datasource_id:
+        Application.get_env(
+          :changelog,
+          Changelog.PromEx
+        )[:grafana][:datasource_id]
     ]
   end
 

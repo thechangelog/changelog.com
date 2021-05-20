@@ -30,6 +30,10 @@ spec:
     metadata:
       labels:
         app: app
+        # Required by grafana-agent: https://github.com/grafana/agent/issues/339#issue-789433621
+        name: app
+      annotations:
+        prometheus.io/port: "4000"
     spec:
       affinity:
         podAffinity:
@@ -284,10 +288,11 @@ spec:
                   name: grafana
                   key: api_key
             - name: PROMETHEUS_BEARER_TOKEN_PROM_EX
-              valueFrom:
-                secretKeyRef:
-                  name: promex
-                  key: bearer_token
+              value: ""
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: promex
+              #     key: bearer_token
             - name: SENTRY_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
