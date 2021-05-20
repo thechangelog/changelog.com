@@ -560,6 +560,8 @@ spec:
         - containerPort: 80
           name: http-metrics
         securityContext:
+          capabilities:
+            add: ["SYS_TIME"]
           privileged: true
           runAsUser: 0
         volumeMounts:
@@ -572,6 +574,15 @@ spec:
           readOnly: true
         - mountPath: /etc/machine-id
           name: etcmachineid
+          readOnly: true
+        - name: rootfs
+          mountPath: /host/root
+          readOnly: true
+        - name: sysfs
+          mountPath: /host/sys
+          readOnly: true
+        - name: procfs
+          mountPath: /host/proc
           readOnly: true
       serviceAccount: grafana-agent
       tolerations:
@@ -590,6 +601,15 @@ spec:
       - hostPath:
           path: /etc/machine-id
         name: etcmachineid
+      - name: rootfs
+        hostPath:
+          path: /
+      - name: sysfs
+        hostPath:
+          path: /sys
+      - name: procfs
+        hostPath:
+          path: /proc
   updateStrategy:
     type: RollingUpdate
 ---
