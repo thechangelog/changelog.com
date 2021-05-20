@@ -50,7 +50,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The amount of time that the application has been running.",
       "fieldConfig": {
         "defaults": {
@@ -94,7 +94,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "changelog_prom_ex_application_uptime_milliseconds_count{kubernetes_namespace=\"$namespace\"}",
+          "expr": "changelog_prom_ex_application_uptime_milliseconds_count{namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -108,7 +108,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The data is populated by the PromEx Application plugin and provides information regarding your application's dependencies.",
       "fieldConfig": {
         "defaults": {
@@ -215,7 +215,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "changelog_prom_ex_application_dependency_info{kubernetes_namespace=\"$namespace\"}",
+          "expr": "changelog_prom_ex_application_dependency_info{namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -258,7 +258,7 @@
       "type": "table"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The name of the primary application that is running.",
       "fieldConfig": {
         "defaults": {
@@ -300,7 +300,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "changelog_prom_ex_application_primary_info{kubernetes_namespace=\"$namespace\"}",
+          "expr": "changelog_prom_ex_application_primary_info{namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -314,7 +314,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The Git SHA of the application.",
       "fieldConfig": {
         "defaults": {
@@ -356,7 +356,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "changelog_prom_ex_application_git_sha_info{kubernetes_namespace=\"$namespace\"}",
+          "expr": "changelog_prom_ex_application_git_sha_info{namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -370,7 +370,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The version of the primary application that is running.",
       "fieldConfig": {
         "defaults": {
@@ -412,7 +412,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "changelog_prom_ex_application_primary_info{kubernetes_namespace=\"$namespace\"}",
+          "expr": "changelog_prom_ex_application_primary_info{namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -426,7 +426,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The number of modules loaded by the primary application that is running.",
       "fieldConfig": {
         "defaults": {
@@ -468,7 +468,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "changelog_prom_ex_application_primary_info{kubernetes_namespace=\"$namespace\"}",
+          "expr": "changelog_prom_ex_application_primary_info{namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -496,15 +496,15 @@
           "text": "None",
           "value": ""
         },
-        "datasource": "Prometheus",
-        "definition": "label_values(changelog_prom_ex_prom_ex_status_info, kubernetes_namespace)",
+        "datasource": "grafanacloud-changelog-prom",
+        "definition": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values(changelog_prom_ex_prom_ex_status_info, kubernetes_namespace)",
+        "query": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,

@@ -64,7 +64,7 @@
       "type": "row"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The Apdex score of the app based on a satisfactory response time of 256ms and a tolerable response time of 1024ms. This only takes into account how long Phoenix has been handling the request and only requests that resulted in a 2xx status code. The score is based on the last 24 hours of requests.",
       "fieldConfig": {
         "defaults": {
@@ -115,7 +115,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "(\n  (\n    sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[24h])) + \n    (sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\", le=\"1024\", status=~\"2..\"}[24h])) - sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[24h]))) / 2\n  ) \n  / \n  sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_count{kubernetes_namespace=\"$namespace\", status=~\"2..\"}[24h]))\n) * 100",
+          "expr": "(\n  (\n    sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[24h])) + \n    (sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{namespace=\"$namespace\", le=\"1024\", status=~\"2..\"}[24h])) - sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[24h]))) / 2\n  ) \n  / \n  sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_count{namespace=\"$namespace\", status=~\"2..\"}[24h]))\n) * 100",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -128,7 +128,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "A percentage of responses that resulted in 400s or 500s over the past 24 hours.",
       "fieldConfig": {
         "defaults": {
@@ -179,7 +179,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{kubernetes_namespace=\"$namespace\", status=~\"4..|5..\"}[24h])) / sum(increase(changelog_prom_ex_phoenix_http_requests_total{kubernetes_namespace=\"$namespace\"}[24h]))",
+          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{namespace=\"$namespace\", status=~\"4..|5..\"}[24h])) / sum(increase(changelog_prom_ex_phoenix_http_requests_total{namespace=\"$namespace\"}[24h]))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -192,7 +192,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The amount of data transferred by Phoenix in a 24 hour rolling window.",
       "fieldConfig": {
         "defaults": {
@@ -235,7 +235,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "sum(increase(changelog_prom_ex_phoenix_http_response_size_bytes_sum{kubernetes_namespace=\"$namespace\"}[24h]))",
+          "expr": "sum(increase(changelog_prom_ex_phoenix_http_response_size_bytes_sum{namespace=\"$namespace\"}[24h]))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -248,7 +248,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The amount of requests received by Phoenix in a 24 hour rolling window.",
       "fieldConfig": {
         "defaults": {
@@ -291,7 +291,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{kubernetes_namespace=\"$namespace\"}[24h]))",
+          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{namespace=\"$namespace\"}[24h]))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -304,7 +304,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The Apdex score of the app based on a satisfactory response time of 256ms and a tolerable response time of 1024ms. This only takes into account how long Phoenix has been handling the request and only requests that resulted in a 2xx status code. The score is based on the previous hour of requests.",
       "fieldConfig": {
         "defaults": {
@@ -356,7 +356,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "(\n  (\n    sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[1h])) + \n    (sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\", le=\"1024\", status=~\"2..\"}[1h])) - sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[1h]))) / 2\n  ) \n  / \n  sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_count{kubernetes_namespace=\"$namespace\", status=~\"2..\"}[1h]))\n) * 100",
+          "expr": "(\n  (\n    sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[1h])) + \n    (sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{namespace=\"$namespace\", le=\"1024\", status=~\"2..\"}[1h])) - sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{namespace=\"$namespace\", le=\"256\", status=~\"2..\"}[1h]))) / 2\n  ) \n  / \n  sum(increase(changelog_prom_ex_phoenix_http_request_duration_milliseconds_count{namespace=\"$namespace\", status=~\"2..\"}[1h]))\n) * 100",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -369,7 +369,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "A percentage of responses that resulted in 400s or 500s over the past hour.",
       "fieldConfig": {
         "defaults": {
@@ -421,7 +421,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{kubernetes_namespace=\"$namespace\", status=~\"4..|5..\"}[1h])) / sum(increase(changelog_prom_ex_phoenix_http_requests_total{kubernetes_namespace=\"$namespace\"}[1h]))",
+          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{namespace=\"$namespace\", status=~\"4..|5..\"}[1h])) / sum(increase(changelog_prom_ex_phoenix_http_requests_total{namespace=\"$namespace\"}[1h]))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -434,7 +434,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The amount of data transferred by Phoenix in the past hour.",
       "fieldConfig": {
         "defaults": {
@@ -477,7 +477,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "sum(increase(changelog_prom_ex_phoenix_http_response_size_bytes_sum{kubernetes_namespace=\"$namespace\"}[1h]))",
+          "expr": "sum(increase(changelog_prom_ex_phoenix_http_response_size_bytes_sum{namespace=\"$namespace\"}[1h]))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -490,7 +490,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The amount of requests received by Phoenix in the past hour.",
       "fieldConfig": {
         "defaults": {
@@ -533,7 +533,7 @@
       "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{kubernetes_namespace=\"$namespace\"}[1h]))",
+          "expr": "sum(increase(changelog_prom_ex_phoenix_http_requests_total{namespace=\"$namespace\"}[1h]))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -564,7 +564,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The average request time per path per status code per HTTP method.",
       "fieldConfig": {
         "defaults": {
@@ -614,7 +614,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "topk(5, sum(irate(changelog_prom_ex_phoenix_http_request_duration_milliseconds_sum{kubernetes_namespace=\"$namespace\"}[$__interval])) by(path) / sum(irate(changelog_prom_ex_phoenix_http_request_duration_milliseconds_count{kubernetes_namespace=\"$namespace\"}[$__interval])) by(path))",
+          "expr": "topk(5, sum(irate(changelog_prom_ex_phoenix_http_request_duration_milliseconds_sum{namespace=\"$namespace\"}[$__interval])) by(path) / sum(irate(changelog_prom_ex_phoenix_http_request_duration_milliseconds_count{namespace=\"$namespace\"}[$__interval])) by(path))",
           "interval": "30s",
           "legendFormat": "{{ method }} {{ path }}",
           "refId": "A"
@@ -666,7 +666,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The average response size per path per status code per HTTP method.",
       "fieldConfig": {
         "defaults": {
@@ -716,7 +716,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "topk(5, sum(irate(changelog_prom_ex_phoenix_http_response_size_bytes_sum{kubernetes_namespace=\"$namespace\"}[$__interval])) by(path) / sum(irate(changelog_prom_ex_phoenix_http_response_size_bytes_count{kubernetes_namespace=\"$namespace\"}[$__interval])) by(path))",
+          "expr": "topk(5, sum(irate(changelog_prom_ex_phoenix_http_response_size_bytes_sum{namespace=\"$namespace\"}[$__interval])) by(path) / sum(irate(changelog_prom_ex_phoenix_http_response_size_bytes_count{namespace=\"$namespace\"}[$__interval])) by(path))",
           "interval": "30s",
           "legendFormat": "{{ method }} {{ path }} :: {{ status }}",
           "refId": "A"
@@ -768,7 +768,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "Shows the number of requests coming into certain paths and the resulting response codes.",
       "fieldConfig": {
         "defaults": {
@@ -818,7 +818,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "topk(5, irate(changelog_prom_ex_phoenix_http_requests_total{kubernetes_namespace=\"$namespace\"}[$__interval]))",
+          "expr": "topk(5, irate(changelog_prom_ex_phoenix_http_requests_total{namespace=\"$namespace\"}[$__interval]))",
           "interval": "30s",
           "legendFormat": "{{ method }} {{ path }} :: {{ status }}",
           "refId": "A"
@@ -870,7 +870,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "The aggregate response status of all the requests.",
       "fieldConfig": {
         "defaults": {
@@ -918,19 +918,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(changelog_prom_ex_phoenix_http_requests_total{status=~\"2..\", kubernetes_namespace=\"$namespace\"}[$__interval]))",
+          "expr": "sum(irate(changelog_prom_ex_phoenix_http_requests_total{status=~\"2..\", namespace=\"$namespace\"}[$__interval]))",
           "interval": "30s",
           "legendFormat": "2xx",
           "refId": "A"
         },
         {
-          "expr": "sum(irate(changelog_prom_ex_phoenix_http_requests_total{status=~\"4..\", kubernetes_namespace=\"$namespace\"}[$__interval]))",
+          "expr": "sum(irate(changelog_prom_ex_phoenix_http_requests_total{status=~\"4..\", namespace=\"$namespace\"}[$__interval]))",
           "interval": "30s",
           "legendFormat": "4xx",
           "refId": "B"
         },
         {
-          "expr": "sum(irate(changelog_prom_ex_phoenix_http_requests_total{status=~\"5..\", kubernetes_namespace=\"$namespace\"}[$__interval]))",
+          "expr": "sum(irate(changelog_prom_ex_phoenix_http_requests_total{status=~\"5..\", namespace=\"$namespace\"}[$__interval]))",
           "interval": "30s",
           "legendFormat": "5xx",
           "refId": "C"
@@ -990,7 +990,7 @@
         "mode": "spectrum"
       },
       "dataFormat": "tsbuckets",
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "A heatmap showing the request time spread across all requests (regardless of path).",
       "fieldConfig": {
         "defaults": {
@@ -1015,7 +1015,7 @@
       "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "sum(irate(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\"}[$__interval])) by (le)",
+          "expr": "sum(irate(changelog_prom_ex_phoenix_http_request_duration_milliseconds_bucket{namespace=\"$namespace\"}[$__interval])) by (le)",
           "format": "heatmap",
           "hide": false,
           "interval": "30s",
@@ -1062,7 +1062,7 @@
         "mode": "spectrum"
       },
       "dataFormat": "tsbuckets",
-      "datasource": "Prometheus",
+      "datasource": "grafanacloud-changelog-prom",
       "description": "A heatmap showing the response payload size spread across all requests (regardless of path).",
       "fieldConfig": {
         "defaults": {
@@ -1087,7 +1087,7 @@
       "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "sum(irate(changelog_prom_ex_phoenix_http_response_size_bytes_bucket{kubernetes_namespace=\"$namespace\"}[$__interval])) by (le)",
+          "expr": "sum(irate(changelog_prom_ex_phoenix_http_response_size_bytes_bucket{namespace=\"$namespace\"}[$__interval])) by (le)",
           "format": "heatmap",
           "hide": false,
           "interval": "30s",
@@ -1137,7 +1137,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "grafanacloud-changelog-prom",
           "description": "How many channel joins have occurred over time.",
           "fieldConfig": {
             "defaults": {
@@ -1183,7 +1183,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "irate(changelog_prom_ex_phoenix_channel_joined_total{kubernetes_namespace=\"$namespace\"}[$__interval])",
+              "expr": "irate(changelog_prom_ex_phoenix_channel_joined_total{namespace=\"$namespace\"}[$__interval])",
               "interval": "30s",
               "legendFormat": "{{ transport }} :: {{ result }}",
               "refId": "A"
@@ -1243,7 +1243,7 @@
             "mode": "spectrum"
           },
           "dataFormat": "tsbuckets",
-          "datasource": "Prometheus",
+          "datasource": "grafanacloud-changelog-prom",
           "description": "A heatmap showing the request time spread across all channel events.",
           "fieldConfig": {
             "defaults": {
@@ -1268,7 +1268,7 @@
           "reverseYBuckets": false,
           "targets": [
             {
-              "expr": "sum(irate(changelog_prom_ex_phoenix_channel_handled_in_duration_milliseconds_bucket{kubernetes_namespace=\"$namespace\"}[$__interval])) by (le)",
+              "expr": "sum(irate(changelog_prom_ex_phoenix_channel_handled_in_duration_milliseconds_bucket{namespace=\"$namespace\"}[$__interval])) by (le)",
               "format": "heatmap",
               "hide": false,
               "interval": "30s",
@@ -1307,7 +1307,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "grafanacloud-changelog-prom",
           "description": "The average response time for a channel message.",
           "fieldConfig": {
             "defaults": {
@@ -1355,7 +1355,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(irate(changelog_prom_ex_phoenix_channel_handled_in_duration_milliseconds_sum{kubernetes_namespace=\"$namespace\"}[$__interval])) by(path) / sum(irate(changelog_prom_ex_phoenix_channel_handled_in_duration_milliseconds_count{kubernetes_namespace=\"$namespace\"}[$__interval])) by(path)",
+              "expr": "sum(irate(changelog_prom_ex_phoenix_channel_handled_in_duration_milliseconds_sum{namespace=\"$namespace\"}[$__interval])) by(path) / sum(irate(changelog_prom_ex_phoenix_channel_handled_in_duration_milliseconds_count{namespace=\"$namespace\"}[$__interval])) by(path)",
               "interval": "30s",
               "legendFormat": "",
               "refId": "A"
@@ -1420,15 +1420,15 @@
           "text": "prod-2020-07",
           "value": "prod-2020-07"
         },
-        "datasource": "Prometheus",
-        "definition": "label_values(changelog_prom_ex_prom_ex_status_info, kubernetes_namespace)",
+        "datasource": "grafanacloud-changelog-prom",
+        "definition": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values(changelog_prom_ex_prom_ex_status_info, kubernetes_namespace)",
+        "query": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
