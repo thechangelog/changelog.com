@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, NewsItem, Post}
+  alias Changelog.{Episode, ListKit, NewsItem, Post}
 
   alias ChangelogWeb.{
     Endpoint,
@@ -42,6 +42,13 @@ defmodule ChangelogWeb.FeedView do
 
   def image_link(item = %NewsItem{}) do
     if link = NewsItemView.image_link(item), do: safe_to_string(link)
+  end
+
+  def podcast_full_description(%{description: description, extended_description: extended}) do
+    [description, extended]
+    |> ListKit.compact()
+    |> Enum.map(&SharedHelpers.md_to_text/1)
+    |> Enum.join(" ")
   end
 
   def podcast_name_with_metadata(podcast) do

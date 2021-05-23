@@ -11,7 +11,6 @@ defmodule ChangelogWeb.Meta.Title do
     PodcastView,
     PostView,
     TopicView,
-    Helpers.SharedHelpers,
     SearchView
   }
 

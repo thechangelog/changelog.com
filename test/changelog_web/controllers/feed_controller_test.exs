@@ -62,7 +62,7 @@ defmodule ChangelogWeb.FeedControllerTest do
   end
 
   test "the podcast feed", %{conn: conn} do
-    p = insert(:podcast)
+    p = insert(:podcast, description: "this & that", extended_description: "that & more stuff")
     e = insert(:published_episode, podcast: p)
     insert(:episode_host, episode: e)
     insert(:episode_guest, episode: e)

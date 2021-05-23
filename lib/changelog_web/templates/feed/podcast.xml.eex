@@ -13,9 +13,9 @@
     <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
     <atom:link href="<%= Routes.podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="text/html" />
     <language>en-us</language>
-    <description><%= SharedHelpers.md_to_text(@podcast.description) %> <%= Map.get(@podcast, :extended_description, "") %></description>
+    <description><%= @podcast |> podcast_full_description() |> escaped() %></description>
     <itunes:author>Changelog Media</itunes:author>
-    <itunes:summary><%= SharedHelpers.md_to_text(@podcast.description) %> <%= Map.get(@podcast, :extended_description, "") %></itunes:summary>
+    <itunes:summary><%= @podcast |> podcast_full_description() |> escaped() %></itunes:summary>
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= PodcastView.cover_url(@podcast) %>"/>
     <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
