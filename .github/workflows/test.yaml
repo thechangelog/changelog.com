@@ -19,7 +19,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     container:
-      image: thechangelog/runtime:2021-05-27T18.06.43Z
+      image: thechangelog/runtime:2021-05-27T18.15.16Z
       env:
         MIX_ENV: test
         DB_NAME: changelog_test

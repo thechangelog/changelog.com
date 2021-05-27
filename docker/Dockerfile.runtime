@@ -9,7 +9,7 @@ USER root
 
 ARG FAIL_FAST_VERBOSE="set -ex"
 ENV DEBIAN_FRONTEND=noninteractive
-ARG PKG_INSTALL="apt-get install --yes --no-install-recommends"
+ARG PKG_INSTALL="apt-get install --yes"
 
 # Use the terminal with 256 colors support
 ENV TERM=xterm-256color
