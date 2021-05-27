@@ -38,6 +38,11 @@ RUN echo "Install make..." \
     ; ${PKG_INSTALL} make \
     ; make --version
 
+RUN echo "Install build-essential for gcc, required by cmark..." \
+    ; ${FAIL_FAST_VERBOSE} \
+    ; ${PKG_INSTALL} build-essential \
+    ; gcc --version
+
 # https://nodejs.org/en/download/
 # https://github.com/nodejs/help/wiki/Installation#how-to-install-nodejs-via-binary-archive-on-linux
 ENV NODEJS_VERSION=v14.17.0

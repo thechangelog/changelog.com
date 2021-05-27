@@ -4,7 +4,7 @@ jobs:
   deps:
     working_directory: &dir /app
     docker:
-      - image: &runtime thechangelog/runtime:2021-05-27T18.15.16Z
+      - image: &runtime thechangelog/runtime:2021-05-27T18.21.20Z
     steps:
       - checkout
       - restore_cache: &deps_cache

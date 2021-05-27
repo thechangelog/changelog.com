@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   changelog_app:
-    image: thechangelog/runtime:2021-05-27T18.15.16Z
+    image: thechangelog/runtime:2021-05-27T18.21.20Z
     command: >
       /bin/sh -c 'apt-get update && apt-get install -y inotify-tools &&
       mix local.hex --force &&
