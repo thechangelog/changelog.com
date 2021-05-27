@@ -1,5 +1,5 @@
 FROM thechangelog/legacy_assets AS legacy_assets
-FROM thechangelog/runtime:2021-05-27T18.31.32Z
+FROM thechangelog/runtime:2021-02-09T18.04.59Z
 
 RUN mkdir /app
 COPY . /app
