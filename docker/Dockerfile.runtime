@@ -43,6 +43,10 @@ RUN echo "Install build-essential for gcc, required by cmark..." \
     ; ${PKG_INSTALL} build-essential \
     ; gcc --version
 
+RUN echo "Install netcat for waiting on open ports..." \
+    ; ${FAIL_FAST_VERBOSE} \
+    ; ${PKG_INSTALL} netcat
+
 # https://nodejs.org/en/download/
 # https://github.com/nodejs/help/wiki/Installation#how-to-install-nodejs-via-binary-archive-on-linux
 ENV NODEJS_VERSION=v14.17.0
