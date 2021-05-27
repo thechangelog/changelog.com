@@ -28,6 +28,11 @@ RUN echo "Install curl..." \
     ; ${PKG_INSTALL} curl ca-certificates \
     ; curl --version
 
+RUN echo "Install git..." \
+    ; ${FAIL_FAST_VERBOSE} \
+    ; ${PKG_INSTALL} git \
+    ; git --version
+
 RUN echo "Install make..." \
     ; ${FAIL_FAST_VERBOSE} \
     ; ${PKG_INSTALL} make \
