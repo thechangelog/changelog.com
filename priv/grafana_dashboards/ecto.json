@@ -1,4 +1,52 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_GRAFANACLOUD-CHANGELOG-PROM",
+      "label": "grafanacloud-changelog-prom",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.5.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "heatmap",
+      "name": "Heatmap",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -47,6 +95,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
+  "iteration": 1622193540982,
   "links": [],
   "panels": [
     {
@@ -64,11 +113,10 @@
       "type": "row"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The host of the database that the Repo is connected to.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -102,9 +150,10 @@
           "fields": "/^database_host$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "expr": "changelog_prom_ex_ecto_repo_init_status_info{namespace=\"$namespace\"}",
@@ -126,11 +175,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The pool size that the repo was initialized with.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -164,9 +212,10 @@
           "fields": "/^Value$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "expr": "changelog_prom_ex_ecto_repo_init_pool_size{namespace=\"$namespace\"}",
@@ -188,11 +237,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The time spent waiting to check out a database connection.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [],
           "thresholds": {
@@ -237,12 +285,14 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "irate(changelog_prom_ex_ecto_repo_query_queue_time_milliseconds_sum{namespace=\"$namespace\"}[$__interval])",
+          "exemplar": true,
+          "expr": "max(irate(changelog_prom_ex_ecto_repo_query_queue_time_milliseconds_sum{namespace=\"$namespace\"}[$__interval])) by(app) > 0",
           "instant": false,
           "interval": "30s",
           "legendFormat": "{{instance}}",
@@ -255,11 +305,10 @@
       "type": "gauge"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The time spent waiting to check out a database connection.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [],
           "thresholds": {
@@ -304,12 +353,14 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "irate(changelog_prom_ex_ecto_repo_query_decode_time_milliseconds_sum{namespace=\"$namespace\"}[$__interval])",
+          "exemplar": true,
+          "expr": "max(irate(changelog_prom_ex_ecto_repo_query_decode_time_milliseconds_sum{namespace=\"$namespace\"}[$__interval])) by(app) > 0",
           "instant": false,
           "interval": "30s",
           "legendFormat": "{{instance}}",
@@ -322,11 +373,10 @@
       "type": "gauge"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The time spent waiting to check out a database connection.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [],
           "thresholds": {
@@ -371,9 +421,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "expr": "max(irate(changelog_prom_ex_ecto_repo_query_execution_time_milliseconds_sum{namespace=\"$namespace\"}[$__interval])) by(app, command) > 0",
@@ -389,11 +440,10 @@
       "type": "gauge"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The host of the database that the Repo is connected to.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -427,9 +477,10 @@
           "fields": "/^database_name$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "expr": "changelog_prom_ex_ecto_repo_init_status_info{namespace=\"$namespace\"}",
@@ -451,11 +502,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The timeout duration that the Repo was initialized with.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [],
           "thresholds": {
@@ -490,9 +540,10 @@
           "fields": "/^Value$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "expr": "changelog_prom_ex_ecto_repo_init_timeout_duration{namespace=\"$namespace\"}",
@@ -518,13 +569,11 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "decimals": 1,
       "description": "The average request time per path per status code per HTTP method.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 0,
@@ -560,7 +609,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -625,13 +674,11 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "decimals": 0,
       "description": "The average response size per path per status code per HTTP method.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 0,
@@ -667,7 +714,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -732,13 +779,11 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "decimals": 0,
       "description": "The average response size per path per status code per HTTP method.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 0,
@@ -774,7 +819,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -858,7 +903,7 @@
             "mode": "spectrum"
           },
           "dataFormat": "tsbuckets",
-          "datasource": "grafanacloud-changelog-prom",
+          "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
           "description": "A heatmap showing the request time spread across all Repo query executions (regardless of query type).",
           "fieldConfig": {
             "defaults": {
@@ -933,7 +978,7 @@
             "mode": "spectrum"
           },
           "dataFormat": "tsbuckets",
-          "datasource": "grafanacloud-changelog-prom",
+          "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
           "description": "A heatmap showing the number of results returned from the database (summed up across all operations and sources).",
           "fieldConfig": {
             "defaults": {
@@ -998,27 +1043,28 @@
     }
   ],
   "refresh": "15s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "prod-2020-07",
-          "value": "prod-2020-07"
-        },
-        "datasource": "grafanacloud-changelog-prom",
+        "current": {},
+        "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
         "definition": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
+        "query": {
+          "query": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
+          "refId": "grafanacloud-changelog-prom-namespace-Variable-Query"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1046,5 +1092,5 @@
   "timezone": "",
   "title": "PromEx - Ecto",
   "uid": "mB8B_ixMk",
-  "version": 20210117
+  "version": 20210528
 }

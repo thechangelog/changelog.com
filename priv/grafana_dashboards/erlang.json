@@ -1,4 +1,46 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_GRAFANACLOUD-CHANGELOG-PROM",
+      "label": "grafanacloud-changelog-prom",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.5.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -47,6 +89,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
+  "iteration": 1622194065978,
   "links": [],
   "panels": [
     {
@@ -64,18 +107,17 @@
       "type": "row"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The amount of time that has passed since the system has started.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "rgb(255, 255, 255)",
                 "value": null
               }
             ]
@@ -103,12 +145,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_stats_uptime_milliseconds_count{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_stats_uptime_milliseconds_count{namespace=\"$namespace\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -121,11 +165,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The amount of memory currently allocated by the BEAM.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -167,12 +210,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_memory_allocated_bytes{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_memory_allocated_bytes{namespace=\"$namespace\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -185,11 +230,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of atoms currently in the atom table.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -231,12 +275,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_stats_atom_count{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_stats_atom_count{namespace=\"$namespace\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -249,11 +295,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of running BEAM processes currently running.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -295,12 +340,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_stats_process_count{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_stats_process_count{namespace=\"$namespace\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -313,11 +360,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of currently active ports.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -359,12 +405,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_stats_port_count{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_stats_port_count{namespace=\"$namespace\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -377,11 +425,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of currently allocated ETS tables.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -423,12 +470,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_stats_ets_count{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_stats_ets_count{namespace=\"$namespace\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -459,29 +508,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "Stats on the current memory usage.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
           "unit": "bytes"
         },
         "overrides": []
@@ -512,7 +542,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -522,36 +552,42 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(changelog_prom_ex_beam_memory_allocated_bytes{namespace=\"$namespace\"}) by(app, namespace)",
           "interval": "",
           "legendFormat": "Total Usage",
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "sum(changelog_prom_ex_beam_memory_atom_total_bytes{namespace=\"$namespace\"}) by(app, namespace)",
           "interval": "",
           "legendFormat": "Atoms",
           "refId": "B"
         },
         {
+          "exemplar": true,
           "expr": "sum(changelog_prom_ex_beam_memory_binary_total_bytes{namespace=\"$namespace\"}) by(app, namespace)",
           "interval": "",
           "legendFormat": "Binaries",
           "refId": "C"
         },
         {
+          "exemplar": true,
           "expr": "sum(changelog_prom_ex_beam_memory_code_total_bytes{namespace=\"$namespace\"}) by(app, namespace)",
           "interval": "",
           "legendFormat": "Code",
           "refId": "D"
         },
         {
+          "exemplar": true,
           "expr": "sum(changelog_prom_ex_beam_memory_ets_total_bytes{namespace=\"$namespace\"}) by(app, namespace)",
           "interval": "",
           "legendFormat": "ETS",
           "refId": "E"
         },
         {
+          "exemplar": true,
           "expr": "sum(changelog_prom_ex_beam_memory_processes_total_bytes{namespace=\"$namespace\"}) by(app, namespace)",
           "interval": "",
           "legendFormat": "Processes",
@@ -578,6 +614,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:141",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -586,6 +623,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:142",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -604,29 +642,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of bytes sent and received through ports.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
           "unit": "Bps"
         },
         "overrides": []
@@ -658,7 +677,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -668,12 +687,14 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(0 - irate(changelog_prom_ex_beam_stats_port_io_byte_count{namespace=\"$namespace\", type=\"input\"}[$__interval])) by(app, namespace)",
           "interval": "30s",
           "legendFormat": "Data Received",
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "sum(0 + irate(changelog_prom_ex_beam_stats_port_io_byte_count{namespace=\"$namespace\", type=\"output\"}[$__interval])) by(app, namespace)",
           "interval": "30s",
           "legendFormat": "Data Sent",
@@ -700,6 +721,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:222",
           "format": "Bps",
           "label": "Data Received (-) / Data Sent (+)",
           "logBase": 1,
@@ -708,6 +730,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:223",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -726,30 +749,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of garbage collection events that are occuring and the number of bytes reclaimed",
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -780,16 +783,18 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:299",
           "alias": "Garbage Collections",
           "yaxis": 1
         },
         {
+          "$$hashKey": "object:300",
           "alias": "Bytes Reclaimed",
           "yaxis": 2
         }
@@ -799,12 +804,14 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(irate(changelog_prom_ex_beam_stats_gc_count{namespace=\"$namespace\"}[$__interval])) by(app, namespace)",
           "interval": "30s",
           "legendFormat": "Garbage Collections",
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "sum(irate(changelog_prom_ex_beam_stats_gc_reclaimed_bytes{namespace=\"$namespace\"}[$__interval])) by(app, namespace)",
           "instant": false,
           "interval": "30s",
@@ -832,6 +839,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:313",
           "format": "locale",
           "label": "Garbage Collections",
           "logBase": 1,
@@ -840,6 +848,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:314",
           "format": "bytes",
           "label": "Reclaimed Bytes",
           "logBase": 2,
@@ -858,30 +867,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of context switches that have occured along with the number of reductions.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -912,7 +901,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -990,30 +979,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "Statistics regarding the normal scheduler.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1044,7 +1013,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1113,30 +1082,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "Statistics regarding the dirty schedulers.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1167,7 +1116,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1236,29 +1185,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of atoms currently in the atom table",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
           "unit": "locale"
         },
         "overrides": []
@@ -1289,7 +1219,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1351,30 +1281,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of active ports.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1403,7 +1313,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1465,30 +1375,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of running BEAM processes.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1517,7 +1407,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1579,30 +1469,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The number of active ETS tables.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1631,7 +1501,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1703,11 +1573,10 @@
       "type": "row"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The OTP major version running the application.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1740,12 +1609,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_system_version_info{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_system_version_info{namespace=\"$namespace\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1758,11 +1629,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "The size of Erlang term words in bytes.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1795,12 +1665,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_system_word_size_bytes_info{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_system_word_size_bytes_info{namespace=\"$namespace\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1813,11 +1685,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
-      "description": "The number of logical processors in the system.",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
+      "description": "The number of logical processors available in the system.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1837,61 +1708,6 @@
         "x": 8,
         "y": 70
       },
-      "id": 13,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.2.1",
-      "targets": [
-        {
-          "expr": "changelog_prom_ex_beam_system_logical_processors_info{namespace=\"$namespace\"}",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Logical Processors",
-      "type": "stat"
-    },
-    {
-      "datasource": "grafanacloud-changelog-prom",
-      "description": "The number of logical processors available in the system.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 70
-      },
       "id": 14,
       "options": {
         "colorMode": "value",
@@ -1905,12 +1721,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_system_logical_processors_available_info{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_system_logical_processors_available_info{namespace=\"$namespace\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1923,11 +1741,10 @@
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
-      "description": "The number of logical processors online in the system.",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
+      "description": "The number of schedulers online in the system.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1960,12 +1777,14 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
-          "expr": "changelog_prom_ex_beam_system_logical_processors_online_info{namespace=\"$namespace\"}",
+          "exemplar": true,
+          "expr": "max by(app)(changelog_prom_ex_beam_system_schedulers_online_info{namespace=\"$namespace\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1974,11 +1793,11 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Logical Processors Online",
+      "title": "Schedulers Online",
       "type": "stat"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "Shows the various options that OTP was compiled with.",
       "fieldConfig": {
         "defaults": {
@@ -2086,7 +1905,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "expr": "{__name__=~\"changelog_prom_ex_beam_system_thread_support_info|changelog_prom_ex_beam_system_smp_support_info|changelog_prom_ex_beam_system_time_correction_support_info\", namespace=\"$namespace\"}",
@@ -2126,7 +1945,7 @@
       "type": "table"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "Shows information regarding the system limits of the BEAM instance.",
       "fieldConfig": {
         "defaults": {
@@ -2228,7 +2047,7 @@
         "frameIndex": 0,
         "showHeader": true
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "expr": "{__name__=~\"changelog_prom_ex_beam_system_ets_limit_info|changelog_prom_ex_beam_system_port_limit_info|changelog_prom_ex_beam_system_process_limit_info|changelog_prom_ex_beam_system_atom_limit_info\", namespace=\"$namespace\"}",
@@ -2268,7 +2087,7 @@
       "type": "table"
     },
     {
-      "datasource": "grafanacloud-changelog-prom",
+      "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
       "description": "Shows information regarding the schedulers configured for the BEAM instance.",
       "fieldConfig": {
         "defaults": {
@@ -2383,9 +2202,10 @@
         "frameIndex": 0,
         "showHeader": true
       },
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
+          "exemplar": true,
           "expr": "{__name__=~\"changelog_prom_ex_beam_system_dirty_cpu_schedulers_info|changelog_prom_ex_beam_system_dirty_cpu_schedulers_online_info|changelog_prom_ex_beam_system_dirty_io_schedulers_info|changelog_prom_ex_beam_system_schedulers_info|changelog_prom_ex_beam_system_schedulers_online_info\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
@@ -2424,27 +2244,28 @@
     }
   ],
   "refresh": "15s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "prod-2020-07",
-          "value": "prod-2020-07"
-        },
-        "datasource": "grafanacloud-changelog-prom",
+        "current": {},
+        "datasource": "${DS_GRAFANACLOUD-CHANGELOG-PROM}",
         "definition": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
+        "query": {
+          "query": "label_values(changelog_prom_ex_prom_ex_status_info, namespace)",
+          "refId": "grafanacloud-changelog-prom-namespace-Variable-Query"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -2472,5 +2293,5 @@
   "timezone": "",
   "title": "PromEx - Erlang",
   "uid": "F3fZlibGk",
-  "version": 20210106
+  "version": 20210528
 }
