@@ -314,10 +314,10 @@ spec:
           resources:
             requests:
               cpu: 8
-              memory: 16Gi
+              memory: 8Gi
             limits:
               cpu: 8
-              memory: 16Gi
+              memory: 8Gi
           readinessProbe:
             httpGet:
               path: /health
