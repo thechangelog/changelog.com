@@ -23,6 +23,11 @@ RUN echo "Install ffmpeg..." \
     ; ${PKG_INSTALL} ffmpeg \
     ; ffmpeg -version
 
+RUN echo "Install convert (imagemagick), required for image resizing..." \
+    ; ${FAIL_FAST_VERBOSE} \
+    ; ${PKG_INSTALL} imagemagick \
+    ; convert --version
+
 RUN echo "Install curl..." \
     ; ${FAIL_FAST_VERBOSE} \
     ; ${PKG_INSTALL} curl ca-certificates \
