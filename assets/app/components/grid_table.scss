@@ -9,7 +9,7 @@
 
     @include breakpoint(tablet) {
       display: grid;
-      grid-template-columns: 20% 30% auto;
+      grid-template-columns: 50% 50%;
     }
   }
 
@@ -17,7 +17,6 @@
     background: $black;
     color: $white;
     font-weight: bold;
-    margin-bottom: 1em;
 
     p {
       display: none;
@@ -34,6 +33,10 @@
     @include breakpoint(tablet, max) {
       border-top: 2px solid $light-grey;
       padding: 2em 0;
+    }
+
+    &:nth-child(odd) {
+      background-color: #f0f0f0;
     }
 
     &-column {

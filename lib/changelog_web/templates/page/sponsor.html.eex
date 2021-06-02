@@ -1,77 +1,190 @@
 <%= render(SharedView, "_drift_js.html") %>
 
 <article class="marketing marketing--sponsor">
+
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
-      <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
+      <p class="marketing-section-header-leadin">Partner with Changelog Media</p>
       <h1>We reach 85,000 developers&nbsp;weekly</h1>
       <p>350,000 monthly listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> SharedHelpers.comma_separated %> email subscribers&nbsp;&nbsp;•&nbsp;&nbsp;250,000 monthly pageviews</p>
 
       <div class="marketing-button_group" style="--max-width-group: 380px;">
-        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large button_large--default" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large button_large--default" %>
       </div>
       <p class="button_note">Or call us at 888-974-CHLG (2454)</p>
     </header>
-
-    <%# render("_marketing_slider.html", assigns) %>
   </section>
 
   <section class="marketing-section">
-    <a id="how-it-works" class="anchor"></a>
     <header class="marketing-section-header">
-      <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
-      <h2>How sponsorship works</h2>
-      <p>Our primary focus is on developers, but people from all areas of the software industry tune in to our developer podcast network and our newsfeed and newsletter to inform their next big idea. From CTOs and Directors of Engineering to Frontend Developers and Product Designers, our audience cares about the future of software development, cloud infrastructure, dev culture, services, tooling, mental health &mdash; and they're waiting to hear from you.</p>
+      <h3>Slow &amp; steady wins</h3>
+      <h2>Loved by brands, trusted by developers</h2>
+      <p>Every day we influence developers at some of the most innovative tech companies in the world. We speak to the builders, leaders, and planners defining the future of software.</p>
     </header>
 
-    <div class="step_markers_wrap">
-      <div class="step_markers step_markers--3">
-        <div class="step_markers-circle"></div>
-        <div class="step_markers-line"></div>
-        <div class="step_markers-circle"></div>
-        <div class="step_markers-line"></div>
-        <div class="step_markers-circle"></div>
+    <div class="marketing-section-proof">
+      <img src='<%= Routes.static_url(@conn, "/images/content/marketing/render-color--on-dark.svg") %>' alt="Render" class="proof-logo" style="max-width: 150px">
+      <p class="proof-quote">The value we get from each interaction with Adam Stacoviak (and team) is tremendous. When we talk through goals, ideas, and strategies it's like he's a member of the Render team &mdash; giving every idea he has to help us find ways to truely connect with the developer community.</p>
+      <%= for example <- Changelog.SponsorStyle.render() do %>
+      <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+      <% end %>
+      <img src='<%= Routes.static_url(@conn, "/images/content/marketing/anurag-goel.jpg") %>' alt="Anurag Goel" class="proof-avatar">
+      <p class="proof-title-line-1">Anurag Goel</p>
+      <p class="proof-title-line-2">Founder and CEO of Render</p>
+    </div>
+
+    <div class="logo_grid logo_grid margin-vertical_large">
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/fastly-dark.svg") %>' alt="Fastly">
       </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linode-dark.svg") %>' alt="Linode">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/launchdarkly-dark.svg") %>' alt="LaunchDarkly">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/grafana-dark.svg") %>' alt="Grafana Cloud">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/render-dark.svg") %>' alt="Render">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/retool-dark.svg") %>' alt="Retool">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cockroachlabs-dark.svg") %>' alt="Cockroach Labs">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/sourcegraph-dark.svg") %>' alt="Sourcegraph">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/teleport-dark.svg") %>' alt="Teleport">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/sentry-dark.svg") %>' alt="Sentry">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/influxdata-dark.svg") %>' alt="InfluxData">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/github-dark.svg") %>' alt="GitHub">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/elastic-dark.svg") %>' alt="Elastic">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/raygun-dark.svg") %>' alt="Raygun">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/rudderstack-dark.svg") %>' alt="RudderStack">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/gitlab-dark.svg") %>' alt="GitLab">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cncf-dark.svg") %>' alt="Cloud Native Computing Foundation">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cloudzero-dark.svg") %>' alt="Cloudzero">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/snowplow-dark.svg") %>' alt="Snowplow">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cast-dark.svg") %>' alt="Cast">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/algolia-dark.svg") %>' alt="Algolia">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linux-foundation-dark.svg") %>' alt="Linux Foundation">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/datadog-dark.svg") %>' alt="Datadog">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/equinix-metal-dark.svg") %>' alt="Equinix Metal">
+      </div>
+      <div class="logo_grid-item">
+        <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/square-dark.svg") %>' alt="Square">
+      </div>
+    </div>
+
+    <footer class="marketing-section-footer">
+      <p>Partner with us to reach software developers all over the world</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large button_large--default" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large button_large--default" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
+
+  </section>
+
+  <section class="marketing-section marketing-section--grey">
+    <a id="how-it-works" class="anchor"></a>
+    <header class="marketing-section-header">
+      <h3>Facts tell, stories sell</h3>
+      <h2>Connect authentically with developers</h2>
+      <p>Podcasts provide the perfect medium to reach software developers. When you sponsor your audiences' favorite podcasts, you get a chance to speak directly to them on a consistent basis. We have a proven process to discover your goals to develop a strategy that gets results.</p>
+      <p>We know our audience very well. Let us tell your story in a way that gets heard.</p>
+    </header>
+
+    <div class="marketing-section-proof">
+      <img src='<%= Routes.static_url(@conn, "/images/content/marketing/sourcegraph-color--on-dark.svg") %>' alt="Sourcegraph" class="proof-logo" style="max-width: 240px">
+      <p class="proof-quote">Developers listen to podcasts to learn new things. Podcasts are the <em>perfect medium</em> for us to reach developers, and we consistently speak directly to real people. Changelog has a proven process to discover our goals to form a strategy that gets results. They know their audience <em>very well</em>. They've helped us shape and tell our story in an authentic way.</p>
+      <%= for example <- Changelog.SponsorStyle.sourcegraph() do %>
+      <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+      <% end %>
+      <img src='<%= Routes.static_url(@conn, "/images/content/marketing/beyang-liu.jpg") %>' alt="Beyang Liu" class="proof-avatar">
+      <p class="proof-title-line-1">Beyang Liu</p>
+      <p class="proof-title-line-2">Co-founder and CTO of Sourcegraph</p>
     </div>
 
     <div class="marketing-section-grid marketing-section-grid--3">
       <div class="marketing-section-grid-item">
-        <h3>1. Develop your strategy</h3>
+        <h3>Step 1: Determine goals & strategy</h3>
         <p>Everything begins by understanding who you are and the goals you're trying to achieve. We have proven workflows to uncover who you are, your goals, what's working, and the aspects of your story developers need to know.</p>
       </div>
       <div class="marketing-section-grid-item">
-        <h3>2. Plan your activation</h3>
+        <h3>Step 2: Creative and audio production</h3>
         <p>Once we have an understanding of who you are and how we can help you, we'll begin to shape what to say, how to say it, and where. Our team has years of growth and marketing experience to develop a campaign focused on your goals.</p>
       </div>
       <div class="marketing-section-grid-item">
-        <h3>3. Build your following</h3>
+        <h3>Step 3: Engage with our audience</h3>
         <p>Developers follow our content to explore new ideas and discover new tools. We make sure your brand and product are a part of their journey. We're here to guide and help you every step of the way.</p>
       </div>
     </div>
 
-    <div class="marketing-section-wrap">
-      <h3>Podcast sponsorship examples</h3>
+    <div class="marketing-section-wrap-2">
+      <p><strong>Listen to these real world campaigns from brands who trust us.</strong> In, cup to go flavour coffee caffeine skinny. As crema ristretto cortado, that cappuccino skinny mazagran brewed. Blue mountain grinder percolator eu to go shop, sweet mazagran café au lait latte brewed doppio. Cinnamon that eu mug, to go blue mountain, milk cinnamon.</p>
+
       <div class="grid_table">
         <div class="grid_table-header">
-          <div class="grid_table-header-column"><p>Campaign type</p></div>
-          <div class="grid_table-header-column"><p>Campaign name</p></div>
-          <div class="grid_table-header-column"><p>Campaign production</p></div>
+          <div class="grid_table-header-column"><p>Campaign</p></div>
+          <div class="grid_table-header-column"><p>Production</p></div>
         </div>
-      <%= for example <- Changelog.SponsorStyle.sponsor_landing() do %>
-        <div class="grid_table-row">
-          <div class="grid_table-row-column"><p><%= example.type %></p></div>
-          <div class="grid_table-row-column"><p><%= example.name %></p></div>
-          <div class="grid_table-row-column">
-            <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+        <%= for example <- Changelog.SponsorStyle.endorsement() do %>
+          <div class="grid_table-row">
+            <div class="grid_table-row-column"><p><%= example.name %></p></div>
+            <div class="grid_table-row-column">
+              <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
       </div>
     </div>
+  </section>
+
+  <section class="marketing-section">
+    <header class="marketing-section-header">
+      <h2>Promote your content to developers</h2>
+      <p>Reaching developers can be very challenging. They're super aware of marketing and very intelligent. We help brands better communicate with developers by speaking to them, not speaking at them. We cater to their desire to understand more deeply the problem set and use the power of story to help them understand what you offer.</p>
+    </header>
 
     <div class="marketing-section-wrap">
-      <h3>News sponsorship examples</h3>
       <div class="mock_browser">
         <div class="mock_browser-header">
           <div class="mock_browser-header-buttons"><span></span><span></span><span></span></div>
@@ -84,6 +197,42 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="marketing-section marketing-section--grey">
+    <header class="marketing-section-header">
+      <h2>Frequently asked questions</h2>
+      <p>Reaching developers can be very challenging. They're super aware of marketing and very intelligent. We help brands better communicate with developers by speaking to them, not speaking at them. We cater to their desire to understand more deeply the problem set and use the power of story to help them understand what you offer.</p>
+    </header>
+    <div class="marketing-section-wrap-2">
+    <div class="marketing-section-grid marketing-section-grid">
+      <div class="marketing-section-grid-item">
+        <h3>Do I just give you a script?</h3>
+        <p>Everything begins by understanding who you are and the goals you're trying to achieve. We have proven workflows to uncover who you are, your goals, what's working, and the aspects of your story developers need to know.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>Does production cost extra?</h3>
+        <p>Once we have an understanding of who you are and how we can help you, we'll begin to shape what to say, how to say it, and where. Our team has years of growth and marketing experience to develop a campaign focused on your goals.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>How long are the ad spots?</h3>
+        <p>Developers follow our content to explore new ideas and discover new tools. We make sure your brand and product are a part of their journey. We're here to guide and help you every step of the way.</p>
+      </div>
+      <div class="marketing-section-grid-item">
+        <h3>Can I review the ad before it's published?</h3>
+        <p>Everything begins by understanding who you are and the goals you're trying to achieve. We have proven workflows to uncover who you are, your goals, what's working, and the aspects of your story developers need to know.</p>
+      </div>
+    </div>
+    </div>
+
+    <footer class="marketing-section-footer">
+      <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
 
     <footer class="marketing-section-footer">
       <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>

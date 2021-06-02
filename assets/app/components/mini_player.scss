@@ -3,6 +3,21 @@
   display: flex;
   margin: 0;
 
+  &--dark {
+    .mini_player {
+      &-button {
+        background: rgba($white, 0.075) url('/images/icons/toolbar-play-white.svg') center no-repeat;
+        border: none;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+        &:hover, &.is-playing {
+          background-color: rgba($white, 0.1);
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+        }
+        &.is-playing { background-image: url('/images/icons/toolbar-pause-white.svg'); }
+      }
+    }
+  }
+
   &-button {
     background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
     background-size: auto 14px;
@@ -23,7 +38,7 @@
   &-time {
     display: none;
     flex: 1 0 auto;
-    margin: 0 1em;
+    margin: 0 0 0 1em;
 
     @include breakpoint(tiny) {
       display: block;

@@ -1,18 +1,18 @@
 .logo_grid {
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(3, calc(33.333% - 10px));
-  grid-column-gap: 10px;
-  grid-row-gap: 20px;
+  grid-template-columns: repeat(2, calc(50%));
+  grid-column-gap: 0;
+  grid-row-gap: 10px;
   margin: $base-spacing auto;
-  max-width: 1080px;
+  max-width: 1180px;
 
   @include breakpoint(tiny) {
-    grid-template-columns: repeat(4, calc(25% - 10px));
+    grid-template-columns: repeat(3, calc(33.333%));
   }
 
   @include breakpoint(tablet) {
-    grid-template-columns: repeat(5, calc(20% - 10px));
+    grid-template-columns: repeat(5, calc(20%));
     margin-top: 50px;
   }
 
@@ -27,11 +27,11 @@
     }
 
     img {
-      filter: grayscale(100%);
+      // filter: grayscale(100%);
       margin: 0 auto;
-      max-height: 100px;
+      max-height: 200px;
       max-width: 100%;
-      transition: filter 0.2s ease-in-out;
+      // transition: filter 0.2s ease-in-out;
 
       &:hover {
         filter: grayscale(0%);

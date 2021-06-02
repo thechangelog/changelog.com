@@ -12,12 +12,31 @@ button {
 }
 
 .button_large {
-  @include button($green, $white);
+  border-radius: 6px;
+  color: $white;
+  font-weight: bold;
+  padding: 0.625em 0.825em 0.5em;
+  transition: all 0.1s $base-easing;
   display: inline-block;
   font-size: 1.1875em;
   margin-bottom: 1em;
   padding-left: 1.25em;
   padding-right: 1.25em;
+
+  &--default {
+    background-color: $green;
+    &:hover { background-color: darken($green, 10%); }
+  }
+  &--ghost {
+    background-color: transparent;
+    border: 1px solid rgba($white, 0.2);
+    &:hover {
+      background-color: darken($green, 10%);
+      border: 1px solid darken($green, 10%);
+    }
+  }
+
+  
 }
 
 .button_small,

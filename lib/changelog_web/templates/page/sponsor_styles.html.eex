@@ -1,21 +1,112 @@
 <%= render(SharedView, "_drift_js.html") %>
 
-<article class="sponsor_story">
-  <div class="sponsor_story-content richtext">
-    <h1>Podcast sponsorship styles</h1>
+<article class="article">
+  <div class="richtext">
+    <h1>Ad production styles</h1>
+
+    <p>Our partnership team loves to get creative when telling your brand's story!</p>
+
+    <p>Once we gain a clear understanding of your goals, our team gets to work producing high-quality engaging audio content that informs, entertains, and influences.</p>
+
+    <p>To accomplish this, we focus on <em>four key styles</em> of ad spots.</p>
+
+    <hr>
     
     <h3>Endorsement</h3>
-    <p>This is our most popular ad style and is read by a member of our ad team. We will take care of all the creative writing based on the goals and strategy we set with you. We can focus on different aspects of the service, a big promotion, an upcoming event you're hosting — or work together to come up with ideas on how to direct people to your current marketing goals and funnels. We like to get creative!</p>
+    
+    <p>The endorsement spot (sometimes called "host read") is the most popular ad spot style. We develop this spot based upon the goals and strategy we determine together for your campaign. We take care of all the heavy lifting: the writing, the creative, and of course the audio production itself.</p>
 
-    <h3>Insider Story</h3>
+    <p>Below are example endorsement spots we've produced.</p>
+
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Campaign</p></div>
+        <div class="grid_table-header-column"><p>Production</p></div>
+      </div>
+      <%= for example <- Changelog.SponsorStyle.endorsement() do %>
+        <div class="grid_table-row">
+          <div class="grid_table-row-column"><p><%= example.name %></p></div>
+          <div class="grid_table-row-column">
+            <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <p>Endorsement spots give the team here at Changelog an opportunity to share their support and belief in your brand's product or service. These types of spots also let us take the listener on a journey, to tell them your brand's story.</p>
+
+    <p>The key, is that we do all of this based upon the goals and strategy we determine together.</p>
+
+    <p>We help you speak authentically to our audiences, and we are here to guide you every step of the way.</p>
+
+    <hr>
+
+    <h3>Insider story</h3>
     <p>Talking to someone inside your company really helps to humanize who you are and allows you tell the developer world who you are in your own words. This prodution is created by having our ad team speak with someone inside your company — an engineer, developer, support, design — really anyone who can speak to the product or service, the work they do, and how that might help the listener to learn more and why they should give it a try. The call to record the initial conversation is around 20-40 minutes.</p>
 
-    <h3>Customer Story / Endorsement</h3>
+    <p>Below are example insider stories we've produced.</p>
+
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Campaign</p></div>
+        <div class="grid_table-header-column"><p>Production</p></div>
+      </div>
+      <%= for example <- Changelog.SponsorStyle.insider() do %>
+        <div class="grid_table-row">
+          <div class="grid_table-row-column"><p><%= example.name %></p></div>
+          <div class="grid_table-row-column">
+            <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
+
+    <h3>Customer story</h3>
     <p>Customer stories are powerful and we are experts at getting your customers talking and sharing details that get the listeners attention. This is a chance to have a future customer hear from one of their peers on why they choose your product or service and why it works for them. This is also a great example of social proof.</p>
     <p>This prodution is created by having our ad team speak with one of your customers or users. The person we speak with should be well spoken and can be anyone that is in charge of decisions or someone who's directly impacted by the product or service. The call to record the initial conversation is around 20-40 minutes.</p>
 
-    <h3>Team Culture / Hiring</h3>
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Brand</p></div>
+        <div class="grid_table-header-column"><p>Campaign</p></div>
+        <div class="grid_table-header-column"><p>Production</p></div>
+      </div>
+      <%= for example <- Changelog.SponsorStyle.customer() do %>
+        <div class="grid_table-row">
+          <div class="grid_table-row-column"><p><%= example.type %></p></div>
+          <div class="grid_table-row-column"><p><%= example.name %></p></div>
+          <div class="grid_table-row-column">
+            <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
+
+    <h3>Hiring <em>&</em> job promotion</h3>
     <p>We're helping engineering teams to tell their story and attract the best talent. We'll work closely with you to determine what the developer community needs to know about your teams and point them in the right direction to learn more and take the first step.</p>
+
+    <div class="grid_table">
+      <div class="grid_table-header">
+        <div class="grid_table-header-column"><p>Brand</p></div>
+        <div class="grid_table-header-column"><p>Campaign</p></div>
+        <div class="grid_table-header-column"><p>Production</p></div>
+      </div>
+      <%= for example <- Changelog.SponsorStyle.hiring() do %>
+        <div class="grid_table-row">
+          <div class="grid_table-row-column"><p><%= example.type %></p></div>
+          <div class="grid_table-row-column"><p><%= example.name %></p></div>
+          <div class="grid_table-row-column">
+            <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
 
     <hr>
   </div>
@@ -38,6 +129,6 @@
       </div>
     <% end %>
     </div>
-    
   </div>
+
 </article>

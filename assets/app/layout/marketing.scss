@@ -38,11 +38,67 @@
   }
   p.button_note {
     color: $medium-grey;
-    font-size: 13px !important;
+    font-size: 15px !important;
     font-style: italic;
     margin-top: 0.75em;
 
     a { color: $medium-grey; }
+  }
+
+  &-section-proof {
+    margin: ($base-spacing * 1.75) auto ($base-spacing * 2.25) auto;
+    max-width: 980px;
+    padding: ($base-spacing * 2.25) 0;
+    text-align: center;
+    // background-color: $black;
+    background: linear-gradient(345deg, rgba($black,1) 0%, rgba(#202020,1) 90%);
+    border-radius: 6px;
+    color: $mostly-white;
+    box-shadow: 0px 70px 55px rgba(0,0,0,0.15),0px 30px 30px rgba(0,0,0,0.08);
+    // box-shadow: 0 2px 2px rgba(0,0,0,.07), 0 6px 5px rgba(0,0,0,.04), 0 12px 10px rgba(0,0,0,.03), 0 22px 18px rgba(0,0,0,.02), 0 41px 33px rgba(0,0,0,.02), 0 100px 80px rgba(0,0,0,.01);
+
+    p { margin: 0; }
+
+    .proof-logo {
+      max-width: 300px;
+      // max-height: 40px;
+      display: block;
+      margin: 0 auto;
+    }
+    .proof-quote {
+      font-size: 1.3em;
+      line-height: 1.5;
+      max-width: 660px;
+      margin: ($base-spacing * 1.2) auto;
+    }
+    figure {
+      max-width: 480px;
+      margin: 0 auto ($base-spacing * 1.25) auto;
+      padding: 14px 18px;
+      // border: 1px solid rgba($white, 0.1);
+      background-color: rgba($white, 0.0375);
+      border-radius: 6px;
+    }
+    .proof-avatar {
+      max-width: 75px;
+      border-radius: 100%;
+      border: 4px solid $white;
+      display: block;
+      margin: 0 auto;
+    }
+    .proof-title-line-1 {
+      color: $white;
+      font-size: 1.2em;
+      font-weight: bold;
+      line-height: 1;
+      margin-top: $base-spacing / 2;
+    }
+    .proof-title-line-2 {
+      font-size: 1em;
+      line-height: 1;
+      margin-top: $base-spacing / 3;
+      font-style: italic;
+    }
   }
 
   // Section
@@ -63,7 +119,13 @@
       background: $black;
       color: $white;
 
-      p { color: $half-white; }
+      p { color: $mostly-white; }
+    }
+
+    &--grey {
+      background-color: #fafafa;
+      border-top: 1px solid #eaeaea;
+      border-bottom: 1px solid #eaeaea;
     }
 
     &--intro {
@@ -91,6 +153,12 @@
       margin: $base-spacing auto 0;
       max-width: 1140px;
       padding: 0 $base-spacing;
+    }
+
+    &-wrap-2 {
+      margin: $padding-large auto;
+      max-width: 880px;
+      padding: 0 $padding-large;
     }
 
     &-header,
@@ -143,21 +211,20 @@
         }
       }
 
-      h2,
-      h3 {
+      h2 {
         margin: 1em 0;
       }
 
       h2 {
         font-size: 1.5em;
-        @media (min-width: $tablet) { font-size: 1.75em; }
+        @media (min-width: $tablet) { font-size: 2em; }
       }
 
       h3 {
-        font-size: 1.25em;
-        font-weight: normal;
+        font: normal 14px $code;
         line-height: 1.5em;
-        @media (min-width: $tablet) { font-size: 1.5625em; }
+        margin: 0;
+        @media (min-width: $tablet) { font-size: 14px; }
 
         .marketing-section--map & {
           color: $half-white;

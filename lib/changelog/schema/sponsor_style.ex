@@ -1,4 +1,104 @@
 defmodule Changelog.SponsorStyle do
+  def endorsement do
+    [
+      %{
+        type: "Linode",
+        name: "Linode - Simple, affordable, and accessible",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/linode-2021--preroll--simple-affordable-accessible-001.mp3",
+        duration: 32
+      },
+      %{
+        type: "Retool",
+        name: "Retool - Low-code internal tools platform",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/retool-2021--low-code-platform-001-1.mp3",
+        duration: 55
+      },
+      %{
+        type: "InfluxData",
+        name: "InfluxData - InfluxDays EMEA 2021",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/influxdata-2021--preroll-influxdays-2021-emea.mp3",
+        duration: 46
+      },
+      %{
+        type: "LaunchDarkly",
+        name: "LaunchDarkly - Feature flags",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/launchdarkly-2021--all-midroll-001-4.mp3",
+        duration: 42
+      },
+      %{
+        type: "Render",
+        name: "Render - Built for modern applications",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/render-2021--midroll-002-2.mp3",
+        duration: 91
+      },
+      %{
+        type: "Equinix Metal",
+        name: "Equinix Metal - Fully automated bare metal",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/equinix-2021--midroll-002-2.mp3",
+        duration: 85
+      },
+      %{
+        type: "O'Reilly",
+        name: "O'Reilly - Online learning platform",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/oreilly-2021--midroll-001-3.mp3",
+        duration: 59
+      },
+      %{
+        type: "Snowplow Analytics",
+        name: "Snowplow Analytics - Core overview",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/snowplow-2021--midroll-overview-001-1.mp3",
+        duration: 55
+      },
+      %{
+        type: "Digital Ocean",
+        name: "Digital Ocean - Developer cloud",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/digital-ocean-2020--developer-cloud-001-1.mp3",
+        duration: 37
+      }
+    ]
+  end
+  def insider do
+    [
+      %{
+        type: "Sourcegraph",
+        name: "Sourcegraph - State of flow",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/sourcegraph-2021--preroll-beyang-001-1.mp3",
+        duration: 100
+      }
+    ]
+  end
+  def customer do
+    [
+      %{
+        type: "Sourcegraph",
+        name: "Sourcegraph - State of flow",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/sourcegraph-2021--preroll-beyang-001-1.mp3",
+        duration: 100
+      }
+    ]
+  end
+  def hiring do
+    [
+      %{
+        type: "Sourcegraph",
+        name: "Sourcegraph - State of flow",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/sourcegraph-2021--preroll-beyang-001-1.mp3",
+        duration: 100
+      }
+    ]
+  end
   def all do
     [
       %{
@@ -174,6 +274,29 @@ defmodule Changelog.SponsorStyle do
         name: "Fastly, Network-wide pre-roll",
         audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/fastly-preroll.mp3",
         duration: 06
+      }
+    ]
+  end
+
+  def render do
+    [
+      %{
+        type: "Render",
+        name: "Render - Out innovating Heroku",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/render-2021--shipit-preroll-anurag-001-1.mp3",
+        duration: 70
+      }
+    ]
+  end
+  def sourcegraph do
+    [
+      %{
+        type: "Sourcegraph",
+        name: "Sourcegraph - State of flow",
+        audio:
+          "https://changelog-assets.s3.us-east-1.amazonaws.com/podcast-ad-examples/sourcegraph-2021--preroll-beyang-001-1.mp3",
+        duration: 100
       }
     ]
   end

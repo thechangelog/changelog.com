@@ -44,6 +44,7 @@ $range-label-width: 60px !default;
   body.embed--day & { background: $light-grey; }
   .episode_player & { height: 6px; }
   .mini_player & { height: 6px; background: $light-grey; }
+  .mini_player--dark & { height: 6px; background: rgba($white, 0.1); }
   .richtext_player & { height: 6px; background: #282F36; }
 }
 
