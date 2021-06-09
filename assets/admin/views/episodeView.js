@@ -139,6 +139,17 @@ export default class EpisodeView {
         requestSelect.dropdown("clear");
       }
     })
+
+    let liveInput = $("input[name='episode[recorded_live]']")
+    let youTubeInputContainer = $("input[name='episode[youtube_id]']").closest("div")
+
+    liveInput.on("change", function () {
+      if (liveInput.is(":checked")) {
+        youTubeInputContainer.removeClass("hidden")
+      } else {
+        youTubeInputContainer.addClass("hidden")
+      }
+    })
   }
 
   edit() {

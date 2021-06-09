@@ -265,10 +265,17 @@
     <%= file_input(f, :plusplus_file) %>
   </div>
 
-  <div class="inline field">
-    <div class="ui toggle checkbox">
-      <%= checkbox(f, :recorded_live, class: "hidden") %>
-      <label>Recorded Live</label>
+  <div class="two fields">
+    <div class="inline field">
+      <div class="ui toggle checkbox">
+        <%= checkbox(f, :recorded_live, class: "hidden") %>
+        <label>Recorded Live</label>
+      </div>
+    </div>
+
+    <div class="inline field <%= if !f.data.recorded_live, do: "hidden" %> <%= AdminHelpers.error_class(f, :youtube_id) %>">
+      <%= text_input(f, :youtube_id, placeholder: "dQw4w9WgXcQ") %>
+      <%= label(f, :youtube_id, "YouTube ID") %>
     </div>
   </div>
 

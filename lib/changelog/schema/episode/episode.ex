@@ -40,6 +40,7 @@ defmodule Changelog.Episode do
     field :published_at, :utc_datetime
     field :recorded_at, :utc_datetime
     field :recorded_live, :boolean, default: false
+    field :youtube_id, :string
 
     field :audio_file, Files.Audio.Type
     field :audio_bytes, :integer
@@ -168,6 +169,7 @@ defmodule Changelog.Episode do
       :published_at,
       :recorded_at,
       :recorded_live,
+      :youtube_id,
       :guid,
       :type
     ])
