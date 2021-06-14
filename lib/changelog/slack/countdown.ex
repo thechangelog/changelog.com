@@ -1,6 +1,6 @@
 defmodule Changelog.Slack.Countdown do
   alias Timex.Duration
-  alias Changelog.{Episode, Icecast}
+  alias ChangelogWeb.LiveView
 
   def live(nil), do: respond("No live recordings scheduled yet...")
 
@@ -13,11 +13,7 @@ defmodule Changelog.Slack.Countdown do
     respond(
       case Duration.to_hours(diff) do
         h when h <= 0 ->
-          if Icecast.is_streaming() do
-            "#{live_message(podcast)}! Listen ~> #{live_url(next_episode)} :tada:"
-          else
-            "#{podcast} _should_ be live, but the stream isn't up yet :thinking_face:"
-          end
+          "#{live_message(podcast)}! Watch ~> #{LiveView.youtube_url(next_episode)} :tada:"
 
         h when h < 2 ->
           "There's just *#{formatted}* until #{podcast} (#{title}) :eyes:"
@@ -26,7 +22,7 @@ defmodule Changelog.Slack.Countdown do
           "There's only *#{formatted}* until #{podcast} (#{title}) :sweat_smile:"
 
         _else ->
-          "There's still *#{formatted}* until #{podcast} (#{title}) :pensive:"
+          "There's still *#{formatted}* until #{podcast} (#{title}) :hourglass_flowing_sand:"
       end,
       next_episode.recorded_at
     )
@@ -38,9 +34,4 @@ defmodule Changelog.Slack.Countdown do
   defp live_message("Go Time"), do: "It's Go Time"
   defp live_message("JS Party"), do: "JS Party Time, y'all"
   defp live_message(name), do: "#{name} is recording live"
-
-  defp live_url(episode) do
-    hashid = Episode.hashid(episode)
-    "https://changelog.com/live/#{hashid}"
-  end
 end

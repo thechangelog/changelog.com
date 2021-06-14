@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.LiveController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Icecast}
+  alias Changelog.Episode
   alias ChangelogWeb.TimeView
   alias ChangelogWeb.Plug.ResponseCache
 
@@ -47,5 +47,5 @@ defmodule ChangelogWeb.LiveController do
     |> render("ical.ics")
   end
 
-  def status(conn, _params), do: json(conn, Icecast.get_stats())
+  def status(conn, _params), do: json(conn, %{streaming: false, listeners: 0})
 end

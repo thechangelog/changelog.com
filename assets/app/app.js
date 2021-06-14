@@ -8,7 +8,6 @@ import Prism from "prismjs";
 import Comment from "modules/comment";
 import OnsitePlayer from "modules/onsitePlayer";
 import MiniPlayer from "modules/miniPlayer";
-import LivePlayer from "modules/livePlayer";
 import Overlay from "modules/overlay";
 import ImageButton from "modules/imageButton";
 import YouTubeButton from "modules/youTubeButton";
@@ -24,7 +23,6 @@ import parseTime from "../shared/parseTime";
 
 window.u = u;
 window.App = {
-  live: new LivePlayer(".js-live"),
   overlay: new Overlay("#overlay"),
   player: new OnsitePlayer("#player"),
   slider: new Slider(".js-slider"),
@@ -307,7 +305,6 @@ u(document).on("turbolinks:before-cache", function () {
 u(document).on("turbolinks:load", function () {
   Prism.highlightAll();
   App.player.attach();
-  App.live.check();
   u(".js-track-news").each(el => {
     observer.observe(el);
   });

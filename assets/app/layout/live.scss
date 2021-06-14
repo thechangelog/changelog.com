@@ -20,75 +20,33 @@
     display: none;
   }
 }
-.live.is-complete {
-  .live-footer-status {
-    background-color: $medium-grey;
-  }
 
-  .live-footer-viewers {
-    display: none;
-  }
-}
 .live {
   color: $white;
   padding: 60px 0 160px;
   width: 100%;
-
-  @media (min-width: $tablet) {
-    align-items: center;
-    display: flex;
-    padding: 80px 0 100px;
-    height: 100%;
-  }
+  align-items: center;
+  display: flex;
+  padding: 80px 0 100px;
+  height: 100%;
 
   &-content {
+    @include large-play-button(".live", 2rem, 6rem);
     margin: $padding-medium auto;
     max-width: 1080px;
     width: 100%;
-
-    @media (min-width: $tablet) {
-      display: flex;
-    }
-  }
-
-  // Button
-  &-button {
-    @include large-play-button(".live", 2rem, 6rem);
-    align-items: center;
     display: flex;
-    margin-bottom: $padding-medium;
-    margin-right: 0;
-    padding: 0;
-    position: relative;
-    text-indent: -9999px;
-
-    $gutter: 2rem;
-    $button_size: 8rem;
-
-    @media (min-width: $tablet) {
-      @include large-play-button(".live", $gutter, $button_size, "");
-      flex: 0 1 200px;
-      left: $gutter / 2;
-      margin-bottom: 0;
-      margin-top: -($gutter);
-    }
-
-    @media (min-width: $desktop) {
-      flex: 0 1 500px;
-    }
+    justify-content: center;
   }
 
   // Info
   &-info {
+    z-index: 3;
     max-width: 880px;
     position: relative;
-    z-index: 2;
     padding: 0 $padding-medium;
     width: 100%;
-
-    @media (min-width: $tablet) {
-      flex: 1 1 600px;
-    }
+    flex: 1 1 600px;
 
     // Header
     &-header {
@@ -96,14 +54,10 @@
       text-align: center;
 
       &-show {
-        font-size: 1.25em;
+        font-size: 1.5em;
         font-weight: normal;
         margin-top: 0;
         text-transform: none;
-
-        a {
-          color: $medium-grey;
-        }
       }
 
       &-title {
@@ -118,15 +72,6 @@
           color: #FF5252;
           text-decoration: underline;
         }
-      }
-    }
-
-    // More
-    &-more {
-      display: none;
-
-      @media (min-height: 680px) and (min-width: $tablet) {
-        display: block;
       }
     }
 
@@ -177,14 +122,10 @@
           font-size: 2em;
           font-weight: bold;
           margin: 0 auto $padding-small;
-          transition: transform 0.1s $ease-in-out-quad;
           line-height: ($size * 1.1);
           width: $size;
           height: $size;
-
-          a:hover & {
-            transform: translateY(-5px);
-          }
+          opacity: 1;
 
           .live-info-guests--3 & {
             $size: 75px;
@@ -256,106 +197,6 @@
             color: $green;
             font-weight: bold;
           }
-        }
-      }
-    }
-  }
-
-  &-footer {
-    $largeText: 1.5em;
-    @extend %display-font;
-    align-items: center;
-    background: rgba($black, 0.7);
-    display: flex;
-    flex-wrap: wrap;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: $padding-extra-small;
-    width: 100%;
-    z-index: 99;
-
-    @media (min-width: $tablet) {
-      padding: $padding-medium;
-    }
-
-    &-status {
-      background: #FF5252;
-      font-size: $largeText;
-      height: 60px;
-      line-height: 60px;
-      width: 100%;
-      margin: $padding-small 0 0;
-      padding: 0 10px;
-      text-align: center;
-
-      @media (min-width: $tablet) {
-        margin: 0 $padding-small 0 0;
-        min-width: 230px;
-        order: -1;
-        width: auto;
-      }
-    }
-
-    &-viewers {
-      align-items: center;
-      display: none;
-      font-size: $largeText;
-      // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
-      margin: 0 $padding-small;
-
-      @media (min-width: $tablet) {
-        display: flex;
-      }
-
-      img { margin: 0 10px 0 0; }
-      span { padding-top: 0.125em; }
-    }
-
-    &-stats {
-      color: $white;
-      display: flex;
-      list-style-type: none;
-      margin: 0 $padding-small 0 0;
-      padding: 0;
-
-      @media (min-width: $tablet) {
-        margin: 0 $padding-small;
-      }
-
-      li {
-        font-size: 1.25em;
-        margin: 0 $padding-small 0 0;
-      }
-
-      strong {
-        color: $green;
-        display: block;
-        font-weight: normal;
-        margin-bottom: 0.25em;
-      }
-    }
-
-    &-share {
-      margin: 0 0 0 auto;
-      text-align: center;
-
-      img {
-        @media (min-width: $tablet) {
-          transform: translateY(2px);
-          margin: 0 5px 0 0;
-        }
-      }
-
-      a {
-        color: $white;
-        display: block;
-        // font-weight: 300; TODO: Add a thinner version of Din Narrow if we want this to look good
-
-        @media (min-width: $tablet) {
-          display: inline-block;
-          font-size: $largeText;
         }
       }
     }

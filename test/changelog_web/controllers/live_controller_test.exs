@@ -1,9 +1,8 @@
 defmodule ChangelogWeb.LiveControllerTest do
   use ChangelogWeb.ConnCase
 
-  import Mock
-
-  alias Changelog.{Episode, Icecast}
+  alias Changelog.Episode
+  alias ChangelogWeb.LiveView
 
   describe "the live index" do
     test "with episodes coming soon", %{conn: conn} do
@@ -29,7 +28,7 @@ defmodule ChangelogWeb.LiveControllerTest do
     test "with no episodes coming soon or live now", %{conn: conn} do
       conn = get(conn, Routes.live_path(conn, :index))
 
-      assert html_response(conn, 200) =~ "No scheduled live shows. Check back soon."
+      assert html_response(conn, 200) =~ LiveView.header_for_episode_list([])
     end
   end
 
@@ -71,22 +70,11 @@ defmodule ChangelogWeb.LiveControllerTest do
   end
 
   describe "the live status" do
-    test "is false when nothing is streaming", %{conn: conn} do
-      with_mock(Icecast, get_stats: fn -> %Icecast.Stats{} end) do
-        conn = get(conn, Routes.live_path(conn, :status))
-        response = json_response(conn, 200)
-        refute response["streaming"]
-        assert response["listeners"] == 0
-      end
-    end
-
-    test "is true when something is streaming", %{conn: conn} do
-      with_mock(Icecast, get_stats: fn -> %Icecast.Stats{streaming: true, listeners: 14} end) do
-        conn = get(conn, Routes.live_path(conn, :status))
-        response = json_response(conn, 200)
-        assert response["streaming"]
-        assert response["listeners"] == 14
-      end
+    test "is false all the time", %{conn: conn} do
+      conn = get(conn, Routes.live_path(conn, :status))
+      response = json_response(conn, 200)
+      refute response["streaming"]
+      assert response["listeners"] == 0
     end
   end
 end

@@ -1,20 +1,16 @@
 <section class="live live--<%= @episode.podcast.slug %> js-live <%= status_class(@episode) %>">
   <div class="live-content">
-    <%= link(to: Icecast.live_url(), role: "button", class: "live-button js-live-play-button", data: []) do %>
-      <div class="live-button-bg"></div>
-      <div class="live-button-icon">Play</div>
-    <% end %>
+
 
     <div class="live-info">
       <header class="live-info-header">
         <h2 class="live-info-header-show">
-          <%= link(EpisodeView.podcast_name_and_number(@episode), to: Routes.podcast_path(@conn, :show, @podcast.slug), title: "View #{@podcast.name} Archive", target: "_blank") %>
+          <%= EpisodeView.podcast_name_and_number(@episode) %>
         </h2>
         <h1 class="live-info-header-title js-title"><%= @episode.title %></h1>
       </header>
 
       <div class="live-info-more">
-        <p class="live-info-description"><%= @podcast.description %></p>
 
         <% participants = EpisodeView.participants(@episode) %>
         <div class="live-info-guests live-info-guests--<%= length(participants) %>">
@@ -22,7 +18,6 @@
           <article class="live-info-guests-item">
             <%= link(to: PersonView.profile_path(person), title: "More Info", target: "_blank") do %>
               <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), String.at(person.name, 0), class: "live-info-guests-item-image", width: 150, height: 150) %>
-              <h2 class="live-info-guests-item-title"><%= if Enum.any?(@episode.guests), do: host_or_guest(@episode, person) %></h2>
               <h1 class="live-info-guests-item-name"><%= person.name %></h1>
             <% end %>
           </article>
@@ -30,34 +25,14 @@
         </div>
 
         <div class="live-info-cta">
-          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-slack-white.svg"), "Slack Logo", class: "live-info-cta-icon", width: 25, height: 25) %>
-        <%= if @podcast.slug == "gotime" do %>
+        <%= if !@podcast.slug == "gotime" do %>
           <p>Join the discussion in the Gophers <%= link(raw("#gotimefm&nbsp;Slack&nbsp;channel"), to: "https://gophers.slack.com/messages/gotimefm") %></p>
         <% else %>
-          <%= if @current_user do %>
-            <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: "https://changelog.slack.com/messages/#{slack_channel(@podcast)}") %></p>
-          <% else %>
-            <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: Routes.page_path(@conn, :community)) %></p>
-            <p><small>Not a member yet? <a href="<%= Routes.page_path(@conn, :community) %>" title="">Join the Changelog&nbsp;Community</a></small></p>
-          <% end %>
+          <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: Routes.page_path(@conn, :community)) %></p>
+            <p><small>Not a member yet? <a href="<%= Routes.page_path(@conn, :community) %>" title="">changelog.com/community</a></small></p>
         <% end %>
         </div>
       </div>
     </div>
   </div>
-
-  <footer class="live-footer">
-    <div class="live-footer-viewers">
-      <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-eye.svg"), "Viewers", class: "live-info-cta-icon", width: 37, height: 26) %>
-      <span class="js-live-viewers">0</span>
-    </div>
-
-    <ul class="live-footer-stats">
-      <li><strong><%= TimeView.ts(@episode.recorded_at, "dayAndDate") %></strong> <%= TimeView.ts(@episode.recorded_at, "amPm") %></li>
-    </ul>
-
-    <div class="live-footer-status js-live-status">
-      <%= if should_be_complete(@episode), do: "Complete", else: "Upcoming" %>
-    </div>
-  </footer>
 </section>

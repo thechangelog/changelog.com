@@ -89,6 +89,9 @@
           <%= AdminHelpers.icon_link("refresh", to: Routes.admin_podcast_episode_path(@conn, :transcript, podcast.slug, episode.slug), method: :post, title: "Refresh Transcript") %>
         <% end %>
           <%= AdminHelpers.icon_link("eye", to: Routes.episode_path(@conn, show_or_preview(episode), podcast.slug, episode.slug)) %>
+        <%= if @status == :draft && episode.recorded_live do %>
+          <%= AdminHelpers.icon_link("image", to: Routes.live_path(@conn, :show, Episode.hashid(episode)), title: "View live image for YT") %>
+        <% end %>
           <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_episode_path(@conn, :edit, podcast.slug, episode.slug)) %>
         <%= if !Episode.is_published(episode) do %>
           <%= AdminHelpers.icon_link("trash", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
