@@ -106,7 +106,7 @@
     padding: 40px 0;
 
     @include breakpoint(mobile) { padding: 50px 0; }
-    @include breakpoint(tablet) { padding: 60px 0; }
+    @include breakpoint(tablet) { padding: 80px 0; }
 
     &> *:first-child { margin-top: 0; }
     &> *:last-child { margin-bottom: 0; }
@@ -217,7 +217,7 @@
 
       h2 {
         font-size: 1.5em;
-        @media (min-width: $tablet) { font-size: 2em; }
+        @include breakpoint(tablet) { font-size: 1.75em; }
       }
 
       h3 {
