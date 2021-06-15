@@ -1,0 +1,8 @@
+<footer class="marketing-section-footer">
+  <p><%= assigns[:cta] || "Partner with us to reach software developers all over the world" %></p>
+  <div class="marketing-button_group" style="--max-width-group: 400px;">
+    <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large button_large--default" %>
+    <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large button_large--default" %>
+  </div>
+  <p class="button_note">Or call 888-974-CHLG (2454)</p>
+</footer>

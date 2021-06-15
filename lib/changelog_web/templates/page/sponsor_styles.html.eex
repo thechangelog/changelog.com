@@ -1,6 +1,10 @@
 <%= render(SharedView, "_drift_js.html") %>
 
 <article class="article">
+
+  <section class="marketing marketing-section">
+  
+
   <div class="richtext">
     <div class="breadcrumbs"><%= link "Sponsor", to: Routes.page_path(@conn, :sponsor) %> / Ad styles</div>
 
@@ -108,6 +112,7 @@
     </div>
 
   </div>
+  </section>
 
   <section class="marketing marketing-section marketing-section--dark">
   
