@@ -2,6 +2,8 @@
 
 <article class="article">
   <div class="richtext">
+    <div class="breadcrumbs"><%= link "Sponsor", to: Routes.page_path(@conn, :sponsor) %> / Ad styles</div>
+
     <h1>Ad production styles</h1>
 
     <p>Our partnership team loves to get creative when telling your brand's story!</p>
@@ -12,9 +14,11 @@
 
     <hr>
     
-    <h3>Endorsement</h3>
+    <h2>Endorsement</h2>
     
-    <p>The endorsement spot (sometimes called "host read") is the most popular ad spot style. We develop this spot based upon the goals and strategy we determine together for your campaign. We take care of all the heavy lifting: the writing, the creative, and of course the audio production itself.</p>
+    <p>Endorsement spots (sometimes called "host read spots") are our most popular ad style. They allow us to easily communicating your value to our audience. We develop this spot based on the goals and strategy we define together for your campaign.</p>
+
+    <p>We take care of <em>everything</em>; the strategy, writing, creative, and the audio production.</p>
 
     <p>Below are example endorsement spots we've produced.</p>
 
@@ -33,15 +37,16 @@
       <% end %>
     </div>
 
-    <p>Endorsement spots give the team here at Changelog an opportunity to share their support and belief in your brand's product or service. These types of spots also let us take the listener on a journey, to tell them your brand's story.</p>
+    <p>Endorsement spots give us an opportunity to share our support and belief in your brand's product or service. These types of spots let us take the listener on a journey, to communicate your value and the narrative of your brand's story.</p>
 
-    <p>The key, is that we do all of this based upon the goals and strategy we determine together.</p>
+    <p>The key, is we do all of this based on the goals and strategy we define together.</p>
 
-    <p>We help you speak authentically to our audiences, and we are here to guide you every step of the way.</p>
+    <p>We help you speak authentically to our audience, and we're here to guide you every step of the way.</p>
 
     <hr>
 
-    <h3>Insider story</h3>
+    <h2>Insider story</h2>
+    
     <p>Talking to someone inside your company really helps to humanize who you are and allows you tell the developer world who you are in your own words. This prodution is created by having our ad team speak with someone inside your company — an engineer, developer, support, design — really anyone who can speak to the product or service, the work they do, and how that might help the listener to learn more and why they should give it a try. The call to record the initial conversation is around 20-40 minutes.</p>
 
     <p>Below are example insider stories we've produced.</p>
@@ -63,19 +68,17 @@
 
     <hr>
 
-    <h3>Customer story</h3>
+    <h2>Customer story</h2>
     <p>Customer stories are powerful and we are experts at getting your customers talking and sharing details that get the listeners attention. This is a chance to have a future customer hear from one of their peers on why they choose your product or service and why it works for them. This is also a great example of social proof.</p>
     <p>This prodution is created by having our ad team speak with one of your customers or users. The person we speak with should be well spoken and can be anyone that is in charge of decisions or someone who's directly impacted by the product or service. The call to record the initial conversation is around 20-40 minutes.</p>
 
     <div class="grid_table">
       <div class="grid_table-header">
-        <div class="grid_table-header-column"><p>Brand</p></div>
         <div class="grid_table-header-column"><p>Campaign</p></div>
         <div class="grid_table-header-column"><p>Production</p></div>
       </div>
       <%= for example <- Changelog.SponsorStyle.customer() do %>
         <div class="grid_table-row">
-          <div class="grid_table-row-column"><p><%= example.type %></p></div>
           <div class="grid_table-row-column"><p><%= example.name %></p></div>
           <div class="grid_table-row-column">
             <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
@@ -86,18 +89,16 @@
 
     <hr>
 
-    <h3>Hiring <em>&</em> job promotion</h3>
+    <h2>Hiring <em>&</em> job promotion</h2>
     <p>We're helping engineering teams to tell their story and attract the best talent. We'll work closely with you to determine what the developer community needs to know about your teams and point them in the right direction to learn more and take the first step.</p>
 
     <div class="grid_table">
       <div class="grid_table-header">
-        <div class="grid_table-header-column"><p>Brand</p></div>
         <div class="grid_table-header-column"><p>Campaign</p></div>
         <div class="grid_table-header-column"><p>Production</p></div>
       </div>
       <%= for example <- Changelog.SponsorStyle.hiring() do %>
         <div class="grid_table-row">
-          <div class="grid_table-row-column"><p><%= example.type %></p></div>
           <div class="grid_table-row-column"><p><%= example.name %></p></div>
           <div class="grid_table-row-column">
             <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
@@ -106,29 +107,29 @@
       <% end %>
     </div>
 
-    <hr>
-
-    <hr>
-  </div>
-  <div class="sponsor_story-examples">
-    <h3>Sponsorship Examples</h3>
-
-    <div class="grid_table">
-      <div class="grid_table-header">
-        <div class="grid_table-header-column"><p>Campaign type</p></div>
-        <div class="grid_table-header-column"><p>Campaign name</p></div>
-        <div class="grid_table-header-column"><p>Campaign production</p></div>
-      </div>
-    <%= for example <- Changelog.SponsorStyle.all() do %>
-      <div class="grid_table-row">
-        <div class="grid_table-row-column"><p><%= example.type %></p></div>
-        <div class="grid_table-row-column"><p><%= example.name %></p></div>
-        <div class="grid_table-row-column">
-          <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
-        </div>
-      </div>
-    <% end %>
-    </div>
   </div>
 
+  <section class="marketing marketing-section marketing-section--dark">
+  
+    <!-- Hack - to get margin on the header as the first child -->
+    <div style="display: none;"></div>
+  
+    <header class="marketing-section-header">
+      <h3>Slow &amp; steady wins</h3>
+      <h2>Loved by brands, trusted by developers</h2>
+      <p>Every day we influence developers at some of the most innovative tech companies in the world. We speak to the builders, leaders, and planners defining the future of software.</p>
+    </header>
+
+    <%= render("_logo_grid--light.html", assigns) %>
+
+    <footer class="marketing-section-footer">
+      <p>Partner with us to reach software developers all over the world</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large button_large--default" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large button_large--default" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
+  
+  </section>
 </article>

@@ -1,3 +1,19 @@
+.breadcrumbs {
+  font-family: $code;
+  font-size: 14px;
+  
+  &--centered {
+    text-align: center;
+  }
+  
+  a {
+    color: $black;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 .sponsor_story {
   @include wrap(1200px);
 
@@ -18,12 +34,12 @@
   &-header {
     &-breadcrumbs {
       font-family: $code;
-      font-size: 0.8em;
+      font-size: 13px;
       text-align: center;
     }
 
     &-logo {
-      margin: 0 auto;
+      margin: 50px auto;
       max-width: 100%;
     }
 
@@ -37,24 +53,19 @@
 
   &-quote {
     margin: 0 auto;
-    max-width: 940px;
+    padding: 0 10%;
 
     &-body {
       margin-bottom: 2.5em;
       text-align: center;
+      font-size: 1.15em;
 
       p {
         line-height: 1.75em;
       }
 
-      @media (min-width: $tablet) {
-        font-size: 1.25em;
-      }
+      @include breakpoint(tablet) { font-size: 1.25em; }
     }
-  }
-
-  &-examples {
-    margin: $base-spacing*3 auto $base-spacing*2;
   }
 
   &-sponsors {

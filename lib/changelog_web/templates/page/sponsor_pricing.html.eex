@@ -2,6 +2,8 @@
 
 <article class="article">
   <div class="richtext">
+    <div class="breadcrumbs"><%= link "Sponsor", to: Routes.page_path(@conn, :sponsor) %> / Sponsorship Pricing</div>
+
     <h1>Sponsorship Pricing</h1>
     <p>We help brands reach hundreds of thousands of developers every day.</p>
 

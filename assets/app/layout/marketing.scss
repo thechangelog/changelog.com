@@ -50,12 +50,13 @@
     max-width: 980px;
     padding: ($base-spacing * 2.25) 0;
     text-align: center;
-    // background-color: $black;
-    background: linear-gradient(345deg, rgba($black,1) 0%, rgba(#202020,1) 90%);
-    border-radius: 6px;
+    background-color: $black;
+    // background: linear-gradient(345deg, rgba($black,1) 0%, rgba(#202020,1) 90%);
     color: $mostly-white;
     box-shadow: 0px 70px 55px rgba(0,0,0,0.15),0px 30px 30px rgba(0,0,0,0.08);
     // box-shadow: 0 2px 2px rgba(0,0,0,.07), 0 6px 5px rgba(0,0,0,.04), 0 12px 10px rgba(0,0,0,.03), 0 22px 18px rgba(0,0,0,.02), 0 41px 33px rgba(0,0,0,.02), 0 100px 80px rgba(0,0,0,.01);
+
+    @include breakpoint(desktop) { border-radius: 6px; }
 
     p { margin: 0; }
 
@@ -66,10 +67,17 @@
       margin: 0 auto;
     }
     .proof-quote {
-      font-size: 1.3em;
+      font-size: 1.25em;
       line-height: 1.5;
-      max-width: 660px;
+      max-width: 100%;
+      padding: 0 $base-spacing * 1.15;
       margin: ($base-spacing * 1.2) auto;
+
+      @include breakpoint(desktop) {
+        font-size: 1.3em;
+        max-width: 660px;
+        padding: 0;
+      }
     }
     figure {
       max-width: 480px;
@@ -112,6 +120,10 @@
     &> *:last-child { margin-bottom: 0; }
 
     &--no_top_padding { padding-top: 0; }
+
+    &--dark svg {
+      fill: rgba(#fff, .8);
+    }
 
     &--dark,
     &--map,

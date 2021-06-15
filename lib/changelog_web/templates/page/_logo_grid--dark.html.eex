@@ -1,0 +1,77 @@
+<div class="logo_grid logo_grid margin-vertical_large">
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/fastly-dark.svg") %>' alt="Fastly">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linode-dark.svg") %>' alt="Linode">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/launchdarkly-dark.svg") %>' alt="LaunchDarkly">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/grafana-dark.svg") %>' alt="Grafana Cloud">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/render-dark.svg") %>' alt="Render">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/retool-dark.svg") %>' alt="Retool">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cockroachlabs-dark.svg") %>' alt="Cockroach Labs">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/sourcegraph-dark.svg") %>' alt="Sourcegraph">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/teleport-dark.svg") %>' alt="Teleport">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/sentry-dark.svg") %>' alt="Sentry">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/influxdata-dark.svg") %>' alt="InfluxData">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/github-dark.svg") %>' alt="GitHub">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/elastic-dark.svg") %>' alt="Elastic">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/raygun-dark.svg") %>' alt="Raygun">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/rudderstack-dark.svg") %>' alt="RudderStack">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/gitlab-dark.svg") %>' alt="GitLab">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cncf-dark.svg") %>' alt="Cloud Native Computing Foundation">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cloudzero-dark.svg") %>' alt="Cloudzero">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/snowplow-dark.svg") %>' alt="Snowplow">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/cast-dark.svg") %>' alt="Cast">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/algolia-dark.svg") %>' alt="Algolia">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linux-foundation-dark.svg") %>' alt="Linux Foundation">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/datadog-dark.svg") %>' alt="Datadog">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/equinix-metal-dark.svg") %>' alt="Equinix Metal">
+  </div>
+  <div class="logo_grid-item">
+    <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/square-dark.svg") %>' alt="Square">
+  </div>
+</div>
