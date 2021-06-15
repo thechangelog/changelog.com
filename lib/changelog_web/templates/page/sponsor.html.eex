@@ -27,7 +27,7 @@
       <img src='<%= Routes.static_url(@conn, "/images/content/marketing/render-color--on-dark.svg") %>' alt="Render" class="proof-logo" style="max-width: 150px">
       <p class="proof-quote">The value we get from each interaction with Adam Stacoviak (and team) is tremendous. When we talk through goals, ideas, and strategies it's like he's a member of the Render team &mdash; giving every idea he has to help us find ways to truely connect with the developer community.</p>
       <%= for example <- Changelog.SponsorStyle.render() do %>
-      <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+      <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration, theme: "dark") %>
       <% end %>
       <img src='<%= Routes.static_url(@conn, "/images/content/marketing/anurag-goel.jpg") %>' alt="Anurag Goel" class="proof-avatar">
       <p class="proof-title-line-1">Anurag Goel</p>
@@ -136,7 +136,7 @@
       <img src='<%= Routes.static_url(@conn, "/images/content/marketing/sourcegraph-color--on-dark.svg") %>' alt="Sourcegraph" class="proof-logo" style="max-width: 240px">
       <p class="proof-quote">Developers listen to podcasts to learn new things. Podcasts are the <em>perfect medium</em> for us to reach developers, and we consistently speak directly to real people. Changelog has a proven process to discover our goals to form a strategy that gets results. They know their audience <em>very well</em>. They've helped us shape and tell our story in an authentic way.</p>
       <%= for example <- Changelog.SponsorStyle.sourcegraph() do %>
-      <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration) %>
+      <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration, theme: "dark") %>
       <% end %>
       <img src='<%= Routes.static_url(@conn, "/images/content/marketing/beyang-liu.jpg") %>' alt="Beyang Liu" class="proof-avatar">
       <p class="proof-title-line-1">Beyang Liu</p>
