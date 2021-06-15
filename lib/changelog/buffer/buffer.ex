@@ -11,13 +11,15 @@ defmodule Changelog.Buffer do
   @gotime ~w(5734d7fc1b14578733224a70)
   @jsparty ~w(58b47fd78d23761f5f19ca89)
   @practicalai ~w(5ac3c64b3fda312b116ca788)
+  @shipit ~w(60c8d806bcbd6083a38beb28)
 
   @topics %{
     @founderstalk => ~w(startups leadership product-development vc),
     @gotime => ~w(go),
     @brainscience => ~w(brain-science mental-health),
     @jsparty => ~w(javascript node html css npm),
-    @practicalai => ~w(ai datascience machinelearning deeplearning nlp)
+    @practicalai => ~w(ai datascience machinelearning deeplearning nlp),
+    @shipit => ~w(ops kubernetes aws cicd cloud servers serverless)
   }
 
   # this returns a single profile, but they're stored as lists so it actually
@@ -30,6 +32,7 @@ defmodule Changelog.Buffer do
       String.starts_with?(slug, "gotime") -> @gotime
       String.starts_with?(slug, "jsparty") -> @jsparty
       String.starts_with?(slug, "practicalai") -> @practicalai
+      String.starts_with?(slug, "shipit") -> @shipit
       true -> @changelog
     end
   end
