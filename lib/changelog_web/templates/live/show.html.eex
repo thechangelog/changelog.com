@@ -25,7 +25,7 @@
         </div>
 
         <div class="live-info-cta">
-        <%= if !@podcast.slug == "gotime" do %>
+        <%= if @podcast.slug == "gotime" do %>
           <p>Join the discussion in the Gophers <%= link(raw("#gotimefm&nbsp;Slack&nbsp;channel"), to: "https://gophers.slack.com/messages/gotimefm") %></p>
         <% else %>
           <p>Join the discussion in our <%= link(raw("##{slack_channel(@podcast)}&nbsp;Slack&nbsp;channel"), to: Routes.page_path(@conn, :community)) %></p>
