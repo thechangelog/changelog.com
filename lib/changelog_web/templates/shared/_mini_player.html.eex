@@ -1,5 +1,5 @@
 <figure
-  class="mini_player mini_player--dark js-mini-player"
+  class="mini_player mini_player--<%= assigns[:theme] || "light" %> js-mini-player"
   data-title="<%= @title %>"
   data-audio="<%= @audio %>"
   data-duration="<%= @duration %>"
