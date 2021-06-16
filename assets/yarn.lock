@@ -2428,10 +2428,10 @@ glightbox@^3.0.9:
   resolved "https://registry.yarnpkg.com/glightbox/-/glightbox-3.0.9.tgz#3c4e64e1e8b6548dcb7f535fd081aa151644bb9f"
   integrity sha512-XI5xLiwJAdia/WVcb0ftjLZHz0MAXo6D5NDURFlhIBm1dG3e4XxP5DQFVUutOBa5sNjVXwyVXCAC7ab5uttMLg==
 
-glob-parent@^5.1.0:
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.1.tgz"
-  integrity sha512-FnI+VGOpnlGHWZxthPGR+QhR78fuiK0sNLkHQv+bL9fQi57lNNdquIbna/WrfROrolq8GK5Ek6BiMwqL/voRYQ==
+glob-parent@^5.1.0, glob-parent@~5.1.0:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
+  integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
   dependencies:
     is-glob "^4.0.1"
 
@@ -2439,13 +2439,6 @@ glob-parent@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-6.0.0.tgz#f851b59b388e788f3a44d63fab50382b2859c33c"
   integrity sha512-Hdd4287VEJcZXUwv1l8a+vXC1GjOQqXe+VS30w/ypihpcnu9M1n3xeYeJu5CBpeEQj2nAab2xxz28GuA3vp4Ww==
-  dependencies:
-    is-glob "^4.0.1"
-
-glob-parent@~5.1.0:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
-  integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
   dependencies:
     is-glob "^4.0.1"
 
