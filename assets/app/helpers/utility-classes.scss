@@ -9,9 +9,9 @@
   &-right { text-align: right; }
 
   // Transform
-  &-lowercase { text-align: lowercase; }
-  &-uppercase { text-align: uppercase; }
-  &-capitalize { text-align: capitalize; }
+  &-lowercase { text-transform: lowercase; }
+  &-uppercase { text-transform: uppercase; }
+  &-capitalize { text-transform: capitalize; }
 }
 
 //

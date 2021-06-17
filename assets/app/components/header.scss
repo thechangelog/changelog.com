@@ -1,15 +1,19 @@
 // Dark Headers
 body[class*="podcast"],
-body[class*="episode"],
 body[class*="live"],
-.page-page-community,
-.page-page-sponsor,
-.page-topic-show,
+.page-episode-show,
 .page-news_source-show,
-.page-person-subscribe,
-.page-page-weekly,
+.page-page-coc,
+.page-page-community,
 .page-page-nightly,
-.page-page-ten {
+.page-page-sponsor,
+.page-page-ten,
+.page-page-weekly,
+.page-person-news,
+.page-person-podcasts,
+.page-person-show, 
+.page-person-subscribe,
+.page-topic-show {
   .header {
     &-container {
       background: $black;
@@ -55,9 +59,10 @@ body[class*="live"],
   z-index: 99999;
 
   &-container {
-    background-color: rgba($white, .98);
+    background-color: rgba($white, .95);
     border-bottom: 1px solid $light-grey;
     padding: 7px $mobile-spacing;
+    backdrop-filter: blur(3px);
 
     @include breakpoint(tablet) { padding: 13px $base-spacing; }
   }

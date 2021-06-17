@@ -5,7 +5,7 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <p class="marketing-section-header-leadin">Partner with Changelog Media</p>
-      <h1>We reach 85,000 developers&nbsp;weekly</h1>
+      <h1>We reach 85,000 developers weekly</h1>
       <p>350,000 monthly listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> SharedHelpers.comma_separated %> email subscribers&nbsp;&nbsp;•&nbsp;&nbsp;250,000 monthly pageviews</p>
 
       <div class="marketing-button_group" style="--max-width-group: 380px;">
@@ -44,13 +44,13 @@
     <header class="marketing-section-header">
       <h3>Facts tell, stories sell</h3>
       <h2>Connect authentically with developers</h2>
-      <p>Podcasts provide the perfect medium to reach software developers. When you sponsor your audiences' favorite podcasts, you get a chance to speak directly to them on a consistent basis. We have a proven process to discover your goals to develop a strategy that gets results.</p>
-      <p>We know our audience very well. Let us tell your story in a way that gets heard.</p>
+      <p>The primary challenge for brands we work with is being able to authentically communicate their value to developers. It's about more than just telling developers who you are and what you do. What's your story? Why should they give you their attention? We focus on defining and communicating a narrative that informs, entertains, and educates what you bring to the market.</p>
+      <p><%= link "Listen to ad styles we support", to: Routes.page_path(@conn, :sponsor_styles), class: "action-link" %></p>
     </header>
 
     <div class="marketing-section-proof">
       <img src='<%= Routes.static_url(@conn, "/images/content/marketing/sourcegraph-color--on-dark.svg") %>' alt="Sourcegraph" class="proof-logo" style="max-width: 240px">
-      <p class="proof-quote">Developers listen to podcasts to learn new things. Podcasts are the <em>perfect medium</em> for us to reach developers, and we consistently speak directly to real people. Changelog has a proven process to discover our goals to form a strategy that gets results. They know their audience <em>very well</em>. They've helped us shape and tell our story in an authentic way.</p>
+      <p class="proof-quote">Developers listen to podcasts to learn new things. Podcasts are the perfect medium for us to <em>consistently communicate</em> our value to developers all over the world. Changelog has a proven process to discover our goals to form a strategy that gets results. They know their audience <em>very well</em>. They've helped us shape and tell our story in an authentic way.</p>
       <%= for example <- Changelog.SponsorStyle.sourcegraph() do %>
       <%= render(SharedView, "_mini_player.html", title: example.name, audio: example.audio, duration: example.duration, theme: "dark") %>
       <% end %>
@@ -59,6 +59,7 @@
       <p class="proof-title-line-2">Co-founder and CTO of Sourcegraph</p>
     </div>
 
+    <!--
     <div class="marketing-section-grid marketing-section-grid--3">
       <div class="marketing-section-grid-item">
         <h3>Step 1: Determine goals & strategy</h3>
@@ -73,9 +74,10 @@
         <p>Developers follow our content to explore new ideas and discover new tools. We make sure your brand and product are a part of their journey. We're here to guide and help you every step of the way.</p>
       </div>
     </div>
+    -->
 
     <div class="marketing-section-wrap-2">
-      <p><strong>Listen to these real world campaigns from brands who trust us.</strong> In, cup to go flavour coffee caffeine skinny. As crema ristretto cortado, that cappuccino skinny mazagran brewed. Blue mountain grinder percolator eu to go shop, sweet mazagran café au lait latte brewed doppio. Cinnamon that eu mug, to go blue mountain, milk cinnamon.</p>
+      <p><strong>Listen to these real world campaigns from brands who trust us.</strong> Podcasts provide the perfect medium to reach software developers. Imagine what you could do if you could speak directly to developers all over the world on a consistent basis. We have a proven process that uncovers your goals so we can develop a strategy that gets results.</p>
 
       <div class="grid_table">
         <div class="grid_table-header">
@@ -96,6 +98,7 @@
 
   <section class="marketing-section">
     <header class="marketing-section-header">
+      <h3>This and that</h3>
       <h2>Promote your content to developers</h2>
       <p>Reaching developers can be very challenging. They're super aware of marketing and very intelligent. We help brands better communicate with developers by speaking to them, not speaking at them. We cater to their desire to understand more deeply the problem set and use the power of story to help them understand what you offer.</p>
     </header>
@@ -115,8 +118,96 @@
     </div>
   </section>
 
+  <section class="marketing-section marketing-section--dark">
+    <header class="marketing-section-header">
+      <h3>Developers around the world</h3>
+      <h2>Reach developers defining the future of software</h2>
+      <p>Our audience is the builders, leaders, and planners defining the future of software.</p>
+    </header>
+
+    <div class="marketing-section-wrap">
+      <div class="bar_graph">
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 30%; width: 22%;">11%</div>
+          <div class="bar_graph-item-label">CEO / Execs</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 50%; width: 40%;">27%</div>
+          <div class="bar_graph-item-label">Frontend / UI</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">43%</div>
+          <div class="bar_graph-item-label">Backend / Engineer</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 34%; width: 27%;">12%</div>
+          <div class="bar_graph-item-label">CTO / Engineering</div>
+        </div>
+        <div class="bar_graph-item">
+          <div class="bar_graph-item-percentage" style="height: 22%; width: 18%">7%</div>
+          <div class="bar_graph-item-label">Product / Design</div>
+        </div>
+      </div>
+
+      <p class="text-center">Every day we influence developers at some of the most innovative tech companies in the world.</p>
+
+      <div class="logo_grid logo_grid--dark margin-vertical_large" style="grid-row-gap: 40px;">
+        <div class="logo_grid-item">
+          <p>Community Leader</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linux-foundation-light.svg") %>' alt="Linux Foundation">
+        </div>
+        <div class="logo_grid-item">
+          <p>Executive VP</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/microsoft-light.svg") %>' alt="Microsoft">
+        </div>
+        <div class="logo_grid-item">
+          <p>Open Source</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/github-light.svg") %>' alt="GitHub">
+        </div>
+        <div class="logo_grid-item">
+          <p>Data Scientist</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/intel-light.svg") %>' alt="Intel">
+        </div>
+        <div class="logo_grid-item">
+          <p>SRE Engineer</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/google-light.svg") %>' alt="Google">
+        </div>
+        <div class="logo_grid-item">
+          <p>OS Engineer</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/rocky-linux-light.svg") %>' alt="Rocky Linux">
+        </div>
+        <div class="logo_grid-item">
+          <p>React Core</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/facebook-light.svg") %>' alt="Facebook">
+        </div>
+        <div class="logo_grid-item">
+          <p>Distributed Systems</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/uber-light.svg") %>' alt="Uber">
+        </div>
+        <div class="logo_grid-item">
+          <p>Engineering Director</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/slack-light.svg") %>' alt="Slack">
+        </div>
+        <div class="logo_grid-item">
+          <p>JavaScript Developer</p>
+          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/paypal-light.svg") %>' alt="PayPal">
+        </div>
+      </div>
+    </div>
+
+    <footer class="marketing-section-footer">
+      <p>Get in touch if you have more questions or would like to talk with someone.</p>
+      <div class="marketing-button_group" style="--max-width-group: 380px;">
+        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
+        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
+      </div>
+      <p class="button_note">Or call 888-974-CHLG (2454)</p>
+    </footer>
+  </section>
+
   <section class="marketing-section marketing-section--grey">
     <header class="marketing-section-header">
+      <h3>Yes to all the things</h3>
       <h2>Frequently asked questions</h2>
       <p>Reaching developers can be very challenging. They're super aware of marketing and very intelligent. We help brands better communicate with developers by speaking to them, not speaking at them. We cater to their desire to understand more deeply the problem set and use the power of story to help them understand what you offer.</p>
     </header>
@@ -160,89 +251,4 @@
     </footer>
   </section>
 
-  <section class="marketing-section marketing-section--dark">
-    <header class="marketing-section-header">
-      <h2>Who you’ll reach</h2>
-      <p>Our audience is the builders, leaders, and planners defining the future of software.</p>
-    </header>
-
-    <div class="marketing-section-wrap">
-      <div class="bar_graph">
-        <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 30%; width: 22%;">11%</div>
-          <div class="bar_graph-item-label">CEO / Execs</div>
-        </div>
-        <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 50%; width: 40%;">27%</div>
-          <div class="bar_graph-item-label">Frontend / UI</div>
-        </div>
-        <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">43%</div>
-          <div class="bar_graph-item-label">Backend / Engineer</div>
-        </div>
-        <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 34%; width: 27%;">12%</div>
-          <div class="bar_graph-item-label">CTO / Engineering</div>
-        </div>
-        <div class="bar_graph-item">
-          <div class="bar_graph-item-percentage" style="height: 22%; width: 18%">7%</div>
-          <div class="bar_graph-item-label">Product / Design</div>
-        </div>
-      </div>
-
-      <p class="text-center">Every day we influence developers at some of the most innovative tech companies in the world.</p>
-
-      <div class="logo_grid logo_grid--dark margin-vertical_large">
-        <div class="logo_grid-item">
-          <p>Community Leader</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linux-foundation-gray.png") %>' alt="Linux Foundation">
-        </div>
-        <div class="logo_grid-item">
-          <p>Data Scientist</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
-        </div>
-        <div class="logo_grid-item">
-          <p>Executive VP</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/microsoft-gray.png") %>' alt="Micrsoft">
-        </div>
-        <div class="logo_grid-item">
-          <p>SRE Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/google-gray.png") %>' alt="Google">
-        </div>
-        <div class="logo_grid-item">
-          <p>Software Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/ibm-gray.png") %>' alt="IBM">
-        </div>
-        <div class="logo_grid-item">
-          <p>Systems Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/datadog-gray.png") %>' alt="Datadog">
-        </div>
-        <div class="logo_grid-item">
-          <p>React Core</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/facebook-gray.png") %>' alt="Facebook">
-        </div>
-        <div class="logo_grid-item">
-          <p>Distributed Systems</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/uber-gray.png") %>' alt="Uber">
-        </div>
-        <div class="logo_grid-item">
-          <p>Engineering Director</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/slack-gray.png") %>' alt="Slack">
-        </div>
-        <div class="logo_grid-item">
-          <p>JavaScript Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/paypal-gray.png") %>' alt="PayPal">
-        </div>
-      </div>
-    </div>
-
-    <footer class="marketing-section-footer">
-      <p>Get in touch if you have more questions or would like to talk with someone.</p>
-      <div class="marketing-button_group" style="--max-width-group: 380px;">
-        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
-      </div>
-      <p class="button_note">Or call 888-974-CHLG (2454)</p>
-    </footer>
-  </section>
 </article>

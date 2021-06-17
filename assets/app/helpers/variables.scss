@@ -60,6 +60,9 @@ $display-fallback: 'Arial Narrow', sans-serif;
 $display: 'DIN 2014 Narrow', $display-fallback;
 $code: 'Roboto Mono', Courier, monospace;
 
+$content-bold: 'SanaSans-Bold', $content-fallback;
+$content-bold-italic: 'SanaSans-Bold-Italic', $content-fallback;
+
 // Roboto Mono - Weight Key
 // --
 // thin > 100

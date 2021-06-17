@@ -3,7 +3,7 @@
 }
 
 .ten {
-  $ten-alt-black: #0D131A;
+  $black-alt: #131313;
   color: $white;
 
   // Generic section + section heading styles
@@ -11,7 +11,7 @@
     overflow: auto; // force inner margins to expand container
 
     &:nth-child(even) {
-      background-color: $ten-alt-black;
+      background-color: $black-alt;
     }
 
     &-inner {
@@ -26,34 +26,6 @@
         max-width: 100%;
         padding: 0;
       }
-    }
-
-    // Overflow gradient masks
-    &--timeline {
-      position: relative;
-
-      &:before,
-      &:after {
-        content: "";
-        @include position(absolute, 0 null);
-        z-index: 3;
-        width: 3vw;
-        height: 100%;
-        pointer-events: none;
-
-        // @include breakpoint(1170px) {
-        //   width: 150px;
-        // }
-      }
-    }
-
-    &:before {
-      background: linear-gradient(to right, $black, transparent);
-    }
-
-    &:after {
-      background: linear-gradient(to left, $black, transparent);
-      right: 0;
     }
 
     &-heading {
@@ -416,7 +388,7 @@
 
         // Adjust circle fill color to match section color
         .ten-section:nth-child(even) & {
-          background-color: $ten-alt-black;
+          background-color: $black-alt;
         }
       }
 

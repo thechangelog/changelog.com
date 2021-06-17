@@ -1,12 +1,14 @@
 <article class="article">
-  <div class="richtext">
+  <div class="richtext">    
     <h1>Code of Conduct</h1>
-    <h3>Our Pledge</h3>
+
+    <hr>
+    
+    <h2>Our Pledge</h2>
 
     <p>In the interest of fostering an open and welcoming environment, we as leaders of the Changelog.com community pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.</p>
 
-    <h3 id="#our-standards">Our Standards</h3>
-
+    <h2 id="#our-standards">Our Standards</h2>
     <p>Examples of behavior that contributes to creating a positive environment include:</p>
 
     <ul>
@@ -27,28 +29,27 @@
       <li>Other conduct which could reasonably be considered inappropriate in a professional setting</li>
     </ul>
 
-    <h3>Our Responsibilities</h3>
+    <h2>Our Responsibilities</h2>
 
     <p>Changelog leadership is responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.</p>
 
     <p>Changelog leadership has the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.</p>
 
-    <h3>Member Responsibilities</h3>
+    <h2>Member Responsibilities</h2>
 
     <p>All participants in this community are expected to abide by "Our Standards" (defined above). As a member of this community, you have a responsibility in helping us uphold this community's values. Any violations of our Code of Conduct are grounds for removal from membership.</p>
 
-    <h3>Scope</h3>
+    <h2>Scope</h2>
 
-    <p>This Code of Conduct applies both within project spaces and in public spaces when an individual is representing Changelog or its community. Examples of representing Changelog or community include using an official Changelog email address, posting via an official social media account, or acting as an appointed
-  representative at an online or offline event. Representation of the community may be further defined and clarified by Changelog leadership.</p>
+    <p>This Code of Conduct applies both within project spaces and in public spaces when an individual is representing Changelog or its community. Examples of representing Changelog or community include using an official Changelog email address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of the community may be further defined and clarified by Changelog leadership.</p>
 
-    <h3>Enforcement</h3>
+    <h2>Enforcement</h2>
 
     <p>Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting Changelog leadership at <a href="mailto:editors@changelog.com">editors@changelog.com</a>. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. Changelog leadership is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.</p>
 
     <p>Changelog leadership who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of Changelog's leadership.</p>
 
-    <h3>Attribution</h3>
+    <h2>Attribution</h2>
 
     <p>This Code of Conduct is adapted from the <a href="http://contributor-covenant.org">Contributor Covenant</a>, version 1.4, available at <a href="https://www.contributor-covenant.org/version/1/4/code-of-conduct.html">https://www.contributor-covenant.org/version/1/4/code-of-conduct.html</a>.</p>
   </div>

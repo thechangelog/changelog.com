@@ -4,10 +4,10 @@
   @include breakpoint(tablet) {
     display: flex;
     margin: $base-spacing*2.5 0;
+    column-gap: 3px;
   }
 
   &-item {
-    margin: 0 1px 0 0;
 
     @include breakpoint(tablet) {
       display: flex;
@@ -34,17 +34,15 @@
         padding: 1em;
       }
       @include breakpoint(tablet) {
-        border: 1em solid $green;
-        // padding-top: 1.5em;
+        padding-top: 1.5em;
         width: 100% !important;
       }
     }
     &-label {
-      padding: 0.5em 0 2em;
+      padding: .8em 0 1.75em;
 
       @include breakpoint(tablet) {
-        height: 2em;
-        padding: 2em 0 3em;
+        padding: 2em 0 0 0;
       }
     }
   }

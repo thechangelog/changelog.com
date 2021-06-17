@@ -9,6 +9,10 @@
   @include breakpoint(tablet) {
     padding: 60px 0;
   }
+  // Extra padding on the news index
+  .page-news_item-index & {
+    padding: 80px 0;
+  }
 
   & + & {
     padding-top: 0;
