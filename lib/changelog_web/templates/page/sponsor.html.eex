@@ -209,50 +209,6 @@
     </footer>
   </section>
 
-  <section class="marketing-section marketing-section--grey">
-    <header class="marketing-section-header">
-      <h3>Yes to all the things</h3>
-      <h2>Frequently asked questions</h2>
-      <p>Reaching developers can be very challenging. They're super aware of marketing and very intelligent. We help brands better communicate with developers by speaking to them, not speaking at them. We cater to their desire to understand more deeply the problem set and use the power of story to help them understand what you offer.</p>
-    </header>
-    <div class="marketing-section-wrap-2">
-    <div class="marketing-section-grid marketing-section-grid">
-      <div class="marketing-section-grid-item">
-        <h3>Do I just give you a script?</h3>
-        <p>Everything begins by understanding who you are and the goals you're trying to achieve. We have proven workflows to uncover who you are, your goals, what's working, and the aspects of your story developers need to know.</p>
-      </div>
-      <div class="marketing-section-grid-item">
-        <h3>Does production cost extra?</h3>
-        <p>Once we have an understanding of who you are and how we can help you, we'll begin to shape what to say, how to say it, and where. Our team has years of growth and marketing experience to develop a campaign focused on your goals.</p>
-      </div>
-      <div class="marketing-section-grid-item">
-        <h3>How long are the ad spots?</h3>
-        <p>Developers follow our content to explore new ideas and discover new tools. We make sure your brand and product are a part of their journey. We're here to guide and help you every step of the way.</p>
-      </div>
-      <div class="marketing-section-grid-item">
-        <h3>Can I review the ad before it's published?</h3>
-        <p>Everything begins by understanding who you are and the goals you're trying to achieve. We have proven workflows to uncover who you are, your goals, what's working, and the aspects of your story developers need to know.</p>
-      </div>
-    </div>
-    </div>
-
-    <footer class="marketing-section-footer">
-      <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
-      <div class="marketing-button_group" style="--max-width-group: 380px;">
-        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
-      </div>
-      <p class="button_note">Or call 888-974-CHLG (2454)</p>
-    </footer>
-
-    <footer class="marketing-section-footer">
-      <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
-      <div class="marketing-button_group" style="--max-width-group: 380px;">
-        <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
-      </div>
-      <p class="button_note">Or call 888-974-CHLG (2454)</p>
-    </footer>
-  </section>
+  <%#= render("_sponsor_faqs.html", conn: @conn) %>
 
 </article>
