@@ -1,4 +1,4 @@
-<div class="logo_grid logo_grid margin-vertical_large">
+<div class="logo_grid margin-bottom_large">
   <div class="logo_grid-item">
     <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/fastly-dark.svg") %>' alt="Fastly">
   </div>

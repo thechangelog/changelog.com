@@ -34,6 +34,10 @@
       <p class="proof-title-line-2">Founder and CEO of Render</p>
     </div>
 
+    <div class="marketing-section-wrap marketing-content text-center">
+      <p>Trusted by these brands to share their story with developers.</p>
+    </div>
+
     <%= render("_logo_grid--dark.html", assigns) %>
 
     <%= render("_footer_section.html", conn: @conn) %>

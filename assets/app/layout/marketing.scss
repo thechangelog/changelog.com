@@ -175,6 +175,19 @@
       padding: 0 $padding-large;
     }
 
+    // .marketing-section > .marketing-content
+    // used inside something like .marketing-section-wrap
+    // or .marketing-section-wrap-2
+    //
+    // This is different from .marketing-section-content
+    // which needs to be refactored
+    & .marketing-content {
+      p {
+        font-size: 1.125em;
+        @media (min-width: $tablet) { font-size: 1.25em; }
+      }
+    }
+
     &-header,
     &-footer {
       margin: $padding-large auto;
