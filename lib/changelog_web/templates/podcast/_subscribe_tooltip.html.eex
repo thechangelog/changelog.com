@@ -4,13 +4,13 @@
     <ul class="tooltip-list">
       <li class="tooltip-list-heading">Subscribe</li>
     <%= if Podcast.has_feed(@podcast) do %>
-      <li><%= link("Direct (RSS)", to: Routes.feed_path(@conn, :podcast, @podcast.slug), data: [turbolinks: false]) %></li>
+      <li><%= link("Direct (RSS)", to: subscribe_via_feed_url(@conn, @podcast), data: [turbolinks: false]) %></li>
       <%= if @podcast.apple_url do %>
-        <li><%= link("Apple Podcasts", to: @podcast.apple_url) %></li>
+        <li><%= link("Apple Podcasts", to: subscribe_on_apple_url(@podcast)) %></li>
         <li><%= link("Overcast", to: subscribe_on_overcast_url(@podcast)) %></li>
       <% end %>
       <%= if @podcast.spotify_url do %>
-        <li><%= link("Spotify", to: @podcast.spotify_url) %></li>
+        <li><%= link("Spotify", to: subscribe_on_spotify_url(@podcast)) %></li>
       <% end %>
         <li><%= link("Android", to: subscribe_on_android_url(@podcast)) %></li>
       <%= if @podcast.twitter_handle do %>

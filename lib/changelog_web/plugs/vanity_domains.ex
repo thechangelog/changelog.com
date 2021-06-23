@@ -44,10 +44,13 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   end
 
   defp determine_destination(podcast, parts) do
+    # prevents infinite redirects back to vanity domain
+    podcast = Map.delete(podcast, :vanity_domain)
+
     case parts do
-      ["apple"] -> podcast.apple_url
+      ["apple"] -> PodcastView.subscribe_on_apple_url(podcast)
       ["android"] -> PodcastView.subscribe_on_android_url(podcast)
-      ["spotify"] -> podcast.spotify_url
+      ["spotify"] -> PodcastView.subscribe_on_spotify_url(podcast)
       ["overcast"] -> PodcastView.subscribe_on_overcast_url(podcast)
       ["rss"] -> changelog_destination([podcast.slug, "feed"])
       ["email"] -> changelog_destination(["subscribe", podcast.slug])
