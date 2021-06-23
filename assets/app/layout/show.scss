@@ -62,7 +62,7 @@
       .show-header--minimal & img {
         width: 80px;
         min-width: auto;
-        
+
         @include breakpoint(desktop) {
           width: 220px;
         }
@@ -263,6 +263,7 @@
           &--android { background-image: url('/images/icons/podcast_icon-android.png'); }
           &--rss { background-image: url('/images/icons/podcast_icon-rss.png'); }
           &--email { background-image: url('/images/icons/podcast_icon-email.png'); }
+          &--twitter { background-image: url('/images/icons/podcast_icon-twitter.png'); }
         }
       }
     }
