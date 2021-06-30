@@ -95,9 +95,7 @@ defmodule ChangelogWeb.EpisodeView do
 
   def embed_code(episode, podcast) do
     ~s{<audio data-theme="night" data-src="#{url(episode, :embed)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
-      ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{
-        Routes.root_url(Endpoint, :index)
-      }">Changelog.com</a></p>} <>
+      ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{Routes.root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
       ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
 

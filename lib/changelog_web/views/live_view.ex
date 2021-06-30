@@ -66,8 +66,7 @@ defmodule ChangelogWeb.LiveView do
     if episode.youtube_id do
       youtube_url(episode)
     else
-      {:javascript,
-        ~s{alert("The YouTube event for this episode hasn't been created yet.");}}
+      {:javascript, ~s{alert("The YouTube event for this episode hasn't been created yet.");}}
     end
   end
 

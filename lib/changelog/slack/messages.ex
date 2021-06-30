@@ -3,9 +3,7 @@ defmodule Changelog.Slack.Messages do
 
   def new_comment(comment) do
     ~s"""
-    New comment by *#{comment.author.name}* on _#{comment.news_item.headline}_ https://changelog.com/news/#{
-      NewsItemView.hashid(comment.news_item)
-    }
+    New comment by *#{comment.author.name}* on _#{comment.news_item.headline}_ https://changelog.com/news/#{NewsItemView.hashid(comment.news_item)}
     """
   end
 

@@ -46,7 +46,9 @@ defmodule ChangelogWeb.PodcastView do
   def episode_count(podcast), do: Podcast.episode_count(podcast)
   def published_episode_count(podcast), do: Podcast.published_episode_count(podcast)
 
-  def subscribe_on_android_url(%{vanity_domain: vanity}) when not is_nil(vanity), do: vanity <> "/android"
+  def subscribe_on_android_url(%{vanity_domain: vanity}) when not is_nil(vanity),
+    do: vanity <> "/android"
+
   def subscribe_on_android_url(podcast) do
     feed_url_sans_protocol =
       Routes.feed_url(Endpoint, :podcast, podcast.slug)
@@ -55,10 +57,14 @@ defmodule ChangelogWeb.PodcastView do
     "https://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
   end
 
-  def subscribe_on_apple_url(%{vanity_domain: vanity}) when not is_nil(vanity), do: vanity <> "/apple"
+  def subscribe_on_apple_url(%{vanity_domain: vanity}) when not is_nil(vanity),
+    do: vanity <> "/apple"
+
   def subscribe_on_apple_url(podcast), do: podcast.apple_url
 
-  def subscribe_on_overcast_url(%{vanity_domain: vanity}) when not is_nil(vanity), do: vanity <> "/overcast"
+  def subscribe_on_overcast_url(%{vanity_domain: vanity}) when not is_nil(vanity),
+    do: vanity <> "/overcast"
+
   def subscribe_on_overcast_url(podcast) do
     %{"id" => id, "name" => name} =
       Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.apple_url)
@@ -66,7 +72,9 @@ defmodule ChangelogWeb.PodcastView do
     "https://overcast.fm/itunes#{id}/#{name}"
   end
 
-  def subscribe_on_spotify_url(%{vanity_domain: vanity}) when not is_nil(vanity), do: vanity <> "/spotify"
+  def subscribe_on_spotify_url(%{vanity_domain: vanity}) when not is_nil(vanity),
+    do: vanity <> "/spotify"
+
   def subscribe_on_spotify_url(podcast), do: podcast.spotify_url
 
   def subscribe_via_email_path(conn, podcast) do
@@ -77,7 +85,9 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
-  def subscribe_via_feed_url(conn, %{vanity_domain: vanity}) when not is_nil(vanity), do: vanity <> "/feed"
+  def subscribe_via_feed_url(conn, %{vanity_domain: vanity}) when not is_nil(vanity),
+    do: vanity <> "/feed"
+
   def subscribe_via_feed_url(conn, podcast), do: Routes.feed_path(conn, :podcast, podcast.slug)
 
   def status_text(podcast) do

@@ -42,7 +42,8 @@ defmodule Changelog.Slack.CountdownTest do
     test "when the upcoming recording is in session and stream is live" do
       less_than_1 = hours_ago(1)
 
-      response = Countdown.live(%{id: 1, recorded_at: less_than_1, podcast: %{name: "Go Time"}, title: ""})
+      response =
+        Countdown.live(%{id: 1, recorded_at: less_than_1, podcast: %{name: "Go Time"}, title: ""})
 
       assert response.text =~ "It's Go Time!"
       assert response.data == less_than_1

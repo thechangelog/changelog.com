@@ -122,9 +122,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
         # No closer found to turn single into two-item list, closing
         true ->
           {:error,
-           "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{
-             current.repr
-           }, type: #{current.type}: #{inspect(items)}"}
+           "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{current.repr}, type: #{current.type}: #{inspect(items)}"}
       end
 
     case current do
@@ -151,9 +149,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     repr
     |> add_statement(
       {:error,
-       "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{
-         current.repr
-       }, type: #{current.type}: #{inspect(current.items)}"}
+       "Unexpected value '#{token}' while building list, mode: #{current.mode}, facet: #{current.repr}, type: #{current.type}: #{inspect(current.items)}"}
     )
     |> parsed(nil)
   end

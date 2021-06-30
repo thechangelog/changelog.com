@@ -68,7 +68,8 @@ defmodule Changelog.Podcast do
       status: :published,
       welcome: "Your one-stop shop for all Changelog podcasts",
       description: "Your one-stop shop for all Changelog podcasts.",
-      extended_description: "Weekly shows about software development, developer culture, open source, building startups, artificial intelligence, shipping code to production, and the people involved. Yes, we focus on the people. Everything else is an implementation detail.",
+      extended_description:
+        "Weekly shows about software development, developer culture, open source, building startups, artificial intelligence, shipping code to production, and the people involved. Yes, we focus on the people. Everything else is an implementation detail.",
       keywords: "changelog, open source, oss, software, development, developer, hacker",
       apple_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
       spotify_url: "https://open.spotify.com/show/0S1h5K7jm2YvOcM7y1ZMXY",
@@ -149,7 +150,8 @@ defmodule Changelog.Podcast do
 
   def is_master(podcast), do: podcast.slug == "master"
 
-  def is_on_riverside(podcast), do: Enum.member?(~w(practicalai shipit jsparty gotime), podcast.slug)
+  def is_on_riverside(podcast),
+    do: Enum.member?(~w(practicalai shipit jsparty gotime), podcast.slug)
 
   def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published())
 
