@@ -204,7 +204,7 @@ defmodule ChangelogWeb.EpisodeView do
       duration: episode.audio_duration,
       art_url: PodcastView.cover_url(podcast, :small),
       audio_url: audio_url(episode),
-      share_url: url(episode, :show)
+      share_url: share_url(episode)
     }
 
     info =
@@ -235,7 +235,7 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def render("share.json", %{podcast: _podcast, episode: episode}) do
-    url = url(episode, :show)
+    url = share_url(episode)
 
     %{
       url: url,
@@ -245,6 +245,16 @@ defmodule ChangelogWeb.EpisodeView do
       facebook: PublicHelpers.facebook_url(url),
       embed: embed_code(episode)
     }
+  end
+
+  def share_url(episode) do
+    vanity = episode.podcast.vanity_domain
+
+    if vanity do
+      vanity <> "/" <> episode.slug
+    else
+      url(episode, :show)
+    end
   end
 
   def url(episode, action) do
