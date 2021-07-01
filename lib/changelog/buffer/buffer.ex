@@ -93,7 +93,7 @@ defmodule Changelog.Buffer do
     link = Content.news_item_link(item)
 
     # network-wide gets full text
-    Client.create(with_shared(@changelog), text, link: link, photo: image)
+    Client.create(@changelog, text, link: link, photo: image)
 
     # topic-specific profiles get brief version
     for profile <- profiles_for_topics(item.topics) do
