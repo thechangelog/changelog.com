@@ -39,6 +39,7 @@
     <%= if @current_user, do: render("_reply_form.html", Map.merge(assigns, %{parent: @comment})) %>
     <%= if Policies.NewsItemComment.update(@current_user, @comment), do: render("_edit_form.html", Map.merge(assigns, %{comment: @comment})) %>
 
+    <%# TODO: Don't show comment-replies if empty %>
     <section class="comment-replies">
       <%= render_many(@comment.children, __MODULE__, "show.html", Map.merge(assigns, %{as: :comment})) %>
     </section>
