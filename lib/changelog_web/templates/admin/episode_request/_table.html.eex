@@ -11,9 +11,9 @@
       <th>Date</th>
     <%= if !assigns[:person] do %>
       <th>Submitter</th>
+    <% end %>
       <th>Topics</th>
       <th>Guests</th>
-    <% end %>
       <th>Pitch</th>
       <th></th>
     </tr>
@@ -43,55 +43,62 @@
       <td><%= SharedHelpers.truncate(request.guests, 30) %></td>
       <td><%= pitch_preview(request, 60) %></td>
       <td class="center aligned">
-        <div class="ui small basic buttons">
-        <%= if Policies.Admin.EpisodeRequest.show(@current_user, podcast) do %>
-          <%= AdminHelpers.icon_link("eye",
-              to: Routes.admin_podcast_episode_request_path(@conn, :show, podcast.slug, request),
-              title: "View Details") %>
-        <% end %>
+        <div class="ui compact menu">
+          <div class="ui simple dropdown item">
+            Actions
+            <i class="dropdown icon"></i>
 
-        <%= if Policies.Admin.EpisodeRequest.edit(@current_user, podcast) do %>
-          <%= AdminHelpers.icon_link("edit",
-          to: Routes.admin_podcast_episode_request_path(@conn, :edit, podcast.slug, request),
-          title: "Edit Request") %>
-        <% end %>
+            <div class="menu">
+            <%= if Policies.Admin.EpisodeRequest.show(@current_user, podcast) do %>
+              <%= AdminHelpers.dropdown_link("View Details",
+                  to: Routes.admin_podcast_episode_request_path(@conn, :show, podcast.slug, request)) %>
+            <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.Episode.create(@current_user, podcast) do %>
-          <%= AdminHelpers.icon_link("add",
-              to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug, request_id: request.id),
-              title: "Start Episode") %>
-        <% end %>
+            <%= if Policies.Admin.EpisodeRequest.edit(@current_user, podcast) do %>
+              <%= AdminHelpers.dropdown_link("Edit Request",
+              to: Routes.admin_podcast_episode_request_path(@conn, :edit, podcast.slug, request)) %>
+            <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_pendable(request) && Policies.Admin.EpisodeRequest.pend(@current_user, podcast) do %>
-          <%= AdminHelpers.icon_link("hourglass half",
-              to: Routes.admin_podcast_episode_request_path(@conn, :pend, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
-              title: "Maybe Later",
-              method: :put) %>
-        <% end %>
+            <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.Episode.create(@current_user, podcast) do %>
+              <%= AdminHelpers.dropdown_link("Start Episode",
+                  to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug, request_id: request.id)) %>
+            <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.decline(@current_user, podcast) do %>
-          <%= AdminHelpers.icon_link("thumbs down",
-              to: Routes.admin_podcast_episode_request_path(@conn, :decline, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
-              title: "Decline silently",
-              method: :put,
-              data: [confirm: "Decline this request?"]) %>
+            <%= if Changelog.EpisodeRequest.is_pendable(request) && Policies.Admin.EpisodeRequest.pend(@current_user, podcast) do %>
+              <%= AdminHelpers.dropdown_link("Set to Pending",
+                  to: Routes.admin_podcast_episode_request_path(@conn, :pend, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
+                  method: :put) %>
+            <% end %>
 
-          <%= AdminHelpers.modal_icon_button(
-                  ChangelogWeb.Admin.EpisodeRequestView,
-                  "file text",
-                  "Decline with message",
-                  "decline",
-                  %{request: request, conn: @conn, podcast: podcast},
-                  request.id
-                ) %>
-        <% end %>
+            <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.fail(@current_user, podcast) do %>
+              <%= AdminHelpers.dropdown_link("Set to Failed",
+                  to: Routes.admin_podcast_episode_request_path(@conn, :fail, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
+                  title: "Failed",
+                  method: :put, data: [confirm: "Set to failed?"]) %>
+            <% end %>
 
-        <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.fail(@current_user, podcast) do %>
-          <%= AdminHelpers.icon_link("x",
-              to: Routes.admin_podcast_episode_request_path(@conn, :fail, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
-              title: "Failed",
-              method: :put, data: [confirm: "Mark as failed?"]) %>
-        <% end %>
+            <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.decline(@current_user, podcast) do %>
+              <%= AdminHelpers.dropdown_link("Decline Silently",
+                  to: Routes.admin_podcast_episode_request_path(@conn, :decline, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
+                  method: :put,
+                  data: [confirm: "Decline this request?"]) %>
+
+              <%= AdminHelpers.modal_dropdown_link(
+                ChangelogWeb.Admin.EpisodeRequestView,
+                "Decline & Message",
+                "decline",
+                %{request: request, conn: @conn, podcast: podcast},
+                request.id
+              ) %>
+            <% end %>
+
+            <%= if Policies.Admin.EpisodeRequest.delete(@current_user, podcast) do %>
+              <%= AdminHelpers.dropdown_link("Delete",
+                to: Routes.admin_podcast_episode_request_path(@conn, :delete, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
+                method: :delete, data: [confirm: "Delete this request?"]) %>
+            <% end %>
+            </div>
+          </div>
         </div>
       </td>
     </tr>

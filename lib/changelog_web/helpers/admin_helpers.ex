@@ -64,9 +64,26 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     """
   end
 
+  def dropdown_link(text, options) do
+    options = Keyword.put(options, :class, "item")
+    link(text, options)
+  end
+
   def icon_link(icon_name, options) do
     options = Keyword.put(options, :class, "ui icon button")
     link(content_tag(:i, "", class: "#{icon_name} icon"), options)
+  end
+
+  def modal_dropdown_link(view_module, text, modal_name, assigns, id) do
+    modal_id = "#{modal_name}-modal-#{id}"
+    form_id = "#{modal_name}-form-#{id}"
+    assigns = Map.merge(assigns, %{modal_id: modal_id, form_id: form_id})
+    modal = Phoenix.View.render(view_module, "_#{modal_name}_modal.html", assigns)
+
+    ~e"""
+    <a href="javascript:void(0);" class="item js-modal" data-modal="#<%= modal_id %>"><%= text %></a>
+    <%= modal %>
+    """
   end
 
   def modal_icon_button(view_module, icon_name, title, modal_name, assigns, id) do
