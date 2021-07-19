@@ -13,6 +13,7 @@ defmodule ChangelogWeb.RobotsTest do
       |> Plug.Robots.call([])
 
     assert String.contains?(conn.resp_body, "sitemap")
+    assert conn.halted
   end
 
   # test "response for www.changelog.com" do
@@ -21,6 +22,7 @@ defmodule ChangelogWeb.RobotsTest do
   #     |> Plug.Robots.call([])
 
   #   assert String.contains?(conn.resp_body, "disallow: /")
+  #   assert conn.halted
   # end
 
   test "no-op for other paths" do
@@ -29,5 +31,6 @@ defmodule ChangelogWeb.RobotsTest do
       |> Plug.Robots.call([])
 
     assert conn.resp_body == nil
+    refute conn.halted
   end
 end

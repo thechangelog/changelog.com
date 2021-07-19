@@ -4,12 +4,19 @@ defmodule ChangelogWeb.Plug.Robots do
   changelog.com indexed, not its sub-domains or other domains.
   """
   import ChangelogWeb.Plug.Conn
+  import Plug.Conn
 
   def init(opts), do: opts
 
   def call(conn = %{request_path: "/robots.txt"}, _opts) do
-    host = get_host(conn)
-    Plug.Conn.send_resp(conn, 200, response_for_host(host))
+    response =
+      conn
+      |> get_host()
+      |> response_for_host()
+
+    conn
+    |> send_resp(200, response)
+    |> halt()
   end
 
   def call(conn, _opts), do: conn
