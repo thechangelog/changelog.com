@@ -14,21 +14,21 @@ defmodule ChangelogWeb.Plug.Robots do
 
   def call(conn, _opts), do: conn
 
-  # defp response_for_host("changelog.com") do
-  #   """
-  #   sitemap: https://changelog.com/sitemap.xml
-  #   user-agent: *
-  #   disallow: /ad/impress
-  #   disallow: /news/impress
-  #   disallow: /auth/github
-  #   disallow: /auth/twitter
-  #   """
-  # end
-
   defp response_for_host(_host) do
     """
+    sitemap: https://changelog.com/sitemap.xml
     user-agent: *
-    disallow: /
+    disallow: /ad/impress
+    disallow: /news/impress
+    disallow: /auth/github
+    disallow: /auth/twitter
     """
   end
+
+  # defp response_for_host(_host) do
+  #   """
+  #   user-agent: *
+  #   disallow: /
+  #   """
+  # end
 end
