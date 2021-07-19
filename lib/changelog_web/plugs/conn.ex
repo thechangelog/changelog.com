@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Plug.Conn do
       |> String.split(":")
       |> List.first()
 
-    Logger.info(host)
+    Logger.info(conn.req_headers)
     host
   end
 
