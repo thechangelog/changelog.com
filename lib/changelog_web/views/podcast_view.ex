@@ -85,7 +85,7 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
-  def subscribe_via_rss_url(conn, %{vanity_domain: vanity}) when not is_nil(vanity),
+  def subscribe_via_rss_url(_conn, %{vanity_domain: vanity}) when not is_nil(vanity),
     do: vanity <> "/rss"
 
   def subscribe_via_rss_url(conn, podcast), do: Routes.feed_path(conn, :podcast, podcast.slug)
