@@ -29,8 +29,6 @@ config :logger,
   level: :info,
   backends: [:console, Sentry.LoggerBackend]
 
-# config :logger, :console, level: :debug, format: "[$level] $message\n"
-
 config :arc,
   storage_dir: System.get_env("UPLOADS_PATH", "/uploads")
 
