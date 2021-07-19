@@ -4,6 +4,7 @@ defmodule ChangelogWeb.Plug.Conn do
   """
 
   import Plug.Conn
+  require Logger
 
   alias ChangelogWeb.Router
 
@@ -20,12 +21,16 @@ defmodule ChangelogWeb.Plug.Conn do
   Extracts the host from a connection's headers
   """
   def get_host(conn) do
-    conn
-    |> get_req_header("host")
-    |> List.first()
-    |> to_string
-    |> String.split(":")
-    |> List.first()
+    host =
+      conn
+      |> get_req_header("host")
+      |> List.first()
+      |> to_string
+      |> String.split(":")
+      |> List.first()
+
+    Logger.info(host)
+    host
   end
 
   @doc """
