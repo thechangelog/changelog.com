@@ -10,6 +10,7 @@ defmodule ChangelogWeb.Router do
 
   # should be used before :browser pipeline to avoid auth and cache headers
   pipeline :public do
+    plug Plug.Robots
     plug Plug.LoadPodcasts
     plug Plug.Redirects
     plug Plug.VanityDomains

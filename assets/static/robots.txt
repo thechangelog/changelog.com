@@ -1,6 +1,0 @@
-sitemap: https://changelog.com/sitemap.xml
-user-agent: *
-disallow: /ad/impress
-disallow: /news/impress
-disallow: /auth/github
-disallow: /auth/twitter
