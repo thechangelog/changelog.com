@@ -42,41 +42,52 @@
           </tr>
           <tr>
             <td>Publish Time</td>
-            <td><%= TimeView.ts(@changeset.data.published_at) %></td>
+            <td>
+              <%= TimeView.ts(@changeset.data.published_at) %>
+            <%= if SharedHelpers.is_past?(@changeset.data.published_at) do %>
+              <div class="ui basic yellow left pointing label">in the past ⚠️</div>
+            <% end %>
+            </td>
           </tr>
         <%= if !Enum.any?(@changeset.data.episode_hosts) do %>
           <tr>
-            <td>Data Warning</td>
+            <td>Data Note ⚠️</td>
             <td>No hosts for this episode?</td>
           </tr>
         <% end %>
         <%= if !Enum.any?(@changeset.data.episode_guests) do %>
           <tr>
-            <td>Data Warning</td>
+            <td>Data Note ⚠️</td>
             <td>No guests for this episode?</td>
           </tr>
         <% end %>
         <%= if !Enum.any?(@changeset.data.episode_sponsors) do %>
           <tr>
-            <td>Data Warning</td>
+            <td>Data Note ⚠️</td>
             <td>No sponsors for this episode?</td>
           </tr>
         <% end %>
         <%= if !Enum.any?(@changeset.data.episode_topics) do %>
           <tr>
-            <td>Data Warning</td>
+            <td>Data Note ⚠️</td>
             <td>No topics for this episode?</td>
           </tr>
         <% end %>
         <%= if Changelog.StringKit.blank?(@changeset.data.notes) do %>
           <tr>
-            <td>Data Warning</td>
+            <td>Data Note ⚠️</td>
             <td>No notes for this episode?</td>
           </tr>
         <% end %>
-        <%= if @changeset.data.audio_duration <= @changeset.data.plusplus_duration do %>
+        <%= if !@changeset.data.plusplus_file do %>
           <tr>
-            <td>Audio Warning</td>
+            <td>Audio Note ⚠️</td>
+            <td>No ++ file for this episode?</td>
+          </tr>
+        <% end %>
+        <%= if @changeset.data.plusplus_file && (@changeset.data.audio_duration <= @changeset.data.plusplus_duration) do %>
+          <tr>
+            <td>Audio Note ⚠️</td>
             <td>The ++ file is longer (or same length as) the public file</td>
           </tr>
         <% end %>
