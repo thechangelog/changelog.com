@@ -20,14 +20,20 @@ defmodule ChangelogWeb.Meta.Image do
 
   def twitter_image(assigns), do: assigns |> get_twitter()
 
+  # a specific podcast
   defp get_fb(%{podcast: podcast}), do: podcast_image(podcast)
 
+  # the podcasts index
+  defp get_fb(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_image()
+
+  # # a specific news item with an image
   defp get_fb(%{view_module: NewsItemView, item: item = %{image: img}}) when is_map(img),
     do: NewsItemView.image_url(item, :original)
 
   defp get_fb(%{view_module: PageView, view_template: "ten.html"}),
     do: static_image("/images/content/ten/ten-year-social.jpg")
 
+  # a specific post
   defp get_fb(%{view_module: PostView, post: post}) do
     cond do
       post.image -> post_image(post)
@@ -48,9 +54,13 @@ defmodule ChangelogWeb.Meta.Image do
   defp get_twitter(%{view_module: PageView, view_template: "ten.html"}),
     do: static_image("/images/content/ten/ten-year-social.jpg")
 
-  defp get_twitter(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_image()
+  # a specific podcast
   defp get_twitter(%{podcast: podcast}), do: podcast_image(podcast)
 
+  # the podcasts index
+  defp get_twitter(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_image()
+
+  # a specific post
   defp get_twitter(%{view_module: PostView, post: post}) do
     cond do
       post.image -> post_image(post)
@@ -59,6 +69,7 @@ defmodule ChangelogWeb.Meta.Image do
     end
   end
 
+  # a specific news item
   defp get_twitter(%{view_module: NewsItemView, item: item}) do
     cond do
       item.author -> person_image(item.author)
@@ -68,18 +79,23 @@ defmodule ChangelogWeb.Meta.Image do
     end
   end
 
+  # a specific news source
   defp get_twitter(%{view_module: NewsSourceView, source: source}), do: source_image(source)
 
+  # a specific person's profile
   defp get_twitter(%{view_module: PersonView, person: person}) when is_map(person),
     do: person_image(person)
 
+  # a specific topic
   defp get_twitter(%{view_module: TopicView, topic: topic}), do: topic_image(topic)
+
+  # everything else
   defp get_twitter(_), do: twitter_summary_image()
 
   defp item_type_image(item), do: static_image("/images/defaults/type-#{item.type}.png")
   defp person_image(person), do: PersonView.avatar_url(person, :large)
   defp podcast_image(podcast), do: static_image("/images/share/twitter-#{podcast.slug}.png")
-  defp podcasts_image, do: static_image("/images/share/twitter-all-podcasts.png")
+  defp podcasts_image, do: static_image("/images/share/all-podcasts.png")
   defp post_image(post), do: PostView.image_url(post, :large)
   defp source_image(source), do: NewsSourceView.icon_url(source, :large)
   defp static_image(path), do: Routes.static_url(Endpoint, path)
