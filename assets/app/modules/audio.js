@@ -100,11 +100,13 @@ export default class ChangelogAudio {
   }
 
   changeSpeed() {
-    if (this.audio.playbackRate == 1.75) {
+    if (this.audio.playbackRate == 2.0) {
       this.audio.playbackRate = 1;
     } else {
       this.audio.playbackRate += 0.25;
     }
+
+    return this.audio.playbackRate;
 }
 
   run(eventName, fn) {

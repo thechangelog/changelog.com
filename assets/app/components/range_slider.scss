@@ -152,7 +152,7 @@ $range-label-width: 60px !default;
         text-align: left;
       }
 
-      & > b {
+      & > b, & > button {
         color: $green;
         font-weight: 400;
       }

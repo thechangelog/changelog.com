@@ -46,6 +46,7 @@ export default class OnsitePlayer {
     this.copyUrlButton = this.container.find(".js-player-copy-url");
     this.closeButton = this.container.find(".js-player-close");
     this.hideButton = this.container.find(".js-player-hide");
+    this.speedButton = this.container.find(".js-player-speed");
   }
 
   attachEvents() {
@@ -57,6 +58,7 @@ export default class OnsitePlayer {
     this.copyUrlButton.on("click", event => { this.copyUrlToClipboard(event); });
     this.closeButton.handle("click", _ => { this.close(); });
     this.hideButton.handle("click", _ => { this.hide(); });
+    this.speedButton.handle("click", _ => { this.changeSpeed(); });
     this.audio.onTimeUpdate(event => { this.updateCopyUrlTime(); this.trackTime(); });
     this.audio.onPlay(event => { this.playUI(); });
     this.audio.onPause(event => { this.pauseUI(); });
@@ -137,7 +139,8 @@ export default class OnsitePlayer {
   }
 
   changeSpeed() {
-    this.audio.changeSpeed();
+    let newSpeed = this.audio.changeSpeed();
+    this.speedButton.html(`[${newSpeed }X]`);
   }
 
   changeVolumeBy(to) {
