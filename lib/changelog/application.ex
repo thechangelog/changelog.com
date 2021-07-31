@@ -29,6 +29,13 @@ defmodule Changelog.Application do
       {Oban, oban_config()}
     ]
 
+    # Only attach the telemetry logger when we aren't in an IEx shell
+    unless Code.ensure_loaded?(IEx) && IEx.started?() do
+      Oban.Telemetry.attach_default_logger(:info)
+
+      Changelog.ObanReporter.attach()
+    end
+
     Supervisor.start_link(children, strategy: :one_for_one, name: Changelog.Supervisor)
   end
 
