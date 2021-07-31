@@ -18,7 +18,7 @@ config :changelog, Changelog.Repo,
   database: System.get_env("DB_NAME", "changelog_test"),
   hostname: System.get_env("DB_HOST", "localhost"),
   password: System.get_env("DB_PASS", "postgres"),
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool: Ecto.Adapters.SQL.Sandbox,
   username: System.get_env("DB_USER", "postgres")
 
 config :changelog, Oban,
