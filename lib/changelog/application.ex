@@ -24,16 +24,12 @@ defmodule Changelog.Application do
         global_ttl: :timer.minutes(5),
         touch_on_read: false
       ),
-      Changelog.Scheduler,
       Changelog.EpisodeTracker,
       Changelog.Metacasts.Filterer.Cache,
       {Oban, oban_config()}
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Changelog.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(children, strategy: :one_for_one, name: Changelog.Supervisor)
   end
 
   defp oban_config do
