@@ -59,7 +59,7 @@ config :changelog, Oban,
       crons: [
         {"0 4 * * *", Changelog.ObanWorkers.StatsProcessor},
         {"0 3 * * *", Changelog.Slack.Tasks},
-        {"* * * * *", Changelog.NewsQueue}
+        {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
       ]
     }
   ]
