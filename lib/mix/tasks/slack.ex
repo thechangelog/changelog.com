@@ -5,6 +5,6 @@ defmodule Mix.Tasks.Changelog.Slack do
 
   def run(_) do
     Mix.Task.run("app.start")
-    Changelog.Slack.Tasks.import_member_ids()
+    Changelog.ObanWorkers.SlackImporter.perform(%Oban.Job{})
   end
 end

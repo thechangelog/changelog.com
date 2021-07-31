@@ -55,13 +55,12 @@ config :changelog, Oban,
     Oban.Plugins.Pruner,
     Oban.Plugins.Stager,
     {Oban.Plugins.Cron,
-    timezone: "US/Central",
-      crons: [
-        {"0 4 * * *", Changelog.ObanWorkers.StatsProcessor},
-        {"0 3 * * *", Changelog.Slack.Tasks},
-        {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
-      ]
-    }
+     timezone: "US/Central",
+     crons: [
+       {"0 4 * * *", Changelog.ObanWorkers.StatsProcessor},
+       {"0 3 * * *", Changelog.ObanWorkers.SlackImporter},
+       {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
+     ]}
   ]
 
 config :changelog, Changelog.PromEx,
