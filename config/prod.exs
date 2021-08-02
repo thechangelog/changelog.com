@@ -56,7 +56,7 @@ config :changelog, Oban,
     Oban.Plugins.Stager,
     {Oban.Plugins.Cron,
      timezone: "US/Central",
-     crons: [
+     crontab: [
        {"0 4 * * *", Changelog.ObanWorkers.StatsProcessor},
        {"0 3 * * *", Changelog.ObanWorkers.SlackImporter},
        {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
