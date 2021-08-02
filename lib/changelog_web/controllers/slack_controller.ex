@@ -2,7 +2,8 @@ defmodule ChangelogWeb.SlackController do
   use ChangelogWeb, :controller
 
   alias Changelog.Episode
-  alias Changelog.Slack.{Client, Countdown, Messages, Tasks}
+  alias Changelog.Slack.{Client, Countdown, Messages}
+  alias Changelog.ObanWorkers.SlackImporter
 
   require Logger
 
@@ -32,7 +33,7 @@ defmodule ChangelogWeb.SlackController do
     id = Map.get(member, "id")
     email = get_in(member, ["profile", "email"]) || ""
     Client.im(id, Messages.welcome())
-    Tasks.import_member_id(id, email)
+    SlackImporter.import_member_id(id, email)
     json(conn, %{})
   end
 

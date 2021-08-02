@@ -22,6 +22,5 @@ config :changelog, Changelog.Repo,
   username: System.get_env("DB_USER", "postgres")
 
 config :changelog, Oban,
-  crontab: false,
   queues: false,
   plugins: false

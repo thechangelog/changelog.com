@@ -40,8 +40,8 @@ config :changelog,
 
 config :changelog, Oban,
   repo: Changelog.Repo,
-  plugins: [Oban.Plugins.Pruner, Oban.Plugins.Stager],
-  queues: [comment_notifier: 10]
+  queues: [comment_notifier: 10, scheduled: 5],
+  plugins: [Oban.Plugins.Pruner, Oban.Plugins.Stager]
 
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
 

@@ -41,7 +41,7 @@ defmodule Changelog.Mixfile do
       {:plug_cowboy, "~> 2.0"},
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
-      {:oban, "~> 2.7.2"},
+      {:oban, "~> 2.8"},
       {:prom_ex, "~> 1.3.0"},
       {:unplug, "~> 0.2.1"},
       {:postgrex, ">= 0.0.0"},
@@ -66,7 +66,6 @@ defmodule Changelog.Mixfile do
       {:nimble_csv, "~> 1.1.0"},
       {:sweet_xml, "~> 0.6"},
       {:user_agent_parser, "~> 1.0"},
-      {:quantum, ">= 2.1.0"},
       {:oauth, github: "tim/erlang-oauth"},
       {:ueberauth_github, "~> 0.4"},
       {:ueberauth_twitter, github: "jerodsanto/ueberauth_twitter"},

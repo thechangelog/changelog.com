@@ -50,13 +50,17 @@ config :changelog, Changelog.Mailer,
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
-config :changelog, Changelog.Scheduler,
-  global: true,
-  timezone: "US/Central",
-  jobs: [
-    {"0 4 * * *", {Changelog.Stats, :process, []}},
-    {"0 3 * * *", {Changelog.Slack.Tasks, :import_member_ids, []}},
-    {"* * * * *", {Changelog.NewsQueue, :publish, []}}
+config :changelog, Oban,
+  plugins: [
+    Oban.Plugins.Pruner,
+    Oban.Plugins.Stager,
+    {Oban.Plugins.Cron,
+     timezone: "US/Central",
+     crons: [
+       {"0 4 * * *", Changelog.ObanWorkers.StatsProcessor},
+       {"0 3 * * *", Changelog.ObanWorkers.SlackImporter},
+       {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
+     ]}
   ]
 
 config :changelog, Changelog.PromEx,

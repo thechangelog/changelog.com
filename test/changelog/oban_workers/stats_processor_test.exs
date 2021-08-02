@@ -1,9 +1,11 @@
-defmodule ChangelogStatsTest do
+defmodule Changelog.ObanWorkers.StatsProcessorTest do
   use Changelog.SchemaCase
+  use Oban.Testing, repo: Changelog.Repo
 
   import Mock
 
   alias Changelog.{Stats, Episode, Podcast, Repo}
+  alias Changelog.ObanWorkers.StatsProcessor
 
   defp log_fixtures(date) do
     file_dir = "#{fixtures_path()}/logs/#{date}"
@@ -11,14 +13,30 @@ defmodule ChangelogStatsTest do
     Enum.map(files, fn file -> File.read!("#{file_dir}/#{file}") end)
   end
 
-  describe "process" do
+  describe "perform/1" do
+    test "inserting jobs for each public podcast and date" do
+      podcast1 = insert(:podcast)
+      podcast2 = insert(:podcast)
+
+      {:ok, jobs} = perform_job(StatsProcessor, %{})
+
+      assert length(jobs) == 4
+
+      args = Enum.map(jobs, & &1.args)
+
+      assert %{"date" => iso_ago(1), "podcast_id" => podcast1.id} in args
+      assert %{"date" => iso_ago(2), "podcast_id" => podcast1.id} in args
+      assert %{"date" => iso_ago(1), "podcast_id" => podcast2.id} in args
+      assert %{"date" => iso_ago(2), "podcast_id" => podcast2.id} in args
+    end
+
     test_with_mock "it processes known logs from 2016-10-10", Stats.S3,
       get_logs: fn date, _slug -> log_fixtures(date) end do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "223", audio_bytes: 80_743_303)
 
-      stats = Stats.process(~D[2016-10-10], podcast)
+      {:ok, stats} = perform_job(StatsProcessor, %{date: ~D[2016-10-10], podcast_id: podcast.id})
 
       assert length(stats) == 1
       stat = get_stat(stats, e1)
@@ -51,7 +69,8 @@ defmodule ChangelogStatsTest do
       e15 = insert(:episode, podcast: podcast, slug: "222", audio_bytes: 81_563_934)
       e16 = insert(:episode, podcast: podcast, slug: "223", audio_bytes: 80_743_303)
 
-      stats = Stats.process(~D[2016-10-11], podcast)
+      {:ok, stats} = perform_job(StatsProcessor, %{date: ~D[2016-10-11], podcast_id: podcast.id})
+
       assert length(stats) == 16
 
       stat = get_stat(stats, e1)
@@ -136,6 +155,12 @@ defmodule ChangelogStatsTest do
 
       assert refreshed_download_count(podcast) == 41.16
       assert refreshed_reach_count(podcast) == 45
+    end
+
+    defp iso_ago(days) do
+      Date.utc_today()
+      |> Date.add(-days)
+      |> Date.to_iso8601()
     end
 
     defp get_stat(stats, episode) do
