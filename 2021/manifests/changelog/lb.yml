@@ -32,6 +32,38 @@ spec:
         - practicalai.fm
       secretName: practicalai-fm-acme-tls
   rules:
+    # Quick fix for when Fastly goes down: https://twitter.com/gerhardlazu/status/1402213916462227456
+    # Cover at length in https://changelog.com/shipit/10
+    # - host: "changelog.com"
+    #   http:
+    #     paths:
+    #       - pathType: Prefix
+    #         path: "/"
+    #         backend:
+    #           service:
+    #             name: app
+    #             port:
+    #               number: 4000
+    # - host: "cdn.changelog.com"
+    #   http:
+    #     paths:
+    #       - pathType: Prefix
+    #         path: "/"
+    #         backend:
+    #           service:
+    #             name: app
+    #             port:
+    #               number: 4000
+    # - host: "www.changelog.com"
+    #   http:
+    #     paths:
+    #       - pathType: Prefix
+    #         path: "/"
+    #         backend:
+    #           service:
+    #             name: app
+    #             port:
+    #               number: 4000
     - host: "21.changelog.com"
       http:
         paths:
