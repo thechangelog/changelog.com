@@ -21,9 +21,9 @@ defmodule ChangelogWeb.PodcastView do
       |> String.split("?")
       |> List.first()
 
-    arc_dir = Application.get_env(:arc, :storage_dir)
+    waffle_dir = Application.get_env(:waffle, :storage_dir)
 
-    if String.starts_with?(path, arc_dir) do
+    if String.starts_with?(path, waffle_dir) do
       path
     else
       Application.app_dir(:changelog, "priv#{path}")

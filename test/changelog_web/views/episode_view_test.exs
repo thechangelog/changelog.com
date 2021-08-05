@@ -7,19 +7,19 @@ defmodule ChangelogWeb.EpisodeViewTest do
 
   describe "audio_local_path" do
     test "is a path on the local file system with relative storage dir" do
-      orig_env = Application.get_env(:arc, :storage_dir)
-      Application.put_env(:arc, :storage_dir, "priv/static")
+      orig_env = Application.get_env(:waffle, :storage_dir)
+      Application.put_env(:waffle, :storage_dir, "priv/static")
       episode = insert(:published_episode) |> stub_audio_file
       assert audio_local_path(episode) =~ ~r{^priv/static}
-      Application.put_env(:arc, :storage_dir, orig_env)
+      Application.put_env(:waffle, :storage_dir, orig_env)
     end
 
     test "is a path on the local file system with absolute storage dir" do
-      orig_env = Application.get_env(:arc, :storage_dir)
-      Application.put_env(:arc, :storage_dir, "/test")
+      orig_env = Application.get_env(:waffle, :storage_dir)
+      Application.put_env(:waffle, :storage_dir, "/test")
       episode = insert(:published_episode) |> stub_audio_file
       assert audio_local_path(episode) =~ ~r{^/test/}
-      Application.put_env(:arc, :storage_dir, orig_env)
+      Application.put_env(:waffle, :storage_dir, orig_env)
     end
   end
 

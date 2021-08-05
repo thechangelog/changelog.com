@@ -29,7 +29,7 @@ config :logger,
   level: :info,
   backends: [:console, Sentry.LoggerBackend]
 
-config :arc,
+config :waffle,
   storage_dir: System.get_env("UPLOADS_PATH", "/uploads")
 
 config :changelog, Changelog.Repo,
