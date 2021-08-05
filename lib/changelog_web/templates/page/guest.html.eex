@@ -18,11 +18,7 @@
       <li>A pair of headphones (over-the-ear preferred) 🎧</li>
       <li>A quiet place to record 🤫</li>
       <li>A reliable internet connection 🔌</li>
-    <%= if Podcast.is_on_riverside(@podcast) do %>
-      <li>A Chromium-based browser such as <a href="https://brave.com" title="Download the Brave Browser">Brave</a> or <a href="https://www.google.com/chrome/index.html" title="Download Google Chrome">Google Chrome</a> 📞</li>
-    <% else %>
-      <li>A <a href="https://zoom.us/">Zoom</a> client 📞</li>
-    <% end %>
+      <li>A Chromium-based browser such as <a href="https://brave.com/cha913" title="Download the Brave Browser">Brave</a> or <a href="https://www.google.com/chrome/index.html" title="Download Google Chrome">Google Chrome</a> 📞</li>
     </ul>
 
     <h4 id="local-recording">Creating a local recording</h4>
@@ -34,12 +30,7 @@
     <h3 id="during">During recording</h3>
 
     <p>
-    <%= if Podcast.is_on_riverside(@podcast) do %>
-      Join Riverside via the link we provided you at the scheduled time.
-    <% else %>
-      Join the Zoom meeting at the scheduled time.
-    <% end %>
-      Here are some <em>tips and tricks</em> for a great show:
+      Join Riverside via the link we provided you at the scheduled time. Here are some <em>tips and tricks</em> for a great show:
     </p>
 
     <ul>

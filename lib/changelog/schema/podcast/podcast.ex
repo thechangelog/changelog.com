@@ -150,9 +150,6 @@ defmodule Changelog.Podcast do
 
   def is_master(podcast), do: podcast.slug == "master"
 
-  def is_on_riverside(podcast),
-    do: Enum.member?(~w(practicalai shipit jsparty gotime), podcast.slug)
-
   def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published())
 
   def published_episode_count(podcast) do
