@@ -1,15 +1,15 @@
 defmodule Changelog.File do
   defmacro __using__(types) do
     quote do
-      use Arc.Definition
-      use Arc.Ecto.Definition
+      use Waffle.Definition
+      use Waffle.Ecto.Definition
 
-      def __storage, do: Arc.Storage.Local
+      def __storage, do: Waffle.Storage.Local
 
       def default_url(_version, _scope), do: "/images/defaults/black.png"
 
       def expanded_dir(path) do
-        Application.fetch_env!(:arc, :storage_dir) <> path
+        Application.fetch_env!(:waffle, :storage_dir) <> path
       end
 
       def validate({file, _}) do

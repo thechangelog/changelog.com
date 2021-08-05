@@ -49,7 +49,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :arc,
+config :waffle,
   storage_dir: System.get_env("UPLOADS_PATH", "priv/uploads")
 
 config :phoenix, :json_library, Jason

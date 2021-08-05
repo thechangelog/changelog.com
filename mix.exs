@@ -53,7 +53,7 @@ defmodule Changelog.Mixfile do
       {:html_sanitize_ex, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},
-      {:arc_ecto, "~> 0.11.1"},
+      {:waffle_ecto, "~> 0.0"},
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
       {:bamboo_phoenix, "~> 1.0.0"},
