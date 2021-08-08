@@ -23,6 +23,13 @@ lke-keel: | $(KEEL_DIR) lke-ctx $(HELM)
 	  --set ingress.annotations."kubernetes\.io/ingress\.class"=nginx \
 	  --set ingress.hosts[0].host=keel21.changelog.com \
 	  --set ingress.hosts[0].paths[0]=/
+	export PUBLIC_IPv4=$(INGRESS_NGINX_SERVICE_EXTERNAL_IP) \
+	; export NAMESPACE=keel \
+	; export DNS_TTL=$(DNS_TTL) \
+	; cat $(CURDIR)/manifests/keel.yml \
+	| $(ENVSUBST) -no-unset \
+	| $(KUBECTL) $(K_CMD) --filename -
+
 lke-bootstrap:: | lke-keel
 
 .PHONY: releases-keel

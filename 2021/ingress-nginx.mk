@@ -25,6 +25,16 @@ lke-ingress-nginx: | $(INGRESS_NGINX_DIR) lke-ctx $(HELM)
 	$(KUBECTL) $(K_CMD) --filename $(CURDIR)/manifests/ingress-nginx
 lke-bootstrap:: | lke-ingress-nginx
 
+ifeq (true,$(INGRESS_NGINX_SERVICE))
+define INGRESS_NGINX_SERVICE_EXTERNAL_IP
+$$($(KUBECTL) get service ingress-nginx-controller \
+	--namespace ingress-nginx \
+	--output=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+endef
+else
+INGRESS_NGINX_SERVICE_EXTERNAL_IP = 127.0.0.1
+endif
+
 .PHONY: releases-ingress-nginx
 releases-ingress-nginx:
 	$(OPEN) $(INGRESS_NGINX_RELEASES)

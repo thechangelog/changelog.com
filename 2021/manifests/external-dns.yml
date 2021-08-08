@@ -25,8 +25,6 @@ spec:
         image: k8s.gcr.io/external-dns/external-dns:v0.8.0
         args:
         - --provider=dnsimple
-        - --source=service
-        - --source=ingress
         - --source=crd
         - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
         - --crd-source-kind=DNSEndpoint
@@ -58,24 +56,6 @@ metadata:
   name: external-dns
   namespace: external-dns
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - services
-  - endpoints
-  - pods
-  verbs:
-  - get
-  - watch
-  - list
-- apiGroups:
-  - extensions
-  resources:
-  - ingresses
-  verbs:
-  - get
-  - watch
-  - list
 - apiGroups:
   - ""
   resources:

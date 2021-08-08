@@ -12,6 +12,8 @@ NORMAL := $(shell tput sgr0)
 
 MANIFESTS := $(CURDIR)/manifests
 
+DNS_TTL ?= 600
+
 K_CMD ?= apply
 # Dump all objects (do not apply) if DEBUG variable is set
 ifneq (,$(DEBUG))

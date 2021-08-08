@@ -26,8 +26,6 @@ spec:
         image: #@ data.values.image
         args:
         - --provider=dnsimple #! Not configurable since the DNSimple API token secret is hard-coded
-        - --source=service
-        - --source=ingress
         - --source=crd
         - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
         - --crd-source-kind=DNSEndpoint
@@ -60,12 +58,6 @@ metadata:
   namespace: #@ data.values.namespace
 rules:
 - apiGroups: [""]
-  resources: ["services","endpoints","pods"]
-  verbs: ["get","watch","list"]
-- apiGroups: ["extensions"]
-  resources: ["ingresses"]
-  verbs: ["get","watch","list"]
-- apiGroups: [""]
   resources: ["nodes"]
   verbs: ["list"]
 - apiGroups: ["externaldns.k8s.io"]
@@ -88,23 +80,3 @@ subjects:
 - kind: ServiceAccount
   name: external-dns
   namespace: #@ data.values.namespace
-#! ---
-#! Only A & CNAME records are supported for now:
-#! https://github.com/kubernetes-sigs/external-dns/issues/1923#issue-787125385
-#! 🤔 https://github.com/kubernetes-sigs/external-dns/pull/1887#issuecomment-786489995
-#! 🧐 https://github.com/octodns/octodns
-#!
-#! What we really need is AAAA support. Leaving this commented for now, with
-#! the hope that it won't be too long now.
-#!
-#! apiVersion: externaldns.k8s.io/v1alpha1
-#! kind: DNSEndpoint
-#! metadata:
-#!   name: 21.changelog.com
-#!   namespace: #@ data.values.namespace
-#! spec:
-#!   endpoints:
-#!   - dnsName: 21.changelog.com
-#!     recordTTL: 60
-#!     recordType: AAAA
-#!     targets: IPv6A,IPv6B
