@@ -29,7 +29,7 @@ $(CURL):
 endif
 
 K9S_RELEASES := https://github.com/derailed/k9s/releases
-K9S_VERSION := 0.24.9
+K9S_VERSION := 0.24.15
 K9S_BIN_DIR := $(LOCAL_BIN)/k9s-$(K9S_VERSION)-$(platform)-x86_64
 K9S_URL := $(K9S_RELEASES)/download/v$(K9S_VERSION)/k9s_$(platform)_x86_64.tar.gz
 K9S := $(K9S_BIN_DIR)/k9s
@@ -98,7 +98,7 @@ env::
 	@mkdir -p $(XDG_CONFIG_HOME)/lpass
 
 HELM_RELEASES := https://github.com/helm/helm/releases
-HELM_VERSION := 3.5.4
+HELM_VERSION := 3.6.3
 HELM_BIN_DIR := helm-v$(HELM_VERSION)-$(platform)-amd64
 HELM_URL := https://get.helm.sh/$(HELM_BIN_DIR).tar.gz
 HELM := $(LOCAL_BIN)/$(HELM_BIN_DIR)/$(platform)-amd64/helm
