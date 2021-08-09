@@ -21,16 +21,12 @@ defmodule ChangelogWeb.Plug.Conn do
   Extracts the host from a connection's headers
   """
   def get_host(conn) do
-    host =
-      conn
-      |> get_req_header("host")
-      |> List.first()
-      |> to_string()
-      |> String.split(":")
-      |> List.first()
-
-    Logger.info("Host detected: #{host}")
-    host
+    conn
+    |> get_req_header("host")
+    |> List.first()
+    |> to_string()
+    |> String.split(":")
+    |> List.first()
   end
 
   @doc """

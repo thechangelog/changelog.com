@@ -16,14 +16,14 @@ defmodule ChangelogWeb.RobotsTest do
     assert conn.halted
   end
 
-  # test "response for www.changelog.com" do
-  #   conn =
-  #     build_conn_with_host_and_path("changelog.com", "/robots.txt")
-  #     |> Plug.Robots.call([])
+  test "response for 21.changelog.com" do
+    conn =
+      build_conn_with_host_and_path("21.changelog.com", "/robots.txt")
+      |> Plug.Robots.call([])
 
-  #   assert String.contains?(conn.resp_body, "disallow: /")
-  #   assert conn.halted
-  # end
+    assert String.contains?(conn.resp_body, "disallow: /")
+    assert conn.halted
+  end
 
   test "no-op for other paths" do
     conn =

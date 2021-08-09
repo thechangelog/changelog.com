@@ -21,7 +21,7 @@ defmodule ChangelogWeb.Plug.Robots do
 
   def call(conn, _opts), do: conn
 
-  defp response_for_host(_host) do
+  defp response_for_host("changelog.com") do
     """
     sitemap: https://changelog.com/sitemap.xml
     user-agent: *
@@ -32,10 +32,10 @@ defmodule ChangelogWeb.Plug.Robots do
     """
   end
 
-  # defp response_for_host(_host) do
-  #   """
-  #   user-agent: *
-  #   disallow: /
-  #   """
-  # end
+  defp response_for_host(_host) do
+    """
+    user-agent: *
+    disallow: /
+    """
+  end
 end
