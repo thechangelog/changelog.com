@@ -84,7 +84,11 @@ defmodule ChangelogWeb.PageController do
 
   def weekly(conn, _params) do
     latest = get_weekly_issues() |> List.first()
-    render(conn, :weekly, latest: latest)
+
+    conn
+    |> assign(:latest, latest)
+    |> ResponseCache.cache_public(:timer.hours(1))
+    |> render(:weekly)
   end
 
   def plusplus(conn, _params) do
@@ -99,6 +103,7 @@ defmodule ChangelogWeb.PageController do
 
     conn
     |> assign(:issues, issues_by_year)
+    |> ResponseCache.cache_public(:timer.hours(1))
     |> render(:weekly_archive)
   end
 
