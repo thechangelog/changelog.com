@@ -25,11 +25,11 @@ defmodule ChangelogWeb.Plug.Conn do
       conn
       |> get_req_header("host")
       |> List.first()
-      |> to_string
+      |> to_string()
       |> String.split(":")
       |> List.first()
 
-    Logger.info(conn.req_headers)
+    Logger.info("Host detected: #{host}")
     host
   end
 
