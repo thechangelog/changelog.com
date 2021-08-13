@@ -91,7 +91,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Regular.woff2") format("woff2"), url("/fonts/SanaSans-Regular.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Regular.woff2") format("woff2"), url("/fonts/SanaSansAlt-Regular.woff") format("woff");
 }
 
 @font-face {
@@ -99,7 +99,7 @@
   font-weight: 400;
   font-style: italic;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Italic.woff2") format("woff2"), url("/fonts/SanaSans-Italic.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Italic.woff2") format("woff2"), url("/fonts/SanaSansAlt-Italic.woff") format("woff");
 }
 
 @font-face {
@@ -107,7 +107,7 @@
   font-weight: 500;
   font-style: normal;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Medium.woff2") format("woff2"), url("/fonts/SanaSans-Medium.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Medium.woff2") format("woff2"), url("/fonts/SanaSansAlt-Medium.woff") format("woff");
 }
 
 @font-face {
@@ -115,7 +115,7 @@
   font-weight: 500;
   font-style: italic;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Medium-Italic.woff2") format("woff2"), url("/fonts/SanaSans-Medium-Italic.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Medium-Italic.woff2") format("woff2"), url("/fonts/SanaSansAlt-Medium-Italic.woff") format("woff");
 }
 
 @font-face {
@@ -123,7 +123,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Bold.woff2") format("woff2"), url("/fonts/SanaSans-Bold.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Bold.woff2") format("woff2"), url("/fonts/SanaSansAlt-Bold.woff") format("woff");
 }
 
 @font-face {
@@ -131,7 +131,7 @@
   font-weight: 700;
   font-style: italic;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Bold-Italic.woff2") format("woff2"), url("/fonts/SanaSans-Bold-Italic.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Bold-Italic.woff2") format("woff2"), url("/fonts/SanaSansAlt-Bold-Italic.woff") format("woff");
 }
 
 @font-face {
@@ -139,7 +139,7 @@
   font-weight: 900;
   font-style: normal;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Black.woff2") format("woff2"), url("/fonts/SanaSans-Black.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Black.woff2") format("woff2"), url("/fonts/SanaSansAlt-Black.woff") format("woff");
 }
 
 @font-face {
@@ -147,5 +147,5 @@
   font-weight: 900;
   font-style: italic;
   font-display: fallback;
-  src: url("/fonts/SanaSans-Black-Italic.woff2") format("woff2"), url("/fonts/SanaSans-Black-Italic.woff") format("woff");
+  src: url("/fonts/SanaSansAlt-Black-Italic.woff2") format("woff2"), url("/fonts/SanaSansAlt-Black-Italic.woff") format("woff");
 }
