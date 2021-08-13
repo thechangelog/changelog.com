@@ -32,6 +32,14 @@ defmodule ChangelogWeb.Plug.Robots do
     """
   end
 
+  defp response_for_host("cdn.changelog.com") do
+    """
+    user-agent: *
+    allow: /images
+    disallow: /
+    """
+  end
+
   defp response_for_host(_host) do
     """
     user-agent: *

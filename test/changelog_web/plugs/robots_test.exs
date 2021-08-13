@@ -16,6 +16,15 @@ defmodule ChangelogWeb.RobotsTest do
     assert conn.halted
   end
 
+  test "response for cdn.changelog.com" do
+    conn =
+      build_conn_with_host_and_path("changelog.com", "/robots.txt")
+      |> Plug.Robots.call([])
+
+    assert String.contains?(conn.resp_body, "allow: /images")
+    assert conn.halted
+  end
+
   test "response for 21.changelog.com" do
     conn =
       build_conn_with_host_and_path("21.changelog.com", "/robots.txt")
