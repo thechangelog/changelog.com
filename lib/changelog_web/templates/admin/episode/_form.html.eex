@@ -211,6 +211,16 @@
   </div>
 
   <div class="field">
+    <label for="doc_url">
+      Collab Doc URL
+    <%= if f.data.doc_url do %>
+      <a href="<%= f.data.doc_url %>" class="field-action" rel="external">(go to there)</a>
+    <% end %>
+    </label>
+    <%= text_input(f, :doc_url, placeholder: "https://hackmd.io/8675309/edit") %>
+  </div>
+
+  <div class="field">
     <%= label(f, :notes) %>
     <%= textarea(f, :notes, placeholder: "The more, the better. Markdown enabled.", rows: 5) %>
   </div>

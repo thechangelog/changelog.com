@@ -82,19 +82,20 @@
       <td><%= TimeView.duration(episode.audio_duration) %></td>
       <td><%= AdminHelpers.reach_count(episode) %></td>
     <% end %>
-      <td class="center aligned">
+      <td class="right aligned">
         <div class="ui small basic buttons">
         <%= if Episode.is_published(episode) do %>
-          <%= AdminHelpers.icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug)) %>
+          <%= AdminHelpers.icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), title: "View Stats") %>
           <%= AdminHelpers.icon_link("refresh", to: Routes.admin_podcast_episode_path(@conn, :transcript, podcast.slug, episode.slug), method: :post, title: "Refresh Transcript") %>
         <% end %>
-          <%= AdminHelpers.icon_link("eye", to: Routes.episode_path(@conn, show_or_preview(episode), podcast.slug, episode.slug)) %>
-        <%= if @status == :draft && episode.recorded_live do %>
-          <%= AdminHelpers.icon_link("image", to: Routes.live_path(@conn, :show, Episode.hashid(episode)), title: "View live image for YT") %>
-        <% end %>
-          <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_episode_path(@conn, :edit, podcast.slug, episode.slug)) %>
-        <%= if !Episode.is_published(episode) do %>
-          <%= AdminHelpers.icon_link("trash", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), method: :delete, data: [confirm: "Are you sure?"]) %>
+
+          <%= AdminHelpers.icon_link("eye", to: Routes.episode_path(@conn, show_or_preview(episode), podcast.slug, episode.slug), title: "View Episode") %>
+          <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_episode_path(@conn, :edit, podcast.slug, episode.slug), title: "Edit Episode") %>
+
+        <%= if @status == :draft do %>
+          <%= if episode.recorded_live, do: AdminHelpers.icon_link("image", to: Routes.live_path(@conn, :show, Episode.hashid(episode)), title: "View live image for YT") %>
+          <%= if episode.doc_url, do: AdminHelpers.icon_link("file alternate", to: episode.doc_url, title: "View Collab Doc", rel: "external") %>
+          <%= AdminHelpers.icon_link("trash", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), title: "Delete Episode", method: :delete, data: [confirm: "Are you sure?"]) %>
         <% end %>
         </div>
       </td>
