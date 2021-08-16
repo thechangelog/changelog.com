@@ -36,6 +36,7 @@ defmodule ChangelogWeb.Plug.Robots do
     """
     user-agent: *
     allow: /images/
+    allow: /uploads/
     disallow: /
     """
   end
