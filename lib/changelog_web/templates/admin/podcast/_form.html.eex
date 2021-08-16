@@ -182,6 +182,12 @@
     <%= AdminHelpers.error_message(f, :spotify_url) %>
   </div>
 
+  <div class="field <%= AdminHelpers.error_class(f, :riverside_url) %>">
+    <%= label(f, :riverside_url, "Riverside URL") %>
+    <%= text_input(f, :riverside_url) %>
+    <%= AdminHelpers.error_message(f, :riverside_url) %>
+  </div>
+
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>
