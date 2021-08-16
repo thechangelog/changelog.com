@@ -58,6 +58,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["request"] -> changelog_destination(["request", podcast.slug])
       ["subscribe"] -> changelog_destination(["subscribe", podcast.slug])
       ["community"] -> changelog_destination(["community"])
+      ["studio"] -> podcast.riverside_url
       _else -> changelog_destination([podcast.slug, parts])
     end
   end

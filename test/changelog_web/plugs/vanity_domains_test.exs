@@ -7,7 +7,8 @@ defmodule ChangelogWeb.VanityDomainsTest do
     vanity_domain: "https://jsparty.fm",
     slug: "jsparty",
     apple_url: "https://podcasts.apple.com/us/podcast/js-party/id1209616598",
-    name: "JS Party"
+    name: "JS Party",
+    riverside_url: "https://riverside.fm/studio/js-to-the-party"
   }
   @gotime %{
     vanity_domain: "https://gotime.fm",
@@ -114,6 +115,15 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> Plug.VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/community")
+  end
+
+  test "vanity redirect for studio URL" do
+    conn =
+      build_conn_with_host_and_path("jsparty.fm", "/studio")
+      |> assign_podcasts([@gotime, @jsparty])
+      |> Plug.VanityDomains.call([])
+
+    assert_vanity_redirect(conn, @jsparty.riverside_url)
   end
 
   test "vanity redirects for guest guide" do
