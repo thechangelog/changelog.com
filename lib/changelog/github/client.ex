@@ -19,6 +19,14 @@ defmodule Changelog.Github.Client do
 
   def get_user_repos(username), do: get("/users/#{username}/repos")
 
+  def create_issue(source, title, body) do
+    params = %{"title" => title, "body" => body}
+
+    source
+    |> issue_path()
+    |> post(Jason.encode!(params))
+  end
+
   def create_file(source, content, message) do
     params = %{"content" => Base.encode64(content), "message" => message}
 
@@ -57,5 +65,9 @@ defmodule Changelog.Github.Client do
 
   defp file_content_path(source) do
     "/repos/#{source.org}/#{source.repo}/contents/#{source.path}"
+  end
+
+  defp issue_path(source) do
+    "/repos/#{source.org}/#{source.repo}/issues"
   end
 end

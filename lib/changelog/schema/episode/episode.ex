@@ -9,6 +9,7 @@ defmodule Changelog.Episode do
     EpisodeStat,
     EpisodeSponsor,
     Files,
+    Github,
     NewsItem,
     Notifier,
     Podcast,
@@ -315,21 +316,25 @@ defmodule Changelog.Episode do
   end
 
   def update_transcript(episode, text) do
-    parsed = Transcripts.Parser.parse_text(text, participants(episode))
+    case Transcripts.Parser.parse_text(text, participants(episode)) do
+      {:ok, parsed} ->
+        updated =
+          episode
+          |> change(transcript: parsed)
+          |> Repo.update!()
 
-    updated =
-      episode
-      |> change(transcript: parsed)
-      |> Repo.update!()
+        if !has_transcript(episode) && has_transcript(updated) do
+          Task.start_link(fn -> Notifier.notify(updated) end)
+        end
 
-    if !has_transcript(episode) && has_transcript(updated) do
-      Task.start_link(fn -> Notifier.notify(updated) end)
-      # Task.start_link(fn -> HN.submit(updated) end)
+        Task.start_link(fn -> Search.save_item(updated) end)
+
+        updated
+
+      {:error, e} ->
+        source = Github.Source.new("transcripts", episode)
+        Github.Issuer.create(source, e)
     end
-
-    Task.start_link(fn -> Search.save_item(updated) end)
-
-    updated
   end
 
   def flatten_for_filtering(query \\ __MODULE__) do
