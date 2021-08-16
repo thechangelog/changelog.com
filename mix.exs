@@ -68,7 +68,7 @@ defmodule Changelog.Mixfile do
       {:user_agent_parser, "~> 1.0"},
       {:oauth, github: "tim/erlang-oauth"},
       {:ueberauth_github, "~> 0.4"},
-      {:ueberauth_twitter, github: "jerodsanto/ueberauth_twitter"},
+      {:ueberauth_twitter, "~> 0.4"},
       {:ex_machina, "~> 2.0"},
       {:sentry, "~> 8.0"},
       {:html_entities, "~> 0.3"},
