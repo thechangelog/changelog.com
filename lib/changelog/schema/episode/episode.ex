@@ -35,6 +35,7 @@ defmodule Changelog.Episode do
 
     field :summary, :string
     field :notes, :string
+    field :doc_url, :string
 
     field :published, :boolean, default: false
     field :published_at, :utc_datetime
@@ -166,6 +167,7 @@ defmodule Changelog.Episode do
       :subhighlight,
       :summary,
       :notes,
+      :doc_url,
       :published_at,
       :recorded_at,
       :recorded_live,
