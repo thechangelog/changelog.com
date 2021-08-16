@@ -6,13 +6,17 @@ defmodule Changelog.Transcripts.ParserTest do
   alias Changelog.Transcripts.Parser
 
   test "parsing an empty string" do
-    parsed = Parser.parse_text("")
+    {:ok, parsed} = Parser.parse_text("")
     assert Enum.empty?(parsed)
   end
 
   test "parsing nil" do
-    parsed = Parser.parse_text(nil)
+    {:ok, parsed} = Parser.parse_text(nil)
     assert Enum.empty?(parsed)
+  end
+
+  test "parsing an invalid doc returns error" do
+    assert {:error, _e} = Parser.parse_text("Kaizen!\n")
   end
 
   test "parsing The Changelog 200" do
@@ -22,7 +26,7 @@ defmodule Changelog.Transcripts.ParserTest do
 
     text = File.read!("#{fixtures_path()}/transcripts/the-changelog-200.md")
 
-    parsed = Parser.parse_text(text, [adam, jerod, raquel])
+    {:ok, parsed} = Parser.parse_text(text, [adam, jerod, raquel])
 
     assert length(parsed) == 181
 
@@ -49,7 +53,7 @@ defmodule Changelog.Transcripts.ParserTest do
 
     text = File.read!("#{fixtures_path()}/transcripts/js-party-1.md")
 
-    parsed = Parser.parse_text(text, [alex, mikeal, rachel])
+    {:ok, parsed} = Parser.parse_text(text, [alex, mikeal, rachel])
 
     assert length(parsed) == 185
 
