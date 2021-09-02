@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: postgres-pod-environment
-  namespace: postgres-operator
-data:
-  ALLOW_NOSSL: "true"
