@@ -42,7 +42,7 @@ defmodule Changelog.PersonTest do
 
     assert encoded == "6A656E6E7940686974732E636F6D7C38363735333039"
 
-    assert ["jenny@hits.com", "8675309"] = Person.decoded_data(encoded)
+    assert {:ok, ["jenny@hits.com", "8675309"]} = Person.decoded_data(encoded)
   end
 
   describe "get_by_ueberauth" do

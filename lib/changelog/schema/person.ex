@@ -137,14 +137,14 @@ defmodule Changelog.Person do
 
   def get_by_encoded_auth(token) do
     case __MODULE__.decoded_data(token) do
-      [email, auth_token] -> Repo.get_by(__MODULE__, email: email, auth_token: auth_token)
+      {:ok, [email, auth_token]} -> Repo.get_by(__MODULE__, email: email, auth_token: auth_token)
       _else -> nil
     end
   end
 
   def get_by_encoded_id(token) do
     case __MODULE__.decoded_data(token) do
-      [id, email] -> Repo.get_by(__MODULE__, id: id, email: email)
+      {:ok, [id, email]} -> Repo.get_by(__MODULE__, id: id, email: email)
       _else -> nil
     end
   end
@@ -268,8 +268,8 @@ defmodule Changelog.Person do
 
   def decoded_data(encoded) do
     case Base.decode16(encoded) do
-      {:ok, decoded} -> String.split(decoded, "|")
-      :error -> ["", ""]
+      {:ok, decoded} -> {:ok, String.split(decoded, "|")}
+      :error -> {:error, ["", ""]}
     end
   end
 
