@@ -39,9 +39,6 @@ defmodule Changelog.Mixfile do
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
-      # Explicit require of 1.2 forces ueberauth to use newer version that fixes :crypto.hmac/3 undefined error on OTP 24
-      # see also https://github.com/ueberauth/ueberauth/issues/143
-      {:plug_crypto, "~> 1.2"},
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
       {:oban, "~> 2.8"},
@@ -70,6 +67,9 @@ defmodule Changelog.Mixfile do
       {:sweet_xml, "~> 0.6"},
       {:user_agent_parser, "~> 1.0"},
       {:oauth, github: "tim/erlang-oauth"},
+      # Explicit require of 1.2 forces ueberauth to use newer version that fixes :crypto.hmac/3 undefined error on OTP 24
+      # see also https://github.com/ueberauth/ueberauth/issues/143
+      {:oauther, "~> 1.2"},
       {:ueberauth_github, "~> 0.4"},
       {:ueberauth_twitter, "~> 0.4"},
       {:ex_machina, "~> 2.0"},
