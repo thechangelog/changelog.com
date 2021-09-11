@@ -93,7 +93,7 @@ defmodule ChangelogWeb.NewsItemView do
     if item.image do
       content_tag :div, class: "news_item-image" do
         link to: item.url, data: [news: true] do
-          tag(:img, src: image_url(item, version), alt: item.headline)
+          tag(:img, src: image_url(item, version), alt: item.headline, loading: "lazy")
         end
       end
     end
