@@ -46,6 +46,7 @@ defmodule Changelog.EpisodeRequest do
     struct
     |> cast(params, ~w(podcast_id submitter_id hosts guests topics pitch pronunciation)a)
     |> validate_required([:podcast_id, :submitter_id, :pitch])
+    |> validate_length(:topics, max: 140, message: "Keep it tweet size, please (OG 140 chars)")
     |> foreign_key_constraint(:podcast_id)
   end
 
