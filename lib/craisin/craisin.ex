@@ -25,7 +25,8 @@ defmodule Craisin do
 
   def handle({:ok, %{status_code: code, body: body}}) when code in 200..201, do: body
   def handle({:ok, %{status_code: 400, body: body}}), do: log(body)
-  def handle({:ok, %{status_code: code, body: body}}) when code > 400, do: log(body["Message"])
+  def handle({:ok, %{status_code: code, body: %{"Message" => message}}}) when code > 400, do: log(message)
+  def handle({:ok, %{status_code: code, body: body}}) when code > 400, do: log(body)
   def handle({:error, %{reason: reason}}) when is_tuple(reason), do: log(elem(reason, 1))
   def handle({:error, %{reason: reason}}), do: log(reason)
 
