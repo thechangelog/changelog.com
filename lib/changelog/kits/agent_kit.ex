@@ -61,7 +61,7 @@ defmodule Changelog.AgentKit do
     end
   end
 
-  defp handle(_agent, subscribers) when subscribers <= 1, do: {:error, :no_subscribers}
+  defp handle(_agent, subscribers) when subscribers < 5, do: {:error, :no_subscribers}
   defp handle(agent, _subscribers) when is_nil(agent), do: {:error, :unknown_agent}
   defp handle(agent, subscribers), do: {:ok, {agent, subscribers}}
 end
