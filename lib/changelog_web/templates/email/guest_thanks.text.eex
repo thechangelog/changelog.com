@@ -2,7 +2,7 @@
 
 Your episode of <%= @podcast.name %> is now live! Here's where it lives on the web:
 
-<%= Routes.episode_url(Endpoint, :show, @podcast.slug, @episode.slug) %>
+<%= EpisodeView.share_url(@episode) %>
 
 And here's what's next.
 

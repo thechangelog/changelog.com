@@ -26,7 +26,7 @@ defmodule Changelog.Notifier do
     deliver_episode_guest_thanks_emails(episode)
     deliver_episode_request_email(episode)
     deliver_podcast_subscription_emails(episode)
-    deliver_slack_new_episode_message(episode, item.url)
+    deliver_slack_new_episode_message(episode)
   end
 
   def notify(item = %NewsItem{status: :declined}) do
@@ -183,8 +183,8 @@ defmodule Changelog.Notifier do
     Slack.Client.message("#news-comments", message)
   end
 
-  defp deliver_slack_new_episode_message(episode, url) do
-    message = Slack.Messages.new_episode(episode, url)
+  defp deliver_slack_new_episode_message(episode) do
+    message = Slack.Messages.new_episode(episode)
     Slack.Client.message("#main", message)
   end
 

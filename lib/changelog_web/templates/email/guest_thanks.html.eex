@@ -2,7 +2,7 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>Your episode of <em><%= @podcast.name %></em> is now live! <%= link("Here's where it lives", to: Routes.episode_url(Endpoint, :show, @podcast.slug, @episode.slug)) %> on the web and <mark>here's what's next</mark>. 👇</p>
+    <p>Your episode of <em><%= @podcast.name %></em> is now live! <%= link("Here's where it lives", to: EpisodeView.share_url(@episode)) %> on the web and <mark>here's what's next</mark>. 👇</p>
 
     <h3>1. You get free merch 🎁</h3>
 

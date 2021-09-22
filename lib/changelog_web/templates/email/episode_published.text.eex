@@ -5,7 +5,7 @@ We just published a new episode of <%= @episode.podcast.name %> with <%= SharedH
 
 > <%= @episode.summary |> SharedHelpers.md_to_text()  %>
 
-Listen and discuss here: <%= Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) %>
+Listen and discuss here: <%= EpisodeView.share_url(@episode) %>
 
 Don't want these notifications? Disable 'em: <%= PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug) %>
 

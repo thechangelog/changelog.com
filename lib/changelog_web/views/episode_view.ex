@@ -248,6 +248,7 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def share_url(episode) do
+    episode = Episode.preload_podcast(episode)
     vanity = episode.podcast.vanity_domain
 
     if vanity do

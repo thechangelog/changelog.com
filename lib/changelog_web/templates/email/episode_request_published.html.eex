@@ -4,7 +4,7 @@
 
     <p>The episode of <%= @podcast.name %> that you requested is now live! 💪</p>
 
-    <p>Listen and discuss here: <%= link(Routes.episode_url(Endpoint, :show, @podcast.slug, @episode.slug), to: Routes.episode_url(Endpoint, :show, @podcast.slug, @episode.slug)) %></p>
+    <p>Listen and discuss here: <%= link(EpisodeView.share_url(@episode), to: EpisodeView.share_url(@episode)) %></p>
 
     <p>We'd love to hear what you think!</p>
 

@@ -7,15 +7,15 @@ defmodule Changelog.Slack.Messages do
     """
   end
 
-  def new_episode(episode, url) do
+  def new_episode(episode) do
     ~s"""
-    #{EpisodeView.title_with_podcast_aside(episode)} #{celebrate_emoji()} #{url}
+    #{EpisodeView.title_with_podcast_aside(episode)} #{celebrate_emoji()} #{EpisodeView.share_url(episode)}
     """
   end
 
   def welcome do
     ~s"""
-    Welcome to Changelog's Community Slack team! :clap:
+    Welcome to Changelog's Community Slack! :clap:
 
     This is an inclusive place where we chat about tech, life, our shows, or just whatever. *There are no imposters here*. By hanging out in this Slack, you are agreeing to abide by our Code of Conduct: https://changelog.com/coc
 

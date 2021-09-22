@@ -2,12 +2,12 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>We <em>just</em> published <%= link("a new episode of #{@episode.podcast.name}", to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug)) %> with <%= SharedHelpers.comma_separated_names(EpisodeView.participants(@episode)) %>!</p>
+    <p>We <em>just</em> published <%= link("a new episode of #{@episode.podcast.name}", to: EpisodeView.share_url(@episode)) %> with <%= SharedHelpers.comma_separated_names(EpisodeView.participants(@episode)) %>!</p>
 
     <blockquote><%= @episode.summary |> SharedHelpers.md_to_html() |> raw()  %></blockquote>
 
     <span class="btn-primary">
-      <%= link("Listen and discuss the episode", to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %>
+      <%= link("Listen and discuss the episode", to: EpisodeView.share_url(@episode), itemprop: "url") %>
     </span>
 
     <%= if @recommendations != [] do %>
