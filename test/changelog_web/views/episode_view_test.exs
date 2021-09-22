@@ -5,36 +5,6 @@ defmodule ChangelogWeb.EpisodeViewTest do
 
   alias Changelog.Episode
 
-  describe "audio_local_path" do
-    test "is a path on the local file system with relative storage dir" do
-      orig_env = Application.get_env(:waffle, :storage_dir)
-      Application.put_env(:waffle, :storage_dir, "priv/static")
-      episode = insert(:published_episode) |> stub_audio_file
-      assert audio_local_path(episode) =~ ~r{^priv/static}
-      Application.put_env(:waffle, :storage_dir, orig_env)
-    end
-
-    test "is a path on the local file system with absolute storage dir" do
-      orig_env = Application.get_env(:waffle, :storage_dir)
-      Application.put_env(:waffle, :storage_dir, "/test")
-      episode = insert(:published_episode) |> stub_audio_file
-      assert audio_local_path(episode) =~ ~r{^/test/}
-      Application.put_env(:waffle, :storage_dir, orig_env)
-    end
-  end
-
-  describe "audio_path" do
-    test "is hard coded to california.mp3 when episode has no file" do
-      episode = build(:episode)
-      assert audio_path(episode) == "/california.mp3"
-    end
-
-    test "starts with the publicly served path when episode has file" do
-      episode = insert(:published_episode) |> stub_audio_file
-      assert audio_path(episode) =~ ~r{^/uploads/}
-    end
-  end
-
   test "megabytes" do
     assert megabytes(%Episode{audio_bytes: 1000}) == 0
     assert megabytes(%Episode{audio_bytes: 1_000_000}) == 1

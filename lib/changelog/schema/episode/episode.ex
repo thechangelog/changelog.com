@@ -18,7 +18,7 @@ defmodule Changelog.Episode do
     Transcripts
   }
 
-  alias ChangelogWeb.{EpisodeView, TimeView}
+  alias ChangelogWeb.{TimeView}
 
   defenum(Type, full: 0, bonus: 1, trailer: 2)
 
@@ -176,6 +176,8 @@ defmodule Changelog.Episode do
       :guid,
       :type
     ])
+    |> prep_audio_file(params)
+    |> prep_plusplus_file(params)
     |> cast_attachments(params, [:audio_file, :plusplus_file])
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
@@ -185,8 +187,6 @@ defmodule Changelog.Episode do
     |> cast_assoc(:episode_guests)
     |> cast_assoc(:episode_sponsors)
     |> cast_assoc(:episode_topics)
-    |> derive_audio_bytes_and_duration()
-    |> derive_plusplus_bytes_and_duration()
   end
 
   def get_news_item(episode) do
@@ -379,47 +379,37 @@ defmodule Changelog.Episode do
     }
   end
 
-  defp derive_audio_bytes_and_duration(changeset = %{changes: %{audio_file: _}}) do
-    new_file = get_change(changeset, :audio_file)
-    tagged_file = EpisodeView.audio_local_path(%{changeset.data | audio_file: new_file})
+  # We do all pre-processing of uploaded audio files here instead of in
+  # Audio.transform/2 because we need to extract information from the
+  # just-transformed files to store in the changeset, which cannot be
+  # accomplished with Waffle at the time of implementation.
+  def prep_audio_file(changeset, %{"audio_file" => %Plug.Upload{path: path}}) do
+    Changelog.FFmpeg.tag(path, changeset.data)
 
-    case File.stat(tagged_file) do
+    case File.stat(path) do
       {:ok, stats} ->
-        seconds = extract_duration_seconds(tagged_file)
+        seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
         change(changeset, audio_bytes: stats.size, audio_duration: seconds)
 
       {:error, _} ->
         changeset
     end
   end
+  def prep_audio_file(changeset, _params), do: changeset
 
-  defp derive_audio_bytes_and_duration(changeset), do: changeset
+  def prep_plusplus_file(changeset, %{"plusplus_file" => %Plug.Upload{path: path}}) do
+    Changelog.FFmpeg.tag(path, changeset.data)
 
-  defp derive_plusplus_bytes_and_duration(changeset = %{changes: %{plusplus_file: _}}) do
-    new_file = get_change(changeset, :plusplus_file)
-    tagged_file = EpisodeView.plusplus_local_path(%{changeset.data | plusplus_file: new_file})
-
-    case File.stat(tagged_file) do
+    case File.stat(path) do
       {:ok, stats} ->
-        seconds = extract_duration_seconds(tagged_file)
+        seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
         change(changeset, plusplus_bytes: stats.size, plusplus_duration: seconds)
 
       {:error, _} ->
         changeset
     end
   end
-
-  defp derive_plusplus_bytes_and_duration(changeset), do: changeset
-
-  defp extract_duration_seconds(path) do
-    try do
-      {info, _exit_code} = System.cmd("ffmpeg", ["-i", path], stderr_to_stdout: true)
-      [_match, duration] = Regex.run(~r/Duration: (.*?),/, info)
-      TimeView.seconds(duration)
-    catch
-      _all -> 0
-    end
-  end
+  def prep_plusplus_file(changeset, _params), do: changeset
 
   defp validate_published_has_published_at(changeset) do
     published = get_field(changeset, :published)

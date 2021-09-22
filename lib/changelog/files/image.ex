@@ -3,7 +3,7 @@ defmodule Changelog.Files.Image do
 
   @versions [:original, :large, :medium, :small]
 
-  def storage_dir(_, {_, scope}), do: expanded_dir("/#{source(scope)}/#{hashed(scope.id)}")
+  def storage_dir(_, {_, scope}), do: "uploads/#{source(scope)}/#{hashed(scope.id)}"
   def filename(version, _), do: version
 
   def transform(:original, _), do: :noaction

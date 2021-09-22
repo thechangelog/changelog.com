@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EpisodeView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem}
+  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem, UrlKit}
 
   alias ChangelogWeb.{
     Endpoint,
@@ -39,44 +39,11 @@ defmodule ChangelogWeb.EpisodeView do
     Files.PlusPlus.filename(:original, {episode.plusplus_file.file_name, episode}) <> ".mp3"
   end
 
-  def audio_local_path(episode) do
-    {episode.audio_file.file_name, episode}
-    |> Files.Audio.url(:original)
-    # remove Arc's "/" when storage is priv
-    |> String.replace_leading("/priv", "priv")
-  end
-
-  def plusplus_local_path(episode) do
-    {episode.plusplus_file.file_name, episode}
-    |> Files.PlusPlus.url(:original)
-    # remove Arc's "/" when storage is priv
-    |> String.replace_leading("/priv", "priv")
-  end
-
-  def audio_path(episode) do
-    if episode.audio_file do
-      episode
-      |> audio_local_path()
-      # ensure relative reference is removed
-      |> String.replace_leading("priv", "")
-    else
-      "/california.mp3"
-    end
-  end
-
-  def plusplus_path(episode) do
-    if episode.plusplus_file do
-      episode
-      |> plusplus_local_path()
-      # ensure relative reference is removed
-      |> String.replace_leading("priv", "")
-    else
-      "/california.mp3"
-    end
-  end
-
   def audio_url(episode) do
-    url = Routes.static_url(Endpoint, audio_path(episode))
+    url =
+      {episode.audio_file, episode}
+      |> Files.Audio.url(:original)
+      |> UrlKit.sans_cache_buster()
 
     if episode.podcast.chartable_id do
       "https://chtbl.com/track/#{episode.podcast.chartable_id}/#{url}"
@@ -86,7 +53,9 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def plusplus_url(episode) do
-    Routes.static_url(Endpoint, plusplus_path(episode))
+    {episode.audio_file, episode}
+    |> Files.PlusPlus.url(:original)
+    |> UrlKit.sans_cache_buster()
   end
 
   def classy_highlight(episode) do

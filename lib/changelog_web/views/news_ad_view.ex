@@ -2,7 +2,7 @@ defmodule ChangelogWeb.NewsAdView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, HtmlKit, NewsAd}
-  alias ChangelogWeb.{Endpoint, SponsorView}
+  alias ChangelogWeb.{SponsorView}
 
   def admin_edit_link(conn, %{admin: true}, ad) do
     path =
@@ -29,13 +29,7 @@ defmodule ChangelogWeb.NewsAdView do
     end
   end
 
-  def image_path(ad, version) do
-    {ad.image, ad}
-    |> Files.Image.url(version)
-    |> String.replace_leading("/priv", "")
-  end
-
-  def image_url(ad, version), do: Routes.static_url(Endpoint, image_path(ad, version))
+  def image_url(ad, version), do: Files.Image.url({ad.image, ad}, version)
 
   def render_toolbar_button(_conn, _ad), do: nil
 

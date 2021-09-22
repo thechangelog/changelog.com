@@ -4,7 +4,7 @@ defmodule Changelog.Files.Avatar do
   @versions [:original, :large, :medium, :small]
 
   def storage_dir(_version, {_file, scope}),
-    do: expanded_dir("/avatars/#{source(scope)}/#{hashed(scope.id)}")
+    do: "uploads/avatars/#{source(scope)}/#{hashed(scope.id)}"
 
   def filename(version, _), do: "avatar_#{version}"
 

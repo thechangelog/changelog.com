@@ -4,17 +4,11 @@ defmodule ChangelogWeb.PersonView do
   alias Changelog.{Files, HtmlKit, NewsItem, Person, Podcast}
   alias ChangelogWeb.{Endpoint, NewsItemView, SharedView, PodcastView}
 
-  def avatar_path(person, version) do
-    {person.avatar, person}
-    |> Files.Avatar.url(version)
-    |> String.replace_leading("/priv", "")
-  end
-
   def avatar_url(person), do: avatar_url(person, :small)
 
   def avatar_url(person, version) do
     if person.avatar do
-      Routes.static_url(Endpoint, avatar_path(person, version))
+      Files.Avatar.url({person.avatar, person}, version)
     else
       gravatar_url(person.email, version)
     end

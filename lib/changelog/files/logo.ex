@@ -5,7 +5,7 @@ defmodule Changelog.Files.Logo do
 
       @versions [:original, :large, :medium, :small]
 
-      def storage_dir(_, {_, scope}), do: expanded_dir("/logos/#{hashed(scope.id)}")
+      def storage_dir(_, {_, scope}), do: "uploads/logos/#{hashed(scope.id)}"
       def filename(version, _), do: "#{unquote(prefix)}_logo_#{version}"
 
       def transform(:original, _), do: :noaction
