@@ -7,34 +7,13 @@ defmodule ChangelogWeb.PodcastView do
 
   def cover_path(%{slug: "master"}, version), do: "/images/podcasts/master-#{version}.png"
   def cover_path(%{slug: "plusplus"}, version), do: "/images/podcasts/plusplus-#{version}.png"
-
-  def cover_path(podcast, version) do
-    {podcast.cover, podcast}
-    |> Cover.url(version)
-    |> String.replace_leading("/priv", "")
-  end
-
-  def cover_local_path(podcast) do
-    path =
-      podcast
-      |> cover_path(:original)
-      |> String.split("?")
-      |> List.first()
-
-    waffle_dir = Application.get_env(:waffle, :storage_dir)
-
-    if String.starts_with?(path, waffle_dir) do
-      path
-    else
-      Application.app_dir(:changelog, "priv#{path}")
-    end
-  end
+  def cover_path(podcast, version), do: Cover.url({podcast.cover, podcast}, version)
 
   def cover_url(podcast), do: cover_url(podcast, :original)
 
   def cover_url(podcast, version) do
     if podcast.cover do
-      Routes.static_url(Endpoint, cover_path(podcast, version))
+      cover_path(podcast, version)
     else
       "/images/defaults/black.png"
     end

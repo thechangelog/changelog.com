@@ -103,15 +103,7 @@ defmodule ChangelogWeb.NewsItemView do
     Files.Image.mime_type(item.image)
   end
 
-  def image_path(item, version) do
-    {item.image, item}
-    |> Files.Image.url(version)
-    |> String.replace_leading("/priv", "")
-  end
-
-  def image_url(item, version) do
-    Routes.static_url(Endpoint, image_path(item, version))
-  end
+  def image_url(item, version), do: Files.Image.url({item.image, item}, version)
 
   def items_with_ads(items, []), do: items
 

@@ -49,9 +49,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :waffle,
-  storage_dir: System.get_env("UPLOADS_PATH", "priv/uploads")
-
 config :phoenix, :json_library, Jason
 
 config :phoenix, :format_encoders, ics: ICalendar
@@ -73,7 +70,17 @@ config :shopify,
 
 config :ex_aws,
   access_key_id: SecretOrEnv.get("AWS_ACCESS_KEY_ID"),
-  secret_access_key: SecretOrEnv.get("AWS_SECRET_ACCESS_KEY")
+  secret_access_key: SecretOrEnv.get("AWS_SECRET_ACCESS_KEY"),
+  region: SecretOrEnv.get("AWS_REGION")
+
+config :ex_aws, :hackney_opts, recv_timeout: 300_000
+
+config :waffle,
+  storage: Waffle.Storage.S3,
+  version_timeout: 30_000,
+  bucket: SecretOrEnv.get("AWS_ASSETS_BUCKET"),
+  # this will match static_url host in prod, deviate in dev
+  asset_host: SecretOrEnv.get("AWS_UPLOADS_HOST", "https://cdn.changelog.com")
 
 config :ueberauth, Ueberauth,
   providers: [

@@ -15,13 +15,7 @@ defmodule ChangelogWeb.PostView do
 
   def image_mime_type(post), do: Files.Image.mime_type(post.image)
 
-  def image_path(post, version) do
-    {post.image, post}
-    |> Files.Image.url(version)
-    |> String.replace_leading("/priv", "")
-  end
-
-  def image_url(post, version), do: Routes.static_url(Endpoint, image_path(post, version))
+  def image_url(post, version), do: Files.Image.url({post.image, post}, version)
 
   def paragraph_count(post) do
     post

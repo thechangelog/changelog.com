@@ -29,9 +29,6 @@ config :logger,
   level: :info,
   backends: [:console, Sentry.LoggerBackend]
 
-config :waffle,
-  storage_dir: System.get_env("UPLOADS_PATH", "/uploads")
-
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: System.get_env("DB_NAME", "changelog"),

@@ -15,6 +15,4 @@ defmodule Changelog.Files.PlusPlus do
     ]
     |> Enum.join("-")
   end
-
-  def transform(version, {file, episode}), do: Audio.transform(version, {file, episode})
 end

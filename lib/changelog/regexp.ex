@@ -1,4 +1,6 @@
 defmodule Changelog.Regexp do
+  def cache_buster, do: ~r/\?v=.*\z/
+
   def email, do: ~r/^\S+@\S+\.\S+$/
 
   def http, do: ~r/^https?:\/\//

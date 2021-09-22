@@ -4,13 +4,9 @@ defmodule Changelog.File do
       use Waffle.Definition
       use Waffle.Ecto.Definition
 
-      def __storage, do: Waffle.Storage.Local
+      @acl :public_read
 
       def default_url(_version, _scope), do: "/images/defaults/black.png"
-
-      def expanded_dir(path) do
-        Application.fetch_env!(:waffle, :storage_dir) <> path
-      end
 
       def validate({file, _}) do
         Enum.member?(unquote(types), file_type(file))

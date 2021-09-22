@@ -4,6 +4,16 @@ defmodule Changelog.UrlKit do
   def get_author(nil), do: nil
   def get_author(url), do: Person.get_by_website(url)
 
+  def get_tempfile(url) do
+    case HTTPoison.get(url) do
+      {:ok, %{status_code: 200, body: body}} ->
+        hash = :sha256 |> :crypto.hash(body) |> Base.encode16()
+        path = Path.join(System.tmp_dir(), hash)
+        :ok = File.write(path, body)
+        path
+    end
+  end
+
   def get_html(nil), do: ""
 
   def get_html(url) do
@@ -81,6 +91,9 @@ defmodule Changelog.UrlKit do
     |> Map.put(:query, query)
     |> URI.to_string()
   end
+
+  def sans_cache_buster(nil), do: nil
+  def sans_cache_buster(url), do: String.replace(url, Regexp.cache_buster(), "")
 
   def sans_scheme(nil), do: nil
   def sans_scheme(url), do: String.replace(url, Regexp.http(), "")
