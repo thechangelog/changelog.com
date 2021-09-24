@@ -153,6 +153,15 @@ defmodule ChangelogWeb.VanityDomainsTest do
     assert_vanity_redirect(conn, "https://changelog.typeform.com/to/QDP70iKO")
   end
 
+  test "vanity redirects for merch" do
+    conn =
+      build_conn_with_host_and_path("gotime.fm", "/merch")
+      |> assign_podcasts([@gotime, @jsparty])
+      |> Plug.VanityDomains.call([])
+
+    assert_vanity_redirect(conn, "https://merch.changelog.com")
+  end
+
   test "it does not vanity redirect for default host" do
     conn =
       build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/")
