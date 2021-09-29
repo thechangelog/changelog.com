@@ -151,6 +151,14 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/", ChangelogWeb do
+    pipe_through [:feed]
+
+    get "/topic/:slug/feed", TopicFeedController, :topic
+    get "/topic/:slug/news/feed", TopicFeedController, :news
+    get "/topic/:slug/podcasts/feed", TopicFeedController, :podcasts
+  end
+
+  scope "/", ChangelogWeb do
     pipe_through [:json_feed]
 
     get "/feed.json", JsonFeedController, :news
