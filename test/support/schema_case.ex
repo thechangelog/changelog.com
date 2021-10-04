@@ -37,6 +37,19 @@ defmodule Changelog.SchemaCase do
   end
 
   @doc """
+  Helper for retrying a test for `timeout` milliseconds before failing
+  """
+  def wait_for_passing(timeout, function) when timeout > 0 do
+    function.()
+  rescue
+    _ ->
+      Process.sleep(100)
+      wait_for_passing(timeout - 100, function)
+  end
+
+  def wait_for_passing(_timeout, function), do: function.()
+
+  @doc """
   Helper for returning list of errors in model when passed certain data.
 
   ## Examples

@@ -189,10 +189,9 @@ defmodule Changelog.NewsQueueTest do
       ]) do
         NewsQueue.publish(item)
         assert Repo.count(NewsItem.published()) == 1
-        assert called(Buffer.queue(:_))
-        assert called(Notifier.notify(:_))
-        assert called(Algolia.save_object(:_, :_, :_))
-        # assert called(HN.submit(:_))
+        wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
+        wait_for_passing(1000, fn -> assert called(Notifier.notify(:_)) end)
+        wait_for_passing(1000, fn -> assert called(Algolia.save_object(:_, :_, :_)) end)
       end
     end
 
@@ -213,9 +212,8 @@ defmodule Changelog.NewsQueueTest do
         {HN, [], [submit: fn _ -> true end]}
       ]) do
         NewsQueue.publish(i2)
-        assert called(Buffer.queue(:_))
-        assert called(Algolia.save_object(:_, :_, :_))
-        # assert called(HN.submit(:_))
+        wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
+        wait_for_passing(1000, fn -> assert called(Algolia.save_object(:_, :_, :_)) end)
         published = Repo.all(NewsItem.published())
         assert Enum.map(published, & &1.id) == [i2.id]
         assert Repo.count(NewsQueue) == 2
