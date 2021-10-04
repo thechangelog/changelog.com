@@ -367,6 +367,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "hailelagi",
+      "name": "Haile Lagi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52631736?v=4",
+      "profile": "http://hailelagi.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
