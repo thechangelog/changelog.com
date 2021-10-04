@@ -1,9 +1,5 @@
-<%= if @page.total_pages > 1 do %>
-  <%= if @page.page_number < @page.total_pages  do %>
-    <nav class="load_more" role="menubar" aria-label="Pagination">
-      <%= link("Next Page", to: pagination_path(+1, assigns) <> "#feed", rel: "next", title: "Next Page", class: "load_more-button") %>
-    </nav>
-  <% else %>
-    <div class="load_more" aria-label="Pagination">That's all, folks!</div>
-  <% end %>
+<%= if @page.page_number < @page.total_pages && (@page.total_pages > 1) do %>
+  <nav class="load_more" role="menubar" aria-label="Pagination">
+    <%= link("Next Page", to: pagination_path(+1, assigns) <> "#feed", rel: "next", title: "Next Page", class: "load_more-button") %>
+  </nav>
 <% end %>

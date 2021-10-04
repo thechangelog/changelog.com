@@ -12,6 +12,10 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert conn.status == 200
     refute conn.resp_body =~ i1.headline
     assert conn.resp_body =~ i2.headline
+
+    conn = get(conn, Routes.root_path(conn, :index, page: 2))
+
+    assert conn.status == 200
   end
 
   @tag :as_admin
