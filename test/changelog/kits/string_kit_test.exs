@@ -10,6 +10,13 @@ defmodule Changelog.StringKitTest do
     refute StringKit.blank?("stuff")
   end
 
+  test "is_number/1" do
+    assert StringKit.is_number("123")
+    assert StringKit.is_number("123.45")
+    refute StringKit.is_number("")
+    refute StringKit.is_number("not-a-number")
+  end
+
   test "present?/1" do
     refute StringKit.present?(nil)
     refute StringKit.present?("")

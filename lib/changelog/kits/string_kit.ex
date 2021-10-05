@@ -28,6 +28,16 @@ defmodule Changelog.StringKit do
   end
 
   @doc """
+  Returns true if the given string represents a number, false otherwise
+  """
+  def is_number(string) do
+    case Integer.parse(string) do
+      :error -> false
+      _else -> true
+    end
+  end
+
+  @doc """
   Converts 'bare' links to Markdown-style links for further processing
   """
   def md_linkify(string) do
