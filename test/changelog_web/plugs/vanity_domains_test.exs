@@ -141,7 +141,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> assign_podcasts([@gotime, @jsparty])
       |> Plug.VanityDomains.call([])
 
-    assert_vanity_redirect(conn, "https://changelog.typeform.com/to/wTCcQHGQ")
+    assert_vanity_redirect(conn, "https://changelog.typeform.com/to/WWOhHlmL")
   end
 
   test "vanity redirects for gotime gs form" do

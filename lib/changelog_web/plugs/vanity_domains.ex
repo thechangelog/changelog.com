@@ -46,7 +46,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     "https://changelog.typeform.com/to/QDP70iKO"
   end
   defp determine_destination(%{slug: "jsparty"}, ["ff"]) do
-    "https://changelog.typeform.com/to/wTCcQHGQ"
+    "https://changelog.typeform.com/to/WWOhHlmL"
   end
 
   defp determine_destination(podcast, parts) do
