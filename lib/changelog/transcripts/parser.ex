@@ -21,7 +21,7 @@ defmodule Changelog.Transcripts.Parser do
 
           speaker_id =
             Enum.find_value(participants, fn x ->
-              if x.name == speaker_name do
+              if String.downcase(x.name) == String.downcase(speaker_name) do
                 x.id
               end
             end)

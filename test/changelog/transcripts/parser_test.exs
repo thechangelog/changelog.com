@@ -47,7 +47,7 @@ defmodule Changelog.Transcripts.ParserTest do
   end
 
   test "JS Party 1" do
-    alex = %Person{id: 1, name: "Alex Sexton"}
+    alex = %Person{id: 1, name: "alex sexton"}
     mikeal = %Person{id: 2, name: "Mikeal Rogers"}
     rachel = %Person{id: 3, name: "Rachel White"}
 
