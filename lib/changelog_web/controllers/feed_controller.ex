@@ -191,26 +191,36 @@ defmodule ChangelogWeb.FeedController do
   end
 
   @doc "A topic's latest news and podcasts feed"
-  def topic(_conn, _params) do
+  def topic(conn, %{"slug" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
     # TODO
+    render(conn, "topic.xml")
   end
 
   @doc "A topic's news feed"
   def topic_news(conn, params =%{"slug" => slug}) do
     topic = Repo.get_by!(Topic, slug: slug)
+    news_items =
+      NewsItem
+      |> NewsItem.with_topic(topic)
+      |> NewsItem.non_audio()
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> assign(:items, NewsItem.latest_news_items())
+    |> assign(:news_items, news_items)
     |> ResponseCache.cache_public(cache_duration())
-    |> render("#{slug} news.xml")
+    |> render("topic_news.xml")
   end
 
   @doc "A topic's podcasts feed"
-  def topic_podcasts(_conn, _params) do
-
-    # render_for_podcast(conn, podcast)
+  def topic_podcasts(conn, %{"slug" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
+    # TODO:
+    render(conn, "topic_podcasts")
   end
 
   defp cache_duration, do: 2..10 |> Enum.random() |> :timer.minutes()

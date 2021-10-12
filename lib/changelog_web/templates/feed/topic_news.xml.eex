@@ -8,5 +8,11 @@
         <atom:link href="<%= Routes.root_url(@conn, :index) %>" rel="alternate" type="text/html" />
         <language>en-us</language>
         <description>News and podcasts for developers</description>
+
+        <%= for item <- @news_items do %>
+        <item>
+            <%= render_item(item, assigns) %>
+        </item>
+        <% end %>
     </channel>
 </rss>
