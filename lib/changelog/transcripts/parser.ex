@@ -36,7 +36,7 @@ defmodule Changelog.Transcripts.Parser do
 
       {:ok, parsed}
     rescue
-      e in MatchError -> {:error, e}
+      e in MatchError -> {:error, "MatchError on: #{e.term}"}
     end
   end
 end

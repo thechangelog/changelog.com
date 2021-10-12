@@ -16,7 +16,7 @@ defmodule Changelog.Transcripts.ParserTest do
   end
 
   test "parsing an invalid doc returns error" do
-    assert {:error, _e} = Parser.parse_text("Kaizen!\n")
+    assert {:error, _msg} = Parser.parse_text("Kaizen!\n")
   end
 
   test "parsing The Changelog 200" do
