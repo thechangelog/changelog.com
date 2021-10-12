@@ -190,5 +190,28 @@ defmodule ChangelogWeb.FeedController do
     |> render("sitemap.xml")
   end
 
+  @doc "A topic's latest news and podcasts feed"
+  def topic(_conn, _params) do
+    # TODO
+  end
+
+  @doc "A topic's news feed"
+  def topic_news(conn, params =%{"slug" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
+
+    conn
+    |> put_layout(false)
+    |> put_resp_content_type("application/xml")
+    |> assign(:items, NewsItem.latest_news_items())
+    |> ResponseCache.cache_public(cache_duration())
+    |> render("#{slug} news.xml")
+  end
+
+  @doc "A topic's podcasts feed"
+  def topic_podcasts(_conn, _params) do
+
+    # render_for_podcast(conn, podcast)
+  end
+
   defp cache_duration, do: 2..10 |> Enum.random() |> :timer.minutes()
 end
