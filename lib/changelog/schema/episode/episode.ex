@@ -334,6 +334,7 @@ defmodule Changelog.Episode do
       {:error, e} ->
         source = Github.Source.new("transcripts", episode)
         Github.Issuer.create(source, e)
+        episode
     end
   end
 

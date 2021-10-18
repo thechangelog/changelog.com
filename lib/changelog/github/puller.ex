@@ -58,6 +58,8 @@ defmodule Changelog.Github.Puller do
       %{status_code: 200, body: text} -> update_function(type, episode, text)
       _else -> Logger.info("#{String.capitalize(type)}: Failed to fetch #{source.raw_url}")
     end
+
+    episode
   end
 
   defp update_function("transcripts", episode, text) do
