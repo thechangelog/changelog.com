@@ -45,6 +45,9 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   defp determine_destination(%{slug: "gotime"}, ["gs"]) do
     "https://changelog.typeform.com/to/QDP70iKO"
   end
+  defp determine_destination(%{slug: "jsparty"}, ["200"]) do
+    "https://changelog.typeform.com/to/GfUesxIT"
+  end
   defp determine_destination(%{slug: "jsparty"}, ["ff"]) do
     "https://changelog.typeform.com/to/WWOhHlmL"
   end
