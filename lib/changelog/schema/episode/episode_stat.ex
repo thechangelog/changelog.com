@@ -23,6 +23,14 @@ defmodule Changelog.EpisodeStat do
   def on_date(query \\ __MODULE__, date), do: from(q in query, where: q.date == ^date)
   def sum_reach(query \\ __MODULE__), do: from(q in query, select: sum(q.uniques))
 
+  def on_full_episodes(query \\ __MODULE__) do
+    from(q in query,
+      left_join: e in Episode,
+      on: [id: q.episode_id],
+      where: e.type == ^:full
+    )
+  end
+
   def sum_episode_reach(query \\ __MODULE__) do
     from(q in query,
       group_by: q.episode_id,
@@ -112,6 +120,7 @@ defmodule Changelog.EpisodeStat do
 
     __MODULE__
     |> between(older_date, newer_date)
+    |> on_full_episodes()
     |> sum_reach()
     |> Repo.one()
     |> Kernel.||(0)
@@ -123,6 +132,7 @@ defmodule Changelog.EpisodeStat do
     podcast
     |> assoc(:episode_stats)
     |> between(older_date, newer_date)
+    |> on_full_episodes()
     |> sum_reach()
     |> Repo.one()
     |> Kernel.||(0)
@@ -131,6 +141,7 @@ defmodule Changelog.EpisodeStat do
   def date_range_episode_reach({older_date, newer_date}, minimum) do
     __MODULE__
     |> between(older_date, newer_date)
+    |> on_full_episodes()
     |> sum_episode_reach()
     |> Repo.all()
     |> Enum.reject(fn %{reach: reach} -> reach < minimum end)
@@ -140,6 +151,7 @@ defmodule Changelog.EpisodeStat do
     podcast
     |> assoc(:episode_stats)
     |> between(older_date, newer_date)
+    |> on_full_episodes()
     |> sum_episode_reach()
     |> Repo.all()
     |> Enum.reject(fn %{reach: reach} -> reach < minimum end)
