@@ -53,13 +53,8 @@
     <div class="ui four wide column">
       <div class="ui horizontal statistics">
         <div class="statistic">
-          <div class="value"><%= AdminHelpers.reach_count(@episode) %></div>
+          <div class="value"><%= SharedHelpers.reach_count(@episode) %></div>
           <div class="label">Reach</div>
-        </div>
-
-        <div class="statistic">
-          <div class="value"><%= AdminHelpers.download_count(@episode) %></div>
-          <div class="label">Downloads</div>
         </div>
 
         <div class="statistic">

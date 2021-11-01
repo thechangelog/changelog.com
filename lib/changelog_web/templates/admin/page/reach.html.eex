@@ -35,7 +35,7 @@
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <td><%= TimeView.duration(episode.audio_duration) %></td>
       <td><%= SharedHelpers.comma_separated(episode.focused_reach) %></td>
-      <td><%= AdminHelpers.reach_count(episode) %></td>
+      <td><%= SharedHelpers.reach_count(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug)) %>

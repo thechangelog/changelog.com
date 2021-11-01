@@ -80,7 +80,7 @@
     <% else %>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <td><%= TimeView.duration(episode.audio_duration) %></td>
-      <td><%= AdminHelpers.reach_count(episode) %></td>
+      <td><%= SharedHelpers.pretty_reach(episode) %></td>
     <% end %>
       <td class="right aligned">
         <div class="ui small basic buttons">

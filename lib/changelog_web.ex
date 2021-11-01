@@ -7,6 +7,7 @@ defmodule ChangelogWeb do
 
       alias Changelog.{Policies, Repo}
       alias ChangelogWeb.Plug.{Authorize, RequireUser, RequireGuest}
+      alias ChangelogWeb.Helpers.{SharedHelpers}
 
       import Ecto
       import Ecto.Query

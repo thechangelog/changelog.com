@@ -3,7 +3,6 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
 
   alias Changelog.Repo
   alias ChangelogWeb.TimeView
-  alias ChangelogWeb.Helpers.SharedHelpers
 
   def error_class(form, field), do: if(form.errors[field], do: "error", else: "")
 
@@ -136,20 +135,6 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   end
 
   def next_param(conn, default \\ nil), do: Map.get(conn.params, "next", default)
-
-  def download_count(ep_or_pod) do
-    ep_or_pod.download_count
-    |> round()
-    |> SharedHelpers.comma_separated()
-  end
-
-  def reach_count(ep_or_pod) do
-    if ep_or_pod.reach_count > ep_or_pod.download_count do
-      SharedHelpers.comma_separated(ep_or_pod.reach_count)
-    else
-      download_count(ep_or_pod)
-    end
-  end
 
   def semantic_calendar_field(form, field) do
     ~e"""

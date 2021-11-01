@@ -101,7 +101,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
           |> Repo.one()
           |> Kernel.||(0)
 
-        {ep.slug, reach, ep.title, ep.reach_count}
+        {ep.slug, reach, ep.title, SharedHelpers.reach_count(ep)}
       end)
       |> Enum.reject(fn {_, reach, _, _} -> reach == 0 end)
 

@@ -10,8 +10,6 @@ defmodule ChangelogWeb.Admin.PodcastView do
 
   def episode_count(podcast), do: PodcastView.episode_count(podcast)
 
-  def download_count(podcast), do: podcast.download_count |> round()
-
   def last_stat(podcast) do
     podcast
     |> Ecto.assoc(:episode_stats)

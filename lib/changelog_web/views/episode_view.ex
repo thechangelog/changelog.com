@@ -22,7 +22,7 @@ defmodule ChangelogWeb.EpisodeView do
 
     content_tag(:span) do
       [
-        link("(#{SharedHelpers.comma_separated(episode.reach_count)})",
+        link("(#{SharedHelpers.pretty_reach(episode)})",
           to: path,
           data: [turbolinks: false]
         )

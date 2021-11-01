@@ -9,8 +9,7 @@
       <th>Twitter</th>
       <th>Subscribers</th>
       <th>Episodes</th>
-      <th>Downloads <%= AdminHelpers.help_icon("Bytes downloaded / bytes per episode") %></th>
-      <th>Reach <%= AdminHelpers.help_icon("Unique IPs per day") %></th>
+      <th>Reach</th>
       <th></th>
     </tr>
   </thead>
@@ -37,8 +36,7 @@
       <% end %>
       </td>
       <td><%= episode_count(podcast) %></td>
-      <td><%= AdminHelpers.download_count(podcast) %></td>
-      <td><%= AdminHelpers.reach_count(podcast) %></td>
+      <td><%= SharedHelpers.pretty_reach(podcast) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: Routes.podcast_path(@conn, :show, podcast.slug)) %>
