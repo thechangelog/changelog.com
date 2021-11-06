@@ -1,6 +1,11 @@
 SHELL := bash# we want bash behaviour in all shell invocations
 PLATFORM := $(shell uname)
 platform = $(shell echo $(PLATFORM) | tr A-Z a-z)
+ifeq ($(PLATFORM),Darwin)
+platform_alt = macOS
+else
+platform_alt = $(platform)
+endif
 MAKEFILE := $(firstword $(MAKEFILE_LIST))
 
 # https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
@@ -27,6 +32,7 @@ exit 1
 endef
 
 include $(CURDIR)/deps.mk
+include $(CURDIR)/dagger.mk
 include $(CURDIR)/linode.mk
 include $(CURDIR)/secrets.mk
 include $(CURDIR)/grafana-agent.mk
