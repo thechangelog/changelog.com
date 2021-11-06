@@ -1,0 +1,296 @@
+{
+  "name": "Fastly.Service.Stats",
+  "style": "visual",
+  "queries": [
+    {
+      "dataset": "fastly",
+      "query": {
+        "breakdowns": [
+          "cache_status"
+        ],
+        "calculations": [
+          {
+            "op": "COUNT"
+          }
+        ],
+        "filters": [
+          {
+            "column": "request_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "s4utWJDPjSF",
+      "query_annotation_id": "ePrpPh5NPRQ",
+      "query_style": "combo"
+    },
+    {
+      "dataset": "fastly",
+      "query": {
+        "breakdowns": [
+          "cache_status"
+        ],
+        "calculations": [
+          {
+            "column": "time_elapsed",
+            "op": "HEATMAP"
+          },
+          {
+            "column": "resp_body_size",
+            "op": "HEATMAP"
+          }
+        ],
+        "filters": [
+          {
+            "column": "content_type",
+            "op": "contains",
+            "value": "audio",
+            "join_column": ""
+          }
+        ],
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "x2C3d4jLnYR",
+      "query_annotation_id": "nnQPo732qQJ",
+      "query_style": "combo"
+    },
+    {
+      "dataset": "fastly",
+      "query": {
+        "breakdowns": [
+          "content_type"
+        ],
+        "calculations": [
+          {
+            "column": "time_elapsed",
+            "op": "HEATMAP"
+          },
+          {
+            "column": "resp_body_size",
+            "op": "HEATMAP"
+          }
+        ],
+        "filters": [
+          {
+            "column": "content_type",
+            "op": "does-not-contain",
+            "value": "audio",
+            "join_column": ""
+          },
+          {
+            "column": "request_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          }
+        ],
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "7ij463ofLV1",
+      "query_annotation_id": "eXFy66i6Rsv",
+      "query_style": "combo"
+    },
+    {
+      "dataset": "fastly",
+      "query": {
+        "breakdowns": [
+          "cache_status",
+          "server_datacenter",
+          "content_type"
+        ],
+        "calculations": [
+          {
+            "column": "time_elapsed",
+            "op": "MAX"
+          }
+        ],
+        "filters": [
+          {
+            "column": "request_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          },
+          {
+            "column": "content_type",
+            "op": "does-not-contain",
+            "value": "audio",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "column": "time_elapsed",
+            "op": "MAX",
+            "order": "descending"
+          }
+        ],
+        "limit": 10,
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "wzyFBbJHeYC",
+      "query_annotation_id": "wWaJZXHeXB1",
+      "query_style": "combo"
+    },
+    {
+      "dataset": "fastly",
+      "query": {
+        "breakdowns": [
+          "status"
+        ],
+        "calculations": [
+          {
+            "op": "COUNT"
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "G8NSegU6FPh",
+      "query_annotation_id": "yjRkSi4ChCJ",
+      "query_style": "combo"
+    },
+    {
+      "dataset": "fastly",
+      "query": {
+        "breakdowns": [
+          "request"
+        ],
+        "calculations": [
+          {
+            "op": "COUNT"
+          }
+        ],
+        "filters": [
+          {
+            "column": "request_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "limit": 10,
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "BrNqxgfGFaH",
+      "query_annotation_id": "rZccCRNsCte",
+      "query_style": "combo"
+    },
+    {
+      "dataset": "fastly",
+      "query": {
+        "breakdowns": [
+          "server_datacenter"
+        ],
+        "calculations": [
+          {
+            "op": "COUNT"
+          }
+        ],
+        "filters": [
+          {
+            "column": "request_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "limit": 10,
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "aSJQ464kACd",
+      "query_annotation_id": "6MegivALAN1",
+      "query_style": "combo"
+    },
+    {
+      "dataset": "fastly",
+      "query": {
+        "calculations": [
+          {
+            "column": "time_elapsed",
+            "op": "P99"
+          }
+        ],
+        "filters": [
+          {
+            "column": "request_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          },
+          {
+            "column": "content_type",
+            "op": "does-not-contain",
+            "value": "audio",
+            "join_column": ""
+          },
+          {
+            "column": "cache_status",
+            "op": "!=",
+            "value": "HIT",
+            "join_column": ""
+          },
+          {
+            "column": "content_type",
+            "op": "does-not-contain",
+            "value": "xml",
+            "join_column": ""
+          },
+          {
+            "column": "status",
+            "op": "=",
+            "value": "200",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "column": "time_elapsed",
+            "op": "P99",
+            "order": "descending"
+          }
+        ],
+        "limit": 10,
+        "time_range": 7200,
+        "granularity": 60
+      },
+      "query_id": "hCJtooNV8ua",
+      "query_annotation_id": "zq4i217fnGt",
+      "query_style": "graph"
+    }
+  ],
+  "id": "FX2Pg5y6NDw"
+}

@@ -1,0 +1,284 @@
+{
+  "name": "ingress-nginx",
+  "style": "visual",
+  "queries": [
+    {
+      "dataset": "ingress-nginx",
+      "query": {
+        "breakdowns": [
+          "path"
+        ],
+        "calculations": [
+          {
+            "op": "COUNT"
+          }
+        ],
+        "filters": [
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "healthcheck",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "pingdom",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "bot",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "limit": 10,
+        "time_range": 604800,
+        "granularity": 3600
+      },
+      "query_id": "h43CzGZxKqz",
+      "query_annotation_id": "EjjuUYYetFY",
+      "query_style": "graph"
+    },
+    {
+      "dataset": "ingress-nginx",
+      "query": {
+        "breakdowns": [
+          "status"
+        ],
+        "calculations": [
+          {
+            "column": "request_time",
+            "op": "HEATMAP"
+          },
+          {
+            "op": "COUNT"
+          }
+        ],
+        "filters": [
+          {
+            "column": "path",
+            "op": "does-not-contain",
+            "value": "mp3",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "bot",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "Pingdom",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "Fastly",
+            "join_column": ""
+          },
+          {
+            "column": "path",
+            "op": "!=",
+            "value": "/health",
+            "join_column": ""
+          },
+          {
+            "column": "path",
+            "op": "does-not-contain",
+            "value": "/admin",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "time_range": 604800,
+        "granularity": 3600
+      },
+      "query_id": "Yeaf5XeXUP",
+      "query_annotation_id": "9B2uK9TiUMq",
+      "query_style": "graph"
+    },
+    {
+      "dataset": "ingress-nginx",
+      "query": {
+        "breakdowns": [
+          "path",
+          "request_time",
+          "http_user_agent"
+        ],
+        "calculations": [
+          {
+            "column": "request_time",
+            "op": "HEATMAP"
+          }
+        ],
+        "filters": [
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "healthcheck",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "pingdom",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "bot",
+            "join_column": ""
+          },
+          {
+            "column": "path",
+            "op": "does-not-contain",
+            "value": "mp3",
+            "join_column": ""
+          },
+          {
+            "column": "path",
+            "op": "does-not-contain",
+            "value": "/admin",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "column": "request_time",
+            "order": "descending"
+          }
+        ],
+        "limit": 100,
+        "time_range": 604800,
+        "granularity": 3600
+      },
+      "query_id": "2vgP1rvCAZb",
+      "query_annotation_id": "eziPnjmzFyw",
+      "query_style": "table"
+    },
+    {
+      "dataset": "ingress-nginx",
+      "query": {
+        "breakdowns": [
+          "status"
+        ],
+        "calculations": [
+          {
+            "column": "request_time",
+            "op": "HEATMAP"
+          },
+          {
+            "op": "COUNT"
+          }
+        ],
+        "filters": [
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "synthetic-monitoring",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "!=",
+            "value": "Varnish/fastly (healthcheck)",
+            "join_column": ""
+          },
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "Pingdom",
+            "join_column": ""
+          },
+          {
+            "column": "path",
+            "op": "contains",
+            "value": "mp3",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "time_range": 604800,
+        "granularity": 3600
+      },
+      "query_id": "rfCnJuQcktc",
+      "query_annotation_id": "oN7Yy2tC2i5",
+      "query_style": "graph"
+    },
+    {
+      "dataset": "ingress-nginx",
+      "query": {
+        "breakdowns": [
+          "path",
+          "http_user_agent"
+        ],
+        "calculations": [
+          {
+            "op": "COUNT"
+          }
+        ],
+        "filters": [
+          {
+            "column": "http_user_agent",
+            "op": "does-not-contain",
+            "value": "Mozilla",
+            "join_column": ""
+          }
+        ],
+        "orders": [
+          {
+            "op": "COUNT",
+            "order": "descending"
+          }
+        ],
+        "limit": 10,
+        "time_range": 604800,
+        "granularity": 3600
+      },
+      "query_id": "HPpY8q6VvcJ",
+      "query_annotation_id": "x8PYoQWV56Y",
+      "query_style": "graph"
+    }
+  ],
+  "id": "qGFoG4oBrJ"
+}
