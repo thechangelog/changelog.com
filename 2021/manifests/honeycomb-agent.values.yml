@@ -1,28 +1,41 @@
 
 honeycomb:
   # Specify your Honeycomb API KEY to send events
-  apiKey: ""
+  apiKey: YOUR_API_KEY
   # Specify host URL to send all events to
   apiHost: https://api.honeycomb.io/
   # Specify the name of an existing secret resource containing your Honeycomb API KEY instead of having a secret resource created
   existingSecret: ""
 
 watchers:
-  - dataset: kubernetes-logs
-    labelSelector: component=kube-controller-manager
-    namespace: kube-system
-    parser: glog
-  - dataset: kubernetes-logs
-    labelSelector: component=kube-scheduler
-    namespace: kube-system
-    parser: glog
+  # - dataset: kubernetes-logs
+  #   labelSelector: "component=kube-apiserver,tier=control-plane"
+  #   namespace: kube-system
+  #   parser: glog
+  # - dataset: kubernetes-logs
+  #   labelSelector: "component=kube-scheduler,tier=control-plane"
+  #   namespace: kube-system
+  #   parser: glog
+  # - dataset: kubernetes-logs
+  #   labelSelector: "component=kube-controller-manager,tier=control-plane"
+  #   namespace: kube-system
+  #   parser: glog
+  # - dataset: kubernetes-logs
+  #   labelSelector: "k8s-app=kube-proxy"
+  #   namespace: kube-system
+  #   parser: glog
+  # - dataset: kubernetes-logs
+  #   labelSelector: "k8s-app=kube-dns"
+  #   namespace: kube-system
+  #   parser: glog
   - dataset: ingress-nginx
     labelSelector: app.kubernetes.io/name=ingress-nginx
     namespace: ingress-nginx
     parser: json
 
+# Disable metrics to make room for Fastly events
 metrics:
-  enabled: true
+  enabled: false
   dataset: kubernetes-metrics
   clusterName: k8s-cluster
   metricGroups:

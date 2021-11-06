@@ -1,5 +1,5 @@
 HONEYCOMB_AGENT_RELEASES := https://github.com/honeycombio/helm-charts/releases
-HONEYCOMB_AGENT_VERSION := 1.0.4
+HONEYCOMB_AGENT_VERSION := 1.1.0
 HONEYCOMB_AGENT_DIR := $(CURDIR)/tmp/honeycomb-agent-$(HONEYCOMB_AGENT_VERSION)
 
 .PHONY: releases-honeycomb-agent
@@ -12,12 +12,13 @@ $(HONEYCOMB_AGENT_DIR):
 	  https://github.com/honeycombio/helm-charts.git $(@)
 tmp/honeycomb-agent: $(HONEYCOMB_AGENT_DIR)
 
-lke-honeycomb-agent: | $(HONEYCOMB_AGENT_DIR) lke-ctx $(HELM)
+HONEYCOMB_API_KEY = $$($(LPASS) show --notes Shared-changelog/secrets/HONEYCOMB_API_KEY)
+lke-honeycomb-agent: | $(HONEYCOMB_AGENT_DIR) lke-ctx $(HELM) $(LPASS)
 	$(HELM) upgrade honeycomb $(HONEYCOMB_AGENT_DIR)/charts/honeycomb \
 	  --install \
 	  --namespace honeycomb --create-namespace \
 	  --values $(CURDIR)/manifests/honeycomb-agent.values.yml \
-	  --set honeycomb.apiKey="$$($(LPASS) show --notes Shared-changelog/secrets/HONEYCOMB_API_KEY)" \
+	  --set honeycomb.apiKey="$(HONEYCOMB_API_KEY)" \
 	  --set metrics.clusterName=$(LKE_LABEL)
 
 lke-bootstrap:: | lke-honeycomb-agent
