@@ -8,12 +8,14 @@ platform_alt = $(platform)
 endif
 MAKEFILE := $(firstword $(MAKEFILE_LIST))
 
-# https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
-RED := $(shell tput setaf 1)
-GREEN := $(shell tput setaf 2)
-YELLOW := $(shell tput setaf 3)
-BOLD := $(shell tput bold)
-NORMAL := $(shell tput sgr0)
+# https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
+GREY := \033[0;37m
+RED := \033[0;31m
+GREEN := \033[0;32m
+YELLOW := \033[0;33m
+BOLD := \033[1m
+NORMAL := \033[0m
+RESET := \033[0m
 
 MANIFESTS := $(CURDIR)/manifests
 
