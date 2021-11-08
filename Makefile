@@ -285,7 +285,7 @@ howto-upgrade-elixir:
 	@printf "1/7. Update $(BOLD)docker/Dockerfile.runtime$(NORMAL) to use an image from the URL above, then run $(BOLD)make runtime-image$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "2/7. Update $(BOLD)docker/Dockerfile.production$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
 	@printf "3/7. Update $(BOLD).circleci/config.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
-	@printf "4/7. Update $(BOLD).github/workflows/test.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "4/7. Update $(BOLD)2021/dagger/ci/ci.cue$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
 	@printf "5/7. Update $(BOLD)dev_docker/changelog.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
 	@printf "6/7. Commit and push everything\n" ; read -rp " $(DONE)" -n 1
 	@printf "7/7. Watch the pipeline succeed and publish an app container image with the updated version of Elixir $(BOLD)$(BLUE)https://app.circleci.com/pipelines/github/thechangelog/changelog.com$(NORMAL)\n" ; read -rp " $(DONE)" -n 1

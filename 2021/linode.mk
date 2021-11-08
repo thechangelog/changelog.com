@@ -41,11 +41,10 @@ LKE_NODE_COUNT ?= 1
 $(LKE_CONFIGS):
 	mkdir -p $(LKE_CONFIGS)
 
-LINODE_CLI_TOKEN ?= $(shell $(LPASS) show --notes Shared-changelog/secrets/LINODE_CLI_TOKEN)
-export LINODE_CLI_TOKEN
 env:: | $(LPASS)
-	@$(LPASS) status --quiet || $(LPASS) login
-	@echo 'export LINODE_CLI_TOKEN="$(LINODE_CLI_TOKEN)"'
+	@$(LPASS) status --quiet \
+	|| ( printf "$(RED)LastPass session expired, run $(BOLD)lpass login <YOUR_EMAIL_ADDRESS>$(NORMAL)\n" ; exit 1 )
+	@echo 'export LINODE_CLI_TOKEN="$(shell $(LPASS) show --notes Shared-changelog/secrets/LINODE_CLI_TOKEN)"'
 
 ifeq ($(PLATFORM),Darwin)
 # Use Python3 for all Python-based CLIs, such as linode-cli

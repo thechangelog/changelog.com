@@ -1,0 +1,41 @@
+name: Prod image
+
+on:
+  push:
+    branches:
+  workflow_dispatch:
+
+env:
+  DOCKER_HOST: "tcp://100.113.182.91:2375"
+  OTEL_EXPORTER_JAEGER_ENDPOINT: "http://100.113.182.91:14268/api/traces"
+
+jobs:
+  build_test_ship:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code...
+        uses: actions/checkout@v2
+
+      - name: Install Dagger...
+        uses: dagger/dagger-action@v1
+        with:
+          # ⚠️  Keep this in sync with 2021/dagger.mk
+          version: 0.1.0-alpha.31
+          age-key: ${{ secrets.DAGGER_AGE_KEY }}
+          args: version
+
+      - name: Configure Tailscale tunnel for remote Docker Engine...
+        uses: tailscale/github-action@v1
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+
+      - name: Run prod_image environment with Dagger on remote Docker Engine...
+        run: |
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text docker_host "$DOCKER_HOST" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text git_branch "$GITHUB_REF_NAME" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text git_sha "$GITHUB_SHA" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text git_author "$GITHUB_ACTOR" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text app_version "$(date -u +'%y.%-m.%-d+')$GITHUB_SHA" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text build_version "$(date -u +'%Y-%m-%dT%H.%M.%SZ')" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text build_url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger up --environment prod_image --log-format plain

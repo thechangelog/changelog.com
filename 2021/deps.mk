@@ -29,7 +29,7 @@ $(CURL):
 endif
 
 K9S_RELEASES := https://github.com/derailed/k9s/releases
-K9S_VERSION := 0.24.15
+K9S_VERSION := 0.25.6
 K9S_BIN_DIR := $(LOCAL_BIN)/k9s-$(K9S_VERSION)-$(platform)-x86_64
 K9S_URL := $(K9S_RELEASES)/download/v$(K9S_VERSION)/k9s_$(platform)_x86_64.tar.gz
 K9S := $(K9S_BIN_DIR)/k9s
@@ -136,21 +136,3 @@ envsubst: $(ENVSUBST)
 .PHONY: releases-envsubst
 releases-envsubst:
 	$(OPEN) $(ENVSUBST_RELEASES)
-
-GH_RELEASES := https://github.com/cli/cli/releases
-GH_VERSION := 2.2.0
-GH_DIR := $(LOCAL_BIN)/gh_$(GH_VERSION)_$(platform_alt)_amd64
-GH_URL := $(GH_RELEASES)/download/v$(GH_VERSION)/$(notdir $(GH_DIR)).tar.gz
-GH := $(GH_DIR)/bin/gh
-$(GH): | $(CURL) $(LOCAL_BIN)
-	$(CURL) --progress-bar --fail --location --output $(GH_DIR).tar.gz $(GH_URL)
-	tar zxf $(GH_DIR).tar.gz -C $(LOCAL_BIN)
-	touch $(GH)
-	chmod +x $(GH)
-	$(GH) version | grep $(GH_VERSION)
-	ln -sf $(GH) $(LOCAL_BIN)/gh
-.PHONY: gh
-gh: $(GH)
-.PHONY: releases-gh
-releases-gh:
-	$(OPEN) $(GH_RELEASES)

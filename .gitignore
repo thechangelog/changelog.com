@@ -65,3 +65,6 @@ bin
 
 # Postgres DB dump
 /db-*
+
+# Dagger lock files
+dagger.lock

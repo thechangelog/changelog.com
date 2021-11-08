@@ -1,4 +1,5 @@
 .circleci
+.dagger
 .git
 .github
 2021
@@ -6,6 +7,7 @@
 _build/dev
 _build/test
 assets/node_modules
+cue.mod
 dev_docker
 docker
 import
@@ -13,7 +15,6 @@ nginx
 priv/db
 priv/uploads
 script
-test
 tmp
 .all-contributorsrc
 .autocomplete*
@@ -24,7 +25,8 @@ tmp
 .env
 .gitattributes
 .gitignore
-.kube
+README.md
 coveralls.json
 start_dev_stack.sh
+.kube
 erl_crash.dump
