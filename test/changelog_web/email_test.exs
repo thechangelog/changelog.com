@@ -37,9 +37,11 @@ defmodule ChangelogWeb.EmailTest do
   end
 
   test "episode published", %{person: person} do
-    podcast = build(:podcast)
-    sub = build(:subscription_on_podcast, id: 1, person: person, podcast: podcast)
-    episode = build(:published_episode, podcast: podcast)
+    # this test needs to insert records for recommendation retrieval
+    person = insert(person)
+    podcast = insert(:podcast)
+    sub = insert(:subscription_on_podcast, id: 1, person: person, podcast: podcast)
+    episode = insert(:published_episode, podcast: podcast)
     email = Email.episode_published(sub, episode)
 
     assert email.to == person
