@@ -6,7 +6,6 @@
 _build/dev
 _build/test
 assets/node_modules
-deps
 dev_docker
 docker
 import
