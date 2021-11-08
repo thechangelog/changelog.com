@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/admin.css") %>">
   </head>
 
-  <body data-module="<%= @view_module %>" data-template="<%= @view_template %>">
+  <body
+    data-module="<%= Phoenix.Controller.view_module(@conn) %>"
+    data-template="<%= Phoenix.Controller.view_template(@conn) %>"
+  >
     <div class="ui fixed menu <%= get_flash(@conn, :result) %>">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
     <%= if Policies.AdminsOnly.index(@current_user) do %>
