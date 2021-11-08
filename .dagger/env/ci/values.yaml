@@ -1,0 +1,118 @@
+plan:
+    package: ./2021/dagger/ci
+name: ci
+inputs:
+    app:
+        dir:
+            path: .
+            exclude:
+                - .circleci
+                - .dagger
+                - .git
+                - .github
+                - "2021"
+                - "2022"
+                - _build/dev
+                - _build/test
+                - assets/node_modules
+                - cue.mod
+                - dev_docker
+                - docker
+                - import
+                - nginx
+                - priv/db
+                - priv/uploads
+                - script
+                - tmp
+                - .all-contributorsrc
+                - .autocomplete
+                - .credo.exs
+                - .dockerignore
+                - .formatter.exs
+                - .envrc
+                - .env
+                - .gitattributes
+                - .gitignore
+                - README.md
+                - coveralls.json
+                - start_dev_stack.sh
+                - .kube
+                - erl_crash.dump
+                - deps
+                - _build
+    app_version:
+        text: 21.12.6+544413fd8200af237cfa22785f40e8e8460dc508
+    build_url:
+        text: https://circleci.com/gh/thechangelog/changelog.com
+    build_version:
+        text: 21.12.6+544413fd8200af237cfa22785f40e8e8460dc508
+    docker_host:
+        text: tcp://100.113.182.91:2375
+    dockerhub_password:
+        secret: ENC[AES256_GCM,data:r7QuEX2gWUrUlHGq1ppRwIIqRA==,iv:36857PCzs4wqJ/MOWEuicI3noqrRI9ViTur7F2iJGO8=,tag:cDy73Gn3h7nJd6F8TmOfnw==,type:str]
+    dockerhub_username:
+        text: gerhard
+    git_author:
+        text: gerhard
+    git_sha:
+        text: 544413fd8200af237cfa22785f40e8e8460dc508
+    prod_dockerfile:
+        text: |
+            FROM thechangelog/legacy_assets AS legacy_assets
+            FROM thechangelog/runtime:2021-05-29T10.17.12Z
+
+            RUN mkdir /app
+            COPY /app /app
+            WORKDIR /app
+            RUN echo "Ensure deps are present & OK..." \
+                ; ls -lahd deps/*
+            RUN echo "Ensure prod bytecode is present & OK..." \
+                ; ls -lahd _build/prod/lib/*/ebin
+            RUN echo "Ensure prod static assets are present & OK..." \
+                ; ls -lah priv/static/cache_manifest.json
+
+            COPY --from=legacy_assets /var/www/wp-content /app/priv/wp-content
+
+            ENV MIX_ENV=prod
+            ENV TERM=xterm
+
+            # Used by PromEx for annotations
+            ARG GIT_AUTHOR
+            ENV GIT_AUTHOR=${GIT_AUTHOR}
+            ARG GIT_SHA
+            ENV GIT_SHA=${GIT_SHA}
+            ARG APP_VERSION
+            ENV APP_VERSION=${APP_VERSION}
+
+            ARG BUILD_URL
+            ENV BUILD_URL=${BUILD_URL}
+            # Used by various tooling to report the identity & origin of this build
+            RUN echo "$GIT_SHA" > priv/static/version.txt \
+                ; echo "$GIT_AUTHOR" > COMMIT_USER \
+                ; echo "$BUILD_URL" > priv/static/build.txt
+
+            EXPOSE 4000
+
+            CMD make on-app-start; mix do ecto.create, ecto.migrate, phx.server
+    run_test:
+        bool: "true"
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1ag8qa42h7up3p3xngup00ps36uvyek59ppc9z4wxq7rwk4pjcaus4aya7l
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA4YU5hQWJOWjRUWWhPbW5N
+            cWpGQWZYbDgxM3U2RTdjczlqRUJBUGtEOVZrCnZZRUNEQm05Umlna3ppZFkyVVp2
+            M0djSXYweHNMaHMxQ0ZBVllJSjlnODQKLS0tIDVZQ1JuSWk1VGNocTUzVmhzQWNG
+            SFBZOXNza3hNbXp0aVpZYnhhaXlDcEUKaQ351RlAs8TXZoFr4Y7bwM+wqndfsaGK
+            zQfR4vq/MeR+l4S2rq+WfHN21CRNGTbVUkZUhkAVhcEniDuzeMeGSA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-12-06T22:38:13Z"
+    mac: ENC[AES256_GCM,data:2tqhAWc0fhw8ZwhTaRjR5vNF0LDIjVnG526zw750NhYKK1UbYmyQLFXX10WIhnK6yYmMmRR6A4QPHdcwxqCjz8YMFsqkpq+Lbtpj6HyJ9nS8RtKz5JN2+oc16v0S3eqRlr4jky6L8HKAQXRFOLy6lwbDAV5p1LaLLtbsGTroxTE=,iv:/fZUbTYUd519kMXzWenunMLusPW0YuJnlvQ48jAP444=,tag:daQ285FSxCZWfKYTm/XD4g==,type:str]
+    pgp: []
+    encrypted_suffix: secret
+    version: 3.7.1
