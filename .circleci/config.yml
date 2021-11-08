@@ -110,12 +110,6 @@ jobs:
       - restore_cache: *deps_cache
       - restore_cache: *build_cache
       - restore_cache: *assets_cache
-      - run:
-          name: Write build identifiers
-          command: |
-            echo "$CIRCLE_SHA1" | tee COMMIT_SHA priv/static/version.txt
-            echo "$CIRCLE_USERNAME" | tee COMMIT_USER
-            echo "$CIRCLE_BUILD_URL" | tee BUILD_URL priv/static/build.txt
       - setup_remote_docker:
           version: 18.06.0-ce
       - run:
@@ -125,6 +119,7 @@ jobs:
               --build-arg APP_VERSION="$(date -u +'%y.%-m.%-d')+${CIRCLE_SHA1:0:7}" \
               --build-arg GIT_SHA="$CIRCLE_SHA1" \
               --build-arg GIT_AUTHOR="$CIRCLE_USERNAME" \
+              --build-arg BUILD_URL="$CIRCLE_BUILD_URL" \
               --tag thechangelog/changelog.com:$CIRCLE_SHA1 \
               --tag thechangelog/changelog.com:latest \
               --file docker/Dockerfile.production .
