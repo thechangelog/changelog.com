@@ -1,5 +1,5 @@
 # https://www.linode.com/docs/kubernetes/deploy-and-manage-lke-cluster-with-api-a-tutorial/
-LKE_CONFIGS := $(XDG_CONFIG_HOME)/.kube/configs
+LKE_CONFIGS := $(XDG_CONFIG_HOME)/kube/configs
 LKE_NAME ?= prod
 
 # This has been already created & will be enabled on: eval "$(make env)"
