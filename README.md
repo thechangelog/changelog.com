@@ -8,8 +8,8 @@ This is the CMS behind [changelog.com](https://changelog.com). It's an [Elixir](
 
 ## Dependencies
 
-- Elixir 1.8.2
-- Erlang/OTP 21
+- Elixir 1.12
+- Erlang/OTP 24
 
 ## Why is it open source?
 
