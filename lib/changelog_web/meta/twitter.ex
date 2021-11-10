@@ -1,19 +1,33 @@
 defmodule ChangelogWeb.Meta.Twitter do
   alias ChangelogWeb.{Endpoint, EpisodeView, PageView, PodcastView, PostView, Router.Helpers}
 
-  def twitter_card_type(%{view_module: EpisodeView, view_template: "show.html"}), do: "player"
+  def get(type, conn) do
+    view = Phoenix.Controller.view_module(conn)
+    template = Phoenix.Controller.view_template(conn)
+    assigns = Map.merge(conn.assigns, %{view_module: view, view_template: template})
 
-  def twitter_card_type(%{view_module: PageView, view_template: "ten.html"}),
+    case type do
+      :card_type -> card_type(assigns)
+      :player_url -> player_url(assigns)
+      :audio_url -> audio_url(assigns)
+    end
+  end
+
+  defp card_type(%{view_module: EpisodeView, view_template: "show.html"}), do: "player"
+
+  defp card_type(%{view_module: PageView, view_template: "ten.html"}),
     do: "summary_large_image"
 
-  def twitter_card_type(%{view_module: PodcastView}), do: "summary_large_image"
+  defp card_type(%{view_module: PodcastView}), do: "summary_large_image"
 
-  def twitter_card_type(%{view_module: PostView, post: %{image: img}}) when is_map(img),
+  defp card_type(%{view_module: PostView, post: %{image: img}}) when is_map(img),
     do: "summary_large_image"
 
-  def twitter_card_type(_), do: "summary"
+  defp card_type(assigns) do
+    "summary"
+  end
 
-  def twitter_player_url(%{
+  defp player_url(%{
         view_module: EpisodeView,
         view_template: "show.html",
         podcast: podcast,
@@ -22,11 +36,11 @@ defmodule ChangelogWeb.Meta.Twitter do
     Helpers.episode_url(Endpoint, :embed, podcast.slug, episode.slug, source: "twitter")
   end
 
-  def twitter_player_url(_), do: ""
+  defp player_url(_), do: ""
 
-  def twitter_audio_url(%{view_module: EpisodeView, view_template: "show.html", episode: episode}) do
+  defp audio_url(%{view_module: EpisodeView, view_template: "show.html", episode: episode}) do
     EpisodeView.audio_url(episode)
   end
 
-  def twitter_audio_url(_), do: ""
+  defp audio_url(_), do: ""
 end

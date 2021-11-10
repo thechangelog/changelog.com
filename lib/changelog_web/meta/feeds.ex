@@ -1,11 +1,17 @@
 defmodule ChangelogWeb.Meta.Feeds do
   alias ChangelogWeb.Router.Helpers, as: Routes
 
-  alias ChangelogWeb.{PostView}
+  alias ChangelogWeb.{Meta, PostView}
 
-  def rss_feeds(assigns), do: assigns |> get
+  def get(type, conn) do
+    assigns = Meta.prep_assigns(conn)
 
-  defp get(%{podcast: podcast}) do
+    case type do
+      :rss -> rss(assigns)
+    end
+  end
+
+  defp rss(%{podcast: podcast}) do
     shared() ++
       [
         %{
@@ -15,11 +21,11 @@ defmodule ChangelogWeb.Meta.Feeds do
       ]
   end
 
-  defp get(%{view_module: PostView}) do
+  defp rss(%{view_module: PostView}) do
     shared() ++ [%{url: Routes.feed_url(conn(), :posts), title: "Posts Feed"}]
   end
 
-  defp get(_), do: shared()
+  defp rss(_), do: shared()
 
   defp shared do
     [

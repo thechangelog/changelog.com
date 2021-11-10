@@ -6,12 +6,11 @@ defmodule ChangelogWeb.EpisodeView do
   alias ChangelogWeb.{
     Endpoint,
     LayoutView,
+    Meta,
     PersonView,
     PodcastView,
     SponsorView,
-    TimeView,
-    Meta.Title,
-    Meta.Description
+    TimeView
   }
 
   def admin_edit_link(conn, %{admin: true}, episode) do

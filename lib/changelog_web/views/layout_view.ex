@@ -2,15 +2,8 @@ defmodule ChangelogWeb.LayoutView do
   use ChangelogWeb, :public_view
 
   alias ChangelogWeb.Meta.{
-    AdminTitle,
-    Apple,
-    CanonicalUrl,
-    Description,
-    Feeds,
-    Image,
-    Title,
-    Twitter
+    Feeds
   }
 
-  alias ChangelogWeb.{Endpoint, PersonView}
+  alias ChangelogWeb.{Endpoint, Meta, PersonView}
 end

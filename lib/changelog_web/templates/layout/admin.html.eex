@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-    <title><%= AdminTitle.admin_page_title(assigns) %></title>
+    <title><%= Meta.AdminTitle.get(:page, @conn) %></title>
     <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/admin.css") %>">
   </head>
 
