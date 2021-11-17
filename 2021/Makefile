@@ -43,6 +43,7 @@ include $(CURDIR)/secrets.mk
 include $(CURDIR)/grafana-agent.mk
 include $(CURDIR)/honeycomb-agent.mk
 include $(CURDIR)/metrics-server.mk
+include $(CURDIR)/parca.mk
 include $(CURDIR)/external-dns.mk
 include $(CURDIR)/cert-manager.mk
 include $(CURDIR)/ingress-nginx.mk
