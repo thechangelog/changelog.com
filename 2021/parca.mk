@@ -26,3 +26,7 @@ lke-parca: | lke-ctx
 	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca-agent/releases/download/v$(PARCA_AGENT_VERSION)/kubernetes-manifest.yaml
 	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca/releases/download/v$(PARCA_SERVER_VERSION)/kubernetes-manifest.yaml
 lke-bootstrap:: | lke-parca
+
+.PHONY: lke-parca-delete
+lke-parca-delete: K_CMD = delete --ignore-not-found=true
+lke-parca-delete: lke-parca
