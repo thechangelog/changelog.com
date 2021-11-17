@@ -13,3 +13,16 @@
 # Interesting: https://www.erlang-solutions.com/blog/performance-testing-the-jit-compiler-for-the-beam-vm/
 #
 # Nice surprise: https://github.com/pyrra-dev/pyrra & https://demo.pyrra.dev/
+
+PARCA_SERVER_RELEASES := https://github.com/parca-dev/parca/releases
+PARCA_SERVER_VERSION := 0.4.2
+
+PARCA_AGENT_RELEASES := https://github.com/parca-dev/parca-agent/releases
+PARCA_AGENT_VERSION := 0.2.0
+
+.PHONY: lke-parca
+lke-parca: | lke-ctx
+	@printf "$(YELLOW)TODO: parca namespace does not need to be set up separately, it is captured in the manifest: $(BOLD)https://www.parca.dev/docs/kubernetes$(RESET)\n"
+	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca-agent/releases/download/v$(PARCA_AGENT_VERSION)/kubernetes-manifest.yaml
+	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca/releases/download/v$(PARCA_SERVER_VERSION)/kubernetes-manifest.yaml
+lke-bootstrap:: | lke-parca
