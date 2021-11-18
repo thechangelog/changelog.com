@@ -53,3 +53,9 @@ lke-parca-pr-132: | lke-ctx
 #
 #
 # Nice surprise (for another time): https://github.com/pyrra-dev/pyrra & https://demo.pyrra.dev/
+#
+#
+# Another surprise: https://github.com/parca-dev/parca-agent/blob/0327839ff8d58042c27f7588e61c73cba4b5b3b3/Dockerfile
+# Notice how Parca pins the apt sources, and then installs the packes with no versions, since the sources pin them.
+# This is the best way to ensure that anyone can reproduce the builds (to the byte!) that Parca distributes.
+# That is a big vote of trust & confidence @brancz!
