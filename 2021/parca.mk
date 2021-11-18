@@ -10,12 +10,10 @@ PARCA_SERVER_VERSION := 0.4.2
 PARCA_AGENT_RELEASES := https://github.com/parca-dev/parca-agent/releases
 PARCA_AGENT_VERSION := 0.2.0
 
-# https://github.com/parca-dev/parca-agent/pull/132
-PARCA_AGENT_132_EXPERIMENT_IMAGE := ghcr.io/parca-dev/parca-agent:v0.2.0-45-gdfa59a1
-
 .PHONY: lke-parca
 lke-parca: | lke-ctx
-	@printf "$(YELLOW)TODO: parca namespace does not need to be set up separately, it is captured in the manifest: $(BOLD)https://www.parca.dev/docs/kubernetes$(RESET)\n"
+	@printf "Create namespace to avoid any race conditions. $(BOLD)@brancz$(RESET) recommedation 👍\n"
+	$(KUBECTL) get namespace parca || $(KUBECTL) create namespace parca
 	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca-agent/releases/download/v$(PARCA_AGENT_VERSION)/kubernetes-manifest.yaml
 	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca/releases/download/v$(PARCA_SERVER_VERSION)/kubernetes-manifest.yaml
 lke-bootstrap:: | lke-parca
@@ -23,6 +21,12 @@ lke-bootstrap:: | lke-parca
 .PHONY: lke-parca-delete
 lke-parca-delete: K_CMD = delete --ignore-not-found=true
 lke-parca-delete: lke-parca
+
+# 
+.PHONY: lke-parca-pr-132
+lke-parca-pr-132: | lke-ctx
+	@printf "$(YELLOW)Try out PR #132: $(BOLD)https://github.com/parca-dev/parca-agent/pull/132$(RESET)\n"
+	$(KUBECTL) patch daemonset parca-agent --namespace parca --patch-file manifests/parca/pr-132-patch.yml
 
 # http://localhost:7070 (port forwarded to the server)
 #
