@@ -8,25 +8,29 @@ PARCA_SERVER_RELEASES := https://github.com/parca-dev/parca/releases
 PARCA_SERVER_VERSION := 0.4.2
 
 PARCA_AGENT_RELEASES := https://github.com/parca-dev/parca-agent/releases
-PARCA_AGENT_VERSION := 0.2.0
+PARCA_AGENT_VERSION := 0.3.0
 
 .PHONY: lke-parca
 lke-parca: | lke-ctx
 	@printf "Create namespace to avoid any race conditions. $(BOLD)@brancz$(RESET) recommedation 👍\n"
 	$(KUBECTL) get namespace parca || $(KUBECTL) create namespace parca
+	@printf "\n$(BOLD)Install Parca agent$(RESET)\n"
 	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca-agent/releases/download/v$(PARCA_AGENT_VERSION)/kubernetes-manifest.yaml
+	@printf "\n$(BOLD)Install parca server$(RESET)\n"
 	$(KUBECTL) $(K_CMD) --filename https://github.com/parca-dev/parca/releases/download/v$(PARCA_SERVER_VERSION)/kubernetes-manifest.yaml
+	@printf "$(YELLOW)Limit Parca server CPU & memory$(RESET)\n"
+	$(KUBECTL) patch deploy parca --namespace parca --patch-file manifests/parca/server-limits.patch.yml
 lke-bootstrap:: | lke-parca
 
 .PHONY: lke-parca-delete
 lke-parca-delete: K_CMD = delete --ignore-not-found=true
 lke-parca-delete: lke-parca
 
-# 
-.PHONY: lke-parca-pr-132
-lke-parca-pr-132: | lke-ctx
+.PHONY: lke-parca-erlang-profiles
+lke-parca-erlang-profiles: | lke-ctx
 	@printf "$(YELLOW)Try out PR #132: $(BOLD)https://github.com/parca-dev/parca-agent/pull/132$(RESET)\n"
-	$(KUBECTL) patch daemonset parca-agent --namespace parca --patch-file manifests/parca/pr-132-patch.yml
+	@printf "$(YELLOW)Try out PR #140: $(BOLD)https://github.com/parca-dev/parca-agent/pull/140$(RESET)\n"
+	$(KUBECTL) patch daemonset parca-agent --namespace parca --patch-file manifests/parca/erlang-profiles.patch.yml
 
 # http://localhost:7070 (port forwarded to the server)
 #
