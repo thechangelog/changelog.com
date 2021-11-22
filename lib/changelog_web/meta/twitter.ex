@@ -23,9 +23,7 @@ defmodule ChangelogWeb.Meta.Twitter do
   defp card_type(%{view_module: PostView, post: %{image: img}}) when is_map(img),
     do: "summary_large_image"
 
-  defp card_type(assigns) do
-    "summary"
-  end
+  defp card_type(_), do: "summary"
 
   defp player_url(%{
         view_module: EpisodeView,
