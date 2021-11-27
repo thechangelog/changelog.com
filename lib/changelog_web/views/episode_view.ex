@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EpisodeView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem}
+  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem, Podcast}
 
   alias ChangelogWeb.{
     Endpoint,
@@ -76,7 +76,13 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def audio_url(episode) do
-    Routes.static_url(Endpoint, audio_path(episode))
+    url = Routes.static_url(Endpoint, audio_path(episode))
+
+    if chartable = Podcast.chartable_id(episode.podcast) do
+      "https://chtbl.com/track/#{chartable}/#{url}"
+    else
+      url
+    end
   end
 
   def plusplus_url(episode) do

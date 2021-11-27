@@ -143,6 +143,9 @@ defmodule Changelog.Podcast do
     end)
   end
 
+  def chartable_id(%{slug: "practicalai"}), do: "A551A9"
+  def chartable_id(_podcast), do: nil
+
   def episode_count(podcast), do: podcast |> assoc(:episodes) |> Repo.count()
 
   def subscription_count(podcast), do: podcast |> assoc(:subscriptions) |> Repo.count()
