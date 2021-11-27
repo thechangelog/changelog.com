@@ -17,14 +17,17 @@ defmodule ChangelogWeb.VanityDomainsTest do
     name: "Go Time"
   }
 
-  def assert_vanity_redirect(conn, path_or_url) do
+  def assert_vanity_redirect(conn, path_or_url_or_regex) do
     location = conn |> get_resp_header("location") |> List.first()
     assert conn.status == 302
 
-    if String.starts_with?(path_or_url, "http") do
-      assert location == path_or_url
-    else
-      assert location == "https://#{ChangelogWeb.Endpoint.host()}#{path_or_url}"
+    cond do
+      # regex case
+      !is_binary(path_or_url_or_regex) -> assert String.match?(location, path_or_url_or_regex)
+      # path case
+      String.starts_with?(path_or_url_or_regex, "http") -> assert location == path_or_url_or_regex
+      # url case
+      true -> assert location == "https://#{ChangelogWeb.Endpoint.host()}#{path_or_url_or_regex}"
     end
   end
 
@@ -135,22 +138,20 @@ defmodule ChangelogWeb.VanityDomainsTest do
     assert_vanity_redirect(conn, "/guest/jsparty")
   end
 
-  test "vanity redirects for jsparty ff form" do
+  test "vanity redirects for typeforms" do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/ff")
       |> assign_podcasts([@gotime, @jsparty])
       |> Plug.VanityDomains.call([])
 
-    assert_vanity_redirect(conn, "https://changelog.typeform.com/to/WWOhHlmL")
-  end
+    assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
 
-  test "vanity redirects for gotime gs form" do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/gs")
       |> assign_podcasts([@gotime, @jsparty])
       |> Plug.VanityDomains.call([])
 
-    assert_vanity_redirect(conn, "https://changelog.typeform.com/to/QDP70iKO")
+    assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
   end
 
   test "vanity redirects for merch" do
