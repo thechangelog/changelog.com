@@ -64,8 +64,8 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
       assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
       assert count(NewsItem.published()) == 1
-      assert called(Buffer.queue(:_))
-      assert called(Algolia.save_object(:_, :_, :_))
+      wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
+      wait_for_passing(1000, fn -> assert called(Algolia.save_object(:_, :_, :_)) end)
     end
   end
 
