@@ -88,9 +88,9 @@ defmodule ChangelogWeb.EpisodeControllerTest do
 
     test "for published episode with prev and next", %{conn: conn} do
       p = insert(:podcast)
-      prev = insert(:published_episode, podcast: p, slug: "1")
-      e = insert(:published_episode, podcast: p, slug: "2")
-      next = insert(:published_episode, podcast: p, slug: "3")
+      prev = insert(:published_episode, podcast: p, slug: "1", published_at: hours_ago(3))
+      e = insert(:published_episode, podcast: p, slug: "2", published_at: hours_ago(2))
+      next = insert(:published_episode, podcast: p, slug: "3", published_at: hours_ago(1))
 
       conn = get(conn, Routes.episode_path(conn, :play, p.slug, e.slug))
       assert conn.status == 200
