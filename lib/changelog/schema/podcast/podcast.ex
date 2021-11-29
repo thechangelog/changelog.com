@@ -32,6 +32,7 @@ defmodule Changelog.Podcast do
     field :apple_url, :string
     field :spotify_url, :string
     field :riverside_url, :string
+    field :chartable_id, :string
     field :schedule_note, :string
     field :download_count, :float
     field :reach_count, :integer
@@ -87,7 +88,7 @@ defmodule Changelog.Podcast do
     podcast
     |> cast(
       attrs,
-      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords twitter_handle apple_url spotify_url riverside_url recorded_live partner position)a
+      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords twitter_handle apple_url spotify_url riverside_url chartable_id recorded_live partner position)a
     )
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http(), message: Regexp.http_message())
@@ -142,9 +143,6 @@ defmodule Changelog.Podcast do
       |> List.last()
     end)
   end
-
-  def chartable_id(%{slug: "practicalai"}), do: "A551A9"
-  def chartable_id(_podcast), do: nil
 
   def episode_count(podcast), do: podcast |> assoc(:episodes) |> Repo.count()
 

@@ -1,5 +1,5 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
-  <div class="three fields">
+  <div class="four fields">
     <div class="field required <%= AdminHelpers.error_class(f, :name) %>">
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "The Changelog") %>
@@ -11,6 +11,12 @@
       <%= select(f, :status, status_options(), class: "ui fluid dropdown") %>
     </div>
 
+    <div class="field required <%= AdminHelpers.error_class(f, :slug) %>">
+      <%= label(f, :slug) %>
+      <%= text_input(f, :slug, placeholder: "tcl", readonly: AdminHelpers.is_persisted(f.data)) %>
+      <%= AdminHelpers.error_message(f, :slug) %>
+    </div>
+
     <div class="field required <%= AdminHelpers.error_class(f, :position) %>">
       <%= label(f, :position) %>
       <%= select(f, :position, position_options(), class: "ui fluid dropdown") %>
@@ -18,11 +24,7 @@
   </div>
 
   <div class="three fields">
-    <div class="field required <%= AdminHelpers.error_class(f, :slug) %>">
-      <%= label(f, :slug) %>
-      <%= text_input(f, :slug, placeholder: "tcl", readonly: AdminHelpers.is_persisted(f.data)) %>
-      <%= AdminHelpers.error_message(f, :slug) %>
-    </div>
+    
 
     <div class="field <%= AdminHelpers.error_class(f, :vanity_domain) %>">
       <%= label(f, :vanity_domain, "Vanity Domain") %>
@@ -34,6 +36,11 @@
       <%= label(f, :twitter_handle, "On Twitter") %>
       <%= text_input(f, :twitter_handle, placeholder: "gracehopper") %>
       <%= AdminHelpers.error_message(f, :twitter_handle) %>
+    </div>
+
+    <div class="field <%= AdminHelpers.error_class(f, :chartable_id) %>">
+      <%= label(f, :chartable_id, "Chartable ID") %>
+      <%= text_input(f, :chartable_id, placeholder: "A551A9") %>
     </div>
   </div>
 
