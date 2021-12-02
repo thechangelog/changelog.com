@@ -8,16 +8,6 @@ defmodule ChangelogWeb.Endpoint do
 
   plug ChangelogWeb.Plug.HealthCheck
 
-  plug Plug.Static,
-    at: "/uploads",
-    from: {:changelog, "priv/uploads"},
-    gzip: false,
-    headers: %{
-      "accept-ranges" => "bytes",
-      "surrogate-control" =>
-        Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
-    }
-
   # Legacy assets that will exist in production & may exist in dev
   plug Plug.Static,
     at: "/wp-content",
@@ -29,6 +19,7 @@ defmodule ChangelogWeb.Endpoint do
         Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
     }
 
+  # TODO this may need to move to dev.exs now that prod serves static from S3
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest

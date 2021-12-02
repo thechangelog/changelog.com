@@ -11,6 +11,13 @@ config :changelog, ChangelogWeb.Endpoint,
   check_origin: false,
   watchers: [
     yarn: ["start", cd: Path.expand("../assets", __DIR__)]
+  ],
+  live_reload: [
+    patterns: [
+      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{lib/changelog_web/(live|views)/.*(ex)$},
+      ~r{lib/changelog_web/templates/.*(eex)$}
+    ]
   ]
 
 # Sometimes we need HTTPS, like when futzing with captchas
@@ -23,16 +30,6 @@ if System.get_env("HTTPS") do
       keyfile: "priv/cert/selfsigned_key.pem"
     ]
 end
-
-# Watch static and templates for browser reloading.
-config :changelog, ChangelogWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{lib/changelog_web/(live|views)/.*(ex)$},
-      ~r{lib/changelog_web/templates/.*(eex)$}
-    ]
-  ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
