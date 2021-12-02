@@ -1,0 +1,83 @@
+defmodule Changelog.S3Static do
+  require Logger
+
+  @doc "Functions for managing static files on S3"
+
+  @s3_path "static"
+  @app_path "priv/static"
+
+  def upload_static_files_to_s3 do
+    s3_bucket = SecretOrEnv.get("AWS_ASSETS_BUCKET")
+    static_path = Path.join(Application.app_dir(:changelog), @app_path)
+
+    static_path
+    |> local_files_from_manifest()
+    |> Enum.each(&put_file(s3_bucket, @s3_path, &1))
+  end
+
+  def delete_unused_files_from_s3 do
+    s3_bucket = SecretOrEnv.get("AWS_ASSETS_BUCKET")
+    static_path = Path.join(Application.app_dir(:changelog), @app_path)
+
+    latest_files =
+      static_path
+      |> local_files_from_manifest()
+      |> Enum.map(&Map.get(&1, :key))
+
+    s3_bucket
+    |> s3_files_from_bucket(@s3_path)
+    |> Enum.reject(fn s3_file ->
+      key = String.trim_leading(s3_file.key, "#{@s3_path}/")
+      Enum.member?(latest_files, key)
+    end)
+    |> Enum.each(&delete_file(s3_bucket, &1))
+  end
+
+  def local_files_from_manifest(path) do
+    path
+    |> Path.join("cache_manifest.json")
+    |> File.read!()
+    |> Phoenix.json_library().decode!()
+    |> Map.get("latest")
+    |> Map.values()
+    |> Enum.map(&%{key: &1, path: Path.join(path, &1)})
+  end
+
+  def s3_files_from_bucket(bucket, prefix) do
+    ExAws.S3.list_objects(bucket, prefix: prefix)
+    |> ExAws.request!()
+    |> get_in([:body, :contents])
+    |> Enum.reject(&is_s3_folder?/1)
+  end
+
+  defp put_file(bucket, prefix, file) do
+    if exists_on_s3?(bucket, prefix, file) do
+      Logger.info("Skipping #{file.key}")
+    else
+      Logger.info("Uploading #{file.key}")
+      key = Path.join(prefix, file.key)
+      data = File.read!(file.path)
+      ExAws.request(ExAws.S3.put_object(bucket, key, data))
+    end
+  end
+
+  defp delete_file(bucket, file) do
+    Logger.info("Deleting #{file.key}")
+    ExAws.request(ExAws.S3.delete_object(bucket, file.key))
+  end
+
+  defp is_s3_folder?(%{size: "0"}), do: true
+  defp is_s3_folder?(_object), do: false
+
+  defp exists_on_s3?(bucket, prefix, file) when is_map(file),
+    do: exists_on_s3?(bucket, prefix, file.key)
+
+  defp exists_on_s3?(bucket, prefix, file) do
+    key = Path.join(prefix, file)
+
+    case ExAws.request(ExAws.S3.head_object(bucket, key)) do
+      {:ok, %{status_code: 200}} -> true
+      {:error, _} -> false
+    end
+  end
+end
