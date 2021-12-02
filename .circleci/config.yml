@@ -94,7 +94,7 @@ jobs:
           name: Digest static assets
           command: |
             export MIX_ENV=prod
-            mix phx.digest
+            mix phx.digest --no-vsn
       - save_cache:
           name: Cache static assets
           key: *assets_key

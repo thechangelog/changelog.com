@@ -10,9 +10,12 @@ config :changelog, ChangelogWeb.Endpoint,
   static_url: [
     scheme: System.get_env("STATIC_URL_SCHEME", "https"),
     host: System.get_env("STATIC_URL_HOST", "cdn.changelog.com"),
-    port: System.get_env("STATIC_URL_PORT", "443")
+    port: System.get_env("STATIC_URL_PORT", "443"),
+    path: "/static"
   ],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  # we don't need vsn=?d because Plug.Static doesn't serve static assets in prod
+  cache_manifest_skip_vsn: true
 
 if System.get_env("HTTPS") do
   config :changelog, ChangelogWeb.Endpoint,
