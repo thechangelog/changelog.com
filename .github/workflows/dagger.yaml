@@ -16,4 +16,4 @@ jobs:
         uses: dagger/dagger-action@v1
         with:
           age-key: ${{ secrets.DAGGER_AGE_KEY }}
-          args: up --environment ci
+          args: up --environment ci --log-format auto
