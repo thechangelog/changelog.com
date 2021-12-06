@@ -12,8 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Up
+      - name: Install Dagger
         uses: dagger/dagger-action@v1
         with:
           age-key: ${{ secrets.DAGGER_AGE_KEY }}
-          args: up --environment ci --log-format auto
+          args: version
+
+      - name: Up
+        run: |
+          /opt/hostedtoolcache/dagger/*/x64/dagger up --environment ci
