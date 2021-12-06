@@ -215,7 +215,7 @@ image_prod_cache: docker.#Build & {
 		"""
 }
 
-image_prod: docker.#Command & {
+image_prod: docker2.#Command & {
 	host: docker_host
 	copy: {
 		"/tmp/app": from: os.#Dir & {
