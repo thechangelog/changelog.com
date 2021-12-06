@@ -15,6 +15,7 @@ jobs:
       - name: Install Dagger
         uses: dagger/dagger-action@v1
         with:
+          age-key: ${{ secrets.DAGGER_AGE_KEY }}
           install-only: true
 
       - name: Up
