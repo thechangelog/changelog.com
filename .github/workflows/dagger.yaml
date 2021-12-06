@@ -16,7 +16,7 @@ jobs:
         uses: dagger/dagger-action@v1
         with:
           age-key: ${{ secrets.DAGGER_AGE_KEY }}
-          install-only: true
+          args: version
 
       - name: Up
         run: dagger up --environment ci
