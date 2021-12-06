@@ -1,0 +1,19 @@
+name: Dagger
+
+on:
+  push:
+    branches:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Up
+        uses: dagger/dagger-action@v1
+        with:
+          age-key: ${{ secrets.DAGGER_AGE_KEY }}
+          args: up --environment ci
