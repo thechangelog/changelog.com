@@ -31,4 +31,4 @@ jobs:
         run: |
           echo "Use local dev dagger until > 0.1.0-alpha.30 ships..."
           echo "# /opt/hostedtoolcache/dagger/*/x64/dagger up --environment ci"
-          ./dagger up --environment ci
+          ./dagger up --environment ci --log-format plain
