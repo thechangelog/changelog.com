@@ -1,4 +1,4 @@
-name: Dagger
+name: Build, test & create production container image
 
 on:
   push:
@@ -10,24 +10,24 @@ env:
   OTEL_EXPORTER_JAEGER_ENDPOINT: "http://100.113.182.91:14268/api/traces"
 
 jobs:
-  deploy:
+  ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout code...
         uses: actions/checkout@v2
 
-      - name: Install Dagger
+      - name: Install Dagger...
         uses: dagger/dagger-action@v1
         with:
           age-key: ${{ secrets.DAGGER_AGE_KEY }}
           args: version
 
-      - name: Configure Tailscale tunnel for Docker Daemon
+      - name: Configure Tailscale tunnel for remote Docker Engine...
         uses: tailscale/github-action@v1
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
 
-      - name: Up
+      - name: Run CI plan with Dagger on remote Docker Engine...
         run: |
           echo "Use local dev dagger until > 0.1.0-alpha.30 ships..."
           echo "# /opt/hostedtoolcache/dagger/*/x64/dagger up --environment ci"
