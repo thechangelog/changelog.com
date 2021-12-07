@@ -40,12 +40,13 @@ inputs:
                 - erl_crash.dump
                 - deps
                 - _build
+                - dagger
     app_version:
-        text: 21.12.6+544413fd8200af237cfa22785f40e8e8460dc508
+        text: 21.12.7+c54db7d2511493ec3cb91e68b8ac751b21ac409e
     build_url:
         text: https://circleci.com/gh/thechangelog/changelog.com
     build_version:
-        text: 21.12.6+544413fd8200af237cfa22785f40e8e8460dc508
+        text: 21.12.7+c54db7d2511493ec3cb91e68b8ac751b21ac409e
     docker_host:
         text: tcp://100.113.182.91:2375
     dockerhub_password:
@@ -55,7 +56,7 @@ inputs:
     git_author:
         text: gerhard
     git_sha:
-        text: 544413fd8200af237cfa22785f40e8e8460dc508
+        text: c54db7d2511493ec3cb91e68b8ac751b21ac409e
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
@@ -111,8 +112,8 @@ sops:
             SFBZOXNza3hNbXp0aVpZYnhhaXlDcEUKaQ351RlAs8TXZoFr4Y7bwM+wqndfsaGK
             zQfR4vq/MeR+l4S2rq+WfHN21CRNGTbVUkZUhkAVhcEniDuzeMeGSA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2021-12-06T22:38:13Z"
-    mac: ENC[AES256_GCM,data:2tqhAWc0fhw8ZwhTaRjR5vNF0LDIjVnG526zw750NhYKK1UbYmyQLFXX10WIhnK6yYmMmRR6A4QPHdcwxqCjz8YMFsqkpq+Lbtpj6HyJ9nS8RtKz5JN2+oc16v0S3eqRlr4jky6L8HKAQXRFOLy6lwbDAV5p1LaLLtbsGTroxTE=,iv:/fZUbTYUd519kMXzWenunMLusPW0YuJnlvQ48jAP444=,tag:daQ285FSxCZWfKYTm/XD4g==,type:str]
+    lastmodified: "2021-12-07T01:34:00Z"
+    mac: ENC[AES256_GCM,data:xk5HZsg/lsUczTrNYj6pwg2zsOjtjNc9Rt2gcL5k2FLiI3IKcGX8e8nkmaIwgSOcvFj/+K+n2DRKsGIlyEeLwbLrhszbssxds1fj2b19zT8GBkHbNFlmcb1lj9sVzKID0mZOGPTdOrw1kwsV41Aat8/rNzQU8b8firQYDRfL1g0=,iv:w57Y6KFRlpzbM3UD4nnqUHzg/kO3JllyBmWceaMVQr4=,tag:x3X/TVXofblJuS617sMGHg==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1

@@ -6,7 +6,6 @@ import (
 	"alpha.dagger.io/dagger"
 	"alpha.dagger.io/docker"
 	"alpha.dagger.io/os"
-	"github.com/thechangelog/dagger/docker2"
 )
 
 app:                    dagger.#Artifact
@@ -72,7 +71,7 @@ run_test:               dagger.#Input & {bool}
 //
 // #############################################################################
 
-test_db_start: docker2.#Command & {
+test_db_start: docker.#Command & {
 	host: docker_host
 	env: {
 		CONTAINER_NAME:  test_db_container_name
@@ -158,7 +157,7 @@ test: os.#Container & {
 	dir:     "/app"
 }
 
-test_db_stop: docker2.#Command & {
+test_db_stop: docker.#Command & {
 	host: docker_host
 	env: {
 		DEP:            test.env.MIX_ENV
@@ -215,7 +214,7 @@ image_prod_cache: docker.#Build & {
 		"""
 }
 
-image_prod: docker2.#Command & {
+image_prod: docker.#Command & {
 	host: docker_host
 	copy: {
 		"/tmp/app": from: os.#Dir & {

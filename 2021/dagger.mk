@@ -74,7 +74,7 @@ endef
 .PHONY: dagger-ci
 dagger-ci: $(DAGGER_ENV)/ci
 	@printf "$(BOLD)TODO$(RESET) $(MAGENTA)Document multiple $(BOLD)--exclude$(RESET)$(MAGENTA) statements$(RESET)\n"
-	$(DAGGER_CTX) input dir app . $(shell $(_convert_dockerignore_to_excludes)) --exclude deps --exclude _build --environment ci
+	$(DAGGER_CTX) input dir app . $(shell $(_convert_dockerignore_to_excludes)) --exclude deps --exclude _build --exclude dagger --environment ci
 	$(DAGGER_CTX) input text prod_dockerfile --file docker/Dockerfile.production --environment ci
 	$(DAGGER_CTX) input bool run_test $(RUN_TEST) --environment ci
 	$(DAGGER_CTX) input text git_sha $(GIT_SHA) --environment ci
