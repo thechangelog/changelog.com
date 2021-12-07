@@ -7,6 +7,7 @@ on:
 
 env:
   DOCKER_HOST: "tcp://100.113.182.91:2375"
+  OTEL_EXPORTER_JAEGER_ENDPOINT: "http://100.113.182.91:14268/api/traces"
 
 jobs:
   deploy:
