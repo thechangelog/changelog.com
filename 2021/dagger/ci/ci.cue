@@ -8,18 +8,20 @@ import (
 	"alpha.dagger.io/os"
 )
 
-app:                    dagger.#Artifact
-prod_dockerfile:        dagger.#Input & {string}
-docker_host:            dagger.#Input & {string}
-dockerhub_username:     dagger.#Input & {string}
-dockerhub_password:     dagger.#Input & {dagger.#Secret}
-runtime_image_ref:      dagger.#Input & {string | *"thechangelog/runtime:2021-05-29T10.17.12Z"}
-prod_image_ref:         dagger.#Input & {string | *"thechangelog/changelog.com:dagger"}
-build_version:          dagger.#Input & {string}
-git_sha:                dagger.#Input & {string}
-git_author:             dagger.#Input & {string}
-app_version:            dagger.#Input & {string}
-build_url:              dagger.#Input & {string}
+app:                dagger.#Artifact
+prod_dockerfile:    dagger.#Input & {string}
+docker_host:        dagger.#Input & {string}
+dockerhub_username: dagger.#Input & {string}
+dockerhub_password: dagger.#Input & {dagger.#Secret}
+// Keep this in sync with ../docker/Dockerfile.production
+runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2021-05-29T10.17.12Z"}
+prod_image_ref:    dagger.#Input & {string | *"thechangelog/changelog.com:dagger"}
+build_version:     dagger.#Input & {string}
+git_sha:           dagger.#Input & {string}
+git_author:        dagger.#Input & {string}
+app_version:       dagger.#Input & {string}
+build_url:         dagger.#Input & {string}
+// Keep this in sync with manifests/changelog/db.yml
 test_db_image_ref:      dagger.#Input & {string | *"circleci/postgres:12.6"}
 test_db_container_name: "changelog_test_postgres"
 run_test:               dagger.#Input & {bool}
