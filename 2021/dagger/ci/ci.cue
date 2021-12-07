@@ -26,16 +26,12 @@ test_db_image_ref:      dagger.#Input & {string | *"circleci/postgres:12.6"}
 test_db_container_name: "changelog_test_postgres"
 run_test:               dagger.#Input & {bool}
 
-// TODO ########################################################################
-//
-// - integrate with GitHub Actions
-// - git commit image digest only if test passes
-
 // STORY #######################################################################
 //
 // 1. Migrate from CircleCI to GitHub Actions
-//    - extract pipeline into Dagger
+//    - extract existing build pipeline into Dagger
 //    - run the pipeline locally
+//    - run the pipeline in GitHub Actions
 //
 // 2. Pipeline is up to 9x quicker (40s vs 370s)
 //    - optimistic branching, as pipelines were originally intended

@@ -3,8 +3,10 @@
 # DAGGER_URL := $(DAGGER_RELEASES)/download/v$(DAGGER_VERSION)/dagger-$(platform)-amd64
 # DAGGER := $(LOCAL_BIN)/$(DAGGER_BIN)
 
+# TODO: download this from https://dl.dagger.io/, same as dagger-action:
+# https://github.com/dagger/dagger-action/blob/17d1f37e8b199e7b4072cfb36548605b2dc8b4c7/dist/index.js#L108
 DAGGER_RELEASES := https://github.com/dagger/dagger/releases
-DAGGER_VERSION := 0.1.0-alpha.30
+DAGGER_VERSION := 0.1.0-alpha.31
 DAGGER_DIR := $(LOCAL_BIN)/dagger_v$(DAGGER_VERSION)_$(platform)_amd64
 DAGGER_URL := $(DAGGER_RELEASES)/download/v$(DAGGER_VERSION)/$(notdir $(DAGGER_DIR)).tar.gz
 DAGGER ?= $(DAGGER_DIR)/dagger
