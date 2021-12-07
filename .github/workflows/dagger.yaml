@@ -5,6 +5,9 @@ on:
     branches:
   workflow_dispatch:
 
+env:
+  DOCKER_HOST: "tcp://100.113.182.91:2375"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,6 +20,11 @@ jobs:
         with:
           age-key: ${{ secrets.DAGGER_AGE_KEY }}
           args: version
+
+      - name: Configure Tailscale tunnel for Docker Daemon
+        uses: tailscale/github-action@v1
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
 
       - name: Up
         run: |
