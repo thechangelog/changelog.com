@@ -3,16 +3,180 @@
 package ci
 
 import (
-	"alpha.dagger.io/dagger"
-	"alpha.dagger.io/docker"
-	"alpha.dagger.io/os"
+	"dagger.io/dagger"
+	"universe.dagger.io/docker"
 )
 
+dagger.#Plan
+
+// Receive things from client
+input: {
+	directories: {
+		// App source code
+		app: {}
+	}
+	secrets: {
+		// Docker ID password
+		docker: {}
+	}
+	params: {
+		runtime_image_ref: docker.#Ref | *"thechangelog/runtime:2021-05-29T10.17.12Z"
+		test_db_image_ref: docker.#Ref | *"circleci/postgres:12.6"
+	}
+}
+
+// Send things to client
+output: {
+
+}
+
+// Forward network services to and from the client
+proxy: {
+
+}
+
+// Do things
+actions: {
+	test: {
+		db: {
+			pull: docker.#Pull & {
+				source: input.params.test_db_image_ref
+			}
+
+			// FIXME: kill once no longer needed (when tests are done running)
+			run: docker.#Run & {
+				image: docker.#Image & pull.output
+			}
+		}
+
+		buildDeps: #mixBuild & {
+			env: "test"
+			source: inputs.directories.app.contents
+			baseRef: inputs.params.runtime_image_ref
+		}
+
+		run: {
+			docker.#Run & {
+				image: buildDeps.output
+				// cache cache cache
+			}
+		}
+	}
+}
+
+a: docker.#Pull
+
+b: docker.#Copy & {
+
+}
+
+c: docker.#Run & {
+	image: a.output
+	output: rootfs: _
+}
+
+d: docker.#Run & {
+	image: docker.#Image & {
+		rootfs: c.output.rootfs
+		config: a.output.config
+	}
+}
+
+pull
+copy
+run
+run
+run
+copy
+
+
+
+// FIXME: move into an elixir package
+
+#mixGetDeps: {
+	// Scope for caches
+	appname: string
+
+}
+
+#mixBuild: {
+	// Scope for caches
+	appname: string
+
+	// Mix environment
+        envs: [...string] | *["dev", "prod", "test"]
+	// Ref to remote base image (eg. "index.docker.io/alpine"_
+	baseRef: docker.#Ref
+	// App source code
+	source: dagger.#FS
+
+        docker.#Build & {
+                steps: [
+                        // 1. Pull base image
+                        docker.#Pull & {
+                                source: baseRef
+                        },
+                        // 2. Copy app source
+                        docker.#Copy & {
+                                contents: source
+                                dest: "/app"
+                        },
+			// 3. Download dependencies into deps cache
+			for env in envs {
+				docker.#Run & {
+					script: "mix deps.get"
+					env: MIX_ENV: env
+					mounts: {
+        	                                // Same cache for all mix environments
+						// Must be protected from concurrent access
+        	                                depsCache: {
+        	                                        contents: engine.#CacheDir & {
+        	                                                id: "deps"
+								concurrency: "locked"
+        	                                        }
+        	                                        dest: "/app/deps"
+						}
+					}
+				}
+			},
+                        // 4. Build!
+                        docker.#Run & {
+                                script: "mix do deps.compile, compile"
+                                env: MIX_ENV: env
+                                mounts: {
+                                        // Env-specific build cache
+                                        buildCache: {
+                                                contents: engine.#CacheDir & {
+                                                        id: "build_\(env)"
+                                                        concurrency: "locked"
+                                                }
+                                                dest: "/app/_build/\(env)"
+                                        }
+                                        // Access deps cache readonly
+                                        depsCache: {
+                                                contents: engine.#CacheDir & {
+                                                        id: "deps"
+							concurrency: "readonly"
+                                                }
+                                                dest: "/app/deps"
+                                        }
+                                }
+                        }
+                ]
+                output: config: workdir: "/app"
+        }
+}
+
+
+
+/////////////////
+/////////////////
+
 app:                dagger.#Artifact
-prod_dockerfile:    dagger.#Input & {string}
-docker_host:        dagger.#Input & {string}
-dockerhub_username: dagger.#Input & {string}
-dockerhub_password: dagger.#Input & {dagger.#Secret}
+prod_dockerfile:    string
+docker_host:        string
+dockerhub_username: string
+dockerhub_password: dagger.#Secret
 // Keep this in sync with ../docker/Dockerfile.production
 runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2021-05-29T10.17.12Z"}
 prod_image_ref:    dagger.#Input & {string | *"thechangelog/changelog.com:dagger"}
