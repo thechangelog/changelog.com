@@ -20,8 +20,10 @@ input: {
 		docker: {}
 	}
 	params: {
-		runtime_image_ref: docker.#Ref | *"thechangelog/runtime:2021-05-29T10.17.12Z"
-		test_db_image_ref: docker.#Ref | *"circleci/postgres:12.6"
+		// Which Elixir base image to download
+		runtime_image: docker.#Ref | *"thechangelog/runtime:2021-05-29T10.17.12Z"
+		// Which test DB image to download
+		test_db_image: docker.#Ref | *"circleci/postgres:12.6"
 	}
 }
 
@@ -37,84 +39,52 @@ proxy: {
 
 // Do things
 actions: {
+
+	runtime: {
+		for env in ["dev", "test", "prod"] {
+			"\(env)": #mixBuild & {
+				"env": env
+				app: "changelog"
+				base: input.params.runtime_image		
+				source: input.directories.app.contents
+		}
+	}
+
 	test: {
 		db: {
+			// Pull test DB image
 			pull: docker.#Pull & {
-				source: input.params.test_db_image_ref
+				source: input.params.test_db_image
 			}
 
+			// Run test DB
 			// FIXME: kill once no longer needed (when tests are done running)
 			run: docker.#Run & {
-				image: docker.#Image & pull.output
-			}
-		}
-
-		buildDeps: #mixBuild & {
-			env: "test"
-			source: inputs.directories.app.contents
-			baseRef: inputs.params.runtime_image_ref
-		}
-
-		run: {
-			docker.#Run & {
-				image: buildDeps.output
-				// cache cache cache
+				image: pull.output
 			}
 		}
 	}
 }
-
-a: docker.#Pull
-
-b: docker.#Copy & {
-
-}
-
-c: docker.#Run & {
-	image: a.output
-	output: rootfs: _
-}
-
-d: docker.#Run & {
-	image: docker.#Image & {
-		rootfs: c.output.rootfs
-		config: a.output.config
-	}
-}
-
-pull
-copy
-run
-run
-run
-copy
-
-
 
 // FIXME: move into an elixir package
-
-#mixGetDeps: {
-	// Scope for caches
-	appname: string
-
-}
-
+// Build an Elixir application with Mix
 #mixBuild: {
-	// Scope for caches
-	appname: string
+	// Ref to base image
+	// FIXME: spin out docker.#Build for max flexibility
+	//   Perhaps implement as a custom docker.#Build step?
+	base: docker.#Ref
+
+	// App name (for cache scoping)
+	app: string
 
 	// Mix environment
-        envs: [...string] | *["dev", "prod", "test"]
-	// Ref to remote base image (eg. "index.docker.io/alpine"_
-	baseRef: docker.#Ref
-	// App source code
-	source: dagger.#FS
+	env: string
 
         docker.#Build & {
                 steps: [
                         // 1. Pull base image
                         docker.#Pull & {
-                                source: baseRef
+                                source: base
                         },
                         // 2. Copy app source
                         docker.#Copy & {
@@ -122,44 +92,43 @@ copy
                                 dest: "/app"
                         },
 			// 3. Download dependencies into deps cache
-			for env in envs {
-				docker.#Run & {
-					script: "mix deps.get"
-					env: MIX_ENV: env
-					mounts: {
-        	                                // Same cache for all mix environments
-						// Must be protected from concurrent access
-        	                                depsCache: {
-        	                                        contents: engine.#CacheDir & {
-        	                                                id: "deps"
-								concurrency: "locked"
-        	                                        }
-        	                                        dest: "/app/deps"
+			docker.#Run & {
+				script: "mix deps.get"
+				"env": MIX_ENV: env
+				mounts: {
+					// Same cache for all mix environments
+					// Must be protected from concurrent access
+					depsCache: {
+						contents: engine.#CacheDir & {
+							id: "\(app)_deps"
+							concurrency: "locked"
 						}
+						dest: "/app/deps"
 					}
 				}
 			},
-                        // 4. Build!
-                        docker.#Run & {
-                                script: "mix do deps.compile, compile"
-                                env: MIX_ENV: env
+			// 4. Build!
+			docker.#Run & {
+			script: "mix do deps.compile, compile"
+			"env": MIX_ENV: env
                                 mounts: {
-                                        // Env-specific build cache
-                                        buildCache: {
-                                                contents: engine.#CacheDir & {
-                                                        id: "build_\(env)"
-                                                        concurrency: "locked"
-                                                }
-                                                dest: "/app/_build/\(env)"
-                                        }
-                                        // Access deps cache readonly
+					// Access deps cache readonly
                                         depsCache: {
                                                 contents: engine.#CacheDir & {
-                                                        id: "deps"
+                                                        id: "\(app)_deps"
 							concurrency: "readonly"
                                                 }
                                                 dest: "/app/deps"
                                         }
+                                        // Env-specific build cache
+                                        buildCache: {
+                                                contents: engine.#CacheDir & {
+                                                        id: "\(app)_build_\(env)"
+                                                        concurrency: "locked"
+                                                }
+                                                dest: "/app/_build/\(env)"
+                                        }
+                                    
                                 }
                         }
                 ]
@@ -306,7 +275,7 @@ test_cache: docker.#Build & {
 		WORKDIR /app
 		RUN --mount=type=cache,id=deps,target=/mnt/app/deps,sharing=locked cp -Rp /mnt/app/deps/* /app/deps/
 		RUN --mount=type=cache,id=build_test,target=/mnt/app/_build/test,sharing=locked cp -Rp /mnt/app/_build/test/* /app/_build/test/
-	"""
+		"""
 }
 
 test: os.#Container & {
