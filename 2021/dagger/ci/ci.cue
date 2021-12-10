@@ -7,60 +7,66 @@ import (
 	"universe.dagger.io/docker"
 )
 
-dagger.#Plan
-
-// Receive things from client
-input: {
-	directories: {
-		// App source code
-		app: {}
-	}
-	secrets: {
-		// Docker ID password
-		docker: {}
-	}
-	params: {
-		// Which Elixir base image to download
-		runtime_image: docker.#Ref | *"thechangelog/runtime:2021-05-29T10.17.12Z"
-		// Which test DB image to download
-		test_db_image: docker.#Ref | *"circleci/postgres:12.6"
-	}
-}
-
-// Send things to client
-output: {
-
-}
-
-// Forward network services to and from the client
-proxy: {
-
-}
-
-// Do things
-actions: {
-
-	runtime: {
-		for env in ["dev", "test", "prod"] {
-			"\(env)": #mixBuild & {
-				"env": env
-				app: "changelog"
-				base: input.params.runtime_image		
-				source: input.directories.app.contents
+dagger.#Plan & {
+	// Receive things from client
+	input: {
+		directories: {
+			// App source code
+			app: {}
+		}
+		secrets: {
+			// Docker ID password
+			docker: {}
+		}
+		params: {
+			// Which Elixir base image to download
+			runtime_image: docker.#Ref | *"thechangelog/runtime:2021-05-29T10.17.12Z"
+			// Which test DB image to download
+			test_db_image: docker.#Ref | *"circleci/postgres:12.6"
 		}
 	}
 
-	test: {
-		db: {
-			// Pull test DB image
-			pull: docker.#Pull & {
-				source: input.params.test_db_image
+	// Send things to client
+	output: {
+	}
+
+	// Forward network services to and from the client
+	proxy: {
+	}
+
+	// Do things
+	actions: {
+
+		test: {
+	
+			build: #mixBuild & {
+				"env": test
+				app: "thechangelog"
+				base: input.params.runtime_image
+				source: input.directories.app.contents
+			}
+	
+			// Run tests
+			run: docker.#Run & {
+				image: build.output
+				script: "mix test"
+				// Don't cache running tests
+				// Just because we've tested a version before, doesn't mean we don't
+				// want to test it again.
+				always: true
 			}
 
-			// Run test DB
-			// FIXME: kill once no longer needed (when tests are done running)
-			run: docker.#Run & {
-				image: pull.output
+			db: {
+				// Pull test DB image
+				pull: docker.#Pull & {
+					source: input.params.test_db_image
+				}
+
+				// Run test DB
+				// FIXME: kill once no longer needed (when tests are done running)
+				run: docker.#Run & {
+					image: pull.output
+				}
 			}
 		}
 	}
@@ -80,7 +86,10 @@ actions: {
 	// Mix environment
 	env: string
 
-        docker.#Build & {
+	// Application source code
+	source: dagger.#FS
+
+	docker.#Build & {
                 steps: [
                         // 1. Pull base image
                         docker.#Pull & {
@@ -128,16 +137,21 @@ actions: {
                                                 }
                                                 dest: "/app/_build/\(env)"
                                         }
-                                    
                                 }
-                        }
+                        },
+			// 5. Set image config
+			// FIXME: how does this actually work? Does it mutate the field? Or is the field somehow
+			// prevented from being concrete? And if so, how?
+			docker.#Set & {
+				workdir: "/app"
+				"env": MIX_ENV: env				
+			}
                 ]
-                output: config: workdir: "/app"
         }
 }
 
 
-
+/////////////////
 /////////////////
 /////////////////
 
@@ -202,27 +216,7 @@ run_test:               dagger.#Input & {bool}
 //
 // #############################################################################
 
-test_db_start: docker.#Command & {
-	host: docker_host
-	env: {
-		CONTAINER_NAME:  test_db_container_name
-		CONTAINER_IMAGE: test_db_image_ref
-	}
-	command: #"""
-		docker container inspect $CONTAINER_NAME \
-		  --format 'Container "{{.Name}}" is "{{.State.Status}}"' \
-		|| docker container run \
-		  --detach --rm --name $CONTAINER_NAME \
-		  --publish 127.0.0.1:5432:5432 \
-		  --env POSTGRES_USER=postgres \
-		  --env POSTGRES_DB=changelog_test \
-		  --env POSTGRES_PASSWORD=postgres \
-		  $CONTAINER_IMAGE
 
-		docker container inspect $CONTAINER_NAME \
-		  --format 'Container "{{.Name}}" is "{{.State.Status}}"'
-		"""#
-}
 
 app_image: docker.#Pull & {
 	from: runtime_image_ref
