@@ -36,12 +36,84 @@ dagger.#Plan & {
 
 	// Do things
 	actions: {
+	
+		// Reuse in all mix commands
+		_appName: "changelog"
+	
+		prod: {
 
+			assets: docker.#Build & {
+				steps: [
+					// 1. Start from dev assets :)
+					dev.assets,
+					// 2. Mix magical command
+					#mixRun & {
+						script: "mix phx.digest"
+						mix: {
+							env: "prod"
+							app: _appName
+							depsCache: "readonly"
+							buildCache: "readonly"
+						}
+						// FIXME: remove copy-pasta
+						mounts: nodeModules: {
+							contents: engine.#CacheDir & {
+								// FIXME: do we need an ID here?
+								id: "\(mix.app)_assets_node_modules"
+								// FIXME: does this command need write access to node_modules cache?
+								concurrency: "readonly"
+							}
+							dest: "\(workdir)/node_modules"
+						}
+					}
+				]
+			}
+
+		}
+
+		dev: {
+			build: #mixBuild & {
+				"env": "dev"
+				app: "thechangelog"
+				base: input.params.runtime_image
+				source: input.directories.app.contents
+			}
+
+			assets: docker.#Build & {
+				steps: [
+					// 1. Start from dev runtime build
+					build,
+					// 2. Build web assets
+					#mixRun & {
+						mix: {
+							env: "dev"
+							app: _appName
+							depsCache: "readonly"
+							buildCache: "readonly"
+						}
+						// FIXME: move this to a reusable def (yarn package? or private?)
+						mounts: nodeModules: {
+							contents: engine.#CacheDir & {
+								// FIXME: do we need an ID here?
+								id: "\(mix.app)_assets_node_modules"
+								// FIXME: will there be multiple writers?
+								concurrency: "locked"
+							}
+							dest: "\(workdir)/node_modules"
+						}
+						// FIXME: run 'yarn install' and 'yarn run compile' separately, with different caching?
+						// FIXME: can we reuse universe.dagger.io/yarn ???? 0:-)
+						script: "yarn install --frozen-lockfile && yarn run compile"
+						workdir: "/app/assets"
+					}
+				]
+			}
+		}
 		test: {
 	
 			build: #mixBuild & {
-				"env": test
-				app: "thechangelog"
+				"env": "test"
+				app: _appName
 				base: input.params.runtime_image
 				source: input.directories.app.contents
 			}
@@ -70,6 +142,44 @@ dagger.#Plan & {
 			}
 		}
 	}
+}
+
+
+
+
+
+
+// Helper to run mix correctly in a container
+#mixRun: {
+	mix: {
+		app: string
+		env: string
+		depsCache?: "readonly" | "locked"
+		buildCache?: "readonly" | "locked"
+	}
+	"env": MIX_ENV: env
+	{
+		mix: depsCache: string
+		workdir: string
+		mounts: depsCache: {
+			contents: engine.#CacheDir & {
+				id: "\(mix.app)_deps"
+				concurrency: mix.depsCache
+			}
+			dest: "\(workdir)/deps"
+		}
+	} | {}
+	{
+		mix: buildCache: string
+		workdir: string
+		mounts: buildCache: {
+			contents: engine.#CacheDir & {
+				id: "\(mix.app)_deps"
+				concurrency: mix.buildCache
+			}
+			dest: "\(workdir)/deps"
+		}
+	} | {}
 }
 
 // FIXME: move into an elixir package
@@ -101,43 +211,25 @@ dagger.#Plan & {
                                 dest: "/app"
                         },
 			// 3. Download dependencies into deps cache
-			docker.#Run & {
-				script: "mix deps.get"
-				"env": MIX_ENV: env
-				mounts: {
-					// Same cache for all mix environments
-					// Must be protected from concurrent access
-					depsCache: {
-						contents: engine.#CacheDir & {
-							id: "\(app)_deps"
-							concurrency: "locked"
-						}
-						dest: "/app/deps"
-					}
+			#mixRun & {
+				mix: {
+					"env": env
+					"app": app
+					depsCache: "locked"
 				}
+				workdir: "/app"
+				script: "mix deps.get"
 			},
 			// 4. Build!
-			docker.#Run & {
-			script: "mix do deps.compile, compile"
-			"env": MIX_ENV: env
-                                mounts: {
-					// Access deps cache readonly
-                                        depsCache: {
-                                                contents: engine.#CacheDir & {
-                                                        id: "\(app)_deps"
-							concurrency: "readonly"
-                                                }
-                                                dest: "/app/deps"
-                                        }
-                                        // Env-specific build cache
-                                        buildCache: {
-                                                contents: engine.#CacheDir & {
-                                                        id: "\(app)_build_\(env)"
-                                                        concurrency: "locked"
-                                                }
-                                                dest: "/app/_build/\(env)"
-                                        }
-                                }
+			#mixRun & {
+				mix: {
+					"env": env
+					"app": app
+					depsCache: "readonly"
+					buildCache: "locked"
+				}
+				workdir: "/app"
+				script: "mix do deps.compile, compile"
                         },
 			// 5. Set image config
 			// FIXME: how does this actually work? Does it mutate the field? Or is the field somehow
@@ -218,114 +310,11 @@ run_test:               dagger.#Input & {bool}
 
 
 
-app_image: docker.#Pull & {
-	from: runtime_image_ref
-}
-
-// Put app source in the correct path, /app
-deps: os.#Container & {
-	image: app_image
-	copy: {
-		"/app": from: app
-	}
-}
-
-// https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/syntax.md#run---mounttypecache
-deps_mount: "--mount=type=cache,id=deps,target=/app/deps/,sharing=locked"
-
-build_dev_mount:  "--mount=type=cache,id=build_dev,target=/app/_build/dev,sharing=locked"
-build_test_mount: "--mount=type=cache,id=build_test,target=/app/_build/test,sharing=locked"
-build_prod_mount: "--mount=type=cache,id=build_prod,target=/app/_build/prod,sharing=locked"
-
-node_modules_mount: "--mount=type=cache,id=assets_node_modules,target=/app/assets/node_modules,sharing=locked"
-
-#deps_compile: docker.#Build & {
-	source:     deps
-	dockerfile: """
-		FROM \(runtime_image_ref)
-		ARG MIX_ENV
-		ENV MIX_ENV=$MIX_ENV
-		COPY /app/ /app/
-		WORKDIR /app
-
-		RUN \(deps_mount) \(build_dev_mount) \(build_test_mount) \(build_prod_mount) mix do deps.get, deps.compile, compile
-	"""
-}
-
-deps_compile_test: #deps_compile & {
-	args: {
-		MIX_ENV: "test"
-	}
-}
-
-// Copy deps so that we can run tests in an os.#Container, not docker.#Build
-test_cache: docker.#Build & {
-	source:     deps_compile_test
-	dockerfile: """
-		FROM \(runtime_image_ref)
-		ARG MIX_ENV
-		ENV MIX_ENV=$MIX_ENV
-		COPY /app/ /app/
-		WORKDIR /app
-		RUN --mount=type=cache,id=deps,target=/mnt/app/deps,sharing=locked cp -Rp /mnt/app/deps/* /app/deps/
-		RUN --mount=type=cache,id=build_test,target=/mnt/app/_build/test,sharing=locked cp -Rp /mnt/app/_build/test/* /app/_build/test/
-		"""
-}
-
-test: os.#Container & {
-	always: run_test
-	image:  test_cache
-	env: {
-		MIX_ENV: "test"
-	}
-	command: "mix test"
-	dir:     "/app"
-}
-
-test_db_stop: docker.#Command & {
-	host: docker_host
-	env: {
-		DEP:            test.env.MIX_ENV
-		CONTAINER_NAME: test_db_container_name
-	}
-	command: #"""
-		docker container stop $CONTAINER_NAME
-		"""#
-}
-
-deps_compile_dev: #deps_compile & {
-	args: {
-		MIX_ENV: "dev"
-	}
-}
-
-assets_dev: docker.#Build & {
-	source:     deps_compile_dev
-	dockerfile: """
-		FROM \(runtime_image_ref)
-		COPY /app/ /app/
-		WORKDIR /app/assets
-
-		RUN \(deps_mount) \(build_dev_mount) \(node_modules_mount) yarn install --frozen-lockfile && yarn run compile
-	"""
-}
 
 deps_compile_prod: #deps_compile & {
 	args: {
 		MIX_ENV: "prod"
 	}
-}
-
-assets_prod: docker.#Build & {
-	source:     assets_dev
-	dockerfile: """
-		FROM \(runtime_image_ref)
-		COPY /app/ /app/
-		ENV MIX_ENV=prod
-		WORKDIR /app/
-
-		RUN \(deps_mount) \(build_prod_mount) \(node_modules_mount) mix phx.digest
-	"""
 }
 
 image_prod_cache: docker.#Build & {
