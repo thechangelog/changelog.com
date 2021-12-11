@@ -230,6 +230,7 @@ image_prod: docker.#Command & {
 	command: #"""
 		cd /tmp
 		docker build \
+		  --build-arg APP_FROM_PATH=/app \
 		  --build-arg GIT_AUTHOR="$GIT_AUTHOR" \
 		  --build-arg GIT_SHA="$GIT_SHA" \
 		  --build-arg APP_VERSION="$APP_VERSION" \

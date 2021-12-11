@@ -42,11 +42,11 @@ inputs:
                 - _build
                 - dagger
     app_version:
-        text: 21.12.11+a8bc394982422415fbf23ddd3501ff764ab98909
+        text: 21.12.11+7e38e17a53f5220ca8fc573f2ec253f19e7eca18
     build_url:
         text: https://github.com/thechangelog/changelog.com/actions
     build_version:
-        text: 21.12.11+a8bc394982422415fbf23ddd3501ff764ab98909
+        text: 21.12.11+7e38e17a53f5220ca8fc573f2ec253f19e7eca18
     docker_host:
         text: tcp://100.113.182.91:2375
     dockerhub_password:
@@ -56,14 +56,15 @@ inputs:
     git_author:
         text: gerhard
     git_sha:
-        text: a8bc394982422415fbf23ddd3501ff764ab98909
+        text: 7e38e17a53f5220ca8fc573f2ec253f19e7eca18
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
             FROM thechangelog/runtime:2021-05-29T10.17.12Z
 
             RUN mkdir /app
-            COPY /app /app
+            ARG APP_FROM_PATH=.
+            COPY ${APP_FROM_PATH} /app
             WORKDIR /app
             RUN echo "Ensure deps are present & OK..." \
                 ; ls -lahd deps/*
@@ -110,8 +111,8 @@ sops:
             RHllVkFJWFpXUDZZNTYzcTVJMm1hOHMKB0jLL+vzIqllrKC8n8BtjVrl954uQkwL
             ucVzAeuQk6XBAckZBAKoo9IB4c0G5KRq7K7PJdi/HqvggVdj2CKF6Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2021-12-11T19:03:14Z"
-    mac: ENC[AES256_GCM,data:P7y7I+jZ+VX8aaqjoC9wPO1Mgi/JSk/4sWEjYXrelmVAjNsDPz65MrEYVd1BOjOUV+MtfILRLGri5Y0JxxiOKNoB+RnMNwKNKjHS7KLvG0gypz5ymkCGOZODvN4txAR7OJ3dMzSjw4ik/lwoLVPrvpUKegWi5m8Qv0M8mOEssEo=,iv:JFC/74bGPsLSa/di5Wprjrg6nW8UGaAMxFAi/eBnRHU=,tag:/OG/+87NYxP0w0YXam26Fg==,type:str]
+    lastmodified: "2021-12-11T22:00:57Z"
+    mac: ENC[AES256_GCM,data:mskkVzfEeHSYuh9/rKsdKiFzIPxIIkRJq5DN5V1c+TMMz97QfEA4PopG07ylQFk2QYRW3rGE78ZUklEi3BEnFue+OlBA3+Q5Jq8YJKV05xelul/AyeYcwQ1mRV1UfcW2tXxFebuROqYp1YQmPHdsElteFgefhLpura5xU9mukMo=,iv:wUfzW5nHp+mRSZLnq2vpjYRQifDviw4fZxH02pMTPJA=,tag:dhF22HsvA+Y9nCqI/+rbuA==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1
