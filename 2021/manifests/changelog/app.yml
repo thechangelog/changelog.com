@@ -298,7 +298,7 @@ spec:
                 secretKeyRef:
                   name: sentry
                   key: auth_token
-          image: thechangelog/changelog.com:latest
+          image: thechangelog/changelog.com:dagger
           imagePullPolicy: Always
           # command:
           #   - iex
