@@ -1,0 +1,14 @@
+---
+apiVersion: linode.jet.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  # TODO: how can I change this to jet-linode?
+  name: default
+  namespace: ${NAMESPACE}
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: linode
+      namespace: ${NAMESPACE}
+      key: token

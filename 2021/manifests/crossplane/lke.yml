@@ -1,0 +1,21 @@
+apiVersion: linode.jet.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  name: ${NAME}
+  namespace: ${NAMESPACE}
+spec:
+  forProvider:
+    label: ${NAME}
+    k8sVersion: "${K8S_VERSION}"
+    region: ${REGION}
+    pool:
+      - count: ${WORKER_NODES_COUNT}
+        type: ${WORKER_NODES_TYPE}
+    tags:
+      - managed-by-crossplane
+      - created-by-${CROSSPLANE_RUNNING_IN}
+      - created-by-crossplane-${CROSSPLANE_VERSION}
+      - created-by-${PROVIDER_LINODE_VERSION}
+  writeConnectionSecretToRef:
+    name: ${NAME}
+    namespace: ${NAMESPACE}

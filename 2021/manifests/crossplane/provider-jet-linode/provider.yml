@@ -1,0 +1,10 @@
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: jet-linode
+  namespace: ${NAMESPACE}
+spec:
+  package: thechangelog/provider-jet-linode:${PROVIDER_LINODE_VERSION}
+  controllerConfigRef:
+    name: jet-linode-config
