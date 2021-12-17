@@ -1,0 +1,9 @@
+---
+apiVersion: pkg.crossplane.io/v1alpha1
+kind: ControllerConfig
+metadata:
+  name: jet-linode-config
+  namespace: ${NAMESPACE}
+spec:
+  args:
+    - --debug

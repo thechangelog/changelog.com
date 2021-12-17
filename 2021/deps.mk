@@ -29,7 +29,7 @@ $(CURL):
 endif
 
 K9S_RELEASES := https://github.com/derailed/k9s/releases
-K9S_VERSION := 0.25.6
+K9S_VERSION := 0.25.14
 K9S_BIN_DIR := $(LOCAL_BIN)/k9s-$(K9S_VERSION)-$(platform)-x86_64
 K9S_URL := $(K9S_RELEASES)/download/v$(K9S_VERSION)/k9s_$(platform)_x86_64.tar.gz
 K9S := $(K9S_BIN_DIR)/k9s
@@ -46,7 +46,7 @@ releases-k9s:
 	$(OPEN) $(K9S_RELEASES)
 
 YTT_RELEASES := https://github.com/vmware-tanzu/carvel-ytt/releases
-YTT_VERSION := 0.31.0
+YTT_VERSION := 0.38.0
 YTT_BIN := ytt-$(YTT_VERSION)-$(platform)-amd64
 YTT_URL := $(YTT_RELEASES)/download/v$(YTT_VERSION)/ytt-$(platform)-amd64
 YTT := $(LOCAL_BIN)/$(YTT_BIN)
@@ -98,7 +98,7 @@ env::
 	@mkdir -p $(XDG_CONFIG_HOME)/lpass
 
 HELM_RELEASES := https://github.com/helm/helm/releases
-HELM_VERSION := 3.6.3
+HELM_VERSION := 3.7.2
 HELM_BIN_DIR := helm-v$(HELM_VERSION)-$(platform)-amd64
 HELM_URL := https://get.helm.sh/$(HELM_BIN_DIR).tar.gz
 HELM := $(LOCAL_BIN)/$(HELM_BIN_DIR)/$(platform)-amd64/helm

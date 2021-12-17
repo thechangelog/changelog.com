@@ -8,6 +8,7 @@ $(KEEL_DIR):
 	  https://github.com/keel-hq/keel.git $(KEEL_DIR)
 tmp/keel: $(KEEL_DIR)
 
+.PHONY: lke-keel
 lke-keel: | $(KEEL_DIR) lke-ctx $(HELM)
 	$(HELM) upgrade keel $(KEEL_DIR)/chart/keel \
 	  --install \
