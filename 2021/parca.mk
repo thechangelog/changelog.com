@@ -5,7 +5,7 @@
 # - https://github.com/parca-dev/parca.dev/blame/da283aec395887e0bfff05d126897ef1e6b72323/docs/kubernetes.mdx#L89
 
 PARCA_SERVER_RELEASES := https://github.com/parca-dev/parca/releases
-PARCA_SERVER_VERSION := 0.5.0
+PARCA_SERVER_VERSION := 0.6.0
 
 PARCA_AGENT_RELEASES := https://github.com/parca-dev/parca-agent/releases
 PARCA_AGENT_VERSION := 0.3.0
