@@ -44,48 +44,6 @@ endif
 	@printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n"
 	@printf "To use this control plane, run: $(BOLD)export KUBECONFIG=$(UPBOUND_KUBECONFIG)$(NORMAL)\n"
 
-# STORY ########################################################################
-#
-# 1. Why did we do this?
-# - We wanted our Kubernetes clusters to not be provisioned via UI or CLI.
-# - We wanted to apply a config and have the cluster be continuously reconciled
-# - If one of us accidentally deletes it, the cluster should be automatically re-created and everything restored
-#
-# 2. How did we do this?
-# - We mentioned in episode 15 about wanting to make Crossplane part of the Changelog 2022 setup
-# - We are running our Kubernetes clusters of Linode, and there is no Crossplane provider for Linode that works + Marques
-# - We have heard of this new and easy ways of generating new Crossplane providers: Terrajet
-# - Muvaffak Onus is here today to tells us about it!
-#   - Why did you create Terrajet?
-#   - How many providers have been generated with Terrajet?
-#   - What is coming next for Terrajet?
-# - We generated a new Linode Provider using Terrajet which is now in crossplane-contrib
-# - Anyone can use this provider to have Crossplane manage K8s clusters on Linode (a.k.a. LKE)
-#
-# 3. This is how we are doing it
-# - Install Crossplane
-# - Install Provider
-# - Provision LKE cluster with Provider
-# - Target LKE cluster
-# - What happens if someone "accidentally" deletes a cluster? 😎
-#
-# 4. What happens next?
-# - Install everything that is needed on the LKE cluster using a Composition
-#   - base composition:
-#     - grafana-agent (sed + envsubst + kubectl)
-#     - honeycomb-agent (helm)
-#     - metrics-server (curl + gsed + kubectl)
-#     - external-dns (envsubst + kubectl)
-#     - cert-manager (helm)
-#     - ingress-nginx (helm)
-#     - local-path-provisioner (helm)
-#     - keel (helm)
-#   - changelog composition (envsubst + kubectl)
-# - Move Crossplane to Upbound Cloud
-#   - developer consoles
-#   - UI
-#   - team permissions
-#   - compositions
 CROSSPLANE_VERSION := 1.5.1
 CROSSPLANE_NAMESPACE := crossplane-system
 CROSSPLANE_RELEASES := https://charts.crossplane.io/stable
