@@ -47,7 +47,7 @@ dagger-init: | $(DAGGER_HOME)
 
 $(DAGGER_ENV)/prod_image: | dagger-init
 	$(DAGGER_CTX) new prod_image --package $(CURDIR)/dagger/prod_image
-	printf "$(INFO)Run this only once per environment$(NORMAL)\n"
+	printf "$(MAGENTA)Run this only once per environment$(NORMAL)\n"
 	read -p "Enter your DockerHub username: " dockerhub_username \
 	; $(DAGGER_CTX) input text dockerhub_username $$dockerhub_username --environment prod_image
 	read -p "Enter your DockerHub password: " dockerhub_password \
