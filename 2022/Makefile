@@ -27,6 +27,7 @@ exit 1
 endef
 
 include $(CURDIR)/deps.mk
+include $(CURDIR)/dagger.mk
 include $(CURDIR)/linode.mk
 include $(CURDIR)/secrets.mk
 include $(CURDIR)/metrics-server.mk
