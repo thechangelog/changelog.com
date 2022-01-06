@@ -38,7 +38,7 @@
   </nav>
   <nav class="footer-nav">
     <div class="footer-nav-list">
-      <h4><a href="/" title="">News</a></h4>
+      <h4>News</h4>
       <ul>
         <li><%= link("Subscribe", to: Routes.person_path(@conn, :subscribe), title: "Subscribe to Changelog News") %></li>
         <li><%= link("Topics", to: Routes.topic_path(@conn, :index), title: "View all topics") %></li>
@@ -65,13 +65,13 @@
       </ul>
     </div>
     <div class="footer-nav-list">
-      <h4><a href="/community" title="">Community</a></h4>
+      <h4>Community</h4>
       <ul>
         <li><%= link("Join the Community", to: Routes.page_path(@conn, :community), title: "Join the community") %></li>
         <li><%= link("Listen Live", to: Routes.live_path(@conn, :index), title: "Listen live") %></li>
         <li><%= link("Code of Conduct", to: Routes.page_path(@conn, :coc), title: "Read the code of conduct") %></li>
         <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
-        <li><%= link("Perks", to: Routes.page_path(@conn, :community), title: "Community perks") %></li>
+        <li><%= link("Merch Shop", to: "https://merch.changelog.com", title: "Changelog's Merch Shop") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
@@ -81,10 +81,10 @@
         <li><%= link("Sponsor", to: Routes.page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
         <li><%= link("Search", to: Routes.search_path(@conn, :search), title: "Search Changelog") %></li>
         <li><%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog’s posts") %></li>
-        <li><a href="https://github.com/thechangelog/changelog.com">View Source</a></li>
-        <li><a href="https://github.com/thechangelog/changelog.com/issues">Report Issues</a></li>
-        <li><a href="/terms">Terms &amp; Conditions</a></li>
-        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="https://github.com/thechangelog/changelog.com" title="Changelog.com source code">View Source</a></li>
+        <li><a href="https://github.com/thechangelog/changelog.com/issues" title="Changelog.com issue tracker">Report Issues</a></li>
+        <li><a href="/terms" title="Terms & Conditions">Terms &amp; Conditions</a></li>
+        <li><a href="/privacy" title="Privacy Policy">Privacy Policy</a></li>
       </ul>
     </div>
   </nav>
