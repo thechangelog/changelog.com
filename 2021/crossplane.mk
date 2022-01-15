@@ -15,8 +15,8 @@ up: $(UP)
 releases-up:
 	$(OPEN) $(UP_RELEASES)
 
-# christmas-2021-gift: https://cloud.upbound.io/changelogmedia/controlPlanes/bd465974-fb45-47a4-b9a5-001db23c89c8
-UPBOUND_CONTROLPLANE_ID := bd465974-fb45-47a4-b9a5-001db23c89c8
+# 2022: https://cloud.upbound.io/changelogmedia/controlPlanes/d9a7a122-fafe-4c06-a170-d0ad543f371c
+UPBOUND_CONTROLPLANE_ID := d9a7a122-fafe-4c06-a170-d0ad543f371c
 UPBOUND_KUBECONFIG := $(XDG_CONFIG_HOME)/upbound.$(UPBOUND_CONTROLPLANE_ID).yml
 UPBOUND_CONTROLPLANE_NAMESPACE := upbound-system
 $(UPBOUND_KUBECONFIG):
@@ -43,8 +43,8 @@ endif
 	@printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n"
 	@printf "To use this control plane, run: $(BOLD)export KUBECONFIG=$(UPBOUND_KUBECONFIG)$(NORMAL)\n"
 
-CROSSPLANE_VERSION := 1.6.1
-CROSSPLANE_NAMESPACE := crossplane-system
+CROSSPLANE_VERSION ?= 1.5.1
+CROSSPLANE_NAMESPACE ?= crossplane-system
 CROSSPLANE_RELEASES := https://charts.crossplane.io/stable
 .PHONY: lke-crossplane
 lke-crossplane: | lke-ctx $(HELM)
@@ -90,7 +90,7 @@ crossplane-linode-provider: | lke-ctx
 	@printf "\n$(MAGENTA)Installing Crossplane Provider Linode v$(CROSSPLANE_PROVIDER_LINODE_VERSION)...$(NORMAL)\n"
 	export NAMESPACE=$(CROSSPLANE_NAMESPACE) \
 	; export PROVIDER_LINODE_VERSION=$(CROSSPLANE_PROVIDER_LINODE_VERSION) \
-	; cat $(CURDIR)/manifests/crossplane/provider-jet-linode/{controller-config,provider}.yml \
+	; cat $(CURDIR)/manifests/crossplane/provider-jet-linode/provider.yml \
 	| $(ENVSUBST_SAFE) \
 	| $(KUBECTL) $(K_CMD) --filename -
 	$(KUBECTL) wait --for=condition=healthy provider/jet-linode --timeout=60s --namespace $(CROSSPLANE_NAMESPACE)
@@ -99,7 +99,7 @@ crossplane-linode-provider: | lke-ctx
 	; cat $(CURDIR)/manifests/crossplane/provider-jet-linode/provider-config.yml \
 	| $(ENVSUBST_SAFE) \
 	| $(KUBECTL) $(K_CMD) --filename -
-	@printf "\n$(BOLD)✅ Crossplane Provider Linode v$(CROSSPLANE_PROVIDER_LINODE_VERSION) installed!$(NORMAL)\n\n"
+	@printf "\n$(BOLD)✅ Crossplane Provider Linode $(CROSSPLANE_PROVIDER_LINODE_VERSION) installed!$(NORMAL)\n\n"
 
 CROSSPLANE_LKE_NAME ?= lke-$(shell date -u +'%Y-%m-%d')
 CROSSPLANE_LKE_K8S_VERSION ?= 1.22
