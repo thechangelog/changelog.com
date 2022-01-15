@@ -1,7 +1,6 @@
 UP_RELEASES := https://cli.upbound.io/stable
 UP_VERSION := 0.5.0
 UP_BIN := up-$(UP_VERSION)-$(platform)-amd64
-https://cli.upbound.io/stable/v0.5.0/bin/darwin_amd64/up
 UP_URL := $(UP_RELEASES)/v$(UP_VERSION)/bin/$(platform)_amd64/up
 UP := $(LOCAL_BIN)/$(UP_BIN)
 $(UP): | $(CURL) $(LOCAL_BIN)
@@ -44,7 +43,7 @@ endif
 	@printf "$(BOLD)$(GREEN)OK!$(NORMAL)\n"
 	@printf "To use this control plane, run: $(BOLD)export KUBECONFIG=$(UPBOUND_KUBECONFIG)$(NORMAL)\n"
 
-CROSSPLANE_VERSION := 1.5.1
+CROSSPLANE_VERSION := 1.6.1
 CROSSPLANE_NAMESPACE := crossplane-system
 CROSSPLANE_RELEASES := https://charts.crossplane.io/stable
 .PHONY: lke-crossplane
@@ -57,6 +56,7 @@ lke-crossplane: | lke-ctx $(HELM)
 		--namespace $(CROSSPLANE_NAMESPACE) --create-namespace \
 		--version $(CROSSPLANE_VERSION) \
 		--wait
+	@printf "\n$(BOLD)✅ Crossplane v$(CROSSPLANE_VERSION) installed!$(NORMAL)\n\n"
 
 lke-bootstrap:: | lke-crossplane
 
@@ -99,11 +99,12 @@ crossplane-linode-provider: | lke-ctx
 	; cat $(CURDIR)/manifests/crossplane/provider-jet-linode/provider-config.yml \
 	| $(ENVSUBST_SAFE) \
 	| $(KUBECTL) $(K_CMD) --filename -
+	@printf "\n$(BOLD)✅ Crossplane Provider Linode v$(CROSSPLANE_PROVIDER_LINODE_VERSION) installed!$(NORMAL)\n\n"
 
 CROSSPLANE_LKE_NAME ?= lke-$(shell date -u +'%Y-%m-%d')
 CROSSPLANE_LKE_K8S_VERSION ?= 1.22
 CROSSPLANE_LKE_REGION ?= us-east
-CROSSPLANE_LKE_WORKER_NODES_TYPE ?= g6-dedicated-4
+CROSSPLANE_LKE_WORKER_NODES_TYPE ?= g6-dedicated-8
 CROSSPLANE_LKE_WORKER_NODES_COUNT ?= 1
 CROSSPLANE_RUNNING_IN ?= $(LKE_LABEL)
 .PHONY: crossplane-lke
@@ -121,6 +122,8 @@ crossplane-lke: | $(KUBECTL)
 	; cat $(CURDIR)/manifests/crossplane/lke.yml \
 	| $(ENVSUBST_SAFE) \
 	| $(KUBECTL) $(K_CMD) --filename -
+	$(KUBECTL) wait --for=condition=ready clusters/$(CROSSPLANE_LKE_NAME) --timeout=180s
+	@printf "\n✅ $(BOLD)$(CROSSPLANE_LKE_NAME)$(NORMAL) running K8s $(BOLD)v$(CROSSPLANE_LKE_K8S_VERSION)$(NORMAL) in $(BOLD)$(CROSSPLANE_LKE_REGION)$(NORMAL) with $(BOLD)$(CROSSPLANE_LKE_WORKER_NODES_COUNT)$(NORMAL) worker node(s) of type $(BOLD)$(CROSSPLANE_LKE_WORKER_NODES_TYPE)$(NORMAL) created!$(NORMAL)\n\n"
 
 .PHONY: crossplane-lke-kubeconfig
 crossplane-lke-kubeconfig: | $(KUBECTL)
@@ -129,4 +132,4 @@ crossplane-lke-kubeconfig: | $(KUBECTL)
 		--namespace $(CROSSPLANE_NAMESPACE) \
 		--template={{.data.kubeconfig}} \
 	| base64 --decode > $(LKE_CONFIGS)/$(CROSSPLANE_LKE_NAME).yml
-	@printf "\nTo use this config, run $(BOLD)export KUBECONFIG=$(LKE_CONFIGS)/$(CROSSPLANE_LKE_NAME).yml$(NORMAL)\n"
+	@printf "\n✅ To use this config, run $(BOLD)export KUBECONFIG=$(LKE_CONFIGS)/$(CROSSPLANE_LKE_NAME).yml$(NORMAL)\n"
