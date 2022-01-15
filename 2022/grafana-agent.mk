@@ -1,7 +1,7 @@
 GRAFANA_AGENT_NAMESPACE := grafana-agent
 
 GRAFANA_AGENT_RELEASES := https://github.com/grafana/agent/releases
-GRAFANA_AGENT_VERSION := v0.19.0
+GRAFANA_AGENT_VERSION := v0.22.0
 GRAFANA_AGENT_DIR := $(CURDIR)/tmp/grafana-agent-$(GRAFANA_AGENT_VERSION)
 
 $(GRAFANA_AGENT_DIR):

@@ -1,5 +1,5 @@
 METRICS_SERVER_RELEASES := https://github.com/kubernetes-sigs/metrics-server/releases
-METRICS_SERVER_VERSION := v0.5.1
+METRICS_SERVER_VERSION := v0.5.2
 
 releases-metrics-server:
 	$(OPEN) $(METRICS_SERVER_RELEASES)
