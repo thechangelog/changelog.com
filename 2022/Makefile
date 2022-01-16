@@ -42,12 +42,14 @@ include $(CURDIR)/linode.mk
 include $(CURDIR)/secrets.mk
 include $(CURDIR)/crossplane.mk
 include $(CURDIR)/metrics-server.mk
-include $(CURDIR)/grafana-agent.mk
+# TODO: nice to have, return to this after the new app instance is live
+# include $(CURDIR)/grafana-agent.mk
 include $(CURDIR)/local-path-provisioner.mk
 include $(CURDIR)/external-dns.mk
-include $(CURDIR)/traefik.mk
-include $(CURDIR)/keel.mk
-include $(CURDIR)/changelog.mk
+# include $(CURDIR)/cert-manager.mk
+# include $(CURDIR)/ingress-nginx.mk
+# include $(CURDIR)/keel.mk
+# include $(CURDIR)/changelog.mk
 
 define MAKE_TARGETS
   awk -F':+' '/^[^.%\t_][0-9a-zA-Z._%-]*:+.*$$/ { printf "%s\n", $$1 }' $(MAKEFILE_LIST)
