@@ -1,5 +1,5 @@
 KEEL_RELEASES := https://github.com/keel-hq/keel/releases
-KEEL_VERSION := 0.16.1
+KEEL_VERSION := master
 KEEL_DIR := $(CURDIR)/tmp/keel-$(KEEL_VERSION)
 
 $(KEEL_DIR):
