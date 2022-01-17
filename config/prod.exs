@@ -1,5 +1,7 @@
 use Mix.Config
 
+static_url_host = System.get_env("STATIC_URL_HOST", "cdn.changelog.com")
+
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: System.get_env("HTTP_PORT", "4000")],
   url: [
@@ -9,7 +11,7 @@ config :changelog, ChangelogWeb.Endpoint,
   ],
   static_url: [
     scheme: System.get_env("STATIC_URL_SCHEME", "https"),
-    host: System.get_env("STATIC_URL_HOST", "cdn.changelog.com"),
+    host: static_url_host,
     port: System.get_env("STATIC_URL_PORT", "443"),
     path: "/static"
   ],
@@ -17,8 +19,8 @@ config :changelog, ChangelogWeb.Endpoint,
   # we don't need vsn=?d because Plug.Static doesn't serve static assets in prod
   cache_manifest_skip_vsn: true
 
-# this should match static_url_host above
-config :waffle, asset_host: System.get_env("STATIC_URL_HOST", "cdn.changelog.com")
+# in prod we point waffle to the CDN, just like we tell our own endpoint
+config :waffle, asset_host: static_url_host
 
 if System.get_env("HTTPS") do
   config :changelog, ChangelogWeb.Endpoint,

@@ -276,8 +276,8 @@ spec:
             #       key: consumer_secret
             - name: UPLOADS_PATH
               value: priv/uploads
-            - name: URL_STATIC_HOST
-              value: cdn.changelog.com
+            - name: STATIC_URL_HOST
+              value: cdn22.changelog.com
             - name: URL_HOST
               value: 22.changelog.com
             - name: GRAFANA_URL
