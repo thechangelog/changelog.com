@@ -1,5 +1,6 @@
 defmodule Changelog.S3Static do
   require Logger
+  import MIME, only: [from_path: 1]
 
   @doc "Functions for managing static files on S3"
 
@@ -57,8 +58,15 @@ defmodule Changelog.S3Static do
       Logger.info("Uploading #{file.key}")
       key = Path.join(prefix, file.key)
       data = File.read!(file.path)
-      ExAws.request(ExAws.S3.put_object(bucket, key, data))
+      headers = object_headers(file.path)
+      ExAws.request(ExAws.S3.put_object(bucket, key, data, headers))
     end
+  end
+
+  def object_headers(path) do
+    [
+      content_type: from_path(path)
+    ]
   end
 
   defp delete_file(bucket, file) do
