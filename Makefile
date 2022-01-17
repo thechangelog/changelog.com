@@ -23,7 +23,7 @@ endif
 # https://tools.ietf.org/html/rfc3339 format - s/:/./g so that Docker tag is valid
 export BUILD_VERSION := $(shell date -u +'%Y-%m-%dT%H.%M.%SZ')
 
-STACK_VERSION ?= 202104
+STACK_VERSION ?= 202201
 HOSTNAME ?= 21.changelog.com
 
 GIT_REPOSITORY ?= https://github.com/thechangelog/changelog.com
@@ -268,6 +268,7 @@ ri: runtime-image
 build-runtime-image: $(DOCKER)
 	@$(DOCKER) build --progress plain --no-cache \
 		--tag thechangelog/runtime:$(BUILD_VERSION) \
+		--tag thechangelog/runtime:$(STACK_VERSION) \
 		--tag thechangelog/runtime:latest \
 		--file docker/Dockerfile.runtime .
 .PHONY: bri
@@ -276,6 +277,7 @@ bri: build-runtime-image
 .PHONY: publish-runtime-image
 publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
+	$(DOCKER) push thechangelog/runtime:$(STACK_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
 
 .PHONY: howto-upgrade-elixir
