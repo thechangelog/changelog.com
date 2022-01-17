@@ -222,13 +222,6 @@ spec:
                   key: slug
             - name: PORT
               value: "4000"
-            - name: production
-              valueFrom:
-                secretKeyRef:
-                  name: rollbar
-                  key: access_token
-            - name: ROLLBAR_ENVIRONMENT
-              value: production
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:

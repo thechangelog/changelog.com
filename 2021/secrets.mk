@@ -239,19 +239,6 @@ slack-lke-secret: | lke-ctx $(LPASS)
 	| $(KUBECTL) $(K_CMD) --filename -
 lke-changelog-secrets:: slack-lke-secret
 
-ROLLBAR_ACCESS_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/ROLLBAR_ACCESS_TOKEN)"
-.PHONY: rollbar
-rollbar: $(LPASS)
-	@echo "export ROLLBAR_ACCESS_TOKEN=$(ROLLBAR_ACCESS_TOKEN)"
-env-secrets:: rollbar
-.PHONY: rollbar-lke-secret
-rollbar-lke-secret: | lke-ctx $(LPASS)
-	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
-	  create secret generic rollbar \
-	  --from-literal=access_token=$(ROLLBAR_ACCESS_TOKEN) \
-	| $(KUBECTL) $(K_CMD) --filename -
-lke-changelog-secrets:: rollbar-lke-secret
-
 BUFFER_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/BUFFER_TOKEN_3)"
 .PHONY: buffer
 buffer: $(LPASS)
