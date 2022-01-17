@@ -78,9 +78,7 @@ config :ex_aws, :hackney_opts, recv_timeout: 300_000
 config :waffle,
   storage: Waffle.Storage.S3,
   version_timeout: 30_000,
-  bucket: SecretOrEnv.get("AWS_ASSETS_BUCKET"),
-  # this will match static_url host in prod, deviate in dev
-  asset_host: SecretOrEnv.get("AWS_UPLOADS_HOST", "https://cdn.changelog.com")
+  bucket: SecretOrEnv.get("AWS_ASSETS_BUCKET")
 
 config :ueberauth, Ueberauth,
   providers: [
