@@ -294,7 +294,7 @@ spec:
             #     secretKeyRef:
             #       name: sentry
             #       key: auth_token
-          image: thechangelog/changelog.com:dagger
+          image: thechangelog/changelog.com:assets-to-s3
           imagePullPolicy: Always
           # command:
           #   - iex
@@ -309,10 +309,10 @@ spec:
               containerPort: 4000
           resources:
             requests:
-              cpu: 4
+              cpu: 2
               memory: 4Gi
             limits:
-              cpu: 4
+              cpu: 2
               memory: 4Gi
           readinessProbe:
             httpGet:
