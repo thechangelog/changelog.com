@@ -52,41 +52,41 @@ spec:
                     values:
                       - postgres
               topologyKey: "kubernetes.io/hostname"
-      # initContainers:
-      #   - name: download-last-db-backup
-      #     image: thechangelog/backups:202104
-      #     imagePullPolicy: Always
-      #     command: ["/usr/local/bin/download_last_db_backup"]
-      #     workingDir: "/docker-entrypoint-initdb.d"
-      #     env:
-      #       - name: AWS_ACCESS_KEY_ID
-      #         valueFrom:
-      #           secretKeyRef:
-      #             name: backups-aws
-      #             key: access_key_id
-      #       - name: AWS_SECRET_ACCESS_KEY
-      #         valueFrom:
-      #           secretKeyRef:
-      #             name: backups-aws
-      #             key: secret_access_key
-      #       - name: AWS_REGION
-      #         value: us-east-1
-      #       - name: AWS_S3_BUCKET
-      #         value: changelog-com-backups
-      #     volumeMounts:
-      #       - name: docker-entrypoint-initdb
-      #         mountPath: "/docker-entrypoint-initdb.d"
+      initContainers:
+        - name: download-last-db-backup
+          image: thechangelog/backups:202201
+          imagePullPolicy: Always
+          command: ["/usr/local/bin/download_last_db_backup"]
+          workingDir: "/docker-entrypoint-initdb.d"
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backups-aws
+                  key: secret_access_key
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_S3_BUCKET
+              value: changelog-com-backups
+          volumeMounts:
+            - name: docker-entrypoint-initdb
+              mountPath: "/docker-entrypoint-initdb.d"
       containers:
         - name: postgres
           # https://hub.docker.com/_/postgres
           image: postgres:12.6
           resources:
             requests:
-              cpu: 4
-              memory: 8Gi
+              cpu: 2
+              memory: 4Gi
             limits:
-              cpu: 4
-              memory: 8Gi
+              cpu: 2
+              memory: 4Gi
           ports:
             - containerPort: 5432
               name: postgres

@@ -331,10 +331,11 @@ promex-lke-secret: | lke-ctx $(LPASS)
 	  create secret generic promex \
 	  --from-literal=bearer_token=$(PROMETHEUS_BEARER_TOKEN_PROM_EX) \
 	| $(KUBECTL) $(K_CMD) --filename -
-	@$(KUBECTL) --namespace $(GRAFANA_AGENT_NAMESPACE) --dry-run=client --output=yaml \
-	  create secret generic promex \
-	  --from-literal=bearer_token=$(PROMETHEUS_BEARER_TOKEN_PROM_EX) \
-	| $(KUBECTL) $(K_CMD) --filename -
+	# TODO: grafana-agent will need this
+	# @$(KUBECTL) --namespace $(GRAFANA_AGENT_NAMESPACE) --dry-run=client --output=yaml \
+	#   create secret generic promex \
+	#   --from-literal=bearer_token=$(PROMETHEUS_BEARER_TOKEN_PROM_EX) \
+	# | $(KUBECTL) $(K_CMD) --filename -
 lke-changelog-secrets:: promex-lke-secret
 
 SENTRY_AUTH_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/SENTRY_AUTH_TOKEN)"
