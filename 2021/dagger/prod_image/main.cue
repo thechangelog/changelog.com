@@ -15,9 +15,9 @@ dockerhub_username: dagger.#Input & {string}
 dockerhub_password: dagger.#Input & {dagger.#Secret}
 // ⚠️  Keep this in sync with ../docker/Dockerfile.production
 runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2021-05-29T10.17.12Z"}
-prod_image_ref:    dagger.#Input & {string | *"thechangelog/changelog.com:dagger"}
 build_version:     dagger.#Input & {string}
-git_branch:        dagger.#Input & {string | *""}
+git_branch:        dagger.#Input & {string | *"dev"}
+prod_image_ref:    dagger.#Input & {string | *"thechangelog/changelog.com:\(git_branch)"}
 git_sha:           dagger.#Input & {string}
 git_author:        dagger.#Input & {string}
 app_version:       dagger.#Input & {string}
@@ -239,20 +239,18 @@ image_prod: docker.#Command & {
 		"""#
 }
 
-if git_branch == "master" {
-	image_prod_tag: docker.#Command & {
-		host: docker_host
-		env: {
-			DOCKERHUB_USERNAME:     dockerhub_username
-			PROD_IMAGE_REF:         image_prod.env.PROD_IMAGE_REF
-			ONLY_RUN_AFTER_TEST_OK: test.dockerfile
-		}
-		secret: "/run/secrets/dockerhub_password": dockerhub_password
-		command: #"""
-			docker login --username "$DOCKERHUB_USERNAME" --password "$(cat /run/secrets/dockerhub_password)"
-			docker push "$PROD_IMAGE_REF" | tee docker.push.log
-			echo "$PROD_IMAGE_REF" > image.ref
-			awk '/digest/ { print $3 }' < docker.push.log > image.digest
-			"""#
+image_prod_tag: docker.#Command & {
+	host: docker_host
+	env: {
+		DOCKERHUB_USERNAME:     dockerhub_username
+		PROD_IMAGE_REF:         image_prod.env.PROD_IMAGE_REF
+		ONLY_RUN_AFTER_TEST_OK: test.dockerfile
 	}
+	secret: "/run/secrets/dockerhub_password": dockerhub_password
+	command: #"""
+		docker login --username "$DOCKERHUB_USERNAME" --password "$(cat /run/secrets/dockerhub_password)"
+		docker push "$PROD_IMAGE_REF" | tee docker.push.log
+		echo "$PROD_IMAGE_REF" > image.ref
+		awk '/digest/ { print $3 }' < docker.push.log > image.digest
+		"""#
 }
