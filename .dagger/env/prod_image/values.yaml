@@ -42,11 +42,11 @@ inputs:
                 - _build
                 - dagger
     app_version:
-        text: 22.1.13+5618b8d08db5eb39b5c1569758faf75346e5eca4
+        text: 22.1.17+0a2b55de0e285526bc8124058c8598913aaf8ce7
     build_url:
         text: https://github.com/thechangelog/changelog.com/actions
     build_version:
-        text: 22.1.13+5618b8d08db5eb39b5c1569758faf75346e5eca4
+        text: 22.1.17+0a2b55de0e285526bc8124058c8598913aaf8ce7
     docker_host:
         text: tcp://100.113.182.91:2375
     dockerhub_password:
@@ -56,7 +56,7 @@ inputs:
     git_author:
         text: gerhard
     git_sha:
-        text: 5618b8d08db5eb39b5c1569758faf75346e5eca4
+        text: 0a2b55de0e285526bc8124058c8598913aaf8ce7
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
@@ -95,7 +95,7 @@ inputs:
 
             EXPOSE 4000
 
-            CMD make on-app-start; mix do ecto.create, ecto.migrate, phx.server
+            CMD make on-app-start; mix do ecto.create, ecto.migrate, changelog.static.upload, phx.server
 sops:
     kms: []
     gcp_kms: []
@@ -111,8 +111,8 @@ sops:
             RHllVkFJWFpXUDZZNTYzcTVJMm1hOHMKB0jLL+vzIqllrKC8n8BtjVrl954uQkwL
             ucVzAeuQk6XBAckZBAKoo9IB4c0G5KRq7K7PJdi/HqvggVdj2CKF6Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-01-13T14:27:40Z"
-    mac: ENC[AES256_GCM,data:mf9Ax7O5SJygOBJK/bSKlv5XoHdBhIVtEB/4u+s8BOWeqVoqggjZnsenFMU0OrCsKy6dqBRqgx01l6XvWjkG1fuzzvyyntAbPGygvPSJP9fQ+904rJ4hZLtZCfjslYS77KQlxgDkPa4xNNU4JFTNJVBr6novH1rEQIXZl8H+TH0=,iv:PDOyOiQf7hoxgGCkskhWnwCoqdixlPPjc5mvfmxfG0A=,tag:uvww3xPXPCHGyQfgtzSavg==,type:str]
+    lastmodified: "2022-01-17T01:14:36Z"
+    mac: ENC[AES256_GCM,data:E6fPQhfHYdCEsXXt/sR1sHQ7HQaA+GiVFcw/ogO+n0ljeSapIFN4sXMjUN02ARWNeAtcxQaDw4RoJnwCyIxatt1K8m33yHZx0IpKm9B5P/HuvPFrFFmgbw0Fudeei37/LmVfa4ABYTzlD2rTx416smps1Gbc/kmVtYpM2qZZ218=,iv:juRgIrHpf3Rnl3KYzd6fzeBVzU+m4FE0g+KLrGCBzvs=,tag:yLVYHz4n53mbU1ffkCkxeg==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1
