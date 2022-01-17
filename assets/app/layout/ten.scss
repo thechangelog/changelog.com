@@ -60,7 +60,7 @@
       min-width: 220px;
       margin-bottom: 40px;
       padding-bottom: 33px;
-      background: url("/images/icons/ten-year-heading-icon.svg") no-repeat;
+      background: url("../images/icons/ten-year-heading-icon.svg") no-repeat;
       background-position: bottom center;
       font-family: $code;
       font-size: 0.875rem;
@@ -77,7 +77,7 @@
 
       .ten-section:nth-child(even) & {
         padding-bottom: 25px;
-        background-image: url("/images/icons/ten-year-heading-icon-alt.svg");
+        background-image: url("../images/icons/ten-year-heading-icon-alt.svg");
       }
     }
 
@@ -131,7 +131,7 @@
         height: 1020px;
         margin-left: -684px;
         margin-top: -400px;
-        background-image: url('/images/content/ten/ten-year-hero-background.svg');
+        background-image: url('../images/content/ten/ten-year-hero-background.svg');
         background-position: center 0;
         background-repeat: no-repeat;
         background-size: 1368px; // NOTE: This is slightly scaled down from the original size to match the 10 year graphic
@@ -193,7 +193,7 @@
 
     &-button {
       padding: 0.875em 1.25em 0.75em 2.5em;
-      background-image: url('/images/icons/toolbar-play-white.svg');
+      background-image: url('../images/icons/toolbar-play-white.svg');
       background-repeat: no-repeat;
       background-position: 20px center;
       background-size: 13px 16px;
@@ -752,7 +752,7 @@
     display: flex;
     align-items: center;
     min-height: 400px;
-    background-image: url('/images/content/ten/ten-year-footer-background.svg');
+    background-image: url('../images/content/ten/ten-year-footer-background.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 1368px; // NOTE: This is slightly scaled down from the original size to match the 10 year graphic
@@ -791,7 +791,7 @@
         display: inline-block;
         width: 27px;
         height: 26px;
-        background: url("/images/icons/icon-heart.svg") no-repeat;
+        background: url("../images/icons/icon-heart.svg") no-repeat;
         background-size: 27px 26px;
       }
     }
@@ -800,7 +800,7 @@
       display: inline-block;
       width: 199px;
       height: 61px;
-      background: url('/images/brand/changelog-logo-full.svg') no-repeat;
+      background: url('../images/brand/changelog-logo-full.svg') no-repeat;
       text-indent: -9999px;
     }
   }

@@ -28,7 +28,7 @@
   }
 
   &-icon {
-    background: url("/images/icons/icon-play-white.svg") center no-repeat;
+    background: url("../images/icons/icon-play-white.svg") center no-repeat;
     background-size: auto 40%;
     overflow: hidden;
     position: absolute;
@@ -41,10 +41,10 @@
     transition: opacity 0.2s $ease-in-out-quint;
 
     #{$parent}.is-paused & {
-      background-image: url("/images/icons/icon-play-white.svg");
+      background-image: url("../images/icons/icon-play-white.svg");
     }
     #{$parent}.is-playing & {
-      background-image: url("/images/icons/icon-pause-white.svg");
+      background-image: url("../images/icons/icon-pause-white.svg");
     }
     #{$parent}.is-upcoming &, #{$parent}.is-complete & {
       opacity: 0.2;
@@ -59,7 +59,7 @@
         -moz-animation: $spin;
         animation: $spin;
         content: "";
-        background: url("/images/icons/loading-2-white.svg") center no-repeat;
+        background: url("../images/icons/loading-2-white.svg") center no-repeat;
         background-size: auto 60%;
         position: absolute;
         top: 0;
@@ -69,7 +69,7 @@
       }
 
       &:before {
-        background-image: url("/images/icons/loading-white.svg");
+        background-image: url("../images/icons/loading-white.svg");
         background-size: auto 60%;
         -webkit-animation: $spin;
         -moz-animation: $spin;
@@ -96,11 +96,11 @@
       transform: rotate(360deg) translate3d(0, 0, 0);
     }
 
-    background-image: url(/images/podcasts/podcast-abstract-art.svg);
+    background-image: url(../images/podcasts/podcast-abstract-art.svg);
 
     @each $podcast in $podcasts {
       #{$parent}--#{$podcast} & {
-        background-image: url(/images/podcasts/#{$podcast}-abstract-art.svg);
+        background-image: url(../images/podcasts/#{$podcast}-abstract-art.svg);
       }
     }
   }

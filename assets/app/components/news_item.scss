@@ -77,11 +77,11 @@
         text-transform: uppercase;
 
         &--link {
-          background: $black url('/images/defaults/type-link.png') no-repeat center;
+          background: $black url('../images/defaults/type-link.png') no-repeat center;
           background-size: 20px;
         }
         &--project {
-          background: $black url('/images/defaults/type-project.png') no-repeat center;
+          background: $black url('../images/defaults/type-project.png') no-repeat center;
           background-size: 20px;
         }
 
@@ -122,7 +122,7 @@
     }
 
     &-external {
-      background: url('/images/icons/icon-external.svg') no-repeat center;
+      background: url('../images/icons/icon-external.svg') no-repeat center;
       display: inline-block;
       height: 15px;
       margin-left: 0.25em;
@@ -237,19 +237,19 @@
     }
 
     &-play_button {
-      background-image: url('/images/icons/toolbar-play.svg');
-      &.is-active { background-image: url('/images/icons/toolbar-pause.svg'); }
+      background-image: url('../images/icons/toolbar-play.svg');
+      &.is-active { background-image: url('../images/icons/toolbar-pause.svg'); }
     }
 
     &-video_button {
-      background-image: url('/images/icons/toolbar-play.svg');
-      &.is-active { background-image: url('/images/icons/toolbar-close.svg'); }
+      background-image: url('../images/icons/toolbar-play.svg');
+      &.is-active { background-image: url('../images/icons/toolbar-close.svg'); }
     }
 
     &-image_button {
-      background-image: url('/images/icons/toolbar-image.svg');
+      background-image: url('../images/icons/toolbar-image.svg');
       background-size: auto 22px;
-      &.is-active { background-image: url('/images/icons/toolbar-close.svg'); }
+      &.is-active { background-image: url('../images/icons/toolbar-close.svg'); }
     }
 
     &-meta {

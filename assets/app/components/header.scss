@@ -17,7 +17,7 @@ body[class*="live"],
     }
 
     &-logo a {
-      background-image: url('/images/brand/changelog-logomark-white.svg');
+      background-image: url('../images/brand/changelog-logomark-white.svg');
     }
 
     &-nav-list-item {
@@ -93,7 +93,7 @@ body[class*="live"],
     text-indent: -9999px;
 
     a {
-      background: url('/images/brand/changelog-logomark.svg') left center no-repeat;
+      background: url('../images/brand/changelog-logomark.svg') left center no-repeat;
       background-size: auto $size;
       display: block;
       height: $size;

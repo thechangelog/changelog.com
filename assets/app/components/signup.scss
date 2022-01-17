@@ -42,11 +42,11 @@
       width: $size;
 
       &--news {
-        background-image: url('/images/icons/icon-news.svg');
+        background-image: url('../images/icons/icon-news.svg');
       }
 
       &--podcasts {
-        background-image: url('/images/icons/icon-podcasts.svg');
+        background-image: url('../images/icons/icon-podcasts.svg');
       }
     }
   }

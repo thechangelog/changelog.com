@@ -7,7 +7,7 @@
 
   &-button {
     $size: 36px;
-    background: $green url('/images/icons/toolbar-play-white.svg') center no-repeat;
+    background: $green url('../images/icons/toolbar-play-white.svg') center no-repeat;
     background-size: auto 14px;
     background-position: 13px center;
     border-radius: $size;
@@ -18,7 +18,7 @@
     text-indent: -9999px;
 
     &.is-playing {
-      background-image: url('/images/icons/toolbar-pause-white.svg');
+      background-image: url('../images/icons/toolbar-pause-white.svg');
       background-position: center;
     }
   }
