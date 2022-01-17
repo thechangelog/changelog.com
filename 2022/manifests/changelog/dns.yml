@@ -28,18 +28,18 @@ spec:
 #     targets:
 #       - ${PUBLIC_IPv4}
 # ---
-# apiVersion: externaldns.k8s.io/v1alpha1
-# kind: DNSEndpoint
-# metadata:
-#   name: cdn.changelog.com
-#   namespace: ${NAMESPACE}
-# spec:
-#   endpoints:
-#   - dnsName: cdn.changelog.com
-#     recordTTL: ${DNS_TTL}
-#     recordType: CNAME
-#     targets:
-#       - dualstack.changelog.map.fastly.net
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: cdn22.changelog.com
+  namespace: ${NAMESPACE}
+spec:
+  endpoints:
+  - dnsName: cdn22.changelog.com
+    recordTTL: ${DNS_TTL}
+    recordType: CNAME
+    targets:
+      - dualstack.changelog.map.fastly.net
 # ---
 # apiVersion: externaldns.k8s.io/v1alpha1
 # kind: DNSEndpoint
