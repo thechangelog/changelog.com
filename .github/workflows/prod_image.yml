@@ -31,7 +31,7 @@ jobs:
 
       - name: Run prod_image environment with Dagger on remote Docker Engine...
         run: |
-          /opt/hostedtoolcache/dagger/*/x64/dagger input prod_dockerfile --file docker/Dockerfile.production --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text prod_dockerfile --file docker/Dockerfile.production --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_branch "$GITHUB_REF_NAME" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_sha "$GITHUB_SHA" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_author "$GITHUB_ACTOR" --environment prod_image
