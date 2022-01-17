@@ -19,9 +19,6 @@ config :changelog, ChangelogWeb.Endpoint,
   # we don't need vsn=?d because Plug.Static doesn't serve static assets in prod
   cache_manifest_skip_vsn: true
 
-# in prod we point waffle to the CDN, just like we tell our own endpoint
-config :waffle, asset_host: static_url_host
-
 if System.get_env("HTTPS") do
   config :changelog, ChangelogWeb.Endpoint,
     https: [
