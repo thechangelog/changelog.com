@@ -23,6 +23,7 @@ lke-external-dns: | $(EXTERNAL_DNS_DIR) lke-ctx $(HELM)
 	  --set txtPrefix=_external-dns. \
 	  --set logLevel=$(EXTERNAL_DNS_LOG_LEVEL) \
 	  --set sources[0]=crd \
+	  --set sources[1]=crd \
 	  --set policy=$(EXTERNAL_DNS_POLICY) \
 	  --set extraArgs[0]=--crd-source-apiversion=externaldns.k8s.io/v1alpha1 \
 	  --set extraArgs[1]=--crd-source-kind=DNSEndpoint \
