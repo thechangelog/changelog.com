@@ -31,11 +31,12 @@ jobs:
 
       - name: Run prod_image environment with Dagger on remote Docker Engine...
         run: |
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text docker_host "$DOCKER_HOST" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input prod_dockerfile --file docker/Dockerfile.production --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_branch "$GITHUB_REF_NAME" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_sha "$GITHUB_SHA" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_author "$GITHUB_ACTOR" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text app_version "$(date -u +'%y.%-m.%-d+')$GITHUB_SHA" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text build_version "$(date -u +'%Y-%m-%dT%H.%M.%SZ')" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text build_url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text docker_host "$DOCKER_HOST" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger up --environment prod_image --log-format plain
