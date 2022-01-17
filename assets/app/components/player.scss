@@ -62,22 +62,22 @@
       }
 
       &--copy {
-        background-image: url("/images/icons/icon-share.svg");
+        background-image: url("../images/icons/icon-share.svg");
       }
 
       &--copy.is-copying {
-        background-image: url("/images/icons/icon-link-white.svg");
+        background-image: url("../images/icons/icon-link-white.svg");
       }
 
       &--hide {
-        background-image: url("/images/icons/icon-down.svg");
+        background-image: url("../images/icons/icon-down.svg");
         .podcast_player--is-hidden & {
-          background-image: url("/images/icons/icon-up.svg");
+          background-image: url("../images/icons/icon-up.svg");
         }
       }
 
       &--close {
-        background-image: url("/images/icons/icon-close.svg");
+        background-image: url("../images/icons/icon-close.svg");
       }
     }
   }
@@ -208,17 +208,17 @@
   }
 
   &--play {
-    background-image: url("/images/icons/player-play.svg");
+    background-image: url("../images/icons/player-play.svg");
 
     &.is-paused {
-      background-image: url("/images/icons/player-play.svg");
+      background-image: url("../images/icons/player-play.svg");
       background-size: 18px;
     }
     &.is-playing {
-      background-image: url("/images/icons/player-pause.svg");
+      background-image: url("../images/icons/player-pause.svg");
     }
     &.is-loading {
-      background-image: url("/images/icons/loading.svg");
+      background-image: url("../images/icons/loading.svg");
       -webkit-animation: spin 1s ease-in-out infinite;
       animation: spin 1s ease-in-out infinite;
 
@@ -226,7 +226,7 @@
         -webkit-animation: spin 1s ease-in-out infinite;
         animation: spin 1s ease-in-out infinite;
         content: "";
-        background: url("/images/icons/loading-2.svg") center no-repeat;
+        background: url("../images/icons/loading-2.svg") center no-repeat;
         position: absolute;
         top: 0;
         right: 0;
@@ -246,8 +246,8 @@
     width: 2.25rem;
     margin: 0 0.5rem;
   }
-  &--back15 { background-image: url("/images/icons/player-prev-15.svg"); }
-  &--forward15 { background-image: url("/images/icons/player-next-15.svg"); }
+  &--back15 { background-image: url("../images/icons/player-prev-15.svg"); }
+  &--forward15 { background-image: url("../images/icons/player-next-15.svg"); }
 
   &--next_episode,
   &--prev_episode {

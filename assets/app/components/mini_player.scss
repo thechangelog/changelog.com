@@ -4,7 +4,7 @@
   margin: 0;
 
   &-button {
-    background: $white url('/images/icons/toolbar-play.svg') center no-repeat;
+    background: $white url('../images/icons/toolbar-play.svg') center no-repeat;
     background-size: auto 14px;
     border: 1px solid $light-grey;
     border-radius: $base-border-radius;
@@ -15,7 +15,7 @@
     width: 42px;
     text-indent: -9999px;
 
-    &.is-playing { background-image: url('/images/icons/toolbar-pause.svg'); }
+    &.is-playing { background-image: url('../images/icons/toolbar-pause.svg'); }
   }
   &-slider {
     flex: 1 100%;

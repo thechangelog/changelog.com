@@ -5,8 +5,14 @@ defmodule ChangelogWeb.PodcastView do
   alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
-  def cover_path(%{slug: "master"}, version), do: "/images/podcasts/master-#{version}.png"
-  def cover_path(%{slug: "plusplus"}, version), do: "/images/podcasts/plusplus-#{version}.png"
+  def cover_path(%{slug: "master"}, version) do
+    Routes.static_url(Endpoint, "/images/podcasts/master-#{version}.png")
+  end
+
+  def cover_path(%{slug: "plusplus"}, version) do
+    Routes.static_url(Endpoint, "/images/podcasts/plusplus-#{version}.png")
+  end
+
   def cover_path(podcast, version), do: Cover.url({podcast.cover, podcast}, version)
 
   def cover_url(podcast), do: cover_url(podcast, :original)
