@@ -34,4 +34,4 @@ RUN echo "$GIT_SHA" > priv/static/version.txt \
 
 EXPOSE 4000
 
-CMD make on-app-start; mix do ecto.create, ecto.migrate, phx.server
+CMD make on-app-start; mix do ecto.create, ecto.migrate, changelog.static.upload, phx.server
