@@ -51,6 +51,7 @@
     <link href="<%= Routes.json_feed_url(@conn, :news) %>" rel="alternate" title="JSON News Feed" type="application/json">
     <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>">
     <link rel="manifest" href="<%= Routes.static_url(@conn, "/manifest.json") %>">
+    <link rel="shortcut icon" href="<%= Routes.static_url(@conn, "/favicon.ico") %>">
   <%= for font <- ~w(roboto-mono-400 roboto-mono-700 SanaSans-Regular SanaSans-Medium SanaSans-Black SanaSans-Bold SanaSans-Italic) do %>
     <link rel="preload" href="<%= Routes.static_url(@conn, "/fonts/#{font}.woff2") %>" as="font" type="font/woff2" crossorigin>
   <% end %>
