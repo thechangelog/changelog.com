@@ -8,14 +8,6 @@
  *
  * You may obtain a valid license at the URLs below.
  *
- * Webfont: DIN2014-Narrow by ParaType
- * URL: http://www.myfonts.com//fonts/paratype/din-2014/narrow-regular/
- * Copyright: Copyright &#x00A9; 2014 ParaType Inc., ParaType Ltd. All rights reserved.
- *
- * Webfont: DIN2014-NarrowBold by ParaType
- * URL: http://www.myfonts.com//fonts/paratype/din-2014/narrow-bold/
- * Copyright: Copyright &#x00A9; 2014 ParaType Inc., ParaType Ltd. All rights reserved.
- *
  * Webfont: SanaSans-Black by Latinotype
  * URL: http://www.myfonts.com//fonts/latinotype/sana-sans/black/
  * Copyright: Copyright &#x00A9; 2015 by Latinotype. All rights reserved.
@@ -68,22 +60,6 @@
   font-style: normal;
   font-display: fallback;
   src: url("../fonts/roboto-mono-700.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "DIN 2014 Narrow";
-  font-weight: 400;
-  font-style: normal;
-  font-display: fallback;
-  src: url("../fonts/DIN2014-Narrow.woff2") format("woff2"), url("../fonts/DIN2014-Narrow.woff") format("woff");
-}
-
-@font-face {
-  font-family: "DIN 2014 Narrow";
-  font-weight: 400;
-  font-style: normal;
-  font-display: fallback;
-  src: url("../fonts/DIN2014-Narrow.woff2") format("woff2"), url("../fonts/DIN2014-Narrow.woff") format("woff");
 }
 
 @font-face {
