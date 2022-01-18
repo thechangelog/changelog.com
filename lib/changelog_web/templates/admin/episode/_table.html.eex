@@ -69,7 +69,7 @@
       <%= if Enum.any?(additional_participants) do %>
           <img
             class="ui avatar image"
-            src="<%= Routes.static_path(@conn, "/images/icons/icon-plus.png") %>"
+            src="<%= Routes.static_url(@conn, "/images/icons/icon-plus.png") %>"
             title="and <%= length(additional_participants) %> more"
             data-popup="true">
       <% end %>
