@@ -1,10 +1,9 @@
 use Mix.Config
 
 config :changelog, ChangelogWeb.Endpoint,
+  http: [port: 4000],
   url: [host: System.get_env("HOST", "localhost")],
-  http: [
-    port: 4000
-  ],
+  static_url: [path: "/static"],
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,

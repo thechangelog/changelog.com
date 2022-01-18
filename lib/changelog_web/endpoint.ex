@@ -19,17 +19,15 @@ defmodule ChangelogWeb.Endpoint do
         Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
     }
 
-  # TODO this may need to move to dev.exs now that prod serves static from S3
-  # Serve at "/" the static files from "priv/static" directory.
-  #
-  # You should set gzip to true if you are running phoenix.digest
-  # when deploying your static files in production.
-  plug Plug.Static,
-    at: "/",
-    from: :changelog,
-    gzip: true,
-    only_matching: ~w(css fonts images js android-chrome apple-touch
-      browserconfig favicon manifest mstile robots safari-pinned-tab version build)
+  # In production static assets are served by the CDN
+  if Mix.env() != :prod do
+    plug Plug.Static,
+      at: "/static",
+      from: :changelog,
+      gzip: true,
+      only_matching: ~w(css fonts images js android-chrome apple-touch
+        browserconfig favicon manifest mstile robots safari-pinned-tab version build)
+  end
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
