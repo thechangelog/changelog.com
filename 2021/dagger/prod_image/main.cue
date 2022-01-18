@@ -189,7 +189,7 @@ assets_digest: docker.#Build & {
 		COPY /app/ /app/
 		ENV MIX_ENV=prod
 		WORKDIR /app/
-		RUN \(deps_mount) \(build_prod_mount) \(node_modules_mount) mix phx.digest
+		RUN \(deps_mount) \(build_prod_mount) \(node_modules_mount) mix phx.digest --no-vsn
 		"""
 }
 
