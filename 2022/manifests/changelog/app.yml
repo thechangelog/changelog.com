@@ -277,7 +277,7 @@ spec:
             - name: UPLOADS_PATH
               value: priv/uploads
             - name: STATIC_URL_HOST
-              value: changelog-assets.s3.amazonaws.com
+              value: cdn22.changelog.com
             - name: URL_HOST
               value: 22.changelog.com
             - name: GRAFANA_URL
