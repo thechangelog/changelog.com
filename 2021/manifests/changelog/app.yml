@@ -216,7 +216,7 @@ spec:
                   name: slack
                   key: invite_api_token
             - name: STATIC_URL_HOST
-              value: cdn22.changelog.com
+              value: cdn.changelog.com
             - name: TWITTER_CONSUMER_KEY
               valueFrom:
                 secretKeyRef:
