@@ -264,6 +264,8 @@ spec:
             #     secretKeyRef:
             #       name: slack
             #       key: invite_api_token
+            - name: STATIC_URL_HOST
+              value: cdn22.changelog.com
             # - name: TWITTER_CONSUMER_KEY
             #   valueFrom:
             #     secretKeyRef:
@@ -274,10 +276,6 @@ spec:
             #     secretKeyRef:
             #       name: twitter
             #       key: consumer_secret
-            - name: UPLOADS_PATH
-              value: priv/uploads
-            - name: STATIC_URL_HOST
-              value: cdn22.changelog.com
             - name: URL_HOST
               value: 22.changelog.com
             - name: GRAFANA_URL
