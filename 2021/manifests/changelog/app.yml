@@ -149,6 +149,12 @@ spec:
                 secretKeyRef:
                   name: aws
                   key: secret_access_key
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_ASSETS_BUCKET
+              value: changelog-assets
+            - name: AWS_UPLOADS_HOST
+              value: https://changelog-assets.s3.amazonaws.com
             - name: BUFFER_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -257,6 +263,8 @@ spec:
                 secretKeyRef:
                   name: slack
                   key: invite_api_token
+            - name: STATIC_URL_HOST
+              value: cdn22.changelog.com
             - name: TWITTER_CONSUMER_KEY
               valueFrom:
                 secretKeyRef:
@@ -267,8 +275,6 @@ spec:
                 secretKeyRef:
                   name: twitter
                   key: consumer_secret
-            - name: UPLOADS_PATH
-              value: priv/uploads
             - name: URL_STATIC_HOST
               value: cdn.changelog.com
             - name: GRAFANA_URL
