@@ -8,6 +8,16 @@ defmodule ChangelogWeb.Endpoint do
 
   plug ChangelogWeb.Plug.HealthCheck
 
+  plug Plug.Static,
+    at: "/uploads",
+    from: {:changelog, "priv/uploads"},
+    gzip: false,
+    headers: %{
+      "accept-ranges" => "bytes",
+      "surrogate-control" =>
+        Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
+    }
+
   # Legacy assets that will exist in production & may exist in dev
   plug Plug.Static,
     at: "/wp-content",
