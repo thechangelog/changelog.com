@@ -166,11 +166,11 @@ spec:
             #     secretKeyRef:
             #       name: campaignmonitor
             #       key: api_token
-            # - name: CM_SMTP_TOKEN
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: campaignmonitor
-            #       key: smtp_token
+            - name: CM_SMTP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: campaignmonitor
+                  key: smtp_token
             # - name: COVERALLS_REPO_TOKEN
             #   valueFrom:
             #     secretKeyRef:
