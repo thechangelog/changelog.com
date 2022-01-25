@@ -40,7 +40,7 @@
 <div class="ui basic segment">
   <h2 class="ui header"><%= link("Requests", to: Routes.admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
   &raquo;
-  Fresh
+  Fresh (<%= length(@episode_requests) %>)
   </h2>
   <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
 </div>

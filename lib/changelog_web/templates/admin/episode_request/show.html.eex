@@ -16,6 +16,11 @@
 
 <div class="ui basic segment">
   <div class="ui text container">
+  <%= if @request.episode do %>
+    <h4 class="ui block header">Resulting Episode</h4>
+
+    <p><%= link(EpisodeView.numbered_title(@request.episode), to: Routes.admin_podcast_episode_path(@conn, :edit, @podcast.slug, @request.episode.slug)) %></p>
+  <% end %>
     <h4 class="ui block header">Submitted By</h4>
 
     <p><%= @request.submitter.name %> (<a href="mailto:<%= @request.submitter.email %>">contact via email</a>) on <%= AdminHelpers.ts(@request.inserted_at) %></p>

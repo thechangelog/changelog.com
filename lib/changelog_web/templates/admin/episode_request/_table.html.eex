@@ -8,7 +8,7 @@
     <%= if !assigns[:status] do %>
       <th>Status</th>
     <% end %>
-      <th>Date</th>
+      <th>Requested</th>
     <%= if !assigns[:person] do %>
       <th>Submitter</th>
     <% end %>
@@ -59,7 +59,7 @@
               to: Routes.admin_podcast_episode_request_path(@conn, :edit, podcast.slug, request)) %>
             <% end %>
 
-            <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.Episode.create(@current_user, podcast) do %>
+            <%= if Changelog.EpisodeRequest.is_undecided(request) && Policies.Admin.Episode.create(@current_user, podcast) do %>
               <%= AdminHelpers.dropdown_link("Start Episode",
                   to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug, request_id: request.id)) %>
             <% end %>
@@ -70,14 +70,14 @@
                   method: :put) %>
             <% end %>
 
-            <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.fail(@current_user, podcast) do %>
+            <%= if Changelog.EpisodeRequest.is_undecided(request) && Policies.Admin.EpisodeRequest.fail(@current_user, podcast) do %>
               <%= AdminHelpers.dropdown_link("Set to Failed",
                   to: Routes.admin_podcast_episode_request_path(@conn, :fail, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
                   title: "Failed",
                   method: :put, data: [confirm: "Set to failed?"]) %>
             <% end %>
 
-            <%= if Changelog.EpisodeRequest.is_active(request) && Policies.Admin.EpisodeRequest.decline(@current_user, podcast) do %>
+            <%= if Changelog.EpisodeRequest.is_undecided(request) && Policies.Admin.EpisodeRequest.decline(@current_user, podcast) do %>
               <%= AdminHelpers.dropdown_link("Decline Silently",
                   to: Routes.admin_podcast_episode_request_path(@conn, :decline, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
                   method: :put,
@@ -92,7 +92,7 @@
               ) %>
             <% end %>
 
-            <%= if Policies.Admin.EpisodeRequest.delete(@current_user, podcast) do %>
+            <%= if !Changelog.EpisodeRequest.is_complete(request) && Policies.Admin.EpisodeRequest.delete(@current_user, podcast) do %>
               <%= AdminHelpers.dropdown_link("Delete",
                 to: Routes.admin_podcast_episode_request_path(@conn, :delete, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
                 method: :delete, data: [confirm: "Delete this request?"]) %>

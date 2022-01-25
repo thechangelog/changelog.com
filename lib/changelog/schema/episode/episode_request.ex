@@ -29,11 +29,26 @@ defmodule Changelog.EpisodeRequest do
   def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
   def failed(query \\ __MODULE__), do: from(q in query, where: q.status == ^:failed)
 
-  def with_episode(query \\ __MODULE__),
-    do: from(q in query, join: e in Episode, on: q.id == e.request_id)
+  def with_episode(query \\ __MODULE__) do
+    from(q in query, join: e in Episode, on: q.id == e.request_id)
+  end
 
-  def sans_episode(query \\ __MODULE__),
-    do: from(q in query, left_join: e in Episode, on: q.id == e.request_id, where: is_nil(e.id))
+  def with_published_episode(query \\ __MODULE__) do
+    from(q in query, join: e in Episode, on: q.id == e.request_id, where: e.published)
+  end
+
+  def with_unpublished_episode(query \\ __MODULE__) do
+    from(q in query, join: e in Episode, on: q.id == e.request_id, where: not(e.published))
+  end
+
+  def sans_episode(query \\ __MODULE__) do
+    from(
+      q in query,
+      left_join: e in Episode,
+      on: q.id == e.request_id,
+      where: is_nil(e.id)
+    )
+  end
 
   def admin_changeset(struct, params \\ %{}) do
     struct
@@ -66,9 +81,16 @@ defmodule Changelog.EpisodeRequest do
   def preload_submitter(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :submitter)
   def preload_submitter(request), do: Repo.preload(request, :submitter)
 
-  def is_active(%{status: status}), do: Enum.member?(~w(fresh pending)a, status)
-  def is_archived(%{status: status}), do: Enum.member?(~w(failed declined)a, status)
+  def is_undecided(%{episode: episode}) when is_map(episode), do: false
+  def is_undecided(%{status: status}), do: Enum.member?(~w(fresh pending)a, status)
+
+  def is_pendable(%{episode: episode}) when is_map(episode), do: false
   def is_pendable(%{status: status}), do: Enum.member?(~w(fresh)a, status)
+
+  def is_archived(%{status: status}), do: Enum.member?(~w(failed declined)a, status)
+
+  def is_complete(%{episode: episode}) when is_map(episode), do: episode.published
+  def is_complete(%{episode: nil}), do: false
 
   def decline!(request), do: update_status!(request, :declined)
   def decline!(request, ""), do: decline!(request)

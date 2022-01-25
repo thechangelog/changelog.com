@@ -34,7 +34,14 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
 
     accepted =
       requests
-      |> EpisodeRequest.with_episode()
+      |> EpisodeRequest.with_unpublished_episode()
+      |> EpisodeRequest.newest_first()
+      |> EpisodeRequest.preload_all()
+      |> Repo.all()
+
+    complete =
+      requests
+      |> EpisodeRequest.with_published_episode()
       |> EpisodeRequest.newest_first()
       |> EpisodeRequest.preload_all()
       |> Repo.all()
@@ -55,6 +62,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
     |> assign(:fresh, fresh)
     |> assign(:pending, pending)
     |> assign(:accepted, accepted)
+    |> assign(:complete, complete)
     |> assign(:declined, declined)
     |> assign(:failed, failed)
     |> render(:index)
