@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.MetacastView do
   use ChangelogWeb, :public_view
 
+  alias Changelog.Endpoint
   alias Changelog.Files.Cover
 
   def cover_url(metacast), do: cover_url(metacast, :original)
@@ -9,7 +10,7 @@ defmodule ChangelogWeb.MetacastView do
     if metacast.cover do
       Cover.url({metacast.cover, metacast}, version)
     else
-      "/images/defaults/black.png"
+      Routes.static_url(Endpoint, "/images/defaults/black.png")
     end
   end
 end

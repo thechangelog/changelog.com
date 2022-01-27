@@ -21,7 +21,7 @@ defmodule ChangelogWeb.PodcastView do
     if podcast.cover do
       cover_path(podcast, version)
     else
-      "/images/defaults/black.png"
+      Routes.static_url(Endpoint, "/images/defaults/black.png")
     end
   end
 
