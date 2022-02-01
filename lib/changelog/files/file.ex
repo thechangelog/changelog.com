@@ -6,7 +6,9 @@ defmodule Changelog.File do
 
       @acl :public_read
 
-      def default_url(_version, _scope), do: "/images/defaults/black.png"
+      def default_url(_version, _scope) do
+        ChangelogWeb.Router.Helpers.static_url(ChangelogWeb.Endpoint, "/images/defaults/black.png")
+      end
 
       def validate({file, _}) do
         Enum.member?(unquote(types), file_type(file))
