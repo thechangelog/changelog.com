@@ -10,6 +10,13 @@ defmodule Changelog.File do
         ChangelogWeb.Router.Helpers.static_url(ChangelogWeb.Endpoint, "/images/defaults/black.png")
       end
 
+      def s3_object_headers(version, {file, scope}) do
+        [
+          content_type: mime_type(file),
+          meta: [{"surrogate-control", Application.get_env(:changelog, :cdn_cache_control_s3)}]
+        ]
+      end
+
       def validate({file, _}) do
         Enum.member?(unquote(types), file_type(file))
       end

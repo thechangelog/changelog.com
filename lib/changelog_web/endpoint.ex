@@ -15,7 +15,7 @@ defmodule ChangelogWeb.Endpoint do
     headers: %{
       "accept-ranges" => "bytes",
       "surrogate-control" =>
-        Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
+        Application.get_env(:changelog, :cdn_cache_control_s3)
     }
 
   # Legacy assets that will exist in production & may exist in dev
@@ -26,7 +26,7 @@ defmodule ChangelogWeb.Endpoint do
     headers: %{
       "cache-control" => "max-age=#{3600 * 24 * 366}, public",
       "surrogate-control" =>
-        Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_static_cache]
+        Application.get_env(:changelog, :cdn_cache_control_s3)
     }
 
   # In production static assets are served by the CDN

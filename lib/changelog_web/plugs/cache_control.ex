@@ -17,7 +17,7 @@ defmodule ChangelogWeb.Plug.CacheControl do
     )
     |> put_resp_header(
       "surrogate-control",
-      Application.get_env(:changelog, ChangelogWeb.Endpoint)[:cdn_app_cache]
+      Application.get_env(:changelog, :cdn_cache_control_app)
     )
   end
 end

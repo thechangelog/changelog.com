@@ -13,17 +13,7 @@ config :changelog, ChangelogWeb.Endpoint,
       "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi"
     ),
   render_errors: [accepts: ~w(html json)],
-  pubsub_server: Changelog.PubSub,
-  cdn_static_cache:
-    System.get_env(
-      "CDN_STATIC_CACHE",
-      "max-age=#{3600 * 24 * 7}, stale-while-revalidate=3600, stale-if-error=#{3600 * 24 * 7}"
-    ),
-  cdn_app_cache:
-    System.get_env(
-      "CDN_APP_CACHE",
-      "max-age=60, stale-while-revalidate=60, stale-if-error=#{3600 * 24 * 7}"
-    )
+  pubsub_server: Changelog.PubSub
 
 config :changelog,
   buffer_token: SecretOrEnv.get("BUFFER_TOKEN"),
@@ -36,6 +26,9 @@ config :changelog,
   slack_invite_api_token: SecretOrEnv.get("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
   plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG"),
+  # 60 = one minute, 3600 = one hour, 86,400 = one day, 604,800 = one week, 31,536,000 = one year
+  cdn_cache_control_s3: SecretOrEnv.get("CDN_CACHE_CONTROL_S3", "max-age=31536000, stale-while-revalidate=3600, stale-if-error=86400"),
+  cdn_cache_control_app: SecretOrEnv.get("CDN_CACHE_CONTROL_APP", "max-age=60, stale-while-revalidate=60, stale-if-error=604800"),
   ecto_repos: [Changelog.Repo]
 
 config :changelog, Oban,
