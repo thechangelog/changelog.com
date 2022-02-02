@@ -2,7 +2,7 @@ defmodule ChangelogWeb.TopicView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Topic
-  alias ChangelogWeb.NewsItemView
+  alias ChangelogWeb.{Endpoint, NewsItemView}
   alias Changelog.Files.Icon
 
   def admin_edit_link(conn, %{admin: true}, topic) do
@@ -23,7 +23,7 @@ defmodule ChangelogWeb.TopicView do
     if topic.icon do
       icon_path(topic, version)
     else
-      "/images/defaults/avatar-topic.png"
+      Routes.static_url(Endpoint, "/images/defaults/avatar-topic.png")
     end
   end
 

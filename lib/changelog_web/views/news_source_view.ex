@@ -3,7 +3,7 @@ defmodule ChangelogWeb.NewsSourceView do
 
   alias Changelog.Files.Icon
   alias Changelog.NewsSource
-  alias ChangelogWeb.{NewsItemView}
+  alias ChangelogWeb.{Endpoint, NewsItemView}
 
   def admin_edit_link(conn, %{admin: true}, source) do
     path =
@@ -20,7 +20,7 @@ defmodule ChangelogWeb.NewsSourceView do
     if news_source.icon do
       Icon.url({news_source.icon, news_source}, version)
     else
-      "/images/defaults/avatar-source.png"
+      Routes.static_url(Endpoint, "/images/defaults/avatar-source.png")
     end
   end
 
