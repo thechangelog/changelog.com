@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Plug.Redirects do
   Handles all redirects, legacy and otherwise
   """
   alias ChangelogWeb.RedirectController, as: Redirect
+  alias ChangelogWeb.Router.Helpers, as: Routes
   import ChangelogWeb.Plug.Conn
 
   @external %{
@@ -54,6 +55,7 @@ defmodule ChangelogWeb.Plug.Redirects do
 
   defp internal_redirect(conn = %{halted: true}), do: conn
 
+
   defp internal_redirect(conn = %{request_path: path}) do
     if destination = Map.get(@internal, path, false) do
       conn |> Redirect.call(to: destination) |> Plug.Conn.halt()
@@ -73,6 +75,12 @@ defmodule ChangelogWeb.Plug.Redirects do
   end
 
   defp external_redirect(conn = %{halted: true}), do: conn
+
+  defp external_redirect(conn = %{request_path: "/favicon.ico"}) do
+    conn
+    |> Redirect.call(external: Routes.static_url(conn, "/favicon.ico"))
+    |> Plug.Conn.halt()
+  end
 
   defp external_redirect(conn = %{request_path: path}) do
     if destination = Map.get(@external, path, false) do
