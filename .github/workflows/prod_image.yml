@@ -20,7 +20,7 @@ jobs:
         uses: dagger/dagger-action@v1
         with:
           # ⚠️  Keep this in sync with 2021/dagger.mk
-          version: 0.1.0
+          version: 0.2.0-alpha.3
           age-key: ${{ secrets.DAGGER_AGE_KEY }}
           args: version
 

@@ -42,11 +42,11 @@ inputs:
                 - _build
                 - dagger
     app_version:
-        text: 22.1.17+0a2b55de0e285526bc8124058c8598913aaf8ce7
+        text: 22.2.2+625db715953f8c509f0c8c473cc8e19610e5c1a1
     build_url:
         text: https://github.com/thechangelog/changelog.com/actions
     build_version:
-        text: 22.1.17+0a2b55de0e285526bc8124058c8598913aaf8ce7
+        text: 22.2.2+625db715953f8c509f0c8c473cc8e19610e5c1a1
     docker_host:
         text: tcp://100.113.182.91:2375
     dockerhub_password:
@@ -56,7 +56,7 @@ inputs:
     git_author:
         text: gerhard
     git_sha:
-        text: 0a2b55de0e285526bc8124058c8598913aaf8ce7
+        text: 625db715953f8c509f0c8c473cc8e19610e5c1a1
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
@@ -95,7 +95,7 @@ inputs:
 
             EXPOSE 4000
 
-            CMD make on-app-start; mix do ecto.create, ecto.migrate, changelog.static.upload, phx.server
+            CMD make on-app-start; mix changelog.static.upload; mix do ecto.create, ecto.migrate, phx.server
 sops:
     kms: []
     gcp_kms: []
@@ -111,8 +111,8 @@ sops:
             RHllVkFJWFpXUDZZNTYzcTVJMm1hOHMKB0jLL+vzIqllrKC8n8BtjVrl954uQkwL
             ucVzAeuQk6XBAckZBAKoo9IB4c0G5KRq7K7PJdi/HqvggVdj2CKF6Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-01-17T01:14:36Z"
-    mac: ENC[AES256_GCM,data:E6fPQhfHYdCEsXXt/sR1sHQ7HQaA+GiVFcw/ogO+n0ljeSapIFN4sXMjUN02ARWNeAtcxQaDw4RoJnwCyIxatt1K8m33yHZx0IpKm9B5P/HuvPFrFFmgbw0Fudeei37/LmVfa4ABYTzlD2rTx416smps1Gbc/kmVtYpM2qZZ218=,iv:juRgIrHpf3Rnl3KYzd6fzeBVzU+m4FE0g+KLrGCBzvs=,tag:yLVYHz4n53mbU1ffkCkxeg==,type:str]
+    lastmodified: "2022-02-02T10:00:35Z"
+    mac: ENC[AES256_GCM,data:wCHSQysCBpFdtFh29x6ZlCkVEFYVYsqFMBH1yzidOJrDSYnbdDjy9Asrk9ScCJDFkcni1HfaL13d0tLHOaX1yf2m/9AbjcybXHOUoTjaT108Ibrk3XCBoHe1MkAzXQpenuzg9LUyc8x8NP2PHXBnG53uCbg7iEzyk22RmqsgutI=,iv:c3mi+GTRw4hPA31ceHxL6OaFqUmKFdlBZsCD3jvnX9w=,tag:cg0dthedaKzIJnwh1ooo6w==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1

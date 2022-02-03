@@ -1,7 +1,7 @@
 # Tip: https://github.com/dagger/dagger-action
 # curl -L https://dl.dagger.io/dagger/latest_version
 # ⚠️  Keep this in sync with .github/workflows/prod_image.yml
-DAGGER_VERSION := 0.1.0
+DAGGER_VERSION := 0.2.0-alpha.3
 DAGGER_RELEASES := https://dl.dagger.io/dagger/releases
 DAGGER_DIR := $(LOCAL_BIN)/dagger_v$(DAGGER_VERSION)_$(platform)_amd64
 DAGGER_URL := $(DAGGER_RELEASES)/$(DAGGER_VERSION)/$(notdir $(DAGGER_DIR)).tar.gz
