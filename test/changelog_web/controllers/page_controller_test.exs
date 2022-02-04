@@ -12,7 +12,8 @@ defmodule ChangelogWeb.PageControllerTest do
         "/sponsor",
         "/sponsor/pricing",
         "/weekly",
-        "/weekly/archive"
+        "/weekly/archive",
+        "/manifest.json"
       ],
       fn route ->
         conn = get(conn, route)

@@ -21,6 +21,7 @@ defmodule ChangelogWeb.PageController do
       :weekly_archive -> weekly_archive(conn, conn.params)
       :++ -> plusplus(conn, conn.params)
       :plusplus -> plusplus(conn, conn.params)
+      :manifest_json -> manifest_json(conn, conn.params)
       name -> render(conn, name)
     end
   end
@@ -62,6 +63,32 @@ defmodule ChangelogWeb.PageController do
       |> Episode.preload_sponsors()
 
     render(conn, :home, featured: featured)
+  end
+
+  def manifest_json(conn, _params) do
+    conn
+    |> ResponseCache.cache_public()
+    |> json(%{
+      name: "Changelog",
+      short_name: "Changelog",
+      start_url: Routes.root_url(conn, :index),
+      display: "standalone",
+      description: "News and podcasts for developers",
+      icons: [
+          %{
+              src: Routes.static_url(conn, "/android-chrome-192x192.png"),
+              sizes: "192x192",
+              type: "image/png"
+          },
+          %{
+              src: Routes.static_url(conn, "/android-chrome-512x512.png"),
+              sizes: "512x512",
+              type: "image/png"
+          }
+      ],
+      theme_color: "#ffffff",
+      background_color: "#ffffff"
+      })
   end
 
   def sponsor(conn, _params) do

@@ -226,6 +226,7 @@ defmodule ChangelogWeb.Router do
     get "/search", SearchController, :search
 
     # static pages
+    get "/manifest.json", PageController, :manifest_json
     get "/about", PageController, :about
     get "/coc", PageController, :coc
     get "/community", PageController, :community
