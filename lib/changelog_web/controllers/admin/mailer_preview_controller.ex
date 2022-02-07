@@ -13,6 +13,8 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
 
   alias ChangelogWeb.Email
 
+  plug Authorize, Policies.AdminsOnly
+
   def index(conn, _params) do
     previews =
       :functions
