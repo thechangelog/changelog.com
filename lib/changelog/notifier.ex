@@ -97,6 +97,17 @@ defmodule Changelog.Notifier do
     for person <- interested |> Person.with_email() |> Repo.all() do
       deliver_episode_transcribed_email(person, episode)
     end
+
+    subs =
+      episode
+      |> Subscription.on_episode()
+      |> Subscription.subscribed()
+      |> Subscription.preload_person()
+      |> Repo.all()
+
+    for sub <- subs do
+      deliver_episode_transcribed_email(sub.person, episode)
+    end
   end
 
   defp list_of_comment_mention_recipients(comment) do

@@ -218,11 +218,13 @@ defmodule Changelog.NotifierTest do
       podcast = insert(:podcast)
       s1 = insert(:subscription_on_podcast, podcast: podcast)
       s2 = insert(:subscription_on_podcast, podcast: podcast)
+      s3 = insert(:unsubscribed_subscription_on_podcast, podcast: podcast)
       episode = insert(:published_episode, podcast: podcast)
       item = episode |> episode_news_item() |> insert()
       Notifier.notify(item)
       assert_delivered_email(Email.episode_published(s1, episode))
       assert_delivered_email(Email.episode_published(s2, episode))
+      refute_delivered_email(Email.episode_published(s3, episode))
     end
   end
 
@@ -304,11 +306,24 @@ defmodule Changelog.NotifierTest do
   end
 
   describe "notify/1 with an episode" do
-    test "when episode has no transcript subscriptions (bc they aren't a thing yet" do
-      person = insert(:person, email: "jerod@changelog.com")
+    test "when episode has no transcript subscriptions" do
+      hardcoded = insert(:person, email: "jerod@changelog.com")
       episode = insert(:episode)
       Notifier.notify(episode)
-      assert_delivered_email(Email.episode_transcribed(person, episode))
+      assert_delivered_email(Email.episode_transcribed(hardcoded, episode))
+    end
+
+    test "when episode has transcript subscriptions" do
+      hardcoded = insert(:person, email: "adam@changelog.com")
+      episode = insert(:episode)
+      s1 = insert(:subscription_on_episode, episode: episode)
+      s2 = insert(:subscription_on_episode, episode: episode)
+      s3 = insert(:unsubscribed_subscription_on_episode, episode: episode)
+      Notifier.notify(episode)
+      assert_delivered_email(Email.episode_transcribed(hardcoded, episode))
+      assert_delivered_email(Email.episode_transcribed(s1.person, episode))
+      assert_delivered_email(Email.episode_transcribed(s2.person, episode))
+      refute_delivered_email(Email.episode_transcribed(s3.person, episode))
     end
   end
 

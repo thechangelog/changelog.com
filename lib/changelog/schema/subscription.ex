@@ -1,15 +1,16 @@
 defmodule Changelog.Subscription do
   use Changelog.Schema
 
-  alias Changelog.{NewsItem, Person, Podcast}
+  alias Changelog.{Episode, NewsItem, Person, Podcast}
 
   schema "subscriptions" do
     field :unsubscribed_at, :utc_datetime
     field :context, :string
 
+    belongs_to :episode, Episode
+    belongs_to :item, NewsItem
     belongs_to :person, Person
     belongs_to :podcast, Podcast
-    belongs_to :item, NewsItem
 
     timestamps()
   end
@@ -38,11 +39,15 @@ defmodule Changelog.Subscription do
   def for_person(query \\ __MODULE__, person),
     do: from(q in query, where: q.person_id == ^person.id)
 
+  def on_episode(query \\ __MODULE__, episode),
+    do: from(q in query, where: q.episode_id == ^episode.id)
+
   def on_item(query \\ __MODULE__, item), do: from(q in query, where: q.item_id == ^item.id)
 
   def on_podcast(query \\ __MODULE__, podcast),
     do: from(q in query, where: q.podcast_id == ^podcast.id)
 
+  def on_subject(query, episode = %Episode{}), do: on_episode(query, episode)
   def on_subject(query, item = %NewsItem{}), do: on_item(query, item)
   def on_subject(query, podcast = %Podcast{}), do: on_podcast(query, podcast)
 

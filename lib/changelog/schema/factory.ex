@@ -280,6 +280,18 @@ defmodule Changelog.Factory do
     }
   end
 
+  def subscription_on_episode_factory do
+    %Changelog.Subscription{
+      person: build(:person),
+      episode: build(:episode),
+      context: "you got it from a factory"
+    }
+  end
+
+  def unsubscribed_subscription_on_episode_factory do
+    %Changelog.Subscription{subscription_on_episode_factory() | unsubscribed_at: hours_ago(24)}
+  end
+
   def subscription_on_item_factory do
     %Changelog.Subscription{
       person: build(:person),
