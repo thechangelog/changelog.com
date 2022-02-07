@@ -2,11 +2,14 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>The transcript for <strong><%= @episode.title %></strong> is ready for you!</p>
+    <p>The transcript for <%= link(@episode.title, to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug), itemprop: "url") %> has just been posted!</p>
 
-    <span class="btn-primary">
-      <%= link("Read it here", to: Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) <> "#transcript", itemprop: "url") %>
-    </span>
+    <ul>
+      <li>Read the stylized version <%= link("on the episode page", to: EpisodeView.transcript_url(@episode), itemprop: "url") %></li>
+      <li>View/edit the Markdown <%= link("source on GitHub", to: EpisodeView.transcript_source_url(@episode), itemprop: "url") %></li>
+    </ul>
+
+    <p>Contributions welcome!</p>
 
     <p>💚, Logbot</p>
   </td>

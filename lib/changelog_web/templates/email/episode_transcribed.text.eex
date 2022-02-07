@@ -1,10 +1,15 @@
 <%= greeting(@person) %>
 
 
-The transcript for <%= @episode.title %> is ready for you!
+The transcript for <%= @episode.title %> has just posted!
 
 
-Read it here: <%= Routes.episode_url(Endpoint, :show, @episode.podcast.slug, @episode.slug) <> "#transcript" %>
+Read it here: <%= EpisodeView.transcript_url(@episode) %>
+
+View the source: <%= EpisodeView.transcript_source_url(@episode) %>
+
+
+Contributions welcome!
 
 
 💚, Logbot

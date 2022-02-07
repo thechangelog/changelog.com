@@ -145,7 +145,7 @@ defmodule ChangelogWeb.Email do
     styled_email()
     |> put_header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug} Transcribed")
     |> to(person)
-    |> subject("Transcript published for #{episode.podcast.name} #{episode.slug}")
+    |> subject("Transcript published (#{episode.podcast.name} ##{episode.slug})")
     |> assign(:person, person)
     |> assign(:episode, episode)
     |> render(:episode_transcribed)
