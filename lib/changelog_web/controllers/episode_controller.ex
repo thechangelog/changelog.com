@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EpisodeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, Podcast}
+  alias Changelog.{Episode, NewsItem, Podcast, Subscription}
   alias ChangelogWeb.Plug.ResponseCache
 
   plug ResponseCache
@@ -117,6 +117,35 @@ defmodule ChangelogWeb.EpisodeController do
     else
       redirect(conn, to: Routes.episode_path(conn, :show, podcast.slug, episode.slug))
     end
+  end
+
+  def subscribe(conn = %{method: "POST", assigns: %{current_user: me}}, %{"slug" => slug}, podcast) do
+    episode =
+      podcast
+      |> assoc(:episodes)
+      |> Episode.published()
+      |> Repo.get_by!(slug: slug)
+
+    context = "you clicked the link to be notified on changelog.com"
+    Subscription.subscribe(me, episode, context)
+
+    conn
+    |> put_flash(:success, "We'll email you when the transcript is published 📥")
+    |> redirect(to: Routes.episode_path(conn, :show, podcast.slug, episode.slug))
+  end
+
+  def unsubscribe(conn = %{method: "POST", assigns: %{current_user: me}}, %{"slug" => slug}, podcast) do
+    episode =
+      podcast
+      |> assoc(:episodes)
+      |> Episode.published()
+      |> Repo.get_by!(slug: slug)
+
+    Subscription.unsubscribe(me, episode)
+
+    conn
+    |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
+    |> redirect(to: Routes.episode_path(conn, :show, podcast.slug, episode.slug))
   end
 
   defp assign_podcast(conn, _) do

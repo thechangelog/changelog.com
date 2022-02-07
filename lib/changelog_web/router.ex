@@ -269,6 +269,8 @@ defmodule ChangelogWeb.Router do
     end
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
+    post "/:podcast/:slug/subscribe", EpisodeController, :subscribe, as: :episode
+    post "/:podcast/:slug/unsubscribe", EpisodeController, :unsubscribe, as: :episode
 
     for subpage <- ~w(embed preview play share discuss)a do
       get "/:podcast/:slug/#{subpage}", EpisodeController, subpage, as: :episode

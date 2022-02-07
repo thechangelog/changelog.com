@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EpisodeView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem, UrlKit}
+  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem, Subscription, UrlKit}
 
   alias ChangelogWeb.{
     Endpoint,
@@ -168,6 +168,10 @@ defmodule ChangelogWeb.EpisodeView do
 
   def transcript_source_url(episode) do
     Github.Source.new("transcripts", episode).html_url
+  end
+
+  def transcript_repo_url(episode) do
+    Github.Source.new("transcripts", episode).repo_url
   end
 
   def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do

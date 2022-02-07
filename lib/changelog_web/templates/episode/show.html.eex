@@ -63,6 +63,7 @@
       <% end %>
         <li>Published <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time></li>
         <li><a href="<%= audio_url(@episode) %>" download title="Download MP3">Download (<%= megabytes(@episode) %>MB)</a></li>
+        <li><a href="#transcript" title="Jump to transcript">Transcript</a></li>
         <li><%= admin_edit_link(@conn, @current_user, @episode) %></li>
       </ul>
 
@@ -123,62 +124,89 @@
         </section>
       <% end %>
 
-      <%= if Enum.any?(@episode.transcript) do %>
-        <section class="episode-body-section">
-          <a id="transcript" class="anchor"></a>
-          <header class="section_heading">
-            <h3 class="section_heading-text">Transcript</h3>
-            <p class="section_heading-note"><%= link("📝 Edit Transcript", to: transcript_source_url(@episode), title: "Edit the transcript on GitHub", rel: "external") %></p>
-          </header>
+      <section class="episode-body-section">
+        <a id="transcript" class="anchor"></a>
+        <header class="section_heading">
+          <h3 class="section_heading-text">Transcript</h3>
+          <p class="section_heading-note">
+          <%= if Enum.any?(@episode.transcript) do %>
+            <%= link("📝 Edit Transcript", to: transcript_source_url(@episode), title: "Edit the transcript on GitHub", rel: "external") %>
+          <% else %>
+            <%= link("⏰ Coming Soon", to: transcript_repo_url(@episode), title: "Our transcripts on GitHub", rel: "external") %>
+          <% end %>
+          </p>
+        </header>
 
-          <div class="transcript">
-            <div  class="transcript-item transcript-item--break">
-              <div class="transcript-item-speaker">
-                <%= link to: Routes.page_path(@conn, :about), title: "Changelog Media" do %>
-                  <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
-                <% end %>
-                <p class="transcript-item-speaker-name">Changelog</p>
-              </div>
-              <div class="transcript-item-text">
-                <p><%= link("Click here", to: audio_url(@episode),
-                data: [play: Routes.episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)]) %> to listen along while you enjoy the transcript. 🎧</p>
-              </div>
+        <div class="transcript">
+        <%= if Enum.any?(@episode.transcript) do %>
+          <div  class="transcript-item transcript-item--break">
+            <div class="transcript-item-speaker">
+              <%= link to: Routes.page_path(@conn, :about), title: "Changelog Media" do %>
+                <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
+              <% end %>
+              <p class="transcript-item-speaker-name">Changelog</p>
             </div>
-            <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
-              <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
-              <a id="transcript-<%= index %>" class="anchor"></a>
-              <div class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
-                <%= if speaker do %>
-                  <div class="transcript-item-speaker">
-                    <%= link to: PersonView.profile_path(speaker), title: speaker.name do %>
-                      <%= SharedHelpers.lazy_image(PersonView.avatar_url(speaker), "#{speaker.name} Says", class: "transcript-item-speaker-image", width: 36, height: 36) %>
-                    <% end %>
-                    <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>
-                  </div>
-                <% end %>
-                <div class="transcript-item-text">
-                  <%= unless speaker do %><strong class="transcript-break"><%= part["title"] %></strong><% end %>
-                  <%= part["body"] |> SharedHelpers.md_to_html() |> PublicHelpers.with_timestamp_links() |> raw() %>
-                </div>
-              </div>
-            <% end %>
-            <div  class="transcript-item transcript-item--break">
-              <div class="transcript-item-speaker">
-                <%= link to: Routes.page_path(@conn, :about), title: "Changelog Media" do %>
-                  <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
-                <% end %>
-                <p class="transcript-item-speaker-name">Changelog</p>
-              </div>
-              <div class="transcript-item-text">
-                <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome. 💚</p>
-              </div>
+            <div class="transcript-item-text">
+              <p><%= link("Click here", to: audio_url(@episode),
+              data: [play: Routes.episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)]) %> to listen along while you enjoy the transcript. 🎧</p>
             </div>
           </div>
-        </section>
-      <% end %>
+          <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
+            <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
+            <a id="transcript-<%= index %>" class="anchor"></a>
+            <div class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
+              <%= if speaker do %>
+                <div class="transcript-item-speaker">
+                  <%= link to: PersonView.profile_path(speaker), title: speaker.name do %>
+                    <%= SharedHelpers.lazy_image(PersonView.avatar_url(speaker), "#{speaker.name} Says", class: "transcript-item-speaker-image", width: 36, height: 36) %>
+                  <% end %>
+                  <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>
+                </div>
+              <% end %>
+              <div class="transcript-item-text">
+                <%= unless speaker do %><strong class="transcript-break"><%= part["title"] %></strong><% end %>
+                <%= part["body"] |> SharedHelpers.md_to_html() |> PublicHelpers.with_timestamp_links() |> raw() %>
+              </div>
+            </div>
+          <% end %>
+          <div  class="transcript-item transcript-item--break">
+            <div class="transcript-item-speaker">
+              <%= link to: Routes.page_path(@conn, :about), title: "Changelog Media" do %>
+                <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
+              <% end %>
+              <p class="transcript-item-speaker-name">Changelog</p>
+            </div>
+            <div class="transcript-item-text">
+              <p>Our transcripts are <%= link "open source on GitHub", to: transcript_source_url(@episode), title: "View transcript source on GitHub", rel: "external" %>. Improvements are welcome. 💚</p>
+            </div>
+          </div>
+        <% else %>
+          <div  class="transcript-item transcript-item--break">
+            <div class="transcript-item-speaker">
+              <%= link to: Routes.page_path(@conn, :about), title: "Changelog Media" do %>
+                <div class="transcript-item-speaker-image transcript-item-speaker-image--changelog"></div>
+              <% end %>
+              <p class="transcript-item-speaker-name">Changelog</p>
+            </div>
+            <div class="transcript-item-text">
+              <p>We're hard at work on the transcript for this episode!
+              <%= if @current_user do %>
+                <%= if Subscription.is_subscribed(@current_user, @episode) do %>
+                  <%= link("Click here", to: Routes.episode_path(@conn, :unsubscribe, @podcast.slug, @episode.slug), method: :post) %> to cancel your transcript notification. 💪</p>
+                <% else %>
+                  <%= link("Click here", to: Routes.episode_path(@conn, :subscribe, @podcast.slug, @episode.slug), method: :post) %> and we'll notify you when it's ready. 💪</p>
+                <% end %>
+              <% else %>
+                <%= link("Sign in", to: Routes.sign_in_path(@conn, :new)) %> / <%= link("up", to: Routes.person_path(@conn, :join)) %> to access transcript notifications. 💪</p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        </div>
+      </section>
 
       <div class="episode-body-pagination">
-        <%= link "View all episodes", to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "button" %>
+        <%= link("View all episodes", to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "button") %>
       </div>
     </div>
   </div>

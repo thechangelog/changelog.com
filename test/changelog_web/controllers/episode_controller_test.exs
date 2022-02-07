@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EpisodeControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.{Episode, NewsItem}
+  alias Changelog.{Episode, NewsItem, Subscription}
 
   test "getting a published podcast episode page and its embed", %{conn: conn} do
     p = insert(:podcast)
@@ -73,6 +73,15 @@ defmodule ChangelogWeb.EpisodeControllerTest do
 
     conn = get(conn, Routes.episode_path(conn, :preview, p.slug, e.slug))
     assert html_response(conn, 200) =~ e.title
+  end
+
+  @tag :as_inserted_user
+  test "subscribing to a podcast episode", %{conn: conn} do
+    p = insert(:podcast)
+    e = insert(:published_episode, podcast: p)
+    conn = post(conn, Routes.episode_path(conn, :subscribe, p.slug, e.slug))
+    assert redirected_to(conn) == Routes.episode_path(conn, :show, p.slug, e.slug)
+    assert count(Subscription.subscribed()) == 1
   end
 
   describe "play" do

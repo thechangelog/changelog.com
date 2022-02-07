@@ -146,6 +146,7 @@ defmodule Changelog.Subscription do
       case subject do
         %NewsItem{id: id} -> %{person_id: person.id, item_id: id}
         %Podcast{id: id} -> %{person_id: person.id, podcast_id: id}
+        %Episode{id: id} -> %{person_id: person.id, episode_id: id}
       end
 
     case Repo.get_by(__MODULE__, attrs) do
