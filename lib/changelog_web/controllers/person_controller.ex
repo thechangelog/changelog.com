@@ -146,20 +146,22 @@ defmodule ChangelogWeb.PersonController do
     |> render(:show)
   end
 
-  def subscribe(conn = %{method: "GET"}, %{"to" => to}) when to in ["weekly", "nightly"] do
+  def subscribe(conn = %{method: "GET"}, params = %{"to" => to}) when to in ["weekly", "nightly"] do
     newsletter = Newsletters.get_by_slug(to)
 
     conn
     |> assign(:newsletter, newsletter)
+    |> assign(:email, params["email"])
     |> render(:subscribe_newsletter)
   end
 
-  def subscribe(conn = %{method: "GET"}, %{"to" => to}) when is_binary(to) do
+  def subscribe(conn = %{method: "GET"}, params = %{"to" => to}) when is_binary(to) do
     podcast = Podcast.get_by_slug!(to)
 
     if Podcast.has_feed(podcast) do
       conn
       |> assign(:podcast, podcast)
+      |> assign(:email, params["email"])
       |> render(:subscribe_podcast)
     else
       redirect(conn, to: Routes.person_path(conn, :subscribe))

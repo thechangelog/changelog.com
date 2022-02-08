@@ -71,7 +71,12 @@
         <%= link("Manage my subscription", to: Routes.home_path(@conn, :show) <> "#podcasts", class: "show-header-user_action button_large") %>
       <% true -> %>
         <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
-        <%= render(SharedView, "_subscribe_form.html", Map.merge(assigns, %{to: @list})) %>
+        <%= form_tag Routes.person_path(@conn, :subscribe, @list), class: "signup-form", method: "get" do %>
+          <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
+          <div class="signup-form-submit">
+            <input class="signup-form-submit-button" type="submit" value="Subscribe">
+          </div>
+        <% end %>
       <% end %>
 
       <%= render("_subscribe_buttons.html", assigns) %>

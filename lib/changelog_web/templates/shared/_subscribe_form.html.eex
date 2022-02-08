@@ -1,6 +1,6 @@
 <%= form_tag Routes.person_path(@conn, :subscribe), id: "subscribe", class: "signup-form" do %>
   <input name="to" type="hidden" value="<%= SharedHelpers.get_assigns_or_param(assigns, "to", "weekly") %>">
-  <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
+  <input name="email" value="<%= SharedHelpers.get_assigns_or_param(assigns, "email") %>" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
   <div class="signup-form-submit">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <input class="signup-form-submit-button g-recaptcha" data-sitekey="6Lda3LoaAAAAAMoUFKUgxnxX91FQKzy9pY8t435v" data-callback="subscribeCaptcha" type="submit" value="Subscribe">

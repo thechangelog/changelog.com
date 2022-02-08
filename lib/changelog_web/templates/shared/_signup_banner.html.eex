@@ -3,7 +3,14 @@
   <div class="banner-content">
     <p>Get the latest news and podcasts for developers in your inbox, <em>every week</em>. We&nbsp;make&nbsp;it&nbsp;super easy to keep up with developer news that matters.</p>
   </div>
-  <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
+
+  <%= form_tag Routes.person_path(@conn, :subscribe, "weekly"), class: "signup-form", method: "get" do %>
+    <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
+    <div class="signup-form-submit">
+      <input class="signup-form-submit-button" type="submit" value="Subscribe">
+    </div>
+  <% end %>
+
   <button class="banner-close js-hide-subscribe-banner" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M1 9L9 1M1 1l8 8" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></button>
 </section>
 <% end %>

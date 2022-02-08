@@ -11,7 +11,12 @@
   <%= if @current_user do %>
     <%= link("Manage Subscriptions", to: Routes.home_path(@conn, :show), class: "button_large") %>
   <% else %>
-    <%= render(SharedView, "_subscribe_form.html", assigns) %>
+    <%= form_tag Routes.person_path(@conn, :subscribe, "weekly"), class: "signup-form", method: "get" do %>
+      <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
+      <div class="signup-form-submit">
+        <input class="signup-form-submit-button" type="submit" value="Subscribe">
+      </div>
+    <% end %>
 
     <p class="signup-sign_in">Already a member? <em><%= link "Sign in", to: Routes.sign_in_path(@conn, :new) %></em></p>
   <% end %>
