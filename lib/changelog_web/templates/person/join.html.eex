@@ -68,13 +68,19 @@
       </div>
     </div>
 
+    <div class="form-element_wrap">
+      <div class="form-element" style="text-align: center;">
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <div class="g-recaptcha" data-sitekey="6Lda3LoaAAAAAMoUFKUgxnxX91FQKzy9pY8t435v" style="display: inline-block;"></div>
+      </div>
+    </div>
+
     <div class="form-submit">
       <div class="form-submit-note">
-        <div>Already a member? <em><%= link "Sign in", to: Routes.sign_in_path(@conn, :new), title: "" %></em></div>
+        <div>Already a member? <em><%= link("Sign in", to: Routes.sign_in_path(@conn, :new), title: "") %></em></div>
       </div>
-      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-      <input class="g-recaptcha" data-sitekey="6Lda3LoaAAAAAMoUFKUgxnxX91FQKzy9pY8t435v" data-callback="joinCaptcha" type="submit" value="Join Now">
-      <script>function joinCaptcha() { document.getElementById("join").submit(); }</script>
+
+      <input type="submit" value="Join Now">
     </div>
   <% end %>
 </article>
