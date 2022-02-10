@@ -13,7 +13,7 @@
     "handlebars": "^4.5.3",
     "intersection-observer": "^0.12.0",
     "jquery": "^3.4.1",
-    "node-sass": "^6.0.0",
+    "node-sass": "^7.0.0",
     "normalize.css": "^8.0.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
