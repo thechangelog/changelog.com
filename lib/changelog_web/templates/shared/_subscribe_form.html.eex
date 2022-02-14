@@ -1,9 +1,51 @@
-<%= form_tag Routes.person_path(@conn, :subscribe), id: "subscribe", class: "signup-form" do %>
+<% email = SharedHelpers.get_assigns_or_param(assigns, "email") %>
+
+<%= form_tag Routes.person_path(@conn, :subscribe), id: "subscribe", class: "auth form form--full_width" do %>
   <input name="to" type="hidden" value="<%= SharedHelpers.get_assigns_or_param(assigns, "to", "weekly") %>">
-  <input name="email" value="<%= SharedHelpers.get_assigns_or_param(assigns, "email") %>" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
-  <div class="signup-form-submit">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <input class="signup-form-submit-button g-recaptcha" data-sitekey="6Lda3LoaAAAAAMoUFKUgxnxX91FQKzy9pY8t435v" data-callback="subscribeCaptcha" type="submit" value="Subscribe">
-    <script>function subscribeCaptcha() { document.getElementById("subscribe").submit(); }</script>
+
+  <div class="form-element_wrap">
+    <div class="form-element">
+      <label>Email<span>*</span></label>
+      <input
+        name="email"
+        value="<%= email %>"
+        placeholder="grace@hopper.com"
+        aria-label="grace@hopper.com"
+        autocapitalize="none"
+        required
+      <%= if !email do %>
+        autofocus=true
+      <% end %>
+      />
+    </div>
+  </div>
+
+  <div class="form-element_wrap">
+    <div class="form-element">
+      <label>Name</label>
+      <input
+        name="name"
+        value='<%= SharedHelpers.get_assigns_or_param(assigns, "name") %>'
+        placeholder="Grace Hopper"
+      <%= if email do %>
+        autofocus=true
+      <% end %>
+      />
+    </div>
+  </div>
+
+  <div class="form-element_wrap">
+    <div class="form-element" style="text-align: center;">
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+      <div class="g-recaptcha" data-sitekey="6Lda3LoaAAAAAMoUFKUgxnxX91FQKzy9pY8t435v" style="display: inline-block;"></div>
+    </div>
+  </div>
+
+  <div class="form-submit">
+    <div class="form-submit-note">
+      <div>Already a subscriber? <em><%= link("Sign in", to: Routes.sign_in_path(@conn, :new), title: "") %></em></div>
+    </div>
+
+    <input type="submit" value="Subscribe Now">
   </div>
 <% end %>

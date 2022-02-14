@@ -30,6 +30,7 @@ defmodule ChangelogWeb.PersonController do
     render(conn, :join, changeset: Person.insert_changeset(person), person: nil)
   end
 
+  # This is the join method does that actual processing
   def join(conn = %{method: "POST"}, params = %{"person" => person_params}) do
     captcha = Map.get(params, "g-recaptcha-response")
     email = Map.get(person_params, "email")
@@ -172,12 +173,14 @@ defmodule ChangelogWeb.PersonController do
     render(conn, :subscribe)
   end
 
+  # This is the subscribe method does that actual processing
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
     subscribe_to = Map.get(params, "to", "weekly")
     captcha = Map.get(params, "g-recaptcha-response")
 
     if Captcha.verify(captcha) do
       if person = Repo.get_by(Person, email: email) do
+        # account already exists, just send over the welcome email
         welcome_subscriber(conn, person, subscribe_to)
       else
         changeset =
