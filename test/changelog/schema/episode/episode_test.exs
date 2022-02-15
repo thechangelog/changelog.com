@@ -77,10 +77,11 @@ defmodule Changelog.EpisodeTest do
       ]) do
         episode = insert(:episode)
         Episode.update_transcript(episode, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n")
-        # wait out the async race condition
-        :timer.sleep(100)
-        assert called(Changelog.Notifier.notify(:_))
-        assert called(Changelog.Search.save_item(:_))
+
+        wait_for_passing(1000, fn ->
+          assert called(Changelog.Notifier.notify(:_))
+          assert called(Changelog.Search.save_item(:_))
+        end)
       end
     end
 
@@ -95,10 +96,11 @@ defmodule Changelog.EpisodeTest do
           )
 
         Episode.update_transcript(episode, "**Host:** Welcome!")
-        # wait out the async race condition
-        :timer.sleep(100)
-        assert called(Changelog.Search.save_item(:_))
-        refute called(Changelog.Notifier.notify(:_))
+
+        wait_for_passing(1000, fn ->
+          assert called(Changelog.Search.save_item(:_))
+          refute called(Changelog.Notifier.notify(:_))
+        end)
       end
     end
 
@@ -109,10 +111,11 @@ defmodule Changelog.EpisodeTest do
       ]) do
         episode = insert(:episode)
         Episode.update_transcript(episode, "")
-        # wait out the async race condition
-        :timer.sleep(100)
-        assert called(Changelog.Search.save_item(:_))
-        refute called(Changelog.Notifier.notify(:_))
+
+        wait_for_passing(1000, fn ->
+          assert called(Changelog.Search.save_item(:_))
+          refute called(Changelog.Notifier.notify(:_))
+        end)
       end
     end
   end

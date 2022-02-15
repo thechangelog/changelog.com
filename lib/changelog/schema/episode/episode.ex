@@ -1,6 +1,8 @@
 defmodule Changelog.Episode do
   use Changelog.Schema, default_sort: :published_at
 
+  require Logger
+
   alias Changelog.{
     EpisodeHost,
     EpisodeGuest,
@@ -123,6 +125,9 @@ defmodule Changelog.Episode do
 
   def with_podcast_slug(query, slug),
     do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
+
+  def with_transcript(query \\ __MODULE__), do: from(q in query, where: fragment("? != '{}'", q.transcript))
+  def sans_transcript(query \\ __MODULE__), do: from(q in query, where: fragment("? = '{}'", q.transcript))
 
   def full(query \\ __MODULE__), do: from(q in query, where: q.type == ^:full)
   def bonus(query \\ __MODULE__), do: from(q in query, where: q.type == ^:bonus)
@@ -318,10 +323,13 @@ defmodule Changelog.Episode do
   def update_transcript(episode, text) do
     case Transcripts.Parser.parse_text(text, participants(episode)) do
       {:ok, parsed} ->
-        updated =
-          episode
-          |> change(transcript: parsed)
-          |> Repo.update!()
+        changeset = change(episode, transcript: parsed)
+
+        if Enum.any?(changeset.changes) do
+          Logger.info("Transcript: refreshing episode ##{episode.id}")
+        end
+
+        updated = Repo.update!(changeset)
 
         if !has_transcript(episode) && has_transcript(updated) do
           Task.start_link(fn -> Notifier.notify(updated) end)
