@@ -1,0 +1,7 @@
+<% participants = participants(@episode) %>
+
+<%= for part <- @episode.transcript do %>
+	<% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
+  <cite><%= if speaker, do: speaker.name, else: part["title"] %>:</cite>
+  <p><%= part["body"] %></p>
+<% end %>

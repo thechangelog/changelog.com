@@ -119,6 +119,21 @@ defmodule ChangelogWeb.EpisodeController do
     end
   end
 
+  def transcript(conn, %{"slug" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published()
+      |> Episode.with_transcript()
+      |> Episode.preload_all()
+      |> Repo.get_by!(slug: slug)
+
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:episode, episode)
+    |> ResponseCache.cache_public(:infinity)
+    |> render(:transcript, layout: false)
+  end
+
   def subscribe(conn = %{method: "POST", assigns: %{current_user: me}}, %{"slug" => slug}, podcast) do
     episode =
       podcast
