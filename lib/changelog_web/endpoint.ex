@@ -36,8 +36,15 @@ defmodule ChangelogWeb.Endpoint do
       from: :changelog,
       gzip: true,
       only_matching: ~w(css fonts images js android-chrome apple-touch
-        browserconfig favicon manifest mstile robots safari-pinned-tab version build)
+        browserconfig favicon manifest mstile robots safari-pinned-tab)
   end
+
+  # Always serve build identifiers, like git sha (a.k.a. version) & build url
+  plug Plug.Static,
+    at: "/static",
+    from: :changelog,
+    gzip: true,
+    only_matching: ~w(version build)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
