@@ -39,7 +39,9 @@ defmodule ChangelogWeb.Endpoint do
         browserconfig favicon manifest mstile robots safari-pinned-tab)
   end
 
-  # Always serve build identifiers, like git sha (a.k.a. version) & build url
+  # App should always serve build identifiers,
+  # like git sha (a.k.a. version) via /static/version.txt
+  # and build url via /static/build.txt
   plug Plug.Static,
     at: "/static",
     from: :changelog,

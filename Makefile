@@ -180,7 +180,7 @@ clean:
 define VERSION_CHECK
 VERSION="$$($(CURL) --silent --location \
   --write-out '$(NORMAL)HTTP/%{http_version} %{http_code} in %{time_total}s' \
-  http://$(HOSTNAME)/version.txt)" && \
+  http://$(HOSTNAME)/static/version.txt)" && \
 echo $(BOLD)$(GIT_COMMIT)$$VERSION @ $$(date)
 endef
 .PHONY: check-deployed-version
