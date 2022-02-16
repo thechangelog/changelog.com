@@ -175,8 +175,16 @@ defmodule Changelog.EpisodeTest do
       refute Episode.has_transcript(build(:episode, transcript: nil))
     end
 
+    test "is false when transcript is nil and has_transcript virtual field is false" do
+      refute Episode.has_transcript(build(:episode, transcript: nil, has_transcript: false))
+    end
+
     test "is false when transcript is empty" do
       refute Episode.has_transcript(build(:episode, transcript: []))
+    end
+
+    test "is true when transcript is nil (due to exclusion) but has_transcript is true" do
+      assert Episode.has_transcript(build(:episode, transcript: nil, has_transcript: true))
     end
 
     test "is true otherwise" do

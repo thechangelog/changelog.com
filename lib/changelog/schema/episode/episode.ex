@@ -59,6 +59,9 @@ defmodule Changelog.Episode do
     field :reach_count, :integer
 
     field :transcript, {:array, :map}
+    # has_transcript is only used to know whether or not the episode has a
+    #transcript even though we're not `select`ing it to reduce query load times
+    field :has_transcript, :boolean, virtual: true, default: false
 
     # this exists merely to satisfy the compiler
     # see load_news_item/1 and get_news_item/1 for actual use
@@ -133,11 +136,20 @@ defmodule Changelog.Episode do
   def bonus(query \\ __MODULE__), do: from(q in query, where: q.type == ^:bonus)
   def trailer(query \\ __MODULE__), do: from(q in query, where: q.type == ^:trailer)
 
+  # Loading an episode's transcript adds significant query time. This function
+  # allows us to opt out of loading the transcript when we aren't going to use
+  # it. It also sets the `has_transcript` boolean field so that we know whether
+  # or not the episode does, indeed, have a transcript even when it's not loaded.
   def exclude_transcript(query \\ __MODULE__) do
     fields = __MODULE__.__schema__(:fields) |> Enum.reject(&(&1 == :transcript))
-    from(q in query, select: ^fields)
+
+    from(q in query,
+      select: ^fields,
+      select_merge: %{has_transcript: fragment("? != '{}'", q.transcript)}
+    )
   end
 
+  def has_transcript(%{has_transcript: true}), do: true
   def has_transcript(%{transcript: nil}), do: false
   def has_transcript(%{transcript: []}), do: false
   def has_transcript(_), do: true
