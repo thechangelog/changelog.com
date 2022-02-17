@@ -17,7 +17,7 @@
       <th>Duration</th>
     <%= if @status == :published do %>
       <th>
-        Reach
+        Downloads
         <%= if assigns[:podcast], do: AdminHelpers.info_icon("as of #{last_stat_date(@podcast)}") %>
       </th>
     <% end %>
@@ -80,7 +80,7 @@
     <% else %>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <td><%= TimeView.duration(episode.audio_duration) %></td>
-      <td><%= SharedHelpers.pretty_reach(episode) %></td>
+      <td><%= SharedHelpers.pretty_downloads(episode) %></td>
     <% end %>
       <td class="right aligned">
         <div class="ui small basic buttons">

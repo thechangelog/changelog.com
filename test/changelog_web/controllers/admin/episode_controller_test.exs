@@ -47,7 +47,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert conn.status == 200
     assert String.contains?(conn.resp_body, e.slug)
     assert String.contains?(conn.resp_body, "2")
-    assert String.contains?(conn.resp_body, "345")
+    assert String.contains?(conn.resp_body, "320")
   end
 
   @tag :as_admin

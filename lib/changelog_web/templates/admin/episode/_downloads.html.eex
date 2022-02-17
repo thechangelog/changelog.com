@@ -1,0 +1,77 @@
+<div class="ui stackable centered four column grid">
+  <div class="ui column">
+    <h3 class="ui dividing header">7 day downloads</h3>
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@downloads[:now_7], @downloads[:then_7]) %>">
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:now_7, assigns) %></div>
+        <div class="label">current</div>
+        <div style="display: none;"><%= AdminHelpers.ts(@downloads[:as_of]) %></div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:prev_7, assigns) %></div>
+        <div class="label">previous</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:then_7, assigns) %></div>
+        <div class="label">last year</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui column">
+    <h3 class="ui dividing header">30 day downloads</h3>
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@downloads[:now_30], @downloads[:then_30]) %>">
+      <div class="statistic">
+      <div class="value"><%= downloads_link(:now_30, assigns) %></div>
+        <div class="label">current</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:prev_30, assigns) %></div>
+        <div class="label">previous</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:then_30, assigns) %></div>
+        <div class="label">last year</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui column">
+    <h3 class="ui dividing header">90 day downloads</h3>
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@downloads[:now_90], @downloads[:then_90]) %>">
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:now_90, assigns) %></div>
+        <div class="label">current</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:prev_90, assigns) %></div>
+        <div class="label">previous</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:then_90, assigns) %></div>
+        <div class="label">last year</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui column">
+    <h3 class="ui dividing header">1 year downloads</h3>
+    <div class="ui mini horizontal statistics <%= AdminHelpers.up_or_down_class(@downloads[:now_year], @downloads[:prev_year]) %>">
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:now_year, assigns) %></div>
+        <div class="label">current</div>
+      </div>
+
+      <div class="statistic">
+        <div class="value"><%= downloads_link(:prev_year, assigns) %></div>
+        <div class="label">previous</div>
+      </div>
+    </div>
+  </div>
+</div>

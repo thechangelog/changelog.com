@@ -33,7 +33,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     |> assign(:active, active)
     |> assign(:draft, draft)
     |> assign(:retired, retired)
-    |> assign(:reach, ChangelogWeb.Admin.PageController.reach())
+    |> assign(:downloads, ChangelogWeb.Admin.PageController.downloads())
     |> render(:index)
   end
 

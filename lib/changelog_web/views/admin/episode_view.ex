@@ -54,8 +54,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     |> Enum.map(fn {date, list} ->
       %{
         date: date,
-        downloads: list |> Enum.map(& &1.downloads) |> Enum.sum(),
-        uniques: list |> Enum.map(& &1.uniques) |> Enum.sum()
+        downloads: list |> Enum.map(& &1.downloads) |> Enum.sum()
       }
     end)
     |> Enum.sort(&Timex.before?(&1.date, &2.date))
@@ -67,7 +66,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
       title: title,
       categories: Enum.map(stats, &stat_chart_date/1),
       series: [
-        %{name: "Reach", data: Enum.map(stats, & &1.uniques)},
         %{name: "Downloads", data: Enum.map(stats, &Float.round(&1.downloads))}
       ]
     }
@@ -78,15 +76,15 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     date
   end
 
-  def reach_link(label, assigns = %{reach: reach, conn: conn, current_user: user}) do
-    count = SharedHelpers.comma_separated(reach[label])
+  def downloads_link(label, assigns = %{downloads: downloads, conn: conn, current_user: user}) do
+    count = SharedHelpers.pretty_downloads(downloads[label])
     podcast = Map.get(assigns, :podcast)
 
-    if Policies.Admin.Page.reach(user) do
+    if Policies.Admin.Page.downloads(user) do
       if podcast do
-        link(count, to: Routes.admin_page_path(conn, :reach, range: label, podcast: podcast.slug))
+        link(count, to: Routes.admin_page_path(conn, :downloads, range: label, podcast: podcast.slug))
       else
-        link(count, to: Routes.admin_page_path(conn, :reach, range: label))
+        link(count, to: Routes.admin_page_path(conn, :downloads, range: label))
       end
     else
       count
@@ -100,15 +98,15 @@ defmodule ChangelogWeb.Admin.EpisodeView do
         %{
           name: "Launch",
           data:
-            Enum.map(stats, fn {slug, reach, title, _reach} ->
-              %{x: slug, y: reach, title: title}
+            Enum.map(stats, fn {slug, downloads, title, _total} ->
+              %{x: slug, y: downloads, title: title}
             end)
         },
         %{
           name: "Total",
           data:
-            Enum.map(stats, fn {slug, _reach, title, reach} ->
-              %{x: slug, y: reach, title: title}
+            Enum.map(stats, fn {slug, _downloads, title, total} ->
+              %{x: slug, y: total, title: title}
             end)
         }
       ]

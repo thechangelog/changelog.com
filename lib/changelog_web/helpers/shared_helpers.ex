@@ -154,19 +154,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def pluralize(1, singular, _plural), do: "1 #{singular}"
   def pluralize(count, _singular, plural), do: "#{count} #{plural}"
 
-  def pretty_reach(ep_or_pod) do
-    ep_or_pod
-    |> reach_count()
-    |> comma_separated()
+  def pretty_downloads(ep_or_pod) when is_map(ep_or_pod) do
+    pretty_downloads(ep_or_pod.download_count)
   end
 
-  def reach_count(ep_or_pod) do
-    if ep_or_pod.reach_count >= ep_or_pod.download_count do
-      ep_or_pod.reach_count
-    else
-      round(ep_or_pod.download_count)
-    end
-  end
+  def pretty_downloads(downloads), do: downloads |> round() |> comma_separated()
 
   def sans_p_tags(html), do: String.replace(html, Regexp.tag("p"), "")
 

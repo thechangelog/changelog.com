@@ -38,7 +38,7 @@
         <td>
           <%= SharedHelpers.truncate(sponsorship.description, 100) %>
         </td>
-        <td><%= SharedHelpers.reach_count(episode) %></td>
+        <td><%= SharedHelpers.pretty_downloads(episode) %></td>
         <td class="center aligned">
           <div class="ui small basic buttons">
             <%= AdminHelpers.icon_link("eye", to: Routes.episode_path(@conn, :show, episode.podcast.slug, episode.slug)) %>

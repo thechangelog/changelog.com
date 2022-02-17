@@ -62,7 +62,7 @@ defmodule ChangelogWeb.Router do
 
     get "/", PageController, :index
     get "/purge", PageController, :purge
-    get "/reach", PageController, :reach
+    get "/downloads", PageController, :downloads
     get "/search", SearchController, :all
     get "/search/:type", SearchController, :one
 

@@ -75,7 +75,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:drafts, drafts)
     |> assign(:filter, filter)
     |> assign(:page, page)
-    |> assign(:reach, reach(podcast))
+    |> assign(:downloads, downloads(podcast))
     |> render(:index)
   end
 
@@ -93,17 +93,17 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         start_date = Timex.to_date(ep.published_at)
         end_date = Timex.shift(start_date, days: 7)
 
-        reach =
+        downloads =
           ep
           |> assoc(:episode_stats)
           |> EpisodeStat.between(start_date, end_date)
-          |> EpisodeStat.sum_reach()
+          |> EpisodeStat.sum_downloads()
           |> Repo.one()
           |> Kernel.||(0)
 
-        {ep.slug, reach, ep.title, SharedHelpers.reach_count(ep)}
+        {ep.slug, round(downloads), ep.title, round(ep.download_count)}
       end)
-      |> Enum.reject(fn {_, reach, _, _} -> reach == 0 end)
+      |> Enum.reject(fn {_, downloads, _, _} -> downloads == 0 end)
 
     conn
     |> assign(:stats, stats)
@@ -372,23 +372,23 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp handle_guest_thanks(%{"thanks" => _}, episode), do: set_guest_thanks(episode, true)
   defp handle_guest_thanks(_, episode), do: set_guest_thanks(episode, false)
 
-  defp reach(podcast) do
+  defp downloads(podcast) do
     now = Timex.today() |> Timex.shift(days: -1)
 
-    Cache.get_or_store("stats-reach-#{podcast.slug}-#{now}", fn ->
+    Cache.get_or_store("stats-downloads-#{podcast.slug}-#{now}", fn ->
       %{
         as_of: Timex.now(),
-        now_7: EpisodeStat.date_range_reach(podcast, :now_7),
-        now_30: EpisodeStat.date_range_reach(podcast, :now_30),
-        now_90: EpisodeStat.date_range_reach(podcast, :now_90),
-        now_year: EpisodeStat.date_range_reach(podcast, :now_year),
-        prev_7: EpisodeStat.date_range_reach(podcast, :prev_7),
-        prev_30: EpisodeStat.date_range_reach(podcast, :prev_30),
-        prev_90: EpisodeStat.date_range_reach(podcast, :prev_90),
-        prev_year: EpisodeStat.date_range_reach(podcast, :prev_year),
-        then_7: EpisodeStat.date_range_reach(podcast, :then_7),
-        then_30: EpisodeStat.date_range_reach(podcast, :then_30),
-        then_90: EpisodeStat.date_range_reach(podcast, :then_90)
+        now_7: EpisodeStat.date_range_downloads(podcast, :now_7),
+        now_30: EpisodeStat.date_range_downloads(podcast, :now_30),
+        now_90: EpisodeStat.date_range_downloads(podcast, :now_90),
+        now_year: EpisodeStat.date_range_downloads(podcast, :now_year),
+        prev_7: EpisodeStat.date_range_downloads(podcast, :prev_7),
+        prev_30: EpisodeStat.date_range_downloads(podcast, :prev_30),
+        prev_90: EpisodeStat.date_range_downloads(podcast, :prev_90),
+        prev_year: EpisodeStat.date_range_downloads(podcast, :prev_year),
+        then_7: EpisodeStat.date_range_downloads(podcast, :then_7),
+        then_30: EpisodeStat.date_range_downloads(podcast, :then_30),
+        then_90: EpisodeStat.date_range_downloads(podcast, :then_90)
       }
     end)
   end

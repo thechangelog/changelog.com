@@ -1,5 +1,5 @@
 <div class="ui basic segment">
-  <h2>Reach breakdown
+  <h2>Downloads
   for <%= if @podcast, do: @podcast.name, else: "all podcasts" %>
   from <%= TimeView.pretty_date(elem(@dates, 0)) %> to <%= TimeView.pretty_date(elem(@dates, 1)) %>
   </h2>
@@ -14,7 +14,7 @@
       <th>Title</th>
       <th>Publish Date</th>
       <th>Duration</th>
-      <th>Focused Reach</th>
+      <th>Focused</th>
       <th>Total</th>
       <th class="center aligned">
       </th>
@@ -34,8 +34,8 @@
       </td>
       <td><%= TimeView.pretty_date(episode.published_at) %></td>
       <td><%= TimeView.duration(episode.audio_duration) %></td>
-      <td><%= SharedHelpers.comma_separated(episode.focused_reach) %></td>
-      <td><%= SharedHelpers.reach_count(episode) %></td>
+      <td><%= SharedHelpers.pretty_downloads(episode.focused) %></td>
+      <td><%= SharedHelpers.pretty_downloads(episode) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug)) %>

@@ -77,7 +77,7 @@
 </div>
 
 <div class="ui basic segment">
-  <%= render(EpisodeView, "_reach.html", assigns) %>
+  <%= render(EpisodeView, "_downloads.html", assigns) %>
 </div>
 
 <%= if Enum.any?(@episode_requests) do %>

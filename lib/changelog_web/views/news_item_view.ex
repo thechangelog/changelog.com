@@ -23,7 +23,7 @@ defmodule ChangelogWeb.NewsItemView do
             Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
           data: [turbolinks: false]
         ),
-        link(" [#{SharedHelpers.pretty_reach(episode)}]",
+        link(" [#{SharedHelpers.pretty_downloads(episode)}]",
           to:
             Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug,
               next: SharedHelpers.current_path(conn)

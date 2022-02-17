@@ -161,7 +161,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   # See time.js for supported styles
   def ts(ts, style), do: TimeView.ts(ts, style)
 
-  def up_or_down_class(a, b) when is_integer(a) and is_integer(b) do
+  def up_or_down_class(a, b) when is_number(a) and is_number(b) do
     if a > b do
       "green"
     else

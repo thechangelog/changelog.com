@@ -26,7 +26,7 @@ defmodule ChangelogWeb.Admin.PageController do
     |> assign(:item_drafts, item_drafts(me))
     |> assign(:members, members())
     |> assign(:podcasts, Cache.podcasts())
-    |> assign(:reach, reach())
+    |> assign(:downloads, downloads())
     |> render(:index)
   end
 
@@ -46,30 +46,30 @@ defmodule ChangelogWeb.Admin.PageController do
     |> redirect(to: Routes.admin_page_path(conn, :index))
   end
 
-  def reach(conn, params) do
+  def downloads(conn, params) do
     podcast = Repo.get_by(Podcast, slug: Map.get(params, "podcast", "nope"))
     range = params |> Map.get("range", "now_7") |> String.to_existing_atom()
-    dates = EpisodeStat.reach_dates(range)
+    dates = EpisodeStat.download_dates(range)
     minimum = Map.get(params, "min", "10") |> String.to_integer()
 
     episodes =
       if podcast do
-        EpisodeStat.date_range_episode_reach(podcast, dates, minimum)
+        EpisodeStat.date_range_episode_downloads(podcast, dates, minimum)
       else
-        EpisodeStat.date_range_episode_reach(dates, minimum)
+        EpisodeStat.date_range_episode_downloads(dates, minimum)
       end
       |> Enum.map(fn stat ->
         Episode
         |> Repo.get(stat.episode_id)
         |> Episode.preload_podcast()
-        |> Map.put(:focused_reach, stat.reach)
+        |> Map.put(:focused, stat.downloads)
       end)
 
     conn
     |> assign(:podcast, podcast)
     |> assign(:dates, dates)
     |> assign(:episodes, episodes)
-    |> render(:reach)
+    |> render(:downloads)
   end
 
   defp episode_drafts do
@@ -105,23 +105,23 @@ defmodule ChangelogWeb.Admin.PageController do
     }
   end
 
-  def reach do
+  def downloads do
     now = Timex.today() |> Timex.shift(days: -1)
 
-    Cache.get_or_store("stats-reach-#{now}", fn ->
+    Cache.get_or_store("stats-downloads-#{now}", fn ->
       %{
         as_of: Timex.now(),
-        now_7: EpisodeStat.date_range_reach(:now_7),
-        now_30: EpisodeStat.date_range_reach(:now_30),
-        now_90: EpisodeStat.date_range_reach(:now_90),
-        now_year: EpisodeStat.date_range_reach(:now_year),
-        prev_7: EpisodeStat.date_range_reach(:prev_7),
-        prev_30: EpisodeStat.date_range_reach(:prev_30),
-        prev_90: EpisodeStat.date_range_reach(:prev_90),
-        prev_year: EpisodeStat.date_range_reach(:prev_year),
-        then_7: EpisodeStat.date_range_reach(:then_7),
-        then_30: EpisodeStat.date_range_reach(:then_30),
-        then_90: EpisodeStat.date_range_reach(:then_90)
+        now_7: EpisodeStat.date_range_downloads(:now_7),
+        now_30: EpisodeStat.date_range_downloads(:now_30),
+        now_90: EpisodeStat.date_range_downloads(:now_90),
+        now_year: EpisodeStat.date_range_downloads(:now_year),
+        prev_7: EpisodeStat.date_range_downloads(:prev_7),
+        prev_30: EpisodeStat.date_range_downloads(:prev_30),
+        prev_90: EpisodeStat.date_range_downloads(:prev_90),
+        prev_year: EpisodeStat.date_range_downloads(:prev_year),
+        then_7: EpisodeStat.date_range_downloads(:then_7),
+        then_30: EpisodeStat.date_range_downloads(:then_30),
+        then_90: EpisodeStat.date_range_downloads(:then_90)
       }
     end)
   end
