@@ -7,7 +7,6 @@
         src="<%= cover_url(@podcast, :original) %>"
         srcset="<%= cover_url(@podcast, :original) %> 3000w, <%= cover_url(@podcast, :medium) %> 440w"
         sizes="(min-width:880px) 490w, 440w"
-        loading="lazy"
         alt="<%= @podcast.name %> Artwork"
       >
     <%= if @podcast.status != :published do %>
