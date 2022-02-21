@@ -65,7 +65,7 @@ defmodule ChangelogWeb.TimeView do
   def rounded_minutes(seconds) when is_nil(seconds), do: rounded_minutes(0)
 
   def rounded_minutes(seconds) do
-    (seconds / 60) |> round
+    (seconds / 60) |> round()
   end
 
   def rss(ts) when is_nil(ts), do: ""

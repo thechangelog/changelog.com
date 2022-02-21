@@ -58,6 +58,11 @@ defmodule ChangelogWeb.EpisodeView do
     |> UrlKit.sans_cache_buster()
   end
 
+  def plusplus_duration_diff(%{plusplus_duration: nil}), do: 0
+  def plusplus_duration_diff(episode) do
+    episode.plusplus_duration - episode.audio_duration
+  end
+
   def classy_highlight(episode) do
     episode.highlight
     |> PublicHelpers.no_widowed_words()
