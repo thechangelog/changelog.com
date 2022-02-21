@@ -6,6 +6,18 @@ defmodule Changelog.File do
 
       @acl :public_read
 
+      # We can purge subsets of files from the CDN by setting a key on upload.
+      # The module name that uses this module seems to be the best way of
+      # categorizing sets of files we might want to purge together.
+      # e.g. - purge all 'audio' files, purge all 'avatars', etc
+      def cdn_key do
+        __MODULE__
+        |> to_string()
+        |> String.split(".")
+        |> List.last()
+        |> String.downcase()
+      end
+
       def default_url(_version, _scope) do
         ChangelogWeb.Router.Helpers.static_url(ChangelogWeb.Endpoint, "/images/defaults/black.png")
       end
@@ -13,7 +25,10 @@ defmodule Changelog.File do
       def s3_object_headers(version, {file, scope}) do
         [
           content_type: mime_type(file),
-          meta: [{"surrogate-control", Application.get_env(:changelog, :cdn_cache_control_s3)}]
+          meta: [
+            {"surrogate-control", Application.get_env(:changelog, :cdn_cache_control_s3)},
+            {"surrogate-key", cdn_key()}
+          ]
         ]
       end
 
