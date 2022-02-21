@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>">
     <link rel="manifest" href="<%= Routes.page_path(@conn, :manifest_json) %>">
     <link rel="shortcut icon" href="<%= Routes.static_url(@conn, "/favicon.ico") %>">
-  <%= for font <- ~w(roboto-mono-400 SanaSans-Regular SanaSans-Medium SanaSans-Black SanaSans-Bold SanaSans-Italic) do %>
+  <%= for font <- ~w(roboto-mono-400 SanaSansAlt-Regular SanaSansAlt-Medium SanaSansAlt-Black SanaSansAlt-Bold SanaSansAlt-Italic) do %>
     <link rel="preload" href="<%= Routes.static_url(@conn, "/fonts/#{font}.woff2") %>" as="font" type="font/woff2" crossorigin>
   <% end %>
     <script defer src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
