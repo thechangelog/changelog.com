@@ -4,9 +4,9 @@
     <input name="q" type="text" placeholder="Search Changelog..." value="<%= @query %>" autofocus />
 
     <div class="search-form-footer">
-      <a href="https://www.algolia.com/?utm_source=changelog&utm_campaign=changelog-search" class="search-form-footer-algolia">
+      <!--<a href="https://www.algolia.com/?utm_source=changelog&utm_campaign=changelog-search" class="search-form-footer-algolia">
         Search by <img src="<%= Routes.static_url(@conn, "/images/icons/algolia.svg") %>" alt="Algolia" width="75" height="20">
-      </a>
+      </a>-->
 
       <%= if @page.total_entries > 0 do %>
         <p class="search-form-footer-results">We found <%= SharedHelpers.pluralize(@page.total_entries, "result", "results") %>.</p>

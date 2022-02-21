@@ -1,6 +1,6 @@
 defmodule Changelog.Search do
   defmodule Page do
-    defstruct items: [], total_entries: 0, page_number: 0, total_pages: 1
+    defstruct entries: [], total_entries: 0, page_number: 0, total_pages: 1
   end
 
   alias Changelog.{Episode, NewsItem, Repo}
@@ -138,7 +138,7 @@ defmodule Changelog.Search do
       |> Enum.map(&NewsItem.load_object/1)
 
     %Page{
-      items: items,
+      entries: items,
       total_pages: Map.get(response, "nbPages", 1),
       total_entries: Map.get(response, "nbHits", 0),
       page_number: Map.get(response, "page", 0)
@@ -170,7 +170,7 @@ defmodule Changelog.Search do
       |> Enum.map(&NewsItem.load_object/1)
 
     %Page{
-      items: Enum.zip(items, highlights),
+      entries: Enum.zip(items, highlights),
       total_pages: Map.get(response, "nbPages", 1),
       total_entries: Map.get(response, "nbHits", 0),
       page_number: Map.get(response, "page", 0)
