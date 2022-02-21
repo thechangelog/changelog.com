@@ -66,6 +66,7 @@ defmodule Changelog.S3Static do
   def object_headers(path) do
     [
       content_type: from_path(path),
+      cache_control: "max-age=31536000",
       meta: [
         {"surrogate-control", Application.get_env(:changelog, :cdn_cache_control_s3)},
         {"surrogate-key", "static"}
