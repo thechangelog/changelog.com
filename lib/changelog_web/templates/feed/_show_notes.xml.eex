@@ -3,18 +3,7 @@
 <%= if @plusplus do %>
 <p>Thank you for supporting us with a Changelog++ membership! 🤗</p>
 <% else %>
-<p><a href="<%= Routes.page_url(Endpoint, :++) %>" rel="payment">Changelog++</a>
-<% duration_diff = @episode |> EpisodeView.plusplus_duration_diff() |> TimeView.rounded_minutes() %>
-<%= cond do %>
-<% duration_diff > 0 -> %>
- members get a bonus <%= duration_diff %> minutes on this episode and no ads.
-<% duration_diff < 0 -> %>
- members save themselves <%= abs(duration_diff) %> minutes on this episode because no ads.
-<% true -> %>
- members support our work, get closer to the metal with extended episodes, and make the ads disappear.
-<% end %>
- Join today!
-</p>
+<p><a href="<%= Routes.page_url(Endpoint, :++) %>" rel="payment">Changelog++</a> <%= EpisodeView.plusplus_cta(@episode) %> Join today!</p>
 <%= if Enum.any?(@episode.sponsors) do %>
 <p>Sponsors</p>
 <p>

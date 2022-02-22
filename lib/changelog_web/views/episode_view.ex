@@ -52,15 +52,24 @@ defmodule ChangelogWeb.EpisodeView do
     end
   end
 
+  def plusplus_cta(%{plusplus_duration: ppd, audio_duration: ad}) when is_number(ppd) do
+    if ppd > ad do
+      # add 5 minutes to adjust for time saved from ad removal
+      bonus = (ppd - ad + (5 * 60)) |> TimeView.rounded_minutes()
+      "members get a bonus #{bonus} minutes on this episode and no ads."
+    else
+      saved = (ad - ppd) |> TimeView.rounded_minutes()
+      "members save #{saved} minutes on this episode because they made the ads disappear."
+    end
+  end
+  def plusplus_cta(_else) do
+    "members support our work, get closer to the metal with extended episodes, and make the ads disappear."
+  end
+
   def plusplus_url(episode) do
     {episode.audio_file, episode}
     |> Files.PlusPlus.url(:original)
     |> UrlKit.sans_cache_buster()
-  end
-
-  def plusplus_duration_diff(%{plusplus_duration: nil}), do: 0
-  def plusplus_duration_diff(episode) do
-    episode.plusplus_duration - episode.audio_duration
   end
 
   def classy_highlight(episode) do
