@@ -119,7 +119,7 @@ defmodule ChangelogWeb.PageController do
   end
 
   def plusplus(conn, _params) do
-    redirect(conn, external: "https://changelog.supercast.tech")
+    redirect(conn, external: Application.get_env(:changelog, :plusplus_url))
   end
 
   def weekly_archive(conn, _params) do

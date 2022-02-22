@@ -26,6 +26,7 @@ config :changelog,
   slack_invite_api_token: SecretOrEnv.get("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
   plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG"),
+  plusplus_url: "https://changelog.supercast.com",
   # 60 = one minute, 3600 = one hour, 86,400 = one day, 604,800 = one week, 31,536,000 = one year
   cdn_cache_control_s3: SecretOrEnv.get("CDN_CACHE_CONTROL_S3", "max-age=31536000, stale-while-revalidate=3600, stale-if-error=86400"),
   cdn_cache_control_app: SecretOrEnv.get("CDN_CACHE_CONTROL_APP", "max-age=60, stale-while-revalidate=60, stale-if-error=604800"),

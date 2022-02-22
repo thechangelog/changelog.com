@@ -39,12 +39,12 @@ defmodule ChangelogWeb.PageControllerTest do
   describe "plusplus" do
     test "it redirects to supercast from /++", %{conn: conn} do
       conn = get(conn, "/++")
-      assert redirected_to(conn) == "https://changelog.supercast.tech"
+      assert redirected_to(conn) == Application.get_env(:changelog, :plusplus_url)
     end
 
     test "it redirects to supercast from /plusplus", %{conn: conn} do
       conn = get(conn, "/plusplus")
-      assert redirected_to(conn) == "https://changelog.supercast.tech"
+      assert redirected_to(conn) == Application.get_env(:changelog, :plusplus_url)
     end
   end
 
