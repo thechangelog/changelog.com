@@ -56,14 +56,14 @@ defmodule ChangelogWeb.EpisodeView do
     if ppd > ad do
       # add 5 minutes to adjust for time saved from ad removal
       bonus = (ppd - ad + (5 * 60)) |> TimeView.rounded_minutes()
-      "members get a bonus #{bonus} minutes on this episode and no ads."
+      "members will hear a bonus #{bonus} minutes at the end of this episode and zero ads."
     else
       saved = (ad - ppd) |> TimeView.rounded_minutes()
       "members save #{saved} minutes on this episode because they made the ads disappear."
     end
   end
   def plusplus_cta(_else) do
-    "members support our work, get closer to the metal with extended episodes, and make the ads disappear."
+    "members support our work, get closer to the metal, and make the ads disappear."
   end
 
   def plusplus_url(episode) do

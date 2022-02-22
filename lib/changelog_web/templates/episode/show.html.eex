@@ -56,6 +56,10 @@
         <%= @episode.summary |> SharedHelpers.md_to_html() |> raw() %>
       </div>
 
+      <div class="episode-body-summary-cta richtext">
+        <p><a href="<%= Routes.page_path(@conn, :++) %>" title="Join Changelog++">Changelog++ <%= plusplus_cta(@episode) %> Join!</a></p>
+      </div>
+
       <ul class="episode-body-summary-meta">
         <li><%= TimeView.rounded_minutes(@episode.audio_duration) %> minutes</li>
       <%= if @episode.recorded_at do %>
