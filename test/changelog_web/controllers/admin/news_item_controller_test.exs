@@ -170,7 +170,8 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
       assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
       assert count(NewsItem.published()) == 0
       assert count(NewsItem.drafted()) == 1
-      assert called(Algolia.delete_object(:_, news_item.id))
+      wait_for_passing(1000, fn -> assert called(Algolia.delete_object(:_, news_item.id)) end)
+
     end
   end
 
