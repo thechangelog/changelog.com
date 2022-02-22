@@ -40,7 +40,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   end
 
   defp determine_destination(%{slug: "podcast"}, ["sotl"]) do
-    "https://changelog.typeform.com/to/HjTiwill"
+    "https://changelog.fm/473"
   end
   defp determine_destination(%{slug: "podcast"}, ["edu"]) do
     "https://changelog.fm/462"
@@ -57,6 +57,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     podcast = Map.delete(podcast, :vanity_domain)
 
     case parts do
+      ["++"] -> Application.get_env(:changelog, :plusplus_url)
       ["apple"] -> PodcastView.subscribe_on_apple_url(podcast)
       ["android"] -> PodcastView.subscribe_on_android_url(podcast)
       ["spotify"] -> PodcastView.subscribe_on_spotify_url(podcast)
