@@ -29,4 +29,5 @@
 </p>
 <% end %>
 <p>Notes and Links</p>
-<%= SharedHelpers.md_to_html(@episode.notes) %>]]>
+<%= SharedHelpers.md_to_html(@episode.notes) %>
+<p>Something missing or broken? <a href="<%= EpisodeView.show_notes_source_url(@episode) %>">PRs welcome!</a></p>]]>
