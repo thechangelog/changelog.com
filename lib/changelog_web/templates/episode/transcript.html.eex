@@ -1,7 +1,18 @@
-<% participants = participants(@episode) %>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Transcript for <%= podcast_name_and_number(@episode) %></title>
+</head>
+<body>
+  <% participants = participants(@episode) %>
 
-<%= for part <- @episode.transcript do %>
-	<% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
-  <cite><%= if speaker, do: speaker.name, else: part["title"] %>:</cite>
-  <p><%= part["body"] %></p>
-<% end %>
+  <%= for part <- @episode.transcript do %>
+    <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
+    <cite><%= if speaker, do: speaker.name, else: part["title"] %>:</cite>
+    <p><%= part["body"] %></p>
+  <% end %>
+</body>
+</html>
