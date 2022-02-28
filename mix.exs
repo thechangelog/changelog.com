@@ -36,13 +36,13 @@ defmodule Changelog.Mixfile do
     [
       {:phoenix, "~> 1.6.2"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_html, "~> 3.1.0"},
+      {:phoenix_html, "~> 3.2.0"},
       {:phoenix_live_reload, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
       # Leaving this here for future dev loops with @akoutmos
       # {:prom_ex, github: "akoutmos/prom_ex", branch: "master"},
       {:oban, "~> 2.8"},
-      {:prom_ex, "~> 1.5.0"},
+      {:prom_ex, "~> 1.6.0"},
       {:unplug, "~> 0.2.1"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
@@ -63,7 +63,7 @@ defmodule Changelog.Mixfile do
       {:con_cache, "~> 1.0.0"},
       {:ex_aws, "~> 2.2"},
       {:ex_aws_s3, "~> 2.3"},
-      {:nimble_csv, "~> 1.1.0"},
+      {:nimble_csv, "~> 1.2.0"},
       {:sweet_xml, "~> 0.6"},
       {:user_agent_parser, "~> 1.0"},
       {:oauth, github: "tim/erlang-oauth"},
@@ -79,7 +79,7 @@ defmodule Changelog.Mixfile do
       {:tzdata, "~> 1.1.0"},
       {:icalendar, "~> 1.0"},
       {:shopify, "~> 0.4"},
-      {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.6.4", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
     ]
