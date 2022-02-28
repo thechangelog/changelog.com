@@ -47,6 +47,28 @@ defmodule Changelog.File do
         end
       end
 
+      # Takes a list of strings and returns a joined string for passing to `convert`
+      # See https://www.smashingmagazine.com/2015/06/efficient-image-resizing-with-imagemagick/
+      def convert_args(opts) when is_binary(opts), do: convert_args([opts])
+
+      def convert_args(opts) when is_list(opts) do
+        opts ++ [
+          "-strip",
+          "-interlace none",
+          "-colorspace sRGB",
+          "-filter Triangle",
+          "-dither None",
+          "-posterize 136",
+          "-quality 82",
+          "-define filter:support=2",
+          "-define jpeg:fancy-upsampling=off",
+          "-define png:compression-filter=5",
+          "-define png:compression-level=9",
+          "-define png:compression-strateg1",
+          "-define png:exclude-chunk=all"
+        ] |> Enum.join(" ")
+      end
+
       defp file_type(file) do
         file.file_name
         |> Path.extname()

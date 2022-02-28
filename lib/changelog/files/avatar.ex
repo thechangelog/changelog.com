@@ -11,9 +11,13 @@ defmodule Changelog.Files.Avatar do
   def transform(:original, _), do: :noaction
 
   def transform(version, {_file, _scope}) do
-    {:convert,
-     "-strip -resize #{dimensions(version)}^ -gravity center -crop #{dimensions(version)}+0+0 -format png",
-     :png}
+    args = [
+      "-resize #{dimensions(version)}^",
+      "-gravity center",
+      "-crop #{dimensions(version)}+0+0",
+    ]
+
+    {:convert, convert_args(args)}
   end
 
   defp dimensions(:large), do: "600x600"

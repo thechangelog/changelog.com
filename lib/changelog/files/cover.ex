@@ -13,7 +13,7 @@ defmodule Changelog.Files.Cover do
   def transform(:original, _), do: :noaction
 
   def transform(version, {_file, _scope}) do
-    {:convert, "-strip -resize #{dimensions(version)}"}
+    {:convert, convert_args("-resize #{dimensions(version)}")}
   end
 
   # defp dimensions(:original),  do: "3000x3000"

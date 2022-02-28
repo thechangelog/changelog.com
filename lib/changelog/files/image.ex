@@ -12,7 +12,7 @@ defmodule Changelog.Files.Image do
     case file_type(file) do
       :gif -> :noaction
       :svg -> :noaction
-      _ -> {:convert, "-strip -resize #{dimensions(version)}"}
+      _ -> {:convert, convert_args("-resize #{dimensions(version)}")}
     end
   end
 
