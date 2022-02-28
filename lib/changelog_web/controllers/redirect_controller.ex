@@ -3,8 +3,8 @@
 defmodule ChangelogWeb.RedirectController do
   import Phoenix.Controller, only: [redirect: 2]
 
-  def init([to: _] = opts), do: opts
-  def init([external: _] = opts), do: opts
+  def init(opts = [to: _]), do: opts
+  def init(opts = [external: _]), do: opts
   def init(_default), do: raise("Missing required to: / external: option in redirect")
 
   def call(conn, to: to) do
@@ -24,15 +24,15 @@ defmodule ChangelogWeb.RedirectController do
   defp append_query_string(%Plug.Conn{query_string: ""}, path), do: path
   defp append_query_string(%Plug.Conn{query_string: query}, path), do: "#{path}?#{query}"
 
-  defp merge_query_string(%URI{query: nil} = destination_uri, %Plug.Conn{query_string: ""}) do
+  defp merge_query_string(destination_uri = %URI{query: nil}, %Plug.Conn{query_string: ""}) do
     destination_uri
   end
 
-  defp merge_query_string(%URI{query: nil} = destination_uri, %Plug.Conn{query_string: source}) do
+  defp merge_query_string(destination_uri = %URI{query: nil}, %Plug.Conn{query_string: source}) do
     %{destination_uri | query: source}
   end
 
-  defp merge_query_string(%URI{query: destination} = destination_uri, %Plug.Conn{
+  defp merge_query_string(destination_uri = %URI{query: destination}, %Plug.Conn{
          query_string: source
        }) do
     merged_query =

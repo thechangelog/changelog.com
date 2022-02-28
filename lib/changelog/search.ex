@@ -183,7 +183,7 @@ defmodule Changelog.Search do
     {get_byte_budget(keys), %{}, keys}
   end
 
-  defp add_to_record({bytes_left, record, keys}, key, %DateTime{} = datetime) do
+  defp add_to_record({bytes_left, record, keys}, key, datetime = %DateTime{}) do
     if key not in keys do
       {:error, "unknown key"}
     end

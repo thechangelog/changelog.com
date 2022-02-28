@@ -25,7 +25,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     errors = Enum.filter(representation.statements, &match?({:error, _}, &1))
 
     cond do
-      length(errors) > 0 -> {:error, errors}
+      Enum.any?(errors) -> {:error, errors}
       is_nil(representation.start) -> {:error, :no_start}
       true -> {:ok, representation}
     end
@@ -64,11 +64,11 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     %{repr | statements: Enum.reverse(statements)}
   end
 
-  defp parse_token("only", nil, %{start: nil} = repr) do
+  defp parse_token("only", nil, repr = %{start: nil}) do
     {nil, %{repr | start: :only}}
   end
 
-  defp parse_token("except", nil, %{start: nil} = repr) do
+  defp parse_token("except", nil, repr = %{start: nil}) do
     {nil, %{repr | start: :except}}
   end
 
@@ -77,7 +77,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
   # podcast: gotime, rfc or afk
   # guest: "Jason Fried" or "Steve Jobs"
   # topic: svelte
-  defp parse_token(token, %FacetStatement{mode: :open, items: items} = current, repr) do
+  defp parse_token(token, current = %FacetStatement{mode: :open, items: items}, repr) do
     current =
       cond do
         # Capture member of list, with comma
@@ -86,7 +86,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
           %{current | items: [token | items]}
 
         # Add single item or possibly two-item list
-        length(items) == 0 ->
+        Enum.empty?(items) ->
           %{current | mode: :single, items: [token | items]}
 
         # Add item without trailing comma, requires closer
@@ -97,7 +97,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     parsed(repr, current)
   end
 
-  defp parse_token(token, %FacetStatement{mode: :single, items: items} = current, repr) do
+  defp parse_token(token, current = %FacetStatement{mode: :single, items: items}, repr) do
     cond do
       # Capture closer for list, such as "or", okay if a single item
       length(items) == 1 and token in @list_closers ->
@@ -112,7 +112,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     end
   end
 
-  defp parse_token(token, %FacetStatement{mode: :closable, items: items} = current, repr) do
+  defp parse_token(token, current = %FacetStatement{mode: :closable, items: items}, repr) do
     current =
       cond do
         # Capture closer for list, such as "or", okay if a single item without comma or list of commad items
@@ -136,7 +136,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     end
   end
 
-  defp parse_token(token, %FacetStatement{mode: :closing, items: items} = current, repr) do
+  defp parse_token(token, current = %FacetStatement{mode: :closing, items: items}, repr) do
     # Add final item to closing list
     current = %{current | mode: :closed, items: Enum.reverse([token | items])}
 
@@ -145,7 +145,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     |> parsed(nil)
   end
 
-  defp parse_token(token, %FacetStatement{} = current, repr) do
+  defp parse_token(token, current = %FacetStatement{}, repr) do
     repr
     |> add_statement(
       {:error,
@@ -155,16 +155,16 @@ defmodule Changelog.Metacasts.Filterer.Parser do
   end
 
   defp parse_token(
-         "unless" = token,
+         token = "unless",
          nil,
-         %{statements: [%FacetStatement{mode: :closed} | _]} = repr
+         repr = %{statements: [%FacetStatement{mode: :closed} | _]}
        ) do
     repr
     |> add_statement(Statements.sub_facet_start(token))
     |> parsed(nil)
   end
 
-  defp parse_token("if" = token, nil, %{statements: [%FacetStatement{mode: :closed} | _]} = repr) do
+  defp parse_token(token = "if", nil, repr = %{statements: [%FacetStatement{mode: :closed} | _]}) do
     repr
     |> add_statement(Statements.sub_facet_start(token))
     |> parsed(nil)
@@ -199,14 +199,14 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     |> parsed(nil)
   end
 
-  defp parse_token(token, nil, %{statements: [{:sub_facet_start, _} | _]} = repr)
+  defp parse_token(token, nil, repr = %{statements: [{:sub_facet_start, _} | _]})
        when token in @sub_facet_logics do
     repr
     |> add_statement(Statements.sub_facet_logic(token))
     |> parsed(nil)
   end
 
-  defp parse_token("(", nil, %{statements: [{:sub_facet_logic, _} | _]} = repr),
+  defp parse_token("(", nil, repr = %{statements: [{:sub_facet_logic, _} | _]}),
     do: parsed(repr, nil)
 
   defp parse_token("(", current, repr) do
@@ -239,7 +239,7 @@ defmodule Changelog.Metacasts.Filterer.Parser do
     parsed(repr, current)
   end
 
-  defp add_statement(%{statements: statements} = repr, statement) do
+  defp add_statement(repr = %{statements: statements}, statement) do
     %{repr | statements: [statement | statements]}
   end
 

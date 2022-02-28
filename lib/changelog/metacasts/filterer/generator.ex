@@ -45,7 +45,7 @@ defmodule Changelog.Metacasts.Filterer.Generator do
   end
 
   # Final statement is FacetStatement, no sub_facet
-  defp generate_filter(%FacetStatement{repr: repr, logic: logic, items: items}, [] = statements) do
+  defp generate_filter(%FacetStatement{repr: repr, logic: logic, items: items}, statements = []) do
     facet_filter = generate_facet_filter(repr, logic, items)
 
     {fn item ->
@@ -55,7 +55,7 @@ defmodule Changelog.Metacasts.Filterer.Generator do
 
   defp generate_filter(
          %FacetStatement{repr: repr, logic: logic, items: items},
-         [look_ahead | ahead_statements] = statements
+         statements = [look_ahead | ahead_statements]
        ) do
     sub_facet? = has_sub_facet?(look_ahead)
     facet_filter = generate_facet_filter(repr, logic, items)

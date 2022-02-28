@@ -396,10 +396,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp set_guest_thanks(episode, true), do: set_guest_thanks(episode, &EpisodeGuest.thanks/1)
   defp set_guest_thanks(episode, false), do: set_guest_thanks(episode, &EpisodeGuest.no_thanks/1)
 
-  defp set_guest_thanks(episode, setFn) when is_function(setFn) do
+  defp set_guest_thanks(episode, set_fn) when is_function(set_fn) do
     episode
     |> Episode.preload_guests()
     |> Map.get(:episode_guests)
-    |> Enum.each(setFn)
+    |> Enum.each(set_fn)
   end
 end

@@ -7,11 +7,11 @@ defmodule ChangelogWeb.Admin.NewsIssueView do
 
   def item_count(issue), do: NewsIssue.item_count(issue)
 
-  def icon(%NewsAd{} = ad) do
+  def icon(ad = %NewsAd{}) do
     if ad.image, do: content_tag(:i, "", class: "image icon")
   end
 
-  def icon(%NewsItem{} = item) do
+  def icon(item = %NewsItem{}) do
     icon_class =
       cond do
         item.image -> "image"

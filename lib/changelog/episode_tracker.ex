@@ -35,7 +35,7 @@ defmodule Changelog.EpisodeTracker do
     GenServer.cast(__MODULE__, :refresh)
   end
 
-  def track(%{type: type, object_id: _object_id} = item) do
+  def track(item = %{type: type, object_id: _object_id}) do
     if type == :audio do
       %{object: episode} = NewsItem.load_object(item)
       track(episode)
@@ -60,7 +60,7 @@ defmodule Changelog.EpisodeTracker do
   end
 
   @impl true
-  def handle_call(_, _, [] = episodes) do
+  def handle_call(_, _, episodes = []) do
     {:reply, {:error, :no_episodes}, episodes}
   end
 

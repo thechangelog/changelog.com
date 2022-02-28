@@ -46,17 +46,17 @@ defmodule Changelog.Metacast do
     episodes
   end
 
-  defp ensure_minimal_filter_query(%{changes: %{filter_query: nil}} = changeset) do
+  defp ensure_minimal_filter_query(changeset = %{changes: %{filter_query: nil}}) do
     change(changeset, filter_query: @minimal_filter_query)
   end
 
-  defp ensure_minimal_filter_query(%{changes: %{filter_query: ""}} = changeset) do
+  defp ensure_minimal_filter_query(changeset = %{changes: %{filter_query: ""}}) do
     change(changeset, filter_query: @minimal_filter_query)
   end
 
   defp ensure_minimal_filter_query(changeset), do: changeset
 
-  defp validate_filter_query(%{changes: %{filter_query: filter_query}} = changeset) do
+  defp validate_filter_query(changeset = %{changes: %{filter_query: filter_query}}) do
     case Cache.compile(filter_query) do
       {:ok, _} ->
         changeset
