@@ -45,17 +45,9 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
   @tag :as_admin
   test "declines an episode request and redirects", %{conn: conn} do
     request = insert(:episode_request)
+    path = Routes.admin_podcast_episode_request_path(conn, :decline, request.podcast.slug, request.id)
 
-    conn =
-      put(
-        conn,
-        Routes.admin_podcast_episode_request_path(
-          conn,
-          :decline,
-          request.podcast.slug,
-          request.id
-        )
-      )
+    conn = put(conn, path)
 
     assert redirected_to(conn) ==
              Routes.admin_podcast_episode_request_path(conn, :index, request.podcast.slug)
@@ -67,18 +59,9 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
   @tag :as_admin
   test "declines an episode request with a message and redirects", %{conn: conn} do
     request = insert(:episode_request)
+    path = Routes.admin_podcast_episode_request_path(conn, :decline, request.podcast.slug, request.id)
 
-    conn =
-      put(
-        conn,
-        Routes.admin_podcast_episode_request_path(
-          conn,
-          :decline,
-          request.podcast.slug,
-          request.id
-        ),
-        %{"message" => "declined because reason"}
-      )
+    conn = put(conn, path, %{"message" => "declined because reason"})
 
     assert redirected_to(conn) ==
              Routes.admin_podcast_episode_request_path(conn, :index, request.podcast.slug)
@@ -87,6 +70,37 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
     assert count(EpisodeRequest.declined()) == 1
 
     assert %{decline_message: "declined because reason", status: :declined} =
+             Changelog.Repo.get(EpisodeRequest, request.id, [])
+  end
+
+  @tag :as_admin
+  test "fails an episode request and redirects", %{conn: conn} do
+    request = insert(:episode_request)
+    path = Routes.admin_podcast_episode_request_path(conn, :fail, request.podcast.slug, request.id)
+
+    conn = put(conn, path)
+
+    assert redirected_to(conn) ==
+             Routes.admin_podcast_episode_request_path(conn, :index, request.podcast.slug)
+
+    assert count(EpisodeRequest) == 1
+    assert count(EpisodeRequest.failed()) == 1
+  end
+
+  @tag :as_admin
+  test "fails an episode request with a message and redirects", %{conn: conn} do
+    request = insert(:episode_request)
+    path = Routes.admin_podcast_episode_request_path(conn, :fail, request.podcast.slug, request.id)
+
+    conn = put(conn, path, %{"message" => "failed because reason"})
+
+    assert redirected_to(conn) ==
+             Routes.admin_podcast_episode_request_path(conn, :index, request.podcast.slug)
+
+    assert count(EpisodeRequest) == 1
+    assert count(EpisodeRequest.failed()) == 1
+
+    assert %{decline_message: "failed because reason", status: :failed} =
              Changelog.Repo.get(EpisodeRequest, request.id, [])
   end
 end

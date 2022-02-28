@@ -1,0 +1,19 @@
+<div id="<%= @modal_id %>" class="ui small fail modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Fail with message: <em><%= @request.guests %></em>
+  </div>
+  <div class="content">
+    <%= form_tag Routes.admin_podcast_episode_request_path(@conn, :fail, @podcast.slug, @request), id: @form_id, method: "PUT", class: "ui small form" do %>
+      <div class="field">
+        <div class="ui">
+          <textarea name="message" placeholder="Reason for failure, sent by email to submitter"></textarea>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="actions">
+    <input type="submit" form="<%= @form_id %>" name="fail" class="ui primary basic button" value="Fail">
+    <div class="ui basic cancel button">Cancel</div>
+  </div>
+</div>

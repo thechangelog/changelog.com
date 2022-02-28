@@ -71,10 +71,18 @@
             <% end %>
 
             <%= if Changelog.EpisodeRequest.is_undecided(request) && Policies.Admin.EpisodeRequest.fail(@current_user, podcast) do %>
-              <%= AdminHelpers.dropdown_link("Set to Failed",
+              <%= AdminHelpers.dropdown_link("Fail Silently",
                   to: Routes.admin_podcast_episode_request_path(@conn, :fail, podcast.slug, request, next: SharedHelpers.current_path(@conn)),
                   title: "Failed",
                   method: :put, data: [confirm: "Set to failed?"]) %>
+
+              <%= AdminHelpers.modal_dropdown_link(
+                ChangelogWeb.Admin.EpisodeRequestView,
+                "Fail & Message",
+                "fail",
+                %{request: request, conn: @conn, podcast: podcast},
+                request.id
+              ) %>
             <% end %>
 
             <%= if Changelog.EpisodeRequest.is_undecided(request) && Policies.Admin.EpisodeRequest.decline(@current_user, podcast) do %>

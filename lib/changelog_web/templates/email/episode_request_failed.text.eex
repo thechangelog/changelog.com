@@ -1,0 +1,14 @@
+<%= greeting(@person) %>
+
+
+Sadly, we failed to fill you request. Here's a message from the team on the particulars:
+
+---
+
+<%= @request.decline_message %>
+
+---
+
+If there's more to say or our message requested a response, feel free to reply.
+
+💚, Logbot

@@ -44,5 +44,5 @@
 
 <%= if Enum.any?(@failed) do %>
   <h2 class="ui header">Failed (<%= length(@failed) %>)</h2>
-  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @declined, status: :failed})) %>
+  <%= render("_table.html", Map.merge(assigns, %{podcast: @podcast, requests: @failed, status: :failed})) %>
 <% end %>

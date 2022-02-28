@@ -102,6 +102,14 @@ defmodule Changelog.EpisodeRequest do
   end
 
   def fail!(request), do: update_status!(request, :failed)
+  def fail!(request, ""), do: fail!(request)
+
+  def fail!(request, message) do
+    request
+    |> change(%{decline_message: message})
+    |> update_status!(:failed)
+  end
+
   def pend!(request), do: update_status!(request, :pending)
 
   defp update_status!(request, status) do

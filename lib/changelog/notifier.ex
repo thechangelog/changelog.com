@@ -1,6 +1,7 @@
 defmodule Changelog.Notifier do
   alias Changelog.{
     Episode,
+    EpisodeRequest,
     Mailer,
     NewsItem,
     NewsItemComment,
@@ -9,7 +10,7 @@ defmodule Changelog.Notifier do
     Repo,
     Subscription,
     Slack,
-    EpisodeRequest
+    StringKit
   }
 
   alias ChangelogWeb.Email
@@ -48,12 +49,19 @@ defmodule Changelog.Notifier do
     end
   end
 
-  def notify(request = %EpisodeRequest{status: :declined, decline_message: message})
-      when is_binary(message) do
-    if message != "" do
+  def notify(request = %EpisodeRequest{status: :declined}) do
+    if StringKit.present?(request.decline_message) do
       request
       |> EpisodeRequest.preload_all()
       |> deliver_request_decline_email()
+    end
+  end
+
+  def notify(request = %EpisodeRequest{status: :failed}) do
+    if StringKit.present?(request.decline_message) do
+      request
+      |> EpisodeRequest.preload_all()
+      |> deliver_request_fail_email()
     end
   end
 
@@ -218,6 +226,12 @@ defmodule Changelog.Notifier do
   defp deliver_request_decline_email(request) do
     request
     |> Email.episode_request_declined()
+    |> Mailer.deliver_later()
+  end
+
+  defp deliver_request_fail_email(request) do
+    request
+    |> Email.episode_request_failed()
     |> Mailer.deliver_later()
   end
 end

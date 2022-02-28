@@ -343,5 +343,21 @@ defmodule Changelog.NotifierTest do
       Notifier.notify(item)
       assert_no_emails_delivered()
     end
+
+    test "when episode request is failed with a message" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      request = insert(:episode_request, submitter: person)
+      request = EpisodeRequest.fail!(request, "fail reason")
+      Notifier.notify(request)
+      assert_delivered_email(Email.episode_request_failed(request))
+    end
+
+    test "when episode request is failed without a message" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      item = insert(:episode_request, submitter: person)
+      item = EpisodeRequest.fail!(item, "")
+      Notifier.notify(item)
+      assert_no_emails_delivered()
+    end
   end
 end

@@ -135,7 +135,9 @@ defmodule ChangelogWeb.Admin.EpisodeRequestController do
   end
 
   def fail(conn = %{assigns: %{request: request}}, params, podcast) do
-    EpisodeRequest.fail!(request)
+    message = Map.get(params, "message", "")
+    request = EpisodeRequest.fail!(request, message)
+    Task.start_link(fn -> Notifier.notify(request) end)
 
     conn
     |> put_flash(:result, "success")
