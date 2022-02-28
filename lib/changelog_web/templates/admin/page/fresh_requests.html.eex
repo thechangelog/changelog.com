@@ -1,0 +1,7 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("Index", to: Routes.admin_page_path(@conn, :index)) %>
+    &raquo; Fresh Requests
+</h1>
+  <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
+</div>

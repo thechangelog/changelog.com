@@ -22,7 +22,7 @@ defmodule ChangelogWeb.Admin.PageController do
     conn
     |> assign(:newsletters, newsletters)
     |> assign(:episode_drafts, episode_drafts())
-    |> assign(:episode_requests, episode_requests())
+    |> assign(:episode_requests, episode_requests(EpisodeRequest.limit(5)))
     |> assign(:item_drafts, item_drafts(me))
     |> assign(:members, members())
     |> assign(:podcasts, Cache.podcasts())
@@ -36,6 +36,12 @@ defmodule ChangelogWeb.Admin.PageController do
 
   def index(conn = %{assigns: %{current_user: %{editor: true}}}, _params) do
     redirect(conn, to: Routes.admin_news_item_path(conn, :index))
+  end
+
+  def fresh_requests(conn, _params) do
+    conn
+    |> assign(:episode_requests, episode_requests())
+    |> render(:fresh_requests)
   end
 
   def purge(conn, _params) do
@@ -81,8 +87,9 @@ defmodule ChangelogWeb.Admin.PageController do
     |> Repo.all()
   end
 
-  defp episode_requests do
-    EpisodeRequest.fresh()
+  defp episode_requests(query \\ EpisodeRequest) do
+    query
+    |> EpisodeRequest.fresh()
     |> EpisodeRequest.sans_episode()
     |> EpisodeRequest.newest_first()
     |> EpisodeRequest.preload_all()

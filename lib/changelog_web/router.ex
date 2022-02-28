@@ -61,8 +61,9 @@ defmodule ChangelogWeb.Router do
     pipe_through [:admin, :browser]
 
     get "/", PageController, :index
-    get "/purge", PageController, :purge
     get "/downloads", PageController, :downloads
+    get "/fresh_requests", PageController, :fresh_requests
+    get "/purge", PageController, :purge
     get "/search", SearchController, :all
     get "/search/:type", SearchController, :one
 
@@ -99,13 +100,12 @@ defmodule ChangelogWeb.Router do
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
       post "/episodes/:id/unpublish", EpisodeController, :unpublish, as: :episode
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode
+
       resources "/episode_requests", EpisodeRequestController
-
-      put "/episode_requests/:id/decline", EpisodeRequestController, :decline,
-        as: :episode_request
-
+      put "/episode_requests/:id/decline", EpisodeRequestController, :decline, as: :episode_request
       put "/episode_requests/:id/fail", EpisodeRequestController, :fail, as: :episode_request
       put "/episode_requests/:id/pend", EpisodeRequestController, :pend, as: :episode_request
+
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
     end
 
