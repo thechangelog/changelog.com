@@ -7,9 +7,13 @@
     <%= for podcast <- @active do %>
       <option value="<%= podcast.slug %>" <%= if @podcast.slug == podcast.slug, do: "selected" %>><%= podcast.name %></option>
     <% end %>
-    </select>! Here's what you can expect:</p>
+    </select>!</p>
 
-    <h3 id="before">Before you record</h3>
+    <p>We have a lot of fun on our shows and do our best to create an enjoyable, relaxed environment for everyone involved. Here's <mark>what you can expect:</mark></p>
+
+    <h2 id="before">Before we record</h2>
+
+    <h3 id="audio-concerns">Concerning audio</h3>
 
     <p>We strive for the best audio quality possible (within reason). Things you'll need to achieve this:</p>
 
@@ -21,13 +25,33 @@
       <li>A Chromium-based browser such as <a href="https://brave.com/cha913" title="Download the Brave Browser">Brave</a> or <a href="https://www.google.com/chrome/index.html" title="Download Google Chrome">Google Chrome</a> 📞</li>
     </ul>
 
-    <h4 id="local-recording">Creating a local recording</h4>
+    <h4 id="local-recording">Creating a local audio recording</h4>
 
-    <p>To get the best quality, we ask that you please create a local recording. Here's a video on how to do that:</p>
+    <p><a href="https://riverside.fm">Riverside</a> takes care of recording everyone's local audio. As a backup to that (because Murphy's Law), we ask that you <mark>please create a local audio recording</mark>. Here's some videos on how to do that:</p>
 
-    <script src="https://fast.wistia.com/embed/medias/7in6285tx0.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_7in6285tx0 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/7in6285tx0/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
+    <ul>
+      <li>On macOS, we suggest that you <a href="https://youtu.be/W7pqfxEMwA4">use the built-in QuickTime Player</a></li>
+      <li>On Windows, we suggest that you <a href="https://youtu.be/Yc4rBee-oG4?t=38">use the built-in Voice Recorder</a></li>
+      <li>On Linux, we suggest that you <a href="https://youtu.be/0Lde3LThQ_E?t=54">use Audacity</a></li>
+    </ul>
 
-    <h3 id="during">During recording</h3>
+    <h3>Concerning video</h3>
+
+    <p>
+    <%= if @podcast.recorded_live do %>
+      We record video and stream the show live to <a href="https://youtube.com/changelog" title="Changelog's YouTube">our YouTube channel</a>. The video is also used for
+    <% else %>
+      We record video, but we don't ship the entire show as a video. It's just used for
+    <% end %>
+    sharing clips and highlights to <a href="https://youtube.com/changelog">YouTube</a>, <a href="https://www.tiktok.com/@changelog.com">TikTok</a>, and <a href="https://www.instagram.com/changelog_">Instagram</a>. Things you'll need to prepare for this:
+    </p>
+
+    <ul>
+      <li>A decent webcam or external video camera 📹</li>
+      <li>Good enough lighting so people can see your face 💡</li>
+    </ul>
+
+    <h2 id="during">While we record</h2>
 
     <p>
       Join Riverside via the link we provided you at the scheduled time. Here are some <em>tips and tricks</em> for a great show:
@@ -44,14 +68,14 @@
         our <%= link("Community Slack", to: Routes.page_path(@conn, :community)) %>.</li>
       <% end %>
     <% else %>
-      <li>Video optional! Feel free to opt out due to a slow connection or a bad hair day 📹</li>
     <% end %>
       <li>Put your mobile device(s) on Airplane Mode 📳</li>
       <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome 🚰</li>
+      <li>Don't worry, we edit every episode for smoothness and listenability. 👂</li>
       <li>Relax. Have fun. Bring your opinions 💯</li>
     </ul>
 
-    <h3 id="after">After recording</h3>
+    <h2 id="after">After we record</h2>
 
     <p>The <strike>hard</strike> <strike>intimidating</strike> talking part is over! As soon as you're able, <mark>upload your local audio file <a href="https://www.dropbox.com/request/4b4c8Hk5zMM0xlciMk6W" rel="nofollow" title="Audio upload link">right here</a></mark>. The episode will be professionally edited, produced, and transcribed. Then you will:</p>
 
@@ -78,7 +102,7 @@
     <%= EpisodeView.embed_iframe(@episode, "day") |> raw %>
   <% end %>
 
-    <h3>That's all!</h3>
+    <h2>That's all!</h2>
 
     <p>Thanks again, we truly appreciate it! 💚💚💚</p>
   </div>
