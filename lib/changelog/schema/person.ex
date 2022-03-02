@@ -120,6 +120,8 @@ defmodule Changelog.Person do
 
   def faked(query \\ __MODULE__), do: from(q in query, where: q.name in ^Changelog.Faker.names())
 
+  def with_avatar(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.avatar))
+
   def with_handles(query \\ __MODULE__, handles),
     do: from(q in query, where: q.handle in ^handles)
 

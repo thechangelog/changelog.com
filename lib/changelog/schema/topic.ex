@@ -22,6 +22,8 @@ defmodule Changelog.Topic do
     timestamps()
   end
 
+  def with_icon(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.icon))
+
   def with_news_items(query \\ __MODULE__) do
     from(q in query,
       distinct: true,
