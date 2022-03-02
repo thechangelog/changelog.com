@@ -12,7 +12,7 @@ defmodule Changelog.Files.Icon do
     if file_type(file) == :svg do
       :noaction
     else
-      {:convert, convert_args("-resize #{dimensions(version)}"), :png}
+      {:convert, convert_args("-resize #{dimensions(version)}")}
     end
   end
 

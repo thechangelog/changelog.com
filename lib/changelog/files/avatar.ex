@@ -17,7 +17,7 @@ defmodule Changelog.Files.Avatar do
       "-crop #{dimensions(version)}+0+0",
     ]
 
-    {:convert, convert_args(args), :png}
+    {:convert, convert_args(args)}
   end
 
   defp dimensions(:large), do: "600x600"
