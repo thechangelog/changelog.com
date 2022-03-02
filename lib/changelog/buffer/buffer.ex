@@ -2,7 +2,7 @@ defmodule Changelog.Buffer do
   alias Changelog.NewsItem
   alias Changelog.Buffer.{Client, Content}
 
-  @shared ~w(506b005149bbd8223400006b 5d27885cb3e9832ca87111a8)
+  @shared ~w(506b005149bbd8223400006b)
 
   @afk ~w(5af9b7a28bae46d01ead92d3)
   @brainscience ~w(5d49c7410eb4bb4992040a42)
