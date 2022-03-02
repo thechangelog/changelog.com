@@ -23,6 +23,7 @@ defmodule ChangelogWeb.PersonView do
   defp gravatar_url(email, version) do
     size =
       case version do
+        :thumb -> 50
         :small -> 150
         :medium -> 300
         :large -> 600
