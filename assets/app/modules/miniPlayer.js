@@ -65,8 +65,8 @@ export default class MiniPlayer {
   }
 
   seekBy(to) {
-    const currentSeek = this.audio.currentSeek() || 0;
-    this.audio.seek(currentSeek + to);
+    const currentTime = this.audio.currentTime() || 0;
+    this.audio.seek(currentTime + to);
   }
 
   load() {
@@ -100,7 +100,7 @@ export default class MiniPlayer {
   }
 
   currentTime() {
-    return Math.round(this.audio.currentSeek() || 0);
+    return Math.round(this.audio.currentTime() || 0);
   }
 
   percentComplete() {

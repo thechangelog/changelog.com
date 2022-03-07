@@ -139,7 +139,7 @@ export default class EmbedPlayer {
   }
 
   currentTime() {
-    return Math.round(this.audio.currentSeek() || 0);
+    return Math.round(this.audio.currentTime() || 0);
   }
 
   percentComplete(asOfTime) {

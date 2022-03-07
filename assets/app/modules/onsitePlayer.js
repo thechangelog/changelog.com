@@ -9,21 +9,19 @@ export default class OnsitePlayer {
     this.selector = selector;
     this.isAttached = false;
     this.tracked = {25: false, 50: false, 75: false, 100: false};
+    this.state = {speed: 1, volume: 1, loaded: null};
   }
 
   attach() {
     if (this.isAttached) return;
 
     this.audio = new ChangelogAudio();
-    this.detailsLoaded = false;
-    this.audioLoaded = false;
     this.playButtons = new PlayButton();
-    this.currentlyLoaded = "";
-    this.deepLink = 0;
     this.attachUI();
     this.attachEvents();
     this.attachKeyboardShortcuts();
     this.isAttached = true;
+    this.restoreState();
   }
 
   attachUI() {
@@ -140,49 +138,68 @@ export default class OnsitePlayer {
 
   changeSpeed() {
     let newSpeed = this.audio.changeSpeed();
+    this.setState("speed", newSpeed);
     this.speedButton.html(`[${newSpeed }X]`);
   }
 
   changeVolumeBy(to) {
-    let currentVolume = this.audio.volume();
-    this.audio.setVolume(currentVolume + to);
+    let newVolume = this.audio.currentVolume() + to;
+    this.setState("volume", newVolume);
+    this.audio.setVolume(this.state.volume);
   }
 
-  seekBy(to) {
-    const currentSeek = this.audio.currentSeek() || 0;
-    this.audio.seek(currentSeek + to);
+  seekTo(to) {
+    this.audio.seek(to);
     this.step();
   }
 
-  // begins the process of playing the audio, fetching the details
-  load(audioUrl, detailsUrl, andThen) {
+  seekBy(offset) {
+    let currentTime = this.audio.currentTime() || 0;
+    this.seekTo(currentTime + offset);
+  }
+
+  // begins the process of fetching details, playing audio
+  load(detailsUrl, andThen) {
+    this.episode = null;
+    this.state.loaded = null;
     this.resetUI();
     this.playButton.addClass("is-loading");
     this.playButton.attr("data-loaded", detailsUrl);
-    this.currentlyLoaded = detailsUrl;
-    this.playButtons.belongsTo(this.currentlyLoaded);
-    this.loadAudio(audioUrl, andThen);
-    this.loadDetails(detailsUrl);
-  }
+    this.playButtons.belongsTo(detailsUrl);
 
-  loadAudio(audioUrl, andThen) {
-    this.audioLoaded = false;
-    this.audio.load(audioUrl, _ => {
-      this.audioLoaded = true;
-      this.play();
-      if (andThen) andThen();
-    });
-  }
-
-  loadDetails(detailsUrl) {
-    this.detailsLoaded = false;
     ajax(detailsUrl, {}, (error, data) => {
+      this.state.loaded = detailsUrl;
       this.episode = new Episode(data);
       this.loadUI();
-      this.detailsLoaded = true;
       this.show();
-      this.log("Play");
+
+      this.audio.load(this.episode.audio(), _ => {
+        let resumeSpeed = this.state.speed;
+        if (resumeSpeed) {
+          this.audio.setSpeed(resumeSpeed);
+        }
+
+        let resumeTime = this.state[this.state.loaded];
+        if (resumeTime) {
+          this.audio.setTime(resumeTime);
+          this.updatePlayTime(resumeTime);
+        }
+
+        let resumeVolume = this.state.volume;
+        if (resumeVolume) {
+          this.audio.setVolume(resumeVolume);
+        }
+
+        this.play();
+        this.log("Play");
+
+        if (andThen) andThen();
+      });
     });
+  }
+
+  isLoaded(detailsUrl) {
+    return this.state.loaded == detailsUrl;
   }
 
   loadUI() {
@@ -191,6 +208,7 @@ export default class OnsitePlayer {
     this.title.text(this.episode.title());
     this.duration.text(Episode.formatTime(this.episode.duration()));
     this.scrubber.attr("max", this.episode.duration());
+    this.speedButton.html(`[${this.state.speed}X]`);
 
     if (this.episode.hasPrev()) {
       this.prevNumber.text(this.episode.prevNumber());
@@ -240,32 +258,54 @@ export default class OnsitePlayer {
     this.nextButton.first().removeAttribute("data-play");
   }
 
-  currentTime() {
-    return Math.round(this.audio.currentSeek() || 0);
+  setState(key, value) {
+    this.state[key] = value;
+    localStorage.setItem("player", JSON.stringify(this.state));
+  }
+
+  restoreState() {
+    let state = JSON.parse(localStorage.getItem("player"));
+
+    if (state) {
+      this.state = state;
+
+      if (this.state.loaded) {
+        this.load(this.state.loaded);
+      }
+    }
   }
 
   percentComplete(asOfTime) {
-    if (!this.detailsLoaded) return 0;
+    if (!this.state.loaded) return 0;
     return asOfTime / this.episode.duration() * 100;
   }
 
   step() {
-    if (!this.detailsLoaded) {
+    if (!this.state.loaded) {
       // wait for it...
       requestAnimationFrame(this.step.bind(this));
       return;
     }
 
     if (!this.isScrubbing) {
-      let time = this.currentTime();
-      this.current.text(Episode.formatTime(time));
-      this.scrubber.first().value = time;
-      this.track.first().style.width = `${this.percentComplete(time)}%`;
+      let newTime = this.audio.currentTime();
+      let prevTime = this.state[this.state.loaded];
+      // this condition ensures we only run this once per second
+      if (newTime > 0 && (!prevTime || newTime > prevTime)) {
+        this.updatePlayTime(newTime);
+        this.setState(this.state.loaded, newTime);
+      }
     }
 
     if (this.isPlaying()) {
       requestAnimationFrame(this.step.bind(this));
     }
+  }
+
+  updatePlayTime(newTime) {
+    this.current.text(Episode.formatTime(newTime));
+    this.scrubber.first().value = newTime;
+    this.track.first().style.width = `${this.percentComplete(newTime)}%`;
   }
 
   scrub(to) {
@@ -276,6 +316,10 @@ export default class OnsitePlayer {
 
   scrubEnd(to) {
     this.isScrubbing = false;
+    this.setState(this.state.loaded, to);
+    this.updatePlayTime(to);
+    console.log(to);
+
     this.audio.seek(to, _ => {
       this.playButton.addClass("is-loading");
     }, _ => {
@@ -295,6 +339,7 @@ export default class OnsitePlayer {
 
   close() {
     this.pause();
+    this.setState("loaded", null);
     u('body').removeClass('player-open');
     this.player.removeClass("podcast_player--is-active");
   }
@@ -320,7 +365,7 @@ export default class OnsitePlayer {
   }
 
   trackTime() {
-    let complete = this.percentComplete(this.currentTime());
+    let complete = this.percentComplete(this.audio.currentTime());
 
     for (var percent in this.tracked) {
       if (complete >= percent && !this.tracked[percent]) {
@@ -331,7 +376,7 @@ export default class OnsitePlayer {
   }
 
   updateCopyUrlTime() {
-    let time = this.currentTime();
+    let time = this.audio.currentTime();
     if (this.episode && time > 0) {
       this.copyUrlButton.attr("href", this.episode.shareUrlWithTs(time));
     }

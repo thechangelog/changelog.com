@@ -59,20 +59,6 @@ export default class ChangelogAudio {
     this.audio.loop = bool;
   }
 
-  volume() {
-    return this.audio.volume;
-  }
-
-  setVolume(value) {
-    if (value < 0) return false;
-
-    if (value > 1) {
-      this.audio.volume = value / 100;
-    } else {
-      this.audio.volume = value;
-    }
-  }
-
   isMuted() {
     return this.audio.muted;
   }
@@ -85,28 +71,54 @@ export default class ChangelogAudio {
     this.audio.muted = false;
   }
 
-  currentSeek() {
-    return this.audio.currentTime;
+  currentSpeed() {
+    return this.audio.playbackRate;
+  }
+
+  setSpeed(to) {
+    if (!to) return false;
+    this.audio.playbackRate = to;
+  }
+
+  currentTime() {
+    return Math.round(this.audio.currentTime || 0);
+  }
+
+  setTime(to) {
+    this.audio.currentTime = to;
+  }
+
+  currentVolume() {
+    return Math.round(this.audio.volume * 10) / 10;
+  }
+
+  setVolume(value) {
+    if (value < 0) return false;
+    if (value > 1) return false;
+    this.audio.volume = value;
   }
 
   seek(to, before, after) {
+    console.log(to);
     to = parseInt(to, 10);
     if (to < 0) to = 0;
 
     if (before) this.runOnce("seeking", before);
     if (after) this.runOnce("seeked", after);
 
-    this.audio.currentTime = to;
+    this.setTime(to);
   }
 
   changeSpeed() {
-    if (this.audio.playbackRate == 2.0) {
-      this.audio.playbackRate = 1;
+    let current = this.currentSpeed();
+
+    if (current == 2.0) {
+      this.setSpeed(1);
     } else {
-      this.audio.playbackRate += 0.25;
+      this.setSpeed(current + 0.25);
     }
 
-    return this.audio.playbackRate;
+    return this.currentSpeed();
 }
 
   run(eventName, fn) {

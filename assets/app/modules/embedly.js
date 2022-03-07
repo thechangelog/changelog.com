@@ -72,7 +72,7 @@ export default class Embedly {
         this.send("getLoop", this.player.willLoop(), message.listener);
         break;
       case "getVolume":
-        this.send("getVolume", (this.player.audio.volume() * 100), message.listener);
+        this.send("getVolume", (this.player.audio.currentVolume() * 100), message.listener);
         break;
       case "setVolume":
         this.player.audio.setVolume(message.value);

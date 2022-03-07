@@ -67,7 +67,7 @@ window.App = {
       this.player.scrubEnd(linkTime);
     } else {
       let playable = u("[data-play]");
-      this.player.load(playable.attr("href"), playable.data("play"), _ => {
+      this.player.load(playable.data("play"), _ => {
         this.player.scrubEnd(linkTime);
       });
     }
@@ -138,15 +138,14 @@ u(document).on("click", "[data-play]", function (event) {
     event.preventDefault();
 
     let clicked = u(event.target).closest("a, button");
-    let audioUrl = clicked.attr("href");
     let detailsUrl = clicked.data("play");
     let linkTime = parseTime(clicked.data("t"));
 
-    if (App.player.currentlyLoaded == detailsUrl) {
+    if (App.player.isLoaded(detailsUrl)) {
       App.player.togglePlayPause();
     } else {
       App.player.pause();
-      App.player.load(audioUrl, detailsUrl, _ => {
+      App.player.load(detailsUrl, _ => {
         if (linkTime) App.player.scrubEnd(linkTime);
       });
     }
