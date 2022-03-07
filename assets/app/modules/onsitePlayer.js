@@ -3,6 +3,7 @@ import Episode from "modules/episode";
 import Log from "modules/log";
 import ChangelogAudio from "modules/audio";
 import PlayButton from "modules/playButton";
+import parseTime from "../../shared/parseTime";
 
 export default class OnsitePlayer {
   constructor(selector) {
@@ -38,6 +39,7 @@ export default class OnsitePlayer {
     this.track = this.container.find(".js-player-track");
     this.duration = this.container.find(".js-player-duration");
     this.current = this.container.find(".js-player-current");
+    this.currentInput = this.container.find(".js-player-current-input");
     this.playButton = this.container.find(".js-player-play-button");
     this.backButton = this.container.find(".js-player-back-button");
     this.forwardButton = this.container.find(".js-player-forward-button");
@@ -57,6 +59,9 @@ export default class OnsitePlayer {
     this.closeButton.handle("click", _ => { this.close(); });
     this.hideButton.handle("click", _ => { this.hide(); });
     this.speedButton.handle("click", _ => { this.changeSpeed(); });
+    this.current.handle("click", _ => { this.focusCurrentInput(); });
+    this.currentInput.handle("focusout", _ => { this.updateCurrent(); });
+    this.currentInput.on("keydown", event => { this.keyCurrent(event); });
     this.audio.onTimeUpdate(event => { this.updateCopyUrlTime(); this.trackTime(); });
     this.audio.onPlay(event => { this.playUI(); });
     this.audio.onPause(event => { this.pauseUI(); });
@@ -134,6 +139,57 @@ export default class OnsitePlayer {
     } else {
       this.play();
     }
+  }
+
+  focusCurrentInput() {
+    let input = this.currentInput.first();
+    let width = "45px";
+
+    if (this.episode.duration() > 3600) {
+      width = "58px";
+    }
+
+    this.current.addClass("is-hidden");
+
+    this.currentInput
+      .attr("value", this.current.text())
+      .attr("style", `width: ${width};`)
+      .removeClass("is-hidden")
+
+    this.pause();
+
+    input.value = this.current.text();
+    input.focus();
+    input.select();
+  }
+
+  blurCurrentInput() {
+    this.currentInput.addClass("is-hidden");
+    this.current.removeClass("is-hidden");
+  }
+
+  keyCurrent(event) {
+    if (event.keyCode == 13) { // enter
+      event.preventDefault();
+      this.currentInput.trigger("focusout"); // triggers update
+    }
+
+    if (event.keyCode == 27) { // escape
+      this.blurCurrentInput();
+      event.stopPropagation();
+    }
+  }
+
+  updateCurrent() {
+    let newTime = parseTime(this.currentInput.first().value);
+
+    if (newTime > this.episode.duration()) {
+      newTime = this.episode.duration() - 10;
+    }
+
+    this.seekTo(newTime);
+    this.blurCurrentInput();
+    this.play();
   }
 
   changeSpeed() {
@@ -290,8 +346,8 @@ export default class OnsitePlayer {
     if (!this.isScrubbing) {
       let newTime = this.audio.currentTime();
       let prevTime = this.state[this.state.loaded];
-      // this condition ensures we only run this once per second
-      if (newTime > 0 && (!prevTime || newTime > prevTime)) {
+
+      if (newTime != prevTime) {
         this.updatePlayTime(newTime);
         this.setState(this.state.loaded, newTime);
       }
@@ -318,7 +374,6 @@ export default class OnsitePlayer {
     this.isScrubbing = false;
     this.setState(this.state.loaded, to);
     this.updatePlayTime(to);
-    console.log(to);
 
     this.audio.seek(to, _ => {
       this.playButton.addClass("is-loading");
@@ -328,19 +383,19 @@ export default class OnsitePlayer {
   }
 
   show() {
-    u('body').addClass('player-open');
+    u("body").addClass("player-open");
     this.player.addClass("podcast_player--is-active").removeClass("podcast_player--is-hidden");
   }
 
   hide() {
-    u('body').toggleClass('player-open');
+    u("body").toggleClass("player-open");
     this.player.toggleClass("podcast_player--is-hidden");
   }
 
   close() {
     this.pause();
     this.setState("loaded", null);
-    u('body').removeClass('player-open');
+    u("body").removeClass("player-open");
     this.player.removeClass("podcast_player--is-active");
   }
 

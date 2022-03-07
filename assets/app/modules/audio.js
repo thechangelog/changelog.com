@@ -99,7 +99,6 @@ export default class ChangelogAudio {
   }
 
   seek(to, before, after) {
-    console.log(to);
     to = parseInt(to, 10);
     if (to < 0) to = 0;
 
