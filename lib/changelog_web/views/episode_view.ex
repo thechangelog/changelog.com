@@ -194,7 +194,7 @@ defmodule ChangelogWeb.EpisodeView do
       title: episode.title,
       number: number(episode),
       duration: episode.audio_duration,
-      art_url: PodcastView.cover_url(podcast, :small),
+      art_url: PodcastView.cover_url(podcast, :medium),
       audio_url: audio_url(episode),
       share_url: share_url(episode)
     }

@@ -2,7 +2,7 @@
 <% {main_participants, additional_participants} = @episode |> Episode.participants() |> Enum.split(5) %>
 <%= for person <- main_participants do %>
   <%= link(to: PersonView.profile_path(person), title: person.name) do %>
-    <%= SharedHelpers.maybe_lazy_image(@conn, PersonView.avatar_url(person), "Featuring #{person.name}", width: 24, height: 24) %>
+    <%= SharedHelpers.maybe_lazy_image(@conn, PersonView.avatar_url(person, :thumb), "Featuring #{person.name}", width: 24, height: 24) %>
   <% end %>
 <% end %>
 <%= if Enum.any?(additional_participants) do %>
