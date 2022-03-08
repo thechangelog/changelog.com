@@ -1,0 +1,14 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("People", to: Routes.admin_person_path(@conn, :index)) %>
+    &raquo;
+    <%= link(@person.name, to: Routes.admin_person_path(@conn, :show, @person.id)) %>
+    &raquo;
+    Comments (<%= @page.total_entries %>)
+  </h1>
+</div>
+
+<div class="ui basic segment">
+  <%= render(NewsItemCommentView, "_table.html", Map.merge(assigns, %{comments: @comments})) %>
+  <%= pagination_links(@conn, @page, [@person], path: &Routes.admin_person_path/4, action: :comments) %>
+</div>

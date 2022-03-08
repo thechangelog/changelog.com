@@ -141,7 +141,9 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
         post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs),
         get(conn, Routes.admin_person_path(conn, :edit, person.id)),
         put(conn, Routes.admin_person_path(conn, :update, person.id), person: @valid_attrs),
-        delete(conn, Routes.admin_person_path(conn, :delete, person.id))
+        delete(conn, Routes.admin_person_path(conn, :delete, person.id)),
+        get(conn, Routes.admin_person_path(conn, :news, person.id)),
+        get(conn, Routes.admin_person_path(conn, :comments, person.id))
       ],
       fn conn ->
         assert html_response(conn, 302)

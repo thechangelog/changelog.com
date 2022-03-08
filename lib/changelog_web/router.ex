@@ -90,6 +90,8 @@ defmodule ChangelogWeb.Router do
     post "/news/issues/:id/unpublish", NewsIssueController, :unpublish, as: :news_issue
 
     resources "/people", PersonController
+    get "/people/:id/news", PersonController, :news, as: :person
+    get "/people/:id/comments", PersonController, :comments, as: :person
     post "/people/:id/slack", PersonController, :slack, as: :person
 
     resources "/metacasts", MetacastController

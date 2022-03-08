@@ -1,10 +1,10 @@
 defmodule ChangelogWeb.Admin.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Episode, EpisodeRequest, NewsItem, Person, Slack, Subscription}
+  alias Changelog.{Mailer, Episode, EpisodeRequest, NewsItem, NewsItemComment, Person, Slack, Subscription}
   alias ChangelogWeb.Email
 
-  plug :assign_person when action in [:show, :edit, :update, :delete, :slack]
+  plug :assign_person when action in [:show, :edit, :update, :delete, :slack, :news, :comments]
   plug Authorize, [Policies.Admin.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
@@ -58,6 +58,7 @@ defmodule ChangelogWeb.Admin.PersonController do
       |> NewsItem.with_person(person)
       |> NewsItem.published()
       |> NewsItem.newest_first()
+      |> NewsItem.limit(5)
       |> NewsItem.preload_all()
       |> Repo.all()
 
@@ -69,6 +70,14 @@ defmodule ChangelogWeb.Admin.PersonController do
       |> NewsItem.preload_all()
       |> Repo.all()
 
+    comments =
+      person
+      |> assoc(:comments)
+      |> NewsItemComment.newest_first()
+      |> NewsItemComment.limit(5)
+      |> NewsItemComment.preload_all()
+      |> Repo.all()
+
     conn
     |> assign(:person, person)
     |> assign(:episodes, episodes)
@@ -76,6 +85,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> assign(:subscriptions, subscriptions)
     |> assign(:published, published)
     |> assign(:declined, declined)
+    |> assign(:comments, comments)
     |> render(:show)
   end
 
@@ -133,6 +143,35 @@ defmodule ChangelogWeb.Admin.PersonController do
     conn
     |> put_flash(:result, "success")
     |> redirect_next(params, Routes.admin_person_path(conn, :index))
+  end
+
+  def comments(conn = %{assigns: %{person: person}}, params) do
+    page =
+      person
+      |> assoc(:comments)
+      |> NewsItemComment.newest_first()
+      |> NewsItemComment.preload_all()
+      |> Repo.paginate(params)
+
+    conn
+    |> assign(:comments, page.entries)
+    |> assign(:page, page)
+    |> render(:comments)
+  end
+
+  def news(conn = %{assigns: %{person: person}}, params) do
+    page =
+      NewsItem
+      |> NewsItem.with_person(person)
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.paginate(params)
+
+    conn
+    |> assign(:published, page.entries)
+    |> assign(:page, page)
+    |> render(:news)
   end
 
   def slack(conn = %{assigns: %{person: person}}, params) do

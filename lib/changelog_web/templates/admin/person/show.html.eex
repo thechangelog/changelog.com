@@ -45,28 +45,35 @@
 
 <%= if Enum.any?(@published) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">News Items</h2>
+  <h2 class="ui header">Recent news <%= link("(view all)", to: Routes.admin_person_path(@conn, :news, @person.id)) %></h2>
   <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{status: :published, items: @published})) %>
 </div>
 <% end %>
 
 <%= if Enum.any?(@declined) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Declined</h2>
+  <h2 class="ui header">Declined news</h2>
   <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{status: :declined, items: @declined})) %>
 </div>
 <% end %>
 
 <%= if Enum.any?(@episodes) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Guest Episodes</h2>
+  <h2 class="ui header">Guest episodes</h2>
   <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @episodes, status: :published})) %>
 </div>
 <% end %>
 
 <%= if Enum.any?(@episode_requests) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Episode Requests</h2>
+  <h2 class="ui header">Episodes requested</h2>
   <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests})) %>
+</div>
+<% end %>
+
+<%= if Enum.any?(@comments) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Recent comments <%= link("(view all)", to: Routes.admin_person_path(@conn, :comments, @person.id)) %></h2>
+  <%= render(NewsItemCommentView, "_table.html", Map.merge(assigns, %{comments: @comments})) %>
 </div>
 <% end %>
