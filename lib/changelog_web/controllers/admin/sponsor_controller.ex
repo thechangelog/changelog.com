@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.SponsorController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{EpisodeSponsor, NewsSponsorship, Sponsor}
+  alias Changelog.{EpisodeSponsor, Fastly, NewsSponsorship, Sponsor}
 
   plug :assign_sponsor when action in [:show, :edit, :update, :delete]
   plug Authorize, [Policies.AdminsOnly, :sponsor]
@@ -71,7 +71,9 @@ defmodule ChangelogWeb.Admin.SponsorController do
     changeset = Sponsor.update_changeset(sponsor, sponsor_params)
 
     case Repo.update(changeset) do
-      {:ok, _sponsor} ->
+      {:ok, sponsor} ->
+        Fastly.purge(sponsor)
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_sponsor_path(conn, :index))

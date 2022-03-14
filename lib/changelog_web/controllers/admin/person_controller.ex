@@ -1,7 +1,18 @@
 defmodule ChangelogWeb.Admin.PersonController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Mailer, Episode, EpisodeRequest, NewsItem, NewsItemComment, Person, Slack, Subscription}
+  alias Changelog.{
+    Episode,
+    EpisodeRequest,
+    Fastly,
+    Mailer,
+    NewsItem,
+    NewsItemComment,
+    Person,
+    Slack,
+    Subscription
+  }
+
   alias ChangelogWeb.Email
 
   plug :assign_person when action in [:show, :edit, :update, :delete, :slack, :news, :comments]
@@ -125,7 +136,9 @@ defmodule ChangelogWeb.Admin.PersonController do
     changeset = Person.admin_update_changeset(person, person_params)
 
     case Repo.update(changeset) do
-      {:ok, _person} ->
+      {:ok, person} ->
+        Fastly.purge(person)
+
         conn
         |> put_flash(:result, "success")
         |> redirect_next(params, Routes.admin_person_path(conn, :index))

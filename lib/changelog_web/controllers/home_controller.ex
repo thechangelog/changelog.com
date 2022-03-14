@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, Person, Podcast, Slack, Subscription}
+  alias Changelog.{Fastly, NewsItem, Person, Podcast, Slack, Subscription}
 
   plug(RequireUser, "except from email links" when action not in [:opt_out])
   plug(:scrub_params, "person" when action in [:update])
@@ -31,7 +31,9 @@ defmodule ChangelogWeb.HomeController do
       end
 
     case Repo.update(changeset) do
-      {:ok, _person} ->
+      {:ok, person} ->
+        Fastly.purge(person)
+
         conn
         |> put_flash(:success, "Your #{from} has been updated! ✨")
         |> redirect(to: Routes.home_path(conn, :show))

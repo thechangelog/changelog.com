@@ -11,6 +11,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     EpisodeHost,
     EpisodeRequest,
     EpisodeStat,
+    Fastly,
     Github,
     NewsItem,
     NewsQueue,
@@ -224,6 +225,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         handle_notes_push_to_github(episode)
         EpisodeNewsItem.update(episode)
         Cache.delete(episode)
+        Fastly.purge(episode)
 
         params =
           replace_next_edit_path(

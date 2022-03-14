@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PostController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, NewsQueue, Post, PostNewsItem}
+  alias Changelog.{Cache, Fastly, NewsQueue, Post, PostNewsItem}
 
   plug :assign_post when action in [:edit, :update, :delete, :publish, :unpublish]
   plug Authorize, [Policies.Admin.Post, :post]
@@ -72,6 +72,7 @@ defmodule ChangelogWeb.Admin.PostController do
     case Repo.update(changeset) do
       {:ok, post} ->
         PostNewsItem.update(post)
+        Fastly.purge(post)
         Cache.delete(post)
 
         conn

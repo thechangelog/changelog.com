@@ -3,8 +3,8 @@ defmodule ChangelogWeb.PersonController do
 
   alias Changelog.{
     Cache,
-    Episode,
     Captcha,
+    Episode,
     Mailer,
     NewsItem,
     Newsletters,

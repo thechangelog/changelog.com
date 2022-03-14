@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.TopicController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Topic
+  alias Changelog.{Fastly, Topic}
 
   plug :assign_topic when action in [:edit, :update, :delete]
   plug Authorize, [Policies.AdminsOnly, :topic]
@@ -49,6 +49,7 @@ defmodule ChangelogWeb.Admin.TopicController do
 
     case Repo.update(changeset) do
       {:ok, topic} ->
+        Fastly.purge(topic)
         params = replace_next_edit_path(params, Routes.admin_topic_path(conn, :edit, topic.slug))
 
         conn

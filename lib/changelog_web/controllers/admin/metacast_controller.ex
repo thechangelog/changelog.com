@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.MetacastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Metacast}
+  alias Changelog.{Cache, Fastly, Metacast}
 
   plug :assign_metacast when action in [:edit, :update, :delete]
   plug Authorize, [Policies.AdminsOnly, :metacast]
@@ -50,6 +50,7 @@ defmodule ChangelogWeb.Admin.MetacastController do
 
     case Repo.update(changeset) do
       {:ok, metacast} ->
+        Fastly.purge(metacast)
         Cache.delete(metacast)
         params = replace_next_edit_path(params, Routes.admin_metacast_path(conn, :edit, metacast))
 

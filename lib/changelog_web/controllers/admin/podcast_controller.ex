@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Podcast}
+  alias Changelog.{Cache, Fastly, Podcast}
 
   plug :assign_podcast when action in [:show, :edit, :update]
   plug Authorize, [Policies.Admin.Podcast, :podcast]
@@ -86,6 +86,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
     case Repo.update(changeset) do
       {:ok, podcast} ->
+        Fastly.purge(podcast)
         Cache.delete(podcast)
 
         params =

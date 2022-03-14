@@ -1,7 +1,17 @@
 defmodule ChangelogWeb.Admin.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{HtmlKit, NewsItem, NewsSource, NewsQueue, Search, Topic, UrlKit, Notifier}
+  alias Changelog.{
+    HtmlKit,
+    Fastly,
+    NewsItem,
+    NewsSource,
+    NewsQueue,
+    Search,
+    Topic,
+    UrlKit,
+    Notifier
+  }
 
   plug :assign_item when action in [:edit, :update, :move, :decline, :move, :unpublish, :delete]
   plug Authorize, [Policies.Admin.NewsItem, :item]
@@ -130,6 +140,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:ok, item} ->
         handle_status_changes(item, params)
         handle_search_update(item)
+        Fastly.purge(item)
 
         conn
         |> put_flash(:result, "success")
