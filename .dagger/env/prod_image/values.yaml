@@ -42,13 +42,13 @@ inputs:
                 - _build
                 - dagger
     app_version:
-        text: 22.2.2+625db715953f8c509f0c8c473cc8e19610e5c1a1
+        text: 22.4.3+0f89da6bc46369d0783580ad15df76639c391e66
     build_url:
         text: https://github.com/thechangelog/changelog.com/actions
     build_version:
-        text: 22.2.2+625db715953f8c509f0c8c473cc8e19610e5c1a1
+        text: 22.4.3+0f89da6bc46369d0783580ad15df76639c391e66
     docker_host:
-        text: tcp://100.113.182.91:2375
+        text: tcp://100.81.87.121:2375
     dockerhub_password:
         secret: ENC[AES256_GCM,data:PDe2tEIrlFIE5S6NmnT+CZSluWY=,iv:ty+I65nKAVAWRBAIVJ0cQXF20Iuolk9iwDypRGVxd90=,tag:UpNb06UYX3GVUuOpLwKwUA==,type:str]
     dockerhub_username:
@@ -56,7 +56,7 @@ inputs:
     git_author:
         text: gerhard
     git_sha:
-        text: 625db715953f8c509f0c8c473cc8e19610e5c1a1
+        text: 0f89da6bc46369d0783580ad15df76639c391e66
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
@@ -111,8 +111,8 @@ sops:
             RHllVkFJWFpXUDZZNTYzcTVJMm1hOHMKB0jLL+vzIqllrKC8n8BtjVrl954uQkwL
             ucVzAeuQk6XBAckZBAKoo9IB4c0G5KRq7K7PJdi/HqvggVdj2CKF6Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-02-02T10:00:35Z"
-    mac: ENC[AES256_GCM,data:wCHSQysCBpFdtFh29x6ZlCkVEFYVYsqFMBH1yzidOJrDSYnbdDjy9Asrk9ScCJDFkcni1HfaL13d0tLHOaX1yf2m/9AbjcybXHOUoTjaT108Ibrk3XCBoHe1MkAzXQpenuzg9LUyc8x8NP2PHXBnG53uCbg7iEzyk22RmqsgutI=,iv:c3mi+GTRw4hPA31ceHxL6OaFqUmKFdlBZsCD3jvnX9w=,tag:cg0dthedaKzIJnwh1ooo6w==,type:str]
+    lastmodified: "2022-04-03T15:11:52Z"
+    mac: ENC[AES256_GCM,data:rQf2tsc9t8DKqJVV/ZvDL2KJxB+QxTMJ4IlqAEwBuf2ijqscbofhWZrbZ6UADJoN6JwaRo+/SKQzB/zGfP72KKtYTlejGVellkDaFDV845czILlweUb24FAJsLWbw3pJoftHGoZIraCEG7Vb2tRga2ShLdv722lzb39xn1c9m+w=,iv:8R5bPi9oiiTZ1LrtnFBQz4hrf6/P41w1AukqvDwFAuk=,tag:KWUdi7xsIX88FX+sS7MURA==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1
