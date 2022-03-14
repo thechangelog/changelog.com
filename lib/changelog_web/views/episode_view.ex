@@ -44,12 +44,6 @@ defmodule ChangelogWeb.EpisodeView do
       {episode.audio_file, episode}
       |> Files.Audio.url(:original)
       |> UrlKit.sans_cache_buster()
-
-    if episode.podcast.chartable_id do
-      "https://chtbl.com/track/#{episode.podcast.chartable_id}/#{url}"
-    else
-      url
-    end
   end
 
   def plusplus_cta(%{plusplus_duration: ppd, audio_duration: ad}) when is_number(ppd) do
