@@ -40,10 +40,9 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def audio_url(episode) do
-    url =
-      {episode.audio_file, episode}
-      |> Files.Audio.url(:original)
-      |> UrlKit.sans_cache_buster()
+    {episode.audio_file, episode}
+    |> Files.Audio.url(:original)
+    |> UrlKit.sans_cache_buster()
   end
 
   def plusplus_cta(%{plusplus_duration: ppd, audio_duration: ad}) when is_number(ppd) do
