@@ -82,7 +82,7 @@ defmodule ChangelogWeb.Endpoint do
 
   cookie_domain =
     if Mix.env() == :prod do
-      ".changelog.com"
+      "changelog-2022-03-13.fly.dev"
     else
       System.get_env("HOST", "localhost")
     end
