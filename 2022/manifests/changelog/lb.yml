@@ -14,35 +14,25 @@ spec:
         - "changelog.com"
         - "*.changelog.com"
       secretName: wildcard-acme-tls
-    # - hosts:
-    #     - "brainscience.fm"
-    #   secretName: brainscience-fm-acme-tls
-    # - hosts:
-    #     - "changelog.fm"
-    #   secretName: changelog-fm-acme-tls
-    # - hosts:
-    #     - founderstalk.fm
-    #   secretName: founderstalk-fm-acme-tls
-    # - hosts:
-    #     - gotime.fm
-    #   secretName: gotime-fm-acme-tls
-    # - hosts:
-    #     - jsparty.fm
-    #   secretName: jsparty-fm-acme-tls
-    # - hosts:
-    #     - practicalai.fm
-    #   secretName: practicalai-fm-acme-tls
+    - hosts:
+        - "brainscience.fm"
+      secretName: brainscience-fm-acme-tls
+    - hosts:
+        - "changelog.fm"
+      secretName: changelog-fm-acme-tls
+    - hosts:
+        - founderstalk.fm
+      secretName: founderstalk-fm-acme-tls
+    - hosts:
+        - gotime.fm
+      secretName: gotime-fm-acme-tls
+    - hosts:
+        - jsparty.fm
+      secretName: jsparty-fm-acme-tls
+    - hosts:
+        - practicalai.fm
+      secretName: practicalai-fm-acme-tls
   rules:
-    # - host: "changelog.com"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
     - host: "22.changelog.com"
       http:
         paths:
@@ -53,96 +43,66 @@ spec:
                 name: app
                 port:
                   number: 4000
-    # - host: "21.changelog.com"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "cdn.changelog.com"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "www.changelog.com"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "brainscience.fm"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "changelog.fm"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "founderstalk.fm"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "gotime.fm"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "jsparty.fm"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
-    # - host: "practicalai.fm"
-    #   http:
-    #     paths:
-    #       - pathType: Prefix
-    #         path: "/"
-    #         backend:
-    #           service:
-    #             name: app
-    #             port:
-    #               number: 4000
+    - host: "brainscience.fm"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: app
+                port:
+                  number: 4000
+    - host: "changelog.fm"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: app
+                port:
+                  number: 4000
+    - host: "founderstalk.fm"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: app
+                port:
+                  number: 4000
+    - host: "gotime.fm"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: app
+                port:
+                  number: 4000
+    - host: "jsparty.fm"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: app
+                port:
+                  number: 4000
+    - host: "practicalai.fm"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: app
+                port:
+                  number: 4000
 ---
 apiVersion: v1
 kind: Service

@@ -2,12 +2,9 @@ EXTERNAL_DNS_RELEASES := https://github.com/kubernetes-sigs/external-dns/release
 EXTERNAL_DNS_VERSION := 1.7.1
 EXTERNAL_DNS_DIR := $(CURDIR)/tmp/external-dns-$(EXTERNAL_DNS_VERSION)
 EXTERNAL_DNS_NAMESPACE := external-dns
-EXTERNAL_DNS_TXT_OWNER_ID ?= $(LKE_LABEL)
-# TODO: Delete the DNSEndpoints & un-comment this when we have finished migrating
-# EXTERNAL_DNS_TXT_OWNER_ID ?= linode-kubernetes-engine
+EXTERNAL_DNS_TXT_OWNER_ID ?= linode-kubernetes-engine
 EXTERNAL_DNS_LOG_LEVEL ?= debug
-# Change to sync when existing DNS records should be updated
-EXTERNAL_DNS_POLICY ?= upsert-only
+EXTERNAL_DNS_POLICY ?= sync
 
 $(EXTERNAL_DNS_DIR):
 	git clone \
