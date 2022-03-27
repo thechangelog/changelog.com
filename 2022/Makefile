@@ -41,13 +41,13 @@ include $(CURDIR)/linode.mk
 include $(CURDIR)/secrets.mk
 include $(CURDIR)/crossplane.mk
 include $(CURDIR)/metrics-server.mk
-# TODO: nice to have, return to this after the new app instance is live
-# include $(CURDIR)/grafana-agent.mk
+include $(CURDIR)/honeycomb-agent.mk
 include $(CURDIR)/local-path-provisioner.mk
 include $(CURDIR)/external-dns.mk
 include $(CURDIR)/cert-manager.mk
 include $(CURDIR)/ingress-nginx.mk
 include $(CURDIR)/keel.mk
+include $(CURDIR)/merkely.mk
 include $(CURDIR)/changelog.mk
 
 define MAKE_TARGETS
