@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_HOST: "tcp://100.113.182.91:2375"
-  OTEL_EXPORTER_JAEGER_ENDPOINT: "http://100.113.182.91:14268/api/traces"
+  DOCKER_HOST: "tcp://100.81.87.121:2375"
+  OTEL_EXPORTER_JAEGER_ENDPOINT: "http://100.81.87.121:14268/api/traces"
 
 jobs:
   build_test_ship:
