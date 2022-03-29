@@ -47,7 +47,6 @@ include $(CURDIR)/external-dns.mk
 include $(CURDIR)/cert-manager.mk
 include $(CURDIR)/ingress-nginx.mk
 include $(CURDIR)/keel.mk
-include $(CURDIR)/merkely.mk
 include $(CURDIR)/changelog.mk
 
 define MAKE_TARGETS
