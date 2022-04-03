@@ -31,6 +31,19 @@ spec:
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
+  name: fly.changelog.com
+  namespace: ${NAMESPACE}
+spec:
+  endpoints:
+  - dnsName: fly.changelog.com
+    recordTTL: ${DNS_TTL}
+    recordType: CNAME
+    targets:
+      - dualstack.changelog.map.fastly.net
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
   name: www.changelog.com
   namespace: ${NAMESPACE}
 spec:
