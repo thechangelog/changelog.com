@@ -47,7 +47,9 @@ env::
 clean:
 	rm -fr $(XDG_CONFIG_HOME) $(LOCAL_BIN) .envrc
 
-CURL ?= /usr/bin/curl
+CURL ?= /usr/local/opt/curl/bin/curl
+PATH := /usr/local/opt/curl/bin:$(PATH)
+export PATH
 ifneq ($(PLATFORM),Darwin)
 $(CURL):
 	$(error Please install curl)
@@ -58,13 +60,21 @@ DAGGER_VERSION := 0.2.4
 DAGGER ?= $(LOCAL_BIN)/dagger
 $(DAGGER): | $(CURL) $(LOCAL_BIN)
 	$(CURL) --fail --location https://dl.dagger.io/dagger/install.sh \
-	| DAGGER_VERSIION=$(DAGGER_VERSION) sh
+	| DAGGER_VERSIION=$(DAGGER_VERSION) sh -ex
 	$(DAGGER) version | grep $(DAGGER_VERSION)
 
 .DEFAULT_GOAL := dagger
 .PHONY: dagger
 dagger: | $(DAGGER) .envrc
 	@printf "\nRun $(BOLD)dagger do$(NORMAL) to discover what actions are available\n\n"
+
+FLY_VERSION := 0.0.311
+FLY ?= $(LOCAL_BIN)/fly
+$(FLY): | $(CURL) $(LOCAL_BIN)
+	$(CURL) --fail --location https://fly.io/install.sh | FLYCTL_INSTALL=$(CURDIR) sh -ex
+	$(FLY) version | grep $(FLY_VERSION)
+.PHONY: fly
+fly: | $(FLY) .envrc
 
 env::
 	@echo 'export DAGGER_LOG_FORMAT=plain'
@@ -73,7 +83,7 @@ env::
 env::
 	@$(MAKE) --directory $(CURDIR)/../2021 --no-print-directory env-secrets
 
-secrets: .envrc
+secrets: .envrc | $(FLY)
 	$(MAKE) --directory $(CURDIR)/../2021 --no-print-directory env-secrets \
 	| awk '! /FLY|PG_DOTCOM/ { print $$2 }' \
-	| fly secrets import
+	| $(FLY) secrets import
