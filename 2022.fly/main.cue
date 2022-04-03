@@ -16,7 +16,11 @@ import (
 //       - put it in a script (workaround)
 //
 // - [ ] import PostgreSQL from last backup
-//   psql -h postgres-2022-03-12.internal -U postgres < ~/Downloads/prod-2021-04_changelog_2022-03-13T13.00.09Z.sql
+//   fly postgres connect postgres-2022-03-12
+//   drop database changelog with (force);
+//   create database changelog;
+//   ^d
+//   psql --host=postgres-2022-03-12.internal --username=postgres --dbname=changelog < ~/Downloads/prod-<TAB>
 //
 // - [ ] connect to PostgreSQL changelog instance
 //
