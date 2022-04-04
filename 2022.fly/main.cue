@@ -16,11 +16,13 @@ import (
 //       - put it in a script (workaround)
 //
 // - [ ] import PostgreSQL from last backup
+//   fly scale count 0
 //   fly postgres connect postgres-2022-03-12
 //   drop database changelog with (force);
 //   create database changelog;
 //   ^d
 //   psql --host=postgres-2022-03-12.internal --username=postgres --dbname=changelog < ~/Downloads/prod-<TAB>
+//   fly scale count 1
 //
 // - [ ] connect to PostgreSQL changelog instance
 //
