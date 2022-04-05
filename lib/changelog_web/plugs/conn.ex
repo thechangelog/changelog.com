@@ -11,19 +11,15 @@ defmodule ChangelogWeb.Plug.Conn do
   @doc """
   Extracts the user agent from a connection's headers
   """
-  def get_agent(conn) do
-    conn
-    |> get_req_header("user-agent")
-    |> List.first()
-  end
+  def get_agent(conn), do: get_header(conn, "user-agent")
 
   @doc """
-  Extracts the host from a connection's headers
+  Extracts the host from a connection's headers, starting with `forwarded-host`
   """
   def get_host(conn) do
-    conn
-    |> get_req_header("host")
-    |> List.first()
+    host = get_header(conn, "x-forwarded-host") || get_header(conn, "host")
+
+    host
     |> to_string()
     |> String.split(":")
     |> List.first()
@@ -36,8 +32,7 @@ defmodule ChangelogWeb.Plug.Conn do
   def get_local_referer(conn) do
     referer =
       conn
-      |> get_req_header("referer")
-      |> Enum.at(0, "")
+      |> get_header("referer", "")
       |> URI.parse()
 
     if referer.host == conn.host do
@@ -61,8 +56,17 @@ defmodule ChangelogWeb.Plug.Conn do
     end
   end
 
+  # returns first header for `key` or nil
+  defp get_header(conn, key) do
+    conn |> get_req_header(key) |> List.first()
+  end
+
+  defp get_header(conn, key, fallback) do
+    conn |> get_req_header(key) |> Enum.at(0, fallback)
+  end
+
   defp extract_referer(conn) do
-    if referer = conn |> get_req_header("referer") |> List.last() do
+    if referer = get_header(conn, "referer") do
       {:ok, referer}
     else
       {:error, "no referer header"}

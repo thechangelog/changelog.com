@@ -17,6 +17,12 @@ defmodule ChangelogWeb.ConnTest do
       assert Plug.Conn.get_host(conn) == ""
     end
 
+    test "host header and forwarded header", %{conn: conn} do
+      conn = put_req_header(conn, "x-forwarded-host", "better.com")
+      conn = put_req_header(conn, "host", "changelog.com")
+      assert Plug.Conn.get_host(conn) == "better.com"
+    end
+
     test "host with port", %{conn: conn} do
       conn = put_req_header(conn, "host", "changelog.com:443")
       assert Plug.Conn.get_host(conn) == "changelog.com"
