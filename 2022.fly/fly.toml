@@ -5,7 +5,7 @@ kill_signal = "SIGTERM"
 kill_timeout = 5
 
 [build]
-  image = "thechangelog/changelog.com:2022.fly"
+  image = "thechangelog/changelog.com:master"
 
 [deploy]
   strategy = "bluegreen"
