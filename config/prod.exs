@@ -46,6 +46,11 @@ config :changelog, Changelog.Repo,
   timeout: 60000,
   username: System.get_env("DB_USER", "postgres")
 
+if System.get_env("FLY_APP_NAME") do
+config :changelog, Changelog.Repo,
+  socket_options: [:inet6]
+end
+
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.api.createsend.com",

@@ -358,3 +358,9 @@ postgres-lke-secret: | lke-ctx $(LPASS)
 	  --from-literal=password=$(POSTGRES_PASSWORD) \
 	| $(KUBECTL) $(K_CMD) --filename -
 lke-changelog-secrets:: postgres-lke-secret
+
+FLY_ACCESS_TOKEN ?= "$$($(LPASS) show --notes Shared-changelog/secrets/FLY_ACCESS_TOKEN)"
+.PHONY: fly-token
+fly-token: $(LPASS)
+	@echo "export FLY_ACCESS_TOKEN=$(FLY_ACCESS_TOKEN)"
+env-secrets:: fly-token
