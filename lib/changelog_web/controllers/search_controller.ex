@@ -1,13 +1,14 @@
 defmodule ChangelogWeb.SearchController do
   use ChangelogWeb, :controller
 
-  alias Changelog.LocalSearch
+  alias Changelog.Search
+  # alias Changelog.LocalSearch
 
   require Logger
 
   def search(conn, params = %{"q" => query}) do
-    # page = Search.search_with_highlights(query, hitsPerPage: 30, page: page_param(params))
-    page = LocalSearch.search_with_highlights(query, hitsPerPage: 30, page: page_param(params))
+    page = Search.search_with_highlights(query, hitsPerPage: 30, page: page_param(params))
+    # page = LocalSearch.search_with_highlights(query, hitsPerPage: 30, page: page_param(params))
     render(conn, :search, items: page.entries, page: page, query: query)
   end
 
