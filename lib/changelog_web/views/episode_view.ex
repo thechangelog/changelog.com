@@ -45,13 +45,20 @@ defmodule ChangelogWeb.EpisodeView do
     |> UrlKit.sans_cache_buster()
   end
 
-  def plusplus_cta(%{plusplus_duration: ppd, audio_duration: ad}) when is_number(ppd) do
-    if ppd > ad do
-      # add 5 minutes to adjust for time saved from ad removal
-      bonus = (ppd - ad + (5 * 60)) |> TimeView.rounded_minutes()
+  def plusplus_cta(%{plusplus_duration: plusplus_duration, audio_duration: audio_duration, episode_sponsors: ads}) when is_number(plusplus_duration) do
+    ads_duration = length(ads) * 90 # average 90 seconds per ad
+    plusplus_diff = plusplus_duration - audio_duration
+
+    # There are two cases where we determine plusplus has bonus content:
+    # 1. plusplus is longer than public audio
+    # 2. plusplus is shorter than public audio BUT shorter than the ads
+    # The first case is obvious, the second case is sneakier.
+
+    if plusplus_duration > audio_duration || abs(plusplus_diff) < ads_duration do
+      bonus = (plusplus_diff + ads_duration) |> TimeView.rounded_minutes()
       "members will hear a bonus #{bonus} minutes at the end of this episode and zero ads."
     else
-      saved = (ad - ppd) |> TimeView.rounded_minutes()
+      saved = ads_duration |> TimeView.rounded_minutes()
       "members save #{saved} minutes on this episode because they made the ads disappear."
     end
   end
