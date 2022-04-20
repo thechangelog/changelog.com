@@ -21,7 +21,7 @@ defmodule ChangelogWeb.EpisodeView do
 
     content_tag(:span) do
       [
-        link("(#{SharedHelpers.pretty_downloads(episode)})",
+        link("🎧 #{SharedHelpers.pretty_downloads(episode)}",
           to: path,
           data: [turbolinks: false]
         )
@@ -29,7 +29,11 @@ defmodule ChangelogWeb.EpisodeView do
     end
   end
 
-  def admin_edit_link(_, _, _), do: nil
+  def admin_edit_link(_, _, episode) do
+    if episode.download_count > 0 do
+      content_tag(:span, "🎧 #{SharedHelpers.pretty_downloads(episode)}")
+    end
+  end
 
   def audio_filename(episode) do
     Files.Audio.filename(:original, {episode.audio_file.file_name, episode}) <> ".mp3"
