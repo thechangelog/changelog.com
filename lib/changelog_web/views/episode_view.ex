@@ -45,24 +45,47 @@ defmodule ChangelogWeb.EpisodeView do
     |> UrlKit.sans_cache_buster()
   end
 
-  def plusplus_cta(%{plusplus_duration: plusplus_duration, audio_duration: audio_duration, episode_sponsors: ads}) when is_number(plusplus_duration) do
-    ads_duration = length(ads) * 90 # average 90 seconds per ad
-    plusplus_diff = plusplus_duration - audio_duration
+  # simplest case, no ++
+  def plusplus_cta(%{plusplus_file: pp}) when is_nil(pp), do: fallback_cta()
 
-    # There are two cases where we determine plusplus has bonus content:
-    # 1. plusplus is longer than public audio
-    # 2. plusplus is shorter than public audio BUT shorter than the ads
-    # The first case is obvious, the second case is sneakier.
+  # yes ++ but no sponsors
+  def plusplus_cta(episode = %{episode_sponsors: []}) do
+    pp_diff = episode.plusplus_duration - episode.audio_duration
 
-    if plusplus_duration > audio_duration || abs(plusplus_diff) < ads_duration do
-      bonus = (plusplus_diff + ads_duration) |> TimeView.rounded_minutes()
-      "members will hear a bonus #{bonus} minutes at the end of this episode and zero ads."
+    # 10 second buffer before we consider it bonus
+    if pp_diff > 10 do
+      bonus_cta(pp_diff)
     else
-      saved = ads_duration |> TimeView.rounded_minutes()
-      "members save #{saved} minutes on this episode because they made the ads disappear."
+      fallback_cta()
     end
   end
-  def plusplus_cta(_else) do
+
+  def plusplus_cta(episode) do
+    # average 80 seconds per ad
+    ads_duration =  length(episode.episode_sponsors) * 80
+    pp_diff = episode.plusplus_duration - episode.audio_duration
+    # There are two cases where we determine plusplus has bonus content:
+    # 1. plusplus is at least 10 seconds longer longer than public audio
+    # 2. plusplus is shorter than public audio AND shorter than the ads
+    # The first case is obvious, the second case is sneakier.
+    if pp_diff > 10 || (pp_diff < 0 && abs(pp_diff) < ads_duration) do
+      bonus_cta(pp_diff + ads_duration)
+    else
+      saved_cta(abs(pp_diff))
+    end
+  end
+
+  defp bonus_cta(time) do
+    bonus_minutes = SharedHelpers.pluralize(TimeView.rounded_minutes(time), "minute", "minutes")
+    "members get a bonus #{bonus_minutes} at the end of this episode and zero ads."
+  end
+
+  defp saved_cta(time) do
+    saved_minutes = SharedHelpers.pluralize(TimeView.rounded_minutes(time), "minute", "minutes")
+    "members save #{saved_minutes} on this episode because they made the ads disappear."
+  end
+
+  defp fallback_cta do
     "members support our work, get closer to the metal, and make the ads disappear."
   end
 
