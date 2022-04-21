@@ -65,8 +65,8 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def plusplus_cta(episode) do
-    # average 80 seconds per ad
-    ads_duration =  length(episode.episode_sponsors) * 80
+    # average 60 seconds per ad
+    ads_duration =  length(episode.episode_sponsors) * 60
     pp_diff = episode.plusplus_duration - episode.audio_duration
     # There are two cases where we determine plusplus has bonus content:
     # 1. plusplus is at least 10 seconds longer longer than public audio
