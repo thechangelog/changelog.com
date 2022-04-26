@@ -14,6 +14,11 @@
           </a>
         </li>
         <li>
+          <a href="https://linkedin.com/company/changelog" title="Changelog on LinkedIn">
+            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-linkedin-black.svg"), "LinkedIn Icon", width: 20, height: 20) %>
+          </a>
+        </li>
+        <li>
           <a href="https://github.com/thechangelog" title="Changelog on GitHub">
             <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-github-black.svg"), "GitHub Icon", width: 20, height: 20) %>
           </a>
@@ -28,11 +33,6 @@
             <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-instagram-black.svg"), "Instagram Icon", width: 20, height: 20) %>
           </a>
         </li>
-        <li>
-          <a href="https://www.twitch.tv/changelog_" title="Changelog on Twitch">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-twitch-black.svg"), "Twitch Icon", width: 20, height: 20) %>
-          </a>
-        </li>
       </ul>
     </div>
   </nav>
@@ -43,6 +43,7 @@
         <li><%= link("Subscribe", to: Routes.person_path(@conn, :subscribe), title: "Subscribe to Changelog News") %></li>
         <li><%= link("Topics", to: Routes.topic_path(@conn, :index), title: "View all topics") %></li>
         <li><%= link("Sources", to: Routes.news_source_path(@conn, :index), title: "View all sources") %></li>
+        <li><%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %></li>
         <li>---</li>
         <li><%= link("Changelog Weekly", to: Routes.page_path(@conn, :weekly), title: "Changelog Weekly") %></li>
         <li><%= link("Changelog Nightly", to: Routes.page_path(@conn, :nightly), title: "Changelog Nightly") %></li>
@@ -67,11 +68,16 @@
     <div class="footer-nav-list">
       <h4>Community</h4>
       <ul>
+        <li><%= link("Merch Shop", to: "https://merch.changelog.com", title: "Changelog's Merch Shop") %></li>
         <li><%= link("Join the Community", to: Routes.page_path(@conn, :community), title: "Join the community") %></li>
-        <li><%= link("Listen Live", to: Routes.live_path(@conn, :index), title: "Listen live") %></li>
         <li><%= link("Code of Conduct", to: Routes.page_path(@conn, :coc), title: "Read the code of conduct") %></li>
         <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
-        <li><%= link("Merch Shop", to: "https://merch.changelog.com", title: "Changelog's Merch Shop") %></li>
+        <li>---</li>
+        <li><%= link("On Twitter", to: "https://twitter.com/changelog", title: "Changelog on Twitter") %></li>
+        <li><%= link("On LinkedIn", to: "https://linkedin.com/company/changelog", title: "Changelog on LinkedIn") %></li>
+        <li><%= link("On GitHub", to: "https://github.com/thechangelog", title: "Changelog on GitHub") %></li>
+        <li><%= link("On YouTube", to: "https://www.youtube.com/changelog", title: "Changelog on YouTube") %></li>
+        <li><%= link("On Instagram", to: "https://www.instagram.com/changelog_", title: "Changelog on Instagram") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
@@ -80,7 +86,6 @@
         <li><%= link("Ten Years", to: Routes.page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %></li>
         <li><%= link("Sponsor", to: Routes.page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
         <li><%= link("Search", to: Routes.search_path(@conn, :search), title: "Search Changelog") %></li>
-        <li><%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog’s posts") %></li>
         <li><a href="https://github.com/thechangelog/changelog.com" title="Changelog.com source code">View Source</a></li>
         <li><a href="https://github.com/thechangelog/changelog.com/issues" title="Changelog.com issue tracker">Report Issues</a></li>
         <li><a href="/terms" title="Terms & Conditions">Terms &amp; Conditions</a></li>
@@ -107,12 +112,6 @@
         <a href="https://launchdarkly.com/?utm_source=changelog" title="Feature flags by LaunchDarkly">
           <p>Feature flags</p>
           <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-launchdarkly.png"), "LaunchDarkly", width: 200, height: 100) %>
-        </a>
-      </div>
-      <div class="footer-sponsors-item">
-        <a href="https://grafana.com/products/cloud/?utm_source=changelog" title="Observability by Grafana Cloud">
-          <p>Observability</p>
-          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-grafana-cloud.png"), "Grafana Cloud", width: 200, height: 100) %>
         </a>
       </div>
     </div>
