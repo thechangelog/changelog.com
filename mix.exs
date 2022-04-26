@@ -70,6 +70,7 @@ defmodule Changelog.Mixfile do
       # Explicit require of 1.2 forces ueberauth to use newer version that fixes :crypto.hmac/3 undefined error on OTP 24
       # see also https://github.com/ueberauth/ueberauth/issues/143
       {:oauther, "~> 1.2"},
+      {:ueberauth, github: "thechangelog/ueberauth", branch: "forwarded-host", override: true},
       {:ueberauth_github, "~> 0.4"},
       {:ueberauth_twitter, "~> 0.4"},
       {:ex_machina, "~> 2.0"},
