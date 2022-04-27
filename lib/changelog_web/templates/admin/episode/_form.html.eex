@@ -162,16 +162,16 @@
             <%= textarea(i, :description, rows: 1) %>
           </div>
 
-          <div class="two fields">
+          <div class="fields">
             <div class="field">
               <label>Starts At</label>
-              <%= text_input(i, :starts_at) %>
+              <%= text_input(i, :starts_at, class: "js-time-in-seconds") %>
               <%= AdminHelpers.error_message(i, :starts_at) %>
             </div>
 
             <div class="field">
               <label>Ends At</label>
-              <%= text_input(i, :ends_at) %>
+              <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
               <%= AdminHelpers.error_message(i, :ends_at) %>
             </div>
           </div>

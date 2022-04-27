@@ -4,6 +4,7 @@ import SearchWidget from "components/searchWidget";
 import FilterWidget from "components/filterWidget";
 import CalendarField from "components/calendarField";
 import Modal from "components/modal";
+import parseTime from "../../shared/parseTime";
 
 export default class EpisodeView {
   constructor() {
@@ -148,6 +149,15 @@ export default class EpisodeView {
         youTubeInputContainer.removeClass("hidden")
       } else {
         youTubeInputContainer.addClass("hidden")
+      }
+    })
+
+    $("form").on("change", ".js-time-in-seconds", function(event) {
+      let currentTime = $(event.target).val();
+      let newTime = parseTime(currentTime);
+
+      if (currentTime != newTime) {
+        $(event.target).val(newTime);
       }
     })
   }

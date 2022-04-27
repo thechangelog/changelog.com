@@ -39,11 +39,12 @@
     >{{extras.description}}</textarea>
   </div>
 
-  <div class="two fields">
+  <div class="fields">
     <div class="field">
       <label>Starts At</label>
       <input
         name="{{parentType}}[{{attrName}}][{{index}}][starts_at]"
+        class="js-time-in-seconds"
       >
     </div>
 
@@ -51,6 +52,7 @@
       <label>Ends At</label>
       <input
         name="{{parentType}}[{{attrName}}][{{index}}][ends_at]"
+        class="js-time-in-seconds"
       >
     </div>
   </div>
