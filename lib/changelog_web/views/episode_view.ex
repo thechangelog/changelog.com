@@ -1,7 +1,17 @@
 defmodule ChangelogWeb.EpisodeView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, Files, Github, HtmlKit, ListKit, NewsItem, Subscription, UrlKit}
+  alias Changelog.{
+    Episode,
+    EpisodeSponsor,
+    Files,
+    Github,
+    HtmlKit,
+    ListKit,
+    NewsItem,
+    Subscription,
+    UrlKit
+  }
 
   alias ChangelogWeb.{
     Endpoint,
@@ -56,8 +66,8 @@ defmodule ChangelogWeb.EpisodeView do
   def plusplus_cta(episode = %{episode_sponsors: []}) do
     pp_diff = episode.plusplus_duration - episode.audio_duration
 
-    # 10 second buffer before we consider it bonus
-    if pp_diff > 10 do
+    # 5 second buffer before we consider it bonus
+    if pp_diff > 5 do
       bonus_cta(pp_diff)
     else
       fallback_cta()
@@ -65,14 +75,13 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def plusplus_cta(episode) do
-    # average 60 seconds per ad
-    ads_duration =  length(episode.episode_sponsors) * 60
+    ads_duration = EpisodeSponsor.duration(episode.episode_sponsors)
     pp_diff = episode.plusplus_duration - episode.audio_duration
     # There are two cases where we determine plusplus has bonus content:
-    # 1. plusplus is at least 10 seconds longer longer than public audio
+    # 1. plusplus is at least 5 seconds longer than public audio
     # 2. plusplus is shorter than public audio AND shorter than the ads
     # The first case is obvious, the second case is sneakier.
-    if pp_diff > 10 || (pp_diff < 0 && abs(pp_diff) < ads_duration) do
+    if pp_diff >= 5 || (pp_diff < 5 && abs(pp_diff) < ads_duration) do
       bonus_cta(pp_diff + ads_duration)
     else
       saved_cta(abs(pp_diff))
