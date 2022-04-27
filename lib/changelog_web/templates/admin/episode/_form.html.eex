@@ -161,7 +161,23 @@
             <label>Description</label>
             <%= textarea(i, :description, rows: 1) %>
           </div>
+
+          <div class="two fields">
+            <div class="field">
+              <label>Starts At</label>
+              <%= text_input(i, :starts_at) %>
+              <%= AdminHelpers.error_message(i, :starts_at) %>
+            </div>
+
+            <div class="field">
+              <label>Ends At</label>
+              <%= text_input(i, :ends_at) %>
+              <%= AdminHelpers.error_message(i, :ends_at) %>
+            </div>
+          </div>
         </div>
+
+        <div class="ui divider"></div>
       <% end %>
     </div>
 

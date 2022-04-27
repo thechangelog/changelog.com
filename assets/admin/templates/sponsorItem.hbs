@@ -39,5 +39,21 @@
     >{{extras.description}}</textarea>
   </div>
 
-  <div class="ui divider"></div>
+  <div class="two fields">
+    <div class="field">
+      <label>Starts At</label>
+      <input
+        name="{{parentType}}[{{attrName}}][{{index}}][starts_at]"
+      >
+    </div>
+
+    <div class="field">
+      <label>Ends At</label>
+      <input
+        name="{{parentType}}[{{attrName}}][{{index}}][ends_at]"
+      >
+    </div>
+  </div>
 </div>
+
+<div class="ui divider"></div>
