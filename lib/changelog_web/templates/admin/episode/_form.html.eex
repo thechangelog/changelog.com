@@ -132,6 +132,15 @@
           <%= hidden_input(i, :position, class: "js-position") %>
 
           <div class="right floated content">
+          <%= if i.data.starts_at do %>
+            <div
+              class="ui tiny icon clipboard button"
+              data-clipboard-text="<%= Routes.episode_url(@conn, :show, @podcast.slug, @episode.slug) %>#t=<%= round(i.data.starts_at) %>"
+              title="Copy URL with timestamp">
+              <i class="clipboard icon"></i>
+            </div>
+          <% end %>
+
             <div class="ui tiny icon button js-remove">
               <i class="remove icon"></i>
               <%= hidden_input(i, :delete) %>

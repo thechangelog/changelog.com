@@ -121,13 +121,21 @@ export default class EpisodeView {
   }
 
   new() {
-    new SearchWidget("person", "episode", "episode_hosts");
-    new SearchWidget("person", "episode", "episode_guests");
-    new SearchWidget("sponsor", "episode", "episode_sponsors");
-    new SearchWidget("topic", "episode", "episode_topics");
-    new CalendarField(".ui.calendar");
-    new Modal(".js-title-guide-modal", ".title-guide.modal");
-    new Modal(".js-subtitle-guide-modal", ".subtitle-guide.modal");
+    new SearchWidget("person", "episode", "episode_hosts")
+    new SearchWidget("person", "episode", "episode_guests")
+    new SearchWidget("sponsor", "episode", "episode_sponsors")
+    new SearchWidget("topic", "episode", "episode_topics")
+    new CalendarField(".ui.calendar")
+    new Modal(".js-title-guide-modal", ".title-guide.modal")
+    new Modal(".js-subtitle-guide-modal", ".subtitle-guide.modal")
+
+    let clipboard = new Clipboard(".clipboard.button")
+
+    clipboard.on("success", function(e) {
+      $(e.trigger).popup({variation: "inverted", content: "Copied!"}).popup("show")
+    })
+
+    clipboard.on("error", function(e) { console.log(e) })
 
     let requestedInput = $("input[name='episode[requested]']")
     let requestSelect = $("select[name='episode[request_id]']")
