@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/wavefile"></script>
+
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
   <div class="two fields">
     <div class="twelve wide field required <%= AdminHelpers.error_class(f, :title) %>">
@@ -252,7 +254,7 @@
 
   <div class="field">
     <%= label(f, :audio_file) do %>
-      Audio File <%= AdminHelpers.help_icon("Upload after Slug, Publish Time, and Title are finalized so correct ID3 tags get written.") %>
+      Audio MP3 File <%= AdminHelpers.help_icon("Upload after Slug, Publish Time, and Title are finalized so correct ID3 tags get written.") %>
     <% end %>
 
     <%= if f.data.audio_file  do %>
@@ -273,6 +275,14 @@
     <% end %>
 
     <%= file_input(f, :audio_file) %>
+  </div>
+
+  <div class="field">
+    <label>Audio Wav File <%= AdminHelpers.help_icon("This does not get uploaded. We just extract marker metadata from it such as sponsor timestamps.") %></label>
+
+    <div class="ui padded center aligned segment js-wav-file">
+      <p>Drop a wav file that has marker metadata here</p>
+    </div>
   </div>
 
   <div class="field">

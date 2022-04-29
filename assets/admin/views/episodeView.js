@@ -161,11 +161,70 @@ export default class EpisodeView {
     })
 
     $("form").on("change", ".js-time-in-seconds", function(event) {
-      let currentTime = $(event.target).val();
-      let newTime = parseTime(currentTime);
+      let currentTime = $(event.target).val()
+      let newTime = parseTime(currentTime)
 
       if (currentTime != newTime) {
-        $(event.target).val(newTime);
+        $(event.target).val(newTime)
+      }
+    })
+
+    async function getAsByteArray(file) {
+      return new Uint8Array(await readFile(file))
+    }
+
+    function readFile(file) {
+      return new Promise((resolve, reject) => {
+        // Create file reader
+        let reader = new FileReader()
+
+        // Register event listeners
+        reader.addEventListener("loadend", e => resolve(e.target.result))
+        reader.addEventListener("error", reject)
+
+        // Read file
+        reader.readAsArrayBuffer(file)
+      })
+    }
+
+    async function dropHandler(event) {
+
+    }
+
+    $(".js-wav-file")
+    .on("dragover", function(event) {
+      event.preventDefault()
+      $(this).addClass("secondary")
+    })
+    .on("dragleave", function(event) {
+      $(this).removeClass("secondary")
+      event.preventDefault()
+    })
+    .on("drop", function(event) {
+      event.preventDefault()
+      $(this).removeClass("secondary")
+
+      let file = event.originalEvent.dataTransfer.items[0]
+
+      if (file.type == "audio/wav") {
+        $(this).addClass("loading")
+        let byteFile = await getAsByteArray(file.getAsFile())
+
+        let wav = new wavefile.WaveFile()
+
+        wav.fromBuffer(byteFile);
+
+        let cues = wav.listCuePoints()
+
+        cues.forEach((cue) => {
+          let name = cue.label
+          let start = cue.position / 1000;
+          let end = cue.end / 1000;
+
+          console.log({name: cue.label, start: (cue.position / 1000), end: (cue.end / 1000)})
+        })
+
+        $(this).removeClass("loading")
       }
     })
   }

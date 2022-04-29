@@ -72,6 +72,12 @@
             <td>No sponsors for this episode?</td>
           </tr>
         <% end %>
+        <%= if Enum.any?(@changeset.data.episode_sponsors, fn(s) -> is_nil(s.starts_at) || is_nil(s.ends_at) end) do %>
+          <tr>
+            <td>Data Note ⚠️</td>
+            <td>Some sponsors are missing start/end timestamp info</td>
+          </tr>
+        <% end %>
         <%= if !Enum.any?(@changeset.data.episode_topics) do %>
           <tr>
             <td>Data Note ⚠️</td>
