@@ -1,7 +1,8 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
     <%= link @podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
-    &raquo; Edit
+    <%= render(PodcastView, "_dropdown_list.html", assigns) %>
+    Edit
   <%= if @episode.published do %>
     <%= link("(View)",
       to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
