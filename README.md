@@ -68,6 +68,15 @@ changelog_app_1    | Webpack is watching the files…
 You can now access a dev copy of changelog.com locally, at `http://localhost:4000` or at `https://localhost:4001` if you
 would like to access the HTTPS version.
 
+If you are using Google Chrome as your browser and notice `ERR_CERT_AUTHORITY_INVALID` errors in your console, you will need to enable Chrome's `allow-insecure-localhost` flag, which you can do by opening `chrome://flags/#allow-insecure-localhost`. There will be a log in your terminal warning about this, but it quickly gets hidden by other logs:
+
+```
+dev_docker-changelog_app-1  | * creating priv/cert/selfsigned_key.pem
+...
+dev_docker-changelog_app-1  | NOTE: when using Google Chrome, open chrome://flags/#allow-insecure-localhost
+dev_docker-changelog_app-1  | to enable the use of self-signed certificates on `localhost`.
+```
+
 When you want to stop all Docker containers, press both `CTRL` and `c` keys at the same time (`Ctrl+C`).
 
 Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
