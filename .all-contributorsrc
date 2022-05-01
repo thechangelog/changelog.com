@@ -376,6 +376,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Nezteb",
+      "name": "Noah",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3588798?v=4",
+      "profile": "http://nezteb.net",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "repoType": "github",

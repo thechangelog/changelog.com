@@ -203,6 +203,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://github.com/d-m-u"><img src="https://avatars.githubusercontent.com/u/16326669?v=4?s=100" width="100px;" alt=""/><br /><sub><b>d-m-u</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/issues?q=author%3Ad-m-u" title="Bug reports">🐛</a></td>
     <td align="center"><a href="http://sorentwo.com"><img src="https://avatars.githubusercontent.com/u/270831?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Parker Selbert</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=sorentwo" title="Code">💻</a></td>
     <td align="center"><a href="http://hailelagi.com"><img src="https://avatars.githubusercontent.com/u/52631736?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Haile Lagi</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=hailelagi" title="Code">💻</a></td>
+    <td align="center"><a href="http://nezteb.net"><img src="https://avatars.githubusercontent.com/u/3588798?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Noah</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=Nezteb" title="Documentation">📖</a></td>
   </tr>
 </table>
 
