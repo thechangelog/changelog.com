@@ -66,8 +66,8 @@ defmodule ChangelogWeb.EpisodeView do
   def plusplus_cta(episode = %{episode_sponsors: []}) do
     pp_diff = episode.plusplus_duration - episode.audio_duration
 
-    # 5 second buffer before we consider it bonus
-    if pp_diff > 5 do
+    # we only care if the bonus is a minute or longer
+    if pp_diff > 60 do
       bonus_cta(pp_diff)
     else
       fallback_cta()
@@ -75,16 +75,16 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def plusplus_cta(episode) do
-    ads_duration = EpisodeSponsor.duration(episode.episode_sponsors)
     pp_diff = episode.plusplus_duration - episode.audio_duration
-    # There are two cases where we determine plusplus has bonus content:
-    # 1. plusplus is at least 5 seconds longer than public audio
-    # 2. plusplus is shorter than public audio AND shorter than the ads
-    # The first case is obvious, the second case is sneakier.
-    if pp_diff >= 5 || (pp_diff < 5 && abs(pp_diff) < ads_duration) do
-      bonus_cta(pp_diff + ads_duration)
-    else
-      saved_cta(abs(pp_diff))
+    ads_duration = EpisodeSponsor.duration(episode.episode_sponsors)
+    bonus_duration = pp_diff + ads_duration
+
+    cond do
+      # bonus of a minute or longer
+      bonus_duration > 60 -> bonus_cta(bonus_duration)
+      # nothing to talk about if it's less than a minute saved
+      pp_diff < -60 -> saved_cta(abs(pp_diff))
+      true -> fallback_cta()
     end
   end
 
