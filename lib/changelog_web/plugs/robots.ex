@@ -9,11 +9,10 @@ defmodule ChangelogWeb.Plug.Robots do
   def init(opts), do: opts
 
   def call(conn = %{request_path: "/robots.txt"}, _opts) do
-    response = response_for_host("changelog.com")
-    # response =
-    #   conn
-    #   |> get_host()
-    #   |> response_for_host()
+    response =
+      conn
+      |> get_host()
+      |> response_for_host()
 
     conn
     |> send_resp(200, response)
