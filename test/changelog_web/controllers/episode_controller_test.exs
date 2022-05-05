@@ -2,6 +2,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
   use ChangelogWeb.ConnCase
 
   alias Changelog.{NewsItem, Subscription}
+  alias ChangelogWeb.TimeView
 
   @transcript [%{"title" => "Host", "body" => "Welcome!"}, %{"title" => "Guest", "body" => "Thanks!"}]
 
@@ -140,13 +141,71 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       assert conn.resp_body =~ "Thanks!"
     end
 
-    test "when episode has no transcript", %{conn: conn} do
+    test "404 when episode has no transcript", %{conn: conn} do
       p = insert(:podcast)
       e = insert(:published_episode, podcast: p)
 
       assert_raise Ecto.NoResultsError, fn ->
         get(conn, Routes.episode_path(conn, :transcript, p.slug, e.slug))
       end
+    end
+  end
+
+  describe "live" do
+    test "404 when episode is not recorded live", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:episode, podcast: p, recorded_live: false)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+      end
+    end
+
+    test "404 when episode is recorded live but no youtube id", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:episode, podcast: p, recorded_live: true)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+      end
+    end
+
+    test "redirects when episode is recorded live and has youtube id", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:episode, podcast: p, recorded_live: true, youtube_id: "8675309")
+
+      conn = get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+
+      assert_redirected_to(conn, "https://youtu.be/8675309")
+    end
+  end
+
+  describe "time" do
+    test "404 when episode is not recorded live", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:episode, podcast: p, recorded_live: false)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        get(conn, Routes.episode_path(conn, :time, p.slug, e.slug))
+      end
+    end
+
+    test "404 when episode is recorded live but no recorded_at", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:episode, podcast: p, recorded_at: nil)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+      end
+    end
+
+    test "redirects when episode is recorded live and has recorded_at", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:episode, podcast: p, recorded_live: true, recorded_at: hours_from_now(5))
+
+      conn = get(conn, Routes.episode_path(conn, :time, p.slug, e.slug))
+
+      assert_redirected_to(conn, TimeView.time_is_url(e.recorded_at))
     end
   end
 end

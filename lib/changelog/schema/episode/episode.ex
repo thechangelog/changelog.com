@@ -105,6 +105,12 @@ defmodule Changelog.Episode do
   def recorded_live(query \\ __MODULE__),
     do: from(q in query, where: q.recorded_live == true)
 
+  def recorded_live_at_known_time(query \\ __MODULE__),
+    do: from(q in query, where: q.recorded_live == true, where: not is_nil(q.recorded_at))
+
+  def with_youtube_id(query \\ __MODULE__),
+    do: from(q in query, where: not is_nil(q.youtube_id))
+
   def scheduled(query \\ __MODULE__),
     do: from(q in query, where: q.published, where: q.published_at > ^Timex.now())
 
