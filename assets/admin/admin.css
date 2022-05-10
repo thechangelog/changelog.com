@@ -79,7 +79,7 @@ input[type=file] {
   text-align: right;
 }
 
-.hidden.field, tr.hidden {
+.hidden {
   display: none;
 }
 

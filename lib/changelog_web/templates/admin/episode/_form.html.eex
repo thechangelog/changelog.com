@@ -280,8 +280,23 @@
   <div class="field">
     <label>Audio Wav File <%= AdminHelpers.help_icon("This does not get uploaded. We just extract marker metadata from it such as sponsor timestamps.") %></label>
 
-    <div class="ui padded center aligned segment js-wav-file">
-      <p>Drop a wav file that has marker metadata here</p>
+    <div class="ui padded segment js-wav-file">
+      <div class="ui icon message">
+          <i class="file audio icon"></i>
+          <div class="content">
+            <div class="header">
+              Drop a markered .wav file here
+            </div>
+            <p>We'll use it to auto-fill sponsorship start/end times.</p>
+          </div>
+      </div>
+
+      <table class="ui compact celled table hidden">
+        <thead>
+          <tr><th>Sponsor</th><th>Starts At</th><th>Ends At</th><th>Status</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
 

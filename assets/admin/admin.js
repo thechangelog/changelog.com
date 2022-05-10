@@ -1,4 +1,5 @@
 import "phoenix_html";
+import "regenerator-runtime/runtime";
 
 import benefitView from "views/benefitView";
 import episodeView from "views/episodeView";

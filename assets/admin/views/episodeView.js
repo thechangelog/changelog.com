@@ -187,45 +187,57 @@ export default class EpisodeView {
       })
     }
 
-    async function dropHandler(event) {
+    let wavFileDropZone = $(".js-wav-file")
+    let episodeSponsors = $(".js-episode_sponsors")
 
-    }
-
-    $(".js-wav-file")
-    .on("dragover", function(event) {
+    wavFileDropZone.on("dragover", function(event) {
       event.preventDefault()
-      $(this).addClass("secondary")
+      wavFileDropZone.addClass("secondary")
     })
     .on("dragleave", function(event) {
-      $(this).removeClass("secondary")
+      wavFileDropZone.removeClass("secondary")
       event.preventDefault()
     })
-    .on("drop", function(event) {
+    .on("drop", async function(event) {
       event.preventDefault()
-      $(this).removeClass("secondary")
 
       let file = event.originalEvent.dataTransfer.items[0]
 
+      wavFileDropZone.removeClass("secondary").find("tbody").html("")
+
       if (file.type == "audio/wav") {
-        $(this).addClass("loading")
+        wavFileDropZone.addClass("loading")
+
         let byteFile = await getAsByteArray(file.getAsFile())
 
         let wav = new wavefile.WaveFile()
 
-        wav.fromBuffer(byteFile);
+        wav.fromBuffer(byteFile)
 
-        let cues = wav.listCuePoints()
+        wavFileDropZone.find("table").removeClass("hidden")
+        wav.listCuePoints().forEach((cue) => {
+          let sponsorNameMatch = cue.label.match(/Sponsor:\s(.*)/)
 
-        cues.forEach((cue) => {
-          let name = cue.label
-          let start = cue.position / 1000;
-          let end = cue.end / 1000;
+          if (sponsorNameMatch) {
+            let name = sponsorNameMatch[1]
+            let start = Math.round((cue.position / 1000) * 1000) / 1000
+            let end = Math.round((cue.end / 1000) * 1000) / 1000
+            let td = `<td>${name}</td><td>${(start)}</td><td>${end}</td>`
 
-          console.log({name: cue.label, start: (cue.position / 1000), end: (cue.end / 1000)})
+            let sponsorItem = episodeSponsors.find(`input[value=${name}]`).parents(".item")
+
+            if (sponsorItem.length) {
+              sponsorItem.find("input[name*=starts_at]").val(start)
+              sponsorItem.find("input[name*=ends_at]").val(end)
+              wavFileDropZone.find("tbody").append(`<tr>${td}<td>✅ Filled</td></tr>`)
+            } else {
+              wavFileDropZone.find("tbody").append(`<tr>${td}<td>❌ Not found</td></tr>`)
+            }
+          }
         })
-
-        $(this).removeClass("loading")
       }
+
+      wavFileDropZone.removeClass("loading")
     })
   }
 
