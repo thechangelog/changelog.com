@@ -248,9 +248,9 @@ bi: backups-image
 build-backups-image: $(DOCKER)
 	@cd docker && \
 	$(DOCKER) build --progress plain \
-	  --tag thechangelog/backups:$(BUILD_VERSION) \
-	  --tag thechangelog/backups:$(STACK_VERSION) \
-	  --file Dockerfile.backups .
+		--tag thechangelog/backups:$(BUILD_VERSION) \
+		--tag thechangelog/backups:$(STACK_VERSION) \
+		--file backups.Dockerfile .
 .PHONY: bbi
 bbi: build-backups-image
 
@@ -270,7 +270,7 @@ build-runtime-image: $(DOCKER)
 		--tag thechangelog/runtime:$(BUILD_VERSION) \
 		--tag thechangelog/runtime:$(STACK_VERSION) \
 		--tag thechangelog/runtime:latest \
-		--file docker/Dockerfile.runtime .
+		--file docker/runtime.Dockerfile .
 .PHONY: bri
 bri: build-runtime-image
 
@@ -279,6 +279,19 @@ publish-runtime-image: $(DOCKER)
 	$(DOCKER) push thechangelog/runtime:$(BUILD_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:$(STACK_VERSION) && \
 	$(DOCKER) push thechangelog/runtime:latest
+
+.PHONY: howto-upgrade-elixir
+howto-upgrade-elixir:
+	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
+	@printf "Pick an image from $(BOLD)$(BLUE)https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-focal$(NORMAL)\n\n"
+	@printf "1/7. Update $(BOLD)docker/runtime.Dockerfile$(NORMAL) to use an image from the URL above, then run $(BOLD)make runtime-image$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "2/7. Update $(BOLD)docker/production.Dockerfile$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "3/7. Update $(BOLD).circleci/config.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "4/7. Update $(BOLD)2021/dagger/ci/ci.cue$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "5/7. Update $(BOLD)dev_docker/changelog.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
+	@printf "6/7. Commit and push everything\n" ; read -rp " $(DONE)" -n 1
+	@printf "7/7. Watch the pipeline succeed and publish an app container image with the updated version of Elixir $(BOLD)$(BLUE)https://app.circleci.com/pipelines/github/thechangelog/changelog.com$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
+	@printf "\nYou may want to update the elixir version in $(BOLD)mix.exs$(NORMAL)\n"
 
 APP_VERSION ?= $(shell date -u +'%y.%-m.%-d')
 export APP_VERSION

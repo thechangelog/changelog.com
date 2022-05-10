@@ -11,7 +11,7 @@ prod_dockerfile:    dagger.#Input & {string}
 docker_host:        dagger.#Input & {string}
 dockerhub_username: dagger.#Input & {string}
 dockerhub_password: dagger.#Input & {dagger.#Secret}
-// ⚠️  Keep this in sync with ../docker/Dockerfile.production
+// ⚠️  Keep this in sync with ../docker/production.Dockerfile
 runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2022-09-21T23.19.21Z"}
 build_version:     dagger.#Input & {string}
 git_branch:        dagger.#Input & {string | *"dev"}
