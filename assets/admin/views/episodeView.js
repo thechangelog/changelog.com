@@ -205,7 +205,7 @@ export default class EpisodeView {
 
       wavFileDropZone.removeClass("secondary").find("tbody").html("")
 
-      if (file.type == "audio/wav") {
+      if (file.type.match(/audio\/(x-)?wav/)) {
         wavFileDropZone.addClass("loading")
 
         let byteFile = await getAsByteArray(file.getAsFile())
