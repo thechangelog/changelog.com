@@ -188,7 +188,7 @@ export default class EpisodeView {
     }
 
     let wavFileDropZone = $(".js-wav-file")
-    let episodeSponsors = $(".js-episode_sponsors")
+    let episodeSponsors = $(".js-episode_sponsors").children(".item")
 
     wavFileDropZone.on("dragover", function(event) {
       event.preventDefault()
@@ -215,26 +215,33 @@ export default class EpisodeView {
         wav.fromBuffer(byteFile)
 
         wavFileDropZone.find("table").removeClass("hidden")
-        wav.listCuePoints().forEach((cue) => {
-          let sponsorNameMatch = cue.label.match(/Sponsor:\s(.*)/)
 
-          if (sponsorNameMatch) {
-            let name = sponsorNameMatch[1]
-            let start = Math.round((cue.position / 1000) * 1000) / 1000
-            let end = Math.round((cue.end / 1000) * 1000) / 1000
+        let markers = wav.listCuePoints()
+        let sponsors = markers.filter(m => m.label.match(/Sponsor:\s/))
+
+        if (sponsors.length == episodeSponsors.length) {
+          sponsors.forEach((marker, index) => {
+            let name = marker.label
+            let start = Math.round((marker.position / 1000) * 1000) / 1000
+            let end = Math.round((marker.end / 1000) * 1000) / 1000
             let td = `<td>${name}</td><td>${(start)}</td><td>${end}</td>`
 
-            let sponsorItem = episodeSponsors.find(`input[value=${name}]`).parents(".item")
+            let sponsorItem = $(episodeSponsors[index])
 
             if (sponsorItem.length) {
+              let sponsorTitle = sponsorItem.find("input[name*=title]").val()
+              let status = name.match(new RegExp(sponsorTitle, "i")) ? "✅" : "❌"
+
               sponsorItem.find("input[name*=starts_at]").val(start)
               sponsorItem.find("input[name*=ends_at]").val(end)
-              wavFileDropZone.find("tbody").append(`<tr>${td}<td>✅ Filled</td></tr>`)
-            } else {
-              wavFileDropZone.find("tbody").append(`<tr>${td}<td>❌ Not found</td></tr>`)
+
+              wavFileDropZone.find("tbody").append(`<tr>${td}<td>${status}</td></tr>`)
             }
-          }
-        })
+          })
+        } else {
+          wavFileDropZone.find("table").addClass("hidden")
+          alert(`Episode has ${episodeSponsors.length} sponsors but wav file has ${sponsors.length}`);
+        }
       }
 
       wavFileDropZone.removeClass("loading")

@@ -293,7 +293,7 @@
 
       <table class="ui compact celled table hidden">
         <thead>
-          <tr><th>Sponsor</th><th>Starts At</th><th>Ends At</th><th>Status</th></tr>
+          <tr><th>Sponsor</th><th>Starts At</th><th>Ends At</th><th>Match</th></tr>
         </thead>
         <tbody></tbody>
       </table>
