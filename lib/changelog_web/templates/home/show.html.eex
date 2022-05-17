@@ -7,7 +7,7 @@
 
     <div class="account_ctas-item-info">
       <h3>Join Changelog++</h3>
-      <p>The <em>best way</em> to directly support the podcasts, news, videos, & other awesome stuff we create. We'll take you <em>closer to the metal</em> with no ads, extended episodes, outtakes, bonus content, a deep discount in our merch store (soon), and more to come.</p>
+      <p>The <strong>best way</strong> to directly support our work! Save time by making <strong>the ads disappear</strong>, get <strong>bonus content</strong> like extended episodes, <strong>level-up</strong> the bitrate on our mp3s, and more!</p>
 
       <div class="account_ctas-item-info-buttons">
       <%= link("Check it Out", to: "https://changelog.com/++", target: "_blank") %>
@@ -34,7 +34,7 @@
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">
         <h3>Changelog Weekly</h3>
-        <p>Our editorialized take covering this week in dev culture, software development, open source, building startups, creative work, and the people involved.</p>
+        <p>Our editorialized coverage of this week in dev culture, software development, open source, building startups, creative work, and the people involved.</p>
         <p class="account_subscriptions-item-info-meta">1 email per week — Delivered on Sundays - <%= link "Archive", to: Routes.page_path(@conn, :weekly_archive) %></p>
       </div>
       <div class="account_subscriptions-item-button">
@@ -56,7 +56,7 @@
         <a id="podcasts" class="anchor"></a>
         <h3>Podcast emails</h3>
         <p>Get notified as soon as an episode is published. Subscribe to as many as you’d like.</p>
-        <p class="account_subscriptions-item-info-meta">Delivered each time a new episode is published</p>
+        <p class="account_subscriptions-item-info-meta">Delivered immediately each time a new episode is published</p>
       </div>
       <% podcasts_with_subs = Enum.map(@podcasts, fn(p) -> Map.put(p, :is_subscribed, PersonView.is_subscribed(@current_user, p)) end) %>
       <div class="account_subscriptions-item-button">
