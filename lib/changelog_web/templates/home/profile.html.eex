@@ -90,7 +90,7 @@
         <label>Bio</label>
         <%= textarea(f, :bio) %>
         <%= PublicHelpers.error_message(f, :bio) %>
-        <p class="form-element-note">Try some Markdown. It *may* work.</p>
+        <p class="form-element-note">Markdown FTW</p>
       </div>
     </div>
 
@@ -109,7 +109,7 @@
           <span class="form-checklist-item-text">I want a public profile page.</span>
         </label>
 
-        <p class="form-element-note">You have to publish something first. <%= link("Submit", to: Routes.news_item_path(@conn, :new)) %> some news or <%= link("request", to: Routes.episode_request_path(@conn, :new)) %> an episode to get started.</p>
+        <p class="form-element-note">We have to approve something you publish first. <%= link("Submit", to: Routes.news_item_path(@conn, :new)) %> some news or <%= link("request", to: Routes.episode_request_path(@conn, :new)) %> an episode to get started.</p>
       <% end %>
       </div>
     </div>
