@@ -34,7 +34,7 @@ defmodule Changelog.Buffer.ContentTest do
       insert(:episode_guest, episode: ep, person: g2, position: 2)
       insert(:episode_host, episode: ep, person: h1)
       item = ep |> episode_news_item() |> insert
-      assert Content.episode_text(item) =~ "@janedoe John Doe"
+      assert Content.episode_text(item) =~ "@janedoe & John Doe"
       assert Content.episode_text(item) =~ "@v_cool"
     end
 
