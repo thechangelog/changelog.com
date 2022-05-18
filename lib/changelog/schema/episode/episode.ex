@@ -410,29 +410,37 @@ defmodule Changelog.Episode do
   # just-transformed files to store in the changeset, which cannot be
   # accomplished with Waffle at the time of implementation.
   def prep_audio_file(changeset, %{"audio_file" => %Plug.Upload{path: path}}) do
-    Changelog.FFmpeg.tag(path, changeset.data)
+    if is_nil(get_field(changeset, :published_at)) do
+      add_error(changeset, :published_at, "can't be blank when uploading audio")
+    else
+      Changelog.FFmpeg.tag(path, changeset.data)
 
-    case File.stat(path) do
-      {:ok, stats} ->
-        seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
-        change(changeset, audio_bytes: stats.size, audio_duration: seconds)
+      case File.stat(path) do
+        {:ok, stats} ->
+          seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
+          change(changeset, audio_bytes: stats.size, audio_duration: seconds)
 
-      {:error, _} ->
-        changeset
+        {:error, _} ->
+          changeset
+      end
     end
   end
   def prep_audio_file(changeset, _params), do: changeset
 
   def prep_plusplus_file(changeset, %{"plusplus_file" => %Plug.Upload{path: path}}) do
-    Changelog.FFmpeg.tag(path, changeset.data)
+    if is_nil(get_field(changeset, :published_at)) do
+      add_error(changeset, :published_at, "can't be blank when uploading audio")
+    else
+      Changelog.FFmpeg.tag(path, changeset.data)
 
-    case File.stat(path) do
-      {:ok, stats} ->
-        seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
-        change(changeset, plusplus_bytes: stats.size, plusplus_duration: seconds)
+      case File.stat(path) do
+        {:ok, stats} ->
+          seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
+          change(changeset, plusplus_bytes: stats.size, plusplus_duration: seconds)
 
-      {:error, _} ->
-        changeset
+        {:error, _} ->
+          changeset
+      end
     end
   end
   def prep_plusplus_file(changeset, _params), do: changeset
