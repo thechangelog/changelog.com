@@ -2,7 +2,7 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>We <em>just</em> published <%= link("a new episode of #{@episode.podcast.name}", to: EpisodeView.share_url(@episode)) %> with <%= SharedHelpers.comma_separated_names(EpisodeView.participants(@episode)) %>!</p>
+    <p>Here's your new <%= link("episode of #{@episode.podcast.name}", to: EpisodeView.share_url(@episode)) %> with <%= SharedHelpers.comma_separated_names(EpisodeView.participants(@episode)) %>!</p>
 
     <blockquote><%= @episode.summary |> SharedHelpers.md_to_html() |> raw()  %></blockquote>
 
@@ -10,17 +10,11 @@
       <%= link("Listen and discuss the episode", to: EpisodeView.share_url(@episode), itemprop: "url") %>
     </span>
 
-    <%= if @recommendations != [] do %>
-      <p>If you enjoyed this episode, you should also check out these:</p>
+  <%= if @episode.notes do %>
+    <h3>Show notes &amp; links</h3>
 
-      <ul>
-        <%= for recommendation <- @recommendations do %>
-          <li>
-            <a href="<%= recommendation["url"] %>"><%= recommendation["headline"] %></a>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+    <%= @episode.notes |> SharedHelpers.md_to_html() |> raw() %>
+  <% end %>
 
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>
 

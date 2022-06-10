@@ -1,7 +1,7 @@
 <%= greeting(@person) %>
 
 
-We just published a new episode of <%= @episode.podcast.name %> with <%= SharedHelpers.comma_separated_names(EpisodeView.participants(@episode)) %>!
+Here's your new episode of <%= @episode.podcast.name %> with <%= SharedHelpers.comma_separated_names(EpisodeView.participants(@episode)) %>!
 
 > <%= @episode.summary |> SharedHelpers.md_to_text()  %>
 
