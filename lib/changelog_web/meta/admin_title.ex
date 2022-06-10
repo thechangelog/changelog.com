@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.Meta.AdminTitle do
   alias ChangelogWeb.Meta
-  alias ChangelogWeb.Admin.{PageView, PersonView}
+  alias ChangelogWeb.Admin.{EpisodeView, PageView, PersonView}
 
-  @suffix "Changelog Admin"
+  @suffix "Admin"
 
   def get(type, conn) do
     assigns = Meta.prep_assigns(conn)
@@ -18,6 +18,10 @@ defmodule ChangelogWeb.Meta.AdminTitle do
 
   defp put_suffix(nil), do: @suffix
   defp put_suffix(title), do: "#{title} |> #{@suffix}"
+
+  defp title(%{view_module: EpisodeView, view_template: template, podcast: podcast}) do
+    "#{podcast.name} |> Episodes |> #{get_template_name(template)}"
+  end
 
   defp title(%{view_module: PageView}), do: nil
 
