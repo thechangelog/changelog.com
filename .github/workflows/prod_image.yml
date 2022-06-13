@@ -53,6 +53,7 @@ jobs:
   # Requires build_test_ship to commit a fly.toml update, and this workflow triggering on fly.toml updates.
   # 🔥 This is fine for now 🔥
   fly:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: build_test_ship
     runs-on: ubuntu-latest
     steps:
