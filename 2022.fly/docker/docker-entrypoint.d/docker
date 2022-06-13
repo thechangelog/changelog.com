@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+echo "Setting up Docker data directory"
+mkdir -p /data/docker
+
+echo "Configuring ipv6 for Docker"
+ip6tables -t nat -A POSTROUTING -s 2001:db8:1::/64 ! -o docker0 -j MASQUERADE
+
+echo "Done setting up Docker!"

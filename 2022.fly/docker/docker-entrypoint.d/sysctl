@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e
+
+echo "Allowing ipv6 forwarding via sysctl"
+sysctl net.ipv6.conf.default.forwarding=1
+sysctl net.ipv6.conf.all.forwarding=1
+
+echo "General sysctl tweaks"
+sysctl vm.swappiness=0
+sysctl vm.dirty_ratio=6
+sysctl vm.dirty_background_ratio=3
+
+# Default Socket Receive Buffer
+sysctl net.core.rmem_default=31457280
+
+# Maximum Socket Receive Buffer
+sysctl net.core.rmem_max=33554432
+
+# Default Socket Send Buffer
+sysctl net.core.wmem_default=31457280
+
+# Maximum Socket Send Buffer
+sysctl net.core.wmem_max=33554432
+
+# Increase number of incoming connections
+sysctl net.core.somaxconn=65535
+
+# Increase number of incoming connections backlog
+sysctl net.core.netdev_max_backlog=65536
+
+# Increase the maximum amount of option memory buffers
+sysctl net.core.optmem_max=25165824
+
+# Increase the maximum total buffer-space allocatable
+# This is measured in units of pages (4096 bytes)
+sysctl "net.ipv4.tcp_mem=786432 1048576 26777216"
+sysctl "net.ipv4.udp_mem=65536 131072 262144"
+
+# Increase the read-buffer space allocatable
+sysctl "net.ipv4.tcp_rmem=8192 87380 33554432"
+sysctl net.ipv4.udp_rmem_min=16384
+
+# Increase the write-buffer-space allocatable
+sysctl "net.ipv4.tcp_wmem=8192 65536 33554432"
+sysctl net.ipv4.udp_wmem_min=16384
