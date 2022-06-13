@@ -68,11 +68,14 @@ $(DAGGER): | $(CURL) $(LOCAL_BIN)
 dagger: | $(DAGGER) .envrc
 	@printf "\nRun $(BOLD)dagger do$(NORMAL) to discover what actions are available\n\n"
 
-FLY_VERSION := 0.0.311
-FLY ?= $(LOCAL_BIN)/fly
+FLY_VERSION := 0.0.333
+FLY_DIR ?= $(LOCAL_BIN)/fly-$(FLY_VERSION)
+FLY ?= $(FLY_DIR)/bin/fly
 $(FLY): | $(CURL) $(LOCAL_BIN)
-	$(CURL) --fail --location https://fly.io/install.sh | FLYCTL_INSTALL=$(CURDIR) sh -ex
+	mkdir -p $(FLY_DIR)
+	$(CURL) --fail --location https://fly.io/install.sh | FLYCTL_INSTALL=$(FLY_DIR) sh -ex
 	$(FLY) version | grep $(FLY_VERSION)
+	ln -sf $(FLY) $(LOCAL_BIN)/fly
 .PHONY: fly
 fly: | $(FLY) .envrc
 
