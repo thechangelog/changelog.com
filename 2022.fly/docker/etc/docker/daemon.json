@@ -1,0 +1,19 @@
+{
+    "data-root": "/data/docker",
+    "ipv6": true,
+    "fixed-cidr-v6": "2001:db8:1::/64",
+    "default-address-pools": [
+        {
+            "base": "10.100.0.1/16",
+            "size": 24
+        }
+    ],
+    "hosts": [
+        "unix:///var/run/docker.sock",
+        "tcp://[::]:2375"
+    ],
+    "mtu": 1400,
+    "max-concurrent-downloads": 10,
+    "max-concurrent-uploads": 5,
+    "metrics-addr": "0.0.0.0:9323"
+}
