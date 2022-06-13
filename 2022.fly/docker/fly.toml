@@ -1,7 +1,7 @@
 # Inspired by https://github.com/fly-apps/docker-daemon/blob/main/fly.toml
 # https://fly.io/docs/reference/configuration/
 
-app = "docker-2022-06-12"
+app = "docker-2022-06-13"
 kill_signal = "SIGINT"
 kill_timeout = 30
 
