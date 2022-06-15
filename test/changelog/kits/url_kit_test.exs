@@ -52,6 +52,10 @@ defmodule Changelog.UrlKitTest do
     test "returns nil when type has no known objects" do
       assert is_nil(UrlKit.get_object_id(:project, "https://test.com"))
     end
+
+    test "returns nil when hosted on a sub-domain" do
+      assert is_nil(UrlKit.get_object_id(:link, "https://merch.changelog.com/products/changelog-sticker-pack"))
+    end
   end
 
   describe "get_source/1" do

@@ -81,6 +81,10 @@ defmodule Changelog.UrlKit do
   def is_youtube(nil), do: false
   def is_youtube(url), do: Enum.any?(youtube_regexes(), &String.match?(url, &1))
 
+  def is_self_hosted(url) do
+    URI.parse(url).host == "changelog.com"
+  end
+
   def normalize_url(nil), do: nil
 
   def normalize_url(url) do
@@ -97,8 +101,6 @@ defmodule Changelog.UrlKit do
 
   def sans_scheme(nil), do: nil
   def sans_scheme(url), do: String.replace(url, Regexp.http(), "")
-
-  defp is_self_hosted(url), do: String.contains?(url, "changelog.com")
 
   defp normalize_query_string(nil), do: nil
 
