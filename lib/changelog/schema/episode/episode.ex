@@ -22,6 +22,24 @@ defmodule Changelog.Episode do
 
   alias ChangelogWeb.{TimeView}
 
+  defmodule Chapter do
+    use Changelog.Schema
+
+    embedded_schema do
+      field :title, :string
+      field :starts_at, :float
+      field :ends_at, :float
+      field :link_url, :string
+      field :image_url, :string
+    end
+
+    def changeset(chapter, attrs \\ %{}) do
+      chapter
+      |> cast(attrs, ~w(title starts_at ends_at link_url image_url)a)
+      |> validate_required([:title, :starts_at])
+    end
+  end
+
   defenum(Type, full: 0, bonus: 1, trailer: 2)
 
   schema "episodes" do
@@ -49,10 +67,14 @@ defmodule Changelog.Episode do
     field :audio_file, Files.Audio.Type
     field :audio_bytes, :integer
     field :audio_duration, :integer
+    # field :audio_chapters, {:array, :map}, default: []
+    embeds_many :audio_chapters, Chapter
 
     field :plusplus_file, Files.PlusPlus.Type
     field :plusplus_bytes, :integer
     field :plusplus_duration, :integer
+    # field :plusplus_chapters, {:array, :map}, default: []
+    embeds_many :plusplus_chapters, Chapter
 
     field :download_count, :float
     field :import_count, :float
@@ -202,6 +224,8 @@ defmodule Changelog.Episode do
     |> prep_audio_file(params)
     |> prep_plusplus_file(params)
     |> cast_attachments(params, [:audio_file, :plusplus_file])
+    |> cast_embed(:audio_chapters)
+    |> cast_embed(:plusplus_chapters)
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
     |> validate_published_has_published_at()
