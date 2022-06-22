@@ -41,7 +41,14 @@
     <% end %>
       <td><%= SharedHelpers.truncate(request.topics, 30) %></td>
       <td><%= SharedHelpers.truncate(request.guests, 30) %></td>
-      <td><%= pitch_preview(request, 60) %></td>
+      <td>
+      <%= if Policies.Admin.EpisodeRequest.show(@current_user, podcast) do %>
+        <%= link(pitch_preview(request, 60), to: Routes.admin_podcast_episode_request_path(@conn, :show, podcast.slug, request)) %>
+      <% else %>
+        <%= pitch_preview(request, 60) %>
+      <% end %>
+
+      </td>
       <td class="center aligned">
         <div class="ui compact menu">
           <div class="ui simple dropdown item">
@@ -49,11 +56,6 @@
             <i class="dropdown icon"></i>
 
             <div class="menu">
-            <%= if Policies.Admin.EpisodeRequest.show(@current_user, podcast) do %>
-              <%= AdminHelpers.dropdown_link("View Details",
-                  to: Routes.admin_podcast_episode_request_path(@conn, :show, podcast.slug, request)) %>
-            <% end %>
-
             <%= if Policies.Admin.EpisodeRequest.edit(@current_user, podcast) do %>
               <%= AdminHelpers.dropdown_link("Edit Request",
               to: Routes.admin_podcast_episode_request_path(@conn, :edit, podcast.slug, request)) %>

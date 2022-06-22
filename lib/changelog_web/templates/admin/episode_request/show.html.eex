@@ -6,7 +6,7 @@
     &raquo;
     <%= link("Episode Requests", to: Routes.admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
     &raquo;
-    <%= @request.id %>
+    <%= @request.id %> <%= status_label(@request) %>
 
   <%= if Policies.Admin.EpisodeRequest.edit(@current_user, @request.podcast) do %>
     <%= link("(Edit)", to: Routes.admin_podcast_episode_request_path(@conn, :edit, @podcast.slug, @request), class: "view") %>
@@ -21,34 +21,94 @@
 
     <p><%= link(EpisodeView.numbered_title(@request.episode), to: Routes.admin_podcast_episode_path(@conn, :edit, @podcast.slug, @request.episode.slug)) %></p>
   <% end %>
-    <h4 class="ui block header">Submitted By</h4>
 
-    <p><%= @request.submitter.name %> (<a href="mailto:<%= @request.submitter.email %>">contact via email</a>) on <%= AdminHelpers.ts(@request.inserted_at) %></p>
+  <div class="actions right">
+    <div class="ui basic buttons">
+    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.Episode.create(@current_user, @request.podcast) do %>
+      <%= AdminHelpers.icon_link("plus", to: Routes.admin_podcast_episode_path(@conn, :new, @request.podcast.slug, request_id: @request.id), title: "Start Episode") %>
+    <% end %>
 
-    <h4 class="ui block header">On-air Credit</h4>
+    <%= if Changelog.EpisodeRequest.is_pendable(@request) && Policies.Admin.EpisodeRequest.pend(@current_user, @request.podcast) do %>
+      <%= AdminHelpers.icon_link("hourglass half", to: Routes.admin_podcast_episode_request_path(@conn, :pend, @request.podcast.slug, @request), method: :put, title: "Set to Pending") %>
+    <% end %>
 
-    <p><%= credit(@request) %></p>
+    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.decline(@current_user, @request.podcast) do %>
+      <%= AdminHelpers.icon_link("thumbs down",
+          to: Routes.admin_podcast_episode_request_path(@conn, :decline, @request.podcast.slug, @request),
+          title: "Decline Silently",
+          method: :put,
+          data: [confirm: "Decline this request?"]) %>
 
-    <h4 class="ui block header">Guests</h4>
+      <%= AdminHelpers.modal_icon_button(
+        ChangelogWeb.Admin.EpisodeRequestView,
+        "bullhorn",
+        "Decline with Message",
+        "decline",
+        %{request: @request, conn: @conn, podcast: @request.podcast},
+        @request.id
+      ) %>
+    <% end %>
 
-    <p><%= @request.guests || "None specified" %></p>
+    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.fail(@current_user, @request.podcast) do %>
+      <%= AdminHelpers.icon_link("frown",
+          to: Routes.admin_podcast_episode_request_path(@conn, :fail, @request.podcast.slug, @request, next: SharedHelpers.current_path(@conn)),
+          title: "Fail Silently",
+          method: :put, data: [confirm: "Set to failed?"]) %>
 
-    <h4 class="ui block header">Hosts</h4>
+      <%= AdminHelpers.modal_icon_button(
+        ChangelogWeb.Admin.EpisodeRequestView,
+        "bullhorn",
+        "Fail with Message",
+        "fail",
+        %{request: @request, conn: @conn, podcast: @request.podcast},
+        @request.id
+      ) %>
+    <% end %>
 
-    <p><%= @request.hosts || "None specified" %></p>
+    <%= if !Changelog.EpisodeRequest.is_complete(@request) && Policies.Admin.EpisodeRequest.delete(@current_user, @request.podcast) do %>
+      <%= AdminHelpers.icon_link("trash",
+        to: Routes.admin_podcast_episode_request_path(@conn, :delete, @request.podcast.slug, @request),
+        method: :delete, title: "Delete", data: [confirm: "Delete this request?"]) %>
+    <% end %>
+    </div>
+  </div>
 
-    <h4 class="ui block header">Topics</h4>
-
-    <p><%= @request.topics || "None specified" %></p>
-
-    <h4 class="ui block header">Pitch</h4>
-
-    <p><%= @request.pitch |> SharedHelpers.md_to_html() |> raw() %></p>
-
-    <%= if @request.status == :declined and @request.decline_message do %>
+  <%= if @request.status == :declined and @request.decline_message do %>
     <h4 class="ui block header">Declined with message</h4>
 
-    <p><%= @request.decline_message %></p>
-    <% end %>
+    <p><%= @request.decline_message |> SharedHelpers.md_to_html() |> raw() %></p>
+  <% end %>
+
+  <%= if @request.status == :failed and @request.decline_message do %>
+    <h4 class="ui block header">Failed with message</h4>
+
+    <p><%= @request.decline_message |> SharedHelpers.md_to_html() |> raw() %></p>
+  <% end %>
+
+  <h4 class="ui block header">Submitted By</h4>
+
+  <p>
+  <%= if Policies.Admin.Person.show(@current_user, @request.submitter) do %>
+    <%= link(@request.submitter.name, to: Routes.admin_person_path(@conn, :show, @request.submitter)) %>
+  <% else %>
+    <%= @request.submitter.name %>
+  <% end %>
+    (<a href="mailto:<%= @request.submitter.email %>">contact via email</a>) on <%= AdminHelpers.ts(@request.inserted_at) %></p>
+
+  <h4 class="ui block header">Topic and/or Guests</h4>
+
+  <p><%= @request.topics || "None specified" %> <strong>with</strong> <%= @request.guests || "None specified" %></p>
+
+  <h4 class="ui block header">Pitch</h4>
+
+  <p><%= @request.pitch |> SharedHelpers.md_to_html() |> raw() %></p>
+
+  <h4 class="ui block header">Requested Hosts</h4>
+
+  <p><%= @request.hosts || "None specified" %></p>
+
+  <h4 class="ui block header">On-air Credit</h4>
+
+  <p><%= credit(@request) %></p>
   </div>
 </div>
