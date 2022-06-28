@@ -1,6 +1,5 @@
 defmodule ChangelogWeb.Router do
   use ChangelogWeb, :router
-  use Plug.ErrorHandler
 
   alias ChangelogWeb.Plug
 
