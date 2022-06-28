@@ -1,8 +1,9 @@
-use Mix.Config
+import Config
 
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: 4000],
   url: [host: System.get_env("HOST", "localhost")],
+  check_origin: false,
   static_url: [path: "/static"],
   debug_errors: true,
   code_reloader: true,

@@ -3,7 +3,7 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
+import Config
 
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
@@ -12,7 +12,7 @@ config :changelog, ChangelogWeb.Endpoint,
       "SECRET_KEY_BASE",
       "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi"
     ),
-  render_errors: [accepts: ~w(html json)],
+  render_errors: [view: ChangelogWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Changelog.PubSub
 
 config :changelog,
@@ -101,4 +101,4 @@ config :sentry,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
+import_config "#{config_env()}.exs"

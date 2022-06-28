@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 static_url_host = System.get_env("STATIC_URL_HOST", "cdn.changelog.com")
 

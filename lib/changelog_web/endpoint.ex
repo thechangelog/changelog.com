@@ -76,7 +76,9 @@ defmodule ChangelogWeb.Endpoint do
     json_decoder: Phoenix.json_library(),
     length: 512_000_000
 
+  # This must come after Plug.Parsers according to Sentry's docs
   plug Sentry.PlugContext
+
   plug Plug.MethodOverride
   plug Plug.Head
 
