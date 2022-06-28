@@ -1,0 +1,10 @@
+<figure class="richtext-figure">
+  <div class="video-container">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed?list=PLCzseuA9sYreJ1p9RXR6Z667mrMyHXAeH&autoplay=1&index=<%= Enum.random(0..99) %>"
+      title="Changelog clips on YouTube"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+</figure>

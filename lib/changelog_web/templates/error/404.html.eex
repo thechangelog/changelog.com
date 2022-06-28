@@ -17,8 +17,9 @@
         <div class="richtext">
           <h1>404</h1>
           <h3>Oops! The page you were looking for&nbsp;doesn’t exist.</h3>
-          <p>You may have mistyped the address or the page may have moved.</p>
-          <%= link "Take Me Home", to: Routes.root_path(@conn, :index), class: "button" %>
+          <p>You may have mistyped the address or the page may have moved. Maybe enjoy some podcast clips instead?</p>
+          <%= render(SharedView, "_clips_embed.html", assigns) %>
+          <%= link("Take Me Home", to: Routes.root_path(@conn, :index), class: "button") %>
         </div>
       </article>
     </main>

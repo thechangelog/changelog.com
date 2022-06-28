@@ -1,9 +1,9 @@
 defmodule ChangelogWeb.ErrorView do
   use ChangelogWeb, :public_view
 
-  # In case no render clause matches or no
-  # template is found, let's render it as 500
-  def template_not_found(_template, assigns) do
-    render("500.html", assigns)
+  alias ChangelogWeb.SharedView
+
+  def template_not_found(template, _assigns) do
+    Phoenix.Controller.status_message_from_template(template)
   end
 end

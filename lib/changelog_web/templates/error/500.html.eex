@@ -17,8 +17,9 @@
         <div class="richtext">
           <h1>Server Error</h1>
           <h3>Oops! Looks like the server had a hiccup.</h3>
-          <p>You may want to try to reload the page to see if the issue has cleared up.</p>
-          <%= link "Take Me Home", to: Routes.root_path(@conn, :index), class: "btn btn--padded-bottom" %>
+          <p>Try reloading the page to see if the issue has cleared up. In the meantime, enjoy some clips!</p>
+          <%= render(SharedView, "_clips_embed.html", assigns) %>
+          <%= link("Take Me Home", to: Routes.root_path(@conn, :index), class: "button") %>
         </div>
       </article>
     </main>
