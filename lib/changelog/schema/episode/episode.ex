@@ -31,12 +31,15 @@ defmodule Changelog.Episode do
       field :ends_at, :float
       field :link_url, :string
       field :image_url, :string
+
+      field :delete, :boolean, virtual: true
     end
 
     def changeset(chapter, attrs \\ %{}) do
       chapter
-      |> cast(attrs, ~w(title starts_at ends_at link_url image_url)a)
+      |> cast(attrs, ~w(title starts_at ends_at link_url image_url delete)a)
       |> validate_required([:title, :starts_at])
+      |> mark_for_deletion()
     end
   end
 
@@ -67,13 +70,13 @@ defmodule Changelog.Episode do
     field :audio_file, Files.Audio.Type
     field :audio_bytes, :integer
     field :audio_duration, :integer
-    # field :audio_chapters, {:array, :map}, default: []
+
     embeds_many :audio_chapters, Chapter
 
     field :plusplus_file, Files.PlusPlus.Type
     field :plusplus_bytes, :integer
     field :plusplus_duration, :integer
-    # field :plusplus_chapters, {:array, :map}, default: []
+
     embeds_many :plusplus_chapters, Chapter
 
     field :download_count, :float
