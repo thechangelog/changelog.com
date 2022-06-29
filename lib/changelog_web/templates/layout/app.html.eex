@@ -21,6 +21,7 @@
     <meta name="twitter:player:height" content="150">
     <meta name="twitter:player:stream" content="<%= Meta.Twitter.get(:audio_url, @conn) %>">
     <meta name="twitter:player:stream:content_type" content="audio/mpeg">
+    <meta name="og:audio" content="<%= Meta.Twitter.get(:audio_url, @conn) %>">
   <% else %>
     <meta name="twitter:url" content="<%= current_url(@conn) %>">
   <% end %>
