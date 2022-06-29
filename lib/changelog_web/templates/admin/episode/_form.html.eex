@@ -278,6 +278,51 @@
   </div>
 
   <div class="field">
+    <%= label(f, :audio_chapters) do %>
+      Audio Chapters <%= AdminHelpers.help_icon("Manually add/edit or drop a WAV file to get started") %>
+    <% end %>
+
+    <div class="ui selection list js-audio_chapters">
+    <%= inputs_for f, :audio_chapters, fn i -> %>
+      <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+        <div class="right floated content">
+          <div class="ui tiny icon button js-remove">
+            <i class="remove icon"></i>
+            <%= hidden_input(i, :delete) %>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="fields">
+            <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
+              <%= label(i, :title) %>
+              <%= text_input(i, :title) %>
+            </div>
+            <div class="three wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
+              <%= label(i, :starts_at) %>
+              <%= text_input(i, :starts_at) %>
+            </div>
+            <div class="three wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
+              <%= label(i, :ends_at) %>
+              <%= text_input(i, :ends_at) %>
+            </div>
+
+            <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
+              <%= label(i, :link) %>
+              <%= text_input(i, :link_url) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    </div>
+
+    <div class="ui tiny icon button js-add-chapter" data-type="audio">
+      <i class="add icon"></i>
+    </div>
+  </div>
+
+  <div class="field">
     <label>Audio Wav File <%= AdminHelpers.help_icon("This does not get uploaded. We just extract marker metadata from it such as sponsor timestamps.") %></label>
 
     <div class="ui padded segment js-wav-file">
@@ -302,7 +347,7 @@
 
   <div class="field">
     <%= label(f, :plusplus_file) do %>
-      ++ File <%= AdminHelpers.help_icon("Upload after Slug, Publish Time, and Title are finalized so correct ID3 tags get written.") %>
+      PlusPlus File <%= AdminHelpers.help_icon("Upload after Slug, Publish Time, and Title are finalized so correct ID3 tags get written.") %>
     <% end %>
 
     <%= if f.data.plusplus_file  do %>
@@ -323,6 +368,51 @@
     <% end %>
 
     <%= file_input(f, :plusplus_file) %>
+  </div>
+
+  <div class="field">
+    <%= label(f, :plusplus_chapters) do %>
+      PlusPlus Chapters <%= AdminHelpers.help_icon("Manually add/edit or drop a WAV file to get started") %>
+    <% end %>
+
+    <div class="ui list js-plusplus_chapters">
+    <%= inputs_for f, :plusplus_chapters, fn i -> %>
+      <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+        <div class="right floated content">
+          <div class="ui tiny icon button js-remove">
+            <i class="remove icon"></i>
+            <%= hidden_input(i, :delete) %>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="fields">
+            <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
+              <%= label(i, :title) %>
+              <%= text_input(i, :title) %>
+            </div>
+            <div class="two wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
+              <%= label(i, :starts_at) %>
+              <%= text_input(i, :starts_at) %>
+            </div>
+            <div class="two wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
+              <%= label(i, :ends_at) %>
+              <%= text_input(i, :ends_at) %>
+            </div>
+
+            <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
+              <%= label(i, :link) %>
+              <%= text_input(i, :link_url) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    </div>
+
+    <div class="ui tiny icon button js-add-chapter" data-type="plusplus">
+      <i class="add icon"></i>
+    </div>
   </div>
 
   <div class="two fields">

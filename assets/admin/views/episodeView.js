@@ -3,6 +3,7 @@ import Clipboard from "clipboard";
 import SearchWidget from "components/searchWidget";
 import FilterWidget from "components/filterWidget";
 import CalendarField from "components/calendarField";
+import ChaptersWidget from "components/chaptersWidget";
 import Modal from "components/modal";
 import parseTime from "../../shared/parseTime";
 
@@ -246,6 +247,9 @@ export default class EpisodeView {
 
       wavFileDropZone.removeClass("loading")
     })
+
+    new ChaptersWidget("audio")
+    new ChaptersWidget("plusplus")
   }
 
   edit() {

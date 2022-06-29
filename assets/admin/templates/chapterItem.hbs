@@ -1,0 +1,43 @@
+<div class="item">
+  <div class="right floated content">
+    <div class="ui tiny icon button js-remove">
+      <i class="remove icon"></i>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="fields">
+      <div class="six wide required field">
+        <label>Title</label>
+        <input
+	        type="text"
+	        name="episode[{{type}}_chapters][{{index}}][title]"
+	        placeholder="A great chapter title"
+        >
+      </div>
+
+      <div class="three wide required field">
+        <label>Starts at</label>
+        <input
+	        type="text"
+	        name="episode[{{type}}_chapters][{{index}}][starts_at]"
+        >
+      </div>
+      <div class="three wide field">
+        <label>Ends at</label>
+        <input
+	        type="text"
+	        name="episode[{{type}}_chapters][{{index}}][ends_at]"
+        >
+      </div>
+
+      <div class="four wide field">
+        <label>Link</label>
+        <input
+	        type="text"
+	        name="episode[{{type}}_chapters][{{index}}][link]"
+        >
+      </div>
+    </div>
+  </div>
+</div>
