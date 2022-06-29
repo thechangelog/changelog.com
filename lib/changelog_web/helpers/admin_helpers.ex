@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Helpers.AdminHelpers do
   use Phoenix.HTML
 
-  alias Changelog.Repo
+  alias Changelog.{Repo, StringKit}
   alias ChangelogWeb.TimeView
 
   def error_class(form, field), do: if(form.errors[field], do: "error", else: "")
@@ -103,7 +103,9 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     """
   end
 
-  def is_persisted(struct), do: is_integer(struct.id)
+  def is_persisted(%{id: id}) when is_integer(id), do: true
+  def is_persisted(%{id: id}) when is_binary(id), do: StringKit.present?(id)
+  def is_persisted(_else), do: false
 
   def is_loaded(nil), do: false
   def is_loaded(%Ecto.Association.NotLoaded{}), do: false
