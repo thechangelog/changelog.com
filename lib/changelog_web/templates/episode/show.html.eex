@@ -159,16 +159,17 @@
             <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
             <a id="transcript-<%= index %>" class="anchor"></a>
             <div class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
+              <div class="transcript-item-speaker">
               <%= if speaker do %>
-                <div class="transcript-item-speaker">
-                  <%= link to: PersonView.profile_path(speaker), title: speaker.name do %>
-                    <%= SharedHelpers.lazy_image(PersonView.avatar_url(speaker), "#{speaker.name} Says", class: "transcript-item-speaker-image", width: 36, height: 36) %>
-                  <% end %>
-                  <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>
-                </div>
+                <%= link to: PersonView.profile_path(speaker), title: speaker.name do %>
+                  <%= SharedHelpers.lazy_image(PersonView.avatar_url(speaker), "#{speaker.name} Says", class: "transcript-item-speaker-image", width: 36, height: 36) %>
+                <% end %>
+              <% else %>
+                <div class="transcript-item-speaker-image"></div>
               <% end %>
+                <p class="transcript-item-speaker-name"><%= link part["title"], to: "#transcript-#{index}" %></p>
+              </div>
               <div class="transcript-item-text">
-                <%= unless speaker do %><strong class="transcript-break"><%= part["title"] %></strong><% end %>
                 <%= part["body"] |> SharedHelpers.md_to_html() |> PublicHelpers.with_timestamp_links() |> raw() %>
               </div>
             </div>
