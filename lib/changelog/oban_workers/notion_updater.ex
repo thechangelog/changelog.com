@@ -11,12 +11,9 @@ defmodule Changelog.ObanWorkers.NotionUpdater do
   end
 
   def reach do
-    db = "b74d24c3ec414482a89af8df9955e702"
-
-    case Notion.get_shipped_sponsorships(db) do
-      {:ok, %{body: sponsorships}} -> update_reach(sponsorships["results"])
-      _else -> false
-    end
+    "b74d24c3ec414482a89af8df9955e702"
+    |> Notion.get_shipped_sponsorships()
+    |> update_reach()
   end
 
   defp update_reach(sponsorships) when is_list(sponsorships) do
