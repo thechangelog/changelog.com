@@ -8,7 +8,7 @@
     &raquo;
     <%= @request.id %> <%= status_label(@request) %>
 
-  <%= if Policies.Admin.EpisodeRequest.edit(@current_user, @request.podcast) do %>
+  <%= if Policies.Admin.EpisodeRequest.edit(@current_user, @podcast) do %>
     <%= link("(Edit)", to: Routes.admin_podcast_episode_request_path(@conn, :edit, @podcast.slug, @request), class: "view") %>
   <% end %>
   </h1>
@@ -24,17 +24,17 @@
 
   <div class="actions right">
     <div class="ui basic buttons">
-    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.Episode.create(@current_user, @request.podcast) do %>
-      <%= AdminHelpers.icon_link("plus", to: Routes.admin_podcast_episode_path(@conn, :new, @request.podcast.slug, request_id: @request.id), title: "Start Episode") %>
+    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.Episode.create(@current_user, @podcast) do %>
+      <%= AdminHelpers.icon_link("plus", to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug, request_id: @request.id), title: "Start Episode") %>
     <% end %>
 
-    <%= if Changelog.EpisodeRequest.is_pendable(@request) && Policies.Admin.EpisodeRequest.pend(@current_user, @request.podcast) do %>
-      <%= AdminHelpers.icon_link("hourglass half", to: Routes.admin_podcast_episode_request_path(@conn, :pend, @request.podcast.slug, @request), method: :put, title: "Set to Pending") %>
+    <%= if Changelog.EpisodeRequest.is_pendable(@request) && Policies.Admin.EpisodeRequest.pend(@current_user, @podcast) do %>
+      <%= AdminHelpers.icon_link("hourglass half", to: Routes.admin_podcast_episode_request_path(@conn, :pend, @podcast.slug, @request), method: :put, title: "Set to Pending") %>
     <% end %>
 
-    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.decline(@current_user, @request.podcast) do %>
+    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.decline(@current_user, @podcast) do %>
       <%= AdminHelpers.icon_link("thumbs down",
-          to: Routes.admin_podcast_episode_request_path(@conn, :decline, @request.podcast.slug, @request),
+          to: Routes.admin_podcast_episode_request_path(@conn, :decline, @podcast.slug, @request),
           title: "Decline Silently",
           method: :put,
           data: [confirm: "Decline this request?"]) %>
@@ -44,14 +44,14 @@
         "bullhorn",
         "Decline with Message",
         "decline",
-        %{request: @request, conn: @conn, podcast: @request.podcast},
+        %{request: @request, conn: @conn, podcast: @podcast},
         @request.id
       ) %>
     <% end %>
 
-    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.fail(@current_user, @request.podcast) do %>
+    <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.fail(@current_user, @podcast) do %>
       <%= AdminHelpers.icon_link("frown",
-          to: Routes.admin_podcast_episode_request_path(@conn, :fail, @request.podcast.slug, @request, next: SharedHelpers.current_path(@conn)),
+          to: Routes.admin_podcast_episode_request_path(@conn, :fail, @podcast.slug, @request, next: SharedHelpers.current_path(@conn)),
           title: "Fail Silently",
           method: :put, data: [confirm: "Set to failed?"]) %>
 
@@ -60,14 +60,14 @@
         "bullhorn",
         "Fail with Message",
         "fail",
-        %{request: @request, conn: @conn, podcast: @request.podcast},
+        %{request: @request, conn: @conn, podcast: @podcast},
         @request.id
       ) %>
     <% end %>
 
-    <%= if !Changelog.EpisodeRequest.is_complete(@request) && Policies.Admin.EpisodeRequest.delete(@current_user, @request.podcast) do %>
+    <%= if !Changelog.EpisodeRequest.is_complete(@request) && Policies.Admin.EpisodeRequest.delete(@current_user, @podcast) do %>
       <%= AdminHelpers.icon_link("trash",
-        to: Routes.admin_podcast_episode_request_path(@conn, :delete, @request.podcast.slug, @request),
+        to: Routes.admin_podcast_episode_request_path(@conn, :delete, @podcast.slug, @request),
         method: :delete, title: "Delete", data: [confirm: "Delete this request?"]) %>
     <% end %>
     </div>

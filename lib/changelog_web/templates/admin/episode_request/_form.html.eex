@@ -55,7 +55,7 @@
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", "edit") %></div>
     <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
     <div class="column">
-    <%= if Changelog.Policies.Admin.EpisodeRequest.delete(@current_user, @request.podcast) do %>
+    <%= if Changelog.Policies.Admin.EpisodeRequest.delete(@current_user, @podcast) do %>
       <%= link("Delete", to: Routes.admin_podcast_episode_request_path(@conn, :delete, @podcast.slug, f.data), class: "ui red fluid basic button", method: :delete, data: [confirm: "Are you sure?"]) %>
     <% end  %>
     </div>
