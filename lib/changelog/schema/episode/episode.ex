@@ -39,7 +39,19 @@ defmodule Changelog.Episode do
       chapter
       |> cast(attrs, ~w(title starts_at ends_at link_url image_url delete)a)
       |> validate_required([:title, :starts_at])
+      |> validate_ends_at_after_starts_at()
       |> mark_for_deletion()
+    end
+
+    defp validate_ends_at_after_starts_at(changeset) do
+      starts_at = get_field(changeset, :starts_at)
+      ends_at = get_field(changeset, :ends_at)
+
+      cond do
+        !is_nil(ends_at) && is_nil(starts_at) -> add_error(changeset, :ends_at, "cannot be set without 'starts at'")
+        !is_nil(ends_at) && starts_at >= ends_at -> add_error(changeset, :ends_at, "must be later than 'starts at'")
+        true -> changeset
+      end
     end
   end
 
@@ -203,30 +215,15 @@ defmodule Changelog.Episode do
     validated.valid? && !is_published(episode)
   end
 
-  def admin_changeset(struct, params \\ %{}) do
+  def admin_changeset(struct, attrs \\ %{}) do
+    attrs = attrs_with_chapters_sorted_by_starts_at(attrs)
+
     struct
-    |> cast(params, [
-      :slug,
-      :title,
-      :subtitle,
-      :published,
-      :featured,
-      :request_id,
-      :highlight,
-      :subhighlight,
-      :summary,
-      :notes,
-      :doc_url,
-      :published_at,
-      :recorded_at,
-      :recorded_live,
-      :youtube_id,
-      :guid,
-      :type
-    ])
-    |> prep_audio_file(params)
-    |> prep_plusplus_file(params)
-    |> cast_attachments(params, [:audio_file, :plusplus_file])
+    |> cast(attrs, ~w(slug title subtitle published featured request_id highlight
+      subhighlight summary notes doc_url published_at recorded_at recorded_live youtube_id guid type)a)
+    |> prep_audio_file(attrs)
+    |> prep_plusplus_file(attrs)
+    |> cast_attachments(attrs, [:audio_file, :plusplus_file])
     |> cast_embed(:audio_chapters)
     |> cast_embed(:plusplus_chapters)
     |> validate_required([:slug, :title, :published, :featured])
@@ -471,6 +468,26 @@ defmodule Changelog.Episode do
     end
   end
   def prep_plusplus_file(changeset, _params), do: changeset
+
+  def attrs_with_chapters_sorted_by_starts_at(attrs) do
+    attrs
+    |> sort_all_by_starts_at("audio_chapters")
+    |> sort_all_by_starts_at("plusplus_chapters")
+  end
+
+  defp sort_all_by_starts_at(attrs, key) do
+    try do
+      Map.update!(attrs, key, fn chapters ->
+        chapters
+        |> Map.values()
+        |> Enum.sort(&(Float.parse(&1["starts_at"]) <= Float.parse(&2["starts_at"])))
+        |> Enum.with_index()
+        |> Map.new(fn {chapter, index} -> {"#{index}", chapter} end)
+      end)
+      rescue
+        KeyError -> attrs
+    end
+  end
 
   defp validate_published_has_published_at(changeset) do
     published = get_field(changeset, :published)
