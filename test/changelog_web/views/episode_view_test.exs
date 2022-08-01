@@ -38,6 +38,18 @@ defmodule ChangelogWeb.EpisodeViewTest do
     end
   end
 
+  describe "is_changelog_news/1" do
+    test "is false when it's a regular episode" do
+      episode = %{slug: "123", podcast: %{name: "The Changelog", slug: "podcast"}}
+      refute is_changelog_news(episode)
+    end
+
+    test "is true when it's a news episode" do
+      episode = %{slug: "news-2022-08-01", podcast: %{name: "The Changelog", slug: "podcast"}}
+      assert is_changelog_news(episode)
+    end
+  end
+
   describe "is_subtitle_guest_focused/1" do
     test "is false when subtitle begins with 'with' but no episode guest(s)" do
       episode = %{subtitle: "with DHH", guests: []}

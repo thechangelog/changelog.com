@@ -62,6 +62,16 @@ defmodule ChangelogWeb.FeedView do
     end
   end
 
+  def podcast_name_with_numbered_episode_title(episode) do
+    numbered_title = EpisodeView.numbered_title(episode)
+
+    if EpisodeView.is_changelog_news(episode) do
+      "Changelog News: #{episode.title}"
+    else
+      "#{episode.podcast.name} #{numbered_title}"
+    end
+  end
+
   def render_item(item = %{object: episode = %Episode{}}, assigns) do
     episode = episode |> Episode.preload_all() |> Map.put(:news_item, item)
     render("_episode.xml", Map.merge(assigns, %{episode: episode, plusplus: false}))
