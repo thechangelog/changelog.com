@@ -13,6 +13,7 @@
 	        type="text"
 	        name="episode[{{type}}_chapters][{{index}}][title]"
 	        placeholder="A great chapter title"
+          value="{{title}}"
         >
       </div>
 
@@ -21,6 +22,7 @@
         <input
 	        type="text"
 	        name="episode[{{type}}_chapters][{{index}}][starts_at]"
+          value="{{starts_at}}"
         >
       </div>
       <div class="three wide field">
@@ -28,14 +30,16 @@
         <input
 	        type="text"
 	        name="episode[{{type}}_chapters][{{index}}][ends_at]"
+          value="{{ends_at}}"
         >
       </div>
 
-      <div class="four wide field">
+      <div class="six wide field">
         <label>Link</label>
         <input
 	        type="text"
-	        name="episode[{{type}}_chapters][{{index}}][link]"
+	        name="episode[{{type}}_chapters][{{index}}][link_url]"
+          value="{{link}}"
         >
       </div>
     </div>

@@ -37,6 +37,7 @@ FormUI.init();
 
 $("a[rel=external]").attr("target", "_blank");
 $(".ui.modal").modal();
+$(".ui.accordion").accordion();
 $(".ui.dropdown.link").dropdown({action: "nothing"});
 
 $(".js-modal").on("click", function() {

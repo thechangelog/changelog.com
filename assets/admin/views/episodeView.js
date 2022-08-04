@@ -129,6 +129,8 @@ export default class EpisodeView {
     new CalendarField(".ui.calendar")
     new Modal(".js-title-guide-modal", ".title-guide.modal")
     new Modal(".js-subtitle-guide-modal", ".subtitle-guide.modal")
+    new ChaptersWidget("audio", $(".js-episode_sponsors"))
+    new ChaptersWidget("plusplus", [])
 
     let clipboard = new Clipboard(".clipboard.button")
 
@@ -169,102 +171,21 @@ export default class EpisodeView {
         $(event.target).val(newTime)
       }
     })
-
-    async function getAsByteArray(file) {
-      return new Uint8Array(await readFile(file))
-    }
-
-    function readFile(file) {
-      return new Promise((resolve, reject) => {
-        // Create file reader
-        let reader = new FileReader()
-
-        // Register event listeners
-        reader.addEventListener("loadend", e => resolve(e.target.result))
-        reader.addEventListener("error", reject)
-
-        // Read file
-        reader.readAsArrayBuffer(file)
-      })
-    }
-
-    let wavFileDropZone = $(".js-wav-file")
-    let episodeSponsors = $(".js-episode_sponsors").children(".item")
-
-    wavFileDropZone.on("dragover", function(event) {
-      event.preventDefault()
-      wavFileDropZone.addClass("secondary")
-    })
-    .on("dragleave", function(event) {
-      wavFileDropZone.removeClass("secondary")
-      event.preventDefault()
-    })
-    .on("drop", async function(event) {
-      event.preventDefault()
-
-      let file = event.originalEvent.dataTransfer.items[0]
-
-      wavFileDropZone.removeClass("secondary").find("tbody").html("")
-
-      if (file.type.match(/audio\/(x-)?wav/)) {
-        wavFileDropZone.addClass("loading")
-
-        let byteFile = await getAsByteArray(file.getAsFile())
-
-        let wav = new wavefile.WaveFile()
-
-        wav.fromBuffer(byteFile)
-
-        wavFileDropZone.find("table").removeClass("hidden")
-
-        let markers = wav.listCuePoints()
-        let sponsors = markers.filter(m => m.label.match(/Sponsor:\s/))
-
-        if (sponsors.length == episodeSponsors.length) {
-          sponsors.forEach((marker, index) => {
-            let name = marker.label
-            let start = Math.round((marker.position / 1000) * 1000) / 1000
-            let end = Math.round((marker.end / 1000) * 1000) / 1000
-            let td = `<td>${name}</td><td>${(start)}</td><td>${end}</td>`
-
-            let sponsorItem = $(episodeSponsors[index])
-
-            if (sponsorItem.length) {
-              let sponsorTitle = sponsorItem.find("input[name*=title]").val()
-              let status = name.match(new RegExp(sponsorTitle, "i")) ? "✅" : "❌"
-
-              sponsorItem.find("input[name*=starts_at]").val(start)
-              sponsorItem.find("input[name*=ends_at]").val(end)
-
-              wavFileDropZone.find("tbody").append(`<tr>${td}<td>${status}</td></tr>`)
-            }
-          })
-        } else {
-          wavFileDropZone.find("table").addClass("hidden")
-          alert(`Episode has ${episodeSponsors.length} sponsors but wav file has ${sponsors.length}`);
-        }
-      }
-
-      wavFileDropZone.removeClass("loading")
-    })
-
-    new ChaptersWidget("audio")
-    new ChaptersWidget("plusplus")
   }
 
   edit() {
-    this.new();
+    this.new()
 
-    new Modal(".js-publish-modal", ".publish.modal");
+    new Modal(".js-publish-modal", ".publish.modal")
 
-    let newsInput = $("input[name=news]");
-    let thanksInput = $("input[name=thanks]");
+    let newsInput = $("input[name=news]")
+    let thanksInput = $("input[name=thanks]")
 
     newsInput.on("change", function() {
       if (newsInput.is(":checked")) {
-        thanksInput.closest(".checkbox").checkbox("set enabled");
+        thanksInput.closest(".checkbox").checkbox("set enabled")
       } else {
-        thanksInput.closest(".checkbox").checkbox("set disabled").checkbox("uncheck");
+        thanksInput.closest(".checkbox").checkbox("set disabled").checkbox("uncheck")
       }
     });
   }

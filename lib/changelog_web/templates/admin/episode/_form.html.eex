@@ -277,71 +277,67 @@
     <%= file_input(f, :audio_file) %>
   </div>
 
-  <div class="field">
-    <%= label(f, :audio_chapters) do %>
-      Audio Chapters <%= AdminHelpers.help_icon("Manually add/edit or drop a WAV file to get started") %>
-    <% end %>
+  <% has_audio_chapters = Enum.any?(f.data.audio_chapters) %>
+  <div class="ui accordion field">
+    <div class="title <%= if !has_audio_chapters, do: "active" %>">
+      <i class="icon dropdown"></i>
+      <%= label(f, :audio_chapters) do %>
+        Audio Chapters <%= if has_audio_chapters do %>(<%= length(f.data.audio_chapters) %>)<% end %>
+      <% end %>
+    </div>
 
-    <div class="ui selection list js-audio_chapters">
-    <%= inputs_for f, :audio_chapters, fn i -> %>
-      <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
-        <div class="right floated content">
-          <div class="ui tiny icon button js-remove">
-            <i class="remove icon"></i>
-            <%= hidden_input(i, :delete) %>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="fields">
-            <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
-              <%= label(i, :title) %>
-              <%= text_input(i, :title) %>
+    <div class="content field <%= if !has_audio_chapters, do: "active" %>">
+      <div class="ui padded segment js-wav-file">
+        <div class="ui icon message">
+            <i class="file audio icon"></i>
+            <div class="content">
+              <div class="header">
+                Drop a markered .wav file here to get started
+              </div>
+              <p>We'll use it to create chapters. Existing chapters will be cleared first. Nothing changes until you save the form.</p>
+              <p>We'll also match chapters up with the Sponsors section in the form above, using this format "Sponsor: {Sponsor Name}"</p>
             </div>
-            <div class="three wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
-              <%= label(i, :starts_at) %>
-              <%= text_input(i, :starts_at) %>
-            </div>
-            <div class="three wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
-              <%= label(i, :ends_at) %>
-              <%= text_input(i, :ends_at) %>
-            </div>
-
-            <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
-              <%= label(i, :link) %>
-              <%= text_input(i, :link_url) %>
-            </div>
-          </div>
         </div>
       </div>
-    <% end %>
-    </div>
 
-    <div class="ui tiny icon button js-add-chapter" data-type="audio">
-      <i class="add icon"></i>
-    </div>
-  </div>
+      <div class="ui selection list js-audio_chapters">
+      <%= inputs_for f, :audio_chapters, fn i -> %>
+        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+          <div class="right floated content">
+            <div class="ui tiny icon button js-remove">
+              <i class="remove icon"></i>
+              <%= hidden_input(i, :delete) %>
+            </div>
+          </div>
 
-  <div class="field">
-    <label>Audio Wav File <%= AdminHelpers.help_icon("This does not get uploaded. We just extract marker metadata from it such as sponsor timestamps.") %></label>
-
-    <div class="ui padded segment js-wav-file">
-      <div class="ui icon message">
-          <i class="file audio icon"></i>
           <div class="content">
-            <div class="header">
-              Drop a markered .wav file here
+            <div class="fields">
+              <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
+                <%= label(i, :title) %>
+                <%= text_input(i, :title) %>
+              </div>
+              <div class="three wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
+                <%= label(i, :starts_at) %>
+                <%= text_input(i, :starts_at, class: "js-time-in-seconds") %>
+              </div>
+              <div class="three wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
+                <%= label(i, :ends_at) %>
+                <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
+              </div>
+
+              <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
+                <%= label(i, :link) %>
+                <%= text_input(i, :link_url) %>
+              </div>
             </div>
-            <p>We'll use it to auto-fill sponsorship start/end times.</p>
           </div>
+        </div>
+      <% end %>
       </div>
 
-      <table class="ui compact celled table hidden">
-        <thead>
-          <tr><th>Sponsor</th><th>Starts At</th><th>Ends At</th><th>Match</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="ui tiny icon button js-add-chapter" data-type="audio">
+        <i class="add icon"></i>
+      </div>
     </div>
   </div>
 
@@ -370,48 +366,66 @@
     <%= file_input(f, :plusplus_file) %>
   </div>
 
-  <div class="field">
-    <%= label(f, :plusplus_chapters) do %>
-      PlusPlus Chapters <%= AdminHelpers.help_icon("Manually add/edit or drop a WAV file to get started") %>
-    <% end %>
-
-    <div class="ui list js-plusplus_chapters">
-    <%= inputs_for f, :plusplus_chapters, fn i -> %>
-      <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
-        <div class="right floated content">
-          <div class="ui tiny icon button js-remove">
-            <i class="remove icon"></i>
-            <%= hidden_input(i, :delete) %>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="fields">
-            <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
-              <%= label(i, :title) %>
-              <%= text_input(i, :title) %>
-            </div>
-            <div class="two wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
-              <%= label(i, :starts_at) %>
-              <%= text_input(i, :starts_at) %>
-            </div>
-            <div class="two wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
-              <%= label(i, :ends_at) %>
-              <%= text_input(i, :ends_at) %>
-            </div>
-
-            <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
-              <%= label(i, :link) %>
-              <%= text_input(i, :link_url) %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
+  <% has_plusplus_chapters = Enum.any?(f.data.plusplus_chapters) %>
+  <div class="ui accordion field">
+    <div class="title <%= if !has_audio_chapters, do: "active" %>">
+      <i class="icon dropdown"></i>
+      <%= label(f, :plusplus_chapters) do %>
+        PlusPlus Chapters <%= if has_plusplus_chapters do %>(<%= length(f.data.plusplus_chapters) %>)<% end %>
+      <% end %>
     </div>
 
-    <div class="ui tiny icon button js-add-chapter" data-type="plusplus">
-      <i class="add icon"></i>
+    <div class="content field <%= if !has_audio_chapters, do: "active" %>">
+      <div class="ui padded segment js-wav-file">
+        <div class="ui icon message">
+            <i class="file audio icon"></i>
+            <div class="content">
+              <div class="header">
+                Drop a markered .wav file here to get started
+              </div>
+              <p>We'll use it to auto-create chapters. Existing chapters will be cleared first. Nothing changes until you save the form.</p>
+            </div>
+        </div>
+      </div>
+
+      <div class="ui list js-plusplus_chapters">
+      <%= inputs_for f, :plusplus_chapters, fn i -> %>
+        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+          <div class="right floated content">
+            <div class="ui tiny icon button js-remove">
+              <i class="remove icon"></i>
+              <%= hidden_input(i, :delete) %>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="fields">
+              <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
+                <%= label(i, :title) %>
+                <%= text_input(i, :title) %>
+              </div>
+              <div class="two wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
+                <%= label(i, :starts_at) %>
+                <%= text_input(i, :starts_at, class: "js-time-in-seconds") %>
+              </div>
+              <div class="two wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
+                <%= label(i, :ends_at) %>
+                <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
+              </div>
+
+              <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
+                <%= label(i, :link) %>
+                <%= text_input(i, :link_url) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      </div>
+
+      <div class="ui tiny icon button js-add-chapter" data-type="plusplus">
+        <i class="add icon"></i>
+      </div>
     </div>
   </div>
 
