@@ -11,14 +11,9 @@ defmodule Changelog.S3Static do
     s3_bucket = SecretOrEnv.get("AWS_ASSETS_BUCKET")
     static_path = Path.join(Application.app_dir(:changelog), @app_path)
 
-    tasks =
-      static_path
-      |> local_files_from_manifest()
-      |> Enum.map(fn file ->
-        Task.async(fn -> put_file(s3_bucket, @s3_path, file) end)
-      end)
-
-    Task.await_many(tasks)
+    static_path
+    |> local_files_from_manifest()
+    |> Enum.each(&put_file(s3_bucket, @s3_path, &1))
   end
 
   def delete_unused_files_from_s3 do
