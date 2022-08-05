@@ -83,50 +83,78 @@
     </div>
 
     <div class="episode-body-details episode-body-details--<%= @podcast.slug %>">
-      <%= if Enum.any?(participants) do %>
-        <section class="episode-body-section">
-          <a id="featuring" class="anchor"></a>
-          <header class="section_heading">
-            <h3 class="section_heading-text">Featuring</h3>
-          </header>
-          <div class="richtext richtext--small">
-            <ul>
-            <%= for person <- participants do %>
-              <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links |> raw %></li>
-            <% end %>
-            </ul>
-          </div>
-        </section>
-      <% end %>
+    <%= if Enum.any?(participants) do %>
+      <section class="episode-body-section">
+        <a id="featuring" class="anchor"></a>
+        <header class="section_heading">
+          <h3 class="section_heading-text">Featuring</h3>
+        </header>
+        <div class="richtext richtext--small">
+          <ul>
+          <%= for person <- participants do %>
+            <li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links |> raw %></li>
+          <% end %>
+          </ul>
+        </div>
+      </section>
+    <% end %>
 
-      <%= if Enum.any?(@episode.episode_sponsors) do %>
-        <section class="episode-body-section">
-          <a id="sponsors" class="anchor"></a>
-          <header class="section_heading">
-            <h3 class="section_heading-text">Sponsors</h3>
-          </header>
-          <div class="richtext richtext--small">
-            <%= for sponsor <- @episode.episode_sponsors do %>
-              <p>
-                <strong><%= link(sponsor.title, to: sponsor.link_url, rel: "sponsored") %></strong> – <%= sponsor.description |> SharedHelpers.md_to_html() |> HtmlKit.put_sponsored() |> SharedHelpers.sans_p_tags() |> raw() %>
-              </p>
-            <% end %>
-          </div>
-        </section>
-      <% end %>
+    <%= if Enum.any?(@episode.episode_sponsors) do %>
+      <section class="episode-body-section">
+        <a id="sponsors" class="anchor"></a>
+        <header class="section_heading">
+          <h3 class="section_heading-text">Sponsors</h3>
+        </header>
+        <div class="richtext richtext--small">
+          <%= for sponsor <- @episode.episode_sponsors do %>
+            <p>
+              <strong><%= link(sponsor.title, to: sponsor.link_url, rel: "sponsored") %></strong> – <%= sponsor.description |> SharedHelpers.md_to_html() |> HtmlKit.put_sponsored() |> SharedHelpers.sans_p_tags() |> raw() %>
+            </p>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
 
-      <%= if @episode.notes do %>
-        <section class="episode-body-section">
-          <a id="notes" class="anchor"></a>
-          <header class="section_heading">
-            <h3 class="section_heading-text">Notes &amp; Links</h3>
-            <p class="section_heading-note"><%= link("📝 Edit Notes", to: show_notes_source_url(@episode), title: "Edit the show notes on GitHub", rel: "external") %></p>
-          </header>
-          <div class="richtext richtext--small">
-            <%= @episode.notes |> SharedHelpers.md_to_html() |> raw() %>
-          </div>
-        </section>
-      <% end %>
+    <%= if @episode.notes do %>
+      <section class="episode-body-section">
+        <a id="notes" class="anchor"></a>
+        <header class="section_heading">
+          <h3 class="section_heading-text">Notes &amp; Links</h3>
+          <p class="section_heading-note"><%= link("📝 Edit Notes", to: show_notes_source_url(@episode), title: "Edit the show notes on GitHub", rel: "external") %></p>
+        </header>
+        <div class="richtext richtext--small">
+          <%= @episode.notes |> SharedHelpers.md_to_html() |> raw() %>
+        </div>
+      </section>
+    <% end %>
+
+    <%= if Enum.any?(@episode.audio_chapters) do %>
+      <section class="episode-body-section">
+        <a id="chapters" class="anchor"></a>
+        <header class="section_heading">
+          <h3 class="section_heading-text">Chapters</h3>
+        </header>
+        <div class="richtext richtext--small">
+          <table>
+          <%= for {chapter, index} <- Enum.with_index(@episode.audio_chapters, 1) do %>
+            <tr>
+              <td style="width: 5%"><%= index %></td>
+              <td style="width: 10%">
+                <a href="#t=<%= round(chapter.starts_at) %>" title="Play episode starting at '<%= chapter.title %>'"><%= TimeView.duration(chapter.starts_at) %></a>
+              </td>
+              <td style="width: 85%">
+              <%= if Changelog.StringKit.present?(chapter.link_url) do %>
+                <%= link(chapter.title, to: chapter.link_url, rel: "nofollow") %>
+              <% else %>
+                <%= chapter.title %>
+              <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </table>
+        </div>
+      </section>
+    <% end %>
 
       <section class="episode-body-section">
         <a id="transcript" class="anchor"></a>

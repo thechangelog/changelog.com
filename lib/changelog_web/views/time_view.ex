@@ -16,6 +16,8 @@ defmodule ChangelogWeb.TimeView do
     Timex.shift(date, days: offset)
   end
 
+  def duration(seconds) when is_float(seconds), do: seconds |> round() |> duration()
+
   def duration(seconds) when is_nil(seconds), do: duration(0)
 
   def duration(seconds) when seconds < 3600 do
