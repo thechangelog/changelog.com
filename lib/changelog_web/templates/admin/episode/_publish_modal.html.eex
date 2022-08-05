@@ -90,18 +90,32 @@
             <td>No notes for this episode?</td>
           </tr>
         <% end %>
+        <%= if !Enum.any?(@changeset.data.audio_chapters) do %>
+          <tr>
+            <td>Chapters Note ⚠️</td>
+            <td>No chapters for this episode?</td>
+          </tr>
+        <% end %>
         <%= if !@changeset.data.plusplus_file do %>
           <tr>
             <td>Audio Note ⚠️</td>
             <td>No ++ file for this episode?</td>
           </tr>
         <% end %>
-        <%= if @changeset.data.plusplus_file && (@changeset.data.audio_duration <= @changeset.data.plusplus_duration) do %>
+      <%= if @changeset.data.plusplus_file do %>
+        <%= if !Enum.any?(@changeset.data.plusplus_chapters) do %>
+          <tr>
+            <td>Chapters Note ⚠️</td>
+            <td>No ++ chapters for this episode?</td>
+          </tr>
+        <% end %>
+        <%= if @changeset.data.audio_duration <= @changeset.data.plusplus_duration do %>
           <tr>
             <td>Audio Note ⚠️</td>
             <td>The ++ file is longer (or same length as) the public file</td>
           </tr>
         <% end %>
+      <% end %>
         </tbody>
       </table>
     </div>
