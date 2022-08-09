@@ -39,9 +39,13 @@ defmodule Changelog.Id3 do
     end)
   end
 
-  defp add_text(tag, _type, ""), do: tag
-  defp add_text(tag, _type, nil), do: tag
-  defp add_text(tag, type, text) do
+  def add_image(tag, image_path, mime_type) do
+    Tag.add_attached_picture(tag, "", mime_type, File.read!(image_path))
+  end
+
+  def add_text(tag, _type, ""), do: tag
+  def add_text(tag, _type, nil), do: tag
+  def add_text(tag, type, text) do
     Tag.add_text_frame(tag, @text_frames[type], text)
   end
 

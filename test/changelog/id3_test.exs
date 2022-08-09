@@ -3,10 +3,6 @@ defmodule Changelog.Id3Test do
 
   alias Changelog.Id3
 
-  def find_text_frame(tag, text) do
-    Enum.find(tag.frames, fn(f) -> Enum.member?(f.data.text, text) end)
-  end
-
   def find_chapter_frames(tag) do
     Enum.filter(tag.frames, fn(%{data: data}) ->
       case data do
@@ -14,6 +10,19 @@ defmodule Changelog.Id3Test do
         _ -> false
       end
     end)
+  end
+
+  def find_picture_frames(tag) do
+    Enum.filter(tag.frames, fn(%{data: data}) ->
+      case data do
+        %Id3vx.Frame.AttachedPicture{} -> true
+        _ -> false
+      end
+    end)
+  end
+
+  def find_text_frame(tag, text) do
+    Enum.find(tag.frames, fn(f) -> Enum.member?(f.data.text, text) end)
   end
 
   describe "tag_for_episode/1" do
@@ -34,29 +43,44 @@ defmodule Changelog.Id3Test do
       assert find_text_frame(tag, podcast.name)
       assert find_text_frame(tag, subtitle)
     end
+  end
 
-    # test "when podcast has cover art" do
-    # end
+    describe "add_image/2" do
+    test "when valid image path is provided" do
+      file_path = fixtures_path() <> "/avatar600x600.png"
+
+      tag =
+        build(:episode)
+        |> Id3.tag_for_episode()
+        |> Id3.add_image(file_path, "image/png")
+
+      assert length(find_picture_frames(tag)) == 1
+    end
   end
 
   describe "add_chapters/2" do
-    test "returns the tag untouched when there aren't any" do
-      episode = build(:episode)
-      tag = Id3.tag_for_episode(episode)
+    test "returns the tag with no chapter frames when passed none" do
+      chapters =
+        build(:episode)
+        |> Id3.tag_for_episode()
+        |> Id3.add_chapters([])
+        |> find_chapter_frames()
 
-      assert tag == Id3.add_chapters(tag, [])
+      assert length(chapters) == 0
     end
 
-    test "returns tag with chapters applied" do
+    test "returns the tag with chapter frames applied" do
       episode = build(:episode, audio_chapters: [
         build(:episode_chapter, title: "Opener", starts_at: 0.0, ends_at: 100),
         build(:episode_chapter, title: "Middle", starts_at: 0.0, ends_at: 1234, link_url: "https://jsparty.fm"),
         build(:episode_chapter, title: "End", starts_at: 1235.0, ends_at: 9999)
       ])
 
-      tag = Id3.tag_for_episode(episode)
-      tag = Id3.add_chapters(tag, episode.audio_chapters)
-      chapters = find_chapter_frames(tag)
+      chapters =
+        episode
+        |> Id3.tag_for_episode()
+        |> Id3.add_chapters(episode.audio_chapters)
+        |> find_chapter_frames()
 
       assert length(chapters) == 3
     end
