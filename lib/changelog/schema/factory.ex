@@ -25,6 +25,13 @@ defmodule Changelog.Factory do
     }
   end
 
+  def episode_chapter_factory do
+    %Changelog.EpisodeChapter{
+      title: sequence(:title, &"Chapter #{&1}"),
+      starts_at: 0.0
+    }
+  end
+
   def episode_stat_factory do
     %Changelog.EpisodeStat{
       date: Timex.today(),
