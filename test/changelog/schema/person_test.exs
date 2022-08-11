@@ -27,7 +27,7 @@ defmodule Changelog.PersonTest do
 
   test "admin_update_changeset with a local file path image URL attribute" do
     person = insert(:person)
-    local_file_path = File.cwd!() <> "/test/fixtures/avatar600x600.png"
+    local_file_path = fixtures_path("/images/avatar600x600.png")
     attrs = Map.put(@valid_attrs, :avatar, local_file_path)
 
     changeset = Person.admin_update_changeset(person, attrs)

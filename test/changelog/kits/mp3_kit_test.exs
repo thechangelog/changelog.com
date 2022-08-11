@@ -37,7 +37,7 @@ defmodule Changelog.Mp3KitTest do
 
   describe "add_image_to_tag/2" do
     test "when valid image path is provided" do
-      file_path = fixtures_path() <> "/avatar600x600.png"
+      file_path = fixtures_path("/images/avatar600x600.png")
 
       tag =
         build(:episode)

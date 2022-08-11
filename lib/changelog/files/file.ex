@@ -36,16 +36,9 @@ defmodule Changelog.File do
         Enum.member?(unquote(types), file_type(file))
       end
 
-      def mime_type(file) do
-        case file_type(file) do
-          :jpg -> "image/jpg"
-          :jpeg -> "image/jpg"
-          :png -> "image/png"
-          :gif -> "image/gif"
-          :mp3 -> "audio/mpeg"
-          :svg -> "image/svg+xml"
-        end
-      end
+      def file_type(file), do: Changelog.FileKit.get_type(file)
+
+      def mime_type(file), do: Changelog.FileKit.mime_type(file)
 
       # Takes a list of strings and returns a joined string for passing to `convert`
       # See https://www.smashingmagazine.com/2015/06/efficient-image-resizing-with-imagemagick/
@@ -67,14 +60,6 @@ defmodule Changelog.File do
           "-define png:compression-strateg1",
           "-define png:exclude-chunk=all"
         ] |> Enum.join(" ")
-      end
-
-      defp file_type(file) do
-        file.file_name
-        |> Path.extname()
-        |> String.replace(".", "")
-        |> String.downcase()
-        |> String.to_existing_atom()
       end
 
       defp hashed(id), do: Changelog.Hashid.encode(id)
