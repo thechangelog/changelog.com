@@ -16,6 +16,23 @@
     <%= @episode.notes |> SharedHelpers.md_to_html() |> raw() %>
   <% end %>
 
+  <%= if Enum.any?(@episode.audio_chapters) do %>
+    <h3>Chapters</h3>
+
+    <ul>
+    <%= for chapter <- @episode.audio_chapters do %>
+      <li>
+          <a href="<%= EpisodeView.share_url(@episode) %>#t=<%= round(chapter.starts_at) %>" title="Play episode starting at '<%= chapter.title %>'"><%= TimeView.duration(chapter.starts_at) %></a>
+        <%= if Changelog.StringKit.present?(chapter.link_url) do %>
+          <%= link(chapter.title, to: chapter.link_url, rel: "nofollow") %>
+        <% else %>
+          <%= chapter.title %>
+        <% end %>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
+
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>
 
     <p>💚, Logbot</p>
