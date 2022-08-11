@@ -2,8 +2,12 @@ defmodule Changelog.TestCase do
   @moduledoc """
   Functions in this module are imported in all test modules
   """
-  def fixtures_path() do
+  def fixtures_path do
     Path.dirname(__ENV__.file) <> "/../fixtures"
+  end
+
+  def fixtures_path(file_path) when is_binary(file_path) do
+    fixtures_path() <> file_path
   end
 
   def stub_audio_file(episode) do

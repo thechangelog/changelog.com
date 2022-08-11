@@ -21,8 +21,6 @@ defmodule Changelog.Episode do
     Transcripts
   }
 
-  alias ChangelogWeb.{TimeView}
-
   defenum(Type, full: 0, bonus: 1, trailer: 2)
 
   schema "episodes" do
@@ -409,7 +407,7 @@ defmodule Changelog.Episode do
 
       case File.stat(path) do
         {:ok, stats} ->
-          seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
+          seconds = Changelog.Mp3Kit.get_duration(path)
           change(changeset, audio_bytes: stats.size, audio_duration: seconds)
 
         {:error, _} ->
@@ -427,7 +425,7 @@ defmodule Changelog.Episode do
 
       case File.stat(path) do
         {:ok, stats} ->
-          seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
+          seconds = Changelog.Mp3Kit.get_duration(path)
           change(changeset, plusplus_bytes: stats.size, plusplus_duration: seconds)
 
         {:error, _} ->
