@@ -15,5 +15,5 @@ Don't want these notifications? Unsubscribe here:
 💚, Logbot
 
 <%= if String.length(@subscription.context) > 0 do %>
-(You received this email because <%= @subscription.context %>)
+(You received this because <%= @subscription.context %>)
 <% end %>

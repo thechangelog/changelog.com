@@ -151,7 +151,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
   def guest_thanks_email do
     episode = known_episode()
     episode_guest = List.first(episode.episode_guests)
-    # Changelog.EpisodeGuest.thanks(episode_guest)
+
     Email.guest_thanks(episode_guest)
   end
 

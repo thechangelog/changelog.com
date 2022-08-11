@@ -15,7 +15,7 @@
     <p>💚, Logbot</p>
 
     <%= if String.length(@subscription.context) > 0 do %>
-      <p class="footnote">(You received this email because <%= @subscription.context %>)</p>
+      <p class="footnote">(You received this because <%= @subscription.context %>)</p>
     <% end %>
   </td>
 </tr>

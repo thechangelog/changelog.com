@@ -89,7 +89,7 @@
                         <td bgcolor="#ffffff" align="center">
                           <div class="footer">
                             <p><webversion>View in Browser</webversion> &bull; <preferences>Manage Subscription</preferences> &bull; <unsubscribe>Unsubscribe</unsubscribe></p>
-                            <p>You received this email because you're a subscriber of Changelog.com emails with this email address: [email]</p>
+                            <p>You received this because you're a subscriber of Changelog.com emails with this email address: [email]</p>
                             <p><a href="https://changelog.com/">Changelog</a> - News and podcasts for developers</p>
                             <p class="last-of-type hacker-heart">💚</p>
                           </div>
