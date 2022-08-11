@@ -64,7 +64,7 @@ export default class ChaptersWidget {
               let sponsorNameMatch = name.match(/Sponsor:\s(.*)/)
 
               if (sponsorNameMatch) {
-                let sponsorItem = $sponsors.find(`input[value=${sponsorNameMatch[1]}]`).parents(".item")
+                let sponsorItem = $sponsors.find(`input[value='${sponsorNameMatch[1]}']`).parents(".item")
                 sponsorItem.find("input[name*=starts_at]").val(start)
                 sponsorItem.find("input[name*=ends_at]").val(end)
                 link = sponsorItem.find("input[name*=link_url]").val()
