@@ -1,5 +1,68 @@
-
 defmodule Changelog.Mp3Kit do
+  alias Changelog.StringKit
+  alias Id3vx.Tag
+
+  @text_frames %{
+    "artist"    => "TPE1",
+    "title"     => "TIT2",
+    "subtitle"  => "TIT3",
+    "album"     => "TALB",
+    "year"      => "TYER",
+    "genre"     => "TCON",
+    "publisher" => "TPUB"
+  }
+
+  @doc """
+  Creates and returns an ID3 tag for a given episode
+  """
+  def tag_for_episode(episode) do
+    Tag.create(3)
+    |> add_text_to_tag("artist", "Changelog Media")
+    |> add_text_to_tag("publisher", "Changelog Media")
+    |> add_text_to_tag("genre", "Podcast")
+    |> add_text_to_tag("album", episode.podcast.name)
+    |> add_text_to_tag("title", episode.title)
+    |> add_text_to_tag("subtitle", episode.subtitle)
+  end
+
+  @doc """
+  Returns a tag with chapter frames added to given tag
+  """
+  def add_chapters_to_tag(tag, []), do: tag
+  def add_chapters_to_tag(tag, chapters) do
+    Enum.reduce(chapters, tag, fn(c, acc) ->
+      Tag.add_typical_chapter_and_toc(acc,
+        in_milliseconds(c.starts_at),
+        in_milliseconds(c.ends_at),
+        0, 0, # settings start/end offsets to zero forces use of start/end times
+        c.title, fn(chapter) ->
+          if StringKit.present?(c.link_url) do
+            Tag.add_custom_url(chapter, "chapter link", c.link_url)
+          else
+            chapter
+          end
+        end)
+    end)
+  end
+
+  defp in_milliseconds(seconds), do: round(seconds * 1000)
+
+  @doc """
+  Returns a tag with image frame added to tag
+  """
+  def add_image_to_tag(tag, image_path, mime_type) do
+    Tag.add_attached_picture(tag, "", mime_type, File.read!(image_path))
+  end
+
+  @doc """
+  Returns a tag with text frame added to tag
+  """
+  def add_text_to_tag(tag, _type, ""), do: tag
+  def add_text_to_tag(tag, _type, nil), do: tag
+  def add_text_to_tag(tag, type, text) do
+    Tag.add_text_frame(tag, @text_frames[type], text)
+  end
+
   @doc """
   Returns duration in seconds, given mp3 data or a valid path to an mp3 file
   (yoinked from https://gist.github.com/kommen/9391eb6391d76c2b42c0402fc5ca7353)
@@ -29,7 +92,7 @@ defmodule Changelog.Mp3Kit do
   defp decode_header_at_offset(offset, data) do
     try do
       binary_part(data, offset, 4)
-      |> decode_header
+      |> decode_header()
     rescue
       ArgumentError -> {:error, "not enough bytes"}
     end
@@ -37,7 +100,7 @@ defmodule Changelog.Mp3Kit do
 
   defp decode_header(<<255, 7::size(3),
     audio_version_id :: size(2), layer_desc :: size(2), _d :: size(1), bitrate_index :: size(4),
-    sampling_rate_index :: size(2), padding :: size(1), bits :: size(9)>>) do
+    sampling_rate_index :: size(2), padding :: size(1), _bits :: size(9)>>) do
 
     with {:ok, version}     <- audio_version(audio_version_id),
          {:ok, layer}       <- layer(layer_desc),
