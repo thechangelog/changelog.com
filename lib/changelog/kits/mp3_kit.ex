@@ -1,5 +1,5 @@
 defmodule Changelog.Mp3Kit do
-  alias Changelog.StringKit
+  alias Changelog.{FileKit, StringKit}
   alias Id3vx.Tag
 
   @text_frames %{
@@ -50,8 +50,10 @@ defmodule Changelog.Mp3Kit do
   @doc """
   Returns a tag with image frame added to tag
   """
-  def add_image_to_tag(tag, image_path, mime_type) do
-    Tag.add_attached_picture(tag, "", mime_type, File.read!(image_path))
+  def add_image_to_tag(tag, image_path) do
+    image_data = File.read!(image_path)
+    mime_type = FileKit.mime_type(image_data)
+    Tag.add_attached_picture(tag, "", mime_type, image_data)
   end
 
   @doc """
@@ -68,7 +70,7 @@ defmodule Changelog.Mp3Kit do
   (yoinked from https://gist.github.com/kommen/9391eb6391d76c2b42c0402fc5ca7353)
   """
   def get_duration(data_or_path) do
-    data = if String.valid?(data_or_path) do
+    data = if FileKit.is_path?(data_or_path) do
       File.read!(data_or_path)
     else
       data_or_path
