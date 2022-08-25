@@ -1,4 +1,4 @@
-name: Prod image
+name: Ship it
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_test_ship:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code...
@@ -34,7 +34,7 @@ jobs:
           nc -vz6 fdaa:0:4556:a7b:21e0:1:1f9d:2 2375
 
       # ⚠️  IPv6 is configured via `fly ips private` - see 2022.fly/docker/README.md
-      - name: Run prod_image Dagger plan on remote Docker Engine...
+      - name: Build, test & release via Fly.io Docker Engine...
         env:
           DOCKER_HOST: "tcp://[fdaa:0:4556:a7b:21e0:1:1f9d:2]:2375"
         run: |
@@ -48,13 +48,9 @@ jobs:
           /opt/hostedtoolcache/dagger/*/x64/dagger input text docker_host "$DOCKER_HOST" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger up --environment prod_image --log-format plain
 
-  # TODO: move this into a standalone fly workflow
-  # While this was the simplest thing, it's wrong to combine build & deploy concerns into a single pipeline.
-  # Requires build_test_ship to commit a fly.toml update, and this workflow triggering on fly.toml updates.
-  # 🔥 This is fine for now 🔥
-  fly:
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs: build_test_ship
+  deploy:
+    if: ${{ github.ref_name == 'master' }}
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code...
@@ -66,3 +62,16 @@ jobs:
           FLY_PROJECT_PATH: ./2022.fly
         with:
           args: "deploy"
+
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack about deploy...
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          MSG_MINIMAL: "commit,actions url"
+          SLACK_CHANNEL: dev
+          SLACK_USERNAME: GitHub Actions
+          SLACK_FOOTER: "Just got shipped to https://changelog.com"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
