@@ -103,15 +103,9 @@
         </a>
       </div>
       <div class="footer-sponsors-item">
-        <a href="https://www.linode.com/changelog" title="Cloud hosting by Linode">
-          <p>Cloud hosting</p>
-          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-linode.png"), "Linode", width: 200, height: 100) %>
-        </a>
-      </div>
-      <div class="footer-sponsors-item">
-        <a href="https://launchdarkly.com/?utm_source=changelog" title="Feature flags by LaunchDarkly">
-          <p>Feature flags</p>
-          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-launchdarkly.png"), "LaunchDarkly", width: 200, height: 100) %>
+        <a href="https://fly.io" title="Hosting by Fly.io">
+          <p>Hosting</p>
+          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/sponsor-fly.png"), "Linode", width: 200, height: 100) %>
         </a>
       </div>
     </div>
