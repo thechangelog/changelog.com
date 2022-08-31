@@ -56,6 +56,9 @@
     <%= if Episode.has_transcript(episode) do %>
       <podcast:transcript url="<%= Routes.episode_url(@conn, :transcript, episode.podcast.slug, episode.slug) %>" type="text/html" />
     <% end %>
+    <%= if Enum.any?(episode.audio_chapters) do %>
+      <podcast:chapters url="<%= Routes.episode_url(@conn, :chapters, episode.podcast.slug, episode.slug) %>" type="application/json+chapters" />
+    <% end %>
     </item>
   <% end %>
   </channel>
