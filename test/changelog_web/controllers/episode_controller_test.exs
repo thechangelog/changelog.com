@@ -151,6 +151,68 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     end
   end
 
+  describe "chapters" do
+    test "returns chapters list as json", %{conn: conn} do
+      c1 = build(:episode_chapter, starts_at: 0, ends_at: 60, image_url: "img")
+      c2 = build(:episode_chapter, starts_at: 60, ends_at: 600)
+      c3 = build(:episode_chapter, starts_at: 600, ends_at: 6000, link_url: "link")
+
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p, audio_chapters: [c1, c2, c3])
+
+      conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug))
+
+      assert json_response(conn, 200) == %{
+        "version" => "1.2.0",
+        "chapters" => [
+          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at, "img" => c1.image_url},
+          %{"title" => c2.title, "startTime" => c2.starts_at, "endTime" => c2.ends_at},
+          %{"title" => c3.title, "startTime" => c3.starts_at, "endTime" => c3.ends_at, "url" => c3.link_url}
+        ]
+      }
+    end
+
+    test "returns empty set when episode has no chapters", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p)
+
+      conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug))
+
+      assert json_response(conn, 200) == %{
+        "version" => "1.2.0",
+        "chapters" => []
+      }
+    end
+
+    test "returns plusplus chapters list as json when specified", %{conn: conn} do
+      c1 = build(:episode_chapter, starts_at: 0, ends_at: 60)
+
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p, plusplus_chapters: [c1])
+
+      conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug, pp: true))
+
+      assert json_response(conn, 200) == %{
+        "version" => "1.2.0",
+        "chapters" => [
+          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at}
+        ]
+      }
+    end
+
+    test "returns empty set when episode has no plusplus chapters", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p)
+
+      conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug, pp: true))
+
+      assert json_response(conn, 200) == %{
+        "version" => "1.2.0",
+        "chapters" => []
+      }
+    end
+  end
+
   describe "live" do
     test "404 when episode is not recorded live", %{conn: conn} do
       p = insert(:podcast)
