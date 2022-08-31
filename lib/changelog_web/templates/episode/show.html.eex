@@ -164,7 +164,11 @@
           <%= if Enum.any?(@episode.transcript) do %>
             <%= link("📝 Edit Transcript", to: transcript_source_url(@episode), title: "Edit the transcript on GitHub", rel: "external") %>
           <% else %>
-            <%= link("⏰ Coming Soon", to: transcript_repo_url(@episode), title: "Our transcripts on GitHub", rel: "external") %>
+            <%= if published_before_transcripts?(@episode) do %>
+              <%= link("⌛️ Legacy Episode", to: transcript_repo_url(@episode), title: "Our transcripts on GitHub", rel: "external") %>
+            <% else %>
+              <%= link("⏰ Coming Soon", to: transcript_repo_url(@episode), title: "Our transcripts on GitHub", rel: "external") %>
+            <% end %>
           <% end %>
           </p>
         </header>
@@ -222,6 +226,9 @@
               <p class="transcript-item-speaker-name">Changelog</p>
             </div>
             <div class="transcript-item-text">
+            <%= if published_before_transcripts?(@episode) do %>
+              <p>This episode was published back before we had transcripts. Thanks for understanding! 💚</p>
+            <% else %>
               <p>We're hard at work on the transcript for this episode!
               <%= if @current_user do %>
                 <%= if Subscription.is_subscribed(@current_user, @episode) do %>
@@ -232,6 +239,7 @@
               <% else %>
                 <%= link("Sign in", to: Routes.sign_in_path(@conn, :new)) %> / <%= link("up", to: Routes.person_path(@conn, :join)) %> to access transcript notifications. 💪</p>
               <% end %>
+            <% end %>
             </div>
           </div>
         <% end %>

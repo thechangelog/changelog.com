@@ -188,6 +188,10 @@ defmodule ChangelogWeb.EpisodeView do
     [episode.podcast.name, number_with_pound(episode)] |> ListKit.compact_join(" ")
   end
 
+  def published_before_transcripts?(episode) do
+    !is_nil(episode.published_at) && Timex.before?(episode.published_at, ~D[2016-04-20])
+  end
+
   def sponsorships_with_dark_logo(episode) do
     Enum.reject(episode.episode_sponsors, fn s -> is_nil(s.sponsor.dark_logo) end)
   end
