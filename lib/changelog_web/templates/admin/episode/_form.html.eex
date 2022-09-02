@@ -368,14 +368,14 @@
 
   <% has_plusplus_chapters = Enum.any?(f.data.plusplus_chapters) %>
   <div class="ui accordion field">
-    <div class="title <%= if !has_audio_chapters, do: "active" %>">
+    <div class="title <%= if !has_plusplus_chapters, do: "active" %>">
       <i class="icon dropdown"></i>
       <%= label(f, :plusplus_chapters) do %>
         PlusPlus Chapters <%= if has_plusplus_chapters do %>(<%= length(f.data.plusplus_chapters) %>)<% end %>
       <% end %>
     </div>
 
-    <div class="content field <%= if !has_audio_chapters, do: "active" %>">
+    <div class="content field <%= if !has_plusplus_chapters, do: "active" %>">
       <div class="ui padded segment js-wav-file">
         <div class="ui icon message">
             <i class="file audio icon"></i>
