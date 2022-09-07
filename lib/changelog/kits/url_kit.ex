@@ -5,7 +5,9 @@ defmodule Changelog.UrlKit do
   def get_author(url), do: Person.get_by_website(url)
 
   def get_tempfile(url) do
-    case HTTPoison.get(url) do
+    # workaround for https://github.com/erlang/otp/issues/6241
+    # TODO remove once we're on OTP >= 24.3.4.5
+    case HTTPoison.get(url, [], [ssl: [{:middlebox_comp_mode, false}]]) do
       {:ok, %{status_code: 200, body: body}} ->
         hash = :sha256 |> :crypto.hash(body) |> Base.encode16()
         path = Path.join(System.tmp_dir(), hash)
