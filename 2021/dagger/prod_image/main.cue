@@ -1,5 +1,3 @@
-// STARTING POINT: https://docs.dagger.io/1012/ci
-// + ../../../.circleci/config.yml
 package main
 
 import (

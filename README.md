@@ -144,7 +144,6 @@ It would be especially interesting to know if [ipvlan on macOS](https://github.c
 1. Update `docker/Dockerfile.runtime` to use an image from the URL above
 1. Run `make runtime-image` to publish the new container image
 1. Update `docker/Dockerfile.production` to the exact runtime version that was published in the previous step
-1. Update `.circleci/config.yml` to the exact runtime version used above
 1. Update `2021/dagger/prod_image/main.cue` to the exact runtime version used above
 1. Update `dev_docker/changelog.yml` to the exact runtime version used above
 1. Update the Elixir version in `README.md` & `mix.exs`
