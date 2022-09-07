@@ -239,7 +239,8 @@ defmodule ChangelogWeb.EpisodeView do
           endTime: chapter.ends_at,
           url: chapter.link_url,
           img: chapter.image_url
-        } |> Map.reject(fn {_k, v} -> is_nil(v) end)
+        # TODO: Switch to Map.reject once we're on Elixir 1.13
+        } |> Enum.reject(fn {_k, v} -> is_nil(v) end) |> Enum.into(%{})
       end)
     }
   end
