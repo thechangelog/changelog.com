@@ -21,8 +21,6 @@ defmodule Changelog.Episode do
     Transcripts
   }
 
-  alias ChangelogWeb.{TimeView}
-
   defenum(Type, full: 0, bonus: 1, trailer: 2)
 
   schema "episodes" do
@@ -402,37 +400,29 @@ defmodule Changelog.Episode do
   # just-transformed files to store in the changeset, which cannot be
   # accomplished with Waffle at the time of implementation.
   def prep_audio_file(changeset, %{"audio_file" => %Plug.Upload{path: path}}) do
-    if is_nil(get_field(changeset, :published_at)) do
-      add_error(changeset, :published_at, "can't be blank when uploading audio")
-    else
-      Changelog.FFmpeg.tag(path, changeset.data)
+    Changelog.Mp3Kit.tag(path, changeset.data, changeset.data.audio_chapters)
 
-      case File.stat(path) do
-        {:ok, stats} ->
-          seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
-          change(changeset, audio_bytes: stats.size, audio_duration: seconds)
+    case File.stat(path) do
+      {:ok, stats} ->
+        seconds = Changelog.Mp3Kit.get_duration(path)
+        change(changeset, audio_bytes: stats.size, audio_duration: seconds)
 
-        {:error, _} ->
-          changeset
-      end
+      {:error, _} ->
+        changeset
     end
   end
   def prep_audio_file(changeset, _params), do: changeset
 
   def prep_plusplus_file(changeset, %{"plusplus_file" => %Plug.Upload{path: path}}) do
-    if is_nil(get_field(changeset, :published_at)) do
-      add_error(changeset, :published_at, "can't be blank when uploading audio")
-    else
-      Changelog.FFmpeg.tag(path, changeset.data)
+    Changelog.Mp3Kit.tag(path, changeset.data, changeset.data.plusplus_chapters)
 
-      case File.stat(path) do
-        {:ok, stats} ->
-          seconds = path |> Changelog.FFmpeg.duration() |> TimeView.seconds()
-          change(changeset, plusplus_bytes: stats.size, plusplus_duration: seconds)
+    case File.stat(path) do
+      {:ok, stats} ->
+        seconds = Changelog.Mp3Kit.get_duration(path)
+        change(changeset, plusplus_bytes: stats.size, plusplus_duration: seconds)
 
-        {:error, _} ->
-          changeset
-      end
+      {:error, _} ->
+        changeset
     end
   end
   def prep_plusplus_file(changeset, _params), do: changeset

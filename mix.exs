@@ -77,6 +77,7 @@ defmodule Changelog.Mixfile do
       {:tzdata, "~> 1.1.0"},
       {:icalendar, "~> 1.0"},
       {:shopify, "~> 0.4"},
+      {:id3vx, "~> 0.0.1-rc6"},
       {:credo, "~> 1.6.4", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}

@@ -135,6 +135,23 @@ defmodule ChangelogWeb.EpisodeController do
     |> render(:transcript, layout: false)
   end
 
+  def chapters(conn, params = %{"slug" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published()
+      |> Repo.get_by!(slug: slug)
+
+    chapters = if Map.has_key?(params, "pp") do
+      episode.plusplus_chapters
+    else
+      episode.audio_chapters
+    end
+
+    conn
+    |> assign(:chapters, chapters)
+    |> render("chapters.json")
+  end
+
   def live(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
