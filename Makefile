@@ -283,7 +283,7 @@ publish-runtime-image: $(DOCKER)
 .PHONY: howto-upgrade-elixir
 howto-upgrade-elixir:
 	@printf "$(BOLD)$(GREEN)All commands must be run in this directory. I propose a new side-by-side split to these instructions.$(NORMAL)\n\n"
-	@printf "Pick an image from $(BOLD)$(BLUE)https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-focal$(NORMAL)\n\n"
+	@printf "Pick an image from $(BOLD)$(BLUE)https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy$(NORMAL)\n\n"
 	@printf "1/7. Update $(BOLD)docker/Dockerfile.runtime$(NORMAL) to use an image from the URL above, then run $(BOLD)make runtime-image$(NORMAL)\n" ; read -rp " $(DONE)" -n 1
 	@printf "2/7. Update $(BOLD)docker/Dockerfile.production$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1
 	@printf "3/7. Update $(BOLD).circleci/config.yml$(NORMAL) to the exact runtime version that was published in the previous step\n" ; read -rp " $(DONE)" -n 1

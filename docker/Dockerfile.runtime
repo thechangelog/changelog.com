@@ -2,8 +2,8 @@
 # FROM elixir:1.12
 #
 # @akoutmos recommends the hex.pm image because it's maintained by the hex core team
-# https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-focal
-FROM hexpm/elixir:1.12.0-erlang-24.0.1-ubuntu-focal-20210325
+# https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy
+FROM hexpm/elixir:1.13.4-erlang-24.3.4.4-ubuntu-jammy-20220428
 
 USER root
 
