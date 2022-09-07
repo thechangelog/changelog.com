@@ -1,5 +1,6 @@
 defmodule Changelog.Mp3Kit do
-  alias Changelog.{FileKit, StringKit}
+  alias Changelog.{FileKit, UrlKit}
+  alias ChangelogWeb.{PodcastView}
   alias Id3vx.Tag
 
   @text_frames %{
@@ -8,21 +9,57 @@ defmodule Changelog.Mp3Kit do
     "subtitle"  => "TIT3",
     "album"     => "TALB",
     "year"      => "TYER",
+    "date"      => "TDAT",
     "genre"     => "TCON",
-    "publisher" => "TPUB"
+    "publisher" => "TPUB",
+    "encoder"   => "TENC"
   }
+
+  def tag(file_path, episode, chapters) do
+    cover_path = PodcastView.cover_path(episode.podcast, :original)
+    cover_file = UrlKit.get_tempfile(cover_path)
+    tagged_file_path = file_path <> "-tagged"
+
+    new_tag =
+      episode
+      |> tag_for_episode()
+      |> add_image_to_tag(cover_file)
+      |> add_chapters_to_tag(chapters)
+
+    Id3vx.replace_tag(new_tag, file_path, tagged_file_path)
+    remove_v1_tag(tagged_file_path)
+    File.rename(tagged_file_path, file_path)
+  end
+
+  @doc """
+  Removes ID3v1 tag (last 128 bytes of tagged files) from a given file path
+  """
+  def remove_v1_tag(file_path) do
+    {:ok, data} = File.read(file_path)
+    audio_byte_size = byte_size(data) - 128
+
+    << audio::binary-size(audio_byte_size), id3_tag::binary >> = data
+
+    if String.starts_with?(id3_tag, "TAG") do
+      File.write(file_path, audio)
+    else
+      :ok
+    end
+  end
 
   @doc """
   Creates and returns an ID3 tag for a given episode
   """
   def tag_for_episode(episode) do
     Tag.create(3)
-    |> add_text_to_tag("artist", "Changelog Media")
-    |> add_text_to_tag("publisher", "Changelog Media")
+    |> add_text_to_tag("encoder", "github.com/thechangelog/id3vx")
     |> add_text_to_tag("genre", "Podcast")
-    |> add_text_to_tag("album", episode.podcast.name)
-    |> add_text_to_tag("title", episode.title)
+    |> add_text_to_tag("publisher", "changelog.com")
+    |> add_text_to_tag("artist", "Changelog Media")
     |> add_text_to_tag("subtitle", episode.subtitle)
+    |> add_text_to_tag("title", episode.title)
+    |> add_text_to_tag("album", episode.podcast.name)
+    |> add_date_to_tag(episode.published_at)
   end
 
   @doc """
@@ -36,15 +73,40 @@ defmodule Changelog.Mp3Kit do
         in_milliseconds(c.ends_at),
         0, 0, # settings start/end offsets to zero forces use of start/end times
         c.title, fn(chapter) ->
-          if StringKit.present?(c.link_url) do
-            Tag.add_custom_url(chapter, "chapter link", c.link_url)
-          else
-            chapter
-          end
+          chapter
+          |> add_link_to_chapter(c.link_url)
+          |> add_image_to_chapter(c.image_url)
         end)
     end)
   end
 
+  defp add_link_to_chapter(tag, nil), do: tag
+  defp add_link_to_chapter(tag, ""), do: tag
+  defp add_link_to_chapter(tag, url) do
+    Tag.add_custom_url(tag, "chapter url", url)
+  end
+
+  defp add_image_to_chapter(tag, nil), do: tag
+  defp add_image_to_chapter(tag, ""), do: tag
+  defp add_image_to_chapter(tag, url) do
+    file_path = UrlKit.get_tempfile(url)
+    add_image_to_tag(tag, file_path)
+  end
+
+  @doc """
+  Returns a tag with date-related frames added to tag
+  """
+  def add_date_to_tag(tag, nil), do: tag
+  def add_date_to_tag(tag, datetime) do
+    {:ok, year} = Timex.format(datetime, "{YYYY}")
+    {:ok, date} = Timex.format(datetime, "{0D}{0M}")
+
+    tag
+    |> add_text_to_tag("year", year)
+    |> add_text_to_tag("date", date)
+  end
+
+  defp in_milliseconds(nil), do: 0
   defp in_milliseconds(seconds), do: round(seconds * 1000)
 
   @doc """

@@ -33,18 +33,13 @@ defmodule Changelog.Mp3KitTest do
       assert find_text_frame(tag, podcast.name)
       assert find_text_frame(tag, subtitle)
     end
-  end
 
-  describe "add_image_to_tag/2" do
-    test "when valid image path is provided" do
-      file_path = fixtures_path("/images/avatar600x600.png")
+    test "when episode has a published_at time" do
+      episode = build(:episode, published_at: ~D[2022-09-02])
+      tag = Mp3Kit.tag_for_episode(episode)
 
-      tag =
-        build(:episode)
-        |> Mp3Kit.tag_for_episode()
-        |> Mp3Kit.add_image_to_tag(file_path, "image/png")
-
-      assert length(find_picture_frames(tag)) == 1
+      assert find_text_frame(tag, "2022")
+      assert find_text_frame(tag, "0209")
     end
   end
 
@@ -73,6 +68,33 @@ defmodule Changelog.Mp3KitTest do
         |> find_chapter_frames()
 
       assert length(chapters) == 3
+    end
+  end
+
+  describe "add_date_to_tag/2" do
+    test "when date is nil" do
+      tag = Id3vx.Tag.create(3)
+      assert Mp3Kit.add_date_to_tag(tag, nil) == tag
+    end
+
+    test "when date is valid" do
+      tag = Id3vx.Tag.create(3)
+      tag = Mp3Kit.add_date_to_tag(tag, ~D[2011-01-02])
+      assert find_text_frame(tag, "2011")
+      assert find_text_frame(tag, "0201")
+    end
+  end
+
+  describe "add_image_to_tag/2" do
+    test "when valid image path is provided" do
+      file_path = fixtures_path("/images/avatar600x600.png")
+
+      tag =
+        build(:episode)
+        |> Mp3Kit.tag_for_episode()
+        |> Mp3Kit.add_image_to_tag(file_path)
+
+      assert length(find_picture_frames(tag)) == 1
     end
   end
 
