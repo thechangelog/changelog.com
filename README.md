@@ -102,42 +102,6 @@ Finally, stop the db container by pressing both `CTRL` and `c` keys and the same
 
 You can now start the app normally, all changelog.com content at the time the db backup was taken will be available locally.
 
-### How do I get a local copy of all assets?
-
-Run `make rsync-image-uploads-to-local` in your terminal. There is even `make rsync-all-uploads-to-local` 😲
-
-### Why is Docker for Mac slow?
-
-If you are running changelog.com locally via `docker-compose up` on a Mac, you might notice that pages take ~1.5s to load:
-
-```
-while true
-do
-  curl --silent --output /dev/null \
-  --write-out '%{http_code} connect:%{time_connect} prepare:%{time_pretransfer} transfer:%{time_starttransfer} total:%{time_total}\n' \
-  http://localhost:4000/
-done
-200 connect:0.004815 prepare:0.004849 transfer:1.488685 total:1.488921
-200 connect:0.005061 prepare:0.005089 transfer:1.627873 total:1.628171
-200 connect:0.005176 prepare:0.005211 transfer:1.566022 total:1.566123
-^C
-```
-
-This is down to [Docker for Mac networking integration with the OS](https://github.com/docker/for-mac/issues/2814), which is still the case in [18.09.0-ce-beta1](https://github.com/docker/docker-ce/releases/tag/v18.09.0-ce-beta1).
-
-The same test on Arch Linux 2018.10.1 running Docker 18.06.1-ce results in ~0.08s response times (20x faster):
-
-```
-200 connect:0.000569 prepare:0.000602 transfer:0.080425 total:0.080501
-200 connect:0.000614 prepare:0.000650 transfer:0.083291 total:0.083407
-200 connect:0.000611 prepare:0.000643 transfer:0.081731 total:0.081853
-^C
-```
-
-Our thinking is: [make it work first, make it right next &amp; make it fast last](http://wiki.c2.com/?MakeItWorkMakeItRightMakeItFast).
-Contributions to make changelog.com dev on Docker for Mac fast are welcome!
-It would be especially interesting to know if [ipvlan on macOS](https://github.com/docker/cli/blob/master/experimental/vlan-networks.md) makes things better.
-
 ### How to upgrade Elixir?
 
 1. Pick an image from [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
