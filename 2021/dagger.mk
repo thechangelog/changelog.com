@@ -1,6 +1,6 @@
 # Tip: https://github.com/dagger/dagger-action
 # curl -L https://dl.dagger.io/dagger/latest_version
-# ⚠️  Keep this in sync with .github/workflows/prod_image.yml
+# ⚠️  Keep this in sync with .github/workflows/ship_it.yml
 DAGGER_VERSION := 0.1.0
 DAGGER_RELEASES := https://dl.dagger.io/dagger/releases
 DAGGER_DIR := $(LOCAL_BIN)/dagger_v$(DAGGER_VERSION)_$(platform)_amd64
@@ -36,11 +36,8 @@ else
 endif
 DAGGER_HOME := $(BASE_DIR)/.dagger
 DAGGER_ENV := $(DAGGER_HOME)/env
-OTEL_EXPORTER_JAEGER_ENDPOINT := http://$(shell awk -F'[/:]' '{ print $$4 }' <<< $(DOCKER_HOST)):14268/api/traces
-export OTEL_EXPORTER_JAEGER_ENDPOINT
 
 $(DAGGER_HOME): | $(DAGGER)
-	@printf "$(BOLD)TODO$(RESET) $(MAGENTA)Make $(BOLD)dagger init$(RESET)$(MAGENTA) command idempotent$(RESET)\n"
 	$(DAGGER_CTX) init
 .PHONY: dagger-init
 dagger-init: | $(DAGGER_HOME)
@@ -63,9 +60,8 @@ GIT_AUTHOR ?= $(USER)
 define _convert_dockerignore_to_excludes
 awk '{ print "--exclude " $$1 }' < $(BASE_DIR)/.dockerignore
 endef
-.PHONY: dagger-prod-image
-dagger-prod-image: $(DAGGER_ENV)/prod_image
-	@printf "$(BOLD)TODO$(RESET) $(MAGENTA)Document multiple $(BOLD)--exclude$(RESET)$(MAGENTA) statements$(RESET)\n"
+.PHONY: ship-it
+ship-it: $(DAGGER_ENV)/prod_image
 	$(DAGGER_CTX) input dir app_src . $(shell $(_convert_dockerignore_to_excludes)) --exclude deps --exclude _build --exclude dagger --environment prod_image
 	$(DAGGER_CTX) input text prod_dockerfile --file docker/Dockerfile.production --environment prod_image
 	$(DAGGER_CTX) input text git_sha $(GIT_SHA) --environment prod_image
@@ -74,7 +70,6 @@ dagger-prod-image: $(DAGGER_ENV)/prod_image
 	$(DAGGER_CTX) input text build_version $(APP_VERSION) --environment prod_image
 	$(DAGGER_CTX) input text build_url $(BUILD_URL) --environment prod_image
 	$(DAGGER_CTX) input text docker_host $(DOCKER_HOST) --environment prod_image
-	@printf "$(BOLD)TODO$(RESET) $(MAGENTA)Remove $(BOLD)JAEGER_TRACE$(RESET)$(MAGENTA) from docs, now supersed by OTEL_EXPORTER_JAEGER_ENDPOINT$(RESET)\n"
 	$(DAGGER_CTX) up --log-level debug --environment prod_image
 
 .PHONY: dagger-clean
