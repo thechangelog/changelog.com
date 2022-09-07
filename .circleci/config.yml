@@ -4,7 +4,7 @@ jobs:
   deps:
     working_directory: &dir /app
     docker:
-      - image: &runtime thechangelog/runtime:2021-05-29T10.17.12Z
+      - image: &runtime thechangelog/runtime:2022-09-07T16.43.00Z
     steps:
       - checkout
       - restore_cache: &deps_cache
@@ -52,7 +52,7 @@ jobs:
     working_directory: *dir
     docker:
       - image: *runtime
-      - image: circleci/postgres:12.6
+      - image: postgres:14.1
         environment:
           POSTGRES_USER: "postgres"
           POSTGRES_DB: changelog_test

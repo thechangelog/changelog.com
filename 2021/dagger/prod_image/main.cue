@@ -14,7 +14,7 @@ docker_host:        dagger.#Input & {string}
 dockerhub_username: dagger.#Input & {string}
 dockerhub_password: dagger.#Input & {dagger.#Secret}
 // ⚠️  Keep this in sync with ../docker/Dockerfile.production
-runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2021-05-29T10.17.12Z"}
+runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2022-09-07T16.43.00Z"}
 build_version:     dagger.#Input & {string}
 git_branch:        dagger.#Input & {string | *"dev"}
 prod_image_ref:    dagger.#Input & {string | *"thechangelog/changelog.com:\(git_branch)"}
@@ -22,8 +22,8 @@ git_sha:           dagger.#Input & {string}
 git_author:        dagger.#Input & {string}
 app_version:       dagger.#Input & {string}
 build_url:         dagger.#Input & {string}
-// ⚠️  Keep this in sync with manifests/changelog/db.yml
-test_db_image_ref:      dagger.#Input & {string | *"circleci/postgres:12.6"}
+// ⚠️  Keep this in sync with dev_docker/postgres.yml
+test_db_image_ref:      dagger.#Input & {string | *"postgres:14.1"}
 test_db_container_name: "changelog_test_postgres"
 
 // STORY #######################################################################
