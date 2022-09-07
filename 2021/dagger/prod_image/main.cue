@@ -22,8 +22,8 @@ git_sha:           dagger.#Input & {string}
 git_author:        dagger.#Input & {string}
 app_version:       dagger.#Input & {string}
 build_url:         dagger.#Input & {string}
-// ⚠️  Keep this in sync with manifests/changelog/db.yml
-test_db_image_ref:      dagger.#Input & {string | *"circleci/postgres:12.6"}
+// ⚠️  Keep this in sync with dev_docker/postgres.yml
+test_db_image_ref:      dagger.#Input & {string | *"postgres:14.1"}
 test_db_container_name: "changelog_test_postgres"
 
 // STORY #######################################################################
