@@ -138,6 +138,20 @@ Our thinking is: [make it work first, make it right next &amp; make it fast last
 Contributions to make changelog.com dev on Docker for Mac fast are welcome!
 It would be especially interesting to know if [ipvlan on macOS](https://github.com/docker/cli/blob/master/experimental/vlan-networks.md) makes things better.
 
+### How to upgrade Elixir?
+
+1. Pick an image from [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
+1. Update `docker/Dockerfile.runtime` to use an image from the URL above
+1. Run `make runtime-image` to publish the new container image
+1. Update `docker/Dockerfile.production` to the exact runtime version that was published in the previous step
+1. Update `.circleci/config.yml` to the exact runtime version used above
+1. Update `2021/dagger/prod_image/main.cue` to the exact runtime version used above
+1. Update `dev_docker/changelog.yml` to the exact runtime version used above
+1. Update the Elixir version in `README.md` & `mix.exs`
+1. Commit and push everything, then wait for the pipeline to deploy everything into production
+
+You may want to test everything locally by running `make dagger-prod-image` from within the `2021` dir. This makes it easy to debug any potential issues locally.
+
 ## Code of Conduct
 
 [Contributor Code of Conduct](https://changelog.com/coc). By participating in this project you agree to abide by its terms.
