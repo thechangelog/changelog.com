@@ -7,7 +7,7 @@ defmodule Changelog.Mixfile do
     [
       app: :changelog,
       version: System.get_env("APP_VERSION", "0.0.1"),
-      elixir: "~> 1.12",
+      elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
