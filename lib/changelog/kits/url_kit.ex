@@ -20,7 +20,7 @@ defmodule Changelog.UrlKit do
 
   def get_html(url) do
     try do
-      case HTTPoison.get!(url, [], follow_redirect: true, max_redirect: 5) do
+      case HTTPoison.get!(url, [], [ssl: [{:middlebox_comp_mode, false}], follow_redirect: true, max_redirect: 5]) do
         %{status_code: 200, headers: headers, body: body} ->
           case List.keyfind(headers, "Content-Encoding", 0) do
             {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
