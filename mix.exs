@@ -54,7 +54,7 @@ defmodule Changelog.Mixfile do
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
       {:bamboo_phoenix, "~> 1.0.0"},
-      {:bamboo_smtp, "~> 4.1.0"},
+      {:bamboo_smtp, "~> 4.2"},
       {:httpoison, "~> 1.0", override: true},
       {:jason, "~> 1.0"},
       {:con_cache, "~> 1.0.0"},
