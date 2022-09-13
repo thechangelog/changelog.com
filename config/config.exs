@@ -35,7 +35,7 @@ config :changelog,
 
 config :changelog, Oban,
   repo: Changelog.Repo,
-  queues: [comment_notifier: 10, scheduled: 5],
+  queues: [comment_notifier: 10, audio_updater: 10, scheduled: 5],
   plugins: [Oban.Plugins.Pruner, Oban.Plugins.Stager]
 
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
