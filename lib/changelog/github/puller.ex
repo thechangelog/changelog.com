@@ -1,7 +1,7 @@
 defmodule Changelog.Github.Puller do
   require Logger
 
-  alias Changelog.{Cache, Episode, Github, Podcast, Repo}
+  alias Changelog.{Cache, Episode, Github, HTTP, Podcast, Repo}
   alias ChangelogWeb.PodcastView
 
   def update(type, items) when is_list(items) do
@@ -54,7 +54,7 @@ defmodule Changelog.Github.Puller do
     episode = Episode.preload_podcast(episode)
     source = Github.Source.new(type, episode)
 
-    case HTTPoison.get!(source.raw_url, [], [ssl: [{:middlebox_comp_mode, false}]]) do
+    case HTTP.get!(source.raw_url) do
       %{status_code: 200, body: text} -> update_function(type, episode, text)
       _else -> Logger.info("#{String.capitalize(type)}: Failed to fetch #{source.raw_url}")
     end

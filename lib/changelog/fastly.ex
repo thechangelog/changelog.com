@@ -6,6 +6,7 @@ defmodule Changelog.Fastly do
 
   alias Changelog.{
     Files,
+    HTTP,
     Episode,
     Metacast,
     NewsAd,
@@ -138,6 +139,6 @@ defmodule Changelog.Fastly do
   def purge(url) do
     %{path: path, host: host} = URI.parse(url)
     Logger.info("Fastly: Purging #{url}")
-    HTTPoison.request(:purge, endpoint(path), "", host: host)
+    HTTP.request(:purge, endpoint(path), "", host: host)
   end
 end

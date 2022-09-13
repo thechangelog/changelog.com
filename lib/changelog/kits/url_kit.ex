@@ -1,13 +1,11 @@
 defmodule Changelog.UrlKit do
-  alias Changelog.{NewsSource, Person, Regexp}
+  alias Changelog.{HTTP, NewsSource, Person, Regexp}
 
   def get_author(nil), do: nil
   def get_author(url), do: Person.get_by_website(url)
 
   def get_tempfile(url) do
-    # workaround for https://github.com/erlang/otp/issues/6241
-    # TODO remove once we're on OTP >= 24.3.4.5
-    case HTTPoison.get(url, [], [ssl: [{:middlebox_comp_mode, false}]]) do
+    case HTTP.get(url) do
       {:ok, %{status_code: 200, body: body}} ->
         hash = :sha256 |> :crypto.hash(body) |> Base.encode16()
         path = Path.join(System.tmp_dir(), hash)
@@ -20,7 +18,7 @@ defmodule Changelog.UrlKit do
 
   def get_html(url) do
     try do
-      case HTTPoison.get!(url, [], [ssl: [{:middlebox_comp_mode, false}], follow_redirect: true, max_redirect: 5]) do
+      case HTTP.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
         %{status_code: 200, headers: headers, body: body} ->
           case List.keyfind(headers, "Content-Encoding", 0) do
             {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)

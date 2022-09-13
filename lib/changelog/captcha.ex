@@ -1,4 +1,6 @@
 defmodule Changelog.Captcha do
+  alias Changelog.HTTP
+
   def host, do: "https://www.google.com/recaptcha/api"
 
   def verify_url, do: host() <> "/siteverify"
@@ -7,7 +9,7 @@ defmodule Changelog.Captcha do
     secret = Application.get_env(:changelog, :recaptcha_secret_key)
 
     verify_url()
-    |> HTTPoison.post!({:form, [{:secret, secret}, {:response, response}]})
+    |> HTTP.post!({:form, [{:secret, secret}, {:response, response}]})
     |> Map.get(:body)
     |> Jason.decode!()
     |> Map.get("success", false)
