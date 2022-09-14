@@ -6,7 +6,7 @@ defmodule Changelog.ObanWorkers.AudioUpdater do
   use Oban.Worker, queue: :audio_updater
 
   alias Changelog.{Episode, Fastly, Mp3Kit, Repo, UrlKit}
-  alias Changelog.Files.Audio
+  alias Changelog.Files.{Audio, PlusPlus}
   alias ChangelogWeb.EpisodeView
 
   @impl Oban.Worker
@@ -53,7 +53,7 @@ defmodule Changelog.ObanWorkers.AudioUpdater do
     Mp3Kit.tag(path, episode, episode.plusplus_chapters)
     Logger.info "Uploading plusplus file"
 
-    case Audio.store({%{filename: name, path: path}, episode}) do
+    case PlusPlus.store({%{filename: name, path: path}, episode}) do
       {:ok, _} -> Logger.info "Upload succeeded"
       {:error, _} -> Logger.info "Upload failed"
     end
