@@ -13,55 +13,52 @@ defmodule Changelog.ObanWorkers.AudioUpdater do
   def perform(%Oban.Job{args: %{"episode_id" => episode_id}}) do
     episode = Episode |> Repo.get(episode_id) |> Episode.preload_all()
 
-    if update_audio_file(episode) || update_plusplus_file(episode) do
-      Logger.info "Purging Fastly"
-      Fastly.purge(episode)
-    end
+    update_audio_file(episode)
+    update_plusplus_file(episode)
+
+    Logger.info "Purging Fastly"
+    Fastly.purge(episode)
 
     :ok
   end
 
-  defp update_audio_file(%{audio_file: nil}), do: false
+  defp update_audio_file(%{audio_file: nil}), do: Logger.info "No audio file"
   defp update_audio_file(episode) do
     url = EpisodeView.audio_url(episode)
     name = Path.basename(url)
-    Logger.info "Downloading Audio mp3: #{url}"
+    Logger.info "Downloading audio file: #{url}"
     path = UrlKit.get_tempfile(url)
 
-    Logger.info "Tagging Audio mp3"
+    Logger.info "Tagging audio file"
     Mp3Kit.tag(path, episode, episode.audio_chapters)
-    Logger.info "Uploading Audio mp3"
+    Logger.info "Uploading audio file"
 
-    did_update = case Audio.store({%{filename: name, path: path}, episode}) do
-      {:ok, _} -> true
-      {:error, _} -> false
+    case Audio.store({%{filename: name, path: path}, episode}) do
+      {:ok, _} -> Logger.info "Upload succeeded"
+      {:error, _} -> Logger.info "Upload failed"
     end
 
     Logger.info "Deleting tempfile: #{path}"
     File.rm(path)
-
-    did_update
   end
 
-  defp update_plusplus_file(%{plusplus_file: nil}), do: false
+  defp update_plusplus_file(%{plusplus_file: nil}), do: Logger.info "No plusplus file"
   defp update_plusplus_file(episode) do
     url = EpisodeView.plusplus_url(episode)
     name = Path.basename(url)
-    Logger.info "Downloading PlusPlus mp3: #{url}"
+    Logger.info "Downloading pluplus file: #{url}"
     path = UrlKit.get_tempfile(url)
 
-    Logger.info "Tagging PlusPlus mp3"
+    Logger.info "Tagging plusplus file"
     Mp3Kit.tag(path, episode, episode.plusplus_chapters)
-    Logger.info "Uploading Audio mp3"
+    Logger.info "Uploading plusplus file"
 
-    did_update = case Audio.store({%{filename: name, path: path}, episode}) do
-      {:ok, _} -> true
-      {:error, _} -> false
+    case Audio.store({%{filename: name, path: path}, episode}) do
+      {:ok, _} -> Logger.info "Upload succeeded"
+      {:error, _} -> Logger.info "Upload failed"
     end
 
     Logger.info "Deleting tempfile: #{path}"
     File.rm(path)
-
-    did_update
   end
 end
