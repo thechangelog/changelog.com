@@ -13,47 +13,55 @@ defmodule Changelog.ObanWorkers.AudioUpdater do
   def perform(%Oban.Job{args: %{"episode_id" => episode_id}}) do
     episode = Episode |> Repo.get(episode_id) |> Episode.preload_all()
 
-    updated_audio = if episode.audio_file do
-      audio_url = EpisodeView.audio_url(episode)
-      audio_name = Path.basename(audio_url)
-      Logger.info "Downloading Audio mp3: #{audio_url}"
-      file_path = UrlKit.get_tempfile(audio_url)
-
-      Logger.info "Tagging Audio mp3"
-      Mp3Kit.tag(file_path, episode, episode.audio_chapters)
-      Logger.info "Uploading Audio mp3"
-
-      case Audio.store({%{filename: audio_name, path: file_path}, episode}) do
-        {:ok, _} -> true
-        {:error, _} -> false
-      end
-    else
-      false
-    end
-
-    updated_plusplus = if episode.plusplus_file do
-      plusplus_url = EpisodeView.plusplus_url(episode)
-      plusplus_name = Path.basename(plusplus_url)
-      Logger.info "Downloading PlusPlus mp3: #{plusplus_url}"
-      file_path = UrlKit.get_tempfile(plusplus_url)
-
-      Logger.info "Tagging PlusPlus mp3"
-      Mp3Kit.tag(file_path, episode, episode.plusplus_chapters)
-      Logger.info "Uploading PlusPlus mp3"
-
-      case Audio.store({%{filename: plusplus_name, path: file_path}, episode}) do
-        {:ok, _} -> true
-        {:error, _} -> false
-      end
-    else
-      false
-    end
-
-    if updated_audio || updated_plusplus do
+    if update_audio_file(episode) || update_plusplus_file(episode) do
       Logger.info "Purging Fastly"
       Fastly.purge(episode)
     end
 
     :ok
+  end
+
+  defp update_audio_file(%{audio_file: nil}), do: false
+  defp update_audio_file(episode) do
+    url = EpisodeView.audio_url(episode)
+    name = Path.basename(url)
+    Logger.info "Downloading Audio mp3: #{url}"
+    path = UrlKit.get_tempfile(url)
+
+    Logger.info "Tagging Audio mp3"
+    Mp3Kit.tag(path, episode, episode.audio_chapters)
+    Logger.info "Uploading Audio mp3"
+
+    did_update = case Audio.store({%{filename: name, path: path}, episode}) do
+      {:ok, _} -> true
+      {:error, _} -> false
+    end
+
+    Logger.info "Deleting tempfile: #{path}"
+    File.rm(path)
+
+    did_update
+  end
+
+  defp update_plusplus_file(%{plusplus_file: nil}), do: false
+  defp update_plusplus_file(episode) do
+    url = EpisodeView.plusplus_url(episode)
+    name = Path.basename(url)
+    Logger.info "Downloading PlusPlus mp3: #{url}"
+    path = UrlKit.get_tempfile(url)
+
+    Logger.info "Tagging PlusPlus mp3"
+    Mp3Kit.tag(path, episode, episode.plusplus_chapters)
+    Logger.info "Uploading Audio mp3"
+
+    did_update = case Audio.store({%{filename: name, path: path}, episode}) do
+      {:ok, _} -> true
+      {:error, _} -> false
+    end
+
+    Logger.info "Deleting tempfile: #{path}"
+    File.rm(path)
+
+    did_update
   end
 end
