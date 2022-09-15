@@ -61,4 +61,13 @@ defmodule Changelog.ObanWorkers.AudioUpdater do
     Logger.info "Deleting tempfile: #{path}"
     File.rm(path)
   end
+
+  @doc """
+  Queues an episode for its audio to be updated
+  """
+  def queue(%Episode{id: id}) do
+    %{"episode_id" => id}
+    |> new()
+    |> Oban.insert()
+  end
 end

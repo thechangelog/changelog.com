@@ -13,10 +13,12 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     EpisodeStat,
     Fastly,
     Github,
+    ListKit,
     NewsItem,
     NewsQueue,
     Podcast
   }
+  alias Changelog.ObanWorkers.AudioUpdater
 
   plug :assign_podcast
   plug Authorize, [Policies.Admin.Episode, :podcast]
@@ -227,6 +229,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         Cache.delete(episode)
         Fastly.purge(episode)
 
+        unless any_files_uploaded?(changeset) do
+          AudioUpdater.queue(episode)
+        end
+
         params =
           replace_next_edit_path(
             params,
@@ -245,6 +251,10 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         |> assign(:episode_requests, episode_requests(episode))
         |> render(:edit)
     end
+  end
+
+  defp any_files_uploaded?(%{changes: changes}) do
+    ListKit.overlap?(Map.keys(changes), ~w(audio_file plusplus_file)a)
   end
 
   def delete(conn, %{"id" => slug}, podcast) do

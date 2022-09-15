@@ -36,4 +36,17 @@ defmodule Changelog.ListKitTest do
       assert ListKit.exclude(list, [2, 4]) == [1, 3, 5]
     end
   end
+
+  describe "overlap?/2" do
+    test "is true when two lists have at least one common element" do
+      assert ListKit.overlap?([1, 2, 3], [2, 3, 4])
+      assert ListKit.overlap?([1, 2, 3], [1, "two", :three])
+    end
+
+    test "is false when two lists have no common elements" do
+      refute ListKit.overlap?([1, 2, 3], [4, 5, 6])
+      refute ListKit.overlap?([1, 2, 3], ["1", "two", :three])
+      refute ListKit.overlap?([1, 2, 3], [])
+    end
+  end
 end

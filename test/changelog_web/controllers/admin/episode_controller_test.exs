@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
   import Mock
 
-  alias Changelog.{Episode, EpisodeGuest, Github, NewsItem, NewsQueue}
+  alias Changelog.{Episode, EpisodeGuest, Github, NewsItem, ObanWorkers, NewsQueue}
 
   @valid_attrs %{title: "The one where we win", slug: "181-win"}
   @invalid_attrs %{title: ""}
@@ -13,7 +13,8 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     [
       {Github.Pusher, [], [push: fn _, _ -> {:ok, "success"} end]},
       {Github.Puller, [], [update: fn _, _ -> true end]},
-      {Changelog.Merch, [], [create_discount: fn _, _ -> {:ok, %{code: "yup"}} end]}
+      {Changelog.Merch, [], [create_discount: fn _, _ -> {:ok, %{code: "yup"}} end]},
+      {ObanWorkers.AudioUpdater, [], [queue: fn _ -> :ok end]}
     ],
     assigns
   ) do
@@ -101,7 +102,8 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
         episode: @valid_attrs
       )
 
-    refute called(Github.Pusher.push())
+    refute called(Github.Pusher.push(:_, :_))
+    assert called(ObanWorkers.AudioUpdater.queue(:_))
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode) == 1
   end
@@ -117,6 +119,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
       )
 
     assert called(Github.Pusher.push(:_, e.notes))
+    assert called(ObanWorkers.AudioUpdater.queue(:_))
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
   end
 
@@ -131,6 +134,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
       )
 
     refute called(Github.Pusher.push())
+    refute called(ObanWorkers.AudioUpdater.queue(:_))
     assert html_response(conn, 200) =~ ~r/error/
   end
 
