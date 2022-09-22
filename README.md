@@ -113,7 +113,38 @@ You can now start the app normally, all changelog.com content at the time the db
 1. Update the Elixir version in `README.md` & `mix.exs`
 1. Commit and push everything, then wait for the pipeline to deploy everything into production
 
-You may want to test everything locally by running `make dagger-prod-image` from within the `2021` dir. This makes it easy to debug any potential issues locally.
+You may want to test everything locally by running `make ship-it` from within the `2021` dir. This makes it easy to debug any potential issues locally.
+
+### How to build a new container image using Docker Engine running on Fly.io?
+
+Ensure that you have a [Fly.io Wireguard Tunnel configured locally](https://fly.io/docs/reference/private-networking/#creating-your-tunnel-configuration).
+You may also need to [install `flyctl`](https://fly.io/docs/hands-on/install-flyctl/).
+
+Given an active Fly.io Wireguard tunnel:
+
+1. Check that the Wireguard tunnel works:
+```
+dig +noall +answer _apps.internal txt
+_apps.internal.		5	IN	TXT	"changelog-2022-03-13,docker-2022-06-13,old-flower-9005,postgres-2022-03-12"
+```
+1. Configure `docker` CLI to use Docker Engine running on Fly.io:
+```
+export DOCKER_HOST=tcp://[fdaa:0:4556:a7b:21e0:1:1f9d:2]:2375
+```
+1. Check that `docker` CLI can connect to the remote Docker Engine:
+```
+docker info
+...
+Server:
+ Containers: 1
+  Running: 1
+  Paused: 0
+  Stopped: 0
+ Server Version: 20.10.17
+...
+```
+
+Any `docker` commands will now run against this remote Docker Engine now, including `make runtime-image`.
 
 ## Code of Conduct
 
