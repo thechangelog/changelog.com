@@ -12,7 +12,7 @@ docker_host:        dagger.#Input & {string}
 dockerhub_username: dagger.#Input & {string}
 dockerhub_password: dagger.#Input & {dagger.#Secret}
 // ⚠️  Keep this in sync with ../docker/Dockerfile.production
-runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2022-09-07T16.43.00Z"}
+runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2022-09-21T23.19.21Z"}
 build_version:     dagger.#Input & {string}
 git_branch:        dagger.#Input & {string | *"dev"}
 prod_image_ref:    dagger.#Input & {string | *"thechangelog/changelog.com:\(git_branch)"}
