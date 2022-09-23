@@ -1,9 +1,6 @@
-# https://hub.docker.com/_/elixir
-# FROM elixir:1.12
-#
 # @akoutmos recommends the hex.pm image because it's maintained by the hex core team
 # https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy
-FROM hexpm/elixir:1.13.4-erlang-24.3.4.4-ubuntu-jammy-20220428
+FROM hexpm/elixir:1.13.4-erlang-24.3.4.5-ubuntu-jammy-20220428
 
 USER root
 
@@ -17,11 +14,6 @@ ENV TERM=xterm-256color
 RUN echo "Pre-warm package manager cache..." \
     ; ${FAIL_FAST_VERBOSE} \
     ; apt-get update
-
-RUN echo "Install ffmpeg..." \
-    ; ${FAIL_FAST_VERBOSE} \
-    ; ${PKG_INSTALL} ffmpeg \
-    ; ffmpeg -version
 
 RUN echo "Install convert (imagemagick), required for image resizing..." \
     ; ${FAIL_FAST_VERBOSE} \
@@ -52,7 +44,7 @@ RUN echo "Install netcat for waiting on open ports..." \
     ; ${FAIL_FAST_VERBOSE} \
     ; ${PKG_INSTALL} netcat
 
-# https://nodejs.org/en/download/
+# https://nodejs.org/en/download/releases/
 # https://github.com/nodejs/help/wiki/Installation#how-to-install-nodejs-via-binary-archive-on-linux
 ENV NODEJS_VERSION=v14.20.0
 ENV PATH=/usr/local/lib/nodejs/node-${NODEJS_VERSION}-linux-x64/bin:$PATH
