@@ -36,8 +36,8 @@
 
   <div class="form-element_wrap">
     <div class="form-element" style="text-align: center;">
-      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-      <div class="g-recaptcha" data-sitekey="6Lda3LoaAAAAAMoUFKUgxnxX91FQKzy9pY8t435v" style="display: inline-block;"></div>
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAAAnzevzjdGT8igM" style="display: inline-block;"></div>
     </div>
   </div>
 

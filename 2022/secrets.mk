@@ -99,18 +99,18 @@ github-lke-secret: | lke-ctx $(LPASS)
 	| $(KUBECTL) $(K_CMD) --filename -
 lke-changelog-secrets:: github-lke-secret
 
-HCAPTCHA_SECRET_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/HCAPTCHA_SECRET_KEY)"
-.PHONY: hcaptcha
-hcaptcha: $(LPASS)
-	@echo "export HCAPTCHA_SECRET_KEY=$(HCAPTCHA_SECRET_KEY)"
-env-secrets:: hcaptcha
-.PHONY: hcaptcha-lke-secret
-hcaptcha-lke-secret: | lke-ctx $(LPASS)
+TURNSTILE_SECRET_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/TURNSTILE_SECRET_KEY)"
+.PHONY: turnstile
+turnstile: $(LPASS)
+	@echo "export TURNSTILE_SECRET_KEY=$(TURNSTILE_SECRET_KEY)"
+env-secrets:: turnstile
+.PHONY: turnstile-lke-secret
+turnstile-lke-secret: | lke-ctx $(LPASS)
 	@$(KUBECTL) --namespace $(CHANGELOG_NAMESPACE) --dry-run=client --output=yaml \
-		create secret generic hcaptcha \
-		--from-literal=secret_key=$(HCAPTCHA_SECRET_KEY) \
+		create secret generic turnstile \
+		--from-literal=secret_key=$(TURNSTILE_SECRET_KEY) \
 	| $(KUBECTL) $(K_CMD) --filename -
-lke-changelog-secrets:: hcaptcha-lke-secret
+lke-changelog-secrets:: turnstile-lke-secret
 
 RECAPTCHA_SECRET_KEY ?= "$$($(LPASS) show --notes Shared-changelog/secrets/RECAPTCHA_SECRET_KEY)"
 .PHONY: recaptcha

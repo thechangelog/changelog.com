@@ -62,7 +62,7 @@ dagger.#Plan & {
 			GITHUB_CLIENT_ID:                dagger.#Secret
 			GITHUB_CLIENT_SECRET:            dagger.#Secret
 			GITHUB_API_TOKEN:                dagger.#Secret
-			HCAPTCHA_SECRET_KEY:             dagger.#Secret
+			TURNSTILE_SECRET_KEY:            dagger.#Secret
 			RECAPTCHA_SECRET_KEY:            dagger.#Secret
 			HN_USER:                         dagger.#Secret
 			HN_PASS:                         dagger.#Secret

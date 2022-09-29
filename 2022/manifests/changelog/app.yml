@@ -141,10 +141,10 @@ spec:
                 secretKeyRef:
                   name: github
                   key: client_secret
-            - name: HCAPTCHA_SECRET_KEY
+            - name: TURNSTILE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: hcaptcha
+                  name: turnstile
                   key: secret_key
             - name: RECAPTCHA_SECRET_KEY
               valueFrom:
