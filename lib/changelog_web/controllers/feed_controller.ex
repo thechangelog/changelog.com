@@ -190,37 +190,69 @@ defmodule ChangelogWeb.FeedController do
     |> render("sitemap.xml")
   end
 
-  @doc "A topic's latest news and podcasts feed"
-  def topic(conn, %{"slug" => slug}) do
-    topic = Repo.get_by!(Topic, slug: slug)
-    # TODO
-    render(conn, "topic.xml")
-  end
-
-  @doc "A topic's news feed"
-  def topic_news(conn, params =%{"slug" => slug}) do
-    topic = Repo.get_by!(Topic, slug: slug)
-    news_items =
-      NewsItem
-      |> NewsItem.with_topic(topic)
-      |> NewsItem.non_audio()
+  @doc "A topic's news and podcasts feed"
+  def topic_show(conn, %{"slug" => slug}) do
+    items =
+      get_topic_by_item_type(slug, :all)
       |> NewsItem.published()
       |> NewsItem.newest_first()
       |> NewsItem.preload_all()
 
-    conn
-    |> put_layout(false)
-    |> put_resp_content_type("application/xml")
-    |> assign(:news_items, news_items)
-    |> ResponseCache.cache_public(cache_duration())
-    |> render("topic_news.xml")
+    render_topic(conn, items)
+  end
+
+  @doc "A topic's news feed"
+  def topic_news(conn, %{"slug" => slug}) do
+    items =
+      get_topic_by_item_type(slug, :news)
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+
+    render_topic(conn, items)
   end
 
   @doc "A topic's podcasts feed"
   def topic_podcasts(conn, %{"slug" => slug}) do
+    podcasts =
+      get_topic_by_item_type(slug, :podcasts)
+      |> NewsItem.published()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+
+    render_topic(conn, podcasts)
+  end
+
+  defp get_topic_by_item_type(slug, :all) do
     topic = Repo.get_by!(Topic, slug: slug)
-    # TODO:
-    render(conn, "topic_podcasts")
+
+    NewsItem
+    |> NewsItem.with_topic(topic)
+  end
+
+  defp get_topic_by_item_type(slug, :news) do
+    topic = Repo.get_by!(Topic, slug: slug)
+
+    NewsItem
+    |> NewsItem.with_topic(topic)
+    |> NewsItem.non_audio()
+  end
+
+  defp get_topic_by_item_type(slug, :podcasts) do
+    topic = Repo.get_by!(Topic, slug: slug)
+
+    NewsItem
+    |> NewsItem.with_topic(topic)
+    |> NewsItem.audio()
+  end
+
+  defp render_topic(conn, items) do
+    conn
+    |> put_layout(false)
+    |> put_resp_content_type("application/xml")
+    |> assign(:items, items)
+    |> ResponseCache.cache_public(cache_duration())
+    |> render("topic.xml")
   end
 
   defp cache_duration, do: 2..10 |> Enum.random() |> :timer.minutes()
