@@ -65,6 +65,13 @@
     </div>
   </div>
 
+  <div class="field <%= AdminHelpers.error_class(f, :publication) %>">
+    <div class="ui toggle checkbox">
+      <%= checkbox(f, :publication, class: "hidden") %>
+      <label>Publication <%= AdminHelpers.help_icon("Publication icons show in the feed. Platforms don't") %></label>
+    </div>
+  </div>
+
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>

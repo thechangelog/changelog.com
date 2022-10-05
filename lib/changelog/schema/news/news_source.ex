@@ -11,6 +11,7 @@ defmodule Changelog.NewsSource do
     field :description, :string
     field :feed, :string
     field :regex, :string
+    field :publication, :boolean
 
     field :icon, Files.Icon.Type
 
@@ -34,7 +35,7 @@ defmodule Changelog.NewsSource do
 
   def insert_changeset(source, attrs \\ %{}) do
     source
-    |> cast(attrs, ~w(name slug website twitter_handle description regex feed)a)
+    |> cast(attrs, ~w(name slug website twitter_handle description regex feed publication)a)
     |> validate_required([:name, :slug, :website])
     |> validate_format(:website, Regexp.http(), message: Regexp.http_message())
     |> validate_format(:feed, Regexp.http(), message: Regexp.http_message())
