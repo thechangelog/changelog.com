@@ -165,4 +165,18 @@ defmodule Changelog.UrlKitTest do
       assert sans == "news.ycombinator.com/item?id=18120667"
     end
   end
+
+  describe "via_scribe/1" do
+    test "it works on medium domain" do
+      url = "https://medium.com/@user/my-post-09a6af907a2"
+      scribed = UrlKit.via_scribe(url)
+      assert scribed == "https://scribe.rip/@user/my-post-09a6af907a2"
+    end
+
+    test "it works on custom domains too" do
+      url = "https://example.com/my-post-09a6af907a2"
+      scribed = UrlKit.via_scribe(url)
+      assert scribed == "https://scribe.rip/my-post-09a6af907a2"
+    end
+  end
 end

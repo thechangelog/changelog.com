@@ -143,7 +143,7 @@ defmodule ChangelogWeb.NewsItemController do
   end
 
   def visit(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
-    item = item_from_hashid(hashid)
+    item = item_from_hashid(hashid) |> NewsItem.preload_source()
 
     if should_track?(user, item), do: NewsItem.track_click(item)
 
@@ -152,7 +152,7 @@ defmodule ChangelogWeb.NewsItemController do
     else
       conn
       |> put_layout(false)
-      |> render(:visit, to: item.url)
+      |> render(:visit, to: NewsItemView.url(item))
     end
   end
 

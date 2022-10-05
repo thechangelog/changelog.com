@@ -83,7 +83,7 @@ defmodule ChangelogWeb.NewsItemView do
   def image_link(item, version \\ :large) do
     if item.image do
       content_tag :div, class: "news_item-image" do
-        link to: item.url, data: [news: true] do
+        link to: url(item), data: [news: true] do
           tag(:img, src: image_url(item, version), alt: item.headline, loading: "lazy")
         end
       end
@@ -239,6 +239,9 @@ defmodule ChangelogWeb.NewsItemView do
       title: "View #{topic.name}"
     )
   end
+
+  def url(%{url: url, source: %{slug: "medium"}}), do: UrlKit.via_scribe(url)
+  def url(%{url: url}), do: url
 
   def video_embed(item = %{type: :video}) do
     item.url |> UrlKit.get_youtube_id() |> render_youtube_embed()

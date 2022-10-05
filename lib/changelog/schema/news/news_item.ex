@@ -491,8 +491,8 @@ defmodule Changelog.NewsItem do
     query
     |> Ecto.Query.preload(:author)
     |> Ecto.Query.preload(:logger)
-    |> Ecto.Query.preload(:source)
     |> Ecto.Query.preload(:submitter)
+    |> preload_source()
     |> preload_topics()
   end
 
@@ -500,8 +500,8 @@ defmodule Changelog.NewsItem do
     item
     |> Repo.preload(:author)
     |> Repo.preload(:logger)
-    |> Repo.preload(:source)
     |> Repo.preload(:submitter)
+    |> preload_source()
     |> preload_topics()
   end
 
@@ -511,6 +511,14 @@ defmodule Changelog.NewsItem do
 
   def preload_comments(item) do
     Repo.preload(item, comments: {NewsItemComment.newest_first(), [:author]})
+  end
+
+  def preload_source(query = %Ecto.Query{}) do
+    Ecto.Query.preload(query, :source)
+  end
+
+  def preload_source(item) do
+    Repo.preload(item, :source)
   end
 
   def preload_topics(query = %Ecto.Query{}) do

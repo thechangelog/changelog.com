@@ -11,7 +11,7 @@ defmodule Changelog.NewsSource do
     field :description, :string
     field :feed, :string
     field :regex, :string
-    field :publication, :boolean
+    field :publication, :boolean, default: true
 
     field :icon, Files.Icon.Type
 

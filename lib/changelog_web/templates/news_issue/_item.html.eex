@@ -3,7 +3,7 @@
     <%= NewsItemView.render_source_image(@conn, @item) %>
     <%= NewsItemView.render_source_name(@conn, @item) %>
   </p>
-  <h2 class="news_item-title"><%= link(@item.headline, to: @item.url) %></h2>
+  <h2 class="news_item-title"><%= link(@item.headline, to: NewsItemView.url(@item)) %></h2>
   <div class="news_item-content">
     <%= @item.story |> SharedHelpers.md_to_html() |> raw() %>
     <%= if @item.image do %>
