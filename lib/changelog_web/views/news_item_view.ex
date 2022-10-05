@@ -168,7 +168,7 @@ defmodule ChangelogWeb.NewsItemView do
       item.author ->
         render("source/_image_author.html", conn: conn, item: item, author: item.author)
 
-      item.source && item.source.icon ->
+      item.source && item.source.publication && item.source.icon ->
         render("source/_image_source.html", conn: conn, item: item, source: item.source)
 
       topic = Enum.find(item.topics, & &1.icon) ->
