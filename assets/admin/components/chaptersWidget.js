@@ -25,6 +25,7 @@ export default class ChaptersWidget {
 
     let $wavFileDropZone = $chapters.siblings(".js-wav-file")
     let $addChapterButton = $chapters.siblings(".js-add-chapter")
+    let $copyDataButton = $chapters.siblings(".js-copy-chapter-data")
 
     $wavFileDropZone.on("dragover", function(event) {
       event.preventDefault()
@@ -95,6 +96,25 @@ export default class ChaptersWidget {
       }
 
       $chapters.append(chapterItem(context))
+    })
+
+    $copyDataButton.on("click", function() {
+      $chapters.find(".item").each((index, item1) => {
+        let title1 = $(item1).find("input[name*=title]")
+        let image1 = $(item1).find("input[name*=image_url]")
+        let link1  = $(item1).find("input[name*=link_url]")
+
+        $(".js-audio_chapters").find(".item").each((index, item2) => {
+          let title2 = $(item2).find("input[name*=title]")
+          let image2 = $(item2).find("input[name*=image_url]")
+          let link2  = $(item2).find("input[name*=link_url]")
+
+          if (title2.val() == title1.val()) {
+            image1.val(image2.val())
+            link1.val(link2.val())
+          }
+        })
+      })
     })
 
     $chapters.on("click", ".js-remove", function(event) {

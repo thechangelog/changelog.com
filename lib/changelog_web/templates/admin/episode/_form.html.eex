@@ -329,6 +329,8 @@
                 <%= label(i, :link) %>
                 <%= text_input(i, :link_url) %>
               </div>
+
+              <%= hidden_input(i, :image_url) %>
             </div>
           </div>
         </div>
@@ -417,6 +419,8 @@
                 <%= label(i, :link) %>
                 <%= text_input(i, :link_url) %>
               </div>
+
+              <%= hidden_input(i, :image_url) %>
             </div>
           </div>
         </div>
@@ -425,6 +429,9 @@
 
       <div class="ui tiny icon button js-add-chapter" data-type="plusplus">
         <i class="add icon"></i>
+      </div>
+      <div class="ui tiny icon button js-copy-chapter-data" title="Copy data from matching chapters above">
+        <i class="copy icon"></i>
       </div>
     </div>
   </div>
