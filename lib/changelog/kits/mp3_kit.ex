@@ -83,7 +83,7 @@ defmodule Changelog.Mp3Kit do
   defp add_link_to_chapter(tag, nil), do: tag
   defp add_link_to_chapter(tag, ""), do: tag
   defp add_link_to_chapter(tag, url) do
-    Tag.add_custom_url(tag, "chapter url", url)
+    Tag.add_custom_url(tag, "chapter url", URI.encode(url))
   end
 
   defp add_image_to_chapter(tag, nil), do: tag
