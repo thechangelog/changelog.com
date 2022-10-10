@@ -1,6 +1,8 @@
 defmodule Changelog.EpisodeChapter do
   use Changelog.Schema
 
+  alias Changelog.Regexp
+
   embedded_schema do
     field :title, :string
     field :starts_at, :float
@@ -15,6 +17,8 @@ defmodule Changelog.EpisodeChapter do
     chapter
     |> cast(attrs, ~w(title starts_at ends_at link_url image_url delete)a)
     |> validate_required([:title, :starts_at])
+    |> validate_format(:link_url, Regexp.http(), message: Regexp.http_message())
+    |> validate_format(:image_url, Regexp.http(), message: Regexp.http_message())
     |> validate_ends_at_after_starts_at()
     |> mark_for_deletion()
   end

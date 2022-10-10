@@ -325,7 +325,7 @@
                 <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
+              <div class="six wide field <%= AdminHelpers.error_class(i, :link_url) %>">
                 <%= label(i, :link) %>
                 <%= text_input(i, :link_url) %>
               </div>
@@ -415,7 +415,7 @@
                 <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="six wide field <%= AdminHelpers.error_class(i, :link) %>">
+              <div class="six wide field <%= AdminHelpers.error_class(i, :link_url) %>">
                 <%= label(i, :link) %>
                 <%= text_input(i, :link_url) %>
               </div>
