@@ -148,6 +148,9 @@ defmodule ChangelogWeb.Router do
     get "/:slug/feed", FeedController, :podcast
     get "/plusplus/:slug/feed", FeedController, :plusplus
     get "/metacast/:slug/feed", FeedController, :metacast
+    get "/topic/:slug/feed", FeedController, :topic
+    get "/topic/:slug/news/feed", FeedController, :topic_news
+    get "/topic/:slug/podcasts/feed", FeedController, :topic_podcasts
   end
 
   scope "/", ChangelogWeb do

@@ -140,4 +140,18 @@ defmodule ChangelogWeb.FeedControllerTest do
     refute conn.resp_body =~ p2.title
     assert conn.resp_body =~ p3.title
   end
+
+  describe "Topic feed" do
+    test "the topic feed", %{conn: conn} do
+      assert true == false
+    end
+
+    test "the topic's news feed", %{conn: conn} do
+      assert true == false
+    end
+
+    test "the topic's podcasts feed", %{conn: conn} do
+      assert true == false
+    end
+  end
 end
