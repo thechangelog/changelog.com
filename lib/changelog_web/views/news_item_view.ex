@@ -165,7 +165,7 @@ defmodule ChangelogWeb.NewsItemView do
 
   def render_source_image(conn, item) do
     cond do
-      item.author ->
+      item.author && item.author.avatar ->
         render("source/_image_author.html", conn: conn, item: item, author: item.author)
 
       item.source && item.source.publication && item.source.icon ->
