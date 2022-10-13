@@ -300,37 +300,58 @@
         </div>
       </div>
 
-      <div class="ui selection list js-audio_chapters">
+      <div class="ui relaxed small list js-audio_chapters">
       <%= inputs_for f, :audio_chapters, fn i -> %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
-          <div class="right floated content">
-            <div class="ui tiny icon button js-remove">
-              <i class="remove icon"></i>
-              <%= hidden_input(i, :delete) %>
-            </div>
-          </div>
-
           <div class="content">
             <div class="fields">
-              <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
-                <%= label(i, :title) %>
+              <div class="seven wide required field <%= AdminHelpers.error_class(i, :title) %>">
+                <%= label(i, :title) do %>
+                  <%= i.index + 1 %>: Title
+                <% end %>
                 <%= text_input(i, :title) %>
               </div>
+
+              <div class="eight wide field <%= AdminHelpers.error_class(i, :link_url) %>">
+                <%= label(i, :link_url, "Link URL") %>
+                <%= text_input(i, :link_url) %>
+              </div>
+
+              <div class="one wide field">
+                <label>&nbsp;</label>
+                <div class="ui tiny icon button js-remove">
+                  <i class="remove icon"></i>
+                  <%= hidden_input(i, :delete) %>
+                </div>
+              </div>
+            </div>
+
+            <div class="fields">
+              <div class="one wide field">
+                <label>&nbsp;</label>
+              </div>
+
               <div class="three wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
                 <%= label(i, :starts_at) %>
                 <%= text_input(i, :starts_at, class: "js-time-in-seconds") %>
               </div>
+
               <div class="three wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
                 <%= label(i, :ends_at) %>
                 <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="six wide field <%= AdminHelpers.error_class(i, :link_url) %>">
-                <%= label(i, :link) %>
-                <%= text_input(i, :link_url) %>
+              <div class="eight wide field <%= AdminHelpers.error_class(i, :image_url) %>">
+                <%= label(i, :image_url, "Image URL") %>
+                <%= text_input(i, :image_url) %>
               </div>
 
-              <%= hidden_input(i, :image_url) %>
+              <div class="one wide field">
+                <label>&nbsp;</label>
+              <%= if i.data.image_url do %>
+                <a href="<%= i.data.image_url %>" target="_blank"><img src="<%= i.data.image_url %>" width="30" height="30" /></a>
+              <% end %>
+              </div>
             </div>
           </div>
         </div>
@@ -390,37 +411,58 @@
         </div>
       </div>
 
-      <div class="ui list js-plusplus_chapters">
+      <div class="ui relaxed small list js-plusplus_chapters">
       <%= inputs_for f, :plusplus_chapters, fn i -> %>
         <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
-          <div class="right floated content">
-            <div class="ui tiny icon button js-remove">
-              <i class="remove icon"></i>
-              <%= hidden_input(i, :delete) %>
-            </div>
-          </div>
-
           <div class="content">
             <div class="fields">
-              <div class="six wide required field <%= AdminHelpers.error_class(i, :title) %>">
-                <%= label(i, :title) %>
+              <div class="seven wide required field <%= AdminHelpers.error_class(i, :title) %>">
+                <%= label(i, :title) do %>
+                <%= i.index + 1 %>: Title
+                <% end %>
                 <%= text_input(i, :title) %>
               </div>
-              <div class="two wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
+
+              <div class="eight wide field <%= AdminHelpers.error_class(i, :link_url) %>">
+                <%= label(i, :link_url, "Link URL") %>
+                <%= text_input(i, :link_url) %>
+              </div>
+
+              <div class="one wide field">
+                <label>&nbsp;</label>
+                <div class="ui tiny icon button js-remove">
+                  <i class="remove icon"></i>
+                  <%= hidden_input(i, :delete) %>
+                </div>
+              </div>
+            </div>
+
+            <div class="fields">
+              <div class="one wide field">
+                <label>&nbsp;</label>
+              </div>
+
+              <div class="three wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
                 <%= label(i, :starts_at) %>
                 <%= text_input(i, :starts_at, class: "js-time-in-seconds") %>
               </div>
-              <div class="two wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
+
+              <div class="three wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
                 <%= label(i, :ends_at) %>
                 <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="six wide field <%= AdminHelpers.error_class(i, :link_url) %>">
-                <%= label(i, :link) %>
-                <%= text_input(i, :link_url) %>
+              <div class="eight wide field <%= AdminHelpers.error_class(i, :image_url) %>">
+                <%= label(i, :image_url, "Image URL") %>
+                <%= text_input(i, :image_url) %>
               </div>
 
-              <%= hidden_input(i, :image_url) %>
+              <div class="one wide field">
+                <label>&nbsp;</label>
+              <%= if i.data.image_url do %>
+                <a href="<%= i.data.image_url %>" target="_blank"><img src="<%= i.data.image_url %>" width="30" height="30" /></a>
+              <% end %>
+              </div>
             </div>
           </div>
         </div>

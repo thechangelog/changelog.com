@@ -60,6 +60,7 @@ export default class ChaptersWidget {
             let start = Math.round((marker.position / 1000) * 1000) / 1000
             let end = Math.round((marker.end / 1000) * 1000) / 1000
             let link = ""
+            let image = ""
 
             if ($sponsors.length) {
               let sponsorNameMatch = name.match(/Sponsor:\s(.*)/)
@@ -74,11 +75,13 @@ export default class ChaptersWidget {
 
             let context = {
               index: index,
+              count: index + 1,
               type: type,
               title: name,
               starts_at: start,
               ends_at: end,
-              link: link
+              link: link,
+              image: image
             }
 
             $chapters.append(chapterItem(context))
