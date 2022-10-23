@@ -1,4 +1,5 @@
 # Inspired by https://github.com/fly-apps/live_beats/blob/master/fly.toml
+# Full app config reference: https://fly.io/docs/reference/configuration/
 app = "changelog-2022-03-13"
 
 kill_signal = "SIGTERM"
@@ -41,3 +42,11 @@ port = 443
 handlers = ["http"]
 port = "80"
 force_https = true
+
+# Increase the limit of connections that a single app instance can handle
+# Otherwise Fly proxy will start sending the requests to instances that we don't have... yet
+# Related to https://github.com/thechangelog/changelog.com/issues/424
+[services.concurrency]
+hard_limit = 2500
+soft_limit = 2000
+type = "connections"
