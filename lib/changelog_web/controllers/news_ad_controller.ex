@@ -28,6 +28,12 @@ defmodule ChangelogWeb.NewsAdController do
     send_resp(conn, 204, "")
   end
 
+  def visit(conn = %{method: "POST", assigns: %{current_user: user}}, %{"id" => hashid}) do
+    ad = ad_from_hashid(hashid)
+    unless is_admin?(user), do: NewsAd.track_click(ad)
+    send_resp(conn, 204, "")
+  end
+
   def visit(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
     ad = ad_from_hashid(hashid)
     unless is_admin?(user), do: NewsAd.track_click(ad)

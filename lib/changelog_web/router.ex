@@ -191,19 +191,22 @@ defmodule ChangelogWeb.Router do
     get "/news/top/all", NewsItemController, :top_all
     resources "/news", NewsItemController, only: [:show, :create], as: :news_item
     get "/news/:id/preview", NewsItemController, :preview, as: :news_item
+    post "/news/:id/visit", NewsItemController, :visit, as: :news_item
+    # we use post now 👆 legacy route for extant <a> tags 👇
     get "/news/:id/visit", NewsItemController, :visit, as: :news_item
     get "/news/:id/subscribe", NewsItemController, :subscribe, as: :news_item
     get "/news/:id/unsubscribe", NewsItemController, :unsubscribe, as: :news_item
     post "/news/impress", NewsItemController, :impress, as: :news_item
-    resources "/ads", NewsAdController, only: [:show], as: :news_ad
-    post "/ad/impress", NewsAdController, :impress, as: :news_ad
-    get "/ad/:id/visit", NewsAdController, :visit, as: :news_ad
 
     resources "/sponsored", NewsAdController, only: [:show], as: :news_sponsored
     post "/sponsored/impress", NewsAdController, :impress, as: :news_sponsored
+    post "/sponsored/:id/visit", NewsAdController, :visit, as: :news_ad
+    # we use post now 👆 legacy route for extant <a> tags 👇
     get "/sponsored/:id/visit", NewsAdController, :visit, as: :news_sponsored
+
     get "/news/issues/:id", NewsIssueController, :show, as: :news_issue
     get "/news/issues/:id/preview", NewsIssueController, :preview, as: :news_issue
+
     resources "/news/comments", NewsItemCommentController, only: [:create, :update]
     post "/news/comments/preview", NewsItemCommentController, :preview, as: :news_item_comment
 

@@ -194,13 +194,16 @@ const observer = new IntersectionObserver(function (entries) {
 });
 
 // track news clicks
-u(document).on("mousedown", "[data-news]", function (event) {
+u(document).on("click", "[data-news]", function (event) {
   let clicked = u(this);
   let type = clicked.closest("[data-news-type]").data("news-type");
   let id = clicked.closest("[data-news-id]").data("news-id");
   if (!id) return false;
   let trackedHref = `${location.origin}/${type}/${id}/visit`;
-  event.currentTarget.href = trackedHref;
+  fetch(trackedHref, {
+    method: "POST",
+    keepalive: true
+  });
 });
 
 // open external links in new window when player is doing its thing

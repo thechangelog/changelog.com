@@ -68,7 +68,15 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert html_response(conn, 200) =~ item.headline
   end
 
-  test "hitting the visit endpoint sans internal object uses html redirect", %{conn: conn} do
+  test "posting to the visit endpoint tracks and responds with 204", %{conn: conn} do
+    item = insert(:published_news_item, headline: "You gonna like this")
+    conn = post(conn, Routes.news_item_path(conn, :visit, NewsItem.hashid(item)))
+    assert conn.status == 204
+    item = Repo.get(NewsItem, item.id)
+    assert item.click_count == 1
+  end
+
+  test "getting the visit endpoint sans internal object uses html redirect", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
     conn = get(conn, Routes.news_item_path(conn, :visit, NewsItem.hashid(item)))
     assert html_response(conn, 200) =~ item.url
@@ -76,7 +84,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert item.click_count == 1
   end
 
-  test "hitting the visit endpoint with internal object uses http redirect", %{conn: conn} do
+  test "getting the visit endpoint with internal object uses http redirect", %{conn: conn} do
     podcast = insert(:podcast, slug: "ohai")
     episode = insert(:published_episode, podcast: podcast, slug: "okbai")
     item = episode |> episode_news_item() |> insert()
@@ -87,7 +95,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   end
 
   @tag :as_admin
-  test "hitting the visit endpoint as admin does not visit", %{conn: conn} do
+  test "getting the visit endpoint as admin does not visit", %{conn: conn} do
     item = insert(:published_news_item, headline: "You gonna like this")
     conn = get(conn, Routes.news_item_path(conn, :visit, NewsItem.hashid(item)))
     assert html_response(conn, 200) =~ item.url

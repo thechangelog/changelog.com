@@ -43,7 +43,16 @@ defmodule ChangelogWeb.NewsAdControllerTest do
     assert ad.sponsorship.impression_count == 0
   end
 
-  test "hitting the visit endpoint", %{conn: conn} do
+  test "posting to the visit endpoint", %{conn: conn} do
+    ad = insert(:news_ad, headline: "You gonna like this")
+    conn = post(conn, Routes.news_sponsored_path(conn, :visit, NewsAd.hashid(ad)))
+    assert conn.status == 204
+    ad = Repo.get(NewsAd, ad.id) |> NewsAd.preload_sponsorship()
+    assert ad.click_count == 1
+    assert ad.sponsorship.click_count == 1
+  end
+
+  test "getting the visit endpoint", %{conn: conn} do
     ad = insert(:news_ad, headline: "You gonna like this")
     conn = get(conn, Routes.news_sponsored_path(conn, :visit, NewsAd.hashid(ad)))
     assert html_response(conn, 200) =~ ad.url
@@ -53,7 +62,7 @@ defmodule ChangelogWeb.NewsAdControllerTest do
   end
 
   @tag :as_admin
-  test "hitting the visit endpoint as admin does not visit", %{conn: conn} do
+  test "getting the visit endpoint as admin does not visit", %{conn: conn} do
     ad = insert(:news_ad, headline: "You gonna like this")
     conn = get(conn, Routes.news_sponsored_path(conn, :visit, NewsAd.hashid(ad)))
     assert html_response(conn, 200) =~ ad.url

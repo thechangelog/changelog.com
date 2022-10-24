@@ -142,6 +142,12 @@ defmodule ChangelogWeb.NewsItemController do
     send_resp(conn, 204, "")
   end
 
+  def visit(conn = %{method: "POST", assigns: %{current_user: user}}, %{"id" => hashid}) do
+    item = item_from_hashid(hashid) |> NewsItem.preload_source()
+    if should_track?(user, item), do: NewsItem.track_click(item)
+    send_resp(conn, 204, "")
+  end
+
   def visit(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
     item = item_from_hashid(hashid) |> NewsItem.preload_source()
 
