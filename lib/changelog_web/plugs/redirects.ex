@@ -9,7 +9,8 @@ defmodule ChangelogWeb.Plug.Redirects do
   @external %{
     "/sentry" => "https://sentry.io/from/changelog/",
     "/square" => "https://developer.squareup.com/",
-    "/reactpodcast" => "https://reactpodcast.simplecast.com"
+    "/reactpodcast" => "https://reactpodcast.simplecast.com",
+    "/store" => "https://merch.changelog.com"
   }
 
   @internal %{
@@ -17,8 +18,7 @@ defmodule ChangelogWeb.Plug.Redirects do
     "/podcast/rss" => "/podcast/feed",
     "/team" => "/about",
     "/changeloggers" => "/about",
-    "/membership" => "/community",
-    "/store" => "/community",
+    "/membership" => "/++",
     "/sponsorship" => "/sponsor",
     "/soundcheck" => "/guest",
     "/submit" => "/news/submit",
