@@ -57,7 +57,10 @@ defmodule ChangelogWeb.EpisodeView do
     {episode.audio_file, episode}
     |> Files.Audio.url(:original)
     |> UrlKit.sans_cache_buster()
+    |> get_down_with_op3()
   end
+
+  defp get_down_with_op3(url), do: String.replace_prefix(url, "", "https://op3.dev/e/")
 
   # simplest case, no ++
   def plusplus_cta(%{plusplus_file: pp}) when is_nil(pp), do: fallback_cta()
