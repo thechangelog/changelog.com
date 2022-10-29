@@ -57,7 +57,7 @@ defmodule ChangelogWeb.FeedView do
       "jsparty" -> "#{podcast.name}: JavaScript, CSS, Web Development"
       "podcast" -> "#{podcast.name}: Software Development, Open Source"
       "practicalai" -> "#{podcast.name}: Machine Learning, Data Science"
-      "shipit" -> "#{podcast.name} DevOps, Infra, Cloud Native"
+      "shipit" -> "#{podcast.name} SRE, Platform Engineering, DevOps"
       _else -> podcast.name
     end
   end
