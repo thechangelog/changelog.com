@@ -17,10 +17,6 @@
     <itunes:summary>Thank you for subscribing to Changelog++!</itunes:summary>
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= Routes.static_url(@conn,"/images/podcasts/plusplus.png") %>"/>
-    <itunes:owner>
-      <itunes:name>Changelog Media</itunes:name>
-      <itunes:email>editors@changelog.com</itunes:email>
-    </itunes:owner>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
       <itunes:category text="Tech News"/>

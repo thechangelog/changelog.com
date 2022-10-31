@@ -19,10 +19,6 @@
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= PodcastView.cover_url(@podcast) %>"/>
     <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
-    <itunes:owner>
-      <itunes:name>Changelog Media</itunes:name>
-      <itunes:email>editors@changelog.com</itunes:email>
-    </itunes:owner>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
       <itunes:category text="Tech News"/>
