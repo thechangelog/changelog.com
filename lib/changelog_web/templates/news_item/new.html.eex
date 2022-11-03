@@ -1,25 +1,29 @@
 <div class="page_basic">
   <h1>Submit News</h1>
 
-<%= unless @current_user do %>
+<%= if !@current_user do %>
   <div class="flash flash--inline flash--error">
     <div class="flash-message"><p>Please <%= link("sign in", to: Routes.sign_in_path(@conn, :new)) %> / <%= link("up", to: Routes.person_path(@conn, :join)) %> to submit news. Your profile is used for attribution and notification.</p></div>
+  </div>
+<% end %>
+
+<%= if @current_user && !@subscribed do %>
+  <div class="flash flash--inline flash--error">
+    <div class="flash-message"><p>Only <%= link("Changelog Weekly", to: Routes.page_path(@conn, :weekly)) %> subscribers can submit news. We require this to prevent drive-by submissions & spammers.</p></div>
   </div>
 <% end %>
 
   <div id="guidelines" class="richtext richtext--small">
     <p>Submitting other people's work is encourged. Submitting your own work is also encouraged.</p>
     <p>Here's a short list of things that we aren't interested in 🙅‍♂️
-      <ol>
-        <li> How-to's and tutorials. e.g. - Configure Nginx on Ubuntu Linux 18.04</li>
-        <li>Commercial products and services. There is a <%= link("proper channel", to: Routes.page_path(@conn, :sponsor_pricing)) %> to promote such things.
-        <li>Medium posts and reader-hostile sites. We consider the entire <%= link("reading experience", to: "https://www.youtube.com/watch?v=7UG8JxTEhAk") %>.
-        <li>Podcast episode suggestions. Please use <%= link("this form", to: Routes.episode_request_path(@conn, :new)) %> instead.
+      <ol style="list-style-type: none;">
+        <li>🚫&nbsp;&nbsp;How-to's and tutorials. e.g. - "Configure Nginx on Ubuntu Linux 18.04"</li>
+        <li>🚫&nbsp;&nbsp;Commercial products/services. <%= link("Sponsorship", to: Routes.page_path(@conn, :sponsor_pricing)) %> is your path.
+        <li>🚫&nbsp;&nbsp;Reader-hostile websites. We consider the entire <%= link("reading experience", to: "https://www.youtube.com/watch?v=7UG8JxTEhAk") %>.
+        <li>🚫&nbsp;&nbsp;Podcast episode suggestions. Use <%= link("this form", to: Routes.episode_request_path(@conn, :new)) %> instead.
       </ol>
     </p>
-    <p>The golden rule: <mark>if your fellow devs will find it interesting, submit it.</mark></p>
-    <p>That being said... we get <em>a lot</em> of submissions. Do your best to convince us why something is newsworthy.</p>
-    <p>You'll be notified via email <em>if and when</em> your submission gets published.</p>
+    <p>The golden rule: <mark>if your fellow devs will find it interesting, submit it.</mark> That being said... we get <em>a lot</em> of submissions. Do your best to convince us why something is newsworthy. You'll be notified via email <em>if and when</em> your submission gets published.</p>
     <p>Keep it positive. Keep it hacker. 💚</p>
     <hr/>
     <p>&nbsp;</p>
@@ -55,7 +59,7 @@
     <div class="form-submit">
       <p class="form-submit-toc"></p>
       <div>
-        <input type="submit" <%= unless(@current_user, do: "disabled") %>>
+        <input type="submit" <%= unless(@current_user && @subscribed, do: "disabled") %>>
         <div class="form_submit_responses"></div>
       </div>
     </div>

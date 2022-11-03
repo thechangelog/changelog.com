@@ -7,6 +7,13 @@ defmodule Craisin.Subscriber do
   def delete(list_id, email),
     do: "/subscribers/#{list_id}?email=#{email}" |> delete() |> local_handle()
 
+  def is_subscribed(list_id, email) do
+    case details(list_id, email) do
+      %{"State" => "Active"} -> true
+      _else -> false
+    end
+  end
+
   def subscribe(list_id, person, custom_fields \\ %{}) do
     fields = %{
       "EmailAddress" => person.email,

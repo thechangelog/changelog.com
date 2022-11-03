@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, NewsItemComment, NewsSponsorship, Subscription}
-  alias ChangelogWeb.NewsItemView
+  alias Changelog.{NewsItem, NewsItemComment, Newsletters, NewsSponsorship, Subscription}
+  alias ChangelogWeb.{NewsItemView, PersonView}
 
   plug RequireUser, "before submitting" when action in [:create]
   plug RequireUser, "before subscribing" when action in [:subscribe, :unsubscribe]
@@ -75,25 +75,47 @@ defmodule ChangelogWeb.NewsItemController do
 
   def top(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))
 
+  def new(conn = %{assigns: %{current_user: user}}) do
+    changeset = NewsItem.submission_changeset(%NewsItem{})
+
+    conn
+    |> assign(:changeset, changeset)
+    |> assign(:subscribed, weekly_subscriber?(user))
+    |> render(:new)
+  end
+
   def new(conn, _params) do
     changeset = NewsItem.submission_changeset(%NewsItem{})
-    render(conn, :new, changeset: changeset)
+
+    conn
+    |> assign(:changeset, changeset)
+    |> assign(:subscribed, false)
+    |> render(:new)
   end
 
   def create(conn = %{assigns: %{current_user: user}}, %{"news_item" => item_params}) do
     item = %NewsItem{type: :link, author_id: user.id, submitter_id: user.id, status: :submitted}
     changeset = NewsItem.submission_changeset(item, item_params)
 
-    case Repo.insert(changeset) do
-      {:ok, _item} ->
-        conn
-        |> put_flash(:success, "We received your submission! Stay awesome 💚")
-        |> redirect(to: Routes.root_path(conn, :index))
+    if weekly_subscriber?(user) do
+      case Repo.insert(changeset) do
+        {:ok, _item} ->
+          conn
+          |> put_flash(:success, "We received your submission! Stay awesome 💚")
+          |> redirect(to: Routes.root_path(conn, :index))
 
-      {:error, changeset} ->
-        conn
-        |> put_flash(:error, "Something went wrong. 😭")
-        |> render(:new, changeset: changeset)
+        {:error, changeset} ->
+          conn
+          |> put_flash(:error, "Something went wrong. 😭")
+          |> assign(:changeset, changeset)
+          |> render(:new)
+      end
+    else
+      conn
+      |> put_flash(:error, "You must subscribe to Changelog Weekly 📥")
+      |> assign(:subscribed, false)
+      |> assign(:changeset, changeset)
+      |> render(:new)
     end
   end
 
@@ -213,5 +235,9 @@ defmodule ChangelogWeb.NewsItemController do
 
   defp should_track?(user, item) do
     NewsItem.is_published(item) && !is_admin?(user)
+  end
+
+  defp weekly_subscriber?(user) do
+    PersonView.is_subscribed(user, Newsletters.weekly())
   end
 end

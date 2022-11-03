@@ -77,10 +77,7 @@ defmodule ChangelogWeb.PersonView do
   end
 
   def is_subscribed(person, newsletter) do
-    case Craisin.Subscriber.details(newsletter.list_id, person.email) do
-      %{"State" => "Active"} -> true
-      _else -> false
-    end
+    Craisin.Subscriber.is_subscribed(newsletter.list_id, person.email)
   end
 
   def is_staff(person), do: String.match?(person.email, ~r/@changelog.com/)
