@@ -8,6 +8,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     Mailer,
     NewsItem,
     NewsItemComment,
+    Newsletters,
     Person,
     Slack,
     Subscription
@@ -152,6 +153,9 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   def delete(conn = %{assigns: %{person: person}}, params) do
     Repo.delete!(person)
+
+    Craisin.Subscriber.delete(Newsletters.weekly().list_id, person.email)
+    Craisin.Subscriber.delete(Newsletters.nightly().list_id, person.email)
 
     conn
     |> put_flash(:result, "success")

@@ -114,9 +114,13 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   test "deletes a person and redirects", %{conn: conn} do
     person = insert(:person)
 
-    conn = delete(conn, Routes.admin_person_path(conn, :delete, person.id))
-    assert redirected_to(conn) == Routes.admin_person_path(conn, :index)
-    assert count(Person) == 0
+    with_mock(Craisin.Subscriber, delete: fn _, _ -> true end) do
+      conn = delete(conn, Routes.admin_person_path(conn, :delete, person.id))
+
+      assert redirected_to(conn) == Routes.admin_person_path(conn, :index)
+      assert count(Person) == 0
+      assert called(Craisin.Subscriber.delete(:_, person.email))
+    end
   end
 
   @tag :as_admin
