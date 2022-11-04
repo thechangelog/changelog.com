@@ -73,7 +73,7 @@ defmodule ChangelogWeb.EpisodeViewTest do
 
   describe "title_with_guest_focused_subtitle_and_podcast_aside/1" do
     test "it only returns the title when episode is a trailer" do
-      episode = %{title: "This is JS Party", podcast: %{name: "JS Party"}, type: :trailer}
+      episode = %{title: "This is JS Party", podcast: %{name: "JS Party", slug: "jsparty"}, type: :trailer}
       assert "This is JS Party" == title_with_guest_focused_subtitle_and_podcast_aside(episode)
     end
 
@@ -82,7 +82,7 @@ defmodule ChangelogWeb.EpisodeViewTest do
         title: "This is JS Party",
         slug: "123",
         subtitle: nil,
-        podcast: %{name: "JS Party"}
+        podcast: %{name: "JS Party", slug: "jsparty"}
       }
 
       assert "This is JS Party (JS Party #123)" ==
