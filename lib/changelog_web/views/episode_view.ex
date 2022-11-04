@@ -187,8 +187,16 @@ defmodule ChangelogWeb.EpisodeView do
     "(#{podcast_name_and_number(episode)})"
   end
 
+  def podcast_name(episode) do
+    if is_changelog_news(episode) do
+      "Changelog News"
+    else
+      episode.podcast.name
+    end
+  end
+
   def podcast_name_and_number(episode) do
-    [episode.podcast.name, number_with_pound(episode)] |> ListKit.compact_join(" ")
+    [podcast_name(episode), number_with_pound(episode)] |> ListKit.compact_join(" ")
   end
 
   def published_before_transcripts?(episode) do
