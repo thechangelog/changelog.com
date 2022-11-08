@@ -38,7 +38,7 @@ defmodule Changelog.Fastly do
     episode = Episode.preload_podcast(episode)
 
     if episode.audio_file do
-      episode |> EpisodeView.audio_url() |> purge()
+      episode |> EpisodeView.audio_direct_url() |> purge()
     end
 
     if episode.plusplus_file do

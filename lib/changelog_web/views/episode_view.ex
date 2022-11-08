@@ -53,11 +53,18 @@ defmodule ChangelogWeb.EpisodeView do
     Files.PlusPlus.filename(:original, {episode.plusplus_file.file_name, episode}) <> ".mp3"
   end
 
+  # use this whenever fetching audio for public consumption
   def audio_url(episode) do
+    episode
+    |> audio_direct_url()
+    |> get_down_with_op3()
+  end
+
+  # use this whenever fetching audio for direct manipulation
+  def audio_direct_url(episode) do
     {episode.audio_file, episode}
     |> Files.Audio.url(:original)
     |> UrlKit.sans_cache_buster()
-    |> get_down_with_op3()
   end
 
   defp get_down_with_op3(url), do: String.replace_prefix(url, "", "https://op3.dev/e/")

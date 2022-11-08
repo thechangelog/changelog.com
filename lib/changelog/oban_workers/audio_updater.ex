@@ -24,7 +24,7 @@ defmodule Changelog.ObanWorkers.AudioUpdater do
 
   defp update_audio_file(%{audio_file: nil}), do: Logger.info "No audio file"
   defp update_audio_file(episode) do
-    url = EpisodeView.audio_url(episode)
+    url = EpisodeView.audio_direct_url(episode)
     name = Path.basename(url)
     Logger.info "Downloading audio file: #{url}"
     path = UrlKit.get_tempfile(url)
