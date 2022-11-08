@@ -5,7 +5,7 @@ defmodule Changelog.UrlKit do
   def get_author(url), do: Person.get_by_website(url)
 
   def get_tempfile(url) do
-    case HTTP.get(url) do
+    case HTTP.get(url, [], [follow_redirect: true, max_redirect: 5]) do
       {:ok, %{status_code: 200, body: body}} ->
         hash = :sha256 |> :crypto.hash(body) |> Base.encode16()
         path = Path.join(System.tmp_dir(), hash)
@@ -25,7 +25,6 @@ defmodule Changelog.UrlKit do
             {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
             _else -> body
           end
-
         _else ->
           ""
       end
