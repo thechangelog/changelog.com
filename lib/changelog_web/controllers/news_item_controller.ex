@@ -75,21 +75,12 @@ defmodule ChangelogWeb.NewsItemController do
 
   def top(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))
 
-  def new(conn = %{assigns: %{current_user: user}}) do
+  def new(conn = %{assigns: %{current_user: user}}, _params) do
     changeset = NewsItem.submission_changeset(%NewsItem{})
 
     conn
     |> assign(:changeset, changeset)
     |> assign(:subscribed, weekly_subscriber?(user))
-    |> render(:new)
-  end
-
-  def new(conn, _params) do
-    changeset = NewsItem.submission_changeset(%NewsItem{})
-
-    conn
-    |> assign(:changeset, changeset)
-    |> assign(:subscribed, false)
     |> render(:new)
   end
 
@@ -236,6 +227,8 @@ defmodule ChangelogWeb.NewsItemController do
   defp should_track?(user, item) do
     NewsItem.is_published(item) && !is_admin?(user)
   end
+
+  defp weekly_subscriber?(nil), do: false
 
   defp weekly_subscriber?(user) do
     PersonView.is_subscribed(user, Newsletters.weekly())
