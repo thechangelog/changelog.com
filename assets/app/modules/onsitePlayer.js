@@ -216,7 +216,7 @@ export default class OnsitePlayer {
     this.seekTo(currentTime + offset);
   }
 
-  // begins the process of fetching details, playing audio
+  // begins the process of fetching details, loading audio
   load(detailsUrl, andThen) {
     this.episode = null;
     this.state.loaded = null;
@@ -248,9 +248,6 @@ export default class OnsitePlayer {
         if (resumeVolume) {
           this.audio.setVolume(resumeVolume);
         }
-
-        this.play();
-        this.log("Play");
 
         if (andThen) andThen();
       });
@@ -343,7 +340,9 @@ export default class OnsitePlayer {
       this.state = state;
 
       if (this.state.loaded) {
-        this.load(this.state.loaded);
+        this.load(this.state.loaded, _ => {
+          this.pauseUI();
+        });
       }
     }
   }

@@ -69,6 +69,8 @@ window.App = {
       let playable = u("[data-play]");
       this.player.load(playable.data("play"), _ => {
         this.player.scrubEnd(linkTime);
+        this.player.play();
+        this.player.log("Play");
       });
     }
 
@@ -146,6 +148,8 @@ u(document).on("click", "[data-play]", function (event) {
     } else {
       App.player.pause();
       App.player.load(detailsUrl, _ => {
+        App.player.play();
+        App.player.log("Play");
         if (linkTime) App.player.scrubEnd(linkTime);
       });
     }
