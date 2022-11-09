@@ -254,16 +254,23 @@ defmodule ChangelogWeb.EpisodeView do
   def render("chapters.json", %{chapters: chapters}) do
     %{
       version: "1.2.0",
-      chapters: Enum.map(chapters, fn chapter ->
-        %{
-          title: chapter.title,
-          startTime: chapter.starts_at,
-          endTime: chapter.ends_at,
-          url: chapter.link_url,
-          img: chapter.image_url
-        } |> Map.reject(fn {_k, v} -> is_nil(v) end)
-      end)
+      chapters: chapters_json(chapters)
     }
+  end
+
+  defp chapters_json(chapters) do
+    chapters
+    |> Enum.with_index()
+    |> Enum.map(fn {chapter, index} ->
+      %{
+        title: chapter.title,
+        number: index + 1,
+        startTime: round(chapter.starts_at),
+        endTime: round(chapter.ends_at),
+        url: chapter.link_url,
+        img: chapter.image_url
+      } |> Map.reject(fn {_k, v} -> is_nil(v) end)
+    end)
   end
 
   def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do
@@ -274,6 +281,7 @@ defmodule ChangelogWeb.EpisodeView do
       duration: episode.audio_duration,
       art_url: PodcastView.cover_url(podcast, :medium),
       audio_url: audio_url(episode),
+      chapters: chapters_json(episode.audio_chapters),
       share_url: share_url(episode)
     }
 

@@ -47,6 +47,7 @@ export default class OnsitePlayer {
     this.closeButton = this.container.find(".js-player-close");
     this.hideButton = this.container.find(".js-player-hide");
     this.speedButton = this.container.find(".js-player-speed");
+    this.chapterSelect = this.container.find(".js-chapter-select");
   }
 
   attachEvents() {
@@ -65,6 +66,7 @@ export default class OnsitePlayer {
     this.audio.onTimeUpdate(event => { this.updateCopyUrlTime(); this.trackTime(); });
     this.audio.onPlay(event => { this.playUI(); });
     this.audio.onPause(event => { this.pauseUI(); });
+    this.chapterSelect.handle("change", event => { this.changeChapter(event.target.value); });
   }
 
   attachKeyboardShortcuts() {
@@ -239,6 +241,7 @@ export default class OnsitePlayer {
         if (resumeTime) {
           this.audio.setTime(resumeTime);
           this.updatePlayTime(resumeTime);
+          this.updateChapter(resumeTime);
         }
 
         let resumeVolume = this.state.volume;
@@ -283,6 +286,18 @@ export default class OnsitePlayer {
     } else {
       this.resetNextUI();
     }
+
+    if (this.episode.hasChapters()) {
+      let options = "";
+      let chapters = this.episode.chapterList();
+
+      for (var i = 0; i < chapters.length; i++) {
+        options += `<option value="${chapters[i].number}">${chapters[i].number}: ${chapters[i].title}</option>`
+      }
+
+      this.chapterSelect.html(options);
+      this.chapterSelect.removeClass("is-hidden");
+    }
   }
 
   log(action) {
@@ -300,6 +315,8 @@ export default class OnsitePlayer {
     this.resetNextUI();
     this.scrubber.first().value = 0;
     this.track.first().style.width = "0%";
+    this.chapterSelect.html("");
+    this.chapterSelect.addClass("is-hidden");
   }
 
   resetPrevUI() {
@@ -349,12 +366,35 @@ export default class OnsitePlayer {
 
       if (newTime != prevTime) {
         this.updatePlayTime(newTime);
+        this.updateChapter(newTime);
         this.setState(this.state.loaded, newTime);
       }
     }
 
     if (this.isPlaying()) {
       requestAnimationFrame(this.step.bind(this));
+    }
+  }
+
+  changeChapter(chapterNumber) {
+    let newChapter = this.episode.chapterList().find(chapter => {
+      return chapter.number == chapterNumber
+    });
+
+    if (newChapter) {
+      this.scrubEnd(newChapter.startTime);
+    }
+  }
+
+  updateChapter(newTime) {
+    if (this.episode.hasChapters()) {
+      let currentChapter = this.episode.chapterList().find(chapter => {
+        return chapter.startTime <= newTime && chapter.endTime >= newTime
+      })
+
+      if (currentChapter) {
+        this.chapterSelect.first().value = currentChapter.number;
+      }
     }
   }
 

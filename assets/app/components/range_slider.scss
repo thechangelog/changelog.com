@@ -125,6 +125,25 @@ $range-label-width: 60px !default;
 
     .episode_player & { padding: 0; }
 
+    select {
+        // A reset of styles, including removing the default dropdown arrow
+        appearance: none;
+        // Additional resets for further consistency
+        background-color: transparent;
+        border: none;
+        cursor: inherit;
+        line-height: inherit;
+        margin-left: 5px;
+        color: $medium-grey;
+        font-family: $code;
+        font-size: 0.7em;
+        letter-spacing: -0.05em;
+    }
+
+    select:active, select:hover, select:focus {
+      outline: none
+    }
+
     & > span {
       display: none;
       font-size: 0.875em;

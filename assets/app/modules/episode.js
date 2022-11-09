@@ -36,8 +36,16 @@ export default class Episode {
     return parts[parts.length - 1];
   }
 
+  chapterList() {
+    return this.ep.chapters;
+  }
+
   duration() {
     return parseInt(this.ep.duration, 10);
+  }
+
+  hasChapters() {
+    return !!this.ep.chapters.length;
   }
 
   hasPrev() {

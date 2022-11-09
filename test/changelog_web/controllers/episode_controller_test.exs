@@ -165,9 +165,9 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       assert json_response(conn, 200) == %{
         "version" => "1.2.0",
         "chapters" => [
-          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at, "img" => c1.image_url},
-          %{"title" => c2.title, "startTime" => c2.starts_at, "endTime" => c2.ends_at},
-          %{"title" => c3.title, "startTime" => c3.starts_at, "endTime" => c3.ends_at, "url" => c3.link_url}
+          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at, "img" => c1.image_url, "number" => 1},
+          %{"title" => c2.title, "startTime" => c2.starts_at, "endTime" => c2.ends_at, "number" => 2},
+          %{"title" => c3.title, "startTime" => c3.starts_at, "endTime" => c3.ends_at, "url" => c3.link_url, "number" => 3}
         ]
       }
     end
@@ -195,7 +195,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       assert json_response(conn, 200) == %{
         "version" => "1.2.0",
         "chapters" => [
-          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at}
+          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at, "number" => 1}
         ]
       }
     end
