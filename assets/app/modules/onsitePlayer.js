@@ -66,6 +66,7 @@ export default class OnsitePlayer {
     this.audio.onTimeUpdate(event => { this.updateCopyUrlTime(); this.trackTime(); });
     this.audio.onPlay(event => { this.playUI(); });
     this.audio.onPause(event => { this.pauseUI(); });
+    this.audio.onEnd(event => { this.log(`100% Played`); this.close(); });
     this.chapterSelect.handle("change", event => { this.changeChapter(event.target.value); });
   }
 
@@ -333,6 +334,11 @@ export default class OnsitePlayer {
     localStorage.setItem("player", JSON.stringify(this.state));
   }
 
+  removeState(key) {
+    delete this.state[key];
+    localStorage.setItem("player", JSON.stringify(this.state));
+  }
+
   restoreState() {
     let state = JSON.parse(localStorage.getItem("player"));
 
@@ -433,7 +439,8 @@ export default class OnsitePlayer {
 
   close() {
     this.pause();
-    this.setState("loaded", null);
+    this.removeState(this.state.loaded);
+    this.removeState("loaded");
     u("body").removeClass("player-open");
     this.player.removeClass("podcast_player--is-active");
   }
