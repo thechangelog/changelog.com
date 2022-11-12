@@ -42,25 +42,25 @@ inputs:
                 - _build
                 - dagger
     app_version:
-        text: 22.4.3+0f89da6bc46369d0783580ad15df76639c391e66
+        text: 22.11.12+a15dd68f3a17e76d42930782ad24ddf769a87d87
     build_url:
         text: https://github.com/thechangelog/changelog.com/actions
     build_version:
-        text: 22.4.3+0f89da6bc46369d0783580ad15df76639c391e66
+        text: 22.11.12+a15dd68f3a17e76d42930782ad24ddf769a87d87
     docker_host:
         text: tcp://100.81.87.121:2375
     dockerhub_password:
-        secret: ENC[AES256_GCM,data:PDe2tEIrlFIE5S6NmnT+CZSluWY=,iv:ty+I65nKAVAWRBAIVJ0cQXF20Iuolk9iwDypRGVxd90=,tag:UpNb06UYX3GVUuOpLwKwUA==,type:str]
+        secret: ENC[AES256_GCM,data:ZaD/Ms4j+GVmmV8Bi8SpOLykYwM=,iv:H9VzVM/6aPQTECXSqO3YJVgcDSclsg1n0PEbeqjKZQQ=,tag:N6utU8mE7NUg8votw1aoLA==,type:str]
     dockerhub_username:
         text: changelogci
     git_author:
         text: gerhard
     git_sha:
-        text: 0f89da6bc46369d0783580ad15df76639c391e66
+        text: a15dd68f3a17e76d42930782ad24ddf769a87d87
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
-            FROM thechangelog/runtime:2021-05-29T10.17.12Z
+            FROM thechangelog/runtime:2022-09-21T23.19.21Z
 
             RUN mkdir /app
             ARG APP_FROM_PATH=.
@@ -102,17 +102,17 @@ sops:
     azure_kv: []
     hc_vault: []
     age:
-        - recipient: age1ag8qa42h7up3p3xngup00ps36uvyek59ppc9z4wxq7rwk4pjcaus4aya7l
+        - recipient: age1jl7vc68wfe2carr7qhe83r540fh8ayjensmym5p5ddsky84cvvas0gyr6l
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwNllVS0ZJaDA2WDAvRkZj
-            U3NadlQyemZNOG5uNmxjUUNEZlRidUI5SFRnCmJHY2JZaXJMemVHVnJ1L2FuQ2VE
-            WXJ4dkd2RzN4T20yTHpkMFhqcFFLZ1UKLS0tIDQ1SVhDdlNqK0k1SWxZbXpLdWww
-            RHllVkFJWFpXUDZZNTYzcTVJMm1hOHMKB0jLL+vzIqllrKC8n8BtjVrl954uQkwL
-            ucVzAeuQk6XBAckZBAKoo9IB4c0G5KRq7K7PJdi/HqvggVdj2CKF6Q==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBzMUhQK2pFelNqbjh1cHVa
+            OCs1T3AzT085SHlWV0MyMmNRWDlpZUxqSFRBCnhibDhoQUpaZVhpMTdJQjZTT2FO
+            SEVqWkhzVXhuazZpTndYZm1wM1dNSGMKLS0tIGpIZHdob1YrbnVQbnNmbTg2cVNr
+            ZE8xQlF0bHVZejFHeEwzZXBwZnF3encK8DzznyIRG/Hq9PDpF52XFE1phXd5Cwcu
+            aphxZYpkm6JiBQySohnqHYCdN0xjCJOXOHAGIdnoog94rnRGqbqrew==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-04-03T15:11:52Z"
-    mac: ENC[AES256_GCM,data:rQf2tsc9t8DKqJVV/ZvDL2KJxB+QxTMJ4IlqAEwBuf2ijqscbofhWZrbZ6UADJoN6JwaRo+/SKQzB/zGfP72KKtYTlejGVellkDaFDV845czILlweUb24FAJsLWbw3pJoftHGoZIraCEG7Vb2tRga2ShLdv722lzb39xn1c9m+w=,iv:8R5bPi9oiiTZ1LrtnFBQz4hrf6/P41w1AukqvDwFAuk=,tag:KWUdi7xsIX88FX+sS7MURA==,type:str]
+    lastmodified: "2022-11-12T18:50:25Z"
+    mac: ENC[AES256_GCM,data:yF3OkSpxn/Mwf9aR1uGq+vevkCORYCgshsoqGkKhb1uBbOrV/F68xLu763hMQJp7UXAxqPZhlhfnlIkjfC+gbtS3OAJO5TtRxW1sy2j5CgpoYrMvaxFxwtBTEtrbGMleK1XI7zwxKpS5oTRLMSj4HlftCrflV+123jIQpHmi39s=,iv:Ls48/AlvN4oY/p/0BPCr323VFVDNOoeTh50hGZMRRjM=,tag:mLicnRAiBOGeNKqoVP86xg==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1

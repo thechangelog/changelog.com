@@ -2,7 +2,6 @@ name: Ship it
 
 on:
   push:
-    branches:
   workflow_dispatch:
 
 jobs:
@@ -38,7 +37,7 @@ jobs:
         env:
           DOCKER_HOST: "tcp://[fdaa:0:4556:a7b:21e0:1:1f9d:2]:2375"
         run: |
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text prod_dockerfile --file docker/Dockerfile.production --environment prod_image
+          /opt/hostedtoolcache/dagger/*/x64/dagger input text prod_dockerfile --file docker/production.Dockerfile --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_branch "$GITHUB_REF_NAME" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_sha "$GITHUB_SHA" --environment prod_image
           /opt/hostedtoolcache/dagger/*/x64/dagger input text git_author "$GITHUB_ACTOR" --environment prod_image
