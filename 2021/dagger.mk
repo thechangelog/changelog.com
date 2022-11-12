@@ -63,7 +63,7 @@ endef
 .PHONY: ship-it
 ship-it: $(DAGGER_ENV)/prod_image
 	$(DAGGER_CTX) input dir app_src . $(shell $(_convert_dockerignore_to_excludes)) --exclude deps --exclude _build --exclude dagger --environment prod_image
-	$(DAGGER_CTX) input text prod_dockerfile --file docker/Dockerfile.production --environment prod_image
+	$(DAGGER_CTX) input text prod_dockerfile --file docker/production.Dockerfile --environment prod_image
 	$(DAGGER_CTX) input text git_sha $(GIT_SHA) --environment prod_image
 	$(DAGGER_CTX) input text git_author $(GIT_AUTHOR) --environment prod_image
 	$(DAGGER_CTX) input text app_version $(APP_VERSION) --environment prod_image

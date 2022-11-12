@@ -250,7 +250,7 @@ build-backups-image: $(DOCKER)
 	$(DOCKER) build --progress plain \
 	  --tag thechangelog/backups:$(BUILD_VERSION) \
 	  --tag thechangelog/backups:$(STACK_VERSION) \
-	  --file Dockerfile.backups .
+	  --file backups.Dockerfile .
 .PHONY: bbi
 bbi: build-backups-image
 
@@ -270,7 +270,7 @@ build-runtime-image: $(DOCKER)
 		--tag thechangelog/runtime:$(BUILD_VERSION) \
 		--tag thechangelog/runtime:$(STACK_VERSION) \
 		--tag thechangelog/runtime:latest \
-		--file docker/Dockerfile.runtime .
+		--file docker/runtime.Dockerfile .
 .PHONY: bri
 bri: build-runtime-image
 
