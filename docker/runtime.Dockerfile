@@ -46,7 +46,7 @@ RUN echo "Install netcat for waiting on open ports..." \
 
 # https://nodejs.org/en/download/releases/
 # https://github.com/nodejs/help/wiki/Installation#how-to-install-nodejs-via-binary-archive-on-linux
-ENV NODEJS_VERSION=v14.20.0
+ENV NODEJS_VERSION=v14.21.1
 ENV PATH=/usr/local/lib/nodejs/node-${NODEJS_VERSION}-linux-x64/bin:$PATH
 RUN echo "Install node.js ${NODEJS_VERSION}..." \
     ; ${FAIL_FAST_VERBOSE} \
