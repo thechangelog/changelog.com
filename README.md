@@ -105,11 +105,11 @@ You can now start the app normally, all changelog.com content at the time the db
 ### How to upgrade Elixir?
 
 1. Pick an image from [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
-2. Update `docker/Dockerfile.runtime` to use the image with the desired version from the URL above
+2. Update `docker/runtime.Dockerfile` to use the image with the desired version from the URL above
 3. Run `make runtime-image` to publish the new container image, which will look something like: `thechangelog/runtime:DATE_TIME`
-   1. This will require push access to [the Docker Hub org](https://hub.docker.com/r/thechangelog/runtime/tags), which only maintainers will have; you'll need to request an image publish from them once the rest of your PR is ready.
+   1. This will require push access to [the Docker Hub `thechangelog` org](https://hub.docker.com/r/thechangelog/runtime/tags), which only maintainers will have (💡 `changeloci` in 1Password); you'll need to request an image publish from them once the rest of your PR is ready.
    2. Update the following files with this new runtime version:
-      1. `docker/Dockerfile.production`
+      1. `docker/production.Dockerfile`
       2. `2021/dagger/prod_image/main.cue`
          1. Do not worry that the directory refers to `2021`; it is still used.
       3. `dev_docker/changelog.yml`
