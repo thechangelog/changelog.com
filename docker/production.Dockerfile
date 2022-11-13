@@ -1,5 +1,5 @@
 FROM thechangelog/legacy_assets AS legacy_assets
-FROM thechangelog/runtime:UPDATE_ONCE_PUBLISHED
+FROM thechangelog/runtime:2022-11-13T07.34.05Z
 
 RUN mkdir /app
 ARG APP_FROM_PATH=.

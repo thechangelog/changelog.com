@@ -1,6 +1,6 @@
 # @akoutmos recommends the hex.pm image because it's maintained by the hex core team
 # https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy
-FROM hexpm/elixir:1.14.0-erlang-25.1-ubuntu-jammy-20220428
+FROM hexpm/elixir:1.14.2-erlang-25.1-ubuntu-jammy-20220428
 
 USER root
 

@@ -42,11 +42,11 @@ inputs:
                 - _build
                 - dagger
     app_version:
-        text: 22.11.12+a15dd68f3a17e76d42930782ad24ddf769a87d87
+        text: 22.11.13+c84768a1d0df8afd6f8848d0100af252e85f6dc1
     build_url:
         text: https://github.com/thechangelog/changelog.com/actions
     build_version:
-        text: 22.11.12+a15dd68f3a17e76d42930782ad24ddf769a87d87
+        text: 22.11.13+c84768a1d0df8afd6f8848d0100af252e85f6dc1
     docker_host:
         text: tcp://100.81.87.121:2375
     dockerhub_password:
@@ -56,22 +56,22 @@ inputs:
     git_author:
         text: gerhard
     git_sha:
-        text: a15dd68f3a17e76d42930782ad24ddf769a87d87
+        text: c84768a1d0df8afd6f8848d0100af252e85f6dc1
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
-            FROM thechangelog/runtime:2022-09-21T23.19.21Z
+            FROM thechangelog/runtime:2022-11-13T07.34.05Z
 
             RUN mkdir /app
             ARG APP_FROM_PATH=.
             COPY ${APP_FROM_PATH} /app
             WORKDIR /app
             RUN echo "Ensure deps are present & OK..." \
-                ; ls -lahd deps/*
+              ; ls -lahd deps/*
             RUN echo "Ensure prod bytecode is present & OK..." \
-                ; ls -lahd _build/prod/lib/*/ebin
+              ; ls -lahd _build/prod/lib/*/ebin
             RUN echo "Ensure prod static assets are present & OK..." \
-                ; ls -lah priv/static/cache_manifest.json
+              ; ls -lah priv/static/cache_manifest.json
 
             COPY --from=legacy_assets /var/www/wp-content /app/priv/wp-content
 
@@ -90,8 +90,8 @@ inputs:
             ENV BUILD_URL=${BUILD_URL}
             # Used by various tooling to report the identity & origin of this build
             RUN echo "$GIT_SHA" > priv/static/version.txt \
-                ; echo "$GIT_AUTHOR" > COMMIT_USER \
-                ; echo "$BUILD_URL" > priv/static/build.txt
+              ; echo "$GIT_AUTHOR" > COMMIT_USER \
+              ; echo "$BUILD_URL" > priv/static/build.txt
 
             EXPOSE 4000
 
@@ -111,8 +111,8 @@ sops:
             ZE8xQlF0bHVZejFHeEwzZXBwZnF3encK8DzznyIRG/Hq9PDpF52XFE1phXd5Cwcu
             aphxZYpkm6JiBQySohnqHYCdN0xjCJOXOHAGIdnoog94rnRGqbqrew==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-11-12T18:50:25Z"
-    mac: ENC[AES256_GCM,data:yF3OkSpxn/Mwf9aR1uGq+vevkCORYCgshsoqGkKhb1uBbOrV/F68xLu763hMQJp7UXAxqPZhlhfnlIkjfC+gbtS3OAJO5TtRxW1sy2j5CgpoYrMvaxFxwtBTEtrbGMleK1XI7zwxKpS5oTRLMSj4HlftCrflV+123jIQpHmi39s=,iv:Ls48/AlvN4oY/p/0BPCr323VFVDNOoeTh50hGZMRRjM=,tag:mLicnRAiBOGeNKqoVP86xg==,type:str]
+    lastmodified: "2022-11-13T07:51:43Z"
+    mac: ENC[AES256_GCM,data:4skxsEcznFxigZ2yLOtxAxxo5CRmiZwMxZxBJzy6Xe0QV9RKgGGLswEIXyYx1XE0H35D7BEm4qKX/eqCd6ZNCP6X1hGvqW4wR3jOPinCpxj5cTeYLtqvdPE3eYYP9WztLwpw/ndion9LjV+1Hdnes3fL9IPkMgpW9hOTe39PME4=,iv:agqCrcoIQUYpmdLRsPj6u8ZA/+GlNhyn4dR12+gcoyI=,tag:931vmINorFrYNjvXJHfOMg==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1
