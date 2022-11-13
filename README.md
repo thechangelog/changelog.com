@@ -8,8 +8,8 @@ This is the CMS behind [changelog.com](https://changelog.com). It's an [Elixir](
 
 ## Dependencies
 
-- Elixir 1.13
-- Erlang/OTP 24
+- Elixir 1.14
+- Erlang/OTP 25
 
 ## Why is it open source?
 
@@ -105,13 +105,16 @@ You can now start the app normally, all changelog.com content at the time the db
 ### How to upgrade Elixir?
 
 1. Pick an image from [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
-1. Update `docker/Dockerfile.runtime` to use an image from the URL above
-1. Run `make runtime-image` to publish the new container image
-1. Update `docker/Dockerfile.production` to the exact runtime version that was published in the previous step
-1. Update `2021/dagger/prod_image/main.cue` to the exact runtime version used above
-1. Update `dev_docker/changelog.yml` to the exact runtime version used above
-1. Update the Elixir version in `README.md` & `mix.exs`
-1. Commit and push everything, then wait for the pipeline to deploy everything into production
+2. Update `docker/runtime.Dockerfile` to use the image with the desired version from the URL above
+3. Run `make runtime-image` to publish the new container image, which will look something like: `thechangelog/runtime:DATE_TIME`
+   1. This will require push access to [the Docker Hub `thechangelog` org](https://hub.docker.com/r/thechangelog/runtime/tags), which only maintainers will have (💡 `changeloci` in 1Password); you'll need to request an image publish from them once the rest of your PR is ready.
+   2. Update the following files with this new runtime version:
+      1. `docker/production.Dockerfile`
+      2. `2021/dagger/prod_image/main.cue`
+         1. Do not worry that the directory refers to `2021`; it is still used.
+      3. `dev_docker/changelog.yml`
+4. Update the Elixir version in `README.md` & `mix.exs`
+5. Commit and push everything, then wait for the pipeline to deploy everything into production
 
 You may want to test everything locally by running `make ship-it` from within the `2021` dir. This makes it easy to debug any potential issues locally.
 
