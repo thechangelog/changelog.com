@@ -1,15 +1,12 @@
-# changelog.com [![All Contributors](https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)](#contributors)
-
-[Read the announcement post!](https://changelog.com/posts/changelog-is-open-source)
+[![All Contributors](https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)](#contributors)
 
 ## What is this?
 
-This is the CMS behind [changelog.com](https://changelog.com). It's an [Elixir](http://elixir-lang.org) application built with the [Phoenix](http://www.phoenixframework.org) web framework, [PostgreSQL](https://www.postgresql.org), and [many](https://github.com/thechangelog/changelog.com/blob/master/mix.exs#L33) [other](https://github.com/thechangelog/changelog.com/blob/master/assets/package.json) great open source efforts.
+This is the CMS behind [changelog.com](https://changelog.com).
+It is an [Elixir](http://elixir-lang.org) application built with the [Phoenix](http://www.phoenixframework.org) web framework and [many](https://github.com/thechangelog/changelog.com/blob/master/mix.exs#L33) [other](https://github.com/thechangelog/changelog.com/blob/master/assets/package.json) great open source efforts.
+It uses [Node.js](https://nodejs.org/en/) for static assets & [PostgreSQL](https://www.postgresql.org) for persistence.
 
-## Dependencies
-
-- Elixir 1.14
-- Erlang/OTP 25
+[More details in our 2016 announcement post!](https://changelog.com/posts/changelog-is-open-source)
 
 ## Why is it open source?
 
@@ -31,129 +28,9 @@ If you have questions about any of the code, holler [@Changelog](https://twitter
 
 ## How can I contribute?
 
-Assuming that you have [Docker](https://docs.docker.com/install/) running locally and `docker-compose` available, all that you have to do is run `./start_dev_stack up` in your terminal.
+That is an excellent idea! Here is [our contributing guide](CONTRIBUTING.md). Kaizen 改善!
 
-When you run this command for the first time, it will take around 7 minutes to pull all Docker images, build the app image and start the app and db containers.
-Depending on your internet connection and CPUs used for compiling various artefacts, this can easily take 30 minutes or more.
-Next time you run this command, since all Docker images will be cached, you can expect all containers to be up and running within 30 seconds.
-
-When all containers are up and running, you should see the following output in your terminal session:
-
-```
-Starting dev_docker_postgres_1   ... done
-Starting dev_docker_prometheus_1 ... done
-Starting dev_docker_grafana_1    ... done
-Starting dev_docker_changelog_app_1 ... done
-Attaching to dev_docker_prometheus_1, dev_docker_postgres_1, dev_docker_grafana_1, dev_docker_changelog_app_1
-...
-grafana_1        | t=2021-02-03T20:53:58+0000 lvl=info msg="Starting Grafana" logger=server version=7.1.3 commit=5723d951af branch=HEAD compiled=2020-08-06T08:44:32+0000
-grafana_1        | t=2021-02-03T20:53:58+0000 lvl=info msg="Config loaded from" logger=settings file=/usr/share/grafana/conf/defaults.ini
-grafana_1        | t=2021-02-03T20:53:58+0000 lvl=info msg="Config loaded from" logger=settings file=/etc/grafana/grafana.ini
-...
-prometheus_1     | level=info ts=2021-02-03T20:53:58.108Z caller=main.go:308 msg="No time or size retention was set so using the default time retention" duration=15d
-prometheus_1     | level=info ts=2021-02-03T20:53:58.109Z caller=main.go:343 msg="Starting Prometheus" version="(version=2.20.1, branch=HEAD, revision=983ebb4a513302315a8117932ab832815f85e3d2)"
-...
-postgres_1         | LOG:  autovacuum launcher started
-postgres_1         | LOG:  database system is ready to accept connections
-...
-changelog_app_1    | [info] Running ChangelogWeb.Endpoint with Cowboy using http://0.0.0.0:4000
-changelog_app_1    | yarn run v1.6.0
-changelog_app_1    | warning package.json: No license field
-changelog_app_1    | $ webpack --mode=development --watch-stdin --color
-changelog_app_1    |
-changelog_app_1    | Webpack is watching the files…
-...
-```
-
-You can now access a dev copy of changelog.com locally, at `http://localhost:4000` or at `https://localhost:4001` if you
-would like to access the HTTPS version.
-
-If you are using Google Chrome as your browser and notice `ERR_CERT_AUTHORITY_INVALID` errors in your console, you will need to enable Chrome's `allow-insecure-localhost` flag, which you can do by opening `chrome://flags/#allow-insecure-localhost`. There will be a log in your terminal warning about this, but it quickly gets hidden by other logs:
-
-```
-dev_docker-changelog_app-1  | * creating priv/cert/selfsigned_key.pem
-...
-dev_docker-changelog_app-1  | NOTE: when using Google Chrome, open chrome://flags/#allow-insecure-localhost
-dev_docker-changelog_app-1  | to enable the use of self-signed certificates on `localhost`.
-```
-
-When you want to stop all Docker containers, press both `CTRL` and `c` keys at the same time (`Ctrl+C`).
-
-Please remember that we have a product roadmap in mind so [open an issue](https://github.com/thechangelog/changelog.com/issues) about the feature you'd like to contribute before putting the time in to code it up. We'd hate for you to waste _any_ of your time building something that may ultimately fall on the cutting room floor.
-
-### How do I import a db backup locally?
-
-First ensure that:
-
-* the local changelog containers are stopped, i.e. `docker-compose down`
-* you have an unarchived db backup file in the `priv/db` directory, e.g. `./priv/db/changelog-201910-2020-01-16T19.36.05Z`
-
-Next, run the following commands:
-
-```sh
-docker-compose up db
-# Run in a separate tab/window
-docker-compose exec --user postgres db dropdb changelog_dev
-docker-compose exec --user postgres db createdb changelog_dev
-docker-compose exec --user postgres db psql --file=/app/priv/db/changelog-201910-2020-01-16T19.36.05Z changelog_dev
-```
-
-Finally, stop the db container by pressing both `CTRL` and `c` keys and the same time in the window/tab that you have `docker-compose up db` running.
-
-You can now start the app normally, all changelog.com content at the time the db backup was taken will be available locally.
-
-### How to upgrade Elixir?
-
-1. Pick an image from [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
-2. Update `docker/runtime.Dockerfile` to use the image with the desired version from the URL above
-3. Run `make runtime-image` to publish the new container image, which will look something like: `thechangelog/runtime:DATE_TIME`
-   1. This will require push access to [the Docker Hub `thechangelog` org](https://hub.docker.com/r/thechangelog/runtime/tags), which only maintainers will have (💡 `changeloci` in 1Password); you'll need to request an image publish from them once the rest of your PR is ready.
-   2. Update the following files with this new runtime version:
-      1. `docker/production.Dockerfile`
-      2. `2021/dagger/prod_image/main.cue`
-         1. Do not worry that the directory refers to `2021`; it is still used.
-      3. `dev_docker/changelog.yml`
-4. Update the Elixir version in `README.md` & `mix.exs`
-5. Commit and push everything, then wait for the pipeline to deploy everything into production
-
-You may want to test everything locally by running `make ship-it` from within the `2021` dir. This makes it easy to debug any potential issues locally.
-
-### How to build a new container image using Docker Engine running on Fly.io?
-
-Ensure that you have a [Fly.io Wireguard Tunnel configured locally](https://fly.io/docs/reference/private-networking/#creating-your-tunnel-configuration).
-You may also need to [install `flyctl`](https://fly.io/docs/hands-on/install-flyctl/).
-
-Given an active Fly.io Wireguard tunnel:
-
-1. Check that the Wireguard tunnel works:
-```
-dig +noall +answer _apps.internal txt
-_apps.internal.		5	IN	TXT	"changelog-2022-03-13,docker-2022-06-13,old-flower-9005,postgres-2022-03-12"
-```
-1. Configure `docker` CLI to use Docker Engine running on Fly.io:
-```
-export DOCKER_HOST=tcp://[fdaa:0:4556:a7b:21e0:1:1f9d:2]:2375
-```
-1. Check that `docker` CLI can connect to the remote Docker Engine:
-```
-docker info
-...
-Server:
- Containers: 1
-  Running: 1
-  Paused: 0
-  Stopped: 0
- Server Version: 20.10.17
-...
-```
-
-Any `docker` commands will now run against this remote Docker Engine now, including `make runtime-image`.
-
-## Code of Conduct
-
-[Contributor Code of Conduct](https://changelog.com/coc). By participating in this project you agree to abide by its terms.
-
-## Contributors
+## CONTRIBUTORS ✨
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
@@ -224,3 +101,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
+
+## LICENSE
+
+[MIT](LICENSE)
