@@ -19,7 +19,7 @@
 
     <div class="field <%= AdminHelpers.error_class(f, :twitter) %>">
       <%= label(f, :twitter_handle, "Twitter Handle") %>
-      <%= text_input(f, :twitter_handle, placeholder: "wired") %>
+      <%= text_input(f, :twitter_handle, placeholder: "wired", mask: "slug") %>
     </div>
   </div>
 

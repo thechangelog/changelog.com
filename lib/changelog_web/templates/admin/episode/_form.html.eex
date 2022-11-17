@@ -487,7 +487,7 @@
     </div>
 
     <div class="inline field <%= if !f.data.recorded_live, do: "hidden" %> <%= AdminHelpers.error_class(f, :youtube_id) %>">
-      <%= text_input(f, :youtube_id, placeholder: "dQw4w9WgXcQ") %>
+      <%= text_input(f, :youtube_id, placeholder: "dQw4w9WgXcQ", mask: "slug") %>
       <%= label(f, :youtube_id, "YouTube ID") %>
     </div>
   </div>

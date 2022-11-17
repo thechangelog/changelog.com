@@ -36,6 +36,22 @@ export default class FormUI {
           .end()
         .hide();
     });
+
+    $("input[mask='slug']").on("input", function(el) {
+      let $input = $(this);
+
+      try {
+        let path = new URL($input.val()).pathname;
+
+        if (path != "/") {
+          let paths = path.split("/").filter(word => word.length > 1);
+          let slug = paths[paths.length - 1];
+          $input.val(slug);
+        }
+      } catch(error) {
+        // console.log(error);
+      }
+    });
   }
 
   static refresh() {

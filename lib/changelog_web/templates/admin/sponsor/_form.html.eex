@@ -62,13 +62,13 @@
 
     <div class="field <%= AdminHelpers.error_class(f, :github_handle) %>">
       <%= label f, :github_handle, "On GitHub" %>
-      <%= text_input f, :github_handle, placeholder: "apple" %>
+      <%= text_input f, :github_handle, placeholder: "apple", mask: "slug" %>
       <%= AdminHelpers.error_message(f, :github_handle) %>
     </div>
 
     <div class="field <%= AdminHelpers.error_class(f, :twitter_handle) %>">
       <%= label f, :twitter_handle, "On Twitter" %>
-      <%= text_input f, :twitter_handle, placeholder: "apple" %>
+      <%= text_input f, :twitter_handle, placeholder: "apple", mask: "slug" %>
       <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
   </div>

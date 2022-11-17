@@ -16,7 +16,7 @@
   <div class="two fields">
     <div class="field <%= AdminHelpers.error_class(f, :twitter_handle) %>">
       <%= label(f, :twitter_handle, "Twitter Handle") %>
-      <%= text_input(f, :twitter_handle, placeholder: "RubyOnRails") %>
+      <%= text_input(f, :twitter_handle, placeholder: "RubyOnRails", mask: "slug") %>
       <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
 
