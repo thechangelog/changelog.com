@@ -14,8 +14,13 @@
           </a>
         </li>
         <li>
+          <a href="https://changelog.social" title="Changelog on Mastodon">
+            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-mastodon-black.svg"), "Mastodon Icon", width: 20, height: 20) %>
+          </a>
+        </li>
+        <li>
           <a href="https://linkedin.com/company/changelog" title="Changelog on LinkedIn">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-linkedin-black.svg"), "LinkedIn Icon", width: 20, height: 20) %>
+            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-linkedin-black.svg"), "LinkedIn Icon", width: 22, height: 22) %>
           </a>
         </li>
         <li>
@@ -74,6 +79,7 @@
         <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
         <li>---</li>
         <li><%= link("On Twitter", to: "https://twitter.com/changelog", title: "Changelog on Twitter") %></li>
+        <li><%= link("On Mastodon", to: "https://changelog.social", title: "Changelog on Mastodon") %></li>
         <li><%= link("On LinkedIn", to: "https://linkedin.com/company/changelog", title: "Changelog on LinkedIn") %></li>
         <li><%= link("On GitHub", to: "https://github.com/thechangelog", title: "Changelog on GitHub") %></li>
         <li><%= link("On YouTube", to: "https://www.youtube.com/changelog", title: "Changelog on YouTube") %></li>

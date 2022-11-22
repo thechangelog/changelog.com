@@ -62,6 +62,11 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
     "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&via=#{via}&related=#{related}"
   end
 
+  def mastodon_url(title, url) do
+    text = URI.encode("#{title} #{url}")
+    "https://toot.kytta.dev?text=#{text}"
+  end
+
   def reddit_url(title, url) do
     title = URI.encode(title)
     "http://www.reddit.com/submit?url=#{url}&title=#{title}"

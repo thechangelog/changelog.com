@@ -173,7 +173,7 @@ u(document).handle("click", ".js-share-popup", function (event) {
   var h, href, left, shareWindow, top, w;
   href = u(event.target).attr("href");
   w = 600;
-  h = 300;
+  h = 500;
   left = screen.width / 2 - w / 2;
   top = screen.height / 2 - h / 2;
   Log.track("Social", { action: "share", url: href });

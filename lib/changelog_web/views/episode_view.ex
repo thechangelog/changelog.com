@@ -318,6 +318,7 @@ defmodule ChangelogWeb.EpisodeView do
     %{
       url: url,
       twitter: PublicHelpers.tweet_url(episode.title, url),
+      mastodon: PublicHelpers.mastodon_url(episode.title, url),
       hackernews: PublicHelpers.hackernews_url(episode.title, url),
       reddit: PublicHelpers.reddit_url(episode.title, url),
       facebook: PublicHelpers.facebook_url(url),
