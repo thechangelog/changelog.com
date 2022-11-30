@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Meta do
   our Meta modules, we use this function to merge those keys back in to the
   assigns and call this from those modules prior to the existing functions.
 
-  Each sub-module now has one public function: `get/`` or `get/2` which
+  Each sub-module now has one public function: `get/1`` or `get/2` which
   implements said behavior.
   """
   def prep_assigns(conn) do

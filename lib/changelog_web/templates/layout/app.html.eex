@@ -25,21 +25,13 @@
   <% else %>
     <meta name="twitter:url" content="<%= current_url(@conn) %>">
   <% end %>
-  <%= if twitter_image = Meta.Image.get(:twitter_image, @conn) do %>
-    <meta name="twitter:image" content="<%= twitter_image %>">
+  <%= if share_image = Meta.Image.get(@conn) do %>
+    <meta name="twitter:image" content="<%= share_image %>">
+    <meta property="og:image" content="<%= share_image %>">
   <% end %>
     <meta property="og:url" content="<%= current_url(@conn) %>">
     <meta property="og:type" content="website">
     <meta property="og:title" content="<%= Meta.Title.get(:share, @conn) |> escaped() %>">
-  <%= if fb_image = Meta.Image.get(:fb_image, @conn) do %>
-    <meta property="og:image" content="<%= fb_image %>">
-  <% end %>
-  <%= if fb_image_width = Meta.Image.get(:fb_image_width, @conn) do %>
-    <meta property="og:image:width" content="<%= fb_image_width %>">
-  <% end %>
-  <%= if fb_image_height = Meta.Image.get(:fb_image_height, @conn) do %>
-    <meta property="og:image:height" content="<%= fb_image_height %>">
-  <% end %>
     <meta property="og:description" content="<%= Meta.Description.get(@conn) |> escaped() %>">
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
