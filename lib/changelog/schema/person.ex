@@ -48,6 +48,7 @@ defmodule Changelog.Person do
     field :handle, :string
     field :github_handle, :string
     field :linkedin_handle, :string
+    field :mastodon_handle, :string
     field :twitter_handle, :string
     field :slack_id, :string
     field :website, :string
@@ -181,7 +182,7 @@ defmodule Changelog.Person do
 
   def admin_insert_changeset(person, attrs \\ %{}) do
     allowed =
-      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location admin host editor public_profile approved)a
+      ~w(name email handle github_handle linkedin_handle mastodon_handle twitter_handle bio website location admin host editor public_profile approved)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
@@ -197,7 +198,7 @@ defmodule Changelog.Person do
 
   def insert_changeset(person, attrs \\ %{}) do
     allowed =
-      ~w(name email handle github_handle linkedin_handle twitter_handle bio website location public_profile)a
+      ~w(name email handle github_handle linkedin_handle mastodon_handle twitter_handle bio website location public_profile)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
@@ -221,18 +222,20 @@ defmodule Changelog.Person do
     |> cast(attrs, allowed)
     |> cast_embed(:settings)
     |> validate_required([:name, :email, :handle])
-    |> validate_format(:email, Regexp.email())
+    |> validate_format(:email, Regexp.email(), message: Regexp.email_message())
     |> validate_format(:website, Regexp.http(), message: Regexp.http_message())
     |> validate_format(:handle, Regexp.slug(), message: Regexp.slug_message())
     |> validate_length(:handle, max: 40, message: "max 40 chars")
     |> validate_format(:github_handle, Regexp.social(), message: Regexp.social_message())
     |> validate_format(:linkedin_handle, Regexp.social(), message: Regexp.social_message())
+    |> validate_format(:mastodon_handle, Regexp.email(), message: Regexp.email_message())
     |> validate_format(:twitter_handle, Regexp.social(), message: Regexp.social_message())
     |> validate_handle_allowed()
     |> unique_constraint(:email)
     |> unique_constraint(:handle)
     |> unique_constraint(:github_handle)
     |> unique_constraint(:linkedin_handle)
+    |> unique_constraint(:mastodon_handle)
     |> unique_constraint(:twitter_handle)
   end
 

@@ -85,6 +85,11 @@ defmodule ChangelogWeb.PersonView do
   def list_of_links(person, separator \\ ", ") do
     [
       %{
+        value: person.mastodon_handle,
+        text: "Mastodon",
+        url: SharedHelpers.mastodon_url(person.mastodon_handle)
+        },
+      %{
         value: person.twitter_handle,
         text: "Twitter",
         url: SharedHelpers.twitter_url(person.twitter_handle)

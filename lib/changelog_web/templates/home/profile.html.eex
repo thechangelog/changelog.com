@@ -71,7 +71,16 @@
       </div>
     </div>
 
-    <div class="form-element_wrap form-element_wrap--2">
+    <div class="form-element_wrap form-element_wrap--3">
+      <div class="form-element <%= PublicHelpers.error_class(f, :mastodon_handle) %>">
+        <label>Mastodon Handle</label>
+        <div class="form-element-preppended_field">
+          <span>@</span>
+          <%= text_input(f, :mastodon_handle, placeholder: "gracehopper@changelog.social") %>
+        </div>
+        <%= PublicHelpers.error_message(f, :mastodon_handle) %>
+      </div>
+
       <div class="form-element <%= PublicHelpers.error_class(f, :location) %>">
         <label>Location</label>
         <%= text_input(f, :location, placeholder: "New York, New York") %>

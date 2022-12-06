@@ -5,7 +5,7 @@ defmodule Changelog.RegexpTest do
 
   test "email requires an @ and a . somewhere after the @" do
     yes = ["changelog-48dafo@e6z9r.net", "jerod+weekly@changelog.com", "x@y.z"]
-    no = ["ohai", "this is a test@no thanks com", "x@y"]
+    no = ["ohai", "this is a test@no thanks com", "x@y", "@jerod@changelog.social"]
 
     for email <- yes do
       assert String.match?(email, Regexp.email())

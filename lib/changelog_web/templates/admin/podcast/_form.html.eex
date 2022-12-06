@@ -28,7 +28,7 @@
 
     <div class="field <%= AdminHelpers.error_class(f, :vanity_domain) %>">
       <%= label(f, :vanity_domain, "Vanity Domain") %>
-      <%= text_input(f, :vanity_domain, placeholder: "http://changelog.fm") %>
+      <%= text_input(f, :vanity_domain, placeholder: "https://changelog.fm") %>
       <%= AdminHelpers.error_message(f, :vanity_domain) %>
     </div>
 
@@ -38,9 +38,9 @@
       <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
 
-    <div class="field <%= AdminHelpers.error_class(f, :chartable_id) %>">
-      <%= label(f, :chartable_id, "Chartable ID") %>
-      <%= text_input(f, :chartable_id, placeholder: "A551A9") %>
+    <div class="field <%= AdminHelpers.error_class(f, :mastodon_handle) %>">
+      <%= label(f, :mastodon_handle, "On Mastodon") %>
+      <%= text_input(f, :mastodon_handle, placeholder: "changelog@changelog.social") %>
     </div>
   </div>
 

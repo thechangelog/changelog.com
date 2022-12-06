@@ -28,6 +28,7 @@ defmodule Changelog.Podcast do
 
     field :vanity_domain, :string
     field :keywords, :string
+    field :mastodon_handle, :string
     field :twitter_handle, :string
     field :apple_url, :string
     field :spotify_url, :string
@@ -88,7 +89,7 @@ defmodule Changelog.Podcast do
     podcast
     |> cast(
       attrs,
-      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords twitter_handle apple_url spotify_url riverside_url chartable_id recorded_live partner position)a
+      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords mastodon_handle twitter_handle apple_url spotify_url riverside_url chartable_id recorded_live partner position)a
     )
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http(), message: Regexp.http_message())

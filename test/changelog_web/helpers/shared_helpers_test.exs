@@ -61,6 +61,24 @@ defmodule ChangelogWeb.SharedHelpersTest do
     end
   end
 
+  describe "mastodon_url/1" do
+    test "is empty when nil" do
+      assert mastodon_url(nil) == ""
+    end
+
+    test "is empty when nil in map" do
+      assert mastodon_url(%{mastodon_handle: nil}) == ""
+    end
+
+    test "converts handle as string" do
+      assert mastodon_url("jerod@changelog.social") == "https://changelog.social/@jerod"
+    end
+
+    test "converts handle in map" do
+      assert mastodon_url(%{mastodon_handle: "jerod@changelog.social"}) == "https://changelog.social/@jerod"
+    end
+  end
+
   describe "pluralize" do
     test "when it is sent a count" do
       assert pluralize(1, "person", "people") == "1 person"

@@ -40,10 +40,30 @@
       <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
 
+    <div class="field <%= AdminHelpers.error_class(f, :mastodon_handle) %>">
+      <%= label(f, :mastodon_handle, "Mastodon Handle") %>
+      <%= text_input(f, :mastodon_handle, placeholder: "gracehopper@changelog.social", autocapitalize: "none", mask: "slug") %>
+      <%= AdminHelpers.error_message(f, :mastodon_handle) %>
+    </div>
+  </div>
+
+  <div class="three fields">
+    <div class="field <%= AdminHelpers.error_class(f, :website) %>">
+      <%= label(f, :website) %>
+      <%= text_input(f, :website, placeholder: "https://en.wikipedia.org/wiki/Grace_Hopper", autocapitalize: "none") %>
+      <%= AdminHelpers.error_message(f, :website) %>
+    </div>
+
     <div class="field <%= AdminHelpers.error_class(f, :linkedin_handle) %>">
       <%= label(f, :linkedin_handle, "LinkedIn Handle") %>
       <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none", mask: "slug") %>
       <%= AdminHelpers.error_message(f, :linkedin_handle) %>
+    </div>
+
+    <div class="field <%= AdminHelpers.error_class(f, :location) %>">
+      <%= label(f, :location) %>
+      <%= text_input(f, :location, placeholder: "New York, New York") %>
+      <%= AdminHelpers.error_message(f, :location) %>
     </div>
   </div>
 
@@ -72,20 +92,6 @@
           height=66
         >
       <% end %>
-    </div>
-  </div>
-
-  <div class="two fields">
-    <div class="field <%= AdminHelpers.error_class(f, :website) %>">
-      <%= label(f, :website) %>
-      <%= text_input(f, :website, placeholder: "https://en.wikipedia.org/wiki/Grace_Hopper", autocapitalize: "none") %>
-      <%= AdminHelpers.error_message(f, :website) %>
-    </div>
-
-    <div class="field <%= AdminHelpers.error_class(f, :location) %>">
-      <%= label(f, :location) %>
-      <%= text_input(f, :location, placeholder: "New York, New York") %>
-      <%= AdminHelpers.error_message(f, :location) %>
     </div>
   </div>
 
