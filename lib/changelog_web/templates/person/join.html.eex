@@ -57,6 +57,17 @@
       </div>
     </div>
 
+    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :twitter_handle) %>">
+      <div class="form-element">
+        <label>Mastodon Handle</label>
+        <div class="form-element-preppended_field">
+          <span>@</span>
+          <%= text_input(f, :mastodon_handle, placeholder: "gracehopper@changelog.social", autocapitalize: "none") %>
+        </div>
+        <%= PublicHelpers.error_message(f, :mastodon_handle) %>
+      </div>
+    </div>
+
     <div class="form-element_wrap <%= PublicHelpers.error_class(f, :linkedin_handle) %>">
       <div class="form-element">
         <label>LinkedIn Handle</label>
