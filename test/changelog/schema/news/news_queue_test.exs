@@ -3,7 +3,7 @@ defmodule Changelog.NewsQueueTest do
 
   import Mock
 
-  alias Changelog.{Buffer, HN, NewsItem, NewsQueue, Notifier}
+  alias Changelog.{Buffer, HN, NewsItem, NewsQueue, Notifier, Social}
 
   describe "append/1" do
     test "when queue is empty" do
@@ -125,7 +125,8 @@ defmodule Changelog.NewsQueueTest do
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
         {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
-        {HN, [], [submit: fn _ -> true end]}
+        {HN, [], [submit: fn _ -> true end]},
+        {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish_next()
 
@@ -160,7 +161,8 @@ defmodule Changelog.NewsQueueTest do
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
         {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
-        {HN, [], [submit: fn _ -> true end]}
+        {HN, [], [submit: fn _ -> true end]},
+        {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish_scheduled()
 
@@ -185,13 +187,15 @@ defmodule Changelog.NewsQueueTest do
         {Buffer, [], [queue: fn _ -> true end]},
         {Notifier, [], [notify: fn _ -> true end]},
         {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
-        {HN, [], [submit: fn _ -> true end]}
+        {HN, [], [submit: fn _ -> true end]},
+        {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish(item)
         assert Repo.count(NewsItem.published()) == 1
         wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
         wait_for_passing(1000, fn -> assert called(Notifier.notify(:_)) end)
         wait_for_passing(1000, fn -> assert called(Algolia.save_object(:_, :_, :_)) end)
+        wait_for_passing(1000, fn -> assert called(Social.post(:_)) end)
       end
     end
 
@@ -209,11 +213,13 @@ defmodule Changelog.NewsQueueTest do
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
         {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
-        {HN, [], [submit: fn _ -> true end]}
+        {HN, [], [submit: fn _ -> true end]},
+        {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish(i2)
         wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
         wait_for_passing(1000, fn -> assert called(Algolia.save_object(:_, :_, :_)) end)
+        wait_for_passing(1000, fn -> assert called(Social.post(:_)) end)
         published = Repo.all(NewsItem.published())
         assert Enum.map(published, & &1.id) == [i2.id]
         assert Repo.count(NewsQueue) == 2

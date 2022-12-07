@@ -11,7 +11,8 @@ defmodule Changelog.NewsQueue do
     NewsItem,
     NewsQueue,
     Notifier,
-    Search
+    Search,
+    Social
   }
 
   schema "news_queue" do
@@ -160,6 +161,7 @@ defmodule Changelog.NewsQueue do
     Task.start_link(fn -> NewsItem.subscribe_participants(item) end)
     Task.start_link(fn -> Search.save_item(item) end)
     Task.start_link(fn -> Buffer.queue(item) end)
+    Task.start_link(fn -> Social.post(item) end)
     Task.start_link(fn -> Notifier.notify(item) end)
     # Task.start_link(fn -> HN.submit(item) end)
     Task.start_link(fn -> EpisodeTracker.track(item) end)
