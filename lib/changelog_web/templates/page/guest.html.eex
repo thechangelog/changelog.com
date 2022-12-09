@@ -30,7 +30,7 @@
     <p><a href="https://riverside.fm">Riverside</a> takes care of recording everyone's local audio. As a backup to that (because Murphy's Law), we ask that you <mark>please create a local audio recording</mark>. Here's some videos on how to do that:</p>
 
     <ul>
-      <li>On macOS, we suggest that you <a href="https://youtu.be/W7pqfxEMwA4">use the built-in QuickTime Player</a></li>
+      <li>On macOS, we suggest that you <a href="https://youtu.be/beEbtC7dv08?t=20">use the built-in QuickTime Player</a></li>
       <li>On Windows, we suggest that you <a href="https://youtu.be/Yc4rBee-oG4?t=38">use the built-in Voice Recorder</a></li>
       <li>On Linux, we suggest that you <a href="https://youtu.be/0Lde3LThQ_E?t=54">use Audacity</a></li>
     </ul>
@@ -49,6 +49,7 @@
     <ul>
       <li>A decent webcam or external video camera 📹</li>
       <li>Good enough lighting so people can see your face 💡</li>
+      <li>Your face centered vertically and horizontally in the shot 🖼</li>
     </ul>
 
     <h2 id="during">While we record</h2>
@@ -82,7 +83,7 @@
     <ul>
       <li>Receive an email when the show is published 📥</li>
       <li>Help share and promote the episode 🗣</li>
-      <li>Get an awesome t-shirt as a thanks from us ✊</li>
+      <li>Get an awesome [t-shirt](https://merch.changelog.com) as a thanks from us ✊</li>
     </ul>
 
     <p>Please do <mark>share your episode</mark>. You put a lot of effort in to what you do and we want to see its impact maximized. Our guests' favorite places to share their show:</p>
@@ -94,7 +95,7 @@
     </ul>
 
   <%= if @episode do %>
-    <p>The email you receive will also include <mark>a snippet you can use</mark> so people can listen to your show without leaving your site. Here's a preview of what it looks like:</p>
+    <p>The email you receive also includes <mark>a snippet you can use</mark> so people can listen to your episode without leaving your site. Here's a preview of what it looks like:</p>
 
     <h4>Night Theme</h4>
     <%= EpisodeView.embed_iframe(@episode, "night") |> raw %>
