@@ -16,8 +16,22 @@ export default class Share {
     this.copyEmbedButton = this.clipboardFor(".js-share-copy-embed");
     // events
     this.toggleEmbedButton.on("change", () => { this.toggleEmbed(); });
+    this.attachKeyboardShortcuts();
     // yup
     this.isAttached = true;
+  }
+
+  attachKeyboardShortcuts() {
+    u(document).on("keydown", event => {
+      if (!this.isAttached) return;
+
+      switch (event.keyCode) {
+        case 27: // escape
+          this.detach();
+          break;
+        default:
+      }
+    });
   }
 
   detach() {
@@ -28,7 +42,7 @@ export default class Share {
     this.copyUrlButton.destroy();
     this.copyEmbedButton.destroy();
     // ui
-    this.overlay.html("");
+    this.overlay.hide("");
   }
 
   load(detailsUrl) {
