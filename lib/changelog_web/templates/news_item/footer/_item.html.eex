@@ -4,5 +4,6 @@
   <%= if SharedHelpers.controller_action_combo(@conn) != "news_item-show" do %>
     &bull; <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
   <% end %>
+    &bull; <%= link("Share", to: share_path(@conn, @item), title: "Copy URL for easy sharing", data: [copy: true]) %>
   </span>
 </footer>

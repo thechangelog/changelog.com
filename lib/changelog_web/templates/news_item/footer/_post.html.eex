@@ -2,5 +2,6 @@
   <span class="news_item-footer-item">
     <%= link("Read On", to: permalink_path(@conn, @item)) %> &bull;
     <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
+    &bull; <%= link("Share", to: share_path(@conn, @item), title: "Copy URL for easy sharing", data: [copy: true]) %>
   </span>
 </footer>

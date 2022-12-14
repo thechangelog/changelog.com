@@ -2,6 +2,10 @@
 <footer class="news_item-footer">
   <span class="news_item-footer-item">
     <%= link(discuss_with_count(@item), to: discussion_path(@conn, @item)) %>
+    &bull; <%= link("Share",
+        title: "Share this episode",
+        to: {:javascript, "void(0);"},
+        data: [share: Routes.episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)]) %>
   </span>
 </footer>
 <% end %>

@@ -168,6 +168,18 @@ u(document).handle("click", "[data-share]", function (event) {
   new Share(App.overlay).load(u(this).data("share"));
 });
 
+u(document).handle("click", "[data-copy]", function(event) {
+  const el = event.target;
+  const type = "text/plain";
+  const blob = new Blob([el.href], {type});
+  const data = [new ClipboardItem({[type]: blob})];
+
+  navigator.clipboard.write(data).then(() => {
+    u(el).text("Copied!");
+    setTimeout(() => { u(el).text("Share") }, 1500);
+  });
+});
+
 // open share dialogs in their own window (order matters or next rule will apply)
 u(document).handle("click", ".js-share-popup", function (event) {
   var h, href, left, shareWindow, top, w;

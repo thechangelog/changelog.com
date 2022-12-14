@@ -218,6 +218,10 @@ defmodule ChangelogWeb.NewsItemView do
   def render_youtube_embed(nil), do: nil
   def render_youtube_embed(id), do: render("_youtube_embed.html", id: id)
 
+  def share_path(conn, item) do
+    Routes.news_item_path(conn, :show, hashid(item))
+  end
+
   def teaser(item, max_words \\ 20) do
     item.story
     |> SharedHelpers.md_to_html()
