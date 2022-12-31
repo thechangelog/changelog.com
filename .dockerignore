@@ -2,13 +2,12 @@
 .dagger
 .git
 .github
-2021
-2022
+2021.dagger
+2022.fly
 _build/dev
 _build/test
 assets/node_modules
 cue.mod
-dev_docker
 docker
 import
 nginx
@@ -16,8 +15,6 @@ priv/db
 priv/uploads
 script
 tmp
-.all-contributorsrc
-.autocomplete*
 .credo.exs
 .dockerignore
 .formatter.exs
@@ -25,8 +22,5 @@ tmp
 .env
 .gitattributes
 .gitignore
-README.md
 coveralls.json
-start_dev_stack.sh
-.kube
 erl_crash.dump

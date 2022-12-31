@@ -1,5 +1,5 @@
 plan:
-    package: ./2021/dagger/prod_image
+    package: ./2021.dagger/dagger/prod_image
 name: prod_image
 inputs:
     app_src:
@@ -10,8 +10,8 @@ inputs:
                 - .dagger
                 - .git
                 - .github
-                - "2021"
-                - "2022"
+                - 2021.dagger
+                - 2022.fly
                 - _build/dev
                 - _build/test
                 - assets/node_modules
@@ -42,21 +42,21 @@ inputs:
                 - _build
                 - dagger
     app_version:
-        text: 22.11.13+c84768a1d0df8afd6f8848d0100af252e85f6dc1
+        text: 22.12.31+8a0c2ff2e53aafba0bfbebf2250596e47ffdc51d
     build_url:
         text: https://github.com/thechangelog/changelog.com/actions
     build_version:
-        text: 22.11.13+c84768a1d0df8afd6f8848d0100af252e85f6dc1
+        text: 22.12.31+8a0c2ff2e53aafba0bfbebf2250596e47ffdc51d
     docker_host:
         text: tcp://100.81.87.121:2375
     dockerhub_password:
-        secret: ENC[AES256_GCM,data:ZaD/Ms4j+GVmmV8Bi8SpOLykYwM=,iv:H9VzVM/6aPQTECXSqO3YJVgcDSclsg1n0PEbeqjKZQQ=,tag:N6utU8mE7NUg8votw1aoLA==,type:str]
+        secret: ENC[AES256_GCM,data:Fin0Di/C0774YTGEEqD7m2zk5xU=,iv:ip4B7roo7CltaS1Xws7yeobPvvNISPQgeTUdHoimS0A=,tag:kuy0AokubbBg0J2FiI+AgA==,type:str]
     dockerhub_username:
         text: changelogci
     git_author:
         text: gerhard
     git_sha:
-        text: c84768a1d0df8afd6f8848d0100af252e85f6dc1
+        text: 8a0c2ff2e53aafba0bfbebf2250596e47ffdc51d
     prod_dockerfile:
         text: |
             FROM thechangelog/legacy_assets AS legacy_assets
@@ -105,14 +105,14 @@ sops:
         - recipient: age1jl7vc68wfe2carr7qhe83r540fh8ayjensmym5p5ddsky84cvvas0gyr6l
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBzMUhQK2pFelNqbjh1cHVa
-            OCs1T3AzT085SHlWV0MyMmNRWDlpZUxqSFRBCnhibDhoQUpaZVhpMTdJQjZTT2FO
-            SEVqWkhzVXhuazZpTndYZm1wM1dNSGMKLS0tIGpIZHdob1YrbnVQbnNmbTg2cVNr
-            ZE8xQlF0bHVZejFHeEwzZXBwZnF3encK8DzznyIRG/Hq9PDpF52XFE1phXd5Cwcu
-            aphxZYpkm6JiBQySohnqHYCdN0xjCJOXOHAGIdnoog94rnRGqbqrew==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBOTm5acGNwRTBweERTUy9q
+            bXdOWjhZTzJyK0loRGxXU1dxdHpNVTMwb0hrCmlFT0wwMVN5Tys1UDBuZHRmWnFL
+            L0F2RmZyQU15SGVFa3FFUGNTZzJFNzgKLS0tIHo5QTBOUndYNXdSc0NjeFI0Y1Za
+            UTVMS2FqWklZSlUrelV3eFNyd1hXUU0K6ktvY5PyvsqSG6X/0VVQBnKozzXwUfJQ
+            hv8BnEh9dcaFKlYsV32YoC3XocSN9fX73GUeHLouVqaUd/wg5CgspQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-11-13T07:51:43Z"
-    mac: ENC[AES256_GCM,data:4skxsEcznFxigZ2yLOtxAxxo5CRmiZwMxZxBJzy6Xe0QV9RKgGGLswEIXyYx1XE0H35D7BEm4qKX/eqCd6ZNCP6X1hGvqW4wR3jOPinCpxj5cTeYLtqvdPE3eYYP9WztLwpw/ndion9LjV+1Hdnes3fL9IPkMgpW9hOTe39PME4=,iv:agqCrcoIQUYpmdLRsPj6u8ZA/+GlNhyn4dR12+gcoyI=,tag:931vmINorFrYNjvXJHfOMg==,type:str]
+    lastmodified: "2022-12-31T19:13:13Z"
+    mac: ENC[AES256_GCM,data:sLEiVe51fDQC54LWWYtASAjFe/TT1wNonmp0Y925Lp1ey9M0VzqUn5y2ANfkGRgpvLNeOL0SyJBPdmmZ1OBtxSzaKzWuwTo9gfxvGspIa8wK0wR6Hkhxyqlh9adxm7aw+GoZTb+xn50Gx4P4J8f58DqUBq3D0LAt6RBChD8bm1U=,iv:26EkL7c9ToPN3AxWRopBLsO4JH3sjYzcEGvprm68Guw=,tag:S4PZZfXViyCalqsqONpmiA==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1

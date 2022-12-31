@@ -2,7 +2,7 @@ package docker
 
 import (
 	"dagger.io/dagger"
-	"dagger.io/dagger/core"
+	"dagger.io/dagger/engine"
 )
 
 // Upload an image to a remote repository
@@ -14,7 +14,8 @@ import (
 	result: #Ref & _push.result
 
 	// Registry authentication
-	auth?: {
+	// Key must be registry address
+	auth: [registry=string]: {
 		username: string
 		secret:   dagger.#Secret
 	}
@@ -22,11 +23,12 @@ import (
 	// Image to push
 	image: #Image
 
-	_push: core.#Push & {
+	_push: engine.#Push & {
 		"dest": dest
-		if auth != _|_ {
-			"auth": auth
-		}
+		"auth": [ for target, creds in auth {
+			"target": target
+			creds
+		}]
 		input:  image.rootfs
 		config: image.config
 	}

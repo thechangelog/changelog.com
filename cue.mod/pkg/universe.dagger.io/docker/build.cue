@@ -2,7 +2,7 @@ package docker
 
 import (
 	"dagger.io/dagger"
-	"dagger.io/dagger/core"
+	"dagger.io/dagger/engine"
 )
 
 // Modular build API for Docker containers
@@ -10,7 +10,7 @@ import (
 	steps: [#Step, ...#Step]
 	output: #Image
 
-	// Generate build DAG from linear steps
+	// Generate build DAG from linerar steps
 	_dag: {
 		for idx, step in steps {
 			"\(idx)": step & {
@@ -47,11 +47,13 @@ import (
 	dest:     string | *"/"
 
 	// Execute copy operation
-	_copy: core.#Copy & {
-		"input":    input.rootfs
-		"contents": contents
-		"source":   source
-		"dest":     dest
+	_copy: engine.#Copy & {
+		"input": input.rootfs
+		"source": {
+			root: contents
+			path: source
+		}
+		"dest": dest
 	}
 
 	output: #Image & {
@@ -62,43 +64,18 @@ import (
 
 // Build step that executes a Dockerfile
 #Dockerfile: {
+	// Source directory
 	source: dagger.#FS
 
-	// Dockerfile definition or path into source
-	dockerfile: *{
-		path: string | *"Dockerfile"
+	// FIXME: not yet implemented
+	*{
+		// Look for Dockerfile in source at default path
+		path: "Dockerfile"
 	} | {
+		// Look for Dockerfile in source at a custom path
+		path: string
+	} | {
+		// Custom dockerfile  contents
 		contents: string
-	}
-
-	// Registry authentication
-	// Key must be registry address
-	auth: [registry=string]: {
-		username: string
-		secret:   dagger.#Secret
-	}
-
-	platforms: [...string]
-	target?: string
-	buildArg: [string]: string
-	label: [string]:    string
-	hosts: [string]:    string
-
-	_build: core.#Dockerfile & {
-		"source":     source
-		"auth":       auth
-		"dockerfile": dockerfile
-		"platforms":  platforms
-		if target != _|_ {
-			"target": target
-		}
-		"buildArg": buildArg
-		"label":    label
-		"hosts":    hosts
-	}
-
-	output: #Image & {
-		rootfs: _build.output
-		config: _build.config
 	}
 }
