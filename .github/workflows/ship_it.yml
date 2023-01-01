@@ -2,25 +2,21 @@ name: "Ship It!"
 
 on:
   push:
+  pull_request:
   workflow_dispatch:
 
 jobs:
-  release:
+  package:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code..."
-        uses: actions/checkout@v2
-
-      - name: "Install Dagger..."
-        uses: dagger/dagger-action@v1
-        with:
-          # ⚠️  Keep this in sync with 2021/dagger.mk
-          version: 0.1.0
-          age-key: ${{ secrets.DAGGER_AGE_KEY }}
-          args: version
+        uses: actions/checkout@v3
 
       # ⚠️  FLY_WIREGUARD is configured via `fly wireguard create ...` - see 2022.fly/docker/README.md
       - name: "Set up WireGuard for Fly.io Docker Engine..."
+        env:
+          FLY_WIREGUARD: ${{ secrets.FLY_WIREGUARD }}
+        if: "${{ env.FLY_WIREGUARD != '' }}"
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools openresolv
           printf "${{ secrets.FLY_WIREGUARD }}" | sudo tee /etc/wireguard/fly.conf
@@ -28,28 +24,27 @@ jobs:
 
       # ⚠️  IPv6 is configured via `fly ips private` - see 2022.fly/docker/README.md
       - name: "Check Fly.io Docker Engine"
+        env:
+          DOCKER_ENGINE_HOST: ${{ secrets.DOCKER_ENGINE_HOST }}
+        if: "${{ env.DOCKER_ENGINE_HOST != '' }}"
         run: |
-          ping6 -c 5 fdaa:0:4556:a7b:21e0:1:1f9d:2
-          nc -vz6 fdaa:0:4556:a7b:21e0:1:1f9d:2 2375
+          ping6 -c 5 "$DOCKER_ENGINE_HOST"
+          nc -vz6 "$DOCKER_ENGINE_HOST" 2375
 
       # ⚠️  IPv6 is configured via `fly ips private` - see 2022.fly/docker/README.md
-      - name: "Build, test & release via Fly.io Docker Engine..."
+      - name: "Build, test & package via Fly.io Docker Engine..."
         env:
-          DOCKER_HOST: "tcp://[fdaa:0:4556:a7b:21e0:1:1f9d:2]:2375"
+          DOCKER_HOST: "${{ secrets.DOCKER_ENGINE_HOST_FQDN }}"
+          DOCKERHUB_USERNAME: "${{ secrets.DOCKERHUB_USERNAME }}"
+          DOCKERHUB_PASSWORD: "${{ secrets.DOCKERHUB_PASSWORD }}"
+          DAGGER_LOG_FORMAT: plain
+          DAGGER_LOG_LEVEL: info
         run: |
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text prod_dockerfile --file docker/production.Dockerfile --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text git_branch "$GITHUB_REF_NAME" --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text git_sha "$GITHUB_SHA" --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text git_author "$GITHUB_ACTOR" --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text app_version "$(date -u +'%y.%-m.%-d+')$GITHUB_SHA" --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text build_version "$(date -u +'%Y-%m-%dT%H.%M.%SZ')" --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text build_url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger input text docker_host "$DOCKER_HOST" --environment prod_image
-          /opt/hostedtoolcache/dagger/*/x64/dagger up --environment prod_image --log-format plain
+          make --directory 2021.dagger ship-it
 
   deploy:
     if: ${{ github.ref_name == 'master' }}
-    needs: release
+    needs: package
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code..."

@@ -42,35 +42,52 @@ $(DAGGER_HOME): | $(DAGGER)
 .PHONY: dagger-init
 dagger-init: | $(DAGGER_HOME)
 
-$(DAGGER_ENV)/prod_image: | dagger-init
-	$(DAGGER_CTX) new prod_image --package $(CURDIR)/dagger/prod_image
-	printf "$(MAGENTA)Run this only once per environment$(NORMAL)\n"
-	read -p "Enter your DockerHub username: " dockerhub_username \
-	; $(DAGGER_CTX) input text dockerhub_username $$dockerhub_username --environment prod_image
-	read -p "Enter your DockerHub password: " dockerhub_password \
-	; $(DAGGER_CTX) input secret dockerhub_password $$dockerhub_password --environment prod_image
+ifeq (,$(DOCKERHUB_USERNAME))
+DOCKERHUB_USERNAME = NO_DOCKERHUB_USERNAME
+endif
+ifeq (,$(DOCKERHUB_PASSWORD))
+DOCKERHUB_PASSWORD = NO_DOCKERHUB_PASSWORD
+endif
+
+DOCKER_SOCKET ?= /var/run/docker.sock
 
 # https://tools.ietf.org/html/rfc3339 format - . instead of : - so that Docker tag is valid
+APP_VERSION ?= $(shell date -u +'%y.%-m.%-d+'$(GITHUB_SHA))
 BUILD_VERSION ?= $(shell date -u +'%Y-%m-%dT%H.%M.%SZ')
-GIT_SHA ?= $(shell git rev-parse HEAD)
-APP_VERSION ?= $(shell date -u +'%y.%-m.%-d+'$(GIT_SHA))
-BUILD_URL ?= https://github.com/thechangelog/changelog.com/actions
-GIT_AUTHOR ?= $(USER)
+GITHUB_SERVER_URL ?= https://github.com
+GITHUB_REPOSITORY ?= thechangelog/changelog.com
+BUILD_URL ?= $(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY)/actions/runs/$(GITHUB_RUN_ID)
+GITHUB_ACTOR ?= $(USER)
+GITHUB_REF_NAME ?= $(shell git branch --show-current)
+GITHUB_REF_NAME_SAFE = $$(echo "$(GITHUB_REF_NAME)" | tr '/' '-')
+GITHUB_SHA ?= $(shell git rev-parse HEAD)
+DAGGER_LOG_LEVEL ?= debug
+export DAGGER_LOG_LEVEL
 
 define _convert_dockerignore_to_excludes
 awk '{ print "--exclude " $$1 }' < $(BASE_DIR)/.dockerignore
 endef
+
+$(DAGGER_ENV)/ship_it: | dagger-init
+	$(DAGGER_CTX) new ship_it --package $(CURDIR)/dagger/prod_image
+	$(DAGGER_CTX) input dir app_src . $(shell $(_convert_dockerignore_to_excludes)) --exclude deps --exclude _build --exclude dagger --environment ship_it
+	$(DAGGER_CTX) input text dockerhub_username $(DOCKERHUB_USERNAME) --environment ship_it
+	$(DAGGER_CTX) input secret dockerhub_password $(DOCKERHUB_PASSWORD) --environment ship_it
+	$(DAGGER_CTX) input text app_version $(APP_VERSION) --environment ship_it
+	$(DAGGER_CTX) input text build_url $(BUILD_URL) --environment ship_it
+	$(DAGGER_CTX) input text build_version $(BUILD_VERSION) --environment ship_it
+	$(DAGGER_CTX) input socket docker_socket $(DOCKER_SOCKET) --environment ship_it
+ifneq (,$(DOCKER_HOST))
+	$(DAGGER_CTX) input text docker_host $(DOCKER_HOST) --environment ship_it
+endif
+	$(DAGGER_CTX) input text git_author $(GITHUB_ACTOR) --environment ship_it
+	$(DAGGER_CTX) input text git_branch $(GITHUB_REF_NAME_SAFE) --environment ship_it
+	$(DAGGER_CTX) input text git_sha $(GITHUB_SHA) --environment ship_it
+	$(DAGGER_CTX) input text prod_dockerfile --file docker/production.Dockerfile --environment ship_it
+
 .PHONY: ship-it
-ship-it: $(DAGGER_ENV)/prod_image
-	$(DAGGER_CTX) input dir app_src . $(shell $(_convert_dockerignore_to_excludes)) --exclude deps --exclude _build --exclude dagger --environment prod_image
-	$(DAGGER_CTX) input text prod_dockerfile --file docker/production.Dockerfile --environment prod_image
-	$(DAGGER_CTX) input text git_sha $(GIT_SHA) --environment prod_image
-	$(DAGGER_CTX) input text git_author $(GIT_AUTHOR) --environment prod_image
-	$(DAGGER_CTX) input text app_version $(APP_VERSION) --environment prod_image
-	$(DAGGER_CTX) input text build_version $(APP_VERSION) --environment prod_image
-	$(DAGGER_CTX) input text build_url $(BUILD_URL) --environment prod_image
-	$(DAGGER_CTX) input text docker_host $(DOCKER_HOST) --environment prod_image
-	$(DAGGER_CTX) up --log-level debug --environment prod_image
+ship-it: $(DAGGER_ENV)/ship_it
+	$(DAGGER_CTX) up --environment ship_it
 
 .PHONY: dagger-clean
 dagger-clean:

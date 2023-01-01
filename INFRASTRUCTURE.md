@@ -160,18 +160,18 @@ production. The ["Ship It!" GitHub Actions
 workflow](.github/workflows/ship_it.yml) is responsible for this. From the
 workflow jobs perspective, it is fairly standard:
 
-- **1/3. Release**
+- **1/3. Package**
   - [Uses Dagger.io](https://github.com/thechangelog/changelog.com/pull/395) so that it works exactly the same locally as it does in GitHub Actions
   - [Connects to a Docker Engine running on Fly.io](https://github.com/thechangelog/changelog.com/pull/416) so that caching is reliable & persistent between runs
   - A successful run publishes a container image to Docker Hub
 - **2/3. Deploy**
-  - Uses `flyctl` GitHub Action to deploy to Fly.io if **Release** succeeds
+  - Uses `flyctl` GitHub Action to deploy to Fly.io if **Package** succeeds
 - **3/3. Notify**
   - Notifies `#dev` channel in changelog.slack.com if **Deploy** succeeds
 
 Most of our pipeline complexity - building, testing, digesting assets &
 publishing the resulting container image - is encapsulated in Dagger.io, which
-runs in GitHub Actions as **1/3. Release**. One of the primary benefits is that
+runs in GitHub Actions as **1/3. Package**. One of the primary benefits is that
 this part works in CI exactly as it does locally. Here is an overview of what
 happens inside our Dagger.io pipeline:
 

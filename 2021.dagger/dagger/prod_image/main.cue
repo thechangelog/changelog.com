@@ -7,10 +7,11 @@ import (
 )
 
 app_src:            dagger.#Artifact
-prod_dockerfile:    dagger.#Input & {string}
-docker_host:        dagger.#Input & {string}
-dockerhub_username: dagger.#Input & {string}
+docker_host:        dagger.#Input & {string | *""}
+docker_socket:      dagger.#Input & dagger.#Stream
 dockerhub_password: dagger.#Input & {dagger.#Secret}
+dockerhub_username: dagger.#Input & {string}
+prod_dockerfile:    dagger.#Input & {string}
 // ⚠️  Keep this in sync with ../docker/production.Dockerfile
 runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2022-11-13T07.34.05Z"}
 build_version:     dagger.#Input & {string}
@@ -20,7 +21,7 @@ git_sha:           dagger.#Input & {string}
 git_author:        dagger.#Input & {string}
 app_version:       dagger.#Input & {string}
 build_url:         dagger.#Input & {string}
-// ⚠️  Keep this in sync with dev_docker/postgres.yml
+// ⚠️  Keep this in sync with PostgreSQL version in CONTRIBUTING.md
 test_db_image_ref:      dagger.#Input & {string | *"postgres:14.1"}
 test_db_container_name: "changelog_test_postgres"
 
@@ -70,12 +71,19 @@ test_db_container_name: "changelog_test_postgres"
 // #############################################################################
 
 test_db_start: docker.#Command & {
-	host: docker_host
+	if docker_host != "" {
+		host: docker_host
+	}
+	if docker_host == "" {
+		socket: docker_socket
+	}
 	env: {
 		CONTAINER_NAME:  test_db_container_name
 		CONTAINER_IMAGE: test_db_image_ref
 	}
 	command: #"""
+		ls -lah /var/run
+		ls -lah /run
 		docker container inspect $CONTAINER_NAME \
 		  --format 'Container "{{.Name}}" is "{{.State.Status}}"' \
 		|| docker container run \
@@ -161,7 +169,12 @@ test: docker.#Build & {
 }
 
 test_db_stop: docker.#Command & {
-	host: docker_host
+	if docker_host != "" {
+		host: docker_host
+	}
+	if docker_host == "" {
+		socket: docker_socket
+	}
 	env: {
 		DEP:            test.dockerfile
 		CONTAINER_NAME: test_db_container_name
@@ -203,7 +216,12 @@ image_prod_cache: docker.#Build & {
 }
 
 image_prod: docker.#Command & {
-	host: docker_host
+	if docker_host != "" {
+		host: docker_host
+	}
+	if docker_host == "" {
+		socket: docker_socket
+	}
 	copy: {
 		"/tmp/app": from: os.#Dir & {
 			from: image_prod_cache
@@ -238,7 +256,12 @@ image_prod: docker.#Command & {
 }
 
 image_prod_tag: docker.#Command & {
-	host: docker_host
+	if docker_host != "" {
+		host: docker_host
+	}
+	if docker_host == "" {
+		socket: docker_socket
+	}
 	env: {
 		DOCKERHUB_USERNAME:     dockerhub_username
 		PROD_IMAGE_REF:         image_prod.env.PROD_IMAGE_REF
