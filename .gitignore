@@ -42,20 +42,10 @@ npm-debug.log*
 
 # .envrc is likely to contain user-specific secrets, such as CIRCLE_TOKEN
 .envrc
-# like .envrc, but for asdf
-.tool-versions
 # .envrc equivalent
 .env
-
-# .terraform will contain large, platform-specific binaries
-.terraform
-
-# Ignore local dir where test run results are stored
-# Helps identify flaky tests
-/test_flakes
-
-# Kubernetes config files, LKE to begin with
-.kube
+# like .envrc, but for asdf
+.tool-versions
 
 # Local binaries
 bin
@@ -66,5 +56,5 @@ bin
 # Postgres DB dump
 /db-*
 
-# Dagger lock files
-dagger.lock
+# Ingore Dagger v0.1 config so that we don't need to worry about SOPS in CI/CD
+.dagger

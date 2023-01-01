@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-# shellcheck source=docker/load_backups_secrets
-source load_backups_secrets
-
-aws s3 ls --human-readable --summarize "s3://${AWS_S3_BUCKET:?must be set}"

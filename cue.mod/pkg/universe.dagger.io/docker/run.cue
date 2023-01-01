@@ -4,34 +4,39 @@ import (
 	"list"
 
 	"dagger.io/dagger"
-	"dagger.io/dagger/core"
+	"dagger.io/dagger/engine"
 )
 
 // Run a command in a container
 #Run: {
-	// Docker image to execute
-	input: #Image
+	_image: #Image
+
+	{
+		image:  #Image
+		_image: image
+	} | {
+		// For compatibility with #Build
+		input:  #Image
+		_image: input
+	}
 
 	always: bool | *false
 
 	// Filesystem mounts
-	mounts: [name=string]: core.#Mount
+	mounts: [name=string]: engine.#Mount
 
 	// Expose network ports
 	// FIXME: investigate feasibility
 	ports: [name=string]: {
-		frontend: dagger.#Socket
+		frontend: dagger.#Service
 		backend: {
 			protocol: *"tcp" | "udp"
 			address:  string
 		}
 	}
 
-	// Entrypoint to prepend to command
-	entrypoint?: [...string]
-
 	// Command to execute
-	command?: {
+	cmd: {
 		// Name of the command to execute
 		// Examples: "ls", "/bin/bash"
 		name: string
@@ -56,49 +61,29 @@ import (
 		], 1)
 	}
 
+	// Optionally pass a script to interpret
+	// Example: "echo hello\necho world"
+	script?: string
+	if script != _|_ {
+		// Default interpreter is /bin/sh -c
+		cmd: *{
+			name: "/bin/sh"
+			flags: "-c": script
+		} | {}
+	}
+
 	// Environment variables
 	// Example: {"DEBUG": "1"}
-	env: [string]: string | dagger.#Secret
+	env: [string]: string
 
 	// Working directory for the command
 	// Example: "/src"
-	workdir: string
+	workdir: string | *"/"
 
 	// Username or UID to ad
 	// User identity for this command
 	// Examples: "root", "0", "1002"
-	user: string
-
-	// Add defaults to image config
-	// This ensures these values are present
-	_defaults: core.#Set & {
-		"input": {
-			entrypoint: []
-			cmd: []
-			workdir: "/"
-			user:    "root"
-		}
-		config: input.config
-	}
-
-	// Override with user config
-	_config: core.#Set & {
-		input: _defaults.output
-		config: {
-			if entrypoint != _|_ {
-				"entrypoint": entrypoint
-			}
-			if command != _|_ {
-				cmd: [command.name] + command._flatFlags + command.args
-			}
-			if workdir != _|_ {
-				"workdir": workdir
-			}
-			if user != _|_ {
-				"user": user
-			}
-		}
-	}
+	user: string | *"root"
 
 	// Output fields
 	{
@@ -119,36 +104,19 @@ import (
 
 		export: {
 			rootfs: dagger.#FS & _exec.output
-			files: [path=string]: string
-			_files: {
-				for path, _ in files {
-					"\(path)": {
-						contents: string & _read.contents
-						_read:    core.#ReadFile & {
-							input:  _exec.output
-							"path": path
-						}
-					}
+			files: [path=string]: {
+				contents: string & _read.contents
+				_read:    engine.#ReadFile & {
+					input:  _exec.output
+					"path": path
 				}
 			}
-			for path, output in _files {
-				files: "\(path)": output.contents
-			}
-
-			directories: [path=string]: dagger.#FS
-			_directories: {
-				for path, _ in directories {
-					"\(path)": {
-						contents: dagger.#FS & _subdir.output
-						_subdir:  core.#Subdir & {
-							input:  _exec.output
-							"path": path
-						}
-					}
+			directories: [path=string]: {
+				contents: dagger.#FS & _subdir.output
+				_subdir:  dagger.#Subdir & {
+					input:  _exec.output
+					"path": path
 				}
-			}
-			for path, output in _directories {
-				directories: "\(path)": output.contents
 			}
 		}
 	}
@@ -156,28 +124,17 @@ import (
 	// For compatibility with #Build
 	output: #Image & {
 		rootfs: _exec.output
-		config: input.config
+		config: _image.config
 	}
 
 	// Actually execute the command
-	_exec: core.#Exec & {
-		"input":  input.rootfs
-		"always": always
-		"mounts": mounts
-		args:     _config.output.entrypoint + _config.output.cmd
-		workdir:  _config.output.workdir
-		user:     _config.output.user
-		"env":    env
-		// env may contain secrets so we can't use core.#Set
-		if input.config.env != _|_ {
-			for key, val in input.config.env {
-				if env[key] == _|_ {
-					env: "\(key)": val
-				}
-			}
-		}
+	_exec: engine.#Exec & {
+		args:      [cmd.name] + cmd._flatFlags + cmd.args
+		input:     _image.rootfs
+		"always":  always
+		"mounts":  mounts
+		"env":     env
+		"workdir": workdir
+		"user":    user
 	}
-
-	// Command exit code
-	exit: _exec.exit
 }

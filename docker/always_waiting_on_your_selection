@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -eo pipefail
-
-echo "=== I WILL ALWAYS WAIT FOR YOU TO TELL ME WHAT TO DO ==="
-select ACTION in backup_db_to_s3 backup_uploads_to_s3
-do
-  echo $ACTION
-done

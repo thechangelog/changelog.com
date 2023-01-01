@@ -55,19 +55,6 @@ $(CURL):
 	$(error Please install curl)
 endif
 
-# https://github.com/dagger/dagger/releases
-DAGGER_VERSION := 0.2.4
-DAGGER ?= $(LOCAL_BIN)/dagger
-$(DAGGER): | $(CURL) $(LOCAL_BIN)
-	$(CURL) --fail --location https://dl.dagger.io/dagger/install.sh \
-	| DAGGER_VERSIION=$(DAGGER_VERSION) sh -ex
-	$(DAGGER) version | grep $(DAGGER_VERSION)
-
-.DEFAULT_GOAL := dagger
-.PHONY: dagger
-dagger: | $(DAGGER) .envrc
-	@printf "\nRun $(BOLD)dagger do$(NORMAL) to discover what actions are available\n\n"
-
 FLY_VERSION := 0.0.333
 FLY_DIR ?= $(LOCAL_BIN)/fly-$(FLY_VERSION)
 FLY ?= $(FLY_DIR)/bin/fly
@@ -78,15 +65,3 @@ $(FLY): | $(CURL) $(LOCAL_BIN)
 	ln -sf $(FLY) $(LOCAL_BIN)/fly
 .PHONY: fly
 fly: | $(FLY) .envrc
-
-env::
-	@echo 'export DAGGER_LOG_FORMAT=plain'
-	@echo 'export DAGGER_LOG_LEVEL=debug'
-
-env::
-	@$(MAKE) --directory $(CURDIR)/../2021 --no-print-directory env-secrets
-
-secrets: .envrc | $(FLY)
-	$(MAKE) --directory $(CURDIR)/../2021 --no-print-directory env-secrets \
-	| awk '! /FLY|PG_DOTCOM/ { print $$2 }' \
-	| $(FLY) secrets import

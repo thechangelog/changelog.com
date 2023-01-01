@@ -2,8 +2,8 @@
 package docker
 
 import (
+	"dagger.io/dagger/engine"
 	"dagger.io/dagger"
-	"dagger.io/dagger/core"
 )
 
 // Download an image from a remote registry
@@ -12,16 +12,18 @@ import (
 	source: #Ref
 
 	// Registry authentication
-	auth?: {
+	// Key must be registry address, for example "index.docker.io"
+	auth: [registry=string]: {
 		username: string
 		secret:   dagger.#Secret
 	}
 
-	_op: core.#Pull & {
+	_op: engine.#Pull & {
 		"source": source
-		if auth != _|_ {
-			"auth": auth
-		}
+		"auth": [ for target, creds in auth {
+			"target": target
+			creds
+		}]
 	}
 
 	// Downloaded image
