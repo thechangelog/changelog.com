@@ -1,4 +1,5 @@
 import chapterItem from "templates/chapterItem.hbs";
+import { WaveFile } from "wavefile";
 
 async function getAsByteArray(file) {
   return new Uint8Array(await readFile(file))
@@ -45,7 +46,7 @@ export default class ChaptersWidget {
 
         let byteFile = await getAsByteArray(file.getAsFile())
 
-        let wav = new wavefile.WaveFile()
+        let wav = new WaveFile()
 
         wav.fromBuffer(byteFile)
 

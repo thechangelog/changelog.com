@@ -1,5 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/wavefile"></script>
-
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
   <div class="two fields">
     <div class="twelve wide field required <%= AdminHelpers.error_class(f, :title) %>">
