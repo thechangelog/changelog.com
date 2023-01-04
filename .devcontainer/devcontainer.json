@@ -1,0 +1,12 @@
+{
+  "dockerComposeFile": ["docker-compose.yml"],
+  "workspaceFolder": "/workspace",
+  "service": "devcontainer",
+  "forwardPorts": [
+    4000,
+    5432
+  ],
+  "extensions": [
+    "JakeBecker.elixir-ls"
+  ]
+}

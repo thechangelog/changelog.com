@@ -1,7 +1,8 @@
 import Config
 
+port = 4000
 config :changelog, ChangelogWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: port],
   url: [host: System.get_env("HOST", "localhost")],
   check_origin: false,
   static_url: [path: "/static"],
@@ -12,6 +13,17 @@ config :changelog, ChangelogWeb.Endpoint,
   watchers: [
     yarn: ["start", cd: Path.expand("../assets", __DIR__)]
   ]
+
+# Update the static_url config if running inside a GitHub Codespaces VS Code web editor to allow assets
+# to load when viewing the forwarded port's URL.
+# "CODESPACES_WEB" is manually set by devs, the other env vars are set by Codespaces automatically
+# https://docs.github.com/en/codespaces/developing-in-codespaces/default-environment-variables-for-your-codespace
+if System.get_env("CODESPACES_WEB") do
+  codespaces_host = "#{System.get_env("CODESPACE_NAME")}-#{port}.#{System.get_env("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}"
+
+  config :changelog, ChangelogWeb.Endpoint,
+    static_url: [host: codespaces_host, path: "/static", port: 80]
+end
 
 # Live reloading is opt-in
 if System.get_env("LIVE_RELOAD") do
