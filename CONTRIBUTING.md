@@ -181,3 +181,32 @@ Server:
 ```
 
 Any `docker` commands will now run against this remote Docker Engine now, including `make runtime-image`.
+
+## Using GitHub Codespaces
+
+A pre-configured Codespace can be launched for this repo by following the instructions [here](https://docs.github.com/codespaces/developing-in-codespaces/creating-a-codespace-for-a-repository). Everything you need to start contributing is installed and the following commands will start the site:
+
+```console
+# CONFIGURE APP
+mix deps.get
+mix ecto.setup
+
+# CONFIGURE STATIC ASSETS
+cd assets
+yarn install
+
+# RUN APP
+mix phx.server
+```
+
+### Codespaces + VS Code Web Editor
+
+If you are developing in the VS Code web editor two extra steps are required for the site to be able to load static assets correctly. Port forwarding utilizes a dynamic HTTPS `*.preview.app.github.dev` URL when developing in the web editor.
+
+1. Set the `CODESPACES_WEB` environment variable. This tells the app to construct appropriate static asset paths.
+
+   ```console
+   export CODESPACES_WEB=true
+   ```
+
+2. After running the app the URL it is exposed on is visible in the `Toggle Ports` VS Code view (port 4000). Launch that URL and configure your browser to allow it to load insecure content via the instructions [here](https://experienceleague.adobe.com/docs/target/using/experiences/vec/troubleshoot-composer/mixed-content.html). This is necessary to allow js/css to be accessible over HTTP when the `*.preview.app.github.dev` site is using HTTPS.
