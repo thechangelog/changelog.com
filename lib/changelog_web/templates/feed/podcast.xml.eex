@@ -23,6 +23,11 @@
       <itunes:category text="Software How-To"/>
       <itunes:category text="Tech News"/>
     </itunes:category>
+  <%= if @podcast.slug == "brainscience" do %>
+    <itunes:category text="Health &amp; Fitness">
+      <itunes:category text="Mental Health"/>
+    </itunes:category>
+  <% end %>
     <podcast:funding url="https://changelog.com/++">Support our work by joining Changelog++</podcast:funding>
     <%= render_many(@podcast.active_hosts, __MODULE__, "_person.xml", as: :person, role: "host") %>
   <%= for episode <- @episodes do %>
