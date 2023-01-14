@@ -385,9 +385,20 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "pilor",
+      "name": "Chris Eggert",
+      "avatar_url": "https://avatars.githubusercontent.com/u/718813?v=4",
+      "profile": "https://github.com/pilor",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
