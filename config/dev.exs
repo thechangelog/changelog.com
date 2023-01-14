@@ -69,17 +69,3 @@ config :changelog, Changelog.Repo,
   password: System.get_env("DB_PASS", "postgres"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
-
-config :changelog, Changelog.PromEx,
-  manual_metrics_start_delay: :no_delay,
-  drop_metrics_groups: [],
-  grafana: [
-    host: System.get_env("GRAFANA_URL", "http://localhost:3000"),
-    # This API Key will need to be created manually, most probably via http://localhost:3000/org/apikeys
-    auth_token: SecretOrEnv.get("GRAFANA_API_KEY"),
-    # This can default to Prometheus, PromEx uses this lowercase value for the built-in dashboards
-    datasource_id: System.get_env("GRAFANA_DATASOURCE_ID", "prometheus"),
-    annotate_app_lifecycle: true
-  ],
-  metrics_server: :disabled,
-  prometheus_bearer_token: SecretOrEnv.get("PROMETHEUS_BEARER_TOKEN_PROM_EX")

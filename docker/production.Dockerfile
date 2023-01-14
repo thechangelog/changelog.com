@@ -17,7 +17,6 @@ COPY --from=legacy_assets /var/www/wp-content /app/priv/wp-content
 ENV MIX_ENV=prod
 ENV TERM=xterm
 
-# Used by PromEx for annotations
 ARG GIT_AUTHOR
 ENV GIT_AUTHOR=${GIT_AUTHOR}
 ARG GIT_SHA

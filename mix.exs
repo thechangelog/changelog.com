@@ -41,7 +41,6 @@ defmodule Changelog.Mixfile do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:plug_cowboy, "~> 2.5"},
       {:oban, "~> 2.8"},
-      {:prom_ex, "~> 1.7.0"},
       {:unplug, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},

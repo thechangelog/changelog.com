@@ -73,15 +73,3 @@ config :changelog, Oban,
        {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
      ]}
   ]
-
-config :changelog, Changelog.PromEx,
-  manual_metrics_start_delay: :no_delay,
-  drop_metrics_groups: [],
-  grafana: [
-    host: System.get_env("GRAFANA_URL"),
-    auth_token: SecretOrEnv.get("GRAFANA_API_KEY"),
-    datasource_id: System.get_env("GRAFANA_DATASOURCE_ID", "Prometheus"),
-    annotate_app_lifecycle: true
-  ],
-  metrics_server: :disabled,
-  prometheus_bearer_token: SecretOrEnv.get("PROMETHEUS_BEARER_TOKEN_PROM_EX")
