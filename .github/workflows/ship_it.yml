@@ -2,8 +2,10 @@ name: "Ship It!"
 
 on:
   push:
+    branches:
+      - '**'
     tags-ignore:
-      - 'kaizen.*'
+      - '**'
   pull_request:
   workflow_dispatch:
 
