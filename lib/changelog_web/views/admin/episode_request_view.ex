@@ -20,7 +20,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
       " by " <>
       request.submitter.handle <>
       " (on #{date}) " <>
-      pitch_preview(request, 60)
+      SharedHelpers.truncate(request.topics, 60)
   end
 
   def podcast_options do
