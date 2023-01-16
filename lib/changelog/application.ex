@@ -7,7 +7,6 @@ defmodule Changelog.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      Changelog.PromEx,
       ChangelogWeb.Endpoint,
       {Phoenix.PubSub, [name: Changelog.PubSub, adapter: Phoenix.PubSub.PG2]},
       Changelog.Repo,
@@ -28,13 +27,6 @@ defmodule Changelog.Application do
       Changelog.Metacasts.Filterer.Cache,
       {Oban, oban_config()}
     ]
-
-    # Only attach the telemetry logger when we aren't in an IEx shell
-    unless Code.ensure_loaded?(IEx) && IEx.started?() do
-      Oban.Telemetry.attach_default_logger(:info)
-
-      Changelog.ObanReporter.attach()
-    end
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Changelog.Supervisor)
   end

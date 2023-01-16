@@ -58,18 +58,6 @@ defmodule ChangelogWeb.Endpoint do
 
   plug Plug.RequestId
 
-  if Changelog.PromEx.bearer_token() == "" do
-    plug PromEx.Plug, prom_ex_module: Changelog.PromEx
-  else
-    plug Unplug,
-      if: ChangelogWeb.Plugs.MetricsPredicate,
-      do: {PromEx.Plug, prom_ex_module: Changelog.PromEx}
-  end
-
-  plug Unplug,
-    if: {Unplug.Predicates.RequestPathNotIn, ["/metrics"]},
-    do: {Plug.Telemetry, event_prefix: [:phoenix, :endpoint]}
-
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
