@@ -145,9 +145,9 @@ export default class EpisodeView {
 
     requestedInput.on("change", function() {
       if (requestedInput.is(":checked")) {
-        requestSelect.closest(".field").show();
+        requestSelect.closest(".field").removeClass("hidden");
       } else {
-        requestSelect.closest(".field").hide();
+        requestSelect.closest(".field").addClass("hidden");
         requestSelect.dropdown("clear");
       }
     })
