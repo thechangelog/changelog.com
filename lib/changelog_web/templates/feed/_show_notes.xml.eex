@@ -5,22 +5,22 @@
 <% else %>
 <p><a href="<%= Routes.page_url(Endpoint, :++) %>" rel="payment">Changelog++</a> <%= EpisodeView.plusplus_cta(@episode) %> Join today!</p>
 <%= if Enum.any?(@episode.sponsors) do %>
-<p>Sponsors</p>
+<p>Sponsors:</p>
 <p><ul>
   <%= for sponsor <- @episode.episode_sponsors do %><li><%= link(sponsor.title, to: sponsor.link_url) |> safe_to_string() %> – <%= sponsor.description |> SharedHelpers.md_to_html() |> SharedHelpers.sans_p_tags() %></li><% end %>
 </ul></p><% end %><% end %>
 <% participants = EpisodeView.participants(@episode) %>
 <%= if Enum.any?(participants) do %>
-<p>Featuring</p>
+<p>Featuring:</p>
 <p><ul><%= for person <- participants do %><li><%= person.name %> &ndash; <%= person |> PersonView.list_of_links() %></li><% end %></ul></p>
 <% end %>
-<p>Notes and Links</p>
+<p>Show Notes:</p>
 <p><%= SharedHelpers.md_to_html(@episode.notes) %></p>
 <p>Something missing or broken? <a href="<%= EpisodeView.show_notes_source_url(@episode) %>">PRs welcome!</a></p>
 <%= if Enum.any?(@episode.audio_chapters) do %>
-<p>Timestamps</p>
-<p><ol>
-<%= for chapter <- @episode.audio_chapters do %><li>(<%= TimeView.duration(chapter.starts_at) %>) - <%= chapter.title %></li><% end %>
-</ol></p>
+<p>Timestamps:</p>
+<p>
+<%= for chapter <- @episode.audio_chapters do %>(<%= TimeView.duration(chapter.starts_at) %>) - <%= chapter.title %><br><% end %>
+</p>
 <% end %>
 ]]>
