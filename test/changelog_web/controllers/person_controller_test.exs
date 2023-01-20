@@ -84,26 +84,21 @@ defmodule ChangelogWeb.PersonControllerTest do
       assert count(Person) == count_before + 1
     end
 
-    test "submission with existing email sends email, redirects, but doesn't create new person",
+    test "submission with existing email re-renders with errors",
          %{conn: conn} do
       existing = insert(:person)
       count_before = count(Person)
 
       conn =
-        with_mocks([
-          {Changelog.Captcha, [], [verify: fn _ -> true end]},
-          {Craisin.Subscriber, [], [subscribe: fn _, _, _ -> nil end]}
-        ]) do
+        with_mock(Changelog.Captcha, verify: fn _ -> true end) do
           post(conn, Routes.person_path(conn, :join),
             person: %{email: existing.email, name: "Joe Blow", handle: "joeblow"}
           )
         end
 
-      existing = Repo.one(from p in Person, where: p.email == ^existing.email)
-
-      assert_delivered_email(ChangelogWeb.Email.community_welcome(existing))
-      assert redirected_to(conn) == Routes.root_path(conn, :index)
+      assert html_response(conn, 200) =~ ~r/Member exists with that email address/i
       assert count(Person) == count_before
+      assert existing.name != "Joe Blow"
     end
   end
 

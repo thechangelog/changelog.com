@@ -36,8 +36,14 @@ defmodule ChangelogWeb.PersonController do
     email = Map.get(person_params, "email")
 
     if Captcha.verify(captcha) do
-      if person = Repo.get_by(Person, email: email) do
-        welcome_community(conn, person)
+      if _person = Repo.get_by(Person, email: email) do
+        # If the person's email already existed in the DB it isn't safe to update profile info until they have signed in.
+        # Don't populate the form with the existing person's details when returning the error.
+        changeset = Person.insert_changeset(%Person{}, person_params)
+
+        conn
+        |> put_flash(:error, "Member exists with that email address. Please sign in.")
+        |> render(:join, changeset: changeset, person: nil)
       else
         changeset = Person.insert_changeset(%Person{public_profile: false}, person_params)
 
