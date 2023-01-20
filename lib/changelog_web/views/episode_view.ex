@@ -3,7 +3,6 @@ defmodule ChangelogWeb.EpisodeView do
 
   alias Changelog.{
     Episode,
-    EpisodeSponsor,
     Files,
     Github,
     HtmlKit,
@@ -86,7 +85,7 @@ defmodule ChangelogWeb.EpisodeView do
 
   def plusplus_cta(episode) do
     pp_diff = episode.plusplus_duration - episode.audio_duration
-    ads_duration = EpisodeSponsor.duration(episode.episode_sponsors)
+    ads_duration = Episode.sponsors_duration(episode)
     bonus_duration = pp_diff + ads_duration
 
     cond do

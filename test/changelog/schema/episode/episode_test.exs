@@ -170,6 +170,41 @@ defmodule Changelog.EpisodeTest do
     end
   end
 
+  describe "sponsors_duration/1" do
+    test "episode where all sponsors have timestamps" do
+      sponsors = [
+        %{starts_at: 12.5, ends_at: 72.5},
+        %{starts_at: 345, ends_at: 436.3},
+        %{starts_at: 123.456, ends_at: 564.12}
+      ]
+      episode = build(:episode, episode_sponsors: sponsors)
+
+      assert Episode.sponsors_duration(episode) == 592
+    end
+
+    test "episode with chapters and some start/end timestamps" do
+      sponsors = [
+        %{starts_at: nil, ends_at: nil},
+        %{starts_at: 12.0, ends_at: nil},
+        %{starts_at: 0, ends_at: 345}
+      ]
+      episode = build(:episode, episode_sponsors: sponsors, audio_chapters: [%{}])
+
+      assert Episode.sponsors_duration(episode) == (0 + 0 + 345)
+    end
+
+    test "episode without chapters and some start/end timestamps" do
+      sponsors = [
+        %{starts_at: nil, ends_at: nil},
+        %{starts_at: 12.0, ends_at: nil},
+        %{starts_at: 0, ends_at: 345}
+      ]
+      episode = build(:episode, episode_sponsors: sponsors)
+
+      assert Episode.sponsors_duration(episode) == (60 + 60 + 345)
+    end
+  end
+
   describe "has_transcript/1" do
     test "is false when transcript is nil" do
       refute Episode.has_transcript(build(:episode, transcript: nil))

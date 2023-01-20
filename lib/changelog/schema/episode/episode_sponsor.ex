@@ -34,18 +34,6 @@ defmodule Changelog.EpisodeSponsor do
   def preload_episode(query = %Ecto.Query{}), do: Ecto.Query.preload(query, episode: :podcast)
   def preload_episode(sponsor), do: Repo.preload(sponsor, episode: :podcast)
 
-  def duration(sponsors) when is_list(sponsors) do
-    sponsors
-    |> Enum.map(fn(s) -> duration(s) end)
-    |> Enum.sum()
-  end
-
-  def duration(%{starts_at: starts, ends_at: ends}) when is_nil(starts) or is_nil(ends), do: 60
-
-  def duration(%{starts_at: starts, ends_at: ends}) do
-    (ends - starts) |> round()
-  end
-
   defp validate_ends_at_after_starts_at(changeset) do
     starts_at = get_field(changeset, :starts_at)
     ends_at = get_field(changeset, :ends_at)

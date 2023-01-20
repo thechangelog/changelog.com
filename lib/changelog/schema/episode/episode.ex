@@ -301,6 +301,24 @@ defmodule Changelog.Episode do
     |> Repo.preload(:topics)
   end
 
+  def sponsors_duration(%{episode_sponsors: []}), do: 0
+
+  def sponsors_duration(episode = %{episode_sponsors: sponsors}) do
+    # A sponsor on an episode with chapters *should* have timestamps. When they
+    # don't, it's because they're only nominal sponsors, so have a 0 duration.
+    # When the episode doesn't have chapters, we guesstimate they're 60 secs
+    default_duration = if Enum.any?(episode.audio_chapters), do: 0, else: 60
+    sponsors |> Enum.map(fn(s) -> sponsor_duration(s, default_duration) end) |> Enum.sum()
+  end
+
+  defp sponsor_duration(sponsor, default) do
+    if sponsor.starts_at && sponsor.ends_at do
+      round(sponsor.ends_at - sponsor.starts_at)
+    else
+      default
+    end
+  end
+
   def update_stat_counts(episode) do
     stats = Repo.all(assoc(episode, :episode_stats))
 
