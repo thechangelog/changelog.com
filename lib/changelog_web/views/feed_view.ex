@@ -36,6 +36,15 @@ defmodule ChangelogWeb.FeedView do
   end
 
   def episode_title(%{slug: "master"}, episode), do: EpisodeView.title_with_podcast_aside(episode)
+
+  def episode_title(%{slug: "podcast"}, episode) do
+    if EpisodeView.is_changelog_news(episode) do
+      "News: #{episode.title}"
+    else
+      episode.title
+    end
+  end
+
   def episode_title(_podcast, episode), do: episode.title
 
   def image_link(item = %NewsItem{}) do
