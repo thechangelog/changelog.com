@@ -11,13 +11,15 @@ defmodule Changelog.Social do
   def post(%NewsItem{type: :audio}), do: false
 
   def post(item = %NewsItem{}) do
-    contents = """
-    #{headline(item)}
+    item = NewsItem.preload_all(item)
 
-    #{link_emoj()} #{link_url(item)}
+    content = """
+    #{headline(item)}
+    #{author(item)}
+    #{link(item)}
     """
 
-    Client.create_status(contents)
+    Client.create_status(content)
   end
 
   def post(_), do: false
@@ -26,7 +28,14 @@ defmodule Changelog.Social do
     item.headline
   end
 
-  defp link_emoj, do: ~w(🔗 ✍️ 🖋) |> Enum.random()
+  defp author(%{author: nil}), do: nil
+  defp author(%{author: %{mastodon_handle: nil}}), do: nil
+  defp author(%{author: %{mastodon_handle: handle}}), do: "#{author_emoj()} by @#{handle}"
+
+  defp link(item), do: "#{link_emoj()} #{link_url(item)}"
+
+  defp author_emoj, do: ~w(✍️ 🖋 ✏️) |> Enum.random()
+  defp link_emoj, do: ~w(✨ 💫 🔗 👉) |> Enum.random()
 
   defp link_url(item) do
     Routes.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
