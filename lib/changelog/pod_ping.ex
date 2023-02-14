@@ -6,6 +6,8 @@ defmodule Changelog.PodPing do
 
   def overcast(episode) do
     url = Routes.feed_url(Endpoint, :podcast, episode.podcast.slug)
-    HTTP.post("https://overcast.fm/ping", {:form, [{"urlprefix", url}]})
+    # disabling this until we have instant feed refresh on public
+    # HTTP.post("https://overcast.fm/ping", {:form, [{"urlprefix", url}]})
+    url
   end
 end
