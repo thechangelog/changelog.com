@@ -12,9 +12,7 @@ defmodule Changelog.Mixfile do
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      preferred_cli_env: [coveralls: :test, "coveralls.circle": :test],
-      test_coverage: [tool: ExCoveralls]
+      deps: deps()
     ]
   end
 
@@ -77,7 +75,6 @@ defmodule Changelog.Mixfile do
       {:shopify, "~> 0.4"},
       {:id3vx, "~> 0.0.1-rc6"},
       {:credo, "~> 1.6.4", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.0", only: :test}
     ]
   end
