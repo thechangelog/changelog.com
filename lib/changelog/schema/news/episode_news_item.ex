@@ -1,7 +1,7 @@
 defmodule Changelog.EpisodeNewsItem do
   use Changelog.Schema
 
-  alias Changelog.{Episode, NewsItem, Search}
+  alias Changelog.{Episode, NewsItem, TypesenseSearch}
   alias ChangelogWeb.EpisodeView
 
   def insert(episode, logger), do: insert(episode, logger, false)
@@ -51,7 +51,7 @@ defmodule Changelog.EpisodeNewsItem do
   end
 
   defp update_search(item) do
-    Task.start_link(fn -> Search.update_item(item) end)
+    Task.start_link(fn -> TypesenseSearch.update_item(item) end)
     item
   end
 end
