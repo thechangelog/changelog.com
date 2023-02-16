@@ -19,22 +19,24 @@ defmodule Changelog.TypesenseSearch do
     })
   end
 
-  def search(query, opts \\ []) do
-    case Algolia.search(namespace(), query, opts) do
+  def search(opts \\ []) do
+    case Typesense.Client.search(namespace(), opts) do
       {:ok, response} ->
         results_from(response)
 
-      _else ->
+      response ->
+        Logger.error("Error during search: #{inspect(opts)}. Response: #{inspect(response)}")
         results_from(%{})
     end
   end
 
-  def search_with_highlights(query, opts \\ []) do
-    case Algolia.search(namespace(), query, opts) do
+  def search_with_highlights(opts \\ []) do
+    case Typesense.Client.search(namespace(), opts) do
       {:ok, response} ->
         results_with_highlights_from(response)
 
-      _response ->
+      response ->
+        Logger.error("Error during search: #{inspect(opts)}. Response: #{inspect(response)}")
         results_with_highlights_from(%{})
     end
   end
@@ -146,6 +148,7 @@ defmodule Changelog.TypesenseSearch do
     item_ids =
       response
       |> Map.get("hits", [])
+      |> Enum.map(fn x -> Map.get(x, "document") end)
       |> Enum.map(fn x -> Map.get(x, "id") end)
       |> Enum.map(&String.to_integer/1)
 
@@ -158,9 +161,9 @@ defmodule Changelog.TypesenseSearch do
 
     %Page{
       entries: items,
-      total_pages: Map.get(response, "nbPages", 1),
-      total_entries: Map.get(response, "nbHits", 0),
-      page_number: Map.get(response, "page", 0)
+      total_pages: Map.get(response, "found", 0) / get_in(response, [Access.key("request_params", %{}), Access.key("per_page", 1)]) |> Float.ceil(),
+      total_entries: Map.get(response, "found", 0),
+      page_number: Map.get(response, "page", 1)
     }
   end
 
@@ -169,13 +172,14 @@ defmodule Changelog.TypesenseSearch do
 
     item_ids =
       hits
+      |> Enum.map(fn x -> Map.get(x, "document") end)
       |> Enum.map(fn x -> Map.get(x, "id") end)
       |> Enum.map(&String.to_integer/1)
 
     highlights =
       hits
       |> Enum.map(fn x ->
-        case Map.get(x, "_highlightResult", nil) do
+        case Map.get(x, "highlight", nil) do
           %{"fragment" => %{"value" => highlighted}} -> highlighted
           _ -> nil
         end
@@ -190,9 +194,9 @@ defmodule Changelog.TypesenseSearch do
 
     %Page{
       entries: Enum.zip(items, highlights),
-      total_pages: Map.get(response, "nbPages", 1),
-      total_entries: Map.get(response, "nbHits", 0),
-      page_number: Map.get(response, "page", 0)
+      total_pages: Map.get(response, "found", 0) / get_in(response, [Access.key("request_params", %{}), Access.key("per_page", 1)]) |> Float.ceil(),
+      total_entries: Map.get(response, "found", 0),
+      page_number: Map.get(response, "page", 1)
     }
   end
 
