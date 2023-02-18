@@ -145,7 +145,7 @@ mix test
       1. `docker/production.Dockerfile`
       2. `2021/dagger/prod_image/main.cue`
          1. Do not worry that the directory refers to `2021`; it is still used.
-      3. `dev_docker/changelog.yml`
+      3. `.devcontainer/docker-compose.yml`
 4. Update the Elixir version in `README.md` & `mix.exs`
 5. Commit and push everything, then wait for the pipeline to deploy everything into production
 
