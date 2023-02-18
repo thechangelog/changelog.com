@@ -45,9 +45,6 @@ endif
 XDG_CONFIG_HOME := $(CURDIR)/.config
 export XDG_CONFIG_HOME
 
-APP_VERSION ?= $(shell date -u +'%y.%-m.%-d')
-export APP_VERSION
-
 
 
 ### DEPS ###
@@ -114,16 +111,6 @@ ssl-report: ## ssl | Run an SSL report via SSL Labs
 	@open "https://www.ssllabs.com/ssltest/analyze.html?d=$(HOSTNAME)&latest"
 .PHONY: ssl
 ssl: ssl-report
-
-.PHONY: on-app-start
-on-app-start: sentry-release
-
-.PHONY: sentry-release
-sentry-release: | $(CURL)
-	@$(CURL) --silent --fail --request POST --url https://sentry.io/api/0/organizations/changelog-media/releases/ \
-        	--header 'Authorization: Bearer $(SENTRY_AUTH_TOKEN)' \
-         	--header 'Content-type: application/json' \
-         	--data '{"version":"$(APP_VERSION)","ref":"$(GIT_SHA)","url":"$(GIT_REPOSITORY)/commit/$(GIT_SHA)","projects":["changelog-com"]}'
 
 .PHONY: runtime-image
 runtime-image: build-runtime-image publish-runtime-image
