@@ -47,7 +47,7 @@ jobs:
           make --directory 2021.dagger ship-it
 
   deploy:
-    if: ${{ github.ref_name == 'master' }}
+    if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
     needs: package
     runs-on: ubuntu-latest
     steps:
