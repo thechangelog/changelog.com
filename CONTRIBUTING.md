@@ -90,18 +90,19 @@ This is what that looks like on macOS 12, our usual development environment:
 <img src="changelog-local-dev-2022.png">
 
 ```console
-# INSTALL DEPENDENCIES
+# 🛠 INSTALL DEPENDENCIES 🛠
 brew install postgresql@14 elixir node@14 yarn imagemagick
 
+#👇 installed on an iMac Pro (2017) running macOS 12.6.1 in ~2mins on Nov. 13, 2022 by @gerhard
 # - PostgreSQL v14.6
 # - Elixir v1.14.2
 # - Erlang v25.1.1
 # - Node v14.21.1
 # - Yarn v1.22.19
 # - ImageMagick v7.1
-# The above was installed on an iMac Pro (2017) running macOS 12.6.1 in ~2 minutes - November 13, 2022 by @gerhard
+# 👆 installed on an iMac Pro (2017) running macOS 12.6.1 in ~2mins on Nov. 13, 2022 by @gerhard
 
-# CONFIGURE DATABASE
+# 🪣 CONFIGURE DATABASE 🪣
 # Add correct PostgreSQL to PATH
 export PATH="$(brew --prefix)/opt/postgresql@14/bin:$PATH"
 # Start PostgreSQL
@@ -113,13 +114,13 @@ createdb changelog_dev --username=postgres
 # Create changelog_test db owned by the postgres user
 createdb changelog_test --username=postgres
 
-# CONFIGURE APP
+# 💜 CONFIGURE APP 💜
 # Install deps
 mix deps.get
 # Prepare dev database
 mix ecto.setup
 
-# CONFIGURE STATIC ASSETS
+# 🌈 CONFIGURE STATIC ASSETS 🌈
 cd assets
 # Add correct Node.js to PATH
 export PATH="$(brew --prefix)/opt/node@14/bin:$PATH"
@@ -127,31 +128,33 @@ export PATH="$(brew --prefix)/opt/node@14/bin:$PATH"
 yarn install
 cd ..
 
-# RUN APP
+# 🏃 RUN APP 🏃
 mix phx.server
 # Go to http://localhost:4000
 
-# RUN TESTS
+# 🏋️ TESTS 🏋️
 mix test
 ```
 
-## How to upgrade Elixir || Erlang/OTP?
+## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
-1. Pick an image from [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
-2. Update `docker/runtime.Dockerfile` to use the image with the desired version from the URL above
-3. Run `make runtime-image` to publish the new container image, which will look something like: `thechangelog/runtime:DATE_TIME`
-   1. This will require push access to [the Docker Hub `thechangelog` org](https://hub.docker.com/r/thechangelog/runtime/tags), which only maintainers will have (💡 `changeloci` in 1Password); you'll need to request an image publish from them once the rest of your PR is ready.
-   2. Update the following files with this new runtime version:
-      1. `docker/production.Dockerfile`
-      2. `2021/dagger/prod_image/main.cue`
-         1. Do not worry that the directory refers to `2021`; it is still used.
-      3. `.devcontainer/docker-compose.yml`
-4. Update the Elixir version in `README.md` & `mix.exs`
-5. Commit and push everything, then wait for the pipeline to deploy everything into production
+1. Update `ElixirVersion` & `ErlangVersion` in `magefiles/image/image.go` to latest [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
+2. While here, also update `NodejsVersion` to [latest-v14.x](https://nodejs.org/download/release/latest-v14.x/)
+3. Commit & push to check that image builds successfully in GitHub Actions
+    - _Alternatively_, build the image locally via: `cd magefiles && go run main.go image:runtime`
 
-You may want to test everything locally by running `make ship-it` from within the `2021` dir. This makes it easy to debug any potential issues locally.
+After you confirm that the image builds successfully:
+1. Update `docker/production.Dockerfile` with new image tag
+2. Update `2021/dagger/prod_image/main.cue` with new image tag
+3. Update `.devcontainer/docker-compose.yml` with new image tag
+4. Ensure that Elixir minor version in `mix.exs` is accurate
+5. Update Elixir, Erlang/OTP & Node.js version in `CONTRIBUTING.md` (this file)
 
-## How to build a new `runtime` container image using Docker Engine running on Fly.io?
+Commit and push everything, then wait for all GitHub Actions checks to go green
+✅ . At this point, one of the maintainers will review, approve & merge this
+change. Thank you very much!
+
+## How to use 🐳 Docker Engine running on ✈️ Fly.io?
 
 Ensure that you have a [Fly.io Wireguard Tunnel configured locally](https://fly.io/docs/reference/private-networking/#creating-your-tunnel-configuration).
 You may also need to [install `flyctl`](https://fly.io/docs/hands-on/install-flyctl/).
@@ -180,7 +183,9 @@ Server:
 ...
 ```
 
-Any `docker` commands will now run against this remote Docker Engine now, including `make runtime-image`.
+Any `docker` commands will now run against this remote Docker Engine now. `cd
+magefiles && go run main.go -w image:runtime` also needs a Docker Engine to
+resolve all its dependencies, and then run.
 
 ## Using GitHub Codespaces
 

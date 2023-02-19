@@ -8,34 +8,37 @@ import (
 	"github.com/magefile/mage/mg"
 	"github.com/thechangelog/changelog.com/magefiles/docker"
 	"github.com/thechangelog/changelog.com/magefiles/env"
+	"github.com/thechangelog/changelog.com/magefiles/sysexit"
 )
 
 type DaggerV01 mg.Namespace
 
 // Build, test & publish using dagger v0.1 pipeline
-func (t DaggerV01) Shipit(ctx context.Context) error {
+func (DaggerV01) Shipit(ctx context.Context) {
+	defer sysexit.Handle()
+
 	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	if err != nil {
-		return err
+		panic(sysexit.Unavailable(err))
 	}
 	defer dag.Close()
 
-	return ShipIt(ctx, dag)
+	ShipIt(ctx, dag)
 }
 
-func ShipIt(ctx context.Context, dag *dagger.Client) error {
-	user := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "USER"))
+func ShipIt(ctx context.Context, dag *dagger.Client) {
+	user := env.Get(ctx, dag.Host(), "USER")
 
-	daggerLogLevel := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "DAGGER_LOG_LEVEL"))
-	daggerLogFormat := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "DAGGER_LOG_FORMAT"))
+	daggerLogLevel := env.Get(ctx, dag.Host(), "DAGGER_LOG_LEVEL")
+	daggerLogFormat := env.Get(ctx, dag.Host(), "DAGGER_LOG_FORMAT")
 
-	dockerhubUsername := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "DOCKERHUB_USERNAME"))
-	dockerhubPassword := env.HostEnv(ctx, dag.Host(), "DOCKERHUB_PASSWORD").Secret()
+	dockerhubUsername := env.Get(ctx, dag.Host(), "DOCKERHUB_USERNAME")
+	dockerhubPassword := env.Get(ctx, dag.Host(), "DOCKERHUB_PASSWORD")
 
-	githubRepository := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "GITHUB_REPOSITORY"))
-	githubRunID := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "GITHUB_RUN_ID"))
-	githubRefName := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "GITHUB_REF_NAME"))
-	githubSHA := env.Val(ctx, env.HostEnv(ctx, dag.Host(), "GITHUB_SHA"))
+	githubRepository := env.Get(ctx, dag.Host(), "GITHUB_REPOSITORY")
+	githubRunID := env.Get(ctx, dag.Host(), "GITHUB_RUN_ID")
+	githubRefName := env.Get(ctx, dag.Host(), "GITHUB_REF_NAME")
+	githubSHA := env.Get(ctx, dag.Host(), "GITHUB_SHA")
 
 	app := dag.Host().Directory(".", dagger.HostDirectoryOpts{
 		Include: []string{
@@ -48,7 +51,6 @@ func ShipIt(ctx context.Context, dag *dagger.Client) error {
 			"priv",
 			"test",
 			".dockerignore",
-			"Makefile",
 			"mix.exs",
 			"mix.lock",
 		},
@@ -58,15 +60,16 @@ func ShipIt(ctx context.Context, dag *dagger.Client) error {
 	})
 
 	_, err := docker.Container(ctx, dag).
-		WithEnvVariable("USER", user).
-		WithEnvVariable("GITHUB_REPOSITORY", githubRepository).
-		WithEnvVariable("GITHUB_RUN_ID", githubRunID).
-		WithEnvVariable("GITHUB_REF_NAME", githubRefName).
-		WithEnvVariable("GITHUB_SHA", githubSHA).
-		WithEnvVariable("DAGGER_LOG_LEVEL", daggerLogLevel).
-		WithEnvVariable("DAGGER_LOG_FORMAT", daggerLogFormat).
-		WithEnvVariable("DOCKERHUB_USERNAME", dockerhubUsername).
-		WithSecretVariable("DOCKERHUB_PASSWORD", dockerhubPassword).
+		Pipeline("dagger v0.1").
+		WithEnvVariable("USER", user.Value()).
+		WithEnvVariable("GITHUB_REPOSITORY", githubRepository.Value()).
+		WithEnvVariable("GITHUB_RUN_ID", githubRunID.Value()).
+		WithEnvVariable("GITHUB_REF_NAME", githubRefName.Value()).
+		WithEnvVariable("GITHUB_SHA", githubSHA.Value()).
+		WithEnvVariable("DAGGER_LOG_LEVEL", daggerLogLevel.Value()).
+		WithEnvVariable("DAGGER_LOG_FORMAT", daggerLogFormat.Value()).
+		WithEnvVariable("DOCKERHUB_USERNAME", dockerhubUsername.Value()).
+		WithSecretVariable("DOCKERHUB_PASSWORD", dockerhubPassword.Secret()).
 		WithDirectory("/app", app).
 		WithWorkdir("/app").
 		WithExec([]string{
@@ -74,5 +77,7 @@ func ShipIt(ctx context.Context, dag *dagger.Client) error {
 		}).
 		ExitCode(ctx)
 
-	return err
+	if err != nil {
+		panic(sysexit.Unavailable(err))
+	}
 }

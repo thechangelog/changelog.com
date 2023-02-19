@@ -45,9 +45,12 @@ jobs:
           DOCKERHUB_PASSWORD: "${{ secrets.DOCKERHUB_PASSWORD }}"
           DAGGER_LOG_FORMAT: plain
           DAGGER_LOG_LEVEL: info
+          IMAGE_OWNER: "${{ secrets.IMAGE_OWNER }}"
+          GHCR_USERNAME: "${{ github.actor }}"
+          GHCR_PASSWORD: "${{ secrets.GHCR_PASSWORD }}"
         run: |
           cd magefiles
-          go run main.go -w ../ daggerV01:shipit
+          go run main.go -w ../ ci
 
   deploy:
     if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
