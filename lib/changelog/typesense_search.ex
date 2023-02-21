@@ -42,9 +42,17 @@ defmodule Changelog.TypesenseSearch do
   end
 
   def save_items(items) do
-    records = items
+    records =
+      items
       |> Enum.filter(fn item -> item.feed_only != true && item.status == :published end)
-      |> Enum.flat_map(fn item -> to_records(item) end)
+      |> Enum.map(fn item -> to_records(item) end)
+      |> Enum.map(fn item_records ->
+        Enum.with_index(item_records)
+        |> Enum.map(fn {record, index} ->
+          if index == 0, do: record, else: Map.put(record, "id", "#{record["id"]}-#{index}")
+        end)
+      end)
+      |> List.flatten()
     result = Typesense.Client.upsert_documents(namespace(), records)
 
     case result do
