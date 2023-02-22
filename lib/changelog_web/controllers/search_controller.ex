@@ -18,8 +18,8 @@ defmodule ChangelogWeb.SearchController do
       group_limit: "1",
       typo_tokens_threshold: 100,
       drop_tokens_threshold: 100,
-      highlight_start_tag: "<em>",
-      highlight_end_tag: "</em>",
+      highlight_start_tag: "<mark>",
+      highlight_end_tag: "</mark>",
       per_page: 30,
       page: page_param(params) + 1
     )

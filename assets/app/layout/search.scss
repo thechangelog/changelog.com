@@ -2,7 +2,7 @@
   @include wrap;
   padding: 0;
   
-  .search-highlight em {
+  .search-highlight mark {
     font-style: normal;
     background-color: $green;
     color: $white;
