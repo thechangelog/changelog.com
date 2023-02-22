@@ -160,9 +160,10 @@ defmodule Changelog.TypesenseSearch do
   end
 
   defp results_from(response) do
+    hits = hits_from_response(response)
+
     item_ids =
-      response
-      |> Map.get("hits", [])
+      hits
       |> Enum.map(fn x -> Map.get(x, "document") end)
       |> Enum.map(fn x -> Map.get(x, "item_id") end)
 
@@ -182,7 +183,9 @@ defmodule Changelog.TypesenseSearch do
   end
 
   defp results_with_highlights_from(response) do
-    hits = Map.get(response, "hits", [])
+    # Logger.debug(inspect(response, limit: :infinity))
+
+    hits = hits_from_response(response)
 
     item_ids =
       hits
@@ -204,8 +207,6 @@ defmodule Changelog.TypesenseSearch do
       |> NewsItem.preload_all()
       |> Repo.all()
       |> Enum.map(&NewsItem.load_object/1)
-
-      # Logger.debug(inspect(response, limit: :infinity))
 
     %Page{
       entries: Enum.zip(items, highlights),
@@ -290,6 +291,16 @@ defmodule Changelog.TypesenseSearch do
     # Each key, has "":"" and all but one have ,
     json_syntax_size = byte_size("{}") + (length(keys) * 5 + (length(keys) - 1)) * byte_size(",")
     @byte_limit - key_size - json_syntax_size
+  end
+
+  defp hits_from_response(%{"grouped_hits" => grouped_hits}) do
+    grouped_hits
+    |> Enum.map(fn grouped_hit -> grouped_hit["hits"] end )
+    |> List.flatten
+  end
+
+  defp hits_from_response(%{"hits" => hits}) do
+    hits
   end
 
   defp clean(text) when is_binary(text) do
