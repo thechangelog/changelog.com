@@ -14,8 +14,13 @@ defmodule Changelog.TypesenseSearch do
     Typesense.Client.create_collection(%{
       name: namespace(),
       fields: [
-        %{name: ".*", type: "auto"}
-      ]
+        %{name: "headline", type: "string", optional: true},
+        %{name: "story", type: "string", optional: true},
+        %{name: "fragment", type: "string", optional: true},
+        %{name: "item_id", type: "int64", facet: true, optional: true},
+        %{name: "published_at", type: "int64", optional: true}
+      ],
+      token_separators: ["(", ")", "[", "]", "/", "<", ">"]
     })
   end
 
@@ -49,10 +54,12 @@ defmodule Changelog.TypesenseSearch do
       |> Enum.map(fn item_records ->
         Enum.with_index(item_records)
         |> Enum.map(fn {record, index} ->
-          if index == 0, do: record, else: Map.put(record, "id", "#{record["id"]}-#{index}")
+          Map.put(record, "id", (if index == 0, do: "#{record["item_id"]}", else: "#{record["item_id"]}-#{index}"))
         end)
       end)
       |> List.flatten()
+
+    # Logger.debug(inspect(records, limit: :infinity))
     result = Typesense.Client.upsert_documents(namespace(), records)
 
     case result do
@@ -110,12 +117,12 @@ defmodule Changelog.TypesenseSearch do
 
   defp item_to_record(item) do
     # Define keys, so we can figure out the byte-budget for our JSON payload
-    keys = ["id", "headline", "story", "published_at"]
+    keys = ["item_id", "headline", "story", "published_at"]
 
     {_, record, _} =
       start_record(keys)
-      |> add_to_record("id", Integer.to_string(item.id))
-      |> add_to_record("published_at", item.published_at)
+      |> add_to_record("item_id", item.id)
+      |> add_to_record("published_at", DateTime.to_unix(item.published_at))
       |> add_to_record("headline", item.headline)
       |> add_to_record("story", item.story, :cuttable)
 
@@ -139,14 +146,14 @@ defmodule Changelog.TypesenseSearch do
 
   defp fragment_to_records(item, text) do
     # Define keys, so we can figure out the byte-budget for our JSON payload
-    keys = ["id", "published_at", "fragment"]
+    keys = ["item_id", "published_at", "fragment"]
 
     if byte_size(text) > @byte_limit, do: raise("fragment too long")
 
     {_, record, _} =
       start_record(keys)
-      |> add_to_record("id", Integer.to_string(item.id))
-      |> add_to_record("published_at", item.published_at)
+      |> add_to_record("item_id", item.id)
+      |> add_to_record("published_at", DateTime.to_unix(item.published_at))
       |> add_to_record("fragment", text, :cuttable)
 
     [record]
@@ -157,8 +164,7 @@ defmodule Changelog.TypesenseSearch do
       response
       |> Map.get("hits", [])
       |> Enum.map(fn x -> Map.get(x, "document") end)
-      |> Enum.map(fn x -> Map.get(x, "id") end)
-      |> Enum.map(&String.to_integer/1)
+      |> Enum.map(fn x -> Map.get(x, "item_id") end)
 
     items =
       NewsItem
@@ -181,8 +187,7 @@ defmodule Changelog.TypesenseSearch do
     item_ids =
       hits
       |> Enum.map(fn x -> Map.get(x, "document") end)
-      |> Enum.map(fn x -> Map.get(x, "id") end)
-      |> Enum.map(&String.to_integer/1)
+      |> Enum.map(fn x -> Map.get(x, "item_id") end)
 
     highlights =
       hits
@@ -199,6 +204,8 @@ defmodule Changelog.TypesenseSearch do
       |> NewsItem.preload_all()
       |> Repo.all()
       |> Enum.map(&NewsItem.load_object/1)
+
+      # Logger.debug(inspect(response, limit: :infinity))
 
     %Page{
       entries: Enum.zip(items, highlights),
@@ -235,7 +242,11 @@ defmodule Changelog.TypesenseSearch do
 
     text = clean(text)
 
-    size = byte_size(text)
+    size = if is_number(text) do
+            text |> :binary.encode_unsigned |> byte_size
+          else
+            byte_size(text)
+          end
 
     if size < bytes_left do
       {bytes_left - size, Map.put(record, key, text), keys}
@@ -284,6 +295,8 @@ defmodule Changelog.TypesenseSearch do
   defp clean(text) when is_binary(text) do
     Changelog.Emoji.remove(text)
   end
+
+  defp clean(text) when is_number(text), do: text
 
   defp clean(_), do: ""
 end

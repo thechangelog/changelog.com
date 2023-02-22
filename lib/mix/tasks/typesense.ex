@@ -17,6 +17,9 @@ defmodule Mix.Tasks.Changelog.Typesense do
       |> NewsItem.newest_last()
       |> Repo.all()
 
+    # Helpful to quickly test ingesting a single item
+    # items = [Repo.get_by!(NewsItem, id: 10233)]
+
     TypesenseSearch.create_collection()
 
     for items_chunk <- Enum.chunk_every(items, 100) do

@@ -12,7 +12,10 @@ defmodule ChangelogWeb.SearchController do
     page = TypesenseSearch.search_with_highlights(
       q: query,
       query_by: query_fields,
+      sort_by: "_text_match:desc,published_at:desc",
       highlight_full_fields: query_fields,
+      highlight_start_tag: "<em>",
+      highlight_end_tag: "</em>",
       per_page: 30,
       page: page_param(params) + 1
     )
