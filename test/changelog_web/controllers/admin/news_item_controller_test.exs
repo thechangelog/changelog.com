@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
   import Mock
 
-  alias Changelog.{Buffer, NewsItem, NewsQueue}
+  alias Changelog.{Buffer, NewsItem, NewsQueue, Typesense}
 
   @valid_attrs %{
     type: :project,
@@ -54,7 +54,8 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
 
     with_mocks([
       {Buffer, [], [queue: fn _ -> true end]},
-      {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]}
+      {Algolia, [], [save_object: fn _, _, _ -> {:ok, %{}} end]},
+      {Typesense.Client, [], [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
     ]) do
       conn =
         post(conn, Routes.admin_news_item_path(conn, :create),
@@ -66,6 +67,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
       assert count(NewsItem.published()) == 1
       wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
       wait_for_passing(1000, fn -> assert called(Algolia.save_object(:_, :_, :_)) end)
+      wait_for_passing(1000, fn -> assert called(Typesense.Client.upsert_documents(:_, :_)) end)
     end
   end
 
@@ -164,14 +166,17 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     news_item = insert(:published_news_item)
     assert count(NewsItem.published()) == 1
 
-    with_mock(Algolia, delete_object: fn _, _ -> {:ok, %{}} end) do
+    with_mocks([
+      {Algolia, [], delete_object: fn _, _ -> {:ok, %{}} end},
+      {Typesense.Client, [], delete_document: fn _, _ -> {:ok, %{}} end}
+    ]) do
       conn = post(conn, Routes.admin_news_item_path(conn, :unpublish, news_item))
 
       assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
       assert count(NewsItem.published()) == 0
       assert count(NewsItem.drafted()) == 1
       wait_for_passing(1000, fn -> assert called(Algolia.delete_object(:_, news_item.id)) end)
-
+      wait_for_passing(1000, fn -> assert called(Typesense.Client.delete_document(:_, news_item.id)) end)
     end
   end
 
