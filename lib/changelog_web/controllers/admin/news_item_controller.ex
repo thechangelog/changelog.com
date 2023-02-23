@@ -8,6 +8,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     NewsSource,
     NewsQueue,
     Search,
+    TypesenseSearch,
     Topic,
     UrlKit,
     Notifier
@@ -166,6 +167,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   def delete(conn = %{assigns: %{item: item}}, _params) do
     Repo.delete!(item)
     Task.start_link(fn -> Search.delete_item(item) end)
+    Task.start_link(fn -> TypesenseSearch.delete_item(item) end)
 
     conn
     |> put_flash(:result, "success")
@@ -175,6 +177,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
   def unpublish(conn = %{assigns: %{item: item}}, _params) do
     NewsItem.unpublish!(item)
     Task.start_link(fn -> Search.delete_item(item) end)
+    Task.start_link(fn -> TypesenseSearch.delete_item(item) end)
 
     conn
     |> put_flash(:result, "success")

@@ -18,6 +18,7 @@ defmodule Changelog.Episode do
     Podcast,
     Regexp,
     Search,
+    TypesenseSearch,
     Transcripts
   }
 
@@ -362,6 +363,7 @@ defmodule Changelog.Episode do
         end
 
         Task.start_link(fn -> Search.save_item(updated) end)
+        Task.start_link(fn -> TypesenseSearch.save_item(updated) end)
 
         updated
 
