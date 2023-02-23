@@ -11,6 +11,10 @@ defmodule Changelog.TypesenseSearch do
   @byte_limit 20 * 1024 - @margin
 
   def create_collection() do
+    # If the schema needs to be changed,
+    #   it's best to clone the current collection via the Typesense Cloud UI (which will copy over synonyms and curation rules)
+    #   and then update the schema by dropping/adding fields.
+    # The following is mainly for bootstrapping the initial collection, and storing the schema in version control for posterity.
     Typesense.Client.create_collection(%{
       name: namespace(),
       fields: [
