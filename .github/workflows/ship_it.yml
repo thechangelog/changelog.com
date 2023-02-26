@@ -35,8 +35,10 @@ jobs:
           ping6 -c 5 "$DOCKER_ENGINE_HOST"
           nc -vz6 "$DOCKER_ENGINE_HOST" 2375
 
-      # ⚠️  IPv6 is configured via `fly ips private` - see 2022.fly/docker/README.md
-      - name: "Build, test & package via Fly.io Docker Engine..."
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - name: "Build, test & package..."
         env:
           DOCKER_HOST: "${{ secrets.DOCKER_ENGINE_HOST_FQDN }}"
           DOCKERHUB_USERNAME: "${{ secrets.DOCKERHUB_USERNAME }}"
@@ -44,7 +46,8 @@ jobs:
           DAGGER_LOG_FORMAT: plain
           DAGGER_LOG_LEVEL: info
         run: |
-          make --directory 2021.dagger ship-it
+          cd magefiles
+          go run main.go -w ../ daggerV01:shipit
 
   deploy:
     if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}

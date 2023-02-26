@@ -11,8 +11,8 @@ graph TB
         click repo "https://github.com/thechangelog/changelog.com"
         cicd[/ fa:fa-circle-check GitHub Action - Ship It \]:::link
         click cicd "https://github.com/thechangelog/changelog.com/actions/workflows/ship_it.yml"
-        automation[\ fa:fa-space-shuttle dagger v0.1 /]:::link
-        click automation "https://github.com/thechangelog/changelog.com/blob/master/2021/dagger/prod_image/main.cue"
+        automation[\ fa:fa-space-shuttle dagger v0.3 /]:::link
+        click automation "https://github.com/thechangelog/changelog.com/blob/master/magefiles/daggerV01/shipit.go"
     end
     
     registry(( fab:fa-docker Docker Hub )):::link
@@ -20,17 +20,16 @@ graph TB
     chat(( fab:fa-slack Slack )):::link
     click chat "https://changelog.slack.com/archives/C03SA8VE2"
 
-    repo -.- |.github/workflows/ship_it.yml| cicd
-    repo -.- |2021/dagger/prod_image/main.cue| automation
+    repo -.-> |.github/workflows/ship_it.yml| cicd
     
-    cicd --> |runs| automation ---> |wireguard| container --> |app image| registry -.-> |app image| app
+    cicd --> |runs magefiles/daggerV01/shipit.go| automation ---> |wireguard| container --> |app image| registry -.-> |app image| app
     cicd ---> |flyctl deploy| app
     cicd ----> |success #dev| chat
 
     repo -.- |2022.fly config| app
     repo -.- |2022.fly/docker config| container
 
-    repo -.-> |make runtime-image| registry -.-> |runtime image| automation
+    repo -.-> |make runtime-image| registry -.-> |pull runtime image| automation
 
     %% PaaS - https://fly.io/dashboard/changelog
     subgraph Fly.io

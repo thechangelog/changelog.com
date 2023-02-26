@@ -55,13 +55,25 @@ DOCKER_SOCKET ?= /var/run/docker.sock
 APP_VERSION ?= $(shell date -u +'%y.%-m.%-d+'$(GITHUB_SHA))
 BUILD_VERSION ?= $(shell date -u +'%Y-%m-%dT%H.%M.%SZ')
 GITHUB_SERVER_URL ?= https://github.com
-GITHUB_REPOSITORY ?= thechangelog/changelog.com
-BUILD_URL ?= $(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY)/actions/runs/$(GITHUB_RUN_ID)
+ifeq ($(GITHUB_REPOSITORY),)
+GITHUB_REPOSITORY = thechangelog/changelog.com
+endif
+ifeq ($(BUILD_URL),)
+BUILD_URL = $(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY)/actions/runs/$(GITHUB_RUN_ID)
+endif
+ifeq ($(GITHUB_ACTOR),)
 GITHUB_ACTOR ?= $(USER)
-GITHUB_REF_NAME ?= $(shell git branch --show-current)
+endif
+ifeq ($(GITHUB_REF_NAME),)
+GITHUB_REF_NAME = $(shell git branch --show-current)
+endif
 GITHUB_REF_NAME_SAFE = $$(echo "$(GITHUB_REF_NAME)" | tr '/' '-')
-GITHUB_SHA ?= $(shell git rev-parse HEAD)
-DAGGER_LOG_LEVEL ?= debug
+ifeq ($(GITHUB_SHA),)
+GITHUB_SHA = $(shell git rev-parse HEAD)
+endif
+ifeq ($(DAGGER_LOG_LEVEL),)
+DAGGER_LOG_LEVEL = debug
+endif
 export DAGGER_LOG_LEVEL
 
 define _convert_dockerignore_to_excludes
@@ -72,12 +84,12 @@ $(DAGGER_ENV)/ship_it: | dagger-init
 	$(DAGGER_CTX) new ship_it --package $(CURDIR)/dagger/prod_image
 	$(DAGGER_CTX) input dir app_src . $(shell $(_convert_dockerignore_to_excludes)) --exclude deps --exclude _build --exclude dagger --environment ship_it
 	$(DAGGER_CTX) input text dockerhub_username $(DOCKERHUB_USERNAME) --environment ship_it
-	$(DAGGER_CTX) input secret dockerhub_password $(DOCKERHUB_PASSWORD) --environment ship_it
+	@$(DAGGER_CTX) input secret dockerhub_password $(DOCKERHUB_PASSWORD) --environment ship_it
 	$(DAGGER_CTX) input text app_version $(APP_VERSION) --environment ship_it
 	$(DAGGER_CTX) input text build_url $(BUILD_URL) --environment ship_it
 	$(DAGGER_CTX) input text build_version $(BUILD_VERSION) --environment ship_it
 	$(DAGGER_CTX) input socket docker_socket $(DOCKER_SOCKET) --environment ship_it
-ifneq (,$(DOCKER_HOST))
+ifneq (,$(findstring $(DOCKER_HOST), tcp://))
 	$(DAGGER_CTX) input text docker_host $(DOCKER_HOST) --environment ship_it
 endif
 	$(DAGGER_CTX) input text git_author $(GITHUB_ACTOR) --environment ship_it
