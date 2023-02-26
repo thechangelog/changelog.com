@@ -1,5 +1,5 @@
 FROM thechangelog/legacy_assets AS legacy_assets
-FROM thechangelog/runtime:2022-11-13T07.34.05Z
+FROM ghcr.io/thechangelog/changelog-runtime:elixir-v1.14.2-erlang-v25.1-nodejs-v14.21.1
 
 RUN mkdir /app
 ARG APP_FROM_PATH=.
