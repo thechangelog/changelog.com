@@ -13,7 +13,7 @@ dockerhub_password: dagger.#Input & {dagger.#Secret}
 dockerhub_username: dagger.#Input & {string}
 prod_dockerfile:    dagger.#Input & {string}
 // ⚠️  Keep this in sync with ../docker/production.Dockerfile
-runtime_image_ref: dagger.#Input & {string | *"thechangelog/runtime:2022-11-13T07.34.05Z"}
+runtime_image_ref: dagger.#Input & {string | *"ghcr.io/thechangelog/changelog-runtime:elixir-v1.14.2-erlang-v25.1-nodejs-v14.21.1"}
 build_version:     dagger.#Input & {string}
 git_branch:        dagger.#Input & {string | *"dev"}
 prod_image_ref:    dagger.#Input & {string | *"thechangelog/changelog.com:\(git_branch)"}
