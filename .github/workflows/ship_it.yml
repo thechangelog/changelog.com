@@ -17,23 +17,23 @@ jobs:
         uses: actions/checkout@v3
 
       # ⚠️  FLY_WIREGUARD is configured via `fly wireguard create ...` - see 2022.fly/docker/README.md
-      - name: "Set up WireGuard for Fly.io Docker Engine..."
-        env:
-          FLY_WIREGUARD: ${{ secrets.FLY_WIREGUARD }}
-        if: "${{ env.FLY_WIREGUARD != '' }}"
-        run: |
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools openresolv
-          printf "${{ secrets.FLY_WIREGUARD }}" | sudo tee /etc/wireguard/fly.conf
-          sudo wg-quick up fly
+      # - name: "Set up WireGuard for Fly.io Docker Engine..."
+      #   env:
+      #     FLY_WIREGUARD: ${{ secrets.FLY_WIREGUARD }}
+      #   if: "${{ env.FLY_WIREGUARD != '' }}"
+      #   run: |
+      #     sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools openresolv
+      #     printf "${{ secrets.FLY_WIREGUARD }}" | sudo tee /etc/wireguard/fly.conf
+      #     sudo wg-quick up fly
 
       # ⚠️  IPv6 is configured via `fly ips private` - see 2022.fly/docker/README.md
-      - name: "Check Fly.io Docker Engine"
-        env:
-          DOCKER_ENGINE_HOST: ${{ secrets.DOCKER_ENGINE_HOST }}
-        if: "${{ env.DOCKER_ENGINE_HOST != '' }}"
-        run: |
-          ping6 -c 5 "$DOCKER_ENGINE_HOST"
-          nc -vz6 "$DOCKER_ENGINE_HOST" 2375
+      # - name: "Check Fly.io Docker Engine"
+      #   env:
+      #     DOCKER_ENGINE_HOST: ${{ secrets.DOCKER_ENGINE_HOST }}
+      #   if: "${{ env.DOCKER_ENGINE_HOST != '' }}"
+      #   run: |
+      #     ping6 -c 5 "$DOCKER_ENGINE_HOST"
+      #     nc -vz6 "$DOCKER_ENGINE_HOST" 2375
 
       - uses: actions/setup-go@v3
         with:
