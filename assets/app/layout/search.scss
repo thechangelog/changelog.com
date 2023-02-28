@@ -2,7 +2,7 @@
   @include wrap;
   padding: 0;
   
-  .search-highlight em {
+  .search-highlight mark {
     font-style: normal;
     background-color: $green;
     color: $white;
@@ -56,7 +56,7 @@
         margin: 0 0 1em;
       }
 
-      &-algolia {
+      &-algolia,&-typesense {
         align-items: center;
         color: $black;
         display: flex;
