@@ -83,11 +83,11 @@ $smartphone: 452px;
 $tablet: 768px;
 $desktop: 1080px;
 
-$padding-extra-small: 12px / $root-font-size * 1rem;
-$padding-small: 16px / $root-font-size * 1rem;
-$padding-medium: 20px / $root-font-size * 1rem;
-$padding-large: 26px / $root-font-size * 1rem;
-$padding-extra-large: 54px / $root-font-size * 1rem;
+$padding-extra-small: calc(12px / $root-font-size * 1rem);
+$padding-small: calc(16px / $root-font-size * 1rem);
+$padding-medium: calc(20px / $root-font-size * 1rem);
+$padding-large: calc(26px / $root-font-size * 1rem);
+$padding-extra-large: calc(54px / $root-font-size * 1rem);
 
 // Elements – Update if changes are made to these components
 $header-height: 63px;

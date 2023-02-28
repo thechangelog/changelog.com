@@ -31,7 +31,7 @@ body.embed {
     display: block;
     height: 30px;
     position: absolute;
-    right: $gutter / 2;
+    right: calc($gutter / 2);
     text-indent: -9999px;
     top: 1rem;
     width: 30px;
@@ -149,7 +149,7 @@ body.embed {
   }
 
   &-slider {
-    padding: 0 $gutter / 2;
+    padding: 0 calc($gutter / 2);
 
     @media (min-width: $smartphone) {
       padding: 0 $gutter;
@@ -210,7 +210,7 @@ body.embed {
     &-button {
       @include large-play-button(".episode_player", $gutter, $button_size, $button_spacing);
       display: block;
-      left: $gutter / 2;
+      left: calc($gutter / 2);
       margin-right: 2rem;
       margin-top: -$gutter;
       padding: 0;
