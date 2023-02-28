@@ -38,7 +38,7 @@ defmodule ChangelogWeb.SearchControllerTest do
       with_mock(Typesense.Client, search: fn _, _ -> {:ok, results} end) do
         conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
 
-        # assert called(Typesense.Client.search(:_, :meck.is(fn opts -> opts[:q] == "phoenix" end)))
+        assert called(Typesense.Client.search(:_, :meck.is(fn opts -> opts[:q] == "phoenix" end)))
         assert conn.status == 200
         assert conn.resp_body =~ "1 result"
         assert conn.resp_body =~ item1.story
@@ -63,7 +63,7 @@ defmodule ChangelogWeb.SearchControllerTest do
       with_mock(Typesense.Client, search: fn _, _ -> {:ok, results} end) do
         conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
 
-        # assert called(Typesense.Client.search(:_, :meck.is(fn opts -> opts[:q] == "phoenix" end)))
+        assert called(Typesense.Client.search(:_, :meck.is(fn opts -> opts[:q] == "phoenix" end)))
         assert conn.status == 200
         assert conn.resp_body =~ "2 results"
         assert conn.resp_body =~ item1.story
@@ -84,7 +84,7 @@ defmodule ChangelogWeb.SearchControllerTest do
 
       with_mock(Typesense.Client, search: fn _, _ -> {:ok, results} end) do
         conn = get(build_conn(), Routes.search_path(build_conn(), :search, q: "phoenix"))
-        # assert called(Typesense.Client.search(:_, :meck.is(fn opts -> opts[:q] == "phoenix" end)))
+        assert called(Typesense.Client.search(:_, :meck.is(fn opts -> opts[:q] == "phoenix" end)))
         assert conn.status == 200
       end
     end
