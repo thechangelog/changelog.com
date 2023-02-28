@@ -1,7 +1,7 @@
 defmodule Changelog.PostNewsItem do
   use Changelog.Schema
 
-  alias Changelog.{Post, NewsItem, Search}
+  alias Changelog.{Post, NewsItem, TypesenseSearch}
   alias ChangelogWeb.PostView
 
   def insert(post, logger) do
@@ -49,7 +49,7 @@ defmodule Changelog.PostNewsItem do
   end
 
   defp update_search(item) do
-    Task.start_link(fn -> Search.update_item(item) end)
+    Task.start_link(fn -> TypesenseSearch.update_item(item) end)
     item
   end
 end

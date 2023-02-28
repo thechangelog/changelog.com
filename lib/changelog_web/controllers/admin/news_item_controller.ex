@@ -220,7 +220,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     end
   end
 
-  defp handle_search_update(item), do: Task.start_link(fn -> Search.update_item(item) end)
+  defp handle_search_update(item), do: Task.start_link(fn -> TypesenseSearch.update_item(item) end)
 
   defp similar_items(nil), do: []
 
