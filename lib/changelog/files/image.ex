@@ -1,5 +1,5 @@
 defmodule Changelog.Files.Image do
-  use Changelog.File, [:jpg, :jpeg, :png, :gif, :svg]
+  use Changelog.File, [:jpg, :jpeg, :png, :gif, :svg, :webp]
 
   @versions [:original, :large, :medium, :small]
 
