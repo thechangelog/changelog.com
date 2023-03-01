@@ -33,6 +33,18 @@
     </div>
   </div>
 
+<%= if f.data.published do %>
+  <div class="field">
+    <label for="socialize_url">
+      Socialize URL
+    <%= if f.data.socialize_url do %>
+      <a href="<%= f.data.socialize_url %>" class="field-action" rel="external">(go to there)</a>
+    <% end %>
+    </label>
+    <%= text_input(f, :socialize_url, placeholder: "https://changelog.social/@changelog/109926145715676533") %>
+  </div>
+<% end %>
+
   <div class="fields">
     <div class="field <%= AdminHelpers.error_class(f, :featured) %>">
       <label>Recommended <%= AdminHelpers.help_icon("Episode will appear in recommended list. Limit to 10% of show's total episodes, max.") %></label>

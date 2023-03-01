@@ -39,6 +39,7 @@ defmodule Changelog.Episode do
     field :summary, :string
     field :notes, :string
     field :doc_url, :string
+    field :socialize_url, :string
 
     field :published, :boolean, default: false
     field :published_at, :utc_datetime
@@ -187,7 +188,8 @@ defmodule Changelog.Episode do
 
     struct
     |> cast(attrs, ~w(slug title subtitle published featured request_id highlight
-      subhighlight summary notes doc_url published_at recorded_at recorded_live youtube_id guid type)a)
+      subhighlight summary notes doc_url socialize_url published_at recorded_at
+      recorded_live youtube_id guid type)a)
     |> prep_audio_file(attrs)
     |> prep_plusplus_file(attrs)
     |> cast_attachments(attrs, [:audio_file, :plusplus_file])
@@ -195,6 +197,8 @@ defmodule Changelog.Episode do
     |> cast_embed(:plusplus_chapters)
     |> validate_required([:slug, :title, :published, :featured])
     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
+    |> validate_format(:doc_url, Regexp.http(), message: Regexp.http_message())
+    |> validate_format(:socialize_url, Regexp.http(), message: Regexp.http_message())
     |> validate_published_has_published_at()
     |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)

@@ -60,6 +60,9 @@
     <%= if Enum.any?(episode.audio_chapters) do %>
       <podcast:chapters url="<%= Routes.episode_url(@conn, :chapters, episode.podcast.slug, episode.slug) %>" type="application/json+chapters" />
     <% end %>
+    <%= if episode.socialize_url do %>
+      <podcast:socialInteract uri="<%= episode.socialize_url %>" protocol="activitypub" />
+    <% end %>
     </item>
   <% end %>
   </channel>
