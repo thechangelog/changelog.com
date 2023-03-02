@@ -6,10 +6,13 @@ defmodule Changelog.Application do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    pg_config = Application.get_env(:changelog, Changelog.Repo) |> Keyword.put(:name, Changelog.PostgresNotifications)
     children = [
       ChangelogWeb.Endpoint,
       {Phoenix.PubSub, [name: Changelog.PubSub, adapter: Phoenix.PubSub.PG2]},
       Changelog.Repo,
+      {Postgrex.Notifications, pg_config},
+      Changelog.Cache2,
       # UA.Parser doesn't yet support new Supervisor child specification
       worker(UA.Parser, []),
       con_cache_child_spec(
