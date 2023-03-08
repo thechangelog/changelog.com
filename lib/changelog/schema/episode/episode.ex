@@ -64,7 +64,7 @@ defmodule Changelog.Episode do
 
     field :transcript, {:array, :map}
     # has_transcript is only used to know whether or not the episode has a
-    #transcript even though we're not `select`ing it to reduce query load times
+    # transcript even though we're not `select`ing it to reduce query load times
     field :has_transcript, :boolean, virtual: true, default: false
 
     # this exists merely to satisfy the compiler
@@ -133,14 +133,20 @@ defmodule Changelog.Episode do
 
   def with_slug(query \\ __MODULE__, slug), do: from(q in query, where: q.slug == ^slug)
 
+  def with_slug_prefix(query \\ __MODULE__, prefix),
+    do: from(q in query, where: like(q.slug, ^"#{prefix}%"))
+
   def with_podcast_slug(query \\ __MODULE__, slug)
   def with_podcast_slug(query, nil), do: query
 
   def with_podcast_slug(query, slug),
     do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
-  def with_transcript(query \\ __MODULE__), do: from(q in query, where: fragment("? != '{}'", q.transcript))
-  def sans_transcript(query \\ __MODULE__), do: from(q in query, where: fragment("? = '{}'", q.transcript))
+  def with_transcript(query \\ __MODULE__),
+    do: from(q in query, where: fragment("? != '{}'", q.transcript))
+
+  def sans_transcript(query \\ __MODULE__),
+    do: from(q in query, where: fragment("? = '{}'", q.transcript))
 
   def full(query \\ __MODULE__), do: from(q in query, where: q.type == ^:full)
   def bonus(query \\ __MODULE__), do: from(q in query, where: q.type == ^:bonus)
@@ -312,7 +318,7 @@ defmodule Changelog.Episode do
     # don't, it's because they're only nominal sponsors, so have a 0 duration.
     # When the episode doesn't have chapters, we guesstimate they're 60 secs
     default_duration = if Enum.any?(episode.audio_chapters), do: 0, else: 60
-    sponsors |> Enum.map(fn(s) -> sponsor_duration(s, default_duration) end) |> Enum.sum()
+    sponsors |> Enum.map(fn s -> sponsor_duration(s, default_duration) end) |> Enum.sum()
   end
 
   defp sponsor_duration(sponsor, default) do
@@ -433,6 +439,7 @@ defmodule Changelog.Episode do
         changeset
     end
   end
+
   def prep_audio_file(changeset, _params), do: changeset
 
   def prep_plusplus_file(changeset, %{"plusplus_file" => %Plug.Upload{path: path}}) do
@@ -447,6 +454,7 @@ defmodule Changelog.Episode do
         changeset
     end
   end
+
   def prep_plusplus_file(changeset, _params), do: changeset
 
   def attrs_with_chapters_sorted_by_starts_at(attrs) do
@@ -464,8 +472,8 @@ defmodule Changelog.Episode do
         |> Enum.with_index()
         |> Map.new(fn {chapter, index} -> {"#{index}", chapter} end)
       end)
-      rescue
-        KeyError -> attrs
+    rescue
+      KeyError -> attrs
     end
   end
 
