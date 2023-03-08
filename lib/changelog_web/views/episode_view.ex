@@ -56,7 +56,7 @@ defmodule ChangelogWeb.EpisodeView do
   def audio_url(episode) do
     episode
     |> audio_direct_url()
-    |> get_down_with_op3()
+    |> get_down_with_op3(Mix.env())
   end
 
   # use this whenever fetching audio for direct manipulation
@@ -66,7 +66,9 @@ defmodule ChangelogWeb.EpisodeView do
     |> UrlKit.sans_cache_buster()
   end
 
-  defp get_down_with_op3(url), do: String.replace_prefix(url, "", "https://op3.dev/e/")
+  defp get_down_with_op3(url, :dev), do: url
+
+  defp get_down_with_op3(url, _mode), do: String.replace_prefix(url, "", "https://op3.dev/e/")
 
   # simplest case, no ++
   def plusplus_cta(%{plusplus_file: pp}) when is_nil(pp), do: fallback_cta()
@@ -268,7 +270,8 @@ defmodule ChangelogWeb.EpisodeView do
         endTime: round(chapter.ends_at),
         url: chapter.link_url,
         img: chapter.image_url
-      } |> Map.reject(fn {_k, v} -> is_nil(v) end)
+      }
+      |> Map.reject(fn {_k, v} -> is_nil(v) end)
     end)
   end
 
