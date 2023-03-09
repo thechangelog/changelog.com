@@ -21,7 +21,7 @@ defmodule Changelog.Cache2 do
   use GenServer
   require Logger
 
-  @table_name :the_cache
+  @table_name :thecache
   @postgres_notify_payload_limit 8000
 
   def start_link(args) do
@@ -31,7 +31,10 @@ defmodule Changelog.Cache2 do
 
   @impl true
   def init(nil) do
-    :ets.new(@table_name, [:named_table, :public])
+    if :ets.whereis(@table_name) == :undefined do
+      :ets.new(@table_name, [:named_table, :public])
+    end
+
     ref = subscribe()
 
     {:ok, %{ref: ref}}
@@ -61,8 +64,9 @@ defmodule Changelog.Cache2 do
     result = apply(module, function, arguments)
     set(key, result)
 
-    item = term_to_postgres_string!({key, module, function, arguments})
+    item = term_to_postgres_string!({self(), key, module, function, arguments})
     Ecto.Adapters.SQL.query(Changelog.Repo, "NOTIFY cache_ops, 'set:#{item}'", [])
+    result
   end
 
   def get(key) do
@@ -100,14 +104,17 @@ defmodule Changelog.Cache2 do
         {:notification, _notification_pid, _listen_ref, "cache_ops", "set:" <> item},
         state
       ) do
-    {key, module, function, arguments} = postgres_string_to_term!(item)
+    {source, key, module, function, arguments} = postgres_string_to_term!(item)
 
-    Logger.debug(
-      "Setting cache key '#{key}' on node #{inspect(Node.self())}, process #{inspect(self)}"
-    )
+    if source != self() do
+      Logger.debug(
+        "Setting cache key '#{key}' on node #{inspect(Node.self())}, process #{inspect(self())}"
+      )
 
-    data = apply(module, function, arguments)
-    set(key, data)
+      data = apply(module, function, arguments)
+      set(key, data)
+    end
+
     {:noreply, state}
   end
 
