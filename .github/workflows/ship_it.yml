@@ -10,65 +10,50 @@ on:
   workflow_dispatch:
 
 jobs:
-  package:
+  cicd:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code..."
         uses: actions/checkout@v3
 
       # ⚠️  FLY_WIREGUARD is configured via `fly wireguard create ...` - see 2022.fly/docker/README.md
-      # - name: "Set up WireGuard for Fly.io Docker Engine..."
-      #   env:
-      #     FLY_WIREGUARD: ${{ secrets.FLY_WIREGUARD }}
-      #   if: "${{ env.FLY_WIREGUARD != '' }}"
-      #   run: |
-      #     sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools openresolv
-      #     printf "${{ secrets.FLY_WIREGUARD }}" | sudo tee /etc/wireguard/fly.conf
-      #     sudo wg-quick up fly
+      - name: "Set up WireGuard for Fly.io Docker Engine..."
+        env:
+          FLY_WIREGUARD: ${{ secrets.FLY_WIREGUARD }}
+        if: "${{ env.FLY_WIREGUARD != '' }}"
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools openresolv
+          printf "${{ secrets.FLY_WIREGUARD }}" | sudo tee /etc/wireguard/fly.conf
+          sudo wg-quick up fly
 
       # ⚠️  IPv6 is configured via `fly ips private` - see 2022.fly/docker/README.md
-      # - name: "Check Fly.io Docker Engine"
-      #   env:
-      #     DOCKER_ENGINE_HOST: ${{ secrets.DOCKER_ENGINE_HOST }}
-      #   if: "${{ env.DOCKER_ENGINE_HOST != '' }}"
-      #   run: |
-      #     ping6 -c 5 "$DOCKER_ENGINE_HOST"
-      #     nc -vz6 "$DOCKER_ENGINE_HOST" 2375
+      - name: "Check Fly.io Docker Engine"
+        env:
+          DOCKER_ENGINE_HOST: ${{ secrets.DOCKER_ENGINE_HOST }}
+        if: "${{ env.DOCKER_ENGINE_HOST != '' }}"
+        run: |
+          ping6 -c 5 "$DOCKER_ENGINE_HOST"
+          nc -vz6 "$DOCKER_ENGINE_HOST" 2375
 
       - uses: actions/setup-go@v3
         with:
-          go-version: 1.19
-      - name: "Build, test & package..."
+          go-version: "1.20"
+      - name: "Build, test, publish & deploy..."
         env:
           DOCKER_HOST: "${{ secrets.DOCKER_ENGINE_HOST_FQDN }}"
-          DOCKERHUB_USERNAME: "${{ secrets.DOCKERHUB_USERNAME }}"
-          DOCKERHUB_PASSWORD: "${{ secrets.DOCKERHUB_PASSWORD }}"
-          DAGGER_LOG_FORMAT: plain
-          DAGGER_LOG_LEVEL: info
           IMAGE_OWNER: "${{ secrets.IMAGE_OWNER }}"
           GHCR_USERNAME: "${{ github.actor }}"
           GHCR_PASSWORD: "${{ secrets.GHCR_PASSWORD }}"
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         run: |
           cd magefiles
-          go run main.go -w ../ ci
-
-  deploy:
-    if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
-    needs: package
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout code..."
-        uses: actions/checkout@v2
-
-      - uses: superfly/flyctl-actions@1.3
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          FLY_PROJECT_PATH: ./2022.fly
-        with:
-          args: "deploy"
+          go run main.go -w ../ ci cd
 
   notify:
-    needs: deploy
+    if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+    needs: cicd
     runs-on: ubuntu-latest
     steps:
       - name: "Notify Slack about deploy..."

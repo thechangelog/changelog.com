@@ -40,21 +40,11 @@ npm-debug.log*
 /import/cookies.yml
 /cover
 
-# .envrc is likely to contain user-specific secrets, such as CIRCLE_TOKEN
-.envrc
-# .envrc equivalent
-.env
-# like .envrc, but for asdf
-.tool-versions
-
-# Local binaries
-bin
+# User-specific environment variables, maybe even secrets
+.env.user
 
 # Local config files, host-specific
 .config
 
 # Postgres DB dump
 /db-*
-
-# Ingore Dagger v0.1 config so that we don't need to worry about SOPS in CI/CD
-.dagger

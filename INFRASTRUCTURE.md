@@ -1,54 +1,66 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Dec.%2031%2C%202022-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Mar.%2016%2C%202023-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
 ```mermaid
-graph TB
+graph TD
     classDef link stroke:#59b287,stroke-width:3px;
     %% Code & assets
     subgraph GitHub
         repo{{ fab:fa-github thechangelog/changelog.com }}:::link
         click repo "https://github.com/thechangelog/changelog.com"
+
         cicd[/ fa:fa-circle-check GitHub Action - Ship It \]:::link
         click cicd "https://github.com/thechangelog/changelog.com/actions/workflows/ship_it.yml"
-        automation[\ fa:fa-space-shuttle dagger v0.3 /]:::link
-        click automation "https://github.com/thechangelog/changelog.com/blob/master/magefiles/daggerV01/shipit.go"
+        
+        automation[\ fab:fa-golang Dagger Go SDK /]:::link
+        click automation "https://github.com/thechangelog/changelog.com/blob/master/magefiles/magefiles.go"
+
+        registry(( fab:fa-github ghcr.io )):::link
+        click registry "https://github.com/orgs/thechangelog/packages"
+
+        chat(( fab:fa-slack Slack )):::link
+        click chat "https://changelog.slack.com/archives/C03SA8VE2"
+
+        repo -.-> |.github/workflows/ship_it.yml| cicd
+        cicd --> |magefiles/magefiles.go| automation
+        
+        cicd ----> |success #dev| chat
+        
     end
     
-    registry(( fab:fa-docker Docker Hub )):::link
-    click registry "https://hub.docker.com/r/thechangelog/changelog.com/tags"
-    chat(( fab:fa-slack Slack )):::link
-    click chat "https://changelog.slack.com/archives/C03SA8VE2"
-
-    repo -.-> |.github/workflows/ship_it.yml| cicd
+    repo -.- |2022.fly| app
     
-    cicd --> |runs magefiles/daggerV01/shipit.go| automation ---> |wireguard| container --> |app image| registry -.-> |app image| app
-    cicd ---> |flyctl deploy| app
-    cicd ----> |success #dev| chat
-
-    repo -.- |2022.fly config| app
-    repo -.- |2022.fly/docker config| container
-
-    repo -.-> |make runtime-image| registry -.-> |pull runtime image| automation
+    registry ---> |ghcr.io/changelog/changelog-prod| app
+    container ---> |flyctl deploy| app
+        
+    repo -.- |2022.fly/docker| container
 
     %% PaaS - https://fly.io/dashboard/changelog
     subgraph Fly.io
+    
         proxy{fa:fa-globe Proxy}
         proxy ====> |https| app
 
-        subgraph IAD
-            container([ fab:fa-docker Docker Engine 2022-03-13 ]):::link
-            click container "https://fly.io/apps/docker-2022-06-13"
-            app(( fab:fa-phoenix-framework App changelog-2022-03-13.fly.dev )):::link
-            style app fill:#488969;
-            click app "https://fly.io/apps/changelog-2022-03-13"
-            dbw([ fa:fa-database PostgreSQL Leader 2022-03-12 ]):::link
-            click dbw "https://fly.io/apps/postgres-2022-03-12"
-            dbr1([ fa:fa-database PostgreSQL Replica 2022-03-12 ])
 
-            app <==> |pgsql| dbw
-            dbw -.-> |replication| dbr1
-        end
+        container([ fab:fa-docker Docker Engine 2022-03-13 ]):::link
+        click container "https://fly.io/apps/docker-2022-06-13"
+            
+        app(( fab:fa-phoenix-framework App changelog-2022-03-13.fly.dev )):::link
+        style app fill:#488969;
+        click app "https://fly.io/apps/changelog-2022-03-13"
+            
+        dbw([ fa:fa-database PostgreSQL Leader 2022-03-12 ]):::link
+        click dbw "https://fly.io/apps/postgres-2022-03-12"
+            
+        dbr1([ fa:fa-database PostgreSQL Replica 2022-03-12 ])
+
+        app <==> |pgsql| dbw
+        dbw -.-> |replication| dbr1
+
+        automation ---> |wireguard| container
+        container --> |ghcr.io/changelog/changelog-runtime| registry
+        container --> |ghcr.io/changelog/changelog-prod| registry
 
         metricsdb([ fa:fa-chart-line Prometheus ])
         metrics[ fa:fa-columns Grafana fly-metrics.net ]:::link
@@ -159,40 +171,18 @@ production. The ["Ship It!" GitHub Actions
 workflow](.github/workflows/ship_it.yml) is responsible for this. From the
 workflow jobs perspective, it is fairly standard:
 
-- **1/3. Package**
-  - [Uses Dagger.io](https://github.com/thechangelog/changelog.com/pull/395) so that it works exactly the same locally as it does in GitHub Actions
-  - [Connects to a Docker Engine running on Fly.io](https://github.com/thechangelog/changelog.com/pull/416) so that caching is reliable & persistent between runs
-  - A successful run publishes a container image to Docker Hub
-- **2/3. Deploy**
-  - Uses `flyctl` GitHub Action to deploy to Fly.io if **Package** succeeds
-- **3/3. Notify**
-  - Notifies `#dev` channel in changelog.slack.com if **Deploy** succeeds
-
-Most of our pipeline complexity - building, testing, digesting assets &
-publishing the resulting container image - is encapsulated in Dagger.io, which
-runs in GitHub Actions as **1/3. Package**. One of the primary benefits is that
-this part works in CI exactly as it does locally. Here is an overview of what
-happens inside our Dagger.io pipeline:
-
-```
-                 app
-                 |
-                 v
-test_db_start    deps ----------------------------------------\
-|                |                      |                     |
-|                v                      v                     v
-|                deps_compile_test      deps_compile_prod     assets_compile
-|                |                      |               |     |
-|                |                      |               \-----|
-|                v                      v                     |
-\--------------> test                   image_prod_cache      assets_digest
-                 |                      |                     |
-test_db_stop <---|                      v                     |
-                 |                      image_prod <----------/
-                 |                      |
-                 |                      v
-                 \--------------------> image_prod_tag
-```
+- **1/2. CI/CD**
+  - Uses Dagger Go SDK so that it works exactly the same locally as it does in
+    GitHub Actions
+  - [Connects to a Docker Engine running on
+    Fly.io](https://github.com/thechangelog/changelog.com/pull/416) so that
+    caching is reliable & persistent between runs
+  - A successful run publishes a container image to
+    https://ghcr.io/thechangelog/changelog-runtime &
+    https://ghcr.io/thechangelog/changelog-prod
+  - Deploys to Fly.io
+- **2/2. Notify**
+  - Notifies `#dev` channel in changelog.slack.com if **CI/CD** succeeds
 
 
 ## Secrets
