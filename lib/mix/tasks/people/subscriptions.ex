@@ -22,7 +22,7 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
     import_file
     |> File.read!()
     |> CSV.parse_string()
-    |> Enum.map(fn [name, email] -> [String.trim(name), String.trim(email)] end)
+    |> Enum.map(fn [name, email, _rest] -> [String.trim(name), String.trim(email)] end)
     |> Enum.each(fn [name, email] ->
       email
       |> find_or_insert_person(name)
@@ -49,7 +49,7 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
       if name == "" do
         Person.with_fake_data()
       else
-        %Person{name: name, handle: Faker.handle(name)}
+        %Person{name: name, handle: Faker.handle(name), public_profile: false}
       end
 
     person

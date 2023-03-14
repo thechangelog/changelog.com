@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Changelog.Episodes.MigrateNews do
+defmodule Mix.Tasks.Changelog.MigrateNews do
   use Mix.Task
 
   alias Changelog.{Episode, Podcast, Repo}
