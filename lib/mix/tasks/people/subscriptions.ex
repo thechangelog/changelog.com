@@ -5,6 +5,8 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
   alias ChangelogWeb.PersonView
   alias NimbleCSV.RFC4180, as: CSV
 
+  require Logger
+
   @shortdoc "Imports people and subscriptions from CSV"
 
   def run([import_file]),
@@ -19,6 +21,10 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
       |> String.replace_trailing(".csv", "")
       |> Podcast.get_by_slug!()
 
+    Logger.info(
+      "Prior to run: #{podcast.name} has #{Podcast.subscription_count(podcast)} subscribers. #{Repo.count(Person)} total people."
+    )
+
     import_file
     |> File.read!()
     |> CSV.parse_string()
@@ -28,6 +34,10 @@ defmodule Mix.Tasks.Changelog.Subscriptions do
       |> find_or_insert_person(name)
       |> subscribe_if_not_already(podcast, context)
     end)
+
+    Logger.info(
+      "After run: #{podcast.name} has #{Podcast.subscription_count(podcast)} subscribers. #{Repo.count(Person)} total people."
+    )
   end
 
   defp subscribe_if_not_already(person, podcast, context) do
