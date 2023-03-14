@@ -229,7 +229,7 @@ defmodule ChangelogWeb.PersonController do
   end
 
   defp subscribe_to_newsletter(person, newsletter) do
-    Craisin.Subscriber.subscribe(newsletter.list_id, Person.sans_fake_data(person))
+    Craisin.Subscriber.subscribe(newsletter.id, Person.sans_fake_data(person))
     person |> Email.subscriber_welcome(newsletter) |> Mailer.deliver_later()
   end
 

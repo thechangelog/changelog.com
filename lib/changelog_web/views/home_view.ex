@@ -1,33 +1,50 @@
 defmodule ChangelogWeb.HomeView do
   use ChangelogWeb, :public_view
 
+  alias Changelog.Podcast
   alias ChangelogWeb.{PersonView, PodcastView}
 
+  def podcasts_with_subs(podcasts, user) do
+    podcasts
+    |> Enum.reject(&Podcast.has_newsletter/1)
+    |> Enum.map(fn podcast ->
+      Map.put(podcast, :is_subscribed, PersonView.is_subscribed(user, podcast))
+    end)
+  end
+
+  def podcasts_with_newsletter_subs(podcasts, user) do
+    podcasts
+    |> Enum.filter(&Podcast.has_newsletter/1)
+    |> Enum.map(fn podcast ->
+      Map.put(podcast, :is_subscribed, PersonView.is_subscribed(user, podcast))
+    end)
+  end
+
   def newsletter_link(newsletter, assigns) do
-    list = newsletter.list_id
+    id = newsletter.id
 
     cond do
-      assigns.subscribed == list ->
-        unsubscribe_link(assigns.conn, list)
+      assigns.subscribed == id ->
+        unsubscribe_link(assigns.conn, id)
 
-      assigns.unsubscribed == list ->
-        subscribe_link(assigns.conn, list)
+      assigns.unsubscribed == id ->
+        subscribe_link(assigns.conn, id)
 
       PersonView.is_subscribed(assigns.current_user, newsletter) ->
-        unsubscribe_link(assigns.conn, list)
+        unsubscribe_link(assigns.conn, id)
 
       true ->
-        subscribe_link(assigns.conn, list)
+        subscribe_link(assigns.conn, id)
     end
   end
 
-  def subscribe_link(conn, list) do
-    link("Subscribe", to: Routes.home_path(conn, :subscribe, id: list), method: :post)
+  def subscribe_link(conn, id) do
+    link("Subscribe", to: Routes.home_path(conn, :subscribe, id: id), method: :post)
   end
 
-  def unsubscribe_link(conn, list) do
+  def unsubscribe_link(conn, id) do
     link("Subscribed",
-      to: Routes.home_path(conn, :unsubscribe, id: list),
+      to: Routes.home_path(conn, :unsubscribe, id: id),
       method: :post,
       class: "is-subscribed"
     )

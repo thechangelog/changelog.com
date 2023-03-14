@@ -151,6 +151,8 @@ defmodule Changelog.Podcast do
 
   def has_feed(podcast), do: podcast.slug != "backstage"
 
+  def has_newsletter(podcast), do: podcast.slug == "update"
+
   def is_master(podcast), do: podcast.slug == "master"
 
   def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published())

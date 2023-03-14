@@ -1,8 +1,6 @@
 defmodule ChangelogWeb.NewsItemControllerTest do
   use ChangelogWeb.ConnCase
 
-  import Mock
-
   alias Changelog.{NewsItem, NewsQueue, Post, Subscription}
 
   test "getting the index", %{conn: conn} do
@@ -148,35 +146,30 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   end
 
   @tag :as_inserted_user
-  test "does not create when user is not subscribed to Weekly", %{conn: conn} do
+  test "does not create when user is not subscribed to Software Update", %{conn: conn} do
     count_before = count(NewsItem)
 
-    with_mock(Craisin.Subscriber, is_subscribed: fn _, _ -> false end) do
-      conn =
-        post(conn, Routes.news_item_path(conn, :create),
-          news_item: %{url: "https://ohai.me/x", headline: "dig it?"}
-        )
+    conn =
+      post(conn, Routes.news_item_path(conn, :create),
+        news_item: %{url: "https://ohai.me/x", headline: "dig it?"})
 
-      assert called(Craisin.Subscriber.is_subscribed(:_, :_))
-      assert html_response(conn, 200) =~ ~r/error/
-      assert count(NewsItem) == count_before
-    end
+    assert html_response(conn, 200) =~ ~r/error/
+    assert count(NewsItem) == count_before
   end
 
   @tag :as_inserted_user
   test "creates news item and sets it as submitted", %{conn: conn} do
-    with_mock(Craisin.Subscriber, is_subscribed: fn _, _ -> true end) do
-      conn =
-        post(conn, Routes.news_item_path(conn, :create),
-          news_item: %{url: "https://ohai.me/x", headline: "dig it?"}
-        )
+    update = insert(:podcast, slug: "update")
+    insert(:subscription_on_podcast, podcast: update, person: conn.assigns.current_user)
 
-      assert called(Craisin.Subscriber.is_subscribed(:_, :_))
-      assert redirected_to(conn) == Routes.root_path(conn, :index)
-      assert count(NewsItem.submitted()) == 1
-      assert count(NewsItem.published()) == 0
-      assert count(NewsQueue) == 0
-    end
+    conn =
+      post(conn, Routes.news_item_path(conn, :create),
+        news_item: %{url: "https://ohai.me/x", headline: "dig it?"})
+
+    assert redirected_to(conn) == Routes.root_path(conn, :index)
+    assert count(NewsItem.submitted()) == 1
+    assert count(NewsItem.published()) == 0
+    assert count(NewsQueue) == 0
   end
 
   @tag :as_inserted_user

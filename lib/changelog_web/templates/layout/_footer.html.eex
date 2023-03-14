@@ -50,7 +50,6 @@
         <li><%= link("Sources", to: Routes.news_source_path(@conn, :index), title: "View all sources") %></li>
         <li><%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %></li>
         <li>---</li>
-        <li><%= link("Changelog Weekly", to: Routes.page_path(@conn, :weekly), title: "Changelog Weekly") %></li>
         <li><%= link("Changelog Nightly", to: Routes.page_path(@conn, :nightly), title: "Changelog Nightly") %></li>
         <li>---</li>
         <li><%= link("Fresh", to: Routes.news_item_path(@conn, :fresh), title: "Freshest news") %></li>

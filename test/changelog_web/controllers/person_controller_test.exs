@@ -143,7 +143,7 @@ defmodule ChangelogWeb.PersonControllerTest do
 
         person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
         refute person.public_profile
-        assert called(Craisin.Subscriber.subscribe(Newsletters.weekly().list_id, :_))
+        assert called(Craisin.Subscriber.subscribe(Newsletters.weekly().id, :_))
 
         assert_delivered_email(
           ChangelogWeb.Email.subscriber_welcome(person, Newsletters.weekly())
@@ -169,7 +169,7 @@ defmodule ChangelogWeb.PersonControllerTest do
 
         existing = Repo.one(from p in Person, where: p.email == ^existing.email)
 
-        assert called(Craisin.Subscriber.subscribe(Newsletters.nightly().list_id, :_))
+        assert called(Craisin.Subscriber.subscribe(Newsletters.nightly().id, :_))
 
         assert_delivered_email(
           ChangelogWeb.Email.subscriber_welcome(existing, Newsletters.nightly())

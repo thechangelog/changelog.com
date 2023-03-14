@@ -6,11 +6,11 @@ defmodule ChangelogWeb.HomeController do
   plug(RequireUser, "except from email links" when action not in [:opt_out])
   plug(:scrub_params, "person" when action in [:update])
 
-  def show(conn, %{"subscribed" => newsletter_id}),
-    do: render(conn, :show, subscribed: newsletter_id, unsubscribed: nil)
+  def show(conn, %{"subscribed" => id}),
+    do: render(conn, :show, subscribed: id, unsubscribed: nil)
 
-  def show(conn, %{"unsubscribed" => newsletter_id}),
-    do: render(conn, :show, subscribed: nil, unsubscribed: newsletter_id)
+  def show(conn, %{"unsubscribed" => id}),
+    do: render(conn, :show, subscribed: nil, unsubscribed: id)
 
   def show(conn, _params), do: render(conn, :show, subscribed: nil, unsubscribed: nil)
 
@@ -45,27 +45,36 @@ defmodule ChangelogWeb.HomeController do
     end
   end
 
-  def subscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
-    Craisin.Subscriber.subscribe(newsletter_id, Person.sans_fake_data(me))
+  def subscribe(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
+    if podcast = Repo.get(Podcast, id) do
+      context = "you subscribed in your changelog.com settings"
+      Subscription.subscribe(me, podcast, context)
+    else
+      Craisin.Subscriber.subscribe(id, Person.sans_fake_data(me))
+    end
 
     conn
     |> put_flash(:success, "You're subscribed! You'll get the next issue in your inbox 📥")
-    |> redirect(to: Routes.home_path(conn, :show, subscribed: newsletter_id))
+    |> redirect(to: Routes.home_path(conn, :show, subscribed: id))
   end
 
   def subscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
     podcast = Podcast.get_by_slug!(slug)
-    context = "you toggled on email notifications in your changelog.com settings"
+    context = "you enabled notifications in your changelog.com settings"
     Subscription.subscribe(me, podcast, context)
     send_resp(conn, 200, "")
   end
 
-  def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"id" => newsletter_id}) do
-    Craisin.Subscriber.unsubscribe(newsletter_id, me.email)
+  def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
+    if podcast = Repo.get(Podcast, id) do
+      Subscription.unsubscribe(me, podcast)
+    else
+      Craisin.Subscriber.unsubscribe(id, me.email)
+    end
 
     conn
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
-    |> redirect(to: Routes.home_path(conn, :show, unsubscribed: newsletter_id))
+    |> redirect(to: Routes.home_path(conn, :show, unsubscribed: id))
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do

@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, NewsItemComment, Newsletters, NewsSponsorship, Subscription}
+  alias Changelog.{NewsItem, NewsItemComment, NewsSponsorship, Podcast, Subscription}
   alias ChangelogWeb.{NewsItemView, PersonView}
 
   plug RequireUser, "before submitting" when action in [:create]
@@ -80,7 +80,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     conn
     |> assign(:changeset, changeset)
-    |> assign(:subscribed, weekly_subscriber?(user))
+    |> assign(:subscribed, update_subscriber?(user))
     |> render(:new)
   end
 
@@ -88,7 +88,7 @@ defmodule ChangelogWeb.NewsItemController do
     item = %NewsItem{type: :link, author_id: user.id, submitter_id: user.id, status: :submitted}
     changeset = NewsItem.submission_changeset(item, item_params)
 
-    if weekly_subscriber?(user) do
+    if update_subscriber?(user) do
       case Repo.insert(changeset) do
         {:ok, _item} ->
           conn
@@ -103,7 +103,7 @@ defmodule ChangelogWeb.NewsItemController do
       end
     else
       conn
-      |> put_flash(:error, "You must subscribe to Changelog Weekly 📥")
+      |> put_flash(:error, "You must subscribe to the Software Update newsletter 📥")
       |> assign(:subscribed, false)
       |> assign(:changeset, changeset)
       |> render(:new)
@@ -228,9 +228,10 @@ defmodule ChangelogWeb.NewsItemController do
     NewsItem.is_published(item) && !is_admin?(user)
   end
 
-  defp weekly_subscriber?(nil), do: false
+  defp update_subscriber?(nil), do: false
 
-  defp weekly_subscriber?(user) do
-    PersonView.is_subscribed(user, Newsletters.weekly())
+  defp update_subscriber?(user) do
+    update = Repo.get_by(Podcast, slug: "update")
+    PersonView.is_subscribed(user, update)
   end
 end

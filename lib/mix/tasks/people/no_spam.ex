@@ -28,8 +28,8 @@ defmodule Mix.Tasks.Changelog.NoSpam do
 
     for person <- Repo.all(fakers) do
       IO.puts("Purging #{person.id} #{person.name} (#{person.email})")
-      Subscriber.delete(Newsletters.weekly().list_id, person.email)
-      Subscriber.delete(Newsletters.nightly().list_id, person.email)
+      Subscriber.delete(Newsletters.weekly().id, person.email)
+      Subscriber.delete(Newsletters.nightly().id, person.email)
       Repo.delete!(person)
     end
 

@@ -30,17 +30,22 @@
     </div>
   </div>
 
+  <a id="subscriptions" class="anchor"></a>
   <div class="account_subscriptions">
+  <% podcast_newsletter_subs = podcasts_with_newsletter_subs(@podcasts, @current_user) %>
+  <%= for podcast <- podcast_newsletter_subs do %>
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">
-        <h3>Changelog Weekly</h3>
-        <p>Our editorialized coverage of this week in dev culture, software development, open source, building startups, creative work, and the people involved.</p>
-        <p class="account_subscriptions-item-info-meta">1 email per week — Delivered on Sundays - <%= link "Archive", to: Routes.page_path(@conn, :weekly_archive) %></p>
+        <h3><%= podcast.name %></h3>
+        <p><%= podcast.description %></p>
+        <p class="account_subscriptions-item-info-meta">1 email per week — Delivered on Mondays</p>
       </div>
+
       <div class="account_subscriptions-item-button">
-        <%= newsletter_link(Changelog.Newsletters.weekly(), assigns) %>
+        <%= newsletter_link(podcast, assigns) %>
       </div>
     </div>
+  <% end %>
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">
         <h3>Changelog Nightly</h3>
@@ -53,19 +58,18 @@
     </div>
     <div class="account_subscriptions-item">
       <div class="account_subscriptions-item-info">
-        <a id="podcasts" class="anchor"></a>
         <h3>Podcast emails</h3>
         <p>Get notified as soon as an episode is published. Subscribe to as many as you’d like.</p>
         <p class="account_subscriptions-item-info-meta">Delivered immediately each time a new episode is published</p>
       </div>
-      <% podcasts_with_subs = Enum.map(@podcasts, fn(p) -> Map.put(p, :is_subscribed, PersonView.is_subscribed(@current_user, p)) end) %>
+      <% podcasts_subs = podcasts_with_subs(@podcasts, @current_user) %>
       <div class="account_subscriptions-item-button">
-      <%= if Enum.any?(podcasts_with_subs, fn(p) -> !p.is_subscribed end) do %>
+      <%= if Enum.any?(podcasts_subs, fn(p) -> !p.is_subscribed end) do %>
         <a href="javascript:void(0);" class="js-subscribe-all">Collect 'em all</a>
       <% end %>
       </div>
       <div class="account_subscriptions-list">
-        <%= for podcast <- podcasts_with_subs do %>
+        <%= for podcast <- podcasts_subs do %>
           <div class="account_subscriptions-list-item">
             <img class="account_subscriptions-list-item-icon" src="<%= PodcastView.cover_url(podcast, :medium) %>" width="50" height="50" alt="<%= podcast.name %>">
             <p class="account_subscriptions-list-item-title"><%= podcast.name %></p>
