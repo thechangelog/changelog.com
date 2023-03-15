@@ -13,7 +13,7 @@
       <% else %>
         <%= if String.length(@query) != 0 do %>
           <p class="search-form-footer-results">
-            There are no results for “<%= @query %>”.
+            Sorry, we didn't find anything. 😔
           </p>
         <% end %>
       <% end %>
