@@ -2,7 +2,7 @@ defmodule SecretOrEnv do
   require Logger
 
   def get(secret) do
-    get(secret, "")
+    get(secret, nil)
   end
 
   def get(secret, default_value) do

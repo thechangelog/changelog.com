@@ -138,17 +138,15 @@ mix test
 
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
-1. Update `ElixirVersion` & `ErlangVersion` in `magefiles/image/image.go` to latest [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
+1. Update `ElixirVersion` & `ErlangVersion` in `magefiles/image/runtime.go` to latest [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
 2. While here, also update `NodejsVersion` to [latest-v14.x](https://nodejs.org/download/release/latest-v14.x/)
 3. Commit & push to check that image builds successfully in GitHub Actions
     - _Alternatively_, build the image locally via: `cd magefiles && go run main.go image:runtime`
 
 After you confirm that the image builds successfully:
-1. Update `docker/production.Dockerfile` with new image tag
-2. Update `2021/dagger/prod_image/main.cue` with new image tag
-3. Update `.devcontainer/docker-compose.yml` with new image tag
-4. Ensure that Elixir minor version in `mix.exs` is accurate
-5. Update Elixir, Erlang/OTP & Node.js version in `CONTRIBUTING.md` (this file)
+1. Update `.devcontainer/docker-compose.yml` with new image tag
+2. Ensure that Elixir minor version in `mix.exs` is accurate
+3. Update Elixir, Erlang/OTP & Node.js version in `CONTRIBUTING.md` (this file)
 
 Commit and push everything, then wait for all GitHub Actions checks to go green
 ✅ . At this point, one of the maintainers will review, approve & merge this

@@ -5,11 +5,9 @@ app = "changelog-2022-03-13"
 kill_signal = "SIGTERM"
 kill_timeout = 5
 
-[build]
-image = "thechangelog/changelog.com:master"
-
 [deploy]
 strategy = "bluegreen"
+release_command = "mix ecto.migrate"
 
 [env]
 AWS_ASSETS_BUCKET = "changelog-assets"
@@ -48,3 +46,6 @@ force_https = true
 hard_limit = 2500
 soft_limit = 2000
 type = "connections"
+
+[experimental]
+cmd = ["mix", "phx.server"]

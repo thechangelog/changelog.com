@@ -59,7 +59,7 @@ defmodule Changelog.S3Static do
       key = Path.join(prefix, file.key)
       data = File.read!(file.path)
       headers = object_headers(file.path)
-      ExAws.request(ExAws.S3.put_object(bucket, key, data, headers))
+      ExAws.request!(ExAws.S3.put_object(bucket, key, data, headers))
     end
   end
 
