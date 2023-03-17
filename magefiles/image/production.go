@@ -124,6 +124,7 @@ func (image *Image) UploadStaticAssets() *Image {
 
 	_, err := image.Production().
 		// 🤔 Why do we need to start the app - and therefore require the DB - to upload static assets?
+		// 🚨👇 This leaves behind envs such as DB_HOST, DB_NAME, DB_USER, DB_PASS
 		WithPostgreSQL("changelog_prod").
 		container.
 		// AT busts the cache so that...
