@@ -1,79 +1,11 @@
 defmodule ChangelogWeb.NewsItemController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, NewsItemComment, NewsSponsorship, Podcast, Subscription}
-  alias ChangelogWeb.{NewsItemView, PersonView}
+  alias Changelog.{Episode, NewsItem, NewsItemComment, Podcast, Subscription}
+  alias ChangelogWeb.{EpisodeView, NewsItemView, PersonView}
 
   plug RequireUser, "before submitting" when action in [:create]
   plug RequireUser, "before subscribing" when action in [:subscribe, :unsubscribe]
-
-  def index(conn, params) do
-    {page, unpinned} = NewsItem.get_unpinned_non_feed_news_items(params)
-    unpinned = NewsItem.batch_load_objects(unpinned)
-
-    # Only load pinned items for the first page
-    pinned =
-      if page.page_number == 1 do
-        NewsItem.get_pinned_non_feed_news_items()
-        |> NewsItem.batch_load_objects()
-      else
-        []
-      end
-
-    conn
-    |> assign(:ads, get_ads())
-    |> assign(:pinned, pinned)
-    |> assign(:items, unpinned)
-    |> assign(:page, page)
-    |> render(:index)
-  end
-
-  def fresh(conn, params) do
-    page =
-      NewsItem
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.freshest_first()
-      |> NewsItem.preload_all()
-      |> Repo.paginate(Map.put(params, :page_size, 20))
-
-    items = Enum.map(page.entries, &NewsItem.load_object/1)
-
-    render(conn, :fresh, ads: get_ads(), items: items, page: page)
-  end
-
-  def top_week(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))
-  def top_month(conn, params), do: top(conn, Map.merge(params, %{"filter" => "month"}))
-  def top_all(conn, params), do: top(conn, Map.merge(params, %{"filter" => "all"}))
-
-  def top(conn, params = %{"filter" => filter}) do
-    query =
-      NewsItem
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.sans_object()
-      |> NewsItem.top_clicked_first()
-      |> NewsItem.preload_all()
-
-    query =
-      case filter do
-        "week" -> NewsItem.published_since(query, Timex.shift(Timex.now(), weeks: -1))
-        "month" -> NewsItem.published_since(query, Timex.shift(Timex.now(), months: -1))
-        _else -> query
-      end
-
-    page = Repo.paginate(query, Map.put(params, :page_size, 20))
-    items = Enum.map(page.entries, &NewsItem.load_object/1)
-
-    conn
-    |> assign(:filter, filter)
-    |> assign(:items, items)
-    |> assign(:ads, get_ads())
-    |> assign(:page, page)
-    |> render(:top)
-  end
-
-  def top(conn, params), do: top(conn, Map.merge(params, %{"filter" => "week"}))
 
   def new(conn = %{assigns: %{current_user: user}}, _params) do
     changeset = NewsItem.submission_changeset(%NewsItem{})
@@ -110,7 +42,28 @@ defmodule ChangelogWeb.NewsItemController do
     end
   end
 
+  # if this is a Changelog News episode, render that instead
   def show(conn, %{"id" => slug}) do
+    try do
+      podcast = Podcast.get_by_slug!("news")
+
+      episode =
+        assoc(podcast, :episodes)
+        |> Episode.published()
+        |> Episode.preload_all()
+        |> Repo.get_by!(slug: slug)
+        |> Episode.load_news_item()
+
+      conn
+      |> assign(:podcast, podcast)
+      |> assign(:episode, episode)
+      |> assign(:item, episode.news_item)
+      |> put_view(EpisodeView)
+      |> render(:show)
+    rescue
+      _e -> false
+    end
+
     hashid = slug |> String.split("-") |> List.last()
     item = item_from_hashid(hashid, NewsItem.published())
 
@@ -208,16 +161,6 @@ defmodule ChangelogWeb.NewsItemController do
     conn
     |> put_flash(:success, "No more email notifications from now on 🤐")
     |> redirect(to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
-  end
-
-  defp get_ads do
-    Timex.today()
-    |> NewsSponsorship.week_of()
-    |> NewsSponsorship.preload_all()
-    |> Repo.all()
-    |> Enum.take_random(2)
-    |> Enum.map(&NewsSponsorship.ad_for_index/1)
-    |> Enum.reject(&is_nil/1)
   end
 
   defp item_from_hashid(hashid, query \\ NewsItem) do

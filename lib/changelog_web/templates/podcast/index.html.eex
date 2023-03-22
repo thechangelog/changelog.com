@@ -1,12 +1,23 @@
+<% {changelog, others} = Enum.split(@podcasts, 2) %>
 <div class="page_podcasts">
   <section class="show_list">
     <header class="show_list-header">
-      <h2>Podcasts from Changelog</h2>
-      <p><%= Podcast.master.extended_description %></p>
-      <p class="show_list-header-master_cta"><a href="/master"><strong>Subscribe to the master feed</strong> to get all of our shows (~5 episodes/wk + our master-only Backstage pod)</a></p>
+      <h2>Welcome to The Changelog</h2>
+      <p><%= link("The Changelog", to: "/podcast", title: "The Changelog") %> podcast is the software world's best weekly <%= link("news brief", to: "/news") %> (Mondays), in-depth <%= link("technical interviews", to: "/podcast") %> (Wednesdays) and our <em>coming soon</em> talk show (Fridays) that feels like your favorite conference's hallway track on repeat.</p>
+      <p class="show_list-header-master_cta"><a href="/news"><strong>Subscribe to the Changelog Newsletter</strong> to get a companion email alongside the audio edition.</a></p>
     </header>
     <div class="show_list-shows">
-      <%= render_many(@podcasts ++ [Podcast.master], __MODULE__, "_summary.html", assigns) %>
+      <%= render_many(changelog, __MODULE__, "_summary.html", assigns) %>
+    </div>
+  </section>
+
+  <section class="show_list">
+    <header class="show_list-header">
+      <h2>But wait there's more</h2>
+      <p>Check out our other great shows on web development, open source, building startups, artificial intelligence & the human brain.</p>
+    </header>
+    <div class="show_list-shows">
+      <%= render_many(others, __MODULE__, "_summary.html", assigns) %>
     </div>
   </section>
 </div>

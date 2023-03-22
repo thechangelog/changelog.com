@@ -26,6 +26,12 @@ defmodule ChangelogWeb.PodcastControllerTest do
     assert html_response(conn, 200) =~ p.name
   end
 
+  test "getting a podcast's recommended sub-page", %{conn: conn} do
+    p = insert(:podcast)
+    conn = get(conn, Routes.podcast_path(conn, :recommended, p.slug))
+    assert html_response(conn, 200) =~ p.name
+  end
+
   test "getting a podcast page with a published episode", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:published_episode, podcast: p)

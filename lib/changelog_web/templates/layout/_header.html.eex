@@ -6,11 +6,8 @@
       <nav class="header-nav">
         <div class="header-nav-wrap">
           <ul class="header-nav-primary header-nav-list">
-            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["news_item", "news_ad"]) %>">
-              <%= link("News", to: Routes.root_path(@conn, :index), title: "Changelog News") %>
-            </li>
             <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["podcast"]) %>">
-              <%= link("Podcasts", to: Routes.podcast_path(@conn, :index), title: "Changelog Podcasts") %>
+              <%= link("Podcasts", to: "/", title: "Changelog Podcasts") %>
             </li>
             <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["post"]) %>">
               <%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %>

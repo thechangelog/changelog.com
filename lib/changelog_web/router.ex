@@ -182,21 +182,7 @@ defmodule ChangelogWeb.Router do
     get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
-    get "/", NewsItemController, :index, as: :root
-    get "/news/submit", NewsItemController, :new
-    get "/news/fresh", NewsItemController, :fresh
-    get "/news/top", NewsItemController, :top
-    get "/news/top/week", NewsItemController, :top_week
-    get "/news/top/month", NewsItemController, :top_month
-    get "/news/top/all", NewsItemController, :top_all
-    resources "/news", NewsItemController, only: [:show, :create], as: :news_item
-    get "/news/:id/preview", NewsItemController, :preview, as: :news_item
-    post "/news/:id/visit", NewsItemController, :visit, as: :news_item
-    # we use post now 👆 legacy route for extant <a> tags 👇
-    get "/news/:id/visit", NewsItemController, :visit, as: :news_item
-    get "/news/:id/subscribe", NewsItemController, :subscribe, as: :news_item
-    get "/news/:id/unsubscribe", NewsItemController, :unsubscribe, as: :news_item
-    post "/news/impress", NewsItemController, :impress, as: :news_item
+    get "/", PodcastController, :index, as: :root
 
     resources "/sponsored", NewsAdController, only: [:show], as: :news_sponsored
     post "/sponsored/impress", NewsAdController, :impress, as: :news_sponsored
@@ -271,6 +257,18 @@ defmodule ChangelogWeb.Router do
     for subpage <- ~w(popular recommended upcoming)a do
       get "/:slug/#{subpage}", PodcastController, subpage, as: :podcast
     end
+
+    # must be after podcast subpages and before episode pages
+    get "/news/submit", NewsItemController, :new
+    resources "/news", NewsItemController, only: [:show, :create], as: :news_item
+
+    get "/news/:id/preview", NewsItemController, :preview, as: :news_item
+    post "/news/:id/visit", NewsItemController, :visit, as: :news_item
+    # we use post now 👆 legacy route for extant <a> tags 👇
+    get "/news/:id/visit", NewsItemController, :visit, as: :news_item
+    get "/news/:id/subscribe", NewsItemController, :subscribe, as: :news_item
+    get "/news/:id/unsubscribe", NewsItemController, :unsubscribe, as: :news_item
+    post "/news/impress", NewsItemController, :impress, as: :news_item
 
     get "/:podcast/:slug", EpisodeController, :show, as: :episode
     post "/:podcast/:slug/subscribe", EpisodeController, :subscribe, as: :episode

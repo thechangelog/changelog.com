@@ -3,31 +3,6 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   alias Changelog.{NewsItem, NewsQueue, Post, Subscription}
 
-  test "getting the index", %{conn: conn} do
-    i1 = insert(:news_item)
-    i2 = insert(:published_news_item)
-
-    conn = get(conn, Routes.root_path(conn, :index))
-
-    assert conn.status == 200
-    refute conn.resp_body =~ i1.headline
-    assert conn.resp_body =~ i2.headline
-
-    conn = get(conn, Routes.root_path(conn, :index, page: 2))
-
-    assert conn.status == 200
-  end
-
-  @tag :as_admin
-  test "getting the index as admin", %{conn: conn} do
-    i1 = insert(:published_news_item)
-
-    conn = get(conn, Routes.root_path(conn, :index))
-
-    assert conn.status == 200
-    assert conn.resp_body =~ i1.headline
-  end
-
   test "getting a published news item page via hashid", %{conn: conn} do
     item = insert(:published_news_item, headline: "Hash ID me!")
     conn = get(conn, Routes.news_item_path(conn, :show, NewsItem.hashid(item)))
@@ -59,13 +34,6 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert_raise Ecto.NoResultsError, fn ->
       get(conn, Routes.news_item_path(conn, :show, "bad-news_item"))
     end
-  end
-
-  test "previewing a news item", %{conn: conn} do
-    item = insert(:news_item)
-
-    conn = get(conn, Routes.news_item_path(conn, :preview, item))
-    assert html_response(conn, 200) =~ item.headline
   end
 
   test "posting to the visit endpoint tracks and responds with 204", %{conn: conn} do
