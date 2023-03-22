@@ -146,7 +146,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
   end
 
   @tag :as_inserted_user
-  test "does not create when user is not subscribed to Software Update", %{conn: conn} do
+  test "does not create when user is not subscribed to News", %{conn: conn} do
     count_before = count(NewsItem)
 
     conn =
@@ -159,7 +159,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
 
   @tag :as_inserted_user
   test "creates news item and sets it as submitted", %{conn: conn} do
-    update = insert(:podcast, slug: "update")
+    update = insert(:podcast, slug: "news")
     insert(:subscription_on_podcast, podcast: update, person: conn.assigns.current_user)
 
     conn =

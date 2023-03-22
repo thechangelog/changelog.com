@@ -80,7 +80,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     conn
     |> assign(:changeset, changeset)
-    |> assign(:subscribed, update_subscriber?(user))
+    |> assign(:subscribed, news_subscriber?(user))
     |> render(:new)
   end
 
@@ -88,7 +88,7 @@ defmodule ChangelogWeb.NewsItemController do
     item = %NewsItem{type: :link, author_id: user.id, submitter_id: user.id, status: :submitted}
     changeset = NewsItem.submission_changeset(item, item_params)
 
-    if update_subscriber?(user) do
+    if news_subscriber?(user) do
       case Repo.insert(changeset) do
         {:ok, _item} ->
           conn
@@ -103,7 +103,7 @@ defmodule ChangelogWeb.NewsItemController do
       end
     else
       conn
-      |> put_flash(:error, "You must subscribe to the Software Update newsletter 📥")
+      |> put_flash(:error, "You must subscribe to the Changelog Newsletter 📥")
       |> assign(:subscribed, false)
       |> assign(:changeset, changeset)
       |> render(:new)
@@ -228,10 +228,10 @@ defmodule ChangelogWeb.NewsItemController do
     NewsItem.is_published(item) && !is_admin?(user)
   end
 
-  defp update_subscriber?(nil), do: false
+  defp news_subscriber?(nil), do: false
 
-  defp update_subscriber?(user) do
-    update = Repo.get_by(Podcast, slug: "update")
-    PersonView.is_subscribed(user, update)
+  defp news_subscriber?(user) do
+    news = Repo.get_by(Podcast, slug: "news")
+    PersonView.is_subscribed(user, news)
   end
 end

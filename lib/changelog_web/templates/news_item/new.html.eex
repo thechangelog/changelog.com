@@ -1,5 +1,5 @@
 <div class="page_basic">
-  <h1>Want something featured in <em>Software Update</em>?</h1>
+  <h1>Want something featured in <em>Changelog News</em>?</h1>
 
 <%= if !@current_user do %>
   <div class="flash flash--inline flash--error">
@@ -9,7 +9,7 @@
 
 <%= if @current_user && !@subscribed do %>
   <div class="flash flash--inline flash--error">
-    <div class="flash-message"><p>Only <%= link("Software Update", to: Routes.podcast_path(@conn, :show, "update")) %> subscribers can submit news. We require this to prevent drive-by submissions & spammers.</p></div>
+    <div class="flash-message"><p>Only <%= link("Changelog News", to: Routes.podcast_path(@conn, :show, "update")) %> subscribers can submit news. We require this to prevent drive-by submissions & spammers.</p></div>
   </div>
 <% end %>
 
