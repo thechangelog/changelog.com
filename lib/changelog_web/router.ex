@@ -116,6 +116,7 @@ defmodule ChangelogWeb.Router do
 
     resources "/sponsors", SponsorController
     resources "/mailers", MailerPreviewController, only: [:index, :show]
+    get "/mailers/:id/send", MailerPreviewController, :send, as: :mailer_preview
   end
 
   scope "/api", ChangelogWeb, as: :api do

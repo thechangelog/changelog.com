@@ -29,6 +29,8 @@ defmodule Changelog.EpisodeRequest do
   def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
   def failed(query \\ __MODULE__), do: from(q in query, where: q.status == ^:failed)
 
+  def with_decline_message(query \\ __MODULE__), do: from(q in query, where: q.decline_message != "")
+
   def with_episode(query \\ __MODULE__) do
     from(q in query, join: e in Episode, on: q.id == e.request_id)
   end
