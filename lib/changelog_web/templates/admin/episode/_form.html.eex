@@ -518,6 +518,25 @@
     </div>
   </div>
 
+<%= if Podcast.is_news(@podcast) do %>
+
+  <div class="field <%= AdminHelpers.error_class(f, :email_subject) %>">
+    <%= label(:f, :email_subject) %>
+    <%= text_input(f, :email_subject) %>
+  </div>
+
+  <div class="field <%= AdminHelpers.error_class(f, :email_teaser) %>">
+    <%= label(:f, :email_teaser) %>
+    <%= text_input(f, :email_teaser) %>
+  </div>
+
+  <div class="field <%= AdminHelpers.error_class(f, :email_content) %>">
+    <%= label(f, :email_content) %>
+    <%= textarea(f, :email_content, placeholder: "Markdown enabled.", rows: 5) %>
+    <%= AdminHelpers.error_message(f, :email_content) %>
+  </div>
+<% end %>
+
   <div class="ui hidden divider"></div>
 
   <div class="ui equal width stackable grid">

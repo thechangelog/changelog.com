@@ -62,6 +62,12 @@ defmodule Changelog.Episode do
     field :import_count, :float
     field :reach_count, :integer
 
+    field :email_subject, :string
+    field :email_teaser, :string
+    field :email_content, :string
+    field :email_sends, :integer
+    field :email_opens, :integer
+
     field :transcript, {:array, :map}
     # has_transcript is only used to know whether or not the episode has a
     # transcript even though we're not `select`ing it to reduce query load times
@@ -194,7 +200,7 @@ defmodule Changelog.Episode do
     struct
     |> cast(attrs, ~w(slug title subtitle published featured request_id highlight
       subhighlight summary notes doc_url socialize_url published_at recorded_at
-      recorded_live youtube_id guid type)a)
+      email_subject email_teaser email_content recorded_live youtube_id guid type)a)
     |> prep_audio_file(attrs)
     |> prep_plusplus_file(attrs)
     |> cast_attachments(attrs, [:audio_file, :plusplus_file])
@@ -205,6 +211,7 @@ defmodule Changelog.Episode do
     |> validate_format(:doc_url, Regexp.http(), message: Regexp.http_message())
     |> validate_format(:socialize_url, Regexp.http(), message: Regexp.http_message())
     |> validate_published_has_published_at()
+    |> validate_all_email_fields_together()
     |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)
     |> cast_assoc(:episode_guests)
@@ -483,6 +490,18 @@ defmodule Changelog.Episode do
 
     if published && is_nil(published_at) do
       add_error(changeset, :published_at, "can't be blank when published")
+    else
+      changeset
+    end
+  end
+
+  defp validate_all_email_fields_together(changeset) do
+    content = get_field(changeset, :email_content)
+    subject = get_field(changeset, :email_subject)
+    teaser = get_field(changeset, :email_teaser)
+
+    if content && (is_nil(subject) || is_nil(teaser)) do
+      add_error(changeset, :email_content, "other email fields must be filled")
     else
       changeset
     end

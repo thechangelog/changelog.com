@@ -151,7 +151,7 @@ defmodule Changelog.Podcast do
 
   def has_feed(podcast), do: podcast.slug != "backstage"
 
-  def has_newsletter(podcast), do: podcast.slug == "news"
+  def is_news(podcast), do: podcast.slug == "news"
 
   def is_master(podcast), do: podcast.slug == "master"
 

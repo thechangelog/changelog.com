@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.EpisodeView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Episode, EpisodeStat, Person, Sponsor, StringKit, Topic}
+  alias Changelog.{Episode, EpisodeStat, Person, Podcast, Sponsor, StringKit, Topic}
   alias ChangelogWeb.{EpisodeView, PersonView, TimeView}
   alias ChangelogWeb.Admin.{EpisodeRequestView, PodcastView}
 

@@ -6,7 +6,7 @@ defmodule ChangelogWeb.HomeView do
 
   def podcasts_with_subs(podcasts, user) do
     podcasts
-    |> Enum.reject(&Podcast.has_newsletter/1)
+    |> Enum.reject(&Podcast.is_news/1)
     |> Enum.map(fn podcast ->
       Map.put(podcast, :is_subscribed, PersonView.is_subscribed(user, podcast))
     end)
@@ -14,7 +14,7 @@ defmodule ChangelogWeb.HomeView do
 
   def podcasts_with_newsletter_subs(podcasts, user) do
     podcasts
-    |> Enum.filter(&Podcast.has_newsletter/1)
+    |> Enum.filter(&Podcast.is_news/1)
     |> Enum.map(fn podcast ->
       Map.put(podcast, :is_subscribed, PersonView.is_subscribed(user, podcast))
     end)
