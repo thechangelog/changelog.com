@@ -124,17 +124,6 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.episode_published(known_subscription(person), known_episode())
   end
 
-  def episode_request_published_email(_person) do
-    request =
-      EpisodeRequest
-      |> EpisodeRequest.limit(1)
-      |> EpisodeRequest.with_episode()
-      |> EpisodeRequest.preload_all()
-      |> Repo.one()
-
-    Email.episode_request_published(request)
-  end
-
   def news_published_email(person) do
     episode =
       Episode.with_podcast_slug("news")
@@ -144,7 +133,18 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
       |> Episode.preload_all()
       |> Repo.one()
 
-    Email.news_published(known_subscription(person), episode)
+    Email.episode_published(known_subscription(person), episode)
+  end
+
+  def episode_request_published_email(_person) do
+    request =
+      EpisodeRequest
+      |> EpisodeRequest.limit(1)
+      |> EpisodeRequest.with_episode()
+      |> EpisodeRequest.preload_all()
+      |> Repo.one()
+
+    Email.episode_request_published(request)
   end
 
   def episode_request_declined_email(_person) do

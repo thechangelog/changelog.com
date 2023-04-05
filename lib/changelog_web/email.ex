@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Email do
   use Bamboo.Phoenix, view: ChangelogWeb.EmailView
 
-  alias Changelog.{EpisodeGuest, EpisodeRequest, NewsItem}
+  alias Changelog.{EpisodeGuest, EpisodeRequest, NewsItem, Podcast}
   alias ChangelogWeb.EpisodeView
 
   # Comment related emails
@@ -97,25 +97,21 @@ defmodule ChangelogWeb.Email do
 
   # Podcast related emails
   def episode_published(subscription, episode) do
-    # Fetch related podcasts
-    related_podcasts =
-      case NewsItem.recommend_podcasts(episode, 3) do
-        {:ok, results} ->
-          results
+    {email, subject, template} = if Podcast.is_news(episode.podcast) do
+      {email_from_news(), episode.email_subject, :news_published}
+    else
+      subject = EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode)
+      {styled_email(), subject, :episode_published}
+    end
 
-        _ ->
-          []
-      end
-
-    styled_email()
+    email
     |> put_header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug}")
     |> to(subscription.person)
-    |> subject(EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode))
+    |> subject(subject)
     |> assign(:subscription, subscription)
     |> assign(:person, subscription.person)
     |> assign(:episode, episode)
-    |> assign(:recommendations, related_podcasts)
-    |> render(:episode_published)
+    |> render(template)
   end
 
   def episode_request_published(request) do
@@ -210,6 +206,14 @@ defmodule ChangelogWeb.Email do
     new_email()
     |> from({"Logbot", "logbot@changelog.com"})
     |> put_header("Reply-To", "editors@changelog.com")
+    |> put_header("X-Cmail-TrackClicks", "false")
+  end
+
+  defp email_from_news do
+    new_email()
+    |> from({"Changelog News", "news@changelog.com"})
+    |> put_header("Reply-To", "editors@changelog.com")
+    |> put_header("X-Cmail-TrackClicks", "false")
   end
 
   defp styled_email do
