@@ -183,6 +183,8 @@ defmodule Changelog.Episode do
   def is_published(episode), do: episode.published
 
   def is_publishable(episode) do
+    episode = preload_podcast(episode)
+
     validated =
       episode
       |> change(%{})
@@ -190,6 +192,12 @@ defmodule Changelog.Episode do
       |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
       |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
       |> cast_assoc(:episode_hosts)
+
+    validated = if Podcast.is_news(episode.podcast) do
+      validate_required(validated, [:email_subject, :email_teaser, :email_content])
+    else
+      validated
+    end
 
     validated.valid? && !is_published(episode)
   end
