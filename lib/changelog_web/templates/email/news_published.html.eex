@@ -43,9 +43,11 @@
                         <tr>
                           <td class="footer" align="center">
                             <img class="spacer-20" src="<%= Routes.static_url(Endpoint, "/images/email/spacer_1.gif") %>">
+                          <%= if @person do %>
                             <p><%= link("Unsubscribe", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;<%= link("View in Browser", to: Routes.episode_path(Endpoint, :email, @episode.podcast.slug, @episode.slug)) %></p>
                           <%= if String.length(@subscription.context) > 0 do %>
                             <p>(Context: <%= @subscription.context %>)</p>
+                          <% end %>
                           <% end %>
                             <p class="last-of-type">Copyright Changelog Media LLC</p>
                             <img class="spacer-20" src="<%= Routes.static_url(Endpoint, "/images/email/spacer_1.gif") %>">

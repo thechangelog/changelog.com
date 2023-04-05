@@ -3,7 +3,7 @@ defmodule ChangelogWeb.EpisodeController do
 
   alias Changelog.{Episode, NewsItem, Podcast, Subscription}
   alias ChangelogWeb.Plug.ResponseCache
-  alias ChangelogWeb.{LiveView, TimeView}
+  alias ChangelogWeb.{Email, LiveView, TimeView}
 
   plug ResponseCache
   plug :assign_podcast
@@ -150,6 +150,20 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> assign(:chapters, chapters)
     |> render("chapters.json")
+  end
+
+  def email(conn, params = %{"slug" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published()
+      |> Episode.preload_all()
+      |> Repo.get_by!(slug: slug)
+
+    email = Email.episode_published(%{person: nil, context: ""}, episode)
+
+    conn
+    |> assign(:email, email)
+    |> render(:email, layout: false)
   end
 
   def live(conn, %{"slug" => slug}, podcast) do

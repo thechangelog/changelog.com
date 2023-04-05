@@ -33,12 +33,16 @@
     </ul>
   <% end %>
 
+  <%= if @person do %>
     <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>
+  <% end %>
 
     <p>💚, Logbot</p>
 
+  <%= if @person do %>
   <%= if String.length(@subscription.context) > 0 do %>
     <p class="footnote">(Context: <%= @subscription.context %>)</p>
+  <% end %>
   <% end %>
   </td>
 </tr>

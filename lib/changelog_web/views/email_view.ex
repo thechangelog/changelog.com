@@ -12,6 +12,8 @@ defmodule ChangelogWeb.EmailView do
     PersonView
   }
 
+  def greeting(nil), do: "Hey there,"
+
   def greeting(person) do
     label =
       if Faker.name_fake?(person.name) do

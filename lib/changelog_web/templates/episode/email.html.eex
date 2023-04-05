@@ -1,0 +1,1 @@
+<%= raw(@email.html_body) %>
