@@ -531,7 +531,14 @@
   </div>
 
   <div class="field <%= AdminHelpers.error_class(f, :email_content) %>">
-    <%= label(f, :email_content) %>
+    <label for="email_content">
+      Email content
+    <%= if f.data.published do %>
+      <a href="<%= Routes.episode_path(@conn, :email, @podcast.slug, @episode.slug) %>" class="field-action" rel="external">(view)</a>
+    <% else %>
+      <a href="<%= Routes.admin_mailer_preview_path(@conn, :show, :news_published) %>" class="field-action" rel="external">(preview)</a>
+    <% end %>
+    </label>
     <%= textarea(f, :email_content, placeholder: "Markdown enabled.", rows: 5) %>
     <%= AdminHelpers.error_message(f, :email_content) %>
   </div>
