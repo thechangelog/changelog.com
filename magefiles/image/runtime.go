@@ -12,7 +12,7 @@ const (
 	UbuntuVersionLong  = "22.04 LTS (Jammy Jellyfish)"
 
 	// https://nodejs.org/en/download/releases/
-	NodejsVersion = "14.21.1"
+	NodejsVersion = "18.15.0"
 
 	RepositoryURL = "https://github.com/thechangelog/changelog.com"
 )

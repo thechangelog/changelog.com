@@ -82,7 +82,7 @@ You will need to have the following dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v14
 - [Elixir](https://elixir-lang.org/install.html) v1.14
 - [Erlang/OTP](https://www.erlang.org/downloads) v25 - usually installed as an Elixir dependency
-- [Node.js](https://nodejs.org/en/download/) v14 LTS - [latest-v14.x](https://nodejs.org/download/release/latest-v14.x/)
+- [Node.js](https://nodejs.org/en/download/) v18 LTS - [latest-v18.x](https://nodejs.org/download/release/latest-v18.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
 
 This is what that looks like on macOS 12, our usual development environment:
@@ -97,7 +97,7 @@ brew install postgresql@14 elixir node@14 yarn imagemagick
 # - PostgreSQL v14.6
 # - Elixir v1.14.2
 # - Erlang v25.1.1
-# - Node v14.21.1
+# - Node.js v18.15.0
 # - Yarn v1.22.19
 # - ImageMagick v7.1
 # 👆 installed on an iMac Pro (2017) running macOS 12.6.1 in ~2mins on Nov. 13, 2022 by @gerhard
@@ -123,7 +123,7 @@ mix ecto.setup
 # 🌈 CONFIGURE STATIC ASSETS 🌈
 cd assets
 # Add correct Node.js to PATH
-export PATH="$(brew --prefix)/opt/node@14/bin:$PATH"
+export PATH="$(brew --prefix)/opt/node@18/bin:$PATH"
 # Install dependencies requires for static assets
 yarn install
 cd ..
@@ -139,7 +139,7 @@ mix test
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
 1. Update `ElixirVersion` & `ErlangVersion` in `magefiles/image/runtime.go` to latest [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
-2. While here, also update `NodejsVersion` to [latest-v14.x](https://nodejs.org/download/release/latest-v14.x/)
+2. While here, also update `NodejsVersion` to [latest-v18.x](https://nodejs.org/download/release/latest-v18.x/)
 3. Commit & push to check that image builds successfully in GitHub Actions
     - _Alternatively_, build the image locally via: `cd magefiles && go run main.go image:runtime`
 
