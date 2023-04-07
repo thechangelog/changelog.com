@@ -24,7 +24,10 @@ func (image *Image) Production() *Image {
 		OK()
 
 	if os.Getenv("DEBUG") != "" {
-		productionImage.container.Export(image.ctx, "tmp/app.test.prod.tar")
+		_, err := productionImage.container.Export(image.ctx, "tmp/app.test.prod.tar")
+		if err != nil {
+			sysexit.Create(err)
+		}
 	}
 
 	return productionImage
@@ -77,7 +80,10 @@ func (image *Image) ProductionClean() *Image {
 	image = image.OK()
 
 	if os.Getenv("DEBUG") != "" {
-		image.container.Export(image.ctx, "tmp/app.prod.tar")
+		_, err := image.container.Export(image.ctx, "tmp/app.prod.tar")
+		if err != nil {
+			sysexit.Create(err)
+		}
 	}
 
 	return image
