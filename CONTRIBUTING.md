@@ -95,8 +95,8 @@ brew install postgresql@14 elixir node@14 yarn imagemagick
 
 #👇 installed on an iMac Pro (2017) running macOS 12.6.1 in ~2mins on Nov. 13, 2022 by @gerhard
 # - PostgreSQL v14.6
-# - Elixir v1.14.2
-# - Erlang v25.1.1
+# - Elixir v1.14.4
+# - Erlang v25.3
 # - Node.js v18.15.0
 # - Yarn v1.22.19
 # - ImageMagick v7.1
