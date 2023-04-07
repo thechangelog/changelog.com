@@ -30,7 +30,7 @@ defmodule ChangelogWeb.FeedView do
 
   def discussion_link(url) when is_binary(url) do
     content_tag(:p) do
-      content_tag(:a, "Discuss on Changelog News", href: url)
+      content_tag(:a, "Leave us a comment", href: url)
     end
     |> safe_to_string()
   end
