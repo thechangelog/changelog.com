@@ -8,7 +8,7 @@ import (
 
 const (
 	// https://hub.docker.com/r/flyio/flyctl/tags
-	flyctlVersion = "0.0.492"
+	flyctlVersion = "0.0.509"
 )
 
 func (image *Image) Deploy() *Image {
