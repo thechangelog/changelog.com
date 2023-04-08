@@ -103,6 +103,30 @@ config :sentry,
   environment_name: Mix.env(),
   filter: Changelog.Sentry.EventFilter
 
+config :opentelemetry,
+  resource: [
+    service: [
+      name: "changelog",
+      namespace: "#{config_env()}",
+    ],
+    user: [
+      name: System.get_env("USER"),
+    ],
+  ],
+  span_processor: :batch,
+  traces_exporter: :none
+
+if System.get_env("HONEYCOMB_API_KEY") do
+  config :opentelemetry, traces_exporter: :otlp
+  config :opentelemetry_exporter,
+    otlp_protocol: :http_protobuf,
+    otlp_endpoint: "https://api.honeycomb.io:443",
+    otlp_headers: [
+      {"x-honeycomb-team", SecretOrEnv.get("HONEYCOMB_API_KEY")},
+      {"x-honeycomb-dataset", "changelog_opentelemetry"}
+    ]
+end
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
