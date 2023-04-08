@@ -39,7 +39,7 @@ func (image *Image) Deploy() *Image {
 			"--image", image.ProductionImageRef(),
 		})
 
-	return image
+	return image.OK()
 }
 
 func (image *Image) flyctl() *Image {

@@ -43,9 +43,7 @@ func (image *Image) Pipeline(name string) *Image {
 
 func (image *Image) OK() *Image {
 	_, err := image.container.ExitCode(image.ctx)
-	if err != nil {
-		panic(sysexit.Unavailable(err))
-	}
+	mustCreate(err)
 
 	return image
 }
@@ -81,9 +79,7 @@ func (image *Image) Publish(reference string) *Image {
 	_, err := image.
 		WithRegistryAuth().
 		container.Publish(image.ctx, reference)
-	if err != nil {
-		panic(sysexit.Create(err))
-	}
+	mustCreate(err)
 
 	return image
 }
@@ -97,4 +93,10 @@ func (image *Image) WithRegistryAuth() *Image {
 		)
 
 	return image
+}
+
+func mustCreate(err error) {
+	if err != nil {
+		panic(sysexit.Create(err))
+	}
 }
