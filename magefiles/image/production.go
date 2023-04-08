@@ -8,7 +8,6 @@ import (
 	"dagger.io/dagger"
 	"github.com/magefile/mage/sh"
 	"github.com/thechangelog/changelog.com/magefiles/env"
-	"github.com/thechangelog/changelog.com/magefiles/sysexit"
 )
 
 func (image *Image) Production() *Image {
@@ -24,7 +23,8 @@ func (image *Image) Production() *Image {
 		OK()
 
 	if os.Getenv("DEBUG") != "" {
-		productionImage.container.Export(image.ctx, "tmp/app.test.prod.tar")
+		_, err := productionImage.container.Export(image.ctx, "tmp/app.test.prod.tar")
+		mustCreate(err)
 	}
 
 	return productionImage
@@ -77,7 +77,8 @@ func (image *Image) ProductionClean() *Image {
 	image = image.OK()
 
 	if os.Getenv("DEBUG") != "" {
-		image.container.Export(image.ctx, "tmp/app.prod.tar")
+		_, err := image.container.Export(image.ctx, "tmp/app.prod.tar")
+		mustCreate(err)
 	}
 
 	return image
@@ -143,9 +144,7 @@ func (image *Image) UploadStaticAssets() *Image {
 		}).
 		ExitCode(image.ctx)
 
-	if err != nil {
-		panic(sysexit.Create(err))
-	}
+	mustCreate(err)
 
 	return image
 }

@@ -31,9 +31,7 @@ func (Image) Runtime(ctx context.Context) {
 	defer sysexit.Handle()
 
 	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	if err != nil {
-		panic(sysexit.Unavailable(err))
-	}
+	mustBeAvailable(err)
 	defer dag.Close()
 
 	image.New(ctx, dag).Pipeline("runtime").
@@ -46,9 +44,7 @@ func (Image) Production(ctx context.Context) {
 	defer sysexit.Handle()
 
 	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	if err != nil {
-		panic(sysexit.Unavailable(err))
-	}
+	mustBeAvailable(err)
 	defer dag.Close()
 
 	image.New(ctx, dag).Pipeline("prod").
@@ -60,22 +56,11 @@ func (Image) Production(ctx context.Context) {
 func Test(ctx context.Context) {
 	defer sysexit.Handle()
 	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	if err != nil {
-		panic(sysexit.Unavailable(err))
-	}
+	mustBeAvailable(err)
 	defer dag.Close()
 
-	testImage := image.New(ctx, dag).Pipeline("test")
-
-	_, err = testImage.TestContainer().
-		WithExec([]string{
-			"mix", "test",
-		}).
-		ExitCode(ctx)
-
-	if err != nil {
-		panic(sysexit.Data(err))
-	}
+	image.New(ctx, dag).Pipeline("test").
+		Test()
 }
 
 type Fly mg.Namespace
@@ -85,12 +70,15 @@ func (Fly) Deploy(ctx context.Context) {
 	defer sysexit.Handle()
 
 	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	if err != nil {
-		panic(sysexit.Unavailable(err))
-	}
+	mustBeAvailable(err)
 	defer dag.Close()
 
 	image.New(ctx, dag).Pipeline("deploy").
-		Deploy().
-		OK()
+		Deploy()
+}
+
+func mustBeAvailable(err error) {
+	if err != nil {
+		panic(sysexit.Unavailable(err))
+	}
 }

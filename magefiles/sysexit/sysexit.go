@@ -22,22 +22,10 @@ func Handle() {
 
 // https://man.openbsd.org/sysexits
 // TODO: https://pkg.go.dev/github.com/sean-/sysexits
-func Read(err error) SysExit {
-	return SysExit{Code: 65, Error: err}
-}
-
-func Data(err error) SysExit {
-	return SysExit{Code: 65, Error: err}
-}
-
 func Unavailable(err error) SysExit {
 	return SysExit{Code: 69, Error: err}
 }
 
 func Create(err error) SysExit {
 	return SysExit{Code: 73, Error: err}
-}
-
-func Misconfigure(err error) SysExit {
-	return SysExit{Code: 78, Error: err}
 }

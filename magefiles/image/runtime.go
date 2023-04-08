@@ -5,14 +5,16 @@ import (
 )
 
 const (
+	// https://github.com/elixir-lang/elixir/releases
+	ElixirVersion = "1.14.4"
+	// https://github.com/erlang/otp/releases
+	ErlangVersion = "25.3"
 	// https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy
-	ElixirVersion      = "1.14.2"
-	ErlangVersion      = "25.1"
-	UbuntuVersionShort = "jammy-20220428"
+	UbuntuVersionShort = "jammy-20230126"
 	UbuntuVersionLong  = "22.04 LTS (Jammy Jellyfish)"
 
 	// https://nodejs.org/en/download/releases/
-	NodejsVersion = "14.21.1"
+	NodejsVersion = "18.15.0"
 
 	RepositoryURL = "https://github.com/thechangelog/changelog.com"
 )
