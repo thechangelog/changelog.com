@@ -75,7 +75,14 @@ defmodule Changelog.Mixfile do
       {:shopify, "~> 0.4"},
       {:id3vx, "~> 0.0.1-rc6"},
       {:credo, "~> 1.6.4", only: [:dev, :test], runtime: false},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:opentelemetry_exporter, "~> 1.0"},
+      {:opentelemetry, "~> 1.0"},
+      {:opentelemetry_api, "~> 1.0"},
+      {:opentelemetry_cowboy, "~> 0.2.0"},
+      {:opentelemetry_ecto, "~> 1.0"},
+      {:opentelemetry_oban, "~> 1.0"},
+      {:opentelemetry_phoenix, "~> 1.0"}
     ]
   end
 

@@ -3,8 +3,10 @@
 This diagram shows the current changelog.com setup:
 
 ```mermaid
+%% https://fontawesome.com/search
 graph TD
     classDef link stroke:#59b287,stroke-width:3px;
+    
     %% Code & assets
     subgraph GitHub
         repo{{ fab:fa-github thechangelog/changelog.com }}:::link
@@ -25,14 +27,13 @@ graph TD
         repo -.-> |.github/workflows/ship_it.yml| cicd
         cicd --> |magefiles/magefiles.go| automation
         
-        cicd ----> |success #dev| chat
-        
+        cicd --> |success #dev| chat
     end
     
     repo -.- |2022.fly| app
     
-    registry ---> |ghcr.io/changelog/changelog-prod| app
-    container ---> |flyctl deploy| app
+    registry --> |ghcr.io/changelog/changelog-prod| app
+    container --> |flyctl deploy| app
         
     repo -.- |2022.fly/docker| container
 
@@ -40,7 +41,7 @@ graph TD
     subgraph Fly.io
     
         proxy{fa:fa-globe Proxy}
-        proxy ====> |https| app
+        proxy ==> |https| app
 
 
         container([ fab:fa-docker Docker Engine 2022-03-13 ]):::link
@@ -58,7 +59,7 @@ graph TD
         app <==> |pgsql| dbw
         dbw -.-> |replication| dbr1
 
-        automation ---> |wireguard| container
+        automation --> |wireguard| container
         container --> |ghcr.io/changelog/changelog-runtime| registry
         container --> |ghcr.io/changelog/changelog-prod| registry
 
@@ -66,20 +67,25 @@ graph TD
         metrics[ fa:fa-columns Grafana fly-metrics.net ]:::link
         click metrics "https://fly-metrics.net"
         metrics --- |promql| metricsdb
-        metricsdb -..- |metrics| app
-        metricsdb -..- |metrics| dbw
-        metricsdb -..- |metrics| container
+        metricsdb -.- |metrics| app
+        metricsdb -.- |metrics| dbw
+        metricsdb -.- |metrics| container
     end
 
+    %% Secrets
     secrets(( fa:fa-key 1Password )):::link
     click secrets "https://changelog.1password.com/"
     secrets -.-> |secrets| app
     secrets -.-> |secrets| cicd
-        
+
+    %% Search
+    search(( fa:fa-magnifying-glass Typesense )):::link
+    app -.-> |search| search
+
     %% Exceptions
     exceptions(( fa:fa-car-crash Sentry )):::link
     click exceptions "https://sentry.io/organizations/changelog-media/issues/?project=5668962"
-    app -..-> |exceptions| exceptions
+    app -...-> |exceptions| exceptions
 
     %% CDN - https://manage.fastly.com/configure/services/7gKbcKSKGDyqU7IuDr43eG
     subgraph Fastly
@@ -90,9 +96,13 @@ graph TD
             cdn[ cdn.changelog.com ]
         end
     end
+
+    %% Observability
     observability(( fa:fa-bug Honeycomb )):::link
     click observability "https://ui.honeycomb.io/changelog/boards"
     apex -.-> |logs| observability
+    app -..-> |traces| observability
+    
     apex ==> |https| proxy
     subgraph AWS.S3
         subgraph us-east-1
@@ -104,11 +114,13 @@ graph TD
     %% Monitoring
     monitoring(( fa:fa-table-tennis Pingdom )):::link
     click monitoring "https://my.pingdom.com/app/newchecks/checks"
-    monitoring -.-> |monitors| apex
+    monitoring -...-> |monitors| apex
     monitoring -.-> |monitors| cdn
     monitoring -.-> |monitors| app
 ```
 
+> **Note**
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWG1v2zYQ_iuEig4tEEl-SWLHXTcEdZsWabds7jZgcTFQFC1zlkiVpGq7cf77jqSsF0dO0fmDbUn38tw9d8ez7zwiYupNvKdP0VLrXE3CcCG4xmuqREYDIrJQUSzJcs4TifMl-jidcwQvkmKlpnSBUsZXSGkpVnTy5OwiGoxHJ-7SX7NYLyfDfPPC6bh3cPUKnKIfEFigWrm7qoicgyum3xaRu2lekubi7g4tcDRZYD9hellESC8pWWKe0FQkYfXNwEX395PJxICqTZCUkZU1hObePkxnyUZ43Nrcm_OGHUbi2xCgGCSESZJSn4DuqgSNLolmgiMfzZYsR-80ms8_HUFjbH0vmhBb-ypcC7lapGKtQgWO_mE62Gapwbr3UX_DhRYZNmq383mVRZGCWTTFSUIluhJoNr1G4TGotYnvBhylIgozrDSV8JHQBUupqr8FiWhnWNKEQfFsnz07IDxZEhkwgZ4_P8qu0-yGKGSi2jhzTFYAQx0wvMS69q1SEEIz-37UsVFpOK3jt9qONugf9gUCf9Ubzi7Hf74eHEYNlekH_k9oFzjQ3QzvbNW06xH5Rq07t7sGdV21UeurghCqFHoS0y87G5KTojxutu4eKNoNeoNBsEi34CLP2yIlD9ZuSVvYUR9-LkXcUCdm7DAO9Wg1wTbRKYppnoqml8fAhLEgKyp3ta19lmHm3GA8g86sply6NcBirJaRwDKugR3MozdWsBmieQH4zfbOTYIEipyiG3Pn_kACvXwJsVifZQytatvDfHa7LzkXAZq6j9c8gcfIxOf3hn5_iD4dLcMqfXUtljGCX1WmxnemzsFUc1wcjIw8r3sgXwrK2cZfSJxRU5XoMs9RzWKNzTAQQP10tYrS25QawwhqM508OR2PL84vXjyYNCDQDb_L4fEI4mhtU2ozijWOsAKChNKJpLPf3qP3FMeQqcrU4HhewdQRSLmzp2pEg8cQyf6jkH6HQmcEtzE1i8Xk5kdbTnmiPsMsAGStiMsJIp0h0_M767ZlpB7ltsvWDPq1gPJv9cyD-vx2M8uCa5bRXdX__8uKGwm1idpIRrVkRMVRlUTQktpPTX9A68HzJS2UzdmBTqUg0iLjCl1JvMAcI-DSL0UCTjU6dvyVMu0qaGo2Wd8L-z7MJQgnM0xV4DvicROsvDyYc8eEWswfEzrg007yahjOKJH16uUubM-bRK3oFvVvYDmDdo8Pu9nlpFTpPPf6ealqz759cvYarkjLq0a8R567A6-B2-2iTsN8r1DDwcfZYst4AgMZEKCP25wqyqHNDkIwnbR3Y0zs0H7Frfy83hCa212rzF51XfkjWPpEwvEBoLg58DoTVSs2cqWsgmkC2EswZ1-xW-vqRshozHDIlCrgSP8Z6uhfSvTLs_NzGJvVlHFxBDaS2s-u4bMR0avpL43TL4MGSGiwgM0MJprhCcplwZJCUkAnvzDYBsJRch2R69n11XT7-Y_Ru2IqT4f06vB4tCaaY4publF7JT-6WIJsZwmVm_fDMVq5vYRju5C8PW5JzG_NW3Dgvpaq9pl2O_wamaBxxFKmy1hE81ZFelQk6K3gdAt2o27GW4qN6AoWLPea7fln9w9VswpJceUJD4FO8RBcybyR0RIDV51SDXvNNcQuJgcsXv41C2bDjjwXyqfAsN9vZ9r9cqu2FrxWjZXAPQzUMMAZ_io4PH2ch5K79rJU_jasOPogONNCQn-7W1l1XbEDpyr8ItOUc6bQDTyJwWsnSbVyg6FsG-ROyW3teR5yurY_8Exvmo89SQ39fQeWt-xMo5sOsbYQxPtNGTscvRMvozLDLIaf6XdGZ-7BWZfRuTeBrzGWK4PqHuTM6T7bcuJNtCzoiVfksGnQKcPAZeZBhlIFd3PM_xaide1N7ryNNzk_C_oXg-FwMD4fDYej8fDE23qTwSgYj8_Gp2e9s9Pexeh0PLo_8b5aC_2g1-ufD4aD0WB8cTbugwIMLgD_wf2rYP9cuP8Pn5FEew)
 
 Let's dig into how all the above pieces fit together.
 
@@ -202,9 +214,16 @@ All logs from Fastly are streamed into Honeycomb.io. This allows us to ask
 unknown questions about how various HTTP clients interact with our content. It
 also helps us explore how Fastly interacts with Fly.io.
 
-All app errors - e.g. `Plug.Conn.InvalidQueryError` - show up in Sentry.io.
+We also send app traces via OpenTelemetry to Honeycomb.io.
+
+App errors - e.g. `Plug.Conn.InvalidQueryError` - show up in Sentry.io.
 
 Pingdom.com monitors our public HTTPS endpoints & alerts us when they become unhealthy.
+
+
+## Search
+
+We use Typesense for search. It's near-instant & it just works.
 
 
 ## What is missing?

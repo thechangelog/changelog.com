@@ -35,6 +35,11 @@ defmodule Changelog.Application do
       Changelog.ObanReporter.attach()
     end
 
+    :opentelemetry_cowboy.setup()
+    OpentelemetryEcto.setup([:changelog, :repo])
+    OpentelemetryOban.setup(trace: [:jobs])
+    OpentelemetryPhoenix.setup(adapter: :cowboy2)
+
     Supervisor.start_link(children, strategy: :one_for_one, name: Changelog.Supervisor)
   end
 

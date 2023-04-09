@@ -47,8 +47,8 @@ config :changelog, Changelog.Repo,
   username: System.get_env("DB_USER", "postgres")
 
 if System.get_env("FLY_APP_NAME") do
-config :changelog, Changelog.Repo,
-  socket_options: [:inet6]
+  config :changelog, Changelog.Repo,
+    socket_options: [:inet6]
 end
 
 config :changelog, Changelog.Mailer,
