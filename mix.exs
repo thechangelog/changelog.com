@@ -69,7 +69,6 @@ defmodule Changelog.Mixfile do
       {:ex_machina, "~> 2.0"},
       {:sentry, "~> 8.0"},
       {:html_entities, "~> 0.3"},
-      {:algolia, "~> 0.8.0"},
       {:tzdata, "~> 1.1.0"},
       {:icalendar, "~> 1.0"},
       {:shopify, "~> 0.4"},

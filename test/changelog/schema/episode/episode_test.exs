@@ -73,14 +73,14 @@ defmodule Changelog.EpisodeTest do
     test "it calls the Notifier when transcript is first set" do
       with_mocks([
         {Changelog.Notifier, [], [notify: fn _ -> true end]},
-        {Changelog.Search, [], [save_item: fn _ -> true end]}
+        {Changelog.TypesenseSearch, [], [save_item: fn _ -> true end]}
       ]) do
         episode = insert(:episode)
         Episode.update_transcript(episode, "**Host:** Welcome!\n\n**Guest:** Thanks!\n\n")
 
         wait_for_passing(1000, fn ->
           assert called(Changelog.Notifier.notify(:_))
-          assert called(Changelog.Search.save_item(:_))
+          assert called(Changelog.TypesenseSearch.save_item(:_))
         end)
       end
     end
@@ -88,7 +88,7 @@ defmodule Changelog.EpisodeTest do
     test "it does not call the Notifier when transcript is updated" do
       with_mocks([
         {Changelog.Notifier, [], [notify: fn _ -> true end]},
-        {Changelog.Search, [], [save_item: fn _ -> true end]}
+        {Changelog.TypesenseSearch, [], [save_item: fn _ -> true end]}
       ]) do
         episode =
           insert(:episode,
@@ -98,7 +98,7 @@ defmodule Changelog.EpisodeTest do
         Episode.update_transcript(episode, "**Host:** Welcome!")
 
         wait_for_passing(1000, fn ->
-          assert called(Changelog.Search.save_item(:_))
+          assert called(Changelog.TypesenseSearch.save_item(:_))
           refute called(Changelog.Notifier.notify(:_))
         end)
       end
@@ -107,13 +107,13 @@ defmodule Changelog.EpisodeTest do
     test "it does not call the Notifier when transcript is not set" do
       with_mocks([
         {Changelog.Notifier, [], [notify: fn _ -> true end]},
-        {Changelog.Search, [], [save_item: fn _ -> true end]}
+        {Changelog.TypesenseSearch, [], [save_item: fn _ -> true end]}
       ]) do
         episode = insert(:episode)
         Episode.update_transcript(episode, "")
 
         wait_for_passing(1000, fn ->
-          assert called(Changelog.Search.save_item(:_))
+          assert called(Changelog.TypesenseSearch.save_item(:_))
           refute called(Changelog.Notifier.notify(:_))
         end)
       end
