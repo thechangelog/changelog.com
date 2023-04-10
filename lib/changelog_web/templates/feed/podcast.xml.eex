@@ -41,9 +41,6 @@
       <content:encoded><%= render("_show_notes.xml", episode: episode, plusplus: false) %></content:encoded>
 
       <itunes:episodeType><%= episode.type %></itunes:episodeType>
-    <%= if episode.type == :full do %>
-      <itunes:episode><%= EpisodeView.number(episode) %></itunes:episode>
-    <% end %>
       <itunes:image href="<%= PodcastView.cover_url(episode.podcast) %>"/>
       <itunes:duration><%= TimeView.duration(episode.audio_duration) %></itunes:duration>
       <itunes:explicit>no</itunes:explicit>
