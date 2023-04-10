@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, Person, Podcast, Post}
+  alias Changelog.{Episode, NewsItem, Podcast, Post}
   alias ChangelogWeb.Plug.ResponseCache
 
   plug ResponseCache
@@ -13,12 +13,8 @@ defmodule ChangelogWeb.PodcastController do
   # here we create our meta-podcast, which is the merging of our 3 main podcasts
   def show(conn, params = %{"slug" => "podcast"}) do
     metapod_query =
-      conn.assigns.podcasts
-      |> Enum.filter(fn(p) ->
-        Enum.member?(["news", "podcast", "friends"], p.slug)
-      end)
-      |> Enum.reduce(NewsItem, fn p, query ->
-        from(q in query, or_where: like(q.object_id, ^"#{p.id}:%"))
+      Enum.reduce(Podcast.changelog_ids(), NewsItem, fn id, query ->
+        from(q in query, or_where: like(q.object_id, ^"#{id}:%"))
       end)
 
     page =

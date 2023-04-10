@@ -104,6 +104,10 @@ defmodule Changelog.Podcast do
     }
   end
 
+  def changelog_ids do
+    from(q in __MODULE__, where: q.slug in ~w(news podcast friends), select: [:id]) |> Repo.all() |> Enum.map(&(&1.id))
+  end
+
   def file_changeset(podcast, attrs \\ %{}), do: cast_attachments(podcast, attrs, [:cover])
 
   def insert_changeset(podcast, attrs \\ %{}) do
