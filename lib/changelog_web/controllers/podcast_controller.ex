@@ -42,6 +42,12 @@ defmodule ChangelogWeb.PodcastController do
     |> render(:show)
   end
 
+  # the "interviews" page is just a new index for the old "podcast" page
+  def show(conn, params = %{"slug" => "interviews"}) do
+    podcast = Podcast.get_by_slug!("podcast")
+    show(conn, params, podcast)
+  end
+
   # front the "actual" show function with this one that tries to fetch a
   # podcast, then falls back to find a (legacy) post and redirect appropriately
   def show(conn, params = %{"slug" => slug}) do
