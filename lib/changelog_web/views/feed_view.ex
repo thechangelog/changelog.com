@@ -37,14 +37,6 @@ defmodule ChangelogWeb.FeedView do
 
   def episode_title(%{slug: "master"}, episode), do: EpisodeView.title_with_podcast_aside(episode)
 
-  def episode_title(%{slug: "podcast"}, episode) do
-    if EpisodeView.is_changelog_news(episode) do
-      "News: #{episode.title}"
-    else
-      episode.title
-    end
-  end
-
   def episode_title(_podcast, episode), do: episode.title
 
   def image_link(item = %NewsItem{}) do
@@ -73,12 +65,7 @@ defmodule ChangelogWeb.FeedView do
 
   def podcast_name_with_numbered_episode_title(episode) do
     numbered_title = EpisodeView.numbered_title(episode)
-
-    if EpisodeView.is_changelog_news(episode) do
-      "Changelog News: #{episode.title}"
-    else
-      "#{episode.podcast.name} #{numbered_title}"
-    end
+    "#{episode.podcast.name} #{numbered_title}"
   end
 
   def render_item(item = %{object: episode = %Episode{}}, assigns) do

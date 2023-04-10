@@ -146,10 +146,6 @@ defmodule ChangelogWeb.EpisodeView do
     episode.guid || "changelog.com/#{episode.podcast_id}/#{episode.id}"
   end
 
-  def is_changelog_news(episode) do
-    episode.podcast.slug == "podcast" && String.starts_with?(episode.slug, "news")
-  end
-
   def is_subtitle_guest_focused(%{subtitle: nil}), do: false
   def is_subtitle_guest_focused(%{guests: nil}), do: false
   def is_subtitle_guest_focused(%{guests: []}), do: false
@@ -195,16 +191,8 @@ defmodule ChangelogWeb.EpisodeView do
     "(#{podcast_name_and_number(episode)})"
   end
 
-  def podcast_name(episode) do
-    if is_changelog_news(episode) do
-      "Changelog News"
-    else
-      episode.podcast.name
-    end
-  end
-
   def podcast_name_and_number(episode) do
-    [podcast_name(episode), number_with_pound(episode)] |> ListKit.compact_join(" ")
+    [episode.podcast.name, number_with_pound(episode)] |> ListKit.compact_join(" ")
   end
 
   def published_before_transcripts?(episode) do
