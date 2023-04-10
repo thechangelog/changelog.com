@@ -152,7 +152,7 @@ defmodule ChangelogWeb.EpisodeController do
     |> render("chapters.json")
   end
 
-  def email(conn, params = %{"slug" => slug}, podcast) do
+  def email(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
       |> Episode.published()

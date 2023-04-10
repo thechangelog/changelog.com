@@ -132,8 +132,6 @@ defmodule Changelog.Episode do
   def top_reach_first(query \\ __MODULE__),
     do: from(q in query, order_by: [desc: :reach_count])
 
-  def with_ids(query \\ __MODULE__, ids), do: from(q in query, where: q.id in ^ids)
-
   def with_numbered_slug(query \\ __MODULE__),
     do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))
 

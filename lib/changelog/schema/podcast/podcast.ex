@@ -7,6 +7,7 @@ defmodule Changelog.Podcast do
     EpisodeStat,
     Files,
     NewsItem,
+    Person,
     PodcastTopic,
     PodcastHost,
     Regexp,
@@ -69,6 +70,8 @@ defmodule Changelog.Podcast do
       name: "Changelog Master Feed",
       slug: "master",
       status: :published,
+      twitter_handle: "changelog",
+      mastodon_handle: "changelog@changelog.social",
       welcome: "Your one-stop shop for all Changelog podcasts",
       description: "Your one-stop shop for all Changelog podcasts.",
       extended_description:
@@ -77,9 +80,27 @@ defmodule Changelog.Podcast do
       apple_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
       spotify_url: "https://open.spotify.com/show/0S1h5K7jm2YvOcM7y1ZMXY",
       cover: true,
-      hosts: [],
       active_hosts: [],
       retired_hosts: []
+    }
+  end
+
+  def changelog do
+    %__MODULE__{
+      name: "The Changelog",
+      slug: "podcast",
+      status: :published,
+      vanity_domain: "https://changelog.fm",
+      twitter_handle: "changelog",
+      mastodon_handle: "changelog@changelog.social",
+      welcome: "Software's best weekly news brief, deep technical interviews & talk show",
+      description: "Software's best weekly news brief, deep technical interviews & talk show.",
+      extended_description: "",
+      keywords: "changelog, open source, software, development, code, programming, hacker, change log, software engineering",
+      apple_url: "https://podcasts.apple.com/us/podcast/the-changelog/id341623264",
+      spotify_url: "https://open.spotify.com/show/5bBki72YeKSLUqyD94qsuJ",
+      cover: true,
+      active_hosts: Person.with_ids([1, 2]) |> Person.newest_first() |> Repo.all()
     }
   end
 
@@ -150,6 +171,8 @@ defmodule Changelog.Podcast do
   def subscription_count(podcast), do: podcast |> assoc(:subscriptions) |> Repo.count()
 
   def has_feed(podcast), do: podcast.slug != "backstage"
+
+  def is_changelog(podcast), do: podcast.slug == "podcast"
 
   def is_news(podcast), do: podcast.slug == "news"
 

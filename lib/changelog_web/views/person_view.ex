@@ -62,7 +62,7 @@ defmodule ChangelogWeb.PersonView do
     !!(person.bio && person.website && person.location)
   end
 
-  def is_subscribed(person, nil), do: false
+  def is_subscribed(_person, nil), do: false
 
   def is_subscribed(person, %NewsItem{id: id}) do
     person

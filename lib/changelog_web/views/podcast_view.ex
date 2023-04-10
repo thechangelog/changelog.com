@@ -5,8 +5,22 @@ defmodule ChangelogWeb.PodcastView do
   alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
+  def podcasts_for_index(podcasts) do
+    pods =
+      podcasts
+      |> Enum.reject(fn(p) ->
+        Enum.member?(["news", "podcast", "friends"], p.slug)
+      end)
+
+    List.flatten([Podcast.changelog, pods, Podcast.master])
+  end
+
   def cover_path(%{slug: "master"}, version) do
     Routes.static_url(Endpoint, "/images/podcasts/master-#{version}.png")
+  end
+
+  def cover_path(%{slug: "podcast"}, version) do
+    Routes.static_url(Endpoint, "/images/podcasts/podcast-#{version}.png")
   end
 
   def cover_path(%{slug: "plusplus"}, version) do

@@ -40,6 +40,8 @@ defmodule Changelog.Schema do
       def older_than(query, time = %DateTime{}),
         do: from(q in query, where: q.inserted_at < ^time)
 
+      def with_ids(query \\ __MODULE__, ids), do: from(q in query, where: q.id in ^ids)
+
       def decode(hashid) when is_binary(hashid), do: Hashid.decode(hashid)
       # sentinal query value
       def decode(_), do: -1

@@ -1,13 +1,45 @@
 defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, Podcast, Post}
+  alias Changelog.{Episode, NewsItem, Person, Podcast, Post}
   alias ChangelogWeb.Plug.ResponseCache
 
   plug ResponseCache
 
   def index(conn, _params) do
     render(conn, :index)
+  end
+
+  # here we create our meta-podcast, which is the merging of our 3 main podcasts
+  def show(conn, params = %{"slug" => "podcast"}) do
+    metapod_query =
+      conn.assigns.podcasts
+      |> Enum.filter(fn(p) ->
+        Enum.member?(["news", "podcast", "friends"], p.slug)
+      end)
+      |> Enum.reduce(NewsItem, fn p, query ->
+        from(q in query, or_where: like(q.object_id, ^"#{p.id}:%"))
+      end)
+
+    page =
+      metapod_query
+      |> NewsItem.published()
+      |> NewsItem.non_feed_only()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.paginate(Map.put(params, :page_size, 30))
+
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    conn
+    |> assign(:podcast, Podcast.changelog())
+    |> assign(:items, items)
+    |> assign(:trailer, nil)
+    |> assign(:page, page)
+    |> ResponseCache.cache_public(:timer.minutes(5))
+    |> render(:show)
   end
 
   # front the "actual" show function with this one that tries to fetch a
