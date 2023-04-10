@@ -82,12 +82,14 @@
         <% else %>
           <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
         <% end %>
+      <%= if @list do %>
         <%= form_tag Routes.person_path(@conn, :subscribe, @list), class: "signup-form", method: "get" do %>
           <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
           <div class="signup-form-submit">
             <input class="signup-form-submit-button" type="submit" value="Subscribe">
           </div>
         <% end %>
+      <% end %>
       <% end %>
 
       <%= render("_subscribe_buttons.html", assigns) %>
