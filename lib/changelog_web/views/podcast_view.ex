@@ -19,7 +19,7 @@ defmodule ChangelogWeb.PodcastView do
     Routes.static_url(Endpoint, "/images/podcasts/master-#{version}.png")
   end
 
-  def cover_path(%{slug: "podcast"}, version) do
+  def cover_path(%{slug: "podcast", is_meta: true}, version) do
     Routes.static_url(Endpoint, "/images/podcasts/podcast-#{version}.png")
   end
 

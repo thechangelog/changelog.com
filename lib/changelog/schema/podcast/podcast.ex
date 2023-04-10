@@ -22,6 +22,7 @@ defmodule Changelog.Podcast do
     field :name, :string
     field :slug, :string
     field :status, Status
+    field :is_meta, :boolean, virtual: true, default: false
 
     field :welcome, :string
     field :description, :string
@@ -70,6 +71,7 @@ defmodule Changelog.Podcast do
       name: "Changelog Master Feed",
       slug: "master",
       status: :published,
+      is_meta: true,
       twitter_handle: "changelog",
       mastodon_handle: "changelog@changelog.social",
       welcome: "Your one-stop shop for all Changelog podcasts",
@@ -90,6 +92,7 @@ defmodule Changelog.Podcast do
       name: "The Changelog",
       slug: "podcast",
       status: :published,
+      is_meta: true,
       vanity_domain: "https://changelog.fm",
       twitter_handle: "changelog",
       mastodon_handle: "changelog@changelog.social",
