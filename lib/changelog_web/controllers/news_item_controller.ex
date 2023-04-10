@@ -128,7 +128,27 @@ defmodule ChangelogWeb.NewsItemController do
     end
   end
 
+  # if this is a Changelog News episode, preview that instead
   def preview(conn, %{"id" => id}) do
+    try do
+      podcast = Podcast.get_by_slug!("news")
+
+      episode =
+        assoc(podcast, :episodes)
+        |> Episode.preload_all()
+        |> Repo.get_by!(slug: id)
+        |> Episode.load_news_item()
+
+      conn
+      |> assign(:podcast, podcast)
+      |> assign(:episode, episode)
+      |> assign(:item, episode.news_item)
+      |> put_view(EpisodeView)
+      |> render(:show)
+    rescue
+      _e -> false
+    end
+
     item =
       NewsItem
       |> Repo.get_by!(id: id)
