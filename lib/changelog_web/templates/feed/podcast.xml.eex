@@ -18,6 +18,12 @@
     <itunes:summary><%= @podcast |> podcast_full_description() |> escaped() %></itunes:summary>
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= PodcastView.cover_url(@podcast) %>"/>
+  <%= if Podcast.is_news(@podcast) do %>
+    <itunes:owner>
+      <itunes:name>Changelog Media</itunes:name>
+      <itunes:email>editors@changelog.com</itunes:email>
+    </itunes:owner>
+  <% end %>
     <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
