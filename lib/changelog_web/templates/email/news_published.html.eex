@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark only">
-    <style type="text/css"><%= render("_news_styles.css", assigns) |> raw() %></style>
+    <link rel="stylesheet" href="<%= Routes.static_url(Endpoint, "/css/email.css") %>">
   </head>
   <body>
     <p style="display:none !important;"><%= @episode.email_teaser %></p>

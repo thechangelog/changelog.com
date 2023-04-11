@@ -78,6 +78,18 @@ module.exports = [
   }),
   merge(common, {
     entry: [
+      __dirname + "/email/email.scss"
+    ],
+    output: {
+      path: __dirname + "/../priv/static"
+    },
+    plugins: [
+      new CopyWebpackPlugin({patterns: [{from: __dirname + "/static"}]}),
+      new MiniCssExtractPlugin({filename: "css/email.css"})
+    ]
+  }),
+  merge(common, {
+    entry: [
       "normalize.css",
       __dirname + "/app/embed.scss",
       __dirname + "/app/embed.js"
