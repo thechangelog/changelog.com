@@ -11,7 +11,7 @@
   <%= if @current_user do %>
     <%= link("Manage Subscriptions", to: Routes.home_path(@conn, :show), class: "button_large") %>
   <% else %>
-    <%= form_tag Routes.person_path(@conn, :subscribe, "weekly"), class: "signup-form", method: "get" do %>
+    <%= form_tag Routes.person_path(@conn, :subscribe, "news"), class: "signup-form", method: "get" do %>
       <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
       <div class="signup-form-submit">
         <input class="signup-form-submit-button" type="submit" value="I'm in!">
