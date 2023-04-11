@@ -5,9 +5,6 @@ defmodule Changelog.Files.Audio do
 
   def storage_dir(_, {_, episode}), do: "uploads/#{episode.podcast.slug}/#{episode.slug}"
 
-  def filename(_, {_, episode = %{podcast: %{slug: "podcast"}}}),
-    do: "the-changelog-#{episode.slug}"
-
   def filename(_, {_, episode}),
     do: "#{PodcastView.dasherized_name(episode.podcast)}-#{episode.slug}"
 end

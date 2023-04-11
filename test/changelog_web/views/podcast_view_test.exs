@@ -3,6 +3,18 @@ defmodule ChangelogWeb.PodcastViewTest do
 
   alias ChangelogWeb.PodcastView
 
+  describe "dasherized_name/1" do
+    test "represents as The Changelog when called on the Interviews pod" do
+      p = build(:podcast, name: "Changelog Interviews")
+      assert PodcastView.dasherized_name(p) == "the-changelog"
+    end
+
+    test "takes the podcast name and dasherizes it" do
+      p = build(:podcast, name: "A Test Pod")
+      assert PodcastView.dasherized_name(p) == "a-test-pod"
+    end
+  end
+
   describe "subscribe_on_overcast_url" do
     test "reformats the Apple URL as necessary" do
       p =

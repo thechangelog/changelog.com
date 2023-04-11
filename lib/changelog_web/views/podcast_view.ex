@@ -39,6 +39,9 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
+  # Any time (except cover art) we're dealing with Interviews, we want it to
+  # be represented by the old "The Changelog" name
+  def dasherized_name(%{name: "Changelog Interviews"}), do: "the-changelog"
   def dasherized_name(%{name: name}), do: StringKit.dasherize(name)
 
   def is_master(podcast), do: Podcast.is_master(podcast)
