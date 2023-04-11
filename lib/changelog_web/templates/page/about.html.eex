@@ -20,15 +20,13 @@
 
     <h3>Special thanks to...</h3>
 
-    <p><a href="https://www.fastly.com/?utm_source=changelog&amp;utm_campaign=changelog-partner">Fastly</a> for providing our real-time CDN and worldwide bandwidth.</p>
+    <p><a href="https://www.fastly.com/?utm_source=changelog">Fastly</a> for helping us ships our podcast super fast, globally. Thanks Fastly!</p>
 
-    <p><a href="https://linode.com/changelog">Linode</a> for providing our high performance SSD Linux cloud servers.</p>
+    <p><a href="https://fly.io/changelog">Fly.io</a> for helping ship our Elixir app and Postgres database close to our users, all over the world, with no ops.</p>
 
-    <p><a href="https://rollbar.com/changelog">Rollbar</a> for providing real-time error monitoring and alerting.</p>
+    <p><a href="https://typesense.org/?utm_source=changelog">Typesense</a> for giving us lightning-fast, open source search to power changelog.com.</p>
 
     <p><a href="https://soundcloud.com/breakmaster-cylinder">Breakmaster Cylinder</a> for working with us to create our awesome beets.</p>
-
-    <p><a href="http://www.oreilly.com/pub/cpc/971">O'Reilly Media</a> for colaborating with us on OSCON and other content projects.</p>
 
   </div>
 </article>
