@@ -58,8 +58,8 @@
     <% end %>
 
     <%= if Policies.AdminsOnly.index(@current_user) do %>
-      <%= link(to: Routes.admin_benefit_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "benefit", "active")}") do %>
-        <i class="ticket icon"></i>Benefits
+      <%= link(to: Routes.admin_mailer_preview_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "mailer", "active")}") do %>
+        <i class="mail icon"></i>Mailers
       <% end %>
     <% end %>
 
