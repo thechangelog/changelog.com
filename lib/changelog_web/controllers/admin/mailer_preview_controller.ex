@@ -129,7 +129,6 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
       Episode.with_podcast_slug("news")
       |> Episode.limit(1)
       |> Episode.newest_first()
-      |> Episode.unpublished()
       |> Episode.preload_all()
       |> Repo.one()
 
