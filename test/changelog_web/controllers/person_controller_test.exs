@@ -120,7 +120,7 @@ defmodule ChangelogWeb.PersonControllerTest do
       ]) do
         conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com")
         assert called(Changelog.Captcha.verify(:_))
-        assert redirected_to(conn) == Routes.person_path(conn, :subscribe, "weekly")
+        assert redirected_to(conn) == Routes.person_path(conn, :subscribe, "news")
       end
     end
   end
@@ -139,14 +139,14 @@ defmodule ChangelogWeb.PersonControllerTest do
       ]) do
         count_before = count(Person)
 
-        conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com")
+        conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com", to: "nightly")
 
         person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
         refute person.public_profile
-        assert called(Craisin.Subscriber.subscribe(Newsletters.weekly().id, :_))
+        assert called(Craisin.Subscriber.subscribe(Newsletters.nightly().id, :_))
 
         assert_delivered_email(
-          ChangelogWeb.Email.subscriber_welcome(person, Newsletters.weekly())
+          ChangelogWeb.Email.subscriber_welcome(person, Newsletters.nightly())
         )
 
         assert redirected_to(conn) == Routes.root_path(conn, :index)

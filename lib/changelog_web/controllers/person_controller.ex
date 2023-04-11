@@ -181,7 +181,7 @@ defmodule ChangelogWeb.PersonController do
 
   # This is the subscribe method does that actual processing
   def subscribe(conn = %{method: "POST"}, params = %{"email" => email}) do
-    subscribe_to = Map.get(params, "to", "weekly")
+    subscribe_to = Map.get(params, "to", "news")
     captcha = Map.get(params, "cf-turnstile-response")
 
     if Captcha.verify(captcha) do
