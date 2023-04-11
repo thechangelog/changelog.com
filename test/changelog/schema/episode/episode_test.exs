@@ -243,21 +243,21 @@ defmodule Changelog.EpisodeTest do
 
   describe "is_publishable/1" do
     test "is false when episode is missing required fields" do
-      refute Episode.is_publishable(build(:episode))
+      refute Episode.is_publishable(insert(:episode))
     end
 
     test "is false when episode is published" do
-      refute Episode.is_publishable(build(:published_episode))
+      refute Episode.is_publishable(insert(:published_episode))
     end
 
     test "is false when episode is News but missing email fields" do
-      news = build(:podcast, slug: "news")
-      episode = stub_audio_file(build(:publishable_episode, podcast: news))
+      news = insert(:podcast, slug: "news")
+      episode = stub_audio_file(insert(:publishable_episode, podcast: news))
       refute Episode.is_publishable(episode)
     end
 
     test "is true when episode has all fields and isn't published" do
-      assert Episode.is_publishable(stub_audio_file(build(:publishable_episode)))
+      assert Episode.is_publishable(stub_audio_file(insert(:publishable_episode)))
     end
   end
 end
