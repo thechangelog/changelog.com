@@ -62,34 +62,10 @@
         <p class="show-header-signup_text">This podcast has been retired. <%= link("Head here", to: Routes.podcast_path(@conn, :index)) %> for more awesome podcasts.</p>
       <% !Podcast.has_feed(@podcast) -> %>
         <p>You can only subscribe to <em><%= @podcast.name %></em> by subscribing to our <%= link("Master Feed", to: Routes.podcast_path(@conn, :show, "master")) %></p>
-      <% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
-        <%= if Podcast.is_news(@podcast) do %>
-          <p class="show-header-signup_text">You are subscribed to receive the companion <em><%= @podcast.name %></em> newsletter!</p>
-        <% else %>
-          <p class="show-header-signup_text">You are subscribed to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
-        <% end %>
-        <%= link("Manage my subscription", to: Routes.home_path(@conn, :show) <> "#subscriptions", class: "show-header-user_action button_large") %>
-      <% is_map(@current_user) and !PersonView.is_subscribed(@current_user, @podcast) -> %>
-        <%= if Podcast.is_news(@podcast) do %>
-          <p class="show-header-signup_text">Subscribe to receive the companion <em><%= @podcast.name %></em> newsletter!</p>
-        <% else %>
-          <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
-        <% end %>
-        <%= link("Manage my subscription", to: Routes.home_path(@conn, :show) <> "#subscriptions", class: "show-header-user_action button_large") %>
+      <% is_a_changelog_pod(@podcast) -> %>
+        <%= render("_news_subscribe.html", assigns) %>
       <% true -> %>
-        <%= if Podcast.is_news(@podcast) do %>
-          <p class="show-header-signup_text">Subscribe to receive the companion <em><%= @podcast.name %></em> newsletter!</p>
-        <% else %>
-          <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
-        <% end %>
-      <%= if @list do %>
-        <%= form_tag Routes.person_path(@conn, :subscribe, @list), class: "signup-form", method: "get" do %>
-          <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
-          <div class="signup-form-submit">
-            <input class="signup-form-submit-button" type="submit" value="Subscribe">
-          </div>
-        <% end %>
-      <% end %>
+        <%= render("_podcast_subscribe.html", assigns) %>
       <% end %>
 
       <%= render("_subscribe_buttons.html", assigns) %>

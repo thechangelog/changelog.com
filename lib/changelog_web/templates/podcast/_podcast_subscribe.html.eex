@@ -1,0 +1,16 @@
+<%= cond do %>
+<% is_map(@current_user) and PersonView.is_subscribed(@current_user, @podcast) -> %>
+  <p class="show-header-signup_text">You are subscribed to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
+  <%= link("Manage my subscription", to: Routes.home_path(@conn, :show) <> "#subscriptions", class: "show-header-user_action button_large") %>
+<% is_map(@current_user) and !PersonView.is_subscribed(@current_user, @podcast) -> %>
+  <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
+  <%= link("Manage my subscription", to: Routes.home_path(@conn, :show) <> "#subscriptions", class: "show-header-user_action button_large") %>
+<% true -> %>
+  <p class="show-header-signup_text">Subscribe to be notified about new episodes of <em><%= @podcast.name %></em>!</p>
+  <%= form_tag Routes.person_path(@conn, :subscribe, @podcast.slug), class: "signup-form", method: "get" do %>
+    <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
+    <div class="signup-form-submit">
+      <input class="signup-form-submit-button" type="submit" value="Subscribe">
+    </div>
+  <% end %>
+<% end %>

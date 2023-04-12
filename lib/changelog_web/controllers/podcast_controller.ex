@@ -31,7 +31,6 @@ defmodule ChangelogWeb.PodcastController do
 
     conn
     |> assign(:podcast, Podcast.changelog())
-    |> assign(:list, nil)
     |> assign(:items, items)
     |> assign(:trailer, nil)
     |> assign(:page, page)
@@ -83,7 +82,6 @@ defmodule ChangelogWeb.PodcastController do
 
     conn
     |> assign(:podcast, podcast)
-    |> assign(:list, podcast.slug)
     |> assign(:items, items)
     |> assign(:trailer, trailer)
     |> assign(:page, page)
