@@ -10,7 +10,9 @@
   <% end %>
     <%= link("Android", to: subscribe_on_android_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android", title: "Subscribe on Android") %>
     <%= link("RSS", to: subscribe_via_rss_url(@conn, @podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--rss", title: "Subscribe via RSS", data: [turbolinks: false]) %>
-    <%= link("Email", to: subscribe_via_email_path(@conn, @podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--email", title: "Subscribe via Email") %>
+  <%= if @podcast.mastodon_handle do %>
+    <%= link("Mastodon", to: SharedHelpers.mastodon_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--mastodon", title: "Follow us on Mastodon") %>
+  <% end %>
   <%= if @podcast.twitter_handle do %>
     <%= link("Twitter", to: SharedHelpers.twitter_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--twitter", title: "Follow us on Twitter") %>
   <% end %>
