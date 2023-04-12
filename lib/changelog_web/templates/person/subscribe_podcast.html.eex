@@ -9,7 +9,9 @@
 </section>
 
 <%= if @current_user do %>
+<div class="signup-content">
   <%= link("Manage Subscriptions", to: Routes.home_path(@conn, :show) <> "#podcasts", class: "button_large") %>
+</div>
 <% else %>
   <%= render(SharedView, "_subscribe_form.html", conn: @conn) %>
 <% end %>

@@ -3,7 +3,7 @@
     <header class="show_list-header">
       <h2>Changelog makes great podcasts for developers</h2>
       <p><%= link("The Changelog", to: "/podcast", title: "The Changelog") %> podcast is the software world's best weekly <%= link("news brief", to: "/news") %> (Mondays), deep <%= link("technical interviews", to: "/interviews") %> (Wednesdays) and our <em>coming soon</em> <%= link("talk show", to: "/friends") %> (Fridays) that's like putting your favorite conference hallway track on repeat.</p>
-      <p class="show_list-header-master_cta"><a href="/news"><strong>Subscribe to the Changelog Newsletter</strong> to get a companion email alongside the audio edition.</a></p>
+      <p class="show_list-header-master_cta"><a href="/subscribe/news"><strong>Subscribe to the Changelog News(letter)!</strong> We keep it brief, entertaining &amp; always on-point.</a></p>
       <p>But that's not all! We produce other great shows about web development, open source, building startups, AI & the human brain.</p>
     </header>
     <div class="show_list-shows">

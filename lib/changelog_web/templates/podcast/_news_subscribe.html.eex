@@ -2,13 +2,13 @@
 
 <%= cond do %>
 <% is_map(@current_user) and PersonView.is_subscribed(@current_user, news) -> %>
-  <p class="show-header-signup_text">You are subscribed to receive our <em>Changelog News</em> email on Mondays!</p>
+  <p class="show-header-signup_text">You are subscribed to receive the <em>Changelog News(letter)</em> on Mondays!</p>
   <%= link("Manage my subscription", to: Routes.home_path(@conn, :show) <> "#subscriptions", class: "show-header-user_action button_large") %>
 <% is_map(@current_user) and !PersonView.is_subscribed(@current_user, news) -> %>
-  <p class="show-header-signup_text">Subscribe to receive our <em>Changelog News</em> email <a href="/news/39/email" title="Changelog News issue #39">(sample)</a> on Mondays!</p>
+  <p class="show-header-signup_text">Subscribe to receive the <em>Changelog News(letter)</em> <a href="/news/39/email" title="Changelog News issue #39">(sample)</a> on Mondays!</p>
   <%= link("Manage my subscription", to: Routes.home_path(@conn, :show) <> "#subscriptions", class: "show-header-user_action button_large") %>
 <% true -> %>
-  <p class="show-header-signup_text">Subscribe to receive our <em>Changelog News</em> email <a href="/news/39/email" title="Changelog News issue #39">(sample)</a> on Mondays!</p>
+  <p class="show-header-signup_text">Subscribe to receive the <em>Changelog News(letter)</em> <a href="/news/39/email" title="Changelog News issue #39">(sample)</a> on Mondays!</p>
   <%= form_tag Routes.person_path(@conn, :subscribe, "news"), class: "signup-form", method: "get" do %>
     <input name="email" class="signup-form-input" placeholder="you@example.com" aria-label="you@example.com" required/>
     <div class="signup-form-submit">

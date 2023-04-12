@@ -35,7 +35,7 @@ defmodule ChangelogWeb.NewsItemController do
       end
     else
       conn
-      |> put_flash(:error, "You must subscribe to the Changelog Newsletter 📥")
+      |> put_flash(:error, "You must subscribe to Changelog News 📥")
       |> assign(:subscribed, false)
       |> assign(:changeset, changeset)
       |> render(:new)
