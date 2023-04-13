@@ -1,6 +1,4 @@
 <div class="page_news_item">
   <%= render("_summary.html", assigns) %>
-
-  <%= render(SharedView, "_signup_banner.html", assigns) %>
   <%= render("_comments.html", assigns) %>
 </div>
