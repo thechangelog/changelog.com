@@ -43,20 +43,16 @@ body {
   }
 }
 
-.last-of-type{
-    margin-bottom: 0 !important
+.last-of-type {
+  margin-bottom: 0 !important
 }
-
-// - - - - - - - - - - - - - - - - - - - - - - - -
-// The content is contained in this class
-// - - - - - - - - - - - - - - - - - - - - - - - -
 
 .content {
 
   margin-bottom: 32px;
   &:last-of-type { margin-bottom: 0 !important; }
 
-  h1.title {
+  h1 {
     color: #101010;
     font-family: $open-sans;
     font-size: 26px;
@@ -64,15 +60,6 @@ body {
     line-height: 1.4;
     margin: 30px 0 15px 0;
   }
-  h4.title {
-    color: #101010;
-    font-family: $roboto-mono;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.2;
-    margin: 0 0 65px 0;
-  }
-
   h2 {
     color:#101010;
     font-size: 22px;
@@ -80,6 +67,9 @@ body {
     line-height: 1.4;
     margin: 60px 0 20px 0;
     a { color: #59b287; }
+  }
+  h4:first-of-type {
+    margin: 0 0 65px 0 !important;
   }
   h4 {
     color: #101010;

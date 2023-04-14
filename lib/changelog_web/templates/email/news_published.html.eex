@@ -24,8 +24,6 @@
                         <tr>
                           <td>
                             <div class="content">
-                              <h1 class="title">Changelog News</h1>
-                              <h4 class="title">Developer news worth your attention</h4>
                               <%= @episode.email_content |> SharedHelpers.md_to_html() |> raw() %>
                             </div>
                           </td>
