@@ -41,6 +41,7 @@ npm-debug.log*
 /cover
 
 # User-specific environment variables, maybe even secrets
+.envrc
 .env.user
 
 # Local config files, host-specific
@@ -48,3 +49,4 @@ npm-debug.log*
 
 # Postgres DB dump
 /db-*
+*.sql
