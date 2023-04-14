@@ -14,7 +14,8 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
       {Github.Pusher, [], [push: fn _, _ -> {:ok, "success"} end]},
       {Github.Puller, [], [update: fn _, _ -> true end]},
       {Changelog.Merch, [], [create_discount: fn _, _ -> {:ok, %{code: "yup"}} end]},
-      {ObanWorkers.AudioUpdater, [], [queue: fn _ -> :ok end]}
+      {ObanWorkers.AudioUpdater, [], [queue: fn _ -> :ok end]},
+      {Craisin.Client, [], [stats: fn _ -> %{"Delivered" => 0, "Opened" => 0} end]}
     ],
     assigns
   ) do
