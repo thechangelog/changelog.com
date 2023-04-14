@@ -58,6 +58,18 @@
         </div>
 
         <div class="statistic">
+          <div class="value"><%= SharedHelpers.comma_separated(@episode.email_sends) %></div>
+          <div class="label">Emails Sent</div>
+        </div>
+        <div class="statistic">
+          <div class="value"><%= SharedHelpers.comma_separated(@episode.email_opens) %></div>
+          <div class="label">Emails Opened</div>
+        </div>
+        <div class="statistic">
+          <div class="value"><%= SharedHelpers.percent(@episode.email_opens, @episode.email_sends) %>%</div>
+          <div class="label">Open Rate</div>
+        </div>
+        <div class="statistic">
           <div class="value"><%= length(@stats) %></div>
           <div class="label">Days Published</div>
         </div>

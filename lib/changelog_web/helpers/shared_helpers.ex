@@ -154,6 +154,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def md_to_text(md) when is_binary(md),
     do: md |> md_to_html() |> HtmlSanitizeEx.strip_tags() |> sans_new_lines()
 
+  def percent(_numerator, 0), do: 0
   def percent(numerator, divisor), do: (numerator / divisor * 100) |> round()
 
   def pluralize(list, singular, plural) when is_list(list),

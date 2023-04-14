@@ -119,6 +119,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> assoc(:episodes)
       |> Repo.get_by!(slug: slug)
       |> Episode.preload_all()
+      |> Episode.update_email_stats()
 
     news_item =
       NewsItem

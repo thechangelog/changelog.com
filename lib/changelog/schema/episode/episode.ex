@@ -363,6 +363,16 @@ defmodule Changelog.Episode do
     |> Repo.update!()
   end
 
+  def update_email_stats(episode) do
+    episode = preload_podcast(episode)
+    group = "#{episode.podcast.name} #{episode.slug}"
+    %{"Delivered" => sends, "Opened" => opens} = Craisin.Client.stats(group)
+
+    episode
+    |> change(%{email_sends: sends, email_opens: opens})
+    |> Repo.update!()
+  end
+
   def update_notes(episode, text) do
     episode
     |> change(notes: text)

@@ -27,6 +27,16 @@ defmodule ChangelogWeb.SharedHelpersTest do
              "The Gangsta, The Killa, The Dope Dealer, and You"
   end
 
+  describe "percent/2" do
+    test "0 when divisor is 0" do
+      assert percent(1, 0) == 0
+    end
+
+    test "rounds to nearest integer percent" do
+      assert percent(5, 22) == 23
+    end
+  end
+
   describe "domain_name" do
     test "includes subdomain by default" do
       assert domain_name("https://blog.jerodsanto.net/2018") == "blog.jerodsanto.net"

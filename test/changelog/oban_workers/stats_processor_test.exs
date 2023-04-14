@@ -14,6 +14,13 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
   end
 
   describe "perform/1" do
+    setup_with_mocks([
+      {Stats.S3, [], [get_logs: fn date, _slug -> log_fixtures(date) end]},
+      {Craisin.Client, [], [stats: fn _group -> %{"Delivered" => 10, "Opened" => 5} end]}
+    ]) do
+      :ok
+    end
+
     test "inserting jobs for each public podcast and date" do
       podcast1 = insert(:podcast)
       podcast2 = insert(:podcast)
@@ -30,8 +37,7 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
       assert %{"date" => iso_ago(2), "podcast_id" => podcast2.id} in args
     end
 
-    test_with_mock "it processes known logs from 2016-10-10", Stats.S3,
-      get_logs: fn date, _slug -> log_fixtures(date) end do
+    test "it processes known logs from 2016-10-10" do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "223", audio_bytes: 80_743_303)
@@ -48,8 +54,7 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
       assert refreshed_reach_count(podcast) == 3
     end
 
-    test_with_mock "it processes known logs from 2016-10-11", Stats.S3,
-      get_logs: fn date, _slug -> log_fixtures(date) end do
+    test "it processes known logs from 2016-10-11" do
       podcast = insert(:podcast)
 
       e1 = insert(:episode, podcast: podcast, slug: "114", audio_bytes: 26_238_621)
@@ -77,11 +82,13 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
       assert stat.downloads == 1
       assert refreshed_download_count(e1) == 1
       assert refreshed_reach_count(e1) == 1
+      assert refreshed_email_stats(e1) == {5, 10}
 
       stat = get_stat(stats, e2)
       assert stat.downloads == 1.06
       assert refreshed_download_count(e2) == 1.06
       assert refreshed_reach_count(e2) == 1
+      assert refreshed_email_stats(e1) == {5, 10}
 
       stat = get_stat(stats, e3)
       assert stat.downloads == 0.04
@@ -165,6 +172,11 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
 
     defp get_stat(stats, episode) do
       Enum.find(stats, fn x -> x.episode_id == episode.id end)
+    end
+
+    defp refreshed_email_stats(%Episode{id: id}) do
+      e = Repo.get(Episode, id)
+      {e.email_opens, e.email_sends}
     end
 
     defp refreshed_download_count(%Episode{id: id}) do

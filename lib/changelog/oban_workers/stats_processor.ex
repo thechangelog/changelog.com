@@ -78,6 +78,7 @@ defmodule Changelog.ObanWorkers.StatsProcessor do
       case Repo.insert_or_update(stat) do
         {:ok, stat} ->
           Episode.update_stat_counts(episode)
+          Episode.update_email_stats(episode)
           stat
 
         {:error, _} ->
