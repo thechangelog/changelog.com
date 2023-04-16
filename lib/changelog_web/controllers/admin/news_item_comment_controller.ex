@@ -67,7 +67,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
     |> Repo.update()
 
     # Send the notification out now that the comment is approved
-    CommentNotifier.schedule_notification(comment)
+    CommentNotifier.schedule(comment)
   end
 
   defp approved_comment_actions(_, _), do: :noop

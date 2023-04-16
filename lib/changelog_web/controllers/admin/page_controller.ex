@@ -6,8 +6,6 @@ defmodule ChangelogWeb.Admin.PageController do
     Episode,
     EpisodeRequest,
     EpisodeStat,
-    NewsItem,
-    Newsletters,
     Person,
     Podcast,
     Subscription

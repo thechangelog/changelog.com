@@ -1,6 +1,7 @@
 defmodule Changelog.NotifierTest do
   use Changelog.SchemaCase
   use Bamboo.Test
+  use Oban.Testing, repo: Changelog.Repo
 
   import Mock
 
@@ -226,6 +227,9 @@ defmodule Changelog.NotifierTest do
       episode = insert(:published_episode, podcast: podcast)
       item = episode |> episode_news_item() |> insert()
       Notifier.notify(item)
+
+      assert %{success: 2, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.episode_published(s1, episode))
       assert_delivered_email(Email.episode_published(s2, episode))
       refute_delivered_email(Email.episode_published(s3, episode))

@@ -13,7 +13,7 @@ defmodule Changelog.Notifier do
     Slack,
     StringKit
   }
-
+  alias Changelog.ObanWorkers.EpisodePublishedMailer
   alias ChangelogWeb.Email
 
   def notify(%NewsItem{feed_only: true}), do: false
@@ -196,10 +196,7 @@ defmodule Changelog.Notifier do
     podcast = Podcast.preload_subscriptions(episode.podcast)
 
     for subscription <- podcast.subscriptions do
-      subscription
-      |> Subscription.preload_all()
-      |> Email.episode_published(episode)
-      |> Mailer.deliver_later()
+      EpisodePublishedMailer.enqueue(subscription, episode)
     end
   end
 

@@ -59,7 +59,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentControllerTest do
       assert_enqueued([worker: CommentNotifier, args: %{"comment_id" => comment.id}], 100)
 
       assert %{success: 1, failure: 0} =
-               Oban.drain_queue(queue: :comment_notifier, with_scheduled: true)
+               Oban.drain_queue(queue: :email, with_scheduled: true)
 
       assert called(Notifier.notify(:_))
     end

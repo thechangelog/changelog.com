@@ -3,7 +3,7 @@ defmodule Changelog.ObanWorkers.CommentNotifier do
   This module defines the Oban worker for dealing with comment notifications.
   """
 
-  use Oban.Worker, queue: :comment_notifier
+  use Oban.Worker, queue: :email
 
   alias Changelog.{NewsItemComment, Notifier, Repo}
 
@@ -18,7 +18,7 @@ defmodule Changelog.ObanWorkers.CommentNotifier do
   @doc """
   Schedules the notification to be sent out 5 mins in the future
   """
-  def schedule_notification(%NewsItemComment{id: id}) do
+  def schedule(%NewsItemComment{id: id}) do
     %{comment_id: id}
     |> new(schedule_in: {5, :minutes})
     |> Oban.insert()

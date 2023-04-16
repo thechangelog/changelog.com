@@ -23,7 +23,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         # Only send the normal notification out if the user is an approved commenter
         # Else send only to admins for vetting. The notify/1 function validates the state
         # of the comment and sends it to the appropriate recipients.
-        CommentNotifier.schedule_notification(comment)
+        CommentNotifier.schedule(comment)
 
         if get_format(conn) == "js" do
           comment = NewsItemComment.preload_all(comment)
