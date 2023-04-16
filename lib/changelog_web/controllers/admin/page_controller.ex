@@ -9,21 +9,17 @@ defmodule ChangelogWeb.Admin.PageController do
     NewsItem,
     Newsletters,
     Person,
-    Podcast
+    Podcast,
+    Subscription
   }
 
   plug Authorize, Policies.Admin.Page
 
-  def index(conn = %{assigns: %{current_user: me = %{admin: true}}}, _params) do
-    newsletters =
-      Newsletters.all()
-      |> Enum.map(&Newsletters.get_stats/1)
-
+  def index(conn = %{assigns: %{current_user: %{admin: true}}}, _params) do
     conn
-    |> assign(:newsletters, newsletters)
+    |> assign(:email_lists, email_lists())
     |> assign(:episode_drafts, episode_drafts())
     |> assign(:episode_requests, episode_requests(EpisodeRequest.limit(5)))
-    |> assign(:item_drafts, item_drafts(me))
     |> assign(:members, members())
     |> assign(:podcasts, Cache.podcasts())
     |> assign(:downloads, downloads())
@@ -78,6 +74,24 @@ defmodule ChangelogWeb.Admin.PageController do
     |> render(:downloads)
   end
 
+  defp email_lists do
+    now = Timex.now()
+    today_start = Timex.subtract(now, Timex.Duration.from_days(1))
+    week_start = Timex.subtract(now, Timex.Duration.from_days(7))
+    month_start = Timex.subtract(now, Timex.Duration.from_days(28))
+
+    Enum.map(Cache.podcasts(), fn pod ->
+      {
+        pod,
+        {Subscription.subscribed_count(pod, now, today_start), Subscription.unsubscribed_count(pod, now, today_start)},
+        {Subscription.subscribed_count(pod, now, week_start), Subscription.unsubscribed_count(pod, now, week_start)},
+        {Subscription.subscribed_count(pod, now, month_start), Subscription.unsubscribed_count(pod, now, month_start)},
+        Subscription.subscribed_count(pod)
+      }
+    end)
+    |> Enum.sort_by(fn {_pod, _day, _week, _month, total} -> total end, :desc)
+  end
+
   defp episode_drafts do
     Episode.unpublished()
     |> Episode.newest_last(:recorded_at)
@@ -96,18 +110,11 @@ defmodule ChangelogWeb.Admin.PageController do
     |> Repo.all()
   end
 
-  defp item_drafts(user) do
-    NewsItem.drafted()
-    |> NewsItem.newest_first(:inserted_at)
-    |> NewsItem.logged_by(user)
-    |> NewsItem.preload_all()
-    |> Repo.all()
-  end
-
   defp members do
     %{
       today: Repo.count(Person.joined_today()),
       slack: Repo.count(Person.in_slack()),
+      spam: Repo.count(Person.spammy()),
       total: Repo.count(Person.joined())
     }
   end

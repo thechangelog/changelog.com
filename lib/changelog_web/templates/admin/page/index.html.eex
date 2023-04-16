@@ -1,21 +1,11 @@
-<%= if Enum.any?(@item_drafts) do %>
 <div class="ui basic segment">
-  <h1 class="ui header">News drafts</h1>
-  <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{items: @item_drafts, status: :draft})) %>
+  <%= render(EpisodeView, "_downloads.html", assigns) %>
 </div>
-<% end %>
-
-<%= if Enum.any?(@episode_drafts) do %>
-<div class="ui basic segment">
-  <h1 class="ui header">Episode drafts (next up)</h1>
-  <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @episode_drafts, status: :draft})) %>
-</div>
-<% end %>
 
 <div class="ui basic segment">
   <div class="ui centered stackable grid">
     <div class="ui twelve wide column">
-      <h1 class="ui header">Newsletters</h1>
+      <h1 class="ui header">Email Lists</h1>
       <table class="ui striped table">
         <thead>
           <tr>
@@ -27,13 +17,13 @@
           </tr>
         </thead>
         <tbody>
-        <%= for newsletter <- @newsletters do %>
+        <%= for {podcast, day, week, month, total} <- @email_lists do %>
           <tr>
-            <td><a href="<%= NewsletterView.web_url(newsletter) %>" rel="external"><%= newsletter.name %></a></td>
-          <%= for period <- [:daily, :weekly, :monthly] do %>
-            <td><i class="caret up icon"></i><%= NewsletterView.subscribers(newsletter, period) %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= NewsletterView.unsubscribers(newsletter, period) %></td>
+            <td><a href=""><%= podcast.name %></a></td>
+          <%= for {up, down} <- [day, week, month] do %>
+            <td><i class="caret up icon"></i><%= up %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= down %></td>
           <% end %>
-            <td><%= NewsletterView.subscribers(newsletter, :all) |> SharedHelpers.comma_separated %></td>
+            <td><%= SharedHelpers.comma_separated(total) %></td>
           </tr>
         <% end %>
         </tbody>
@@ -56,19 +46,23 @@
         <tbody>
           <tr>
             <td>Members today</td>
-            <td><%= @members[:today] |> SharedHelpers.comma_separated %></td>
+            <td><%= @members[:today] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
             <td>Members in Slack</td>
-            <td><%= @members[:slack] |> SharedHelpers.comma_separated %></td>
+            <td><%= @members[:slack] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
             <td>Members in total</td>
-            <td><%= @members[:total] |> SharedHelpers.comma_separated %></td>
+            <td><%= @members[:total] |> SharedHelpers.comma_separated() %></td>
+          </tr>
+          <tr>
+            <td>Spammy People</td>
+            <td><%= @members[:spam] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
             <td>People in total</td>
-            <td><%= Repo.count(Changelog.Person) |> SharedHelpers.comma_separated %></td>
+            <td><%= Changelog.Person |> Repo.count() |> SharedHelpers.comma_separated() %></td>
           </tr>
         </tbody>
       </table>
@@ -76,9 +70,12 @@
   </div>
 </div>
 
+<%= if Enum.any?(@episode_drafts) do %>
 <div class="ui basic segment">
-  <%= render(EpisodeView, "_downloads.html", assigns) %>
+  <h1 class="ui header">Episode drafts (next up)</h1>
+  <%= render(EpisodeView, "_table.html", Map.merge(assigns, %{episodes: @episode_drafts, status: :draft})) %>
 </div>
+<% end %>
 
 <%= if Enum.any?(@episode_requests) do %>
 <div class="ui basic segment">
@@ -86,21 +83,3 @@
   <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
 </div>
 <% end %>
-
-<div class="ui basic segment">
-  <div class="ui stackable centered two column grid">
-  <%= for podcast <- @podcasts do %>
-    <div class="column">
-      <div class="ui segment">
-        <h3 class="ui center aligned header">
-          <div class="content">
-            <i class="sound icon"></i>
-            <%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
-          </div>
-        </h3>
-        <%= render("_podcast_episodes_table.html", conn: @conn, podcast: podcast) %>
-      </div>
-    </div>
-  <% end %>
-  </div>
-</div>
