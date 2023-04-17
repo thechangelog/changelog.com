@@ -14,6 +14,10 @@ defmodule Changelog.Cache do
     episode = Episode.preload_podcast(episode)
     delete_prefix("/#{episode.podcast.slug}/#{episode.slug}")
 
+    if Podcast.is_a_changelog_pod(episode.podcast) do
+      delete_prefix("/podcast")
+    end
+
     if Episode.is_public(episode) do
       delete_prefix(episode.podcast.slug)
       delete_prefix("/master")

@@ -62,7 +62,7 @@
         <p class="show-header-signup_text">This podcast has been retired. <%= link("Head here", to: Routes.podcast_path(@conn, :index)) %> for more awesome podcasts.</p>
       <% !Podcast.has_feed(@podcast) -> %>
         <p>You can only subscribe to <em><%= @podcast.name %></em> by subscribing to our <%= link("Master Feed", to: Routes.podcast_path(@conn, :show, "master")) %></p>
-      <% is_a_changelog_pod(@podcast) -> %>
+      <% Podcast.is_a_changelog_pod(@podcast) -> %>
         <%= render("_news_subscribe.html", assigns) %>
       <% true -> %>
         <%= render("_podcast_subscribe.html", assigns) %>

@@ -181,6 +181,10 @@ defmodule Changelog.Podcast do
 
   def is_changelog(podcast), do: podcast.slug == "podcast" && podcast.is_meta
 
+  def is_a_changelog_pod(podcast) do
+    Enum.member?(~w(news podcast friends), podcast.slug)
+  end
+
   def is_interviews(podcast), do: podcast.slug == "podcast" && !podcast.is_meta
 
   def is_news(podcast), do: podcast.slug == "news"

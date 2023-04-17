@@ -6,13 +6,9 @@ defmodule ChangelogWeb.PodcastView do
   alias Changelog.Files.Cover
 
   def podcasts_for_index(podcasts) do
-    pods = Enum.reject(podcasts, &is_a_changelog_pod/1)
+    pods = Enum.reject(podcasts, &Podcast.is_a_changelog_pod/1)
 
     List.flatten([Podcast.changelog, pods, Podcast.master])
-  end
-
-  def is_a_changelog_pod(podcast) do
-    Enum.member?(~w(news podcast friends), podcast.slug)
   end
 
   def cover_path(%{slug: "master"}, version) do
