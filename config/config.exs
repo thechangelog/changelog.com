@@ -39,7 +39,7 @@ config :changelog,
 
 config :changelog, Oban,
   repo: Changelog.Repo,
-  queues: [audio_updater: 10, scheduled: 5, email: 1],
+  queues: [audio_updater: 10, scheduled: 5, email: 2],
   plugins: [Oban.Plugins.Pruner, Oban.Plugins.Stager]
 
 config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
