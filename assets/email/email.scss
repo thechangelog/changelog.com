@@ -203,6 +203,13 @@ body {
     h1, h2, h3, h4 {
       color: #e2e2e2;
     }
+
+    p {
+      code {
+        background-color: #333333;
+        border: 1px solid #212121;
+      }
+    }
   }
 
   .footer {
