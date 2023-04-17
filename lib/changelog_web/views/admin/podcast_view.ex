@@ -22,6 +22,9 @@ defmodule ChangelogWeb.Admin.PodcastView do
     1..Repo.count(Podcast.not_retired())
   end
 
+  def subscribers_count(%{subscribers: nil}), do: 0
+  def subscribers_count(%{subscribers: subs}), do: subs |> Map.values() |> Enum.sum()
+
   def status_label(podcast) do
     case podcast.status do
       :draft -> content_tag(:span, "Draft", class: "ui tiny yellow basic label")

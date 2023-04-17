@@ -5,25 +5,27 @@
 <div class="ui basic segment">
   <div class="ui centered stackable grid">
     <div class="ui twelve wide column">
-      <h1 class="ui header">Email Lists</h1>
+      <h1 class="ui header">Subscribers</h1>
       <table class="ui striped table">
         <thead>
           <tr>
             <th>List</th>
             <th>Today</th>
             <th>This Week</th>
-            <th>This Month</th>
-            <th>Total</th>
+            <th>This Month <i class="caret up icon"></th>
+            <th>Total Email</th>
+            <th>Total RSS</th>
           </tr>
         </thead>
         <tbody>
         <%= for {podcast, day, week, month, total} <- @email_lists do %>
           <tr>
-            <td><a href=""><%= podcast.name %></a></td>
+            <td><%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
           <%= for {up, down} <- [day, week, month] do %>
             <td><i class="caret up icon"></i><%= up %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= down %></td>
           <% end %>
             <td><%= SharedHelpers.comma_separated(total) %></td>
+            <td><%= podcast |> PodcastView.subscribers_count() |> SharedHelpers.comma_separated() %></td>
           </tr>
         <% end %>
         </tbody>
@@ -45,7 +47,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>Members today</td>
+            <td>New members today</td>
             <td><%= @members[:today] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
@@ -53,15 +55,15 @@
             <td><%= @members[:slack] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
-            <td>Members in total</td>
+            <td>Total members</td>
             <td><%= @members[:total] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
-            <td>Spammy People</td>
+            <td>Spammy members</td>
             <td><%= @members[:spam] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
-            <td>People in total</td>
+            <td>Total people</td>
             <td><%= Changelog.Person |> Repo.count() |> SharedHelpers.comma_separated() %></td>
           </tr>
         </tbody>
