@@ -11,8 +11,6 @@ defmodule ChangelogWeb.PageControllerTest do
         "/nightly",
         "/sponsor",
         "/sponsor/pricing",
-        "/weekly",
-        "/weekly/archive",
         "/manifest.json"
       ],
       fn route ->

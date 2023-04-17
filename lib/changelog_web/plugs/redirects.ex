@@ -23,7 +23,8 @@ defmodule ChangelogWeb.Plug.Redirects do
     "/soundcheck" => "/guest",
     "/submit" => "/news/submit",
     "/blog" => "/posts",
-    "/weekly" => "/news"
+    "/weekly" => "/news",
+    "/weekly/archive" => "/news"
   }
 
   def init(opts), do: opts
