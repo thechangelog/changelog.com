@@ -172,10 +172,11 @@ defmodule ChangelogWeb.Meta.Title do
 
   defp title(%{view_module: PodcastView, podcast: %{name: name, slug: slug}}) do
     case slug do
-      "backstage" -> "Changelog's #{name} Podcast"
+      "backstage" -> "Changelog's #{name} podcast"
       "master" -> name
-      "podcast" -> "#{name} Podcast"
-      _else -> "The #{name} Podcast"
+      "news" -> "Changelog News podcast + newsletter"
+      "podcast" -> "#{name} podcast"
+      _else -> "The #{name} podcast"
     end
   end
 
