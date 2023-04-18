@@ -1,7 +1,9 @@
 defmodule ChangelogWeb.HomeControllerTest do
   use ChangelogWeb.ConnCase
 
-  alias Changelog.{NewsItem, Person, Subscription}
+  import Mock
+
+  alias Changelog.{NewsItem, Newsletters, Person, Subscription}
 
   @tag :as_user
   test "renders the home page", %{conn: conn} do
@@ -76,6 +78,17 @@ defmodule ChangelogWeb.HomeControllerTest do
     conn = get(conn, Routes.home_path(conn, :opt_out, token, "news", item.id))
     assert redirected_to(conn) == Routes.news_item_path(conn, :show, NewsItem.slug(item))
     assert Subscription.is_unsubscribed(person, item)
+  end
+
+  @tag :as_inserted_user
+  test "subscribing to Changelog Nightly", %{conn: conn} do
+    with_mock(Craisin.Subscriber, subscribe: fn _, _ -> true end) do
+      nightly_id = Newsletters.nightly().id
+      conn = post(conn, Routes.home_path(conn, :subscribe, id: nightly_id))
+      assert called(Craisin.Subscriber.subscribe(nightly_id, :_))
+      assert conn.status == 302
+      assert count(Subscription.subscribed()) == 0
+    end
   end
 
   @tag :as_inserted_user

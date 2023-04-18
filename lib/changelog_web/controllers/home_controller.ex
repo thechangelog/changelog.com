@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Fastly, NewsItem, Person, Podcast, Slack, Subscription}
+  alias Changelog.{Fastly, NewsItem, Person, Podcast, Slack, StringKit, Subscription}
 
   plug(RequireUser, "except from email links" when action not in [:opt_out])
   plug(:scrub_params, "person" when action in [:update])
@@ -46,7 +46,8 @@ defmodule ChangelogWeb.HomeController do
   end
 
   def subscribe(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
-    if podcast = Repo.get(Podcast, id) do
+    if StringKit.is_integer(id) do
+      podcast = Repo.get(Podcast, id)
       context = "you subscribed in your changelog.com settings"
       Subscription.subscribe(me, podcast, context)
     else

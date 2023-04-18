@@ -40,7 +40,7 @@
             <td>Slug</td>
             <td>
               <%= @changeset.data.slug %>
-          <%= if !StringKit.is_number(@changeset.data.slug) do %>
+          <%= if !StringKit.is_integer(@changeset.data.slug) do %>
               <div class="ui basic yellow left pointing label">not a number ⚠️</div>
           <% end %>
             </td>
