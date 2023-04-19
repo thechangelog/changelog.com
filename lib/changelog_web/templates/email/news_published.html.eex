@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= EpisodeView.podcast_name_and_number(@episode) %> <%= if @episode.published_at, do: "(#{TimeView.hacker_date(@episode.published_at)})" %></title>
+    <title>Changelog News #<%= @episode.slug %> <%= if @episode.published_at, do: "(#{TimeView.hacker_date(@episode.published_at)})" %></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark only">
-    <link rel="stylesheet" href="<%= Routes.static_url(Endpoint, "/css/email.css") %>">
+    <link rel="stylesheet" href="<%= Routes.static_url(Endpoint, "/css/email.css") %>" data-turbolinks-track="reload">
   </head>
   <body>
     <p style="display:none !important;"><%= @episode.email_teaser %></p>
