@@ -7,7 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark only">
+    <meta name="description" content="<%= @episode.email_teaser %>">
+    <meta name="copyright" content="Changelog Media LLC">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Changelog">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="<%= PodcastView.cover_url(@episode.podcast, :original) %>">
+    <meta name="apple-itunes-app" content="app-id=<%= PodcastView.apple_id(@episode.podcast) %>">
     <link rel="stylesheet" href="<%= Routes.static_url(Endpoint, "/css/email.css") %>" data-turbolinks-track="reload">
+    <link rel="shortcut icon" href="<%= Routes.static_url(Endpoint, "/favicon.ico") %>">
   </head>
   <body>
     <p style="display:none !important;"><%= @episode.email_teaser %></p>

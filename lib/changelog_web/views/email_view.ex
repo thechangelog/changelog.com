@@ -9,7 +9,8 @@ defmodule ChangelogWeb.EmailView do
     EpisodeView,
     NewsItemView,
     NewsItemCommentView,
-    PersonView
+    PersonView,
+    PodcastView
   }
 
   def greeting(nil), do: "Hey there,"

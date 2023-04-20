@@ -21,12 +21,7 @@ defmodule ChangelogWeb.Meta.Apple do
 
   # Podcast pages
   defp podcasts_id(%{view_module: PodcastView, podcast: podcast}) do
-    if url = podcast.apple_url do
-      url
-      |> String.split("/")
-      |> List.last()
-      |> String.replace_leading("id", "")
-    end
+    PodcastView.apple_id(podcast)
   end
 
   defp podcasts_id(_), do: nil

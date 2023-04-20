@@ -11,6 +11,15 @@ defmodule ChangelogWeb.PodcastView do
     List.flatten([Podcast.changelog, pods, Podcast.master])
   end
 
+  def apple_id(podcast) do
+    if url = podcast.apple_url do
+      url
+      |> String.split("/")
+      |> List.last()
+      |> String.replace_leading("id", "")
+    end
+  end
+
   def cover_path(%{slug: "master"}, version) do
     Routes.static_url(Endpoint, "/images/podcasts/master-#{version}.png")
   end
