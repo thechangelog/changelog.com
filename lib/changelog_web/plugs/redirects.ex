@@ -24,7 +24,8 @@ defmodule ChangelogWeb.Plug.Redirects do
     "/submit" => "/news/submit",
     "/blog" => "/posts",
     "/weekly" => "/news",
-    "/weekly/archive" => "/news"
+    "/weekly/archive" => "/news",
+    "/weekly/unsubscribed" => "/news"
   }
 
   def init(opts), do: opts
