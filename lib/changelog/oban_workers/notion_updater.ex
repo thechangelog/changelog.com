@@ -11,9 +11,13 @@ defmodule Changelog.ObanWorkers.NotionUpdater do
   end
 
   def reach do
-    "b74d24c3ec414482a89af8df9955e702"
-    |> Notion.get_shipped_sponsorships()
-    |> update_reach()
+    for db <- ~w(b74d24c3ec414482a89af8df9955e702 c93a66e12ab14d41bc6b07b3c7e607d1) do
+      reach(db)
+    end
+  end
+
+  def reach(db) do
+    db |> Notion.get_shipped_sponsorships() |> update_reach()
   end
 
   defp update_reach(sponsorships) when is_list(sponsorships) do
