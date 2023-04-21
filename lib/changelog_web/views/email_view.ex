@@ -42,6 +42,16 @@ defmodule ChangelogWeb.EmailView do
     Routes.news_item_url(Endpoint, :show, NewsItem.slug(item))
   end
 
+  def news_title(episode) do
+    title = "Changelog News ##{episode.slug}"
+
+    if episode.published_at do
+      "#{title} (#{TimeView.hacker_date(episode.published_at)})"
+    else
+      title
+    end
+  end
+
   def comment_url(item, comment) do
     news_item_url(item) <> NewsItemCommentView.permalink_path(comment)
   end
