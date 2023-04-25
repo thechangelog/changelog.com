@@ -149,35 +149,4 @@ defmodule ChangelogWeb.PodcastController do
     |> assign(:tab, "recommended")
     |> render(:show)
   end
-
-  def upcoming(conn, params = %{"slug" => slug}) do
-    podcast = Podcast.get_by_slug!(slug)
-
-    page =
-      Podcast.get_episodes(podcast)
-      |> Episode.unpublished()
-      |> NewsItem.newest_last(:recorded_at)
-      |> Episode.preload_all()
-      |> Episode.exclude_transcript()
-      |> Repo.paginate(Map.put(params, :page_size, 10))
-
-    items =
-      page.entries
-      |> Enum.map(fn episode ->
-        item = %NewsItem{
-          type: :audio,
-          headline: episode.title,
-          topics: episode.topics
-        }
-
-        Map.put(item, :object, episode)
-      end)
-
-    conn
-    |> assign(:podcast, podcast)
-    |> assign(:items, items)
-    |> assign(:page, page)
-    |> assign(:tab, "upcoming")
-    |> render(:show)
-  end
 end
