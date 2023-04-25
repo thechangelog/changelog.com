@@ -39,7 +39,5 @@
     </span>
   <% end %>
   <% end %>
-
-    <%= admin_edit_link(@conn, @current_user, @item) %>
   </div>
 </div>
