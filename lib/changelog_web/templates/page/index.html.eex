@@ -1,8 +1,21 @@
 <%= render(ChangelogWeb.PodcastView, "index.html", assigns) %>
 
 <section class="show">
-  <a id="feed" class="anchor"></a>
+  <a id="recent" class="anchor"></a>
   <div class="feed">
+    <nav class="subnav">
+      <ul class="subnav-list">
+        <li class="subnav-list-item">
+          <%= link("Recent Episodes", to: "#recent", title: "Recent episodes from all Changelog podcasts", alt: "Recent Episodes") %>
+        </li>
+
+        <li class="subnav-list-item subnav-list-item--right">
+          <%= link("🙏 Request!", to: Routes.episode_request_path(@conn, :new), title: "Request an episode", alt: "Request an Episode") %>
+        </li>
+      </ul>
+    </nav>
+
+
   <%= if Enum.any?(@items) do %>
     <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
 
