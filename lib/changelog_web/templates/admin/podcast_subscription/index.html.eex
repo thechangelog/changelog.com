@@ -21,18 +21,20 @@
     <div class="value"><%= total_unsubscribed_count(@podcast) %></div>
     <div class="label">Total Unsubs</div>
   </div>
-  <% {up, down} = recent_subscription_counts(@podcast) %>
+<%= for days <- [7, 30] do %>
+  <% {up, down} = recent_subscription_counts(@podcast, days) %>
   <%= if up > down do %>
   <div class="ui horizontal statistic green">
     <div class="value">+<%= up - down %></div>
-    <div class="label">Last 30 Days</div>
+    <div class="label">Last <%= days %> Days</div>
   </div>
   <% else %>
   <div class="ui horizontal statistic red">
     <div class="value"><%= up - down %></div>
-    <div class="label">Last 30 Days</div>
+    <div class="label">Last <%= days %> Days</div>
   </div>
   <% end %>
+<% end %>
 </div>
 
 <div class="ui basic segment">

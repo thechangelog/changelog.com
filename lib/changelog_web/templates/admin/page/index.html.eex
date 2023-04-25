@@ -24,7 +24,7 @@
           <%= for {up, down} <- [day, week, month] do %>
             <td><i class="caret up icon"></i><%= up %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= down %></td>
           <% end %>
-            <td><%= SharedHelpers.comma_separated(total) %></td>
+            <td><%= link(SharedHelpers.comma_separated(total), to: Routes.admin_podcast_subscription_path(@conn, :index, podcast.slug)) %></td>
             <td><%= podcast |> PodcastView.subscribers_count() |> SharedHelpers.comma_separated() %></td>
           </tr>
         <% end %>

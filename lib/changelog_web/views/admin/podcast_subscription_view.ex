@@ -4,9 +4,9 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
   alias Changelog.Subscription
   alias ChangelogWeb.PersonView
 
-  def recent_subscription_counts(podcast) do
+  def recent_subscription_counts(podcast, days \\ 30) do
     start_time = Timex.now()
-    end_time = Timex.shift(start_time, days: -30)
+    end_time = Timex.shift(start_time, days: -days)
 
     up = podcast |> Subscription.subscribed_count(start_time, end_time)
     down = podcast |> Subscription.unsubscribed_count(start_time, end_time)
