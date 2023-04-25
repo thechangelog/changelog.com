@@ -133,8 +133,8 @@ defmodule ChangelogWeb.Meta.Title do
       "coc.html" ->
         "Code of conduct"
 
-      "home.html" ->
-        nil
+      "index.html" ->
+        "Podcasts for developers"
 
       "weekly.html" ->
         "Subscribe to Changelog Weekly"

@@ -183,7 +183,7 @@ defmodule ChangelogWeb.Router do
     get "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
-    get "/", PodcastController, :index, as: :root
+    get "/", PageController, :index, as: :root
 
     resources "/sponsored", NewsAdController, only: [:show], as: :news_sponsored
     post "/sponsored/impress", NewsAdController, :impress, as: :news_sponsored

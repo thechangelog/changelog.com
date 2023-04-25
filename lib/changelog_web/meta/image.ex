@@ -20,6 +20,8 @@ defmodule ChangelogWeb.Meta.Image do
 
   # the podcasts index
   defp get_image(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_image()
+  # the main index page
+  defp get_image(%{view_module: PageView, view_template: "index.html"}), do: podcasts_image()
 
   # a specific podcast
   defp get_image(%{podcast: podcast}), do: podcast_image(podcast)

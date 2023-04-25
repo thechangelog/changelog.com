@@ -38,6 +38,10 @@ defmodule ChangelogWeb.Meta.Description do
     end
   end
 
+  defp description(%{view_module: PageView, view_template: "index.html"}) do
+    podcasts_summary()
+  end
+
   defp description(%{view_module: PageView, view_template: "community.html"}) do
     "Join developers from all over the world with a backstage pass to everything we do"
   end

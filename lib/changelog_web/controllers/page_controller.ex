@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, Newsletters, NewsSponsorship, Podcast}
+  alias Changelog.{Cache, Episode, NewsItem, Newsletters, NewsSponsorship, Podcast}
   alias ChangelogWeb.TimeView
   alias ChangelogWeb.Plug.ResponseCache
 
@@ -13,7 +13,7 @@ defmodule ChangelogWeb.PageController do
   def action(conn, _) do
     case action_name(conn) do
       :guest -> guest(conn, Map.get(conn.params, "slug"))
-      :home -> home(conn, conn.params)
+      :index -> index(conn, conn.params)
       :sponsor -> sponsor(conn, conn.params)
       :sponsor_pricing -> sponsor_pricing(conn, conn.params)
       :sponsor_story -> sponsor_story(conn, Map.get(conn.params, "slug"))
@@ -52,17 +52,23 @@ defmodule ChangelogWeb.PageController do
     |> render(:guest)
   end
 
-  def home(conn, _params) do
-    featured =
-      Episode.published()
-      |> Episode.featured()
-      |> Episode.newest_first()
-      |> Episode.limit(5)
-      |> Repo.all()
-      |> Episode.preload_podcast()
-      |> Episode.preload_sponsors()
+  def index(conn, params) do
+    page =
+      Podcast.master()
+      |> Podcast.get_news_items()
+      |> NewsItem.published()
+      |> NewsItem.non_feed_only()
+      |> NewsItem.newest_first()
+      |> NewsItem.preload_all()
+      |> Repo.paginate(Map.put(params, :page_size, 10))
 
-    render(conn, :home, featured: featured)
+    items =
+      page.entries
+      |> Enum.map(&NewsItem.load_object/1)
+
+    conn
+    |> assign(:items, items)
+    |> render(:index)
   end
 
   def manifest_json(conn, _params) do

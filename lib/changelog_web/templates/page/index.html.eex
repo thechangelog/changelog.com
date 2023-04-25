@@ -1,0 +1,14 @@
+<%= render(ChangelogWeb.PodcastView, "index.html", assigns) %>
+
+<section class="show">
+  <a id="feed" class="anchor"></a>
+  <div class="feed">
+  <%= if Enum.any?(@items) do %>
+    <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
+
+    <nav class="load_more" role="navigation" aria-label="Pagination">
+      <%= link("View All", to: Routes.podcast_path(@conn, :show, "master"), class: "load_more-button") %>
+    </nav>
+  <% end %>
+  </div>
+</section>

@@ -31,7 +31,6 @@ body {
   min-height: calc(100vh - #{($header-height + $footer-height)});
 
   // Pages that should have black backgrounds
-  .page-podcast-index &,
   .page-page-ten & {
     background-color: $black;
   }

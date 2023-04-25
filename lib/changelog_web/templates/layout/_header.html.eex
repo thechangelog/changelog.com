@@ -6,7 +6,7 @@
       <nav class="header-nav">
         <div class="header-nav-wrap">
           <ul class="header-nav-primary header-nav-list">
-            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["podcast"]) %>">
+            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["page-index", "podcast"]) %>">
               <%= link("Podcasts", to: "/", title: "Changelog Podcasts") %>
             </li>
             <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["post"]) %>">
@@ -22,7 +22,7 @@
           <% end %>
           <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
             <li class="header-nav-list-item header-nav-list-item--ten">
-              <%= link("Changelog++", to: Routes.page_path(@conn, :++), title: "Join Changelog++") %>
+              <a href="<%= Routes.page_path(@conn, :++) %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a>
             </li>
           <% end %>
           </ul>
@@ -88,18 +88,14 @@
       <div class="mobile_nav-main-inner">
         <p class="mobile_nav-logo"><%= link("Changelog", to: "/", title: "Go $HOME") %></p>
         <ul class="mobile_nav-list">
-          <li class="mobile_nav-list-item"><%= link("News", to: Routes.root_path(@conn, :index)) %></li>
           <li class="mobile_nav-list-item"><%= link("Podcasts", to: Routes.podcast_path(@conn, :index)) %></li>
           <li class="mobile_nav-list-item"><%= link("Posts", to: Routes.post_path(@conn, :index)) %></li>
           <li class="mobile_nav-list-item"><%= link("Community", to: Routes.page_path(@conn, :community)) %></li>
-          <li class="mobile_nav-list-item"><%= link("About", to: Routes.page_path(@conn, :about)) %></li>
         <%= if !@current_user do %>
           <li class="mobile_nav-list-item"><%= link("Subscribe", to: Routes.person_path(@conn, :subscribe)) %></li>
         <% end %>
-        <li class="mobile_nav-list-item"><%= link("Submit News", to: Routes.news_item_path(@conn, :new)) %></li>
-        <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
-          <li class="mobile_nav-list-item"><%= link("Ten Years", to: Routes.page_path(@conn, :ten), title: "Celebrating Ten Years of Changelog") %></li>
-        <% end %>
+          <li class="mobile_nav-list-item"><a href="<%= Routes.page_path(@conn, :++) %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a></li>
+          <li class="mobile_nav-list-item"><%= link("Submit News", to: Routes.news_item_path(@conn, :new)) %></li>
         </ul>
       </div>
     </div>
