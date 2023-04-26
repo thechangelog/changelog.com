@@ -33,7 +33,7 @@ defmodule ChangelogWeb.AuthControllerTest do
     assert redirected_to(conn) == Routes.person_path(conn, :join, %{email: "joe@blow.com"})
   end
 
-  test "following a valid auth token signs you in", %{conn: conn} do
+  test "posting a valid auth token signs you in", %{conn: conn} do
     person = insert(:person)
 
     changeset =
@@ -45,20 +45,20 @@ defmodule ChangelogWeb.AuthControllerTest do
     {:ok, person} = Repo.update(changeset)
     {:ok, encoded} = Person.encoded_auth(person)
 
-    conn = get(conn, "/in/#{encoded}")
+    conn = post(conn, "/in/#{encoded}")
 
     assert redirected_to(conn) == Routes.home_path(conn, :show)
     assert get_session(conn, "id") == person.id
   end
 
-  test "following an invalid auth token doesn't sign you in", %{conn: conn} do
-    conn = get(conn, "/in/asdf1234")
+  test "posting an invalid auth token doesn't sign you in", %{conn: conn} do
+    conn = post(conn, "/in/asdf1234")
 
     assert html_response(conn, 200) =~ "Sign In"
     assert is_nil(get_session(conn, "id"))
   end
 
-  test "following an expired auth token doesn't sign you in", %{conn: conn} do
+  test "posting an expired auth token doesn't sign you in", %{conn: conn} do
     person = insert(:person)
 
     changeset =
@@ -70,7 +70,7 @@ defmodule ChangelogWeb.AuthControllerTest do
     {:ok, person} = Repo.update(changeset)
     {:ok, encoded} = Person.encoded_auth(person)
 
-    conn = get(conn, "/in/#{encoded}")
+    conn = post(conn, "/in/#{encoded}")
 
     assert html_response(conn, 200) =~ "Sign In"
     refute get_session(conn, "id") == person.id

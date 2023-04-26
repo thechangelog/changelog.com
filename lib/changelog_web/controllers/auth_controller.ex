@@ -23,7 +23,13 @@ defmodule ChangelogWeb.AuthController do
     render(conn, "new.html", person: nil)
   end
 
-  def create(conn, %{"token" => token}) do
+  def create(conn = %{method: "GET"}, %{"token" => token}) do
+    conn
+    |> assign(:token, token)
+    |> render(:create)
+  end
+
+  def create(conn = %{method: "POST"}, %{"token" => token}) do
     person = Person.get_by_encoded_auth(token)
 
     if person && Timex.before?(Timex.now(), person.auth_token_expires_at) do

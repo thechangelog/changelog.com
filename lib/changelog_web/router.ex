@@ -181,6 +181,7 @@ defmodule ChangelogWeb.Router do
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in
     get "/in/:token", AuthController, :create, as: :sign_in
+    post "/in/:token", AuthController, :create, as: :sign_in
     get "/out", AuthController, :delete, as: :sign_out
 
     get "/", PageController, :index, as: :root
