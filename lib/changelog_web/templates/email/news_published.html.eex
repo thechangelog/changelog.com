@@ -2,22 +2,30 @@
 <html>
   <head>
     <title><%= news_title(@episode) %></title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark only">
     <meta name="copyright" content="Changelog Media LLC">
-    <meta property="og:type" content="article">
-    <meta name="author" property="article:author" content="Jerod Santo">
-    <meta property="article:published_time" content="<%= TimeView.iso_8601(@episode.published_at) %>" />
-    <meta name="description" property="og:description" content="<%= @episode.title %>">
+    <meta name="author" content="<%= List.first(@episode.hosts, %{name: "Jerod Santo"}).name %>">
+    <meta name="description" property="og:description" content="<%= @episode.title |> html_escape() %>">
+
+    <meta property="og:type" content="website">
     <meta property="og:title" content="<%= news_title(@episode) %>">
     <meta property="og:site_name" content="Changelog News">
     <meta property="og:url" content="<%= Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug) %>">
     <meta property="og:locale" content="en_US">
     <meta property="og:image" content="<%= Routes.static_url(Endpoint, "/images/share/twitter-news.png") %>">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Changelog">
+    <meta name="twitter:description" content="<%= @episode.title |> html_escape() %>">
+    <meta name="twitter:url" content="<%= Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug) %>">
+    <meta name="twitter:image" content="<%= Routes.static_url(Endpoint, "/images/share/twitter-news.png") %>">
+
     <meta name="apple-itunes-app" content="app-id=<%= PodcastView.apple_id(@episode.podcast) %>">
+
     <link rel="stylesheet" href="<%= Routes.static_url(Endpoint, "/css/email.css") %>" data-turbolinks-track="reload">
     <link rel="shortcut icon" href="<%= Routes.static_url(Endpoint, "/favicon.ico") %>">
   </head>
