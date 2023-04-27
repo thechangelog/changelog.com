@@ -173,6 +173,7 @@ defmodule ChangelogWeb.Router do
     get "/~/profile", HomeController, :profile
     get "/~/account", HomeController, :account
     get "/~/nope/:token/:type/:id", HomeController, :opt_out
+    post "/~/nope/:token/:type/:id", HomeController, :opt_out
 
     post "/~/slack", HomeController, :slack
     post "/~/subscribe", HomeController, :subscribe

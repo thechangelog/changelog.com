@@ -1,11 +1,18 @@
-<article class="article">
-  <div class="richtext">
-    <h1>Never Gonna Get It</h1>
+<article class="auth">
+  <h1 class="auth-header">Finalizing...</h1>
 
-    <p>Notification disabled! Change your mind? <%= link "Sign In", to: Routes.sign_in_path(@conn, :new) %> to manage notifications and other settings.</p>
-
-    <div class="video-container">
-      <iframe src="https://www.youtube.com/embed/BVeZnsuY7Vc?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-  </div>
+  <%= form_for @conn, Routes.home_path(@conn, :opt_out, @token, @type, @id), [id: "finalize", class: "form form--full_width"], fn _f -> %>
+    <noscript>
+      <div class="form-submit">
+        <div class="form-submit-note">
+          JavaScript disabled. Click the button!
+        </div>
+        <input type="submit" value="Finalize">
+      </div>
+    </noscript>
+  <% end %>
 </article>
+
+<script type="text/javascript">
+  document.getElementById("finalize").submit();
+</script>

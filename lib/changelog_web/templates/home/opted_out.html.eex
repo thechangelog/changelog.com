@@ -1,0 +1,11 @@
+<article class="article">
+  <div class="richtext">
+    <h1>Never Gonna Get It</h1>
+
+    <p>Notification disabled! Change your mind? <%= link("Go here", to: Routes.home_path(@conn, :account)) %> to manage notifications and other settings.</p>
+
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/BVeZnsuY7Vc?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+</article>

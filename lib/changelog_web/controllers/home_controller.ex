@@ -103,6 +103,14 @@ defmodule ChangelogWeb.HomeController do
     |> redirect(to: Routes.home_path(conn, :show))
   end
 
+  def opt_out(conn = %{method: "GET"}, %{"token" => token, "type" => type, "id" => id}) do
+    conn
+    |> assign(:token, token)
+    |> assign(:type, type)
+    |> assign(:id, id)
+    |> render(:opt_out)
+  end
+
   def opt_out(conn, %{"token" => token, "type" => type, "id" => id}) do
     person = Person.get_by_encoded_id(token)
 
@@ -138,7 +146,7 @@ defmodule ChangelogWeb.HomeController do
       |> Repo.update()
     end
 
-    render(conn, :opt_out)
+    render(conn, :opted_out)
   end
 
   defp set_slack_id(person) do
