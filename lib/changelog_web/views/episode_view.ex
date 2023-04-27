@@ -239,14 +239,6 @@ defmodule ChangelogWeb.EpisodeView do
     Github.Source.new("transcripts", episode).repo_url
   end
 
-  # format: https://github.com/Podcastindex-org/podcast-namespace/blob/main/chapters/jsonChapters.md
-  def render("chapters.json", %{chapters: chapters}) do
-    %{
-      version: "1.2.0",
-      chapters: chapters_json(chapters)
-    }
-  end
-
   defp chapters_json(chapters) do
     chapters
     |> Enum.with_index()
@@ -261,6 +253,14 @@ defmodule ChangelogWeb.EpisodeView do
       }
       |> Map.reject(fn {_k, v} -> is_nil(v) end)
     end)
+  end
+
+  # format: https://github.com/Podcastindex-org/podcast-namespace/blob/main/chapters/jsonChapters.md
+  def render("chapters.json", %{chapters: chapters}) do
+    %{
+      version: "1.2.0",
+      chapters: chapters_json(chapters)
+    }
   end
 
   def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do

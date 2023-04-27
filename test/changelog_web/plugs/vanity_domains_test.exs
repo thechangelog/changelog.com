@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.VanityDomainsTest do
   use ChangelogWeb.ConnCase
 
-  alias ChangelogWeb.{Plug}
+  alias ChangelogWeb.Plug.VanityDomains
 
   @jsparty %{
     vanity_domain: "https://jsparty.fm",
@@ -32,7 +32,8 @@ defmodule ChangelogWeb.VanityDomainsTest do
   end
 
   def build_conn_with_host_and_path(host, path) do
-    build_conn(:get, path) |> put_req_header("host", host)
+    conn = build_conn(:get, path)
+    %Plug.Conn{conn | host: host}
   end
 
   def assign_podcasts(conn, podcasts) do
@@ -43,7 +44,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/")
       |> assign_podcasts([@jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/jsparty")
   end
@@ -52,7 +53,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/102")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/gotime/102")
   end
@@ -61,7 +62,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/++")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, Application.get_env(:changelog, :plusplus_url))
   end
@@ -70,7 +71,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/apple")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, @jsparty.apple_url)
   end
@@ -79,7 +80,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/spotify")
       |> assign_podcasts([@gotime, @gotime])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, @gotime.spotify_url)
   end
@@ -88,7 +89,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/overcast")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "https://overcast.fm/itunes1209616598/js-party")
   end
@@ -97,7 +98,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/rss")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/gotime/feed")
   end
@@ -106,7 +107,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/email")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/subscribe/jsparty")
   end
@@ -115,7 +116,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/request")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/request/gotime")
   end
@@ -124,7 +125,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/community")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/community")
   end
@@ -133,7 +134,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/studio")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, @jsparty.riverside_url)
   end
@@ -142,7 +143,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/guest")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "/guest/jsparty")
   end
@@ -151,14 +152,14 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("jsparty.fm", "/ff")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
 
     conn =
       build_conn_with_host_and_path("gotime.fm", "/gs")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
   end
@@ -167,7 +168,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/merch")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "https://merch.changelog.com")
   end
@@ -176,7 +177,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path(ChangelogWeb.Endpoint.host(), "/")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     vanity_redirect = conn |> get_resp_header("x-changelog-vanity-redirect")
     assert vanity_redirect == ["false"]
@@ -186,7 +187,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       build_conn_with_host_and_path("21.#{ChangelogWeb.Endpoint.host()}", "/")
       |> assign_podcasts([@gotime, @jsparty])
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     vanity_redirect = conn |> get_resp_header("x-changelog-vanity-redirect")
     assert vanity_redirect == ["false"]
@@ -196,7 +197,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     conn =
       :get
       |> build_conn("")
-      |> Plug.VanityDomains.call([])
+      |> VanityDomains.call([])
 
     assert conn.status == nil
   end

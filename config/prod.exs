@@ -63,7 +63,6 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 config :changelog, Oban,
   plugins: [
     Oban.Plugins.Pruner,
-    Oban.Plugins.Stager,
     {Oban.Plugins.Cron,
      timezone: "US/Central",
      crontab: [

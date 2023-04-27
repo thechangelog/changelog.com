@@ -21,6 +21,4 @@ config :changelog, Changelog.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   username: System.get_env("DB_USER", "postgres")
 
-config :changelog, Oban,
-  queues: false,
-  plugins: false
+config :changelog, Oban, testing: :manual

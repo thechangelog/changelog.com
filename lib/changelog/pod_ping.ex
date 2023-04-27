@@ -1,6 +1,6 @@
 defmodule Changelog.PodPing do
 
-  alias Changelog.HTTP
+  # alias Changelog.HTTP
   alias ChangelogWeb.{Endpoint}
   alias ChangelogWeb.Router.Helpers, as: Routes
 

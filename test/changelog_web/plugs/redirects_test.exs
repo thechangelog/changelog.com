@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.RedirectsTest do
   use ChangelogWeb.ConnCase
 
-  alias ChangelogWeb.{Plug}
+  alias ChangelogWeb.Plug.Redirects
 
   @default_host ChangelogWeb.Endpoint.host()
 
@@ -58,9 +58,10 @@ defmodule ChangelogWeb.RedirectsTest do
   end
 
   def http_conn(host, path) do
-    build_conn(:get, path)
-    |> put_req_header("host", host)
-    |> Plug.Redirects.call([])
+    conn = build_conn(:get, path)
+    conn = %Plug.Conn{conn | host: host}
+
+    Redirects.call(conn, [])
   end
 
   test "changelog hosts" do

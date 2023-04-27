@@ -17,7 +17,7 @@ defmodule ChangelogWeb.Plug.Conn do
   Extracts the host from a connection's headers, starting with `forwarded-host`
   """
   def get_host(conn) do
-    host = get_header(conn, "x-forwarded-host") || get_header(conn, "host")
+    host = get_header(conn, "x-forwarded-host") || get_header(conn, "host") || Map.get(conn, :host, nil)
 
     host
     |> to_string()
