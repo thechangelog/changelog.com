@@ -2,8 +2,6 @@ defmodule Changelog.Buffer do
   alias Changelog.NewsItem
   alias Changelog.Buffer.{Client, Content}
 
-  @shared ~w(506b005149bbd8223400006b)
-
   @afk ~w(5af9b7a28bae46d01ead92d3)
   @brainscience ~w(5d49c7410eb4bb4992040a42)
   @changelog ~w(4f3ad7c8512f7ef962000004)
@@ -31,6 +29,7 @@ defmodule Changelog.Buffer do
       String.starts_with?(slug, "founderstalk") -> @founderstalk
       String.starts_with?(slug, "gotime") -> @gotime
       String.starts_with?(slug, "jsparty") -> @jsparty
+      String.starts_with?(slug, "news") -> nil
       String.starts_with?(slug, "practicalai") -> @practicalai
       String.starts_with?(slug, "shipit") -> @shipit
       true -> @changelog
@@ -64,7 +63,7 @@ defmodule Changelog.Buffer do
     link = Content.episode_link(item)
     text = Content.episode_text(item)
     profiles = profiles_for_podcast(episode.podcast)
-    Client.create(with_shared(profiles), text, link: link)
+    Client.create(profiles, text, link: link)
   end
 
   # an episode news item with no attached object
@@ -77,7 +76,7 @@ defmodule Changelog.Buffer do
     link = Content.post_link(item)
 
     # network-wide gets full text
-    Client.create(with_shared(@changelog), text, link: link)
+    Client.create(@changelog, text, link: link)
 
     # topic-specific profiles get brief version
     for profile <- profiles_for_topics(item.topics) do
@@ -100,6 +99,4 @@ defmodule Changelog.Buffer do
       Client.create(profile, brief, link: link, photo: image)
     end
   end
-
-  defp with_shared(profiles), do: profiles ++ @shared
 end

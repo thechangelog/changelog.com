@@ -49,6 +49,21 @@ defmodule Changelog.Buffer.BufferTest do
       end
     end
 
+    test "is a no-op when sent News episode" do
+      news = insert(:podcast, slug: "news")
+      episode = insert(:episode, podcast: news)
+      item = %NewsItem{type: :audio, object_id: Episode.object_id(episode)}
+
+      with_mocks([
+        {Buffer.Content, [], [episode_text: fn _ -> "text" end]},
+        {Buffer.Content, [], [episode_link: fn _ -> "url1" end]},
+        {Buffer.Client, [], [create: fn _, _, _ -> true end]}
+      ]) do
+        Buffer.queue(item)
+        assert called(Buffer.Client.create(nil, "text", link: "url1"))
+      end
+    end
+
     test "is a no-op when sent other audio news item" do
       item = %NewsItem{type: :audio}
 

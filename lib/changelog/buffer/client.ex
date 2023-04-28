@@ -26,6 +26,7 @@ defmodule Changelog.Buffer.Client do
   def handle({:error, %{reason: reason}}), do: log(reason)
 
   def create(profiles, text, media \\ [])
+  def create(nil, _text, _media), do: false
   def create(profiles, text, media) when is_binary(profiles), do: create([profiles], text, media)
 
   def create(profiles, text, media) when is_list(profiles) do

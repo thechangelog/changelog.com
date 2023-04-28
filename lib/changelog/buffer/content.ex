@@ -27,11 +27,12 @@ defmodule Changelog.Buffer.Content do
       ]
       |> Enum.reject(&is_nil/1)
 
-    episode_emoj = episode_emoji()
+    emoj = episode_emoji()
+    ann = podcast_announcement(episode)
 
     if Enum.any?(meta) do
       """
-      #{episode_emoj} New episode of #{episode.podcast.name} #{episode_emoj}
+      #{emoj} #{ann}
 
       #{Enum.join(meta, "\n")}
 
@@ -39,11 +40,23 @@ defmodule Changelog.Buffer.Content do
       """
     else
       """
-      #{episode_emoj} New episode of #{episode.podcast.name} #{episode_emoj}
+      #{emoj} #{ann}
 
       💚 #{EpisodeView.share_url(episode)}
       """
     end
+  end
+
+  defp podcast_announcement(%{podcast: %{slug: "podcast"}}) do
+    "New Changelog interview!"
+  end
+
+  defp podcast_announcement(%{podcast: %{slug: "shipit"}}) do
+    "New episode of Ship It!"
+  end
+
+  defp podcast_announcement(%{podcast: %{name: name}}) do
+    "New episode of #{name}!"
   end
 
   def news_item_brief(nil), do: ""
@@ -131,9 +144,9 @@ defmodule Changelog.Buffer.Content do
   end
 
   defp author_emoji, do: ~w(✍ 🖋 📝 🗣) |> Enum.random()
-  defp episode_emoji, do: ~w(🙌 🎉 🔥 🎧 💥 🚢 🚀) |> Enum.random()
-  defp guest_emoji, do: ~w(🌟 ✨ 💫 🤩 😎) |> Enum.random()
-  defp host_emoji, do: ~w(🎙 ⚡️ 🎤) |> Enum.random()
+  defp episode_emoji, do: ~w(🙌 🎉 🔥 🎧 💥 🚢 🚀 🥳 🤘) |> Enum.random()
+  defp guest_emoji, do: ~w(🌟 ✨ 💫 🤩 😎 ) |> Enum.random()
+  defp host_emoji, do: ~w(🎙 ⚡️ 🎤 🫡) |> Enum.random()
   defp source_emoji, do: ~w(📨 📡 📢 🔊) |> Enum.random()
   defp title_emoji, do: ~w(🗣 💬 💡 💭 📌) |> Enum.random()
   defp topic_emoji, do: ~w(🏷 🗂 🗃️ 🗄️) |> Enum.random()
