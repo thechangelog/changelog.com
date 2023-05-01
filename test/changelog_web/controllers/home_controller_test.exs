@@ -110,6 +110,16 @@ defmodule ChangelogWeb.HomeControllerTest do
   end
 
   @tag :as_inserted_user
+  test "unsubscribing from Changelog Nightly", %{conn: conn} do
+    with_mock(Craisin.Subscriber, unsubscribe: fn _, _ -> true end) do
+      nightly_id = Newsletters.nightly().id
+      conn = post(conn, Routes.home_path(conn, :unsubscribe, id: nightly_id))
+      assert called(Craisin.Subscriber.unsubscribe(nightly_id, :_))
+      assert conn.status == 302
+    end
+  end
+
+  @tag :as_inserted_user
   test "signed in and opting out of notifications", %{conn: conn} do
     person = conn.assigns.current_user
     {:ok, token} = Person.encoded_id(person)

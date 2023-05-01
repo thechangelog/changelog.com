@@ -67,7 +67,8 @@ defmodule ChangelogWeb.HomeController do
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
-    if podcast = Repo.get(Podcast, id) do
+    if StringKit.is_integer(id) do
+      podcast = Repo.get(Podcast, id)
       Subscription.unsubscribe(me, podcast)
     else
       Craisin.Subscriber.unsubscribe(id, me.email)
