@@ -20,18 +20,6 @@ defmodule ChangelogWeb.LiveController do
     |> render(:index)
   end
 
-  def show(conn, %{"id" => hashid}) do
-    episode =
-      Episode.recorded_live()
-      |> Repo.get_by!(id: Episode.decode(hashid))
-      |> Episode.preload_all()
-
-    conn
-    |> assign(:episode, episode)
-    |> assign(:podcast, episode.podcast)
-    |> render(:show)
-  end
-
   def ical(conn, params) do
     episodes =
       Episode.with_podcast_slug(params["slug"])

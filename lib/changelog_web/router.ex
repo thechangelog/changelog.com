@@ -214,7 +214,6 @@ defmodule ChangelogWeb.Router do
     get "/live/ical", LiveController, :ical
     get "/live/ical/:slug", LiveController, :ical
     get "/live/status", LiveController, :status
-    get "/live/:id", LiveController, :show
 
     get "/search", SearchController, :search
 
