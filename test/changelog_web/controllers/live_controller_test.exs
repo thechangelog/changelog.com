@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.LiveControllerTest do
   use ChangelogWeb.ConnCase
 
+  alias Changelog.Episode
   alias ChangelogWeb.LiveView
 
   describe "the live index" do
@@ -28,6 +29,22 @@ defmodule ChangelogWeb.LiveControllerTest do
       conn = get(conn, Routes.live_path(conn, :index))
 
       assert html_response(conn, 200) =~ LiveView.header_for_episode_list([])
+    end
+  end
+
+  test "getting a live episode page", %{conn: conn} do
+    episode = insert(:episode, recorded_live: true, recorded_at: hours_from_now(1))
+
+    conn = get(conn, Routes.live_path(conn, :show, Episode.hashid(episode)))
+
+    assert html_response(conn, 200) =~ episode.title
+  end
+
+  test "getting a non-live episode page", %{conn: conn} do
+    episode = insert(:episode, recorded_live: false, recorded_at: hours_from_now(1))
+
+    assert_raise Ecto.NoResultsError, fn ->
+      get(conn, Routes.live_path(conn, :show, Episode.hashid(episode)))
     end
   end
 

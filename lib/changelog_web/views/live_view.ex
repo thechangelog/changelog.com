@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.LiveView do
   use ChangelogWeb, :public_view
 
-  alias ChangelogWeb.{EpisodeView, PersonView, PodcastView, TimeView}
+  alias Changelog.{Episode}
+  alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, PodcastView, TimeView}
 
   def render("ical.ics", %{episodes: episodes}) do
     events =
@@ -9,7 +10,7 @@ defmodule ChangelogWeb.LiveView do
         %ICalendar.Event{
           summary: "#{episode.podcast.name} Live",
           description: episode_title_with_subtitle(episode),
-          url: youtube_url(episode),
+          url: Routes.live_url(Endpoint, :show, Episode.hashid(episode)),
           dtstart: episode.recorded_at,
           dtend: Timex.shift(episode.recorded_at, minutes: 90)
         }
