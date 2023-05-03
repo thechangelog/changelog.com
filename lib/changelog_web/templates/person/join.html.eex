@@ -20,8 +20,9 @@
     <div class="form-element_wrap <%= PublicHelpers.error_class(f, :handle) %>">
       <div class="form-element">
         <label>Username / Handle<span>*</span></label>
-        <%= text_input(f, :handle, placeholder: "gracehopper", required: true, autocapitalize: "none") %>
+        <%= text_input(f, :handle, placeholder: "gracehopper", required: true, autocapitalize: "none", pattern: "^[a-z|0-9|_|-]+$") %>
         <%= PublicHelpers.error_message(f, :handle) %>
+        <p class="form-element-note">Valid characters: a-z, 0-9, -, _</p>
       </div>
     </div>
 
