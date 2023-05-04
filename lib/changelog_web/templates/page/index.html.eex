@@ -6,11 +6,11 @@
     <nav class="subnav">
       <ul class="subnav-list">
         <li class="subnav-list-item">
-          <%= link("Recent Episodes", to: "#recent", title: "Recent episodes from all Changelog podcasts", alt: "Recent Episodes") %>
+          <%= link("Recent Episodes", to: "#recent", title: "Recent episodes from all Changelog podcasts") %>
         </li>
 
         <li class="subnav-list-item subnav-list-item--right">
-          <%= link("🙏 Request!", to: Routes.episode_request_path(@conn, :new), title: "Request an episode", alt: "Request an Episode") %>
+          <%= link("🙏 Request!", to: Routes.episode_request_path(@conn, :new), title: "Request an episode") %>
         </li>
       </ul>
     </nav>
