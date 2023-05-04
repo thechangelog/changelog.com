@@ -10,10 +10,10 @@
       <img class="podcast_player-art js-player-art" src="data:," alt="Player art">
     </div>
     <div class="podcast_player-details">
-      <div class="podcast_player-details-title">
+      <figure class="podcast_player-details-title">
         <span class="js-player-now-playing"></span>
         <figcaption class="js-player-title"></figcaption>
-      </div>
+      </figure>
     </div>
     <div class="podcast_player-buttons">
       <button class="podcast_player-button podcast_player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
