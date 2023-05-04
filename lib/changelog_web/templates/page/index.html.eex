@@ -1,6 +1,6 @@
 <%= render(ChangelogWeb.PodcastView, "index.html", assigns) %>
 
-<section class="show">
+<div class="show">
   <a id="recent" class="anchor"></a>
   <div class="feed">
     <nav class="subnav">
@@ -24,4 +24,4 @@
     </nav>
   <% end %>
   </div>
-</section>
+</div>
