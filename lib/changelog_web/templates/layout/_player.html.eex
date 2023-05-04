@@ -7,7 +7,7 @@
       <button class="podcast_player-nav-button podcast_player-nav-button--close js-player-close" title="Close Player"></button>
     </nav>
     <div class="image_border_hack">
-      <img class="podcast_player-art js-player-art">
+      <img class="podcast_player-art js-player-art" src="data:,">
     </div>
     <div class="podcast_player-details">
       <div class="podcast_player-details-title">
