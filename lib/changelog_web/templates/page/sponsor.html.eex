@@ -4,8 +4,8 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
-      <h1>We reach 85,000 developers&nbsp;weekly</h1>
-      <p>350,000 monthly listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> SharedHelpers.comma_separated %> email subscribers&nbsp;&nbsp;•&nbsp;&nbsp;250,000 monthly pageviews</p>
+      <h1>We reach 100,000 developers&nbsp;weekly</h1>
+      <p>650,000 monthly listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> SharedHelpers.comma_separated %> newsletter subscribers&nbsp;&nbsp;•&nbsp;&nbsp;6,500 Slack members</p>
 
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
@@ -20,20 +20,9 @@
   <section class="marketing-section">
     <a id="how-it-works" class="anchor"></a>
     <header class="marketing-section-header">
-      <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/subbrand-icons.svg") %>' role="presentation">
       <h2>How sponsorship works</h2>
-      <p>Our primary focus is on developers, but people from all areas of the software industry tune in to our developer podcast network and our newsfeed and newsletter to inform their next big idea. From CTOs and Directors of Engineering to Frontend Developers and Product Designers, our audience cares about the future of software development, cloud infrastructure, dev culture, services, tooling, mental health &mdash; and they're waiting to hear from you.</p>
+      <p>Trust us to tell your story to the developer community.</p>
     </header>
-
-    <div class="step_markers_wrap">
-      <div class="step_markers step_markers--3">
-        <div class="step_markers-circle"></div>
-        <div class="step_markers-line"></div>
-        <div class="step_markers-circle"></div>
-        <div class="step_markers-line"></div>
-        <div class="step_markers-circle"></div>
-      </div>
-    </div>
 
     <div class="marketing-section-grid marketing-section-grid--3">
       <div class="marketing-section-grid-item">
@@ -49,9 +38,14 @@
         <p>Developers follow our content to explore new ideas and discover new tools. We make sure your brand and product are a part of their journey. We're here to guide and help you every step of the way.</p>
       </div>
     </div>
+  </section>
 
+  <section class="marketing-section">
     <div class="marketing-section-wrap">
-      <h3>Podcast sponsorship examples</h3>
+      <header class="marketing-section-header">
+        <h2>Listen before you buy</h2>
+        <p>Example campaigns from brands who trust us.</p>
+      </header>
       <div class="grid_table">
         <div class="grid_table-header">
           <div class="grid_table-header-column"><p>Campaign type</p></div>
@@ -70,21 +64,6 @@
       </div>
     </div>
 
-    <div class="marketing-section-wrap">
-      <h3>News sponsorship examples</h3>
-      <div class="mock_browser">
-        <div class="mock_browser-header">
-          <div class="mock_browser-header-buttons"><span></span><span></span><span></span></div>
-          <div class="mock_browser-header-address_bar">changelog.com</div>
-        </div>
-        <div class="mock_browser-body">
-          <div class="feed">
-            <%= for ad <- @ads, do: NewsItemView.render_item_summary_or_ad(ad, assigns) %>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <footer class="marketing-section-footer">
       <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
       <div class="marketing-button_group" style="--max-width-group: 380px;">
@@ -98,14 +77,14 @@
   <section class="marketing-section marketing-section--dark">
     <header class="marketing-section-header">
       <h2>Who you’ll reach</h2>
-      <p>Our audience is the builders, leaders, and planners defining the future of software.</p>
+      <p>We speak to the builders, leaders, and planners defining the future of software. From ICs to engineering management, CEOs to builders, full-stack devs to frontenders, and everywhere in-between. Our audience cares about the future of software development, cloud infrastructure, AI, dev culture, services, tooling, and mental health &mdash; and they're waiting to hear from you.</p>
     </header>
 
     <div class="marketing-section-wrap">
       <div class="bar_graph">
         <div class="bar_graph-item">
           <div class="bar_graph-item-percentage" style="height: 30%; width: 22%;">11%</div>
-          <div class="bar_graph-item-label">CEO / Execs</div>
+          <div class="bar_graph-item-label">CEOs / Founders</div>
         </div>
         <div class="bar_graph-item">
           <div class="bar_graph-item-percentage" style="height: 50%; width: 40%;">27%</div>
@@ -113,11 +92,11 @@
         </div>
         <div class="bar_graph-item">
           <div class="bar_graph-item-percentage" style="height: 100%; width: 90%;">43%</div>
-          <div class="bar_graph-item-label">Backend / Engineer</div>
+          <div class="bar_graph-item-label">Backend / Engineering</div>
         </div>
         <div class="bar_graph-item">
           <div class="bar_graph-item-percentage" style="height: 34%; width: 27%;">12%</div>
-          <div class="bar_graph-item-label">CTO / Engineering</div>
+          <div class="bar_graph-item-label">Eng management / CTOs</div>
         </div>
         <div class="bar_graph-item">
           <div class="bar_graph-item-percentage" style="height: 22%; width: 18%">7%</div>
