@@ -37,6 +37,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
   end
 
   def assign_podcasts(conn, podcasts) do
+    Changelog.Cache.put("vanity", podcasts)
     assign(conn, :podcasts, podcasts)
   end
 

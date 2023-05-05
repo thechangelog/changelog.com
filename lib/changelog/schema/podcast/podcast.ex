@@ -146,6 +146,8 @@ defmodule Changelog.Podcast do
   def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
   def retired_last(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.status])
 
+  def vanity_domains(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.vanity_domain), select: [:slug, :vanity_domain])
+
   def get_by_slug!("master"), do: master()
 
   def get_by_slug!(slug) do
