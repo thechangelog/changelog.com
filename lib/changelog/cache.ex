@@ -102,8 +102,7 @@ defmodule Changelog.Cache do
 
   def vanity_domains do
     get_or_store("vanity", :infinity, fn ->
-      Podcast.vanity_domains()
-      |> Repo.all()
+      Podcast.with_vanity_domain() |> Repo.all()
     end)
   end
 end
