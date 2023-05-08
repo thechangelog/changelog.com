@@ -16,16 +16,20 @@ $roboto-mono-regular:  400;
 $roboto-mono-bold:     700;
 
 // Colors
+$white: #ffffff;
+$off-white: #f2f2f2;
+$black: #101820;
 $green: #59b287;
+$light-grey: #f5f5f5;
+$dark-grey: #303030;
+$dark-blue: #1a232c;
 $medium-grey: #878b8f;
-$grey: #f5f5f5;
-$dark-grey: #1A232C;
 
 body {
   font-family: $open-sans;
   width: 100%;
-  color: #303030;
-  background-color: #fff;
+  color: $dark-grey;
+  background-color: $white;
   margin: 0;
   padding: 0;
 }
@@ -59,7 +63,7 @@ body {
   font-family: $roboto-mono;
   text-align: center;
   font-size: 13px;
-  background-color: $grey;
+  background-color: $light-grey;
   padding: 1em 0;
   line-height: 1.8;
 
@@ -72,18 +76,25 @@ body {
   }
 
   input::placeholder {
-    color: #303030;
+    color: $dark-grey;
     opacity: .75;
   }
 }
 
 .content {
-
   margin-bottom: 32px;
   &:last-of-type { margin-bottom: 0 !important; }
 
   h1, h2, h3, h4 {
-    color: #101010;
+    color: $black;
+
+    a {
+      color: $black;
+      font-weight: unset;
+      &:hover {
+        color: $green;
+      }
+    }
   }
 
   h1 {
@@ -125,8 +136,8 @@ body {
     color: $green;
     text-decoration: underline;
     &:hover {
-      color: $green;
-      text-decoration:underline
+      text-decoration: underline;
+      color: $black;
     }
   }
   p, li {
@@ -212,11 +223,13 @@ body {
 }
 
 .footer {
-  color: #777;
+  a {
+    color: $dark-grey;
 
-  @media (max-width: 700px) { background-color: $grey; }
-
-  a { color: #121921; }
+    &:hover {
+      color: $green;
+    }
+  }
 
   p {
     font-size: 13px;
@@ -230,23 +243,37 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-    color: #f2f2f2;
-    background-color: #101820;
+    color: $off-white;
+    background-color: $black;
   }
 
   .meta {
-    color: #e6e5e6;
-    background-color: $dark-grey;
+    color: $off-white;
+    background-color: $dark-blue;
     border-bottom: 1px solid $medium-grey;
 
     input::placeholder {
-      color: #e6e5e6;
+      color: $off-white;
     }
   }
 
   .content {
     h1, h2, h3, h4 {
-      color: #e2e2e2;
+      color: $off-white;
+
+      a {
+        color: $off-white;
+
+        &:hover {
+          color: $green;
+        }
+      }
+    }
+
+    a {
+      &:hover {
+        color: $off-white;
+      }
     }
 
     p {
@@ -258,9 +285,15 @@ body {
   }
 
   .footer {
-    color: #e6e5e6;
+    color: $off-white;
 
-    a { color: #e6e5e6 }
+    a {
+      color: $off-white;
+
+      &:hover {
+        color: $green;
+      }
+    }
 
     @media (max-width: 700px) { background-color: $dark-grey; }
   }
