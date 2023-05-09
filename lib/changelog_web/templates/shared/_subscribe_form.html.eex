@@ -1,7 +1,8 @@
 <% email = SharedHelpers.get_assigns_or_param(assigns, "email") %>
+<% target = SharedHelpers.get_assigns_or_param(assigns, "to", "news") %>
 
 <%= form_tag Routes.person_path(@conn, :subscribe), id: "subscribe", class: "auth form form--full_width" do %>
-  <input name="to" type="hidden" value="<%= SharedHelpers.get_assigns_or_param(assigns, "to", "weekly") %>">
+  <input name="to" type="hidden" value="<%= target %>">
 
   <div class="form-element_wrap">
     <div class="form-element">
@@ -40,6 +41,18 @@
       <div class="cf-turnstile" data-sitekey="0x4AAAAAAAAnzevzjdGT8igM" style="display: inline-block;"></div>
     </div>
   </div>
+
+<%= if target != "news" do %>
+  <div class="form-checklist">
+    <div class="form-checklist-item">
+      <label>
+        <input name="news_subscribe" type="checkbox">
+        <span class="form-checklist-item-box"></span>
+        <span class="form-checklist-item-text">Also sign me up for Changelog News!</span>
+      </label>
+    </div>
+  </div>
+<% end %>
 
   <div class="form-submit">
     <div class="form-submit-note">

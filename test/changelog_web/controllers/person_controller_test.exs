@@ -231,6 +231,28 @@ defmodule ChangelogWeb.PersonControllerTest do
       end
     end
 
+    test "submission with Changelog News opt-in subscribes you to it as well", %{conn: conn} do
+      news = insert(:podcast, slug: "news")
+
+      with_mocks([
+        {Changelog.Captcha, [], [verify: fn _ -> true end]}
+      ]) do
+        podcast = insert(:podcast)
+        count_before = count(Person)
+
+        conn =
+          post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com", news_subscribe: "on", to: podcast.slug)
+
+        person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
+
+        assert_delivered_email(ChangelogWeb.Email.subscriber_welcome(person, podcast))
+        assert Subscription.is_subscribed(person, news)
+        assert redirected_to(conn) == Routes.root_path(conn, :index)
+        assert count(Person) == count_before + 1
+        assert count(Subscription) == 2
+      end
+    end
+
     test "with existing email subscribes, sends email, redirects, but doesn't create person", %{
       conn: conn
     } do

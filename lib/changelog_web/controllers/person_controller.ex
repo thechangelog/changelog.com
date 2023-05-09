@@ -52,13 +52,8 @@ defmodule ChangelogWeb.PersonController do
         case Repo.insert(changeset) do
           {:ok, person} ->
             Repo.update(Person.file_changeset(person, person_params))
-
-            if Map.get(params, "news_subscribe", false) do
-              person |> Subscription.subscribe(Podcast.get_by_slug!("news"), "you signed up while joining")
-            end
-
+            maybe_sign_up_for_news(person, params, "you signed up while joining")
             welcome_community(conn, person)
-
           {:error, changeset} ->
             conn
             |> put_flash(:error, "Something went wrong. 😭")
@@ -203,8 +198,8 @@ defmodule ChangelogWeb.PersonController do
         case Repo.insert(changeset) do
           {:ok, person} ->
             log_request(conn)
+            maybe_sign_up_for_news(person, params, "you signed up while subscribing to #{subscribe_to}")
             welcome_subscriber(conn, person, subscribe_to)
-
           {:error, _changeset} ->
             conn
             |> put_flash(:error, "Something went wrong. 😭")
@@ -221,6 +216,13 @@ defmodule ChangelogWeb.PersonController do
   def subscribe(conn = %{method: "POST"}, _params) do
     redirect(conn, to: Routes.person_path(conn, :subscribe))
   end
+
+  defp maybe_sign_up_for_news(person, %{"news_subscribe" => _present}, context) do
+    news = Podcast.get_by_slug!("news")
+    Subscription.subscribe(person, news, context)
+  end
+
+  defp maybe_sign_up_for_news(_person, _params, _context), do: nil
 
   defp welcome_subscriber(conn, person, subscribe_to) do
     person = Person.refresh_auth_token(person)
