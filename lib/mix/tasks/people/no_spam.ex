@@ -1,6 +1,7 @@
 defmodule Mix.Tasks.Changelog.NoSpam do
   use Mix.Task
 
+  alias ChangelogWeb.PersonView
   alias Changelog.{Newsletters, Person, Repo}
   alias Craisin.Subscriber
 
@@ -19,20 +20,22 @@ defmodule Mix.Tasks.Changelog.NoSpam do
           yup
       end
 
-    fakers =
-      Person.faked()
-      |> Person.never_signed_in()
-      |> Person.older_than(older_than)
+    spammy = Person.spammy() |> Person.older_than(older_than) |> Repo.all()
 
-    fakers_count = Repo.count(fakers)
+    results = Enum.map(spammy, fn person ->
+      if PersonView.is_subscribed(person, Newsletters.nightly()) do
+        IO.puts("Skipping Nightly subscriber #{person.id} #{person.name} (#{person.email})")
+        false
+      else
+        IO.puts("Purging #{person.id} #{person.name} (#{person.email})")
+        Repo.delete!(person)
+        true
+      end
+    end)
 
-    for person <- Repo.all(fakers) do
-      IO.puts("Purging #{person.id} #{person.name} (#{person.email})")
-      Subscriber.delete(Newsletters.weekly().id, person.email)
-      Subscriber.delete(Newsletters.nightly().id, person.email)
-      Repo.delete!(person)
-    end
+    purged_count = results |> Enum.filter(&(&1)) |> length()
+    skipped_count = results |> Enum.filter(&(!&1)) |> length()
 
-    IO.puts("Finished purging #{fakers_count} fakes older than #{older_than}")
+    IO.puts("Finished purging #{purged_count} spam accounts older than #{older_than}, Skipped #{skipped_count}")
   end
 end
