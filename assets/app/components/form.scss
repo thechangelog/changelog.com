@@ -148,12 +148,7 @@
     }
 
     &-item {
-      border-top: 1px solid $light-grey;
       padding: 15px 0 13px;
-
-      &:last-child {
-        border-bottom: $border;
-      }
 
       label {
         align-items: center;

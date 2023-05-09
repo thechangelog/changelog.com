@@ -84,6 +84,29 @@ defmodule ChangelogWeb.PersonControllerTest do
       assert count(Person) == count_before + 1
     end
 
+    test "submission with Changelog News opt-in subscribes you to it as well", %{conn: conn} do
+      news = insert(:podcast, slug: "news")
+      count_before = count(Person)
+
+      conn =
+        with_mocks([
+          {Changelog.Captcha, [], [verify: fn _ -> true end]},
+          {Craisin.Subscriber, [], [subscribe: fn _, _, _ -> nil end]}
+        ]) do
+          post(conn, Routes.person_path(conn, :join),
+            person: %{email: "joe@blow.com", name: "Joe Blow", handle: "joeblow"},
+            news_subscribe: "on"
+          )
+        end
+
+      person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
+      assert Subscription.is_subscribed(person, news)
+      assert count(Subscription) == 1
+      assert_delivered_email(ChangelogWeb.Email.community_welcome(person))
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
+      assert count(Person) == count_before + 1
+    end
+
     test "submission with existing email re-renders with errors",
          %{conn: conn} do
       existing = insert(:person)

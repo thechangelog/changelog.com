@@ -24,7 +24,9 @@ defmodule ChangelogWeb.PersonController do
       email: Map.get(params, "email"),
       handle: Map.get(params, "handle"),
       github_handle: Map.get(params, "github_handle"),
-      twitter_handle: Map.get(params, "twitter_handle")
+      twitter_handle: Map.get(params, "twitter_handle"),
+      mastodon_handle: Map.get(params, "mastodon_handle"),
+      linkedin_handle: Map.get(params, "linkedin_handle")
     }
 
     render(conn, :join, changeset: Person.insert_changeset(person), person: nil)
@@ -50,6 +52,11 @@ defmodule ChangelogWeb.PersonController do
         case Repo.insert(changeset) do
           {:ok, person} ->
             Repo.update(Person.file_changeset(person, person_params))
+
+            if Map.get(params, "news_subscribe", false) do
+              person |> Subscription.subscribe(Podcast.get_by_slug!("news"), "you signed up while joining")
+            end
+
             welcome_community(conn, person)
 
           {:error, changeset} ->
