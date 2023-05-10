@@ -20,7 +20,7 @@ defmodule ChangelogWeb.NewsItemView do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
           to: Routes.admin_podcast_episode_path(conn, :edit, episode.podcast.slug, episode.slug, next: SharedHelpers.current_path(conn)),
-          data: [turbolinks: false]
+          data: [turbolinks: "false"]
         )
       ]
     end
@@ -32,7 +32,7 @@ defmodule ChangelogWeb.NewsItemView do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
           to: Routes.admin_post_path(conn, :edit, post, next: SharedHelpers.current_path(conn)),
-          data: [turbolinks: false]
+          data: [turbolinks: "false"]
         )
       ]
     end
@@ -43,7 +43,7 @@ defmodule ChangelogWeb.NewsItemView do
       [
         link("[#{item.click_count}/#{item.impression_count}]",
           to: Routes.admin_news_item_path(conn, :edit, item, next: SharedHelpers.current_path(conn)),
-          data: [turbolinks: false]
+          data: [turbolinks: "false"]
         )
       ]
     end

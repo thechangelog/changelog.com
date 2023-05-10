@@ -32,7 +32,7 @@ defmodule ChangelogWeb.EpisodeView do
       [
         link("🎧 #{SharedHelpers.pretty_downloads(episode)}",
           to: path,
-          data: [turbolinks: false]
+          data: [turbolinks: "false"]
         )
       ]
     end
