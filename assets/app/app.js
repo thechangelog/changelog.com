@@ -258,7 +258,7 @@ u(document).on("click", "a[href^=\\#t]", function (event) {
 });
 
 // submit forms with Turbolinks
-u(document).on("submit", "form", function (event) {
+u(document).on("submit", "form:not([data-turbolinks=\"false\"])", function (event) {
   event.preventDefault();
 
   let form = u(this);
