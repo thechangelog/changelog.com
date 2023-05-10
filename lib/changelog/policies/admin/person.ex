@@ -12,4 +12,5 @@ defmodule Changelog.Policies.Admin.Person do
   def news(actor, context), do: show(actor, context)
   def comments(actor, context), do: show(actor, context)
   def slack(actor, _), do: is_admin_editor_or_host(actor)
+  def masq(actor, _), do: is_admin(actor)
 end

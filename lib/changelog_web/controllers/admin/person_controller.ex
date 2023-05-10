@@ -16,7 +16,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   alias ChangelogWeb.Email
 
-  plug :assign_person when action in [:show, :edit, :update, :delete, :slack, :news, :comments]
+  plug :assign_person when action in [:show, :edit, :update, :delete, :slack, :news, :comments, :masq]
   plug Authorize, [Policies.Admin.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
@@ -209,6 +209,15 @@ defmodule ChangelogWeb.Admin.PersonController do
     conn
     |> put_flash(:result, flash)
     |> redirect_next(params, Routes.admin_person_path(conn, :index))
+  end
+
+  def masq(conn = %{assigns: %{person: person}}, params) do
+
+    conn
+    |> put_session("id", person.id)
+    |> configure_session(renew: true)
+    |> put_flash(:success, "Now using the site as #{person.name}")
+    |> redirect(to: Routes.root_path(conn, :index))
   end
 
   defp assign_person(conn = %{params: %{"id" => id}}, _) do

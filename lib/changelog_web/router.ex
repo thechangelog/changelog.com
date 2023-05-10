@@ -92,6 +92,7 @@ defmodule ChangelogWeb.Router do
     get "/people/:id/news", PersonController, :news, as: :person
     get "/people/:id/comments", PersonController, :comments, as: :person
     post "/people/:id/slack", PersonController, :slack, as: :person
+    post "/people/:id/masq", PersonController, :masq, as: :person
 
     resources "/metacasts", MetacastController
 
