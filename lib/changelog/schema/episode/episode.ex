@@ -144,7 +144,7 @@ defmodule Changelog.Episode do
   def with_podcast_slug(query, nil), do: query
 
   def with_podcast_slug(query, slug),
-    do: from(q in query, join: p in Podcast, where: q.podcast_id == p.id, where: p.slug == ^slug)
+    do: from(q in query, join: p in Podcast, on: true, where: q.podcast_id == p.id, where: p.slug == ^slug)
 
   def with_transcript(query \\ __MODULE__),
     do: from(q in query, where: fragment("? != '{}'", q.transcript))

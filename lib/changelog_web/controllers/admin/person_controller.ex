@@ -211,8 +211,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> redirect_next(params, Routes.admin_person_path(conn, :index))
   end
 
-  def masq(conn = %{assigns: %{person: person}}, params) do
-
+  def masq(conn = %{assigns: %{person: person}}, _params) do
     conn
     |> put_session("id", person.id)
     |> configure_session(renew: true)
