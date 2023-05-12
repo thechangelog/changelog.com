@@ -23,9 +23,6 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     end
   end
 
-  # no-op if we don't have any podcasts in assigns
-  def call(conn, _opts), do: conn
-
   # no-op if we didn't match a vanity domain
   defp vanity_redirect(nil, conn), do: conn
 
@@ -41,15 +38,29 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   defp determine_destination(%{slug: "podcast"}, ["sotl"]) do
     "https://changelog.fm/520"
   end
+
   defp determine_destination(%{slug: "podcast"}, ["edu"]) do
     "https://changelog.fm/462"
   end
-  defp determine_destination(%{slug: "podcast"}, ["news-2023-03-37"]) do
-    "https://changelog.fm/news-2023-03-27"
-  end
+
+  # old news episode locations redirect
+  ~w(2022-06-27 2022-07-04 2022-07-11 2022-07-18 2022-07-25 2022-08-01 2022-08-08
+     2022-08-15 2022-08-22 2022-08-29 2022-09-05 2022-09-12 2022-09-19 2022-09-26
+     2022-10-03 2022-10-10 2022-10-17 2022-10-24 2022-11-07 2022-11-14 2022-11-21
+     2022-11-28 2022-12-05 2022-12-12 2023-01-02 2023-01-09 2023-01-16 2023-01-23
+     2023-01-30 2023-02-06 2023-02-13 2023-02-20 2023-02-27 2023-03-06 2023-03-13
+     2023-03-20 2023-03-27 2023-04-03)
+    |> Enum.with_index()
+    |> Enum.each(fn {date, index} ->
+    defp determine_destination(%{slug: "podcast"}, ["news-" <> unquote(date)]) do
+      changelog_destination(["news", unquote(index + 1)])
+    end
+  end)
+
   defp determine_destination(%{slug: "gotime"}, ["gs"]) do
     "https://changelog.typeform.com/to/IR4twWc6"
   end
+
   defp determine_destination(%{slug: "jsparty"}, ["ff"]) do
     "https://changelog.typeform.com/to/jbJy7anr"
   end

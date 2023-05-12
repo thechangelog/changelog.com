@@ -3,6 +3,10 @@ defmodule ChangelogWeb.VanityDomainsTest do
 
   alias ChangelogWeb.Plug.VanityDomains
 
+  @changelog %{
+    vanity_domain: "https://changelog.fm",
+    slug: "podcast"
+  }
   @jsparty %{
     vanity_domain: "https://jsparty.fm",
     slug: "jsparty",
@@ -172,6 +176,15 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, "https://merch.changelog.com")
+  end
+
+  test "vanity redirects for old news URLs" do
+    conn =
+      build_conn_with_host_and_path("changelog.fm", "/news-2023-02-27")
+      |> assign_podcasts([@changelog])
+      |> VanityDomains.call([])
+
+    assert_vanity_redirect(conn,  "/news/33")
   end
 
   test "it does not vanity redirect for default host" do
