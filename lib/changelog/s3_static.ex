@@ -13,7 +13,8 @@ defmodule Changelog.S3Static do
 
     static_path
     |> local_files_from_manifest()
-    |> Enum.each(&put_file(s3_bucket, @s3_path, &1))
+    |> Task.async_stream(&put_file(&1, s3_bucket, @s3_path), max_concurrency: 10)
+    |> Stream.run()
   end
 
   def delete_unused_files_from_s3 do
@@ -31,7 +32,7 @@ defmodule Changelog.S3Static do
       key = String.trim_leading(s3_file.key, "#{@s3_path}/")
       Enum.member?(latest_files, key)
     end)
-    |> Enum.each(&delete_file(s3_bucket, &1))
+    |> Enum.each(&delete_file(&1, s3_bucket))
   end
 
   def local_files_from_manifest(path) do
@@ -51,10 +52,8 @@ defmodule Changelog.S3Static do
     |> Enum.reject(&is_s3_folder?/1)
   end
 
-  defp put_file(bucket, prefix, file) do
-    if exists_on_s3?(bucket, prefix, file) do
-      Logger.info("Skipping #{file.key}")
-    else
+  defp put_file(file, bucket, prefix) do
+    if !exists_on_s3?(file, bucket, prefix) do
       Logger.info("Uploading #{file.key}")
       key = Path.join(prefix, file.key)
       data = File.read!(file.path)
@@ -82,10 +81,10 @@ defmodule Changelog.S3Static do
   defp is_s3_folder?(%{size: "0"}), do: true
   defp is_s3_folder?(_object), do: false
 
-  defp exists_on_s3?(bucket, prefix, file) when is_map(file),
-    do: exists_on_s3?(bucket, prefix, file.key)
+  defp exists_on_s3?(file, bucket, prefix) when is_map(file),
+    do: exists_on_s3?(file.key, bucket, prefix)
 
-  defp exists_on_s3?(bucket, prefix, file) do
+  defp exists_on_s3?(file, bucket, prefix) do
     key = Path.join(prefix, file)
 
     case ExAws.request(ExAws.S3.head_object(bucket, key)) do
