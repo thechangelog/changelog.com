@@ -7,13 +7,13 @@
       <button class="podcast_player-nav-button podcast_player-nav-button--close js-player-close" title="Close Player"></button>
     </nav>
     <div class="image_border_hack">
-      <img class="podcast_player-art js-player-art">
+      <img class="podcast_player-art js-player-art" src="data:," alt="Player art">
     </div>
     <div class="podcast_player-details">
-      <div class="podcast_player-details-title">
+      <figure class="podcast_player-details-title">
         <span class="js-player-now-playing"></span>
         <figcaption class="js-player-title"></figcaption>
-      </div>
+      </figure>
     </div>
     <div class="podcast_player-buttons">
       <button class="podcast_player-button podcast_player-button--prev_episode js-player-prev-button" title="Listen to the previous episode">
@@ -32,11 +32,11 @@
       <div class="range_slider">
         <span class="range_slider-above"><span class="js-player-now-playing"></span></span>
         <div class="range_slider-range_wrap">
-          <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="500"/>
+          <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="500">
           <div class="range_slider-range-track js-player-track"></div>
         </div>
         <span class="range_slider-below"> <span class="js-player-title"></span>&nbsp;<select class="js-chapter-select is-hidden"></select>
-          <output><button class="js-player-speed" title="Change Speed">[1X]</button> <b class="js-player-current">0:00</b><input class="js-player-current-input is-hidden"/> / <span class="js-player-duration">0:00</span></output></span>
+          <output><button class="js-player-speed" title="Change Speed">[1X]</button> <b class="js-player-current">0:00</b><input class="js-player-current-input is-hidden"> / <span class="js-player-duration">0:00</span></output></span>
       </div>
     </form>
   </figure>

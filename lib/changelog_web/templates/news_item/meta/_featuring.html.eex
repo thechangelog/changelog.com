@@ -1,4 +1,4 @@
-<span class="news_item-toolbar-meta-item news_item-toolbar-meta-item__featuring">
+<div class="news_item-toolbar-meta-item news_item-toolbar-meta-item__featuring">
 <% {main_participants, additional_participants} = @episode |> Episode.participants() |> Enum.split(5) %>
 <%= for person <- main_participants do %>
   <%= link(to: PersonView.profile_path(person), title: person.name) do %>
@@ -18,4 +18,4 @@
     </div>
   </div>
 <% end %>
-</span>
+</div>

@@ -67,7 +67,7 @@
           <% end %>
 
             <form action="<%= Routes.search_path(@conn, :search) %>" method="get" class="header-search">
-              <input name="q" type="text" placeholder="Search Changelog" value="" aria-label="Search"/>
+              <input name="q" type="text" placeholder="Search Changelog" value="" aria-label="Search">
             </form>
 
             <button class="header-menu js-toggle-nav" title="Toggle Menu">
@@ -102,7 +102,7 @@
 
     <div class="mobile_nav-bottom">
       <form action="<%= Routes.search_path(@conn, :search) %>" method="get" class="mobile_nav-search search-form">
-        <input name="q" type="text" placeholder="Search Changelog" aria-label="Search"/>
+        <input name="q" type="text" placeholder="Search Changelog" aria-label="Search">
       </form>
     </div>
   </div>
