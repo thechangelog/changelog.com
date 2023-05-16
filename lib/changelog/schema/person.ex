@@ -98,6 +98,7 @@ defmodule Changelog.Person do
     from(q in query, where: not is_nil(q.bio) or not is_nil(q.website))
     |> joined()
     |> not_in_slack()
+    |> no_requests()
     |> no_subs()
     |> not_a_guest()
   end
@@ -113,6 +114,14 @@ defmodule Changelog.Person do
       left_join: g in EpisodeGuest,
       on: [person_id: q.id],
       where: is_nil(g.id)
+    )
+  end
+
+  def no_requests(query \\ __MODULE__) do
+    from(q in query,
+      left_join: r in EpisodeRequest,
+      on: [submitter_id: q.id],
+      where: is_nil(r.id)
     )
   end
 
