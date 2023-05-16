@@ -395,6 +395,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "ken-kost",
+      "name": "Kenneth Kostrešević",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34007453?v=4",
+      "profile": "https://reintegrate-web-development.fly.dev/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
