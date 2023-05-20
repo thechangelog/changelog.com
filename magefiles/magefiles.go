@@ -16,12 +16,12 @@ import (
 
 // Run the CI pipeline
 func CI(ctx context.Context) {
-	mg.SerialCtxDeps(ctx, Image.Runtime, Test, Image.Production)
+	mg.CtxDeps(ctx, Image.Runtime, Test, Image.Production)
 }
 
 // Run the CD pipeline
 func CD(ctx context.Context) {
-	mg.SerialCtxDeps(ctx, Fly.Deploy)
+	mg.CtxDeps(ctx, Fly.Deploy)
 }
 
 type Image mg.Namespace
@@ -34,7 +34,7 @@ func (Image) Runtime(ctx context.Context) {
 	mustBeAvailable(err)
 	defer dag.Close()
 
-	image.New(ctx, dag).Pipeline("runtime").
+	image.New(ctx, dag.Pipeline("📦 RUNTIME IMAGE")).
 		Runtime().
 		PublishRuntime()
 }
@@ -47,7 +47,7 @@ func (Image) Production(ctx context.Context) {
 	mustBeAvailable(err)
 	defer dag.Close()
 
-	image.New(ctx, dag).Pipeline("prod").
+	image.New(ctx, dag.Pipeline("🎁 PRODUCTION IMAGE")).
 		ProductionClean().
 		PublishProduction()
 }
@@ -59,8 +59,7 @@ func Test(ctx context.Context) {
 	mustBeAvailable(err)
 	defer dag.Close()
 
-	image.New(ctx, dag).Pipeline("test").
-		Test()
+	image.New(ctx, dag.Pipeline("🧰 TEST")).Test()
 }
 
 type Fly mg.Namespace
@@ -73,8 +72,7 @@ func (Fly) Deploy(ctx context.Context) {
 	mustBeAvailable(err)
 	defer dag.Close()
 
-	image.New(ctx, dag).Pipeline("deploy").
-		Deploy()
+	image.New(ctx, dag.Pipeline("🏁 DEPLOY")).Deploy()
 }
 
 func mustBeAvailable(err error) {

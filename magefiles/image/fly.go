@@ -6,11 +6,6 @@ import (
 	"dagger.io/dagger"
 )
 
-const (
-	// https://hub.docker.com/r/flyio/flyctl/tags
-	flyctlVersion = "0.0.509"
-)
-
 func (image *Image) Deploy() *Image {
 	githubRepo := image.Env("GITHUB_REPOSITORY")
 	githubRef := image.Env("GITHUB_REF_NAME")
@@ -44,7 +39,7 @@ func (image *Image) Deploy() *Image {
 
 func (image *Image) flyctl() *Image {
 	image.container = image.NewContainer().
-		From(flyctlImageRef()).
+		From(image.flyctlImageRef()).
 		WithSecretVariable("FLY_API_TOKEN", image.Env("FLY_API_TOKEN").Secret()).
 		WithMountedFile("fly.toml", image.flyConfig()).
 		WithExec([]string{
@@ -54,8 +49,8 @@ func (image *Image) flyctl() *Image {
 	return image
 }
 
-func flyctlImageRef() string {
-	return fmt.Sprintf("flyio/flyctl:v%s", flyctlVersion)
+func (image *Image) flyctlImageRef() string {
+	return fmt.Sprintf("flyio/flyctl:v%s", image.versions.Flyctl())
 }
 
 func (image *Image) flyConfig() *dagger.File {
