@@ -13,8 +13,9 @@ import (
 func (image *Image) Production() *Image {
 	productionImage := image.Runtime().
 		WithAppSrc().
-		WithProdEnv().
 		WithAppDeps().
+		WithProdEnv().
+		WithAppCompiled().
 		WithAppStaticAssets().
 		WithAppLegacyAssets().
 		WithGitAuthor().
