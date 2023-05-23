@@ -7,6 +7,7 @@ import (
 	"dagger.io/dagger"
 	"github.com/thechangelog/changelog.com/magefiles/env"
 	"github.com/thechangelog/changelog.com/magefiles/sysexit"
+	"github.com/thechangelog/changelog.com/magefiles/tools"
 )
 
 const (
@@ -21,11 +22,13 @@ type Image struct {
 	ctx       context.Context
 	dag       *dagger.Client
 	container *dagger.Container
+	versions  *tools.Versions
 }
 
 func New(ctx context.Context, dag *dagger.Client) *Image {
 	image := &Image{ctx: ctx, dag: dag}
 	image.container = image.NewContainer()
+	image.versions = tools.CurrentVersions()
 	return image
 }
 

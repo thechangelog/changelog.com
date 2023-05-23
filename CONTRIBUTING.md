@@ -84,6 +84,9 @@ You will need to have the following dependencies installed:
 - [Erlang/OTP](https://www.erlang.org/downloads) v25 - usually installed as an Elixir dependency
 - [Node.js](https://nodejs.org/en/download/) v18 LTS - [latest-v18.x](https://nodejs.org/download/release/latest-v18.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
+- [Golang](https://go.dev/doc/install) v1.20 - if you want to run CI locally
+
+We are using [`asdf`](https://asdf-vm.com/) to install the correct dependency versions in our development environment.
 
 This is what that looks like on macOS 12, our usual development environment:
 
@@ -91,24 +94,24 @@ This is what that looks like on macOS 12, our usual development environment:
 
 ```console
 # 🛠 INSTALL DEPENDENCIES 🛠
-brew install postgresql@14 elixir node@14 yarn imagemagick
+asdf install
 
-#👇 installed on an iMac Pro (2017) running macOS 12.6.1 in ~2mins on Nov. 13, 2022 by @gerhard
-# - PostgreSQL v14.6
+#👇 installed on a MacBook Pro 16" (2021) running macOS 12.6.3 in ~4mins on May 20, 2023 by @gerhard
 # - Elixir v1.14.4
-# - Erlang v25.3
-# - Node.js v18.15.0
+# - Erlang v25.3.2
+# - Golang 1.20.4
+# - Node.js v18.16.0
 # - Yarn v1.22.19
-# - ImageMagick v7.1
-# 👆 installed on an iMac Pro (2017) running macOS 12.6.1 in ~2mins on Nov. 13, 2022 by @gerhard
+# - PostgreSQL v14.1
+#👆 installed on a MacBook Pro 16" (2021) running macOS 12.6.3 in ~4mins on May 20, 2023 by @gerhard
+
+# You will also need to install imagemagick via Homebrew.
+# asdf imagemagick plugin did not work for me.
+brew install imagemagick
 
 # 🪣 CONFIGURE DATABASE 🪣
-# Add correct PostgreSQL to PATH
-export PATH="$(brew --prefix)/opt/postgresql@14/bin:$PATH"
 # Start PostgreSQL
-postgres -D $(brew --prefix)/var/postgresql@14
-# Create user "postgres" with password "postgres"
-createuser postgres --password --createdb
+postgres # or pg_ctl start
 # Create changelog_dev db owned by the postgres user
 createdb changelog_dev --username=postgres
 # Create changelog_test db owned by the postgres user
@@ -122,8 +125,6 @@ mix ecto.setup
 
 # 🌈 CONFIGURE STATIC ASSETS 🌈
 cd assets
-# Add correct Node.js to PATH
-export PATH="$(brew --prefix)/opt/node@18/bin:$PATH"
 # Install dependencies requires for static assets
 yarn install
 cd ..
@@ -138,10 +139,11 @@ mix test
 
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
-1. Update `ElixirVersion` & `ErlangVersion` in `magefiles/image/runtime.go` to latest [hexpm/elixir](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy)
-2. While here, also update `NodejsVersion` to [latest-v18.x](https://nodejs.org/download/release/latest-v18.x/)
+1. Run e.g. `asdf install erlang latest:25`
+    - If a new version gets installed, run `asdf local erlang <INSTALLED_VERSION>`
+2. Repeat previous step for Elixir & Node.js
 3. Commit & push to check that image builds successfully in GitHub Actions
-    - _Alternatively_, build the image locally via: `cd magefiles && go run main.go image:runtime`
+    - _Alternatively_, build the image locally via: `mage image:runtime`
 
 After you confirm that the image builds successfully:
 1. Update `.devcontainer/docker-compose.yml` with new image tag
@@ -181,9 +183,9 @@ Server:
 ...
 ```
 
-Any `docker` commands will now run against this remote Docker Engine now. `cd
-magefiles && go run main.go -w image:runtime` also needs a Docker Engine to
-resolve all its dependencies, and then run.
+Any `docker` commands will now run against this remote Docker Engine now. `mage
+image:runtime` also needs a Docker Engine to resolve all its dependencies, and
+then run.
 
 ## Using GitHub Codespaces
 

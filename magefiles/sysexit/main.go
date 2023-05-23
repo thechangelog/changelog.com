@@ -26,6 +26,14 @@ func Unavailable(err error) SysExit {
 	return SysExit{Code: 69, Error: err}
 }
 
+func Os(err error) SysExit {
+	return SysExit{Code: 71, Error: err}
+}
+
+func File(err error) SysExit {
+	return SysExit{Code: 72, Error: err}
+}
+
 func Create(err error) SysExit {
 	return SysExit{Code: 73, Error: err}
 }

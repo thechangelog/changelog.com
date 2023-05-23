@@ -7,9 +7,8 @@ import (
 )
 
 const (
-	PostgreSQLVersion = "14.1"
-	postgreSQLUser    = "postgres"
-	postgreSQLPass    = "postgres"
+	postgreSQLUser = "postgres"
+	postgreSQLPass = "postgres"
 )
 
 func (image *Image) WithPostgreSQL(dbName string) *Image {
@@ -27,7 +26,7 @@ func (image *Image) WithPostgreSQL(dbName string) *Image {
 
 func (image *Image) postgreSQLContainer(dbName string) *dagger.Container {
 	return image.NewContainer().
-		From(fmt.Sprintf("postgres:%s", PostgreSQLVersion)).
+		From(fmt.Sprintf("postgres:%s", image.versions.Postgres())).
 		WithExposedPort(5432).
 		WithEnvVariable("POSTGRES_USER", postgreSQLUser).
 		WithEnvVariable("POSTGRES_PASSWORD", postgreSQLPass).

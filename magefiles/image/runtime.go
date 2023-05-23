@@ -5,23 +5,8 @@ import (
 )
 
 const (
-	// https://github.com/elixir-lang/elixir/releases
-	ElixirVersion = "1.14.4"
-	// https://github.com/erlang/otp/releases
-	ErlangVersion = "25.3"
-	// https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy
-	UbuntuVersionShort = "jammy-20230126"
-	UbuntuVersionLong  = "22.04 LTS (Jammy Jellyfish)"
-
-	// https://nodejs.org/en/download/releases/
-	NodejsVersion = "18.15.0"
-
 	RepositoryURL = "https://github.com/thechangelog/changelog.com"
 )
-
-func ElixirImageRef() string {
-	return fmt.Sprintf("hexpm/elixir:%s-erlang-%s-ubuntu-%s", ElixirVersion, ErlangVersion, UbuntuVersionShort)
-}
 
 func (image *Image) RuntimeImageRef() string {
 	imageOwner := image.Env("IMAGE_OWNER")
@@ -32,9 +17,9 @@ func (image *Image) RuntimeImageRef() string {
 	return fmt.Sprintf(
 		"ghcr.io/%s/changelog-runtime:elixir-v%s-erlang-v%s-nodejs-v%s",
 		imageOwner.Value(),
-		ElixirVersion,
-		ErlangVersion,
-		NodejsVersion,
+		image.versions.Elixir(),
+		image.versions.Erlang(),
+		image.versions.Nodejs(),
 	)
 }
 
@@ -47,10 +32,10 @@ func (image *Image) PublishRuntime() *Image {
 func (image *Image) WithRuntimeLabels() *Image {
 	description := fmt.Sprintf(
 		"💜 Elixir v%s | 🚜 Erlang v%s | ⬢ Node.js v%s | 🐡 Ubuntu %s | %s",
-		ElixirVersion,
-		ErlangVersion,
-		NodejsVersion,
-		UbuntuVersionLong,
+		image.versions.Elixir(),
+		image.versions.Erlang(),
+		image.versions.Nodejs(),
+		image.versions.Ubuntu.Long,
 		buildURL(),
 	)
 
@@ -79,7 +64,7 @@ func (image *Image) Runtime() *Image {
 
 func (image *Image) Elixir() *Image {
 	image.container = image.NewContainer().
-		From(ElixirImageRef()).
+		From(image.ElixirImageRef()).
 		WithExec([]string{
 			"mix", "--version",
 		}).
@@ -97,6 +82,15 @@ func (image *Image) Elixir() *Image {
 		})
 
 	return image
+}
+
+func (image *Image) ElixirImageRef() string {
+	return fmt.Sprintf(
+		"hexpm/elixir:%s-erlang-%s-ubuntu-%s",
+		image.versions.Elixir(),
+		image.versions.Erlang(),
+		image.versions.Ubuntu.Short,
+	)
 }
 
 func (image *Image) WithAptPackages() *Image {
@@ -185,7 +179,7 @@ func (image *Image) WithPostgreSQLClient() *Image {
 }
 
 func (image *Image) WithNodejs() *Image {
-	NodejsVersionAndPlatform := fmt.Sprintf("node-v%s-%s", NodejsVersion, RuntimePlatformAlt)
+	NodejsVersionAndPlatform := fmt.Sprintf("node-v%s-%s", image.versions.Nodejs(), RuntimePlatformAlt)
 	image.container = image.WithCurl().WithXZ().container.
 		WithExec([]string{
 			"echo", "Install Node.js...",
@@ -193,7 +187,7 @@ func (image *Image) WithNodejs() *Image {
 		WithExec([]string{
 			"curl", "--silent", "--fail", "--location",
 			"--output", fmt.Sprintf("/opt/%s.tar.xz", NodejsVersionAndPlatform),
-			fmt.Sprintf("https://nodejs.org/dist/v%s/%s.tar.xz", NodejsVersion, NodejsVersionAndPlatform),
+			fmt.Sprintf("https://nodejs.org/dist/v%s/%s.tar.xz", image.versions.Nodejs(), NodejsVersionAndPlatform),
 		}).
 		WithExec([]string{
 			"tar", "-xJvf", fmt.Sprintf("/opt/%s.tar.xz", NodejsVersionAndPlatform), "-C", "/opt",
@@ -239,7 +233,7 @@ func (image *Image) WithXZ() *Image {
 func (image *Image) WithYarn() *Image {
 	image.container = image.container.
 		WithExec([]string{
-			"npm", "install", "--global", "yarn",
+			"npm", "install", "--global", fmt.Sprintf("yarn@%s", image.versions.Yarn()),
 		}).
 		WithExec([]string{
 			"yarn", "--version",
