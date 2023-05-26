@@ -18,7 +18,7 @@
     <itunes:summary><%= @podcast |> podcast_full_description() |> escaped() %></itunes:summary>
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= PodcastView.cover_url(@podcast) %>"/>
-  <%= if Podcast.is_news(@podcast) do %>
+  <%= if Podcast.is_a_changelog_pod(@podcast) do %>
     <itunes:owner>
       <itunes:name>Changelog Media</itunes:name>
       <itunes:email>editors@changelog.com</itunes:email>
