@@ -32,7 +32,7 @@
     <a id="news" class="anchor"></a>
     <h2>Changelog News</h2>
 
-    <p>Changelog News is our weekly guide to developer news worth your attention. It's hosted and written by our Managing Editor Jerod Santo. Every Monday we cover the developer news worth your attention. We keep it brief, entertaining & always on point. Tune-in to the podcast or read the newsletter to keep up.</p>
+    <p>Changelog News is our weekly guide to developer news worth your attention. It's hosted and written by our Managing Editor Jerod Santo. Every Monday we cover the developer news worth your attention. We keep it brief, entertaining & always on point. Developers tune-in to the podcast and read the newsletter to keep up.</p>
 
     <p><strong>Who you'll reach:</strong> Busy software developers and engineers who want a single subscription to keep them informed and up to date with what's happening in the software world. The podcast is often 8 mins (or less) in length which makes it a must listen. It's often listened to within 1-2 days of publishing. The newsletter is for those who prefer to read instead of listen. It contains extended details, links, and bonus sections not included in the podcast.</p>
 
@@ -41,7 +41,7 @@
     <ul>
       <li>Changelog News is a podcast + newsletter that ships on Mondays</li>
       <li>Each week we feature one brand on the podcast and the newsletter</li>
-      <li><mark>$1,000 per week with no minimums</mark></li>
+      <li>$1,250 per week with no minimums ($1,000/wk if you bundle with The Changelog)</li>
       <li>The podcast reaches 25-35k listens per episode</li>
       <li>The newsletter reaches 20k+ subscribers with a 51.35% open rate</li>
       <li><%= link "Review previous episodes", to: "/news" %>
@@ -71,7 +71,9 @@
     <a id="jsparty" class="anchor"></a>
     <h2>JS Party</h2>
 
-    <p>Every week a rotating panel of web experts are joined by special guests to discuss the latest in JavaScript and the web platform.</p>
+    <p>JS Party is weekly podcast that features an expert panel of JavScript developers as well as special guests that discuss the latest in JavaScript and the web platform. Front-enders around the globe tune in to JS Party to keep up with the direction and capabilities of the web platform.</p>
+
+    <p><strong>Who you'll reach:</strong> JavaScript developers, Front-end/Back-end/Full-stack developers, Framework and Library makeers and users, mobile app developers (using  React Native, Vue Native, Ionic), engineering leadership (CTOs and tech leads), and open source contributors.</p>
 
     <ul>
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
