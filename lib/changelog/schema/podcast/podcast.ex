@@ -79,7 +79,7 @@ defmodule Changelog.Podcast do
       extended_description:
         "Weekly shows about software development, developer culture, open source, building startups, artificial intelligence, shipping code to production, and the people involved. Yes, we focus on the people. Everything else is an implementation detail.",
       keywords: "changelog, open source, oss, software, development, developer, hacker",
-      apple_url: "https://itunes.apple.com/us/podcast/changelog-master-feed/id1164554936",
+      apple_url: "https://podcasts.apple.com/us/podcast/changelog-master-feed/id1164554936",
       spotify_url: "https://open.spotify.com/show/0S1h5K7jm2YvOcM7y1ZMXY",
       cover: true,
       active_hosts: [],
