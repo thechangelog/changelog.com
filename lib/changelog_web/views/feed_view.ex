@@ -50,13 +50,16 @@ defmodule ChangelogWeb.FeedView do
     |> Enum.join(" ")
   end
 
+  def podcast_name_with_metadata(%{slug: "podcast", is_meta: true, name: name}) do
+    "#{name}: Software Development, Open Source"
+  end
+
   def podcast_name_with_metadata(podcast) do
     case podcast.slug do
       "brainscience" -> "#{podcast.name}: Neuroscience, Behavior"
       "founderstalk" -> "#{podcast.name}: Startups, CEOs, Leadership"
       "gotime" -> "#{podcast.name}: Golang, Software Engineering"
       "jsparty" -> "#{podcast.name}: JavaScript, CSS, Web Development"
-      "podcast" -> "#{podcast.name}: Software Development, Open Source"
       "practicalai" -> "#{podcast.name}: Machine Learning, Data Science"
       "shipit" -> "#{podcast.name} SRE, Platform Engineering, DevOps"
       _else -> podcast.name
