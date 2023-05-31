@@ -5,7 +5,7 @@
     <header class="marketing-section-header">
       <p class="marketing-section-header-leadin">Advertise with Changelog Media</p>
       <h1>We reach 100,000 developers&nbsp;weekly</h1>
-      <p>650,000 monthly listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= @weekly |> NewsletterView.subscribers(:all, 9786) |> SharedHelpers.comma_separated %> newsletter subscribers&nbsp;&nbsp;•&nbsp;&nbsp;6,500 Slack members</p>
+      <p>650,000 monthly listens&nbsp;&nbsp;•&nbsp;&nbsp;<%= SharedHelpers.comma_separated(@subs) %> newsletter subscribers&nbsp;&nbsp;•&nbsp;&nbsp;6,500 Slack members</p>
 
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>

@@ -97,6 +97,8 @@ defmodule Changelog.Subscription do
     |> Repo.insert_or_update()
   end
 
+  def subscribed_count(nil), do: 0
+
   def subscribed_count(subject) do
     __MODULE__
     |> on_subject(subject)

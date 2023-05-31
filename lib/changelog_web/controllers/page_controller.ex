@@ -1,8 +1,7 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, NewsItem, Newsletters, NewsSponsorship, Podcast}
-  alias ChangelogWeb.TimeView
+  alias Changelog.{Cache, Episode, NewsItem, Podcast, Subscription}
   alias ChangelogWeb.Plug.ResponseCache
 
   plug RequireGuest, "before joining" when action in [:join]
@@ -98,16 +97,17 @@ defmodule ChangelogWeb.PageController do
   end
 
   def sponsor(conn, _params) do
-    weekly = Newsletters.weekly() |> Newsletters.get_stats()
     examples = Changelog.SponsorStory.examples()
-    ads = NewsSponsorship.get_ads_for_index()
-    render(conn, :sponsor, weekly: weekly, examples: examples, ads: ads)
+    subs =
+      Changelog.Cache.podcasts()
+      |> Enum.find(&Podcast.is_news/1)
+      |> Subscription.subscribed_count()
+
+    render(conn, :sponsor, examples: examples, subs: subs)
   end
 
   def sponsor_pricing(conn, _params) do
-    weekly = Newsletters.weekly() |> Newsletters.get_stats()
-    weeks = Timex.today() |> TimeView.closest_monday_to() |> TimeView.weeks(12)
-    render(conn, :sponsor_pricing, weekly: weekly, weeks: weeks)
+    render(conn, :sponsor_pricing)
   end
 
   def sponsor_story(conn, slug) do

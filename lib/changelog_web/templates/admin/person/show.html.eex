@@ -34,9 +34,6 @@
 <%= for subscription <- @subscriptions do %>
   <span class="ui large label"><%= subscription.podcast.name %></span>
 <% end %>
-<%= if is_subscribed(@person, Changelog.Newsletters.weekly()) do %>
-  <span class="ui large label">Weekly</span>
-<% end %>
 <%= if is_subscribed(@person, Changelog.Newsletters.nightly()) do %>
   <span class="ui large label">Nightly</span>
 <% end %>

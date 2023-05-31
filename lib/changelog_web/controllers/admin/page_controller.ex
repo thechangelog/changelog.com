@@ -87,7 +87,7 @@ defmodule ChangelogWeb.Admin.PageController do
         Subscription.subscribed_count(pod)
       }
     end)
-    |> Enum.sort_by(fn {_pod, _day, _week, {up, down}, _total} -> up end, :desc)
+    |> Enum.sort_by(fn {_pod, _day, _week, {up, _down}, _total} -> up end, :desc)
   end
 
   defp episode_drafts do
