@@ -35,6 +35,6 @@ defmodule ChangelogWeb.NewsIssueView do
   end
 
   def spacer_url do
-    "https://changelog-assets.s3.amazonaws.com/weekly/spacer.gif"
+    "https://cdn.changelog.com/weekly/spacer.gif"
   end
 end

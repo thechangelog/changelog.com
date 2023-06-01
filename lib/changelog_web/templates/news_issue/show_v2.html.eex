@@ -34,7 +34,7 @@
                                         <td>
                                           <div class="header">
                                             <a href="https://changelog.com/">
-                                              <img class="header-logo" width="300" alt="Changelog" src="https://changelog-assets.s3.amazonaws.com/weekly/changelog-logo.png">
+                                              <img class="header-logo" width="300" alt="Changelog" src="https://cdn.changelog.com/weekly/changelog-logo.png">
                                             </a>
                                             <p><webversion>Issue #<%= @issue.slug %> • <%= TimeView.hacker_date(@issue.published_at) %></webversion></p>
                                           </div>

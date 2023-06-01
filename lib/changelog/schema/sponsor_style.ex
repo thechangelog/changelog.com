@@ -5,49 +5,49 @@ defmodule Changelog.SponsorStyle do
         type: "Endorsement",
         name: "Linode, Keep it fast.",
         audio:
-          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-preroll--keep-it-fast.mp3",
+          "https://cdn.changelog.com/partner-stories/linode-2020-preroll--keep-it-fast.mp3",
         duration: 21
       },
       %{
         type: "Endorsement",
         name: "Pluralsight, Stay home. Skill up.",
         audio:
-          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/pluralsight-2020-001.mp3",
+          "https://cdn.changelog.com/partner-stories/pluralsight-2020-001.mp3",
         duration: 38
       },
       %{
         type: "Endorsement",
         name: "Digital Ocean, Launch in the Cloud",
         audio:
-          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/digital-ocean-2020-002.mp3",
+          "https://cdn.changelog.com/partner-stories/digital-ocean-2020-002.mp3",
         duration: 37
       },
       %{
         type: "Endorsement",
         name: "Algolia, Together against COVID-19",
         audio:
-          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/algolia-2020-001--covid-19.mp3",
+          "https://cdn.changelog.com/partner-stories/algolia-2020-001--covid-19.mp3",
         duration: 72
       },
       %{
         type: "Customer Story",
         name: "Retool, Doordash story",
         audio:
-          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020--doordash.mp3",
+          "https://cdn.changelog.com/partner-stories/retool-2020--doordash.mp3",
         duration: 96
       },
       %{
         type: "Endorsement",
         name: "Retool, Product overview",
         audio:
-          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/retool-2020-002.mp3",
+          "https://cdn.changelog.com/partner-stories/retool-2020-002.mp3",
         duration: 90
       },
       %{
         type: "Endorsement",
         name: "Mux, Product overview",
         audio:
-          "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/mux-2020-001.mp3",
+          "https://cdn.changelog.com/partner-stories/mux-2020-001.mp3",
         duration: 83
       },
       %{

@@ -39,21 +39,21 @@ defmodule Changelog.SponsorStory do
           type: "Partner preroll",
           name: "Move fast and fix things",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-partner-preroll-move-fast-and-fix-things.mp3",
+            "https://cdn.changelog.com/partner-stories/rollbar-partner-preroll-move-fast-and-fix-things.mp3",
           duration: 5
         },
         %{
           type: "Customer story",
           name: "CircleCI: Paul Biggar",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-circleci-1.mp3",
+            "https://cdn.changelog.com/partner-stories/rollbar-circleci-1.mp3",
           duration: 63
         },
         %{
           type: "Endorsement",
           name: "Move fast and fix things",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/partner-stories/rollbar-move-fast-and-fix-things.mp3",
+            "https://cdn.changelog.com/partner-stories/rollbar-move-fast-and-fix-things.mp3",
           duration: 33
         }
       ],
@@ -109,14 +109,14 @@ defmodule Changelog.SponsorStory do
           type: "Endorsement",
           name: "Datadog overview (The Changelog)",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-2017-08-01-02.mp3",
+            "https://cdn.changelog.com/partner-stories/datadog-2017-08-01-02.mp3",
           duration: 55
         },
         %{
           type: "Endorsement",
           name: "Datadog overview (Go Time)",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/partner-stories/datadog-gotime-001.mp3",
+            "https://cdn.changelog.com/partner-stories/datadog-gotime-001.mp3",
           duration: 44
         }
       ],
@@ -141,14 +141,14 @@ defmodule Changelog.SponsorStory do
           type: "Team Culture",
           name: "Indeed Assesments, Darren Nix",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-darren-001.mp3",
+            "https://cdn.changelog.com/podcast-ad-examples/indeed-darren-001.mp3",
           duration: 141
         },
         %{
           type: "Team Culture",
           name: "Indeed Assesments, Bryan Chaney",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/podcast-ad-examples/indeed-bryan-001.mp3",
+            "https://cdn.changelog.com/podcast-ad-examples/indeed-bryan-001.mp3",
           duration: 126
         }
       ],
@@ -173,7 +173,7 @@ defmodule Changelog.SponsorStory do
           type: "Endorsement",
           name: "Move fast and fix things",
           audio:
-            "https://changelog-assets.s3.amazonaws.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3",
+            "https://cdn.changelog.com/site-sponsors-rollbar-adroll-move-fast-and-fix-things.mp3",
           duration: 33
         }
       ],
@@ -273,7 +273,7 @@ defmodule Changelog.SponsorStory do
         %{
           type: "Partner preroll",
           name: "Networkwide preroll sponsorship",
-          audio: "https://changelog-assets.s3.amazonaws.com/partner-stories/fastly-preroll.mp3",
+          audio: "https://cdn.changelog.com/partner-stories/fastly-preroll.mp3",
           duration: 06
         }
       ],
