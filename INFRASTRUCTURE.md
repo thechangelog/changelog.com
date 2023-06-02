@@ -35,7 +35,7 @@ graph TD
     registry --> |ghcr.io/changelog/changelog-prod| app
     container --> |flyctl deploy| app
         
-    repo -.- |2022.fly/docker| container
+    repo -.- |fly.io/dagger-engine-2023-05-20| container
 
     %% PaaS - https://fly.io/dashboard/changelog
     subgraph Fly.io
@@ -44,8 +44,8 @@ graph TD
         proxy ==> |https| app
 
 
-        container([ fab:fa-docker Docker Engine 2022-03-13 ]):::link
-        click container "https://fly.io/apps/docker-2022-06-13"
+        container([ fa:fa-project-diagram Dagger Engine 2023-05-20 ]):::link
+        click container "https://fly.io/apps/dagger-engine-2023-05-20"
             
         app(( fab:fa-phoenix-framework App changelog-2022-03-13.fly.dev )):::link
         style app fill:#488969;
@@ -127,7 +127,7 @@ graph TD
 ```
 
 > **Note**
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWG1v2zYQ_iuEig4tEEm2lcSOu27I6i4t0m7d3G7A4qKgJFrmLIkqSTVR4_z3HUm9UK6ctvMHx5Lu5bm7546n3DoRi4kzdx4-RBspCzH3_TXLJb4mgmXEi1jmC4J5tFnlCcfFBr1drHIEnyjFQizIGqU03yIhOduS-YOTs3Aymx6ZS_eaxnIzD4qbJ0bHfIOrZ-AU_YDAApHC3BVlaBxcUPmiDM1N9eGkYLe3aI3D-Rq7CZWbMkRyQ6INzhOSssRvfym46O5uPp8rUJ2JKKXRVhtCK6cJ01jSER62tnJWuWWHRvGVD1AUkojyKCVuBLrbGjQ6jyRlOXLRckML9FKi1er9ATTK1vei8bG2L_xrxrfrlF0LX4CjD1R6VZYqrI2P7hcuJcuwUrtardosshTMogVOEsLRBUPLxSXyD0HtTHw34DBloZ9hIQmHPwlZ05SI7peXsH6GOUkokKd69Giv4Mkm4h5l6PHjg9U1msMQGU9EH2eBoy3AEHsV3mDZ-RYpCKGl_j7oWKlYTrv4tbYpG_QP_QSBPxsFy_PZX88n-1EDM13P_QntPAN6uMI7zZo-H5Gr1IZzu7NKN8SNTl-UUUSEQA9i8mmnQzJSJI_t1m2Aot1kNJl467QCF0XRF6nroO3WZfMH-OEWnMWWeqTGDs2Bj1oTbEcyRTEpUmZ7uQ-MH7NoS_ius9VkGWbOG4yX0JntlEsrBSzGYhMyzOMO2N48-lUL2iGqD4C_qW7NJEiA5AS9UXfu9iTQ06cQi_ZZx9BjWwPz0VVDORMBWpg_z_MEHiMVnzsK3HGA3h-kYZu-jot1jOBX1KlxjalTMGWPi72RURRdDxQbRnJ64645zohiJTovCtRVscOmKuABf4ZaRcgqJcowAm6m8wfHs9nZ6dmTLyYNCAzDH3J4OII4vNYp1RnFEodYQIGYkAknyz9eoVcEx5ApMBW4o6kbjA_nFUx9FVJhLAu3M3gfNj6-F9yfQHka4T46mzYqSz9qYhWJ-AhTATD2Yq9nCTeGVPfvtNuekW6o6367ptC5JTRCr3u-YOrX25qXuaQZ2bWT4H9ZMcOhM9EZyYjkNBJx2CYRtLh0U9Up0ITwfENKoXO2p9MqsLTMcoEuOF7jHCOoqluLeDmR6NBBWMv0-WBr2lVvhF0XJhSEk6lKteAH4jGzrL7cm3iHhHqVPyS0V08909uxuCQR75Ywc6G7XyVqSyo0fgNrGjR-vN_XJie1yuAJOC5qVX0KNslpNAxJ6ysr3u55X8CcfRZws5YaFfW7hQ1nYE7XFc0TmM0AAb2tCiJIDn32uGaF6iFwUHtQ2jvULLqti-c3ESn0xlVnrr1uXUWYuxGHQwTw5OrYG0xSp2jlSWgF1QCwneCcfsZmueuaICMxxT4VooSD_Wfg0L8kkk9PTk9heE6adNqRdH52lk8romeL36wzMAPyJ8Rbw34Gc03VCKiypknJCaDjnyjsBP40uQyjy-XlxaL6-G76slzw44Bc7B-S2oQ9osjNFeov5gfXS5AdpE-9f385Qlu353B4lzzvj9oozq_Ul7fnvpNqt5p-K_weqqBxSFMq61iYfastelgm6AXLSQV2w-GK9xSt6ErqbRrN_uxTR4F6HepufWAFUISkRHVy5W9gtHVFh5yZBgJBqDb7EntDDC0lOYZiDspZ8St-wVnNONDCcmQvMXqt2av--d9LbxkM1KcULgFmuON-hcx7X7vz4GthLRTmoScCD2f4M8vh6f31q2veX7XqN8s2ttcspxAXjIQ97L8QCS8nSwm7ur2uYFm2x0WKK9icEs7Kon7ifRuzjbDd8gPa_VeBrMXZsg02BHjPlCTPqUDvCnW4Hn4b6fRt0mklL9ShCtm8lkiCM38cBMFo4td6oneCdbZaHjVyO82MA7J9QajNN8lZzPqKpEmjRQHnyMkIzzCNnblzqx6sHNgCVL_M4WeM-VYFdgdyau9ZVnnkQGpTQY6csoDOIwuKgQ9Ze7fA-T-M9a6d-a1z48xPT7zx2SQIJrPTaRBMZ8GRUznzydSbzU5mxyejk-PR2fR4Nr07cj5rC2NvNBqfToLJdDI7O5mNQQHmOkTy2vzrRf8H5u4_mDKjsw)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEig4tEEm2FceJu27I6i4t0m7d3G7A4qKgJFrmLIkqSTVx43z3PZI6KEfqMf9h63j3-72DvnUiFhNn7jx8iDZSFmLu-2uWS3xNBMuIF7HMFwTzaLPKE46LDXq7WOUIPlGKhViQNUppvkVCcrYl8wfTs3ByOjsyt-41jeVmHhQ3TwyP-QZVz0Ap-gGBBCKFeSrK0Ci4oPJFGZqH6sNJwW5v0RqH8zV2Eyo3ZYjkhkQbnCckZYnfXClz0d3dfD5XRrUiopRGWy0IrZzaTSNJezgsbeWscksOjeIrH0xRlkSURylxI-DdVkaj80hSliMXLTe0QC8lWq3eD1ijZH2vNT7W8oV_zfh2nbJr4QtQ9IFKb5elytZaR3uFS8kyrNiuVqsmiiwFsWiBk4RwdMHQcnGJ_CFTWxHfbXCYstDPsJCEw09C1jQlor3yEtaNMCcJBfDsHj06SHiyibhHGXr8eDC7hrPfRMYT0bWzwNEWzBAHGd5g2eoWKRChpf4eVKxYLKWt_5rbpA3qh34Cx5-NguX56V_PJ4deAzJdz_0J7T1jdH-G9xo1XTwiV7H1x3Zvpa4PGy2_KKOICIEexOTTXrtkqEge26VbG4r2k9Fk4q3THagoii5JlQctt0qb34MPt-Asttgj1XZoDnjUnCA7kimKSZEyW0ufMUCrlMQazi7JExDjgoWBO5rC776VXUcdetAbjJdQqU3Xq2WITcgwj1tDD_rTr5rQdll9wJmb3a3pDAmAnqA36sndAQV6-hR80zornzroq818dFU1GWD6l0TSjSkG7Vldsc-1i6h1Eb0fhGcT1hajla-gXwwGze4mBx2lKNoSKTaM5PTGXYN1RIEWnRcFapOscOKOAnccKLR4AK--ShJylxIlGAF00_mD49PTs5OzJ_caERD0e9GncNiDOLxuIhxjiUMsIF9MyIST5R-v0CuCYwiYCcbMDcbD4QVRXzWpMJKF2wr8km18_EXj_oSKoBHuWmejSEXpR42zIhEfoWmAjR3fq1bDjSDVHPZabUdI2_N1OV5TKOwS6qJTTPeA-_Wq52UuaUb2TaP4X1JM72hFtEIyIjmNRBw2QQQuLt1UFQzUJLzfkFLomB3wNAwsLbNcoAuO1zjHCLLqViReTiQampMVTRcPNqed9ZrYdaGBgTuZylRjfI8_ptVVtwcNcYiok_khooN86pbfdMkliXi7o5kbXf0qUFuyQ-M3sMVB4ceHdW1iUrH0DshxUbHqIVkHp-YwIK3uLH_b910CMxotw83WaljUdWM2jMicrnc0T6BVgwno7a4gguRQZ48rVKgaAgWVBsW9R_Ue3Kh4fhORQi9kVeSa-0ZVhLkbcZgpYE-upmJvkFpGK05CM6gCgOUF5_QzNrtfWwQZgbHgUyFKmPs_V6Pi6fTkBJrnpA6n7UmrZ2_ptDx6tvjNGokZgD8h3hrWN-hrKkcAlTVNSk7AOv6Jwsrgz5LLMLpcXl4sdh_fzV6WC34ckIvDmalF2C2K3Fyh7t4-uH0CbS98qvX8fgtt1J7DLC953m21UZxfqS_vQH1L1Sw93VL4PVRO45CmVFa-MPtRk_SwTNALlpMdyA37M95htLwrqbepObu9T40CdVpqH31gBUCEpERV8s7fQGtrkw4xMwUEhJBtdt_2GhiaSnIMyeyls_xX-IJZzTjAwlJk7zR6yznI_vnfS28Z9OSnFC4BZLjjbobMsfCqXjHwtbAWCvPSE4GHM_yZ5fD2y_mrct7dvKqDZ-Pba5ZT8AtawoHtvxAJZ5elhFXeXlewLJtxkeIdLFAJZ2VRvfG-DdmG2C75Hu7uSSFr7GzQBhsCHEMlyXMq0LtCDdfhw0rLb4NOM3mhdlXI-tQiCc78cRAEo4lf8YnOBGtlNTiq6fYaGQO0XULIzTfRWcj6CqUJowUB58jJCM8wjZ25c6terBzYAlS9zOEyxnyrHLsDOrX3LHd55EBoU0GOnLKAyiMLs383Twuc_8NY596Z3zo3ztydBSfeyWw0Ojs9nkxn0_HpkbNz5mdjb3w8nQWT2QgeT4Pp3ZHzWUsYe7NgGpwdj0bj0Wg2AnJo6-DIa_PHjP5_5u4_wV6tvQ)
 
 Let's dig into how all the above pieces fit together.
 
@@ -193,9 +193,9 @@ workflow jobs perspective, it is fairly standard:
 - **1/2. CI/CD**
   - Uses Dagger Go SDK so that it works exactly the same locally as it does in
     GitHub Actions
-  - [Connects to a Docker Engine running on
-    Fly.io](https://github.com/thechangelog/changelog.com/pull/416) so that
-    caching is reliable & persistent between runs
+  - [Spins up a Dagger Engine as a Fly.io machine on-demand, then connects to
+    it](https://github.com/thechangelog/changelog.com/pull/471) so that caching
+    is reliable & persistent between workflow runs
   - A successful run publishes a container image to
     https://ghcr.io/thechangelog/changelog-runtime &
     https://ghcr.io/thechangelog/changelog-prod

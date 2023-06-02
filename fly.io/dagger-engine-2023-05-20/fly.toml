@@ -7,7 +7,7 @@ kill_signal = "SIGINT"
 kill_timeout = 30
 
 [build]
-  image = "registry.dagger.io/engine:v0.5.3"
+  image = "registry.dagger.io/engine:v0.6.4"
 
 [env]
   _EXPERIMENTAL_DAGGER_SERVICES_DNS = "true"
@@ -21,8 +21,8 @@ kill_timeout = 30
 
 [checks]
   [checks.grpc]
-    grace_period = "2s"
-    interval = "3s"
+    grace_period = "3s"
+    interval = "2s"
     port = 8080
-    timeout = "2s"
+    timeout = "1s"
     type = "tcp"

@@ -18,14 +18,14 @@ on:
 jobs:
   # In thechangelog/changelog repository (a.k.a. upstream),
   # this is the preferred default:
-  dagger-on-fly-docker:
+  dagger-on-fly:
     if: ${{ contains(vars.RUNS_ON, 'fly') }}
-    uses: ./.github/workflows/dagger_on_fly_docker.yml
+    uses: ./.github/workflows/dagger_on_fly.yml
     secrets: inherit
 
   # When our Fly.io setup misbehaves, we want a fallback:
   dagger-on-github-fallback:
-    needs: dagger-on-fly-docker
+    needs: dagger-on-fly
     if: ${{ failure() }}
     uses: ./.github/workflows/dagger_on_github.yml
     secrets: inherit
