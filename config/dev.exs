@@ -58,8 +58,8 @@ config :phoenix, :stacktrace_depth, 20
 
 config :phoenix, :plug_init_mode, :runtime
 
-# in dev route direct to S3, in prod route through CDN
-config :waffle, asset_host: SecretOrEnv.get("AWS_UPLOADS_HOST")
+# in dev route direct to R2, in prod route through CDN
+config :waffle, asset_host: "https://" <> SecretOrEnv.get("R2_PUBLIC_HOST")
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
