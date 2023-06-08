@@ -1,8 +1,7 @@
 defmodule ChangelogWeb.LiveView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode}
-  alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, PodcastView, TimeView}
+  alias ChangelogWeb.{EpisodeView, PersonView, PodcastView, TimeView}
 
   def render("ical.ics", %{episodes: episodes}) do
     events =

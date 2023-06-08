@@ -8,16 +8,6 @@ defmodule ChangelogWeb.Endpoint do
 
   plug ChangelogWeb.Plug.HealthCheck
 
-  plug Plug.Static,
-    at: "/uploads",
-    from: {:changelog, "priv/uploads"},
-    gzip: false,
-    headers: %{
-      "accept-ranges" => "bytes",
-      "surrogate-control" =>
-        Application.get_env(:changelog, :cdn_cache_control_s3)
-    }
-
   # Legacy assets that will exist in production & may exist in dev
   plug Plug.Static,
     at: "/wp-content",
@@ -26,7 +16,7 @@ defmodule ChangelogWeb.Endpoint do
     headers: %{
       "cache-control" => "max-age=#{3600 * 24 * 366}, public",
       "surrogate-control" =>
-        Application.get_env(:changelog, :cdn_cache_control_s3)
+        Application.compile_env(:changelog, :cdn_cache_control_s3)
     }
 
   # In production static assets are served by the CDN

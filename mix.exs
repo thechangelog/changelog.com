@@ -9,7 +9,6 @@ defmodule Changelog.Mixfile do
       version: System.get_env("APP_VERSION", "0.0.1"),
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -20,7 +19,10 @@ defmodule Changelog.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Changelog.Application, []}, extra_applications: [:logger, :runtime_tools, :iex]]
+    [
+      mod: {Changelog.Application, []},
+      extra_applications: [:logger, :runtime_tools]
+    ]
   end
 
   # Specifies which paths to compile per environment.
@@ -32,17 +34,18 @@ defmodule Changelog.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.10"},
+      {:phoenix, "~> 1.7.3"},
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
-      {:phoenix_html, "~> 3.0"},
+      {:ecto_sql, "~> 3.10"},
+      {:postgrex, ">= 0.0.0"},
+      {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:plug_cowboy, "~> 2.5"},
       {:oban, "~> 2.15"},
-      {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},
-      {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-6"},
+      {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-7"},
       {:cmark, "~> 0.6"},
       {:floki, "~> 0.34.0"},
       {:html_sanitize_ex, "~> 1.1"},

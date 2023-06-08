@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <%= for {type, message} <- get_flash(@conn), do: render("_flash.html", type: type, message: message) %>
+  <%= for {type, message} <- @flash, do: render("_flash.html", type: type, message: message) %>
 </header>
 
 <nav class="mobile_nav">

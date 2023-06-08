@@ -13,7 +13,7 @@
     data-module="<%= Phoenix.Controller.view_module(@conn) %>"
     data-template="<%= Phoenix.Controller.view_template(@conn) %>"
   >
-    <div class="ui fixed menu <%= get_flash(@conn, :result) %>">
+    <div class="ui fixed menu <%= Phoenix.Flash.get(@flash, :result) %>">
       <a href="/" class="icon item"><i class="eject icon"></i></a>
     <%= if Policies.AdminsOnly.index(@current_user) do %>
       <%= link(to: Routes.admin_page_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "page", "active")}") do %>
