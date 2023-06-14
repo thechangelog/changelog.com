@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Server Error | Changelog</title>
     <meta name="copyright" content="Changelog Media LLC">
-    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>">
-    <script src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
+    <link rel="stylesheet" href="<%= url(~p"/css/app.css") %>">
+    <script src="<%= url(~p"/js/app.js") %>"></script>
   </head>
   <body class="error"><!--[if lt IE 8]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

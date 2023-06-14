@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
     <title><%= Meta.AdminTitle.get(:page, @conn) %></title>
-    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/admin.css") %>">
+    <link rel="stylesheet" href="<%= url(~p"/css/admin.css") %>">
   </head>
 
   <body
@@ -90,6 +90,6 @@
       <%= @inner_content %>
     </div>
 
-    <script src="<%= Routes.static_url(@conn, "/js/admin.js") %>"></script>
+    <script src="<%= url(~p"/js/admin.js") %>"></script>
   </body>
 </html>

@@ -109,43 +109,43 @@
       <div class="logo_grid logo_grid--dark margin-vertical_large">
         <div class="logo_grid-item">
           <p>Community Leader</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/linux-foundation-gray.png") %>' alt="Linux Foundation">
+          <img src='<%= url(~p"/images/content/sponsors/linux-foundation-gray.png") %>' alt="Linux Foundation">
         </div>
         <div class="logo_grid-item">
           <p>Data Scientist</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/intel-grey.png") %>' alt="Intel">
+          <img src='<%= url(~p"/images/content/sponsors/intel-grey.png") %>' alt="Intel">
         </div>
         <div class="logo_grid-item">
           <p>Executive VP</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/microsoft-gray.png") %>' alt="Micrsoft">
+          <img src='<%= url(~p"/images/content/sponsors/microsoft-gray.png") %>' alt="Micrsoft">
         </div>
         <div class="logo_grid-item">
           <p>SRE Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/google-gray.png") %>' alt="Google">
+          <img src='<%= url(~p"/images/content/sponsors/google-gray.png") %>' alt="Google">
         </div>
         <div class="logo_grid-item">
           <p>Software Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/ibm-gray.png") %>' alt="IBM">
+          <img src='<%= url(~p"/images/content/sponsors/ibm-gray.png") %>' alt="IBM">
         </div>
         <div class="logo_grid-item">
           <p>Systems Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/datadog-gray.png") %>' alt="Datadog">
+          <img src='<%= url(~p"/images/content/sponsors/datadog-gray.png") %>' alt="Datadog">
         </div>
         <div class="logo_grid-item">
           <p>React Core</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/facebook-gray.png") %>' alt="Facebook">
+          <img src='<%= url(~p"/images/content/sponsors/facebook-gray.png") %>' alt="Facebook">
         </div>
         <div class="logo_grid-item">
           <p>Distributed Systems</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/uber-gray.png") %>' alt="Uber">
+          <img src='<%= url(~p"/images/content/sponsors/uber-gray.png") %>' alt="Uber">
         </div>
         <div class="logo_grid-item">
           <p>Engineering Director</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/slack-gray.png") %>' alt="Slack">
+          <img src='<%= url(~p"/images/content/sponsors/slack-gray.png") %>' alt="Slack">
         </div>
         <div class="logo_grid-item">
           <p>JavaScript Engineer</p>
-          <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/paypal-gray.png") %>' alt="PayPal">
+          <img src='<%= url(~p"/images/content/sponsors/paypal-gray.png") %>' alt="PayPal">
         </div>
       </div>
     </div>

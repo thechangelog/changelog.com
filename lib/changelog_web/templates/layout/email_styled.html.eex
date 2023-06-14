@@ -224,7 +224,7 @@
         <div class="header">
           <table width="100%">
             <tr>
-              <td class="aligncenter header-logo"><a href="https://changelog.com" title="logo"><img src="<%= Routes.static_url(Endpoint, "/images/email-logomark.png") %>" width="60" height="60"></a></td>
+              <td class="aligncenter header-logo"><a href="https://changelog.com" title="logo"><img src="<%= url(~p"/images/email-logomark.png") %>" width="60" height="60"></a></td>
             </tr>
           </table>
         </div></div>

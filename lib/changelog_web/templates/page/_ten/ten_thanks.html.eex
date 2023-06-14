@@ -147,55 +147,55 @@
   </ul>
   <hr>
   <div class="ten-thanks-companies logo_grid">
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/fastly.png") %>' alt="Fastly logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/rollbar.png") %>' alt="Rollbar Logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/linode.png") %>' alt="Linode logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/algolia.png") %>' alt="Algolia logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/gitprime.png") %>' alt="GitPrime logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/digital-ocean.png") %>' alt="Digital Ocean logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/tidelift.png") %>' alt="Tidelift logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/github.png") %>' alt="Github logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/elixir-phoenix.png") %>' alt="Elixir and Phoenix"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/go-cd.png") %>' alt="GoCD logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/circle-ci.png") %>' alt="CircleCI logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/datadog.png") %>' alt="Datadog logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/heroku.png") %>' alt="Heroku logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/oreilly.png") %>' alt="Oreilly logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/oscon.png") %>' alt="OSCON logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/ato.png") %>' alt="All Things Open logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/redhat.png") %>' alt="Redhat logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/command-line-heroes.png") %>' alt="Command Line Heroes logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/google.png") %>' alt="Google logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/go.png") %>' alt="Go logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/gauge.png") %>' alt="Gauge logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/microsoft.png") %>' alt="Microsoft logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/linux-foundation.png") %>' alt="Linux Foundation logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/kubecon.png") %>' alt="KubeCon logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/intel.png") %>' alt="Intel logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/node-js-interactive.png") %>' alt="Nose JS Interactive logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/sentry.png") %>' alt="Sentry logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/slack.png") %>' alt="Slack logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/stripe.png") %>' alt="Stripe logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/gitlab.png") %>' alt="GitLab logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/square.png") %>' alt="Square logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/toptal.png") %>' alt="Toptal logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/auth0.png") %>' alt="Auth0 logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/clubhouse.png") %>' alt="Clubhouse logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/codacy.png") %>' alt="Codacy logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/heap.png") %>' alt="Heap logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/ibm.png") %>' alt="IBM logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/hired.png") %>' alt="Hired logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/indeed.png") %>' alt="Indeed logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/infinite-red.png") %>' alt="Infinite Red logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/manifold.png") %>' alt="Manifold logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/mongodb.png") %>' alt="MongoDB logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/raygun.png") %>' alt="Raygun logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/retool.png") %>' alt="Retool logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/segment.png") %>' alt="Segment logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/stream.png") %>' alt="Stream logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/strongdm.png") %>' alt="strongDM logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/testim.png") %>' alt="Testim logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/xteam.png") %>' alt="X-Team logo"></span>
-    <span class="logo_grid-item"><img src='<%= Routes.static_url(@conn, "/images/content/ten/sponsors/campaign-monitor.png") %>' alt="Campaign Monitor logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/fastly.png") %>' alt="Fastly logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/rollbar.png") %>' alt="Rollbar Logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/linode.png") %>' alt="Linode logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/algolia.png") %>' alt="Algolia logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/gitprime.png") %>' alt="GitPrime logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/digital-ocean.png") %>' alt="Digital Ocean logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/tidelift.png") %>' alt="Tidelift logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/github.png") %>' alt="Github logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/elixir-phoenix.png") %>' alt="Elixir and Phoenix"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/go-cd.png") %>' alt="GoCD logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/circle-ci.png") %>' alt="CircleCI logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/datadog.png") %>' alt="Datadog logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/heroku.png") %>' alt="Heroku logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/oreilly.png") %>' alt="Oreilly logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/oscon.png") %>' alt="OSCON logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/ato.png") %>' alt="All Things Open logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/redhat.png") %>' alt="Redhat logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/command-line-heroes.png") %>' alt="Command Line Heroes logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/google.png") %>' alt="Google logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/go.png") %>' alt="Go logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/gauge.png") %>' alt="Gauge logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/microsoft.png") %>' alt="Microsoft logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/linux-foundation.png") %>' alt="Linux Foundation logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/kubecon.png") %>' alt="KubeCon logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/intel.png") %>' alt="Intel logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/node-js-interactive.png") %>' alt="Nose JS Interactive logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/sentry.png") %>' alt="Sentry logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/slack.png") %>' alt="Slack logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/stripe.png") %>' alt="Stripe logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/gitlab.png") %>' alt="GitLab logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/square.png") %>' alt="Square logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/toptal.png") %>' alt="Toptal logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/auth0.png") %>' alt="Auth0 logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/clubhouse.png") %>' alt="Clubhouse logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/codacy.png") %>' alt="Codacy logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/heap.png") %>' alt="Heap logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/ibm.png") %>' alt="IBM logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/hired.png") %>' alt="Hired logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/indeed.png") %>' alt="Indeed logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/infinite-red.png") %>' alt="Infinite Red logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/manifold.png") %>' alt="Manifold logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/mongodb.png") %>' alt="MongoDB logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/raygun.png") %>' alt="Raygun logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/retool.png") %>' alt="Retool logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/segment.png") %>' alt="Segment logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/stream.png") %>' alt="Stream logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/strongdm.png") %>' alt="strongDM logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/testim.png") %>' alt="Testim logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/xteam.png") %>' alt="X-Team logo"></span>
+    <span class="logo_grid-item"><img loading="lazy" src='<%= url(~p"/images/content/ten/sponsors/campaign-monitor.png") %>' alt="Campaign Monitor logo"></span>
   </div>
 </div>

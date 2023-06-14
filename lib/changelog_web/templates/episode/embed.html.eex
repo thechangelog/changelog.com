@@ -7,7 +7,7 @@
     <title><%= Meta.Title.get(:page, @conn) %></title>
     <meta name="description" content="<%= Meta.Description.get(@conn) %>">
     <meta name="copyright" content="Changelog Media LLC">
-    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/embed.css") %>">
+    <link rel="stylesheet" href="<%= url(~p"/css/embed.css") %>">
     <%= render(LayoutView, "_head_scripts.html", assigns) %>
   </head>
   <body class="embed embed--<%= @theme %> embed--<%= @source %>"><!--[if lt IE 8]>
@@ -76,13 +76,13 @@
                   to: PublicHelpers.tweet_url(@episode.title, Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug)),
                   class: "js-share-popup",
                   target: "_blank",
-                  style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-share.svg")}')" %>
+                  style: "background-image: url('#{url(~p"/images/icons/icon-share.svg")}')" %>
             </li>
             <li class="episode_player-nav-list-item">
               <a
                 href="<%= audio_url(@episode) %>"
                 title="Download Episode"
-                style="background-image: url('<%= Routes.static_url(@conn, "/images/icons/icon-download.svg") %>')"
+                style="background-image: url('<%= url(~p"/images/icons/icon-download.svg") %>')"
                 download>
                 Download
               </a>
@@ -92,19 +92,19 @@
                   title: "Subscribe to #{@podcast.name}",
                   to: Routes.podcast_url(@conn, :index),
                   target: "_blank",
-                  style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-subscribe.svg")}')" %>
+                  style: "background-image: url('#{url(~p"/images/icons/icon-subscribe.svg")}')" %>
             </li>
             <li class="episode_player-nav-list-item episode_player-nav-list-item--listen-on">
               <%= link "Listen on Changelog.com",
                   to: Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug),
                   target: "_blank",
                   class: "js-listen-link",
-                  style: "background-image: url('#{Routes.static_url(@conn, "/images/brand/podcasts.svg")}')" %>
+                  style: "background-image: url('#{url(~p"/images/brand/podcasts.svg")}')" %>
             </li>
           </ul>
         </nav>
       <% end %>
     </figure>
-    <script src="<%= Routes.static_url(@conn, "/js/embed.js") %>"></script>
+    <script src="<%= url(~p"/js/embed.js") %>"></script>
   </body>
 </html>

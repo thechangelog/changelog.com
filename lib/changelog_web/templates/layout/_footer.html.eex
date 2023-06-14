@@ -10,32 +10,32 @@
       <ul class="footer-primary-list footer-primary-list--social">
         <li>
           <a href="https://twitter.com/changelog" title="Changelog on Twitter">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-twitter-black.svg"), "Twitter Icon", width: 20, height: 20) %>
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-twitter-black.svg"), "Twitter Icon", width: 20, height: 20) %>
           </a>
         </li>
         <li>
           <a href="https://changelog.social" title="Changelog on Mastodon">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-mastodon-black.svg"), "Mastodon Icon", width: 20, height: 20) %>
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-mastodon-black.svg"), "Mastodon Icon", width: 20, height: 20) %>
           </a>
         </li>
         <li>
           <a href="https://linkedin.com/company/changelog" title="Changelog on LinkedIn">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-linkedin-black.svg"), "LinkedIn Icon", width: 22, height: 22) %>
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-linkedin-black.svg"), "LinkedIn Icon", width: 22, height: 22) %>
           </a>
         </li>
         <li>
           <a href="https://github.com/thechangelog" title="Changelog on GitHub">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-github-black.svg"), "GitHub Icon", width: 20, height: 20) %>
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-github-black.svg"), "GitHub Icon", width: 20, height: 20) %>
           </a>
         </li>
         <li>
           <a href="https://www.youtube.com/changelog" title="Changelog on YouTube">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-youtube-black.svg"), "YouTube Icon", width: 20, height: 20) %>
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-youtube-black.svg"), "YouTube Icon", width: 20, height: 20) %>
           </a>
         </li>
         <li>
           <a href="https://www.instagram.com/changelog_" title="Changelog on Instagram">
-            <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/icons/icon-instagram-black.svg"), "Instagram Icon", width: 20, height: 20) %>
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-instagram-black.svg"), "Instagram Icon", width: 20, height: 20) %>
           </a>
         </li>
       </ul>
@@ -99,19 +99,19 @@
       <div class="footer-partners-item">
         <a href="https://www.fastly.com/?utm_source=changelog" title="Bandwidth by Fastly">
           <p>Bandwidth</p>
-          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/partner-fastly.png"), "Fastly", width: 200, height: 100) %>
+          <%= SharedHelpers.lazy_image(url(~p"/images/content/footer/partner-fastly.png"), "Fastly", width: 200, height: 100) %>
         </a>
       </div>
       <div class="footer-partners-item">
         <a href="https://fly.io" title="Hosting by Fly.io">
           <p>Hosting</p>
-          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/partner-fly.png"), "Fly", width: 200, height: 100) %>
+          <%= SharedHelpers.lazy_image(url(~p"/images/content/footer/partner-fly.png"), "Fly", width: 200, height: 100) %>
         </a>
       </div>
       <div class="footer-partners-item">
         <a href="https://typesense.org/?utm_source=changelog&utm_campaign=changelog-search&utm_medium=referral" title="Search by Typesense">
           <p>Search</p>
-          <%= SharedHelpers.lazy_image(Routes.static_url(@conn, "/images/content/footer/partner-typesense.png"), "Typesense", width: 200, height: 100) %>
+          <%= SharedHelpers.lazy_image(url(~p"/images/content/footer/partner-typesense.png"), "Typesense", width: 200, height: 100) %>
         </a>
       </div>
     </div>

@@ -2,8 +2,9 @@ defmodule ChangelogWeb.Plug.Redirects do
   @moduledoc """
   Handles all redirects, legacy and otherwise
   """
+  use ChangelogWeb, :verified_routes
+
   alias ChangelogWeb.RedirectController, as: Redirect
-  alias ChangelogWeb.Router.Helpers, as: Routes
   import ChangelogWeb.Plug.Conn
 
   @external %{
@@ -79,7 +80,7 @@ defmodule ChangelogWeb.Plug.Redirects do
 
   defp external_redirect(conn = %{request_path: "/favicon.ico"}) do
     conn
-    |> Redirect.call(external: Routes.static_url(conn, "/favicon.ico"))
+    |> Redirect.call(external: url(~p"/favicon.ico"))
     |> Plug.Conn.halt()
   end
 

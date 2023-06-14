@@ -21,15 +21,18 @@ defmodule ChangelogWeb.PodcastView do
   end
 
   def cover_path(%{slug: "master"}, version) do
-    Routes.static_url(Endpoint, "/images/podcasts/master-#{version}.png")
+    image = "master-#{version}.png"
+    url(~p"/images/podcasts/#{image}")
   end
 
   def cover_path(%{slug: "podcast", is_meta: true}, version) do
-    Routes.static_url(Endpoint, "/images/podcasts/podcast-#{version}.png")
+    image = "podcast-#{version}.png"
+    url(~p"/images/podcasts/#{image}")
   end
 
   def cover_path(%{slug: "plusplus"}, version) do
-    Routes.static_url(Endpoint, "/images/podcasts/plusplus-#{version}.png")
+    image = "plusplus-#{version}.png"
+    url(~p"/images/podcasts/#{image}")
   end
 
   def cover_path(podcast, version), do: Cover.url({podcast.cover, podcast}, version)
@@ -40,7 +43,7 @@ defmodule ChangelogWeb.PodcastView do
     if podcast.cover do
       cover_path(podcast, version)
     else
-      Routes.static_url(Endpoint, "/images/defaults/black.png")
+      url(~p"/images/defaults/black.png")
     end
   end
 

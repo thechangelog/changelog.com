@@ -3,14 +3,14 @@
     <%= for story <- @stories do %>
       <div class="marketing_slider-item js-slider-item">
         <%= link to: "/sponsor/stories/" <> story.slug, class: "marketing_slider-item-inner", title: "View Story" do %>
-          <img class="sponsor_story-header-logo" src='<%= Routes.static_url(@conn, "/images/content/sponsors/#{story.slug}") %>.png' srcset='<%= Routes.static_url(@conn, "/images/content/sponsors/#{story.slug}") %>.png 1x, <%= Routes.static_url(@conn, "/images/content/sponsors/#{story.slug}") %>@2x.png 2x' alt="<%= story.sponsor %> Logo" width="400">
+          <img class="sponsor_story-header-logo" src='<%= url(~p"/images/content/sponsors/#{story.slug}") %>.png' srcset='<%= url(~p"/images/content/sponsors/#{story.slug}") %>.png 1x, <%= url(~p"/images/content/sponsors/#{story.slug}") %>@2x.png 2x' alt="<%= story.sponsor %> Logo" width="400">
 
           <blockquote class="sponsor_story-quote">
             <div class="sponsor_story-quote-body">
               <p>“<%= story.quote.content %>”</p>
             </div>
             <footer class="marketing_quote-footer">
-              <img src='<%= Routes.static_url(@conn, "/images/content/sponsors/#{story.quote.image}") %>' alt="" width="50" height="50">
+              <img src='<%= url(~p"/images/content/sponsors/#{story.quote.image}") %>' alt="" width="50" height="50">
               <strong><%= story.quote.name %></strong>
               <span class="quote-title"><%= story.quote.title %></span>
             </footer>

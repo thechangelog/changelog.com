@@ -14,14 +14,14 @@
         title: "Discuss this Episode",
         to: Routes.news_item_path(@conn, :show, NewsItem.slug(@item)),
         class: "toolbar_item toolbar_item--button",
-        style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-chat.svg")}')") %>
+        style: "background-image: url('#{~p"/images/icons/icon-chat.svg"}')") %>
   <% end %>
 
     <%= link("Subscribe",
         title: "Subscribe to Podcast",
         to: {:javascript, "void(0);"},
         class: "toolbar_item toolbar_item--button has-tooltip",
-        style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-subscribe.svg")}')") %>
+        style: "background-image: url('#{~p"/images/icons/icon-subscribe.svg"}')") %>
     <%= render(PodcastView, "_subscribe_tooltip.html", conn: @conn, podcast: @episode.podcast) %>
 
     <%= link("Share",
@@ -29,6 +29,6 @@
         to: {:javascript, "void(0);"},
         class: "toolbar_item toolbar_item--button",
         data: [share: Routes.episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
-        style: "background-image: url('#{Routes.static_url(@conn, "/images/icons/icon-share.svg")}')") %>
+        style: "background-image: url('#{~p"/images/icons/icon-share.svg"}')") %>
   </div>
 </div>

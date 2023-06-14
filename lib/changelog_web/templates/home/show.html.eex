@@ -3,7 +3,7 @@
 
   <div class="account_ctas">
     <div class="account_ctas-item">
-    <img class="account_ctas-item-icon" src='<%= Routes.static_url(@conn, "/images/podcasts/plusplus.png") %>' width="50" height="50" alt="Changelog++ Art"></i>
+    <img class="account_ctas-item-icon" src='<%= url(~p"/images/podcasts/plusplus.png") %>' width="50" height="50" alt="Changelog++ Art"></i>
 
     <div class="account_ctas-item-info">
       <h3>Join Changelog++</h3>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="account_ctas-item">
-      <img class="account_ctas-item-icon" src='<%= Routes.static_url(@conn, "/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
+      <img class="account_ctas-item-icon" src='<%= url(~p"/images/content/community/slack-mark.svg") %>' width="50" height="50" alt="Slack Logomark"></i>
 
       <div class="account_ctas-item-info">
         <h3>Changelog Slack</h3>

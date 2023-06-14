@@ -16,18 +16,18 @@
     <meta property="og:site_name" content="Changelog News">
     <meta property="og:url" content="<%= Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug) %>">
     <meta property="og:locale" content="en_US">
-    <meta property="og:image" content="<%= Routes.static_url(Endpoint, "/images/share/twitter-news.png") %>">
+    <meta property="og:image" content="<%= url(~p"/images/share/twitter-news.png") %>">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Changelog">
     <meta name="twitter:description" content="<%= @episode.title |> html_escape() %>">
     <meta name="twitter:url" content="<%= Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug) %>">
-    <meta name="twitter:image" content="<%= Routes.static_url(Endpoint, "/images/share/twitter-news.png") %>">
+    <meta name="twitter:image" content="<%= url(~p"/images/share/twitter-news.png") %>">
 
     <meta name="apple-itunes-app" content="app-id=<%= PodcastView.apple_id(@episode.podcast) %>">
 
-    <link rel="stylesheet" href="<%= Routes.static_url(Endpoint, "/css/email.css") %>" data-turbolinks-track="reload">
-    <link rel="shortcut icon" href="<%= Routes.static_url(Endpoint, "/favicon.ico") %>">
+    <link rel="stylesheet" href="<%= url(~p"/css/email.css") %>" data-turbolinks-track="reload">
+    <link rel="shortcut icon" href="<%= url(~p"/favicon.ico") %>">
   </head>
   <body>
     <p style="display:none !important;"><%= @episode.email_teaser %></p>
@@ -57,7 +57,7 @@
                         </tr>
                       </tbody>
                     </table>
-                    <img class="spacer-20" src="<%= Routes.static_url(Endpoint, "/images/email/spacer_1.gif") %>">
+                    <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e5e5e5">
                       <tbody>
                         <tr><td bgcolor="#e5e5e5" height="1" width="100%"></td></tr>
@@ -67,7 +67,7 @@
                       <tbody>
                         <tr>
                           <td class="footer" align="center">
-                            <img class="spacer-20" src="<%= Routes.static_url(Endpoint, "/images/email/spacer_1.gif") %>">
+                            <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
                           <%= if @person do %>
                             <p><%= link("Unsubscribe", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;<%= link("View in Browser", to: Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug)) %></p>
                           <%= if String.length(@subscription.context) > 0 do %>
@@ -75,7 +75,7 @@
                           <% end %>
                           <% end %>
                             <p class="last-of-type">Copyright Changelog Media LLC</p>
-                            <img class="spacer-20" src="<%= Routes.static_url(Endpoint, "/images/email/spacer_1.gif") %>">
+                            <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
                           </td>
                         </tr>
                       </tbody>

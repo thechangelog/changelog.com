@@ -3,7 +3,6 @@ defmodule Mix.Tasks.Changelog.NoSpam do
 
   alias ChangelogWeb.PersonView
   alias Changelog.{Newsletters, Person, Repo}
-  alias Craisin.Subscriber
 
   @shortdoc "Purges all spam person records"
 

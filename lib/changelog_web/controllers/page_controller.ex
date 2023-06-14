@@ -79,12 +79,12 @@ defmodule ChangelogWeb.PageController do
       description: "News and podcasts for developers",
       icons: [
           %{
-              src: Routes.static_url(conn, "/android-chrome-192x192.png"),
+              src: url(~p"/android-chrome-192x192.png"),
               sizes: "192x192",
               type: "image/png"
           },
           %{
-              src: Routes.static_url(conn, "/android-chrome-512x512.png"),
+              src: url(~p"/android-chrome-512x512.png"),
               sizes: "512x512",
               type: "image/png"
           }
