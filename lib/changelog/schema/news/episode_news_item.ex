@@ -11,7 +11,7 @@ defmodule Changelog.EpisodeNewsItem do
       type: :audio,
       feed_only: feed_only,
       object_id: Episode.object_id(episode),
-      url: EpisodeView.url(episode, :show),
+      url: EpisodeView.episode_url(episode, :show),
       headline: episode.title,
       story: episode.summary,
       published_at: episode.published_at,
@@ -27,7 +27,7 @@ defmodule Changelog.EpisodeNewsItem do
       item
       |> NewsItem.preload_topics()
       |> change(%{
-        url: EpisodeView.url(episode, :show),
+        url: EpisodeView.episode_url(episode, :show),
         headline: episode.title,
         story: episode.summary,
         news_item_topics: episode_topics(episode)

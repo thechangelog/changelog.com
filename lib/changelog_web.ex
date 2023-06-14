@@ -1,4 +1,7 @@
 defmodule ChangelogWeb do
+  def static_paths, do: ~w(css fonts images js android-chrome apple-touch
+    browserconfig favicon manifest mstile robots safari-pinned-tab)
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: ChangelogWeb
@@ -45,6 +48,8 @@ defmodule ChangelogWeb do
 
       defp is_admin?(user = %Changelog.Person{}), do: user.admin
       defp is_admin?(_), do: false
+
+      unquote(verified_routes())
     end
   end
 
@@ -58,6 +63,8 @@ defmodule ChangelogWeb do
       alias ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
       alias Changelog.Policies
       alias ChangelogWeb.TimeView
+
+      unquote(verified_routes())
     end
   end
 
@@ -81,6 +88,8 @@ defmodule ChangelogWeb do
       alias ChangelogWeb.Helpers.{PublicHelpers, SharedHelpers}
       alias Changelog.Policies
       alias ChangelogWeb.{SharedView, TimeView}
+
+      unquote(verified_routes())
     end
   end
 
@@ -97,6 +106,15 @@ defmodule ChangelogWeb do
       alias Changelog.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
+    end
+  end
+
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: ChangelogWeb.Endpoint,
+        router: ChangelogWeb.Router,
+        statics: ChangelogWeb.static_paths()
     end
   end
 

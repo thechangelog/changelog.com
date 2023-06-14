@@ -129,13 +129,13 @@ defmodule ChangelogWeb.EpisodeView do
   def embed_code(episode), do: embed_code(episode, episode.podcast)
 
   def embed_code(episode, podcast) do
-    ~s{<audio data-theme="night" data-src="#{url(episode, :embed)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
-      ~s{<p><a href="#{url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{Routes.root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
+    ~s{<audio data-theme="night" data-src="#{episode_url(episode, :embed)}" src="#{audio_url(episode)}" preload="none" class="changelog-episode" controls></audio>} <>
+      ~s{<p><a href="#{episode_url(episode, :show)}">#{podcast.name} #{numbered_title(episode)}</a> – Listen on <a href="#{Routes.root_url(Endpoint, :index)}">Changelog.com</a></p>} <>
       ~s{<script async src="//cdn.changelog.com/embed.js"></script>}
   end
 
   def embed_iframe(episode, theme) do
-    ~s{<iframe src="#{url(episode, :embed)}?theme=#{theme}" width="100%" height=220 scrolling=no frameborder=no></iframe>}
+    ~s{<iframe src="#{episode_url(episode, :embed)}?theme=#{theme}" width="100%" height=220 scrolling=no frameborder=no></iframe>}
   end
 
   def guest_focused_subtitle(episode) do
@@ -323,11 +323,11 @@ defmodule ChangelogWeb.EpisodeView do
     if vanity do
       vanity <> "/" <> episode.slug
     else
-      url(episode, :show)
+      episode_url(episode, :show)
     end
   end
 
-  def url(episode, action) do
+  def episode_url(episode, action) do
     episode = Episode.preload_podcast(episode)
     Routes.episode_url(Endpoint, action, episode.podcast.slug, episode.slug)
   end

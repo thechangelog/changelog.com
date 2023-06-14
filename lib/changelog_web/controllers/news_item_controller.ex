@@ -124,7 +124,7 @@ defmodule ChangelogWeb.NewsItemController do
     else
       conn
       |> put_layout(false)
-      |> render(:visit, to: NewsItemView.url(item))
+      |> render(:visit, to: NewsItemView.news_item_url(item))
     end
   end
 

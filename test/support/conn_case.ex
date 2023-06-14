@@ -17,10 +17,15 @@ defmodule ChangelogWeb.ConnCase do
 
   using do
     quote do
-      # Import conveniences for testing with connections
+      # The default endpoint for testing
+      @endpoint ChangelogWeb.Endpoint
+
+      use ChangelogWeb, :verified_routes
+
       alias Changelog.Repo
       alias ChangelogWeb.Router.Helpers, as: Routes
 
+      # Import conveniences for testing with connections
       import Ecto
       import Ecto.Query, only: [from: 2]
       import Plug.Conn
@@ -49,9 +54,6 @@ defmodule ChangelogWeb.ConnCase do
           assert Map.equal?(URI.decode_query(actual_uri.query), URI.decode_query(expected_uri.query))
         end
       end
-
-      # The default endpoint for testing
-      @endpoint ChangelogWeb.Endpoint
     end
   end
 
