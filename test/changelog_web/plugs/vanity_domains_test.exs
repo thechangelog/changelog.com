@@ -155,13 +155,6 @@ defmodule ChangelogWeb.VanityDomainsTest do
 
   test "vanity redirects for typeforms" do
     conn =
-      build_conn_with_host_and_path("jsparty.fm", "/ff")
-      |> assign_podcasts([@gotime, @jsparty])
-      |> VanityDomains.call([])
-
-    assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
-
-    conn =
       build_conn_with_host_and_path("gotime.fm", "/gs")
       |> assign_podcasts([@gotime, @jsparty])
       |> VanityDomains.call([])
