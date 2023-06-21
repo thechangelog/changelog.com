@@ -34,6 +34,17 @@
       <itunes:category text="Mental Health"/>
     </itunes:category>
   <% end %>
+  <%= if @podcast.slug == "founderstalk" do %>
+    <itunes:category text="Business">
+      <itunes:category text="Careers"/>
+      <itunes:category text="Entrepreneurship"/>
+    </itunes:category>
+  <% end %>
+  <%= if @podcast.slug == "news" do %>
+    <itunes:category text="News">
+      <itunes:category text="Tech News"/>
+    </itunes:category>
+  <% end %>
     <podcast:funding url="https://changelog.com/++">Support our work by joining Changelog++</podcast:funding>
     <%= render_many(@podcast.active_hosts, __MODULE__, "_person.xml", as: :person, role: "host") %>
   <%= for episode <- @episodes do %>
