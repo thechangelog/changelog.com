@@ -1,5 +1,5 @@
 defmodule Changelog.ObanWorkers.EpisodePublishedMailer do
-  use Oban.Worker, queue: :email
+  use Oban.Worker, queue: :email, unique: [fields: [:args, :queue], period: 300]
 
   alias Changelog.{Episode, Mailer, Repo, Subscription}
   alias ChangelogWeb.Email
