@@ -32,8 +32,8 @@ defmodule ChangelogWeb.EmailTest do
     email = Email.community_welcome(person)
 
     assert email.to == person
-    assert email.subject =~ ~r/welcome/i
-    assert email.html_body =~ ~r/welcome/i
+    assert email.subject =~ ~r/confirm/i
+    assert email.html_body =~ ~r/confirm/i
   end
 
   test "episode published", %{person: person} do
@@ -75,8 +75,8 @@ defmodule ChangelogWeb.EmailTest do
     email = Email.subscriber_welcome(person, Newsletters.weekly())
 
     assert email.to == person
-    assert email.subject =~ ~r/welcome/i
-    assert email.html_body =~ ~r/subscribed/i
+    assert email.subject =~ ~r/confirm/i
+    assert email.html_body =~ ~r/confirm/i
     assert email.html_body =~ ~r/Changelog Weekly/
   end
 
@@ -85,8 +85,8 @@ defmodule ChangelogWeb.EmailTest do
     email = Email.subscriber_welcome(person, podcast)
 
     assert email.to == person
-    assert email.subject =~ ~r/welcome/i
-    assert email.html_body =~ ~r/subscribed/i
+    assert email.subject =~ ~r/confirm/i
+    assert email.html_body =~ ~r/confirm/i
     assert email.html_body =~ ~r/#{podcast.name}/
   end
 end

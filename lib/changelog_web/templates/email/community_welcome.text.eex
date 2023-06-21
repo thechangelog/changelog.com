@@ -1,7 +1,7 @@
 <%= greeting(@person) %>
 
 
-Welcome to the Changelog Community! Sign in to your account to:
+Welcome! Click below to confirm your account. Then you can:
 
 <%= render("_account_actions.text", assigns) %>
 

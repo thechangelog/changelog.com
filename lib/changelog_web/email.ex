@@ -80,7 +80,7 @@ defmodule ChangelogWeb.Email do
     styled_email()
     |> put_header("X-CMail-GroupName", "Subscriber Welcome")
     |> to(person)
-    |> subject("Welcome! Confirm your address")
+    |> subject("Last step! Confirm your address")
     |> assign(:person, person)
     |> assign(:subscribed_to, subscribed_to)
     |> render(:subscriber_welcome)

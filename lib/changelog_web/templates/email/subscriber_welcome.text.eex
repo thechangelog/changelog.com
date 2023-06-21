@@ -1,12 +1,10 @@
 <%= greeting(@person) %>
 
 
-You subscribed to <%= @subscribed_to.name %>! Sign in to your account to:
-
-<%= render("_account_actions.text", assigns) %>
-
-We don't use passwords. Each time you sign in we’ll send you a temporary link to your email address. That’s one less password to worry about (yay!). Here’s your first one:
+Click the link below to confirm your <%= @subscribed_to.name %> subscription!
 
 <%= render("_sign_in_link.text", assigns) %>
+
+(Changed your mind? Received this in error? Don't click the button! Delete this email and enjoy the rest of your day. We'll purge your account and forget this ever happened ✊)
 
 💚, Logbot

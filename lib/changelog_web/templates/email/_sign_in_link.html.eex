@@ -1,6 +1,8 @@
+<% cta = Map.get(assigns, :cta, "Sign in to Changelog") %>
+
 <span class="btn-primary">
-  <%= link "Sign in to Changelog", to: AuthView.auth_url(Endpoint, @person), itemprop: "url" %>
+  <%= link(cta, to: AuthView.auth_url(Endpoint, @person), itemprop: "url") %>
 </span>
 
 <p><em>This one-time use link will self-destruct in <%= PublicHelpers.auth_link_expires_in(@person) %>.</em><p>
-<p>No longer working?  Request a new one <%= link "right here", to: Routes.sign_in_url(Endpoint, :new) %>.</p>
+<p>No longer working?  Request a new one <%= link("right here", to: Routes.sign_in_url(Endpoint, :new)) %>.</p>

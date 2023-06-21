@@ -2,13 +2,11 @@
   <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
     <p><%= greeting(@person) %></p>
 
-    <p>You're subscribed to <strong><%= @subscribed_to.name %></strong>! Sign in to your account to:</p>
+    <p><strong>Click the button below</strong> to confirm your <%= @subscribed_to.name %> subscription!</p>
 
-    <%= render("_account_actions.html", assigns) %>
+    <p>(Changed your mind? Received this in error? Don't click the button! Delete this email and enjoy the rest of your day. We'll purge your account and forget this ever happened ✊)</p>
 
-    <p>We don't use passwords. Each time you sign in we’ll send you a temporary link to your email address. That’s one less password to worry about (yay!). <em>Here’s your first one:</em></p>
-
-    <%= render("_sign_in_link.html", assigns) %>
+    <%= render("_sign_in_link.html", Map.merge(assigns, %{cta: "Confirm my subscription!"})) %>
 
     <p>💚, Logbot</p>
   </td>
