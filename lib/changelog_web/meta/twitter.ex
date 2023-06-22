@@ -18,6 +18,9 @@ defmodule ChangelogWeb.Meta.Twitter do
   defp card_type(%{view_module: PageView, view_template: "ten.html"}),
     do: "summary_large_image"
 
+  defp card_type(%{view_module: PageView, view_template: "index.html"}),
+    do: "summary_large_image"
+
   defp card_type(%{view_module: PodcastView}), do: "summary_large_image"
 
   defp card_type(%{view_module: PostView, post: %{image: img}}) when is_map(img),
