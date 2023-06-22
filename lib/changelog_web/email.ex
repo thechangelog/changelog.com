@@ -36,7 +36,7 @@ defmodule ChangelogWeb.Email do
     styled_email()
     |> put_header("X-CMail-GroupName", "Comment Reply")
     |> to(person)
-    |> subject("Someone replied to you on Changelog News")
+    |> subject("Someone replied to you on Changelog")
     |> assign(:person, person)
     |> assign(:reply, reply)
     |> assign(:item, item)
