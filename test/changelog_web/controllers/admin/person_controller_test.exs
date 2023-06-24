@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.Admin.PersonControllerTest do
   use ChangelogWeb.ConnCase
   use Bamboo.Test
+  use Oban.Testing, repo: Changelog.Repo
 
   import Mock
 
@@ -55,6 +56,8 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
         next: Routes.admin_person_path(conn, :index)
       )
 
+    assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
     assert_delivered_email(ChangelogWeb.Email.community_welcome(person))
     assert redirected_to(conn) == Routes.admin_person_path(conn, :index)
@@ -65,6 +68,8 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
   test "creates person, sends guest welcome, and redirects", %{conn: conn} do
     conn =
       post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs, welcome: "guest")
+
+    assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
     assert_delivered_email(ChangelogWeb.Email.guest_welcome(person))

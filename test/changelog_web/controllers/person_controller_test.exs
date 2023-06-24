@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.PersonControllerTest do
   use ChangelogWeb.ConnCase
   use Bamboo.Test
+  use Oban.Testing, repo: Changelog.Repo
 
   import Mock
 
@@ -77,6 +78,8 @@ defmodule ChangelogWeb.PersonControllerTest do
           )
         end
 
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
       refute person.public_profile
       assert_delivered_email(ChangelogWeb.Email.community_welcome(person))
@@ -99,6 +102,8 @@ defmodule ChangelogWeb.PersonControllerTest do
           )
         end
 
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
       assert Subscription.is_subscribed(person, news)
       assert count(Subscription) == 1
@@ -118,6 +123,8 @@ defmodule ChangelogWeb.PersonControllerTest do
             person: %{email: existing.email, name: "Joe Blow", handle: "joeblow"}
           )
         end
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert html_response(conn, 200) =~ ~r/Member exists with that email address/i
       assert count(Person) == count_before
@@ -168,6 +175,8 @@ defmodule ChangelogWeb.PersonControllerTest do
         refute person.public_profile
         assert called(Craisin.Subscriber.subscribe(Newsletters.nightly().id, :_))
 
+        assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
         assert_delivered_email(
           ChangelogWeb.Email.subscriber_welcome(person, Newsletters.nightly())
         )
@@ -193,6 +202,8 @@ defmodule ChangelogWeb.PersonControllerTest do
         existing = Repo.one(from p in Person, where: p.email == ^existing.email)
 
         assert called(Craisin.Subscriber.subscribe(Newsletters.nightly().id, :_))
+
+        assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
         assert_delivered_email(
           ChangelogWeb.Email.subscriber_welcome(existing, Newsletters.nightly())
@@ -224,6 +235,8 @@ defmodule ChangelogWeb.PersonControllerTest do
 
         person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
 
+        assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
         assert_delivered_email(ChangelogWeb.Email.subscriber_welcome(person, podcast))
         assert redirected_to(conn) == Routes.root_path(conn, :index)
         assert count(Person) == count_before + 1
@@ -244,6 +257,8 @@ defmodule ChangelogWeb.PersonControllerTest do
           post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com", news_subscribe: "on", to: podcast.slug)
 
         person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
+
+        assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
         assert_delivered_email(ChangelogWeb.Email.subscriber_welcome(person, podcast))
         assert Subscription.is_subscribed(person, news)
@@ -268,6 +283,8 @@ defmodule ChangelogWeb.PersonControllerTest do
         end
 
       existing = Repo.one(from p in Person, where: p.email == ^existing.email)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_delivered_email(ChangelogWeb.Email.subscriber_welcome(existing, podcast))
       assert redirected_to(conn) == Routes.root_path(conn, :index)

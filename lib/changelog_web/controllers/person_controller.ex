@@ -5,7 +5,6 @@ defmodule ChangelogWeb.PersonController do
     Cache,
     Captcha,
     Episode,
-    Mailer,
     NewsItem,
     Newsletters,
     Person,
@@ -14,7 +13,7 @@ defmodule ChangelogWeb.PersonController do
     Subscription
   }
 
-  alias ChangelogWeb.Email
+  alias Changelog.ObanWorkers.MailDeliverer
 
   plug RequireGuest, "before joining" when action in [:join]
 
@@ -239,7 +238,7 @@ defmodule ChangelogWeb.PersonController do
 
   defp subscribe_to_newsletter(person, newsletter) do
     Craisin.Subscriber.subscribe(newsletter.id, Person.sans_fake_data(person))
-    person |> Email.subscriber_welcome(newsletter) |> Mailer.deliver_later()
+    MailDeliverer.enqueue("subscriber_welcome", %{"person" => person.id, "newsletter" => newsletter.slug})
   end
 
   defp subscribe_to_podcast(person, "master") do
@@ -248,20 +247,21 @@ defmodule ChangelogWeb.PersonController do
       Subscription.subscribe(person, podcast, context)
     end
 
-    person |> Email.subscriber_welcome(Podcast.master()) |> Mailer.deliver_later()
+    MailDeliverer.enqueue("subscriber_welcome", %{"person" => person.id, "podcast" => "master"})
   end
 
   defp subscribe_to_podcast(person, slug) do
     podcast = Podcast.get_by_slug!(slug)
     context = "you signed up for email notifications on changelog.com"
+
     Subscription.subscribe(person, podcast, context)
-    person |> Email.subscriber_welcome(podcast) |> Mailer.deliver_later()
+    MailDeliverer.enqueue("subscriber_welcome", %{"person" => person.id, "podcast" => podcast.slug})
   end
 
   defp welcome_community(conn, person) do
     person = Person.refresh_auth_token(person)
 
-    Email.community_welcome(person) |> Mailer.deliver_later()
+    MailDeliverer.enqueue("community_welcome", %{"person" => person.id})
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")

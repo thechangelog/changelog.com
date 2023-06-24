@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.AuthController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Person, Mailer}
-  alias ChangelogWeb.Email
+  alias Changelog.Person
+  alias Changelog.ObanWorkers.MailDeliverer
 
   plug RequireGuest, "before signing in" when action in [:new, :create]
   plug Ueberauth
@@ -10,7 +10,7 @@ defmodule ChangelogWeb.AuthController do
   def new(conn, %{"auth" => %{"email" => email}}) do
     if person = Repo.get_by(Person, email: email) do
       person = Person.refresh_auth_token(person)
-      Email.sign_in(person) |> Mailer.deliver_later()
+      MailDeliverer.enqueue("sign_in", %{"person" => person.id})
       render(conn, "new.html", person: person)
     else
       conn

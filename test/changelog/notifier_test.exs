@@ -19,12 +19,18 @@ defmodule Changelog.NotifierTest do
       admin = insert(:person, email: "jerod@changelog.com")
       comment = insert(:news_item_comment, approved: false)
       Notifier.notify(comment)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.comment_approval(admin, comment))
     end
 
     test "when comment has no parent or subscribers" do
       comment = insert(:news_item_comment)
       Notifier.notify(comment)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#news-comments", :_))
     end
@@ -35,6 +41,9 @@ defmodule Changelog.NotifierTest do
       Subscription.subscribe(commenter, item)
       comment = insert(:news_item_comment, news_item: item, author: commenter)
       Notifier.notify(comment)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#news-comments", :_))
     end
@@ -45,6 +54,9 @@ defmodule Changelog.NotifierTest do
       sub2 = insert(:subscription_on_item, item: item)
       comment = insert(:news_item_comment, news_item: item)
       Notifier.notify(comment)
+
+      assert %{success: 2, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.comment_subscription(sub1, comment))
       assert_delivered_email(Email.comment_subscription(sub2, comment))
       assert called(Slack.Client.message("#news-comments", :_))
@@ -58,6 +70,9 @@ defmodule Changelog.NotifierTest do
       Subscription.unsubscribe(sub1.person, item)
       Subscription.unsubscribe(sub2.person, item)
       Notifier.notify(comment)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#news-comments", :_))
     end
@@ -68,6 +83,9 @@ defmodule Changelog.NotifierTest do
       p3 = insert(:person, handle: "p3", settings: %{email_on_comment_mentions: false})
       comment = insert(:news_item_comment, content: "Yo @p1 @p2 and @p3 what up!")
       Notifier.notify(comment)
+
+      assert %{success: 2, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.comment_mention(p1, comment))
       assert_delivered_email(Email.comment_mention(p2, comment))
       refute_delivered_email(Email.comment_mention(p3, comment))
@@ -77,6 +95,9 @@ defmodule Changelog.NotifierTest do
       comment = insert(:news_item_comment)
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
       Notifier.notify(reply)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.comment_reply(reply.parent.author, reply))
       assert called(Slack.Client.message("#news-comments", :_))
     end
@@ -88,6 +109,9 @@ defmodule Changelog.NotifierTest do
       comment = insert(:news_item_comment, news_item: item, author: parent)
       reply = insert(:news_item_comment, news_item: item, parent: comment)
       Notifier.notify(reply)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.comment_reply(parent, reply))
       refute_delivered_email(Email.comment_subscription(sub, reply))
       assert called(Slack.Client.message("#news-comments", :_))
@@ -108,6 +132,9 @@ defmodule Changelog.NotifierTest do
         )
 
       Notifier.notify(reply)
+
+      assert %{success: 2, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.comment_reply(parent, reply))
       assert_delivered_email(Email.comment_mention(mentioned, reply))
       refute_delivered_email(Email.comment_mention(parent, reply))
@@ -122,6 +149,9 @@ defmodule Changelog.NotifierTest do
       comment = insert(:news_item_comment, news_item: item, author: parent)
       reply = insert(:news_item_comment, news_item: item, parent: comment)
       Notifier.notify(reply)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#news-comments", :_))
     end
@@ -131,6 +161,9 @@ defmodule Changelog.NotifierTest do
       comment = insert(:news_item_comment, author: person)
       reply = insert(:news_item_comment, news_item: comment.news_item, parent: comment)
       Notifier.notify(reply)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#news-comments", :_))
     end
@@ -143,6 +176,9 @@ defmodule Changelog.NotifierTest do
         insert(:news_item_comment, news_item: comment.news_item, parent: comment, author: person)
 
       Notifier.notify(reply)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#news-comments", :_))
     end
@@ -160,6 +196,9 @@ defmodule Changelog.NotifierTest do
       episode = insert(:published_episode)
       item = episode |> episode_news_item() |> insert()
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
       assert called(Changelog.PodPing.overcast(:_))
@@ -172,8 +211,10 @@ defmodule Changelog.NotifierTest do
       insert(:episode_guest, episode: episode, person: g1, thanks: false)
       insert(:episode_guest, episode: episode, person: g2, thanks: false)
       item = episode |> episode_news_item() |> insert()
-
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
       assert called(Changelog.PodPing.overcast(:_))
@@ -190,6 +231,9 @@ defmodule Changelog.NotifierTest do
       item = episode |> episode_news_item() |> insert()
 
       Notifier.notify(item)
+
+      assert %{success: 2, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.guest_thanks(eg1))
       assert_delivered_email(Email.guest_thanks(eg2))
       assert called(Slack.Client.message("#main", :_))
@@ -202,8 +246,10 @@ defmodule Changelog.NotifierTest do
       request = insert(:episode_request, podcast: podcast, submitter: submitter)
       episode = insert(:published_episode, podcast: podcast, episode_request: request)
       item = episode |> episode_news_item() |> insert()
-
       Notifier.notify(item)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.episode_request_published(request))
     end
 
@@ -214,8 +260,10 @@ defmodule Changelog.NotifierTest do
       episode = insert(:published_episode, podcast: podcast, episode_request: request)
       insert(:episode_guest, episode: episode, person: submitter, thanks: false)
       item = episode |> episode_news_item() |> insert()
-
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
 
@@ -240,6 +288,9 @@ defmodule Changelog.NotifierTest do
     test "when item has no submitter or author" do
       item = insert(:news_item)
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
 
@@ -247,6 +298,9 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person)
       Notifier.notify(item)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.submitted_news_published(item))
     end
 
@@ -254,6 +308,9 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_submitted_news: false})
       item = insert(:news_item, submitter: person)
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
 
@@ -262,6 +319,9 @@ defmodule Changelog.NotifierTest do
       item = insert(:news_item, submitter: person)
       item = NewsItem.decline!(item, "decline reason")
       Notifier.notify(item)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.submitted_news_declined(item))
     end
 
@@ -270,6 +330,9 @@ defmodule Changelog.NotifierTest do
       item = insert(:news_item, submitter: person)
       item = NewsItem.decline!(item, "")
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
 
@@ -277,6 +340,9 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person, author: person)
       Notifier.notify(item)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.submitted_news_published(item))
       refute_delivered_email(Email.authored_news_published(item))
     end
@@ -285,6 +351,9 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_authored_news: true})
       item = insert(:news_item, author: person)
       Notifier.notify(item)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.authored_news_published(item))
     end
 
@@ -292,6 +361,9 @@ defmodule Changelog.NotifierTest do
       person = insert(:person, settings: %{email_on_authored_news: false})
       item = insert(:news_item, author: person)
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
 
@@ -300,6 +372,9 @@ defmodule Changelog.NotifierTest do
       author = insert(:person, settings: %{email_on_authored_news: true})
       item = insert(:news_item, author: author, submitter: submitter)
       Notifier.notify(item)
+
+      assert %{success: 2, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.authored_news_published(item))
       assert_delivered_email(Email.submitted_news_published(item))
     end
@@ -309,6 +384,9 @@ defmodule Changelog.NotifierTest do
     test "nobody is notified" do
       item = insert(:news_item, feed_only: true)
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
   end
@@ -318,6 +396,9 @@ defmodule Changelog.NotifierTest do
       hardcoded = insert(:person, email: "jerod@changelog.com")
       episode = insert(:episode)
       Notifier.notify(episode)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.episode_transcribed(hardcoded, episode))
     end
 
@@ -328,6 +409,9 @@ defmodule Changelog.NotifierTest do
       s2 = insert(:subscription_on_episode, episode: episode)
       s3 = insert(:unsubscribed_subscription_on_episode, episode: episode)
       Notifier.notify(episode)
+
+      assert %{success: 3, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.episode_transcribed(hardcoded, episode))
       assert_delivered_email(Email.episode_transcribed(s1.person, episode))
       assert_delivered_email(Email.episode_transcribed(s2.person, episode))
@@ -341,6 +425,9 @@ defmodule Changelog.NotifierTest do
       request = insert(:episode_request, submitter: person)
       request = EpisodeRequest.decline!(request, "decline reason")
       Notifier.notify(request)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.episode_request_declined(request))
     end
 
@@ -349,6 +436,9 @@ defmodule Changelog.NotifierTest do
       item = insert(:episode_request, submitter: person)
       item = EpisodeRequest.decline!(item, "")
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
 
@@ -357,6 +447,9 @@ defmodule Changelog.NotifierTest do
       request = insert(:episode_request, submitter: person)
       request = EpisodeRequest.fail!(request, "fail reason")
       Notifier.notify(request)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_delivered_email(Email.episode_request_failed(request))
     end
 
@@ -365,6 +458,9 @@ defmodule Changelog.NotifierTest do
       item = insert(:episode_request, submitter: person)
       item = EpisodeRequest.fail!(item, "")
       Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
       assert_no_emails_delivered()
     end
   end

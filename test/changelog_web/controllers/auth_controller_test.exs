@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.AuthControllerTest do
   use ChangelogWeb.ConnCase
   use Bamboo.Test
+  use Oban.Testing, repo: Changelog.Repo
 
   alias Changelog.Person
 
@@ -24,6 +25,9 @@ defmodule ChangelogWeb.AuthControllerTest do
 
     assert html_response(conn, 200) =~ "Check your email"
     assert person.auth_token != nil
+
+    assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
     assert_delivered_email(ChangelogWeb.Email.sign_in(person))
   end
 

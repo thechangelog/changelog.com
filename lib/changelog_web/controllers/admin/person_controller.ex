@@ -5,7 +5,6 @@ defmodule ChangelogWeb.Admin.PersonController do
     Episode,
     EpisodeRequest,
     Fastly,
-    Mailer,
     NewsItem,
     NewsItemComment,
     Newsletters,
@@ -14,7 +13,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     Subscription
   }
 
-  alias ChangelogWeb.Email
+  alias Changelog.ObanWorkers.MailDeliverer
 
   plug :assign_person when action in [:show, :edit, :update, :delete, :slack, :news, :comments, :masq]
   plug Authorize, [Policies.Admin.Person, :person]
@@ -256,11 +255,11 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   defp handle_generic_welcome_email(person) do
     person = Person.refresh_auth_token(person)
-    Email.community_welcome(person) |> Mailer.deliver_later()
+    MailDeliverer.enqueue("community_welcome", %{"person" => person.id})
   end
 
   defp handle_guest_welcome_email(person) do
     person = Person.refresh_auth_token(person)
-    Email.guest_welcome(person) |> Mailer.deliver_later()
+    MailDeliverer.enqueue("guest_welcome", %{"person" => person.id})
   end
 end
