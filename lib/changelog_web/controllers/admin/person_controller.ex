@@ -28,7 +28,8 @@ defmodule ChangelogWeb.Admin.PersonController do
         "admin" -> Person.admins()
         "host" -> Person.hosts()
         "editor" -> Person.editors()
-        "spam" -> Person.spammy()
+        "spammy" -> Person.spammy()
+        "uncomfirmed" -> Person.needs_confirmation()
         _else -> Person
       end
       |> Person.newest_first()

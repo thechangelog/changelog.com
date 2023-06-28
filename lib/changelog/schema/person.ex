@@ -335,8 +335,8 @@ defmodule Changelog.Person do
   end
 
   def podcast_subscription_count(person) do
-    Subscription
-    |> Subscription.for_person(person)
+    person
+    |> assoc(:subscriptions)
     |> Subscription.to_podcast()
     |> Repo.count()
   end

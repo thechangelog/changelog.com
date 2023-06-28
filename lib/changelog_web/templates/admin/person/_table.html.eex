@@ -8,7 +8,7 @@
       <th>In Slack</th>
       <th>Subs</th>
       <th>
-        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts", spam: "Spammy") %>
+        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", admin: "Admins", editor: "Editors", host: "Hosts", spammy: "Spammy", uncomfirmed: "Uncomfirmed") %>
       </th>
     </tr>
   </thead>
@@ -23,7 +23,7 @@
         <%= if person.admin do %>
           <div class="ui tiny blue basic label">Admin</div>
         <% end %>
-        <%= if String.length(person.bio || "") > 500 do %>%
+        <%= if String.length(person.bio || "") > 500 do %>
           <div class="ui tiny yellow basic label">Long Bio</div>
         <% end %>
       </td>
