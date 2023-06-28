@@ -3,8 +3,8 @@ defmodule Changelog.Person do
 
   alias Changelog.{
     Episode,
-    EpisodeHost,
     EpisodeGuest,
+    EpisodeHost,
     EpisodeRequest,
     Faker,
     Files,
@@ -107,30 +107,31 @@ defmodule Changelog.Person do
   def not_in_slack(query \\ __MODULE__), do: from(q in query, where: is_nil(q.slack_id))
 
   def joined(query \\ __MODULE__), do: from(a in query, where: not is_nil(a.joined_at))
+  def never_confirmed(query \\ __MODULE__), do: from(q in query, where: is_nil(q.joined_at))
   def never_signed_in(query \\ __MODULE__), do: from(q in query, where: is_nil(q.signed_in_at))
 
+  def needs_confirmation(query \\ __MODULE__) do
+    query |> not_an_author() |> not_a_host() |> not_a_guest() |> never_confirmed()
+  end
+
+  def not_an_author(query \\ __MODULE__) do
+    from(q in query, left_join: p in assoc(q, :authored_posts), where: is_nil(p.id))
+  end
+
   def not_a_guest(query \\ __MODULE__) do
-    from(q in query,
-      left_join: g in EpisodeGuest,
-      on: [person_id: q.id],
-      where: is_nil(g.id)
-    )
+    from(q in query, left_join: g in assoc(q, :episode_guests), where: is_nil(g.id))
+  end
+
+  def not_a_host(query \\ __MODULE__) do
+    from(q in query, left_join: h in assoc(q, :episode_hosts), where: is_nil(h.id))
   end
 
   def no_requests(query \\ __MODULE__) do
-    from(q in query,
-      left_join: r in EpisodeRequest,
-      on: [submitter_id: q.id],
-      where: is_nil(r.id)
-    )
+    from(q in query, left_join: r in assoc(q, :episode_requests), where: is_nil(r.id))
   end
 
   def no_subs(query \\ __MODULE__) do
-    from(q in query,
-      left_join: s in Subscription,
-      on: [person_id: q.id],
-      where: is_nil(s.id)
-    )
+    from(q in query, left_join: s in assoc(q, :subscriptions), where: is_nil(s.id))
   end
 
   def faked(query \\ __MODULE__), do: from(q in query, where: q.name in ^Changelog.Faker.names())
