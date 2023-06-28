@@ -45,4 +45,25 @@ defmodule Changelog.HtmlKit do
   def put_sponsored({:safe, html}), do: put_sponsored(html)
 
   def put_sponsored(html), do: put_a_rel(html, "sponsored")
+
+  def put_utm_source(html, value) do
+    case Floki.parse_document(html) do
+      {:ok, document} ->
+        document
+        |> Floki.attr("a", "href", fn href ->
+          href |> URI.parse() |> put_query_params([utm_source: value]) |> URI.to_string()
+        end)
+        |> Floki.raw_html()
+      {:error, _string} ->
+        html
+    end
+  end
+
+  defp put_query_params(uri = %URI{query: query}, params) do
+    if query && String.match?(query, ~r/utm_/) do
+      uri
+    else
+      Map.put(uri, :query, URI.encode_query(params))
+    end
+  end
 end

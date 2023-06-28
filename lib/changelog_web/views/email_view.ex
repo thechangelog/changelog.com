@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EmailView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Faker, NewsItem}
+  alias Changelog.{Faker, HtmlKit, NewsItem}
 
   alias ChangelogWeb.{
     AuthView,

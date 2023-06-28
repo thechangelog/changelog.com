@@ -75,7 +75,7 @@ defmodule Changelog.HtmlKitTest do
     end
   end
 
-  describe "put_a_rel/1" do
+  describe "put_a_rel/2" do
     test "does nothing if there are no anchors" do
       assert HtmlKit.put_a_rel("<html></html>", "nofollow") == "<html></html>"
     end
@@ -90,6 +90,30 @@ defmodule Changelog.HtmlKitTest do
       a = ~s(<a href="">ohai there</a>  <a href="">obai there</a>)
       b = ~s(<a rel="ugc" href="">ohai there</a><a rel="ugc" href="">obai there</a>)
       assert HtmlKit.put_a_rel(a, "ugc") == b
+    end
+  end
+
+  describe "put_utm_source/2" do
+    test "does nothing if there are no anchors" do
+      assert HtmlKit.put_utm_source("<html></html>", "changelog-news") == "<html></html>"
+    end
+
+    test "it adds utm_source to a single anchor" do
+      a = ~s(<div><h1><a href="test.com">ohai</a></h1></div>)
+      b = ~s(<div><h1><a href="test.com?utm_source=ohai">ohai</a></h1></div>)
+      assert HtmlKit.put_utm_source(a, "ohai") == b
+    end
+
+    test "it adds utm_source to multiple anchors" do
+      a = ~s(<a href="https://changelog.com">ohai there</a>  <a href="https://test.com">obai there</a>)
+      b = ~s(<a href="https://changelog.com?utm_source=test">ohai there</a><a href="https://test.com?utm_source=test">obai there</a>)
+      assert HtmlKit.put_utm_source(a, "test") == b
+    end
+
+    test "it skips anchors that are have utm" do
+      a = ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a>  <a href="https://test.com">obai there</a>)
+      b = ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a><a href="https://test.com?utm_source=test">obai there</a>)
+      assert HtmlKit.put_utm_source(a, "test") == b
     end
   end
 end

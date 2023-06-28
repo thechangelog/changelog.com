@@ -51,7 +51,7 @@
                         <tr>
                           <td>
                             <div class="content">
-                              <%= @episode.email_content |> SharedHelpers.md_to_html() |> raw() %>
+                              <%= @episode.email_content |> SharedHelpers.md_to_html() |> HtmlKit.put_utm_source("changelog-news") |> raw() %>
                             </div>
                           </td>
                         </tr>
