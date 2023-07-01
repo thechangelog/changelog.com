@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Mar.%2016%2C%202023-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Jul.%201%2C%202023-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -76,11 +76,11 @@ graph TD
     secrets(( fa:fa-key 1Password )):::link
     click secrets "https://changelog.1password.com/"
     secrets -.-> |secrets| app
-    secrets -.-> |secrets| cicd
+    secrets -..-> |secrets| cicd
 
     %% Search
     search(( fa:fa-magnifying-glass Typesense ))
-    app -.-> |search| search
+    app -...-> |search| search
 
     %% Exceptions
     exceptions(( fa:fa-car-crash Sentry )):::link
@@ -99,10 +99,11 @@ graph TD
 
     %% Observability
     observability(( fa:fa-bug Honeycomb )):::link
-    click observability "https://ui.honeycomb.io/changelog/boards"
+    click observability "https://ui.honeycomb.io/changelog/datasets/changelog_opentelemetry/home"
     apex -.-> |logs| observability
-    app -..-> |traces| observability
+    app -....-> |traces| observability
     
+    %% Object storage
     apex ==> |https| proxy
     subgraph AWS.S3
         subgraph us-east-1
@@ -112,11 +113,17 @@ graph TD
     cdn ==> |https| assets
 
     %% Monitoring
-    monitoring(( fa:fa-table-tennis Pingdom )):::link
-    click monitoring "https://my.pingdom.com/app/newchecks/checks"
-    monitoring -...-> |monitors| apex
-    monitoring -.-> |monitors| cdn
-    monitoring -.-> |monitors| app
+    subgraph BetterStack
+        status[ fa:fa-layer-group status.changelog.com ]:::link
+        click status "https://status.changelog.com"
+
+        monitoring(( fa:fa-table-tennis Uptime )):::link
+        click monitoring "https://uptime.betterstack.com/team/133302/monitors"
+        monitoring -....-> |monitors| apex
+        monitoring -.-> |monitors| cdn
+        monitoring -.-> |monitors| proxy
+        monitoring -.-> |monitors| status
+    end
 ```
 
 > **Note**
@@ -218,7 +225,7 @@ We also send app traces via OpenTelemetry to Honeycomb.io.
 
 App errors - e.g. `Plug.Conn.InvalidQueryError` - show up in Sentry.io.
 
-Pingdom.com monitors our public HTTPS endpoints & alerts us when they become unhealthy.
+BetterStack.com monitors our public HTTPS endpoints & alerts us when they become unhealthy.
 
 
 ## Search
