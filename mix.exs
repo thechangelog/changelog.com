@@ -40,6 +40,7 @@ defmodule Changelog.Mixfile do
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.3"},
+      {:phoenix_live_view, "~> 0.19.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:plug_cowboy, "~> 2.5"},
       {:oban, "~> 2.15"},

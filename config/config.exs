@@ -13,7 +13,8 @@ config :changelog, ChangelogWeb.Endpoint,
       "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi"
     ),
   render_errors: [view: ChangelogWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Changelog.PubSub
+  pubsub_server: Changelog.PubSub,
+  live_view: [signing_salt: "+GzuQhsbhBJIqc4ctHLGjo+D2ZohVqNW"]
 
 config :changelog,
   buffer_token: SecretOrEnv.get("BUFFER_TOKEN"),
