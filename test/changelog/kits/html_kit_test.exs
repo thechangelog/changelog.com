@@ -94,7 +94,7 @@ defmodule Changelog.HtmlKitTest do
   end
 
   describe "put_utm_source/2" do
-    test "does nothing if there are no anchors" do
+    test "it does nothing if there are no anchors" do
       assert HtmlKit.put_utm_source("<html></html>", "changelog-news") == "<html></html>"
     end
 
@@ -113,6 +113,12 @@ defmodule Changelog.HtmlKitTest do
     test "it skips anchors that are have utm" do
       a = ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a>  <a href="https://test.com">obai there</a>)
       b = ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a><a href="https://test.com?utm_source=test">obai there</a>)
+      assert HtmlKit.put_utm_source(a, "test") == b
+    end
+
+    test "it doesn't clobber other valid query params" do
+      a = ~s(<a href="https://www.youtube.com/watch?v=GWYhtksrmhE">cool video</a>)
+      b = ~s(<a href="https://www.youtube.com/watch?utm_source=test&v=GWYhtksrmhE">cool video</a>)
       assert HtmlKit.put_utm_source(a, "test") == b
     end
   end

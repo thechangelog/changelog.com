@@ -51,19 +51,27 @@ defmodule Changelog.HtmlKit do
       {:ok, document} ->
         document
         |> Floki.attr("a", "href", fn href ->
-          href |> URI.parse() |> put_query_params([utm_source: value]) |> URI.to_string()
+           merge_href_query_params(href, %{utm_source: value})
         end)
-        |> Floki.raw_html()
+        |> Floki.raw_html(encode: false)
       {:error, _string} ->
         html
     end
   end
 
-  defp put_query_params(uri = %URI{query: query}, params) do
-    if query && String.match?(query, ~r/utm_/) do
-      uri
-    else
-      Map.put(uri, :query, URI.encode_query(params))
+  defp merge_href_query_params(href, params) do
+    uri = URI.parse(href)
+
+    new_uri = cond do
+      is_nil(uri.query) ->
+        uri |> Map.put(:query, URI.encode_query(params))
+      String.match?(uri.query, ~r/utm_/) ->
+        uri
+      true ->
+        new_query = uri.query |> URI.decode_query() |> Map.merge(params)
+        uri |> Map.put(:query, URI.encode_query(new_query))
     end
+
+    URI.to_string(new_uri)
   end
 end
