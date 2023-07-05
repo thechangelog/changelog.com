@@ -44,6 +44,7 @@ defmodule Changelog.Mixfile do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:plug_cowboy, "~> 2.5"},
       {:oban, "~> 2.15"},
+      {:oban_web, "~> 2.9", repo: "oban"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},
       {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-7"},
