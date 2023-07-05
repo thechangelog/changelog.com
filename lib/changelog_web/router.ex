@@ -62,7 +62,7 @@ defmodule ChangelogWeb.Router do
   scope "/admin", ChangelogWeb.Admin, as: :admin do
     pipe_through [:browser, :admin]
 
-    oban_dashboard "/oban"
+    oban_dashboard "/oban", resolver: ChangelogWeb.ObanResolver
 
     get "/", PageController, :index
     get "/downloads", PageController, :downloads
