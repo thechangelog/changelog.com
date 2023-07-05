@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.Router do
   use ChangelogWeb, :router
 
+  import Oban.Web.Router
+
   alias ChangelogWeb.Plug
 
   if Mix.env() == :dev do
@@ -17,6 +19,7 @@ defmodule ChangelogWeb.Router do
 
   pipeline :admin do
     plug Plug.AdminLayoutPlug
+    plug :protect_from_forgery
   end
 
   pipeline :browser do
@@ -57,7 +60,9 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/admin", ChangelogWeb.Admin, as: :admin do
-    pipe_through [:admin, :browser]
+    pipe_through [:browser, :admin]
+
+    oban_dashboard "/oban"
 
     get "/", PageController, :index
     get "/downloads", PageController, :downloads
