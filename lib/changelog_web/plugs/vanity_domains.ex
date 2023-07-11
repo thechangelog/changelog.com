@@ -57,12 +57,12 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     end
   end)
 
-  defp determine_destination(%{slug: "gotime"}, ["gs"]) do
-    "https://changelog.typeform.com/to/rq4ssslj"
+  defp determine_destination(pod = %{slug: "gotime"}, ["gs"]) do
+    determine_destination(pod, ["games"])
   end
 
-  defp determine_destination(%{slug: "jsparty"}, ["ff"]) do
-    "https://changelog.com/topic/games"
+  defp determine_destination(pod = %{slug: "jsparty"}, ["ff"]) do
+    determine_destination(pod, ["games"])
   end
 
   defp determine_destination(podcast, parts) do
@@ -77,6 +77,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["overcast"] -> PodcastView.subscribe_on_overcast_url(podcast)
       ["rss"] -> changelog_destination([podcast.slug, "feed"])
       ["email"] -> changelog_destination(["subscribe", podcast.slug])
+      ["games"] -> changelog_destination(["topic", "games"])
       ["guest"] -> changelog_destination(["guest", podcast.slug])
       ["request"] -> changelog_destination(["request", podcast.slug])
       ["subscribe"] -> changelog_destination(["subscribe", podcast.slug])

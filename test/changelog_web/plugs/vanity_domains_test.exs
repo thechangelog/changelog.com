@@ -159,7 +159,8 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> assign_podcasts([@gotime, @jsparty])
       |> VanityDomains.call([])
 
-    assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
+    # assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
+    assert_vanity_redirect(conn, "/topic/games")
   end
 
   test "vanity redirects for merch" do
@@ -178,6 +179,15 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> VanityDomains.call([])
 
     assert_vanity_redirect(conn,  "/news/33")
+  end
+
+  test "vanity redirects for games" do
+    conn =
+      build_conn_with_host_and_path("gotime.fm", "/games")
+      |> assign_podcasts([@gotime, @jsparty])
+      |> VanityDomains.call([])
+
+    assert_vanity_redirect(conn, "/topic/games")
   end
 
   test "it does not vanity redirect for default host" do
