@@ -85,9 +85,11 @@
         <li><%= link("Search", to: Routes.search_path(@conn, :search), title: "Search Changelog") %></li>
         <li><a href="https://github.com/thechangelog/changelog.com" title="Changelog.com source code">View Source</a></li>
         <li>---</li>
-        <li><a href="https://github.com/thechangelog/changelog.com/issues" title="Changelog.com issue tracker">Report Issues</a></li>
+        <li><a href="https://github.com/thechangelog/changelog.com/issues/new" title="Report a Changelog.com issue">Report an Issue</a></li>
         <li><a href="/terms" title="Terms & Conditions">Terms &amp; Conditions</a></li>
         <li><a href="/privacy" title="Privacy Policy">Privacy Policy</a></li>
+        <li>---</li>
+        <li><a href="https://status.changelog.com" title="Changelog.com services status">Status</a></li>
       </ul>
     </div>
   </nav>
