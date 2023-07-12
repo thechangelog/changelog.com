@@ -16,6 +16,14 @@ defmodule Changelog.RegexpTest do
     end
   end
 
+  test "email cannot have a spaces in them" do
+    no = ["tester@yandex.ru ", " tester@yandex.ru", "test er@yandex.ru", "tester@yandex .ru", "tester@yandex. ru"]
+
+    for email <- no do
+      refute String.match?(email, Regexp.email())
+    end
+  end
+
   test "social requires no http, @, or spaces" do
     yes = ["jerodsanto", "changelog", "This_or-that"]
     no = ["@jerodsanto", "https://github.com/thechangelog", "cool dudette"]

@@ -1,7 +1,7 @@
 defmodule Changelog.Regexp do
   def cache_buster, do: ~r/\?v=.*\z/
 
-  def email, do: ~r/^[^@]+@.+\..+$/
+  def email, do: ~r/^[^@ ]+@[^ ]+\.[^ ]+$/
 
   def email_message, do: "must be a valid email address"
 
