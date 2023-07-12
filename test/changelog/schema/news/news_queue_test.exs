@@ -192,7 +192,6 @@ defmodule Changelog.NewsQueueTest do
       ]) do
         NewsQueue.publish(item)
         assert Repo.count(NewsItem.published()) == 1
-        wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
         wait_for_passing(1000, fn -> assert called(Notifier.notify(:_)) end)
         wait_for_passing(1000, fn -> assert called(Typesense.Client.upsert_documents(:_, :_)) end)
         wait_for_passing(1000, fn -> assert called(Social.post(:_)) end)
@@ -217,7 +216,6 @@ defmodule Changelog.NewsQueueTest do
         {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish(i2)
-        wait_for_passing(1000, fn -> assert called(Buffer.queue(:_)) end)
         wait_for_passing(1000, fn -> assert called(Typesense.Client.upsert_documents(:_, :_)) end)
         wait_for_passing(1000, fn -> assert called(Social.post(:_)) end)
         published = Repo.all(NewsItem.published())

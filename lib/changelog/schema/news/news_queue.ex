@@ -4,10 +4,8 @@ defmodule Changelog.NewsQueue do
   require Logger
 
   alias Changelog.{
-    Buffer,
     Cache,
     EpisodeTracker,
-    # HN,
     NewsItem,
     NewsQueue,
     Notifier,
@@ -160,10 +158,8 @@ defmodule Changelog.NewsQueue do
     item = NewsItem.publish!(item)
     Task.start_link(fn -> NewsItem.subscribe_participants(item) end)
     Task.start_link(fn -> TypesenseSearch.save_item(item) end)
-    Task.start_link(fn -> Buffer.queue(item) end)
     Task.start_link(fn -> Social.post(item) end)
     Task.start_link(fn -> Notifier.notify(item) end)
-    # Task.start_link(fn -> HN.submit(item) end)
     Task.start_link(fn -> EpisodeTracker.track(item) end)
     Cache.delete(item)
     Logger.info("News: Published ##{item.id}")
