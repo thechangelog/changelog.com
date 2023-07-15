@@ -3,7 +3,7 @@
 app = "changelog-2022-03-13"
 
 kill_signal = "SIGTERM"
-kill_timeout = 5
+kill_timeout = 30
 
 [deploy]
 strategy = "bluegreen"
@@ -24,12 +24,12 @@ processes = ["app"]
 protocol = "tcp"
 
 [[services.http_checks]]
-grace_period = "120s"
-interval = 15000
+grace_period = "30s"
+interval = "15s"
 method = "get"
 path = "/health"
 protocol = "http"
-timeout = 10000
+timeout = "10s"
 
 [[services.ports]]
 handlers = ["tls", "http"]
