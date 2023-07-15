@@ -9,14 +9,21 @@ const (
 )
 
 func (image *Image) RuntimeImageRef() string {
-	imageOwner := image.Env("IMAGE_OWNER")
-	if imageOwner.Value() == "" {
-		imageOwner = image.Env("GITHUB_ACTOR")
+	imageOwner := image.Env("IMAGE_OWNER").Value()
+	if imageOwner == "" {
+		imageOwner = image.Env("GITHUB_ACTOR").Value()
+	}
+	// If we are not running in CI,
+	// and there is no explicit IMAGE_OWNER,
+	// default to thechangelog,
+	// otherwise the image reference will be invalid.
+	if imageOwner == "" {
+		imageOwner = "thechangelog"
 	}
 
 	return fmt.Sprintf(
 		"ghcr.io/%s/changelog-runtime:elixir-v%s-erlang-v%s-nodejs-v%s",
-		imageOwner.Value(),
+		imageOwner,
 		image.versions.Elixir(),
 		image.versions.Erlang(),
 		image.versions.Nodejs(),
