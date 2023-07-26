@@ -9,7 +9,7 @@ defmodule ChangelogWeb.Plug.Redirects do
   @external %{
     "/sentry" => "https://sentry.io/from/changelog/",
     "/square" => "https://developer.squareup.com/",
-    "/tailscale" => "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog&utm_content=",
+    "/tailscale" => "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog,
     "/reactpodcast" => "https://reactpodcast.simplecast.com",
     "/store" => "https://merch.changelog.com"
   }
