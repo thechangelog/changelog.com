@@ -1,0 +1,69 @@
+name: "Dagger on Fly.io Docker"
+
+on:
+  workflow_call:
+    secrets:
+      FLY_WIREGUARD:
+        required: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code..."
+        uses: actions/checkout@v3
+
+      # ⚠️  FLY_WIREGUARD is configured via `fly wireguard create ...` - see 2022.fly/docker/README.md
+      - name: "Set up WireGuard for Fly.io Docker Engine..."
+        run: |
+          echo "🔒 Install WireGuard & friends..."
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools openresolv
+          echo "🔐 Configure WireGuard tunnel..."
+          printf "${{ secrets.FLY_WIREGUARD }}" | sudo tee /etc/wireguard/fly.conf
+          sudo wg-quick up fly
+          echo "🩻 Check IPv6 routes..."
+          sudo ip -6 route list
+          echo "🩻 Check DNS resolution..."
+          sudo resolvconf -v
+
+      - name: "Check remote Docker Engine..."
+        env:
+          DOCKER_ENGINE_HOST: ${{ vars.DOCKER_ENGINE_HOST }}
+        run: |
+          echo "🤨 Can we resolve ${DOCKER_ENGINE_HOST:?must be set} IPv6?"
+          dig +short "$DOCKER_ENGINE_HOST" AAAA
+          echo "🤨 Can we ping $DOCKER_ENGINE_HOST IPv6?"
+          ping6 -c 3 "$(dig +short $DOCKER_ENGINE_HOST AAAA)"
+          echo "🤨 Can we ping $DOCKER_ENGINE_HOST FQDN?"
+          ping6 -c 3 "$DOCKER_ENGINE_HOST"
+          echo "🤨 Can we connect to Docker running on $DOCKER_ENGINE_HOST?"
+          nc -vz6 "$DOCKER_ENGINE_HOST" 2375
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+          cache-dependency-path: "magefiles/go.sum"
+
+      - name: "Build, test, publish & deploy..."
+        id: cicd
+        env:
+          DOCKER_HOST: "${{ vars.DOCKER_ENGINE_HOST_FQDN }}"
+          IMAGE_OWNER: "${{ vars.IMAGE_OWNER }}"
+          GHCR_USERNAME: "${{ github.actor }}"
+          GHCR_PASSWORD: "${{ secrets.GHCR_PASSWORD }}"
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        run: |
+          cd magefiles
+          go run main.go -w ../ ci cd
+
+      - name: "Announce deploy in #dev Slack..."
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          MSG_MINIMAL: "commit,actions url"
+          SLACK_CHANNEL: dev
+          SLACK_USERNAME: "GitHub Actions"
+          SLACK_FOOTER: "Just got shipped to https://changelog.com"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
