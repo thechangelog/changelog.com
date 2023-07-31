@@ -67,7 +67,7 @@ This new Docker Engine is configured & used in `.github/workflows/prod_image.yml
     pwd
     $HOME/github.com/thechangelog/changelog.com/2022.fly/docker
 
-    fly wireguard create changelog iad github-actions-2022-08-30
+    flyctl wireguard create changelog iad github-actions-2023-07-27
 
     !!!! WARNING: Output includes private key. Private keys cannot be recovered !!!!
     !!!! after creating the peer; if you lose the key, you'll need to remove    !!!!
@@ -79,4 +79,4 @@ This new Docker Engine is configured & used in `.github/workflows/prod_image.yml
     PersistentKeepalive = 15
     ```
 1. Update the [`FLY_WIREGUARD` value in GitHub Actions secrets](https://github.com/thechangelog/changelog.com/settings/secrets/actions) with the stdout output, starting with the `[Interface]` line
-1. Re-run the failed job, e.g. https://github.com/thechangelog/changelog.com/actions/runs/2951152698
+1. Re-run the failed job, e.g. https://github.com/thechangelog/changelog.com/actions/runs/5673476702/attempts/1
