@@ -1,5 +1,10 @@
 name: "Ship It!"
 
+concurrency:
+  # There should only be able one running job per repository / branch combo.
+  # We do not want multiple deploys running in parallel.
+  group: ${{ github.repository }}-${{ github.ref_name }}
+
 on:
   push:
     branches:
@@ -9,58 +14,32 @@ on:
   pull_request:
   workflow_dispatch:
 
+# All jobs have the same outcome. We define multiple for resiliency reasons.
 jobs:
-  cicd:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout code..."
-        uses: actions/checkout@v3
+  # In thechangelog/changelog repository (a.k.a. upstream),
+  # this is the preferred default:
+  dagger-on-fly-docker:
+    if: ${{ contains(vars.RUNS_ON, 'fly') }}
+    uses: ./.github/workflows/dagger_on_fly_docker.yml
+    secrets: inherit
 
-      # ⚠️  FLY_WIREGUARD is configured via `fly wireguard create ...` - see 2022.fly/docker/README.md
-      - name: "Set up WireGuard for Fly.io Docker Engine..."
-        env:
-          FLY_WIREGUARD: ${{ secrets.FLY_WIREGUARD }}
-        if: "${{ env.FLY_WIREGUARD != '' }}"
-        run: |
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools openresolv
-          printf "${{ secrets.FLY_WIREGUARD }}" | sudo tee /etc/wireguard/fly.conf
-          sudo wg-quick up fly
+  # When our Fly.io setup misbehaves, we want a fallback:
+  dagger-on-github-fallback:
+    needs: dagger-on-fly-docker
+    if: ${{ failure() }}
+    uses: ./.github/workflows/dagger_on_github.yml
+    secrets: inherit
 
-      # ⚠️  IPv6 is configured via `fly ips private` - see 2022.fly/docker/README.md
-      - name: "Check Fly.io Docker Engine"
-        env:
-          DOCKER_ENGINE_HOST: ${{ secrets.DOCKER_ENGINE_HOST }}
-        if: "${{ env.DOCKER_ENGINE_HOST != '' }}"
-        run: |
-          ping6 -c 5 "$DOCKER_ENGINE_HOST"
-          nc -vz6 "$DOCKER_ENGINE_HOST" 2375
+  # As forks will not have access to our Fly.io,
+  # we fallback to GitHub default:
+  dagger-on-github:
+    if: ${{ !contains(vars.RUNS_ON, 'fly') }}
+    uses: ./.github/workflows/dagger_on_github.yml
+    secrets: inherit
 
-      - uses: actions/setup-go@v4
-        with:
-          go-version: "1.20"
-      - name: "Build, test, publish & deploy..."
-        env:
-          DOCKER_HOST: "${{ secrets.DOCKER_ENGINE_HOST_FQDN }}"
-          IMAGE_OWNER: "${{ secrets.IMAGE_OWNER }}"
-          GHCR_USERNAME: "${{ github.actor }}"
-          GHCR_PASSWORD: "${{ secrets.GHCR_PASSWORD }}"
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        run: |
-          cd magefiles
-          go run main.go -w ../ ci cd
-
-  notify:
-    if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
-    needs: cicd
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Notify Slack about deploy..."
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          MSG_MINIMAL: "commit,actions url"
-          SLACK_CHANNEL: dev
-          SLACK_USERNAME: "GitHub Actions"
-          SLACK_FOOTER: "Just got shipped to https://changelog.com"
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  # This is an experimental job which only runs the CI part of our pipeline.
+  # In other words, this does not run CD, it does not deploy our app.
+  dagger-on-k8s:
+    if: ${{ contains(vars.RUNS_ON, 'k8s') }}
+    uses: ./.github/workflows/dagger_on_k8s.yml
+    secrets: inherit
