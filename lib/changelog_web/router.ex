@@ -104,7 +104,10 @@ defmodule ChangelogWeb.Router do
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode
 
       resources "/episode_requests", EpisodeRequestController
-      put "/episode_requests/:id/decline", EpisodeRequestController, :decline, as: :episode_request
+
+      put "/episode_requests/:id/decline", EpisodeRequestController, :decline,
+        as: :episode_request
+
       put "/episode_requests/:id/fail", EpisodeRequestController, :fail, as: :episode_request
       put "/episode_requests/:id/pend", EpisodeRequestController, :pend, as: :episode_request
 
@@ -143,11 +146,18 @@ defmodule ChangelogWeb.Router do
   scope "/", ChangelogWeb do
     pipe_through [:feed]
 
+    get "/sitemap.xml", FeedController, :sitemap
+
     get "/feed", FeedController, :news
     get "/feed/titles", FeedController, :news_titles
+
+    get "/topic/:slug/feed", FeedController, :topic_show
+    get "/topic/:slug/news/feed", FeedController, :topic_news
+    get "/topic/:slug/podcasts/feed", FeedController, :topic_podcasts
+
     get "/posts/feed", FeedController, :posts
-    get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
+
     get "/plusplus/:slug/feed", FeedController, :plusplus
     get "/metacast/:slug/feed", FeedController, :metacast
   end

@@ -227,5 +227,80 @@ defmodule ChangelogWeb.FeedController do
     |> render("sitemap.xml")
   end
 
+  @doc "A topic's news and podcasts feed"
+  def topic(conn, %{"slug" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
+
+    items =
+      topic
+      |> filter_items_by_topic(:all)
+      |> fetch_items_by_topic()
+
+    render_topic(conn, slug, items)
+  end
+
+  @doc "A topic's news feed"
+  def topic_news(conn, %{"slug" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
+
+    news_items =
+      topic
+      |> filter_items_by_topic(:news)
+      |> fetch_items_by_topic()
+
+    render_topic(conn, topic, news_items)
+  end
+
+  @doc "A topic's podcasts feed"
+  def topic_podcasts(conn, %{"slug" => slug}) do
+    topic = Repo.get_by!(Topic, slug: slug)
+
+    podcasts =
+      topic
+      |> filter_items_by_topic(:podcasts)
+      |> fetch_items_by_topic()
+
+    render_topic(conn, topic, podcasts)
+  end
+
+  defp filter_items_by_topic(topic, :all) do
+    NewsItem
+    |> NewsItem.with_topic(topic)
+  end
+
+  defp filter_items_by_topic(topic, :news) do
+    NewsItem
+    |> NewsItem.with_topic(topic)
+    |> NewsItem.non_audio()
+  end
+
+  defp filter_items_by_topic(topic, :podcasts) do
+    NewsItem
+    |> NewsItem.with_topic(topic)
+    |> NewsItem.audio()
+  end
+
+  defp fetch_items_by_topic(query) do
+    query
+    |> NewsItem.published()
+    |> NewsItem.newest_first()
+    |> NewsItem.preload_all()
+    |> Repo.all()
+  end
+
+  defp render_topic(conn, topic, items) do
+    IO.inspect(topic, label: "TOPIC")
+    IO.inspect(items, label: "ITEMS")
+
+    conn
+    |> put_layout(false)
+    |> put_resp_content_type("application/xml")
+    |> assign(:topic_name, topic.name)
+    |> assign(:topic_description, topic.description)
+    |> assign(:items, items)
+    |> ResponseCache.cache_public(cache_duration())
+    |> render("topic.xml")
+  end
+
   defp cache_duration, do: 2..10 |> Enum.random() |> :timer.minutes()
 end
