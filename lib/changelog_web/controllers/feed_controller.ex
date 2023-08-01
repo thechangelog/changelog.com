@@ -227,5 +227,5 @@ defmodule ChangelogWeb.FeedController do
     |> render("sitemap.xml")
   end
 
-  defp cache_duration, do: 2..10 |> Enum.random() |> :timer.minutes()
+  defp cache_duration, do: :timer.minutes(2)
 end
