@@ -16,7 +16,7 @@ services:
       && sleep infinity"
 
   db:
-    image: postgres:14.1
+    image: postgres:15.3
     ports:
       - "4000:4000"
       - "5432:5432"

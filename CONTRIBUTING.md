@@ -79,7 +79,7 @@ Create a new pull request via https://github.com/thechangelog/changelog.com
 ## How do I run the application locally?
 
 You will need to have the following dependencies installed:
-- [PostgreSQL](https://www.postgresql.org/download/) v14
+- [PostgreSQL](https://www.postgresql.org/download/) v15
 - [Elixir](https://elixir-lang.org/install.html) v1.14
 - [Erlang/OTP](https://www.erlang.org/downloads) v25 - usually installed as an Elixir dependency
 - [Node.js](https://nodejs.org/en/download/) v18 LTS - [latest-v18.x](https://nodejs.org/download/release/latest-v18.x/)

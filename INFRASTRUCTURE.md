@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Jul.%201%2C%202023-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Aug.%202%2C%202023-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -51,10 +51,10 @@ graph TD
         style app fill:#488969;
         click app "https://fly.io/apps/changelog-2022-03-13"
             
-        dbw([ fa:fa-database PostgreSQL Leader 2022-03-12 ]):::link
-        click dbw "https://fly.io/apps/postgres-2022-03-12"
+        dbw([ fa:fa-database PostgreSQL Leader 2023-07-31 ]):::link
+        click dbw "https://fly.io/apps/changelog-postgres-2023-07-31"
             
-        dbr1([ fa:fa-database PostgreSQL Replica 2022-03-12 ])
+        dbr1([ fa:fa-database PostgreSQL Replica 2023-07-31 ])
 
         app <==> |pgsql| dbw
         dbw -.-> |replication| dbr1
@@ -127,7 +127,7 @@ graph TD
 ```
 
 > **Note**
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWG1v2zYQ_iuEig4tEEl-SWLHXTcEdZsWabds7jZgcTFQFC1zlkiVpGq7cf77jqSsF0dO0fmDbUn38tw9d8ez7zwiYupNvKdP0VLrXE3CcCG4xmuqREYDIrJQUSzJcs4TifMl-jidcwQvkmKlpnSBUsZXSGkpVnTy5OwiGoxHJ-7SX7NYLyfDfPPC6bh3cPUKnKIfEFigWrm7qoicgyum3xaRu2lekubi7g4tcDRZYD9hellESC8pWWKe0FQkYfXNwEX395PJxICqTZCUkZU1hObePkxnyUZ43Nrcm_OGHUbi2xCgGCSESZJSn4DuqgSNLolmgiMfzZYsR-80ms8_HUFjbH0vmhBb-ypcC7lapGKtQgWO_mE62Gapwbr3UX_DhRYZNmq383mVRZGCWTTFSUIluhJoNr1G4TGotYnvBhylIgozrDSV8JHQBUupqr8FiWhnWNKEQfFsnz07IDxZEhkwgZ4_P8qu0-yGKGSi2jhzTFYAQx0wvMS69q1SEEIz-37UsVFpOK3jt9qONugf9gUCf9Ubzi7Hf74eHEYNlekH_k9oFzjQ3QzvbNW06xH5Rq07t7sGdV21UeurghCqFHoS0y87G5KTojxutu4eKNoNeoNBsEi34CLP2yIlD9ZuSVvYUR9-LkXcUCdm7DAO9Wg1wTbRKYppnoqml8fAhLEgKyp3ta19lmHm3GA8g86sply6NcBirJaRwDKugR3MozdWsBmieQH4zfbOTYIEipyiG3Pn_kACvXwJsVifZQytatvDfHa7LzkXAZq6j9c8gcfIxOf3hn5_iD4dLcMqfXUtljGCX1WmxnemzsFUc1wcjIw8r3sgXwrK2cZfSJxRU5XoMs9RzWKNzTAQQP10tYrS25QawwhqM508OR2PL84vXjyYNCDQDb_L4fEI4mhtU2ozijWOsAKChNKJpLPf3qP3FMeQqcrU4HhewdQRSLmzp2pEg8cQyf6jkH6HQmcEtzE1i8Xk5kdbTnmiPsMsAGStiMsJIp0h0_M767ZlpB7ltsvWDPq1gPJv9cyD-vx2M8uCa5bRXdX__8uKGwm1idpIRrVkRMVRlUTQktpPTX9A68HzJS2UzdmBTqUg0iLjCl1JvMAcI-DSL0UCTjU6dvyVMu0qaGo2Wd8L-z7MJQgnM0xV4DvicROsvDyYc8eEWswfEzrg007yahjOKJH16uUubM-bRK3oFvVvYDmDdo8Pu9nlpFTpPPf6ealqz759cvYarkjLq0a8R567A6-B2-2iTsN8r1DDwcfZYst4AgMZEKCP25wqyqHNnpdFYVpob9_o7tB-t60cvN4Qmtslq0xbdV05Ilj6RMK5AWi4Oek6M1QrNpKkrIKpflhIMGdfsdvn6g7IaMxwyJQq4Cz_GQroX0r0y7Pzc5iX1XhxcQQ2ktrPruGzEdGr6S-NYy-Dyk9osICVDEaZIQjqZMGSQlJAJ78wWAPCUXIdkevZ9dV0-_mP0btiKk-H9OrwXLQmmvOJbm5Rexc_ulGCbGftlCv3w_lZub2E87qQvD1nScxvzVtw4L6WqhaZdh_8GpmgccRSpstYRPNWRXpUJOit4HQLdqNuxluKjegKFiz3mu3BZxcPVbMKSXHlCQ-BTvEQXMm8kdESA1edUg17zf3DbiQHLF7-NQtmw448F8qnwLDfb2fa_WSr1hW8Vo1dwD0M1DDAGf4qODx9nIeSu_aWVP4orDj6IDjTQkJju1tZdV2xA8cp_BTTlHOm0A08icFrJ0m1coOhbBvkTsmt63kecrq2v-xMb5qPPUkN_X0HlrfsMKObDrG2EMT7TRk7Fb0TL6MywyyG3-d3RmfuwSGX0bk3ga8xliuD6h7kzLE-23LiTbQs6IlX5LBi0CnDwGXmQYZSBXdzzP8WonXtTe68jTc5Pwv6F4PhcDA-Hw2Ho_HwxNt6k8EoGI_PxqdnvbPT3sXodDy6P_G-Wgv9oNfrnw-Gg9FgfHE27oMCDC4A_8H9nWD_Vbj_D0sOQh8)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWG1v2zYQ_iuEig4tEEm2lcSOu27I6i4t0m7d3G7A4qKgJFrmLIkqSTVR4_z3HUm9UK6ctvMHx5Lu5bm7546n3DoRi4kzdx4-RBspCzH3_TXLJb4mgmXEi1jmC4J5tFnlCcfFBr1drHIEnyjFQizIGqU03yIhOduS-YOTs3Aymx6ZS_eaxnIzD4qbJ0bHfIOrZ-AU_YDAApHC3BVlaBxcUPmiDM1N9eGkYLe3aI3D-Rq7CZWbMkRyQ6INzhOSssRvfym46O5uPp8rUJ2JKKXRVhtCK6cJ01jSER62tnJWuWWHRvGVD1AUkojyKCVuBLrbGjQ6jyRlOXLRckML9FKi1er9ATTK1vei8bG2L_xrxrfrlF0LX4CjD1R6VZYqrI2P7hcuJcuwUrtardosshTMogVOEsLRBUPLxSXyD0HtTHw34DBloZ9hIQmHPwlZ05SI7peXsH6GOUkokKd69Giv4Mkm4h5l6PHjg9U1msMQGU9EH2eBoy3AEHsV3mDZ-RYpCKGl_j7oWKlYTrv4tbYpG_QP_QSBPxsFy_PZX88n-1EDM13P_QntPAN6uMI7zZo-H5Gr1IZzu7NKN8SNTl-UUUSEQA9i8mmnQzJSJI_t1m2Aot1kNJl467QCF0XRF6nroO3WZfMH-OEWnMWWeqTGDs2Bj1oTbEcyRTEpUmZ7uQ-MH7NoS_ius9VkGWbOG4yX0JntlEsrBSzGYhMyzOMO2N48-lUL2iGqD4C_qW7NJEiA5AS9UXfu9iTQ06cQi_ZZx9BjWwPz0VVDORMBWpg_z_MEHiMVnzsK3HGA3h-kYZu-jot1jOBX1KlxjalTMGWPi72RURRdDxQbRnJ64645zohiJTovCtRVscOmKuABf4ZaRcgqJcowAm6m8wfHs9nZ6dmTLyYNCAzDH3J4OII4vNYp1RnFEodYQIGYkAknyz9eoVcEx5ApMBW4o6kbjA_nFUx9FVJhLAu3M3gfNj6-F9yfQHka4T46mzYqSz9qYhWJ-AhTATD2Yq9nCTeGVPfvtNuekW6o6367ptC5JTRCr3u-YOrX25qXuaQZ2bWT4H9ZMcOhM9EZyYjkNBJx2CYRtLh0U9Up0ITwfENKoXO2p9MqsLTMcoEuOF7jHCOoqluLeDmR6NBBWMv0-WBr2lVvhF0XJhSEk6lKteAH4jGzrL7cm3iHhHqVPyS0V08909uxuCQR75Ywc6G7XyVqSyo0fgNrGjR-vN_XJie1yuAJOC5qVX0KNslpNAxJ6ysr3u55X8CcfRZws5YaFfW7hQ1nYE7XFc0TmM0AAb2tCiJIDn32uGaF6iFwUHtQ2jvULLqti-c3ESn0xlVnrr1uXUWYuxGHQwTw5OrYG0xSp2jlSWgF1QCwneCcfsZmueuaICMxxT4VooSD_Wfg0L8kkk9PTk9heE6adNqRdH52lk8romeL36wzMAPyJ8Rbw34Gc03VCKiypknJCaDjnyjsBP40uQyjy-XlxaL6-G76slzw44Bc7B-S2oQ9osjNFeov5gfXS5AdpE-9f385Qlu353B4lzzvj9oozq_Ul7fnvpNqt5p-K_weqqBxSFMq61iYfastelgm6AXLSQV2w-GK9xSt6ErqbRrN_uxTR4F6HepufWAFUISkRHVy5W9gtHVFh5yZBgJBqDb7EntDDC0lOYZiDspZ8St-wVnNONDCcmQvMXqt2av--d9LbxkM1KcULgFmuON-hcx7X7vz4GthLRTmoScCD2f4M8vh6f31q2veX7XqN8s2ttcspxAXjIQ97L8QCS8nSwm7ur2uYFm2x0WKK9icEs7Kon7ifRuzjbDd8gPa_VeBrMXZsg02BHjPlCTPqUDvCnW4Hn4b6fRt0mklL9ShCtm8lkiCM38cBMFo4td6oneCdbZaHjVyO82MA7J9QajNN8lZzPqKpEmjRQHnyMkIzzCNnblzqx6sHNgCVL_M4WeM-VYFdgdyau9ZVnnkQGpTQY6csoDOIwuKgQ9Ze7fA-T-M9a6d-a1z48xPT7zx2SQIJrPTaRBMZ8GRUznzydSbzU5mxyejk-PR2fR4Nr07cj5rC2NvNBqfToLJdDI7O5mNQQHmOkTy2vzrRf8H5u4_mDKjsw)
 
 Let's dig into how all the above pieces fit together.
 
@@ -247,3 +247,46 @@ check out [GitHub discussion
 If anything on this page is missing, or could be clearer, please [open an
 issue](https://github.com/thechangelog/changelog.com/issues/new/choose). Thank
 you very much!
+
+---
+
+## How to upgrade our PostgreSQL instance running on Fly.io?
+
+1. Provision a new PostgreSQL instance
+```console
+flyctl postgres create \
+    --org changelog --region iad \
+    --name changelog-postgres-2023-07-31 \
+    --initial-cluster-size 2 \
+    --vm-size performance-2x \
+    --volume-size 10
+```
+
+2. Connect to newly created instance (we want to use the new `pd_dump`, with the latest improvements)
+```console
+flyctl ssh console --app changelog-postgres-2023-07-31
+```
+
+3. Create new db
+```console
+createdb changelog --host localhost --username postgres
+```
+
+4. Dump database to local file
+```console
+pg_dump --host postgres-2022-03-12.internal --username postgres changelog > changelog.sql
+```
+
+5. Restore database from local file
+```console
+psql --host localhost --username postgres --single-transaction changelog < changelog.sql
+psql --host localhost --command 'ANALYZE VERBOSE;' changelog postgres 
+```
+
+> **Note**
+> If a previous restore failed, run `dropdb --force --host localhost --username postgres changelog`, then `createdb ...` again.
+
+6. Configure app to use new PostgreSQL instance
+```console
+flyctl secrets set DB_HOST=changelog-postgres-2023-07-31.flycast DB_PASS=<NEW_DB_PASSWORD> --app changelog-2022-03-13
+```
