@@ -60,7 +60,7 @@ config :phoenix, :plug_init_mode, :runtime
 
 # in dev route direct to R2
 config :waffle,
-  asset_host: "https://acd4d0fe190cbd98417069601607c33a.r2.cloudflarestorage.com/changelog-assets"
+asset_host: "https://acd4d0fe190cbd98417069601607c33a.r2.cloudflarestorage.com/changelog-assets-dev"
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
