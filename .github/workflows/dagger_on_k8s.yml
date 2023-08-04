@@ -16,7 +16,7 @@ jobs:
           go-version: "1.20"
           cache-dependency-path: "magefiles/go.sum"
 
-      - name: "Build, test, publish & deploy..."
+      - name: "Build, test & publish..."
         env:
           IMAGE_OWNER: "${{ vars.IMAGE_OWNER }}"
           GHCR_USERNAME: "${{ github.actor }}"
@@ -29,4 +29,5 @@ jobs:
           go run main.go -w ../ ci
 
       # TODO: run this in Dagger
+      # https://github.com/rtCamp/action-slack-notify/blob/v2.2.0/main.go
       # - name: "Announce deploy in #dev Slack..."
