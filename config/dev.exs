@@ -58,8 +58,9 @@ config :phoenix, :stacktrace_depth, 20
 
 config :phoenix, :plug_init_mode, :runtime
 
-# in dev route direct to R2, in prod route through CDN
-config :waffle, asset_host: "https://" <> SecretOrEnv.get("R2_PUBLIC_HOST")
+# in dev route direct to R2
+config :waffle,
+  asset_host: "https://acd4d0fe190cbd98417069601607c33a.r2.cloudflarestorage.com/changelog-assets"
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
