@@ -44,7 +44,13 @@ func (image *Image) WithAppDeps() *Image {
 		}).
 		WithExec([]string{
 			"sh", "-c", "ls -lahd /app/deps/*",
-		}).
+		})
+
+	return image
+}
+
+func (image *Image) WithAppCompiled() *Image {
+	image.container = image.container.
 		WithMountedCache(
 			"/app/_build", image.dag.CacheVolume("app-build"),
 		).

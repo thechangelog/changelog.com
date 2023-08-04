@@ -16,6 +16,13 @@ import (
 
 // Run the CI pipeline
 func CI(ctx context.Context) {
+	defer sysexit.Handle()
+
+	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+	mustBeAvailable(err)
+	defer dag.Close()
+
+	ctx = context.WithValue(ctx, "dag", dag)
 	mg.CtxDeps(ctx, Image.Runtime, Test, Image.Production)
 }
 
@@ -30,9 +37,14 @@ type Image mg.Namespace
 func (Image) Runtime(ctx context.Context) {
 	defer sysexit.Handle()
 
-	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	mustBeAvailable(err)
-	defer dag.Close()
+	var dag *dagger.Client
+	var err error
+	dag, ok := ctx.Value("dag").(*dagger.Client)
+	if !ok {
+		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+		mustBeAvailable(err)
+		defer dag.Close()
+	}
 
 	image.New(ctx, dag.Pipeline("📦 RUNTIME IMAGE")).
 		Runtime().
@@ -43,9 +55,14 @@ func (Image) Runtime(ctx context.Context) {
 func (Image) Production(ctx context.Context) {
 	defer sysexit.Handle()
 
-	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	mustBeAvailable(err)
-	defer dag.Close()
+	var dag *dagger.Client
+	var err error
+	dag, ok := ctx.Value("dag").(*dagger.Client)
+	if !ok {
+		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+		mustBeAvailable(err)
+		defer dag.Close()
+	}
 
 	image.New(ctx, dag.Pipeline("🎁 PRODUCTION IMAGE")).
 		ProductionClean().
@@ -55,9 +72,15 @@ func (Image) Production(ctx context.Context) {
 // Run tests
 func Test(ctx context.Context) {
 	defer sysexit.Handle()
-	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	mustBeAvailable(err)
-	defer dag.Close()
+
+	var dag *dagger.Client
+	var err error
+	dag, ok := ctx.Value("dag").(*dagger.Client)
+	if !ok {
+		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+		mustBeAvailable(err)
+		defer dag.Close()
+	}
 
 	image.New(ctx, dag.Pipeline("🧰 TEST")).Test()
 }
@@ -68,11 +91,46 @@ type Fly mg.Namespace
 func (Fly) Deploy(ctx context.Context) {
 	defer sysexit.Handle()
 
-	dag, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	mustBeAvailable(err)
-	defer dag.Close()
+	var dag *dagger.Client
+	var err error
+	dag, ok := ctx.Value("dag").(*dagger.Client)
+	if !ok {
+		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+		mustBeAvailable(err)
+		defer dag.Close()
+	}
 
 	image.New(ctx, dag.Pipeline("🏁 DEPLOY")).Deploy()
+}
+
+func (Fly) DaggerStart(ctx context.Context) {
+	defer sysexit.Handle()
+
+	var dag *dagger.Client
+	var err error
+	dag, ok := ctx.Value("dag").(*dagger.Client)
+	if !ok {
+		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+		mustBeAvailable(err)
+		defer dag.Close()
+	}
+
+	image.New(ctx, dag.Pipeline("🚙 START DAGGER ENGINE")).DaggerStart()
+}
+
+func (Fly) DaggerStop(ctx context.Context) {
+	defer sysexit.Handle()
+
+	var dag *dagger.Client
+	var err error
+	dag, ok := ctx.Value("dag").(*dagger.Client)
+	if !ok {
+		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+		mustBeAvailable(err)
+		defer dag.Close()
+	}
+
+	image.New(ctx, dag.Pipeline("🚗 STOP DAGGER ENGINE")).DaggerStop()
 }
 
 func mustBeAvailable(err error) {

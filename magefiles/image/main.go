@@ -81,7 +81,9 @@ func (image *Image) Publish(reference string) *Image {
 
 	_, err := image.
 		WithRegistryAuth().
-		container.Publish(image.ctx, reference)
+		container.Publish(image.ctx, reference, dagger.ContainerPublishOpts{
+		MediaTypes: dagger.Dockermediatypes,
+	})
 	mustCreate(err)
 
 	return image
