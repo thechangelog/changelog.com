@@ -68,16 +68,18 @@ config :shopify,
   password: SecretOrEnv.get("SHOPIFY_API_PASSWORD")
 
 config :ex_aws,
-  access_key_id: SecretOrEnv.get("AWS_ACCESS_KEY_ID"),
-  secret_access_key: SecretOrEnv.get("AWS_SECRET_ACCESS_KEY"),
-  region: SecretOrEnv.get("AWS_REGION")
+  access_key_id: SecretOrEnv.get("R2_ACCESS_KEY_ID"),
+  secret_access_key: SecretOrEnv.get("R2_SECRET_ACCESS_KEY")
+
+config :ex_aws, :s3,
+  host: SecretOrEnv.get("R2_API_HOST")
 
 config :ex_aws, :hackney_opts, recv_timeout: 300_000
 
 config :waffle,
   storage: Waffle.Storage.S3,
   version_timeout: 30_000,
-  bucket: SecretOrEnv.get("AWS_ASSETS_BUCKET")
+  bucket: SecretOrEnv.get("R2_ASSETS_BUCKET")
 
 config :ueberauth, Ueberauth,
   providers: [

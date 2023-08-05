@@ -8,9 +8,7 @@ concurrency:
 on:
   push:
     branches:
-      - '**'
-    tags-ignore:
-      - '**'
+      - 'master'
   pull_request:
   workflow_dispatch:
 

@@ -61,7 +61,7 @@ func (image *Image) ProductionClean() *Image {
 		WithImagemagick().
 		WithProdEnv()
 
-	if os.Getenv("AWS_ACCESS_KEY_ID") != "" {
+	if os.Getenv("R2_ACCESS_KEY_ID") != "" {
 		image = image.UploadStaticAssets()
 	}
 
@@ -121,8 +121,9 @@ func (image *Image) ProductionImageRef() string {
 // 1. Upload legacy assets
 // 2. /wp-content/** redirect
 func (image *Image) UploadStaticAssets() *Image {
-	AWS_ACCESS_KEY_ID := env.Get(image.ctx, image.dag.Host(), "AWS_ACCESS_KEY_ID").Secret()
-	AWS_SECRET_ACCESS_KEY := env.Get(image.ctx, image.dag.Host(), "AWS_SECRET_ACCESS_KEY").Secret()
+	R2_API_HOST := env.Get(image.ctx, image.dag.Host(), "R2_API_HOST").Secret()
+	R2_ACCESS_KEY_ID := env.Get(image.ctx, image.dag.Host(), "R2_ACCESS_KEY_ID").Secret()
+	R2_SECRET_ACCESS_KEY := env.Get(image.ctx, image.dag.Host(), "R2_SECRET_ACCESS_KEY").Secret()
 
 	_, err := image.Production().
 		// 🤔 Why do we need to start the app - and therefore require the DB - to upload static assets?
@@ -135,11 +136,10 @@ func (image *Image) UploadStaticAssets() *Image {
 		WithExec([]string{
 			"mix", "ecto.migrate",
 		}).
-		WithEnvVariable("AWS_ASSETS_BUCKET", "changelog-assets").
-		WithEnvVariable("AWS_REGION", "us-east-1").
-		WithEnvVariable("AWS_UPLOADS_HOST", "https://changelog-assets.s3.amazonaws.com").
-		WithSecretVariable("AWS_ACCESS_KEY_ID", AWS_ACCESS_KEY_ID).
-		WithSecretVariable("AWS_SECRET_ACCESS_KEY", AWS_SECRET_ACCESS_KEY).
+		WithSecretVariable("R2_API_HOST", R2_API_HOST).
+		WithEnvVariable("R2_ASSETS_BUCKET", "changelog-assets").
+		WithSecretVariable("R2_ACCESS_KEY_ID", R2_ACCESS_KEY_ID).
+		WithSecretVariable("R2_SECRET_ACCESS_KEY", R2_SECRET_ACCESS_KEY).
 		WithExec([]string{
 			"mix", "changelog.static.upload",
 		}).

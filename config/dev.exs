@@ -58,8 +58,9 @@ config :phoenix, :stacktrace_depth, 20
 
 config :phoenix, :plug_init_mode, :runtime
 
-# in dev route direct to S3, in prod route through CDN
-config :waffle, asset_host: SecretOrEnv.get("AWS_UPLOADS_HOST")
+# Serve Waffle static assets from Cloudflare R2 changelog-assets-dev, the r2.dev subdomain
+config :waffle,
+  asset_host: System.get_env("CDN_PUBLIC_HOST", "https://pub-09bcfd436e22494a8f79ac4e8cd51197.r2.dev")
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
