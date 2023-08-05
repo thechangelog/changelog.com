@@ -62,6 +62,7 @@ func (image *Image) ProductionClean() *Image {
 		WithProdEnv()
 
 	if os.Getenv("R2_ACCESS_KEY_ID") != "" {
+		fmt.Printf("⚡️ Uploading static assets...")
 		image = image.UploadStaticAssets()
 	}
 
