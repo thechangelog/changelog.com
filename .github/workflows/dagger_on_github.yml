@@ -22,7 +22,7 @@ jobs:
           GHCR_PASSWORD: "${{ secrets.GHCR_PASSWORD }}"
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           R2_API_HOST: "${{ secrets.R2_API_HOST }}"
-          R2_ACCESS_KEY_ID: "${{ secrets.R2_ACCESS_KEY_ID_ }}"
+          R2_ACCESS_KEY_ID: "${{ secrets.R2_ACCESS_KEY_ID }}"
           R2_SECRET_ACCESS_KEY: "${{ secrets.R2_SECRET_ACCESS_KEY }}"
         run: |
           cd magefiles
