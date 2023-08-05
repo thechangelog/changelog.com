@@ -19,8 +19,9 @@ config :changelog, ChangelogWeb.Endpoint,
   # we don't need vsn=?d because Plug.Static doesn't serve static assets in prod
   cache_manifest_skip_vsn: true
 
-# in prod we point waffle to the CDN, just like we tell our own endpoint
-config :waffle, asset_host: "https://#{static_url_host}"
+# Serve Waffle static assets from our CDN, usually cdn.changelog.com
+config :waffle,
+  asset_host: "https://#{static_url_host}"
 
 if System.get_env("HTTPS") do
   config :changelog, ChangelogWeb.Endpoint,
@@ -58,7 +59,8 @@ config :changelog, Changelog.Mailer,
   username: SecretOrEnv.get("CM_SMTP_TOKEN"),
   password: SecretOrEnv.get("CM_SMTP_TOKEN")
 
-config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+config :elixir,
+  :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :changelog, Oban,
   plugins: [

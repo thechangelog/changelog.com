@@ -58,9 +58,9 @@ config :phoenix, :stacktrace_depth, 20
 
 config :phoenix, :plug_init_mode, :runtime
 
-# in dev route direct to R2
+# Serve Waffle static assets from Cloudflare R2 changelog-assets-dev, the r2.dev subdomain
 config :waffle,
-asset_host: "https://acd4d0fe190cbd98417069601607c33a.r2.cloudflarestorage.com/changelog-assets-dev"
+  asset_host: System.get_env("CDN_PUBLIC_HOST", "https://pub-09bcfd436e22494a8f79ac4e8cd51197.r2.dev")
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
