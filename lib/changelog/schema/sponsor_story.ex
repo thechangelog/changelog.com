@@ -198,28 +198,28 @@ defmodule Changelog.SponsorStory do
           type: "Endorsement",
           name: "Keep it fast. Keep it simple.",
           audio:
-            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-preroll--keep-it-fast.mp3",
+            "https://cdn.changelog.com/partner-stories/linode-2020-preroll--keep-it-fast.mp3",
           duration: 21
         },
         %{
           type: "Partner preroll",
           name: "We're hosted on Linode cloud servers",
           audio:
-            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-partner-preroll.mp3",
+            "https://cdn.changelog.com/partner-stories/linode-2020-partner-preroll.mp3",
           duration: 5
         },
         %{
           type: "Endorsement",
           name: "Independent open cloud",
           audio:
-            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-preroll--independent-open-cloud.mp3",
+            "https://cdn.changelog.com/partner-stories/linode-2020-preroll--independent-open-cloud.mp3",
           duration: 40
         },
         %{
           type: "Endorsement",
           name: "Object store",
           audio:
-            "https://changelog-assets.s3.us-east-1.amazonaws.com/partner-stories/linode-2020-midroll--object-store.mp3",
+            "https://cdn.changelog.com/partner-stories/linode-2020-midroll--object-store.mp3",
           duration: 30
         }
       ],
