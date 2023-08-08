@@ -76,7 +76,7 @@ graph TD
     secrets(( fa:fa-key 1Password )):::link
     click secrets "https://changelog.1password.com/"
     secrets -.-> |secrets| app
-    secrets -..-> |secrets| cicd
+    secrets -.-> |secrets| repo
 
     %% Search
     search(( fa:fa-magnifying-glass Typesense ))
@@ -97,18 +97,21 @@ graph TD
         end
     end
 
+    subgraph AWS.S3
+        logs[ fab:fa-aws changelog-logs ]
+    end
+    apex & cdn-.-> |logs| logs
+
     %% Observability
     observability(( fa:fa-bug Honeycomb )):::link
     click observability "https://ui.honeycomb.io/changelog/datasets/changelog_opentelemetry/home"
-    apex -.-> |logs| observability
     app -....-> |traces| observability
+    logs -.-> |logs| observability
     
     %% Object storage
     apex ==> |https| proxy
-    subgraph AWS.S3
-        subgraph us-east-1
-            assets[ fab:fa-aws changelog-assets.s3.amazonaws.com ]
-        end
+    subgraph Cloudflare.R2
+        assets[ fab:fa-cloudflare changelog-assets changelog.place ]
     end
     cdn ==> |https| assets
 
@@ -127,7 +130,7 @@ graph TD
 ```
 
 > **Note**
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEig4tEEm2FceJu27I6i4t0m7d3G7A4qKgJFrmLIkqSTVx43z3PZI6KEfqMf9h63j3-72DvnUiFhNn7jx8iDZSFmLu-2uWS3xNBMuIF7HMFwTzaLPKE46LDXq7WOUIPlGKhViQNUppvkVCcrYl8wfTs3ByOjsyt-41jeVmHhQ3TwyP-QZVz0Ap-gGBBCKFeSrK0Ci4oPJFGZqH6sNJwW5v0RqH8zV2Eyo3ZYjkhkQbnCckZYnfXClz0d3dfD5XRrUiopRGWy0IrZzaTSNJezgsbeWscksOjeIrH0xRlkSURylxI-DdVkaj80hSliMXLTe0QC8lWq3eD1ijZH2vNT7W8oV_zfh2nbJr4QtQ9IFKb5elytZaR3uFS8kyrNiuVqsmiiwFsWiBk4RwdMHQcnGJ_CFTWxHfbXCYstDPsJCEw09C1jQlor3yEtaNMCcJBfDsHj06SHiyibhHGXr8eDC7hrPfRMYT0bWzwNEWzBAHGd5g2eoWKRChpf4eVKxYLKWt_5rbpA3qh34Cx5-NguX56V_PJ4deAzJdz_0J7T1jdH-G9xo1XTwiV7H1x3Zvpa4PGy2_KKOICIEexOTTXrtkqEge26VbG4r2k9Fk4q3THagoii5JlQctt0qb34MPt-Asttgj1XZoDnjUnCA7kimKSZEyW0ufMUCrlMQazi7JExDjgoWBO5rC776VXUcdetAbjJdQqU3Xq2WITcgwj1tDD_rTr5rQdll9wJmb3a3pDAmAnqA36sndAQV6-hR80zornzroq818dFU1GWD6l0TSjSkG7Vldsc-1i6h1Eb0fhGcT1hajla-gXwwGze4mBx2lKNoSKTaM5PTGXYN1RIEWnRcFapOscOKOAnccKLR4AK--ShJylxIlGAF00_mD49PTs5OzJ_caERD0e9GncNiDOLxuIhxjiUMsIF9MyIST5R-v0CuCYwiYCcbMDcbD4QVRXzWpMJKF2wr8km18_EXj_oSKoBHuWmejSEXpR42zIhEfoWmAjR3fq1bDjSDVHPZabUdI2_N1OV5TKOwS6qJTTPeA-_Wq52UuaUb2TaP4X1JM72hFtEIyIjmNRBw2QQQuLt1UFQzUJLzfkFLomB3wNAwsLbNcoAuO1zjHCLLqViReTiQampMVTRcPNqed9ZrYdaGBgTuZylRjfI8_ptVVtwcNcYiok_khooN86pbfdMkliXi7o5kbXf0qUFuyQ-M3sMVB4ceHdW1iUrH0DshxUbHqIVkHp-YwIK3uLH_b910CMxotw83WaljUdWM2jMicrnc0T6BVgwno7a4gguRQZ48rVKgaAgWVBsW9R_Ue3Kh4fhORQi9kVeSa-0ZVhLkbcZgpYE-upmJvkFpGK05CM6gCgOUF5_QzNrtfWwQZgbHgUyFKmPs_V6Pi6fTkBJrnpA6n7UmrZ2_ptDx6tvjNGokZgD8h3hrWN-hrKkcAlTVNSk7AOv6Jwsrgz5LLMLpcXl4sdh_fzV6WC34ckIvDmalF2C2K3Fyh7t4-uH0CbS98qvX8fgtt1J7DLC953m21UZxfqS_vQH1L1Sw93VL4PVRO45CmVFa-MPtRk_SwTNALlpMdyA37M95htLwrqbepObu9T40CdVpqH31gBUCEpERV8s7fQGtrkw4xMwUEhJBtdt_2GhiaSnIMyeyls_xX-IJZzTjAwlJk7zR6yznI_vnfS28Z9OSnFC4BZLjjbobMsfCqXjHwtbAWCvPSE4GHM_yZ5fD2y_mrct7dvKqDZ-Pba5ZT8AtawoHtvxAJZ5elhFXeXlewLJtxkeIdLFAJZ2VRvfG-DdmG2C75Hu7uSSFr7GzQBhsCHEMlyXMq0LtCDdfhw0rLb4NOM3mhdlXI-tQiCc78cRAEo4lf8YnOBGtlNTiq6fYaGQO0XULIzTfRWcj6CqUJowUB58jJCM8wjZ25c6terBzYAlS9zOEyxnyrHLsDOrX3LHd55EBoU0GOnLKAyiMLs383Twuc_8NY596Z3zo3ztydBSfeyWw0Ojs9nkxn0_HpkbNz5mdjb3w8nQWT2QgeT4Pp3ZHzWUsYe7NgGpwdj0bj0Wg2AnJo6-DIa_PHjP5_5u4_wV6tvQ)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEihYtEEm2FceJum7I4i4t0m5d3W7A4qKgJFrmLIkqSdVx43z3PVIX5Ug95j9sHe9-v3fQt1bIImL51sOHaC1lLnzXXbFM4i0RLCVOyFJXEMzD9TKLOc7X6N18mSH4hAkWYk5WKKHZBgnJ2Yb4D6ZnweR0dlTe2lsaybXv5TdPS57yG1RdgFL0CIEEIkX5VBRBqeCSyhdFUD5UH05ydnuLVjjwV9iOqVwXAZJrEq5xFpOExW5zpcxFd3e-7yujWhFhQsONFoSWVu1mKUl7OCxtaS0zQw4No2sXTFGWhJSHCbFD4N1URqPzUFKWIRst1jRHLyVaLj8MWKNk_ag1LtbyhbtlfLNK2Fa4AhR9pNLZpYmytdbRXuFCshQrtuvlsokiS0AsmuM4JhxdMrSYXyF3yNRWxA8bHCQscFMsJOHwE5MVTYhor5yYdSPMSUwBPLvHjw8SHq9D7lCGnjwZzG7J2W8i47Ho2pnjcANmiIMMr7FsdYsEiNBCfw8qViyG0tZ_zV2mDeqHfgbHL0be4vz0r-eTQ68BmbZj_4z2Tml0f4b3GjVdPCJbsfXHdm-krg8bLb8owpAIgR5E5PNeu1RSkSwyS7c2FO0no8nEWSU7UJHnXZIqD1pulTa3Bx92zllksIeq7dAM8Kg5QXYoExSRPGGmlj5jgFYpiTScbZLFIMYGCz17NIXffSu7jjr0oDcYL6BSm65XyxDrgGEetYYe9KffNKHpsvqAMze727IzxAB6gt6oJ3cHFOjZM_BN66x86qCvNvPxddVkgOlfEko7ohi0p3XFPtcuotZF9GEQnk1YW4xWvoJ-MRg0s5scdJQ8b0skXzOS0Rt7BdYRBVp0nueoTbLCiT3y7LGn0OIAvPoqSchdQpRgBNBN_AfHp6dnJ2dP7zUiIOj3ok_hsAdRsG0iHGGJAywgX0zImJPFn6_QK4IjCFgZjJntjYfDC6K-aVJeShZ2K_BrtvHxV417CxVBQ9y1zkSRitJPGmd5LD5B0wAbO75XrYaXglRz2Gu1HSFtz9fluKVQ2AXURaeY7gH321XPi0zSlOybRvG_pJS9oxXRCkmJ5DQUUdAEEbi4tBNVMFCT8H5NCqFjdsDTMLCkSDOBLjle4QwjyKpdkTgZkWhoTlY0XTyYnGbWa2LbhgYG7qQqU43xPf6Ura66PWiIQ0SdzA8RHeRTt_ymSy5IyNsdrbzR1a8CtSE7NH4DWxwUfnRY12VMKpbeATnOK1Y9JOvg1BwlSKs7w9-B92oadOwul9aSQ103VsOEzOhqR7MYOjVYgN7tciJIBmX2pAKFKiHbcSoNinuP6jW4UfH8JiS53seqwDX3jaoQczvkMFLAnkwNxd4YtYxGmIRmUPiH3QVn9AsuV7-2BlICU8GlQhQw9n-pJsWz6ckJ9M5JHU3Tk1bP3tBpeHQx_92YiClgPybOCrY3aGsqRYCUFY0LTsA6_pnCxuDO4qsgvFpcXc53n97PXhZzfuyRy8ORqUWYHYrcXKPu2j64fAJtL3qq7fx-B23UnsMoL3jW7bRhlF2rL-dAfUvV7DxGJbQy_144C68lBn7dN_QwxFthjD71qpbbyNTuPFIGlPhVRHstxcjDH4GKLw5oQmUVNmY-avAVFDF6wTKyAxeCfnB1GI1AFtRZ15zdLquGjjqXtY8-shzQSBKiesbOXUMTPcSXdkZyDJjYd3WWdDoYpss9NIb_CsqwFTAOCDQCZ25Pep86yM5FwopolWBOnLcTA2_6nNmkKWyojGyVNAYoc1jfyb38QeK6O1x1hG1sf80yCnZDdzmw7Vci4RS0kHAoMBcfLItm8CR4B6tYzFmRV2-c7yuSktjsHj3c3TNH2tjZoAl2DTjQSpJlVKD3uRrTw8eelt8ElWZyAu2qkPX5RxKcumPP80YTt-ITnVnYymqwVNPtdeYHaLuEkJvvojOQ8w3KMowGBKwjKyU8xTSyfOtWvVhasE-oevDhMsJ8oxy7Azq1QS12WWj5khfkyCpyKCwyLxd5C-KdCHia4-wfxjr3ln9r3Vi-PfNOnJPZaHR2ejyZzqbj0yNrZ_lnY2d8PJ15k9kIHk-96d2R9UVLGDszb-qdHY9G49FoNgJyGBDgx-vyHx79R8_df1dCyJo)
 
 Let's dig into how all the above pieces fit together.
 
@@ -138,7 +141,7 @@ TL;DR:
 - **Front-end**
   - Fastly
   - Fly.io Proxy
-  - AWS S3
+  - Cloudflare R2
 - **Application**
   - Elixir / Phoenix
 - **Database**
@@ -150,13 +153,13 @@ TL;DR:
 [PostgreSQL](https://www.postgresql.org) for persistence &
 [Node.js](https://nodejs.org) to digest & compile static assets (CSS & JS).
 
-Static assets, including all our mp3 episodes, are stored on AWS S3. They are
-served via Fastly, specifically https://cdn.changelog.com. In summary:
+Static assets, including all our mp3 episodes, are stored on Cloudflare R2.
+They are served via Fastly, specifically https://cdn.changelog.com. In summary:
 
 ```
 Fastly (cdn.changelog.com)
 ↓
-AWS S3 (changelog-assets.s3.amazonaws.com)
+Cloudflare R2 (changelog.place)
 ````
 
 The production instance of our application is running on Fly.io. All
