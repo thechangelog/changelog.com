@@ -1,5 +1,5 @@
 #!/bin/bash -ex
 
-dropdb changelog_dev --if-exists
-createdb changelog_dev
-psql changelog_dev < $1
+dropdb -U postgres changelog_dev --if-exists
+createdb -U postgres changelog_dev
+psql -U postgres changelog_dev < $1
