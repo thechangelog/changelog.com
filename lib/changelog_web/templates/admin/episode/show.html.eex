@@ -7,20 +7,22 @@
     <%= link @episode.slug, to: Routes.admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug) %>
 
     <div class="ui basic right floated buttons">
-      <%= if @episode.published do %>
-        <%= link("View Public",
-          to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
-          rel: "external",
-          class: "ui button") %>
-      <% else %>
-        <%= link("Preview",
-          to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
-          rel: "external",
-          class: "ui button") %>
-      <% end %>
-      <%= if @item do %>
-        <%= link("News Item", to: Routes.admin_news_item_path(@conn, :edit, @item), class: "ui button") %>
-      <% end %>
+    <%= if @episode.published do %>
+      <input type="hidden" value="<%= Changelog.Buffer.Content.episode_text(@item) %>">
+      <button class="ui icon button clipboard" title="Copy Share Text"><i class="share icon"></i></button>
+      <%= link("View Public",
+        to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
+        rel: "external",
+        class: "ui button") %>
+    <% else %>
+      <%= link("Preview",
+        to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
+        rel: "external",
+        class: "ui button") %>
+    <% end %>
+    <%= if @item do %>
+      <%= link("News Item", to: Routes.admin_news_item_path(@conn, :edit, @item), class: "ui button") %>
+    <% end %>
     </div>
 
     <div class="sub header"><%= @episode.title %></div>
