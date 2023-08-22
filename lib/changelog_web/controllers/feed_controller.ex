@@ -42,46 +42,14 @@ defmodule ChangelogWeb.FeedController do
     send_resp(conn, :not_found, "")
   end
 
-  def podcast(conn, %{"slug" => "podcast"}) do
-    podcast = Podcast.changelog()
-
-    episodes =
-      Podcast.changelog_ids()
-      |> Enum.reduce(NewsItem, fn id, query ->
-        from(q in query, or_where: like(q.object_id, ^"#{id}:%"))
-      end)
-      |> Ecto.Query.select([:object_id])
-      |> Repo.all()
-      |> Enum.map(fn i ->
-        i.object_id
-        |> String.split(":")
-        |> List.last()
-      end)
-      |> Episode.with_ids()
-      |> Episode.published()
-      |> Episode.newest_first()
-      |> Episode.exclude_transcript()
-      |> Episode.preload_all()
-      |> Repo.all()
-
+  def podcast(conn, %{"slug" => slug}) do
+    feed = ChangelogWeb.Feeds.generate(slug)
     conn
     |> put_layout(false)
     |> put_resp_header("access-control-allow-origin", "*")
     |> put_resp_content_type("application/xml")
-    |> assign(:podcast, podcast)
-    |> assign(:episodes, episodes)
     |> ResponseCache.cache_public()
-    |> render("podcast.xml")
-  end
-
-  def podcast(conn, %{"slug" => "interviews"}) do
-    podcast = Podcast.get_by_slug!("podcast")
-    render_feed_for_podcast(conn, podcast)
-  end
-
-  def podcast(conn, %{"slug" => slug}) do
-    podcast = Podcast.get_by_slug!(slug)
-    render_feed_for_podcast(conn, podcast)
+    |> send_resp(200, feed)
   end
 
   def plusplus(conn, %{"slug" => slug}) do
@@ -103,7 +71,7 @@ defmodule ChangelogWeb.FeedController do
     end
   end
 
-  defp render_feed_for_podcast(conn, podcast, template \\ "podcast") do
+  defp render_feed_for_podcast(conn, podcast, template) do
     episodes =
       podcast
       |> Podcast.get_news_item_episode_ids!()
