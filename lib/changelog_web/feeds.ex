@@ -9,10 +9,11 @@ defmodule ChangelogWeb.Feeds do
   """
   def refresh(slug) do
     content = generate(slug)
+    bucket = SecretOrEnv.get("R2_FEEDS_BUCKET", "changelog-feeds-dev")
     headers = [content_type: "application/xml"]
     key = "#{slug}.xml"
 
-    ExAws.request!(ExAws.S3.put_object("changelog-feeds", key, content, headers))
+    ExAws.request!(ExAws.S3.put_object(bucket, key, content, headers))
   end
 
   # Special case for "The Changelog" feed which gets its episodes from
