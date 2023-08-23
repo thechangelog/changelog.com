@@ -10,6 +10,8 @@ defmodule Changelog.ObanWorkers.FeedUpdater do
   @impl Oban.Worker
   def perform(%Job{args: %{"slug" => slug}}) do
     ChangelogWeb.Feeds.refresh(slug)
+
+    :ok
   end
 
   def queue(item = %NewsItem{}) do

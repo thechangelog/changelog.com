@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     NewsQueue,
     Podcast
   }
-  alias Changelog.ObanWorkers.AudioUpdater
+  alias Changelog.ObanWorkers.{AudioUpdater, FeedUpdater}
 
   plug :assign_podcast
   plug Authorize, [Policies.Admin.Episode, :podcast]
@@ -227,6 +227,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
         EpisodeNewsItem.update(episode)
+        FeedUpdater.queue(episode)
         Cache.delete(episode)
         Fastly.purge(episode)
 
@@ -267,6 +268,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Repo.delete!(episode)
     EpisodeTracker.untrack(episode.id)
     EpisodeNewsItem.delete(episode)
+    FeedUpdater.queue(episode)
     Cache.delete(episode)
 
     conn
@@ -307,6 +309,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
+        FeedUpdater.queue(episode)
         Cache.delete(episode)
 
         conn

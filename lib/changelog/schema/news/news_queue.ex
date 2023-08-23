@@ -13,6 +13,8 @@ defmodule Changelog.NewsQueue do
     Social
   }
 
+  alias Changelog.ObanWorkers.FeedUpdater
+
   schema "news_queue" do
     field :position, :float
     belongs_to :item, NewsItem
@@ -161,6 +163,7 @@ defmodule Changelog.NewsQueue do
     Task.start_link(fn -> Social.post(item) end)
     Task.start_link(fn -> Notifier.notify(item) end)
     Task.start_link(fn -> EpisodeTracker.track(item) end)
+    Task.start_link(fn -> FeedUpdater.queue(item) end)
     Cache.delete(item)
     Logger.info("News: Published ##{item.id}")
     true

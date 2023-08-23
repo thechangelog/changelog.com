@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Fastly, ObanWorkers, Podcast}
+  alias Changelog.{Cache, Fastly, Podcast}
+  alias Changelog.ObanWorkers.FeedUpdater
 
   plug :assign_podcast when action in [:show, :edit, :update, :feed]
   plug Authorize, [Policies.Admin.Podcast, :podcast]
@@ -48,6 +49,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     case Repo.insert(changeset) do
       {:ok, podcast} ->
         Repo.update(Podcast.file_changeset(podcast, podcast_params))
+        FeedUpdater.queue(podcast)
         Cache.delete(podcast)
 
         conn
@@ -86,6 +88,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
     case Repo.update(changeset) do
       {:ok, podcast} ->
+        FeedUpdater.queue(podcast)
         Fastly.purge(podcast)
         Cache.delete(podcast)
 
@@ -102,7 +105,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
   end
 
   def feed(conn = %{assigns: %{podcast: podcast}}, _params) do
-    ObanWorkers.FeedUpdater.queue(podcast)
+    FeedUpdater.queue(podcast)
 
     conn
     |> put_flash(:result, "success")
