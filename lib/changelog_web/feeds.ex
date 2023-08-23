@@ -4,8 +4,22 @@ defmodule ChangelogWeb.Feeds do
   alias Changelog.{Episode, NewsItem, Podcast, Repo}
   alias ChangelogWeb.{Endpoint, FeedView}
 
+  @doc """
+  Generates a fresh feed XML and uploads it to R2
+  """
+  def refresh(slug) do
+    content = generate(slug)
+    headers = [content_type: "application/xml"]
+    key = "#{slug}.xml"
+
+    ExAws.request!(ExAws.S3.put_object("changelog-feeds", key, content, headers))
+  end
+
+  # Special case for "The Changelog" feed which gets its episodes from
+  # News, Friends & Interviews
   def generate("podcast") do
     podcast = Podcast.changelog()
+
     episodes =
       Podcast.changelog_ids()
         |> Enum.reduce(NewsItem, fn id, query ->
@@ -28,12 +42,9 @@ defmodule ChangelogWeb.Feeds do
     render(podcast, episodes)
   end
 
-  def generate("interviews") do
-    podcast = Podcast.get_by_slug!("podcast")
-    episodes = get_episodes(podcast)
-    render(podcast, episodes)
-  end
-
+  @doc """
+  Generates and returns the entire XML feed for a podcast given its feed's slug
+  """
   def generate(slug) do
     podcast = Podcast.get_by_slug!(slug)
     episodes = get_episodes(podcast)
@@ -52,6 +63,7 @@ defmodule ChangelogWeb.Feeds do
   end
 
   defp render(podcast, episodes, template \\ "podcast.xml") do
-    Phoenix.View.render_to_string(FeedView, template, conn: Endpoint, podcast: podcast, episodes: episodes)
+    assigns = [conn: Endpoint, podcast: podcast, episodes: episodes]
+    Phoenix.View.render_to_string(FeedView, template, assigns)
   end
 end
