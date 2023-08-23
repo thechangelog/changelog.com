@@ -40,6 +40,7 @@
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: Routes.podcast_path(@conn, :show, podcast.slug)) %>
+          <%= AdminHelpers.icon_link("refresh", to: Routes.admin_podcast_path(@conn, :feed, podcast.slug), method: :post, title: "Refresh Feed") %>
         <%= if Policies.Admin.Podcast.edit(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_path(@conn, :edit, podcast.slug)) %>
         <% end %>

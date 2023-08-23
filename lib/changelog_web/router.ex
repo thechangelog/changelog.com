@@ -111,6 +111,8 @@ defmodule ChangelogWeb.Router do
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
     end
 
+    post "/podcasts/:id/feed", PodcastController, :feed, as: :podcast
+
     resources "/posts", PostController, except: [:show]
     post "/posts/:id/publish", PostController, :publish, as: :post
     post "/posts/:id/unpublish", PostController, :unpublish, as: :post

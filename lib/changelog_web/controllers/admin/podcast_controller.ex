@@ -1,9 +1,9 @@
 defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Fastly, Podcast}
+  alias Changelog.{Cache, Fastly, ObanWorkers, Podcast}
 
-  plug :assign_podcast when action in [:show, :edit, :update]
+  plug :assign_podcast when action in [:show, :edit, :update, :feed]
   plug Authorize, [Policies.Admin.Podcast, :podcast]
   plug :scrub_params, "podcast" when action in [:create, :update]
 
@@ -99,6 +99,14 @@ defmodule ChangelogWeb.Admin.PodcastController do
       {:error, changeset} ->
         render(conn, :edit, podcast: podcast, changeset: changeset)
     end
+  end
+
+  def feed(conn = %{assigns: %{podcast: podcast}}, _params) do
+    ObanWorkers.FeedUpdater.queue(podcast)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: Routes.admin_podcast_path(conn, :index))
   end
 
   defp assign_podcast(conn = %{params: %{"id" => id}}, _) do

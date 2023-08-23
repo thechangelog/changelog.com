@@ -5,6 +5,7 @@ defmodule Changelog.Policies.Admin.Podcast do
   def index(actor), do: is_admin_or_host(actor)
   def show(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def update(actor, _), do: is_admin(actor)
+  def feed(actor, podcast), do: update(actor, podcast)
   def delete(actor, _), do: is_admin(actor)
 
   defp is_host(actor, podcast) do
