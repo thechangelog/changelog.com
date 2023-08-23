@@ -9,21 +9,18 @@
   <channel>
     <title><%= @podcast |> podcast_name_with_metadata() |> escaped() %></title>
     <copyright>All rights reserved</copyright>
-    <link><%= Routes.podcast_url(@conn, :show, @podcast.slug) %></link>
-    <atom:link href="<%= Routes.feed_url(@conn, :podcast, @podcast.slug) %>" rel="self" type="application/rss+xml" />
-    <atom:link href="<%= Routes.podcast_url(@conn, :show, @podcast.slug) %>" rel="alternate" type="text/html" />
+    <link><%= podcast_url(@conn, @podcast) %></link>
+    <atom:link href="<%= PodcastView.feed_url(@podcast) %>" rel="self" type="application/rss+xml" />
+    <atom:link href="<%= podcast_url(@conn, @podcast) %>" rel="alternate" type="text/html" />
     <language>en-us</language>
     <description><%= @podcast |> podcast_full_description() |> escaped() %></description>
     <itunes:author>Changelog Media</itunes:author>
     <itunes:summary><%= @podcast |> podcast_full_description() |> escaped() %></itunes:summary>
     <itunes:explicit>no</itunes:explicit>
     <itunes:image href="<%= PodcastView.cover_url(@podcast) %>"/>
-  <%= if Podcast.is_a_changelog_pod(@podcast) do %>
     <itunes:owner>
       <itunes:name>Changelog Media</itunes:name>
-      <itunes:email>editors@changelog.com</itunes:email>
     </itunes:owner>
-  <% end %>
     <itunes:keywords><%= @podcast.keywords %></itunes:keywords>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>

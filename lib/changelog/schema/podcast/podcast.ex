@@ -148,6 +148,8 @@ defmodule Changelog.Podcast do
 
   def with_vanity_domain(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.vanity_domain))
 
+
+  def get_by_slug!("interviews"), do: get_by_slug!("podcast")
   def get_by_slug!("master"), do: master()
 
   def get_by_slug!(slug) do

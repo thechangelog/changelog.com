@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PodcastView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Podcast, StringKit}
+  alias Changelog.{Podcast, StringKit, UrlKit}
   alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
@@ -51,17 +51,22 @@ defmodule ChangelogWeb.PodcastView do
 
   def is_master(podcast), do: Podcast.is_master(podcast)
   def episode_count(podcast), do: Podcast.episode_count(podcast)
+
+  # Exists to special-case /interviews
+  def feed_url(podcast) do
+    slug = if Podcast.is_interviews(podcast), do: "interviews", else: podcast.slug
+    Routes.feed_url(Endpoint, :podcast, slug)
+  end
+
   def published_episode_count(podcast), do: Podcast.published_episode_count(podcast)
 
   def subscribe_on_android_url(%{vanity_domain: vanity}) when not is_nil(vanity),
     do: vanity <> "/android"
 
   def subscribe_on_android_url(podcast) do
-    feed_url_sans_protocol =
-      Routes.feed_url(Endpoint, :podcast, podcast.slug)
-      |> String.replace(~r/\Ahttps?:\/\//, "")
+    path = podcast |> feed_url() |> UrlKit.sans_scheme()
 
-    "https://www.subscribeonandroid.com/#{feed_url_sans_protocol}"
+    "https://www.subscribeonandroid.com/#{path}"
   end
 
   def subscribe_on_apple_url(%{vanity_domain: vanity}) when not is_nil(vanity),
@@ -92,10 +97,10 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
-  def subscribe_via_rss_url(_conn, %{vanity_domain: vanity}) when not is_nil(vanity),
+  def subscribe_via_rss_url(%{vanity_domain: vanity}) when not is_nil(vanity),
     do: vanity <> "/rss"
 
-  def subscribe_via_rss_url(conn, podcast), do: Routes.feed_path(conn, :podcast, podcast.slug)
+  def subscribe_via_rss_url(podcast), do: feed_url(podcast)
 
   def status_text(podcast) do
     if podcast.status == :soon do

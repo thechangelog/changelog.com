@@ -71,6 +71,12 @@ defmodule ChangelogWeb.FeedView do
     "#{episode.podcast.name} #{numbered_title}"
   end
 
+  # Exists to special-case /interviews
+  def podcast_url(conn, podcast) do
+    slug = if Podcast.is_interviews(podcast), do: "interviews", else: podcast.slug
+    Routes.podcast_url(conn, :show, slug)
+  end
+
   def render_item(item = %{object: episode = %Episode{}}, assigns) do
     episode = episode |> Episode.preload_all() |> Map.put(:news_item, item)
     render("_episode.xml", Map.merge(assigns, %{episode: episode, plusplus: false}))
