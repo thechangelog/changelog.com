@@ -227,9 +227,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       {:ok, episode} ->
         handle_notes_push_to_github(episode)
         EpisodeNewsItem.update(episode)
-        FeedUpdater.queue(episode)
+        handle_feed_updates(episode)
         Cache.delete(episode)
-        Fastly.purge(episode)
 
         unless any_files_uploaded?(changeset) do
           AudioUpdater.queue(episode)
@@ -268,7 +267,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Repo.delete!(episode)
     EpisodeTracker.untrack(episode.id)
     EpisodeNewsItem.delete(episode)
-    FeedUpdater.queue(episode)
+    handle_feed_updates(episode)
     Cache.delete(episode)
 
     conn
@@ -309,7 +308,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     case Repo.update(changeset) do
       {:ok, episode} ->
-        FeedUpdater.queue(episode)
+        handle_feed_updates(episode)
         Cache.delete(episode)
 
         conn
@@ -382,6 +381,13 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       episode = Episode.preload_podcast(episode)
       source = Github.Source.new("show-notes", episode)
       Github.Pusher.push(source, episode.notes)
+    end
+  end
+
+  defp handle_feed_updates(episode) do
+    if Episode.is_published(episode) do
+      FeedUpdater.queue(episode)
+      Fastly.purge(episode)
     end
   end
 
