@@ -2,10 +2,8 @@ defmodule ChangelogWeb.EpisodeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, NewsItem, Podcast, Subscription}
-  alias ChangelogWeb.Plug.ResponseCache
   alias ChangelogWeb.{Email, LiveView, TimeView}
 
-  plug ResponseCache
   plug :assign_podcast
 
   def action(conn, _) do
@@ -25,7 +23,6 @@ defmodule ChangelogWeb.EpisodeController do
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
     |> assign(:item, episode.news_item)
-    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render(:show)
   end
 
@@ -45,7 +42,6 @@ defmodule ChangelogWeb.EpisodeController do
     |> assign(:episode, episode)
     |> assign(:theme, theme)
     |> assign(:source, source)
-    |> ResponseCache.cache_public(:infinity)
     |> render(:embed)
   end
 
@@ -131,7 +127,6 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
-    |> ResponseCache.cache_public(:infinity)
     |> render(:transcript, layout: false)
   end
 

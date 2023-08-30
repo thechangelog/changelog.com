@@ -2,10 +2,8 @@ defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, NewsItem, Podcast, Subscription}
-  alias ChangelogWeb.Plug.ResponseCache
 
   plug RequireGuest, "before joining" when action in [:join]
-  plug ResponseCache
 
   # pages that need special treatment get their own matched function
   # all others simply render the template of the same name
@@ -45,7 +43,6 @@ defmodule ChangelogWeb.PageController do
     |> assign(:active, active)
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
-    |> ResponseCache.cache_public()
     |> render(:guest)
   end
 
@@ -70,7 +67,6 @@ defmodule ChangelogWeb.PageController do
 
   def manifest_json(conn, _params) do
     conn
-    |> ResponseCache.cache_public()
     |> json(%{
       name: "Changelog",
       short_name: "Changelog",

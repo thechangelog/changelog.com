@@ -2,9 +2,6 @@ defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, NewsItem, Podcast, Post}
-  alias ChangelogWeb.Plug.ResponseCache
-
-  plug ResponseCache
 
   def index(conn, _params) do
     render(conn, :index)
@@ -34,7 +31,6 @@ defmodule ChangelogWeb.PodcastController do
     |> assign(:items, items)
     |> assign(:trailer, nil)
     |> assign(:page, page)
-    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render(:show)
   end
 
@@ -79,7 +75,6 @@ defmodule ChangelogWeb.PodcastController do
     |> assign(:items, items)
     |> assign(:trailer, trailer)
     |> assign(:page, page)
-    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render(:show)
   end
 
