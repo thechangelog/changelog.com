@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Feeds do
   import Ecto.Query, only: [from: 2]
 
-  alias Changelog.{Episode, Fastly, NewsItem, Podcast, Repo}
+  alias Changelog.{Episode, Fastly, NewsItem, Podcast, PodPing, Repo}
   alias ChangelogWeb.{Endpoint, FeedView}
   alias ChangelogWeb.Router.Helpers, as: Routes
 
@@ -9,6 +9,7 @@ defmodule ChangelogWeb.Feeds do
   Generates a fresh feed XML and uploads it to R2
   """
   def refresh(slug) do
+    url = Routes.feed_url(Endpoint, :podcast, slug)
     content = generate(slug)
     bucket = SecretOrEnv.get("R2_FEEDS_BUCKET", "changelog-feeds-dev")
     headers = [content_type: "application/xml"]
@@ -16,8 +17,10 @@ defmodule ChangelogWeb.Feeds do
 
     ExAws.request!(ExAws.S3.put_object(bucket, key, content, headers))
 
-    url = Routes.feed_url(Endpoint, :podcast, slug)
     Fastly.purge(url)
+    PodPing.overcast(url)
+
+    :ok
   end
 
   # Special case for "The Changelog" feed which gets its episodes from

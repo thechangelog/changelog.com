@@ -1,12 +1,8 @@
 defmodule Changelog.PodPing do
 
-  # alias Changelog.HTTP
-  alias ChangelogWeb.PodcastView
+  alias Changelog.HTTP
 
-  def overcast(episode) do
-    url = PodcastView.feed_url(episode.podcast)
-    # disabling this until we have instant feed refresh on public
-    # HTTP.post("https://overcast.fm/ping", {:form, [{"urlprefix", url}]})
-    url
+  def overcast(url) do
+    HTTP.post("https://overcast.fm/ping", {:form, [{"urlprefix", url}]})
   end
 end

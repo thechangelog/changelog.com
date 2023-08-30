@@ -6,7 +6,6 @@ defmodule Changelog.Notifier do
     NewsItemComment,
     Person,
     Podcast,
-    PodPing,
     Repo,
     Subscription,
     Slack,
@@ -27,7 +26,6 @@ defmodule Changelog.Notifier do
     deliver_episode_request_email(episode)
     deliver_podcast_subscription_emails(episode)
     deliver_slack_new_episode_message(episode)
-    deliver_podcast_index_pings(episode)
   end
 
   def notify(item = %NewsItem{status: :declined}) do
@@ -176,10 +174,6 @@ defmodule Changelog.Notifier do
 
   defp deliver_episode_transcribed_email(person, episode) do
     MailDeliverer.enqueue("episode_transcribed", %{"person" => person.id, "episode" => episode.id})
-  end
-
-  defp deliver_podcast_index_pings(episode) do
-    PodPing.overcast(episode)
   end
 
   defp deliver_podcast_subscription_emails(episode) do

@@ -186,8 +186,7 @@ defmodule Changelog.NotifierTest do
 
   describe "notify/1 with episode item" do
     setup_with_mocks([
-      {Slack.Client, [], [message: fn _, _ -> true end]},
-      {Changelog.PodPing, [], [overcast: fn _ -> true end]}
+      {Slack.Client, [], [message: fn _, _ -> true end]}
     ]) do
       :ok
     end
@@ -201,7 +200,6 @@ defmodule Changelog.NotifierTest do
 
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
-      assert called(Changelog.PodPing.overcast(:_))
     end
 
     test "when episode has guests but none of them have 'thanks' set" do
@@ -217,7 +215,6 @@ defmodule Changelog.NotifierTest do
 
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
-      assert called(Changelog.PodPing.overcast(:_))
     end
 
     test "when episode has guests and some of them have 'thanks' set" do
@@ -237,7 +234,6 @@ defmodule Changelog.NotifierTest do
       assert_delivered_email(Email.guest_thanks(eg1))
       assert_delivered_email(Email.guest_thanks(eg2))
       assert called(Slack.Client.message("#main", :_))
-      assert called(Changelog.PodPing.overcast(:_))
     end
 
     test "when episode was requested" do
