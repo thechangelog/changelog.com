@@ -54,8 +54,13 @@ defmodule ChangelogWeb.FeedController do
 
   def plusplus(conn, %{"slug" => slug}) do
     if Application.get_env(:changelog, :plusplus_slug) == slug do
-      podcast = Podcast.get_by_slug!("master")
-      render_feed_for_podcast(conn, podcast, "plusplus")
+      feed = ChangelogWeb.Feeds.generate("plusplus")
+
+      conn
+      |> put_layout(false)
+      |> put_resp_header("access-control-allow-origin", "*")
+      |> put_resp_content_type("application/xml")
+      |> send_resp(200, feed)
     else
       send_resp(conn, :not_found, "")
     end
@@ -69,27 +74,6 @@ defmodule ChangelogWeb.FeedController do
     else
       send_resp(conn, :not_found, "")
     end
-  end
-
-  defp render_feed_for_podcast(conn, podcast, template) do
-    episodes =
-      podcast
-      |> Podcast.get_news_item_episode_ids!()
-      |> Episode.with_ids()
-      |> Episode.published()
-      |> Episode.newest_first()
-      |> Episode.exclude_transcript()
-      |> Episode.preload_all()
-      |> Repo.all()
-
-    conn
-    |> put_layout(false)
-    |> put_resp_header("access-control-allow-origin", "*")
-    |> put_resp_content_type("application/xml")
-    |> assign(:podcast, podcast)
-    |> assign(:episodes, episodes)
-    |> ResponseCache.cache_public()
-    |> render("#{template}.xml")
   end
 
   defp render_feed_for_metacast(conn, metacast, template \\ "podcast") do

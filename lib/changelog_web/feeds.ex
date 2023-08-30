@@ -26,6 +26,11 @@ defmodule ChangelogWeb.Feeds do
     Fastly.purge(url)
   end
 
+  defp notify_services("plusplus") do
+    url = Routes.feed_url(Endpoint, :plusplus, Application.get_env(:changelog, :plusplus_slug))
+    Fastly.purge(url)
+  end
+
   defp notify_services(slug) do
     url = Routes.feed_url(Endpoint, :podcast, slug)
     Fastly.purge(url)
@@ -45,6 +50,12 @@ defmodule ChangelogWeb.Feeds do
       |> Enum.map(&Post.load_news_item/1)
 
     render("posts.xml", posts: posts)
+  end
+
+  def generate("plusplus") do
+    podcast = Podcast.get_by_slug!("master")
+    episodes = get_episodes(podcast)
+    render("plusplus.xml", podcast: podcast, episodes: episodes)
   end
 
   # Special case for "The Changelog" feed which gets its episodes from
