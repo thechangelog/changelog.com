@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Episode, NewsItem, Podcast, Subscription}
+  alias Changelog.{Episode, NewsItem, Podcast, Subscription}
   alias ChangelogWeb.Plug.ResponseCache
 
   plug RequireGuest, "before joining" when action in [:join]
@@ -16,8 +16,6 @@ defmodule ChangelogWeb.PageController do
       :sponsor -> sponsor(conn, conn.params)
       :sponsor_pricing -> sponsor_pricing(conn, conn.params)
       :sponsor_story -> sponsor_story(conn, Map.get(conn.params, "slug"))
-      :weekly -> weekly(conn, conn.params)
-      :weekly_archive -> weekly_archive(conn, conn.params)
       :++ -> plusplus(conn, conn.params)
       :plusplus -> plusplus(conn, conn.params)
       :manifest_json -> manifest_json(conn, conn.params)
@@ -115,36 +113,7 @@ defmodule ChangelogWeb.PageController do
     render(conn, :sponsor_story, story: story)
   end
 
-  def weekly(conn, _params) do
-    latest = get_weekly_issues() |> List.first()
-
-    conn
-    |> assign(:latest, latest)
-    |> ResponseCache.cache_public(:timer.hours(1))
-    |> render(:weekly)
-  end
-
   def plusplus(conn, _params) do
     redirect(conn, external: Application.get_env(:changelog, :plusplus_url))
-  end
-
-  def weekly_archive(conn, _params) do
-    issues_by_year =
-      get_weekly_issues()
-      |> Enum.group_by(fn c -> String.slice(c["SentDate"], 0..3) end)
-      |> Enum.reverse()
-
-    conn
-    |> assign(:issues, issues_by_year)
-    |> ResponseCache.cache_public(:timer.hours(1))
-    |> render(:weekly_archive)
-  end
-
-  defp get_weekly_issues do
-    Cache.get_or_store("weekly_archive", :timer.hours(24), fn ->
-      Craisin.Client.campaigns("e8870c50d493e5cc72c78ffec0c5b86f")
-      |> Enum.filter(fn c -> String.starts_with?(c["Name"], "Weekly") end)
-      |> Enum.filter(fn c -> String.match?(c["Name"], ~r/Issue \#\d+\z/) end)
-    end)
   end
 end

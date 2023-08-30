@@ -250,10 +250,6 @@ defmodule ChangelogWeb.Router do
     get "/nightly", PageController, :nightly
     get "/nightly/unsubscribed", PageController, :nightly_unsubscribed
 
-    get "/weekly", PageController, :weekly
-    get "/weekly/archive", PageController, :weekly_archive
-    get "/weekly/unsubscribed", PageController, :weekly_unsubscribed
-
     get "/request", EpisodeRequestController, :new, as: :episode_request
     get "/request/:slug", EpisodeRequestController, :new, as: :episode_request
     post "/request", EpisodeRequestController, :create, as: :episode_request

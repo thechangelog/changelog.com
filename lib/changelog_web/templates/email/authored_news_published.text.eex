@@ -3,18 +3,15 @@
 
 Something you created just got featured[1] on Changelog News!
 
-Each week's top performing news is also featured in Changelog Weekly[2].
-
 Here are 3 ways you can help your submission make the grade:
 
 1. Start the discussion by being the first to comment
 2. Share the link on social media and may _The Algorithms_ #bless you
 3. <%= news_item_promotion_advice(@item) %>
 
-Don't want these notifications? Disable 'em[3]
+Don't want these notifications? Disable 'em[2]
 
 [1]: <%= Routes.news_item_url(Endpoint, :show, NewsItem.slug(@item)) %>
-[2]: <%= Routes.page_url(Endpoint, :weekly) %>
-[3]: <%= PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_authored_news") %>
+[2]: <%= PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_authored_news") %>
 
 💚, Logbot

@@ -4,8 +4,6 @@
 
     <p>Your submission got published! ✊</p>
 
-    <p>Each week's top performing news is also featured in <%= link("Changelog Weekly", to: Routes.page_url(Endpoint, :weekly), itemprop: "url") %>. Here are 3 ways you can help your submission make the grade:</p>
-
     <ol>
       <li>🗣 Start the discussion by being <%= link("the first to comment", to: Routes.news_item_url(Endpoint, :show, NewsItemView.hashid(@item)) <> "#discussion", itemprop: "url") %> </li>
       <li>😇 Share <%= link("the link", to: Routes.news_item_url(Endpoint, :show, NewsItemView.hashid(@item)), itemprop: "url") %> on social media and may <em>The Algorithms</em> #bless you</li>

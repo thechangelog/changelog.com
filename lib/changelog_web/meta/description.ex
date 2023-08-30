@@ -46,10 +46,6 @@ defmodule ChangelogWeb.Meta.Description do
     "Join developers from all over the world with a backstage pass to everything we do"
   end
 
-  defp description(%{view_module: PageView, view_template: "weekly.html"}) do
-    "Our editorialized take on this week in dev culture, software development, open source, building startups, creative work, and the people involved"
-  end
-
   defp description(%{view_module: PageView, view_template: "nightly.html"}) do
     "Get the hottest new repos trending on GitHub in your inbox every night. No fluff, just repos!"
   end
