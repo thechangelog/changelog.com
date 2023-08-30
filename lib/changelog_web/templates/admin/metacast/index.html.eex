@@ -5,7 +5,7 @@
   </h1>
 
   <div class="actions">
-    <%= link to: Routes.admin_metacast_path(@conn, :new), class: "ui right floated primary basic button" do %>
+    <%= link to: ~p"/admin/metacasts/new", class: "ui right floated primary basic button" do %>
       <i class="icon unmute"></i>
       Add Metacast
     <% end %>

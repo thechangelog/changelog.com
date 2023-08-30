@@ -1,7 +1,8 @@
 defmodule Changelog.Buffer.Content do
+  use ChangelogWeb, :verified_routes
+
   alias Changelog.{Episode, ListKit, NewsItem}
-  alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView}
-  alias ChangelogWeb.Router.Helpers, as: Routes
+  alias ChangelogWeb.{EpisodeView, NewsItemView}
 
   def episode_link(nil), do: nil
   def episode_link(item), do: item.url
@@ -75,7 +76,7 @@ defmodule Changelog.Buffer.Content do
   def news_item_link(nil), do: nil
 
   def news_item_link(item) do
-    Routes.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
+    url(~p"/news/#{NewsItemView.hashid(item)}")
   end
 
   def news_item_text(nil), do: ""

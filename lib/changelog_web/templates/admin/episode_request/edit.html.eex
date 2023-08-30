@@ -1,17 +1,17 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Podcasts", to: Routes.admin_podcast_path(@conn, :index)) %>
+    <%= link("Podcasts", to: ~p"/admin/podcasts") %>
     <%= render(PodcastView, "_dropdown_list.html", assigns) %>
-    <%= link(@podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    <%= link(@podcast.name, to: ~p"/admin/podcasts/#{@podcast.slug}/episodes") %>
     &raquo;
-    <%= link("Episode Requests", to: Routes.admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
+    <%= link("Episode Requests", to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests") %>
     &raquo;
     <%= @request.id %>
 
-    <%= link("(View)", to: Routes.admin_podcast_episode_request_path(@conn, :show, @podcast.slug, @request), class: "view") %>
+    <%= link("(View)", to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}", class: "view") %>
   </h1>
 </div>
 
 <div class="ui basic segment text container">
-  <%= render("_form.html", Map.merge(assigns,  %{action: Routes.admin_podcast_episode_request_path(@conn, :update, @podcast.slug, @request)})) %>
+  <%= render("_form.html", Map.merge(assigns,  %{action: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}"})) %>
 </div>

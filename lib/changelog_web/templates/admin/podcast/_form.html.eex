@@ -199,7 +199,7 @@
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
-    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_podcast_path(@conn, :index))) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, ~p"/admin/podcasts")) %></div>
   <% else %>
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", "edit") %></div>
     <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>

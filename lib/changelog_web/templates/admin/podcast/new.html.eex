@@ -1,6 +1,6 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link "Podcasts", to: Routes.admin_podcast_path(@conn, :index) %>
+    <%= link "Podcasts", to: ~p"/admin/podcasts" %>
     &raquo; New
   </h1>
 </div>

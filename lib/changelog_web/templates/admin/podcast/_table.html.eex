@@ -18,7 +18,7 @@
   <%= for podcast <- @podcasts do %>
     <tr>
       <td class="center aligned">
-        <%= link to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug) do %>
+        <%= link to: ~p"/admin/podcasts/#{podcast.slug}/episodes" do %>
         <h2 class="ui image header">
           <img src="<%= cover_url(podcast, :small) %>" class="ui image" />
         </h2>
@@ -44,7 +44,7 @@
         <%= if Policies.Admin.Podcast.edit(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_path(@conn, :edit, podcast.slug)) %>
         <% end %>
-          <%= AdminHelpers.icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %>
+          <%= AdminHelpers.icon_link("list", to: ~p"/admin/podcasts/#{podcast.slug}/episodes") %>
         <%= if Policies.Admin.Episode.new(@current_user, podcast) do %>
           <%= AdminHelpers.icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, podcast.slug)) %>
         <% end %>

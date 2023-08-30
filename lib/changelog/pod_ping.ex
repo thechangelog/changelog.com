@@ -1,5 +1,4 @@
 defmodule Changelog.PodPing do
-
   alias Changelog.HTTP
 
   def overcast(url) do

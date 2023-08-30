@@ -1,11 +1,11 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Podcasts", to: Routes.admin_podcast_path(@conn, :index)) %>
+    <%= link("Podcasts", to: ~p"/admin/podcasts") %>
     &raquo;
-    <%= link(@podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    <%= link(@podcast.name, to: ~p"/admin/podcasts/#{@podcast.slug}/episodes") %>
     &raquo;
     Subscriptions
-    <%= link("(View Public)", to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "view") %>
+    <%= link("(View Public)", to: ~p"/#{@podcast.slug}", class: "view") %>
   </h1>
 
   <div class="actions right">

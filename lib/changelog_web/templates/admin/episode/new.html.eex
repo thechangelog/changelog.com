@@ -1,9 +1,9 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link(@podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    <%= link(@podcast.name, to: ~p"/admin/podcasts/#{@podcast.slug}/episodes") %>
     <%= render(PodcastView, "_dropdown_list.html", assigns) %>
     New Episode
   </h1>
 
-  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_podcast_episode_path(@conn, :create, @podcast.slug)})) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: ~p"/admin/podcasts/#{@podcast.slug}/episodes"})) %>
 </div>

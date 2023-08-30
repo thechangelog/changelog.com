@@ -69,7 +69,7 @@ defmodule ChangelogWeb.PersonController do
   end
 
   def join(conn = %{method: "POST"}, _params) do
-    redirect(conn, to: Routes.person_path(conn, :join))
+    redirect(conn, to: ~p"/join")
   end
 
   def show(conn, params = %{"handle" => handle}) do
@@ -172,7 +172,7 @@ defmodule ChangelogWeb.PersonController do
       |> assign(:email, params["email"])
       |> render(:subscribe_podcast)
     else
-      redirect(conn, to: Routes.person_path(conn, :subscribe))
+      redirect(conn, to: ~p"/subscribe")
     end
   end
 
@@ -202,18 +202,18 @@ defmodule ChangelogWeb.PersonController do
           {:error, _changeset} ->
             conn
             |> put_flash(:error, "Something went wrong. 😭")
-            |> redirect(to: Routes.person_path(conn, :subscribe, subscribe_to))
+            |> redirect(to: ~p"/subscribe/#{subscribe_to}")
         end
       end
     else
       conn
       |> put_flash(:error, "CAPTCHA fail. Are you blocking scripts? Are you a robot? 🤖")
-      |> redirect(to: Routes.person_path(conn, :subscribe, subscribe_to))
+      |> redirect(to: ~p"/subscribe/#{subscribe_to}")
     end
   end
 
   def subscribe(conn = %{method: "POST"}, _params) do
-    redirect(conn, to: Routes.person_path(conn, :subscribe))
+    redirect(conn, to: ~p"/subscribe")
   end
 
   defp maybe_sign_up_for_news(person, %{"news_subscribe" => _present}, context) do
@@ -233,7 +233,7 @@ defmodule ChangelogWeb.PersonController do
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
-    |> redirect(to: Routes.root_path(conn, :index))
+    |> redirect(to: ~p"/")
   end
 
   defp subscribe_to_newsletter(person, newsletter) do
@@ -265,6 +265,6 @@ defmodule ChangelogWeb.PersonController do
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")
-    |> redirect(to: Routes.root_path(conn, :index))
+    |> redirect(to: ~p"/")
   end
 end

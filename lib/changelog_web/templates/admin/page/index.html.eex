@@ -20,7 +20,7 @@
         <tbody>
         <%= for {podcast, day, week, month, total} <- @email_lists do %>
           <tr>
-            <td><%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
+            <td><%= link(podcast.name, to: ~p"/admin/podcasts/#{podcast.slug}/episodes") %></td>
           <%= for {up, down} <- [day, week, month] do %>
             <td><i class="caret up icon"></i><%= up %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= down %></td>
           <% end %>

@@ -29,7 +29,7 @@ defmodule ChangelogWeb.EpisodeRequestController do
       {:ok, _request} ->
         conn
         |> put_flash(:success, "We received your episode request! Stay awesome 💚")
-        |> redirect(to: Routes.root_path(conn, :index))
+        |> redirect(to: ~p"/")
 
       {:error, changeset} ->
         conn

@@ -22,7 +22,7 @@
     <% end %>
 
     <%= if Policies.Admin.Podcast.index(@current_user) do %>
-      <%= link(to: Routes.admin_podcast_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, ["podcast", "episode"], "active")}") do %>
+      <%= link(to: ~p"/admin/podcasts", class: "item #{SharedHelpers.active_class(@conn, ["podcast", "episode"], "active")}") do %>
         <i class="unmute icon"></i>Podcasts
       <% end %>
     <% end %>

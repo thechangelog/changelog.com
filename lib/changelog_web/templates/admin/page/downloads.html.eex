@@ -26,7 +26,7 @@
     <% podcast = assigns[:podcast] || episode.podcast %>
     <tr>
     <%= if !assigns[:podcast] do %>
-      <td><%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
+      <td><%= link(podcast.name, to: ~p"/admin/podcasts/#{podcast.slug}/episodes") %></td>
     <% end %>
       <td title="<%= episode.id %>"><%= episode.slug %></td>
       <td>

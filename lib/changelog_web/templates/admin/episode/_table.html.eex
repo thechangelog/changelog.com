@@ -25,9 +25,9 @@
       <th class="center aligned">
       <%= if assigns[:actions] && assigns[:podcast] do %>
         <div class="ui basic buttons">
-          <%= AdminHelpers.icon_link("eye", to: Routes.podcast_path(@conn, :show, @podcast.slug), title: "View Public") %>
-          <%= AdminHelpers.icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
-          <%= AdminHelpers.icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
+          <%= AdminHelpers.icon_link("eye", to: ~p"/#{@podcast.slug}", title: "View Public") %>
+          <%= AdminHelpers.icon_link("list", to: ~p"/admin/podcasts/#{@podcast.slug}/episodes", title: "All Episodes") %>
+          <%= AdminHelpers.icon_link("add", to: ~p"/admin/podcasts/#{@podcast.slug}/episodes/new", title: "Add Episode") %>
         </div>
     <% end %>
     <%= if assigns[:filter] && @status == :published do %>
@@ -44,7 +44,7 @@
     <%= if assigns[:podcast] do %>
       <td title="<%= episode.id %>"><%= episode.slug %></td>
     <% else %>
-      <td><%= link(podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, podcast.slug)) %></td>
+      <td><%= link(podcast.name, to: ~p"/admin/podcasts/#{podcast.slug}/episodes") %></td>
     <% end %>
       <td>
         <%= SharedHelpers.truncate(episode.title, 50) %>
@@ -55,14 +55,14 @@
       <%= if episode.episode_request do %>
         &nbsp;&nbsp;
         <%= link("Requested",
-          to: Routes.admin_podcast_episode_request_path(@conn, :show, podcast.slug, episode.episode_request),
+          to: ~p"/admin/podcasts/#{podcast.slug}/episode_requests/#{episode.episode_request}",
           class: "ui tiny green basic icon label") %>
       <% end %>
       </td>
       <td>
       <% {main_participants, additional_participants} = episode |> Episode.participants() |> Enum.split(5) %>
       <%= for person <- main_participants do %>
-        <%= link to: Routes.admin_person_path(@conn, :show, person), title: person.name, data: [popup: true] do %>
+        <%= link to: ~p"/admin/people/#{person}", title: person.name, data: [popup: true] do %>
           <img class="ui avatar image" src="<%= PersonView.avatar_url(person) %>">&nbsp;
         <% end %>
       <% end %>
@@ -85,17 +85,17 @@
       <td class="right aligned">
         <div class="ui small basic buttons">
         <%= if Episode.is_published(episode) do %>
-          <%= AdminHelpers.icon_link("line chart", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), title: "View Stats") %>
-          <%= AdminHelpers.icon_link("refresh", to: Routes.admin_podcast_episode_path(@conn, :transcript, podcast.slug, episode.slug), method: :post, title: "Refresh Transcript") %>
+          <%= AdminHelpers.icon_link("line chart", to: ~p"/admin/podcasts/#{podcast.slug}/episodes/#{episode.slug}", title: "View Stats") %>
+          <%= AdminHelpers.icon_link("refresh", to: ~p"/admin/podcasts/#{podcast.slug}/episodes/#{episode.slug}/transcript", method: :post, title: "Refresh Transcript") %>
         <% end %>
 
-          <%= AdminHelpers.icon_link("eye", to: Routes.episode_path(@conn, show_or_preview(episode), podcast.slug, episode.slug), title: "View Episode") %>
-          <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_episode_path(@conn, :edit, podcast.slug, episode.slug), title: "Edit Episode") %>
+          <%= AdminHelpers.icon_link("eye", to: show_or_preview_path(podcast, episode), title: "View Episode") %>
+          <%= AdminHelpers.icon_link("edit", to: ~p"/admin/podcasts/#{podcast.slug}/episodes/#{episode.slug}/edit", title: "Edit Episode") %>
 
         <%= if @status == :draft do %>
-          <%= if episode.recorded_live, do: AdminHelpers.icon_link("image", to: Routes.live_path(@conn, :show, Episode.hashid(episode)), title: "View live image for YT") %>
+          <%= if episode.recorded_live, do: AdminHelpers.icon_link("image", to: ~p"/live/#{Episode.hashid(episode)}", title: "View live image for YT") %>
           <%= if episode.doc_url, do: AdminHelpers.icon_link("file alternate", to: episode.doc_url, title: "View Collab Doc", rel: "external") %>
-          <%= AdminHelpers.icon_link("trash", to: Routes.admin_podcast_episode_path(@conn, :show, podcast.slug, episode.slug), title: "Delete Episode", method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= AdminHelpers.icon_link("trash", to: ~p"/admin/podcasts/#{podcast.slug}/episodes/#{episode.slug}", title: "Delete Episode", method: :delete, data: [confirm: "Are you sure?"]) %>
         <% end %>
         </div>
       </td>

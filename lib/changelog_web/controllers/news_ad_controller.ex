@@ -8,7 +8,7 @@ defmodule ChangelogWeb.NewsAdController do
     ad = ad_from_hashid(hashid)
 
     if slug == hashid do
-      redirect(conn, to: Routes.news_sponsored_path(conn, :show, NewsAd.slug(ad)))
+      redirect(conn, to: ~p"/sponsored/#{NewsAd.slug(ad)}")
     else
       render(conn, :show, ad: ad, sponsor: ad.sponsorship.sponsor)
     end

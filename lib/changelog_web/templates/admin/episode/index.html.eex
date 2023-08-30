@@ -1,21 +1,21 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Podcasts", to: Routes.admin_podcast_path(@conn, :index)) %>
+    <%= link("Podcasts", to: ~p"/admin/podcasts") %>
     <%= render(PodcastView, "_dropdown_list.html", assigns) %>
     <%= @podcast.name %>
   </h1>
 
   <div class="actions right">
     <div class="ui basic buttons">
-      <%= AdminHelpers.icon_link("eye", to: Routes.podcast_path(@conn, :show, @podcast.slug), title: "View Public", rel: "external") %>
-      <%= AdminHelpers.icon_link("edit", to: Routes.admin_podcast_path(@conn, :edit, @podcast.slug), title: "Edit") %>
+      <%= AdminHelpers.icon_link("eye", to: ~p"/#{@podcast.slug}", title: "View Public", rel: "external") %>
+      <%= AdminHelpers.icon_link("edit", to: ~p"/admin/podcasts/#{@podcast.slug}/edit", title: "Edit") %>
     </div>
 
     <span class="ui calendar" data-scheduled="<%= Jason.encode!(Enum.map(@drafts, &(&1.recorded_at))) %>" >
       <button class="ui basic icon button" title="View Schedule"><i class="calendar icon"></i></button>
     </span>
 
-    <%= link to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug), class: "ui right floated primary basic button" do %>
+    <%= link to: ~p"/admin/podcasts/#{@podcast.slug}/episodes/new", class: "ui right floated primary basic button" do %>
       <i class="icon unmute"></i>
       Add Episode
     <% end %>
@@ -38,7 +38,7 @@
 
 <%= if Enum.any?(@episode_requests) do %>
 <div class="ui basic segment">
-  <h2 class="ui header"><%= link("Requests", to: Routes.admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
+  <h2 class="ui header"><%= link("Requests", to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests") %>
   &raquo;
   Fresh (<%= length(@episode_requests) %>)
   </h2>

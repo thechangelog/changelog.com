@@ -6,7 +6,7 @@
 
   <div class="ui ordered large list">
   <%= for preview <- @previews do %>
-    <div class="item"><%= link(preview, to: Routes.admin_mailer_preview_path(@conn, :show, preview)) %></div>
+    <div class="item"><%= link(preview, to: ~p"/admin/mailers/#{preview}") %></div>
   <% end %>
   </div>
 </div>

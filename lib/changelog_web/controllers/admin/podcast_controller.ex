@@ -54,7 +54,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_podcast_path(conn, :edit, podcast.slug))
+        |> redirect_next(params, ~p"/admin/podcasts/#{podcast.slug}/edit")
 
       {:error, changeset} ->
         conn
@@ -64,7 +64,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
   end
 
   def show(conn = %{assigns: %{podcast: podcast}}, _params) do
-    redirect(conn, to: Routes.admin_podcast_episode_path(conn, :index, podcast.slug))
+    redirect(conn, to: ~p"/admin/podcasts/#{podcast.slug}/episodes")
   end
 
   def edit(conn = %{assigns: %{podcast: podcast}}, _params) do
@@ -92,11 +92,11 @@ defmodule ChangelogWeb.Admin.PodcastController do
         Cache.delete(podcast)
 
         params =
-          replace_next_edit_path(params, Routes.admin_podcast_path(conn, :edit, podcast.slug))
+          replace_next_edit_path(params, ~p"/admin/podcasts/#{podcast.slug}/edit")
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_podcast_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/podcasts")
 
       {:error, changeset} ->
         render(conn, :edit, podcast: podcast, changeset: changeset)

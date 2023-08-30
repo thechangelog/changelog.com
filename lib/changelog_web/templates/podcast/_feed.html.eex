@@ -5,7 +5,7 @@
 <nav class="subnav">
   <ul class="subnav-list">
     <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "show") %>">
-      <%= link("Recent", to: Routes.podcast_path(@conn, :show, @podcast.slug) <> "#feed", title: "Recent episodes of #{@podcast.name}", alt: "Recent Episodes") %>
+      <%= link("Recent", to: ~p"/#{@podcast.slug}" <> "#feed", title: "Recent episodes of #{@podcast.name}", alt: "Recent Episodes") %>
     </li>
     <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, "recommended") %>">
       <%= link("Recommended", to: Routes.podcast_path(@conn, :recommended, @podcast.slug) <> "#feed", title: "Recommended episodes of #{@podcast.name}", alt: "Recommended Episodes") %>

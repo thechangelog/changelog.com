@@ -31,7 +31,7 @@ defmodule ChangelogWeb.Admin.MetacastController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_metacast_path(conn, :edit, metacast))
+        |> redirect_next(params, ~p"/admin/metacasts/#{metacast}/edit")
 
       {:error, changeset} ->
         conn
@@ -52,11 +52,11 @@ defmodule ChangelogWeb.Admin.MetacastController do
       {:ok, metacast} ->
         Fastly.purge(metacast)
         Cache.delete(metacast)
-        params = replace_next_edit_path(params, Routes.admin_metacast_path(conn, :edit, metacast))
+        params = replace_next_edit_path(params, ~p"/admin/metacasts/#{metacast}/edit")
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_metacast_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/metacasts")
 
       {:error, changeset} ->
         render(conn, :edit, metacast: metacast, changeset: changeset)
@@ -68,7 +68,7 @@ defmodule ChangelogWeb.Admin.MetacastController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_metacast_path(conn, :index))
+    |> redirect(to: ~p"/admin/metacasts")
   end
 
   defp assign_metacast(conn = %{params: %{"id" => id}}, _) do

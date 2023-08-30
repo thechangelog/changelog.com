@@ -25,11 +25,11 @@ defmodule ChangelogWeb.Admin.PageController do
   end
 
   def index(conn = %{assigns: %{current_user: %{host: true}}}, _params) do
-    redirect(conn, to: Routes.admin_podcast_path(conn, :index))
+    redirect(conn, to: ~p"/admin/podcasts")
   end
 
   def index(conn = %{assigns: %{current_user: %{editor: true}}}, _params) do
-    redirect(conn, to: Routes.admin_news_item_path(conn, :index))
+    redirect(conn, to: ~p"/admin/news")
   end
 
   def fresh_requests(conn, _params) do
@@ -43,7 +43,7 @@ defmodule ChangelogWeb.Admin.PageController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_page_path(conn, :index))
+    |> redirect(to: ~p"/admin")
   end
 
   def downloads(conn, params) do

@@ -74,7 +74,7 @@ defmodule ChangelogWeb.PageController do
     |> json(%{
       name: "Changelog",
       short_name: "Changelog",
-      start_url: Routes.root_url(conn, :index),
+      start_url: url(~p"/"),
       display: "standalone",
       description: "News and podcasts for developers",
       icons: [

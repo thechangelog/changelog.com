@@ -1,10 +1,10 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link "Benefits", to: Routes.admin_benefit_path(@conn, :index) %>
+    <%= link "Benefits", to: ~p"/admin/benefits" %>
     &raquo; Edit
   </h1>
 </div>
 
 <div class="ui basic segment text container">
-  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_benefit_path(@conn, :update, @benefit)})) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: ~p"/admin/benefits/#{@benefit}"})) %>
 </div>

@@ -1,27 +1,27 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Podcasts", to: Routes.admin_podcast_path(@conn, :index)) %>
+    <%= link("Podcasts", to: ~p"/admin/podcasts") %>
     <%= render(PodcastView, "_dropdown_list.html", assigns) %>
-    <%= link @episode.podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @episode.podcast.slug) %>
+    <%= link @episode.podcast.name, to: ~p"/admin/podcasts/#{@episode.podcast.slug}/episodes" %>
     &raquo;
-    <%= link @episode.slug, to: Routes.admin_podcast_episode_path(@conn, :edit, @podcast.slug, @episode.slug) %>
+    <%= link @episode.slug, to: ~p"/admin/podcasts/#{@podcast.slug}/episodes/#{@episode.slug}/edit" %>
 
     <div class="ui basic right floated buttons">
     <%= if @episode.published do %>
       <input type="hidden" value="<%= Changelog.Buffer.Content.episode_text(@item) %>">
       <button class="ui icon button clipboard" title="Copy Share Text"><i class="share icon"></i></button>
       <%= link("View Public",
-        to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
+        to: ~p"/#{@podcast.slug}/#{@episode.slug}",
         rel: "external",
         class: "ui button") %>
     <% else %>
       <%= link("Preview",
-        to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
+        to: ~p"/#{@podcast.slug}/#{@episode.slug}/preview",
         rel: "external",
         class: "ui button") %>
     <% end %>
     <%= if @item do %>
-      <%= link("News Item", to: Routes.admin_news_item_path(@conn, :edit, @item), class: "ui button") %>
+      <%= link("News Item", to: ~p"/admin/news/items/#{@item}/edit", class: "ui button") %>
     <% end %>
     </div>
 

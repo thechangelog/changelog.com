@@ -6,9 +6,9 @@
       <th>Downloads</th>
       <th class="center aligned">
         <div class="ui basic buttons">
-          <%= AdminHelpers.icon_link("eye", to: Routes.podcast_path(@conn, :show, @podcast.slug), title: "View Public") %>
-          <%= AdminHelpers.icon_link("list", to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug), title: "All Episodes") %>
-          <%= AdminHelpers.icon_link("add", to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug), title: "Add Episode") %>
+          <%= AdminHelpers.icon_link("eye", to: ~p"/#{@podcast.slug}", title: "View Public") %>
+          <%= AdminHelpers.icon_link("list", to: ~p"/admin/podcasts/#{@podcast.slug}/episodes", title: "All Episodes") %>
+          <%= AdminHelpers.icon_link("add", to: ~p"/admin/podcasts/#{@podcast.slug}/episodes/new", title: "Add Episode") %>
         </div>
       </th>
     </tr>

@@ -133,11 +133,11 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     end
   end
 
-  def show_or_preview(episode) do
+  def show_or_preview_path(podcast, episode) do
     if Episode.is_public(episode) do
-      :show
+      ~p"/#{podcast.slug}/#{episode.slug}"
     else
-      :preview
+      ~p"/#{podcast.slug}/#{episode.slug}/preview"
     end
   end
 

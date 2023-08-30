@@ -118,7 +118,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_person_path(conn, :edit, person))
+        |> redirect_next(params, ~p"/admin/people/#{person}/edit")
 
       {:error, changeset} ->
         conn
@@ -142,7 +142,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_person_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/people")
 
       {:error, changeset} ->
         conn
@@ -159,7 +159,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect_next(params, Routes.admin_person_path(conn, :index))
+    |> redirect_next(params, ~p"/admin/people")
   end
 
   def comments(conn = %{assigns: %{person: person}}, params) do
@@ -208,7 +208,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     conn
     |> put_flash(:result, flash)
-    |> redirect_next(params, Routes.admin_person_path(conn, :index))
+    |> redirect_next(params, ~p"/admin/people")
   end
 
   def masq(conn = %{assigns: %{person: person}}, _params) do
@@ -216,7 +216,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> put_session("id", person.id)
     |> configure_session(renew: true)
     |> put_flash(:success, "Now using the site as #{person.name}")
-    |> redirect(to: Routes.root_path(conn, :index))
+    |> redirect(to: ~p"/")
   end
 
   defp assign_person(conn = %{params: %{"id" => id}}, _) do

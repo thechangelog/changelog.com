@@ -25,7 +25,7 @@ defmodule ChangelogWeb.NewsItemController do
         {:ok, _item} ->
           conn
           |> put_flash(:success, "We received your submission! Stay awesome 💚")
-          |> redirect(to: Routes.root_path(conn, :index))
+          |> redirect(to: ~p"/")
 
         {:error, changeset} ->
           conn
@@ -72,7 +72,7 @@ defmodule ChangelogWeb.NewsItemController do
         redirect(conn, to: NewsItemView.object_path(item))
 
       slug == hashid ->
-        redirect(conn, to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
+        redirect(conn, to: ~p"/news/#{NewsItem.slug(item)}")
 
       true ->
         item =
@@ -171,7 +171,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     conn
     |> put_flash(:success, "We'll email you when folks comment 📥")
-    |> redirect(to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
+    |> redirect(to: ~p"/news/#{NewsItem.slug(item)}")
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
@@ -180,7 +180,7 @@ defmodule ChangelogWeb.NewsItemController do
 
     conn
     |> put_flash(:success, "No more email notifications from now on 🤐")
-    |> redirect(to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
+    |> redirect(to: ~p"/news/#{NewsItem.slug(item)}")
   end
 
   defp item_from_hashid(hashid, query \\ NewsItem) do

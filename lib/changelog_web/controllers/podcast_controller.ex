@@ -47,7 +47,7 @@ defmodule ChangelogWeb.PodcastController do
     rescue
       _e in Ecto.NoResultsError ->
         post = Post.published() |> Repo.get_by!(slug: slug)
-        redirect(conn, to: Routes.post_path(conn, :show, post.slug))
+        redirect(conn, to: ~p"/posts/#{post.slug}")
     end
   end
 

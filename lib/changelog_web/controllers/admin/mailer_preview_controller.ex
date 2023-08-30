@@ -46,7 +46,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
 
     conn
     |> put_flash(:result, :success)
-    |> redirect(to: Routes.admin_mailer_preview_path(conn, :index))
+    |> redirect(to: ~p"/admin/mailers")
   end
 
   # Welcome emails

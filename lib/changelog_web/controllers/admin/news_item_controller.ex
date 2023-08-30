@@ -113,7 +113,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect(to: determine_redirect(conn, item, params))
+        |> redirect(to: determine_redirect(item, params))
 
       {:error, changeset} ->
         conn
@@ -144,7 +144,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, determine_redirect(conn, item, params))
+        |> redirect_next(params, determine_redirect(item, params))
 
       {:error, changeset} ->
         conn
@@ -160,7 +160,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_news_item_path(conn, :index))
+    |> redirect(to: ~p"/admin/news")
   end
 
   def delete(conn = %{assigns: %{item: item}}, _params) do
@@ -169,7 +169,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_news_item_path(conn, :index))
+    |> redirect(to: ~p"/admin/news")
   end
 
   def unpublish(conn = %{assigns: %{item: item}}, _params) do
@@ -178,7 +178,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_news_item_path(conn, :index))
+    |> redirect(to: ~p"/admin/news")
   end
 
   def move(conn = %{assigns: %{item: item}}, %{"position" => position}) do
@@ -201,10 +201,10 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   defp detect_object_id(item_params), do: item_params
 
-  defp determine_redirect(conn, item, params) do
+  defp determine_redirect(item, params) do
     case Map.get(params, "queue", "draft") do
-      "draft" -> Routes.admin_news_item_path(conn, :edit, item)
-      _else -> Routes.admin_news_item_path(conn, :index)
+      "draft" -> ~p"/admin/news/items/#{item}/edit"
+      _else -> ~p"/admin/news"
     end
   end
 

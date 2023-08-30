@@ -51,7 +51,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_post_path(conn, :edit, post))
+        |> redirect_next(params, ~p"/admin/posts/#{post}/edit")
 
       {:error, changeset} ->
         conn
@@ -78,7 +78,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_post_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/posts")
 
       {:error, changeset} ->
         conn
@@ -95,7 +95,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_post_path(conn, :index))
+    |> redirect(to: ~p"/admin/posts")
   end
 
   def publish(conn = %{assigns: %{post: post}}, params) do
@@ -107,7 +107,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_post_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/posts")
 
       {:error, changeset} ->
         conn
@@ -126,7 +126,7 @@ defmodule ChangelogWeb.Admin.PostController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_post_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/posts")
 
       {:error, changeset} ->
         conn

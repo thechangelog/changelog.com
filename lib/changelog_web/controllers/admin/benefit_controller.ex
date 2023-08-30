@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Admin.BenefitController do
       {:ok, benefit} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_benefit_path(conn, :edit, benefit))
+        |> redirect_next(params, ~p"/admin/benefits/#{benefit}/edit")
 
       {:error, changeset} ->
         conn
@@ -52,7 +52,7 @@ defmodule ChangelogWeb.Admin.BenefitController do
       {:ok, _benefit} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_benefit_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/benefits")
 
       {:error, changeset} ->
         conn
@@ -66,7 +66,7 @@ defmodule ChangelogWeb.Admin.BenefitController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_benefit_path(conn, :index))
+    |> redirect(to: ~p"/admin/benefits")
   end
 
   defp assign_benefit(conn = %{params: %{"id" => id}}, _) do

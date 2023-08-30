@@ -1,20 +1,20 @@
 <div class="ui basic segment text container">
   <h1 class="ui dividing header">
-    <%= link @podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug) %>
+    <%= link @podcast.name, to: ~p"/admin/podcasts/#{@podcast.slug}/episodes" %>
     <%= render(PodcastView, "_dropdown_list.html", assigns) %>
     Edit
   <%= if @episode.published do %>
     <%= link("(View)",
-      to: Routes.episode_path(@conn, :show, @podcast.slug, @episode.slug),
+      to: ~p"/#{@podcast.slug}/#{@episode.slug}",
       rel: "external",
       class: "view") %>
   <% else %>
     <%= link("(Preview)",
-      to: Routes.episode_path(@conn, :preview, @podcast.slug, @episode.slug),
+      to: ~p"/#{@podcast.slug}/#{@episode.slug}/preview",
       rel: "external",
       class: "view") %>
   <% end %>
   </h1>
 
-  <%= render("_form.html", Map.merge(assigns, %{action: Routes.admin_podcast_episode_path(@conn, :update, @podcast.slug, @episode.slug)})) %>
+  <%= render("_form.html", Map.merge(assigns, %{action: ~p"/admin/podcasts/#{@podcast.slug}/episodes/#{@episode.slug}"})) %>
 </div>

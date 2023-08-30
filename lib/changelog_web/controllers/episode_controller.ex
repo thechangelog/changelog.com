@@ -114,9 +114,9 @@ defmodule ChangelogWeb.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     if item = Episode.get_news_item(episode) do
-      redirect(conn, to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
+      redirect(conn, to: ~p"/news/#{NewsItem.slug(item)}")
     else
-      redirect(conn, to: Routes.episode_path(conn, :show, podcast.slug, episode.slug))
+      redirect(conn, to: ~p"/#{podcast.slug}/#{episode.slug}")
     end
   end
 
@@ -197,7 +197,7 @@ defmodule ChangelogWeb.EpisodeController do
 
     conn
     |> put_flash(:success, "We'll email you when the transcript is published 📥")
-    |> redirect(to: Routes.episode_path(conn, :show, podcast.slug, episode.slug))
+    |> redirect(to: ~p"/#{podcast.slug}/#{episode.slug}")
   end
 
   def unsubscribe(conn = %{method: "POST", assigns: %{current_user: me}}, %{"slug" => slug}, podcast) do
@@ -211,7 +211,7 @@ defmodule ChangelogWeb.EpisodeController do
 
     conn
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
-    |> redirect(to: Routes.episode_path(conn, :show, podcast.slug, episode.slug))
+    |> redirect(to: ~p"/#{podcast.slug}/#{episode.slug}")
   end
 
   defp assign_podcast(conn, _) do

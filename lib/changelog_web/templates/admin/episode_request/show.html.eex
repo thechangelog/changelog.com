@@ -1,15 +1,15 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("Podcasts", to: Routes.admin_podcast_path(@conn, :index)) %>
+    <%= link("Podcasts", to: ~p"/admin/podcasts") %>
     <%= render(PodcastView, "_dropdown_list.html", assigns) %>
-    <%= link(@podcast.name, to: Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug)) %>
+    <%= link(@podcast.name, to: ~p"/admin/podcasts/#{@podcast.slug}/episodes") %>
     &raquo;
-    <%= link("Episode Requests", to: Routes.admin_podcast_episode_request_path(@conn, :index, @podcast.slug)) %>
+    <%= link("Episode Requests", to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests") %>
     &raquo;
     <%= @request.id %> <%= status_label(@request) %>
 
   <%= if Policies.Admin.EpisodeRequest.edit(@current_user, @podcast) do %>
-    <%= link("(Edit)", to: Routes.admin_podcast_episode_request_path(@conn, :edit, @podcast.slug, @request), class: "view") %>
+    <%= link("(Edit)", to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}/edit", class: "view") %>
   <% end %>
   </h1>
 </div>
@@ -19,22 +19,22 @@
   <%= if @request.episode do %>
     <h4 class="ui block header">Resulting Episode</h4>
 
-    <p><%= link(EpisodeView.numbered_title(@request.episode), to: Routes.admin_podcast_episode_path(@conn, :edit, @podcast.slug, @request.episode.slug)) %></p>
+    <p><%= link(EpisodeView.numbered_title(@request.episode), to: ~p"/admin/podcasts/#{@podcast.slug}/episodes/#{@request.episode.slug}/edit") %></p>
   <% end %>
 
   <div class="actions right">
     <div class="ui basic buttons">
     <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.Episode.create(@current_user, @podcast) do %>
-      <%= AdminHelpers.icon_link("plus", to: Routes.admin_podcast_episode_path(@conn, :new, @podcast.slug, request_id: @request.id), title: "Start Episode") %>
+      <%= AdminHelpers.icon_link("plus", to: ~p"/admin/podcasts/#{@podcast.slug}/episodes/new?request_id=#{@request.id}", title: "Start Episode") %>
     <% end %>
 
     <%= if Changelog.EpisodeRequest.is_pendable(@request) && Policies.Admin.EpisodeRequest.pend(@current_user, @podcast) do %>
-      <%= AdminHelpers.icon_link("hourglass half", to: Routes.admin_podcast_episode_request_path(@conn, :pend, @podcast.slug, @request), method: :put, title: "Set to Pending") %>
+      <%= AdminHelpers.icon_link("hourglass half", to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}/pend", method: :put, title: "Set to Pending") %>
     <% end %>
 
     <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.decline(@current_user, @podcast) do %>
       <%= AdminHelpers.icon_link("thumbs down",
-          to: Routes.admin_podcast_episode_request_path(@conn, :decline, @podcast.slug, @request),
+          to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}/decline",
           title: "Decline Silently",
           method: :put,
           data: [confirm: "Decline this request?"]) %>
@@ -51,7 +51,7 @@
 
     <%= if Changelog.EpisodeRequest.is_undecided(@request) && Policies.Admin.EpisodeRequest.fail(@current_user, @podcast) do %>
       <%= AdminHelpers.icon_link("frown",
-          to: Routes.admin_podcast_episode_request_path(@conn, :fail, @podcast.slug, @request, next: SharedHelpers.current_path(@conn)),
+          to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}/fail?next=#{SharedHelpers.current_path(@conn)}",
           title: "Fail Silently",
           method: :put, data: [confirm: "Set to failed?"]) %>
 
@@ -67,7 +67,7 @@
 
     <%= if !Changelog.EpisodeRequest.is_complete(@request) && Policies.Admin.EpisodeRequest.delete(@current_user, @podcast) do %>
       <%= AdminHelpers.icon_link("trash",
-        to: Routes.admin_podcast_episode_request_path(@conn, :delete, @podcast.slug, @request),
+        to: ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}",
         method: :delete, title: "Delete", data: [confirm: "Delete this request?"]) %>
     <% end %>
     </div>
@@ -89,7 +89,7 @@
 
   <p>
   <%= if Policies.Admin.Person.show(@current_user, @request.submitter) do %>
-    <%= link(@request.submitter.name, to: Routes.admin_person_path(@conn, :show, @request.submitter)) %>
+    <%= link(@request.submitter.name, to: ~p"/admin/people/#{@request.submitter}") %>
   <% else %>
     <%= @request.submitter.name %>
   <% end %>

@@ -1,8 +1,9 @@
 defmodule Changelog.Social do
+  use ChangelogWeb, :verified_routes
+
   alias Changelog.Social.Client
   alias Changelog.NewsItem
-  alias ChangelogWeb.{Endpoint, NewsItemView}
-  alias ChangelogWeb.Router.Helpers, as: Routes
+  alias ChangelogWeb.NewsItemView
 
   # feed-only news items don't get posted
   def post(%NewsItem{feed_only: true}), do: false
@@ -38,6 +39,6 @@ defmodule Changelog.Social do
   defp link_emoj, do: ~w(✨ 💫 🔗 👉) |> Enum.random()
 
   defp link_url(item) do
-    Routes.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
+    ~p"/news/#{NewsItemView.hashid(item)}"
   end
 end

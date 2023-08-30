@@ -15,7 +15,7 @@
     <%= for issue <- @issues do %>
       <tr>
         <td>
-          <%= link issue.slug, to: Routes.admin_news_issue_path(@conn, :edit, issue) %>
+          <%= link issue.slug, to: ~p"/admin/news/issues/#{issue}/edit" %>
         </td>
         <td><%= item_count(issue) %></td>
         <td><%= ad_count(issue) %></td>
@@ -25,7 +25,7 @@
         <td class="center aligned">
           <div class="ui small basic buttons">
             <%= AdminHelpers.icon_link("eye", to: Routes.news_issue_path(@conn, show_or_preview(issue), issue.slug)) %>
-            <%= AdminHelpers.icon_link("edit", to: Routes.admin_news_issue_path(@conn, :edit, issue)) %>
+            <%= AdminHelpers.icon_link("edit", to: ~p"/admin/news/issues/#{issue}/edit") %>
             <%= AdminHelpers.icon_link("trash", to: Routes.admin_news_issue_path(@conn, :delete, issue), method: :delete, data: [confirm: "Are you sure?"]) %>
           </div>
         </td>

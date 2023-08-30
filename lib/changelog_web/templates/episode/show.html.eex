@@ -247,7 +247,7 @@
       </section>
 
       <div class="episode-body-pagination">
-        <%= link("View all episodes", to: Routes.podcast_path(@conn, :show, @podcast.slug), class: "button") %>
+        <%= link("View all episodes", to: ~p"/#{@podcast.slug}", class: "button") %>
       </div>
     </div>
   </div>

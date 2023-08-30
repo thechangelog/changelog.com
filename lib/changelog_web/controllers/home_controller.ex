@@ -36,7 +36,7 @@ defmodule ChangelogWeb.HomeController do
 
         conn
         |> put_flash(:success, "Your #{from} has been updated! ✨")
-        |> redirect(to: Routes.home_path(conn, :show))
+        |> redirect(to: ~p"/~")
 
       {:error, changeset} ->
         conn
@@ -56,7 +56,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're subscribed! You'll get the next issue in your inbox 📥")
-    |> redirect(to: Routes.home_path(conn, :show, subscribed: id))
+    |> redirect(to: ~p"/~?#{[subscribed: id]}")
   end
 
   def subscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
@@ -76,7 +76,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
-    |> redirect(to: Routes.home_path(conn, :show, unsubscribed: id))
+    |> redirect(to: ~p"/~?#{[unsubscribed: id]}")
   end
 
   def unsubscribe(conn = %{assigns: %{current_user: me}}, %{"slug" => slug}) do
@@ -101,7 +101,7 @@ defmodule ChangelogWeb.HomeController do
     conn
     |> assign(:current_user, updated_user)
     |> put_flash(:success, flash)
-    |> redirect(to: Routes.home_path(conn, :show))
+    |> redirect(to: ~p"/~")
   end
 
   def opt_out(conn = %{method: "GET"}, %{"token" => token, "type" => type, "id" => id}) do
@@ -128,7 +128,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You've muted this discussion. 🤐")
-    |> redirect(to: Routes.news_item_path(conn, :show, NewsItem.slug(item)))
+    |> redirect(to: ~p"/news/#{NewsItem.slug(item)}")
   end
 
   defp opt_out_podcast(conn, person, slug) do
@@ -137,7 +137,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're unsubscribed! Resubscribe any time 🤗")
-    |> redirect(to: Routes.podcast_path(conn, :show, podcast.slug))
+    |> redirect(to: ~p"/#{podcast.slug}")
   end
 
   defp opt_out_setting(conn, person, setting) do

@@ -38,7 +38,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
 
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_news_item_comment_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/news/comments")
 
       {:error, changeset} ->
         conn
@@ -52,7 +52,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_news_item_comment_path(conn, :index))
+    |> redirect(to: ~p"/admin/news/comments")
   end
 
   defp assign_comment(conn = %{params: %{"id" => id}}, _) do

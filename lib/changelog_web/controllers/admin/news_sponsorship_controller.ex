@@ -55,7 +55,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
       {:ok, sponsorship} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_news_sponsorship_path(conn, :edit, sponsorship))
+        |> redirect_next(params, ~p"/admin/news/sponsorships/#{sponsorship}/edit")
 
       {:error, changeset} ->
         conn
@@ -79,7 +79,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
       {:ok, _sponsorship} ->
         conn
         |> put_flash(:result, "success")
-        |> redirect_next(params, Routes.admin_news_sponsorship_path(conn, :index))
+        |> redirect_next(params, ~p"/admin/news/sponsorships")
 
       {:error, changeset} ->
         conn
@@ -93,7 +93,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_news_sponsorship_path(conn, :index))
+    |> redirect(to: ~p"/admin/news/sponsorships")
   end
 
   defp assign_sponsorship(conn = %{params: %{"id" => id}}, _) do

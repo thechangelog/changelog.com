@@ -147,7 +147,7 @@
           <%= if i.data.starts_at do %>
             <div
               class="ui tiny icon clipboard button"
-              data-clipboard-text="<%= Routes.episode_url(@conn, :show, @podcast.slug, @episode.slug) %>#t=<%= round(i.data.starts_at) %>"
+              data-clipboard-text="<%= url(~p"/#{@podcast.slug}/#{@episode.slug}") %>#t=<%= round(i.data.starts_at) %>"
               title="Copy URL with timestamp">
               <i class="clipboard icon"></i>
             </div>
@@ -161,7 +161,7 @@
 
           <h4 class="ui sponsor header">
             #<span class="js-position-display"><%= i.data.position || i.params["position"] %></span> &mdash;
-            <%= link(sponsor.name, to: Routes.admin_sponsor_path(@conn, :show, sponsor), rel: "external") %>
+            <%= link(sponsor.name, to: ~p"/admin/sponsors/#{sponsor}", rel: "external") %>
           </h4>
 
           <div class="fields">
@@ -534,9 +534,9 @@
     <label for="email_content">
       Email content
     <%= if f.data.published do %>
-      <a href="<%= Routes.episode_path(@conn, :email, @podcast.slug, @episode.slug) %>" class="field-action" rel="external">(view)</a>
+      <a href="<%= ~p"/#{@podcast.slug}/#{@episode.slug}/email" %>" class="field-action" rel="external">(view)</a>
     <% else %>
-      <a href="<%= Routes.admin_mailer_preview_path(@conn, :show, :news_published) %>" class="field-action" rel="external">(preview)</a>
+      <a href="<%= ~p"/admin/mailers/news_published" %>" class="field-action" rel="external">(preview)</a>
     <% end %>
     </label>
     <%= textarea(f, :email_content, placeholder: "Markdown enabled.", rows: 5) %>
@@ -549,7 +549,7 @@
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
-    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, Routes.admin_podcast_episode_path(@conn, :index, @podcast.slug))) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, ~p"/admin/podcasts/#{@podcast.slug}/episodes")) %></div>
   <% else %>
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", "edit") %></div>
     <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>

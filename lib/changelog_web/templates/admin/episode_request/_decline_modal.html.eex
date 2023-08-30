@@ -4,7 +4,7 @@
     Decline with message: <em><%= @request.guests %></em>
   </div>
   <div class="content">
-    <%= form_tag Routes.admin_podcast_episode_request_path(@conn, :decline, @podcast.slug, @request), id: @form_id, method: "PUT", class: "ui small form" do %>
+    <%= form_tag ~p"/admin/podcasts/#{@podcast.slug}/episode_requests/#{@request}/decline", id: @form_id, method: "PUT", class: "ui small form" do %>
       <div class="field">
         <div class="ui">
           <textarea name="message" placeholder="Reason for declining, sent by email to submitter"></textarea>
