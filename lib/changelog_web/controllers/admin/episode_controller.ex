@@ -11,7 +11,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     EpisodeHost,
     EpisodeRequest,
     EpisodeStat,
-    Fastly,
     Github,
     ListKit,
     NewsItem,
@@ -387,7 +386,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   defp handle_feed_updates(episode) do
     if Episode.is_published(episode) do
       FeedUpdater.queue(episode)
-      Fastly.purge(episode)
     end
   end
 
