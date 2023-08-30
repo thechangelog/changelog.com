@@ -25,7 +25,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
-    |> ResponseCache.cache_public(cache_duration())
+    |> ResponseCache.cache_public(:timer.minutes(2))
     |> render("news.xml")
   end
 
@@ -34,7 +34,7 @@ defmodule ChangelogWeb.FeedController do
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
     |> assign(:items, NewsItem.latest_news_items())
-    |> ResponseCache.cache_public(cache_duration())
+    |> ResponseCache.cache_public(:timer.minutes(2))
     |> render("news_titles.xml")
   end
 
@@ -44,11 +44,11 @@ defmodule ChangelogWeb.FeedController do
 
   def podcast(conn, %{"slug" => slug}) do
     feed = ChangelogWeb.Feeds.generate(slug)
+
     conn
     |> put_layout(false)
     |> put_resp_header("access-control-allow-origin", "*")
     |> put_resp_content_type("application/xml")
-    |> ResponseCache.cache_public()
     |> send_resp(200, feed)
   end
 
@@ -131,19 +131,13 @@ defmodule ChangelogWeb.FeedController do
   end
 
   def posts(conn, _params) do
-    posts =
-      Post.published()
-      |> Post.newest_first()
-      |> Post.limit(100)
-      |> Post.preload_author()
-      |> Repo.all()
-      |> Enum.map(&Post.load_news_item/1)
+    feed = ChangelogWeb.Feeds.generate("posts")
 
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> ResponseCache.cache_public(cache_duration())
-    |> render("posts.xml", posts: posts)
+    |> ResponseCache.cache_public(:timer.minutes(1))
+    |> send_resp(200, feed)
   end
 
   def sitemap(conn, _params) do
@@ -191,9 +185,7 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:podcasts, podcasts)
     |> assign(:posts, posts)
     |> assign(:topics, topics)
-    |> ResponseCache.cache_public(cache_duration())
+    |> ResponseCache.cache_public(:timer.minutes(5))
     |> render("sitemap.xml")
   end
-
-  defp cache_duration, do: :timer.minutes(2)
 end

@@ -5,7 +5,7 @@ defmodule Changelog.ObanWorkers.FeedUpdater do
   """
   use Oban.Worker, queue: :feeds
 
-  alias Changelog.{Episode, NewsItem, Podcast}
+  alias Changelog.{Episode, NewsItem, Podcast, Post}
 
   @impl Oban.Worker
   def perform(%Job{args: %{"slug" => slug}}) do
@@ -42,6 +42,10 @@ defmodule Changelog.ObanWorkers.FeedUpdater do
 
   def queue(%Podcast{slug: slug}) do
     queue_slugs(~w(#{slug} master))
+  end
+
+  def queue(%Post{}) do
+    queue_slugs(~w(posts))
   end
 
   def queue(_), do: nil

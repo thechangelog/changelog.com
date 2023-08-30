@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Feeds do
   import Ecto.Query, only: [from: 2]
 
-  alias Changelog.{Episode, Fastly, NewsItem, Podcast, PodPing, Repo}
+  alias Changelog.{Episode, Fastly, NewsItem, Podcast, PodPing, Post, Repo}
   alias ChangelogWeb.{Endpoint, FeedView}
   alias ChangelogWeb.Router.Helpers, as: Routes
 
@@ -9,7 +9,6 @@ defmodule ChangelogWeb.Feeds do
   Generates a fresh feed XML and uploads it to R2
   """
   def refresh(slug) do
-    url = Routes.feed_url(Endpoint, :podcast, slug)
     content = generate(slug)
     bucket = SecretOrEnv.get("R2_FEEDS_BUCKET", "changelog-feeds-dev")
     headers = [content_type: "application/xml"]
@@ -17,10 +16,35 @@ defmodule ChangelogWeb.Feeds do
 
     ExAws.request!(ExAws.S3.put_object(bucket, key, content, headers))
 
-    Fastly.purge(url)
-    PodPing.overcast(url)
+    notify_services(slug)
 
     :ok
+  end
+
+  defp notify_services("posts") do
+    url = Routes.feed_url(Endpoint, :posts)
+    Fastly.purge(url)
+  end
+
+  defp notify_services(slug) do
+    url = Routes.feed_url(Endpoint, :podcast, slug)
+    Fastly.purge(url)
+    PodPing.overcast(url)
+  end
+
+  @doc """
+  Generates and returns the entire XML feed for given slug
+  """
+  def generate("posts") do
+    posts =
+      Post.published()
+      |> Post.newest_first()
+      |> Post.limit(100)
+      |> Post.preload_author()
+      |> Repo.all()
+      |> Enum.map(&Post.load_news_item/1)
+
+    render("posts.xml", posts: posts)
   end
 
   # Special case for "The Changelog" feed which gets its episodes from
@@ -47,16 +71,14 @@ defmodule ChangelogWeb.Feeds do
         |> Episode.preload_all()
         |> Repo.all()
 
-    render(podcast, episodes)
+    render("podcast.xml", podcast: podcast, episodes: episodes)
   end
 
-  @doc """
-  Generates and returns the entire XML feed for a podcast given its feed's slug
-  """
+  # All other podcasts
   def generate(slug) do
     podcast = Podcast.get_by_slug!(slug)
     episodes = get_episodes(podcast)
-    render(podcast, episodes)
+    render("podcast.xml", podcast: podcast, episodes: episodes)
   end
 
   defp get_episodes(podcast) do
@@ -70,8 +92,9 @@ defmodule ChangelogWeb.Feeds do
     |> Repo.all()
   end
 
-  defp render(podcast, episodes, template \\ "podcast.xml") do
-    assigns = [conn: Endpoint, podcast: podcast, episodes: episodes]
+  # defp render(podcast, episodes, template \\ "podcast.xml") do
+  defp render(template, assigns) do
+    assigns = [conn: Endpoint] ++ assigns
     Phoenix.View.render_to_string(FeedView, template, assigns)
   end
 end
