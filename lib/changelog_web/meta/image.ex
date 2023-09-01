@@ -60,20 +60,20 @@ defmodule ChangelogWeb.Meta.Image do
 
   # special image for /ten
   defp get_image(%{view_module: PageView, view_template: "ten.html"}),
-    do: static_image("/images/content/ten/ten-year-social.jpg")
+    do: static_image(~w[images content ten ten-year-social.jpg])
 
   # fallback
   defp get_image(_), do: summary_image()
 
   # convenience functions
-  defp item_type_image(item), do: static_image("/images/defaults/type-#{item.type}.png")
+  defp item_type_image(item), do: static_image(~w[images defaults type-#{item.type}.png])
   defp person_image(person), do: PersonView.avatar_url(person, :large)
-  defp podcast_image(podcast), do: static_image("/images/share/twitter-#{podcast.slug}.png")
-  defp podcasts_image, do: static_image("/images/share/all-podcasts.png")
+  defp podcast_image(podcast), do: static_image(~w[images share twitter-#{podcast.slug}.png])
+  defp podcasts_image, do: static_image(~w[images share all-podcasts.png])
   defp post_image(post), do: PostView.image_url(post, :large)
   defp source_image(source), do: NewsSourceView.icon_url(source, :large)
-  defp static_image(path), do: url(~p"/#{path}")
+  defp static_image(parts), do: url(~p"/#{parts}")
   defp topic_image(topic), do: TopicView.icon_url(topic, :large)
 
-  defp summary_image, do: static_image("/images/share/twitter-sitewide-summary.png")
+  defp summary_image, do: static_image(~w[images share twitter-sidewide-summary.png])
 end
