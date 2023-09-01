@@ -2,6 +2,7 @@ defmodule ChangelogWeb.Meta.Image do
   use ChangelogWeb, :verified_routes
 
   alias ChangelogWeb.{
+    Endpoint,
     Meta,
     NewsItemView,
     NewsSourceView,
@@ -72,7 +73,7 @@ defmodule ChangelogWeb.Meta.Image do
   defp podcasts_image, do: static_image(~w[images share all-podcasts.png])
   defp post_image(post), do: PostView.image_url(post, :large)
   defp source_image(source), do: NewsSourceView.icon_url(source, :large)
-  defp static_image(parts), do: url(~p"/#{parts}")
+  defp static_image(parts), do: static_url(Endpoint, ~p"/#{parts}")
   defp topic_image(topic), do: TopicView.icon_url(topic, :large)
 
   defp summary_image, do: static_image(~w[images share twitter-sidewide-summary.png])

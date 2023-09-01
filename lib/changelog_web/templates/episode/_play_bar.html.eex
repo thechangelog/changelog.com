@@ -13,22 +13,19 @@
     <%= link("Discuss",
         title: "Discuss this Episode",
         to: Routes.news_item_path(@conn, :show, NewsItem.slug(@item)),
-        class: "toolbar_item toolbar_item--button",
-        style: "background-image: url('#{~p"/images/icons/icon-chat.svg"}')") %>
+        class: "toolbar_item toolbar_item--button playbar_discuss") %>
   <% end %>
 
     <%= link("Subscribe",
         title: "Subscribe to Podcast",
         to: {:javascript, "void(0);"},
-        class: "toolbar_item toolbar_item--button has-tooltip",
-        style: "background-image: url('#{~p"/images/icons/icon-subscribe.svg"}')") %>
+        class: "toolbar_item toolbar_item--button has-tooltip playbar_subscribe") %>
     <%= render(PodcastView, "_subscribe_tooltip.html", conn: @conn, podcast: @episode.podcast) %>
 
     <%= link("Share",
         title: "Share this Episode",
         to: {:javascript, "void(0);"},
-        class: "toolbar_item toolbar_item--button",
-        data: [share: Routes.episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)],
-        style: "background-image: url('#{~p"/images/icons/icon-share.svg"}')") %>
+        class: "toolbar_item toolbar_item--button playbar_share",
+        data: [share: Routes.episode_path(@conn, :share, @episode.podcast.slug, @episode.slug)]) %>
   </div>
 </div>
