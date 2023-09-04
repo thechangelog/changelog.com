@@ -5,6 +5,7 @@ defmodule ChangelogWeb.PersonController do
     Cache,
     Captcha,
     Episode,
+    MapKit,
     NewsItem,
     Newsletters,
     Person,
@@ -192,7 +193,7 @@ defmodule ChangelogWeb.PersonController do
       else
         changeset =
           Person.with_fake_data()
-          |> Person.insert_changeset(params)
+          |> Person.insert_changeset(MapKit.sans_blanks(params))
 
         case Repo.insert(changeset) do
           {:ok, person} ->
