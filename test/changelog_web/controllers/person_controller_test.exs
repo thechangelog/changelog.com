@@ -169,7 +169,7 @@ defmodule ChangelogWeb.PersonControllerTest do
       ]) do
         count_before = count(Person)
 
-        conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com", to: "nightly")
+        conn = post(conn, Routes.person_path(conn, :subscribe), email: "joe@blow.com", name: "", to: "nightly")
 
         person = Repo.one(from p in Person, where: p.email == "joe@blow.com")
         refute person.public_profile
