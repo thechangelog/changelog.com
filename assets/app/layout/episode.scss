@@ -143,6 +143,7 @@
         font-size: 0.8125em;
         margin-top: $base-spacing;
         text-align: left;
+        line-height: 2em;
 
         @include breakpoint(640px) {
           display: flex;
@@ -175,7 +176,7 @@
 
         &,
         a {
-          color: $medium-grey;
+          color: $dark-grey;
         }
         a:hover { color: $black; }
       }

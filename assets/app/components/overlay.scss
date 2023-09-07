@@ -67,12 +67,6 @@
       width: 50%;
     }
 
-    &-lead_in {
-      @extend %display-font;
-      color: $medium-grey;
-      margin: 0 0 0.5em;
-    }
-
     &-heading {
       color: $white;
       font-size: 1.625em;
@@ -96,9 +90,7 @@
     padding: 0;
 
     li {
-      @extend %display-font;
       display: block;
-      font-family: $display;
       font-size: 1.15em;
       line-height: 1.25em;
       margin: 0.75em 0;

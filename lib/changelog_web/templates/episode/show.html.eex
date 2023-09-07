@@ -136,21 +136,30 @@
         </header>
         <div class="richtext richtext--small">
           <table>
-          <%= for {chapter, index} <- Enum.with_index(@episode.audio_chapters, 1) do %>
-            <tr>
-              <td style="width: 5%"><%= index %></td>
-              <td style="width: 10%">
-                <a href="#t=<%= round(chapter.starts_at) %>" title="Play episode starting at '<%= chapter.title %>'"><%= TimeView.duration(chapter.starts_at) %></a>
-              </td>
-              <td style="width: 85%">
-              <%= if Changelog.StringKit.present?(chapter.link_url) do %>
-                <%= link(chapter.title, to: chapter.link_url, rel: "nofollow") %>
-              <% else %>
-                <%= chapter.title %>
-              <% end %>
-              </td>
-            </tr>
-          <% end %>
+            <thead hidden>
+              <tr>
+                <td>Chapter Number</td>
+                <td>Chapter Start Time</td>
+                <td>Chapter Title</td>
+              </tr>
+            </thead>
+            <tbody>
+            <%= for {chapter, index} <- Enum.with_index(@episode.audio_chapters, 1) do %>
+              <tr>
+                <td style="width: 5%"><%= index %></td>
+                <td style="width: 10%">
+                  <a href="#t=<%= round(chapter.starts_at) %>" title="Play episode starting at '<%= chapter.title %>'"><%= TimeView.duration(chapter.starts_at) %></a>
+                </td>
+                <td style="width: 85%">
+                <%= if Changelog.StringKit.present?(chapter.link_url) do %>
+                  <%= link(chapter.title, to: chapter.link_url, rel: "nofollow") %>
+                <% else %>
+                  <%= chapter.title %>
+                <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
           </table>
         </div>
       </section>
@@ -183,7 +192,7 @@
               <p class="transcript-item-speaker-name">Changelog</p>
             </div>
             <div class="transcript-item-text">
-              <p><%= link("Click here", to: audio_url(@episode),
+              <p><%= link("Play the audio", to: audio_url(@episode),
               data: [play: Routes.episode_path(@conn, :play, @episode.podcast.slug, @episode.slug)]) %> to listen along while you enjoy the transcript. 🎧</p>
             </div>
           </div>
