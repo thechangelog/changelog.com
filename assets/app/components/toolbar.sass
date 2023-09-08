@@ -46,9 +46,9 @@
     &_scroll-wrap
         // Setting a height here to fix weird hover issue
         height: 65px
-        $width: 540px
+        $width: 600px
 
-        @media (min-width: ($smartphone + 50))
+        @media (min-width: ($width + 30))
             max-width: 100%
             width: $width
             @media (min-width: $tablet)
@@ -58,7 +58,7 @@
             flex-wrap: nowrap
             justify-content: space-between
 
-            @media (min-width: ($smartphone + 50))
+            @media (min-width: ($width + 30))
                 width: $width !important
 
     a
