@@ -1,5 +1,4 @@
 import "phoenix_html";
-import "intersection-observer";
 import Turbolinks from "turbolinks";
 import { u, ajax } from "umbrellajs";
 import autosize from "autosize";
@@ -197,31 +196,6 @@ u(document).handle("click", ".js-share-popup", function (event) {
   shareWindow.opener = null;
 });
 
-// track news impressions
-const observer = new IntersectionObserver(function (entries) {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    let el = u(entry.target);
-    let type = el.data("news-type");
-    let id = el.data("news-id");
-    ajax(`/${type}/impress`, { method: "POST", body: { ids: id } });
-    observer.unobserve(entry.target);
-  });
-});
-
-// track news clicks
-u(document).on("click", "[data-news]", function (event) {
-  let clicked = u(this);
-  let type = clicked.closest("[data-news-type]").data("news-type");
-  let id = clicked.closest("[data-news-id]").data("news-id");
-  if (!id) return false;
-  let trackedHref = `${location.origin}/${type}/${id}/visit`;
-  fetch(trackedHref, {
-    method: "POST",
-    keepalive: true
-  });
-});
-
 // open external links in new window when player is doing its thing
 u(document).on("click", "a[href^=http]", function (event) {
   if (App.player.isActive()) {
@@ -323,9 +297,6 @@ u(document).on("turbolinks:before-cache", function () {
 u(document).on("turbolinks:load", function () {
   Prism.highlightAll();
   App.player.attach();
-  u(".js-track-news").each(el => {
-    observer.observe(el);
-  });
   autosize(document.querySelectorAll("textarea"));
   App.attachComments();
   App.attachFlash();

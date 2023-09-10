@@ -1,4 +1,4 @@
-<article class="news_item js-track-news" data-news-type="news" data-news-id="<%= hashid(@item) %>">
+<article class="news_item">
   <%= render("_header.html", assigns) %>
   <%= render("_toolbar.html", Map.put(assigns, :style, "date")) %>
   <div class="news_item-content richtext">

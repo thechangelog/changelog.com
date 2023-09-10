@@ -1,6 +1,6 @@
 <a id="feed" class="anchor"></a>
 <div class="feed">
-  <article class="news_item js-track-news" data-news-type="sponsored" data-news-id="<%= NewsAd.hashid(@ad) %>">
+  <article class="news_item">
     <%= render("_header.html", assigns) %>
     <%= render("_toolbar.html", assigns) %>
     <div class="news_item-content richtext">

@@ -1,4 +1,4 @@
-<article class="news_item news_item--sponsor js-track-news" data-news-type="sponsored" data-news-id="<%= NewsAd.hashid(@ad) %>">
+<article class="news_item news_item--sponsor">
   <%= render("_header.html", assigns) %>
   <%= render("_toolbar.html", assigns) %>
   <div class="news_item-content richtext">
