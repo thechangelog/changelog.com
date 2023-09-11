@@ -5,10 +5,7 @@
         <th>Type</th>
         <th>Headline</th>
         <th>Topics</th>
-      <%= if @status == :published do %>
-        <th><i class="mouse pointer icon"></i> / <i class="eye icon"></i></th>
-        <th>CTR</th>
-      <% else %>
+      <%= if @status != :published do %>
         <th>Create Time</th>
       <% end %>
       <%= if Enum.member?([:published, :scheduled], @status) do %>
@@ -60,10 +57,7 @@
           <%= link "##{topic.slug}", to: Routes.admin_topic_path(@conn, :edit, topic.slug) %><br/>
         <% end %>
         </td>
-      <%= if @status == :published do %>
-        <td><%= item.click_count %> / <%= item.impression_count %></td>
-        <td><%= SharedHelpers.ctr(item) %>%</td>
-      <% else %>
+      <%= if @status != :published do %>
         <td><%= AdminHelpers.ts(item.inserted_at) %></td>
       <% end %>
       <%= if Enum.member?([:published, :scheduled], @status) do %>
