@@ -194,7 +194,6 @@ defmodule Changelog.NewsQueueTest do
         assert Repo.count(NewsItem.published()) == 1
         wait_for_passing(1000, fn -> assert called(Notifier.notify(:_)) end)
         wait_for_passing(1000, fn -> assert called(Typesense.Client.upsert_documents(:_, :_)) end)
-        wait_for_passing(1000, fn -> assert called(Social.post(:_)) end)
       end
     end
 
@@ -217,7 +216,6 @@ defmodule Changelog.NewsQueueTest do
       ]) do
         NewsQueue.publish(i2)
         wait_for_passing(1000, fn -> assert called(Typesense.Client.upsert_documents(:_, :_)) end)
-        wait_for_passing(1000, fn -> assert called(Social.post(:_)) end)
         published = Repo.all(NewsItem.published())
         assert Enum.map(published, & &1.id) == [i2.id]
         assert Repo.count(NewsQueue) == 2

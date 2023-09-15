@@ -9,8 +9,7 @@ defmodule Changelog.NewsQueue do
     NewsItem,
     NewsQueue,
     Notifier,
-    TypesenseSearch,
-    Social
+    TypesenseSearch
   }
 
   alias Changelog.ObanWorkers.FeedUpdater
@@ -160,7 +159,6 @@ defmodule Changelog.NewsQueue do
     item = NewsItem.publish!(item)
     Task.start_link(fn -> NewsItem.subscribe_participants(item) end)
     Task.start_link(fn -> TypesenseSearch.save_item(item) end)
-    Task.start_link(fn -> Social.post(item) end)
     Task.start_link(fn -> Notifier.notify(item) end)
     Task.start_link(fn -> EpisodeTracker.track(item) end)
     Task.start_link(fn -> FeedUpdater.queue(item) end)

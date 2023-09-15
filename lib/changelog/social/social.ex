@@ -11,6 +11,7 @@ defmodule Changelog.Social do
   # episode news items don't get posted (for now)
   def post(%NewsItem{type: :audio}), do: false
 
+  # post news items also don't get posted (for now)
   def post(item = %NewsItem{}) do
     item = NewsItem.preload_all(item)
 
@@ -39,6 +40,6 @@ defmodule Changelog.Social do
   defp link_emoj, do: ~w(✨ 💫 🔗 👉) |> Enum.random()
 
   defp link_url(item) do
-    ~p"/news/#{NewsItemView.hashid(item)}"
+    url(~p"/news/#{NewsItemView.hashid(item)}")
   end
 end
