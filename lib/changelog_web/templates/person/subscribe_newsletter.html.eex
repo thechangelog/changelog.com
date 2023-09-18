@@ -6,13 +6,7 @@
     </div>
     <h1 class="signup-heading">You&rsquo;re subscribing to <%= @newsletter.name %></h1>
     <p class="signup-text"><%= @newsletter.description %></p>
-    <p class="signup-text">
-  <%= if @newsletter.slug == "weekly" do %>
-    1 email per week — Delivered on Sundays - <%= link("Archive", to: Routes.page_path(@conn, :weekly_archive)) %>
-  <% else %>
-    7 emails per week — Delivered daily at 10pm US Central
-  <% end %>
-    </p>
+    <p class="signup-text">7 emails per week — Delivered daily at 10pm US Central</p>
   </div>
 </section>
 

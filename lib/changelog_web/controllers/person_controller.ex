@@ -155,8 +155,12 @@ defmodule ChangelogWeb.PersonController do
     |> render(:show)
   end
 
-  def subscribe(conn = %{method: "GET"}, params = %{"to" => to}) when to in ["weekly", "nightly"] do
-    newsletter = Newsletters.get_by_slug(to)
+  def subscribe(conn = %{method: "GET"}, params = %{"to" => "weekly"}) do
+    redirect(conn, to: ~p"/subscribe/news")
+  end
+
+  def subscribe(conn = %{method: "GET"}, params = %{"to" => "nightly"}) do
+    newsletter = Newsletters.nightly()
 
     conn
     |> assign(:newsletter, newsletter)
