@@ -40,6 +40,9 @@ defmodule Changelog.Notion do
 			{:ok, %{status_code: 400, body: %{"message" => message}}} ->
 				Logger.warn("Notion: #{message}")
 				[]
+			{:error, error} ->
+				Logger.warn("Notion Error: #{error}")
+				[]
 		end
 	end
 

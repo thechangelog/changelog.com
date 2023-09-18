@@ -44,13 +44,17 @@ defmodule Changelog.ObanWorkers.NotionUpdater do
 
   defp episode_from_url(nil), do: nil
   defp episode_from_url(url) do
-    uri = URI.parse(url)
-    [_, p_slug, e_slug] = String.split(uri.path, "/")
+    try do
+      uri = URI.parse(url)
+      [_, p_slug, e_slug] = String.split(uri.path, "/")
 
-    Episode.published()
-    |> Episode.with_podcast_slug(p_slug)
-    |> Episode.with_slug(e_slug)
-    |> Episode.limit(1)
-    |> Repo.one()
+      Episode.published()
+      |> Episode.with_podcast_slug(p_slug)
+      |> Episode.with_slug(e_slug)
+      |> Episode.limit(1)
+      |> Repo.one()
+    rescue
+      _ -> nil
+    end
   end
 end
