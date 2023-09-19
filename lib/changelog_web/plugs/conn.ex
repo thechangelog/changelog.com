@@ -78,7 +78,7 @@ defmodule ChangelogWeb.Plug.Conn do
     path = Map.get(uri, :path)
 
     cond do
-      uri.host != conn.host -> {:error, "external referer"}
+      uri.host != get_host(conn) -> {:error, "external referer"}
       String.starts_with?(path, "//") -> {:error, "invalid path"}
       true -> {:ok, path}
     end
