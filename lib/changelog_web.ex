@@ -26,6 +26,12 @@ defmodule ChangelogWeb do
         Logger.info("#{prefix}: #{conn.method} /#{conn.path_info} #{details}")
       end
 
+      def send_to_sentry(event_name, info) when is_map(info) do
+        if Mix.env() == :prod do
+          Sentry.capture_message(event_name, extra: info)
+        end
+      end
+
       @doc """
       Allows param-based 'next' path to redirect with fallback when not specified
       """
