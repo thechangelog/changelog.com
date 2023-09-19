@@ -41,7 +41,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         else
           send_to_sentry("new_comment", %{format: get_format(conn), referer: referer, comment: comment.id})
           conn
-          |> put_flash(:success, random_success_message())
+          |> put_flash(:success, random_success_message(comment))
           |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
         end
 
@@ -97,14 +97,22 @@ defmodule ChangelogWeb.NewsItemCommentController do
     NewsItemComment.update_changeset(comment, %{content: updated_content})
   end
 
-  defp random_success_message do
+  defp random_success_message(%{approved: false}) do
+    "Your first one must be approved before it shows up! ⏳"
+  end
+  defp random_success_message(_comment) do
     [
       "Now that's a solid take! ✊",
       "You tell 'em 💥",
       "That comment is fresh to death 🕺",
       "The hottest of hot takes 🔥",
       "Where do you get all those wonderful words? 🤔",
-      "👏👏👏👏👏"
+      "👏👏👏👏👏",
+      "Give yourself a high five! 🙌",
+      "Funky dope comment! ✨",
+      "That's what the crowd wants! 🤩",
+      "It's all about puttin' on a show 👯",
+      "Niiiiiiiiiiice 🔝"
     ]
     |> Enum.random()
   end
