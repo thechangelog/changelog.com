@@ -155,7 +155,7 @@ defmodule ChangelogWeb.PersonController do
     |> render(:show)
   end
 
-  def subscribe(conn = %{method: "GET"}, params = %{"to" => "weekly"}) do
+  def subscribe(conn = %{method: "GET"}, %{"to" => "weekly"}) do
     redirect(conn, to: ~p"/subscribe/news")
   end
 
