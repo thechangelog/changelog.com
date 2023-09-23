@@ -29,6 +29,13 @@
 </div>
 <% end %>
 
+<%= if Podcast.is_news(@podcast) && Enum.any?(@submitted) do %>
+<div class="ui basic segment">
+  <h2 id="submitted" class="ui header">Submitted</h2>
+  <%= render(ChangelogWeb.Admin.NewsItemView, "_table.html", Map.merge(assigns, %{status: :submitted, items: @submitted})) %>
+</div>
+<% end %>
+
 <%= if Enum.any?(@scheduled) do %>
 <div class="ui basic segment">
   <h2 class="ui header">Scheduled</h2>

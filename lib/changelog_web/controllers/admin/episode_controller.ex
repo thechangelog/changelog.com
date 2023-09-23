@@ -71,6 +71,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.all()
 
     conn
+    |> assign_submitted(podcast)
     |> assign(:episodes, page.entries)
     |> assign(:episode_requests, episode_requests)
     |> assign(:scheduled, scheduled)
@@ -79,6 +80,19 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:page, page)
     |> assign(:downloads, downloads(podcast))
     |> render(:index)
+  end
+
+  defp assign_submitted(conn, podcast) do
+    submitted = if Podcast.is_news(podcast) do
+      NewsItem.submitted()
+      |> NewsItem.newest_first(:inserted_at)
+      |> NewsItem.preload_all()
+      |> Repo.all()
+    else
+      []
+    end
+
+    assign(conn, :submitted, submitted)
   end
 
   def performance(conn, %{"ids" => ids}, podcast) do

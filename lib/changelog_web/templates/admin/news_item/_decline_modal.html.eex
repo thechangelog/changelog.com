@@ -4,7 +4,7 @@
     Decline with message: <em><%= @item.headline %></em>
   </div>
   <div class="content">
-    <%= form_tag Routes.admin_news_item_path(@conn, :decline, @item), id: @form_id, method: "DELETE", class: "ui small form" do %>
+    <%= form_tag Routes.admin_news_item_path(@conn, :decline, @item, next: "back"), id: @form_id, method: "DELETE", class: "ui small form" do %>
       <div class="field">
         <div class="ui">
           <textarea name="message" placeholder="Reason for declining, sent by email to submitter"></textarea>

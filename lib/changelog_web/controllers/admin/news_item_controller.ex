@@ -160,16 +160,16 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: ~p"/admin/news")
+    |> redirect_next(params, ~p"/admin/news")
   end
 
-  def delete(conn = %{assigns: %{item: item}}, _params) do
+  def delete(conn = %{assigns: %{item: item}}, params) do
     Repo.delete!(item)
     Task.start_link(fn -> TypesenseSearch.delete_item(item) end)
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: ~p"/admin/news")
+    |> redirect_next(params, ~p"/admin/news")
   end
 
   def unpublish(conn = %{assigns: %{item: item}}, _params) do

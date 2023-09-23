@@ -27,12 +27,6 @@
       <% end %>
     <% end %>
 
-    <%= if Policies.Admin.NewsItem.index(@current_user) do %>
-      <%= link(to: Routes.admin_news_item_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, ["news_item", "news_source"], "active")}") do %>
-        <i class="newspaper icon"></i>News</a>
-      <% end %>
-    <% end %>
-
     <%= if Policies.Admin.Post.index(@current_user) do %>
       <%= link(to: Routes.admin_post_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "post", "active")}") do %>
         <i class="pencil alternate icon"></i>Posts
