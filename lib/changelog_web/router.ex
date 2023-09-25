@@ -1,7 +1,6 @@
 defmodule ChangelogWeb.Router do
   use ChangelogWeb, :router
-
-  import Oban.Web.Router
+  use ChangelogWeb.ObanWeb
 
   alias ChangelogWeb.Plug
 
@@ -61,8 +60,6 @@ defmodule ChangelogWeb.Router do
 
   scope "/admin", ChangelogWeb.Admin, as: :admin do
     pipe_through [:browser, :admin]
-
-    oban_dashboard "/oban", resolver: ChangelogWeb.ObanResolver
 
     get "/", PageController, :index
     get "/downloads", PageController, :downloads
