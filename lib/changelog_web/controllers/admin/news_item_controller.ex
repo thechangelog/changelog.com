@@ -153,6 +153,16 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     end
   end
 
+  def accept(conn = %{assigns: %{item: item}}, params) do
+    message = Map.get(params, "message", "")
+    item = NewsItem.accept!(item, message)
+    Task.start_link(fn -> Notifier.notify(item) end)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect_next(params, ~p"/admin/news")
+  end
+
   def decline(conn = %{assigns: %{item: item}}, params) do
     message = Map.get(params, "message", "")
     item = NewsItem.decline!(item, message)

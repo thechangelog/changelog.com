@@ -18,7 +18,7 @@ defmodule Changelog.NewsItem do
     UrlKit
   }
 
-  defenum(Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3)
+  defenum(Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3, accepted: 4)
   defenum(Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4)
 
   schema "news_items" do
@@ -532,6 +532,12 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(news_item_topics: {NewsItemTopic.by_position(), :topic})
     |> Repo.preload(:topics)
   end
+
+  def accept!(item), do: item |> change(%{status: :accepted}) |> Repo.update!()
+  def accept!(item, ""), do: accept!(item)
+
+  def accept!(item, message),
+    do: item |> change(%{status: :accepted, decline_message: message}) |> Repo.update!()
 
   def decline!(item), do: item |> change(%{status: :declined}) |> Repo.update!()
   def decline!(item, ""), do: decline!(item)

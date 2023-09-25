@@ -1,11 +1,13 @@
+<% next = SharedHelpers.get_param(assigns, "next", "back") %>
+
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    <%= link("People", to: Routes.admin_person_path(@conn, :index)) %>
+    <%= link("People", to: ~p"/admin/people") %>
     &raquo;
     <%= @person.name %> (<%= @person.handle %>)
     <div class="ui basic right floated buttons">
       <%= link("View Public",
-            to: Routes.person_path(@conn, :show, @person.handle),
+            to: ~p"/person/#{@person.handle}",
             rel: "external",
             class: "ui button") %>
     </div>
@@ -22,10 +24,10 @@
 <div class="actions right">
   <div class="ui basic buttons">
     <%= @person |> list_of_links() |> raw() %>
-    <%= AdminHelpers.icon_link("edit", to: Routes.admin_person_path(@conn, :edit, @person)) %>
-    <%= AdminHelpers.icon_link("slack", to: Routes.admin_person_path(@conn, :slack, @person, next: Routes.admin_person_path(@conn, :show, @person)), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
-    <%= AdminHelpers.icon_link("user secret", to: Routes.admin_person_path(@conn, :masq, @person), title: "Masquarade", method: :post, data: [confirm: "Do you want to use the site as this user?"]) %>
-    <%= AdminHelpers.icon_link("trash", to: Routes.admin_person_path(@conn, :delete, @person), method: :delete, data: [confirm: "Are you sure?"]) %>
+    <%= AdminHelpers.icon_link("edit", to: ~p"/admin/people/#{@person}/edit") %>
+    <%= AdminHelpers.icon_link("slack", to: ~p"/admin/people/#{@person}/slack", title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+    <%= AdminHelpers.icon_link("user secret", to: ~p"/admin/people/#{@person}/masq", title: "Masquarade", method: :post, data: [confirm: "Do you want to use the site as this user?"]) %>
+    <%= AdminHelpers.icon_link("trash", to: ~p"/admin/people/#{@person}?next=#{next}", method: :delete, data: [confirm: "Are you sure?"]) %>
   </div>
 </div>
 
@@ -41,7 +43,7 @@
 
 <%= if Enum.any?(@published) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Recent news <%= link("(view all)", to: Routes.admin_person_path(@conn, :news, @person.id)) %></h2>
+  <h2 class="ui header">Recent news <%= link("(view all)", to: ~p"/admin/people/#{@person}/news") %></h2>
   <%= render(NewsItemView, "_table.html", Map.merge(assigns, %{status: :published, items: @published})) %>
 </div>
 <% end %>
@@ -69,7 +71,7 @@
 
 <%= if Enum.any?(@comments) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Recent comments <%= link("(view all)", to: Routes.admin_person_path(@conn, :comments, @person.id)) %></h2>
+  <h2 class="ui header">Recent comments <%= link("(view all)", to: ~p"/admin/people/#{@person}/comments") %></h2>
   <%= render(NewsItemCommentView, "_table.html", Map.merge(assigns, %{comments: @comments})) %>
 </div>
 <% end %>
