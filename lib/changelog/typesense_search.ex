@@ -107,7 +107,12 @@ defmodule Changelog.TypesenseSearch do
   def update_item(item), do: save_item(item)
 
   def delete_item(item) do
-    {:ok, _} = Typesense.Client.delete_document(namespace(), item.id)
+    case Typesense.Client.delete_document(namespace(), item.id) do
+      {:ok, _response} -> :ok
+      {:error, _response} ->
+        Logger.error("Typesense: could not delete item #{item.id}")
+        :ok
+    end
   end
 
   defp to_records(item = %NewsItem{type: :audio, object_id: _}) do

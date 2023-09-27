@@ -43,7 +43,7 @@ defmodule Changelog.Typesense.Client do
       %{status_code: 200, body: body} ->
         {:ok, try_json_decode(body)}
       response ->
-        response
+        {:error, response}
     end
   end
 
