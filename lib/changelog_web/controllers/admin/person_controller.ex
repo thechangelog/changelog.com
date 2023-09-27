@@ -157,6 +157,8 @@ defmodule ChangelogWeb.Admin.PersonController do
     Craisin.Subscriber.delete(Newsletters.weekly().id, person.email)
     Craisin.Subscriber.delete(Newsletters.nightly().id, person.email)
 
+    send_to_sentry("person_delete", %{person: person.id, referer: Plug.Conn.get_req_header(conn, "referer")})
+
     conn
     |> put_flash(:result, "success")
     |> redirect_next(params, ~p"/admin/people")

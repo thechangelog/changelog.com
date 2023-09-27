@@ -25,10 +25,7 @@ defmodule ChangelogWeb.NewsItemCommentController do
         # of the comment and sends it to the appropriate recipients.
         CommentNotifier.schedule(comment)
 
-        referer = Plug.Conn.get_req_header(conn, "referer")
-
         if get_format(conn) == "js" do
-          send_to_sentry("new_comment", %{format: "js", referer: referer, comment: comment.id})
           comment = NewsItemComment.preload_all(comment)
           item = comment.news_item
           changeset = item |> build_assoc(:comments) |> NewsItemComment.insert_changeset()
@@ -39,7 +36,6 @@ defmodule ChangelogWeb.NewsItemCommentController do
           |> assign(:changeset, changeset)
           |> render("create_success.js")
         else
-          send_to_sentry("new_comment", %{format: get_format(conn), referer: referer, comment: comment.id})
           conn
           |> put_flash(:success, random_success_message(comment))
           |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
