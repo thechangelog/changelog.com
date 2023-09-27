@@ -1,8 +1,10 @@
 defmodule Changelog.Mixfile do
   use Mix.Project
 
-  # Change this to [:prod] if you don't have a web license available
-  @oban_envs [:dev, :prod]
+  @oban_envs [:prod]
+  if System.get_env("OBAN_LICENSE_KEY") do
+    @oban_envs [:dev, :prod]
+  end
 
   Code.compile_file("config/secret_or_env.exs")
 
