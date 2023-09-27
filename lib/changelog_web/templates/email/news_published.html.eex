@@ -46,6 +46,23 @@
               <tbody>
                 <tr>
                   <td width="700">
+                  <%= if @person do %>
+                    <table width="700" cellpadding="0" cellspacing="0" border="0">
+                      <tbody>
+                        <tr>
+                          <td class="header" align="center">
+                            <img class="spacer-10" src="<%= url(~p"/images/email/spacer_1.gif") %>">
+                            <p class="last-of-type"><%= link("View on Web", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}/email"), title: "View this newsletter in your web browser") %>
+                              &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;
+                              <%= link("Audio Edition", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}"), title: "View the companion audio edition") %>
+                              &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;
+                              <%= link("Changelog++", to: url(~p"/++"), title: "It's better!") %>
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  <% end %>
                     <table width="700" cellpadding="35" cellspacing="0" border="0">
                       <tbody>
                         <tr>
@@ -69,7 +86,7 @@
                           <td class="footer" align="center">
                             <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
                           <%= if @person do %>
-                            <p><%= link("Unsubscribe", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;<%= link("View in Browser", to: Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug)) %></p>
+                            <p><%= link("Unsubscribe", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></p>
                           <%= if String.length(@subscription.context) > 0 do %>
                             <p>(Context: <%= @subscription.context %>)</p>
                           <% end %>

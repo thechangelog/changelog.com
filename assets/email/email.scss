@@ -221,6 +221,25 @@ body {
   table { width: 100%; }
 }
 
+.header {
+  a {
+    color: $dark-grey;
+    text-decoration: none;
+
+    &:hover {
+      color: $green;
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    padding: 0 40px
+  }
+}
+
 .footer {
   a {
     color: $dark-grey;
@@ -238,6 +257,7 @@ body {
   }
 }
 
+.spacer-10 { display:block; height: 10px; width: 1px; }
 .spacer-20 { display:block; height: 20px; width: 1px; }
 
 @media (prefers-color-scheme: dark) {
