@@ -13,8 +13,8 @@ import (
 func (image *Image) Production() *Image {
 	productionImage := image.Runtime().
 		WithAppSrc().
-		WithAppDeps().
 		WithProdEnv().
+		WithAppDeps().
 		WithAppCompiled().
 		WithAppStaticAssets().
 		WithAppLegacyAssets().
@@ -38,6 +38,11 @@ func (image *Image) Production() *Image {
 // I don’t think this is sufferable much longer
 // https://github.com/thechangelog/changelog.com/actions/runs/4430462525
 func (image *Image) ProductionClean() *Image {
+	obanLicenseKey := os.Getenv("OBAN_LICENSE_KEY")
+	if obanLicenseKey == "" {
+		fmt.Printf("\n👮 Building the production image requires an OBAN_LICENSE_KEY\n")
+		return image
+	}
 	app := image.Production().container.
 		WithExec([]string{
 			"cp", "--recursive", "--preserve=mode,ownership,timestamps", "/app", "/app.prod",
