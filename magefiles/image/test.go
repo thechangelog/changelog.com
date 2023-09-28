@@ -4,8 +4,8 @@ func (image *Image) Test() *Image {
 	return image.
 		Runtime().
 		WithAppSrc().
-		WithAppDeps().
 		WithTestEnv().
+		WithAppDeps().
 		WithAppCompiled().
 		WithPostgreSQL("changelog_test").
 		WithTest().

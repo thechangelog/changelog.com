@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Router do
   use ChangelogWeb, :router
+  use ChangelogWeb.ObanWeb
 
   alias ChangelogWeb.Plug
 
@@ -17,6 +18,7 @@ defmodule ChangelogWeb.Router do
 
   pipeline :admin do
     plug Plug.AdminLayoutPlug
+    plug :protect_from_forgery
   end
 
   pipeline :browser do
@@ -24,7 +26,7 @@ defmodule ChangelogWeb.Router do
     plug Plug.FlocOff
     plug :fetch_session
     plug Plug.Turbolinks
-    plug :fetch_flash
+    plug :fetch_live_flash
     plug :put_secure_browser_headers
     plug Plug.Authenticate, repo: Changelog.Repo
     plug Plug.AllowFraming
@@ -57,7 +59,7 @@ defmodule ChangelogWeb.Router do
   end
 
   scope "/admin", ChangelogWeb.Admin, as: :admin do
-    pipe_through [:admin, :browser]
+    pipe_through [:browser, :admin]
 
     get "/", PageController, :index
     get "/downloads", PageController, :downloads

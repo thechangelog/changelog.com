@@ -74,6 +74,28 @@ defmodule ChangelogWeb do
     end
   end
 
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {ChangelogWeb.LayoutView, :live}
+
+      unquote(html_helpers())
+    end
+  end
+
+  defp html_helpers do
+    quote do
+      # HTML escaping functionality
+      import Phoenix.HTML
+      # Core UI components and translation
+      import HelloWeb.CoreComponents
+      import HelloWeb.Gettext
+
+      # Shortcut for generating JS commands
+      alias Phoenix.LiveView.JS
+    end
+  end
+
   def public_view do
     quote do
       use Phoenix.View,
@@ -83,6 +105,7 @@ defmodule ChangelogWeb do
 
       use Phoenix.HTML
 
+      import Phoenix.Component
       import Phoenix.Controller,
         only: [current_url: 1, get_flash: 1, get_flash: 2, view_module: 1]
 
@@ -102,6 +125,8 @@ defmodule ChangelogWeb do
   def router do
     quote do
       use Phoenix.Router
+
+      import Phoenix.LiveView.Router
     end
   end
 

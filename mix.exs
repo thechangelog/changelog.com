@@ -1,6 +1,11 @@
 defmodule Changelog.Mixfile do
   use Mix.Project
 
+  @oban_envs [:prod]
+  if System.get_env("OBAN_LICENSE_KEY") do
+    @oban_envs [:dev, :prod]
+  end
+
   Code.compile_file("config/secret_or_env.exs")
 
   def project do
@@ -40,9 +45,11 @@ defmodule Changelog.Mixfile do
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.3"},
+      {:phoenix_live_view, "~> 0.19.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:plug_cowboy, "~> 2.5"},
       {:oban, "~> 2.15"},
+      {:oban_web, "~> 2.10.0-rc.2", repo: "oban", only: @oban_envs},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},
       {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-7"},

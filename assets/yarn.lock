@@ -2862,10 +2862,13 @@ pegjs@^0.10.0:
   integrity sha512-qI5+oFNEGi3L5HAxDwN2LA4Gg7irF70Zs25edhjld9QemOgp0CbvMtbFcMvFtEo1OityPrcCzkQFB8JP/hxgow==
 
 "phoenix@file:../deps/phoenix":
-  version "1.6.14"
+  version "1.7.3"
 
 "phoenix_html@file:../deps/phoenix_html":
-  version "3.2.0"
+  version "3.3.1"
+
+"phoenix_live_view@file:../deps/phoenix_live_view":
+  version "0.19.3"
 
 picocolors@^1.0.0:
   version "1.0.0"

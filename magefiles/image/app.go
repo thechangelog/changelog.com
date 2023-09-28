@@ -37,7 +37,7 @@ func (image *Image) WithAppDeps() *Image {
 			"echo", "Fetch app deps...",
 		}).
 		WithExec([]string{
-			"sh", "-c", "mix deps.get",
+			"sh", "-c", "mix deps.get --only $MIX_ENV",
 		}).
 		WithExec([]string{
 			"sh", "-c", "echo \"Ensure app deps are present & OK...\"",
