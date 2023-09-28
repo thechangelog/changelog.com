@@ -51,6 +51,8 @@ jobs:
           R2_API_HOST: "${{ secrets.R2_API_HOST }}"
           R2_ACCESS_KEY_ID: "${{ secrets.R2_ACCESS_KEY_ID }}"
           R2_SECRET_ACCESS_KEY: "${{ secrets.R2_SECRET_ACCESS_KEY }}"
+          OBAN_KEY_FINGERPRINT: "${{ secrets.OBAN_KEY_FINGERPRINT }}"
+          OBAN_LICENSE_KEY: "${{ secrets.OBAN_LICENSE_KEY }}"
         run: |
           echo "🤨 Can we ping ${FLY_DNS_SERVER:?must be set}?"
           ping6 -c 3 "$FLY_DNS_SERVER"
