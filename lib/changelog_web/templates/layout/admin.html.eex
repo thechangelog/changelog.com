@@ -64,6 +64,12 @@
       <% end %>
     <% end %>
 
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      <%= link(to: ~p"/admin/oban", class: "item") do %>
+        <i class="list icon"></i>Oban
+      <% end %>
+    <% end %>
+
       <div class="right menu">
       <%= if Policies.AdminsOnly.index(@current_user) do %>
         <div class="ui right aligned navigation search item">
