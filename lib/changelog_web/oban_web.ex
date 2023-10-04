@@ -19,9 +19,8 @@ defmodule ChangelogWeb.ObanWeb do
         end
 
         @impl true
-        def resolve_access(_user) do
-          # if Changelog.Policies.AdminsOnly.index(user) do
-          if true do
+        def resolve_access(user) do
+          if Changelog.Policies.AdminsOnly.index(user) do
             :all
           else
             {:forbidden, "/in"}

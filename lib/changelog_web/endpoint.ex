@@ -19,11 +19,7 @@ defmodule ChangelogWeb.Endpoint do
     domain: cookie_domain
   ]
 
-  socket "/live", Phoenix.LiveView.Socket,
-    websocket: [
-      check_origin: false,
-      connect_info: [session: @session_options]]
-
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
   socket "/socket", ChangelogWeb.UserSocket,
     # or list of options
     websocket: true
