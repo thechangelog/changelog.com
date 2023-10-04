@@ -21,12 +21,13 @@ defmodule ChangelogWeb.FeedController do
   plug ResponseCache
 
   def news(conn, _params) do
+    feed = ChangelogWeb.Feeds.generate("feed")
+
     conn
     |> put_layout(false)
     |> put_resp_content_type("application/xml")
-    |> assign(:items, NewsItem.latest_news_items())
-    |> ResponseCache.cache_public(:timer.minutes(2))
-    |> render("news.xml")
+    |> ResponseCache.cache_public(:timer.minutes(1))
+    |> send_resp(200, feed)
   end
 
   def news_titles(conn, _params) do

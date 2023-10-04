@@ -21,6 +21,11 @@ defmodule ChangelogWeb.Feeds do
     :ok
   end
 
+  defp notify_services("feed") do
+    url = Routes.feed_url(Endpoint, :news)
+    Fastly.purge(url)
+  end
+
   defp notify_services("posts") do
     url = Routes.feed_url(Endpoint, :posts)
     Fastly.purge(url)
@@ -40,6 +45,11 @@ defmodule ChangelogWeb.Feeds do
   @doc """
   Generates and returns the entire XML feed for given slug
   """
+  def generate("feed") do
+    items = NewsItem.latest_news_items()
+    render("news.xml", items: items)
+  end
+
   def generate("posts") do
     posts =
       Post.published()

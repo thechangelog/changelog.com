@@ -24,28 +24,28 @@ defmodule Changelog.ObanWorkers.FeedUpdater do
     queue(episode.podcast)
   end
 
-  def queue(%Podcast{slug: "podcast", is_meta: false}) do
-    queue_slugs(~w(interviews podcast master plusplus))
+  def queue(%Podcast{slug: "podcast", is_meta: true}) do
+    queue_slugs(~w(podcast master feed plusplus))
   end
 
-  def queue(%Podcast{slug: "podcast", is_meta: true}) do
-    queue_slugs(~w(podcast master plusplus))
+  def queue(%Podcast{slug: "podcast", is_meta: false}) do
+    queue_slugs(~w(interviews podcast master feed plusplus))
   end
 
   def queue(%Podcast{slug: "friends"}) do
-    queue_slugs(~w(friends podcast master plusplus))
+    queue_slugs(~w(friends podcast master feed plusplus))
   end
 
   def queue(%Podcast{slug: "news"}) do
-    queue_slugs(~w(news podcast master plusplus))
+    queue_slugs(~w(news podcast master feed plusplus))
   end
 
   def queue(%Podcast{slug: slug}) do
-    queue_slugs(~w(#{slug} master plusplus))
+    queue_slugs(~w(#{slug} master feed plusplus))
   end
 
   def queue(%Post{}) do
-    queue_slugs(~w(posts))
+    queue_slugs(~w(posts feed))
   end
 
   def queue(_), do: nil
