@@ -31,9 +31,9 @@ export default class OnsitePlayer {
     this.art = this.container.find(".js-player-art");
     this.nowPlaying = this.container.find(".js-player-now-playing");
     this.title = this.container.find(".js-player-title");
-    this.prevNumber = this.container.find(".js-player-prev-number");
+    this.prevChapter = this.container.find(".js-player-prev-chapter");
     this.prevButton = this.container.find(".js-player-prev-button");
-    this.nextNumber = this.container.find(".js-player-next-number");
+    this.nextChapter = this.container.find(".js-player-next-chapter");
     this.nextButton = this.container.find(".js-player-next-button");
     this.scrubber = this.container.find(".js-player-scrubber");
     this.track = this.container.find(".js-player-track");
@@ -52,6 +52,8 @@ export default class OnsitePlayer {
 
   attachEvents() {
     this.playButton.handle("click", _ => { this.togglePlayPause(); });
+    this.prevButton.handle("click", _ => { this.chapterSelect.first().value = this.chapter - 1; this.chapterSelect.trigger("change"); });
+    this.nextButton.handle("click", _ => { this.chapterSelect.first().value = this.chapter + 1; this.chapterSelect.trigger("change"); });
     this.backButton.handle("click", _ => { this.seekBy(-15); });
     this.forwardButton.handle("click", _ => { this.seekBy(15); });
     this.scrubber.on("input", event => { this.scrub(event.target.value); });
@@ -67,7 +69,7 @@ export default class OnsitePlayer {
     this.audio.onPlay(event => { this.playUI(); });
     this.audio.onPause(event => { this.pauseUI(); });
     this.audio.onEnd(event => { this.log(`100% Played`); this.close(); });
-    this.chapterSelect.handle("change", event => { this.changeChapter(event.target.value); });
+    this.chapterSelect.handle("change", event => { this.changeChapter(event.target.value, true); });
   }
 
   attachKeyboardShortcuts() {
@@ -220,6 +222,7 @@ export default class OnsitePlayer {
   // begins the process of fetching details, loading audio
   load(detailsUrl, andThen) {
     this.episode = null;
+    this.chapter = null;
     this.state.loaded = null;
     this.resetUI();
     this.playButton.addClass("is-loading");
@@ -267,24 +270,6 @@ export default class OnsitePlayer {
     this.scrubber.attr("max", this.episode.duration());
     this.speedButton.html(`[${this.state.speed}X]`);
 
-    if (this.episode.hasPrev()) {
-      this.prevNumber.text(this.episode.prevNumber());
-      this.prevButton.attr("title", "Listen to " + this.episode.prevTitle());
-      this.prevButton.attr("href", this.episode.prevAudio());
-      this.prevButton.data("play", this.episode.prevLocation());
-    } else {
-      this.resetPrevUI();
-    }
-
-    if (this.episode.hasNext()) {
-      this.nextNumber.text(this.episode.nextNumber());
-      this.nextButton.attr("title", "Listen to " + this.episode.nextTitle());
-      this.nextButton.attr("href", this.episode.nextAudio());
-      this.nextButton.data("play", this.episode.nextLocation());
-    } else {
-      this.resetNextUI();
-    }
-
     if (this.episode.hasChapters()) {
       let options = "";
       let chapters = this.episode.chapterList();
@@ -295,7 +280,13 @@ export default class OnsitePlayer {
 
       this.chapterSelect.html(options);
       this.chapterSelect.removeClass("is-hidden");
+      this.chapter = 1;
+    } else {
+      this.chapter = null;
     }
+
+    this.updatePrevChapter();
+    this.updateNextChapter();
   }
 
   log(action) {
@@ -309,24 +300,10 @@ export default class OnsitePlayer {
     this.duration.text("0:00");
     this.playButton.first().removeAttribute("data-loaded");
     this.copyUrlButton.attr("href", "");
-    this.resetPrevUI();
-    this.resetNextUI();
     this.scrubber.first().value = 0;
     this.track.first().style.width = "0%";
     this.chapterSelect.html("");
     this.chapterSelect.addClass("is-hidden");
-  }
-
-  resetPrevUI() {
-    this.prevNumber.text("");
-    this.prevButton.first().removeAttribute("href");
-    this.prevButton.first().removeAttribute("data-play");
-  }
-
-  resetNextUI() {
-    this.nextNumber.text("");
-    this.nextButton.first().removeAttribute("href");
-    this.nextButton.first().removeAttribute("data-play");
   }
 
   setState(key, value) {
@@ -381,25 +358,75 @@ export default class OnsitePlayer {
     }
   }
 
-  changeChapter(chapterNumber) {
+  hasPrevChapter() {
+    return (this.episode.hasChapters() && this.chapter > 1);
+  }
+
+  hasNextChapter() {
+    return (this.episode.hasChapters() && this.chapter < this.episode.chapterList().length);
+  }
+
+  changeChapter(chapterNumber, shouldScrub) {
     let newChapter = this.episode.chapterList().find(chapter => {
-      return chapter.number == chapterNumber
+      return parseInt(chapter.number, 10) == parseInt(chapterNumber, 10);
     });
 
-    if (newChapter) {
-      this.scrubEnd(newChapter.startTime);
+    if (newChapter && newChapter.number != this.chapter) {
+      this.chapter = parseInt(chapterNumber, 10);
+      this.updateChaptersTable();
+      this.updatePrevChapter();
+      this.updateNextChapter();
+
+      if (shouldScrub) {
+        this.scrubEnd(newChapter.startTime);
+      }
     }
   }
 
   updateChapter(newTime) {
     if (this.episode.hasChapters()) {
       let currentChapter = this.episode.chapterList().find(chapter => {
-        return chapter.startTime <= newTime && chapter.endTime >= newTime
+        return chapter.startTime <= newTime && chapter.endTime > newTime
       })
 
-      if (currentChapter) {
-        this.chapterSelect.first().value = currentChapter.number;
+      if (currentChapter && currentChapter.number != this.chapter) {
+        this.changeChapter(currentChapter.number, false);
+      } else {
+        this.updateChaptersTable();
+        this.updatePrevChapter();
+        this.updateNextChapter();
       }
+    }
+  }
+
+  updateChaptersTable() {
+    u(`tr[data-chapter='${this.episode.id()}-${this.chapter}']`).addClass("is-active");
+    u(`tr:not([data-chapter='${this.episode.id()}-${this.chapter}'])`).removeClass("is-active");
+  }
+
+  updatePrevChapter() {
+    if (this.hasPrevChapter()) {
+      let prevChapter = this.chapter - 1;
+      this.prevChapter.text(`#${prevChapter}`);
+      this.prevButton.attr("title", `Skip to Chapter ${prevChapter}`);
+      this.prevButton.addClass("is-active");
+    } else {
+      this.prevChapter.text("");
+      this.prevButton.attr("title", "");
+      this.prevButton.removeClass("is-active");
+    }
+  }
+
+  updateNextChapter() {
+    if (this.hasNextChapter()) {
+      let nextChapter = this.chapter + 1;
+      this.nextChapter.text(`#${nextChapter}`);
+      this.nextButton.attr("title", `Skip to Chapter ${nextChapter}`);
+      this.nextButton.addClass("is-active");
+    } else {
+      this.nextChapter.text("");
+      this.nextButton.attr("title", "");
+      this.nextButton.removeClass("is-active");
     }
   }
 

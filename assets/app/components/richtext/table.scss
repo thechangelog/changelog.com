@@ -47,6 +47,10 @@
 
       &:nth-child(2n) { background-color: $lightest-grey; }
     }
+
+    tr.is-active {
+      border: 1px solid $black;
+    }
   }
 
   tfoot {

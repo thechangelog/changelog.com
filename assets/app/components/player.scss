@@ -249,8 +249,8 @@
   &--back15 { background-image: url("../images/icons/player-prev-15.svg"); }
   &--forward15 { background-image: url("../images/icons/player-next-15.svg"); }
 
-  &--next_episode,
-  &--prev_episode {
+  &--next_chapter,
+  &--prev_chapter {
     background-color: transparent;
     justify-content: space-around;
     line-height: 1.25rem;
@@ -262,8 +262,8 @@
     transform: scaleX(-1);
   }
 
-  &--next_episode:not([data-play]),
-  &--prev_episode:not([data-play]) {
+  &--next_chapter:not(.is-active),
+  &--prev_chapter:not(.is-active) {
     filter: brightness(50%);
     cursor: default;
   }

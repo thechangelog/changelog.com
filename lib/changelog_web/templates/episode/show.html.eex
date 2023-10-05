@@ -145,7 +145,7 @@
             </thead>
             <tbody>
             <%= for {chapter, index} <- Enum.with_index(@episode.audio_chapters, 1) do %>
-              <tr>
+              <tr data-chapter="<%= @episode.id %>-<%= index %>">
                 <td style="width: 5%"><%= index %></td>
                 <td style="width: 10%">
                   <a href="#t=<%= round(chapter.starts_at) %>" title="Play episode starting at '<%= chapter.title %>'"><%= TimeView.duration(chapter.starts_at) %></a>

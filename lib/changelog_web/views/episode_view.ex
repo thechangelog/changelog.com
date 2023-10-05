@@ -263,43 +263,19 @@ defmodule ChangelogWeb.EpisodeView do
     }
   end
 
-  def render("play.json", %{podcast: podcast, episode: episode, prev: prev, next: next}) do
-    info = %{
+  def render("play.json", %{podcast: podcast, episode: episode}) do
+    %{
+      id: episode.id,
       podcast: podcast.name,
       title: episode.title,
       number: number(episode),
+      slug: episode.slug,
       duration: episode.audio_duration,
       art_url: PodcastView.cover_url(podcast, :medium),
       audio_url: audio_url(episode),
       chapters: chapters_json(episode.audio_chapters),
       share_url: share_url(episode)
     }
-
-    info =
-      if prev do
-        Map.put(info, :prev, %{
-          number: prev.slug,
-          title: prev.title,
-          location: Routes.episode_path(Endpoint, :play, podcast.slug, prev.slug),
-          audio_url: audio_url(prev)
-        })
-      else
-        info
-      end
-
-    info =
-      if next do
-        Map.put(info, :next, %{
-          number: next.slug,
-          title: next.title,
-          location: Routes.episode_path(Endpoint, :play, podcast.slug, next.slug),
-          audio_url: audio_url(next)
-        })
-      else
-        info
-      end
-
-    info
   end
 
   def render("share.json", %{podcast: _podcast, episode: episode}) do

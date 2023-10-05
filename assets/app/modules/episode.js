@@ -16,10 +16,6 @@ export default class Episode {
   }
 
   constructor(data) {
-    this.prev = data.prev;
-    this.next = data.next;
-    delete data.prev;
-    delete data.nex;
     this.ep = data;
   }
 
@@ -48,28 +44,8 @@ export default class Episode {
     return !!this.ep.chapters.length;
   }
 
-  hasPrev() {
-    return !!this.prev;
-  }
-
-  hasNext() {
-    return !!this.next;
-  }
-
-  nextNumber() {
-    return `#${this.next.number}`;
-  }
-
-  nextTitle() {
-    return this.next.title;
-  }
-
-  nextLocation() {
-    return this.next.location;
-  }
-
-  nextAudio() {
-   return this.next.audio_url;
+  id() {
+    return this.ep.id;
   }
 
   nowPlaying() {
@@ -82,22 +58,6 @@ export default class Episode {
 
   podcastName() {
     return this.ep.podcast;
-  }
-
-  prevNumber() {
-    return `#${this.prev.number}`;
-  }
-
-  prevTitle() {
-    return this.prev.title;
-  }
-
-  prevAudio() {
-   return this.prev.audio_url;
-  }
-
-  prevLocation() {
-    return this.prev.location;
   }
 
   shareUrl() {

@@ -64,31 +64,9 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.preload_podcast()
       |> Repo.get_by!(slug: slug)
 
-    prev =
-      assoc(podcast, :episodes)
-      |> Episode.published()
-      |> Episode.with_numbered_slug()
-      |> Episode.newest_first()
-      |> Episode.previous_to(episode)
-      |> Episode.limit(1)
-      |> Episode.preload_podcast()
-      |> Repo.one()
-
-    next =
-      assoc(podcast, :episodes)
-      |> Episode.published()
-      |> Episode.with_numbered_slug()
-      |> Episode.newest_last()
-      |> Episode.next_after(episode)
-      |> Episode.limit(1)
-      |> Episode.preload_podcast()
-      |> Repo.one()
-
     conn
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
-    |> assign(:prev, prev)
-    |> assign(:next, next)
     |> render("play.json")
   end
 
