@@ -159,16 +159,16 @@ body {
         margin: 10px 0;
       }
     }
-    code {
-      background-color: #f8f8f8;
-      border: 1px solid #eaeaea;
-      border-radius: 3px;
-      color: inherit;
-      font-family: $roboto-mono;
-      font-size: 12px;
-      margin: 0 2px;
-      padding: 2px 5px;
-    }
+  }
+  p code, li code {
+    background-color: #f8f8f8;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+    color: inherit;
+    font-family: $roboto-mono;
+    font-size: 12px;
+    margin: 0 2px;
+    padding: 2px 5px;
   }
   em {
     font-style: italic;
@@ -295,11 +295,9 @@ body {
       }
     }
 
-    p {
-      code {
-        background-color: #333333;
-        border: 1px solid #212121;
-      }
+    p code, li code {
+      background-color: #333333;
+      border: 1px solid #212121;
     }
   }
 
