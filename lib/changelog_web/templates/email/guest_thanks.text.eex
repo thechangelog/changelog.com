@@ -6,18 +6,7 @@ Your episode of <%= @podcast.name %> is now live! Here's where it lives on the w
 
 And here's what's next.
 
-
-#### 1. You get free merch ####
-
-This is our gift to you as a thanks for your time and all you do for the community.
-
-- Visit our Merch Store (https://merch.changelog.com)
-- Pick a shirt you want (or anything really)
-- Use coupon code <%= @discount_code %> at checkout
-- Keep your order at $0 for free shipping!
-
-
-#### 2. Please share the episode ####
+#### 1. Please share the episode ####
 
 If you have a website and/or blog where you can link to the show, we'd greatly appreciate you taking the time to do so. Here’s an embed snippet you can use so folks can listen to the episode without leaving your site:
 
@@ -26,16 +15,27 @@ If you have a website and/or blog where you can link to the show, we'd greatly a
 (You can see it in action on the HashiCorp blog: https://www.hashicorp.com/blog/vault-on-the-changelog-podcast.html)
 
 
-#### 3. Recommend a guest ####
+#### 2. Recommend a guest ####
 
 Over the years we've learned that the best guests are often recommended to us from past guests like yourself. Do you know someone who you think would be great on <%= @podcast.name %>? Hit reply and let us know. They'll thank you later... and we'll thank you right away.
 
 
-#### 4. Plug in to Changelog News ####
+#### 3. Plug in to Changelog News ####
 
 Are you aware of Changelog News? It's our podcast + newsletter combo featuring all developer news worth your attention. Submit here (https://changelog.com/submit) when you have future news/announcements. We'd be happy to help you spread the word.
 
 Oh, and get it in your inbox weekly right here (https://changelog.com/news).
+
+<%= if Podcast.gives_free_shirt(@podcast) do %>
+#### 4. You get free merch ####
+
+This is our gift to you as a thanks for your time and all you do for the community.
+
+- Visit our Merch Store (https://merch.changelog.com)
+- Pick a shirt you want (or anything really)
+- Use coupon code <%= @discount_code %> at checkout
+- Keep your order at $0 for free shipping!
+<% end %>
 
 ---
 

@@ -43,11 +43,16 @@ defmodule Changelog.EpisodeGuest do
   end
 
   def thanks(episode_guest = %{discount_code: ""}) do
-    code =
+    episode_guest = preload_episode(episode_guest)
+    podcast = episode_guest.episode.podcast
+    code = if Changelog.Podcast.gives_free_shirt(podcast) do
       case Merch.create_discount(thanks_code(episode_guest), "-28.0") do
         {:ok, dc} -> dc.code
         {:error, _} -> ""
       end
+    else
+      ""
+    end
 
     episode_guest
     |> changeset(%{thanks: true, discount_code: code})

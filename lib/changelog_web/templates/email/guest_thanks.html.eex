@@ -4,7 +4,24 @@
 
     <p>Your episode of <em><%= @podcast.name %></em> is now live! <%= link("Here's where it lives", to: EpisodeView.share_url(@episode)) %> on the web and <mark>here's what's next</mark>. 👇</p>
 
-    <h3>1. You get free merch 🎁</h3>
+    <h3>1. Please share the episode 💚</h3>
+
+    <p>If you have a website and/or blog where you can link to the show, <mark>we'd greatly appreciate</mark> you taking the time to do so. Here’s an embed snippet you can use so folks can listen to the episode without leaving your site:</p>
+
+    <pre><%= EpisodeView.embed_code(@episode) %></pre>
+
+    <p><em>(See it in action on the <a href="https://blog.npmjs.org/post/182374655445/on-building-npm-and-hiring-a-ceo-founders-talk">npm blog</a> and the <a href="https://plausible.io/blog/changelog-podcast">Plausible Analytics</a> blog)</em></p>
+
+    <h3>2. Recommend a guest ✨</h3>
+
+    <p>Over the years we've learned that the best guests are often recommended to us from past guests like yourself. Do you know <mark>someone who you think would be great</mark> on <em><%= @podcast.name %></em>? Hit reply and let us know. They'll thank you later... and we'll thank you right away. 😉</p>
+
+    <h3>3. Plug in to Changelog News 🗞️</h3>
+
+    <p>Are you aware of <a href="https://changelog.com/news">Changelog News</a>? It's our podcast + newsletter combo featuring all developer news worth your attention. Submit <a href="https://changelog.com/submit">right here</a> when you have future news/announcements. We'd be happy to help you spread the word.</p>
+
+  <%= if Changelog.Podcast.gives_free_shirt(@podcast) do %>
+    <h3>4. You get free merch 🎁</h3>
 
     <p>This is our gift to you as a thanks for your time and all you do for the community.</p>
 
@@ -14,22 +31,7 @@
     <li>Use coupon code <mark><strong><%= @discount_code %></strong></mark> at checkout</li>
     <li>Keep your order at $0 for free shipping!</li>
     </ol>
-
-    <h3>2. Please share the episode 💚</h3>
-
-    <p>If you have a website and/or blog where you can link to the show, <mark>we'd greatly appreciate</mark> you taking the time to do so. Here’s an embed snippet you can use so folks can listen to the episode without leaving your site:</p>
-
-    <pre><%= EpisodeView.embed_code(@episode) %></pre>
-
-    <p><em>(See it in action on the <a href="https://blog.npmjs.org/post/182374655445/on-building-npm-and-hiring-a-ceo-founders-talk">npm blog</a> and the <a href="https://plausible.io/blog/changelog-podcast">Plausible Analytics</a> blog)</em></p>
-
-    <h3>3. Recommend a guest ✨</h3>
-
-    <p>Over the years we've learned that the best guests are often recommended to us from past guests like yourself. Do you know <mark>someone who you think would be great</mark> on <em><%= @podcast.name %></em>? Hit reply and let us know. They'll thank you later... and we'll thank you right away. 😉</p>
-
-    <h3>4. Plug in to Changelog News 🗞️</h3>
-
-    <p>Are you aware of <a href="https://changelog.com/news">Changelog News</a>? It's our podcast + newsletter combo featuring all developer news worth your attention. Submit <a href="https://changelog.com/submit">right here</a> when you have future news/announcements. We'd be happy to help you spread the word.</p>
+  <% end %>
 
     <hr/>
 

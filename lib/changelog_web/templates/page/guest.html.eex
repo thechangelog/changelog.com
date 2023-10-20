@@ -104,7 +104,9 @@
     <ul>
       <li>Receive an email when the show is published 📥</li>
       <li>Help share and promote the episode 🗣</li>
+    <%= if Podcast.gives_free_shirt(@podcast) do %>
       <li>Get an awesome <a href="https://merch.changelog.com" title="Changelog Merch">t-shirt</a> as a thanks from us ✊</li>
+    <% end %>
     </ul>
 
     <p>Please do <mark>share your episode</mark>. You put a lot of effort in to what you do and we want to see its impact maximized. Our guests' favorite places to share their show:</p>
