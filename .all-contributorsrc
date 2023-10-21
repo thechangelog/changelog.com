@@ -404,10 +404,20 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "gorosgobe",
+      "name": "Pablo Gorostiaga",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26676483?v=4",
+      "profile": "https://github.com/gorosgobe",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
