@@ -404,10 +404,20 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "patHyatt",
+      "name": "Patrick Hyatt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/296125?v=4",
+      "profile": "http://www.patrickhyatt.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
