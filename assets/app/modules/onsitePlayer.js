@@ -473,7 +473,7 @@ export default class OnsitePlayer {
   }
 
   copyUrlToClipboard(event) {
-    if (!"execCommand" in document) return event;
+    if (!("execCommand" in document)) return event;
 
     event.preventDefault();
     event.stopPropagation();
