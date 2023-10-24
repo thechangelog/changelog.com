@@ -6,9 +6,9 @@ defmodule Changelog.HTTP do
 
   @options [ssl: [{:middlebox_comp_mode, false}]]
 
-  def request(method, body \\ "", headers \\ [], options \\ []) do
-    case HTTPoison.request(method, body, headers, options) do
-      {:error, _} -> HTTPoison.request(method, body, headers, with_shared_options(options))
+  def request(method, url, body \\ "", headers \\ [], options \\ []) do
+    case HTTPoison.request(method, url, body, headers, options) do
+      {:error, _} -> HTTPoison.request(method, url, body, headers, with_shared_options(options))
       response -> response
     end
   end

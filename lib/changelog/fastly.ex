@@ -137,8 +137,9 @@ defmodule Changelog.Fastly do
   end
 
   def purge(url) do
+    auth = Application.get_env(:changelog, :fastly_token)
     %{path: path, host: host} = URI.parse(url)
     Logger.info("Fastly: Purging #{url}")
-    HTTP.request(:purge, endpoint(path), "", host: host)
+    HTTP.request(:purge, endpoint(path), "", [{"Host", host}  , {"Fastly-Key", auth}])
   end
 end
