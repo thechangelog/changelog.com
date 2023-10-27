@@ -1,0 +1,7 @@
+<div class="show-header-subscribe">
+  <div class="show-header-subscribe-buttons">
+    <%= link("Spotify", to: spotify_url(@album), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--spotify", title: "Listen on Spotify") %>
+    <%= link("Apple Music", to: apple_music_url(@album), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple-music", title: "Listen on Apple Music") %>
+    <%= link("Bandcamp", to: @album.bandcamp_url, class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--bandcamp", title: "Buy on Bandcamp") %>
+  </div>
+</div>

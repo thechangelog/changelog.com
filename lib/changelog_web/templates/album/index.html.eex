@@ -1,0 +1,12 @@
+<div class="page_podcasts">
+  <section class="show_list">
+    <header class="show_list-header">
+      <h2>Changelog Beats</h2>
+      <p>If you’ve been head-nodding to the beats during our shows and wishing for a way to listen outside of the pods, then these albums will be an absolute delight. Stream or purchase, either works for us!</p>
+      <p>In collaboration with our beat freak in residence: the mysterious <a href="https://en.wikipedia.org/wiki/Breakmaster_Cylinder">Breakmaster Cylinder</a>!</p>
+    </header>
+    <div class="show_list-shows">
+      <%= render_many(@albums, __MODULE__, "_summary.html", assigns) %>
+    </div>
+  </section>
+</div>

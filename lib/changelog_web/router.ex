@@ -257,6 +257,9 @@ defmodule ChangelogWeb.Router do
     get "/request/:slug", EpisodeRequestController, :new, as: :episode_request
     post "/request", EpisodeRequestController, :create, as: :episode_request
 
+    get "/beats", AlbumController, :index, as: :album
+    get "/beats/:slug", AlbumController, :show, as: :album
+
     get "/podcasts", PodcastController, :index, as: :podcast
 
     for subpage <- ~w(popular recommended)a do
