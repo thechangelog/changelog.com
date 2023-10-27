@@ -7,22 +7,25 @@
         <div class="header-nav-wrap">
           <ul class="header-nav-primary header-nav-list">
             <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["page-index", "podcast"]) %>">
-              <%= link("Podcasts", to: "/", title: "Changelog Podcasts") %>
+              <%= link("Podcasts", to: ~p"/", title: "Changelog Podcasts") %>
+            </li>
+            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["album-index", "album"]) %>">
+              <%= link("Beats", to: ~p"/beats", title: "Changelog Beats") %>
             </li>
             <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["post"]) %>">
-              <%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %>
+              <%= link("Posts", to: ~p"/posts", title: "Changelog Posts") %>
             </li>
             <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["page-community", "person-join"]) %>">
-              <%= link("Community", to: Routes.page_path(@conn, :community), title: "Changelog Community") %>
+              <%= link("Community", to: ~p"/community", title: "Changelog Community") %>
             </li>
           <%= if !@current_user do %>
             <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["person-subscribe"]) %>">
-              <%= link("Subscribe", to: Routes.person_path(@conn, :subscribe)) %>
+              <%= link("Subscribe", to: ~p"/subscribe") %>
             </li>
           <% end %>
           <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
             <li class="header-nav-list-item header-nav-list-item--ten">
-              <a href="<%= Routes.page_path(@conn, :++) %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a>
+              <a href="<%= ~p"/++" %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a>
             </li>
           <% end %>
           </ul>
@@ -30,10 +33,10 @@
           <div class="header-nav-secondary">
             <ul class="header-nav-list">
               <li class="header-nav-list-item header-nav-list-item--live is-hidden <%= SharedHelpers.active_class(@conn, ["live"]) %> js-live-indicator">
-                <%= link("Live", to: Routes.live_path(@conn, :index), title: "Listen Live") %>
+                <%= link("Live", to: ~p"/live", title: "Listen Live") %>
               </li>
               <li class="header-nav-list-item is-desktop_only">
-                <%= link("Submit News", to: Routes.news_item_path(@conn, :new), class: "header-button", title: "Submit News") %>
+                <%= link("Submit News", to: ~p"/news/submit", class: "header-button", title: "Submit News") %>
               </li>
             </ul>
 
@@ -46,14 +49,14 @@
               <div class="tooltip-wrap">
                 <ul class="tooltip-list">
                   <%= if Policies.Admin.Page.index(@current_user) do %>
-                    <li><%= link("Admin", to: Routes.admin_page_path(@conn, :index), data: [turbolinks: "false"]) %></li>
+                    <li><%= link("Admin", to: ~p"/admin", data: [turbolinks: "false"]) %></li>
                   <% end %>
                 <%= if @current_user.public_profile do %>
                   <li><%= link("My Profile", to: PersonView.profile_path(@current_user)) %></li>
                 <% end %>
-                  <li><%= link("My Subscriptions", to: Routes.home_path(@conn, :show)) %></li>
-                  <li><%= link("Profile Settings", to: Routes.home_path(@conn, :profile)) %></li>
-                  <li><%= link("Account Settings", to: Routes.home_path(@conn, :account)) %></li>
+                  <li><%= link("My Subscriptions", to: ~p"/~") %></li>
+                  <li><%= link("Profile Settings", to: ~p"/~/profile") %></li>
+                  <li><%= link("Account Settings", to: ~p"/~/account") %></li>
                 </ul>
                 <div class="tooltip-footer">
                   <%= link("Sign Out", to: Routes.sign_out_path(@conn, :delete)) %>
@@ -62,7 +65,7 @@
             </div>
           <% else %>
             <ul class="header-nav-list">
-              <li class="header-nav-list-item"><%= link("Sign In", to: Routes.sign_in_path(@conn, :new), class: "header-button", title: "Sign In") %></li>
+              <li class="header-nav-list-item"><%= link("Sign In", to: ~p"/in", class: "header-button", title: "Sign In") %></li>
             </ul>
           <% end %>
 
@@ -88,20 +91,21 @@
       <div class="mobile_nav-main-inner">
         <p class="mobile_nav-logo"><%= link("Changelog", to: "/", title: "Go $HOME") %></p>
         <ul class="mobile_nav-list">
-          <li class="mobile_nav-list-item"><%= link("Podcasts", to: Routes.podcast_path(@conn, :index)) %></li>
-          <li class="mobile_nav-list-item"><%= link("Posts", to: Routes.post_path(@conn, :index)) %></li>
-          <li class="mobile_nav-list-item"><%= link("Community", to: Routes.page_path(@conn, :community)) %></li>
+          <li class="mobile_nav-list-item"><%= link("Podcasts", to: ~p"/podcasts") %></li>
+          <li class="mobile_nav-list-item"><%= link("Beats", to: ~p"/beats") %></li>
+          <li class="mobile_nav-list-item"><%= link("Posts", to: ~p"/posts") %></li>
+          <li class="mobile_nav-list-item"><%= link("Community", to: ~p"/community") %></li>
         <%= if !@current_user do %>
-          <li class="mobile_nav-list-item"><%= link("Subscribe", to: Routes.person_path(@conn, :subscribe)) %></li>
+          <li class="mobile_nav-list-item"><%= link("Subscribe", to: ~p"/subscribe") %></li>
         <% end %>
-          <li class="mobile_nav-list-item"><a href="<%= Routes.page_path(@conn, :++) %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a></li>
-          <li class="mobile_nav-list-item"><%= link("Submit News", to: Routes.news_item_path(@conn, :new)) %></li>
+          <li class="mobile_nav-list-item"><a href="<%= ~p"/++" %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a></li>
+          <li class="mobile_nav-list-item"><%= link("Submit News", to: ~p"/news/submit") %></li>
         </ul>
       </div>
     </div>
 
     <div class="mobile_nav-bottom">
-      <form action="<%= Routes.search_path(@conn, :search) %>" method="get" class="mobile_nav-search search-form">
+      <form action="<%= ~p"/search" %>" method="get" class="mobile_nav-search search-form">
         <input name="q" type="text" placeholder="Search Changelog" aria-label="Search">
       </form>
     </div>

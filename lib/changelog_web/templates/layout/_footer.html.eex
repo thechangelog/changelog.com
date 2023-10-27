@@ -43,13 +43,13 @@
   </nav>
   <nav class="footer-nav">
     <div class="footer-nav-list">
-      <h4><%= link("Podcasts", to: Routes.podcast_path(@conn, :index), title: "View all podcasts") %></h4>
+      <h4><%= link("Podcasts", to: ~p"/podcasts", title: "View all podcasts") %></h4>
       <ul>
       <%= for podcast <- @podcasts do %>
-        <li><%= link(podcast.name, to: Routes.podcast_path(@conn, :show, podcast.slug), title: podcast.name) %></li>
+        <li><%= link(podcast.name, to: ~p"/#{podcast.slug}", title: podcast.name) %></li>
       <% end %>
         <li>---</li>
-        <li><%= link("Master", to: Routes.podcast_path(@conn, :show, :master), title: "Master feed") %></li>
+        <li><%= link("Master", to: ~p"/master", title: "Master feed") %></li>
 
       </ul>
     </div>
@@ -68,21 +68,22 @@
       <h4>Community</h4>
       <ul>
         <li><%= link("Merch Shop", to: "https://merch.changelog.com", title: "Changelog's Merch Shop") %></li>
-        <li><%= link("Join the Community", to: Routes.page_path(@conn, :community), title: "Join the community") %></li>
-        <li><%= link("Code of Conduct", to: Routes.page_path(@conn, :coc), title: "Read the code of conduct") %></li>
+        <li><%= link("Join the Community", to: ~p"/community", title: "Join the community") %></li>
+        <li><%= link("Code of Conduct", to: ~p"/coc", title: "Read the code of conduct") %></li>
         <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
         <li>---</li>
-        <li><%= link("Request Episode", to: Routes.episode_request_path(@conn, :new), title: "Request an episode") %></li>
-        <li><%= link("Submit News", to: Routes.news_item_path(@conn, :new), title: "Submit news") %></li>
+        <li><%= link("Request Episode", to: ~p"/request", title: "Request an episode") %></li>
+        <li><%= link("Submit News", to: ~p"/news/submit", title: "Submit news") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
       <h4>Etc.</h4>
       <ul>
-        <li><%= link("Posts", to: Routes.post_path(@conn, :index), title: "Changelog Posts") %></li>
-        <li><%= link("Changelog Nightly", to: Routes.page_path(@conn, :nightly), title: "Changelog Nightly") %></li>
-        <li><%= link("Sponsor", to: Routes.page_path(@conn, :sponsor), title: "Sponsor Changelog") %></li>
-        <li><%= link("Search", to: Routes.search_path(@conn, :search), title: "Search Changelog") %></li>
+        <li><%= link("Beats", to: ~p"/beats", title: "Changelog Beats") %></li>
+        <li><%= link("Posts", to: ~p"/posts", title: "Changelog Posts") %></li>
+        <li><%= link("Changelog Nightly", to: ~p"/nightly", title: "Changelog Nightly") %></li>
+        <li><%= link("Sponsor", to: ~p"/sponsor", title: "Sponsor Changelog") %></li>
+        <li><%= link("Search", to: ~p"/search", title: "Search Changelog") %></li>
         <li><a href="https://github.com/thechangelog/changelog.com" title="Changelog.com source code">View Source</a></li>
         <li>---</li>
         <li><a href="https://github.com/thechangelog/changelog.com/issues/new" title="Report a Changelog.com issue">Report an Issue</a></li>
