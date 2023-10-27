@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Meta.Title do
   alias ChangelogWeb.{
+    AlbumView,
     AuthView,
     EpisodeView,
     EpisodeRequestView,
@@ -77,6 +78,12 @@ defmodule ChangelogWeb.Meta.Title do
 
   # Sign in
   defp title(%{view_module: AuthView}), do: "Sign In"
+
+  # Album index
+  defp title(%{view_module: AlbumView, view_template: "index.html"}), do: "Changelog Beats"
+
+  # Album show
+  defp title(%{view_module: AlbumView, view_template: "show.html", album: album}), do: "#{album.name} by Changelog Beats"
 
   # Source index
   defp title(%{view_module: NewsSourceView, view_template: "index.html"}), do: "All news sources"

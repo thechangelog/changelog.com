@@ -2,6 +2,7 @@ defmodule ChangelogWeb.Meta.Image do
   use ChangelogWeb, :verified_routes
 
   alias ChangelogWeb.{
+    AlbumView,
     Endpoint,
     Meta,
     NewsItemView,
@@ -38,6 +39,11 @@ defmodule ChangelogWeb.Meta.Image do
       topic = Enum.find(item.topics, & &1.icon) -> topic_image(topic)
       true -> item_type_image(item)
     end
+  end
+
+  # a specific album
+  defp get_image(%{view_module: AlbumView, album: album}) do
+    AlbumView.art_url(album, 512)
   end
 
   # a specific post

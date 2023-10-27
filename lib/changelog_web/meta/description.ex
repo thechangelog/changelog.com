@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Meta.Description do
   alias ChangelogWeb.{
+    AlbumView,
     EpisodeView,
     LiveView,
     Meta,
@@ -17,6 +18,11 @@ defmodule ChangelogWeb.Meta.Description do
     assigns = Meta.prep_assigns(conn)
     description(assigns)
   end
+
+  defp description(%{view_module: AlbumView, view_template: "index.html"}) do
+    "Original music by Breakmaster Cylinder that powers all Changelog podcasts"
+  end
+  defp description(%{view_module: AlbumView, album: album}), do: album.description
 
   defp description(%{view_module: EpisodeView, episode: episode}),
     do: episode.summary |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
