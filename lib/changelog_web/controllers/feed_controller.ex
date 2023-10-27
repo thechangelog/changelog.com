@@ -126,6 +126,8 @@ defmodule ChangelogWeb.FeedController do
   end
 
   def sitemap(conn, _params) do
+    albums = Changelog.Album.all()
+
     news_items =
       NewsItem.published()
       |> NewsItem.newest_first()
@@ -163,6 +165,7 @@ defmodule ChangelogWeb.FeedController do
 
     conn
     |> put_layout(false)
+    |> assign(:albums, albums)
     |> assign(:news_items, news_items)
     |> assign(:news_sources, news_sources)
     |> assign(:episodes, episodes)

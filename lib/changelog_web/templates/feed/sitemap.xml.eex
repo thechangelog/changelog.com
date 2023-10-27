@@ -1,58 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc><%= Routes.root_url(@conn, :index) %></loc><changefreq>always</changefreq></url>
-  <url><loc><%= Routes.page_url(@conn, :about) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :coc) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :contact) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :films) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :community) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :sponsor) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :sponsor_pricing) %></loc></url>
-  <url><loc><%= Routes.page_url(@conn, :nightly) %></loc></url>
-  <url><loc><%= Routes.person_url(@conn, :join) %></loc></url>
-  <url><loc><%= Routes.person_url(@conn, :subscribe) %></loc></url>
-  <url><loc><%= Routes.live_url(@conn, :index) %></loc></url>
+  <url><loc><%= url(~p"/") %></loc><changefreq>always</changefreq></url>
+  <url><loc><%= url(~p"/about") %></loc></url>
+  <url><loc><%= url(~p"/coc") %></loc></url>
+  <url><loc><%= url(~p"/contact") %></loc></url>
+  <url><loc><%= url(~p"/films") %></loc></url>
+  <url><loc><%= url(~p"/community") %></loc></url>
+  <url><loc><%= url(~p"/sponsor") %></loc></url>
+  <url><loc><%= url(~p"/sponsor/pricing") %></loc></url>
+  <url><loc><%= url(~p"/nightly") %></loc></url>
+  <url><loc><%= url(~p"/join") %></loc></url>
+  <url><loc><%= url(~p"/subscribe") %></loc></url>
+  <url><loc><%= url(~p"/live") %></loc></url>
+
+  <url><loc><%= url(~p"/beats") %></loc></url>
+  <%= for album <- @albums do %>
+    <url><loc><%= url(~p"/beats/#{album.slug}") %></loc></url>
+  <% end %>
 
 <%= for item <- @news_items do %>
-  <url><loc><%= Routes.news_item_url(@conn, :show, NewsItem.slug(item)) %></loc></url>
+  <url><loc><%= url(~p"/news/#{NewsItem.slug(item)}") %></loc></url>
 <% end %>
 
-  <url><loc><%= Routes.news_source_url(@conn, :index) %></loc></url>
+  <url><loc><%= url(~p"/sources") %></loc></url>
 <%= for source <- @news_sources do %>
-  <url><loc><%= Routes.news_source_url(@conn, :show, source.slug) %></loc></url>
+  <url><loc><%= url(~p"/source/#{source.slug}") %></loc></url>
 <% end %>
 
 <%= for person <- @people do %>
-  <url><loc><%= Routes.person_url(@conn, :show, person.handle) %></loc></url>
-  <url><loc><%= Routes.person_url(@conn, :news, person.handle) %></loc></url>
-  <url><loc><%= Routes.person_url(@conn, :podcasts, person.handle) %></loc></url>
+  <url><loc><%= url(~p"/person/#{person.handle}") %></loc></url>
+  <url><loc><%= url(~p"/person/#{person.handle}/news") %></loc></url>
+  <url><loc><%= url(~p"/person/#{person.handle}/podcasts") %></loc></url>
 <% end %>
 
-  <url><loc><%= Routes.podcast_url(@conn, :index) %></loc></url>
+  <url><loc><%= url(~p"/podcasts") %></loc></url>
 <%= for podcast <- @podcasts do %>
-  <url><loc><%= Routes.podcast_url(@conn, :show, podcast.slug) %></loc></url>
-  <url><loc><%= Routes.podcast_url(@conn, :popular, podcast.slug) %></loc></url>
-  <url><loc><%= Routes.podcast_url(@conn, :recommended, podcast.slug) %></loc></url>
+  <url><loc><%= url(~p"/#{podcast.slug}") %></loc></url>
+  <url><loc><%= url(~p"/#{podcast.slug}/popular") %></loc></url>
+  <url><loc><%= url(~p"/#{podcast.slug}/recommended") %></loc></url>
 <% end %>
 
-  <url><loc><%= Routes.episode_request_url(@conn, :new) %></loc></url>
+  <url><loc><%= url(~p"/request") %></loc></url>
 <%= for podcast <- @podcasts do %>
-  <url><loc><%= Routes.episode_request_url(@conn, :new, podcast.slug) %></loc></url>
+  <url><loc><%= url(~p"/request/#{podcast.slug}") %></loc></url>
 <% end %>
 
   <%= for episode <- @episodes do %>
-    <url><loc><%= Routes.episode_url(@conn, :show, episode.podcast.slug, episode.slug) %></loc></url>
+    <url><loc><%= url(~p"/#{episode.podcast.slug}/#{episode.slug}") %></loc></url>
   <% end %>
 
-  <url><loc><%= Routes.post_url(@conn, :index) %></loc></url>
+  <url><loc><%= url(~p"/posts") %></loc></url>
   <%= for post <- @posts do %>
-    <url><loc><%= Routes.post_url(@conn, :show, post.slug) %></loc></url>
+    <url><loc><%= url(~p"/posts/#{post.slug}") %></loc></url>
   <% end %>
 
-  <url><loc><%= Routes.topic_url(@conn, :index) %></loc></url>
+  <url><loc><%= url(~p"/topics") %></loc></url>
   <%= for topic <- @topics do %>
-    <url><loc><%= Routes.topic_url(@conn, :show, topic.slug) %></loc></url>
-    <url><loc><%= Routes.topic_url(@conn, :news, topic.slug) %></loc></url>
-    <url><loc><%= Routes.topic_url(@conn, :podcasts, topic.slug) %></loc></url>
+    <url><loc><%= url(~p"/topic/#{topic.slug}") %></loc></url>
+    <url><loc><%= url(~p"/topic/#{topic.slug}/news") %></loc></url>
+    <url><loc><%= url(~p"/topic/#{topic.slug}/podcasts") %></loc></url>
   <% end %>
 </urlset>
