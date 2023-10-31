@@ -5,7 +5,7 @@ on:
 
 jobs:
   run:
-    runs-on: self-hosted
+    runs-on: dagger-06x
     continue-on-error: true
     steps:
       - name: "Checkout code..."
