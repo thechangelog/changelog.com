@@ -40,11 +40,7 @@
     bottom: 0;
     left: 0;
     overflow: auto;
-    align-items: flex-start;
-
-    @media (min-width: $smartphone + 100) {
-      align-items: center;
-    }
+    align-items: center;
   }
 
   &-wrap {
