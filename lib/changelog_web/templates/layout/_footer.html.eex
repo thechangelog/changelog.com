@@ -38,6 +38,11 @@
             <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-instagram-black.svg"), "Instagram Icon", width: 20, height: 20) %>
           </a>
         </li>
+        <li>
+          <a href="https://www.tiktok.com/@changelog.com" title="Changelog on TikTok">
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-tiktok-black.svg"), "TikTok Icon", width: 20, height: 20) %>
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -62,6 +67,7 @@
         <li><%= link("GitHub", to: "https://github.com/thechangelog", title: "Changelog on GitHub") %></li>
         <li><%= link("YouTube", to: "https://www.youtube.com/changelog", title: "Changelog on YouTube") %></li>
         <li><%= link("Instagram", to: "https://www.instagram.com/changelog_", title: "Changelog on Instagram") %></li>
+        <li><%= link("TikTok", to: "https://www.tiktok.com/@changelog.com", title: "Changelog on TikTok") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
