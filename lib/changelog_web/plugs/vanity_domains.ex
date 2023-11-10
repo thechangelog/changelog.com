@@ -65,10 +65,6 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     determine_destination(pod, ["games"])
   end
 
-  defp determine_destination(%{slug: "jsparty"}, ["300"]) do
-    "https://changelog.typeform.com/to/NYraPxk0"
-  end
-
   defp determine_destination(podcast, parts) do
     # prevents infinite redirects back to vanity domain
     podcast = Map.delete(podcast, :vanity_domain)
