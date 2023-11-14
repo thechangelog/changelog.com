@@ -94,32 +94,16 @@ defmodule ChangelogWeb.Meta.Title do
   end
 
   # Topic index
-  defp title(%{view_module: TopicView, view_template: "index.html"}), do: "All news topics"
+  defp title(%{view_module: TopicView, view_template: "index.html"}), do: "All podcast topics"
 
-  # Topic show pages
-  defp title(%{view_module: TopicView, topic: topic, tab: "news"}) do
-    "Developer news about #{topic.name}"
-  end
-
-  defp title(%{view_module: TopicView, topic: topic, tab: "podcasts"}) do
-    "#{topic.name} podcasts for developers"
-  end
-
+  # Topic show page
   defp title(%{view_module: TopicView, topic: topic}) do
-    "#{topic.name} news and podcasts for developers"
+    "#{topic.name} podcast episodes"
   end
 
-  # Person show pages
-  defp title(%{view_module: PersonView, person: person, tab: "news"}) do
-    "News contributed by #{person.name}"
-  end
-
-  defp title(%{view_module: PersonView, person: person, tab: "podcasts"}) do
-    "#{person.name}'s podcast episodes On Changelog"
-  end
-
+  # Person show page
   defp title(%{view_module: PersonView, person: person}) do
-    "#{person.name} on Changelog"
+    "Podcast episodes featuring #{person.name}"
   end
 
   # Guest guide

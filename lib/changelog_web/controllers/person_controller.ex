@@ -75,59 +75,6 @@ defmodule ChangelogWeb.PersonController do
 
   def show(conn, params = %{"handle" => handle}) do
     person = Repo.get_by!(Person, handle: handle, public_profile: true)
-
-    episodes =
-      person
-      |> Person.participating_episode_ids()
-      |> Episode.with_ids()
-      |> Episode.published()
-      |> Episode.exclude_transcript()
-      |> Repo.all()
-
-    page =
-      person
-      |> NewsItem.with_person_or_episodes(episodes)
-      |> NewsItem.published()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> Repo.paginate(Map.put(params, :page_size, 20))
-
-    items =
-      page.entries
-      |> Enum.map(&NewsItem.load_object/1)
-
-    conn
-    |> assign(:person, person)
-    |> assign(:items, items)
-    |> assign(:page, page)
-    |> render(:show)
-  end
-
-  def news(conn, params = %{"handle" => handle}) do
-    person = Repo.get_by!(Person, handle: handle)
-
-    page =
-      NewsItem
-      |> NewsItem.with_person(person)
-      |> NewsItem.published()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> Repo.paginate(Map.put(params, :page_size, 20))
-
-    items =
-      page.entries
-      |> Enum.map(&NewsItem.load_object/1)
-
-    conn
-    |> assign(:person, person)
-    |> assign(:items, items)
-    |> assign(:page, page)
-    |> assign(:tab, "news")
-    |> render(:show)
-  end
-
-  def podcasts(conn, params = %{"handle" => handle}) do
-    person = Repo.get_by!(Person, handle: handle)
     episode_ids = Person.participating_episode_ids(person)
 
     page =
@@ -151,8 +98,19 @@ defmodule ChangelogWeb.PersonController do
     |> assign(:person, person)
     |> assign(:items, items)
     |> assign(:page, page)
-    |> assign(:tab, "podcasts")
     |> render(:show)
+  end
+
+  def news(conn, %{"handle" => handle}) do
+    conn
+    |> put_status(301)
+    |> redirect(to: ~p"/person/#{handle}")
+  end
+
+  def podcasts(conn, %{"handle" => handle}) do
+    conn
+    |> put_status(301)
+    |> redirect(to: ~p"/person/#{handle}")
   end
 
   def subscribe(conn = %{method: "GET"}, %{"to" => "weekly"}) do

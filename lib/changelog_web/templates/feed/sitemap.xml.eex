@@ -29,8 +29,6 @@
 
 <%= for person <- @people do %>
   <url><loc><%= url(~p"/person/#{person.handle}") %></loc></url>
-  <url><loc><%= url(~p"/person/#{person.handle}/news") %></loc></url>
-  <url><loc><%= url(~p"/person/#{person.handle}/podcasts") %></loc></url>
 <% end %>
 
   <url><loc><%= url(~p"/podcasts") %></loc></url>
@@ -57,7 +55,5 @@
   <url><loc><%= url(~p"/topics") %></loc></url>
   <%= for topic <- @topics do %>
     <url><loc><%= url(~p"/topic/#{topic.slug}") %></loc></url>
-    <url><loc><%= url(~p"/topic/#{topic.slug}/news") %></loc></url>
-    <url><loc><%= url(~p"/topic/#{topic.slug}/podcasts") %></loc></url>
   <% end %>
 </urlset>
