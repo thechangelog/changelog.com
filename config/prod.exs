@@ -70,7 +70,7 @@ config :changelog, Oban,
      crontab: [
        {"00 3 * * *", Changelog.ObanWorkers.SlackImporter},
        {"30 3 * * *", Changelog.ObanWorkers.Bouncer},
-       {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor},
+       # {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor},
        {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
      ]}
   ]
