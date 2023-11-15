@@ -10,6 +10,9 @@ defmodule Changelog.ObanWorkers.StatsProcessor do
   require Logger
 
   @impl Oban.Worker
+  def timeout(_job), do: 600_000
+
+  @impl Oban.Worker
   def perform(%Job{args: %{"date" => date, "podcast_id" => podcast_id}}) do
     date = Date.from_iso8601!(date)
     podcast = Repo.get!(Podcast, podcast_id)
@@ -24,6 +27,32 @@ defmodule Changelog.ObanWorkers.StatsProcessor do
     Podcast.update_stat_counts(podcast)
 
     {:ok, processed}
+  end
+
+  @doc """
+  This form will process all episodes for the current date and requeue itself
+  if the given date is in the past.
+  """
+  def perform(%Job{args: %{"date" => date}}) do
+    date = Date.from_iso8601!(date)
+    Logger.info "Called for #{date}"
+
+    podcast_ids =
+      Podcast.public()
+      |> select([p], p.id)
+      |> Repo.all()
+
+    for(id <- podcast_ids) do
+      Logger.info "Performing for #{date}: #{id}"
+      perform(%Oban.Job{args: %{"date" => Date.to_string(date), "podcast_id" => id}})
+    end
+
+    if is_in_past?(date) do
+      Logger.info "new job"
+      new(%{date: Date.add(date, 1)}) |> Oban.insert()
+    end
+
+    :ok
   end
 
   def perform(_job) do
@@ -45,8 +74,7 @@ defmodule Changelog.ObanWorkers.StatsProcessor do
     {:ok, jobs}
   end
 
-  @impl Oban.Worker
-  def timeout(_job), do: 600_000
+  defp is_in_past?(date), do: Timex.compare(date, Date.utc_today()) < 0
 
   defp process_episode(date, podcast, slug, entries) do
     if episode = Repo.get_by(Ecto.assoc(podcast, :episodes), slug: slug) do
