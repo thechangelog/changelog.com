@@ -3,7 +3,7 @@ defmodule Changelog.ObanWorkers.MailDeliverer do
   This module defines the Oban worker for delivering all email. We no longer use
   Bamboo's `deliver_later/1` function directly, using Oban instead.
   """
-  use Oban.Worker, queue: :email, unique: [fields: [:args, :queue], period: 60]
+  use Oban.Worker, queue: :email, unique: [fields: [:args, :queue], period: 60], max_attempts: 1
 
   alias Changelog.{Episode, EpisodeGuest, EpisodeRequest, Mailer, NewsItem,
     NewsItemComment, Newsletters, Person, Podcast, Repo, Subscription}

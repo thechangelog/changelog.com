@@ -64,13 +64,13 @@ config :elixir,
 
 config :changelog, Oban,
   plugins: [
-    {Oban.Plugins.Pruner, max_age: 300},
+    {Oban.Plugins.Pruner, max_age: 43_200}, # 12 hours
     {Oban.Plugins.Cron,
      timezone: "US/Central",
      crontab: [
        {"00 3 * * *", Changelog.ObanWorkers.SlackImporter},
        {"30 3 * * *", Changelog.ObanWorkers.Bouncer},
-       # {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor},
+       {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor},
        {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
      ]}
   ]
