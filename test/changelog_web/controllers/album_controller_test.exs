@@ -15,4 +15,9 @@ defmodule ChangelogWeb.AlbumControllerTest do
     conn = get(conn, ~p"/beats/theme-songs")
     assert html_response(conn, 200) =~ "Theme Songs"
   end
+
+  test "getting a non-existent album page", %{conn: conn} do
+    conn = get(conn, ~p"/beats/not-real")
+    assert conn.status == 404
+  end
 end

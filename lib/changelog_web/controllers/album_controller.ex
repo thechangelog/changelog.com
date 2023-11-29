@@ -10,10 +10,12 @@ defmodule ChangelogWeb.AlbumController do
   end
 
   def show(conn, %{"slug" => slug}) do
-    album = Album.get_by_slug(slug)
-
-    conn
-    |> assign(:album, album)
-    |> render(:show)
+    if album = Album.get_by_slug(slug) do
+      conn
+      |> assign(:album, album)
+      |> render(:show)
+    else
+      send_resp(conn, :not_found, "")
+    end
   end
 end
