@@ -35,7 +35,7 @@ defmodule ChangelogWeb.Plug.Conn do
       |> get_header("referer", "")
       |> URI.parse()
 
-    if referer.host == conn.host do
+    if referer.host == get_host(conn) do
       referer
       |> Map.merge(%{authority: nil, host: nil, scheme: nil, port: nil})
       |> URI.to_string()
