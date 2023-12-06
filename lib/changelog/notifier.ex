@@ -29,7 +29,7 @@ defmodule Changelog.Notifier do
   end
 
   def notify(item = %NewsItem{status: :declined}) do
-    if item.decline_message && item.decline_message != "" do
+    if StringKit.present?(item.message) do
       item
       |> NewsItem.preload_all()
       |> deliver_submitter_decline_email()
@@ -53,7 +53,7 @@ defmodule Changelog.Notifier do
   end
 
   def notify(request = %EpisodeRequest{status: :declined}) do
-    if StringKit.present?(request.decline_message) do
+    if StringKit.present?(request.message) do
       request
       |> EpisodeRequest.preload_all()
       |> deliver_request_decline_email()
@@ -61,7 +61,7 @@ defmodule Changelog.Notifier do
   end
 
   def notify(request = %EpisodeRequest{status: :failed}) do
-    if StringKit.present?(request.decline_message) do
+    if StringKit.present?(request.message) do
       request
       |> EpisodeRequest.preload_all()
       |> deliver_request_fail_email()

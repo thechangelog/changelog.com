@@ -4,7 +4,7 @@
 
     <p>Sadly, your Changelog News submission was <strong>declined</strong>. Here's a message from the team with more on the decision:</p>
 
-    <p><blockquote><%= @item.decline_message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
+    <p><blockquote><%= @item.message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
 
     <p>If there's more to say or our message requested a response, feel free to reply.</p>
 

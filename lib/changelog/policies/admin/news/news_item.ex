@@ -2,6 +2,7 @@ defmodule Changelog.Policies.Admin.NewsItem do
   use Changelog.Policies.Default
 
   def create(actor), do: is_admin(actor) || is_editor(actor)
+  def accept(actor), do: is_admin(actor)
   def index(actor), do: is_admin(actor) || is_editor(actor)
   def update(actor, item), do: is_admin(actor) || is_logger(actor, item)
   def move(actor, _), do: is_admin(actor)

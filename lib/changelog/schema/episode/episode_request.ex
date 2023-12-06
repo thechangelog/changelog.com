@@ -13,7 +13,7 @@ defmodule Changelog.EpisodeRequest do
     field :topics, :string
     field :pitch, :string
     field :pronunciation, :string
-    field :decline_message, :string, default: ""
+    field :message, :string, default: ""
 
     belongs_to :podcast, Podcast
     belongs_to :submitter, Person
@@ -29,7 +29,7 @@ defmodule Changelog.EpisodeRequest do
   def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
   def failed(query \\ __MODULE__), do: from(q in query, where: q.status == ^:failed)
 
-  def with_decline_message(query \\ __MODULE__), do: from(q in query, where: q.decline_message != "")
+  def with_message(query \\ __MODULE__), do: from(q in query, where: q.message != "")
 
   def with_episode(query \\ __MODULE__) do
     from(q in query, join: e in Episode, on: q.id == e.request_id)
@@ -99,7 +99,7 @@ defmodule Changelog.EpisodeRequest do
 
   def decline!(request, message) do
     request
-    |> change(%{decline_message: message})
+    |> change(%{message: message})
     |> update_status!(:declined)
   end
 
@@ -108,7 +108,7 @@ defmodule Changelog.EpisodeRequest do
 
   def fail!(request, message) do
     request
-    |> change(%{decline_message: message})
+    |> change(%{message: message})
     |> update_status!(:failed)
   end
 

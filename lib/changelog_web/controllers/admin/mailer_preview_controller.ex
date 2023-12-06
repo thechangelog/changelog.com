@@ -150,7 +150,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     request =
       EpisodeRequest
       |> EpisodeRequest.declined()
-      |> EpisodeRequest.with_decline_message()
+      |> EpisodeRequest.with_message()
       |> EpisodeRequest.newest_first()
       |> EpisodeRequest.limit(1)
       |> EpisodeRequest.preload_all()

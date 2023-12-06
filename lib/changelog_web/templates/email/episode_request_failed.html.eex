@@ -4,7 +4,7 @@
 
     <p>Sadly, we <strong>failed</strong> to fill your request. Here's a message from the team on the particulars:</p>
 
-    <p><blockquote><%= @request.decline_message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
+    <p><blockquote><%= @request.message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
 
     <p>If there's more to say or our message requested a response, feel free to reply.</p>
 

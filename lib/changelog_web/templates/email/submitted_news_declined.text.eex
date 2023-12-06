@@ -5,7 +5,7 @@ Sadly, your Changelog News submission was declined. Here's a message from the te
 
 ---
 
-<%= @item.decline_message %>
+<%= @item.message %>
 
 ---
 

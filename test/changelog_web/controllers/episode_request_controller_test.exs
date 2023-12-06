@@ -69,7 +69,7 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
     assert count(EpisodeRequest) == 1
     assert count(EpisodeRequest.declined()) == 1
 
-    assert %{decline_message: "declined because reason", status: :declined} =
+    assert %{message: "declined because reason", status: :declined} =
              Changelog.Repo.get(EpisodeRequest, request.id, [])
   end
 
@@ -100,7 +100,7 @@ defmodule ChangelogWeb.EpisodeRequestControllerTest do
     assert count(EpisodeRequest) == 1
     assert count(EpisodeRequest.failed()) == 1
 
-    assert %{decline_message: "failed because reason", status: :failed} =
+    assert %{message: "failed because reason", status: :failed} =
              Changelog.Repo.get(EpisodeRequest, request.id, [])
   end
 end

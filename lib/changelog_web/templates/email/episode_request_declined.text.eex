@@ -5,7 +5,7 @@ Sadly, your request was declined. Here's a message from the team with more on th
 
 ---
 
-<%= @request.decline_message %>
+<%= @request.message %>
 
 ---
 

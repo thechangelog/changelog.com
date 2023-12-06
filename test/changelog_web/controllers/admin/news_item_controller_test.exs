@@ -199,7 +199,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     assert count(NewsItem) == 1
     assert count(NewsItem.declined()) == 1
 
-    assert %{decline_message: "declined because reason", status: :declined} =
+    assert %{message: "declined because reason", status: :declined} =
              Changelog.Repo.get(NewsItem, news_item.id, [])
   end
 

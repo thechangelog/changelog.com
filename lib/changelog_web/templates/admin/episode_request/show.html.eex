@@ -73,16 +73,16 @@
     </div>
   </div>
 
-  <%= if @request.status == :declined and @request.decline_message do %>
+  <%= if @request.status == :declined and @request.message do %>
     <h4 class="ui block header">Declined with message</h4>
 
-    <p><%= @request.decline_message |> SharedHelpers.md_to_html() |> raw() %></p>
+    <p><%= @request.message |> SharedHelpers.md_to_html() |> raw() %></p>
   <% end %>
 
-  <%= if @request.status == :failed and @request.decline_message do %>
+  <%= if @request.status == :failed and @request.message do %>
     <h4 class="ui block header">Failed with message</h4>
 
-    <p><%= @request.decline_message |> SharedHelpers.md_to_html() |> raw() %></p>
+    <p><%= @request.message |> SharedHelpers.md_to_html() |> raw() %></p>
   <% end %>
 
   <h4 class="ui block header">Submitted By</h4>

@@ -4,7 +4,7 @@
 
     <p>Sadly, your request was <strong>declined</strong>. Here's a message from the team with more on the decision:</p>
 
-    <p><blockquote><%= @request.decline_message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
+    <p><blockquote><%= @request.message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
 
     <p>If there's more to say or our message requested a response, feel free to reply.</p>
 

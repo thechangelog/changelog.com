@@ -5,7 +5,7 @@ Sadly, we failed to fill you request. Here's a message from the team on the part
 
 ---
 
-<%= @request.decline_message %>
+<%= @request.message %>
 
 ---
 
