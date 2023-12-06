@@ -111,7 +111,12 @@ defmodule Changelog.Person do
   def never_signed_in(query \\ __MODULE__), do: from(q in query, where: is_nil(q.signed_in_at))
 
   def needs_confirmation(query \\ __MODULE__) do
-    query |> not_an_author() |> not_a_host() |> not_a_guest() |> never_confirmed()
+    query
+    |> not_an_author()
+    |> not_a_host()
+    |> not_a_guest()
+    |> no_public_profile()
+    |> never_confirmed()
   end
 
   def not_an_author(query \\ __MODULE__) do
@@ -133,6 +138,8 @@ defmodule Changelog.Person do
   def no_subs(query \\ __MODULE__) do
     from(q in query, left_join: s in assoc(q, :subscriptions), where: is_nil(s.id))
   end
+
+  def no_public_profile(query \\ __MODULE__), do: from(q in query, where: not q.public_profile)
 
   def faked(query \\ __MODULE__), do: from(q in query, where: q.name in ^Changelog.Faker.names())
 
