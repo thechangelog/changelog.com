@@ -1,6 +1,6 @@
 defmodule Changelog.ObanWorkers.Bouncer do
   @moduledoc """
-  This module defines the Oban worker for getting hard bounces from CM and
+  This module defines the Oban worker for getting hard bounces/spam from CM and
   deleting the associated people records from the system
   """
   require Logger
@@ -12,6 +12,13 @@ defmodule Changelog.ObanWorkers.Bouncer do
 
   @impl Oban.Worker
   def perform(_job) do
+    delete_bounces()
+    delete_spam()
+
+    :ok
+  end
+
+  def delete_bounces do
     bounced =
       Client.bounces()
       |> Enum.filter(&is_hard_bounce/1)
@@ -22,8 +29,18 @@ defmodule Changelog.ObanWorkers.Bouncer do
     {deleted_count, _} = Person.with_email(bounced) |> Repo.delete_all()
 
     Logger.info "Bouncer deleted #{deleted_count} from #{length(bounced)} hard bounced emails."
+  end
 
-    :ok
+  def delete_spam do
+    spam =
+      Client.spam()
+      |> Enum.map(&email_address/1)
+      |> ListKit.compact()
+      |> Enum.uniq()
+
+    {deleted_count, _} = Person.with_email(spam) |> Repo.delete_all()
+
+    Logger.info "Bouncer deleted #{deleted_count} from #{length(spam)} emails marked as spam."
   end
 
   defp is_hard_bounce(bounce) do

@@ -2,17 +2,24 @@ defmodule Craisin.Client do
   import Craisin
 
   @doc """
-  Returns all transactional emails that bounced within the trackedable period (90 days?)
+  Returns all transactional emails that bounced within the trackable period (90 days?)
   """
-  def bounces(before_id \\ nil, accumulated \\ []) do
-    response = get("/transactional/messages?status=bounced&count=200&sentBeforeID=#{before_id}")
+  def bounces(), do: messages_by_status("bounced")
+
+  @doc """
+  Returns all transactional emails marked as spam within the trackable period (90 days?)
+  """
+  def spam(), do: messages_by_status("spam")
+
+  def messages_by_status(status, before_id \\ nil, accumulated \\ []) do
+    response = get("/transactional/messages?status=#{status}&count=200&sentBeforeID=#{before_id}")
 
     case handle(response) do
       [] ->
         accumulated
       list ->
         before_id = list |> List.last() |> Map.get("MessageID")
-        bounces(before_id, accumulated ++ list)
+        messages_by_status(status, before_id, accumulated ++ list)
     end
   end
 
