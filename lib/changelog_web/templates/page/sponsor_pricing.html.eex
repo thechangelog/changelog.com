@@ -14,7 +14,7 @@
     <a id="podcast" class="anchor"></a>
     <h2>The Changelog</h2>
 
-    <p>The Changelog is our flagship podcast hosted by Adam Stacoviak (Editor-in-Chief) and Jerod Santo (Managing Editor). Every week we feature insightful conversations with the leaders, visionaries, and disruptors who are actively shaping the future landscape of the software industry.</p>
+    <p>The Changelog is our flagship podcast hosted by Adam Stacoviak (Editor-in-Chief) and Jerod Santo (Managing Editor). Every week we feature insightful conversations with the leaders, visionaries, and disruptors who are actively shaping the future landscape of the software industry. We ship two (2) episodes every week that reach 50,000 to 90,000 developers weekly.</p>
 
     <p><strong>Who you'll reach:</strong> Software developers and engineers, engineering leadership and decision-makers who drive the technology stack and direction of their organization, open source maintainers/leaders and contributors, technology enthusiasts and learners who are Junior in their role or just getting started.</p>
 
@@ -33,6 +33,8 @@
     <h2>Changelog News</h2>
 
     <p>Changelog News is our weekly guide to developer news worth your attention. It's hosted and written by our Managing Editor Jerod Santo. Every Monday we cover the developer news worth your attention. We keep it brief, entertaining & always on point. Developers tune-in to the podcast and read the newsletter to keep up.</p>
+
+    <p>Changelog News reaches 25,000 to 45,000 per week on the pod, plus another 22,000 via the newsletter.</p>
 
     <p><strong>Who you'll reach:</strong> Busy software developers and engineers who want a single subscription to keep them informed and up to date with what's happening in the software world. The podcast is often 8 mins (or less) in length which makes it a must listen. It's often listened to within 1-2 days of publishing. The newsletter is for those who prefer to read instead of listen. It contains extended details, links, and bonus sections not included in the podcast.</p>
 
@@ -71,7 +73,9 @@
     <a id="jsparty" class="anchor"></a>
     <h2>JS Party</h2>
 
-    <p>JS Party is weekly podcast that features an expert panel of JavScript developers as well as special guests that discuss the latest in JavaScript and the web platform. Front-enders around the globe tune in to JS Party to keep up with the direction and capabilities of the web platform.</p>
+    <p>JS Party is weekly podcast that features an expert panel of JavScript developers as well as special guests that discuss the latest in JavaScript and the web platform. Front-enders around the globe tune in to JS Party to keep up with the direction and capabilities of the web platform. We ship one (1) episode every week that reaches 15,000 to 20,000 web developers weekly.</p>
+
+    <p>JS Party reaches 15,000 to 20,000 per episode.</p>
 
     <p><strong>Who you'll reach:</strong> JavaScript developers, Front-end/Back-end/Full-stack developers, Framework and Library makeers and users, mobile app developers (using  React Native, Vue Native, Ionic), engineering leadership (CTOs and tech leads), and open source contributors.</p>
 
@@ -89,7 +93,7 @@
     <a id="gotime" class="anchor"></a>
     <h2>Go Time</h2>
 
-    <p>Go Time is the #1 podcast for Go developers! Every week a rotating panel of Go experts are joined by special guests and members of the community to discuss distributed systems, cloud infrastructure, microservices, Kubernetes...oh, and also Go!</p>
+    <p>Go Time is the #1 podcast for Go developers! Every week a rotating panel of Go experts are joined by special guests and members of the community to discuss distributed systems, cloud infrastructure, microservices, Kubernetes...oh, and also Go! We ship one (1) episode every week that reaches 15,000 to 22,000 Go developers (and Go-curious) weekly.</p>
 
     <p><strong>Who you'll reach:</strong> Go developers and devs who are "Go curious", distributed systems experts, cloud infrastructure professionals, microservices specialists, Kubernetes practitioners and decision-makers, SRE and DevOps engineers, engineering leadership (CTOs and tech leads), and open source contributors.</p>
 
@@ -97,7 +101,7 @@
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
       <li><mark>$1,200 per episode</mark></li>
       <li>Two (2) week minimum &mdash; reach between 62,000 to 88,000 listens</li>
-      <li>Reaches an average 14,000 to 20,000 listens per episode</li>
+      <li>Reaches an average 15,000 to 22,000 listens per episode</li>
       <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
     </ul>
@@ -107,13 +111,13 @@
     <a id="practicalai" class="anchor"></a>
     <h2>Practical AI</h2>
 
-    <p>Journey into the world of artificial intelligence from the lens of expert AI practitioners. We're making artificial intelligence practical, productive, and accessible to developers.</p>
+    <p>Journey into the world of artificial intelligence from the lens of expert AI practitioners. We're making artificial intelligence practical, productive, and accessible to developers. We ship one (1) episode every week that reaches 25,000 to 45,000 AI developers weekly.</p>
 
     <ul>
       <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
       <li><mark>$1,200 per episode</mark></li>
       <li>Four (4) week minimum with an estimated reach between 100,000 to 180,000</li>
-      <li>Reaches an average 25-45k listens per episode</li>
+      <li>Reaches an average 25,000 to 45,000 listens per episode</li>
       <li>Reaches an average 150,000 listens per month, podcast-wide</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
       <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
@@ -124,7 +128,7 @@
     <a id="conferences" class="anchor"></a>
     <h2>Conference partnering</h2>
 
-    <p>We love to partner with conferences and community leaders! We have several options on how we can support and partner with you. We can come in as a media partner to help promote your event, bring a live show to the conference, speak with featured speakers on our podcasts, or other creative ways we can be involved.</p>
+    <p>We love to partner with conferences and community leaders! We have several options on how we can support and partner with you. We can come in as a media partner to help promote your event, bring a live show to the conference, cover the hallway track, speak with featured speakers on our podcasts, or other creative ways we can be involved.</p>
 
     <p>Email <a href="mailto:adam@changelog.com">adam@changelog.com</a> so we can talk through your details and goals.</p>
   </div>
