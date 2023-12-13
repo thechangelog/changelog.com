@@ -27,11 +27,6 @@ defmodule Craisin.Client do
   def lists(client_id), do: "/clients/#{client_id}/lists" |> get() |> handle()
 
   def stats(group) do
-    path = "/transactional/statistics?group=#{URI.encode(group)}"
-
-    case path |> get() |> handle() do
-      %{} -> %{"Delivered" => 0, "Opened" => 0}
-      good_response -> good_response
-    end
+    "/transactional/statistics?group=#{URI.encode(group)}" |> get() |> handle()
   end
 end
