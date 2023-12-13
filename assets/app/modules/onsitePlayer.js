@@ -52,8 +52,8 @@ export default class OnsitePlayer {
 
   attachEvents() {
     this.playButton.handle("click", _ => { this.togglePlayPause(); });
-    this.prevButton.handle("click", _ => { this.chapterSelect.first().value = this.chapter - 1; this.chapterSelect.trigger("change"); });
-    this.nextButton.handle("click", _ => { this.chapterSelect.first().value = this.chapter + 1; this.chapterSelect.trigger("change"); });
+    this.prevButton.handle("click", _ => { this.changeChapterSelect(this.chapter - 1); this.chapterSelect.trigger("change"); });
+    this.nextButton.handle("click", _ => { this.changeChapterSelect(this.chapter + 1); this.chapterSelect.trigger("change"); });
     this.backButton.handle("click", _ => { this.seekBy(-15); });
     this.forwardButton.handle("click", _ => { this.seekBy(15); });
     this.scrubber.on("input", event => { this.scrub(event.target.value); });
@@ -383,6 +383,10 @@ export default class OnsitePlayer {
     }
   }
 
+  changeChapterSelect(chapterNumber) {
+    this.chapterSelect.first().value = chapterNumber;
+  }
+
   updateChapter(newTime) {
     if (this.episode.hasChapters()) {
       let currentChapter = this.episode.chapterList().find(chapter => {
@@ -390,6 +394,7 @@ export default class OnsitePlayer {
       })
 
       if (currentChapter && currentChapter.number != this.chapter) {
+        this.changeChapterSelect(currentChapter.number);
         this.changeChapter(currentChapter.number, false);
       } else {
         this.updateChaptersTable();
