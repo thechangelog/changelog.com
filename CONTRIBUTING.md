@@ -94,6 +94,7 @@ This is what that looks like on macOS 12, our usual development environment:
 
 ```console
 # 🛠 INSTALL DEPENDENCIES 🛠
+awk '{ system("asdf plugin-add " $1) }' < .tool-versions
 asdf install
 
 #👇 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
@@ -102,7 +103,7 @@ asdf install
 # - Golang 1.20.12
 # - Node.js v20.10.0
 # - Yarn v1.22.19
-# - PostgreSQL v14.1
+# - PostgreSQL v15.3
 #👆 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
 
 # You will also need to install imagemagick via Homebrew.
