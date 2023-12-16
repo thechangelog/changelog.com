@@ -205,9 +205,6 @@ func (image *Image) WithNodejs() *Image {
 		}).
 		WithExec([]string{
 			"npm", "--version",
-		}).
-		WithExec([]string{
-			"rm", fmt.Sprintf("/opt/%s.tar.xz", NodejsVersionAndPlatform),
 		})
 
 	return image
