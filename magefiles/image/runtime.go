@@ -197,7 +197,7 @@ func (image *Image) WithNodejs() *Image {
 			fmt.Sprintf("https://nodejs.org/dist/v%s/%s.tar.xz", image.versions.Nodejs(), NodejsVersionAndPlatform),
 		}).
 		WithExec([]string{
-			"tar", "-xJvf", fmt.Sprintf("/opt/%s.tar.xz", NodejsVersionAndPlatform), "-C", "/opt",
+			"tar", "-xJf", fmt.Sprintf("/opt/%s.tar.xz", NodejsVersionAndPlatform), "-C", "/opt",
 		}).
 		WithEnvVariable("PATH", fmt.Sprintf("/opt/%s/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", NodejsVersionAndPlatform)).
 		WithExec([]string{
