@@ -81,8 +81,8 @@ Create a new pull request via https://github.com/thechangelog/changelog.com
 You will need to have the following dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v15
 - [Elixir](https://elixir-lang.org/install.html) v1.14
-- [Erlang/OTP](https://www.erlang.org/downloads) v25 - usually installed as an Elixir dependency
-- [Node.js](https://nodejs.org/en/download/) v18 LTS - [latest-v18.x](https://nodejs.org/download/release/latest-v18.x/)
+- [Erlang/OTP](https://www.erlang.org/downloads) v26 - usually installed as an Elixir dependency
+- [Node.js](https://nodejs.org/en/download/) v20 LTS - [latest-v20.x](https://nodejs.org/download/release/latest-v20.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
 - [Golang](https://go.dev/doc/install) v1.20 - if you want to run CI locally
 
@@ -96,14 +96,14 @@ This is what that looks like on macOS 12, our usual development environment:
 # 🛠 INSTALL DEPENDENCIES 🛠
 asdf install
 
-#👇 installed on a MacBook Pro 16" (2021) running macOS 12.6.3 in ~4mins on May 20, 2023 by @gerhard
-# - Elixir v1.14.4
-# - Erlang v25.3.2
-# - Golang 1.20.4
-# - Node.js v18.16.0
+#👇 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
+# - Elixir v1.14.5
+# - Erlang v26.2
+# - Golang 1.20.12
+# - Node.js v20.10.0
 # - Yarn v1.22.19
 # - PostgreSQL v14.1
-#👆 installed on a MacBook Pro 16" (2021) running macOS 12.6.3 in ~4mins on May 20, 2023 by @gerhard
+#👆 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
 
 # You will also need to install imagemagick via Homebrew.
 # asdf imagemagick plugin did not work for me.
@@ -139,7 +139,7 @@ mix test
 
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
-1. Run e.g. `asdf install erlang latest:25`
+1. Run e.g. `asdf install erlang latest:26`
     - If a new version gets installed, run `asdf local erlang <INSTALLED_VERSION>`
 2. Repeat previous step for Elixir & Node.js
 3. Commit & push to check that image builds successfully in GitHub Actions
