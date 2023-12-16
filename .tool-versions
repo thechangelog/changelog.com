@@ -6,4 +6,3 @@ nodejs 20.10.0
 yarn 1.22.19
 postgres 15.3
 flyctl 0.1.134
-mage 1.15.0

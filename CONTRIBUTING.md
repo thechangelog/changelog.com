@@ -143,7 +143,7 @@ mix test
     - If a new version gets installed, run `asdf local erlang <INSTALLED_VERSION>`
 2. Repeat previous step for Elixir & Node.js
 3. Commit & push to check that image builds successfully in GitHub Actions
-    - _Alternatively_, build the image locally via: `mage image:runtime`
+    - _Alternatively_, build the image locally via: `{ cd magefiles && go run main.go -w ../ image:runtime }`
 
 After you confirm that the image builds successfully:
 1. Update `.devcontainer/docker-compose.yml` with new image tag
