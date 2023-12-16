@@ -154,7 +154,7 @@ TL;DR:
 [Node.js](https://nodejs.org) to digest & compile static assets (CSS & JS).
 
 Static assets, including all our mp3 episodes, are stored on Cloudflare R2.
-They are served via Fastly, specifically https://cdn.changelog.com. In summary:
+They are served via Fastly, specifically https://cdn.changelog.com.
 
 ```
 Fastly (cdn.changelog.com)
@@ -164,7 +164,7 @@ Cloudflare R2 (changelog.place)
 
 The production instance of our application is running on Fly.io. All
 https://changelog.com requests are served via Fastly. Each Fastly request gets
-proxied to our application instance via the Fly.io Proxy. In summary:
+proxied to our application instance via the Fly.io Proxy.
 
 ```
 Fastly (changelog.com)
@@ -175,7 +175,7 @@ Application (changelog-2022-03-13.fly.dev)
 ```
 
 The production database - PostgreSQL - is running on Fly.io too. It is a
-replicated setup, with one leader & one replica. In summary:
+replicated setup, with one leader & one replica.
 
 ```
 Application (changelog-2022-03-13.fly.dev)
