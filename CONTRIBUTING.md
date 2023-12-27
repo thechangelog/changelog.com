@@ -79,7 +79,7 @@ Create a new pull request via https://github.com/thechangelog/changelog.com
 ## How do I run the application locally?
 
 You will need to have the following dependencies installed:
-- [PostgreSQL](https://www.postgresql.org/download/) v15
+- [PostgreSQL](https://www.postgresql.org/download/) v16
 - [Elixir](https://elixir-lang.org/install.html) v1.14
 - [Erlang/OTP](https://www.erlang.org/downloads) v26 - usually installed as an Elixir dependency
 - [Node.js](https://nodejs.org/en/download/) v20 LTS - [latest-v20.x](https://nodejs.org/download/release/latest-v20.x/)
@@ -93,9 +93,11 @@ This is what that looks like on macOS 12, our usual development environment:
 <img src="changelog-local-dev-2022.png">
 
 ```console
+
 # 🛠 INSTALL DEPENDENCIES 🛠
 awk '{ system("asdf plugin-add " $1) }' < .tool-versions
-asdf install
+# icu4c required by https://github.com/smashedtoatoms/asdf-postgres
+PKG_CONFIG_PATH="$(brew --prefix)/opt/icu4c/lib/pkgconfig" asdf install
 
 #👇 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
 # - Elixir v1.14.5
@@ -103,7 +105,7 @@ asdf install
 # - Golang 1.20.12
 # - Node.js v20.10.0
 # - Yarn v1.22.19
-# - PostgreSQL v15.3
+# - PostgreSQL v16.1
 #👆 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
 
 # You will also need to install imagemagick via Homebrew.
