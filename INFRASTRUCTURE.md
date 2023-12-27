@@ -293,3 +293,40 @@ psql --host localhost --command 'ANALYZE VERBOSE;' changelog postgres
 ```console
 flyctl secrets set DB_HOST=changelog-postgres-2023-07-31.flycast DB_PASS=<NEW_DB_PASSWORD> --app changelog-2022-03-13
 ```
+
+## How to load data into a Neon.tech from a Fly.io Postgres instance?
+
+The assumption is that a Neon.tech instance has already been provisioned.
+
+### Pre-requisites
+
+- Credentials for the Fly.io Postgres:
+```console
+op read op://changelog/changelog-postgres-2023-07-31/url --account changelog.1password.com --cache
+```
+- Credentials for the Neon.tech Postgres:
+```console
+op read op://changelog/neon/url --account changelog.1password.com --cache
+```
+
+### Step-by-step guide
+
+1. Connect to the **replica** instance:
+```console
+flyctl ssh console --select --app changelog-postgres-2023-07-31
+```
+
+2. Backup db to local file, then restore to remote host:
+```console
+time pg_dump --dbname="<FLY_POSTGRES_URL>" --format=c --verbose > /data/changelog.sql
+time pg_restore --dbname="<NEON_POSTGRES_URL>" --format=c --clean --exit-on-error --no-owner --no-privileges < /data/changelog.sql
+```
+
+> **Note**
+> This step can be re-run as many times as needed. It performs a point-in-time
+> db dump & restore - cleans existing data!
+
+3. [Warm-up the query planner](https://www.postgresql.org/docs/current/sql-analyze.html):
+```console
+time psql "<NEON_POSTGRES_URL>" --command "ANALYZE VERBOSE;"
+```
