@@ -30,7 +30,7 @@ graph TD
         cicd --> |success #dev| chat
     end
     
-    repo -.- |2022.fly| app
+    repo -.- |fly.io/changelog-2023-12-17| app
     
     registry --> |ghcr.io/changelog/changelog-prod| app
     container --> |flyctl deploy| app
@@ -39,25 +39,15 @@ graph TD
 
     %% PaaS - https://fly.io/dashboard/changelog
     subgraph Fly.io
-    
         proxy{fa:fa-globe Proxy}
         proxy ==> |https| app
-
 
         container([ fa:fa-project-diagram Dagger Engine 2023-05-20 ]):::link
         click container "https://fly.io/apps/dagger-engine-2023-05-20"
             
-        app(( fab:fa-phoenix-framework App changelog-2022-03-13.fly.dev )):::link
+        app(( fab:fa-phoenix-framework App changelog-2023-12-17.fly.dev )):::link
         style app fill:#488969;
-        click app "https://fly.io/apps/changelog-2022-03-13"
-            
-        dbw([ fa:fa-database PostgreSQL Leader 2023-07-31 ]):::link
-        click dbw "https://fly.io/apps/changelog-postgres-2023-07-31"
-            
-        dbr1([ fa:fa-database PostgreSQL Replica 2023-07-31 ])
-
-        app <==> |pgsql| dbw
-        dbw -.-> |replication| dbr1
+        click app "https://fly.io/apps/changelog-2023-12-17"
 
         automation --> |wireguard| container
         container --> |ghcr.io/changelog/changelog-runtime| registry
@@ -68,8 +58,17 @@ graph TD
         click metrics "https://fly-metrics.net"
         metrics --- |promql| metricsdb
         metricsdb -.- |metrics| app
-        metricsdb -.- |metrics| dbw
         metricsdb -.- |metrics| container
+    end
+
+    app <==> |Postgres| dbrw
+
+    subgraph Neon.tech
+        dbrw([ fa:fa-database main branch primary ]):::link
+        click dbrw "https://console.neon.tech/app/projects/orange-sound-86604986/branches/br-wandering-smoke-78468159"
+
+        dbro1([ fa:fa-database main branch replica ])
+        dbrw -.-> |replicate| dbro1
     end
 
     %% Secrets
@@ -130,7 +129,7 @@ graph TD
 ```
 
 > **Note**
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEihYtEEm2FceJum7I4i4t0m5d3W7A4qKgJFrmLIkqSdVx43z3PVIX5Ug95j9sHe9-v3fQt1bIImL51sOHaC1lLnzXXbFM4i0RLCVOyFJXEMzD9TKLOc7X6N18mSH4hAkWYk5WKKHZBgnJ2Yb4D6ZnweR0dlTe2lsaybXv5TdPS57yG1RdgFL0CIEEIkX5VBRBqeCSyhdFUD5UH05ydnuLVjjwV9iOqVwXAZJrEq5xFpOExW5zpcxFd3e-7yujWhFhQsONFoSWVu1mKUl7OCxtaS0zQw4No2sXTFGWhJSHCbFD4N1URqPzUFKWIRst1jRHLyVaLj8MWKNk_ag1LtbyhbtlfLNK2Fa4AhR9pNLZpYmytdbRXuFCshQrtuvlsokiS0AsmuM4JhxdMrSYXyF3yNRWxA8bHCQscFMsJOHwE5MVTYhor5yYdSPMSUwBPLvHjw8SHq9D7lCGnjwZzG7J2W8i47Ho2pnjcANmiIMMr7FsdYsEiNBCfw8qViyG0tZ_zV2mDeqHfgbHL0be4vz0r-eTQ68BmbZj_4z2Tml0f4b3GjVdPCJbsfXHdm-krg8bLb8owpAIgR5E5PNeu1RSkSwyS7c2FO0no8nEWSU7UJHnXZIqD1pulTa3Bx92zllksIeq7dAM8Kg5QXYoExSRPGGmlj5jgFYpiTScbZLFIMYGCz17NIXffSu7jjr0oDcYL6BSm65XyxDrgGEetYYe9KffNKHpsvqAMze727IzxAB6gt6oJ3cHFOjZM_BN66x86qCvNvPxddVkgOlfEko7ohi0p3XFPtcuotZF9GEQnk1YW4xWvoJ-MRg0s5scdJQ8b0skXzOS0Rt7BdYRBVp0nueoTbLCiT3y7LGn0OIAvPoqSchdQpRgBNBN_AfHp6dnJ2dP7zUiIOj3ok_hsAdRsG0iHGGJAywgX0zImJPFn6_QK4IjCFgZjJntjYfDC6K-aVJeShZ2K_BrtvHxV417CxVBQ9y1zkSRitJPGmd5LD5B0wAbO75XrYaXglRz2Gu1HSFtz9fluKVQ2AXURaeY7gH321XPi0zSlOybRvG_pJS9oxXRCkmJ5DQUUdAEEbi4tBNVMFCT8H5NCqFjdsDTMLCkSDOBLjle4QwjyKpdkTgZkWhoTlY0XTyYnGbWa2LbhgYG7qQqU43xPf6Ura66PWiIQ0SdzA8RHeRTt_ymSy5IyNsdrbzR1a8CtSE7NH4DWxwUfnRY12VMKpbeATnOK1Y9JOvg1BwlSKs7w9-B92oadOwul9aSQ103VsOEzOhqR7MYOjVYgN7tciJIBmX2pAKFKiHbcSoNinuP6jW4UfH8JiS53seqwDX3jaoQczvkMFLAnkwNxd4YtYxGmIRmUPiH3QVn9AsuV7-2BlICU8GlQhQw9n-pJsWz6ckJ9M5JHU3Tk1bP3tBpeHQx_92YiClgPybOCrY3aGsqRYCUFY0LTsA6_pnCxuDO4qsgvFpcXc53n97PXhZzfuyRy8ORqUWYHYrcXKPu2j64fAJtL3qq7fx-B23UnsMoL3jW7bRhlF2rL-dAfUvV7DxGJbQy_144C68lBn7dN_QwxFthjD71qpbbyNTuPFIGlPhVRHstxcjDH4GKLw5oQmUVNmY-avAVFDF6wTKyAxeCfnB1GI1AFtRZ15zdLquGjjqXtY8-shzQSBKiesbOXUMTPcSXdkZyDJjYd3WWdDoYpss9NIb_CsqwFTAOCDQCZ25Pep86yM5FwopolWBOnLcTA2_6nNmkKWyojGyVNAYoc1jfyb38QeK6O1x1hG1sf80yCnZDdzmw7Vci4RS0kHAoMBcfLItm8CR4B6tYzFmRV2-c7yuSktjsHj3c3TNH2tjZoAl2DTjQSpJlVKD3uRrTw8eelt8ElWZyAu2qkPX5RxKcumPP80YTt-ITnVnYymqwVNPtdeYHaLuEkJvvojOQ8w3KMowGBKwjKyU8xTSyfOtWvVhasE-oevDhMsJ8oxy7Azq1QS12WWj5khfkyCpyKCwyLxd5C-KdCHia4-wfxjr3ln9r3Vi-PfNOnJPZaHR2ejyZzqbj0yNrZ_lnY2d8PJ15k9kIHk-96d2R9UVLGDszb-qdHY9G49FoNgJyGBDgx-vyHx79R8_df1dCyJo)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEihYNEEk-4rPrhizu0iJoF8ztBiwuBkqiZS4SqZJUHTfOd98jdVGO3GP-w9bx7vd7B33vhDwiztx5-hRtlMrk3PfXnCm8JZKnxAt56kuCRbhZsVjgbIPeL1YMwSdMsJQLskYJZbdIKsFvyfzJaBYMppPT4tbd0kht5sPs7kXBU3yDqgtQip4hkECULJ7KPCgUXFL1Og-Kh_ojSMbv79EaB_M1dmOqNnmA1IaEG8xikvDYr6-0uejhYT6fa6MaEWFCw1sjCK2cys1CkvHwuLSVs2KWHBpGNz6Yoi0JqQgT4obAe1sajc5DRTlDLlpuaIbeKLRafTxijZb1o9b42MiX_paL23XCt9KXoOgfqrxdmmhbKx3NFc4VT7Fmu1mt6ijyBMSiBY5jItAlR8vFFfKPmdqI-GGDg4QHfoqlIgJ-YrKmCZHNlRfzdoQFiSmAZ_f8-UHC400oPMrRycnR7Bac3SZyEcu2nRkOb8EMeZDhDVaNbpkAEVqa76OKNYultPHfcBdpg_qhn8Hxi95weT7989Xg0GtApuu5P6O9VxjdneG9QU0bj8jVbN2x3Vup68JGwy_zMCRSoicR-bw3LhVUhEV26VaGov062UE6Gm_dQW8wdPsDtz8BrVnW5ipTY1SVmfQ7IONmgkcWe6g7EWUAUcMJOkOVoIhkCd9ZZF-xLzIIdwmLQUxhY28Ev_tGdpUIaEvXGC-heOtGWMmQm4BjETWGHrSs3wxhYwy4cbe7L9pEDBVA0LV-8nBAgV6-BK-MttIbKzWVec9vyn4DLP-SULkRxaA1rYr3lXENNa6hj0eRWoezgWvpI2iXR4NlN5aD5pJlTbVkG04YvXPXYB3R-EXnWYa6EOJprYC0rqKSapcQLRgBipP5k7PpdDaevXjUk4Cg24suhe1ys_qZwdWWAkJzSHALFY8y8W34ipwpmpJ9jfj_JaUogkZEIyQlStBQRkENCuASyk00AgBi8H5DcgkIeMRTM_AkT5lElwKvMcMIIueWJB4jCh2bASVNO-Y2pw2Sith1oRLBnfQTtK7a-A5_ipotbw8q-xjRQapMpyouNTZ-MrV1zaWKBQHqKBDb6n1dt-8IZ54iermptGm6OroRVjjAkqAUFKFAYBZuoHRpiqGZHS0zLcIeCDCweUIgRqUyDVO_rGYJk0nn3ZU8Z5E7HY97Z7Pp2C90QTsPhLvFLCKCstiVqd6qJtOz8bQ_mrVBDVp5_-uWQ3cEA3ELHsbYYvSUrxXZF8IexRU65JKEolnZihvTAbTSW7JD_WtY6qD4o8PaLmJTsnTOy35WspqZWeGp4ihsLO8siBx5rydBy-5ihy049HVtNQxMRtc7Hd9Y77To_S4jkjAI3slJAyjX80oNmnuPqq24VvHqLiSZWc_KwNX3taoQCzcUME7AHqYHYmeMGkYrTNIw6JYBqwxm9AsuNsGmbaQEJoNPpcwBNr-U-Ho5Go-hfw6qaNqeNHr2lk7Lo4vFO2saptAuYuKtYZmDbqtTBMhe0zgXBKwTnyksEP4kvgrCq-XV5WL36cPkTb4QZ0NyeTgujQh7ipC7G9Te4o_uokDbiZ5yWX88o2q15zDGc8HasyyM2I3-8g7UN1T1CmRVQiPzr6W3HDbEwG9arRmIeCut8adfVXJrmcadZ9qAAr-aaG-kWHn4PdDxxQFNqCrDxu1HNb6CPEavOSM7cCHoBleL0QpkTr1NxdkeTLqV6GNa8-gfngEaSUJ0L975G5g7h_gyziiBQ917-WP7TTBslztoLP81lGEzgF4ZEytw9v5kNqqD7FwkPI_WCRbE-2Ng4c0cO-s0hTWVla2CxgJlBts8eZQ_SFx7iytPtLXtbzmjYDd0lwPbfiUKDkVLBWcEe_nBKq9ndYJ3sI7FgudZ-cb7viIpiO3u0cHdHh9pbWeNJpggcL5VhDEq0YdMbzbHT0ENvw0qw-QFxlWpquOQIjj1-8PhsDfwSz7ZWh8aWTWWKrq9yfwR2jYh5Oa76CzkfIOyCKMFAefUSYmAGRs5c-dev1g5sILpepjDZYTFrXbsAej00rncsdCZK5GTUyfPoLDIoljmHYh3IuFphtnfnLfunfm9c-fM3clw7I0nvd5sejYYTUb96amzc-azvtc_G02Gg0kPHo-Go4dT54uR0Pcmw9Fwdtbr9Xu9SQ_IYUCAH2-LP3zM_z4P_wG9QNng)
 
 Let's dig into how all the above pieces fit together.
 
