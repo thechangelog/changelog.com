@@ -80,7 +80,7 @@ Create a new pull request via https://github.com/thechangelog/changelog.com
 
 You will need to have the following dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v15
-- [Elixir](https://elixir-lang.org/install.html) v1.14
+- [Elixir](https://elixir-lang.org/install.html) v1.15
 - [Erlang/OTP](https://www.erlang.org/downloads) v26 - usually installed as an Elixir dependency
 - [Node.js](https://nodejs.org/en/download/) v20 LTS - [latest-v20.x](https://nodejs.org/download/release/latest-v20.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
@@ -98,7 +98,7 @@ awk '{ system("asdf plugin-add " $1) }' < .tool-versions
 asdf install
 
 #👇 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
-# - Elixir v1.14.5
+# - Elixir v1.15.7
 # - Erlang v26.2
 # - Golang 1.20.12
 # - Node.js v20.10.0
