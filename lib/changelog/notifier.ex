@@ -39,6 +39,11 @@ defmodule Changelog.Notifier do
   def notify(item = %NewsItem{}) do
     item = NewsItem.preload_all(item)
 
+    if NewsItem.is_post(item) do
+      post = item |> NewsItem.load_object() |> Map.get(:object)
+      deliver_slack_new_post_message(post)
+    end
+
     if item.submitter == item.author do
       deliver_submitter_email(item.submitter, item)
     else
@@ -191,6 +196,11 @@ defmodule Changelog.Notifier do
 
   defp deliver_slack_new_episode_message(episode) do
     message = Slack.Messages.new_episode(episode)
+    Slack.Client.message("#main", message)
+  end
+
+  defp deliver_slack_new_post_message(post) do
+    message = Slack.Messages.new_post(post)
     Slack.Client.message("#main", message)
   end
 

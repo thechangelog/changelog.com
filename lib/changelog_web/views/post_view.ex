@@ -26,5 +26,5 @@ defmodule ChangelogWeb.PostView do
     |> length()
   end
 
-  def url(post, action), do: Routes.post_url(Endpoint, action, post.slug)
+  def url(post, action \\ :show), do: Routes.post_url(Endpoint, action, post.slug)
 end

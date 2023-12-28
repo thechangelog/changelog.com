@@ -460,4 +460,23 @@ defmodule Changelog.NotifierTest do
       assert_no_emails_delivered()
     end
   end
+
+  describe "notify/1 with a post item" do
+    setup_with_mocks([
+      {Slack.Client, [], [message: fn _, _ -> true end]}
+    ]) do
+      :ok
+    end
+
+    test "when post is published" do
+      post = insert(:published_post)
+      item = post |> post_news_item() |> insert()
+      Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
+      assert_no_emails_delivered()
+      assert called(Slack.Client.message("#main", :_))
+    end
+  end
 end
