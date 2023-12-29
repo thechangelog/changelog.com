@@ -120,7 +120,8 @@ createdb changelog_test --username=postgres
 
 # 💜 CONFIGURE APP 💜
 # Install deps
-mix deps.get
+mix deps.get --only dev
+mix deps.get --only test
 # Prepare dev database
 mix ecto.setup
 
