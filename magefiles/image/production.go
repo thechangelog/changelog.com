@@ -39,9 +39,12 @@ func (image *Image) Production() *Image {
 // I don’t think this is sufferable much longer
 // https://github.com/thechangelog/changelog.com/actions/runs/4430462525
 func (image *Image) ProductionClean() *Image {
-	obanLicenseKey := os.Getenv("OBAN_LICENSE_KEY")
-	if obanLicenseKey == "" {
+	if os.Getenv("OBAN_LICENSE_KEY") == "" {
 		fmt.Printf("\n👮 Building the production image requires an OBAN_LICENSE_KEY\n")
+		return image
+	}
+	if os.Getenv("OBAN_KEY_FINGERPRINT") == "" {
+		fmt.Printf("\n👮 Building the production image requires an OBAN_KEY_FINGERPRINT\n")
 		return image
 	}
 	app := image.Production().container.
