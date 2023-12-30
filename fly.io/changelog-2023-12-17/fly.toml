@@ -1,6 +1,7 @@
 # Inspired by https://github.com/fly-apps/live_beats/blob/master/fly.toml
 # Full app config reference: https://fly.io/docs/reference/configuration/
 app = "changelog-2023-12-17"
+primary_region = "iad"
 
 kill_signal = "SIGTERM"
 kill_timeout = 30
