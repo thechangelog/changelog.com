@@ -23,17 +23,6 @@ config :changelog, ChangelogWeb.Endpoint,
 config :waffle,
   asset_host: "https://#{static_url_host}"
 
-if System.get_env("HTTPS") do
-  config :changelog, ChangelogWeb.Endpoint,
-    https: [
-      port: System.get_env("HTTPS_PORT", "443"),
-      cipher_suite: :strong,
-      otp_app: :changelog,
-      certfile: System.get_env("HTTPS_CERTFILE"),
-      keyfile: System.get_env("HTTPS_KEYFILE")
-    ]
-end
-
 config :logger,
   level: :info,
   backends: [:console, Sentry.LoggerBackend]
