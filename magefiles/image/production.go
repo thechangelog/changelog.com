@@ -67,7 +67,7 @@ func (image *Image) ProductionClean() *Image {
 		WithImagemagick().
 		WithProdEnv()
 
-	if os.Getenv("R2_ACCESS_KEY_ID") != "" {
+	if os.Getenv("R2_ACCESS_KEY_ID") != "" && os.Getenv("R2_SECRET_ACCESS_KEY") != "" {
 		fmt.Printf("⚡️ Uploading static assets...")
 		image = image.UploadStaticAssets()
 	}
@@ -131,6 +131,7 @@ func (image *Image) UploadStaticAssets() *Image {
 	R2_API_HOST := env.Get(image.ctx, image.dag.Host(), "R2_API_HOST").Secret()
 	R2_ACCESS_KEY_ID := env.Get(image.ctx, image.dag.Host(), "R2_ACCESS_KEY_ID").Secret()
 	R2_SECRET_ACCESS_KEY := env.Get(image.ctx, image.dag.Host(), "R2_SECRET_ACCESS_KEY").Secret()
+	R2_ASSETS_BUCKET := env.Get(image.ctx, image.dag.Host(), "R2_ASSETS_BUCKET").Value()
 
 	_, err := image.Production().
 		// 🤔 Why do we need to start the app - and therefore require the DB - to upload static assets?
@@ -144,7 +145,7 @@ func (image *Image) UploadStaticAssets() *Image {
 			"mix", "ecto.migrate",
 		}).
 		WithSecretVariable("R2_API_HOST", R2_API_HOST).
-		WithEnvVariable("R2_ASSETS_BUCKET", "changelog-assets").
+		WithEnvVariable("R2_ASSETS_BUCKET", R2_ASSETS_BUCKET).
 		WithSecretVariable("R2_ACCESS_KEY_ID", R2_ACCESS_KEY_ID).
 		WithSecretVariable("R2_SECRET_ACCESS_KEY", R2_SECRET_ACCESS_KEY).
 		WithExec([]string{
