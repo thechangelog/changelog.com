@@ -17,9 +17,6 @@ PORT = "4000"
 STATIC_URL_HOST = "cdn.changelog.com"
 URL_HOST = "changelog.com"
 DB_NAME = "changelog"
-# Sample traces to 10%, otherwise we will exceed out monthly 100M limit
-OTEL_TRACES_SAMPLER="parentbased_traceidratio"
-OTEL_TRACES_SAMPLER_ARG="0.1"
 
 [[services]]
 internal_port = 4000
