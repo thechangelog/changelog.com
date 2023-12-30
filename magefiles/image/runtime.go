@@ -170,6 +170,20 @@ func (image *Image) WithInotifyTools() *Image {
 	return image
 }
 
+func (image *Image) WithOnePassword() *Image {
+	op := image.NewContainer().
+		From(fmt.Sprintf("1password/op:%s", image.versions.OnePassword())).
+		File("/usr/local/bin/op")
+
+	image.container = image.container.
+		WithFile("/usr/local/bin/op", op).
+		WithExec([]string{
+			"op", "--version",
+		})
+
+	return image
+}
+
 func (image *Image) WithPostgreSQLClient() *Image {
 	image.container = image.container.
 		WithExec([]string{

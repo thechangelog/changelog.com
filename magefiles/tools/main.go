@@ -60,6 +60,11 @@ func (v *Versions) Flyctl() string {
 	return v.toolVersions["flyctl"]
 }
 
+// https://app-updates.agilebits.com/product_history/CLI2 || asdf list all 1password-cli
+func (v *Versions) OnePassword() string {
+	return v.toolVersions["1password-cli"]
+}
+
 func toolVersions() map[string]string {
 	wd, err := os.Getwd()
 	if err != nil {

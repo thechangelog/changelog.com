@@ -68,6 +68,9 @@ func (image *Image) ProductionClean() *Image {
 		WithAptPackages().
 		WithGit().
 		WithImagemagick().
+		WithOnePassword().
+		WithDbMigrate().
+		WithAppStart().
 		WithProdEnv()
 
 	if os.Getenv("R2_ACCESS_KEY_ID") != "" && os.Getenv("R2_SECRET_ACCESS_KEY") != "" {
