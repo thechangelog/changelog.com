@@ -5,17 +5,15 @@ defmodule ChangelogWeb.PostControllerTest do
 
   test "getting the posts index", %{conn: conn} do
     p1 = insert(:published_post)
-    i1 = insert(:published_news_item, object_id: "posts:#{p1.slug}")
     p2 = insert(:published_post)
-    i2 = insert(:published_news_item, object_id: "posts:#{p2.slug}")
     unpublished = insert(:post, published: false)
     scheduled = insert(:scheduled_post)
 
-    conn = get(conn, Routes.post_path(conn, :index))
+    conn = get(conn, ~p"/posts")
 
     assert conn.status == 200
-    assert conn.resp_body =~ i1.headline
-    assert conn.resp_body =~ i2.headline
+    assert conn.resp_body =~ p1.tldr
+    assert conn.resp_body =~ p2.tldr
     refute conn.resp_body =~ unpublished.title
     refute conn.resp_body =~ scheduled.title
   end

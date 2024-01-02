@@ -1,0 +1,65 @@
+<article class="news_item">
+  <header class="news_item-header">
+    <p class="news_item-source">
+      <%= link to: PersonView.profile_path(@post.author), title: @post.author.name, class: "news_item-source-image" do %>
+        <%= SharedHelpers.lazy_image(PersonView.avatar_url(@post.author), @post.author.name, width: 70, height: 70) %>
+      <% end %>
+
+      <%= link("changelog.com/posts", to: ~p"/posts", title: "Changelog Posts") %>
+    </p>
+
+    <h2 class="news_item-title"><%= link(@post.title, to: ~p"/posts/#{@post.slug}") %></h2>
+  </header>
+
+  <div class="news_item-toolbar">
+    <div class="news_item-toolbar-item news_item-toolbar-meta">
+      <span class="news_item-toolbar-meta-item">
+        by <strong><%= link(@post.author.name, to: PersonView.profile_path(@post.author)) %></strong>
+      </span>
+
+      <span class="news_item-toolbar-meta-item">
+        <%= TimeView.ts(@post.published_at, :date) %>
+      </span>
+
+    <%= if Enum.any?(@post.topics) do %>
+      <% {main_topics, additional_topics} = Enum.split(@post.topics, 1) %>
+
+      <span class="news_item-toolbar-meta-item">
+      <%= for topic <- main_topics do %>
+        <%= link("##{topic.slug}", to: ~p"/topic/#{topic.slug}", title: "View #{topic.name}") %>
+      <% end %>
+
+      <%= if Enum.any?(additional_topics) do %>
+        <span class="has-tooltip">+<%= length(additional_topics) %></span>
+        <div class="tooltip tooltip--topics">
+          <div class="tooltip-arrow"></div>
+          <div class="tooltip-wrap">
+            <ul class="tooltip-list">
+              <%= for topic <- additional_topics do %>
+                <li>
+                  <%= link("##{topic.slug}", to: ~p"/topic/#{topic.slug}", title: "View #{topic.name}") %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+      </span>
+    <% end %>
+    </div>
+
+  </div>
+
+  <div class="news_item-content richtext">
+    <%= @post.tldr |> SharedHelpers.md_to_html() |> raw() %>
+  </div>
+
+  <footer class="news_item-footer">
+    <span class="news_item-footer-item">
+      <%= link("Read On", to: ~p"/posts/#{@post.slug}") %> &bull;
+      <%= link("Discuss", to: ~p"/posts/#{@post.slug}" <> "#discussion") %>
+      &bull; <%= link("Share", to: ~p"/posts/#{@post.slug}", title: "Copy URL for easy sharing", data: [copy: true]) %>
+    </span>
+  </footer>
+
+</article>

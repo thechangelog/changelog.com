@@ -4,11 +4,14 @@ defmodule ChangelogWeb.PostController do
   alias Changelog.{Post, NewsItem, NewsItemComment}
 
   def index(conn, params) do
-    {page, items} = NewsItem.get_post_news_items(params)
+    page =
+      Post.published()
+      |> Post.newest_first(:published_at)
+      |> Post.preload_all()
+      |> Repo.paginate(Map.put(params, :page_size, 15))
 
     conn
     |> assign(:page, page)
-    |> assign(:items, items)
     |> render(:index)
   end
 

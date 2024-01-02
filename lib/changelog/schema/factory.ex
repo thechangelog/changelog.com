@@ -274,11 +274,11 @@ defmodule Changelog.Factory do
   end
 
   def published_post_factory do
-    %Changelog.Post{post_factory() | published: true, published_at: hours_ago(1)}
+    %Changelog.Post{publishable_post_factory() | published: true, published_at: hours_ago(1)}
   end
 
   def scheduled_post_factory do
-    %Changelog.Post{post_factory() | published: true, published_at: hours_from_now(1)}
+    %Changelog.Post{publishable_post_factory() | published: true, published_at: hours_from_now(1)}
   end
 
   def sponsor_factory do

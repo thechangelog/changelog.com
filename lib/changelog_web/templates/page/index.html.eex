@@ -16,7 +16,7 @@
     </nav>
 
 
-  <%= if Enum.any?(@page) do %>
+  <%= if Enum.any?(@page.entries) do %>
     <%= render_many(@page, EpisodeView, "_item.html") %>
 
     <nav class="load_more" aria-label="Pagination">
