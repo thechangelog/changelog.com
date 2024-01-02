@@ -129,8 +129,8 @@ defmodule Changelog.Episode do
 
   def unpublished(query \\ __MODULE__), do: from(q in query, where: not q.published)
 
-  def top_reach_first(query \\ __MODULE__),
-    do: from(q in query, order_by: [desc: :reach_count])
+  def top_downloaded_first(query \\ __MODULE__),
+    do: from(q in query, order_by: [desc: :download_count])
 
   def with_numbered_slug(query \\ __MODULE__),
     do: from(q in query, where: fragment("slug ~ E'^\\\\d+$'"))

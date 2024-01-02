@@ -1,0 +1,101 @@
+<article class="news_item">
+  <header class="news_item-header">
+    <p class="news_item-source">
+      <% slug = if @episode.podcast.slug == "podcast", do: "interviews", else: @episode.podcast.slug %>
+      <%= link to: ~p"/#{slug}",
+        title: @episode.podcast.name,
+        class: "news_item-source-image news_item-source-image--episode" do %>
+        <%= SharedHelpers.lazy_image(PodcastView.cover_url(@episode.podcast, :small), @episode.podcast.name, width: 70, height: 70, style: "background-color: #121921") %>
+      <% end %>
+
+      <%= link(podcast_name_and_number(@episode),
+        to: ~p"/#{@episode.podcast.slug}/#{@episode.slug}",
+        title: podcast_name_and_number(@episode)) %>
+    </p>
+    <h2 class="news_item-title"><%= link(@episode.title, to: ~p"/#{@episode.podcast.slug}/#{@episode.slug}") %></h2>
+  </header>
+
+  <div class="news_item-toolbar">
+    <%= link title: "Play Episode",
+        to: audio_url(@episode),
+        data: [play: ~p"/#{@episode.podcast.slug}/#{@episode.slug}/play"],
+        role: "button",
+        class: "news_item-toolbar-play_button" do %>
+        <span>Play</span>
+    <% end %>
+
+    <div class="news_item-toolbar-item news_item-toolbar-meta">
+      <div class="news_item-toolbar-meta-item news_item-toolbar-meta-item__featuring">
+      <% {main_participants, additional_participants} = @episode |> Episode.participants() |> Enum.split(5) %>
+      <%= for person <- main_participants do %>
+        <%= link(to: PersonView.profile_path(person), title: person.name) do %>
+          <%= SharedHelpers.lazy_image(PersonView.avatar_url(person, :thumb), "Featuring #{person.name}", width: 24, height: 24) %>
+        <% end %>
+      <% end %>
+      <%= if Enum.any?(additional_participants) do %>
+        <span class="has-tooltip"><%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-plus.png"), "And more", width: 24, height: 24, style: "background: none;") %></span>
+        <div class="tooltip tooltip--topics">
+          <div class="tooltip-arrow"></div>
+          <div class="tooltip-wrap">
+            <ul class="tooltip-list">
+              <%= for person <- additional_participants do %>
+                <li><%= link(person.name, to: PersonView.profile_path(person), title: person.name) %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+      </div>
+
+      <span class="news_item-toolbar-meta-item">
+        <%= TimeView.ts(@episode.published_at, :date) %>
+      </span>
+
+      <%= if Enum.any?(@episode.topics) do %>
+        <% {main_topics, additional_topics} = Enum.split(@episode.topics, 1) %>
+
+        <span class="news_item-toolbar-meta-item">
+        <%= for topic <- main_topics do %>
+          <%= link("##{topic.slug}", to: ~p"/topic/#{topic.slug}", title: "View #{topic.name}") %>
+        <% end %>
+
+        <%= if Enum.any?(additional_topics) do %>
+          <span class="has-tooltip">+<%= length(additional_topics) %></span>
+          <div class="tooltip tooltip--topics">
+            <div class="tooltip-arrow"></div>
+            <div class="tooltip-wrap">
+              <ul class="tooltip-list">
+                <%= for topic <- additional_topics do %>
+                  <li>
+                    <%= link("##{topic.slug}", to: ~p"/topic/#{topic.slug}", title: "View #{topic.name}") %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+        </span>
+      <% end %>
+
+    <%= if @episode.download_count > 0 do %>
+      <span class="news_item-toolbar-meta-item">
+        <span>🎧 <%= SharedHelpers.pretty_downloads(@episode) %></span>
+      </span>
+    <% end %>
+    </div>
+  </div>
+
+  <div class="news_item-content richtext">
+    <%= @episode.summary |> SharedHelpers.md_to_html() |> raw() %>
+  </div>
+
+  <footer class="news_item-footer">
+    <span class="news_item-footer-item">
+      <%= link("Discuss", to: ~p"/#{@episode.podcast.slug}/#{@episode.slug}/discuss") %>
+      &bull; <%= link("Share",
+          title: "Share this episode",
+          to: {:javascript, "void(0);"},
+          data: [share: ~p"/#{@episode.podcast.slug}/#{@episode.slug}/share"]) %>
+    </span>
+  </footer>
+</article>

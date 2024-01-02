@@ -93,13 +93,13 @@
       }
 
       @include breakpoint($condensedBreakpoint) {
-        $size: 50px;
+        $size: 70px;
         height: $size;
-        left: -50px;
+        left: 0px;
         line-height: $size;
         position: absolute;
         width: $size;
-        top: 15px;
+        top: 5px;
 
         .news_item--sponsor & { top: 45px; }
 

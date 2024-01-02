@@ -21,15 +21,15 @@
             title: "Play the Trailer",
             to: EpisodeView.audio_url(@trailer),
             role: "button",
-            data: [play: Routes.episode_path(@conn, :play, @podcast.slug, @trailer.slug)],
+            data: [play: ~p"/#{@podcast.slug}/#{@trailer.slug}/play"],
             class: "show-header-play_trailer button_play") %>
       <% else %>
-        <% latest = List.first(@items) %>
+        <% latest = List.first(@page.entries) %>
         <%= if is_map(latest) do %>
           <%= link("Listen to the latest",
-              to: EpisodeView.audio_url(latest.object),
+              to: EpisodeView.audio_url(latest),
               role: "button",
-              data: [play: Routes.episode_path(@conn, :play, @podcast.slug, latest.object.slug)],
+              data: [play: ~p"/#{@podcast.slug}/#{latest.slug}/play"],
               class: "show-header-play_trailer button_play") %>
         <% end %>
       <% end %>

@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, NewsItem, Podcast, Subscription}
+  alias Changelog.{Episode, Podcast, Subscription}
 
   plug RequireGuest, "before joining" when action in [:join]
 
@@ -49,19 +49,14 @@ defmodule ChangelogWeb.PageController do
   def index(conn, params) do
     page =
       Podcast.master()
-      |> Podcast.get_news_items()
-      |> NewsItem.published()
-      |> NewsItem.non_feed_only()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
+      |> Podcast.get_episodes()
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 10))
 
-    items =
-      page.entries
-      |> Enum.map(&NewsItem.load_object/1)
-
     conn
-    |> assign(:items, items)
+    |> assign(:page, page)
     |> render(:index)
   end
 

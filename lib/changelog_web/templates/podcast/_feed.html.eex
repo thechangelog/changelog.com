@@ -19,8 +19,8 @@
   </ul>
 </nav>
 
-<%= if Enum.any?(@items) do %>
-  <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
+<%= if Enum.any?(@page) do %>
+  <%= render_many(@page, EpisodeView, "_item.html") %>
   <%= render(SharedView, "_more_button.html", assigns) %>
 <% else %>
   <p class="feed-note">Nothing to see here. Move along.</p>

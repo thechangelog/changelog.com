@@ -160,6 +160,7 @@ defmodule Changelog.Podcast do
   end
 
   def get_episodes(%{slug: "master"}), do: from(e in Episode)
+  def get_episodes(%{slug: "podcast", is_meta: true}), do: from(e in Episode, where: e.podcast_id in ^changelog_ids())
   def get_episodes(podcast), do: assoc(podcast, :episodes)
 
   def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio())

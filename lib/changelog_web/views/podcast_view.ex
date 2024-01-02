@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PodcastView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Podcast, StringKit, UrlKit}
-  alias ChangelogWeb.{Endpoint, EpisodeView, NewsItemView, PersonView, SharedView}
+  alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
   def podcasts_for_index(podcasts) do

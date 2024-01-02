@@ -16,11 +16,11 @@
     </nav>
 
 
-  <%= if Enum.any?(@items) do %>
-    <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
+  <%= if Enum.any?(@page) do %>
+    <%= render_many(@page, EpisodeView, "_item.html") %>
 
     <nav class="load_more" aria-label="Pagination">
-      <%= link("View All", to: Routes.podcast_path(@conn, :show, "master"), class: "load_more-button") %>
+      <%= link("View All", to: ~p"/master", class: "load_more-button") %>
     </nav>
   <% end %>
   </div>
