@@ -9,7 +9,7 @@
     <div class="show_list-shows-item-content">
       <div class="show_list-shows-item-content-heading">
         <h2><a href="<%= ~p"/#{@podcast.slug}" %>"><%= @podcast.name %></a></h2>
-        <%= if @podcast.status != :soon do %>
+        <%= if Podcast.is_publishing(@podcast) do %>
           <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Subscribe</button>
           <%= render("_subscribe_tooltip.html", conn: @conn, podcast: @podcast) %>
         <% end %>

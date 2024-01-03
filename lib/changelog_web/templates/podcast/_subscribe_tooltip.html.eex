@@ -21,11 +21,11 @@
       <% end %>
         <li><%= link("Email", to: subscribe_via_email_path(@conn, @podcast), title: "Subscribe via Email") %></li>
     <% else %>
-      <li><%= link("Via Master", to: Routes.podcast_path(@conn, :show, "master")) %></li>
+      <li><%= link("Via Master", to: ~p"/master") %></li>
     <% end %>
     </ul>
     <div class="tooltip-footer">
-      <%= link("Request Episode", to: Routes.episode_request_path(@conn, :new, @podcast.slug)) %>
+      <%= link("Request Episode", to: ~p"/request/#{@podcast.slug}") %>
     </div>
   </div>
 </div>

@@ -1,0 +1,8 @@
+<section class="show_list">
+  <header class="show_list-header">
+    <h2>More great podcasts that are not currently in production</h2>
+  </header>
+  <div class="show_list-shows">
+    <%= render_many(inactive_podcasts_for_index(@podcasts), __MODULE__, "_summary.html", assigns) %>
+  </div>
+</section>

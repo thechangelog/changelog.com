@@ -17,23 +17,30 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
     active =
       Podcast.active()
-      |> Podcast.not_retired()
       |> Podcast.by_position()
       |> Podcast.preload_active_hosts()
       |> Repo.all()
       |> Enum.filter(fn p -> Policies.Admin.Podcast.show(user, p) end)
 
-    retired =
-      Podcast.retired()
+    inactive =
+      Podcast.inactive()
+      |> Podcast.by_position()
+      |> Podcast.preload_active_hosts()
+      |> Repo.all()
+      |> Enum.filter(fn p -> Policies.Admin.Podcast.show(user, p) end)
+
+    archived =
+      Podcast.archived()
       |> Podcast.oldest_first()
       |> Podcast.preload_active_hosts()
       |> Repo.all()
       |> Enum.filter(fn p -> Policies.Admin.Podcast.show(user, p) end)
 
     conn
-    |> assign(:active, active)
     |> assign(:draft, draft)
-    |> assign(:retired, retired)
+    |> assign(:active, active)
+    |> assign(:inactive, inactive)
+    |> assign(:archived, archived)
     |> assign(:downloads, ChangelogWeb.Admin.PageController.downloads())
     |> render(:index)
   end

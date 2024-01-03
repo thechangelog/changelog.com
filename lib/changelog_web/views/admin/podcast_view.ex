@@ -19,7 +19,7 @@ defmodule ChangelogWeb.Admin.PodcastView do
   end
 
   def position_options do
-    1..Repo.count(Podcast.not_retired())
+    1..Repo.count(Podcast.public())
   end
 
   def subscribers_count(%{subscribers: nil}), do: 0
@@ -29,8 +29,9 @@ defmodule ChangelogWeb.Admin.PodcastView do
     case podcast.status do
       :draft -> content_tag(:span, "Draft", class: "ui tiny yellow basic label")
       :soon -> content_tag(:span, "Coming Soon", class: "ui tiny yellow basic label")
-      :published -> content_tag(:span, "Published", class: "ui tiny green basic label")
-      :retired -> content_tag(:span, "Retired", class: "ui tiny basic label")
+      :publishing -> content_tag(:span, "Publishing", class: "ui tiny green basic label")
+      :inactive -> content_tag(:span, "Inactive", class: "ui tiny red basic label")
+      :archived -> content_tag(:span, "Archived", class: "ui tiny basic label")
     end
   end
 

@@ -5,10 +5,17 @@ defmodule ChangelogWeb.PodcastView do
   alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
-  def podcasts_for_index(podcasts) do
-    pods = Enum.reject(podcasts, &Podcast.is_a_changelog_pod/1)
+  def active_podcasts_for_index(podcasts) do
+    pods =
+      podcasts
+      |> Enum.reject(&Podcast.is_a_changelog_pod/1)
+      |> Enum.filter(&Podcast.is_active/1)
 
     List.flatten([Podcast.changelog, pods, Podcast.master])
+  end
+
+  def inactive_podcasts_for_index(podcasts) do
+    Enum.reject(podcasts, &Podcast.is_active/1)
   end
 
   def apple_id(podcast) do
@@ -94,9 +101,9 @@ defmodule ChangelogWeb.PodcastView do
 
   def subscribe_via_email_path(conn, podcast) do
     if conn.assigns.current_user do
-      Routes.home_path(conn, :show) <> "#podcasts"
+      ~p"/~" <> "#podcasts"
     else
-      Routes.person_path(conn, :subscribe, podcast.slug)
+      ~p"/subscribe/#{podcast.slug}"
     end
   end
 

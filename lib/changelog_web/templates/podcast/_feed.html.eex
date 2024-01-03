@@ -1,5 +1,5 @@
-<%= if @podcast.status == :retired do %>
-  <p class="feed-note">This podcast has been retired. Please browse and enjoy the archive below.</p>
+<%= if @podcast.status == :inactive do %>
+  <p class="feed-note">This podcast is not in production. Please browse and enjoy the archive below.</p>
 <% end %>
 
 <nav class="subnav">

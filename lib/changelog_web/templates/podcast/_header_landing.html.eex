@@ -9,13 +9,13 @@
         sizes="(min-width:880px) 490w, 440w"
         alt="<%= @podcast.name %> Artwork"
       >
-    <%= if @podcast.status != :published do %>
+    <%= if @podcast.status != :publishing do %>
       <div class="show-header-art-status show-header-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
     <% end %>
     </div>
 
     <div class="show-header-content">
-    <%= if @podcast.status != :retired do %>
+    <%= if Podcast.is_active(@podcast) do %>
       <%= if is_map(@trailer) do %>
         <%= link("Listen to the Trailer",
             title: "Play the Trailer",
@@ -58,17 +58,17 @@
       <hr class="show-header-break">
 
       <%= cond do %>
-      <% @podcast.status == :retired -> %>
-        <p class="show-header-signup_text">This podcast has been retired. <%= link("Head here", to: Routes.podcast_path(@conn, :index)) %> for more awesome podcasts.</p>
+      <% @podcast.status == :inactive -> %>
+        <p class="show-header-signup_text">This podcast is not currently in production. <%= link("Head here", to: Routes.podcast_path(@conn, :index)) %> for more awesome podcasts.</p>
       <% !Podcast.has_feed(@podcast) -> %>
         <p>You can only subscribe to <em><%= @podcast.name %></em> by subscribing to our <%= link("Master Feed", to: Routes.podcast_path(@conn, :show, "master")) %></p>
       <% Podcast.is_a_changelog_pod(@podcast) -> %>
         <%= render("_news_subscribe.html", assigns) %>
+        <%= render("_subscribe_buttons.html", assigns) %>
       <% true -> %>
         <%= render("_podcast_subscribe.html", assigns) %>
+        <%= render("_subscribe_buttons.html", assigns) %>
       <% end %>
-
-      <%= render("_subscribe_buttons.html", assigns) %>
     </div>
 
   </div>

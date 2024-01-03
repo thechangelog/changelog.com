@@ -96,7 +96,7 @@ defmodule Changelog.Cache do
 
   def podcasts do
     get_or_store("podcasts", :infinity, fn ->
-      Podcast.active()
+      Podcast.public()
       |> Podcast.by_position()
       |> Podcast.preload_active_hosts()
       |> Podcast.preload_retired_hosts()

@@ -2,8 +2,8 @@
   <nav class="footer-primary">
     <div class="footer-primary_wrap">
       <ul class="footer-primary-list footer-primary-list--company">
-        <li><%= link "About", to: Routes.page_path(@conn, :about) %></li>
-        <li><%= link "Contact", to: Routes.page_path(@conn, :contact) %></li>
+        <li><%= link "About", to: ~p"/about" %></li>
+        <li><%= link "Contact", to: ~p"/contact" %></li>
         <li><a href="tel:+1-888-974-2454">888-974-CHLG (2454)</a></li>
       </ul>
 
@@ -50,12 +50,13 @@
     <div class="footer-nav-list">
       <h4><%= link("Podcasts", to: ~p"/podcasts", title: "View all podcasts") %></h4>
       <ul>
-      <%= for podcast <- @podcasts do %>
+      <%= for podcast <- ChangelogWeb.PodcastView.active_podcasts_for_index(@podcasts) do %>
         <li><%= link(podcast.name, to: ~p"/#{podcast.slug}", title: podcast.name) %></li>
       <% end %>
         <li>---</li>
-        <li><%= link("Master", to: ~p"/master", title: "Master feed") %></li>
-
+      <%= for podcast <- ChangelogWeb.PodcastView.inactive_podcasts_for_index(@podcasts) do %>
+        <li><%= link(podcast.name, to: ~p"/#{podcast.slug}", title: podcast.name) %></li>
+      <% end %>
       </ul>
     </div>
     <div class="footer-nav-list">

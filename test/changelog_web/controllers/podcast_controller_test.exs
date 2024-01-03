@@ -20,6 +20,14 @@ defmodule ChangelogWeb.PodcastControllerTest do
     end
   end
 
+  test "getting an archived podcast page", %{conn: conn} do
+    p = insert(:podcast, status: :archived)
+
+    assert_raise Ecto.NoResultsError, fn ->
+      get(conn, Routes.podcast_path(conn, :show, p.slug))
+    end
+  end
+
   test "getting a podcast page", %{conn: conn} do
     p = insert(:podcast)
     conn = get(conn, Routes.podcast_path(conn, :show, p.slug))

@@ -16,7 +16,7 @@ defmodule Changelog.Podcast do
 
   require Logger
 
-  defenum(Status, draft: 0, soon: 1, published: 2, retired: 3)
+  defenum(Status, draft: 0, soon: 1, publishing: 2, inactive: 3, archived: 4)
 
   schema "podcasts" do
     field :name, :string
@@ -70,7 +70,7 @@ defmodule Changelog.Podcast do
     %__MODULE__{
       name: "Changelog Master Feed",
       slug: "master",
-      status: :published,
+      status: :publishing,
       is_meta: true,
       twitter_handle: "changelog",
       mastodon_handle: "changelog@changelog.social",
@@ -91,7 +91,7 @@ defmodule Changelog.Podcast do
     %__MODULE__{
       name: "The Changelog",
       slug: "podcast",
-      status: :published,
+      status: :publishing,
       is_meta: true,
       vanity_domain: "https://changelog.fm",
       twitter_handle: "changelog",
@@ -135,19 +135,18 @@ defmodule Changelog.Podcast do
     |> file_changeset(attrs)
   end
 
-  def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:published])
+  def private(query \\ __MODULE__), do: from(q in query, where: q.status in [^:draft, ^:archived])
+
+  def public(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:publishing, ^:inactive])
+  def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:publishing])
+  def inactive(query \\ __MODULE__), do: from(q in query, where: q.status == ^:inactive)
+
   def draft(query \\ __MODULE__), do: from(q in query, where: q.status == ^:draft)
+  def archived(query \\ __MODULE__), do: from(q in query, where: q.status == ^:archived)
 
-  def public(query \\ __MODULE__),
-    do: from(q in query, where: q.status in [^:soon, ^:published, ^:retired])
-
-  def retired(query \\ __MODULE__), do: from(q in query, where: q.status == ^:retired)
-  def not_retired(query \\ __MODULE__), do: from(q in query, where: q.status != ^:retired)
   def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
-  def retired_last(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.status])
 
   def with_vanity_domain(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.vanity_domain))
-
 
   def get_by_slug!("interviews"), do: get_by_slug!("podcast")
   def get_by_slug!("master"), do: master()
@@ -197,6 +196,10 @@ defmodule Changelog.Podcast do
   def is_news(podcast), do: podcast.slug == "news"
 
   def is_master(podcast), do: podcast.slug == "master"
+
+  def is_active(podcast), do: Enum.member?([:soon, :publishing], podcast.status)
+
+  def is_publishing(podcast), do: podcast.status == :publishing
 
   def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published())
 

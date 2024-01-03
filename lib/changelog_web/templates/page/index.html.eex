@@ -1,4 +1,4 @@
-<%= render(ChangelogWeb.PodcastView, "index.html", assigns) %>
+<%= render(ChangelogWeb.PodcastView, "_index_active.html", assigns) %>
 
 <div class="show">
   <a id="recent" class="anchor"></a>

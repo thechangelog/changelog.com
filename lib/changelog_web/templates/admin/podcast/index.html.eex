@@ -19,23 +19,30 @@
   <%= render(EpisodeView, "_downloads.html", assigns) %>
 </div>
 
-<%= if Enum.any?(@active) do %>
-<div class="ui basic segment">
-  <h2 class="ui header">Active podcasts</h2>
-  <%= render("_table.html", Map.merge(assigns, %{podcasts: @active})) %>
-</div>
-<% end %>
-
 <%= if Enum.any?(@draft) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Draft podcasts</h2>
+  <h2 class="ui header">Draft pods</h2>
   <%= render("_table.html", Map.merge(assigns, %{podcasts: @draft})) %>
 </div>
 <% end %>
 
-<%= if Enum.any?(@retired) do %>
+<%= if Enum.any?(@active) do %>
 <div class="ui basic segment">
-  <h2 class="ui header">Retired podcasts</h2>
-  <%= render("_table.html", Map.merge(assigns, %{podcasts: @retired})) %>
+  <h2 class="ui header">Active pods</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcasts: @active})) %>
+</div>
+<% end %>
+
+<%= if Enum.any?(@inactive) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Inactive pods (still public)</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcasts: @inactive})) %>
+</div>
+<% end %>
+
+<%= if Enum.any?(@archived) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Archived pods (private)</h2>
+  <%= render("_table.html", Map.merge(assigns, %{podcasts: @archived})) %>
 </div>
 <% end %>
