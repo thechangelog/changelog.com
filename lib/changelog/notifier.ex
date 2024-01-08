@@ -22,10 +22,10 @@ defmodule Changelog.Notifier do
       |> Map.get(:object)
       |> Episode.preload_all()
 
+    deliver_slack_new_episode_message(episode)
     deliver_episode_guest_thanks_emails(episode)
     deliver_episode_request_email(episode)
     deliver_podcast_subscription_emails(episode)
-    deliver_slack_new_episode_message(episode)
   end
 
   def notify(item = %NewsItem{status: :declined}) do

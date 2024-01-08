@@ -38,5 +38,5 @@ defmodule Changelog.Slack.Messages do
   end
 
   defp celebrate_emoji,
-    do: ~w(:tada: :gift: :muscle: :raised_hands: :parrot: :dancer:) |> Enum.random()
+    do: ~w(:tada: :gift: :muscle: :raised_hands: :partying_face: :dancer:) |> Enum.random()
 end
