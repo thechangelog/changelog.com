@@ -19,6 +19,6 @@ export FLY_API_TOKEN="$(flyctl auth token)"
 # Required for image publishing to work locally
 export GITHUB_REPOSITORY="thechangelog/changelog.com"
 export GITHUB_REF_NAME="master"
-export IMAGE_OWNER=$USER
+export IMAGE_OWNER=thechangelog
 export GHCR_USERNAME=$USER
 export GHCR_PASSWORD="op://changelog/ghcr/credential"
