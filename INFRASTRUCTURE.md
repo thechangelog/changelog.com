@@ -143,8 +143,9 @@ TL;DR:
   - Cloudflare R2
 - **Application**
   - Elixir / Phoenix
+  - Typesense search
 - **Database**
-  - PostgreSQL
+  - PostgreSQL (Neon.tech)
 
 [changelog.com](https://changelog.com) is a monolithic
 [Elixir](http://elixir-lang.org) application built with the
@@ -173,15 +174,17 @@ Fly.io Proxy
 Application (changelog-2022-03-13.fly.dev)
 ```
 
-The production database - PostgreSQL - is running on Fly.io too. It is a
-replicated setup, with one leader & one replica.
+The production database - PostgreSQL - is running on Neon.tech. It is a
+replicated setup, with one leader (RW) & one replica (RO). We are currently not
+using the replica, and since Neon.tech scales down to 0, this isn't costing
+anything.
 
 ```
 Application (changelog-2022-03-13.fly.dev)
 ↓
-PostgreSQL Leader
+PostgreSQL Leader (RW)
 ↓
-PostgreSQL Replica
+PostgreSQL Replica (RO)
 ```
 
 
@@ -209,9 +212,13 @@ workflow jobs perspective, it is fairly standard:
 ## Secrets
 
 All our secrets are stored in [1Password](https://changelog.1password.com/), in
-the **Shared** Vault. Currently, they are manually declared in Fly.io via
-`flyctl`. They are pasted manually in [GitHub Actions
-secrets](https://github.com/thechangelog/changelog.com/settings/secrets/actions).
+the **changelog** vault. We are declaring a single secret in Fly.io,
+`OP_SERVICE_ACCOUNT_TOKEN`, and then loading all other secrets into memory part
+of app boot via `op` & `env.op`.
+
+In [GitHub Actions
+secrets](https://github.com/thechangelog/changelog.com/settings/secrets/actions),
+we are still pasting them manually. That is something that should use `op` too.
 
 
 ## Metrics & observability
@@ -252,47 +259,6 @@ you very much!
 
 ---
 
-## How to upgrade our PostgreSQL instance running on Fly.io?
-
-1. Provision a new PostgreSQL instance
-```console
-flyctl postgres create \
-    --org changelog --region iad \
-    --name changelog-postgres-2023-07-31 \
-    --initial-cluster-size 2 \
-    --vm-size performance-2x \
-    --volume-size 10
-```
-
-2. Connect to newly created instance (we want to use the new `pd_dump`, with the latest improvements)
-```console
-flyctl ssh console --app changelog-postgres-2023-07-31
-```
-
-3. Create new db
-```console
-createdb changelog --host localhost --username postgres
-```
-
-4. Dump database to local file
-```console
-pg_dump --host postgres-2022-03-12.internal --username postgres changelog > changelog.sql
-```
-
-5. Restore database from local file
-```console
-psql --host localhost --username postgres --single-transaction changelog < changelog.sql
-psql --host localhost --command 'ANALYZE VERBOSE;' changelog postgres 
-```
-
-> **Note**
-> If a previous restore failed, run `dropdb --force --host localhost --username postgres changelog`, then `createdb ...` again.
-
-6. Configure app to use new PostgreSQL instance
-```console
-flyctl secrets set DB_HOST=changelog-postgres-2023-07-31.flycast DB_PASS=<NEW_DB_PASSWORD> --app changelog-2022-03-13
-```
-
 ## How to load data into a Neon.tech from a Fly.io Postgres instance?
 
 The assumption is that a Neon.tech instance has already been provisioned.
@@ -307,6 +273,8 @@ op read op://changelog/changelog-postgres-2023-07-31/url --account changelog.1pa
 ```console
 op read op://changelog/neon/url --account changelog.1password.com --cache
 ```
+- ensure there are no app instances connected to the db being restored
+- ensure the db is clean before restore
 
 ### Step-by-step guide
 
@@ -318,14 +286,14 @@ flyctl ssh console --select --app changelog-postgres-2023-07-31
 2. Backup db to local file, then restore to remote host:
 ```console
 time pg_dump --dbname="<FLY_POSTGRES_URL>" --format=c --verbose > /data/changelog.sql
-time pg_restore --dbname="<NEON_POSTGRES_URL>" --format=c --clean --exit-on-error --no-owner --no-privileges < /data/changelog.sql
-```
+# Expected to take ~40s
 
-> **Note**
-> This step can be re-run as many times as needed. It performs a point-in-time
-> db dump & restore - cleans existing data!
+time pg_restore --dbname="<NEON_POSTGRES_URL>" --format=c --exit-on-error --no-owner --no-privileges < /data/changelog.sql
+# Expected to take ~1m
+```
 
 3. [Warm-up the query planner](https://www.postgresql.org/docs/current/sql-analyze.html):
 ```console
 time psql "<NEON_POSTGRES_URL>" --command "ANALYZE VERBOSE;"
+# Expected to take ~3s
 ```
