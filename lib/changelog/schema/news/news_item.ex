@@ -19,7 +19,7 @@ defmodule Changelog.NewsItem do
   }
 
   defenum(Status, declined: -1, draft: 0, queued: 1, submitted: 2, published: 3, accepted: 4)
-  defenum(Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4)
+  defenum(Type, link: 0, audio: 1, video: 2, project: 3, announcement: 4, post: 5)
 
   schema "news_items" do
     field :status, Status, default: :draft
@@ -77,13 +77,8 @@ defmodule Changelog.NewsItem do
   def logged_by(query \\ __MODULE__, person),
     do: from(q in query, where: q.logger_id == ^person.id)
 
-  def post(query \\ __MODULE__), do: from(q in query, where: like(q.object_id, ^"posts:%"))
-
-  def non_post(query \\ __MODULE__),
-    do:
-      from(q in query,
-        where: fragment("? is null or ? not like 'posts:%'", q.object_id, q.object_id)
-      )
+  def post(query \\ __MODULE__), do: from(q in query, where: q.type == ^:post)
+  def non_post(query \\ __MODULE__), do: from(q in query, where: q.type != ^:post)
 
   def published(query \\ __MODULE__),
     do: from(q in query, where: q.status == ^:published, where: q.published_at <= ^Timex.now())
@@ -207,7 +202,8 @@ defmodule Changelog.NewsItem do
     object =
       case item.type do
         :audio -> get_episode_object(item.object_id)
-        _else -> get_post_object(item.object_id)
+        :post -> get_post_object(item.object_id)
+        _else -> nil
       end
 
     load_object(item, object)
@@ -343,7 +339,7 @@ defmodule Changelog.NewsItem do
 
   def is_audio(item), do: item.type == :audio
   def is_non_audio(item), do: item.type != :audio
-  def is_post(item), do: item.type == :link && !is_nil(item.object_id)
+  def is_post(item), do: item.type == :post
   def is_video(item), do: item.type == :video
 
   def is_draft(item), do: item.status == :draft

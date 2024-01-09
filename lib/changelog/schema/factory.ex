@@ -181,7 +181,8 @@ defmodule Changelog.Factory do
 
     %{
       published_news_item_factory()
-      | headline: post.title,
+      | type: :post,
+        headline: post.title,
         url: "https://changelog.com/posts/#{post.slug}",
         object_id: object_id
     }

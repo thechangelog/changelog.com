@@ -75,7 +75,7 @@ defmodule Changelog.Buffer.BufferTest do
 
     test "calls post functions and Client.create when news item with post object" do
       insert(:published_post, slug: "this-is-one")
-      item = %NewsItem{type: :link, object_id: "posts:this-is-one"}
+      item = %NewsItem{type: :post, object_id: "posts:this-is-one"}
 
       with_mocks([
         {Buffer.Content, [], [post_brief: fn _ -> "brief" end]},

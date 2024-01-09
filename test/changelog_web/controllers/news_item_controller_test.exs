@@ -15,7 +15,7 @@ defmodule ChangelogWeb.NewsItemControllerTest do
     assert html_response(conn, 200) =~ item.headline
   end
 
-  test "getting a published news item page of that has a post", %{conn: conn} do
+  test "getting a published news item page that has a post", %{conn: conn} do
     post = insert(:published_post)
     item = post |> post_news_item() |> insert()
     conn = get(conn, Routes.news_item_path(conn, :show, Post.hashid(item)))
