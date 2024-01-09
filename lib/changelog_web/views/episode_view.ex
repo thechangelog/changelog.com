@@ -12,6 +12,8 @@ defmodule ChangelogWeb.EpisodeView do
     UrlKit
   }
 
+  alias Changelog.Files.Cover
+
   alias ChangelogWeb.{
     Endpoint,
     LayoutView,
@@ -69,6 +71,14 @@ defmodule ChangelogWeb.EpisodeView do
   defp get_down_with_op3(url, :dev), do: url
 
   defp get_down_with_op3(url, _mode), do: String.replace_prefix(url, "", "https://op3.dev/e/")
+
+  def cover_url(episode, version \\ :original) do
+    if episode.cover do
+      Cover.url({episode.cover, episode}, version)
+    else
+      PodcastView.cover_url(episode.podcast, version)
+    end
+  end
 
   # simplest case, no ++
   def plusplus_cta(%{plusplus_file: pp}) when is_nil(pp), do: fallback_cta()

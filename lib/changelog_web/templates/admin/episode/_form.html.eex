@@ -46,19 +46,45 @@
 <% end %>
 
   <div class="fields">
-    <div class="field <%= AdminHelpers.error_class(f, :featured) %>">
-      <label>Recommended <%= AdminHelpers.help_icon("Episode will appear in recommended list. Limit to 10% of show's total episodes, max.") %></label>
+    <div class="three wide field <%= AdminHelpers.error_class(f, :featured) %>">
+      <label>Recommend <%= AdminHelpers.help_icon("Episode will appear in recommended list. Limit to 10% of show's total episodes, max.") %></label>
       <div class="ui fitted toggle checkbox">
         <%= checkbox(f, :featured, class: "hidden") %>
         <%= AdminHelpers.error_message(f, :featured) %>
       </div>
     </div>
 
-    <div class="field">
+    <div class="three wide field">
       <label>Requested</label>
       <div class="ui fitted toggle checkbox">
         <%= checkbox(f, :requested, class: "hidden", value: !!f.data.request_id) %>
       </div>
+    </div>
+
+    <div class="eight wide field">
+      <label for="cover">
+        Cover Art
+        <%= AdminHelpers.help_icon("Ideal size is 3000px by 3000px") %>
+        <%= AdminHelpers.file_toggle_buttons() %>
+      </label>
+      <%= file_input(f, :cover) %>
+      <%= AdminHelpers.error_message(f, :cover) %>
+    </div>
+
+    <div class="two wide field">
+      <%= if AdminHelpers.is_persisted(f.data) do %>
+        <img
+          src="<%= EpisodeView.cover_url(f.data, :small) %>"
+          data-popup=true
+          width=66
+          height=66
+        <%= if !f.data.cover do %>
+          data-content="Using the podcast cover"
+        <% else %>
+          data-content="Using the uploaded file"
+        <% end %>
+        >
+      <% end %>
     </div>
   </div>
 

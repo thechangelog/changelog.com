@@ -1,14 +1,18 @@
 defmodule Changelog.Files.Cover do
   use Changelog.File, [:jpg, :png]
 
-  alias Changelog.Podcast
+  alias Changelog.{Episode, Podcast}
   alias ChangelogWeb.PodcastView
 
   @versions [:original, :medium, :small]
 
   def storage_dir(_, _), do: "uploads/covers"
 
-  def filename(version, {_, %{name: _} = scope}) do
+  def filename(version, {_file, %Episode{} = scope}) do
+    "episode-#{scope.id}-#{version}"
+  end
+
+  def filename(version, {_file, %Podcast{} = scope}) do
     name = if Podcast.is_interviews(scope) do
       "changelog-interviews"
     else

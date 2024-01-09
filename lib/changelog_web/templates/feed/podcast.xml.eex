@@ -55,7 +55,7 @@
       <content:encoded><%= render("_show_notes.xml", episode: episode, plusplus: false) %></content:encoded>
 
       <itunes:episodeType><%= episode.type %></itunes:episodeType>
-      <itunes:image href="<%= PodcastView.cover_url(episode.podcast) %>"/>
+      <itunes:image href="<%= EpisodeView.cover_url(episode) %>"/>
       <itunes:duration><%= TimeView.duration(episode.audio_duration) %></itunes:duration>
       <itunes:explicit>no</itunes:explicit>
       <itunes:keywords><%= episode.podcast.keywords %></itunes:keywords>

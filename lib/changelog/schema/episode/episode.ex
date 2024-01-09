@@ -46,6 +46,8 @@ defmodule Changelog.Episode do
     field :recorded_live, :boolean, default: false
     field :youtube_id, :string
 
+    field :cover, Files.Cover.Type
+
     field :audio_file, Files.Audio.Type
     field :audio_bytes, :integer
     field :audio_duration, :integer
@@ -209,7 +211,7 @@ defmodule Changelog.Episode do
       email_subject email_teaser email_content recorded_live youtube_id guid type)a)
     |> prep_audio_file(attrs)
     |> prep_plusplus_file(attrs)
-    |> cast_attachments(attrs, [:audio_file, :plusplus_file])
+    |> cast_attachments(attrs, [:audio_file, :plusplus_file, :cover])
     |> cast_embed(:audio_chapters)
     |> cast_embed(:plusplus_chapters)
     |> validate_required([:slug, :title, :published, :featured])

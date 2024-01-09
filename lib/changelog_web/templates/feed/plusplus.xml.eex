@@ -38,7 +38,7 @@
       <%= if episode.type == :full do %>
         <itunes:episode><%= EpisodeView.number(episode) %></itunes:episode>
       <% end %>
-        <itunes:image href="<%= PodcastView.cover_url(episode.podcast) %>"/>
+        <itunes:image href="<%= EpisodeView.cover_url(episode) %>"/>
         <itunes:duration><%= TimeView.duration(duration) %></itunes:duration>
         <itunes:explicit>no</itunes:explicit>
         <itunes:subtitle><%= escaped(episode.subtitle) %></itunes:subtitle>

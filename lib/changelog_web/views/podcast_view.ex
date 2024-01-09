@@ -27,28 +27,28 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
-  def cover_path(%{slug: "master"}, version) do
+  def cover_url(podcast, version \\ :original)
+
+  # Special cases for Master, The Changelog & ++
+  def cover_url(%{slug: "master"}, version) do
     image = "master-#{version}.png"
     url(~p"/images/podcasts/#{image}")
   end
 
-  def cover_path(%{slug: "podcast", is_meta: true}, version) do
+  def cover_url(%{slug: "podcast", is_meta: true}, version) do
     image = "podcast-#{version}.png"
     url(~p"/images/podcasts/#{image}")
   end
 
-  def cover_path(%{slug: "plusplus"}, version) do
+  def cover_url(%{slug: "plusplus"}, version) do
     image = "plusplus-#{version}.png"
     url(~p"/images/podcasts/#{image}")
   end
 
-  def cover_path(podcast, version), do: Cover.url({podcast.cover, podcast}, version)
-
-  def cover_url(podcast), do: cover_url(podcast, :original)
-
+  # Standard case
   def cover_url(podcast, version) do
     if podcast.cover do
-      cover_path(podcast, version)
+      Cover.url({podcast.cover, podcast}, version)
     else
       url(~p"/images/defaults/black.png")
     end

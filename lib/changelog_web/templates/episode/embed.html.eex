@@ -67,7 +67,7 @@
           <ul class="episode_player-nav-list">
             <li class="episode_player-nav-list-item episode_player-nav-list-item--show">
               <%= link to: Routes.podcast_url(@conn, :show, @podcast.slug), title: "#{@podcast.name} on Changelog.com", alt: "#{@podcast.name} Podcast" do %>
-                <img src="<%= PodcastView.cover_url(@podcast, :small) %>" alt="<%= @podcast.name %>" width="75" height="75">
+                <img src="<%= cover_url(@episode, :small) %>" alt="<%= @podcast.name %>" width="75" height="75">
               <% end %>
             </li>
             <li class="episode_player-nav-list-item">

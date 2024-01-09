@@ -5,7 +5,7 @@
       <%= link to: ~p"/#{slug}",
         title: @episode.podcast.name,
         class: "news_item-source-image news_item-source-image--episode" do %>
-        <%= SharedHelpers.lazy_image(PodcastView.cover_url(@episode.podcast, :small), @episode.podcast.name, width: 70, height: 70, style: "background-color: #121921") %>
+        <%= SharedHelpers.lazy_image(cover_url(@episode, :small), @episode.podcast.name, width: 70, height: 70, style: "background-color: #121921") %>
       <% end %>
 
       <%= link(podcast_name_and_number(@episode),
