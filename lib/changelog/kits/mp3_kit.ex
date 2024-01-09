@@ -16,7 +16,7 @@ defmodule Changelog.Mp3Kit do
   }
 
   def tag(file_path, episode, chapters) do
-    cover_url = EpisodeView.cover_url(episode.podcast, :original)
+    cover_url = EpisodeView.cover_url(episode, :original)
     cover_file = UrlKit.get_tempfile(cover_url)
     tagged_file_path = file_path <> "-tagged"
 
