@@ -19,7 +19,7 @@ defmodule ChangelogWeb.Admin.PageController do
     |> assign(:episode_drafts, episode_drafts())
     |> assign(:episode_requests, episode_requests(EpisodeRequest.limit(5)))
     |> assign(:members, members())
-    |> assign(:podcasts, Cache.podcasts())
+    |> assign(:podcasts, podcasts_for_index())
     |> assign(:downloads, downloads())
     |> render(:index)
   end
@@ -30,6 +30,10 @@ defmodule ChangelogWeb.Admin.PageController do
 
   def index(conn = %{assigns: %{current_user: %{editor: true}}}, _params) do
     redirect(conn, to: ~p"/admin/news")
+  end
+
+  defp podcasts_for_index do
+    Enum.filter(Cache.podcasts(), &Podcast.is_active/1)
   end
 
   def fresh_requests(conn, _params) do
@@ -78,7 +82,7 @@ defmodule ChangelogWeb.Admin.PageController do
     week_start = Timex.subtract(now, Timex.Duration.from_days(7))
     month_start = Timex.subtract(now, Timex.Duration.from_days(28))
 
-    Enum.map(Cache.podcasts(), fn pod ->
+    Enum.map(podcasts_for_index(), fn pod ->
       {
         pod,
         {Subscription.subscribed_count(pod, now, today_start), Subscription.unsubscribed_count(pod, now, today_start)},
