@@ -64,15 +64,16 @@ config :changelog, Changelog.Repo,
   # ssl_opts: [
   #   cacerts: :public_key.cacerts_get(), # available since OTP26
   #   verify: :verify_peer,
-  #   server_name_indication: String.to_charlist(System.get_env("DB_HOST", "db")),
+  #   server_name_indication: 'ep-polished-lake-61433986-pooler.us-east-1.aws.neon.tech',
   #   customize_hostname_check: [
   #     match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
   #   ]
   # ],
+  # password: SecretOrEnv.get("DB_PASS"),
 
   # 🤔 This combined with prepending endpoint=<endpoint_id> is the only thing that works 🤔
   ssl_opts: [ verify: :verify_none ],
-  password: SecretOrEnv.get("DB_PASS"),
+  password: SecretOrEnv.get("DB_ENDPOINT_AND_PASS"),
   timeout: 60000,
   pool_size: 40
 
