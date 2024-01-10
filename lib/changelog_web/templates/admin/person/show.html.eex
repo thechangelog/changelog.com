@@ -1,4 +1,4 @@
-<% next = SharedHelpers.get_param(assigns, "next", "back") %>
+<% next = SharedHelpers.get_param(assigns, "next", "") %>
 
 <div class="ui basic segment">
   <h1 class="ui dividing header">
