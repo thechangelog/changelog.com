@@ -17,12 +17,6 @@ defmodule Changelog.Application do
         ttl_check_interval: :timer.seconds(1),
         global_ttl: :timer.seconds(60)
       ),
-      con_cache_child_spec(
-        :news_item_recommendations,
-        ttl_check_interval: :timer.seconds(30),
-        global_ttl: :timer.minutes(5),
-        touch_on_read: false
-      ),
       Changelog.EpisodeTracker,
       Changelog.Metacasts.Filterer.Cache,
       {Oban, oban_config()}
