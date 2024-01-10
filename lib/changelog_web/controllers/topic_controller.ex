@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.TopicController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{NewsItem, Topic}
+  alias Changelog.{Episode, Topic}
 
   def index(conn, params) do
     page =
@@ -18,21 +18,16 @@ defmodule ChangelogWeb.TopicController do
     topic = Repo.get_by!(Topic, slug: slug)
 
     page =
-      NewsItem
-      |> NewsItem.with_topic(topic)
-      |> NewsItem.audio()
-      |> NewsItem.published()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
+      topic
+      |> assoc(:episodes)
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.exclude_transcript()
+      |> Episode.preload_all()
       |> Repo.paginate(params)
-
-    items =
-      page.entries
-      |> Enum.map(&NewsItem.load_object/1)
 
     conn
     |> assign(:topic, topic)
-    |> assign(:items, items)
     |> assign(:page, page)
     |> render(:show)
   end

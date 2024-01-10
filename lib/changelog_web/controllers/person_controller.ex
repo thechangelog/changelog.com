@@ -6,7 +6,6 @@ defmodule ChangelogWeb.PersonController do
     Captcha,
     Episode,
     MapKit,
-    NewsItem,
     Newsletters,
     Person,
     Podcast,
@@ -83,20 +82,11 @@ defmodule ChangelogWeb.PersonController do
       |> Episode.published()
       |> Episode.newest_first()
       |> Episode.exclude_transcript()
+      |> Episode.preload_all()
       |> Repo.paginate(Map.put(params, :page_size, 20))
-
-    items =
-      page.entries
-      |> NewsItem.with_episodes()
-      |> NewsItem.published()
-      |> NewsItem.newest_first()
-      |> NewsItem.preload_all()
-      |> Repo.all()
-      |> Enum.map(&NewsItem.load_object/1)
 
     conn
     |> assign(:person, person)
-    |> assign(:items, items)
     |> assign(:page, page)
     |> render(:show)
   end

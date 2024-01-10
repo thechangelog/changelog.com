@@ -15,11 +15,18 @@
       <% end %>
         <%= @person |> list_of_links(" · ") |> raw() %>
       </div>
+
+      <div class="topic-header-meta"><%= SharedHelpers.pluralize(@page.total_entries, "episode", "episodes") %></div>
     </div>
   </header>
 
   <a id="feed" class="anchor"></a>
   <div class="feed">
-    <%= render("_feed.html", assigns) %>
+  <%= if Enum.any?(@page.entries) do %>
+    <%= render_many(@page, EpisodeView, "_item.html") %>
+    <%= render(SharedView, "_more_button.html", assigns) %>
+  <% else %>
+    <p class="feed-note">Nothing to see here. <%= link("Submit", to: ~p"/news/submit") %> some news or <%= link("request", to: ~p"/request/new") %> an episode.</p>
+  <% end %>
   </div>
 </div>

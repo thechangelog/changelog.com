@@ -10,7 +10,7 @@
       <%= link("Reply here", to: comment_url(@item, @comment), itemprop: "url") %>
     </span>
 
-    <p>Don't want these notifications? <em><%= link("Unsubscribe here", to: PersonView.opt_out_url(Endpoint, @person, "news", @item.id)) %></em></p>
+    <p>Don't want these notifications? <em><%= link("Unsubscribe here", to: PersonView.opt_out_url(@person, "news", @item.id)) %></em></p>
 
     <p>💚, Logbot</p>
 

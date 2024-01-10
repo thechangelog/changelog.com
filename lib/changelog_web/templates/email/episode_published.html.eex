@@ -34,7 +34,7 @@
   <% end %>
 
   <%= if @person do %>
-    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></em></p>
+    <p>Don't want these notifications? <em><%= link("Disable 'em", to: PersonView.opt_out_url(@person, "podcast", @episode.podcast.slug)) %></em></p>
   <% end %>
 
     <p>💚, Logbot</p>

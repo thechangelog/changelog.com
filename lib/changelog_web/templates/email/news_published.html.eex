@@ -86,7 +86,7 @@
                           <td class="footer" align="center">
                             <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
                           <%= if @person do %>
-                            <p><%= link("Unsubscribe", to: PersonView.opt_out_url(Endpoint, @person, "podcast", @episode.podcast.slug)) %></p>
+                            <p><%= link("Unsubscribe", to: PersonView.opt_out_url(@person, "podcast", @episode.podcast.slug)) %></p>
                           <%= if String.length(@subscription.context) > 0 do %>
                             <p>(Context: <%= @subscription.context %>)</p>
                           <% end %>

@@ -10,10 +10,10 @@ Reply here: <%= comment_url(@item, @comment) %>
 
 Seen enough? Mute this discussion:
 
-<%= PersonView.opt_out_url(Endpoint, @person, "news", @item.id) %>
+<%= PersonView.opt_out_url(@person, "news", @item.id) %>
 
 Or disable mention notifications all together:
 
-<%= PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_comment_mentions") %>
+<%= PersonView.opt_out_url(@person, "setting", "email_on_comment_mentions") %>
 
 💚, Logbot

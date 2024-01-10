@@ -2,7 +2,7 @@ defmodule ChangelogWeb.TopicView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Topic
-  alias ChangelogWeb.{NewsItemView}
+  alias ChangelogWeb.{EpisodeView}
   alias Changelog.Files.Icon
 
   def admin_edit_link(conn, %{admin: true}, topic) do

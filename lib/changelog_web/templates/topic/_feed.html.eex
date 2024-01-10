@@ -1,6 +1,0 @@
-<%= if Enum.any?(@items) do %>
-  <%= render_many(@items, NewsItemView, "_summary.html", Map.merge(assigns, %{as: :item, style: "date"})) %>
-  <%= render(SharedView, "_more_button.html", assigns) %>
-<% else %>
-  <p class="feed-note">Nothing to see here. <%= link("Submit", to: Routes.news_item_path(@conn, :new)) %> some news or <%= link("request", to: Routes.episode_request_path(@conn, :new)) %> an episode.</p>
-<% end %>

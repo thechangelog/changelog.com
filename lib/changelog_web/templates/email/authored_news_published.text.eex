@@ -12,6 +12,6 @@ Here are 3 ways you can help your submission make the grade:
 Don't want these notifications? Disable 'em[2]
 
 [1]: <%= Routes.news_item_url(Endpoint, :show, NewsItem.slug(@item)) %>
-[2]: <%= PersonView.opt_out_url(Endpoint, @person, "setting", "email_on_authored_news") %>
+[2]: <%= PersonView.opt_out_url(@person, "setting", "email_on_authored_news") %>
 
 💚, Logbot

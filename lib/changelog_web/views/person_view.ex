@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PersonView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, HtmlKit, NewsItem, Person, Podcast}
-  alias ChangelogWeb.{Endpoint, NewsItemView, SharedView, PodcastView}
+  alias ChangelogWeb.{EpisodeView, SharedView, PodcastView}
 
   def avatar_url(person), do: avatar_url(person, :small)
 
@@ -113,24 +113,24 @@ defmodule ChangelogWeb.PersonView do
     |> Enum.join(separator)
   end
 
-  def opt_out_path(conn, person, type, id) do
+  def opt_out_path(person, type, id) do
     {:ok, encoded} = Person.encoded_id(person)
-    Routes.home_path(conn, :opt_out, encoded, type, id)
+    ~p"/~/nope/#{encoded}/#{type}/#{id}"
   end
 
-  def opt_out_url(conn, person, type, id) do
+  def opt_out_url(person, type, id) do
     {:ok, encoded} = Person.encoded_id(person)
-    Routes.home_url(conn, :opt_out, encoded, type, id)
+    url(~p"/~/nope/#{encoded}/#{type}/#{id}")
   end
 
   def profile_path(person = %{public_profile: true}) do
-    Routes.person_path(Endpoint, :show, person.handle)
+    ~p"/person/#{person.handle}"
   end
 
   def profile_path(person), do: external_url(person)
 
   def profile_url(person = %{public_profile: true}) do
-    Routes.person_url(Endpoint, :show, person.handle)
+    url(~p"/person/#{person.handle}")
   end
 
   def profile_url(person), do: external_url(person)
