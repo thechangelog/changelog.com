@@ -28,7 +28,9 @@ Oh, and get it in your inbox weekly right here (https://changelog.com/news).
 
 <%= if Podcast.gives_free_shirt(@podcast) do %>
 #### 4. You get free merch ####
-
+<%= if Changelog.StringKit.blank?(@discount_code) do %>
+Dratz! Something's wrong with our Shopify integration! Hit reply and let us know</mark> so we can generate a coupon code for you.
+<% else %>
 This is our gift to you as a thanks for your time and all you do for the community.
 
 - Visit our Merch Store (https://merch.changelog.com)
@@ -36,7 +38,7 @@ This is our gift to you as a thanks for your time and all you do for the communi
 - Use coupon code <%= @discount_code %> at checkout
 - Keep your order at $0 for free shipping!
 <% end %>
-
+<% end %>
 ---
 
 That's all we have. You’re part of Changelog's family now. If there is any way that we can help you in the future, don’t hesitate to contact us.

@@ -23,6 +23,9 @@
   <%= if Changelog.Podcast.gives_free_shirt(@podcast) do %>
     <h3>4. You get free merch 🎁</h3>
 
+  <%= if Changelog.StringKit.blank?(@discount_code) do %>
+    <p>Dratz! Something's wrong with our Shopify integration! <mark>Hit reply and let us know</mark> so we can generate a coupon code for you 😔</p>
+  <% else %>
     <p>This is our gift to you as a thanks for your time and all you do for the community.</p>
 
     <ol>
@@ -31,6 +34,7 @@
     <li>Use coupon code <mark><strong><%= @discount_code %></strong></mark> at checkout</li>
     <li>Keep your order at $0 for free shipping!</li>
     </ol>
+  <% end %>
   <% end %>
 
     <hr/>
