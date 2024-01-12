@@ -171,7 +171,7 @@ Fastly (changelog.com)
 ↓
 Fly.io Proxy
 ↓
-Application (changelog-2022-03-13.fly.dev)
+Application (changelog-2024-01-12.fly.dev)
 ```
 
 The production database - PostgreSQL - is running on Neon.tech. It is a
@@ -180,7 +180,7 @@ using the replica, and since Neon.tech scales down to 0, this isn't costing
 anything.
 
 ```
-Application (changelog-2022-03-13.fly.dev)
+Application (changelog-2024-01-12.fly.dev)
 ↓
 PostgreSQL Leader (RW)
 ↓
@@ -275,6 +275,7 @@ you very much!
 6. Deploy the latest app image from <https://github.com/thechangelog/changelog.com/pkgs/container/changelog-prod>
 
         flyctl deploy --vm-size performance-4x --image <LATEST_IMAGE_SHA>
+
 
 ## How to load data into a Neon.tech from a Fly.io Postgres instance?
 
