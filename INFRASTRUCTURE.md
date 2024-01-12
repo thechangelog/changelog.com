@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Aug.%202%2C%202023-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Jan.%2012%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -30,7 +30,7 @@ graph TD
         cicd --> |success #dev| chat
     end
     
-    repo -.- |fly.io/changelog-2023-12-17| app
+    repo -.- |fly.io/changelog-2024-01-12| app
     
     registry --> |ghcr.io/changelog/changelog-prod| app
     container --> |flyctl deploy| app
@@ -45,9 +45,9 @@ graph TD
         container([ fa:fa-project-diagram Dagger Engine 2023-05-20 ]):::link
         click container "https://fly.io/apps/dagger-engine-2023-05-20"
             
-        app(( fab:fa-phoenix-framework App changelog-2023-12-17.fly.dev )):::link
+        app(( fab:fa-phoenix-framework App changelog-2024-01-12.fly.dev )):::link
         style app fill:#488969;
-        click app "https://fly.io/apps/changelog-2023-12-17"
+        click app "https://fly.io/apps/changelog-2024-01-12"
 
         automation --> |wireguard| container
         container --> |ghcr.io/changelog/changelog-runtime| registry
@@ -246,7 +246,7 @@ We use Typesense for search. It's near-instant & it just works.
 
 The above is what we have so far. While we like to keep things simple, our
 setup is a constant work in progress. We keep making small improvements all the
-time, and we talk about them every 10 weeks in the context of our [Ship It!
+time, and we talk about them every few months in the context of our [Ship It!
 Kaizen episodes](https://changelog.com/topic/kaizen). For example, this diagram
 and document were created in the context of [🎧 Kaizen 8: 24 improvements & a
 lot more](https://shipit.show/80). If you would prefer to stay in reading mode,
@@ -258,6 +258,23 @@ issue](https://github.com/thechangelog/changelog.com/issues/new/choose). Thank
 you very much!
 
 ---
+
+## How to create a new app instance?
+
+1. Start by creating a new app, e.g. `flyctl apps create changelog-2024-01-12 --org changelog`
+2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2023-12-17,2024-01-12}`
+3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2024-01-12`
+4. Update the app name in e.g. `fly.toml` to match the newly created app
+5. From within the app directory, set a few secrets required by the app to work correctly while testing
+
+        flyctl secrets set --stage \
+            OP_SERVICE_ACCOUNT_TOKEN="$(op read op://changelog/op/credential --account changelog.1password.com --cache)" \
+            R2_FEEDS_BUCKET=changelog-feeds-dev \
+            URL_HOST=changelog-2024-01-12.fly.dev
+
+6. Deploy the latest app image from <https://github.com/thechangelog/changelog.com/pkgs/container/changelog-prod>
+
+        flyctl deploy --vm-size performance-4x --image <LATEST_IMAGE_SHA>
 
 ## How to load data into a Neon.tech from a Fly.io Postgres instance?
 
