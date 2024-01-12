@@ -25,6 +25,7 @@ func (image *Image) Deploy() *Image {
 	}
 
 	image.container = image.container.
+		WithEnvVariable("CACHE_BUSTED_AT", time.Now().String()).
 		WithExec([]string{
 			"status",
 		}).
