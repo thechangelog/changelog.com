@@ -3,7 +3,6 @@ package image
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"dagger.io/dagger"
 	"github.com/magefile/mage/sh"
@@ -69,14 +68,9 @@ func (image *Image) ProductionClean() *Image {
 		WithGit().
 		WithImagemagick().
 		WithOnePassword().
-		WithDbMigrate().
+		WithOnDeploy().
 		WithAppStart().
 		WithProdEnv()
-
-	if os.Getenv("R2_ACCESS_KEY_ID") != "" && os.Getenv("R2_SECRET_ACCESS_KEY") != "" {
-		fmt.Printf("⚡️ Uploading static assets...")
-		image = image.UploadStaticAssets()
-	}
 
 	image.container = image.container.
 		WithDirectory("/app", app).
@@ -128,40 +122,6 @@ func (image *Image) ProductionImageRef() string {
 		imageOwner.Value(),
 		gitSHA(),
 	)
-}
-
-// 👉 TODO:
-// 1. Upload legacy assets
-// 2. /wp-content/** redirect
-func (image *Image) UploadStaticAssets() *Image {
-	R2_API_HOST := env.Get(image.ctx, image.dag.Host(), "R2_API_HOST").Secret()
-	R2_ACCESS_KEY_ID := env.Get(image.ctx, image.dag.Host(), "R2_ACCESS_KEY_ID").Secret()
-	R2_SECRET_ACCESS_KEY := env.Get(image.ctx, image.dag.Host(), "R2_SECRET_ACCESS_KEY").Secret()
-	R2_ASSETS_BUCKET := env.Get(image.ctx, image.dag.Host(), "R2_ASSETS_BUCKET").Value()
-
-	_, err := image.Production().
-		// 🤔 Why do we need to start the app - and therefore require the DB - to upload static assets?
-		// 🚨👇 This leaves behind envs such as DB_HOST, DB_NAME, DB_USER, DB_PASS
-		WithPostgreSQL("changelog_prod").
-		container.
-		// AT busts the cache so that...
-		WithEnvVariable("AT", time.Now().String()).
-		// ... we always run the db migration - the DB container doesn't keep data
-		WithExec([]string{
-			"mix", "ecto.migrate",
-		}).
-		WithSecretVariable("R2_API_HOST", R2_API_HOST).
-		WithEnvVariable("R2_ASSETS_BUCKET", R2_ASSETS_BUCKET).
-		WithSecretVariable("R2_ACCESS_KEY_ID", R2_ACCESS_KEY_ID).
-		WithSecretVariable("R2_SECRET_ACCESS_KEY", R2_SECRET_ACCESS_KEY).
-		WithExec([]string{
-			"mix", "changelog.static.upload",
-		}).
-		ExitCode(image.ctx)
-
-	mustCreate(err)
-
-	return image
 }
 
 func (image *Image) WithProdEnv() *Image {

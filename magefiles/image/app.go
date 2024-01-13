@@ -110,6 +110,7 @@ func (image *Image) WithAppStaticAssets() *Image {
 	return image
 }
 
+// TODO: upload legacy assets to R2 + /wp-content/.* redirect
 func (image *Image) WithAppLegacyAssets() *Image {
 	legacyAssets := image.NewContainer().
 		From(LegacyAssetsImageRef).
@@ -127,11 +128,12 @@ func (image *Image) WithAppLegacyAssets() *Image {
 	return image
 }
 
-func (image *Image) WithDbMigrate() *Image {
+func (image *Image) WithOnDeploy() *Image {
 	image.container = image.container.
-		WithNewFile("/usr/local/bin/db.migrate", dagger.ContainerWithNewFileOpts{
+		WithNewFile("/usr/local/bin/on.deploy", dagger.ContainerWithNewFileOpts{
 			Contents: `#!/bin/bash
 OP_SERVICE_ACCOUNT_TOKEN="${OP_SERVICE_ACCOUNT_TOKEN:?must be set}"
+op run --env-file="./env.op" --no-masking -- mix changelog.static.upload
 op run --env-file="./env.op" --no-masking -- mix ecto.migrate`,
 			Permissions: 555,
 		})

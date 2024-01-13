@@ -25,7 +25,6 @@ func (image *Image) Deploy() *Image {
 	}
 
 	image.container = image.container.
-		WithEnvVariable("CACHE_BUSTED_AT", time.Now().String()).
 		WithExec([]string{
 			"status",
 		}).
@@ -100,6 +99,7 @@ func (image *Image) flyctl() *Image {
 	image.container = image.NewContainer().
 		From(image.flyctlImageRef()).
 		WithSecretVariable("FLY_API_TOKEN", image.Env("FLY_API_TOKEN").Secret()).
+		WithEnvVariable("CACHE_BUSTED_AT", time.Now().String()).
 		WithExec([]string{
 			"version",
 		})
@@ -125,7 +125,6 @@ func (image *Image) startMachine(id string) (*Image, error) {
 	var err error
 
 	image.container, err = image.container.
-		WithEnvVariable("CACHE_BUSTED_AT", time.Now().String()).
 		WithExec([]string{
 			"machine",
 			"start", id,
@@ -143,7 +142,6 @@ func (image *Image) stopMachine(id string) (*Image, error) {
 	var err error
 
 	image.container, err = image.container.
-		WithEnvVariable("CACHE_BUSTED_AT", time.Now().String()).
 		WithExec([]string{
 			"machine",
 			"stop", id,

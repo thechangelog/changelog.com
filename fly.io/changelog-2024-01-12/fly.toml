@@ -8,7 +8,7 @@ kill_timeout = 30
 
 [deploy]
 strategy = "bluegreen"
-release_command = "db.migrate"
+release_command = "on.deploy"
 
 [[services]]
 internal_port = 4000
