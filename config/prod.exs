@@ -23,17 +23,6 @@ config :changelog, ChangelogWeb.Endpoint,
 config :waffle,
   asset_host: "https://#{static_url_host}"
 
-if System.get_env("HTTPS") do
-  config :changelog, ChangelogWeb.Endpoint,
-    https: [
-      port: System.get_env("HTTPS_PORT", "443"),
-      cipher_suite: :strong,
-      otp_app: :changelog,
-      certfile: System.get_env("HTTPS_CERTFILE"),
-      keyfile: System.get_env("HTTPS_KEYFILE")
-    ]
-end
-
 config :logger,
   level: :info,
   backends: [:console, Sentry.LoggerBackend]
@@ -42,15 +31,22 @@ config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: System.get_env("DB_NAME", "changelog"),
   hostname: System.get_env("DB_HOST", "db"),
-  password: SecretOrEnv.get("DB_PASS"),
-  pool_size: 40,
-  timeout: 60000,
-  username: System.get_env("DB_USER", "postgres")
+  username: System.get_env("DB_USER", "postgres"),
+  ssl: true,
 
-if System.get_env("FLY_APP_NAME") do
-  config :changelog, Changelog.Repo,
-    socket_options: [:inet6]
-end
+  ssl_opts: [
+    # The cacertfile values implies Ubuntu,
+    # which is what we use when building the prod container image
+    cacertfile: "/etc/ssl/certs/ca-certificates.crt",
+    verify: :verify_peer,
+    server_name_indication: String.to_charlist(System.get_env("DB_HOST", "db")),
+    customize_hostname_check: [
+      match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+    ]
+  ],
+  password: SecretOrEnv.get("DB_PASS"),
+  timeout: 60000,
+  pool_size: 40
 
 config :changelog, Changelog.Mailer,
   adapter: Bamboo.SMTPAdapter,

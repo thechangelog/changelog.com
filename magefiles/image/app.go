@@ -16,6 +16,7 @@ func (image *Image) WithAppSrc() *Image {
 			"lib",
 			"priv/repo",
 			"test",
+			"env.op",
 			"mix.exs",
 			"mix.lock",
 		},
@@ -121,6 +122,30 @@ func (image *Image) WithAppLegacyAssets() *Image {
 		}).
 		WithExec([]string{
 			"ls", "-lah", "/app/priv/static/wp-content/uploads",
+		})
+
+	return image
+}
+
+func (image *Image) WithDbMigrate() *Image {
+	image.container = image.container.
+		WithNewFile("/usr/local/bin/db.migrate", dagger.ContainerWithNewFileOpts{
+			Contents: `#!/bin/bash
+OP_SERVICE_ACCOUNT_TOKEN="${OP_SERVICE_ACCOUNT_TOKEN:?must be set}"
+op run --env-file="./env.op" --no-masking -- mix ecto.migrate`,
+			Permissions: 555,
+		})
+
+	return image
+}
+
+func (image *Image) WithAppStart() *Image {
+	image.container = image.container.
+		WithNewFile("/usr/local/bin/app.start", dagger.ContainerWithNewFileOpts{
+			Contents: `#!/bin/bash
+OP_SERVICE_ACCOUNT_TOKEN="${OP_SERVICE_ACCOUNT_TOKEN:?must be set}"
+op run --env-file="./env.op" --no-masking -- mix phx.server`,
+			Permissions: 555,
 		})
 
 	return image

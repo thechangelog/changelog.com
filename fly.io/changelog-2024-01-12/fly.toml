@@ -1,22 +1,14 @@
 # Inspired by https://github.com/fly-apps/live_beats/blob/master/fly.toml
 # Full app config reference: https://fly.io/docs/reference/configuration/
-app = "changelog-2022-03-13"
+app = "changelog-2024-01-12"
+primary_region = "iad"
 
 kill_signal = "SIGTERM"
 kill_timeout = 30
 
 [deploy]
 strategy = "bluegreen"
-release_command = "mix ecto.migrate"
-
-[env]
-AWS_REGION = "us-east-1"
-R2_ASSETS_BUCKET = "changelog-assets"
-R2_FEEDS_BUCKET = "changelog-feeds"
-PORT = "4000"
-STATIC_URL_HOST = "cdn.changelog.com"
-URL_HOST = "changelog.com"
-DB_NAME = "changelog"
+release_command = "db.migrate"
 
 [[services]]
 internal_port = 4000
@@ -40,13 +32,10 @@ handlers = ["http"]
 port = "80"
 force_https = true
 
-# Increase the limit of connections that a single app instance can handle
-# Otherwise Fly proxy will start sending the requests to instances that we don't have... yet
-# Related to https://github.com/thechangelog/changelog.com/issues/424
 [services.concurrency]
 hard_limit = 2500
 soft_limit = 2000
 type = "connections"
 
 [experimental]
-cmd = ["mix", "phx.server"]
+cmd = ["app.start"]

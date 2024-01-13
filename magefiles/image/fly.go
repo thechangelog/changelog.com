@@ -25,12 +25,14 @@ func (image *Image) Deploy() *Image {
 	}
 
 	image.container = image.container.
+		WithEnvVariable("CACHE_BUSTED_AT", time.Now().String()).
 		WithExec([]string{
 			"status",
 		}).
 		WithExec([]string{
 			"deploy",
 			"--image", image.ProductionImageRef(),
+			"--vm-size", "performance-4x",
 		})
 
 	return image.OK()
@@ -107,7 +109,7 @@ func (image *Image) flyctl() *Image {
 
 func (image *Image) app() *Image {
 	image.container = image.container.
-		WithMountedFile("fly.toml", image.dag.Host().Directory("2022.fly").File("fly.toml"))
+		WithMountedFile("fly.toml", image.dag.Host().Directory("fly.io/changelog-2024-01-12").File("fly.toml"))
 
 	return image
 }

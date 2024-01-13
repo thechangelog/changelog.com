@@ -56,6 +56,16 @@ func (image *Image) Env(key string) *env.Env {
 }
 
 func (image *Image) Publish(reference string) *Image {
+	registryUsername := image.Env("GHCR_USERNAME")
+	if registryUsername.Value() == "" {
+		fmt.Printf(
+			"\n👮 Skip publishing %s\n"+
+				"👮 GHCR_USERNAME env var is required to publish this image\n",
+			reference,
+		)
+		return image
+	}
+
 	registryPassword := image.Env("GHCR_PASSWORD")
 	if registryPassword.Value() == "" {
 		fmt.Printf(

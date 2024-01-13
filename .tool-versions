@@ -4,5 +4,7 @@ erlang 26.2
 golang 1.20.12
 nodejs 20.10.0
 yarn 1.22.19
-postgres 15.3
-flyctl 0.1.134
+postgres 16.1
+flyctl 0.1.135
+1password-cli 2.24.0
+dagger 0.6.4

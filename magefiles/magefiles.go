@@ -103,6 +103,7 @@ func (Fly) Deploy(ctx context.Context) {
 	image.New(ctx, dag.Pipeline("🏁 DEPLOY")).Deploy()
 }
 
+// Start Dagger Engine on Fly.io
 func (Fly) DaggerStart(ctx context.Context) {
 	defer sysexit.Handle()
 
@@ -118,6 +119,7 @@ func (Fly) DaggerStart(ctx context.Context) {
 	image.New(ctx, dag.Pipeline("🚙 START DAGGER ENGINE")).DaggerStart()
 }
 
+// Stop Dagger Engine on Fly.io
 func (Fly) DaggerStop(ctx context.Context) {
 	defer sysexit.Handle()
 
