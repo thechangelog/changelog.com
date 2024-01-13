@@ -29,5 +29,16 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: changelog_dev
 
+  typesense:
+    # https://hub.docker.com/r/typesense/typesense
+    image: typesense/typesense:0.25.2
+    restart: on-failure
+    ports:
+      - "8108:8108"
+    volumes:
+      - typesense-data:/data
+    command: '--data-dir /data --api-key=xyz --enable-cors'
+
 volumes:
   postgres-data:
+  typesense-data:

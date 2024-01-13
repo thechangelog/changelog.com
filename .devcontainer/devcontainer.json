@@ -4,7 +4,8 @@
   "service": "devcontainer",
   "forwardPorts": [
     4000,
-    5432
+    5432,
+    8108
   ],
   "extensions": [
     "JakeBecker.elixir-ls"
