@@ -77,7 +77,8 @@ defmodule Changelog.Mixfile do
       {:html_entities, "~> 0.3"},
       {:tzdata, "~> 1.1.0"},
       {:icalendar, "~> 1.0"},
-      {:shopify, "~> 0.4"},
+      # TODO: find replacement for dead https://github.com/nsweeting/shopify
+      {:shopify, "~> 0.4", github: "ankhers/shopify", branch: "otp24_upgrade"},
       {:id3vx, "~> 0.0.1-rc6"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:mock, "~> 0.3.0", only: :test},
