@@ -67,6 +67,7 @@ config :changelog, Oban,
        {"00 3 * * *", Changelog.ObanWorkers.SlackImporter},
        {"30 3 * * *", Changelog.ObanWorkers.Bouncer},
        {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor},
-       {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
+       {"* * * * *", Changelog.ObanWorkers.NewsPublisher},
+       {"15 * * * *", Changelog.ObanWorkers.SmokeTester}
      ]}
   ]
