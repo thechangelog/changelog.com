@@ -96,12 +96,6 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   consumer_key: SecretOrEnv.get("TWITTER_CONSUMER_KEY"),
   consumer_secret: SecretOrEnv.get("TWITTER_CONSUMER_SECRET")
 
-config :sentry,
-  dsn: "https://2b1aed8f16f5404cb2bc79b855f2f92d@o546963.ingest.sentry.io/5668962",
-  included_environments: [:prod],
-  environment_name: Mix.env(),
-  filter: Changelog.Sentry.EventFilter
-
 config :opentelemetry,
   resource: [
     service: [

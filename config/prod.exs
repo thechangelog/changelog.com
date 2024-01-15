@@ -23,6 +23,11 @@ config :changelog, ChangelogWeb.Endpoint,
 config :waffle,
   asset_host: "https://#{static_url_host}"
 
+config :sentry,
+  dsn: "https://2b1aed8f16f5404cb2bc79b855f2f92d@o546963.ingest.sentry.io/5668962",
+  environment_name: Mix.env(),
+  filter: Changelog.Sentry.EventFilter
+
 config :logger,
   level: :info,
   backends: [:console, Sentry.LoggerBackend]
