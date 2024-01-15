@@ -102,7 +102,8 @@ defmodule Changelog.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      "deps.get_dev": ["deps.unlock oban_web oban_met", "deps.get --only dev"]
     ]
   end
 end
