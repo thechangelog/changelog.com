@@ -26,10 +26,10 @@ $dark-blue: #1a232c;
 $medium-grey: #878b8f;
 
 body {
-  font-family: $open-sans;
+  font-family: $open-sans !important;
   width: 100%;
-  color: $dark-grey;
-  background-color: $white;
+  color: $dark-grey !important;
+  background-color: $white !important;
   margin: 0;
   padding: 0;
 }
@@ -180,8 +180,8 @@ body {
     margin: 50px 0 30px 0;
   }
   blockquote {
-    color: $dark-grey; // repeat here because iCloud Mail sets to blue otherwise
-    border-left: 2px solid $green;
+    color: inherit;
+    border-left: 2px solid $green !important;
     margin: 25px 0;
     padding: 0 0 0 25px;
     p {
@@ -263,8 +263,8 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-    color: $off-white;
-    background-color: $black;
+    color: $off-white !important;
+    background-color: $black !important;
   }
 
   .meta {
