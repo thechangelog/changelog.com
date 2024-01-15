@@ -16,7 +16,9 @@ defmodule Changelog.ObanWorkers.SmokeTester do
 
   def test_shopify_integration do
     case Shopify.Order.count(Shopify.session()) do
-      {:error, response} -> report("shopify_failure", response)
+      {:error, response} ->
+        info = Map.take(response, [:code, :data])
+        report("shopify_failure", info)
       {:ok, _response} -> :ok
     end
   end
