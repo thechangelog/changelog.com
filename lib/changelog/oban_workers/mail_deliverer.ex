@@ -47,6 +47,14 @@ defmodule Changelog.ObanWorkers.MailDeliverer do
     |> Mailer.deliver_now()
   end
 
+  def submitted_news_accepted(%{"item" => id}) do
+    NewsItem
+    |> Repo.get(id)
+    |> NewsItem.preload_all()
+    |> Email.submitted_news_accepted()
+    |> Mailer.deliver_now()
+  end
+
   def submitted_news_declined(%{"item" => id}) do
     NewsItem
     |> Repo.get(id)

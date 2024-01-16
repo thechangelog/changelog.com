@@ -1,0 +1,18 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p><%= greeting(@person) %></p>
+
+    <p>Your <%= link("submission", to: @item.url) %> was <strong>accepted</strong>! It is included in Changelog News #<%= @news.slug %>:</p>
+
+    <ul>
+      <li><%= link("Audio here", to: url(~p"/news/#{@news.slug}")) %></li>
+      <li><%= link("Email here", to: url(~p"/news/#{@news.slug}/email")) %></li>
+    </ul>
+
+    <p>In addition, here is a message from the editor:</p>
+
+    <p><blockquote><%= @item.message |> SharedHelpers.md_to_html() |> raw() %></blockquote></p>
+
+    <p>💚, Logbot</p>
+  </td>
+</tr>

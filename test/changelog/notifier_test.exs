@@ -332,6 +332,32 @@ defmodule Changelog.NotifierTest do
       assert_no_emails_delivered()
     end
 
+    test "when submitter has news item accepted with message" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      item = insert(:news_item, submitter: person)
+      news = insert(:podcast, slug: "news")
+      ep = insert(:published_episode, podcast: news)
+      item = NewsItem.accept!(item, ep.id, "accepted reason")
+      Notifier.notify(item)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
+      assert_delivered_email(Email.submitted_news_accepted(item))
+    end
+
+    test "when submitter has news item accepted sans message" do
+      person = insert(:person, settings: %{email_on_submitted_news: true})
+      item = insert(:news_item, submitter: person)
+      news = insert(:podcast, slug: "news")
+      ep = insert(:published_episode, podcast: news)
+      item = NewsItem.accept!(item, ep.id, "")
+      Notifier.notify(item)
+
+      assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+
+      assert_no_emails_delivered()
+    end
+
     test "when submitter and author are same person, notifications enabled" do
       person = insert(:person, settings: %{email_on_submitted_news: true})
       item = insert(:news_item, submitter: person, author: person)

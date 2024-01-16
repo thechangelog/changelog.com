@@ -13,7 +13,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     Notifier
   }
 
-  plug :assign_item when action in [:edit, :update, :move, :decline, :move, :unpublish, :delete]
+  plug :assign_item when action in [:accept, :edit, :update, :move, :decline, :move, :unpublish, :delete]
   plug Authorize, [Policies.Admin.NewsItem, :item]
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
@@ -155,7 +155,9 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   def accept(conn = %{assigns: %{item: item}}, params) do
     message = Map.get(params, "message", "")
-    item = NewsItem.accept!(item, message)
+    object_id = Map.get(params, "object", nil)
+
+    item = NewsItem.accept!(item, object_id, message)
     Task.start_link(fn -> Notifier.notify(item) end)
 
     conn

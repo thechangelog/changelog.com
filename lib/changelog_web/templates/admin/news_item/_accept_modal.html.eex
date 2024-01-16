@@ -1,13 +1,21 @@
 <div id="<%= @modal_id %>" class="ui small accept modal">
   <i class="close icon"></i>
   <div class="header">
-    Accept with message: <em><%= @item.headline %></em>
+    Accepting: <em><%= @item.headline %></em>
   </div>
   <div class="content">
     <%= form_tag Routes.admin_news_item_path(@conn, :accept, @item, next: "back"), id: @form_id, class: "ui small form" do %>
       <div class="field">
+        <label>Featured in:</label>
+        <select name="object" class="ui fluid selection dropdown">
+        <%= for news <- @news_episodes do %>
+          <option value="<%= news.id %>">#<%= news.slug %>: <%= news.title %></option>
+        <% end %>
+        </select>
+      </div>
+      <div class="field">
         <div class="ui">
-          <textarea name="message" placeholder="Personal note, sent by email to submitter"></textarea>
+          <textarea name="message" placeholder="Personal note, sent by email to submitter. Leave blank to accept silently."></textarea>
         </div>
       </div>
     <% end %>

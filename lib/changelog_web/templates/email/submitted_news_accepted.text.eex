@@ -1,0 +1,19 @@
+<%= greeting(@person) %>
+
+
+Your submission was accepted! It is included in Changelog News #<%= @news.slug %>:
+
+Audio link: url(~p"/news/#{@news.slug}")
+Email link: url(~p"/news/#{@news.slug}/email")
+
+In addition, here is a message from the editor:
+
+---
+
+<%= @item.message %>
+
+---
+
+If there's more to say or our message requested a response, feel free to reply.
+
+💚, Logbot

@@ -192,6 +192,19 @@ defmodule ChangelogWeb.Email do
     |> render(:submitted_news_published)
   end
 
+  def submitted_news_accepted(item) do
+    item = NewsItem.load_object(item)
+
+    styled_email()
+    |> put_header("X-CMail-GroupName", "Accepted News")
+    |> to(item.submitter)
+    |> subject("Your submission to Changelog News")
+    |> assign(:person, item.submitter)
+    |> assign(:item, item)
+    |> assign(:news, item.object)
+    |> render(:submitted_news_accepted)
+  end
+
   def submitted_news_declined(item) do
     styled_email()
     |> put_header("X-CMail-GroupName", "Declined News")

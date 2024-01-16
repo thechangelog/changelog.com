@@ -28,6 +28,14 @@ defmodule Changelog.Notifier do
     deliver_podcast_subscription_emails(episode)
   end
 
+  def notify(item = %NewsItem{status: :accepted}) do
+    if StringKit.present?(item.message) do
+      item
+      |> NewsItem.preload_all()
+      |> deliver_submitter_accepted_email()
+    end
+  end
+
   def notify(item = %NewsItem{status: :declined}) do
     if StringKit.present?(item.message) do
       item
@@ -210,6 +218,10 @@ defmodule Changelog.Notifier do
     if person.settings.email_on_submitted_news do
       MailDeliverer.enqueue("submitted_news_published", %{"item" => item.id})
     end
+  end
+
+  defp deliver_submitter_accepted_email(item) do
+    MailDeliverer.enqueue("submitted_news_accepted", %{"item" => item.id})
   end
 
   defp deliver_submitter_decline_email(item) do

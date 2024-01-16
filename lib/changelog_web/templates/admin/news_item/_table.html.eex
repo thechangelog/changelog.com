@@ -74,13 +74,12 @@
           <% end %>
             <%= if Policies.Admin.NewsItem.edit(@current_user, item), do: AdminHelpers.icon_link("edit", to: ~p"/admin/news/items/#{item}/edit") %>
           <%= if @status == :submitted do %>
-            <%= AdminHelpers.icon_link("thumbs up", to: ~p"/admin/news/items/#{item}/accept?next=back", title: "Accept silently", method: :delete, data: [confirm: "Decline this item?"]) %>
             <%= AdminHelpers.modal_icon_button(
                   ChangelogWeb.Admin.NewsItemView,
-                  "file text",
-                  "Accept with message",
+                  "thumbs up",
+                  "Accept",
                   "accept",
-                  %{item: item, conn: @conn},
+                  Map.merge(assigns, %{item: item}),
                   item.id
                 ) %>
             <%= AdminHelpers.icon_link("thumbs down", to: ~p"/admin/news/items/#{item}/decline?next=back", title: "Decline silently", method: :delete, data: [confirm: "Decline this item?"]) %>

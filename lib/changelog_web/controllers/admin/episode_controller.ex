@@ -83,16 +83,22 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   defp assign_submitted(conn, podcast) do
-    submitted = if Podcast.is_news(podcast) do
-      NewsItem.submitted()
+    {submitted, news_episodes} = if Podcast.is_news(podcast) do
+      {NewsItem.submitted()
       |> NewsItem.newest_first(:inserted_at)
       |> NewsItem.preload_all()
-      |> Repo.all()
+      |> Repo.all(),
+      Episode.with_podcast_slug("news")
+      |> Episode.newest_first(:recorded_at)
+      |> Episode.limit(20)
+      |> Repo.all()}
     else
-      []
+      {[], []}
     end
 
-    assign(conn, :submitted, submitted)
+    conn
+    |> assign(:submitted, submitted)
+    |> assign(:news_episodes, news_episodes)
   end
 
   def performance(conn, %{"ids" => ids}, podcast) do

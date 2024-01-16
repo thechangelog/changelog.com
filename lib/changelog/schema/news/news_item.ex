@@ -71,6 +71,7 @@ defmodule Changelog.NewsItem do
   def feed_only(query \\ __MODULE__), do: from(q in query, where: q.feed_only)
   def non_feed_only(query \\ __MODULE__), do: from(q in query, where: not q.feed_only)
 
+  def accepted(query \\ __MODULE__), do: from(q in query, where: q.status == ^:accepted)
   def declined(query \\ __MODULE__), do: from(q in query, where: q.status == ^:declined)
   def drafted(query \\ __MODULE__), do: from(q in query, where: q.status == ^:draft)
 
@@ -203,6 +204,7 @@ defmodule Changelog.NewsItem do
       case item.type do
         :audio -> get_episode_object(item.object_id)
         :post -> get_post_object(item.object_id)
+        :link -> get_news_object(item.object_id)
         _else -> nil
       end
 
@@ -222,8 +224,7 @@ defmodule Changelog.NewsItem do
     load_object(item, episode)
   end
 
-  defp get_episode_object(object_id) when is_nil(object_id), do: nil
-
+  defp get_episode_object(nil), do: nil
   defp get_episode_object(object_id) do
     [_podcast_id, episode_id] = String.split(object_id, ":")
 
@@ -234,8 +235,13 @@ defmodule Changelog.NewsItem do
     |> Repo.get(episode_id)
   end
 
-  defp get_post_object(object_id) when is_nil(object_id), do: nil
+  # items that link to news objects are actually the same as items
+  # that link to episode objects, but we differentiate them because
+  # they are not audio, they are merely links that have been accepted
+  # and included in a news episode/email
+  defp get_news_object(object_id), do: get_episode_object(object_id)
 
+  defp get_post_object(nil), do: nil
   defp get_post_object(object_id) do
     [_, slug] = String.split(object_id, ":")
 
@@ -310,11 +316,16 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(:topics)
   end
 
-  def accept!(item), do: item |> change(%{status: :accepted}) |> Repo.update!()
-  def accept!(item, ""), do: accept!(item)
 
-  def accept!(item, message),
-    do: item |> change(%{status: :accepted, message: message}) |> Repo.update!()
+  def accept!(item, object_id), do: accept!(item, object_id, "")
+
+  def accept!(item, object_id, message) do
+    item
+    |> change(%{status: :accepted})
+    |> change(%{message: message})
+    |> change(%{object_id: "news:#{object_id}"})
+    |> Repo.update!()
+  end
 
   def decline!(item), do: item |> change(%{status: :declined}) |> Repo.update!()
   def decline!(item, ""), do: decline!(item)

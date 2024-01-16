@@ -188,6 +188,19 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Email.authored_news_published(item)
   end
 
+  def submitted_news_accepted_email(_person) do
+    item =
+      NewsItem
+      |> NewsItem.accepted()
+      |> NewsItem.with_object()
+      |> NewsItem.newest_first()
+      |> NewsItem.limit(1)
+      |> NewsItem.preload_all()
+      |> Repo.one()
+
+    Email.submitted_news_accepted(item)
+  end
+
   def submitted_news_declined_email(_person) do
     item =
       NewsItem
