@@ -101,6 +101,14 @@ defmodule Changelog.UrlKit do
   def sans_scheme(nil), do: nil
   def sans_scheme(url), do: String.replace(url, Regexp.http(), "")
 
+  def sans_query(nil), do: nil
+  def sans_query(url) do
+    url
+    |> URI.parse()
+    |> Map.put(:query, nil)
+    |> URI.to_string()
+  end
+
   def via_scribe(url) do
     url |> URI.parse() |> Map.put(:host, "scribe.rip") |> URI.to_string()
   end

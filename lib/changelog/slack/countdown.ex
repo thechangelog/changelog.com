@@ -13,7 +13,7 @@ defmodule Changelog.Slack.Countdown do
     respond(
       case Duration.to_hours(diff) do
         h when h <= 0 ->
-          "#{live_message(podcast)}! Watch ~> #{LiveView.youtube_url(next_episode)} :tada:"
+          "#{live_message(podcast)}! Watch ~> #{LiveView.live_url(next_episode)} :tada:"
 
         h when h < 2 ->
           "There's just *#{formatted}* until #{podcast} (#{title}) :eyes:"

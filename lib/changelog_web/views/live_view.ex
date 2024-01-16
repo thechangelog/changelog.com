@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.LiveView do
   use ChangelogWeb, :public_view
 
+  alias Changelog.UrlKit
   alias ChangelogWeb.{EpisodeView, PersonView, PodcastView, TimeView}
 
   def render("ical.ics", %{episodes: episodes}) do
@@ -9,7 +10,7 @@ defmodule ChangelogWeb.LiveView do
         %ICalendar.Event{
           summary: "#{episode.podcast.name} Live",
           description: episode_title_with_subtitle(episode),
-          url: youtube_url(episode),
+          url: live_url(episode),
           dtstart: episode.recorded_at,
           dtend: Timex.shift(episode.recorded_at, minutes: 90)
         }
@@ -61,14 +62,18 @@ defmodule ChangelogWeb.LiveView do
     end
   end
 
-  def youtube_link(episode) do
-    if episode.youtube_id do
-      youtube_url(episode)
-    else
-      {:javascript, ~s{alert("The YouTube event for this episode hasn't been created yet.");}}
+  # For use in link(to: ) calls vs just the raw url (below)
+  def live_link(episode) do
+    case live_url(episode) do
+      nil -> {:javascript, ~s{alert("This live event is not yet configured.");}}
+      url -> url
     end
   end
 
-  def youtube_url(%{youtube_id: id}) when is_binary(id), do: "https://youtu.be/#{id}"
-  def youtube_url(_), do: "https://youtube.com/changelog"
+  def live_url(episode = %{youtube_id: id}) when not is_nil(id), do: youtube_url(episode)
+  def live_url(%{podcast: %{riverside_url: url}}) when not is_nil(url), do: UrlKit.sans_query(url)
+  def live_url(_else), do: nil
+
+  defp youtube_url(%{youtube_id: id}) when is_binary(id), do: "https://youtu.be/#{id}"
+  defp youtube_url(_), do: "https://youtube.com/changelog"
 end

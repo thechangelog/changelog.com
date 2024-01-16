@@ -166,6 +166,14 @@ defmodule Changelog.UrlKitTest do
     end
   end
 
+  describe "sans_query/1" do
+    test "it removes all query params" do
+      url = "https://news.ycombinator.com/item?id=18120667"
+      sans = UrlKit.sans_query(url)
+      assert sans == "https://news.ycombinator.com/item"
+    end
+  end
+
   describe "via_scribe/1" do
     test "it works on medium domain" do
       url = "https://medium.com/@user/my-post-09a6af907a2"

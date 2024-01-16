@@ -146,7 +146,7 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.with_youtube_id()
       |> Repo.get_by!(slug: slug)
 
-    redirect(conn, external: LiveView.youtube_url(episode))
+    redirect(conn, external: LiveView.live_url(episode))
   end
 
   def time(conn, %{"slug" => slug}, podcast) do

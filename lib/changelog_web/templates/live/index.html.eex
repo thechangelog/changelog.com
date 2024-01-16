@@ -19,7 +19,7 @@
 <%= if Enum.any?(@episodes) do %>
   <div class="live_upcoming-grid">
   <%= for episode <- @episodes do %>
-    <%= link to: youtube_link(episode), title: "View on YouTube", class: "live_upcoming-grid-item live_upcoming-grid-item--live" do %>
+    <%= link to: live_link(episode), title: "View Live", class: "live_upcoming-grid-item live_upcoming-grid-item--live" do %>
       <div class="live_upcoming-grid-item-image">
         <div class="image_border_hack">
           <%= SharedHelpers.lazy_image(PodcastView.cover_url(episode.podcast, :medium), "#{episode.podcast.name} Artwork", width: 120, height: 120) %>

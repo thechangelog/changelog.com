@@ -255,6 +255,10 @@ defmodule Changelog.Factory do
     }
   end
 
+  def live_podcast_factory do
+    %Changelog.Podcast{podcast_factory() | riverside_url: "https://riverside.fm/studio/livepod?t=123"}
+  end
+
   def post_factory do
     %Changelog.Post{
       title: sequence(:name, &"Post #{&1}"),
