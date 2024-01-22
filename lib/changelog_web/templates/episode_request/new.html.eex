@@ -11,7 +11,7 @@
     <div class="form-element_wrap">
       <div class="form-element <%= PublicHelpers.error_class(f, :podcast_id) %>">
         <label>This request is for...</label>
-        <%= select(f, :podcast_id, Enum.map(@podcasts, &{&1.name, &1.id})) %>
+        <%= select(f, :podcast_id, Enum.map(Cache.active_podcasts(), &{&1.name, &1.id})) %>
         <%= PublicHelpers.error_message(f, :podcast_id) %>
       </div>
     </div>

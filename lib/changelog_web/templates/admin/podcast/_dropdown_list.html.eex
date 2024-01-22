@@ -1,4 +1,4 @@
-<% linkable = Changelog.Cache.podcasts() |> Changelog.ListKit.exclude(@podcast) %>
+<% linkable = Changelog.Cache.active_podcasts() |> Changelog.ListKit.exclude(@podcast) %>
 
 <%= if Enum.any?(linkable) do %>
 <div class="ui inline link dropdown">

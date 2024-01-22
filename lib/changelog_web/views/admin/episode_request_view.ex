@@ -24,7 +24,7 @@ defmodule ChangelogWeb.Admin.EpisodeRequestView do
   end
 
   def podcast_options do
-    Changelog.Cache.podcasts() |> Enum.map(&{&1.name, &1.id})
+    Changelog.Cache.active_podcasts() |> Enum.map(&{&1.name, &1.id})
   end
 
   def pitch_preview(%{pitch: pitch}, count \\ 80) do

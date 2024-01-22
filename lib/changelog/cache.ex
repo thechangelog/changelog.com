@@ -41,7 +41,7 @@ defmodule Changelog.Cache do
   end
 
   def delete(podcast = %Podcast{}) do
-    delete("podcasts")
+    delete_prefix("podcasts")
     delete_prefix("/#{podcast.slug}")
   end
 
@@ -94,8 +94,14 @@ defmodule Changelog.Cache do
     |> Enum.map(&elem(&1, 0))
   end
 
+  def active_podcasts do
+    get_or_store("podcasts_active", :infinity, fn ->
+      Enum.filter(podcasts(), &Podcast.is_active/1)
+    end)
+  end
+
   def podcasts do
-    get_or_store("podcasts", :infinity, fn ->
+    get_or_store("podcasts_all", :infinity, fn ->
       Podcast.public()
       |> Podcast.by_position()
       |> Podcast.preload_active_hosts()

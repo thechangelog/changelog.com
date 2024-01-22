@@ -195,7 +195,7 @@ defmodule ChangelogWeb.PersonController do
   end
 
   defp subscribe_to_podcast(person, "master") do
-    for podcast <- Cache.podcasts() do
+    for podcast <- Cache.active_podcasts() do
       context = "you signed up for email notifications on changelog.com"
       Subscription.subscribe(person, podcast, context)
     end
