@@ -58,12 +58,6 @@
       <% end %>
     <% end %>
 
-    <%= if Policies.Admin.Podcast.create(@current_user) do %>
-      <%= link(to: Routes.admin_metacast_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, ["metacast"], "active")}") do %>
-        <i class="mute icon"></i>Metacasts
-      <% end %>
-    <% end %>
-
     <%= if Policies.AdminsOnly.index(@current_user) do %>
       <%= link(to: ~p"/admin/oban", class: "item") do %>
         <i class="list icon"></i>Oban

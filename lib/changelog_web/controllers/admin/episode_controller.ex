@@ -90,7 +90,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.all(),
       Episode.with_podcast_slug("news")
       |> Episode.newest_first(:recorded_at)
-      |> Episode.limit(20)
+      |> Episode.limit(50)
       |> Repo.all()}
     else
       {[], []}
