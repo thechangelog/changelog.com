@@ -1,0 +1,37 @@
+# Full app config reference: https://fly.io/docs/reference/configuration/
+app = "cdn-2024-01-26"
+# Closest to James
+primary_region = "sjc"
+# Secondary region will be "lhr", closest to Gerhard
+
+kill_signal = "SIGTERM"
+kill_timeout = 30
+
+[deploy]
+strategy = "bluegreen"
+
+[[services]]
+internal_port = 9000
+protocol = "tcp"
+
+# [[services.http_checks]]
+# grace_period = "30s"
+# interval = "15s"
+# method = "get"
+# path = "/health"
+# protocol = "http"
+# timeout = "10s"
+
+[[services.ports]]
+handlers = ["tls", "http"]
+port = 443
+
+[[services.ports]]
+handlers = ["http"]
+port = "80"
+force_https = true
+
+[services.concurrency]
+hard_limit = 2500
+soft_limit = 2000
+type = "connections"

@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
+COMMAND="$(tput bold)"
+RESET="$(tput sgr0)"
+STEP="$(tput bold)$(tput setaf 3)"
+NEXT="$(tput bold)$(tput setaf 5)"
+
+APP="${PWD##*/}"
+TS="$(date +'%F.%H-%M-%S')"
+IMAGE="registry.fly.io/$APP:$TS"
+
+main() {
+  clear
+  explore_varnish_container_image
+}
+
+explore_varnish_container_image() {
+  _run \
+    "1/7. EXPLORE Varnish container image" \
+    "docker history --no-trunc --format=json $(_varnish_version) | jq .CreatedBy | lvim -"
+
+  _run \
+    "2/7. EXPLORE Varnish container image command" \
+    "true https://github.com/varnish/docker-varnish/blob/master/fresh/debian/scripts/docker-varnish-entrypoint"
+
+  _run \
+    "3/7. BUILD LOCAL Varnish container image" \
+    "docker build . --tag $IMAGE"
+
+  _run \
+    "4/7. EXPLORE Varnish command-line options" \
+    "docker run --rm $IMAGE varnishd -? | lvim -"
+
+  _run \
+    "5/7. EXPLORE Varnish parameters" \
+    "docker run --rm $IMAGE varnishd -x parameter | lvim -"
+
+  _run \
+    "6/7. EXPERIMENT with Varnish locally" \
+    "docker run --name $APP --volume $PWD/default.vcl:/etc/varnish/default.vcl --rm -itp 9000:9000 $IMAGE -d"
+
+  _run \
+    "7/7. Deploy to Fly.io" \
+    "flyctl auth docker && docker push $IMAGE && flyctl deploy --ha=false --image $IMAGE"
+}
+
+
+## PRIVATE FUNCTIONS
+#
+
+_varnish_version() {
+  rg FROM Dockerfile \
+  | awk '{ print $2 }'
+}
+
+_next() {
+  read -rp "${NEXT}⌨️  PRESS ANY KEY TO CONTINUE${RESET}" -n 1
+}
+
+_run() {
+  local name="${1:?first argument must be command description}"
+  local command="${2:?second argument must be command to run}"
+
+  printf "\n👉 ${STEP}$name${RESET}\n${COMMAND}$command${RESET}\n"
+
+  eval "$command"
+  _next
+}
+
+main
