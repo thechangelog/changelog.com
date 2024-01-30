@@ -40,7 +40,7 @@ defmodule ChangelogWeb.Admin.SponsorController do
   end
 
   def new(conn, _params) do
-    changeset = Sponsor.insert_changeset(%Sponsor{})
+    changeset = Sponsor.insert_changeset(%Sponsor{sponsor_reps: []})
     render(conn, :new, changeset: changeset)
   end
 
@@ -63,11 +63,16 @@ defmodule ChangelogWeb.Admin.SponsorController do
   end
 
   def edit(conn = %{assigns: %{sponsor: sponsor}}, _params) do
+    sponsor = sponsor |> Sponsor.preload_reps()
     changeset = Sponsor.update_changeset(sponsor)
     render(conn, :edit, sponsor: sponsor, changeset: changeset)
   end
 
   def update(conn = %{assigns: %{sponsor: sponsor}}, params = %{"sponsor" => sponsor_params}) do
+    sponsor =
+      sponsor
+      |> Sponsor.preload_reps()
+
     changeset = Sponsor.update_changeset(sponsor, sponsor_params)
 
     case Repo.update(changeset) do

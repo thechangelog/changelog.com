@@ -79,6 +79,40 @@
     <%= AdminHelpers.error_message(f, :description) %>
   </div>
 
+  <div class="field">
+    <%= label(f, :reps) do %>
+      Reps <%= AdminHelpers.help_icon("People with access to the sponsor dashboard") %>
+    <% end %>
+
+    <div class="ui middle aligned selection list js-sponsor_reps">
+      <%= inputs_for f, :sponsor_reps, fn i -> %>
+        <% rep = AdminHelpers.load_from_form(i, Person, :person) %>
+        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+          <%= hidden_input(i, :person_id) %>
+          <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(rep) %>">
+
+          <div class="content">
+            <div class="header"><%= rep.name %> (@<%= rep.handle %>)</div>
+          </div>
+
+          <div class="right floated content">
+            <div class="ui tiny icon button js-remove">
+              <i class="remove icon"></i>
+              <%= hidden_input(i, :delete) %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="ui search">
+      <div class="ui left icon input">
+        <input class="prompt" type="text" placeholder="Add a Rep">
+        <i class="user icon"></i>
+      </div>
+    </div>
+  </div>
+
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>

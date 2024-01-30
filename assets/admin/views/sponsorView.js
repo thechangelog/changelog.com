@@ -1,4 +1,5 @@
 import Clipboard from "clipboard";
+import SearchWidget from "components/searchWidget";
 
 export default class SponsorView {
   show() {
@@ -10,5 +11,13 @@ export default class SponsorView {
     });
 
     clipboard.on("error", function(e) { console.log(e); });
+  }
+
+  new() {
+    new SearchWidget("person", "sponsor", "sponsor_reps")
+  }
+
+  edit() {
+    this.new()
   }
 }
