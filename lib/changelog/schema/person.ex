@@ -13,6 +13,7 @@ defmodule Changelog.Person do
     PodcastHost,
     Post,
     Regexp,
+    SponsorRep,
     Subscription
   }
 
@@ -78,6 +79,9 @@ defmodule Changelog.Person do
     has_many :guest_episodes, through: [:episode_guests, :episode]
 
     has_many :authored_posts, Post, foreign_key: :author_id, on_delete: :delete_all
+
+    has_many :sponsor_reps, SponsorRep, foreign_key: :rep_id, on_delete: :delete_all
+    has_many :sponsors, through: [:sponsor_reps, :sponsor]
 
     has_many :authored_news_items, NewsItem, foreign_key: :author_id, on_delete: :nilify_all
     has_many :logged_news_items, NewsItem, foreign_key: :logger_id, on_delete: :nilify_all
