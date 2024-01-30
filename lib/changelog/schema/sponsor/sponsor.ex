@@ -25,6 +25,18 @@ defmodule Changelog.Sponsor do
     timestamps()
   end
 
+  def preload_reps(query = %Ecto.Query{}) do
+    query
+    |> Ecto.Query.preload(:sponsor_reps)
+    |> Ecto.Query.preload(:reps)
+  end
+
+  def preload_reps(sponsor) do
+    sponsor
+    |> Repo.preload(:sponsor_reps)
+    |> Repo.preload(:reps)
+  end
+
   def file_changeset(sponsor, attrs \\ %{}) do
     cast_attachments(sponsor, attrs, ~w(avatar color_logo dark_logo light_logo)a, allow_urls: true)
   end
@@ -34,6 +46,7 @@ defmodule Changelog.Sponsor do
     |> cast(attrs, ~w(name description website github_handle twitter_handle)a)
     |> validate_required([:name])
     |> validate_format(:website, Regexp.http(), message: Regexp.http_message())
+    |> cast_assoc(:sponsor_reps)
     |> unique_constraint(:name)
   end
 

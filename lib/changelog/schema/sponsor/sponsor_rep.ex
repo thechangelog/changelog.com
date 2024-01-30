@@ -7,15 +7,15 @@ defmodule Changelog.SponsorRep do
     field :delete, :boolean, virtual: true
 
     belongs_to :sponsor, Sponsor
-    belongs_to :rep, Person
+    belongs_to :person, Person
 
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(rep_id sponsor_id delete)a)
-    |> foreign_key_constraint(:rep_id)
+    |> cast(params, ~w(person_id sponsor_id delete)a)
+    |> foreign_key_constraint(:person_id)
     |> foreign_key_constraint(:sponsor_id)
     |> mark_for_deletion()
   end
