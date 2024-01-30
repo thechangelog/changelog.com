@@ -159,8 +159,8 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> assign_podcasts([@gotime, @jsparty])
       |> VanityDomains.call([])
 
-    # assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
-    assert_vanity_redirect(conn, "/topic/games")
+    assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
+    # assert_vanity_redirect(conn, "/topic/games")
   end
 
   test "vanity redirects for merch" do
