@@ -42,7 +42,7 @@
 <footer class="marketing-section-footer">
   <p>Get in touch so we can help share your brand story with our developer community.</p>
   <div class="marketing-button_group" style="--max-width-group: 400px;">
-    <%= link "Get in touch", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
+    <%= link "Get in touch", to: ~p"/sponsor/pricing", class: "button_large" %>
     <%= link "How it works", to: "#how-it-works", class: "button_large" %>
   </div>
   <p class="button_note">Or call 888-974-CHLG (2454)</p>

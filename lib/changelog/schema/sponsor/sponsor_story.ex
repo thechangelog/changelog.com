@@ -1,7 +1,8 @@
 defmodule Changelog.SponsorStory do
   defstruct [:sponsor, :slug, :quote, :examples, :content_md]
 
-  def all, do: [rollbar(), fastly(), linode(), datadog(), indeed()]
+  # def all, do: [rollbar(), fastly(), linode(), datadog(), indeed()]
+  def all, do: [indeed()]
 
   @doc """
   Provides _just_ the example data for the given sponsors. This is used on
@@ -16,11 +17,7 @@ defmodule Changelog.SponsorStory do
   end
 
   def get_by_slug(slug) do
-    try do
-      apply(__MODULE__, String.to_existing_atom(slug), [])
-    rescue
-      _all -> rollbar()
-    end
+    Enum.find(all(), rollbar(), &(&1.slug == slug))
   end
 
   def rollbar do

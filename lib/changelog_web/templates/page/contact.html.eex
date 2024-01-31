@@ -8,7 +8,7 @@
 
     <p><%= link("Submit news", to: Routes.news_item_path(@conn, :new)) %> for publishing consideration.</p>
 
-    <p><%= link("Start here", to: Routes.page_path(@conn, :sponsor)) %> for sponsorship opportunities.</p>
+    <p><%= link("Start here", to: ~p"/sponsor") %> for sponsorship opportunities.</p>
 
     <p><a href="https://github.com/thechangelog/changelog.com/issues">Open an issue</a> with bug reports and feature requests.</p>
 

@@ -18,7 +18,7 @@
     <p>Here's a short list of things that we aren't interested in 🙅‍♂️
       <ol style="list-style-type: none;">
         <li>🚫&nbsp;&nbsp;How-to's and tutorials. e.g. - "Configure Nginx on Ubuntu Linux 18.04"</li>
-        <li>🚫&nbsp;&nbsp;Commercial products/services. <%= link("Sponsorship", to: Routes.page_path(@conn, :sponsor_pricing)) %> is your path.
+        <li>🚫&nbsp;&nbsp;Commercial products/services. <%= link("Sponsorship", to: ~p"/sponsor/pricing") %> is your path.
         <li>🚫&nbsp;&nbsp;Reader-hostile websites. We consider the entire <%= link("reading experience", to: "https://www.youtube.com/watch?v=7UG8JxTEhAk") %>.
         <li>🚫&nbsp;&nbsp;Podcast episode suggestions. Use <%= link("this form", to: Routes.episode_request_path(@conn, :new)) %> instead.
       </ol>

@@ -106,7 +106,10 @@ defmodule ChangelogWeb.Router do
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode
 
       resources "/episode_requests", EpisodeRequestController
-      put "/episode_requests/:id/decline", EpisodeRequestController, :decline, as: :episode_request
+
+      put "/episode_requests/:id/decline", EpisodeRequestController, :decline,
+        as: :episode_request
+
       put "/episode_requests/:id/fail", EpisodeRequestController, :fail, as: :episode_request
       put "/episode_requests/:id/pend", EpisodeRequestController, :pend, as: :episode_request
 
@@ -192,6 +195,12 @@ defmodule ChangelogWeb.Router do
 
     get "/", PageController, :index, as: :root
 
+    resources "/sponsor", SponsorController, only: [:index]
+    get "/sponsor/pricing", SponsorController, :pricing
+    get "/sponsor/styles", SponsorController, :styles
+    get "/sponsor/details", SponsorController, :details
+    get "/sponsor/stories/:slug", SponsorController, :story
+
     resources "/sponsored", NewsAdController, only: [:show], as: :news_sponsored
     post "/sponsored/impress", NewsAdController, :impress, as: :news_sponsored
     post "/sponsored/:id/visit", NewsAdController, :visit, as: :news_ad
@@ -236,11 +245,11 @@ defmodule ChangelogWeb.Router do
     get "/guest", PageController, :guest
     get "/guest/:slug", PageController, :guest
     get "/styleguide", PageController, :styleguide
-    get "/sponsor", PageController, :sponsor
-    get "/sponsor/pricing", PageController, :sponsor_pricing
-    get "/sponsor/styles", PageController, :sponsor_styles
-    get "/sponsor/details", PageController, :sponsor_details
-    get "/sponsor/stories/:slug", PageController, :sponsor_story
+    # get "/sponsor", PageController, :sponsor
+    # get "/sponsor/pricing", PageController, :sponsor_pricing
+    # get "/sponsor/styles", PageController, :sponsor_styles
+    # get "/sponsor/details", PageController, :sponsor_details
+    # get "/sponsor/stories/:slug", PageController, :sponsor_story
     get "/ten", PageController, :ten
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms

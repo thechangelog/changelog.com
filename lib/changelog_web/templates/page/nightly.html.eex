@@ -50,7 +50,7 @@
 
       <h4>Can I sponsor Changelog Nightly?</h4>
 
-      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: Routes.page_path(@conn, :sponsor) %>.</p>
+      <p>Maybe in the future. In the meantime learn more about our other <%= link "sponsorship options", to: ~p"/sponsor" %>.</p>
     </div>
   </div>
 </article>

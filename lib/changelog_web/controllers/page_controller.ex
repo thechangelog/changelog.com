@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PageController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Podcast, Subscription}
+  alias Changelog.{Episode, Podcast}
 
   plug RequireGuest, "before joining" when action in [:join]
 
@@ -11,9 +11,6 @@ defmodule ChangelogWeb.PageController do
     case action_name(conn) do
       :guest -> guest(conn, Map.get(conn.params, "slug"))
       :index -> index(conn, conn.params)
-      :sponsor -> sponsor(conn, conn.params)
-      :sponsor_pricing -> sponsor_pricing(conn, conn.params)
-      :sponsor_story -> sponsor_story(conn, Map.get(conn.params, "slug"))
       :++ -> plusplus(conn, conn.params)
       :plusplus -> plusplus(conn, conn.params)
       :manifest_json -> manifest_json(conn, conn.params)
@@ -83,25 +80,6 @@ defmodule ChangelogWeb.PageController do
       theme_color: "#ffffff",
       background_color: "#ffffff"
       })
-  end
-
-  def sponsor(conn, _params) do
-    examples = Changelog.SponsorStory.examples()
-    subs =
-      Changelog.Cache.podcasts()
-      |> Enum.find(&Podcast.is_news/1)
-      |> Subscription.subscribed_count()
-
-    render(conn, :sponsor, examples: examples, subs: subs)
-  end
-
-  def sponsor_pricing(conn, _params) do
-    render(conn, :sponsor_pricing)
-  end
-
-  def sponsor_story(conn, slug) do
-    story = Changelog.SponsorStory.get_by_slug(slug)
-    render(conn, :sponsor_story, story: story)
   end
 
   def plusplus(conn, _params) do

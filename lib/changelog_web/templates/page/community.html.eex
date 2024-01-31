@@ -79,7 +79,7 @@
     </header>
 
     <div class="logo_grid">
-      <%= render("_sponsors.html", assigns) %>
+      <%= render(ChangelogWeb.SponsorView, "_sponsors.html", assigns) %>
     </div>
   </section>
 

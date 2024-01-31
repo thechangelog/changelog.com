@@ -2,7 +2,7 @@
 
 <article class="sponsor_story">
   <header class="sponsor_story-header">
-    <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: Routes.page_path(@conn, :sponsor) %> / Partner Story</div>
+    <div class="sponsor_story-header-breadcrumbs"><~ <%= link "Sponsor", to: ~p"/sponsor" %> / Partner Story</div>
 
     <img class="sponsor_story-header-logo" src='<%= url(~p"/images/content/sponsors/#{@story.slug}") %>.png' srcset='<%= url(~p"/images/content/sponsors/#{@story.slug}") %>.png 1x, <%= url(~p"/images/content/sponsors/#{@story.slug}") %>@2x.png 2x' alt="<%= @story.sponsor %>" width="400">
 
@@ -59,7 +59,7 @@
 
     <p>Want to work with us to share your brand’s story with the developer community?</p>
     <p>
-      <%= link to: Routes.page_path(@conn, :sponsor) do %>
+      <%= link to: ~p"/sponsor" do %>
         Learn more about sponsoring our news and podcasts&nbsp;<span class="link_arrow">›</span>
       <% end %>
     </p>

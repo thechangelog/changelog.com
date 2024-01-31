@@ -9,7 +9,7 @@
 
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "Pricing", to: ~p"/sponsor/pricing", class: "button_large" %>
       </div>
       <p class="button_note">Or call us at 888-974-CHLG (2454)</p>
     </header>
@@ -68,7 +68,7 @@
       <p>Ready to get started? Get in touch so we can connect and learn how we can help you.</p>
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "Pricing", to: ~p"/sponsor/pricing", class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>
@@ -154,7 +154,7 @@
       <p>Get in touch if you have more questions or would like to talk with someone.</p>
       <div class="marketing-button_group" style="--max-width-group: 380px;">
         <%= link "Get in touch", to: "mailto:adam@changelog.com", class: "button_large" %>
-        <%= link "Pricing", to: Routes.page_path(@conn, :sponsor_pricing), class: "button_large" %>
+        <%= link "Pricing", to: ~p"/sponsor/pricing", class: "button_large" %>
       </div>
       <p class="button_note">Or call 888-974-CHLG (2454)</p>
     </footer>
