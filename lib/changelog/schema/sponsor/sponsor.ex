@@ -1,7 +1,7 @@
 defmodule Changelog.Sponsor do
   use Changelog.Schema
 
-  alias Changelog.{Benefit, EpisodeSponsor, Files, NewsSponsorship, Regexp, SponsorRep}
+  alias Changelog.{EpisodeSponsor, Files, NewsSponsorship, Regexp, SponsorRep}
 
   schema "sponsors" do
     field :name, :string
@@ -15,7 +15,6 @@ defmodule Changelog.Sponsor do
     field :dark_logo, Files.DarkLogo.Type
     field :light_logo, Files.LightLogo.Type
 
-    has_many :benefits, Benefit, on_delete: :delete_all
     has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
     has_many :news_sponsorships, NewsSponsorship, on_delete: :delete_all
 

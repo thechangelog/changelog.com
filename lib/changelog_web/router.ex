@@ -68,7 +68,6 @@ defmodule ChangelogWeb.Router do
     get "/search", SearchController, :all
     get "/search/:type", SearchController, :one
 
-    resources "/benefits", BenefitController, except: [:show]
     resources "/topics", TopicController, except: [:show]
 
     get "/news", NewsItemController, :index
@@ -205,7 +204,6 @@ defmodule ChangelogWeb.Router do
     resources "/news/comments", NewsItemCommentController, only: [:create, :update]
     post "/news/comments/preview", NewsItemCommentController, :preview, as: :news_item_comment
 
-    resources "/benefits", BenefitController, only: [:index]
     resources "/posts", PostController, only: [:index, :show]
     get "/posts/:id/preview", PostController, :preview, as: :post
 

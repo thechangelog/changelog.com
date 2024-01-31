@@ -1,14 +1,6 @@
 defmodule Changelog.Factory do
   use ExMachina.Ecto, repo: Changelog.Repo
 
-  def benefit_factory do
-    %Changelog.Benefit{
-      offer: "Free stuff!",
-      sponsor: build(:sponsor),
-      link_url: "https://benefits.com"
-    }
-  end
-
   def topic_factory do
     %Changelog.Topic{
       name: sequence(:name, &"Topic #{&1}"),

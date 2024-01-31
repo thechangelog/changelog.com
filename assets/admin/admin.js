@@ -9,7 +9,6 @@ let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToke
 // Connect if there are any LiveViews on the page
 liveSocket.connect();
 
-import benefitView from "views/benefitView";
 import episodeView from "views/episodeView";
 import metacastView from "views/metacastView";
 import newsIssueView from "views/newsIssueView";
@@ -26,7 +25,6 @@ import ts from "../shared/ts";
 import FormUI from "components/formUI";
 
 let views = {
-  "BenefitView": benefitView,
   "EpisodeView": episodeView,
   "MetacastView": metacastView,
   "NewsItemView": newsItemView,
