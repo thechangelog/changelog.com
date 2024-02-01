@@ -195,7 +195,7 @@ defmodule ChangelogWeb.Router do
 
     get "/", PageController, :index, as: :root
 
-    resources "/sponsor", SponsorController, only: [:index]
+    resources "/sponsor", SponsorController, only: [:index, :show]
     get "/sponsor/pricing", SponsorController, :pricing
     get "/sponsor/styles", SponsorController, :styles
     get "/sponsor/details", SponsorController, :details
