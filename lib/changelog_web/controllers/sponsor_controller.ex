@@ -3,6 +3,8 @@ defmodule ChangelogWeb.SponsorController do
 
   alias Changelog.{Cache, Podcast, SponsorStory, Subscription}
 
+  plug Authorize, [Policies.Sponsor, :sponsor]
+
   def index(conn, _params) do
     examples = SponsorStory.examples()
 
