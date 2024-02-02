@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Admin.SponsorView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.Sponsor
-  alias ChangelogWeb.{Admin, EpisodeView, SponsorView, TimeView}
+  alias ChangelogWeb.{Admin, EpisodeView, PersonView, SponsorView, TimeView}
 
   def avatar_url(sponsor, version), do: SponsorView.avatar_url(sponsor, version)
 

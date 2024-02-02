@@ -11,6 +11,7 @@ defmodule ChangelogWeb.Admin.SponsorController do
     sponsors =
       Sponsor
       |> Sponsor.newest_first(:updated_at)
+      |> Sponsor.preload_reps()
       |> Repo.all()
 
     conn

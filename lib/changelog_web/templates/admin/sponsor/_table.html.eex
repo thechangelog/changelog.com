@@ -5,7 +5,7 @@
       <th>Links</th>
       <th>Edited</th>
       <th>Sponsored Eps</th>
-      <th>Sponsored News</th>
+      <th>Reps</th>
       <th></th>
     </tr>
   </thead>
@@ -26,7 +26,13 @@
       <td><div class="ui basic icon buttons"><%= sponsor |> list_of_links() |> raw() %></div></td>
       <td><%= AdminHelpers.ts(sponsor.updated_at) %></td>
       <td><%= sponsorship_count(sponsor, :episode) %></td>
-      <td><%= sponsorship_count(sponsor, :news) %></td>
+      <td>
+      <%= for person <- sponsor.reps do %>
+        <%= link to: ~p"/admin/people/#{person}", title: person.name, data: [popup: true] do %>
+          <img class="ui avatar image" src="<%= PersonView.avatar_url(person) %>">&nbsp;
+        <% end %>
+      <% end %>
+      </td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link "eye", to: ~p"/sponsor/#{sponsor.id}", title: "View Public" %>

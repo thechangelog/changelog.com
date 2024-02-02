@@ -5,12 +5,7 @@
   </h1>
 
   <div class="actions">
-    <%= link to: Routes.admin_news_sponsorship_path(@conn, :new), class: "ui right floated primary basic button" do %>
-      <i class="plus icon"></i>
-      Add Sponsorship
-    <% end %>
-
-    <%= link to: Routes.admin_sponsor_path(@conn, :new), class: "ui right floated primary basic button" do %>
+    <%= link to: ~p"/admin/sponsors/new", class: "ui right floated primary basic button" do %>
       <i class="dollar icon"></i>
       Add Sponsor
     <% end %>
