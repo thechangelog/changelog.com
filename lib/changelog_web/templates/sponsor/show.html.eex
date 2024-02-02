@@ -1,1 +1,46 @@
-<%= @sponsor.name %>
+<div class="sponsor">
+  <header class="topic-header">
+    <div class="topic-header-wrap">
+      <div class="topic-header-avatar">
+        <img src="<%= avatar_url(@sponsor, :large) %>" width="80" height="80" alt="<%= @sponsor.name %> Logo">
+      </div>
+
+      <h2 class="topic-header-title"><%= @sponsor.name %></h2>
+
+      <div class="topic-header-description"><%= @sponsor.description %></div>
+
+      <div class="topic-header-meta">
+        <%= @sponsor |> list_of_links(" · ") |> raw() %>
+      </div>
+
+      <div class="topic-header-meta"><%= SharedHelpers.pluralize(length(@sponsorships), "episode sponsored", "episodes sponsored") %></div>
+    </div>
+  </header>
+
+  <div class="feed richtext">
+    <h3 class="section_heading-text">Global Reach: <%= total_reach(@sponsorships) %></h3>
+
+    <table>
+      <thead>
+        <tr>
+          <td style="width: 5%">Date</td>
+          <td>Episode</td>
+          <td>Placement</td>
+          <td>Reach</td>
+        </tr>
+      </thead>
+      <tbody>
+      <%= for sponsorship = %{episode: episode} <- @sponsorships do %>
+        <tr>
+          <td style="width: 5%"><%= TimeView.terse_date(episode.published_at) %></td>
+          <td><%= link(EpisodeView.podcast_name_and_number(episode), to: ~p"/#{episode.podcast.slug}/#{episode.slug}") %>: <%= SharedHelpers.truncate(episode.title, 30) %></td>
+          <td><%= link("📝", to: ~p"/#{episode.podcast.slug}/#{episode.slug}" <> "#sponsors", title: "Show Notes") %>
+          <%= if sponsorship.starts_at do %><%= link("🎧", to: ~p"/#{episode.podcast.slug}/#{episode.slug}" <> "#t=#{sponsorship.starts_at}", title: "In Audio") %><% end %></td>
+          <td><%= SharedHelpers.pretty_downloads(episode) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>

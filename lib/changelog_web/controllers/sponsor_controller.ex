@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.SponsorController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Cache, Podcast, Sponsor, SponsorStory, Subscription}
+  alias Changelog.{Cache, EpisodeSponsor, Podcast, Sponsor, SponsorStory, Subscription}
 
   plug :assign_sponsor when action in [:show]
   plug Authorize, [Policies.Sponsor, :sponsor]
@@ -26,8 +26,17 @@ defmodule ChangelogWeb.SponsorController do
     render(conn, :story, story: story)
   end
 
-  def show(conn, _params) do
-    render(conn, :show)
+  def show(conn = %{assigns: %{sponsor: sponsor}}, params) do
+    sponsorships =
+      sponsor
+      |> assoc(:episode_sponsors)
+      |> EpisodeSponsor.newest_first()
+      |> EpisodeSponsor.preload_episode()
+      |> Repo.all()
+
+    conn
+    |> assign(:sponsorships, sponsorships)
+    |> render(:show)
   end
 
   defp assign_sponsor(conn = %{params: %{"id" => id}}, _) do

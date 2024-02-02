@@ -3,11 +3,38 @@ defmodule ChangelogWeb.SponsorView do
 
   alias Changelog.Files.{Avatar, ColorLogo, DarkLogo, LightLogo}
   alias Changelog.StringKit
+  alias ChangelogWeb.EpisodeView
 
   def avatar_url(sponsor), do: avatar_url(sponsor, :small)
 
   def avatar_url(sponsor, version) do
     Avatar.url({sponsor.avatar, sponsor}, version)
+  end
+
+  def total_reach(sponsorships) do
+    sponsorships
+    |> Enum.map(& &1.episode.download_count)
+    |> Enum.sum()
+    |> SharedHelpers.pretty_downloads()
+  end
+
+  def list_of_links(sponsor, separator \\ ", ") do
+    [
+      %{
+        value: sponsor.twitter_handle,
+        text: "Twitter",
+        url: SharedHelpers.twitter_url(sponsor.twitter_handle)
+      },
+      %{
+        value: sponsor.github_handle,
+        text: "GitHub",
+        url: SharedHelpers.github_url(sponsor.github_handle)
+      },
+      %{value: sponsor.website, text: "Website", url: sponsor.website}
+    ]
+    |> Enum.reject(fn x -> x.value == nil end)
+    |> Enum.map(fn x -> ~s{<a href="#{x.url}" rel="external ugc">#{x.text}</a>} end)
+    |> Enum.join(separator)
   end
 
   def logo_url(sponsor, type, version) do
