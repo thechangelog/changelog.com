@@ -195,11 +195,10 @@ defmodule ChangelogWeb.Router do
 
     get "/", PageController, :index, as: :root
 
-    resources "/sponsor", SponsorController, only: [:index, :show]
     get "/sponsor/pricing", SponsorController, :pricing
     get "/sponsor/styles", SponsorController, :styles
-    get "/sponsor/details", SponsorController, :details
     get "/sponsor/stories/:slug", SponsorController, :story
+    resources "/sponsor", SponsorController, only: [:index, :show]
 
     resources "/sponsored", NewsAdController, only: [:show], as: :news_sponsored
     post "/sponsored/impress", NewsAdController, :impress, as: :news_sponsored
@@ -245,11 +244,6 @@ defmodule ChangelogWeb.Router do
     get "/guest", PageController, :guest
     get "/guest/:slug", PageController, :guest
     get "/styleguide", PageController, :styleguide
-    # get "/sponsor", PageController, :sponsor
-    # get "/sponsor/pricing", PageController, :sponsor_pricing
-    # get "/sponsor/styles", PageController, :sponsor_styles
-    # get "/sponsor/details", PageController, :sponsor_details
-    # get "/sponsor/stories/:slug", PageController, :sponsor_story
     get "/ten", PageController, :ten
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms

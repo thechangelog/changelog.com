@@ -26,7 +26,7 @@ defmodule ChangelogWeb.SponsorController do
     render(conn, :story, story: story)
   end
 
-  def show(conn = %{assigns: %{sponsor: sponsor}}, params) do
+  def show(conn = %{assigns: %{sponsor: sponsor}}, _params) do
     sponsorships =
       sponsor
       |> assoc(:episode_sponsors)
