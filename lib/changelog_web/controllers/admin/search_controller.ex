@@ -99,6 +99,7 @@ defmodule ChangelogWeb.Admin.SearchController do
 
   defp search_sponsors(q) do
     from(q in Sponsor, where: ilike(q.name, ^"%#{q}%"))
+    |> Sponsor.preload_reps()
     |> Repo.all()
   end
 

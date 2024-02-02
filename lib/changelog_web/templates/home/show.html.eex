@@ -23,7 +23,7 @@
         <p>Connect with like-minded developers from all over the world. Hang with us and Slack in realtime during our live shows. Be the first to hear about upcoming shows and projects. This is your all-access pass to everything we do.</p>
 
         <div class="account_ctas-item-info-buttons">
-          <%= link("Request Invite", to: Routes.home_path(@conn, :slack), method: :post) %>
+          <%= link("Request Invite", to: ~p"/~/slack", method: :post) %>
           <%= link("Launch Slack", to: "https://changelog.slack.com", target: "_blank") %>
         </div>
       </div>
