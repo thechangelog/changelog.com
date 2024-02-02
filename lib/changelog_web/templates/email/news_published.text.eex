@@ -1,9 +1,8 @@
-<%= @episode.email_content |> SharedHelpers.md_to_text() %>
+<%= @episode.email_content %>
 
 <%= if @person do %>
 Unsubscribe: <%= PersonView.opt_out_url(@person, "podcast", @episode.podcast.slug) %>
 <% end %>
-
 <%= if String.length(@subscription.context) > 0 do %>
 (Context: <%= @subscription.context %>)
 <% end %>
