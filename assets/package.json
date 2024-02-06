@@ -40,7 +40,7 @@
     "handlebars-loader": "^1.7.0",
     "mini-css-extract-plugin": "^2.3.0",
     "mocha": "^10.0.0",
-    "postcss": ">= 8.1",
+    "postcss": ">= 8.4",
     "postcss-loader": "^6.1.0",
     "sass": "^1.58.3",
     "sass-loader": "^12.1.0",
