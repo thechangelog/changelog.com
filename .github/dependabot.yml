@@ -1,0 +1,38 @@
+updates:
+  - package-ecosystem: "github-actions"
+    commit-message:
+      prefix: "Actions"
+    directory: "/" 
+    schedule:
+      day: "saturday"
+      interval: "weekly"
+      time: "03:00"
+
+  - package-ecosystem: "gomod"
+    commit-message:
+      prefix: "Go Modules"
+    directory: "/magefiles" 
+    schedule:
+      day: "saturday"
+      interval: "weekly"
+      time: "03:00"
+
+  - package-ecosystem: "npm"
+    commit-message:
+      prefix: "Node Packages"
+    directory: "/assets"
+    schedule:
+      day: "saturday"
+      interval: "weekly"
+      time: "03:00"
+
+  - package-ecosystem: "mix"
+    commit-message:
+      prefix: "Elixir Packages"
+    directory: "/" 
+    schedule:
+      day: "saturday"
+      interval: "weekly"
+      time: "03:00"
+    
+version: 2
