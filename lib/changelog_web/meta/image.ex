@@ -41,9 +41,9 @@ defmodule ChangelogWeb.Meta.Image do
     end
   end
 
-  # a specific album
-  defp get_image(%{view_module: AlbumView, album: album}) do
-    AlbumView.art_url(album, 512)
+  # all album pages
+  defp get_image(%{view_module: AlbumView}) do
+    static_image(~w[images share changelog-beats.jpg])
   end
 
   # a specific post
@@ -56,14 +56,16 @@ defmodule ChangelogWeb.Meta.Image do
   end
 
   # a specific news source
-  defp get_image(%{view_module: NewsSourceView, source: source})  when is_map(source), do: source_image(source)
+  defp get_image(%{view_module: NewsSourceView, source: source}) when is_map(source),
+    do: source_image(source)
 
   # a specific person's profile
   defp get_image(%{view_module: PersonView, person: person}) when is_map(person),
     do: person_image(person)
 
   # a specific topic
-  defp get_image(%{view_module: TopicView, topic: topic}) when is_map(topic), do: topic_image(topic)
+  defp get_image(%{view_module: TopicView, topic: topic}) when is_map(topic),
+    do: topic_image(topic)
 
   # special image for /ten
   defp get_image(%{view_module: PageView, view_template: "ten.html"}),

@@ -1,5 +1,7 @@
 defmodule ChangelogWeb.Meta.Twitter do
-  alias ChangelogWeb.{Endpoint, EpisodeView, PageView, PodcastView, PostView, Router.Helpers}
+  use ChangelogWeb, :verified_routes
+
+  alias ChangelogWeb.{AlbumView, EpisodeView, PageView, PodcastView, PostView}
 
   def get(type, conn) do
     view = Phoenix.Controller.view_module(conn)
@@ -15,6 +17,8 @@ defmodule ChangelogWeb.Meta.Twitter do
 
   defp card_type(%{view_module: EpisodeView, view_template: "show.html"}), do: "player"
 
+  defp card_type(%{view_module: AlbumView}), do: "summary_large_image"
+
   defp card_type(%{view_module: PageView, view_template: "ten.html"}),
     do: "summary_large_image"
 
@@ -29,12 +33,12 @@ defmodule ChangelogWeb.Meta.Twitter do
   defp card_type(_), do: "summary"
 
   defp player_url(%{
-        view_module: EpisodeView,
-        view_template: "show.html",
-        podcast: podcast,
-        episode: episode
-      }) do
-    Helpers.episode_url(Endpoint, :embed, podcast.slug, episode.slug, source: "twitter")
+         view_module: EpisodeView,
+         view_template: "show.html",
+         podcast: podcast,
+         episode: episode
+       }) do
+    ~p"/#{podcast.slug}/#{episode.slug}?source=twitter"
   end
 
   defp player_url(_), do: ""

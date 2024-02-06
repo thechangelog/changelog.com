@@ -20,8 +20,9 @@ defmodule ChangelogWeb.Meta.Description do
   end
 
   defp description(%{view_module: AlbumView, view_template: "index.html"}) do
-    "Original music by Breakmaster Cylinder that powers all Changelog podcasts"
+    "Original music by Breakmaster Cylinder featured on all Changelog podcasts"
   end
+
   defp description(%{view_module: AlbumView, album: album}), do: album.description
 
   defp description(%{view_module: EpisodeView, episode: episode}),
@@ -31,7 +32,10 @@ defmodule ChangelogWeb.Meta.Description do
     do: item.story |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
 
   defp description(%{view_module: NewsSourceView, source: source}), do: source.description
-  defp description(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_summary()
+
+  defp description(%{view_module: PodcastView, view_template: "index.html"}),
+    do: podcasts_summary()
+
   defp description(%{view_module: PodcastView, podcast: podcast}), do: podcast.description
   defp description(%{view_module: LiveView, view_template: "index.html"}), do: podcasts_summary()
   defp description(%{view_module: LiveView, podcast: podcast}), do: podcast.description

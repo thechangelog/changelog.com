@@ -46,7 +46,7 @@ defmodule Changelog.Album do
       volume: "02",
       tagline: "We can dance if we want to",
       description:
-        "We double dog dare you to listen to this bundle of BMC bangers and try NOT to dance your pretty little face off 🫠",
+        "Double dog dare you to listen to this bundle of BMC bangers and try NOT to dance your pretty little face off 🫠",
       apple_id: "1729386895",
       spotify_id: "1pTOAGNr05QRkjaYoxtUY8",
       bandcamp_url:
