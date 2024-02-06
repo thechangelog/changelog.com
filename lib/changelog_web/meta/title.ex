@@ -83,7 +83,8 @@ defmodule ChangelogWeb.Meta.Title do
   defp title(%{view_module: AlbumView, view_template: "index.html"}), do: "Changelog Beats"
 
   # Album show
-  defp title(%{view_module: AlbumView, view_template: "show.html", album: album}), do: "#{album.name} by Changelog Beats"
+  defp title(%{view_module: AlbumView, view_template: "show.html", album: album}),
+    do: "#{album.name} by Breakmaster Cylinder on Changelog Beats"
 
   # Source index
   defp title(%{view_module: NewsSourceView, view_template: "index.html"}), do: "All news sources"
