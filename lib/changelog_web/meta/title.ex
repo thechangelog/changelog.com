@@ -15,27 +15,15 @@ defmodule ChangelogWeb.Meta.Title do
     SearchView
   }
 
-  @default "News and podcasts for developers"
+  @default "Podcasts for developers"
 
-  def get(type, conn) do
+  def get(conn) do
     view = Phoenix.Controller.view_module(conn)
     template = Phoenix.Controller.view_template(conn)
     assigns = Map.merge(conn.assigns, %{view_module: view, view_template: template})
 
-    case type do
-      :page -> page_title(assigns)
-      :share -> share_title(assigns)
-    end
+    title(assigns) || @default
   end
-
-  defp page_title(assigns) do
-    [title(assigns) || @default, "Changelog"]
-    |> Enum.reject(&is_nil/1)
-    |> Enum.join(" |> ")
-  end
-
-  # no need for the suffix on these
-  defp share_title(assigns), do: title(assigns) || @default
 
   # Search views
   defp title(%{view_module: SearchView, view_template: "search.html", query: ""}), do: "Search"

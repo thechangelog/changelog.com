@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta name="csrf-token" content={Plug.CSRFProtection.get_csrf_token()} />
 
-    <title><%= Meta.AdminTitle.get(:page, @conn) %></title>
+    <title><%= Meta.AdminTitle.get(@conn) %></title>
     <link rel="stylesheet" href="<%= url(~p"/css/admin.css") %>">
   </head>
 

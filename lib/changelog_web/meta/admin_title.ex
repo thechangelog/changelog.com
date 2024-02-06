@@ -4,15 +4,8 @@ defmodule ChangelogWeb.Meta.AdminTitle do
 
   @suffix "Admin"
 
-  def get(type, conn) do
+  def get(conn) do
     assigns = Meta.prep_assigns(conn)
-
-    case type do
-      :page -> page_title(assigns)
-    end
-  end
-
-  defp page_title(assigns) do
     assigns |> title() |> put_suffix()
   end
 

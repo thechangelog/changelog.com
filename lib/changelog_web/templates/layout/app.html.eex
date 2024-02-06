@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#59B287">
-    <title><%= Meta.Title.get(:page, @conn) %></title>
+    <title><%= Meta.Title.get(@conn) %></title>
     <link rel="canonical" href="<%= Meta.Url.get(:canonical, @conn) || current_url(@conn) %>">
     <meta name="description" content="<%= Meta.Description.get(@conn) %>">
     <meta name="copyright" content="Changelog Media LLC">
   <% twitter_card_type = Meta.Twitter.get(:card_type, @conn) %>
     <meta name="twitter:card" content="<%= twitter_card_type %>">
     <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:title" content="<%= Meta.Title.get(:share, @conn) |> escaped()
+    <meta name="twitter:title" content="<%= Meta.Title.get(@conn) |> escaped()
  %>">
     <meta name="twitter:description" content="<%= Meta.Description.get(@conn) |> escaped() %>">
   <%= if twitter_card_type == "player" do %>
@@ -31,7 +31,7 @@
   <% end %>
     <meta property="og:url" content="<%= current_url(@conn) %>">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<%= Meta.Title.get(:share, @conn) |> escaped() %>">
+    <meta property="og:title" content="<%= Meta.Title.get(@conn) |> escaped() %>">
     <meta property="og:description" content="<%= Meta.Description.get(@conn) |> escaped() %>">
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
