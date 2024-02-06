@@ -33,7 +33,7 @@
     "autoprefixer": "^10.2.5",
     "babel-loader": "^8.0.4",
     "babel-plugin-prismjs": "^2.0.1",
-    "copy-webpack-plugin": "^10.0.0",
+    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.2.0",
     "css-minimizer-webpack-plugin": "^3.0.1",
     "file-loader": "^6.0.0",
