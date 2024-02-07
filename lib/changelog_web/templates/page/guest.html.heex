@@ -5,7 +5,7 @@
 
     <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
     <%= for podcast <- @active do %>
-      <option value="<%= podcast.slug %>" <%= if @podcast.slug == podcast.slug, do: "selected" %>><%= podcast.name %></option>
+        <option value={podcast.slug} selected={@podcast.slug == podcast.slug}><%= podcast.name %></option>
     <% end %>
     </select>!</p>
 
@@ -81,14 +81,15 @@
 
     <ul>
     <%= if @podcast.recorded_live do %>
-      <li><mark>This show records live</mark> on <a href="https://youtube.com/changelog" title="Changelog's YouTube">our YouTube channel</a>. 📺</li>
-      <li>We only produce the audio, but your video will be streamed live as well. 📹</li>
+      <li><mark>This show records live</mark>. 📺</li>
+      <li>We only produce the audio, but your video will be streamed as well. 📹</li>
       <li>You can interact with listeners in
       <%= if @podcast.slug == "gotime" do %>
         the <%= link("Gophers Slack", to: "https://gophers.slack.com/messages/gotimefm") %>
       <% else %>
-        our <%= link("Community Slack", to: Routes.page_path(@conn, :community)) %>.</li>
+        our <%= link("Community Slack", to: ~p"/community") %>.
       <% end %>
+      </li>
     <% else %>
     <% end %>
       <li>Put your mobile device(s) on Airplane Mode 📳</li>
