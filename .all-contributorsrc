@@ -422,6 +422,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "glentner",
+      "name": "Geoffrey Lentner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8965948?v=4",
+      "profile": "http://lentner.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
