@@ -14,7 +14,7 @@
 <% end %>
 
   <div id="guidelines" class="richtext richtext--small">
-    <p>Submitting other people's work is encourged. Submitting your own work is also encouraged.</p>
+    <p>Submitting other people's work is encouraged. Submitting your own work is also encouraged.</p>
     <p>Here's a short list of things that we aren't interested in 🙅‍♂️
       <ol style="list-style-type: none;">
         <li>🚫&nbsp;&nbsp;How-to's and tutorials. e.g. - "Configure Nginx on Ubuntu Linux 18.04"</li>
