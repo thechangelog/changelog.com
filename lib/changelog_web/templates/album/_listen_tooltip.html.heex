@@ -3,8 +3,10 @@
   <div class="tooltip-wrap">
     <ul class="tooltip-list">
       <li class="tooltip-list-heading">Listen</li>
-      <li><%= link("Apple Music", to: apple_music_url(@album)) %></li>
       <li><%= link("Spotify", to: spotify_url(@album)) %></li>
+      <li><%= link("Apple Music", to: apple_music_url(@album)) %></li>
+      <li><%= link("Amazon Music", to: amazon_music_url(@album)) %></li>
+      <li><%= link("YouTube Music", to: youtube_music_url(@album)) %></li>
       <li><%= link("Bandcamp", to: @album.bandcamp_url) %></li>
     </ul>
   </div>

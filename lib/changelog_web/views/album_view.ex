@@ -5,6 +5,10 @@ defmodule ChangelogWeb.AlbumView do
     "https://cdn.changelog.com/albums/#{album.volume}-#{album.slug}-#{version}.jpg"
   end
 
+  def amazon_music_url(album) do
+    "https://music.amazon.com/albums/#{album.amazon_id}"
+  end
+
   def apple_music_url(album) do
     "https://music.apple.com/us/album/#{album.slug}/#{album.apple_id}"
   end
@@ -15,6 +19,10 @@ defmodule ChangelogWeb.AlbumView do
 
   def spotify_embed_url(album) do
     "https://open.spotify.com/embed/album/#{album.spotify_id}"
+  end
+
+  def youtube_music_url(album) do
+    "https://music.youtube.com/playlist?list=#{album.youtube_id}"
   end
 
   def header_art_attrs(album) do
