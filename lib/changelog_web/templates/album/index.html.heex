@@ -6,7 +6,9 @@
       <p>In collaboration with our <%= link("beat freak in residence", to: ~p"/person/breakmastercylinder") %>: the mysterious <a href="https://en.wikipedia.org/wiki/Breakmaster_Cylinder">Breakmaster Cylinder</a>!</p>
     </header>
     <div class="show_list-shows">
-      <%= render_many(@albums, __MODULE__, "_summary.html", assigns) %>
+    <%= for album <- @albums do %>
+      <%= render(__MODULE__, "_summary.html", album: album) %>
+    <% end %>
     </div>
   </section>
 </div>

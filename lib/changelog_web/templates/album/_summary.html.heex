@@ -5,9 +5,9 @@
     <% end %>
     <div class="show_list-shows-item-content">
       <div class="show_list-shows-item-content-heading">
-        <h2><a href="<%= ~p"/#{@album.slug}" %>"><%= @album.name %></a></h2>
+        <h2><%= link(@album.name, to: ~p"/beats/#{@album.slug}") %></h2>
           <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Listen</button>
-          <%= render("_listen_tooltip.html", conn: @conn, album: @album) %>
+          <%= render("_listen_tooltip.html", album: @album) %>
       </div>
       <%= @album.tagline |> SharedHelpers.md_to_html() |> raw() %>
     </div>

@@ -16,4 +16,13 @@ defmodule ChangelogWeb.AlbumView do
   def spotify_embed_url(album) do
     "https://open.spotify.com/embed/album/#{album.spotify_id}"
   end
+
+  def header_art_attrs(album) do
+    %{
+      src: art_url(album, 'full'),
+      srcset: "#{art_url(album, 'full')} 3000w, #{art_url(album, '512')} 440w",
+      sizes: "(min-width:880px) 490w, 440w",
+      alt: "#{album.name} Album Artwork"
+    }
+  end
 end
