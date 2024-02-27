@@ -39,7 +39,7 @@ defmodule Changelog.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.7.3"},
+      {:phoenix, "~> 1.7.11"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -85,7 +85,7 @@ defmodule Changelog.Mixfile do
       {:opentelemetry_exporter, "~> 1.0"},
       {:opentelemetry, "~> 1.0"},
       {:opentelemetry_api, "~> 1.0"},
-      {:opentelemetry_cowboy, "~> 0.2.0"},
+      {:opentelemetry_cowboy, "~> 0.3.0"},
       {:opentelemetry_ecto, "~> 1.0"},
       {:opentelemetry_oban, "~> 1.0"},
       {:opentelemetry_phoenix, "~> 1.0"}
