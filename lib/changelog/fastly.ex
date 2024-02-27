@@ -44,6 +44,12 @@ defmodule Changelog.Fastly do
     if episode.plusplus_file do
       episode |> EpisodeView.plusplus_url() |> purge()
     end
+
+    if episode.cover do
+      for version <- Files.Cover.__versions() do
+        episode |> EpisodeView.cover_url(version) |> purge()
+      end
+    end
   end
 
   def purge(metacast = %Metacast{}) do
@@ -140,6 +146,6 @@ defmodule Changelog.Fastly do
     auth = Application.get_env(:changelog, :fastly_token)
     %{path: path, host: host} = URI.parse(url)
     Logger.info("Fastly: Purging #{url}")
-    HTTP.request(:purge, endpoint(path), "", [{"Host", host}  , {"Fastly-Key", auth}])
+    HTTP.request(:purge, endpoint(path), "", [{"Host", host}, {"Fastly-Key", auth}])
   end
 end
