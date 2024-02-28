@@ -9,7 +9,7 @@ defmodule ChangelogWeb.NewsSourceView do
     path =
       Routes.admin_news_source_path(conn, :edit, source, next: SharedHelpers.current_path(conn))
 
-    link("[edit]", to: path, data: [turbolinks: "false"])
+    link("[edit]", to: path)
   end
 
   def admin_edit_link(_, _, _), do: nil

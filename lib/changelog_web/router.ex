@@ -25,7 +25,6 @@ defmodule ChangelogWeb.Router do
     plug :accepts, ["html", "js"]
     plug Plug.FlocOff
     plug :fetch_session
-    plug Plug.Turbolinks
     plug :fetch_live_flash
     plug :put_secure_browser_headers
     plug Plug.Authenticate, repo: Changelog.Repo

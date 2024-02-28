@@ -25,7 +25,7 @@
           <% end %>
           <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
             <li class="header-nav-list-item header-nav-list-item--ten">
-              <a href="<%= ~p"/++" %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a>
+              <a href="<%= ~p"/++" %>" title="Join Changelog++">Changelog++</a>
             </li>
           <% end %>
           </ul>
@@ -49,7 +49,7 @@
               <div class="tooltip-wrap">
                 <ul class="tooltip-list">
                   <%= if Policies.Admin.Page.index(@current_user) do %>
-                    <li><%= link("Admin", to: ~p"/admin", data: [turbolinks: "false"]) %></li>
+                    <li><%= link("Admin", to: ~p"/admin") %></li>
                   <% end %>
                 <%= if @current_user.public_profile do %>
                   <li><%= link("My Profile", to: PersonView.profile_path(@current_user)) %></li>
@@ -98,7 +98,7 @@
         <%= if !@current_user do %>
           <li class="mobile_nav-list-item"><%= link("Subscribe", to: ~p"/subscribe") %></li>
         <% end %>
-          <li class="mobile_nav-list-item"><a href="<%= ~p"/++" %>" title="Join Changelog++" data-turbolinks="false">Changelog++</a></li>
+          <li class="mobile_nav-list-item"><a href="<%= ~p"/++" %>" title="Join Changelog++">Changelog++</a></li>
           <li class="mobile_nav-list-item"><%= link("Submit News", to: ~p"/news/submit") %></li>
         </ul>
       </div>

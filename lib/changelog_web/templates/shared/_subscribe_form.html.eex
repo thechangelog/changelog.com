@@ -1,7 +1,7 @@
 <% email = SharedHelpers.get_assigns_or_param(assigns, "email") %>
 <% target = SharedHelpers.get_assigns_or_param(assigns, "to", "news") %>
 
-<%= form_tag Routes.person_path(@conn, :subscribe), id: "subscribe", class: "auth form form--full_width", data: [turbolinks: "false"] do %>
+<%= form_tag Routes.person_path(@conn, :subscribe), id: "subscribe", class: "auth form form--full_width" do %>
   <input name="to" type="hidden" value="<%= target %>">
 
   <div class="form-element_wrap">

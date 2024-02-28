@@ -125,7 +125,7 @@ defmodule ChangelogWeb.NewsItemCommentControllerTest do
 
     assert patch(conn, Routes.news_item_comment_path(conn, :update, Changelog.Hashid.encode(id)),
              news_item_comment: %{content: "how dare thee!!!"}
-           ).status == 200
+           ).status == 302
 
     assert NewsItemComment.get_by_id(id).content == "how dare thee!!!"
   end

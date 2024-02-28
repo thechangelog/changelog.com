@@ -6,7 +6,7 @@ defmodule ChangelogWeb.PostView do
 
   def admin_edit_link(conn, %{admin: true}, post) do
     path = Routes.admin_post_path(conn, :edit, post, next: SharedHelpers.current_path(conn))
-    link("[edit]", to: path, data: [turbolinks: "false"])
+    link("[edit]", to: path)
   end
 
   def admin_edit_link(_, _, _), do: nil

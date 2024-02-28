@@ -66,6 +66,6 @@
     <%= render("_overlay.html", assigns) %>
     <%= render("_footer.html", assigns) %>
     <%= render("_player.html", assigns) %>
-    <div id="drift-widget-container" data-turbolinks-permanent></div>
+    <div id="drift-widget-container"></div>
   </body>
 </html>

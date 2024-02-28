@@ -21,7 +21,6 @@
     "prismjs": "^1.15.0",
     "siema": "^1.5.1",
     "sortablejs": "^1.4.2",
-    "turbolinks": "^5.2.0",
     "umbrellajs": "^2.8.0",
     "wavefile": "11.0.0"
   },

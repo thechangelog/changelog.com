@@ -14,18 +14,24 @@ export default class Comment {
 
   attachUI() {
     // Reply textbox and new text box actions
-    this.replyForm = this.container.children('form[data-context="reply"], form[data-context="new"]');
+    this.replyForm = this.container.children(
+      'form[data-context="reply"], form[data-context="new"]'
+    );
     this.replyTextArea = this.replyForm.find("textarea").first();
     this.previewArea = this.replyForm.find(".js-comment-preview-area");
     this.collapseButton = this.container.children(".js-comment-collapse");
-    this.replyButton = this.container.children("footer").find(".js-comment-reply");
+    this.replyButton = this.container
+      .children("footer")
+      .find(".js-comment-reply");
     this.previewButton = this.replyForm.find(".js-comment-preview");
     this.writeButton = this.replyForm.find(".js-comment-write");
     this.replies = this.container.children(".comment-replies");
 
     // Edit textbox actions
     this.editForm = this.container.children('form[data-context="edit"]');
-    this.editButton = this.container.children("footer").find(".js-comment-edit");
+    this.editButton = this.container
+      .children("footer")
+      .find(".js-comment-edit");
     this.editTextArea = this.editForm.find("textarea").first();
     this.editPreviewArea = this.editForm.find(".js-comment-preview-area");
     this.editPreviewButton = this.editForm.find(".js-comment-preview");
@@ -33,41 +39,41 @@ export default class Comment {
   }
 
   attachEvents() {
-    this.collapseButton.handle("click", _ => {
+    this.collapseButton.handle("click", (_) => {
       this.container.toggleClass("is-collapsed");
     });
-    this.replyButton.handle("click", _ => {
+    this.replyButton.handle("click", (_) => {
       this.toggleReplyForm();
     });
-    this.editButton.handle("click", _ => {
+    this.editButton.handle("click", (_) => {
       this.toggleEditForm();
     });
-    this.previewButton.handle("click", _ => {
+    this.previewButton.handle("click", (_) => {
       this.showPreview();
     });
-    this.editPreviewButton.handle("click", _ => {
+    this.editPreviewButton.handle("click", (_) => {
       this.showEditPreview();
     });
-    this.previewArea.handle("click", _ => {
+    this.previewArea.handle("click", (_) => {
       this.showWrite();
     });
-    this.writeButton.handle("click", _ => {
+    this.writeButton.handle("click", (_) => {
       this.showWrite();
     });
-    this.editPreviewArea.handle("click", _ => {
+    this.editPreviewArea.handle("click", (_) => {
       this.showEditWrite();
     });
-    this.editWriteButton.handle("click", _ => {
+    this.editWriteButton.handle("click", (_) => {
       this.showEditWrite();
     });
   }
 
   attachKeyboardShortcuts() {
-    this.replyForm.on("keydown", event => {
+    this.replyForm.on("keydown", (event) => {
       // ctrl+enter or cmd+enter submits form
       if ((event.metaKey || event.ctrlKey) && event.key == "Enter") {
         event.preventDefault();
-        this.replyForm.trigger("submit");
+        this.replyForm.first().submit();
       }
     });
   }
@@ -125,7 +131,7 @@ export default class Comment {
   // Reply form related functions
   toggleReplyForm() {
     if (!this.replyForm.length) {
-      Turbolinks.visit("/in");
+      window.location.href = "/in";
     } else if (this.replyForm.hasClass("is-hidden")) {
       this.openReplyForm();
     } else {
@@ -155,7 +161,7 @@ export default class Comment {
   // Edit form related functions
   toggleEditForm() {
     if (!this.editForm.length) {
-      //Turbolinks.visit('/in')
+      window.location.href = "/in";
     } else if (this.editForm.hasClass("is-hidden")) {
       this.openEditForm();
     } else {

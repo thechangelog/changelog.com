@@ -33,8 +33,7 @@ defmodule ChangelogWeb.EpisodeView do
     content_tag(:span) do
       [
         link("🎧 #{SharedHelpers.pretty_downloads(episode)}",
-          to: path,
-          data: [turbolinks: "false"]
+          to: path
         )
       ]
     end

@@ -1,4 +1,4 @@
-<div id="player" data-turbolinks-permanent>
+<div id="player">
   <figure class="podcast_player js-player">
     <nav class="podcast_player-nav">
       <button class="podcast_player-nav-button podcast_player-nav-button--copy js-player-copy-url" title="Copy Timestamp to Clipboard"></button>

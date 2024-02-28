@@ -4,7 +4,7 @@
     <ul class="tooltip-list">
       <li class="tooltip-list-heading">Subscribe</li>
     <%= if Podcast.has_feed(@podcast) do %>
-      <li><%= link("Direct (RSS)", to: subscribe_via_rss_url(@podcast), data: [turbolinks: "false"]) %></li>
+      <li><%= link("Direct (RSS)", to: subscribe_via_rss_url(@podcast)) %></li>
       <%= if @podcast.apple_url do %>
         <li><%= link("Apple Podcasts", to: subscribe_on_apple_url(@podcast)) %></li>
         <li><%= link("Overcast", to: subscribe_on_overcast_url(@podcast)) %></li>

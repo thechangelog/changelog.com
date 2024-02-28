@@ -26,7 +26,7 @@
 
     <meta name="apple-itunes-app" content="app-id=<%= PodcastView.apple_id(@episode.podcast) %>">
 
-    <link rel="stylesheet" href="<%= url(~p"/css/email.css") %>" data-turbolinks-track="reload">
+    <link rel="stylesheet" href="<%= url(~p"/css/email.css") %>">
     <link rel="shortcut icon" href="<%= url(~p"/favicon.ico") %>">
   </head>
   <body>

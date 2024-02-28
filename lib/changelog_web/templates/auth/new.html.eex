@@ -4,7 +4,7 @@
   <%= if @person do %>
     <div class="form_submit_response form_submit_response--success"><p>Check your email! We sent you a single-use sign in link. It will expire in <%= PublicHelpers.auth_link_expires_in(@person) %>.</p></div>
     <%= if Mix.env == :dev do %>
-      <p>Psst! Since you're hacking we'll just skip the email process. <%= link "click here", to: auth_path(@conn, @person), data: [turbolinks: "false"] %> instead!</p>
+      <p>Psst! Since you're hacking we'll just skip the email process. <%= link "click here", to: auth_path(@conn, @person) %> instead!</p>
     <% end %>
   <% else %>
     <p class="auth-links">via <a href="/auth/github" title="Sign in via GitHub">GitHub</a></p>

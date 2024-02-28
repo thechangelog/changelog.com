@@ -12,7 +12,7 @@ defmodule ChangelogWeb.NewsAdView do
 
     content_tag(:span, class: "news_item-toolbar-meta-item") do
       [
-        link("(#{ad.click_count}/#{ad.impression_count})", to: path, data: [turbolinks: "false"])
+        link("(#{ad.click_count}/#{ad.impression_count})", to: path)
       ]
     end
   end

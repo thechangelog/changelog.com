@@ -67,26 +67,44 @@ defmodule ChangelogWeb.NewsItemCommentController do
       comment = NewsItemComment.preload_all(comment)
       item = comment.news_item
 
-      conn
-      |> put_flash(:success, "Your comment has been updated")
-      |> assign(:item, item)
-      |> assign(:comment, comment)
-      |> assign(:changeset, changeset)
-      |> render("create_update.js")
+      if get_format(conn) == "js" do
+        conn
+        |> put_flash(:success, "Your comment has been updated")
+        |> assign(:item, item)
+        |> assign(:comment, comment)
+        |> assign(:changeset, changeset)
+        |> render("create_update.js")
+      else
+        conn
+        |> put_flash(:success, "Your comment has been updated")
+        |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
+      end
     else
       _error ->
-        conn
-        |> put_flash(:error, "Unable to update the selected comment!")
-        |> put_status(:not_found)
-        |> render("create_failure.js")
+        if get_format(conn) == "js" do
+          conn
+          |> put_flash(:error, "Unable to update the selected comment!")
+          |> put_status(:not_found)
+          |> render("create_failure.js")
+        else
+          conn
+          |> put_flash(:error, "Something went wrong")
+          |> send_resp(:not_found, "")
+        end
     end
   end
 
   def update(conn, _) do
-    conn
-    |> put_flash(:error, "Unable to update the selected comment!")
-    |> put_status(:unprocessable_entity)
-    |> render("create_failure.js")
+    if get_format(conn) == "js" do
+      conn
+      |> put_flash(:error, "Unable to update the selected comment!")
+      |> put_status(:unprocessable_entity)
+      |> render("create_failure.js")
+    else
+      conn
+      |> put_flash(:error, "Unable to update the selected comment!")
+      |> redirect(to: ChangelogWeb.Plug.Conn.referer_or_root_path(conn))
+    end
   end
 
   defp update_comment(comment = %NewsItemComment{}, updated_content) do

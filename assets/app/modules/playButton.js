@@ -4,7 +4,7 @@ export default class PlayButton {
   constructor() {
     this.isPlaying = false;
     this.owner = "";
-    u(document).on("turbolinks:load", () => {
+    u(document).on("DOMContentLoaded", () => {
       if (this.isPlaying && this.owner) {
         this.play();
       }
@@ -18,13 +18,19 @@ export default class PlayButton {
 
   play() {
     this.isPlaying = true;
-    this.playBarButton().removeClass("playbar_play").addClass("playbar_pause").text("Pause");
+    this.playBarButton()
+      .removeClass("playbar_play")
+      .addClass("playbar_pause")
+      .text("Pause");
     this.newsItemButton().addClass("is-active").html("<span>Pause</span>");
   }
 
   pause() {
     this.isPlaying = false;
-    this.playBarButton().removeClass("playbar_pause").addClass("playbar_play").text("Play");
+    this.playBarButton()
+      .removeClass("playbar_pause")
+      .addClass("playbar_play")
+      .text("Play");
     this.newsItemButton().removeClass("is-active").html("<span>Play</span>");
   }
 

@@ -1,6 +1,6 @@
 <article class="auth">
   <h1 class="auth-header">Join the community</h1>
-  <%= form_for @changeset, Routes.person_path(@conn, :join), [id: "join", class: "form form--full_width", multipart: true, data: [turbolinks: "false"]], fn f -> %>
+  <%= form_for @changeset, Routes.person_path(@conn, :join), [id: "join", class: "form form--full_width", multipart: true], fn f -> %>
     <div class="form-element_wrap <%= PublicHelpers.error_class(f, :name) %>">
       <div class="form-element">
         <label>Name<span>*</span></label>
