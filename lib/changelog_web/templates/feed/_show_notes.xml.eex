@@ -3,7 +3,7 @@
 <%= if @plusplus do %>
 <p>Thank you for supporting us with a Changelog++ membership! 🤗</p>
 <% else %>
-<p><a href="<%= Routes.page_url(Endpoint, :++) %>" rel="payment">Changelog++</a> <%= EpisodeView.plusplus_cta(@episode) %> Join today!</p>
+<p><a href="<%= url(~p"/++") %>" rel="payment">Changelog++</a> <%= EpisodeView.plusplus_cta(@episode) %> Join today!</p>
 <%= if Enum.any?(@episode.sponsors) do %>
 <p>Sponsors:</p>
 <p><ul>

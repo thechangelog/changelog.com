@@ -4,7 +4,6 @@ defmodule ChangelogWeb.FeedView do
   alias Changelog.{Episode, ListKit, NewsItem, Podcast, Post}
 
   alias ChangelogWeb.{
-    Endpoint,
     EpisodeView,
     NewsItemView,
     PersonView,
@@ -16,16 +15,13 @@ defmodule ChangelogWeb.FeedView do
   def discussion_link(nil), do: ""
 
   def discussion_link(episode = %Episode{}) do
-    Endpoint
-    |> Routes.episode_url(:discuss, episode.podcast.slug, episode.slug)
-    |> discussion_link()
+    url(~p"/#{episode.podcast.slug}/#{episode.slug}/discuss") |> discussion_link()
   end
 
   def discussion_link(post = %Post{}), do: discussion_link(post.news_item)
 
   def discussion_link(item = %NewsItem{}) do
-    url = Routes.news_item_url(Endpoint, :show, NewsItemView.hashid(item))
-    discussion_link(url)
+    url(~p"/news/#{NewsItemView.hashid(item)}") |> discussion_link()
   end
 
   def discussion_link(url) when is_binary(url) do
@@ -72,9 +68,9 @@ defmodule ChangelogWeb.FeedView do
   end
 
   # Exists to special-case /interviews
-  def podcast_url(conn, podcast) do
+  def podcast_url(podcast) do
     slug = if Podcast.is_interviews(podcast), do: "interviews", else: podcast.slug
-    Routes.podcast_url(conn, :show, slug)
+    url(~p"/#{slug}")
   end
 
   def render_item(item = %{object: episode = %Episode{}}, assigns) do
