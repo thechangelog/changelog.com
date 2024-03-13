@@ -99,7 +99,8 @@ defmodule Changelog.Podcast do
       welcome: "Software's best weekly news brief, deep technical interviews & talk show",
       description: "Software's best weekly news brief, deep technical interviews & talk show.",
       extended_description: "",
-      keywords: "changelog, open source, software, development, code, programming, hacker, change log, software engineering",
+      keywords:
+        "changelog, open source, software, development, code, programming, hacker, change log, software engineering",
       apple_url: "https://podcasts.apple.com/us/podcast/the-changelog/id341623264",
       spotify_url: "https://open.spotify.com/show/5bBki72YeKSLUqyD94qsuJ",
       cover: true,
@@ -107,8 +108,23 @@ defmodule Changelog.Podcast do
     }
   end
 
+  def plusplus do
+    %__MODULE__{
+      name: "Changelog++",
+      slug: "plusplus",
+      status: :publishing,
+      is_meta: true,
+      description: "Directly support our work. It's better!",
+      cover: true,
+      active_hosts: [],
+      retired_hosts: []
+    }
+  end
+
   def changelog_ids do
-    from(q in __MODULE__, where: q.slug in ~w(news podcast friends), select: [:id]) |> Repo.all() |> Enum.map(&(&1.id))
+    from(q in __MODULE__, where: q.slug in ~w(news podcast friends), select: [:id])
+    |> Repo.all()
+    |> Enum.map(& &1.id)
   end
 
   def file_changeset(podcast, attrs \\ %{}), do: cast_attachments(podcast, attrs, [:cover])
@@ -137,7 +153,9 @@ defmodule Changelog.Podcast do
 
   def private(query \\ __MODULE__), do: from(q in query, where: q.status in [^:draft, ^:archived])
 
-  def public(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:publishing, ^:inactive])
+  def public(query \\ __MODULE__),
+    do: from(q in query, where: q.status in [^:soon, ^:publishing, ^:inactive])
+
   def active(query \\ __MODULE__), do: from(q in query, where: q.status in [^:soon, ^:publishing])
   def inactive(query \\ __MODULE__), do: from(q in query, where: q.status == ^:inactive)
 
@@ -146,7 +164,8 @@ defmodule Changelog.Podcast do
 
   def oldest_first(query \\ __MODULE__), do: from(q in query, order_by: [asc: q.id])
 
-  def with_vanity_domain(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.vanity_domain))
+  def with_vanity_domain(query \\ __MODULE__),
+    do: from(q in query, where: not is_nil(q.vanity_domain))
 
   def get_by_slug!("interviews"), do: get_by_slug!("podcast")
   def get_by_slug!("master"), do: master()
@@ -159,7 +178,10 @@ defmodule Changelog.Podcast do
   end
 
   def get_episodes(%{slug: "master"}), do: from(e in Episode)
-  def get_episodes(%{slug: "podcast", is_meta: true}), do: from(e in Episode, where: e.podcast_id in ^changelog_ids())
+
+  def get_episodes(%{slug: "podcast", is_meta: true}),
+    do: from(e in Episode, where: e.podcast_id in ^changelog_ids())
+
   def get_episodes(podcast), do: assoc(podcast, :episodes)
 
   def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio())
@@ -181,7 +203,7 @@ defmodule Changelog.Podcast do
 
   def subscription_count(podcast), do: podcast |> assoc(:subscriptions) |> Repo.count()
 
-  def has_feed(podcast), do: podcast.slug != "backstage"
+  def has_feed(podcast), do: !Enum.member?(["backstage", "plusplus"], podcast.slug)
 
   def is_changelog(podcast), do: podcast.slug == "podcast" && podcast.is_meta
 

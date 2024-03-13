@@ -6,6 +6,8 @@
     <p>But that's not all! We produce other great shows about web development, open source, building startups, AI & the human brain.</p>
   </header>
   <div class="show_list-shows">
-    <%= render_many(active_podcasts_for_index(@podcasts), __MODULE__, "_summary.html", assigns) %>
+  <%= for podcast <- active_podcasts_for_index(@podcasts) do %>
+    <%= render(__MODULE__, "_summary.html", podcast: podcast) %>
+  <% end %>
   </div>
 </section>

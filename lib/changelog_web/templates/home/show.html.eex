@@ -3,7 +3,7 @@
 
   <div class="account_ctas">
     <div class="account_ctas-item">
-    <img class="account_ctas-item-icon" src='<%= url(~p"/images/podcasts/plusplus.png") %>' width="50" height="50" alt="Changelog++ Art"></i>
+    <img class="account_ctas-item-icon" src='<%= url(~p"/images/podcasts/plusplus-medium.png") %>' width="50" height="50" alt="Changelog++ Art"></i>
 
     <div class="account_ctas-item-info">
       <h3>Join Changelog++</h3>

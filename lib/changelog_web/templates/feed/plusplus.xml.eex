@@ -16,7 +16,7 @@
     <itunes:block>yes</itunes:block>
     <itunes:summary>Thank you for subscribing to Changelog++!</itunes:summary>
     <itunes:explicit>no</itunes:explicit>
-    <itunes:image href="<%= url(~p"/images/podcasts/plusplus.png") %>"/>
+    <itunes:image href="<%= url(~p"/images/podcasts/plusplus-original.png") %>"/>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
       <itunes:category text="Tech News"/>

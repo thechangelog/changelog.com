@@ -11,7 +11,7 @@ defmodule ChangelogWeb.PodcastView do
       |> Enum.reject(&Podcast.is_a_changelog_pod/1)
       |> Enum.filter(&Podcast.is_active/1)
 
-    List.flatten([Podcast.changelog, pods, Podcast.master])
+    List.flatten([Podcast.changelog(), pods, Podcast.master(), Podcast.plusplus()])
   end
 
   def inactive_podcasts_for_index(podcasts) do
@@ -98,14 +98,6 @@ defmodule ChangelogWeb.PodcastView do
     do: vanity <> "/spotify"
 
   def subscribe_on_spotify_url(podcast), do: podcast.spotify_url
-
-  def subscribe_via_email_path(conn, podcast) do
-    if conn.assigns.current_user do
-      ~p"/~" <> "#podcasts"
-    else
-      ~p"/subscribe/#{podcast.slug}"
-    end
-  end
 
   def subscribe_via_rss_url(%{vanity_domain: vanity}) when not is_nil(vanity),
     do: vanity <> "/rss"

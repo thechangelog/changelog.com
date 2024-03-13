@@ -3,15 +3,15 @@
     <%= link(to: ~p"/#{@podcast.slug}", class: "show_list-shows-item-art", title: "View #{@podcast.name}") do %>
       <%= SharedHelpers.lazy_image(cover_url(@podcast, :medium), "#{@podcast.name} Artwork", width: 220, height: 220) %>
       <%= if @podcast.status == :soon do %>
-        <div class="show_list-shows-item-art-status show_list-shows-item-art-status--<%= @podcast.status %>"><span><%= status_text(@podcast) %></span></div>
+        <div class="show_list-shows-item-art-status show_list-shows-item-art-status--soon"><span><%= status_text(@podcast) %></span></div>
       <% end %>
     <% end %>
     <div class="show_list-shows-item-content">
       <div class="show_list-shows-item-content-heading">
-        <h2><a href="<%= ~p"/#{@podcast.slug}" %>"><%= @podcast.name %></a></h2>
-        <%= if Podcast.is_publishing(@podcast) do %>
+        <h2><a href={~p"/#{@podcast.slug}"}><%= @podcast.name %></a></h2>
+        <%= if Podcast.is_publishing(@podcast) && Podcast.has_feed(@podcast) do %>
           <button class="show_list-shows-item-content-heading-subscribe has-tooltip" title="Subscribe">Subscribe</button>
-          <%= render("_subscribe_tooltip.html", conn: @conn, podcast: @podcast) %>
+          <%= render("_subscribe_tooltip.html", podcast: @podcast) %>
         <% end %>
       </div>
       <%= @podcast.description |> SharedHelpers.md_to_html() |> raw() %>
