@@ -8,32 +8,32 @@
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark only">
     <meta name="copyright" content="Changelog Media LLC">
-    <meta name="author" content="<%= List.first(@episode.hosts, %{name: "Jerod Santo"}).name %>">
-    <meta name="description" property="og:description" content="<%= @episode.title |> html_escape() %>">
+    <meta name="author" content={List.first(@episode.hosts, %{name: "Jerod Santo"}).name}>
+    <meta name="description" property="og:description" content={html_escape(@episode.title)}>
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<%= news_title(@episode) %>">
+    <meta property="og:title" content={news_title(@episode)}>
     <meta property="og:site_name" content="Changelog News">
-    <meta property="og:url" content="<%= Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug) %>">
+    <meta property="og:url" content={url(~p"/#{@episode.podcast.slug}/#{@episode.slug}/email")}>
     <meta property="og:locale" content="en_US">
-    <meta property="og:image" content="<%= url(~p"/images/share/twitter-news.png") %>">
+    <meta property="og:image" content={url(~p"/images/share/twitter-news.png")}>
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:description" content="<%= @episode.title |> html_escape() %>">
-    <meta name="twitter:url" content="<%= Routes.episode_url(Endpoint, :email, @episode.podcast.slug, @episode.slug) %>">
-    <meta name="twitter:image" content="<%= url(~p"/images/share/twitter-news.png") %>">
+    <meta name="twitter:description" content={html_escape(@episode.title)}>
+    <meta name="twitter:url" content={url(~p"/#{@episode.podcast.slug}/#{@episode.slug}/email")}>
+    <meta name="twitter:image" content={url(~p"/images/share/twitter-news.png")}>
 
-    <meta name="apple-itunes-app" content="app-id=<%= PodcastView.apple_id(@episode.podcast) %>">
+    <meta name="apple-itunes-app" content={"app-id" <> PodcastView.apple_id(@episode.podcast)}>
 
-    <link rel="stylesheet" href="<%= url(~p"/css/email.css") %>">
-    <link rel="shortcut icon" href="<%= url(~p"/favicon.ico") %>">
+    <link rel="stylesheet" href={url(~p"/css/email.css")}>
+    <link rel="shortcut icon" href={url(~p"/favicon.ico")}>
   </head>
   <body>
     <p style="display:none !important;"><%= @episode.email_teaser %></p>
   <%= if !@person do %>
     <div class="meta">
-      <%= form_tag Routes.person_path(Endpoint, :subscribe, "news"), method: "get" do %>
+      <%= form_tag ~p"/subscribe/news", method: "get" do %>
         You are viewing issue #<%= @episode.slug %> of the Changelog News(letter). Pop in your <input type="email" name="email" placeholder="email address" aria-label="you@example.com" required/> <input class="signup-form-submit-button" type="submit" value="to get it"> in your inbox every Monday.
       <% end %>
     </div>
@@ -51,7 +51,7 @@
                       <tbody>
                         <tr>
                           <td class="header" align="center">
-                            <img class="spacer-10" src="<%= url(~p"/images/email/spacer_1.gif") %>">
+                            <img class="spacer-10" src={url(~p"/images/email/spacer_1.gif")}>
                             <p class="last-of-type"><%= link("View on Web", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}/email"), title: "View this newsletter in your web browser") %>
                               &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;
                               <%= link("Audio Edition", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}"), title: "View the companion audio edition") %>
@@ -68,13 +68,18 @@
                         <tr>
                           <td>
                             <div class="content">
-                              <%= @episode.email_content |> SharedHelpers.md_to_html() |> HtmlKit.put_utm_source("changelog-news") |> raw() %>
+                              <%=
+                              @episode.email_content
+                              |> SharedHelpers.md_to_html()
+                              |> HtmlKit.put_utm_source("changelog-news")
+                              |> HtmlKit.put_img_width("630")
+                              |> raw() %>
                             </div>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
+                    <img class="spacer-20" src={url(~p"/images/email/spacer_1.gif")}>
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e5e5e5">
                       <tbody>
                         <tr><td bgcolor="#e5e5e5" height="1" width="100%"></td></tr>
@@ -84,7 +89,7 @@
                       <tbody>
                         <tr>
                           <td class="footer" align="center">
-                            <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
+                            <img class="spacer-20" src={url(~p"/images/email/spacer_1.gif")}>
                           <%= if @person do %>
                             <p><%= link("Unsubscribe", to: PersonView.opt_out_url(@person, "podcast", @episode.podcast.slug)) %></p>
                           <%= if String.length(@subscription.context) > 0 do %>
@@ -92,7 +97,7 @@
                           <% end %>
                           <% end %>
                             <p class="last-of-type">Copyright Changelog Media LLC</p>
-                            <img class="spacer-20" src="<%= url(~p"/images/email/spacer_1.gif") %>">
+                            <img class="spacer-20" src={url(~p"/images/email/spacer_1.gif")}>
                           </td>
                         </tr>
                       </tbody>

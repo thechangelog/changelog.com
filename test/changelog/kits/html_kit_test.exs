@@ -93,6 +93,24 @@ defmodule Changelog.HtmlKitTest do
     end
   end
 
+  describe "put_img_width/2" do
+    test "does nothing if there are no img tags" do
+      assert HtmlKit.put_img_width("<html></html>", 500) == "<html></html>"
+    end
+
+    test "it adds width to a single img" do
+      a = ~s(<div><h1><img src="/example.png"></h1></div>)
+      b = ~s(<div><h1><img width="500" src="/example.png"/></h1></div>)
+      assert HtmlKit.put_img_width(a, 500) == b
+    end
+
+    test "it adds width to multiple img tags" do
+      a = ~s(<img src="/test1.png"> (<img src="/test2.png">)
+      b = ~s(<img width="250" src="/test1.png"/> (<img width="250" src="/test2.png"/>)
+      assert HtmlKit.put_img_width(a, "250") == b
+    end
+  end
+
   describe "put_utm_source/2" do
     test "it does nothing if there are no anchors" do
       assert HtmlKit.put_utm_source("<html></html>", "changelog-news") == "<html></html>"
@@ -105,14 +123,22 @@ defmodule Changelog.HtmlKitTest do
     end
 
     test "it adds utm_source to multiple anchors" do
-      a = ~s(<a href="https://changelog.com">ohai there</a>  <a href="https://test.com">obai there</a>)
-      b = ~s(<a href="https://changelog.com?utm_source=test">ohai there</a><a href="https://test.com?utm_source=test">obai there</a>)
+      a =
+        ~s(<a href="https://changelog.com">ohai there</a>  <a href="https://test.com">obai there</a>)
+
+      b =
+        ~s(<a href="https://changelog.com?utm_source=test">ohai there</a><a href="https://test.com?utm_source=test">obai there</a>)
+
       assert HtmlKit.put_utm_source(a, "test") == b
     end
 
     test "it skips anchors that are have utm" do
-      a = ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a>  <a href="https://test.com">obai there</a>)
-      b = ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a><a href="https://test.com?utm_source=test">obai there</a>)
+      a =
+        ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a>  <a href="https://test.com">obai there</a>)
+
+      b =
+        ~s(<a href="https://changelog.com?utm_medium=nope">ohai there</a><a href="https://test.com?utm_source=test">obai there</a>)
+
       assert HtmlKit.put_utm_source(a, "test") == b
     end
 
