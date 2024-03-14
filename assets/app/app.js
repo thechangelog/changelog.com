@@ -246,7 +246,6 @@ window.onhashchange = function () {
 };
 
 u(document).on("DOMContentLoaded", function () {
-  console.log("ready");
   Prism.highlightAll();
   App.player.attach();
   autosize(document.querySelectorAll("textarea"));
