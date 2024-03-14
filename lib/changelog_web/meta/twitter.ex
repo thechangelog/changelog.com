@@ -38,7 +38,7 @@ defmodule ChangelogWeb.Meta.Twitter do
          podcast: podcast,
          episode: episode
        }) do
-    url(~p"/#{podcast.slug}/#{episode.slug}?source=twitter")
+    url(~p"/#{podcast.slug}/#{episode.slug}/embed?source=twitter")
   end
 
   defp player_url(_), do: ""
