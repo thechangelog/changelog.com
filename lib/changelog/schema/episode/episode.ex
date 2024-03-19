@@ -146,7 +146,13 @@ defmodule Changelog.Episode do
   def with_podcast_slug(query, nil), do: query
 
   def with_podcast_slug(query, slug),
-    do: from(q in query, join: p in Podcast, on: true, where: q.podcast_id == p.id, where: p.slug == ^slug)
+    do:
+      from(q in query,
+        join: p in Podcast,
+        on: true,
+        where: q.podcast_id == p.id,
+        where: p.slug == ^slug
+      )
 
   def with_transcript(query \\ __MODULE__),
     do: from(q in query, where: fragment("? != '{}'", q.transcript))
@@ -193,11 +199,12 @@ defmodule Changelog.Episode do
       |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
       |> cast_assoc(:episode_hosts)
 
-    validated = if Podcast.is_news(episode.podcast) do
-      validate_required(validated, [:email_subject, :email_teaser, :email_content])
-    else
-      validated
-    end
+    validated =
+      if Podcast.is_news(episode.podcast) do
+        validate_required(validated, [:email_subject, :email_teaser, :email_content])
+      else
+        validated
+      end
 
     validated.valid? && !is_published(episode)
   end

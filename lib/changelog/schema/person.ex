@@ -202,8 +202,7 @@ defmodule Changelog.Person do
     do: cast(person, attrs, ~w(auth_token auth_token_expires_at)a)
 
   def admin_insert_changeset(person, attrs \\ %{}) do
-    allowed =
-      ~w(name email handle github_handle linkedin_handle mastodon_handle
+    allowed = ~w(name email handle github_handle linkedin_handle mastodon_handle
       twitter_handle bio website location admin host editor
       public_profile approved)a
 
@@ -220,8 +219,7 @@ defmodule Changelog.Person do
     do: cast_attachments(person, attrs, [:avatar], allow_urls: true)
 
   def insert_changeset(person, attrs \\ %{}) do
-    allowed =
-      ~w(name email handle github_handle linkedin_handle mastodon_handle
+    allowed = ~w(name email handle github_handle linkedin_handle mastodon_handle
       twitter_handle bio website location public_profile)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)

@@ -225,6 +225,7 @@ defmodule Changelog.NewsItem do
   end
 
   defp get_episode_object(nil), do: nil
+
   defp get_episode_object(object_id) do
     [_podcast_id, episode_id] = String.split(object_id, ":")
 
@@ -242,6 +243,7 @@ defmodule Changelog.NewsItem do
   defp get_news_object(object_id), do: get_episode_object(object_id)
 
   defp get_post_object(nil), do: nil
+
   defp get_post_object(object_id) do
     [_, slug] = String.split(object_id, ":")
 
@@ -315,7 +317,6 @@ defmodule Changelog.NewsItem do
     |> Repo.preload(news_item_topics: {NewsItemTopic.by_position(), :topic})
     |> Repo.preload(:topics)
   end
-
 
   def accept!(item, object_id), do: accept!(item, object_id, "")
 
