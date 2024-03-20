@@ -37,13 +37,13 @@ defmodule Changelog.Buffer.Content do
 
       #{Enum.join(meta, "\n")}
 
-      💚 #{EpisodeView.share_url(episode)}
+      🎧 #{EpisodeView.share_url(episode)}
       """
     else
       """
       #{emoj} #{ann}
 
-      💚 #{EpisodeView.share_url(episode)}
+      🎧 #{EpisodeView.share_url(episode)}
       """
     end
   end
@@ -92,10 +92,12 @@ defmodule Changelog.Buffer.Content do
   end
 
   defp news_item_terse_text(item) do
-    text = [
-      news_item_headline(item),
-      news_item_byline(item)
-    ] |> ListKit.compact_join(" ")
+    text =
+      [
+        news_item_headline(item),
+        news_item_byline(item)
+      ]
+      |> ListKit.compact_join(" ")
 
     [text, news_item_link(item)]
     |> ListKit.compact_join("\n\n")
@@ -145,11 +147,11 @@ defmodule Changelog.Buffer.Content do
   end
 
   defp author_emoji, do: ~w(✍ 🖋 📝 🗣) |> Enum.random()
-  defp episode_emoji, do: ~w(🙌 🎉 🔥 🎧 💥 🚢 🚀 🥳 🤘) |> Enum.random()
+  defp episode_emoji, do: ~w(🙌 🎉 🔥 💥 🚢 🚀 🥳 🤘) |> Enum.random()
   defp guest_emoji, do: ~w(🌟 ✨ 💫 🤩 😎 ) |> Enum.random()
   defp host_emoji, do: ~w(🎙 ⚡️ 🎤 🫡) |> Enum.random()
   defp source_emoji, do: ~w(📨 📡 📢 🔊) |> Enum.random()
-  defp title_emoji, do: ~w(🗣 💬 💡 💭 📌) |> Enum.random()
+  defp title_emoji, do: ~w(🗣 💬 💡 💚 📌) |> Enum.random()
   defp topic_emoji, do: ~w(🏷 🗂 🗃️ 🗄️) |> Enum.random()
   defp video_emoji, do: ~w(🎞 📽 🎬 🍿) |> Enum.random()
 
@@ -161,24 +163,28 @@ defmodule Changelog.Buffer.Content do
   defp guest_intro(_guests), do: "with"
 
   defp guest_meta([]), do: nil
+
   defp guest_meta(guests) do
     [
       guest_emoji(),
       guest_intro(guests),
       twitter_list(guests, " & ")
-    ] |> ListKit.compact_join()
+    ]
+    |> ListKit.compact_join()
   end
 
   defp host_intro([_host]), do: ["hosted by", "host"] |> Enum.random()
   defp host_intro(_hosts), do: ["hosted by", "hosts"] |> Enum.random()
 
   defp host_meta([]), do: nil
+
   defp host_meta(hosts) do
     [
       host_emoji(),
       host_intro(hosts),
       twitter_list(hosts, " & ")
-    ] |> ListKit.compact_join()
+    ]
+    |> ListKit.compact_join()
   end
 
   defp source_meta(%{source: nil}), do: nil
@@ -194,7 +200,8 @@ defmodule Changelog.Buffer.Content do
       topic_emoji(),
       topic_intro(topics),
       twitter_list(topics)
-    ] |> ListKit.compact_join()
+    ]
+    |> ListKit.compact_join()
   end
 
   defp topic_intro(_topics), do: [nil, "tagged"] |> Enum.random()
