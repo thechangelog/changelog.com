@@ -12,8 +12,8 @@ defmodule Changelog.Feed do
     field :starts_at, :utc_datetime
     field :cover, Files.Cover.Type
 
-    field :podcast_ids, {:array, :integer}
-    field :person_ids, {:array, :integer}
+    field :podcast_ids, {:array, :integer}, default: []
+    field :person_ids, {:array, :integer}, default: []
 
     belongs_to :owner, Person
 
@@ -42,12 +42,11 @@ defmodule Changelog.Feed do
 
   def preload_all(feed) do
     feed
-    |> preload_person()
-    |> preload_podcasts()
+    |> preload_owner()
   end
 
-  def preload_person(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :person)
-  def preload_person(feed), do: Repo.preload(feed, :person)
+  def preload_owner(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :owner)
+  def preload_owner(feed), do: Repo.preload(feed, :owner)
 
   defp put_random_slug(changeset, length \\ 16) do
     put_change(changeset, :slug, :binary.encode_hex(:crypto.strong_rand_bytes(length)))

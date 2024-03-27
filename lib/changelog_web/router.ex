@@ -68,6 +68,8 @@ defmodule ChangelogWeb.Router do
     get "/search", SearchController, :all
     get "/search/:type", SearchController, :one
 
+    resources "/feeds", FeedController
+
     resources "/topics", TopicController, except: [:show]
 
     get "/news", NewsItemController, :index

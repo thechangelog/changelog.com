@@ -1,0 +1,19 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    Feeds
+    <div class="sub header">Customized to our liking (<%= @page.total_entries |> SharedHelpers.comma_separated() %>)</div>
+  </h1>
+
+  <div class="actions">
+    <%= link to: ~p"/admin/feeds/new", class: "ui right floated primary basic button" do %>
+      <i class="add layout icon"></i>
+      Add Feed
+    <% end %>
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@page.entries) do %>
+  <%= render("_table.html", assigns) %>
+<% end %>
+</div>

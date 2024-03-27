@@ -1,0 +1,54 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Owner</th>
+      <th>Cover</th>
+      <th>Name</th>
+      <th>Starts at</th>
+      <th>Podcasts</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for feed <- @page.entries do %>
+    <tr>
+      <td>
+      <%= link to: ~p"/admin/people/#{feed.owner}", title: feed.owner.name, data: [popup: true] do %>
+        <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(feed.owner)}> <%= feed.owner.name %>
+      <% end %>
+      </td>
+      <td></td>
+      <td>
+      <%= feed.name %>
+      <%= if feed.plusplus do %>
+        &nbsp;
+        <span class="ui tiny blue basic label">++</span>
+      <% end %>
+      <%= if feed.autosub do %>
+        &nbsp;
+        <span class="ui tiny green basic label">auto</span>
+      <% end %>
+      </td>
+      <td><%= AdminHelpers.ts(feed.starts_at) %></td>
+      <td class="ui mini images">
+      <%= for podcast <- @podcasts do %>
+        <%= if Enum.member?(feed.podcast_ids, podcast.id) do %>
+        <img class="ui middle aligned image" src={PodcastView.cover_url(podcast, :small)}>
+        <% end %>
+      <% end %>
+      </td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= AdminHelpers.icon_link("eye", to: "#") %>
+          <%= AdminHelpers.icon_link("edit", to: ~p"/admin/feeds/#{feed}/edit") %>
+          <%= AdminHelpers.icon_link("trash",
+                        to: ~p"/admin/feeds/#{feed}",
+                        method: :delete,
+                        data: [confirm: "Are you sure?"]) %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

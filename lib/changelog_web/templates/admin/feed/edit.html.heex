@@ -1,0 +1,10 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link "Feeds", to: ~p"/admin/feeds" %>
+    &raquo; Edit
+  </h1>
+</div>
+
+<div class="ui basic segment text container">
+  <%= render("_form.html", Map.merge(assigns, %{action: ~p"/admin/feeds/#{@feed}"})) %>
+</div>

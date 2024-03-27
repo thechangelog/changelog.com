@@ -1,0 +1,85 @@
+<%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
+  <div class={"field required #{AdminHelpers.error_class(f, :owner_id)}"}>
+    <%= label(f, :owner_id, "Owner") %>
+    <div class="ui fluid remote person search selection dropdown">
+      <%= hidden_input(f, :owner_id) %>
+      <i class="dropdown icon"></i>
+      <%= if AdminHelpers.is_loaded(f.data.owner) do %>
+        <div class="selected text"><%= f.data.owner.name %></div>
+      <% else %>
+        <div class="default text">Select Owner</div>
+      <% end %>
+    </div>
+    <%= AdminHelpers.error_message(f, :person_id) %>
+  </div>
+
+  <div class={"field required #{AdminHelpers.error_class(f, :name)}"}>
+    <%= label f, :name, "Name" %>
+    <%= text_input f, :name, placeholder: "My Custom Feed" %>
+    <%= AdminHelpers.error_message(f, :name) %>
+  </div>
+
+  <div class={"field #{AdminHelpers.error_class(f, :description)}"}>
+    <%= label f, :description, "Description" %>
+    <%= text_input f, :description, placeholder: "My personalized Changelog feed" %>
+    <%= AdminHelpers.error_message(f, :description) %>
+  </div>
+
+  <div class={"field #{AdminHelpers.error_class(f, :starts_at)}"}>
+    <%= label(f, :starts_at) do %>
+      Starts At <%= AdminHelpers.help_icon("Feed will only include episodes published after this time") %>
+    <% end %>
+    <%= AdminHelpers.semantic_calendar_field(f, :starts_at) %>
+    <%= AdminHelpers.error_message(f, :starts_at) %>
+  </div>
+
+  <div class="fields">
+    <div class="field">
+      <label>Changelog++ <%= AdminHelpers.help_icon("This feed should receive Changelog++ mp3s") %></label>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :plusplus, class: "hidden") %>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Auto sub <%= AdminHelpers.help_icon("Automatically subscribe this feed when we add new podcasts") %></label>
+      <div class="ui fitted toggle checkbox">
+        <%= checkbox(f, :autosub, class: "hidden") %>
+      </div>
+    </div>
+  </div>
+
+  <div class="required field">
+    <%= label(f, :podcasts) %>
+
+    <div class="ui four cards js-podcast_ids">
+    <%= for podcast <- @podcasts do %>
+      <div class="card">
+      <%= if Enum.member?(f.data.podcast_ids, podcast.id) do %>
+        <a class="ui image" href="javascript:void(0);" data-id={podcast.id}>
+          <img src={PodcastView.cover_url(podcast)}>
+          <input type="hidden" name="feed[podcast_ids][]" value={podcast.id}>
+        </a>
+      <% else %>
+        <a class="ui disabled image" href="javascript:void(0);" data-id={podcast.id}>
+          <img src={PodcastView.cover_url(podcast)}>
+        </a>
+      <% end %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+
+  <div class="ui hidden divider"></div>
+
+  <div class="ui equal width stackable grid">
+  <%= if !AdminHelpers.is_persisted(f.data) do %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, ~p"/admin/feeds")) %></div>
+  <% else %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
+  <% end %>
+    <div class="column"></div>
+  </div>
+<% end %>
